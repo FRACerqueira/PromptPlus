@@ -1,4 +1,5 @@
 # PromptPlus # BaseOptions
+
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Hotkeys**](index.md#hotkeys) |
