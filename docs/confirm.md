@@ -1,0 +1,81 @@
+# PromptPlus # Confirm
+[**Main**](index.md#help) | 
+[**Controls**](index.md#apis) |
+[**ResultPPlus**](resultpplus) |
+[**Confirm Options**](confirmoptions) |
+[**BasePromptOptions**](basepromptoptions)
+
+## Documentation
+Control Confirm. Simple confirm with with tool tips and language detection.
+
+![](./images/Confirm.gif)
+
+### Options
+
+[**Confirm Options**](confirmoptions)
+
+### Syntax
+[**Top**](#promptplus--confirm)
+
+```csharp
+Confirm(ConfirmOptions options, CancellationToken? cancellationToken = null)
+Confirm(Action<ConfirmOptions> configure, CancellationToken? cancellationToken = null)
+Confirm(string message, bool? defaultValue = null, CancellationToken? cancellationToken = null)  
+````
+
+**_Note1: defaultValue is true for positive confirm , false for negative confirm._**
+
+**_Note2: The text for positive/negative confirm is extract from resx._**
+
+### Return
+[**Top**](#promptplus--confirm)
+
+```csharp
+ResultPPlus<bool>
+````
+**_Note: [ResultPPlus](resultpplus).Value is true for positive confirm , false for negative confirm._**
+
+
+### Sample
+[**Top**](#promptplus--confirm)
+
+```csharp
+PPlus.DefaultCulture = new CultureInfo("en-US");
+var answer = PPlus.Confirm("Are you ready?", true, cancellationToken:_stopApp);
+if (answer.IsAborted)
+{
+    return;
+}
+if (answer.Value)
+{
+    Console.WriteLine($"Sua resposta é Yes");
+}
+else
+{
+    Console.WriteLine($"Sua resposta é No");
+}
+````
+
+```csharp
+PPlus.DefaultCulture = new CultureInfo("pt-BR");
+var answer = PPlus.Confirm("Você esta pronto?", true, cancellationToken:_stopApp);
+if (answer.IsAborted)
+{
+    return;
+}
+if (answer.Value)
+{
+    Console.WriteLine($"Sua resposta é Sim");
+}
+else
+{
+    Console.WriteLine($"Sua resposta é Não");
+}
+````
+
+### Links
+[**Main**](index.md#help) | 
+[**Controls**](index.md#apis) |
+[**ResultPPlus**](resultpplus) |
+[**Confirm Options**](confirmoptions) |
+[**BasePromptOptions**](basepromptoptions)

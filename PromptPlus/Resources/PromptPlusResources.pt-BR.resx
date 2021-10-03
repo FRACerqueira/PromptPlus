@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnyKey" xml:space="preserve">
+    <value>Digite qualquer tecla</value>
+  </data>
+  <data name="CanceledText" xml:space="preserve">
+    <value>Cancelado</value>
+  </data>
+  <data name="EmptyTitle" xml:space="preserve">
+    <value>Título vazio</value>
+  </data>
+  <data name="EnterFininsh" xml:space="preserve">
+    <value>Enter: Terminar</value>
+  </data>
+  <data name="EscCancel" xml:space="preserve">
+    <value>, {0}: Cancelar</value>
+  </data>
+  <data name="EscCancelWithPipeline" xml:space="preserve">
+    <value>, {0}: Cancelar pipe, {1} : Cancelar pipes</value>
+  </data>
+  <data name="EscCancelWithPipeNotAll" xml:space="preserve">
+    <value>, {0}: Cancelar pipe</value>
+  </data>
+  <data name="FileNotSelected" xml:space="preserve">
+    <value>item não é um arquivo!</value>
+  </data>
+  <data name="FolderCurrentPath" xml:space="preserve">
+    <value>Pasta:</value>
+  </data>
+  <data name="FolderKeyNavigation" xml:space="preserve">
+    <value>Ctrl+Left/Right: Entar na pasta, Enter: Selecionar, {0}: Filtro</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Valor é inválido</value>
+  </data>
+  <data name="ItemsFiltered" xml:space="preserve">
+    <value>Itens filtrados!</value>
+  </data>
+  <data name="KeyNavPaging" xml:space="preserve">
+    <value>PgUp/PgDown: Paginar, </value>
+  </data>
+  <data name="ListItemAlreadyexists" xml:space="preserve">
+    <value>Item já existe</value>
+  </data>
+  <data name="ListKeyNavigation" xml:space="preserve">
+    <value>Ctrl+Del: Remove selecionado, {0}: Remove tudo, Enter: Terminar</value>
+  </data>
+  <data name="ListMaxSelection" xml:space="preserve">
+    <value>O máximo de itens ({0}) foi atingido</value>
+  </data>
+  <data name="ListMinSelection" xml:space="preserve">
+    <value>O minimo de itens({0}) é necessário</value>
+  </data>
+  <data name="LongNoKey" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="LongYesKey" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="MaxLength" xml:space="preserve">
+    <value>Valor é muito grande</value>
+  </data>
+  <data name="MinLength" xml:space="preserve">
+    <value>Valor é muito pequeno</value>
+  </data>
+  <data name="MultiSelectKeyNavigation" xml:space="preserve">
+    <value>Space: Marcar, Enter: Terminar,  {0}: Filtro {1}: Alternar, {2}:Inverter</value>
+  </data>
+  <data name="MultiSelectMaxSelection" xml:space="preserve">
+    <value>O máximo de seleção({0}) foi atingido</value>
+  </data>
+  <data name="MultiSelectMinSelection" xml:space="preserve">
+    <value>O minimo de seleção({0}) é necessário</value>
+  </data>
+  <data name="NoKey" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="NoMatchRegex" xml:space="preserve">
+    <value>Valor digitado não segue o padrão</value>
+  </data>
+  <data name="OffValue" xml:space="preserve">
+    <value>Desligado</value>
+  </data>
+  <data name="OnValue" xml:space="preserve">
+    <value>Ligado</value>
+  </data>
+  <data name="PaginationTemplate" xml:space="preserve">
+    <value>  {0} itens, {1}/{2} paginas</value>
+  </data>
+  <data name="PipeLineText" xml:space="preserve">
+    <value>Resumo dos passos</value>
+  </data>
+  <data name="PressedKey" xml:space="preserve">
+    <value>Tecla Pressionada</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Valor é obrigatório</value>
+  </data>
+  <data name="ResizedTerminal" xml:space="preserve">
+    <value>Terminal redimensionado!</value>
+  </data>
+  <data name="ResizeTerminal" xml:space="preserve">
+    <value>Redimensione:  {0} to {1} linhas...Digite qualquer tecla.</value>
+  </data>
+  <data name="RunningText" xml:space="preserve">
+    <value>Executando</value>
+  </data>
+  <data name="SelectKeyNavigation" xml:space="preserve">
+    <value>Enter: Selecionar, {0}: Filtro</value>
+  </data>
+  <data name="ShowKeyPressStandardHotKeys" xml:space="preserve">
+    <value>{0}{1}</value>
+  </data>
+  <data name="ShowKeyPressStandardHotKeysWithPipeline" xml:space="preserve">
+    <value>{0}, {1} Mostrar resumo dos passos{2}</value>
+  </data>
+  <data name="ShowProcessStandardHotKeysWithPipeline" xml:space="preserve">
+    <value>{0} Mostrar resumo pipes{1}</value>
+  </data>
+  <data name="ShowStandardHotKeys" xml:space="preserve">
+    <value>{0} Mostrar/Esconder teclas{1}</value>
+  </data>
+  <data name="ShowStandardHotKeysWithPipeline" xml:space="preserve">
+    <value>{0} Mostrar/Esconder teclas, {1} Mostrar resumo dos pipes{2}</value>
+  </data>
+  <data name="SkipedText" xml:space="preserve">
+    <value>Ignorado</value>
+  </data>
+  <data name="SliderNumberKeyNavigator" xml:space="preserve">
+    <value>Left/Right: Passo curto, Crtl+Left/Right: Passo grande , Enter: Terminar</value>
+  </data>
+  <data name="SliderSwitcheKeyNavigator" xml:space="preserve">
+    <value>, Left/Right: Mudar , Enter: Terminar</value>
+  </data>
+  <data name="SummaryPipelineReturnto" xml:space="preserve">
+    <value>voltar para</value>
+  </data>
+  <data name="WaittingProcess" xml:space="preserve">
+    <value>Aguardando {0} de {1}</value>
+  </data>
+  <data name="WaittingText" xml:space="preserve">
+    <value>Aguardando</value>
+  </data>
+  <data name="YesKey" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="PasswordStandardHotkeys" xml:space="preserve">
+    <value>{0}, {1}:Mostrar/Esconder senha</value>
+  </data>
+  <data name="MaskEditPosYear" xml:space="preserve">
+    <value>Ano</value>
+  </data>
+  <data name="MaskEditPosSecond" xml:space="preserve">
+    <value>Segundo</value>
+  </data>
+  <data name="MaskEditPosNumeric" xml:space="preserve">
+    <value>Numerico</value>
+  </data>
+  <data name="MaskEditPosMonth" xml:space="preserve">
+    <value>Mês</value>
+  </data>
+  <data name="MaskEditPosMinute" xml:space="preserve">
+    <value>Minuto</value>
+  </data>
+  <data name="MaskEditPosLetter" xml:space="preserve">
+    <value>Letra</value>
+  </data>
+  <data name="MaskEditPosHour" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="MaskEditPosDay" xml:space="preserve">
+    <value>Dia</value>
+  </data>
+  <data name="MaskEditPosCustom" xml:space="preserve">
+    <value>Somente({0})</value>
+  </data>
+  <data name="MaskEditPosAnyChar" xml:space="preserve">
+    <value>Qualquer caracter</value>
+  </data>
+  <data name="MaskEditErase" xml:space="preserve">
+    <value>,Ctrl+Del: apagar tudo</value>
+  </data>
+  <data name="NumberUpDownKeyNavigator" xml:space="preserve">
+    <value>Up/Down: Mudar, Enter: Terminar</value>
+  </data>
+  <data name="MaskEditInputType" xml:space="preserve">
+    <value>Tipo Entrada: {0}</value>
+  </data>
+  <data name="InvalidTypeByte" xml:space="preserve">
+    <value>Valor inválido para número (-128 a 127)</value>
+  </data>
+  <data name="InvalidTypeNumber" xml:space="preserve">
+    <value>Valor inválido para número</value>
+  </data>
+  <data name="InvalidTypeDateTime" xml:space="preserve">
+    <value>Valor inválido para Data({0})/Hora({1})</value>
+  </data>
+  <data name="InvalidTypeChar" xml:space="preserve">
+    <value>Valor inválido para um único caracater</value>
+  </data>
+  <data name="InvalidTypeBoolean" xml:space="preserve">
+    <value>Valor inválido para lógico(0:Falso/1:Verdadeiro)</value>
+  </data>
+</root>
