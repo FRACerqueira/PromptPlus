@@ -1,4 +1,4 @@
-# PromptPlus # BasePromptOptions
+# PromptPlus # BaseOptions
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Hotkeys**](index.md#hotkeys) |
@@ -8,7 +8,7 @@
 Base class for all class control´s options.
 
 ### Properties
-[**Top**](#promptplus--basepromptoptions)
+[**Top**](#promptplus--baseoptions)
 
 - Message
 	- Type : string

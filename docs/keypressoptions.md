@@ -2,10 +2,10 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Key Press Control**](keypress) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 
 ## Documentation
-Control Options Class for [**Key Press**](keypress). inherits from [**BasePromptOptions**](basepromptoptions)
+Control Options Class for [**Key Press**](keypress). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--keypressoptions)
@@ -23,5 +23,5 @@ Control Options Class for [**Key Press**](keypress). inherits from [**BasePrompt
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Key Press Control**](keypress) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 

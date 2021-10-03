@@ -5,7 +5,7 @@
 [**SingleProcess**](singleprocess) 
 
 ## Documentation
-Control Options Class for [**WaitProcess Control**](waitprocess). inherits from [**BasePromptOptions**](basepromptoptions)
+Control Options Class for [**WaitProcess Control**](waitprocess). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--waitprocessoptions)

@@ -2,10 +2,10 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Confirm Control**](confirm) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 
 ## Documentation
-Control Options Class for [**Confirm**](confirm). inherits from [**BasePromptOptions**](basepromptoptions)
+Control Options Class for [**Confirm**](confirm). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--confirmoptions)
@@ -18,4 +18,4 @@ Control Options Class for [**Confirm**](confirm). inherits from [**BasePromptOpt
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Confirm Control**](confirm) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 

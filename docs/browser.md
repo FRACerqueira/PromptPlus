@@ -4,7 +4,7 @@
 [**ResultPPlus**](resultpplus) |
 [**ResultBrowser**](resultbrowser) |
 [**Browser Options**](browseroptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control Browser. Browser files/folder with auto-paginator and tooltips.
@@ -76,4 +76,4 @@ else
 [**ResultPPlus**](resultpplus) |
 [**ResultBrowser**](resultbrowser) |
 [**Browser Options**](browseroptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)

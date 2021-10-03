@@ -3,10 +3,10 @@
 [**Controls**](index.md#apis) |
 [**SliderNumber Control**](slidernumber) |
 [**NumberUpDown Control**](numberupdown) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 
 ## Documentation
-Control Options Class for [**SliderNumber Control**](slidernumber) and [**NumberUpDown Control**](numberupdown). inherits from [**BasePromptOptions**](basepromptoptions)
+Control Options Class for [**SliderNumber Control**](slidernumber) and [**NumberUpDown Control**](numberupdown). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--slidernumberoptions)
@@ -42,5 +42,5 @@ Control Options Class for [**SliderNumber Control**](slidernumber) and [**Number
 [**Controls**](index.md#apis) |
 [**SliderNumber Control**](slidernumber) |
 [**NumberUpDown Control**](numberupdown) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 

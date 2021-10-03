@@ -2,10 +2,10 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Select Control**](select) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 
 ## Documentation
-Control Options Class for [**Select**](select). inherits from [**BasePromptOptions**](basepromptoptions)
+Control Options Class for [**Select**](select). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--selectoptions)
@@ -32,5 +32,5 @@ Control Options Class for [**Select**](select). inherits from [**BasePromptOptio
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Select Control**](select) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 

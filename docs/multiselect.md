@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**MultiSelect Options**](multiselectoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control MultSelect. Generic multi select input IEnumerable/Enum with auto-paginator , tooltips and more.
@@ -87,4 +87,4 @@ Console.WriteLine($"You picked {string.Join(", ", multvalue.Value.Select(x => x.
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**MultiSelect Options**](multiselectoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)

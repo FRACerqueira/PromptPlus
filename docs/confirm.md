@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**Confirm Options**](confirmoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control Confirm. Simple confirm with with tool tips and language detection.
@@ -78,4 +78,4 @@ else
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**Confirm Options**](confirmoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)

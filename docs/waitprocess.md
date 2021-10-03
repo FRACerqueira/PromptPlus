@@ -4,7 +4,7 @@
 [**ResultPPlus**](resultpplus) |
 [**WaitProcess Options**](waitprocessoptions) |
 [**SingleProcess**](singleprocess) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control WaitProcess. Wait process with animation.
@@ -104,4 +104,4 @@ if (progress.IsAborted)
 [**ResultPPlus**](resultpplus) |
 [**WaitProcess Options**](waitprocessoptions) |
 [**SingleProcess**](singleprocess) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)

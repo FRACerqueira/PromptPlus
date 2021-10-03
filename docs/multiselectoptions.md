@@ -2,10 +2,10 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**MultiSelect Control**](multiselect) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 
 ## Documentation
-Control Options Class for [**MultiSelect**](multiselect). inherits from [**BasePromptOptions**](basepromptoptions)
+Control Options Class for [**MultiSelect**](multiselect). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--multiselectoptions)
@@ -42,4 +42,4 @@ Control Options Class for [**MultiSelect**](multiselect). inherits from [**BaseP
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**MultiSelect Control**](multiselect) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 

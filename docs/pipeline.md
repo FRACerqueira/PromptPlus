@@ -21,11 +21,9 @@ Not have options
 Pipeline(IList<IFormPPlusBase> steps, CancellationToken? cancellationToken = null)
 ```
 
-**_Note1: All controls inherit from IPromptbase_**
+**_Note1: All controls inherit from IFormPPlusBase_**. All controls that inherit from IFormPPlusBase are in the namespece PPlus.Pipe_**
 
-**_Note2: All controls that inherit from IFormPPlusBase are in the namespece PPlus.Pipe_**
-
-**_Note3: It is mandatory to tell the control to use the Step extension to define a pipe for a contro´s Pipeline. See examples below!_**
+**_Note2: It is mandatory to tell the control to use the Step extension to define a pipe for a contro´s Pipeline. See examples below!_**
 
 ### Return
 [**Top**](#promptplus--input)

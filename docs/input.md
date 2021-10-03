@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**Input Options**](inputoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control Input. Generic input with input validator with tooltips.
@@ -57,4 +57,4 @@ Console.WriteLine($"Hello, {name.Value}!");
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**Input Options**](inputoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)

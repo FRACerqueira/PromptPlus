@@ -2,10 +2,10 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Progressbar Control**](progressbar) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 
 ## Documentation
-Control Options Class for [**Progressbar Control**](progressbar). inherits from [**BasePromptOptions**](basepromptoptions)
+Control Options Class for [**Progressbar Control**](progressbar). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--progressbaroptions)
@@ -26,4 +26,4 @@ Control Options Class for [**Progressbar Control**](progressbar). inherits from 
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Progressbar Control**](progressbar) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 

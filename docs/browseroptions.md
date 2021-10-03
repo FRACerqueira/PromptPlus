@@ -2,10 +2,10 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Browser Control**](browser) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 
 ## Documentation
-Control Options Class for [**Browser**](browser). inherits from [**BasePromptOptions**](basepromptoptions)
+Control Options Class for [**Browser**](browser). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--browseroptions)
@@ -69,4 +69,4 @@ Control Options Class for [**Browser**](browser). inherits from [**BasePromptOpt
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Browser Control**](browser) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 

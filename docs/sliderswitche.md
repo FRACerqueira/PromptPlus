@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**SliderSwitche Options**](sliderswitcheoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control SliderSwitche. Generic choice with customization and tooltips.
@@ -55,6 +55,6 @@ Console.WriteLine($"Your answer is: {slider.Value}");
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**SliderSwitche Options**](sliderswitcheoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 

@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**Select Options**](selectoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control Select. Generic select input IEnumerable/Enum with auto-paginator and tooltips and more.
@@ -79,4 +79,4 @@ Console.WriteLine($"You selected {envalue.Value.DisplayName}");
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**Select Options**](selectoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)

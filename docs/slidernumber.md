@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**SliderNumber Options**](slidernumberoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control SliderNumber. Numeric ranger with short/large step and tooltips.
@@ -58,4 +58,4 @@ Console.WriteLine($"Your answer is: {number.Value}");
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**SliderNumber Options**](slidernumberoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)

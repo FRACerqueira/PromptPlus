@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**ResultMasked**](resultmasked) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 
 ## Documentation
@@ -88,5 +88,5 @@ else
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**ResultMasked**](resultmasked) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 

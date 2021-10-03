@@ -1,7 +1,8 @@
 # Welcome to PromptPlus
-
+<!--
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
+-->
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 
@@ -146,7 +147,7 @@ PPlus.ColorSchema.Answer = ConsoleColor.Cyan;
 ### Symbols
 [**Top**](#help)
 
-PromptPlus has a configurable symbos with Unicode support (Multi-byte characters and Emoji😀🎉) and Fallback.
+PromptPlus has a configurable symbos with Unicode support and Fallback.
 
 - MaskEmpty
     - Symbol : ■

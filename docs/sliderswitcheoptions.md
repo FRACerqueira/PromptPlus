@@ -2,10 +2,10 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**SliderSwitche Control**](sliderswitche) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 
 ## Documentation
-Control Options Class for [**SliderSwitche Control**](sliderswitche). inherits from [**BasePromptOptions**](basepromptoptions)
+Control Options Class for [**SliderSwitche Control**](sliderswitche). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--sliderswitcheoptions)
@@ -26,5 +26,5 @@ Control Options Class for [**SliderSwitche Control**](sliderswitche). inherits f
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**SliderSwitche Control**](sliderswitche) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 

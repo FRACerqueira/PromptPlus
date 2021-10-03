@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**SliderNumber Options**](slidernumberoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control NumberUpDown. Numeric ranger with step and tooltips.
@@ -58,5 +58,5 @@ Console.WriteLine($"Your answer is: {number.Value}");
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**SliderNumber Options**](slidernumberoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 

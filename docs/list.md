@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**List Options**](listoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control List. Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more.
@@ -57,4 +57,4 @@ Console.WriteLine($"You picked {string.Join(", ", lst.Value)}");
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**List Options**](listoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)

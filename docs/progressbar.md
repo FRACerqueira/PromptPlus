@@ -4,7 +4,7 @@
 [**ResultPPlus**](resultpplus) |
 [**ProgressBarInfo**](progressbarinfo) |
 [**ProgressBar Options**](progressbaroptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control ProgressBar. Progress Bar with interation customization.
@@ -70,4 +70,4 @@ private async Task<ProgressBarInfo> UpdateSampleHandlerAsync(ProgressBarInfo sta
 [**ResultPPlus**](resultpplus) |
 [**ProgressBarInfo**](progressbarinfo) |
 [**ProgressBar Options**](progressbaroptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)

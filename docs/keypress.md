@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**KeyPress Options**](keypressoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control KeyPress. Simple specific key.
@@ -54,5 +54,5 @@ Console.WriteLine($"Hello,  key Ctrl-B pressed");
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**KeyPress Options**](keypressoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 

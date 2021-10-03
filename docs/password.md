@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**Input Options**](inputoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 
 ## Documentation
 Control Password. Generic input password with input validator and show/hide(optional) input value.
@@ -53,5 +53,5 @@ Console.WriteLine($"Password OK : {pwd.Value}");
 [**Controls**](index.md#apis) |
 [**ResultPPlus**](resultpplus) |
 [**Input Options**](inputoptions) |
-[**BasePromptOptions**](basepromptoptions)
+[**BaseOptions**](baseoptions)
 

@@ -2,10 +2,10 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**List Control**](list) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
 
 ## Documentation
-Control Options Class for [**List**](list). inherits from [**BasePromptOptions**](basepromptoptions)
+Control Options Class for [**List**](list). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--listoptions)
@@ -42,4 +42,4 @@ Control Options Class for [**List**](list). inherits from [**BasePromptOptions**
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**List Control**](list) |
-[**BasePromptOptions**](basepromptoptions) 
+[**BaseOptions**](baseoptions) 
