@@ -8,11 +8,11 @@ using System;
 using System.Linq.Expressions;
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.Options;
-using PromptPlus.Resources;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
+using PromptPlusControls.Resources;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
     internal class SliderNumberForm<T> : FormBase<T> where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
     {
@@ -228,7 +228,7 @@ namespace PromptPlus.Forms
         private string ValueToString(T value)
         {
             var tmp = value.ToString();
-            var decsep = PPlus.DefaultCulture.NumberFormat.NumberDecimalSeparator;
+            var decsep = PromptPlus.DefaultCulture.NumberFormat.NumberDecimalSeparator;
             var index = tmp.IndexOf(decsep);
             if (index >= 0)
             {

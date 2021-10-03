@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-using PromptPlus.Drivers;
+using PromptPlusControls.Drivers;
 
-namespace PromptPlus.Internal
+namespace PromptPlusControls.Internal
 {
     internal class ScreenRender : IDisposable
     {

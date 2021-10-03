@@ -10,9 +10,9 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-using PromptPlus.Internal;
+using PromptPlusControls.Internal;
 
-namespace PromptPlus.ValueObjects
+namespace PromptPlusControls.ValueObjects
 {
     public static class Validators
     {

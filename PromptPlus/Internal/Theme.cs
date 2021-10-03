@@ -6,7 +6,7 @@
 
 using System;
 
-namespace PromptPlus.ValueObjects
+namespace PromptPlusControls.ValueObjects
 {
     internal class Theme
     {

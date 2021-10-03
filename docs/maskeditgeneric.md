@@ -1,7 +1,7 @@
 # PromptPlus # MaskEditGeneric
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ResultMasked**](resultmasked) |
 [**BaseOptions**](baseoptions)
 
@@ -58,14 +58,14 @@ MaskEdit(MaskedGenericType masktype, string message, string maskedvalue, string 
 [**Top**](#promptplus--maskeditgeneric)
 
 ```csharp
-ResultPPlus<ResultMasked>
+ResultPromptPlus<ResultMasked>
 ```
 
 ### Sample
 [**Top**](#promptplus--maskeditgeneric)
 
 ```csharp
-var mask = PPlus.MaskEdit(PPlus.MaskTypeGeneric, 
+var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, 
   "Inventory Number", 
   @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", 
   cancellationToken: _stopApp);
@@ -86,7 +86,7 @@ else
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ResultMasked**](resultmasked) |
 [**BaseOptions**](baseoptions)
 

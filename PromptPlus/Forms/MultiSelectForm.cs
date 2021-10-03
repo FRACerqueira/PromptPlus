@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.Options;
-using PromptPlus.Resources;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
+using PromptPlusControls.Resources;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
     internal class MultiSelectForm<T> : FormBase<IEnumerable<T>>
     {
@@ -64,7 +64,7 @@ namespace PromptPlus.Forms
                     continue;
                 }
 
-                else if (PPlus.UnSelectFilter.Equals(keyInfo))
+                else if (PromptPlus.UnSelectFilter.Equals(keyInfo))
                 {
                     _localpaginator.UnSelected();
                     result = default;

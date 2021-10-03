@@ -6,9 +6,9 @@
 
 using System;
 
-using PromptPlus.Resources;
+using PromptPlusControls.Resources;
 
-namespace PromptPlus.ValueObjects
+namespace PromptPlusControls.ValueObjects
 {
     public struct HotKey : IEquatable<ConsoleKeyInfo>
     {

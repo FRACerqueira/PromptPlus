@@ -6,9 +6,9 @@
 
 using System;
 
-namespace PromptPlus
+namespace PromptPlusControls
 {
-    public static partial class PPlus
+    public static partial class PromptPlus
     {
         public static class ColorSchema
         {

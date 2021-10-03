@@ -8,11 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace PromptPlus.Options
+namespace PromptPlusControls.Options
 {
     public class WaitProcessOptions<T> : BaseOptions
     {
-        public int SpeedAnimation { get; set; } = PPlus.SpeedAnimation;
+        public int SpeedAnimation { get; set; } = PromptPlus.SpeedAnimation;
         public IEnumerable<SingleProcess<T>> Process { get; set; }
         public Func<T, string> ProcessTextResult { get; set; } = x => x.ToString();
     }

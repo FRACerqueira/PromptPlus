@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PromptPlus.Options
+namespace PromptPlusControls.Options
 {
     public class MultiSelectOptions<T> : BaseOptions
     {

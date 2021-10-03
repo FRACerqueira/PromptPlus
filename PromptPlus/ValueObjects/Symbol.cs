@@ -7,7 +7,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace PromptPlus.ValueObjects
+namespace PromptPlusControls.ValueObjects
 {
     public class Symbol
     {

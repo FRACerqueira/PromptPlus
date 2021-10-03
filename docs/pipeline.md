@@ -1,7 +1,7 @@
 # PromptPlus # PipeLine
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ResultPipe**](resultpipe) |
 [**Step Extension**](pipelinestep) 
 
@@ -18,10 +18,10 @@ Not have options
 [**Top**](#promptplus--pipeline)
 
 ```csharp
-Pipeline(IList<IFormPPlusBase> steps, CancellationToken? cancellationToken = null)
+Pipeline(IList<IFormPlusBase> steps, CancellationToken? cancellationToken = null)
 ```
 
-**_Note1: All controls inherit from IFormPPlusBase_**. All controls that inherit from IFormPPlusBase are in the namespece PPlus.Pipe_**
+**_Note1: All controls inherit from IFormPPlusBase_**. All controls that inherit from IFormPlusBase are in the namespece PromptPlus.Pipe_**
 
 **_Note2: It is mandatory to tell the control to use the Step extension to define a pipe for a contro´s Pipeline. See examples below!_**
 
@@ -29,7 +29,7 @@ Pipeline(IList<IFormPPlusBase> steps, CancellationToken? cancellationToken = nul
 [**Top**](#promptplus--input)
 
 ```csharp
-ResultPPlus<IEnumerable<ResultPipe>>
+ResultPromptPlus<IEnumerable<ResultPipe>>
 ```
 
 ### Sample
@@ -38,28 +38,28 @@ ResultPPlus<IEnumerable<ResultPipe>>
 ```csharp
 var steps = new List<IFormPPlusBase>
 {
-    PPlus.Pipe.Input<string>(new InputOptions { Message = "Your first name (empty = skip lastname)" })
-    .Step("First Name"),
+    PromptPlus.Pipe.Input<string>(new InputOptions { Message = "Your first name (empty = skip lastname)" })
+        .Step("First Name"),
 
-    PPlus.Pipe.Input<string>(new InputOptions { Message = "Your last name" })
-    .Step("Last Name",(res,context) =>
-    {
-        return !string.IsNullOrEmpty( ((ResultPPlus<string>)res[0].ValuePipe).Value);
-    }),
+    PromptPlus.Pipe.Input<string>(new InputOptions { Message = "Your last name" })
+        .Step("Last Name",(res,context) =>
+        {
+            return !string.IsNullOrEmpty( ((ResultPromptPlus<string>)res[0].ValuePipe).Value);
+        }),
 
-    PPlus.Pipe.MaskEdit(PPlus.MaskTypeDateOnly, "Your birth date",cancellationToken: _stopApp)
-    .Step("birth date"),
+    PromptPlus.Pipe.MaskEdit(PromptPlus.MaskTypeDateOnly, "Your birth date",cancellationToken: _stopApp)
+        .Step("birth date"),
 
-    PPlus.Pipe.Progressbar("Processing Tasks ",  UpdateSampleHandlerAsync, 30)
-    .Step("Update")
+    PromptPlus.Pipe.Progressbar("Processing Tasks ",  UpdateSampleHandlerAsync, 30)
+        .Step("Update")
 };
-var pipiline = PPlus.Pipeline(steps, _stopApp);
+var pipiline = PromptPlus.Pipeline(steps, _stopApp);
 ```
 
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ResultPipe**](resultpipe) |
 [**Step Extension**](pipelinestep) 
 

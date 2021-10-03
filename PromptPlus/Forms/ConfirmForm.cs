@@ -7,10 +7,10 @@
 using System;
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.Options;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
     internal class ConfirmForm : FormBase<bool>
     {

@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 
-namespace PromptPlus.ValueObjects
+namespace PromptPlusControls.ValueObjects
 {
     public class EnumValue<T> : IEquatable<EnumValue<T>> where T : Enum
     {

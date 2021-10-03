@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-namespace PromptPlus.Internal
+namespace PromptPlusControls.Internal
 {
     internal static class ValidatorsExtensions
     {

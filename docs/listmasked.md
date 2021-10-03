@@ -1,7 +1,7 @@
 # PromptPlus # ListMasked
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus)
+[**ResultPromptPlus**](resultpromptplus)
 
 ## Documentation
 Control ListMasked. Create generic IEnumerable with masked input, auto-paginator, tooptip , input validator
@@ -37,7 +37,7 @@ ListMasked<T>(string message, string maskValue, int minimum = 0, int maximum = i
 [**Top**](#promptplus--listmasked)
 
 ```csharp
-ResultPPlus<IEnumerable<T>>
+ResultPromptPlus<IEnumerable<T>>
 ```
 
 ### Sample
@@ -45,7 +45,7 @@ ResultPPlus<IEnumerable<T>>
 
 
 ```csharp
-var lst = PPlus.ListMasked<string>("Please add item(s)", 
+var lst = PromptPlus.ListMasked<string>("Please add item(s)", 
             @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", 
             uppercase: true, cancellationToken: _stopApp);
 if (lst.IsAborted)
@@ -58,4 +58,4 @@ Console.WriteLine($"You picked {string.Join(", ", lst.Value)}");
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus)
+[**ResultPromptPlus**](resultpromptplus)

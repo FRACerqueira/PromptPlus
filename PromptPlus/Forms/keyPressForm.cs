@@ -6,10 +6,10 @@
 
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.Options;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
     internal class keyPressForm : FormBase<bool>
     {
@@ -78,7 +78,7 @@ namespace PromptPlus.Forms
                 {
                     if (OverPipeLine)
                     {
-                        aux = string.Format(Messages.ShowKeyPressStandardHotKeysWithPipeline, aux, PPlus.ResumePipesKeyPress, Messages.EscCancel);
+                        aux = string.Format(Messages.ShowKeyPressStandardHotKeysWithPipeline, aux, PromptPlus.ResumePipesKeyPress, Messages.EscCancel);
                     }
                     else
                     {
@@ -89,7 +89,7 @@ namespace PromptPlus.Forms
                 {
                     if (OverPipeLine)
                     {
-                        aux = string.Format(Messages.ShowKeyPressStandardHotKeysWithPipeline, aux, PPlus.ResumePipesKeyPress, "");
+                        aux = string.Format(Messages.ShowKeyPressStandardHotKeysWithPipeline, aux, PromptPlus.ResumePipesKeyPress, "");
                     }
                     else
                     {

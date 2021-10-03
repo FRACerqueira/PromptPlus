@@ -4,7 +4,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under same MIT license
 // ********************************************************************************************
 
-namespace PromptPlus.Options
+namespace PromptPlusControls.Options
 {
     public abstract class BaseOptions
     {
@@ -13,9 +13,9 @@ namespace PromptPlus.Options
             HideAfterFinish = hideAfterFinish;
         }
         public string Message { get; set; }
-        public bool EnabledAbortKey { get; set; } = PPlus.EnabledAbortKey;
-        public bool EnabledAbortAllPipes { get; set; } = PPlus.EnabledAbortAllPipes;
-        public bool EnabledPromptTooltip { get; set; } = PPlus.EnabledPromptTooltip;
+        public bool EnabledAbortKey { get; set; } = PromptPlus.EnabledAbortKey;
+        public bool EnabledAbortAllPipes { get; set; } = PromptPlus.EnabledAbortAllPipes;
+        public bool EnabledPromptTooltip { get; set; } = PromptPlus.EnabledPromptTooltip;
         public bool HideAfterFinish { get; set; }
 
     }

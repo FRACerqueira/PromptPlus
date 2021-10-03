@@ -1,4 +1,4 @@
-﻿namespace PromptPlus.Example
+﻿namespace PromptPlusExample
 {
     public enum LanguageOptions
     {

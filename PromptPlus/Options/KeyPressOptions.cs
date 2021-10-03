@@ -6,7 +6,7 @@
 
 using System;
 
-namespace PromptPlus.Options
+namespace PromptPlusControls.Options
 {
     public class KeyPressOptions : BaseOptions
     {

@@ -1,7 +1,7 @@
 # PromptPlus # Browser
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ResultBrowser**](resultbrowser) |
 [**Browser Options**](browseroptions) |
 [**BaseOptions**](baseoptions)
@@ -42,14 +42,14 @@ Browser(BrowserFilter fileBrowserChoose, string message, string defaultValue = n
 [**Top**](#promptplus--browser)
 
 ```csharp
-ResultPPlus<ResultBrowser>
+ResultPromptPlus<ResultBrowser>
 ```
 
 ### Sample
 [**Top**](#promptplus--browser)
 
 ```csharp
-var file = PPlus.Browser(BrowserFilter.None, 
+var file = PromptPlus.Browser(BrowserFilter.None, 
     "Select/New file", 
     cancellationToken: _stopApp, 
     pageSize: 10, 
@@ -73,7 +73,7 @@ else
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ResultBrowser**](resultbrowser) |
 [**Browser Options**](browseroptions) |
 [**BaseOptions**](baseoptions)

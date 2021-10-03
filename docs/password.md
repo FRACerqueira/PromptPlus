@@ -1,7 +1,7 @@
 # PromptPlus # Password
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**Input Options**](inputoptions) |
 [**BaseOptions**](baseoptions)
 
@@ -32,14 +32,14 @@ Password(string message, bool swithVisible = true, IList<Func<object, Validation
 [**Top**](#promptplus--password)
 
 ```csharp
-ResultPPlus<String>
+ResultPromptPlus<String>
 ```
 
 ### Sample
 [**Top**](#promptplus--password)
 
 ```csharp
-var pwd = PPlus.Password("Type new password", true, 
+var pwd = PromptPlus.Password("Type new password", true, 
             new[] { Validators.Required(), Validators.MinLength(8) }, _stopApp);
 if (pwd.IsAborted)
 {
@@ -51,7 +51,7 @@ Console.WriteLine($"Password OK : {pwd.Value}");
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**Input Options**](inputoptions) |
 [**BaseOptions**](baseoptions)
 

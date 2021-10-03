@@ -1,7 +1,7 @@
 # PromptPlus # ProgressBar
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ProgressBarInfo**](progressbarinfo) |
 [**ProgressBar Options**](progressbaroptions) |
 [**BaseOptions**](baseoptions)
@@ -24,7 +24,7 @@ Progressbar(Action<ProgressBarOptions> configure, CancellationToken? cancellatio
 ```
 
 ```csharp
-ResultPPlus<ProgressBarInfo> Progressbar(string title, Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> updateHandler,int width = 30, object interationId = null, CancellationToken? cancellationToken = null)
+ResultPromptPlus<ProgressBarInfo> Progressbar(string title, Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> updateHandler,int width = 30, object interationId = null, CancellationToken? cancellationToken = null)
 ```
 
 **Highlighted parameters**
@@ -37,14 +37,14 @@ ResultPPlus<ProgressBarInfo> Progressbar(string title, Func<ProgressBarInfo, Can
 [**Top**](#promptplus--progressbar)
 
 ```csharp
-ResultPPlus<ProgressBarInfo>
+ResultPromptPlus<ProgressBarInfo>
 ```
 
 ### Sample
 [**Top**](#promptplus--progressbar)
 
 ```csharp
-var progress = PPlus.Progressbar("Processing Tasks", UpdateSampleHandlerAsync, 0, cancellationToken: _stopApp);
+var progress = PromptPlus.Progressbar("Processing Tasks", UpdateSampleHandlerAsync, 0, cancellationToken: _stopApp);
 if (progress.IsAborted)
 {
    return;
@@ -67,7 +67,7 @@ private async Task<ProgressBarInfo> UpdateSampleHandlerAsync(ProgressBarInfo sta
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ProgressBarInfo**](progressbarinfo) |
 [**ProgressBar Options**](progressbaroptions) |
 [**BaseOptions**](baseoptions)

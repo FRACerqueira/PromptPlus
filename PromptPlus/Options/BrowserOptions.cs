@@ -4,9 +4,9 @@
 // The maintenance and evolution is maintained by the PromptPlus project under same MIT license
 // ********************************************************************************************
 
-using PromptPlus.ValueObjects;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus.Options
+namespace PromptPlusControls.Options
 {
     public class BrowserOptions : BaseOptions
     {

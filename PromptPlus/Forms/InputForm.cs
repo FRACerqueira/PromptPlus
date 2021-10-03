@@ -7,11 +7,11 @@
 using System;
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.Options;
-using PromptPlus.Resources;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
+using PromptPlusControls.Resources;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
     internal class InputForm<T> : FormBase<T>
     {
@@ -79,7 +79,7 @@ namespace PromptPlus.Forms
                         }
                         catch (FormatException)
                         {
-                            SetError(PPlus.LocalizateFormatException(typeof(T)));
+                            SetError(PromptPlus.LocalizateFormatException(typeof(T)));
                         }
                         catch (Exception ex)
                         {
@@ -142,7 +142,7 @@ namespace PromptPlus.Forms
 
             if (_options.IsPassword && !_passwordvisible)
             {
-                screenBuffer.WriteAnswer(new string(PPlus.PasswordChar, _inputBuffer.ToBackwardString().Length));
+                screenBuffer.WriteAnswer(new string(PromptPlus.PasswordChar, _inputBuffer.ToBackwardString().Length));
             }
             else
             {
@@ -153,7 +153,7 @@ namespace PromptPlus.Forms
 
             if (_options.IsPassword && !_passwordvisible)
             {
-                screenBuffer.WriteAnswer(new string(PPlus.PasswordChar, _inputBuffer.ToForwardString().Length));
+                screenBuffer.WriteAnswer(new string(PromptPlus.PasswordChar, _inputBuffer.ToForwardString().Length));
             }
             else
             {
@@ -178,7 +178,7 @@ namespace PromptPlus.Forms
             {
                 if (_options.IsPassword)
                 {
-                    FinishResult = new string(PPlus.PasswordChar, result.ToString().Length);
+                    FinishResult = new string(PromptPlus.PasswordChar, result.ToString().Length);
                 }
                 else
                 {

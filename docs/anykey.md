@@ -1,7 +1,7 @@
 # PromptPlus # Any Key
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus)
+[**ResultPromptPlus**](resultpromptplus)
 
 ## Documentation
 Simple any key press.
@@ -22,13 +22,13 @@ AnyKey(CancellationToken? cancellationToken = null)
 [**Top**](#promptplus--any-key)
 
 ```csharp
-ResultPPlus<bool>
+ResultPromptPlus<bool>
 ```
 ### Sample
 [**Top**](#promptplus--any-key)
 
 ```csharp
-PPlus.AnyKey(cancellationToken:_stopApp)
+PromptPlus.AnyKey(cancellationToken:_stopApp)
 if (key.IsAborted)
 {
     return;
@@ -39,4 +39,4 @@ Console.WriteLine($"Hello, key pressed");
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus)
+[**ResultPromptPlus**](resultpromptplus)

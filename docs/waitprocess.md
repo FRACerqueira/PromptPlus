@@ -1,7 +1,7 @@
 # PromptPlus # WaitProcess
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**WaitProcess Options**](waitprocessoptions) |
 [**SingleProcess**](singleprocess) |
 [**BaseOptions**](baseoptions)
@@ -43,14 +43,14 @@ WaitProcess<T>(string title, IEnumerable<SingleProcess<T>> process, Func<T, stri
 [**Top**](#promptplus--waitprocess)
 
 ```csharp
-ResultPPlus<IEnumerable<T>>
+ResultPromptPlus<IEnumerable<T>>
 ```
 
 ### Sample
 [**Top**](#promptplus--waitprocess)
 
 ```csharp
-var progress = PPlus.WaitProcess("My Task", async () =>
+var progress = PromptPlus.WaitProcess("My Task", async () =>
     {
         await Task.Delay(10000);
         return "Done";
@@ -62,7 +62,7 @@ if (progress.IsAborted)
 ```
 
 ```csharp
-var progress = PPlus.WaitProcess("My Tasks(3) Async", new List<SingleProcess<string>>
+var progress = PromptPlus.WaitProcess("My Tasks(3) Async", new List<SingleProcess<string>>
 {
     new SingleProcess<string>
     {
@@ -101,7 +101,7 @@ if (progress.IsAborted)
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**WaitProcess Options**](waitprocessoptions) |
 [**SingleProcess**](singleprocess) |
 [**BaseOptions**](baseoptions)

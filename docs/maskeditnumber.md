@@ -1,7 +1,7 @@
 # PromptPlus # MaskEditNumber
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ResultMasked**](resultmasked)
 
 ## Documentation
@@ -41,14 +41,14 @@ MaskEdit(MaskedNumberType masktype, string message, int ammoutInteger, int ammou
 [**Top**](#promptplus--maskeditnumber)
 
 ```csharp
-ResultPPlus<ResultMasked>
+ResultPromptPlus<ResultMasked>
 ```
 
 ### Sample
 [**Top**](#promptplus--maskeditnumber)
 
 ```csharp
- var mask = PPlus.MaskEdit(PPlus.MaskTypeNumber,"Number", 5, 2, null
+ var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeNumber,"Number", 5, 2, null
                     new CultureInfo("fr-FR"),MaskedSignal.Enabled, cancellationToken: _stopApp);
 if (string.IsNullOrEmpty(mask.Value.Input))
 {
@@ -63,5 +63,5 @@ else
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ResultMasked**](resultmasked)

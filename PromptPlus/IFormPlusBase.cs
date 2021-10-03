@@ -6,11 +6,11 @@
 
 using System;
 
-using PromptPlus.ValueObjects;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus
+namespace PromptPlusControls
 {
-    public interface IFormPPlusBase : IDisposable
+    public interface IFormPlusBase : IDisposable
     {
         string PipeId { get; set; }
 

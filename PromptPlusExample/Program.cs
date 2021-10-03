@@ -11,11 +11,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using PromptPlus.Example.Models;
-using PromptPlus.Options;
-using PromptPlus.ValueObjects;
+using PromptPlusControls;
+using PromptPlusControls.Options;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus.Example
+using PromptPlusExample.Models;
+
+namespace PromptPlusExample
 {
 
     class Program
@@ -90,12 +92,12 @@ namespace PromptPlus.Example
 
             var quit = false;
 
-            PPlus.DefaultCulture = new CultureInfo("en-US");
+            PromptPlus.DefaultCulture = new CultureInfo("en-US");
 
             while (!_stopApp.IsCancellationRequested && !quit)
             {
 
-                var type = PPlus.Select<ExampleType>("Choose prompt example", cancellationToken: _stopApp);
+                var type = PromptPlus.Select<ExampleType>("Choose prompt example", cancellationToken: _stopApp);
                 if (type.IsAborted)
                 {
                     continue;
@@ -200,7 +202,7 @@ namespace PromptPlus.Example
                     //Console.ReadKey(true);
                     if (type.Value.Value != ExampleType.AnyKey)
                     {
-                        PPlus.AnyKey(_stopApp);
+                        PromptPlus.AnyKey(_stopApp);
                     }
                 }
             }
@@ -213,19 +215,19 @@ namespace PromptPlus.Example
 
         private void RunSaveLoadSample()
         {
-            PPlus.AbortAllPipesKeyPress = new HotKey(ConsoleKey.X, false, true, false);
-            PPlus.AbortKeyPress = new HotKey(ConsoleKey.Escape, false, false, false);
-            PPlus.TooltipKeyPress = new HotKey(ConsoleKey.F1, false, false, false);
-            PPlus.ResumePipesKeyPress = new HotKey(ConsoleKey.F2, false, false, false);
+            PromptPlus.AbortAllPipesKeyPress = new HotKey(ConsoleKey.X, false, true, false);
+            PromptPlus.AbortKeyPress = new HotKey(ConsoleKey.Escape, false, false, false);
+            PromptPlus.TooltipKeyPress = new HotKey(ConsoleKey.F1, false, false, false);
+            PromptPlus.ResumePipesKeyPress = new HotKey(ConsoleKey.F2, false, false, false);
 
-            var filecfg = PPlus.SaveConfigToFile();
-            PPlus.LoadConfigFromFile();
+            var filecfg = PromptPlus.SaveConfigToFile();
+            PromptPlus.LoadConfigFromFile();
             Console.WriteLine($"PromptPlus file saved and readed. Location: {filecfg}");
         }
 
         private void RunChooseLanguageSample()
         {
-            var envalue = PPlus.Select<LanguageOptions>("Select a language", defaultValue: LanguageOptions.English, cancellationToken: _stopApp);
+            var envalue = PromptPlus.Select<LanguageOptions>("Select a language", defaultValue: LanguageOptions.English, cancellationToken: _stopApp);
             if (envalue.IsAborted)
             {
                 return;
@@ -234,10 +236,10 @@ namespace PromptPlus.Example
             switch (envalue.Value.Value)
             {
                 case LanguageOptions.English:
-                    PPlus.DefaultCulture = new CultureInfo("en");
+                    PromptPlus.DefaultCulture = new CultureInfo("en");
                     break;
                 case LanguageOptions.PortugueseBrazil:
-                    PPlus.DefaultCulture = new CultureInfo("pt-BR");
+                    PromptPlus.DefaultCulture = new CultureInfo("pt-BR");
                     break;
                 default:
                     break;
@@ -246,22 +248,22 @@ namespace PromptPlus.Example
 
         private void RunMaskEditNumberSample(string numtype)
         {
-            var maskqtdint = PPlus.MaskEdit(PPlus.MaskTypeGeneric, "Max integer pos.(empty = 5)", @"C[123456789]", "5", cancellationToken: _stopApp);
+            var maskqtdint = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, "Max integer pos.(empty = 5)", @"C[123456789]", "5", cancellationToken: _stopApp);
             if (maskqtdint.IsAborted)
             {
                 return;
             }
-            var maskqtddec = PPlus.MaskEdit(PPlus.MaskTypeGeneric, "Max decimal pos.(empty = 2)", @"C[0123]", "2", cancellationToken: _stopApp);
+            var maskqtddec = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, "Max decimal pos.(empty = 2)", @"C[0123]", "2", cancellationToken: _stopApp);
             if (maskqtddec.IsAborted)
             {
                 return;
             }
-            var masksignal = PPlus.SliderSwitche("Accept negative", true, cancellationToken: _stopApp);
+            var masksignal = PromptPlus.SliderSwitche("Accept negative", true, cancellationToken: _stopApp);
             if (masksignal.IsAborted)
             {
                 return;
             }
-            var opccult = PPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil", "French" }, cancellationToken: _stopApp);
+            var opccult = PromptPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil", "French" }, cancellationToken: _stopApp);
             if (opccult.IsAborted)
             {
                 return;
@@ -276,10 +278,10 @@ namespace PromptPlus.Example
             {
                 qtddec = int.Parse(maskqtddec.Value.ObjectValue.ToString());
             }
-            ResultPPlus<ResultMasked> mask;
+            ResultPromptPlus<ResultMasked> mask;
             if (numtype == "N")
             {
-                mask = PPlus.MaskEdit(PPlus.MaskTypeNumber,
+                mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeNumber,
                     "Number",
                     qtdint,
                     qtddec,
@@ -289,7 +291,7 @@ namespace PromptPlus.Example
             }
             else
             {
-                mask = PPlus.MaskEdit(PPlus.MaskTypeCurrency,
+                mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeCurrency,
                     "Currency",
                     qtdint,
                     qtddec,
@@ -311,27 +313,27 @@ namespace PromptPlus.Example
 
         private void RunMaskEditDateTimeSample()
         {
-            var opcyear = PPlus.Select("Select format year", new List<string> { "Four digits", "Two digits" }, cancellationToken: _stopApp);
+            var opcyear = PromptPlus.Select("Select format year", new List<string> { "Four digits", "Two digits" }, cancellationToken: _stopApp);
             if (opcyear.IsAborted)
             {
                 return;
             }
-            var opctime = PPlus.Select("Select format time", new List<string> { "1-Hour,minute,Second", "2-Hour,minute", "3-hour" }, cancellationToken: _stopApp);
+            var opctime = PromptPlus.Select("Select format time", new List<string> { "1-Hour,minute,Second", "2-Hour,minute", "3-hour" }, cancellationToken: _stopApp);
             if (opctime.IsAborted)
             {
                 return;
             }
-            var masfill = PPlus.SliderSwitche("Fill with zeros", true, cancellationToken: _stopApp);
+            var masfill = PromptPlus.SliderSwitche("Fill with zeros", true, cancellationToken: _stopApp);
             if (masfill.IsAborted)
             {
                 return;
             }
-            var opccult = PPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
+            var opccult = PromptPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
             if (opccult.IsAborted)
             {
                 return;
             }
-            var mask = PPlus.MaskEdit(PPlus.MaskTypeDateTime, "Date and Time",
+            var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeDateTime, "Date and Time",
                 cultureinfo: opccult.Value[0] == 'E' ? new CultureInfo("en-US") : new CultureInfo("pt-BR"),
                 fyear: opcyear.Value[0] == 'F' ? FormatYear.Y4 : FormatYear.Y2,
                 ftime: opctime.Value[0] == '1' ? FormatTime.HMS : opctime.Value[0] == '2' ? FormatTime.OnlyHM : FormatTime.OnlyH,
@@ -351,22 +353,22 @@ namespace PromptPlus.Example
 
         private void RunMaskEditTimeSample()
         {
-            var opctime = PPlus.Select("Select format time", new List<string> { "1-Hour,minute,Second", "2-Hour,minute", "3-hour" }, cancellationToken: _stopApp);
+            var opctime = PromptPlus.Select("Select format time", new List<string> { "1-Hour,minute,Second", "2-Hour,minute", "3-hour" }, cancellationToken: _stopApp);
             if (opctime.IsAborted)
             {
                 return;
             }
-            var masfill = PPlus.SliderSwitche("Fill with zeros", true, cancellationToken: _stopApp);
+            var masfill = PromptPlus.SliderSwitche("Fill with zeros", true, cancellationToken: _stopApp);
             if (masfill.IsAborted)
             {
                 return;
             }
-            var opccult = PPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
+            var opccult = PromptPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
             if (opccult.IsAborted)
             {
                 return;
             }
-            var mask = PPlus.MaskEdit(PPlus.MaskTypeTimeOnly, "Time",
+            var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeTimeOnly, "Time",
                 cultureinfo: opccult.Value[0] == 'E' ? new CultureInfo("en-US") : new CultureInfo("pt-BR"),
                 ftime: opctime.Value[0] == '1' ? FormatTime.HMS : opctime.Value[0] == '2' ? FormatTime.OnlyHM : FormatTime.OnlyH,
                 fillzeros: masfill.Value,
@@ -385,22 +387,22 @@ namespace PromptPlus.Example
 
         private void RunMaskEditDateSample()
         {
-            var opcyear = PPlus.Select("Select format year", new List<string> { "Four digits", "Two digits" }, cancellationToken: _stopApp);
+            var opcyear = PromptPlus.Select("Select format year", new List<string> { "Four digits", "Two digits" }, cancellationToken: _stopApp);
             if (opcyear.IsAborted)
             {
                 return;
             }
-            var masfill = PPlus.SliderSwitche("Fill with zeros", true, cancellationToken: _stopApp);
+            var masfill = PromptPlus.SliderSwitche("Fill with zeros", true, cancellationToken: _stopApp);
             if (masfill.IsAborted)
             {
                 return;
             }
-            var opccult = PPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
+            var opccult = PromptPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
             if (opccult.IsAborted)
             {
                 return;
             }
-            var mask = PPlus.MaskEdit(PPlus.MaskTypeDateOnly, "Date",
+            var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeDateOnly, "Date",
                 cultureinfo: opccult.Value[0] == 'E' ? new CultureInfo("en-US") : new CultureInfo("pt-BR"),
                 fyear: opcyear.Value[0] == 'F' ? FormatYear.Y4 : FormatYear.Y2,
                 fillzeros: masfill.Value,
@@ -418,7 +420,7 @@ namespace PromptPlus.Example
 
         private void RunMaskEditGenericSample()
         {
-            var mask = PPlus.MaskEdit(PPlus.MaskTypeGeneric, "Inventory Number", @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", cancellationToken: _stopApp);
+            var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, "Inventory Number", @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", cancellationToken: _stopApp);
             if (mask.IsAborted)
             {
                 return;
@@ -435,7 +437,7 @@ namespace PromptPlus.Example
 
         private void RunAnyKeySample()
         {
-            var key = PPlus.AnyKey(_stopApp);
+            var key = PromptPlus.AnyKey(_stopApp);
             if (key.IsAborted)
             {
                 return;
@@ -445,7 +447,7 @@ namespace PromptPlus.Example
 
         private void RunKeyPressSample()
         {
-            var key = PPlus.KeyPress("Press Ctrl-B to continue", 'B', ConsoleModifiers.Control, _stopApp);
+            var key = PromptPlus.KeyPress("Press Ctrl-B to continue", 'B', ConsoleModifiers.Control, _stopApp);
             if (key.IsAborted)
             {
                 return;
@@ -455,7 +457,7 @@ namespace PromptPlus.Example
 
         private void RunInputSample()
         {
-            var name = PPlus.Input<string>("What's your name?", "Peter Parker", validators: new[] { Validators.Required(), Validators.MinLength(3) }, cancellationToken: _stopApp);
+            var name = PromptPlus.Input<string>("What's your name?", "Peter Parker", validators: new[] { Validators.Required(), Validators.MinLength(3) }, cancellationToken: _stopApp);
             if (name.IsAborted)
             {
                 return;
@@ -465,15 +467,15 @@ namespace PromptPlus.Example
 
         private void RunConfirmSample()
         {
-            var opccult = PPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
+            var opccult = PromptPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
             if (opccult.IsAborted)
             {
                 return;
             }
             if (opccult.Value[0] == 'E')
             {
-                PPlus.DefaultCulture = new CultureInfo("en-US");
-                var answer = PPlus.Confirm("Are you ready?", true, _stopApp);
+                PromptPlus.DefaultCulture = new CultureInfo("en-US");
+                var answer = PromptPlus.Confirm("Are you ready?", true, _stopApp);
                 if (answer.IsAborted)
                 {
                     return;
@@ -489,8 +491,8 @@ namespace PromptPlus.Example
             }
             else
             {
-                PPlus.DefaultCulture = new CultureInfo("pt-BR");
-                var answer = PPlus.Confirm("Você esta pronto?", true, _stopApp);
+                PromptPlus.DefaultCulture = new CultureInfo("pt-BR");
+                var answer = PromptPlus.Confirm("Você esta pronto?", true, _stopApp);
                 if (answer.IsAborted)
                 {
                     return;
@@ -511,7 +513,7 @@ namespace PromptPlus.Example
             Console.WriteLine("Press any key to start...");
             Console.ReadKey(true);
 
-            var progress = PPlus.WaitProcess("My Task", async () =>
+            var progress = PromptPlus.WaitProcess("My Task", async () =>
                 {
                     await Task.Delay(10000);
                     return "Done";
@@ -527,7 +529,7 @@ namespace PromptPlus.Example
             Console.WriteLine("Press any key to start...");
             Console.ReadKey(true);
 
-            var progress = PPlus.WaitProcess("My Tasks(3) Async", new List<SingleProcess<string>>
+            var progress = PromptPlus.WaitProcess("My Tasks(3) Async", new List<SingleProcess<string>>
             {
                 new SingleProcess<string>
                 {
@@ -569,7 +571,7 @@ namespace PromptPlus.Example
             Console.WriteLine("Press any key to start...");
             Console.ReadKey(true);
 
-            var progress = PPlus.Progressbar("Processing Tasks", UpdateSampleHandlerAsync, 0, cancellationToken: _stopApp);
+            var progress = PromptPlus.Progressbar("Processing Tasks", UpdateSampleHandlerAsync, 0, cancellationToken: _stopApp);
             if (progress.IsAborted)
             {
                 return;
@@ -591,7 +593,7 @@ namespace PromptPlus.Example
 
         private void RunNumberUpDownSample()
         {
-            var number = PPlus.NumberUpDown("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
+            var number = PromptPlus.NumberUpDown("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
             if (number.IsAborted)
             {
                 return;
@@ -601,7 +603,7 @@ namespace PromptPlus.Example
 
         private void RunSliderNumberSample()
         {
-            var number = PPlus.SliderNumber("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
+            var number = PromptPlus.SliderNumber("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
             if (number.IsAborted)
             {
                 return;
@@ -611,7 +613,7 @@ namespace PromptPlus.Example
 
         private void RunSliderSwitcheSample()
         {
-            var slider = PPlus.SliderSwitche("Turn on/off", false, cancellationToken: _stopApp);
+            var slider = PromptPlus.SliderSwitche("Turn on/off", false, cancellationToken: _stopApp);
             if (slider.IsAborted)
             {
                 return;
@@ -621,7 +623,7 @@ namespace PromptPlus.Example
 
         private void RunPasswordSample()
         {
-            var pwd = PPlus.Password("Type new password", true, new[] { Validators.Required(), Validators.MinLength(8) }, _stopApp);
+            var pwd = PromptPlus.Password("Type new password", true, new[] { Validators.Required(), Validators.MinLength(8) }, _stopApp);
             if (pwd.IsAborted)
             {
                 return;
@@ -631,7 +633,7 @@ namespace PromptPlus.Example
 
         private void RunListSample()
         {
-            var lst = PPlus.List<string>("Please add item(s)", uppercase: true, cancellationToken: _stopApp);
+            var lst = PromptPlus.List<string>("Please add item(s)", uppercase: true, cancellationToken: _stopApp);
             if (lst.IsAborted)
             {
                 return;
@@ -641,7 +643,7 @@ namespace PromptPlus.Example
 
         private void RunListMaskedSample()
         {
-            var lst = PPlus.ListMasked<string>("Please add item(s)", @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", uppercase: true, cancellationToken: _stopApp);
+            var lst = PromptPlus.ListMasked<string>("Please add item(s)", @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", uppercase: true, cancellationToken: _stopApp);
             if (lst.IsAborted)
             {
                 return;
@@ -651,7 +653,7 @@ namespace PromptPlus.Example
 
         private void RunSelectSample()
         {
-            var city = PPlus.Select("Select your city", new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" }, pageSize: 3, cancellationToken: _stopApp);
+            var city = PromptPlus.Select("Select your city", new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" }, pageSize: 3, cancellationToken: _stopApp);
             if (city.IsAborted)
             {
                 return;
@@ -668,7 +670,7 @@ namespace PromptPlus.Example
 
         private void RunMultiSelectSample()
         {
-            var options = PPlus.MultiSelect("Which cities would you like to visit?", new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" }, pageSize: 3, defaultValues: new[] { "Tokyo" }, minimum: 0, cancellationToken: _stopApp);
+            var options = PromptPlus.MultiSelect("Which cities would you like to visit?", new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" }, pageSize: 3, defaultValues: new[] { "Tokyo" }, minimum: 0, cancellationToken: _stopApp);
             if (options.IsAborted)
             {
                 return;
@@ -685,7 +687,7 @@ namespace PromptPlus.Example
 
         private void RunSelectEnumSample()
         {
-            var envalue = PPlus.Select<MyEnum>("Select enum value", defaultValue: MyEnum.Bar, cancellationToken: _stopApp);
+            var envalue = PromptPlus.Select<MyEnum>("Select enum value", defaultValue: MyEnum.Bar, cancellationToken: _stopApp);
             if (envalue.IsAborted)
             {
                 return;
@@ -695,7 +697,7 @@ namespace PromptPlus.Example
 
         private void RunMultiSelectEnumSample()
         {
-            var multvalue = PPlus.MultiSelect("Select enum value", defaultValues: new[] { MyEnum.Bar }, cancellationToken: _stopApp);
+            var multvalue = PromptPlus.MultiSelect("Select enum value", defaultValues: new[] { MyEnum.Bar }, cancellationToken: _stopApp);
             if (multvalue.IsAborted)
             {
                 return;
@@ -705,29 +707,29 @@ namespace PromptPlus.Example
 
         private void RunPipeLineSample()
         {
-            var steps = new List<IFormPPlusBase>
+            var steps = new List<IFormPlusBase>
             {
-                PPlus.Pipe.Input<string>(new InputOptions { Message = "Your first name (empty = skip lastname)" })
+                PromptPlus.Pipe.Input<string>(new InputOptions { Message = "Your first name (empty = skip lastname)" })
                 .Step("First Name"),
 
-                PPlus.Pipe.Input<string>(new InputOptions { Message = "Your last name" })
+                PromptPlus.Pipe.Input<string>(new InputOptions { Message = "Your last name" })
                 .Step("Last Name",(res,context) =>
                 {
-                    return !string.IsNullOrEmpty( ((ResultPPlus<string>)res[0].ValuePipe).Value);
+                    return !string.IsNullOrEmpty( ((ResultPromptPlus<string>)res[0].ValuePipe).Value);
                 }),
 
-                PPlus.Pipe.MaskEdit(PPlus.MaskTypeDateOnly, "Your birth date",cancellationToken: _stopApp)
+                PromptPlus.Pipe.MaskEdit(PromptPlus.MaskTypeDateOnly, "Your birth date",cancellationToken: _stopApp)
                 .Step("birth date"),
 
-                PPlus.Pipe.Progressbar("Processing Tasks ",  UpdateSampleHandlerAsync, 30)
+                PromptPlus.Pipe.Progressbar("Processing Tasks ",  UpdateSampleHandlerAsync, 30)
                 .Step("Update")
             };
-            _ = PPlus.Pipeline(steps, _stopApp);
+            _ = PromptPlus.Pipeline(steps, _stopApp);
         }
 
         private void RunFolderSample()
         {
-            var folder = PPlus.Browser(BrowserFilter.OnlyFolder, "Select/New folder", cancellationToken: _stopApp, pageSize: 5, promptCurrentPath: false);
+            var folder = PromptPlus.Browser(BrowserFilter.OnlyFolder, "Select/New folder", cancellationToken: _stopApp, pageSize: 5, promptCurrentPath: false);
             if (folder.IsAborted)
             {
                 return;
@@ -745,7 +747,7 @@ namespace PromptPlus.Example
 
         private void RunFileSample()
         {
-            var file = PPlus.Browser(BrowserFilter.None, "Select/New file", cancellationToken: _stopApp, pageSize: 10, allowNotSelected: true, prefixExtension: ".cs", supressHidden: false);
+            var file = PromptPlus.Browser(BrowserFilter.None, "Select/New file", cancellationToken: _stopApp, pageSize: 10, allowNotSelected: true, prefixExtension: ".cs", supressHidden: false);
             if (file.IsAborted)
             {
                 return;

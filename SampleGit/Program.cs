@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,9 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using PromptPlus;
-using PromptPlus.Options;
-using PromptPlus.ValueObjects;
+using PromptPlusControls;
+using PromptPlusControls.Options;
+using PromptPlusControls.ValueObjects;
 
 namespace SampleGit
 {
@@ -50,43 +49,41 @@ namespace SampleGit
 
         public Task StartAsync(CancellationToken stoppingToken)
         {
-            _ = Task.Run(() =>
+            _ = Task.Run((Action)(() =>
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.BackgroundColor = ConsoleColor.Black;
                 while (!_stopApp.IsCancellationRequested)
                 {
                     Console.Clear();
-                    var lng = PPlus.Select("Select language", new List<string> { "English", "Portuguese" });
+                    var lng = PromptPlus.Select("Select language", new List<string> { "English", "Portuguese" });
                     if (lng.Value[0] == 'E')
                     {
-                        PPlus.DefaultCulture = new CultureInfo("en-US");
+                        PromptPlus.DefaultCulture = new CultureInfo("en-US");
                     }
                     else
                     {
-                        PPlus.DefaultCulture = new CultureInfo("pt-BR");
+                        PromptPlus.DefaultCulture = new CultureInfo("pt-BR");
                     }
-                    var steps = new List<IFormPPlusBase>
+                    var steps = new List<IFormPlusBase>
                     {
-                        PPlus.Pipe.Input<string>(new InputOptions { Message = "Your first name (empty = skip lastname)" })
-                        .Step("First Name"),
-
-                        PPlus.Pipe.Input<string>(new InputOptions { Message = "Your last name" })
-                        .Step("Last Name", (res, context) =>
+                        PromptPlus.Pipe.Input<string>(new InputOptions { Message = "Your first name (empty = skip lastname)" })
+                            .Step("First Name"),
+                        PromptPlus.Pipe.Input<string>(new InputOptions { Message = "Your last name" })
+                            .Step("Last Name", (ResultPipe[] res, object context) =>
                         {
-                            return !string.IsNullOrEmpty( ((ResultPPlus<string>)res[0].ValuePipe).Value);
+                            return !string.IsNullOrEmpty( ((ResultPromptPlus<string>)res[0].ValuePipe).Value);
                         }),
-
-                        PPlus.Pipe.MaskEdit(PPlus.MaskTypeDateOnly, "Your birth date")
-                        .Step("birth date"),
-                        PPlus.Pipe.Progressbar("Processing Tasks ", UpdateSampleHandlerAsync,interationId:80)
-                        .Step("Update")
+                        PromptPlus.Pipe.MaskEdit(PromptPlus.MaskTypeDateOnly, "Your birth date")
+                             .Step("birth date"),
+                        PromptPlus.Pipe.Progressbar("Processing Tasks ", UpdateSampleHandlerAsync,interationId:80)
+                             .Step("Update")
                     };
-                    _ = PPlus.Pipeline(steps);
+                    _ = PromptPlus.Pipeline(steps);
                     Console.Write("Done");
                     Console.ReadKey();
                 }
-            }, stoppingToken);
+            }), stoppingToken);
             return Task.CompletedTask;
         }
 

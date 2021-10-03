@@ -1,7 +1,7 @@
 # PromptPlus # SliderNumber
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**SliderNumber Options**](slidernumberoptions) |
 [**BaseOptions**](baseoptions)
 
@@ -38,14 +38,14 @@ SliderNumber<T>(string message, T value, T min, T max, T shortstep, T? largestep
 [**Top**](#promptplus--slidernumber)
 
 ```csharp
-ResultPPlus<T>
+ResultPromptPlus<T>
 ```
 
 ### Sample
 [**Top**](#promptplus--slidernumber)
 
 ```csharp
-var number = PPlus.SliderNumber("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
+var number = PromptPlus.SliderNumber("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
 if (number.IsAborted)
 {
    Return;
@@ -56,6 +56,6 @@ Console.WriteLine($"Your answer is: {number.Value}");
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**SliderNumber Options**](slidernumberoptions) |
 [**BaseOptions**](baseoptions)

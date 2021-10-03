@@ -9,19 +9,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.ValueObjects;
+using PromptPlusControls.Internal;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
     internal class PipeLineForms : IDisposable
     {
 
         private string _currentPipe;
         private int _currentIndex;
-        private readonly Dictionary<string, IFormPPlusBase> _steps = new();
-        private readonly Dictionary<string, ResultPPlus<ResultPipe>> _resultpipeline = new();
-        private readonly Paginator<ResultPPlus<ResultPipe>> _summaryPipePaginator;
+        private readonly Dictionary<string, IFormPlusBase> _steps = new();
+        private readonly Dictionary<string, ResultPromptPlus<ResultPipe>> _resultpipeline = new();
+        private readonly Paginator<ResultPromptPlus<ResultPipe>> _summaryPipePaginator;
         private readonly CancellationTokenSource _esckeyCts;
 
         public void Dispose()
@@ -36,21 +36,21 @@ namespace PromptPlus.Forms
             }
         }
 
-        public PipeLineForms(IList<IFormPPlusBase> steps)
+        public PipeLineForms(IList<IFormPlusBase> steps)
         {
             foreach (var item in steps)
             {
                 _steps.Add(item.PipeId, item);
-                _resultpipeline.Add(item.PipeId, new ResultPPlus<ResultPipe>(new ResultPipe(item.PipeId, item.PipeTitle, null, item.PipeCondition), false));
+                _resultpipeline.Add(item.PipeId, new ResultPromptPlus<ResultPipe>(new ResultPipe(item.PipeId, item.PipeTitle, null, item.PipeCondition), false));
             }
 
-            var resultpipes = new ResultPPlus<ResultPipe>[_steps.Count];
+            var resultpipes = new ResultPromptPlus<ResultPipe>[_steps.Count];
             _resultpipeline.Values.CopyTo(resultpipes, 0);
-            _summaryPipePaginator = new Paginator<ResultPPlus<ResultPipe>>(resultpipes, null, Optional<ResultPPlus<ResultPipe>>.Create(null), (_) => string.Empty);
+            _summaryPipePaginator = new Paginator<ResultPromptPlus<ResultPipe>>(resultpipes, null, Optional<ResultPromptPlus<ResultPipe>>.Create(null), (_) => string.Empty);
             _esckeyCts = new CancellationTokenSource();
         }
 
-        public ResultPPlus<IEnumerable<ResultPipe>> Start(CancellationToken? stoptoken = null)
+        public ResultPromptPlus<IEnumerable<ResultPipe>> Start(CancellationToken? stoptoken = null)
         {
             _currentIndex = 0;
             var abortedall = false;
@@ -102,7 +102,7 @@ namespace PromptPlus.Forms
                 }
                 _currentIndex++;
             }
-            return new ResultPPlus<IEnumerable<ResultPipe>>(_resultpipeline.Values.Select(x => x.Value).ToArray(), abortedall);
+            return new ResultPromptPlus<IEnumerable<ResultPipe>>(_resultpipeline.Values.Select(x => x.Value).ToArray(), abortedall);
         }
 
         private void SummaryPipelineTemplate(ScreenBuffer screenBuffer)
@@ -112,15 +112,15 @@ namespace PromptPlus.Forms
             screenBuffer.WriteAnswer($"{_currentIndex}/{_resultpipeline.Count}");
 
             screenBuffer.PushCursor();
-            if (PPlus.EnabledStandardTooltip)
+            if (PromptPlus.EnabledStandardTooltip)
             {
                 if (_summaryPipePaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLineHint($"{Messages.KeyNavPaging}{PPlus.ResumePipesKeyPress}: {Messages.SummaryPipelineReturnText} {_steps[_currentPipe].PipeTitle}");
+                    screenBuffer.WriteLineHint($"{Messages.KeyNavPaging}{PromptPlus.ResumePipesKeyPress}: {Messages.SummaryPipelineReturnText} {_steps[_currentPipe].PipeTitle}");
                 }
                 else
                 {
-                    screenBuffer.WriteLineHint($"{PPlus.ResumePipesKeyPress}: {Messages.SummaryPipelineReturnText} {_steps[_currentPipe].PipeTitle}");
+                    screenBuffer.WriteLineHint($"{PromptPlus.ResumePipesKeyPress}: {Messages.SummaryPipelineReturnText} {_steps[_currentPipe].PipeTitle}");
                 }
             }
 
@@ -130,32 +130,32 @@ namespace PromptPlus.Forms
                 if (item.Value.Status == StatusPipe.Skiped)
                 {
                     screenBuffer.WriteLinePipeSkiped();
-                    screenBuffer.Write($" {item.Value.Title} : ", PPlus.ColorSchema.Disabled);
-                    screenBuffer.Write(Messages.SkipedText, PPlus.ColorSchema.Disabled);
+                    screenBuffer.Write($" {item.Value.Title} : ", PromptPlus.ColorSchema.Disabled);
+                    screenBuffer.Write(Messages.SkipedText, PromptPlus.ColorSchema.Disabled);
                 }
                 else if (item.Value.Status == StatusPipe.Aborted)
                 {
                     screenBuffer.WriteLinePipeSkiped();
-                    screenBuffer.Write($" {item.Value.Title} : ", PPlus.ColorSchema.Disabled);
-                    screenBuffer.Write(Messages.CanceledText, PPlus.ColorSchema.Disabled);
+                    screenBuffer.Write($" {item.Value.Title} : ", PromptPlus.ColorSchema.Disabled);
+                    screenBuffer.Write(Messages.CanceledText, PromptPlus.ColorSchema.Disabled);
                 }
                 else if (item.Value.Status == StatusPipe.Running)
                 {
                     screenBuffer.WriteLinePipeSelect();
-                    screenBuffer.Write($" {item.Value.Title} : ", PPlus.ColorSchema.Select);
-                    screenBuffer.Write(Messages.RunningText, PPlus.ColorSchema.Select);
+                    screenBuffer.Write($" {item.Value.Title} : ", PromptPlus.ColorSchema.Select);
+                    screenBuffer.Write(Messages.RunningText, PromptPlus.ColorSchema.Select);
                 }
                 else if (item.Value.Status == StatusPipe.Waitting)
                 {
                     screenBuffer.WriteLinePipeDisabled();
-                    screenBuffer.Write($" {item.Value.Title} : ", PPlus.ColorSchema.Disabled);
-                    screenBuffer.Write(Messages.WaittingText, PPlus.ColorSchema.Disabled);
+                    screenBuffer.Write($" {item.Value.Title} : ", PromptPlus.ColorSchema.Disabled);
+                    screenBuffer.Write(Messages.WaittingText, PromptPlus.ColorSchema.Disabled);
                 }
                 else if (item.Value.Status == StatusPipe.Done)
                 {
                     screenBuffer.WriteLineSymbolsDone();
                     screenBuffer.Write($" {item.Value.Title} : ");
-                    screenBuffer.Write(_steps[item.Value.PipeId].GetType().GetProperty("FinishResult").GetValue(_steps[item.Value.PipeId]).ToString(), PPlus.ColorSchema.Answer);
+                    screenBuffer.Write(_steps[item.Value.PipeId].GetType().GetProperty("FinishResult").GetValue(_steps[item.Value.PipeId]).ToString(), PromptPlus.ColorSchema.Answer);
                 }
                 else
                 {

@@ -1,7 +1,7 @@
 # PromptPlus # MultiSelect
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**MultiSelect Options**](multiselectoptions) |
 [**BaseOptions**](baseoptions)
 
@@ -42,16 +42,16 @@ MultiSelect<T>(string message, IEnumerable<T> items, int minimum = 1, int maximu
 
 ```csharp
 //for  IEnumerable type
-ResultPPlus<IEnumerable<T>> 
+ResultPromptPlus<IEnumerable<T>> 
 //for  enum values
-ResultPPlus<IEnumerable<EnumValue<T>>>
+ResultPromptPlus<IEnumerable<EnumValue<T>>>
 ```
 
 ### Sample
 [**Top**](#promptplus--multiselect)
 
 ```csharp
-var options = PPlus.MultiSelect("Which cities would you like to visit?", 
+var options = PromptPlus.MultiSelect("Which cities would you like to visit?", 
                 new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" }, 
                 pageSize: 3, 
                 defaultValues: new[] { "Tokyo" }, 
@@ -72,7 +72,7 @@ else
 ```
 
 ```csharp
-var multvalue = PPlus.MultiSelect("Select enum value", 
+var multvalue = PromptPlus.MultiSelect("Select enum value", 
                    defaultValues: new[] { MyEnum.Foo,MyEnum.Bar }, 
                    cancellationToken: _stopApp);
 if (multvalue.IsAborted)
@@ -85,6 +85,6 @@ Console.WriteLine($"You picked {string.Join(", ", multvalue.Value.Select(x => x.
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**MultiSelect Options**](multiselectoptions) |
 [**BaseOptions**](baseoptions)

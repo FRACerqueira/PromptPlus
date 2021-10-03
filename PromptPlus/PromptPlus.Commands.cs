@@ -12,19 +12,19 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PromptPlus.Forms;
-using PromptPlus.Internal;
-using PromptPlus.Options;
-using PromptPlus.Resources;
-using PromptPlus.ValueObjects;
+using PromptPlusControls.Forms;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
+using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus
+namespace PromptPlusControls
 {
-    public static partial class PPlus
+    public static partial class PromptPlus
     {
         private static readonly char? s_defaultfill = '0';
 
-        public static ResultPPlus<IEnumerable<ResultPipe>> Pipeline(IList<IFormPPlusBase> steps, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<ResultPipe>> Pipeline(IList<IFormPlusBase> steps, CancellationToken? cancellationToken = null)
         {
             foreach (var item in steps)
             {
@@ -37,20 +37,20 @@ namespace PromptPlus
             return pipeline.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<bool> AnyKey(CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<bool> AnyKey(CancellationToken? cancellationToken = null)
         {
             using var form = KeyPressForm(new KeyPressOptions { });
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<bool> KeyPress(Action<KeyPressOptions> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<bool> KeyPress(Action<KeyPressOptions> configure, CancellationToken? cancellationToken = null)
         {
             var options = new KeyPressOptions();
             configure(options);
             return KeyPress(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<bool> KeyPress(KeyPressOptions options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<bool> KeyPress(KeyPressOptions options, CancellationToken? cancellationToken = null)
         {
             using var form = KeyPressForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -61,7 +61,7 @@ namespace PromptPlus
             return new keyPressForm(options);
         }
 
-        public static ResultPPlus<bool> KeyPress(string message, char? Keypress, ConsoleModifiers? keymodifiers = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<bool> KeyPress(string message, char? Keypress, ConsoleModifiers? keymodifiers = null, CancellationToken? cancellationToken = null)
         {
             using var form = KeyPressForm(message, Keypress, keymodifiers);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -78,7 +78,7 @@ namespace PromptPlus
             return KeyPressForm(options);
         }
 
-        internal static ResultPPlus<ResultMasked> MaskEdit(MaskedOptions options, CancellationToken? cancellationToken = null)
+        internal static ResultPromptPlus<ResultMasked> MaskEdit(MaskedOptions options, CancellationToken? cancellationToken = null)
         {
             using var form = MaskEditForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -89,7 +89,7 @@ namespace PromptPlus
             return new MaskedInputForm(options);
         }
 
-        public static ResultPPlus<ResultMasked> MaskEdit(MaskedGenericType masktype, string message, string maskedvalue, string defaultValue = null, bool upperCase = true, bool showtypeinput = true, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<ResultMasked> MaskEdit(MaskedGenericType masktype, string message, string maskedvalue, string defaultValue = null, bool upperCase = true, bool showtypeinput = true, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
         {
             using var form = MaskEditForm(masktype, message, maskedvalue, defaultValue, upperCase, showtypeinput, validators, enabledPromptTooltip, enabledAbortKey, enabledAbortAllPipes, hideAfterFinish);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -123,7 +123,7 @@ namespace PromptPlus
             return MaskEditForm(options);
         }
 
-        public static ResultPPlus<ResultMasked> MaskEdit(MaskedDateType masktype, string message, DateTime? defaultValue = null, CultureInfo cultureinfo = null, bool fillzeros = false, bool showtypeinput = true, FormatYear fyear = FormatYear.Y4, FormatTime ftime = FormatTime.HMS, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<ResultMasked> MaskEdit(MaskedDateType masktype, string message, DateTime? defaultValue = null, CultureInfo cultureinfo = null, bool fillzeros = false, bool showtypeinput = true, FormatYear fyear = FormatYear.Y4, FormatTime ftime = FormatTime.HMS, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
         {
             using var form = MaskEditForm(masktype, message, defaultValue, cultureinfo, fillzeros, showtypeinput, fyear, ftime, validators, enabledPromptTooltip, enabledAbortKey, enabledAbortAllPipes, hideAfterFinish);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -256,7 +256,7 @@ namespace PromptPlus
             return MaskEditForm(options);
         }
 
-        public static ResultPPlus<ResultMasked> MaskEdit(MaskedNumberType masktype, string message, int ammoutInteger, int ammoutDecimal, double? defaultValue = null, CultureInfo cultureinfo = null, MaskedSignal signal = MaskedSignal.None, bool showtypeinput = true, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<ResultMasked> MaskEdit(MaskedNumberType masktype, string message, int ammoutInteger, int ammoutDecimal, double? defaultValue = null, CultureInfo cultureinfo = null, MaskedSignal signal = MaskedSignal.None, bool showtypeinput = true, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
         {
             using var form = MaskEditForm(masktype, message, ammoutInteger, ammoutDecimal, defaultValue, cultureinfo, signal, showtypeinput, validators, enabledPromptTooltip, enabledAbortKey, enabledAbortAllPipes, hideAfterFinish);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -354,7 +354,7 @@ namespace PromptPlus
 
         public static MaskedGenericType MaskTypeGeneric => new();
 
-        public static ResultPPlus<T> Input<T>(InputOptions options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<T> Input<T>(InputOptions options, CancellationToken? cancellationToken = null)
         {
             using var form = InputForm<T>(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -365,20 +365,20 @@ namespace PromptPlus
             return new InputForm<T>(options);
         }
 
-        public static ResultPPlus<T> Input<T>(Action<InputOptions> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<T> Input<T>(Action<InputOptions> configure, CancellationToken? cancellationToken = null)
         {
             var options = new InputOptions();
             configure(options);
             return Input<T>(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<T> Input<T>(string message, object defaultValue = null, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<T> Input<T>(string message, object defaultValue = null, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
         {
             using var form = InputForm<T>(message, defaultValue, validators, false, false);
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<string> Password(string message, bool swithVisible = true, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<string> Password(string message, bool swithVisible = true, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
         {
             var options = new InputOptions
             {
@@ -412,7 +412,7 @@ namespace PromptPlus
             return InputForm<T>(options);
         }
 
-        public static ResultPPlus<T> SliderNumber<T>(SliderNumberOptions<T> options, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        public static ResultPromptPlus<T> SliderNumber<T>(SliderNumberOptions<T> options, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
             using var form = SliderNumberForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -423,7 +423,7 @@ namespace PromptPlus
             return new SliderNumberForm<T>(options);
         }
 
-        public static ResultPPlus<T> SliderNumber<T>(Action<SliderNumberOptions<T>> configure, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        public static ResultPromptPlus<T> SliderNumber<T>(Action<SliderNumberOptions<T>> configure, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
             var options = new SliderNumberOptions<T>();
 
@@ -432,7 +432,7 @@ namespace PromptPlus
             return SliderNumber(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<T> SliderNumber<T>(string message, T value, T min, T max, T shortstep, T? largestep = null, int fracionalDig = 0, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        public static ResultPromptPlus<T> SliderNumber<T>(string message, T value, T min, T max, T shortstep, T? largestep = null, int fracionalDig = 0, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
             T large;
             if (largestep == null)
@@ -462,14 +462,14 @@ namespace PromptPlus
             return SliderNumberForm(options);
         }
 
-        public static ResultPPlus<T> NumberUpDown<T>(SliderNumberOptions<T> options, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        public static ResultPromptPlus<T> NumberUpDown<T>(SliderNumberOptions<T> options, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
             options.Type = SliderNumberType.UpDown;
             using var form = SliderNumberForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<T> NumberUpDown<T>(Action<SliderNumberOptions<T>> configure, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        public static ResultPromptPlus<T> NumberUpDown<T>(Action<SliderNumberOptions<T>> configure, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
             var options = new SliderNumberOptions<T>();
             configure(options);
@@ -477,7 +477,7 @@ namespace PromptPlus
             return SliderNumber(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<T> NumberUpDown<T>(string message, T value, T min, T max, T step, int fracionalDig = 0, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        public static ResultPromptPlus<T> NumberUpDown<T>(string message, T value, T min, T max, T step, int fracionalDig = 0, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
             using var form = NumberUpDownForm(message, value, min, max, step, fracionalDig);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -499,7 +499,7 @@ namespace PromptPlus
             return SliderNumberForm(options);
         }
 
-        public static ResultPPlus<bool> SliderSwitche(SliderSwitcheOptions options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<bool> SliderSwitche(SliderSwitcheOptions options, CancellationToken? cancellationToken = null)
         {
             using var form = SliderSwitcheForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -510,7 +510,7 @@ namespace PromptPlus
             return new SliderSwitcheForm(options);
         }
 
-        public static ResultPPlus<bool> SliderSwitche(Action<SliderSwitcheOptions> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<bool> SliderSwitche(Action<SliderSwitcheOptions> configure, CancellationToken? cancellationToken = null)
         {
             var options = new SliderSwitcheOptions();
 
@@ -519,7 +519,7 @@ namespace PromptPlus
             return SliderSwitche(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<bool> SliderSwitche(string message, bool value, string offvalue = null, string onvalue = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<bool> SliderSwitche(string message, bool value, string offvalue = null, string onvalue = null, CancellationToken? cancellationToken = null)
         {
             using var form = SliderSwitcheForm(message, value, offvalue, onvalue);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -538,7 +538,7 @@ namespace PromptPlus
             return SliderSwitcheForm(options);
         }
 
-        public static ResultPPlus<ProgressBarInfo> Progressbar(ProgressBarOptions options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<ProgressBarInfo> Progressbar(ProgressBarOptions options, CancellationToken? cancellationToken = null)
         {
             using var form = ProgressbarForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -549,7 +549,7 @@ namespace PromptPlus
             return new ProgressBarForm(options);
         }
 
-        public static ResultPPlus<ProgressBarInfo> Progressbar(Action<ProgressBarOptions> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<ProgressBarInfo> Progressbar(Action<ProgressBarOptions> configure, CancellationToken? cancellationToken = null)
         {
             var options = new ProgressBarOptions();
 
@@ -558,7 +558,7 @@ namespace PromptPlus
             return Progressbar(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<ProgressBarInfo> Progressbar(string title, Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> updateHandler, int width = ProgressgBarWitdth, object interationId = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<ProgressBarInfo> Progressbar(string title, Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> updateHandler, int width = ProgressgBarWitdth, object interationId = null, CancellationToken? cancellationToken = null)
         {
             using var form = ProgressbarForm(title, interationId, updateHandler, width);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -577,15 +577,15 @@ namespace PromptPlus
             return ProgressbarForm(options);
         }
 
-        public static ResultPPlus<IEnumerable<T>> WaitProcess<T>(WaitProcessOptions<T> options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> WaitProcess<T>(WaitProcessOptions<T> options, CancellationToken? cancellationToken = null)
         {
             using var form = WaitProcessForm(options);
             var res = form.Start(cancellationToken ?? CancellationToken.None);
             if (res.IsAborted)
             {
-                return new ResultPPlus<IEnumerable<T>>(default, true);
+                return new ResultPromptPlus<IEnumerable<T>>(default, true);
             }
-            return new ResultPPlus<IEnumerable<T>>(res.Value, res.IsAborted);
+            return new ResultPromptPlus<IEnumerable<T>>(res.Value, res.IsAborted);
         }
 
         internal static WaitProcessForm<T> WaitProcessForm<T>(WaitProcessOptions<T> options)
@@ -593,7 +593,7 @@ namespace PromptPlus
             return new WaitProcessForm<T>(options);
         }
 
-        public static ResultPPlus<IEnumerable<T>> WaitProcess<T>(Action<WaitProcessOptions<T>> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> WaitProcess<T>(Action<WaitProcessOptions<T>> configure, CancellationToken? cancellationToken = null)
         {
             var options = new WaitProcessOptions<T>();
 
@@ -602,7 +602,7 @@ namespace PromptPlus
             return WaitProcess(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<IEnumerable<T>> WaitProcess<T>(string title, Func<Task<T>> process, Func<T, string> processTextResult = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> WaitProcess<T>(string title, Func<Task<T>> process, Func<T, string> processTextResult = null, CancellationToken? cancellationToken = null)
         {
             return WaitProcess(
                 title,
@@ -614,15 +614,15 @@ namespace PromptPlus
                 cancellationToken);
         }
 
-        public static ResultPPlus<IEnumerable<T>> WaitProcess<T>(string title, IEnumerable<SingleProcess<T>> process, Func<T, string> processTextResult = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> WaitProcess<T>(string title, IEnumerable<SingleProcess<T>> process, Func<T, string> processTextResult = null, CancellationToken? cancellationToken = null)
         {
             using var form = WaitProcessForm(title, process, processTextResult);
             var res = form.Start(cancellationToken ?? CancellationToken.None);
             if (res.IsAborted)
             {
-                return new ResultPPlus<IEnumerable<T>>(default, true);
+                return new ResultPromptPlus<IEnumerable<T>>(default, true);
             }
-            return new ResultPPlus<IEnumerable<T>>(res.Value, res.IsAborted);
+            return new ResultPromptPlus<IEnumerable<T>>(res.Value, res.IsAborted);
         }
 
         internal static WaitProcessForm<T> WaitProcessForm<T>(string title, IEnumerable<SingleProcess<T>> process, Func<T, string> processTextResult = null)
@@ -637,7 +637,7 @@ namespace PromptPlus
             return WaitProcessForm(options);
         }
 
-        public static ResultPPlus<bool> Confirm(ConfirmOptions options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<bool> Confirm(ConfirmOptions options, CancellationToken? cancellationToken = null)
         {
             using var form = ConfirmForm(options);
 
@@ -649,14 +649,14 @@ namespace PromptPlus
             return new ConfirmForm(options);
         }
 
-        public static ResultPPlus<bool> Confirm(Action<ConfirmOptions> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<bool> Confirm(Action<ConfirmOptions> configure, CancellationToken? cancellationToken = null)
         {
             var options = new ConfirmOptions();
             configure(options);
             return Confirm(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<bool> Confirm(string message, bool? defaultValue = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<bool> Confirm(string message, bool? defaultValue = null, CancellationToken? cancellationToken = null)
         {
             using var form = ConfirmForm(message, defaultValue);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -673,7 +673,7 @@ namespace PromptPlus
             return ConfirmForm(options);
         }
 
-        public static ResultPPlus<T> Select<T>(SelectOptions<T> options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<T> Select<T>(SelectOptions<T> options, CancellationToken? cancellationToken = null)
         {
             using var form = SelectForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -684,22 +684,22 @@ namespace PromptPlus
             return new SelectForm<T>(options);
         }
 
-        public static ResultPPlus<T> Select<T>(Action<SelectOptions<T>> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<T> Select<T>(Action<SelectOptions<T>> configure, CancellationToken? cancellationToken = null)
         {
             var options = new SelectOptions<T>();
             configure(options);
             return Select(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<EnumValue<T>> Select<T>(string message, T? defaultValue = null, int? pageSize = null, CancellationToken? cancellationToken = null) where T : struct, Enum
+        public static ResultPromptPlus<EnumValue<T>> Select<T>(string message, T? defaultValue = null, int? pageSize = null, CancellationToken? cancellationToken = null) where T : struct, Enum
         {
             using var form = SelectForm(message, defaultValue, pageSize);
             var aux = form.Start(cancellationToken ?? CancellationToken.None);
             if (aux.IsAborted)
             {
-                return new ResultPPlus<EnumValue<T>>(default, true);
+                return new ResultPromptPlus<EnumValue<T>>(default, true);
             }
-            return new ResultPPlus<EnumValue<T>>(aux.Value, aux.IsAborted);
+            return new ResultPromptPlus<EnumValue<T>>(aux.Value, aux.IsAborted);
 
         }
 
@@ -717,7 +717,7 @@ namespace PromptPlus
             return SelectForm(options);
         }
 
-        public static ResultPPlus<T> Select<T>(string message, IEnumerable<T> items, object defaultValue = null, int? pageSize = null, Func<T, string> textSelector = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<T> Select<T>(string message, IEnumerable<T> items, object defaultValue = null, int? pageSize = null, Func<T, string> textSelector = null, CancellationToken? cancellationToken = null)
         {
             using var form = SelectForm(message, items, defaultValue, pageSize, textSelector);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -737,7 +737,7 @@ namespace PromptPlus
             return SelectForm(options);
         }
 
-        public static ResultPPlus<IEnumerable<T>> MultiSelect<T>(MultiSelectOptions<T> options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> MultiSelect<T>(MultiSelectOptions<T> options, CancellationToken? cancellationToken = null)
         {
             using var form = MultiSelectForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -748,22 +748,22 @@ namespace PromptPlus
             return new MultiSelectForm<T>(options);
         }
 
-        public static ResultPPlus<IEnumerable<T>> MultiSelect<T>(Action<MultiSelectOptions<T>> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> MultiSelect<T>(Action<MultiSelectOptions<T>> configure, CancellationToken? cancellationToken = null)
         {
             var options = new MultiSelectOptions<T>();
             configure(options);
             return MultiSelect(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<IEnumerable<EnumValue<T>>> MultiSelect<T>(string message, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, CancellationToken? cancellationToken = null) where T : struct, Enum
+        public static ResultPromptPlus<IEnumerable<EnumValue<T>>> MultiSelect<T>(string message, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, CancellationToken? cancellationToken = null) where T : struct, Enum
         {
             using var form = MultiSelectForm(message, minimum, maximum, defaultValues, pageSize);
             var aux = form.Start(cancellationToken ?? CancellationToken.None);
             if (aux.IsAborted)
             {
-                return new ResultPPlus<IEnumerable<EnumValue<T>>>(default, true);
+                return new ResultPromptPlus<IEnumerable<EnumValue<T>>>(default, true);
             }
-            return new ResultPPlus<IEnumerable<EnumValue<T>>>(aux.Value, aux.IsAborted);
+            return new ResultPromptPlus<IEnumerable<EnumValue<T>>>(aux.Value, aux.IsAborted);
 
         }
 
@@ -784,7 +784,7 @@ namespace PromptPlus
             return MultiSelectForm(options);
         }
 
-        public static ResultPPlus<IEnumerable<T>> MultiSelect<T>(string message, IEnumerable<T> items, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, Func<T, string> textSelector = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> MultiSelect<T>(string message, IEnumerable<T> items, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, Func<T, string> textSelector = null, CancellationToken? cancellationToken = null)
         {
             using var form = MultiSelectForm(message, items, minimum, maximum, defaultValues, pageSize, textSelector);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -806,7 +806,7 @@ namespace PromptPlus
             return MultiSelectForm(options);
         }
 
-        public static ResultPPlus<IEnumerable<T>> List<T>(ListOptions<T> options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> List<T>(ListOptions<T> options, CancellationToken? cancellationToken = null)
         {
             using var form = ListForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -817,14 +817,14 @@ namespace PromptPlus
             return new ListForm<T>(options);
         }
 
-        public static ResultPPlus<IEnumerable<T>> List<T>(Action<ListOptions<T>> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> List<T>(Action<ListOptions<T>> configure, CancellationToken? cancellationToken = null)
         {
             var options = new ListOptions<T>();
             configure(options);
             return List(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<IEnumerable<T>> List<T>(string message, int minimum = 0, int maximum = int.MaxValue, int? pageSize = null, bool uppercase = false, bool allowduplicate = true, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> List<T>(string message, int minimum = 0, int maximum = int.MaxValue, int? pageSize = null, bool uppercase = false, bool allowduplicate = true, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
         {
             using var form = ListForm<T>(message, minimum, maximum, pageSize, uppercase, allowduplicate, validators);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -851,7 +851,7 @@ namespace PromptPlus
             return ListForm(options);
         }
 
-        public static ResultPPlus<IEnumerable<T>> ListMasked<T>(string message, string maskValue, int minimum = 0, int maximum = int.MaxValue, bool uppercase = false, bool showInputType = true, bool fillzeros = false, CultureInfo? cultureInfo = null, int? pageSize = null, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<T>> ListMasked<T>(string message, string maskValue, int minimum = 0, int maximum = int.MaxValue, bool uppercase = false, bool showInputType = true, bool fillzeros = false, CultureInfo? cultureInfo = null, int? pageSize = null, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
         {
             using var form = ListMaskedForm<T>(message, maskValue, minimum, maximum, uppercase, showInputType, fillzeros, cultureInfo, pageSize, validators, enabledPromptTooltip, enabledAbortKey, enabledAbortAllPipes, hideAfterFinish);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -895,7 +895,7 @@ namespace PromptPlus
             return new MaskedListForm<T>(options);
         }
 
-        public static ResultPPlus<ResultBrowser> Browser(BrowserOptions options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<ResultBrowser> Browser(BrowserOptions options, CancellationToken? cancellationToken = null)
         {
             using var form = BrowserForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
@@ -906,14 +906,14 @@ namespace PromptPlus
             return new BrowserForm(options);
         }
 
-        public static ResultPPlus<ResultBrowser> Browser(Action<BrowserOptions> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<ResultBrowser> Browser(Action<BrowserOptions> configure, CancellationToken? cancellationToken = null)
         {
             var options = new BrowserOptions();
             configure(options);
             return Browser(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPPlus<ResultBrowser> Browser(BrowserFilter fileBrowserChoose, string message, string defaultValue = null, string prefixExtension = null, bool allowNotSelected = false, string rootFolder = null, string searchPattern = null, int? pageSize = null, bool supressHidden = true, bool promptCurrentPath = true, bool promptSearchPattern = true, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<ResultBrowser> Browser(BrowserFilter fileBrowserChoose, string message, string defaultValue = null, string prefixExtension = null, bool allowNotSelected = false, string rootFolder = null, string searchPattern = null, int? pageSize = null, bool supressHidden = true, bool promptCurrentPath = true, bool promptSearchPattern = true, CancellationToken? cancellationToken = null)
         {
             using var form = BrowserForm(fileBrowserChoose, message, defaultValue, prefixExtension, allowNotSelected, rootFolder, searchPattern, pageSize, supressHidden, promptCurrentPath, promptSearchPattern);
             return form.Start(cancellationToken ?? CancellationToken.None);

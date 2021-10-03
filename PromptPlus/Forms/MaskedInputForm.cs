@@ -8,10 +8,10 @@ using System;
 using System.Globalization;
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.ValueObjects;
+using PromptPlusControls.Internal;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
     internal class MaskedInputForm : FormBase<ResultMasked>
     {
@@ -85,7 +85,7 @@ namespace PromptPlus.Forms
                         }
                         catch (FormatException)
                         {
-                            SetError(PPlus.LocalizateFormatException(typeof(string)));
+                            SetError(PromptPlus.LocalizateFormatException(typeof(string)));
                         }
                         catch (Exception ex)
                         {

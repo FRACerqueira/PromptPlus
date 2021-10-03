@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-using PromptPlus.Options;
-using PromptPlus.ValueObjects;
+using PromptPlusControls.Options;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus.Internal
+namespace PromptPlusControls.Internal
 {
     internal class MaskedOptions : BaseOptions
     {
@@ -26,7 +26,7 @@ namespace PromptPlus.Internal
 
         internal FormatTime FmtTime { get; set; } = FormatTime.HMS;
 
-        internal CultureInfo CurrentCulture { get; set; } = PPlus.DefaultCulture;
+        internal CultureInfo CurrentCulture { get; set; } = PromptPlus.DefaultCulture;
 
         internal MaskedSignal AcceptSignal { get; set; } = MaskedSignal.None;
 

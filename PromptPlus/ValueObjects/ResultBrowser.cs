@@ -6,7 +6,7 @@
 
 using System.IO;
 
-namespace PromptPlus.ValueObjects
+namespace PromptPlusControls.ValueObjects
 {
     public struct ResultBrowser
     {
@@ -25,7 +25,7 @@ namespace PromptPlus.ValueObjects
             SelectedValue = vale;
             NotFound = notfound;
             IsFile = isfile;
-            var prefix = isfile ? PPlus.Symbols.File : PPlus.Symbols.Folder;
+            var prefix = isfile ? PromptPlus.Symbols.File : PromptPlus.Symbols.Folder;
             if (showpath)
             {
                 AliasSelected = $"{prefix} {Path.Combine(PathValue, SelectedValue)}";

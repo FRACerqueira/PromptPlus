@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-using PromptPlus.Internal;
+using PromptPlusControls.Internal;
 
-namespace PromptPlus.Options
+namespace PromptPlusControls.Options
 {
     public class ListOptions<T> : BaseOptions
     {
@@ -46,6 +46,6 @@ namespace PromptPlus.Options
 
         internal bool FillZeros { get; set; } = false;
 
-        internal CultureInfo CurrentCulture { get; set; } = PPlus.DefaultCulture;
+        internal CultureInfo CurrentCulture { get; set; } = PromptPlus.DefaultCulture;
     }
 }

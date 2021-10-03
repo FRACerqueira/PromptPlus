@@ -82,7 +82,7 @@
 
 ```csharp
 //MaskEdit Generic
-var mask = PPlus.MaskEdit(PPlus.MaskTypeGeneric, 
+var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, 
     "Inventory Number", 
     @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", 
     cancellationToken: _stopApp);
@@ -101,7 +101,7 @@ else
 }
 
 //AnyKey
-var key = PPlus.AnyKey(_stopApp);
+var key = PromptPlus.AnyKey(_stopApp);
 
 if (key.IsAborted)
 {
@@ -111,7 +111,7 @@ Console.WriteLine($"Hello, key pressed");
 
 
 //input
-var name = PPlus.Input<string>(
+var name = PromptPlus.Input<string>(
     "What's your name?", 
     validators: new[] { Validators.Required(), Validators.MinLength(3) });
 
@@ -170,7 +170,7 @@ All messages are affected when changed language/culture. PromptPlus has language
  
 ```csharp
 //sample
-PPlus.DefaultCulture = new CultureInfo("en-US");
+PromptPlus.DefaultCulture = new CultureInfo("en-US");
 ```
 
 To use a non-embedded language/culture:
@@ -186,8 +186,8 @@ To use a non-embedded language/culture:
 PromptPlus has a configurable color(16 color) schema.
 
 ```csharp
-PPlus.ColorSchema.Answer = ConsoleColor.DarkRed;
-PPlus.ColorSchema.Select = ConsoleColor.DarkCyan;
+PromptPlus.ColorSchema.Answer = ConsoleColor.DarkRed;
+PromptPlus.ColorSchema.Select = ConsoleColor.DarkCyan;
 ```
 
 ### Symbols
@@ -197,7 +197,7 @@ PromptPlus has a configurable symbos with Unicode support (Multi-byte characters
 
  ```csharp
 //sample
-PPlus.Symbols.Done = new Symbol("√", "V ");
+PromptPlus.Symbols.Done = new Symbol("√", "V ");
 ```
 **_Note: new Symbol() return : Symbol = single space and Fallback = double space._**
 
@@ -222,7 +222,7 @@ Hotkeys (global and control-specific) are configurable. Some hotkeys are interna
 
  ```csharp
 //sample
-PPlus.TooltipKeyPress = new HotKey(key: "F1", alt: false, ctrl: false, shift: false);
+PromptPlus.TooltipKeyPress = new HotKey(key: "F1", alt: false, ctrl: false, shift: false);
 ```
 
 **_Note: the key parameter is case-insentive;_**
@@ -234,9 +234,9 @@ PromptPlus allows saving and loading a previous configuration of culture, behavi
 
 ```csharp
 //sample save
-PPlus.SaveConfigToFile(folderfile: "YourFolder");
+PromptPlus.SaveConfigToFile(folderfile: "YourFolder");
 //sample load
-PPlus.LoadConfigFromFile(folderfile: "YourFolder");
+PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 ```
 
 **_Note: if the folderfile parameter is omitted, it will be saved/loaded from the default application folder_**

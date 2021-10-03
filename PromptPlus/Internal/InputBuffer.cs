@@ -6,7 +6,7 @@
 
 using System.Text;
 
-namespace PromptPlus.Internal
+namespace PromptPlusControls.Internal
 {
     internal class InputBuffer
     {

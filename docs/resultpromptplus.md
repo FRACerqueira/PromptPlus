@@ -1,4 +1,4 @@
-# PromptPlus # ResultPPlus
+# PromptPlus # ResultPromptPlus
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis)
 
@@ -6,7 +6,7 @@
 Default return class for all controls.
 
 ### Properties
-[**Top**](#promptplus--resultpplus)
+[**Top**](#promptplus--resultpromptplus)
 
 - IsAborted
 	- Type : bool

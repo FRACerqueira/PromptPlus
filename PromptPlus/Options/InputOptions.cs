@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace PromptPlus.Options
+namespace PromptPlusControls.Options
 {
     public class InputOptions : BaseOptions
     {

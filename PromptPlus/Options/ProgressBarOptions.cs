@@ -8,9 +8,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PromptPlus.ValueObjects;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus.Options
+namespace PromptPlusControls.Options
 {
     public class ProgressBarOptions : BaseOptions
     {
@@ -18,11 +18,11 @@ namespace PromptPlus.Options
 
         public Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> UpdateHandler { get; set; }
 
-        public int Witdth { get; set; } = PPlus.ProgressgBarWitdth;
+        public int Witdth { get; set; } = PromptPlus.ProgressgBarWitdth;
 
-        internal int DoneDelay { get; private set; } = PPlus.ProgressgBarDoneDelay;
+        internal int DoneDelay { get; private set; } = PromptPlus.ProgressgBarDoneDelay;
 
-        internal int ProcessCheckInterval { get; private set; } = PPlus.ProgressgBarCheckDelay;
+        internal int ProcessCheckInterval { get; private set; } = PromptPlus.ProgressgBarCheckDelay;
 
     }
 }

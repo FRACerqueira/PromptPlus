@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 
-using PromptPlus.ValueObjects;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus.Internal
+namespace PromptPlusControls.Internal
 {
-    internal abstract class FormBase<T> : IFormPPlusBase
+    internal abstract class FormBase<T> : IFormPlusBase
     {
         private const int IdleReadKey = 8;
         private string _finishResult;
@@ -26,8 +26,8 @@ namespace PromptPlus.Internal
         private readonly bool _skiplastrender;
         protected FormBase(bool hideafterFinish, bool showcursor, bool enabledAbortEscKey, bool enabledAbortAllPipes, bool skiplastrender = false)
         {
-            Thread.CurrentThread.CurrentCulture = PPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
 
             _skiplastrender = skiplastrender;
             _screenrender = new ScreenRender();
@@ -67,7 +67,7 @@ namespace PromptPlus.Internal
 
         public bool AbortedAll { get; set; }
 
-        public bool EnabledStandardTooltip { get; set; } = PPlus.EnabledStandardTooltip;
+        public bool EnabledStandardTooltip { get; set; } = PromptPlus.EnabledStandardTooltip;
 
         public string FinishResult
         {
@@ -93,12 +93,12 @@ namespace PromptPlus.Internal
                 _esckeyCancelation.Dispose();
             }
 
-            Thread.CurrentThread.CurrentCulture = PPlus.AppCulture;
-            Thread.CurrentThread.CurrentUICulture = PPlus.AppCultureUI;
+            Thread.CurrentThread.CurrentCulture = PromptPlus.AppCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.AppCultureUI;
 
         }
 
-        public ResultPPlus<T> StartPipeline(Action<ScreenBuffer> summarypipeline, Paginator<ResultPPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
+        public ResultPromptPlus<T> StartPipeline(Action<ScreenBuffer> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
         {
             _screenrender.StopToken = stoptoken;
             if (!_showcursor)
@@ -145,7 +145,7 @@ namespace PromptPlus.Internal
                         else
                         {
                             hit = TryGetResult(false, _linkedCts.Token, out result);
-                            if (!hit.HasValue && PPlus.EnabledBeep)
+                            if (!hit.HasValue && PromptPlus.EnabledBeep)
                             {
                                 _screenrender.Beep();
                             }
@@ -179,15 +179,15 @@ namespace PromptPlus.Internal
                             _screenrender.NewLine();
                         }
                         _screenrender.ShowCursor();
-                        return new ResultPPlus<T>(result, false);
+                        return new ResultPromptPlus<T>(result, false);
                     }
                 }
             }
             _screenrender.ShowCursor();
-            return new ResultPPlus<T>(default, true);
+            return new ResultPromptPlus<T>(default, true);
         }
 
-        public ResultPPlus<T> Start(CancellationToken stoptoken)
+        public ResultPromptPlus<T> Start(CancellationToken stoptoken)
         {
             _screenrender.StopToken = stoptoken;
             if (!_showcursor)
@@ -217,7 +217,7 @@ namespace PromptPlus.Internal
                             _screenrender.ShowCursor();
                         }
                         hit = TryGetResult(false, _linkedCts.Token, out result);
-                        if (!hit.HasValue && PPlus.EnabledBeep)
+                        if (!hit.HasValue && PromptPlus.EnabledBeep)
                         {
                             _screenrender.Beep();
                         }
@@ -250,12 +250,12 @@ namespace PromptPlus.Internal
                             _screenrender.NewLine();
                         }
                         _screenrender.ShowCursor();
-                        return new ResultPPlus<T>(result, false);
+                        return new ResultPromptPlus<T>(result, false);
                     }
                 }
             }
             _screenrender.ShowCursor();
-            return new ResultPPlus<T>(default, true);
+            return new ResultPromptPlus<T>(default, true);
         }
 
         public abstract bool? TryGetResult(bool IsSummary, CancellationToken stoptoken, out T result);
@@ -326,23 +326,23 @@ namespace PromptPlus.Internal
 
         public bool CheckDefaultKey(ConsoleKeyInfo keyInfo)
         {
-            if (PPlus.TooltipKeyPress.Equals(keyInfo))
+            if (PromptPlus.TooltipKeyPress.Equals(keyInfo))
             {
                 EnabledStandardTooltip = !EnabledStandardTooltip;
                 return true;
             }
-            else if (PPlus.AbortKeyPress.Equals(keyInfo) && _enabledAbortEscKey)
+            else if (PromptPlus.AbortKeyPress.Equals(keyInfo) && _enabledAbortEscKey)
             {
                 _esckeyCancelation.Cancel();
                 AbortedAll = false;
                 return true;
             }
-            else if (OverPipeLine && PPlus.AbortAllPipesKeyPress.Equals(keyInfo) && _enabledAbortAllPipes)
+            else if (OverPipeLine && PromptPlus.AbortAllPipesKeyPress.Equals(keyInfo) && _enabledAbortAllPipes)
             {
                 _esckeyCancelation.Cancel();
                 AbortedAll = true;
             }
-            else if (OverPipeLine && PPlus.ResumePipesKeyPress.Equals(keyInfo))
+            else if (OverPipeLine && PromptPlus.ResumePipesKeyPress.Equals(keyInfo))
             {
                 SummaryPipeLine = !SummaryPipeLine;
                 return true;
@@ -370,7 +370,7 @@ namespace PromptPlus.Internal
 
         public bool KeyAvailable => _screenrender.KeyAvailable;
 
-        private void SummaryPipeLineToPrompt(Paginator<ResultPPlus<ResultPipe>> paginator, CancellationToken stoptoken)
+        private void SummaryPipeLineToPrompt(Paginator<ResultPromptPlus<ResultPipe>> paginator, CancellationToken stoptoken)
         {
             do
             {
@@ -387,7 +387,7 @@ namespace PromptPlus.Internal
                 {
                     continue;
                 }
-                if (PPlus.ResumePipesKeyPress.Equals(keyInfo))
+                if (PromptPlus.ResumePipesKeyPress.Equals(keyInfo))
                 {
                     SummaryPipeLine = false;
                     return;

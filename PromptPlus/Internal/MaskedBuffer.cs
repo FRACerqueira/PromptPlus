@@ -10,10 +10,10 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-using PromptPlus.Resources;
-using PromptPlus.ValueObjects;
+using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus.Internal
+namespace PromptPlusControls.Internal
 {
     internal class MaskedBuffer
     {
@@ -63,7 +63,7 @@ namespace PromptPlus.Internal
         private readonly int _diffIniTime;
         private readonly int _iniTime;
 
-        private readonly char _promptmask = PPlus.Symbols.MaskEmpty.ToString()[0];
+        private readonly char _promptmask = PromptPlus.Symbols.MaskEmpty.ToString()[0];
         private readonly MaskedOptions _maskInputOptions;
         private char _signalNumberInput;
         private string _signalTimeInput;

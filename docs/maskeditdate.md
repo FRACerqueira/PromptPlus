@@ -1,7 +1,7 @@
 # PromptPlus # MaskEditDate
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ResultMasked**](resultmasked)
 
 ## Documentation
@@ -43,14 +43,14 @@ MaskEdit(MaskedDateType masktype, string message, DateTime? defaultValue = null,
 [**Top**](#promptplus--maskeditgeneric)
 
 ```csharp
-ResultPPlus<ResultMasked>
+ResultPromptPlus<ResultMasked>
 ```
 
 ### Sample
 [**Top**](#promptplus--maskeditgeneric)
 
 ```csharp
-var mask = PPlus.MaskEdit(PPlus.MaskTypeDateOnly, "Date",
+var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeDateOnly, "Date",
                 cultureinfo: new CultureInfo("en-US"),
                 fyear: MaskedDatePlaceholder.Y4,
                 FillZeros: true,
@@ -69,5 +69,5 @@ else
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**ResultMasked**](resultmasked)

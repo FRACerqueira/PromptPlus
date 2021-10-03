@@ -1,7 +1,7 @@
 # PromptPlus # Input
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**Input Options**](inputoptions) |
 [**BaseOptions**](baseoptions)
 
@@ -35,14 +35,14 @@ Input<T>(string message, object defaultValue = null, IList<Func<object, Validati
 [**Top**](#promptplus--input)
 
 ```csharp
-ResultPPlus<T>
+ResultPromptPlus<T>
 ```
 
 ### Sample
 [**Top**](#promptplus--input)
 
 ```csharp
-var name = PPlus.Input<string>("What's your name?", 
+var name = PromptPlus.Input<string>("What's your name?", 
              validators: new[] { Validators.Required(), Validators.MinLength(3) }, 
              cancellationToken: _stopApp);
 if (name.IsAborted)
@@ -55,6 +55,6 @@ Console.WriteLine($"Hello, {name.Value}!");
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**Input Options**](inputoptions) |
 [**BaseOptions**](baseoptions)

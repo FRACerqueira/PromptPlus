@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlus", "PromptPlus\PromptPlus.csproj", "{B4F50CA1-7DBB-411D-8D09-0E26B83337FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlus.Example", "PromptPlus.Example\PromptPlus.Example.csproj", "{56DA0F00-A45D-4A4C-B13A-F2AD2A6C3C52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlusExample", "PromptPlusExample\PromptPlusExample.csproj", "{56DA0F00-A45D-4A4C-B13A-F2AD2A6C3C52}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleGit", "SampleGit\SampleGit.csproj", "{FFA0F173-235B-4FC4-A64D-08DA6DDCB59A}"
 EndProject
@@ -45,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\resultbrowser.md = docs\resultbrowser.md
 		docs\resultmasked.md = docs\resultmasked.md
 		docs\resultpipe.md = docs\resultpipe.md
-		docs\resultpplus.md = docs\resultpplus.md
+		docs\resultpromptplus.md = docs\resultpromptplus.md
 		docs\select.md = docs\select.md
 		docs\selectoptions.md = docs\selectoptions.md
 		docs\singleprocess.md = docs\singleprocess.md

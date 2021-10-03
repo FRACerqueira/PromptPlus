@@ -10,8 +10,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>PromptPlus.Example</AssemblyName>
-    <RootNamespace>PromptPlus.Example</RootNamespace>
+    <AssemblyName>PromptPlusExample</AssemblyName>
+    <RootNamespace>PromptPlusExample</RootNamespace>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>

@@ -1,7 +1,7 @@
 # PromptPlus # Confirm
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**Confirm Options**](confirmoptions) |
 [**BaseOptions**](baseoptions)
 
@@ -31,17 +31,17 @@ Confirm(string message, bool? defaultValue = null, CancellationToken? cancellati
 [**Top**](#promptplus--confirm)
 
 ```csharp
-ResultPPlus<bool>
+ResultPromptPlus<bool>
 ````
-**_Note: [ResultPPlus](resultpplus).Value is true for positive confirm , false for negative confirm._**
+**_Note: [ResultPromptPlus](resultpromptplus).Value is true for positive confirm , false for negative confirm._**
 
 
 ### Sample
 [**Top**](#promptplus--confirm)
 
 ```csharp
-PPlus.DefaultCulture = new CultureInfo("en-US");
-var answer = PPlus.Confirm("Are you ready?", true, cancellationToken:_stopApp);
+PromptPlus.DefaultCulture = new CultureInfo("en-US");
+var answer = PromptPlus.Confirm("Are you ready?", true, cancellationToken:_stopApp);
 if (answer.IsAborted)
 {
     return;
@@ -57,8 +57,8 @@ else
 ````
 
 ```csharp
-PPlus.DefaultCulture = new CultureInfo("pt-BR");
-var answer = PPlus.Confirm("Você esta pronto?", true, cancellationToken:_stopApp);
+PromptPlus.DefaultCulture = new CultureInfo("pt-BR");
+var answer = PromptPlus.Confirm("Você esta pronto?", true, cancellationToken:_stopApp);
 if (answer.IsAborted)
 {
     return;
@@ -76,6 +76,6 @@ else
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**Confirm Options**](confirmoptions) |
 [**BaseOptions**](baseoptions)

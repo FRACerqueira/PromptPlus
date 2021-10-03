@@ -10,11 +10,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PromptPlus.Internal;
-using PromptPlus.Options;
-using PromptPlus.Resources;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
+using PromptPlusControls.Resources;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
     internal class WaitProcessForm<T> : FormBase<IEnumerable<T>>
     {
@@ -128,9 +128,9 @@ namespace PromptPlus.Forms
                 screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey);
             }
 
-            for (var i = 0; i < PPlus.MaxShowTasks; i++)
+            for (var i = 0; i < PromptPlus.MaxShowTasks; i++)
             {
-                var pos = _pagevisible * PPlus.MaxShowTasks + _indexvisible + i;
+                var pos = _pagevisible * PromptPlus.MaxShowTasks + _indexvisible + i;
                 if (pos > _localTask.Count() - 1)
                 {
                     _indexvisible = 0;
@@ -170,10 +170,10 @@ namespace PromptPlus.Forms
                 {
                     _countRotate = 0;
                 }
-                if (_countRotate % PPlus.RollupFactor == 0)
+                if (_countRotate % PromptPlus.RollupFactor == 0)
                 {
                     _indexvisible++;
-                    if (_indexvisible >= PPlus.MaxShowTasks)
+                    if (_indexvisible >= PromptPlus.MaxShowTasks)
                     {
                         _indexvisible = 0;
                         _pagevisible++;

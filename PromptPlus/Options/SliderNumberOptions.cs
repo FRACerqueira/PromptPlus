@@ -6,13 +6,13 @@
 
 using System;
 
-using PromptPlus.Internal;
+using PromptPlusControls.Internal;
 
-namespace PromptPlus.Options
+namespace PromptPlusControls.Options
 {
     public class SliderNumberOptions<T> : BaseOptions where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
     {
-        internal int Witdth { get; private set; } = PPlus.SliderWitdth;
+        internal int Witdth { get; private set; } = PromptPlus.SliderWitdth;
 
         internal SliderNumberType Type { get; set; } = SliderNumberType.LeftRight;
 

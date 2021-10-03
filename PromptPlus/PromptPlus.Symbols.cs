@@ -4,11 +4,11 @@
 // The maintenance and evolution is maintained by the PromptPlus project under same MIT license
 // ********************************************************************************************
 
-using PromptPlus.ValueObjects;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus
+namespace PromptPlusControls
 {
-    public static partial class PPlus
+    public static partial class PromptPlus
     {
         public static class Symbols
         {

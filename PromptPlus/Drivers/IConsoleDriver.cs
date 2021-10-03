@@ -7,7 +7,7 @@
 using System;
 using System.Threading;
 
-namespace PromptPlus.Drivers
+namespace PromptPlusControls.Drivers
 {
     public interface IConsoleDriver : IDisposable
     {

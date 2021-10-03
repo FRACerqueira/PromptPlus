@@ -1,7 +1,7 @@
 # PromptPlus # NumberUpDown
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**SliderNumber Options**](slidernumberoptions) |
 [**BaseOptions**](baseoptions)
 
@@ -38,14 +38,14 @@ NumberUpDown<T>(string message, T value, T min, T max, T step, int fracionalDig 
 
 
 ```csharp
-ResultPPlus<T>
+ResultPromptPlus<T>
 ```
 
 ### Sample
 [**Top**](#promptplus--numberupdown)
 
 ```csharp
-var number = PPlus.NumberUpDown("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
+var number = PromptPlus.NumberUpDown("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
 if (number.IsAborted)
 {
    return;
@@ -56,7 +56,7 @@ Console.WriteLine($"Your answer is: {number.Value}");
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**SliderNumber Options**](slidernumberoptions) |
 [**BaseOptions**](baseoptions)
 

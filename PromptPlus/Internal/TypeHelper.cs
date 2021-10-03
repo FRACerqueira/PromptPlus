@@ -7,7 +7,7 @@
 using System;
 using System.ComponentModel;
 
-namespace PromptPlus.Internal
+namespace PromptPlusControls.Internal
 {
     internal static class TypeHelper<T>
     {

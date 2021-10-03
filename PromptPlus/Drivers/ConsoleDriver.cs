@@ -8,9 +8,9 @@ using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 
-using PromptPlus.Resources;
+using PromptPlusControls.Resources;
 
-namespace PromptPlus.Drivers
+namespace PromptPlusControls.Drivers
 {
     internal sealed class ConsoleDriver : IConsoleDriver
     {
@@ -44,8 +44,8 @@ namespace PromptPlus.Drivers
         public ConsoleDriver()
         {
             Console.CancelKeyPress += CancelKeyPressHandler;
-            Console.ForegroundColor = PPlus.ColorSchema.ForeColorSchema;
-            Console.BackgroundColor = PPlus.ColorSchema.BackColorSchema;
+            Console.ForegroundColor = PromptPlus.ColorSchema.ForeColorSchema;
+            Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
         }
 
         #region IDisposable
@@ -114,8 +114,8 @@ namespace PromptPlus.Drivers
                 Console.BackgroundColor = colorbg.Value;
             }
             Console.Write(value);
-            Console.ForegroundColor = PPlus.ColorSchema.ForeColorSchema;
-            Console.BackgroundColor = PPlus.ColorSchema.BackColorSchema;
+            Console.ForegroundColor = PromptPlus.ColorSchema.ForeColorSchema;
+            Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
         }
 
         public void WriteLine() => Console.WriteLine();

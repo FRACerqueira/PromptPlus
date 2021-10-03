@@ -1,7 +1,7 @@
 # PromptPlus # SliderSwitche
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**SliderSwitche Options**](sliderswitcheoptions) |
 [**BaseOptions**](baseoptions)
 
@@ -35,14 +35,14 @@ SliderSwitche(string message, bool value, string offvalue = null, string onvalue
 [**Top**](#promptplus--sliderswitche)
 
 ```csharp
-ResultPPlus<bool>
+ResultPromptPlus<bool>
 ```
 
 ### Sample
 [**Top**](#promptplus--sliderswitche)
 
 ```csharp
-var slider = PPlus.SliderSwitche("Turn on/off",false, cancellationToken: _stopApp);
+var slider = PromptPlus.SliderSwitche("Turn on/off",false, cancellationToken: _stopApp);
 if (slider.IsAborted)
 {
     return;
@@ -53,7 +53,7 @@ Console.WriteLine($"Your answer is: {slider.Value}");
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**SliderSwitche Options**](sliderswitcheoptions) |
 [**BaseOptions**](baseoptions)
 

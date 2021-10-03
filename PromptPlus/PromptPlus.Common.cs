@@ -11,13 +11,13 @@ using System.Reflection;
 using System.Resources;
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.Resources;
-using PromptPlus.ValueObjects;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus
+namespace PromptPlusControls
 {
-    public static partial class PPlus
+    public static partial class PromptPlus
     {
         internal const int MaxShowTasks = 1;
         internal const int RollupFactor = 13;
@@ -27,7 +27,7 @@ namespace PromptPlus
         internal const int ProgressgBarDoneDelay = 1000;
         internal const int ProgressgBarCheckDelay = 50;
 
-        static PPlus()
+        static PromptPlus()
         {
             AppCulture = Thread.CurrentThread.CurrentCulture;
             AppCultureUI = Thread.CurrentThread.CurrentUICulture;

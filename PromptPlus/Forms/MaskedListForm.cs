@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.Options;
-using PromptPlus.Resources;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
+using PromptPlusControls.Resources;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
     internal class MaskedListForm<T> : FormBase<IEnumerable<T>>
     {
@@ -62,7 +62,7 @@ namespace PromptPlus.Forms
                 {
                     continue;
                 }
-                else if (PPlus.RemoveAll.Equals(keyInfo))
+                else if (PromptPlus.RemoveAll.Equals(keyInfo))
                 {
                     var aux = _inputItems.Where(x => _options.TextSelector(x).IndexOf(_inputBuffer.ToString(), StringComparison.OrdinalIgnoreCase) != -1).ToArray();
                     _inputItems.RemoveAll(x => aux.Contains(x));
@@ -103,13 +103,13 @@ namespace PromptPlus.Forms
                             inputValue = TypeHelper<T>.ConvertTo(input);
                             if (!TryValidate(inputValue, _options.Validators))
                             {
-                                Thread.CurrentThread.CurrentUICulture = PPlus.DefaultCulture;
-                                Thread.CurrentThread.CurrentCulture = PPlus.DefaultCulture;
+                                Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+                                Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
                                 result = _inputItems;
                                 return false;
                             }
-                            Thread.CurrentThread.CurrentUICulture = PPlus.DefaultCulture;
-                            Thread.CurrentThread.CurrentCulture = PPlus.DefaultCulture;
+                            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+                            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
                             if (!_options.AllowDuplicate)
                             {
                                 if (_inputItems.Contains(inputValue))
@@ -126,7 +126,7 @@ namespace PromptPlus.Forms
                         }
                         catch (FormatException)
                         {
-                            SetError(PPlus.LocalizateFormatException(typeof(T)));
+                            SetError(PromptPlus.LocalizateFormatException(typeof(T)));
                         }
                         catch (Exception ex)
                         {

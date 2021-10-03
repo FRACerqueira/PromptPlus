@@ -1,7 +1,7 @@
 # PromptPlus # List
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**List Options**](listoptions) |
 [**BaseOptions**](baseoptions)
 
@@ -37,14 +37,14 @@ List<T>(string message, int minimum = 1, int maximum = -1, int? pageSize = null,
 [**Top**](#promptplus--list)
 
 ```csharp
-ResultPPlus<IEnumerable<T>>
+ResultPromptPlus<IEnumerable<T>>
 ```
 
 ### Sample
 [**Top**](#promptplus--list)
 
 ```csharp
-var lst = PPlus.List<string>("Please add item(s)", uppercase: true, cancellationToken: _stopApp);
+var lst = PromptPlus.List<string>("Please add item(s)", uppercase: true, cancellationToken: _stopApp);
 if (lst.IsAborted)
 {
    return;
@@ -55,6 +55,6 @@ Console.WriteLine($"You picked {string.Join(", ", lst.Value)}");
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**List Options**](listoptions) |
 [**BaseOptions**](baseoptions)

@@ -11,11 +11,11 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using PromptPlus.ValueObjects;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus
+namespace PromptPlusControls
 {
-    public static partial class PPlus
+    public static partial class PromptPlus
     {
         public static string SaveConfigToFile(string folderfile = "")
         {

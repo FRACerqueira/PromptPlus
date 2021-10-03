@@ -4,9 +4,9 @@
 // The maintenance and evolution is maintained by the PromptPlus project under same MIT license
 // ********************************************************************************************
 
-using PromptPlus.Internal;
+using PromptPlusControls.Internal;
 
-namespace PromptPlus.Options
+namespace PromptPlusControls.Options
 {
     public class SliderSwitcheOptions : BaseOptions
     {

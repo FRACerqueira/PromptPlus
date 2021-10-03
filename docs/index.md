@@ -83,7 +83,7 @@ When a control has a collection it can be paged with a limit of items per page. 
 
 ```csharp
 //sample
-PPlus.EnabledAbortKey = false;
+PromptPlus.EnabledAbortKey = false;
 ```
 
 ### Culture
@@ -97,7 +97,7 @@ All messages are affected when changed language/culture. PromptPlus has language
  
 ```csharp
 //sample
-PPlus.DefaultCulture = new CultureInfo("en-US");
+PromptPlus.DefaultCulture = new CultureInfo("en-US");
 ```
 
 To use a non-embedded language/culture:
@@ -141,7 +141,7 @@ PromptPlus has a configurable color(16 color) schema.
  
  ```csharp
 //sample
-PPlus.ColorSchema.Answer = ConsoleColor.Cyan;
+PromptPlus.ColorSchema.Answer = ConsoleColor.Cyan;
 ```
 
 ### Symbols
@@ -196,7 +196,7 @@ PromptPlus has a configurable symbos with Unicode support and Fallback.
 
  ```csharp
 //sample
-PPlus.Symbols.Done = new Symbol("√", "V ");
+PromptPlus.Symbols.Done = new Symbol("√", "V ");
 ```
 **_Note: new Symbol() return : Symbol = single space and Fallback = double space._**
 
@@ -243,7 +243,7 @@ Hotkeys (global and control-specific) are configurable. Some hotkeys are interna
  
  ```csharp
 //sample
-PPlus.AbortAllPipesKeyPress = new HotKey(key: "X", alt: true, ctrl: false, shift: false);
+PromptPlus.AbortAllPipesKeyPress = new HotKey(key: "X", alt: true, ctrl: false, shift: false);
 ```
 
 **_Note: the key parameter is case-insentive;_**
@@ -255,9 +255,9 @@ PromptPlus allows saving and loading a previous configuration of culture, behavi
 
 ```csharp
 //sample save
-PPlus.SaveConfigToFile(folderfile: "YourFolder");
+PromptPlus.SaveConfigToFile(folderfile: "YourFolder");
 //sample load
-PPlus.LoadConfigFromFile(folderfile: "YourFolder");
+PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 ```
 
 **_Note: if the folderfile parameter is omitted, it will be saved/loaded from the default application folder_**

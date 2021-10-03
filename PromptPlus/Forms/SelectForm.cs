@@ -8,10 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.Options;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
 
-namespace PromptPlus.Forms
+
+namespace PromptPlusControls.Forms
 {
     internal class SelectForm<T> : FormBase<T>
     {
@@ -45,7 +46,7 @@ namespace PromptPlus.Forms
                 {
                     continue;
                 }
-                else if (PPlus.UnSelectFilter.Equals(keyInfo))
+                else if (PromptPlus.UnSelectFilter.Equals(keyInfo))
                 {
                     Paginator.UnSelected();
                     result = default;

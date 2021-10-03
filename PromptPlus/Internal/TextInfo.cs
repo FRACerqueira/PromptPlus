@@ -6,7 +6,7 @@
 
 using System;
 
-namespace PromptPlus.Internal
+namespace PromptPlusControls.Internal
 {
     internal class TextInfo : IEquatable<TextInfo>
     {

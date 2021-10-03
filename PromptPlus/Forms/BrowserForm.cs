@@ -11,12 +11,12 @@ using System.Linq;
 using System.Security;
 using System.Threading;
 
-using PromptPlus.Internal;
-using PromptPlus.Options;
-using PromptPlus.Resources;
-using PromptPlus.ValueObjects;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
+using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
 
     internal class BrowserForm : FormBase<ResultBrowser>
@@ -146,7 +146,7 @@ namespace PromptPlus.Forms
                     continue;
                 }
 
-                if (PPlus.UnSelectFilter.Equals(keyInfo))
+                if (PromptPlus.UnSelectFilter.Equals(keyInfo))
                 {
                     _paginator.UnSelected();
                     result = default;

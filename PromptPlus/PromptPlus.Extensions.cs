@@ -6,14 +6,14 @@
 
 using System;
 
-using PromptPlus.Internal;
-using PromptPlus.ValueObjects;
+using PromptPlusControls.Internal;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus
+namespace PromptPlusControls
 {
-    public static partial class PPlus
+    public static partial class PromptPlus
     {
-        public static IFormPPlusBase Step(this IFormPPlusBase form, string title, Func<ResultPipe[], object, bool> condition = null, object contextstate = null, string id = null)
+        public static IFormPlusBase Step(this IFormPlusBase form, string title, Func<ResultPipe[], object, bool> condition = null, object contextstate = null, string id = null)
         {
             form.PipeId = id ?? Guid.NewGuid().ToString();
             form.PipeTitle = !string.IsNullOrEmpty(title) ? title : Messages.EmptyTitle;
@@ -22,24 +22,24 @@ namespace PromptPlus
             return form;
         }
 
-        public static TypeCode GetTypeCode<T>(this ResultPPlus<T> result) => LocalGetTypeCode(result);
-        public static bool ToBoolean<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (bool)ChangeType(result);
-        public static byte ToByte<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (byte)ChangeType(result);
-        public static char ToChar<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (char)ChangeType(result);
-        public static DateTime ToDateTime<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (DateTime)ChangeType(result);
-        public static decimal ToDecimal<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (decimal)ChangeType(result);
-        public static double ToDouble<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (double)ChangeType(result);
-        public static short ToInt16<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (short)ChangeType(result);
-        public static int ToInt32<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (int)ChangeType(result);
-        public static long ToInt64<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (long)ChangeType(result);
-        public static sbyte ToSByte<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (sbyte)ChangeType(result);
-        public static float ToSingle<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (float)ChangeType(result);
-        public static string ToString<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (string)ChangeType(result);
-        public static object ToType<T>(this ResultPPlus<T> result, Type conversionType, IFormatProvider provider = null) => Convert.ChangeType(result, conversionType);
-        public static ushort ToUInt16<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (ushort)ChangeType(result);
-        public static uint ToUInt32<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (uint)ChangeType(result);
-        public static ulong ToUInt64<T>(this ResultPPlus<T> result, IFormatProvider provider = null) => (ulong)ChangeType(result);
-        private static object ChangeType<T>(ResultPPlus<T> promptres)
+        public static TypeCode GetTypeCode<T>(this ResultPromptPlus<T> result) => LocalGetTypeCode(result);
+        public static bool ToBoolean<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (bool)ChangeType(result);
+        public static byte ToByte<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (byte)ChangeType(result);
+        public static char ToChar<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (char)ChangeType(result);
+        public static DateTime ToDateTime<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (DateTime)ChangeType(result);
+        public static decimal ToDecimal<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (decimal)ChangeType(result);
+        public static double ToDouble<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (double)ChangeType(result);
+        public static short ToInt16<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (short)ChangeType(result);
+        public static int ToInt32<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (int)ChangeType(result);
+        public static long ToInt64<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (long)ChangeType(result);
+        public static sbyte ToSByte<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (sbyte)ChangeType(result);
+        public static float ToSingle<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (float)ChangeType(result);
+        public static string ToString<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (string)ChangeType(result);
+        public static object ToType<T>(this ResultPromptPlus<T> result, Type conversionType, IFormatProvider provider = null) => Convert.ChangeType(result, conversionType);
+        public static ushort ToUInt16<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (ushort)ChangeType(result);
+        public static uint ToUInt32<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (uint)ChangeType(result);
+        public static ulong ToUInt64<T>(this ResultPromptPlus<T> result, IFormatProvider provider = null) => (ulong)ChangeType(result);
+        private static object ChangeType<T>(ResultPromptPlus<T> promptres)
         {
             switch (LocalGetTypeCode(promptres))
             {
@@ -136,7 +136,7 @@ namespace PromptPlus
             }
             return null;
         }
-        private static TypeCode LocalGetTypeCode<T>(ResultPPlus<T> result)
+        private static TypeCode LocalGetTypeCode<T>(ResultPromptPlus<T> result)
         {
             var type = result.GetType().Name;
             if (type == "Boolean")

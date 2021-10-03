@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PromptPlus.Example.Models
+namespace PromptPlusExample.Models
 {
     public enum MyEnum
     {

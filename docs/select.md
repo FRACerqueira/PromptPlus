@@ -1,7 +1,7 @@
 # PromptPlus # Select
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**Select Options**](selectoptions) |
 [**BaseOptions**](baseoptions)
 
@@ -39,16 +39,16 @@ Select<T>(string message, IEnumerable<T> items, object defaultValue = null, int?
 
 ```csharp
 //for  IEnumerable type
-ResultPPlus<T> 
+ResultPromptPlus<T> 
 //for  enum values
-ResultPPlus<EnumValue<T>>
+ResultPromptPlus<EnumValue<T>>
 ```
 
 ### Sample
 [**Top**](#promptplus--select)
 
 ```csharp
-var city = PPlus.Select("Select your city", 
+var city = PromptPlus.Select("Select your city", 
              new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" }, 
              pageSize: 3, cancellationToken: _stopApp);
 if (city.IsAborted)
@@ -66,7 +66,7 @@ else
 ```
 
 ```csharp
-var envalue = PPlus.Select<MyEnum>("Select enum value", defaultValue: MyEnum.Foo, cancellationToken: _stopApp);
+var envalue = PromptPlus.Select<MyEnum>("Select enum value", defaultValue: MyEnum.Foo, cancellationToken: _stopApp);
 if (envalue.IsAborted)
 {
    return;
@@ -77,6 +77,6 @@ Console.WriteLine($"You selected {envalue.Value.DisplayName}");
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**Select Options**](selectoptions) |
 [**BaseOptions**](baseoptions)

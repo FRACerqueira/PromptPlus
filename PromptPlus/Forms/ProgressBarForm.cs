@@ -8,12 +8,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PromptPlus.Internal;
-using PromptPlus.Options;
-using PromptPlus.Resources;
-using PromptPlus.ValueObjects;
+using PromptPlusControls.Internal;
+using PromptPlusControls.Options;
+using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
-namespace PromptPlus.Forms
+namespace PromptPlusControls.Forms
 {
     internal class ProgressBarForm : FormBase<ProgressBarInfo>
     {

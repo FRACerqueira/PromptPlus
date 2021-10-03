@@ -1,7 +1,7 @@
 # PromptPlus # Key Press
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**KeyPress Options**](keypressoptions) |
 [**BaseOptions**](baseoptions)
 
@@ -32,14 +32,14 @@ KeyPress(string message, char? Keypress, ConsoleModifiers? keymodifiers = null, 
 [**Top**](#promptplus--key-press)
 
 ```csharp
-ResultPPlus<bool>
+ResultPromptPlus<bool>
 ````
 
 ### Sample
 [**Top**](#promptplus--key-press)
 
 ```csharp
-var key = PPlus.KeyPress("Press Ctrl-B to continue", 'B', 
+var key = PromptPlus.KeyPress("Press Ctrl-B to continue", 'B', 
    ConsoleModifiers.Control, 
    cancellationToken:_stopApp);
 if (key.IsAborted)
@@ -52,7 +52,7 @@ Console.WriteLine($"Hello,  key Ctrl-B pressed");
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**ResultPPlus**](resultpplus) |
+[**ResultPromptPlus**](resultpromptplus) |
 [**KeyPress Options**](keypressoptions) |
 [**BaseOptions**](baseoptions)
 

@@ -4,12 +4,12 @@
 // The maintenance and evolution is maintained by the PromptPlus project under same MIT license
 // ********************************************************************************************
 
-namespace PromptPlus.ValueObjects
+namespace PromptPlusControls.ValueObjects
 {
-    public class ResultPPlus<T>
+    public class ResultPromptPlus<T>
     {
 
-        public ResultPPlus(T value, bool aborted)
+        public ResultPromptPlus(T value, bool aborted)
         {
             Value = value;
             IsAborted = aborted;
@@ -17,9 +17,9 @@ namespace PromptPlus.ValueObjects
 
         internal bool IsAllAborted { get; private set; }
 
-        internal static ResultPPlus<T> AbortAll()
+        internal static ResultPromptPlus<T> AbortAll()
         {
-            return new ResultPPlus<T>(default, true) { IsAllAborted = true };
+            return new ResultPromptPlus<T>(default, true) { IsAllAborted = true };
         }
 
         public T Value { get; }
