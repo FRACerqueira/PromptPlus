@@ -51,6 +51,10 @@ namespace PromptPlusControls.Controls
             if (!summary && CheckDefaultKey(GetKeyAvailable(cancellationToken)))
             {
                 result = _laststatus;
+                if (PipeId != null)
+                {
+                    return null;
+                }
                 return false;
             }
             if (_newInteration)

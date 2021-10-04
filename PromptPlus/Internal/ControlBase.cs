@@ -24,6 +24,8 @@ namespace PromptPlusControls.Internal
         private readonly bool _enabledAbortAllPipes;
         private readonly bool _hideAfterFinish;
         private readonly bool _skiplastrender;
+        private bool _toggleSummary = false;
+
         protected ControlBase(bool hideafterFinish, bool showcursor, bool enabledAbortEscKey, bool enabledAbortAllPipes, bool skiplastrender = false)
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
@@ -111,11 +113,23 @@ namespace PromptPlusControls.Internal
             using (var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_esckeyCancelation.Token, stoptoken))
             {
                 bool? hit = true;
+                var fistskip = true;
                 while (!_linkedCts.IsCancellationRequested)
                 {
+                    var skip = _skiplastrender;
+                    if (SummaryPipeLine && fistskip)
+                    {
+                        skip = false;
+                        fistskip = false;
+                    }
+                    if (_toggleSummary)
+                    {
+                        skip = false;
+                        _toggleSummary = false;
+                    }
                     if (hit.HasValue)
                     {
-                        if (!_screenrender.HideLastRender())
+                        if (!_screenrender.HideLastRender(skip))
                         {
                             _linkedCts.Cancel();
                             continue;
@@ -140,20 +154,26 @@ namespace PromptPlusControls.Internal
                         if (SummaryPipeLine)
                         {
                             SummaryPipeLineToPrompt(pipePaginator, _linkedCts.Token);
+                            _toggleSummary = true;
                             hit = false;
                         }
                         else
                         {
                             hit = TryGetResult(false, _linkedCts.Token, out result);
-                            if (!hit.HasValue && PromptPlus.EnabledBeep)
+                            if (!hit.HasValue && PromptPlus.EnabledBeep && PipeId == null)
                             {
                                 _screenrender.Beep();
+                            }
+                            if (!hit.HasValue && _skiplastrender)
+                            {
+                                hit = false;
+                                _toggleSummary = true;
                             }
                         }
                         _screenrender.HideCursor();
                         if (_linkedCts.IsCancellationRequested)
                         {
-                            if (!_screenrender.HideLastRender())
+                            if (!_screenrender.HideLastRender(skip))
                             {
                                 _linkedCts.Cancel();
                                 continue;
@@ -378,32 +398,33 @@ namespace PromptPlusControls.Internal
                 {
                     stoptoken.WaitHandle.WaitOne(IdleReadKey);
                 }
-                ConsoleKeyInfo keyInfo;
+                var keyInfo = new ConsoleKeyInfo();
                 if (_screenrender.KeyAvailable && !stoptoken.IsCancellationRequested)
                 {
                     keyInfo = GetKeyAvailable(stoptoken);
                 }
-                else
-                {
-                    continue;
-                }
                 if (PromptPlus.ResumePipesKeyPress.Equals(keyInfo))
                 {
                     SummaryPipeLine = false;
-                    return;
+                    continue;
                 }
                 if (keyInfo.Key == ConsoleKey.PageUp && keyInfo.Modifiers == 0 && paginator.PageCount > 1)
                 {
                     paginator.PreviousPage(IndexOption.LastItemWhenHasPages);
-                    return;
+                    continue;
                 }
                 else if (keyInfo.Key == ConsoleKey.PageDown && keyInfo.Modifiers == 0 && paginator.PageCount > 1)
                 {
                     paginator.NextPage(IndexOption.FirstItemWhenHasPages);
-                    return;
+                    continue;
                 }
-                TryGetResult(true, stoptoken, out _);
-            } while (_screenrender.KeyAvailable && !stoptoken.IsCancellationRequested);
+                var result = TryGetResult(true, stoptoken, out _);
+                if (result.HasValue && result.Value)
+                {
+                    SummaryPipeLine = false;
+                }
+            } while (SummaryPipeLine && !stoptoken.IsCancellationRequested);
+            _toggleSummary = true;
         }
     }
 }

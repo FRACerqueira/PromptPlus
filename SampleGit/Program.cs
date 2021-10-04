@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using PromptPlusControls;
+using PromptPlusControls.Drivers;
 using PromptPlusControls.Options;
 using PromptPlusControls.ValueObjects;
 
@@ -53,6 +54,7 @@ namespace SampleGit
             {
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.BackgroundColor = ConsoleColor.Black;
+
                 while (!_stopApp.IsCancellationRequested)
                 {
                     Console.Clear();
@@ -76,7 +78,7 @@ namespace SampleGit
                         }),
                         PromptPlus.Pipe.MaskEdit(PromptPlus.MaskTypeDateOnly, "Your birth date")
                              .Step("birth date"),
-                        PromptPlus.Pipe.Progressbar("Processing Tasks ", UpdateSampleHandlerAsync,interationId:80)
+                        PromptPlus.Pipe.Progressbar("Processing update ", UpdateSampleHandlerAsync,interationId:70)
                              .Step("Update")
                     };
                     _ = PromptPlus.Pipeline(steps);
@@ -91,8 +93,8 @@ namespace SampleGit
 
         private async Task<ProgressBarInfo> UpdateSampleHandlerAsync(ProgressBarInfo status, CancellationToken cancellationToken)
         {
-            await Task.Delay(100);
             var aux = (int)status.InterationId + 1;
+            await Task.Delay(100);
             var endupdate = true;
             if (aux < 100)
             {

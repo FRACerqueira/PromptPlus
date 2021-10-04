@@ -29,12 +29,12 @@ ProgressBarInfo(int percentValue, bool finished, string message, object interati
 - Message 
 	- Type : string
 	- ReadOnly
-	- Message to show interaction.
+	- Interaction message to show.
 
 - InterationId 
 	- Type : object
 	- ReadOnly
-	- interaction identification.
+	- Interaction identification.
 
 ### Links
 

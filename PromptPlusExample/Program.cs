@@ -84,15 +84,17 @@ namespace PromptPlusExample
         public void ShowMenu()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.BackgroundColor = ConsoleColor.Black;
+
+            PromptPlus.DefaultCulture = new CultureInfo("en-US");
+
+            Console.ForegroundColor = PromptPlus.ColorSchema.ForeColorSchema;
+            Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
             Console.Clear();
             //Console.WriteLine("Attach process to debug..");
             //Console.ReadKey(false);
 
             var quit = false;
 
-            PromptPlus.DefaultCulture = new CultureInfo("en-US");
 
             while (!_stopApp.IsCancellationRequested && !quit)
             {
