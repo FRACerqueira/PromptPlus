@@ -2,9 +2,9 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 env:
   DOTNET_VERSION: 5.0.x
@@ -25,6 +25,3 @@ jobs:
 
     - name: Build project
       run: dotnet build -c Release
-
-    - name: Lint C# code
-      run: dotnet format --check --verbosity detailed
