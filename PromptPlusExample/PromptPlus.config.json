@@ -1,0 +1,81 @@
+{
+  "Culture": null,
+  "EnabledBeep": false,
+  "EnabledStandardTooltip": true,
+  "EnabledPromptTooltip": true,
+  "EnabledAbortKey": true,
+  "EnabledAbortAllPipes": true,
+  "PasswordChar": "#",
+  "HotKeys": {
+    "AbortAllPipesKeyPress": "Crtl\u002BX",
+    "AbortKeyPress": "Esc",
+    "TooltipKeyPress": "F1",
+    "ResumePipesKeyPress": "F2",
+    "UnSelectFilter": "Alt\u002BF",
+    "SwitchViewPassword": "Alt\u002BV",
+    "SelectAll": "Alt\u002BA",
+    "InvertSelect": "Alt\u002BI",
+    "RemoveAll": "Alt\u002BR"
+  },
+  "Colors": {
+    "ForeColorSchema": "White",
+    "BackColorSchema": "Black",
+    "Pagination": "DarkGray",
+    "Hint": "DarkGray",
+    "Answer": "Cyan",
+    "Select": "Green",
+    "Disabled": "DarkGray",
+    "Filter": "Yellow",
+    "Error": "Red",
+    "DoneSymbol": "Cyan",
+    "PromptSymbol": "Green",
+    "SliderBackcolor": "DarkGray",
+    "SliderForecolor": "Cyan"
+  },
+  "Symbols": {
+    "MaskEmpty": {
+      "Value": "\u25A0",
+      "FallbackValue": "  "
+    },
+    "File": {
+      "Value": "\u25A0",
+      "FallbackValue": "- "
+    },
+    "Folder": {
+      "Value": "\u25BA",
+      "FallbackValue": "\u003E "
+    },
+    "Prompt": {
+      "Value": "\u2192",
+      "FallbackValue": "-\u003E"
+    },
+    "Done": {
+      "Value": "\u221A",
+      "FallbackValue": "V "
+    },
+    "Error": {
+      "Value": "\u00BB",
+      "FallbackValue": "\u003E\u003E"
+    },
+    "Selector": {
+      "Value": "\u203A",
+      "FallbackValue": "\u003E "
+    },
+    "Selected": {
+      "Value": "\u2666",
+      "FallbackValue": "* "
+    },
+    "NotSelect": {
+      "Value": "\u25CB",
+      "FallbackValue": "   "
+    },
+    "TaskRun": {
+      "Value": "\u2666",
+      "FallbackValue": "*"
+    },
+    "Skiped": {
+      "Value": "\u00D7",
+      "FallbackValue": "x"
+    }
+  }
+}
