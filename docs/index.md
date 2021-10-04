@@ -8,11 +8,11 @@
 
 Interactive command-line based application framework for **C# with powerful controls**.
 
+[**Snapshot of All Controls**](#snapshot)
+
 ![](./images/PipeLine.gif)
 
 ## Help
-- [Snapshot](#snapshot)
-- [Controls](#apis)
 - [Install](#install)
 - [Organization](#organization)
     - [Paging Behavior](#paging-behavior)
@@ -22,6 +22,7 @@ Interactive command-line based application framework for **C# with powerful cont
     - [Symbols](#symbols)
     - [Hotkeys](#hotkeys)
 - [Load and Save Settings](#load-and-save-settings)
+- [**Api Controls**](#apis)
 
 # Documentation
 
