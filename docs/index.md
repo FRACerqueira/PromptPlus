@@ -11,7 +11,7 @@ Interactive command-line based application framework for **C# with powerful cont
 ![](./images/PipeLine.gif)
 
 ## Help
-
+- [Snapshot]([#snapshot)
 - [Controls](#apis)
 - [Install](#install)
 - [Organization](#organization)
@@ -292,4 +292,70 @@ controls | Details
 
 [**Top**](#help)
 
+## Snapshot
+[**Top**](#help)
+
+### Input
+[**Top**](#help) | [Input](input.md) | [Password](password.md)
+
+![](./images/Input.gif)
+![](./images/Password.gif)
+
+### MaskEdit
+[**Top**](#help) | [MaskEdit Generic](maskeditgeneric.md) | [MaskEdit Date/Time](maskeditdate.md) | [MaskEdit Number/Currency](maskeditnumber.md) 
+
+![](./images/MaskEditGeneric.gif)
+![](./images/MaskEditDateTime.gif)
+![](./images/MaskEditNumber.gif)
+![](./images/MaskEditCurrency.gif)
+
+### KeyPress
+[**Top**](#help) | [Any key](anykey.md) | [Key Press](keypress.md)
+
+![](./images/Anykey.gif)
+![](./images/KeyPress.gif)
+
+### Selectors
+[**Top**](#help) | [Select](select.md) | [MultiSelect](multiselect.md)
+
+![](./images/Select.gif)
+![](./images/MultSelect.gif)
+
+### Confirm
+[**Top**](#help) | [Confirm](confirm.md) | [Slider Switche](sliderswitche.md)[Slider Switche](sliderswitche.md)
+
+![](./images/Confirm.gif)
+![](./images/SliderSwitche.gif)
+
+### WaitProcess
+[**Top**](#help) | [WaitProcess](waitprocess.md) 
+
+![](./images/WaitProcess.gif)
+
+### ProgressBar
+[**Top**](#help) | [Progress Bar](progressbar.md)
+
+![](./images/ProgressBar.gif)
+
+### Slider Number
+[**Top**](#help) | [Slider Number](slidernumber.md) | [Number Up/Down](numberupdown.md)
+
+![](./images/SliderNumber.gif)
+![](./images/NumberUpDown.gif)
+
+### List
+[**Top**](#help) | [List](list.md) | [ListMasked](listmasked.md)
+
+![](./images/List.gif)
+![](./images/MaskedList.gif)
+
+### Browser
+[**Top**](#help) | [Browser](browser.md)
+
+![](./images/Browser.gif)
+
+### PipeLine
+[**Top**](#help) | [PipeLine](pipeline.md)
+
+![](./images/PipeLine.gif)
 
