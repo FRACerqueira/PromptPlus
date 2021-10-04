@@ -11,7 +11,7 @@ Interactive command-line based application framework for **C# with powerful cont
 ![](./images/PipeLine.gif)
 
 ## Help
-- [Snapshot]([#snapshot)
+- [Snapshot](#snapshot)
 - [Controls](#apis)
 - [Install](#install)
 - [Organization](#organization)
