@@ -12,9 +12,9 @@ using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class SliderNumberForm<T> : FormBase<T> where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+    internal class SliderNumberControl<T> : ControlBase<T> where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
     {
         private T _currentValue;
         private readonly SliderNumberOptions<T> _options;
@@ -23,7 +23,7 @@ namespace PromptPlusControls.Forms
         private readonly T _shortstep;
         private readonly T _zerovalue = (T)Convert.ChangeType(0, typeof(T));
 
-        public SliderNumberForm(SliderNumberOptions<T> options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public SliderNumberControl(SliderNumberOptions<T> options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             if (!IsValidType())
             {

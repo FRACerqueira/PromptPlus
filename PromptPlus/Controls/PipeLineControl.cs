@@ -12,9 +12,9 @@ using System.Threading;
 using PromptPlusControls.Internal;
 using PromptPlusControls.ValueObjects;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class PipeLineForms : IDisposable
+    internal class PipeLineControl : IDisposable
     {
 
         private string _currentPipe;
@@ -36,7 +36,7 @@ namespace PromptPlusControls.Forms
             }
         }
 
-        public PipeLineForms(IList<IFormPlusBase> steps)
+        public PipeLineControl(IList<IFormPlusBase> steps)
         {
             foreach (var item in steps)
             {

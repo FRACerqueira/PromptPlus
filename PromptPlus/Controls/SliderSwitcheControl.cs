@@ -10,14 +10,14 @@ using System.Threading;
 using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class SliderSwitcheForm : FormBase<bool>
+    internal class SliderSwitcheControl : ControlBase<bool>
     {
         private bool _currentValue;
         private readonly SliderSwitcheOptions _options;
 
-        public SliderSwitcheForm(SliderSwitcheOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public SliderSwitcheControl(SliderSwitcheOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
             _currentValue = _options.Value;

@@ -9,13 +9,13 @@ using System.Threading;
 using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class keyPressForm : FormBase<bool>
+    internal class keyPressControl : ControlBase<bool>
     {
         private readonly KeyPressOptions _options;
 
-        public keyPressForm(KeyPressOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public keyPressControl(KeyPressOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
         }

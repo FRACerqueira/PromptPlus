@@ -10,15 +10,15 @@ using System.Threading;
 using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class ConfirmForm : FormBase<bool>
+    internal class ConfirmControl : ControlBase<bool>
     {
         private bool _initform;
         private readonly ConfirmOptions _options;
         private readonly InputBuffer _inputBuffer = new();
 
-        public ConfirmForm(ConfirmOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public ConfirmControl(ConfirmOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
             _initform = true;

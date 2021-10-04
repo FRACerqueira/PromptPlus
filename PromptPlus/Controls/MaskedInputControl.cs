@@ -11,14 +11,14 @@ using System.Threading;
 using PromptPlusControls.Internal;
 using PromptPlusControls.ValueObjects;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class MaskedInputForm : FormBase<ResultMasked>
+    internal class MaskedInputControl : ControlBase<ResultMasked>
     {
         private readonly MaskedOptions _options;
         private readonly MaskedBuffer _maskedBuffer;
 
-        public MaskedInputForm(MaskedOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public MaskedInputControl(MaskedOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
             _maskedBuffer = new MaskedBuffer(_options);

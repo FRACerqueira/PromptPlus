@@ -11,9 +11,9 @@ using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class InputForm<T> : FormBase<T>
+    internal class InputControl<T> : ControlBase<T>
     {
         private readonly InputOptions _options;
         private readonly Optional<T> _defaultValue;
@@ -21,7 +21,7 @@ namespace PromptPlusControls.Forms
         private bool _initform;
         private bool _passwordvisible;
 
-        public InputForm(InputOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public InputControl(InputOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             if (options.IsPassword && options.DefaultValue != null)
             {

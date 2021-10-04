@@ -14,9 +14,9 @@ using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class WaitProcessForm<T> : FormBase<IEnumerable<T>>
+    internal class WaitProcessControl<T> : ControlBase<IEnumerable<T>>
     {
         private const string Twirl = "|/-\\";
         private bool _notstart = true;
@@ -28,7 +28,7 @@ namespace PromptPlusControls.Forms
         private readonly List<int> _index = new();
         private readonly List<Task> _localTask = new();
 
-        public WaitProcessForm(WaitProcessOptions<T> options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
+        public WaitProcessControl(WaitProcessOptions<T> options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
         {
             if (options.Process == null)
             {

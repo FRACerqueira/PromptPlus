@@ -13,9 +13,9 @@ using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class MultiSelectForm<T> : FormBase<IEnumerable<T>>
+    internal class MultiSelectControl<T> : ControlBase<IEnumerable<T>>
     {
 
         private readonly MultiSelectOptions<T> _options;
@@ -23,7 +23,7 @@ namespace PromptPlusControls.Forms
         private readonly List<T> _selectedItems = new();
         private readonly InputBuffer _filterBuffer = new();
 
-        public MultiSelectForm(MultiSelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public MultiSelectControl(MultiSelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             if (options.Minimum < 0)
             {

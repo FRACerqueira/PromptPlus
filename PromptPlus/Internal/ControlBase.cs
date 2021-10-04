@@ -13,7 +13,7 @@ using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Internal
 {
-    internal abstract class FormBase<T> : IFormPlusBase
+    internal abstract class ControlBase<T> : IFormPlusBase
     {
         private const int IdleReadKey = 8;
         private string _finishResult;
@@ -24,7 +24,7 @@ namespace PromptPlusControls.Internal
         private readonly bool _enabledAbortAllPipes;
         private readonly bool _hideAfterFinish;
         private readonly bool _skiplastrender;
-        protected FormBase(bool hideafterFinish, bool showcursor, bool enabledAbortEscKey, bool enabledAbortAllPipes, bool skiplastrender = false)
+        protected ControlBase(bool hideafterFinish, bool showcursor, bool enabledAbortEscKey, bool enabledAbortAllPipes, bool skiplastrender = false)
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;

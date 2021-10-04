@@ -13,9 +13,9 @@ using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class ProgressBarForm : FormBase<ProgressBarInfo>
+    internal class ProgressBarControl : ControlBase<ProgressBarInfo>
     {
         private ProgressBarInfo _laststatus;
         private Task<ProgressBarInfo> _localTask;
@@ -23,7 +23,7 @@ namespace PromptPlusControls.Forms
         private readonly ProgressBarOptions _options;
         private readonly double _step;
 
-        public ProgressBarForm(ProgressBarOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
+        public ProgressBarControl(ProgressBarOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
         {
             if (options.UpdateHandler == null)
             {

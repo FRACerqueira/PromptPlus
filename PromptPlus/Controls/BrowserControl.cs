@@ -16,10 +16,10 @@ using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
 
-    internal class BrowserForm : FormBase<ResultBrowser>
+    internal class BrowserControl : ControlBase<ResultBrowser>
     {
         private ResultBrowser _defaultopt;
         private string _currentPath;
@@ -30,7 +30,7 @@ namespace PromptPlusControls.Forms
         private readonly Func<ResultBrowser, string> _textSelector = x => x.SelectedValue;
         private readonly Func<ResultBrowser, string> _fullPathSelector = x => Path.Combine(x.PathValue, x.SelectedValue);
 
-        public BrowserForm(BrowserOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public BrowserControl(BrowserOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
             switch (_options.Filter)

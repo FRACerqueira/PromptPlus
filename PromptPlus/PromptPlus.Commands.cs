@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PromptPlusControls.Forms;
+using PromptPlusControls.Controls;
 using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
@@ -33,7 +33,7 @@ namespace PromptPlusControls
                     throw new ArgumentException(Exceptions.EX_PipeLineEmptyId);
                 }
             }
-            using var pipeline = new PipeLineForms(steps);
+            using var pipeline = new PipeLineControl(steps);
             return pipeline.Start(cancellationToken ?? CancellationToken.None);
         }
 
@@ -56,9 +56,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static keyPressForm KeyPressForm(KeyPressOptions options)
+        internal static keyPressControl KeyPressForm(KeyPressOptions options)
         {
-            return new keyPressForm(options);
+            return new keyPressControl(options);
         }
 
         public static ResultPromptPlus<bool> KeyPress(string message, char? Keypress, ConsoleModifiers? keymodifiers = null, CancellationToken? cancellationToken = null)
@@ -67,7 +67,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static keyPressForm KeyPressForm(string message, char? Keypress, ConsoleModifiers? keymodifiers = null)
+        internal static keyPressControl KeyPressForm(string message, char? Keypress, ConsoleModifiers? keymodifiers = null)
         {
             var options = new KeyPressOptions
             {
@@ -84,9 +84,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static MaskedInputForm MaskEditForm(MaskedOptions options)
+        internal static MaskedInputControl MaskEditForm(MaskedOptions options)
         {
-            return new MaskedInputForm(options);
+            return new MaskedInputControl(options);
         }
 
         public static ResultPromptPlus<ResultMasked> MaskEdit(MaskedGenericType masktype, string message, string maskedvalue, string defaultValue = null, bool upperCase = true, bool showtypeinput = true, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
@@ -95,7 +95,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static MaskedInputForm MaskEditForm(MaskedGenericType masktype, string message, string maskedvalue, string defaultValue, bool upperCase, bool showtypeinput, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
+        internal static MaskedInputControl MaskEditForm(MaskedGenericType masktype, string message, string maskedvalue, string defaultValue, bool upperCase, bool showtypeinput, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
         {
             var options = new MaskedOptions
             {
@@ -129,7 +129,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static MaskedInputForm MaskEditForm(MaskedDateType masktype, string message, DateTime? defaultValue, CultureInfo? cultureinfo, bool fillzeros, bool showtypeinput, FormatYear fyear, FormatTime ftime, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
+        internal static MaskedInputControl MaskEditForm(MaskedDateType masktype, string message, DateTime? defaultValue, CultureInfo? cultureinfo, bool fillzeros, bool showtypeinput, FormatYear fyear, FormatTime ftime, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
         {
             var paramAM = DefaultCulture.DateTimeFormat.AMDesignator;
             if (cultureinfo == null)
@@ -262,7 +262,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static MaskedInputForm MaskEditForm(MaskedNumberType masktype, string message, int ammoutInteger, int ammoutDecimal, double? defaultValue, CultureInfo cultureinfo, MaskedSignal signal, bool showtypeinput, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
+        internal static MaskedInputControl MaskEditForm(MaskedNumberType masktype, string message, int ammoutInteger, int ammoutDecimal, double? defaultValue, CultureInfo cultureinfo, MaskedSignal signal, bool showtypeinput, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
         {
             string defaultnumValue = null;
             if (defaultValue.HasValue)
@@ -360,9 +360,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static InputForm<T> InputForm<T>(InputOptions options)
+        internal static InputControl<T> InputForm<T>(InputOptions options)
         {
-            return new InputForm<T>(options);
+            return new InputControl<T>(options);
         }
 
         public static ResultPromptPlus<T> Input<T>(Action<InputOptions> configure, CancellationToken? cancellationToken = null)
@@ -395,7 +395,7 @@ namespace PromptPlusControls
             return Input<string>(options, cancellationToken ?? CancellationToken.None);
         }
 
-        internal static InputForm<T> InputForm<T>(string message, object defaultValue = null, IList<Func<object, ValidationResult>> validators = null, bool ispassword = false, bool swithVisible = true)
+        internal static InputControl<T> InputForm<T>(string message, object defaultValue = null, IList<Func<object, ValidationResult>> validators = null, bool ispassword = false, bool swithVisible = true)
         {
             var options = new InputOptions
             {
@@ -418,9 +418,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static SliderNumberForm<T> SliderNumberForm<T>(SliderNumberOptions<T> options) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        internal static SliderNumberControl<T> SliderNumberForm<T>(SliderNumberOptions<T> options) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
-            return new SliderNumberForm<T>(options);
+            return new SliderNumberControl<T>(options);
         }
 
         public static ResultPromptPlus<T> SliderNumber<T>(Action<SliderNumberOptions<T>> configure, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
@@ -447,7 +447,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static SliderNumberForm<T> SliderNumberForm<T>(string message, T value, T min, T max, T shortstep, T? largestep = null, int fracionalDig = 0) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        internal static SliderNumberControl<T> SliderNumberForm<T>(string message, T value, T min, T max, T shortstep, T? largestep = null, int fracionalDig = 0) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
             var options = new SliderNumberOptions<T>
             {
@@ -483,7 +483,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static SliderNumberForm<T> NumberUpDownForm<T>(string message, T value, T min, T max, T step, int fracionalDig = 0) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        internal static SliderNumberControl<T> NumberUpDownForm<T>(string message, T value, T min, T max, T step, int fracionalDig = 0) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
             var options = new SliderNumberOptions<T>
             {
@@ -505,9 +505,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static SliderSwitcheForm SliderSwitcheForm(SliderSwitcheOptions options)
+        internal static SliderSwitcheControl SliderSwitcheForm(SliderSwitcheOptions options)
         {
-            return new SliderSwitcheForm(options);
+            return new SliderSwitcheControl(options);
         }
 
         public static ResultPromptPlus<bool> SliderSwitche(Action<SliderSwitcheOptions> configure, CancellationToken? cancellationToken = null)
@@ -526,7 +526,7 @@ namespace PromptPlusControls
 
         }
 
-        internal static SliderSwitcheForm SliderSwitcheForm(string message, bool value, string offvalue, string onvalue)
+        internal static SliderSwitcheControl SliderSwitcheForm(string message, bool value, string offvalue, string onvalue)
         {
             var options = new SliderSwitcheOptions
             {
@@ -544,9 +544,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static ProgressBarForm ProgressbarForm(ProgressBarOptions options)
+        internal static ProgressBarControl ProgressbarForm(ProgressBarOptions options)
         {
-            return new ProgressBarForm(options);
+            return new ProgressBarControl(options);
         }
 
         public static ResultPromptPlus<ProgressBarInfo> Progressbar(Action<ProgressBarOptions> configure, CancellationToken? cancellationToken = null)
@@ -565,7 +565,7 @@ namespace PromptPlusControls
 
         }
 
-        internal static ProgressBarForm ProgressbarForm(string title, object interationId, Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> updateHandler, int width)
+        internal static ProgressBarControl ProgressbarForm(string title, object interationId, Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> updateHandler, int width)
         {
             var options = new ProgressBarOptions
             {
@@ -588,9 +588,9 @@ namespace PromptPlusControls
             return new ResultPromptPlus<IEnumerable<T>>(res.Value, res.IsAborted);
         }
 
-        internal static WaitProcessForm<T> WaitProcessForm<T>(WaitProcessOptions<T> options)
+        internal static WaitProcessControl<T> WaitProcessForm<T>(WaitProcessOptions<T> options)
         {
-            return new WaitProcessForm<T>(options);
+            return new WaitProcessControl<T>(options);
         }
 
         public static ResultPromptPlus<IEnumerable<T>> WaitProcess<T>(Action<WaitProcessOptions<T>> configure, CancellationToken? cancellationToken = null)
@@ -625,7 +625,7 @@ namespace PromptPlusControls
             return new ResultPromptPlus<IEnumerable<T>>(res.Value, res.IsAborted);
         }
 
-        internal static WaitProcessForm<T> WaitProcessForm<T>(string title, IEnumerable<SingleProcess<T>> process, Func<T, string> processTextResult = null)
+        internal static WaitProcessControl<T> WaitProcessForm<T>(string title, IEnumerable<SingleProcess<T>> process, Func<T, string> processTextResult = null)
         {
             Func<T, string> aux = x => x?.ToString();
             var options = new WaitProcessOptions<T>
@@ -644,9 +644,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static ConfirmForm ConfirmForm(ConfirmOptions options)
+        internal static ConfirmControl ConfirmForm(ConfirmOptions options)
         {
-            return new ConfirmForm(options);
+            return new ConfirmControl(options);
         }
 
         public static ResultPromptPlus<bool> Confirm(Action<ConfirmOptions> configure, CancellationToken? cancellationToken = null)
@@ -662,7 +662,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static ConfirmForm ConfirmForm(string message, bool? defaultValue = null)
+        internal static ConfirmControl ConfirmForm(string message, bool? defaultValue = null)
         {
             var options = new ConfirmOptions
             {
@@ -679,9 +679,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static SelectForm<T> SelectForm<T>(SelectOptions<T> options)
+        internal static SelectControl<T> SelectForm<T>(SelectOptions<T> options)
         {
-            return new SelectForm<T>(options);
+            return new SelectControl<T>(options);
         }
 
         public static ResultPromptPlus<T> Select<T>(Action<SelectOptions<T>> configure, CancellationToken? cancellationToken = null)
@@ -703,7 +703,7 @@ namespace PromptPlusControls
 
         }
 
-        internal static SelectForm<EnumValue<T>> SelectForm<T>(string message, T? defaultValue = null, int? pageSize = null) where T : struct, Enum
+        internal static SelectControl<EnumValue<T>> SelectForm<T>(string message, T? defaultValue = null, int? pageSize = null) where T : struct, Enum
         {
             var items = EnumValue<T>.GetValues();
             var options = new SelectOptions<EnumValue<T>>
@@ -723,7 +723,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static SelectForm<T> SelectForm<T>(string message, IEnumerable<T> items, object defaultValue = null, int? pageSize = null, Func<T, string> textSelector = null)
+        internal static SelectControl<T> SelectForm<T>(string message, IEnumerable<T> items, object defaultValue = null, int? pageSize = null, Func<T, string> textSelector = null)
         {
             var options = new SelectOptions<T>
             {
@@ -743,9 +743,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static MultiSelectForm<T> MultiSelectForm<T>(MultiSelectOptions<T> options)
+        internal static MultiSelectControl<T> MultiSelectForm<T>(MultiSelectOptions<T> options)
         {
-            return new MultiSelectForm<T>(options);
+            return new MultiSelectControl<T>(options);
         }
 
         public static ResultPromptPlus<IEnumerable<T>> MultiSelect<T>(Action<MultiSelectOptions<T>> configure, CancellationToken? cancellationToken = null)
@@ -767,7 +767,7 @@ namespace PromptPlusControls
 
         }
 
-        internal static MultiSelectForm<EnumValue<T>> MultiSelectForm<T>(string message, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null) where T : struct, Enum
+        internal static MultiSelectControl<EnumValue<T>> MultiSelectForm<T>(string message, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null) where T : struct, Enum
         {
             var items = EnumValue<T>.GetValues();
 
@@ -790,7 +790,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static MultiSelectForm<T> MultiSelectForm<T>(string message, IEnumerable<T> items, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, Func<T, string> textSelector = null)
+        internal static MultiSelectControl<T> MultiSelectForm<T>(string message, IEnumerable<T> items, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, Func<T, string> textSelector = null)
         {
             var options = new MultiSelectOptions<T>
             {
@@ -812,9 +812,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static ListForm<T> ListForm<T>(ListOptions<T> options)
+        internal static ListControl<T> ListForm<T>(ListOptions<T> options)
         {
-            return new ListForm<T>(options);
+            return new ListControl<T>(options);
         }
 
         public static ResultPromptPlus<IEnumerable<T>> List<T>(Action<ListOptions<T>> configure, CancellationToken? cancellationToken = null)
@@ -831,7 +831,7 @@ namespace PromptPlusControls
 
         }
 
-        internal static ListForm<T> ListForm<T>(string message, int minimum, int maximum, int? pageSize, bool uppercase, bool allowduplicate, IList<Func<object, ValidationResult>> validators)
+        internal static ListControl<T> ListForm<T>(string message, int minimum, int maximum, int? pageSize, bool uppercase, bool allowduplicate, IList<Func<object, ValidationResult>> validators)
         {
             var options = new ListOptions<T>
             {
@@ -857,7 +857,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static MaskedListForm<T> ListMaskedForm<T>(string message, string maskValue, int minimum, int maximum, bool uppercase, bool showInputType, bool fillzeros, CultureInfo? cultureInfo, int? pageSize, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
+        internal static MaskedListControl<T> ListMaskedForm<T>(string message, string maskValue, int minimum, int maximum, bool uppercase, bool showInputType, bool fillzeros, CultureInfo? cultureInfo, int? pageSize, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
         {
             var localopc = new MaskedOptions
             {
@@ -892,7 +892,7 @@ namespace PromptPlusControls
                 options.Validators.Merge(validators);
 
             }
-            return new MaskedListForm<T>(options);
+            return new MaskedListControl<T>(options);
         }
 
         public static ResultPromptPlus<ResultBrowser> Browser(BrowserOptions options, CancellationToken? cancellationToken = null)
@@ -901,9 +901,9 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static BrowserForm BrowserForm(BrowserOptions options)
+        internal static BrowserControl BrowserForm(BrowserOptions options)
         {
-            return new BrowserForm(options);
+            return new BrowserControl(options);
         }
 
         public static ResultPromptPlus<ResultBrowser> Browser(Action<BrowserOptions> configure, CancellationToken? cancellationToken = null)
@@ -919,7 +919,7 @@ namespace PromptPlusControls
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static BrowserForm BrowserForm(BrowserFilter fileBrowserChoose, string message, string defaultValue = null, string prefixExtension = null, bool allowNotSelected = false, string rootFolder = null, string searchPattern = null, int? pageSize = null, bool supressHidden = true, bool promptCurrentPath = true, bool promptSearchPattern = true)
+        internal static BrowserControl BrowserForm(BrowserFilter fileBrowserChoose, string message, string defaultValue = null, string prefixExtension = null, bool allowNotSelected = false, string rootFolder = null, string searchPattern = null, int? pageSize = null, bool supressHidden = true, bool promptCurrentPath = true, bool promptSearchPattern = true)
         {
             var options = new BrowserOptions
             {

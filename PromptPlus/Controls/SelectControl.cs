@@ -12,14 +12,14 @@ using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class SelectForm<T> : FormBase<T>
+    internal class SelectControl<T> : ControlBase<T>
     {
         private readonly SelectOptions<T> _options;
         private readonly InputBuffer _filterBuffer = new();
 
-        public SelectForm(SelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public SelectControl(SelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             Paginator = new Paginator<T>(options.Items, options.PageSize, Optional<T>.Create(options.DefaultValue), options.TextSelector);
             Paginator.FirstItem();

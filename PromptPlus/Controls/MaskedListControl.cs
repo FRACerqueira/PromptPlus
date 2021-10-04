@@ -13,19 +13,21 @@ using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
 
-namespace PromptPlusControls.Forms
+namespace PromptPlusControls.Controls
 {
-    internal class ListForm<T> : FormBase<IEnumerable<T>>
+    internal class MaskedListControl<T> : ControlBase<IEnumerable<T>>
     {
         private Paginator<T> _localpaginator;
         private readonly ListOptions<T> _options;
         private readonly Type _targetType = typeof(T);
         private readonly Type _underlyingType = Nullable.GetUnderlyingType(typeof(T));
-        private readonly InputBuffer _inputBuffer = new();
+        private readonly MaskedBuffer _inputBuffer;
         private readonly List<T> _inputItems = new();
 
-        public ListForm(ListOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public MaskedListControl(ListOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
+            _inputBuffer = new MaskedBuffer(options.MaskedOption);
+
             if (options.Minimum < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(options.Minimum), string.Format(Exceptions.Ex_MinArgumentOutOfRange, options.Minimum));
@@ -60,7 +62,6 @@ namespace PromptPlusControls.Forms
                 {
                     continue;
                 }
-
                 else if (PromptPlus.RemoveAll.Equals(keyInfo))
                 {
                     var aux = _inputItems.Where(x => _options.TextSelector(x).IndexOf(_inputBuffer.ToString(), StringComparison.OrdinalIgnoreCase) != -1).ToArray();
@@ -72,12 +73,11 @@ namespace PromptPlusControls.Forms
                     return false;
                 }
 
-
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.Enter when keyInfo.Modifiers == 0:
                     {
-                        var input = _inputBuffer.ToString();
+                        var input = _inputBuffer.ToMasked();
                         try
                         {
                             result = _inputItems;
@@ -97,7 +97,6 @@ namespace PromptPlusControls.Forms
                                 SetError(string.Format(Messages.ListMaxSelection, _options.Maximum));
                                 return false;
                             }
-
                             T inputValue;
                             Thread.CurrentThread.CurrentUICulture = _options.CurrentCulture;
                             Thread.CurrentThread.CurrentCulture = _options.CurrentCulture;
@@ -111,7 +110,6 @@ namespace PromptPlusControls.Forms
                             }
                             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
                             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-
                             if (!_options.AllowDuplicate)
                             {
                                 if (_inputItems.Contains(inputValue))
@@ -179,7 +177,7 @@ namespace PromptPlusControls.Forms
                         {
                             if (!char.IsControl(keyInfo.KeyChar))
                             {
-                                _localpaginator.UpdateFilter(_inputBuffer.Insert(_options.UpperCase ? char.ToUpper(keyInfo.KeyChar) : keyInfo.KeyChar).ToString());
+                                _localpaginator.UpdateFilter(_inputBuffer.Insert(_options.UpperCase ? char.ToUpper(keyInfo.KeyChar) : keyInfo.KeyChar, out var _).ToString());
                             }
                             else
                             {
@@ -201,6 +199,12 @@ namespace PromptPlusControls.Forms
 
             screenBuffer.PushCursor(_inputBuffer);
 
+            if (_options.ShowInputType)
+            {
+                screenBuffer.WriteLine();
+                screenBuffer.WriteAnswer(string.Format(Messages.MaskEditInputType, _inputBuffer.Tooltip));
+            }
+
             if (EnabledStandardTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
@@ -218,7 +222,7 @@ namespace PromptPlusControls.Forms
             if (_inputBuffer.Length > 0)
             {
                 screenBuffer.WriteLineFilter(Messages.ItemsFiltered);
-                screenBuffer.WriteFilter($" ({_inputBuffer})");
+                screenBuffer.WriteFilter($" ({_inputBuffer.ToMasked()})");
             }
             var subset = _localpaginator.ToSubset();
             var index = 0;
