@@ -6,11 +6,17 @@
 
 **_Interactive command-line  toolkit for C# with powerful controls._** This project is basead on fork of the [Sharprompt](https://github.com/shibayan/Sharprompt). A complete refatoring was done , introducing  **_new features, making the product more complete, more stable and more configurable_**. In all files is showing the reference to original project acconding to the MIT licence.
 
-
 #### [visit the official page for complete documentation](https://fracerqueira.github.io/PromptPlus/)
 
+## Examples
+The project in the folder **PromptPlusExample** contains all the samples.
+
+```
+dotnet run --project PromptPlusExample
+```
+
 ## Snapshot
-[**Usage**](#usage) | [**Api Controls**](#apis) | [**Install**](#install) | [**Organization**](#organization) | 
+[**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis)
 
 ### Input
 
