@@ -74,7 +74,7 @@ namespace PromptPlusControls.ValueObjects
 
         private MaskedOptionNumberType _localoption = MaskedOptionNumberType.Number;
 
-        internal MaskedType SeletedOption { get; private set; } = MaskedType.DateOnly;
+        internal MaskedType SeletedOption { get; private set; } = MaskedType.Number;
 
         internal MaskedOptionNumberType Option
         {
