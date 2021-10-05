@@ -138,15 +138,15 @@ PromptPlus was developed in c# with the **netstandard2.1** target framework, wit
 - .NET Core 5.0
 - .NET Core 6.X
 
-
 ```
-Install-Package PromptPlus -pre
-```
-
-```
-dotnet add package PromptPlus --prerelease
+Install-Package PromptPlus [-pre]
 ```
 
+```
+dotnet add package PromptPlus [--prerelease]
+```
+
+**_Note:  [-pre]/[--prerelease] usage for pre-release versions_**
 
 ## Organization
 [**Top**](#welcome-to-promptplus)
