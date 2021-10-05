@@ -25,10 +25,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.18" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.1.18" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\PromptPlus\PromptPlus.csproj" />
+    <PackageReference Include="PromptPlus" Version="1.0.0-rc" />
   </ItemGroup>
 
   <ItemGroup>
