@@ -17,7 +17,7 @@ Control Options Class for [**Browser**](browser). inherits from [**BaseOptions**
 
 - PrefixExtension
   - Type : string
-  - prefix to be added to the end of the selected item
+  - prefix to be added to the end of item (only new file/folder)
   - Default Value = null
 
 - AllowNotSelected

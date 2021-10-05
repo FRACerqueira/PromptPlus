@@ -61,6 +61,15 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The expression cannot be null..
+        /// </summary>
+        internal static string Ex_ExpressionCannotBeNull {
+            get {
+                return ResourceManager.GetString("Ex_ExpressionCannotBeNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default file not found or invalid!.
         /// </summary>
         internal static string Ex_FileBrowserDefaultValueArgument {
@@ -93,6 +102,15 @@ namespace PromptPlusControls.Resources {
         internal static string Ex_InputOutPutRedirected {
             get {
                 return ResourceManager.GetString("Ex_InputOutPutRedirected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid expression..
+        /// </summary>
+        internal static string Ex_InvalidExpression {
+            get {
+                return ResourceManager.GetString("Ex_InvalidExpression", resourceCulture);
             }
         }
         

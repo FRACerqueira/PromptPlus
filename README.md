@@ -18,7 +18,7 @@ dotnet run --project PromptPlusExample
 ```
 
 ## Snapshot
-[**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis)
+[**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis) | [**Extensions**](#extensions) | [**Supported Platforms**](#supported-platforms)
 
 ### Input
 
@@ -275,6 +275,30 @@ controls | Details
 [Progress Bar](https://fracerqueira.github.io/PromptPlus/progressbar) | Progress Bar with interation customization
 [WaitProcess](https://fracerqueira.github.io/PromptPlus/waitprocess) | Wait process with animation
 [PipeLine](https://fracerqueira.github.io/PromptPlus/pipeline) | Pipeline sequence to all prompts with condition by pipe and status summary
+
+## Extensions
+PromptPlus have a extension to **import validator**. No duplicate code! 
+
+```csharp
+private class MylCass
+{
+    [Required(ErrorMessage = "{0} is required!")]
+    [MinLength(3, ErrorMessage = "Min. Length = 3.")]
+    [MaxLength(5, ErrorMessage = "Min. Length = 5.")]
+    [Display(Prompt ="My Input")]
+    public string MyInput { get; set; }
+}
+```
+```csharp
+var inst = new MylCass();
+var name = PromptPlus.Input<string>("Input Value for MyInput", null, 
+    validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
+if (name.IsAborted)
+{
+   return;
+}
+Console.WriteLine($"Your input: {name.Value}!");
+```
 
 ## Supported platforms
 [**Top**](#welcome-to-promptplus)

@@ -102,6 +102,9 @@ namespace PromptPlusControls.Controls
                     case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
                         _inputBuffer.Delete();
                         break;
+                    case ConsoleKey.Delete when keyInfo.Modifiers == ConsoleModifiers.Control && _inputBuffer.Length > 0:
+                        _inputBuffer.Clear();
+                        break;
                     default:
                     {
                         if (!cancellationToken.IsCancellationRequested)
@@ -165,7 +168,7 @@ namespace PromptPlusControls.Controls
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
                 if (_options.EnabledPromptTooltip)
                 {
-                    screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, Messages.EnterFininsh);
+                    screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, string.Join("", Messages.EnterFininsh, Messages.MaskEditErase));
                 }
             }
             _initform = false;

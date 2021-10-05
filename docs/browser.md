@@ -29,7 +29,7 @@ Browser(BrowserFilter fileBrowserChoose, string message, string defaultValue = n
 
 **Highlighted parameters**
 - defaultValue = full path of file/folder initial selected
-- prefixExtension = prefix to be added to the end of the selected item
+- prefixExtension = prefix to be added to the end of item (only new file/folder)
 - allowNotSelected = accept not seleted item
 - rootFolder = root for discovery
 - searchPattern = Specifies what to search for by the browser

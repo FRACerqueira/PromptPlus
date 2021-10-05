@@ -174,7 +174,14 @@ namespace PromptPlusControls.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.WritePrompt(_options.Message);
+            if (_options.Type == SliderNumberType.UpDown)
+            {
+                screenBuffer.WritePrompt($"{_options.Message} [{_options.Min},{_options.Max}]");
+            }
+            else
+            {
+                screenBuffer.WritePrompt(_options.Message);
+            }
 
             var valuestep = CurrentValueStep(_currentValue);
 
@@ -202,6 +209,7 @@ namespace PromptPlusControls.Controls
             }
 
             screenBuffer.PushCursor();
+
             if (EnabledStandardTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);

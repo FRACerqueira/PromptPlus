@@ -56,6 +56,8 @@ namespace PromptPlusExample
         WaitManyProcess,
         [Display(Name = "Control: PipeLine - IEnumerable Prompt sequential with conditions")]
         PipeLine,
+        [Display(Name = "Extension: Import Validators")]
+        ImportValidators,
         [Display(Name = "Utility: Save and Load Config")]
         SaveLoadConfig,
         [Display(Name = "Utility: Change Language")]

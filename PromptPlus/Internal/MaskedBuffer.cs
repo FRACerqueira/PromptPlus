@@ -310,6 +310,14 @@ namespace PromptPlusControls.Internal
                     break;
                 case MaskedType.TimeOnly:
                 case MaskedType.DateTime:
+                    if (_maskInputOptions.FmtTime == FormatTime.OnlyH)
+                    {
+                        aux += ":00:00";
+                    }
+                    if (_maskInputOptions.FmtTime == FormatTime.OnlyHM)
+                    {
+                        aux += ":00";
+                    }
                     if (!string.IsNullOrEmpty(_cultureMasked.DateTimeFormat.AMDesignator))
                     {
                         if (_signalTimeInput == _cultureMasked.DateTimeFormat.AMDesignator || string.IsNullOrEmpty(_signalTimeInput))

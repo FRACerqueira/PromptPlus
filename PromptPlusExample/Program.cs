@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -192,6 +193,9 @@ namespace PromptPlusExample
                         break;
                     case ExampleType.PipeLine:
                         RunPipeLineSample();
+                        break;
+                    case ExampleType.ImportValidators:
+                        RunImportValidatorsSample();
                         break;
                     case ExampleType.Quit:
                         quit = true;
@@ -457,6 +461,30 @@ namespace PromptPlusExample
             Console.WriteLine($"Hello,  key Ctrl-B pressed");
         }
 
+        private void RunImportValidatorsSample()
+        {
+            var inst = new MylCass();
+
+            Console.WriteLine("Imported Validators of Myclass, property MyInput:");
+            Console.WriteLine("private class MylCass \n{\n   [Required(ErrorMessage = \"{0} is required!\")] \n   [MinLength(3, ErrorMessage = \"Min. Length = 3.\")] \n   [MaxLength(5, ErrorMessage = \"Max. Length = 5.\")] \n   [Display(Prompt = \"My Input\")]\n   public string MyInput { get; set; }\n}");
+            var name = PromptPlus.Input<string>("Input Value for MyInput", null, validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
+            if (name.IsAborted)
+            {
+                return;
+            }
+            Console.WriteLine($"Your input: {name.Value}!");
+        }
+
+        private class MylCass
+        {
+            [Required(ErrorMessage = "{0} is required!")]
+            [MinLength(3, ErrorMessage = "Min. Length = 3.")]
+            [MaxLength(5, ErrorMessage = "Min. Length = 5.")]
+            [Display(Prompt = "My Input")]
+            public string MyInput { get; set; }
+        }
+
+
         private void RunInputSample()
         {
             var name = PromptPlus.Input<string>("What's your name?", "Peter Parker", validators: new[] { Validators.Required(), Validators.MinLength(3) }, cancellationToken: _stopApp);
@@ -635,7 +663,7 @@ namespace PromptPlusExample
 
         private void RunListSample()
         {
-            var lst = PromptPlus.List<string>("Please add item(s)", uppercase: true, cancellationToken: _stopApp);
+            var lst = PromptPlus.List<string>("Please add item(s)", pageSize: 3, uppercase: true, cancellationToken: _stopApp);
             if (lst.IsAborted)
             {
                 return;
@@ -749,7 +777,7 @@ namespace PromptPlusExample
 
         private void RunFileSample()
         {
-            var file = PromptPlus.Browser(BrowserFilter.None, "Select/New file", cancellationToken: _stopApp, pageSize: 10, allowNotSelected: true, prefixExtension: ".cs", supressHidden: false);
+            var file = PromptPlus.Browser(BrowserFilter.None, "Select/New file", cancellationToken: _stopApp, pageSize: 10, allowNotSelected: true, prefixExtension: ".cs");
             if (file.IsAborted)
             {
                 return;

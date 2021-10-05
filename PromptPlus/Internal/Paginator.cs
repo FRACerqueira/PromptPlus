@@ -67,7 +67,7 @@ namespace PromptPlusControls.Internal
 
                 var size = Math.Min(_maxpageSize, _filteredItems.Length);
 
-                for (var i = 0; i < _filteredItems.Length; i++)
+                for (var i = (_maxpageSize * SelectedPage) + SelectedIndex; i < _filteredItems.Length; i++)
                 {
                     if (EqualityComparer<T>.Default.Equals(_filteredItems[i], selectedItem))
                     {
@@ -217,9 +217,6 @@ namespace PromptPlusControls.Internal
         public ArraySegment<T> ToSubset()
         {
             EnsureTerminalPagesize();
-            if (Count < 0)
-            {
-            }
             return new ArraySegment<T>(_filteredItems, _maxpageSize * SelectedPage, Count);
         }
 

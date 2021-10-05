@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Ex_ExpressionCannotBeNull" xml:space="preserve">
+    <value>The expression cannot be null.</value>
+  </data>
   <data name="Ex_FileBrowserDefaultValueArgument" xml:space="preserve">
     <value>Default file not found or invalid!</value>
   </data>
@@ -128,6 +131,9 @@
   </data>
   <data name="Ex_InputOutPutRedirected" xml:space="preserve">
     <value>Required interactive environment.</value>
+  </data>
+  <data name="Ex_InvalidExpression" xml:space="preserve">
+    <value>Invalid expression.</value>
   </data>
   <data name="Ex_InvalidHotKey" xml:space="preserve">
     <value>Reserved value! Invalid hotkey.</value>

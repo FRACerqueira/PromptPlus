@@ -23,6 +23,9 @@ Interactive command-line based application framework for **C# with powerful cont
     - [Hotkeys](#hotkeys)
 - [Load and Save Settings](#load-and-save-settings)
 - [**Api Controls**](#apis)
+- [**Extensions**](#extensions)
+- [Snapshot of All Controls](#snapshot)
+- [Supported Platforms](#supported-platforms)
 
 # Documentation
 
@@ -295,6 +298,30 @@ controls | Details
 
 [**Top**](#help)
 
+## Extensions
+PromptPlus have a extension to **import validator**. No duplicate code! 
+
+```csharp
+private class MylCass
+{
+    [Required(ErrorMessage = "{0} is required!")]
+    [MinLength(3, ErrorMessage = "Min. Length = 3.")]
+    [MaxLength(5, ErrorMessage = "Min. Length = 5.")]
+    [Display(Prompt ="My Input")]
+    public string MyInput { get; set; }
+}
+```
+```csharp
+var inst = new MylCass();
+var name = PromptPlus.Input<string>("Input Value for MyInput", null, 
+    validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
+if (name.IsAborted)
+{
+   return;
+}
+Console.WriteLine($"Your input: {name.Value}!");
+```
+
 ## Snapshot
 [**Top**](#help)
 
@@ -362,3 +389,12 @@ controls | Details
 
 ![](./images/PipeLine.gif)
 
+## Supported platforms
+[**Top**](#help)
+
+- Windows
+    - Command Prompt, PowerShell, Windows Terminal
+- Linux (Ubuntu, etc)
+    - Windows Terminal (WSL 2)
+- macOS
+    - Terminal.app
