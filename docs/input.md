@@ -18,16 +18,15 @@ Control Input. Generic input with input validator with tooltips.
 [**Top**](#promptplus--input)
 
 ```csharp
-Input<T>(InputOptions options, CancellationToken? cancellationToken = null)
-Input<T>(Action<InputOptions> configure, CancellationToken? cancellationToken = null)
+Input(InputOptions options, CancellationToken? cancellationToken = null)
+Input(Action<InputOptions> configure, CancellationToken? cancellationToken = null)
 ```
 
 ```csharp
 //Note : The properties are fixed in InputOptions: SwithVisiblePassword = true, IsPassword = false
-Input<T>(string message, object defaultValue = null, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
+Input(string message, string defaultValue = null, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
 ```
 
-**_Note1: defaultValue will be displayed with the expression defaultValue.ToString()._**
 
 **_Note2: If the input is empty and there is a DefaultValue and the all condition from Validators is true, the return will be DefaultValue._**
 
@@ -35,14 +34,14 @@ Input<T>(string message, object defaultValue = null, IList<Func<object, Validati
 [**Top**](#promptplus--input)
 
 ```csharp
-ResultPromptPlus<T>
+ResultPromptPlus<string>
 ```
 
 ### Sample
 [**Top**](#promptplus--input)
 
 ```csharp
-var name = PromptPlus.Input<string>("What's your name?", 
+var name = PromptPlus.Input("What's your name?", 
              validators: new[] { Validators.Required(), Validators.MinLength(3) }, 
              cancellationToken: _stopApp);
 if (name.IsAborted)

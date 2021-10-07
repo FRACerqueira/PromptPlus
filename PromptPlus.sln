@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlus", "PromptPlus\Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlusExample", "PromptPlusExample\PromptPlusExample.csproj", "{56DA0F00-A45D-4A4C-B13A-F2AD2A6C3C52}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Component", "Component", "{1D88B60E-F8D4-494F-BF56-940EA9DDAB0D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{1D88B60E-F8D4-494F-BF56-940EA9DDAB0D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{1697A2D6-9353-4291-AB40-376068E0BFC6}"
 EndProject
@@ -43,6 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\resultbrowser.md = docs\resultbrowser.md
 		docs\resultmasked.md = docs\resultmasked.md
 		docs\resultpipe.md = docs\resultpipe.md
+		docs\resultprocess.md = docs\resultprocess.md
 		docs\resultpromptplus.md = docs\resultpromptplus.md
 		docs\select.md = docs\select.md
 		docs\selectoptions.md = docs\selectoptions.md
@@ -106,7 +107,7 @@ Global
 		{0EBFCDFA-D7BC-448D-B396-7179B9B32577} = {640ED284-A90B-43B8-ABA5-66F769752DDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 		RESX_ShowErrorsInErrorList = False
+		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 	EndGlobalSection
 EndGlobal

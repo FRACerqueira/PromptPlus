@@ -13,10 +13,9 @@ using PromptPlusControls.Resources;
 
 namespace PromptPlusControls.Controls
 {
-    internal class InputControl<T> : ControlBase<T>
+    internal class InputControl : ControlBase<string>
     {
         private readonly InputOptions _options;
-        private readonly Optional<T> _defaultValue;
         private readonly InputBuffer _inputBuffer = new();
         private bool _initform;
         private bool _passwordvisible;
@@ -27,12 +26,11 @@ namespace PromptPlusControls.Controls
             {
                 throw new ArgumentException(Exceptions.Ex_PasswordDefaultValue);
             }
-            _defaultValue = Optional<T>.Create(options.DefaultValue);
             _options = options;
             _initform = true;
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out T result)
+        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out string result)
         {
             bool? isvalidhit = false;
             if (summary)
@@ -53,33 +51,19 @@ namespace PromptPlusControls.Controls
                 {
                     case ConsoleKey.Enter when keyInfo.Modifiers == 0:
                     {
-                        var input = _inputBuffer.ToString();
+                        result = _inputBuffer.ToString();
+                        if (!string.IsNullOrEmpty(_options.DefaultValue) && result.Length == 0)
+                        {
+                            result = _options.DefaultValue;
+                        }
                         try
                         {
-                            if (string.IsNullOrEmpty(input))
-                            {
-                                if (TypeHelper<T>.IsValueType && !_defaultValue.HasValue)
-                                {
-                                    SetError(Messages.Required);
-                                    result = default;
-                                    return false;
-                                }
-                                result = _defaultValue;
-                            }
-                            else
-                            {
-                                result = TypeHelper<T>.ConvertTo(input);
-                            }
-                            if (!TryValidate(result, _options.Validators))
+                            if (!TryValidate((object)result, _options.Validators))
                             {
                                 result = default;
                                 return false;
                             }
                             return true;
-                        }
-                        catch (FormatException)
-                        {
-                            SetError(PromptPlus.LocalizateFormatException(typeof(T)));
                         }
                         catch (Exception ex)
                         {
@@ -132,13 +116,13 @@ namespace PromptPlusControls.Controls
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
             var prompt = _options.Message;
-            if (_defaultValue.HasValue)
+            if (!string.IsNullOrEmpty(_options.DefaultValue))
             {
                 if (_initform)
                 {
-                    _inputBuffer.Load(_defaultValue.Value.ToString());
+                    _inputBuffer.Load(_options.DefaultValue);
                 }
-                prompt = $"{_options.Message} ({_defaultValue.Value}) ";
+                prompt = $"{_options.Message} ({_options.DefaultValue})";
             }
 
             screenBuffer.WritePrompt(prompt);
@@ -174,7 +158,7 @@ namespace PromptPlusControls.Controls
             _initform = false;
         }
 
-        public override void FinishTemplate(ScreenBuffer screenBuffer, T result)
+        public override void FinishTemplate(ScreenBuffer screenBuffer, string result)
         {
             screenBuffer.WriteDone(_options.Message);
             if (result != null)
@@ -185,7 +169,7 @@ namespace PromptPlusControls.Controls
                 }
                 else
                 {
-                    FinishResult = result.ToString();
+                    FinishResult = result;
                 }
                 screenBuffer.WriteAnswer(FinishResult);
             }

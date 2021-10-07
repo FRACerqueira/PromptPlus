@@ -6,7 +6,7 @@
 [**BaseOptions**](baseoptions)
 
 ## Documentation
-Control Password. Generic input password with input validator and show/hide(optional) input value.
+Control Input. Generic input password with input validator and show/hide(optional) input value.
 
 ![](./images/Password.gif)
 
@@ -18,8 +18,8 @@ Control Password. Generic input password with input validator and show/hide(opti
 [**Top**](#promptplus--password)
 
 ```csharp
-Input<T>(InputOptions options, CancellationToken? cancellationToken = null)
-Input<T>(Action<InputOptions> configure, CancellationToken? cancellationToken = null)
+Input(InputOptions options, CancellationToken? cancellationToken = null)
+Input(Action<InputOptions> configure, CancellationToken? cancellationToken = null)
 ```
 
 ```csharp

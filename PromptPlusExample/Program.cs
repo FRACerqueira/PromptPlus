@@ -467,7 +467,7 @@ namespace PromptPlusExample
 
             Console.WriteLine("Imported Validators of Myclass, property MyInput:");
             Console.WriteLine("private class MylCass \n{\n   [Required(ErrorMessage = \"{0} is required!\")] \n   [MinLength(3, ErrorMessage = \"Min. Length = 3.\")] \n   [MaxLength(5, ErrorMessage = \"Max. Length = 5.\")] \n   [Display(Prompt = \"My Input\")]\n   public string MyInput { get; set; }\n}");
-            var name = PromptPlus.Input<string>("Input Value for MyInput", null, validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
+            var name = PromptPlus.Input("Input Value for MyInput", null, validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
             if (name.IsAborted)
             {
                 return;
@@ -487,7 +487,7 @@ namespace PromptPlusExample
 
         private void RunInputSample()
         {
-            var name = PromptPlus.Input<string>("What's your name?", "Peter Parker", validators: new[] { Validators.Required(), Validators.MinLength(3) }, cancellationToken: _stopApp);
+            var name = PromptPlus.Input("What's your name?", "Peter Parker", validators: new[] { Validators.Required(), Validators.MinLength(3) }, cancellationToken: _stopApp);
             if (name.IsAborted)
             {
                 return;
@@ -543,15 +543,22 @@ namespace PromptPlusExample
             Console.WriteLine("Press any key to start...");
             Console.ReadKey(true);
 
-            var progress = PromptPlus.WaitProcess("My Task", async () =>
-                {
-                    await Task.Delay(10000);
-                    return "Done";
-                }, cancellationToken: _stopApp);
-            if (progress.IsAborted)
+            var process = PromptPlus.WaitProcess("phase 1", new SingleProcess
             {
-                Console.WriteLine($"Your task aborted.");
-            }
+                ProcessToRun = (_stopApp) =>
+                {
+                    _stopApp.WaitHandle.WaitOne(4000);
+                    if (_stopApp.IsCancellationRequested)
+                    {
+                        return Task.FromResult<object>("canceled");
+                    }
+                    return Task.FromResult<object>("Done");
+                },
+            }, cancellationToken: _stopApp);
+
+            var aux = process.Value.First();
+
+            Console.WriteLine($"Result task ({aux.ProcessId}) : {aux.TextResult}. Property IsCanceled = {aux.IsCanceled}");
         }
 
         private void RunWaitManyProcessSample()
@@ -559,40 +566,51 @@ namespace PromptPlusExample
             Console.WriteLine("Press any key to start...");
             Console.ReadKey(true);
 
-            var progress = PromptPlus.WaitProcess("My Tasks(3) Async", new List<SingleProcess<string>>
+            var Process = PromptPlus.WaitProcess("My Tasks(3) Async", new List<SingleProcess>
             {
-                new SingleProcess<string>
-                {
+                new SingleProcess                {
                      ProcessId = "Task1",
-                     ProcessToRun = async () =>
+                     ProcessToRun = (_stopApp) =>
                      {
-                         await Task.Delay(10000);
-                         return "Done";
+                         _stopApp.WaitHandle.WaitOne(10000);
+                         if (_stopApp.IsCancellationRequested)
+                         {
+                            return Task.FromResult<object>("canceled");
+                         }
+                         return Task.FromResult<object>("Done");
                      }
                 },
-                new SingleProcess<string>
+                new SingleProcess
                 {
                      ProcessId = "Task2",
-                     ProcessToRun = async () =>
+                     ProcessToRun = (_stopApp) =>
                      {
-                         await Task.Delay(5000);
-                         return "Done";
+                         _stopApp.WaitHandle.WaitOne(5000);
+                         if (_stopApp.IsCancellationRequested)
+                         {
+                            return Task.FromResult<object>(-1);
+                         }
+                         return Task.FromResult<object>(1);
                      }
                 },
-                new SingleProcess<string>
+                new SingleProcess
                 {
                      ProcessId = "Task3",
-                     ProcessToRun = async () =>
+                     ProcessToRun = (_stopApp) =>
                      {
-                         await Task.Delay(7000);
-                         return "Done";
+                         _stopApp.WaitHandle.WaitOne(7000);
+                         if (_stopApp.IsCancellationRequested)
+                         {
+                            return Task.FromResult<object>("Canceled");
+                         }
+                         return Task.FromResult<object>("Done");
                      }
                 },
             }
             , cancellationToken: _stopApp);
-            if (progress.IsAborted)
+            foreach (var item in Process.Value)
             {
-                return;
+                Console.WriteLine($"Result tasks ({item.ProcessId}) : {item.ValueProcess}");
             }
         }
 
@@ -604,6 +622,7 @@ namespace PromptPlusExample
             var progress = PromptPlus.Progressbar("Processing Tasks", UpdateSampleHandlerAsync, 0, cancellationToken: _stopApp);
             if (progress.IsAborted)
             {
+                Console.WriteLine($"Your result is: {progress.Value.Message} Canceled!");
                 return;
             }
             Console.WriteLine($"Your result is: {progress.Value.Message}");
@@ -739,10 +758,10 @@ namespace PromptPlusExample
         {
             var steps = new List<IFormPlusBase>
             {
-                PromptPlus.Pipe.Input<string>(new InputOptions { Message = "Your first name (empty = skip lastname)" })
+                PromptPlus.Pipe.Input(new InputOptions { Message = "Your first name (empty = skip lastname)" })
                 .Step("First Name"),
 
-                PromptPlus.Pipe.Input<string>(new InputOptions { Message = "Your last name" })
+                PromptPlus.Pipe.Input(new InputOptions { Message = "Your last name" })
                 .Step("Last Name",(res,context) =>
                 {
                     return !string.IsNullOrEmpty( ((ResultPromptPlus<string>)res[0].ValuePipe).Value);
@@ -751,8 +770,18 @@ namespace PromptPlusExample
                 PromptPlus.Pipe.MaskEdit(PromptPlus.MaskTypeDateOnly, "Your birth date",cancellationToken: _stopApp)
                 .Step("birth date"),
 
-                PromptPlus.Pipe.Progressbar("Processing Tasks ",  UpdateSampleHandlerAsync, 30)
-                .Step("Update")
+                PromptPlus.Pipe.WaitProcess("phase 1", new SingleProcess{ ProcessToRun = (_stopApp) =>
+                {
+                    _stopApp.WaitHandle.WaitOne(4000);
+                    if (_stopApp.IsCancellationRequested)
+                    {
+                        return Task.FromResult<object>("canceled");
+                    }
+                    return Task.FromResult<object>("Done");
+                } }).Step("Update phase 1"),
+
+                PromptPlus.Pipe.Progressbar("Processing Tasks ",  UpdateSampleHandlerAsync)
+                .Step("Update phase 2")
             };
             _ = PromptPlus.Pipeline(steps, _stopApp);
         }

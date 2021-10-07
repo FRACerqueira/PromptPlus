@@ -2,10 +2,11 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Input Control**](input) |
-[**BaseOptions**](baseoptions) 
+[**Password Control**](password) |
+[**BaseOptions**](baseoptions)
 
 ## Documentation
-Control Options Class for [**Input**](input). inherits from [**BaseOptions**](baseoptions)
+Control Options Class for [**Input**](input) and [**Password Control**](password). inherits from [**BaseOptions**](baseoptions)
 
 ### Properties
 [**Top**](#promptplus--inputoptions)
@@ -22,7 +23,7 @@ Control Options Class for [**Input**](input). inherits from [**BaseOptions**](ba
 	- Default Value = false
 	
 - DefaultValue
-  - Type : Object
+  - Type : string
   - Default value for input. If the input is empty and there is a DefaultValue and the all condition from Validators is true, the return will be DefaultValue
     - Default value will be ignored if IsPassword = true
 
@@ -35,6 +36,8 @@ Control Options Class for [**Input**](input). inherits from [**BaseOptions**](ba
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Input Control**](input) |
-[**BaseOptions**](baseoptions) 
+[**Password Control**](password) |
+[**BaseOptions**](baseoptions)
+
 
 

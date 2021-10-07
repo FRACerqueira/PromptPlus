@@ -276,7 +276,7 @@ controls | Details
 [Any key](anykey.md) |  Simple any key press
 [Key Press](keypress.md) | Simple specific key
 [Confirm](confirm.md) | Simple confirm with  with tool tips and language detection 
-[Input](input.md) | Generic input with input validator with tooltips
+[Input](input.md) | Input text with input validator with tooltips
 [Password](password.md) | Input password with input validator and show/hide(optional) input value
 [MaskEdit Generic](maskeditgeneric.md) | Input with masked input , tooltips and input validator
 [MaskEdit Date](maskeditdate.md) | Date input with language parameter, tooltips and input validator
@@ -313,7 +313,7 @@ private class MylCass
 ```
 ```csharp
 var inst = new MylCass();
-var name = PromptPlus.Input<string>("Input Value for MyInput", null, 
+var name = PromptPlus.Input("Input Value for MyInput", null, 
     validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
 if (name.IsAborted)
 {

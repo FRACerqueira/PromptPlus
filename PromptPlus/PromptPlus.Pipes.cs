@@ -58,26 +58,26 @@ namespace PromptPlusControls
                 return MaskEditForm(masktype, message, ammoutInteger, ammoutDecimal, defaultValue, cultureinfo, signal, showtypeinput, validators, enabledPromptTooltip, enabledAbortKey, enabledAbortAllPipes, hideAfterFinish);
             }
 
-            public static IFormPlusBase Input<T>(InputOptions options)
+            public static IFormPlusBase Input(InputOptions options)
             {
-                return InputForm<T>(options);
+                return InputForm(options);
             }
 
-            public static IFormPlusBase Input<T>(Action<InputOptions> configure)
+            public static IFormPlusBase Input(Action<InputOptions> configure)
             {
                 var options = new InputOptions();
                 configure(options);
-                return InputForm<T>(options);
+                return InputForm(options);
             }
 
-            public static IFormPlusBase Input<T>(string message, object defaultValue = null, IList<Func<object, ValidationResult>> validators = null)
+            public static IFormPlusBase Input<T>(string message, string defaultValue = null, IList<Func<object, ValidationResult>> validators = null)
             {
-                return InputForm<T>(message, defaultValue, validators, false, false);
+                return InputForm(message, defaultValue, validators, false, false);
             }
 
             public static IFormPlusBase Password(string message, bool swithVisible = true, IList<Func<object, ValidationResult>> validators = null)
             {
-                return InputForm<string>(message, null, validators, true, swithVisible);
+                return InputForm(message, null, validators, true, swithVisible);
             }
 
             public static IFormPlusBase SliderNumber<T>(SliderNumberOptions<T> options, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
@@ -151,32 +151,31 @@ namespace PromptPlusControls
                 return ProgressbarForm(title, interationId, updateHandler, width);
             }
 
-            public static IFormPlusBase WaitProcess<T>(WaitProcessOptions<T> options)
+            public static IFormPlusBase WaitProcess(string v, WaitProcessOptions options)
             {
                 return WaitProcessForm(options);
             }
 
-            public static IFormPlusBase WaitProcess<T>(Action<WaitProcessOptions<T>> configure)
+            public static IFormPlusBase WaitProcess(Action<WaitProcessOptions> configure)
             {
-                var options = new WaitProcessOptions<T>();
+                var options = new WaitProcessOptions();
                 configure(options);
                 return WaitProcessForm(options);
             }
 
-            public static IFormPlusBase WaitProcess<T>(string title, Func<Task<T>> process, Func<T, string> processTextResult = null)
+            public static IFormPlusBase WaitProcess(string title, SingleProcess process)
             {
                 return WaitProcessForm(
                     title,
-                    new List<SingleProcess<T>>()
+                    new List<SingleProcess>()
                     {
-                     new SingleProcess<T>{ ProcessToRun = process }
-                    },
-                    processTextResult);
+                        process
+                    });
             }
 
-            public static IFormPlusBase WaitProcess<T>(string title, IEnumerable<SingleProcess<T>> process, Func<T, string> processTextResult = null)
+            public static IFormPlusBase WaitProcess(string title, IEnumerable<SingleProcess> process)
             {
-                return WaitProcessForm(title, process, processTextResult);
+                return WaitProcessForm(title, process);
             }
 
             public static IFormPlusBase Confirm(ConfirmOptions options)

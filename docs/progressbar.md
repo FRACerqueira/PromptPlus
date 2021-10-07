@@ -31,7 +31,7 @@ ResultPromptPlus<ProgressBarInfo> Progressbar(string title, Func<ProgressBarInfo
 - title = Title of progress bar 
 - updateHandler = function that will be performed for each interaction
 - interationId = identification last interaction. If null value, interationId = 0 (int)
-- width = Width of Progressbar. If Width < 30, Width = 30.  If Width . 100, Width = 100
+- width = Width of Progressbar. If Width < 30, Width = 30.  If Width > 100, Width = 100
 
 ### Return
 [**Top**](#promptplus--progressbar)
@@ -44,7 +44,7 @@ ResultPromptPlus<ProgressBarInfo>
 [**Top**](#promptplus--progressbar)
 
 ```csharp
-var progress = PromptPlus.Progressbar("Processing Tasks", UpdateSampleHandlerAsync, 0, cancellationToken: _stopApp);
+var progress = PromptPlus.Progressbar("Processing Tasks", UpdateSampleHandlerAsync, cancellationToken: _stopApp);
 if (progress.IsAborted)
 {
    return;

@@ -4,49 +4,49 @@ namespace PromptPlusExample
 {
     public enum ExampleType
     {
-        [Display(Name = "Prompt: Any key")]
+        [Display(Name = "Control: Any key")]
         AnyKey,
-        [Display(Name = "Prompt: Key Press")]
+        [Display(Name = "Control: Key Press")]
         KeyPress,
-        [Display(Name = "Prompt: Confirm")]
+        [Display(Name = "Control: Confirm")]
         Confirm,
-        [Display(Name = "Prompt: MaskEdit Generic")]
+        [Display(Name = "Control: MaskEdit Generic")]
         MaskEditGeneric,
-        [Display(Name = "Prompt: MaskEdit Date")]
+        [Display(Name = "Control: MaskEdit Date")]
         MaskEditDate,
-        [Display(Name = "Prompt: MaskEdit Time")]
+        [Display(Name = "Control: MaskEdit Time")]
         MaskEditTime,
-        [Display(Name = "Prompt: MaskEdit Date and Time")]
+        [Display(Name = "Control: MaskEdit Date and Time")]
         MaskEditDateTime,
-        [Display(Name = "Prompt: MaskEdit Number")]
+        [Display(Name = "Control: MaskEdit Number")]
         MaskEditNumber,
-        [Display(Name = "Prompt: MaskEdit Currency")]
+        [Display(Name = "Control: MaskEdit Currency")]
         MaskEditCurrrency,
-        [Display(Name = "Prompt: Input - Generic")]
+        [Display(Name = "Control: Input - Text")]
         Input,
-        [Display(Name = "Prompt: Input - Password")]
+        [Display(Name = "Control: Input - Password")]
         Password,
-        [Display(Name = "Prompt: Select - IEnumerable")]
+        [Display(Name = "Control: Select - IEnumerable")]
         Select,
-        [Display(Name = "Prompt: Select - Enum")]
+        [Display(Name = "Control: Select - Enum")]
         SelectWithEnum,
-        [Display(Name = "Prompt: MultiSelect - IEnumerable")]
+        [Display(Name = "Control: MultiSelect - IEnumerable")]
         MultiSelect,
-        [Display(Name = "Prompt: MultiSelect - Enum")]
+        [Display(Name = "Control: MultiSelect - Enum")]
         MultiSelectWithEnum,
-        [Display(Name = "Prompt: List - Create IEnumerable with Free Input")]
+        [Display(Name = "Control: List - Create IEnumerable with Free Input")]
         List,
-        [Display(Name = "Prompt: ListMasked - Create IEnumerable with MaskEdit Generic")]
+        [Display(Name = "Control: ListMasked - Create IEnumerable with MaskEdit Generic")]
         ListMasked,
-        [Display(Name = "Prompt: Browser - Filter Only Folder")]
+        [Display(Name = "Control: Browser - Filter Only Folder")]
         FolderBrowser,
-        [Display(Name = "Prompt: Browser - Filter None (selected only File)")]
+        [Display(Name = "Control: Browser - Filter None (selected only File)")]
         FileBrowser,
-        [Display(Name = "Prompt: Slider Number")]
+        [Display(Name = "Control: Slider Number")]
         SliderNumber,
-        [Display(Name = "Prompt: Number Up/Down")]
+        [Display(Name = "Control: Number Up/Down")]
         NumberUpDown,
-        [Display(Name = "Prompt: Slider Switche")]
+        [Display(Name = "Control: Slider Switche")]
         SliderSwitche,
         [Display(Name = "Control: Progress Bar")]
         ProgressbarAsync,

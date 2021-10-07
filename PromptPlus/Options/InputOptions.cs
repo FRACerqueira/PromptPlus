@@ -16,7 +16,7 @@ namespace PromptPlusControls.Options
 
         public bool IsPassword { get; set; }
 
-        public object DefaultValue { get; set; }
+        public string DefaultValue { get; set; }
 
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
     }

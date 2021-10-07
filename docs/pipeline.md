@@ -36,24 +36,34 @@ ResultPromptPlus<IEnumerable<ResultPipe>>
 [**Top**](#promptplus--input)
 
 ```csharp
-var steps = new List<IFormPPlusBase>
+var steps = new List<IFormPlusBase>
 {
-    PromptPlus.Pipe.Input<string>(new InputOptions { Message = "Your first name (empty = skip lastname)" })
-        .Step("First Name"),
+    PromptPlus.Pipe.Input(new InputOptions { Message = "Your first name (empty = skip lastname)" })
+    .Step("First Name"),
 
-    PromptPlus.Pipe.Input<string>(new InputOptions { Message = "Your last name" })
-        .Step("Last Name",(res,context) =>
-        {
-            return !string.IsNullOrEmpty( ((ResultPromptPlus<string>)res[0].ValuePipe).Value);
-        }),
+    PromptPlus.Pipe.Input(new InputOptions { Message = "Your last name" })
+    .Step("Last Name",(res,context) =>
+    {
+        return !string.IsNullOrEmpty( ((ResultPromptPlus<string>)res[0].ValuePipe).Value);
+    }),
 
     PromptPlus.Pipe.MaskEdit(PromptPlus.MaskTypeDateOnly, "Your birth date",cancellationToken: _stopApp)
-        .Step("birth date"),
+    .Step("birth date"),
 
-    PromptPlus.Pipe.Progressbar("Processing Tasks ",  UpdateSampleHandlerAsync, 30)
-        .Step("Update")
+    PromptPlus.Pipe.WaitProcess("phase 1", new SingleProcess{ ProcessToRun = (_stopApp) =>
+    {
+        _stopApp.WaitHandle.WaitOne(4000);
+        if (_stopApp.IsCancellationRequested)
+        {
+            return Task.FromResult<object>("canceled");
+        }
+        return Task.FromResult<object>("Done");
+    } }).Step("Update phase 1"),
+
+    PromptPlus.Pipe.Progressbar("Processing Tasks ",  UpdateSampleHandlerAsync)
+    .Step("Update phase 2")
 };
-var pipiline = PromptPlus.Pipeline(steps, _stopApp);
+var pipeline = PromptPlus.Pipeline(steps, _stopApp);
 ```
 
 ### Links

@@ -354,27 +354,27 @@ namespace PromptPlusControls
 
         public static MaskedGenericType MaskTypeGeneric => new();
 
-        public static ResultPromptPlus<T> Input<T>(InputOptions options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<string> Input(InputOptions options, CancellationToken? cancellationToken = null)
         {
-            using var form = InputForm<T>(options);
+            using var form = InputForm(options);
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        internal static InputControl<T> InputForm<T>(InputOptions options)
+        internal static InputControl InputForm(InputOptions options)
         {
-            return new InputControl<T>(options);
+            return new InputControl(options);
         }
 
-        public static ResultPromptPlus<T> Input<T>(Action<InputOptions> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<string> Input(Action<InputOptions> configure, CancellationToken? cancellationToken = null)
         {
             var options = new InputOptions();
             configure(options);
-            return Input<T>(options, cancellationToken ?? CancellationToken.None);
+            return Input(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPromptPlus<T> Input<T>(string message, object defaultValue = null, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<string> Input(string message, string defaultValue = null, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
         {
-            using var form = InputForm<T>(message, defaultValue, validators, false, false);
+            using var form = InputForm(message, defaultValue, validators, false, false);
             return form.Start(cancellationToken ?? CancellationToken.None);
         }
 
@@ -392,10 +392,10 @@ namespace PromptPlusControls
                 options.Validators.Merge(validators);
             }
 
-            return Input<string>(options, cancellationToken ?? CancellationToken.None);
+            return Input(options, cancellationToken ?? CancellationToken.None);
         }
 
-        internal static InputControl<T> InputForm<T>(string message, object defaultValue = null, IList<Func<object, ValidationResult>> validators = null, bool ispassword = false, bool swithVisible = true)
+        internal static InputControl InputForm(string message, string defaultValue = null, IList<Func<object, ValidationResult>> validators = null, bool ispassword = false, bool swithVisible = true)
         {
             var options = new InputOptions
             {
@@ -409,7 +409,7 @@ namespace PromptPlusControls
             {
                 options.Validators.Merge(validators);
             }
-            return InputForm<T>(options);
+            return InputForm(options);
         }
 
         public static ResultPromptPlus<T> SliderNumber<T>(SliderNumberOptions<T> options, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
@@ -577,62 +577,54 @@ namespace PromptPlusControls
             return ProgressbarForm(options);
         }
 
-        public static ResultPromptPlus<IEnumerable<T>> WaitProcess<T>(WaitProcessOptions<T> options, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<ResultProcess>> WaitProcess(WaitProcessOptions options, CancellationToken? cancellationToken = null)
         {
             using var form = WaitProcessForm(options);
             var res = form.Start(cancellationToken ?? CancellationToken.None);
             if (res.IsAborted)
             {
-                return new ResultPromptPlus<IEnumerable<T>>(default, true);
+                return new ResultPromptPlus<IEnumerable<ResultProcess>>(res.Value, true);
             }
-            return new ResultPromptPlus<IEnumerable<T>>(res.Value, res.IsAborted);
+            return new ResultPromptPlus<IEnumerable<ResultProcess>>(res.Value, res.IsAborted);
         }
 
-        internal static WaitProcessControl<T> WaitProcessForm<T>(WaitProcessOptions<T> options)
+        internal static WaitProcessControl WaitProcessForm(WaitProcessOptions options)
         {
-            return new WaitProcessControl<T>(options);
+            return new WaitProcessControl(options);
         }
 
-        public static ResultPromptPlus<IEnumerable<T>> WaitProcess<T>(Action<WaitProcessOptions<T>> configure, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<ResultProcess>> WaitProcess(Action<WaitProcessOptions> configure, CancellationToken? cancellationToken = null)
         {
-            var options = new WaitProcessOptions<T>();
+            var options = new WaitProcessOptions();
 
             configure(options);
 
             return WaitProcess(options, cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPromptPlus<IEnumerable<T>> WaitProcess<T>(string title, Func<Task<T>> process, Func<T, string> processTextResult = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<ResultProcess>> WaitProcess(string title, SingleProcess process, CancellationToken? cancellationToken = null)
         {
             return WaitProcess(
                 title,
-                new List<SingleProcess<T>>()
+                new List<SingleProcess>()
                 {
-                     new SingleProcess<T>{ ProcessToRun = process }
-                },
-                processTextResult,
-                cancellationToken);
+                     process
+                }, cancellationToken);
         }
 
-        public static ResultPromptPlus<IEnumerable<T>> WaitProcess<T>(string title, IEnumerable<SingleProcess<T>> process, Func<T, string> processTextResult = null, CancellationToken? cancellationToken = null)
+        public static ResultPromptPlus<IEnumerable<ResultProcess>> WaitProcess(string title, IEnumerable<SingleProcess> process, CancellationToken? cancellationToken = null)
         {
-            using var form = WaitProcessForm(title, process, processTextResult);
+            using var form = WaitProcessForm(title, process);
             var res = form.Start(cancellationToken ?? CancellationToken.None);
-            if (res.IsAborted)
-            {
-                return new ResultPromptPlus<IEnumerable<T>>(default, true);
-            }
-            return new ResultPromptPlus<IEnumerable<T>>(res.Value, res.IsAborted);
+            return new ResultPromptPlus<IEnumerable<ResultProcess>>(res.Value, res.IsAborted);
         }
 
-        internal static WaitProcessControl<T> WaitProcessForm<T>(string title, IEnumerable<SingleProcess<T>> process, Func<T, string> processTextResult = null)
+        internal static WaitProcessControl WaitProcessForm(string title, IEnumerable<SingleProcess> process)
         {
-            Func<T, string> aux = x => x?.ToString();
-            var options = new WaitProcessOptions<T>
+            var options = new WaitProcessOptions
             {
                 Message = title,
-                Process = process,
-                ProcessTextResult = processTextResult ?? aux
+                Process = process
             };
             return WaitProcessForm(options);
         }

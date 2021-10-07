@@ -13,22 +13,23 @@ using System.Threading.Tasks;
 using PromptPlusControls.Internal;
 using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class WaitProcessControl<T> : ControlBase<IEnumerable<T>>
+    internal class WaitProcessControl : ControlBase<IEnumerable<ResultProcess>>
     {
         private const string Twirl = "|/-\\";
         private bool _notstart = true;
         private int _countRotate;
         private int _indexvisible;
         private int _pagevisible;
-        private readonly WaitProcessOptions<T> _options;
-        private readonly Dictionary<string, Task<T>> _lastresult = new();
+        private readonly WaitProcessOptions _options;
+        private readonly Dictionary<string, ResultProcess> _lastresult = new();
         private readonly List<int> _index = new();
         private readonly List<Task> _localTask = new();
 
-        public WaitProcessControl(WaitProcessOptions<T> options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
+        public WaitProcessControl(WaitProcessOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
         {
             if (options.Process == null)
             {
@@ -38,7 +39,7 @@ namespace PromptPlusControls.Controls
             {
                 if (item == null)
                 {
-                    throw new ArgumentException(nameof(SingleProcess<T>), Exceptions.Ex_WaitTaskToRun);
+                    throw new ArgumentException(nameof(SingleProcess), Exceptions.Ex_WaitTaskToRun);
                 }
             }
 
@@ -53,11 +54,19 @@ namespace PromptPlusControls.Controls
             }
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)
+        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out IEnumerable<ResultProcess> result)
         {
             if (!summary && CheckDefaultKey(GetKeyAvailable(cancellationToken)))
             {
-                result = _lastresult.Values.Select(x => x.Result);
+                result = _lastresult.Values;
+                if (!SummaryPipeLine)
+                {
+                    Task.WaitAll(_localTask.ToArray());
+                }
+                if (PipeId != null || AbortedAll)
+                {
+                    return null;
+                }
                 return false;
             }
             if (_notstart)
@@ -68,8 +77,14 @@ namespace PromptPlusControls.Controls
                     _lastresult.Add(item.ProcessId, default);
                     _localTask.Add(Task.Run(() =>
                     {
-                        _lastresult[item.ProcessId] = item.ProcessToRun.Invoke();
-                        _lastresult[item.ProcessId].Wait();
+                        var itemtask = item.ProcessToRun.Invoke(cancellationToken).Result;
+                        //for asyn task
+                        if (itemtask as Task<object> != null)
+                        {
+                            itemtask = (itemtask as Task<object>).Result;
+                        }
+                        var aux = item.ProcessTextResult(itemtask);
+                        _lastresult[item.ProcessId] = new ResultProcess(item.ProcessId, itemtask, cancellationToken.IsCancellationRequested, aux);
                     }, cancellationToken));
                 }
 
@@ -81,13 +96,13 @@ namespace PromptPlusControls.Controls
             }
             if (IsListEndStaus(_localTask.Select(x => x.Status)))
             {
-                result = _lastresult.Values.Select(x => x.Result);
+                result = _lastresult.Values;
                 _localTask.ForEach(x => x.Dispose());
                 _localTask.Clear();
                 _index.Clear();
                 return true;
             }
-            result = _lastresult.Values.Select(x => x.Result);
+            result = _lastresult.Values;
             return false;
         }
 
@@ -154,7 +169,7 @@ namespace PromptPlusControls.Controls
                     {
                         screenBuffer.WriteLineSymbolsDone();
                         screenBuffer.Write($" {item.ProcessId} : ");
-                        screenBuffer.WriteAnswer(_options.ProcessTextResult(_lastresult[item.ProcessId].Result));
+                        screenBuffer.WriteAnswer(_lastresult[item.ProcessId].TextResult);
                     }
                 }
                 else
@@ -215,16 +230,16 @@ namespace PromptPlusControls.Controls
         }
 #pragma warning restore IDE0066 // Convert switch statement to expression
 
-        public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<T> result)
+        public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<ResultProcess> result)
         {
             screenBuffer.WriteDone(_options.Message);
             if (result.Count() == 1)
             {
-                FinishResult = _options.ProcessTextResult(result.First());
+                FinishResult = result.First().TextResult;
             }
             else
             {
-                FinishResult = string.Join(", ", result.Select(x => _options.ProcessTextResult(x)));
+                FinishResult = string.Join(", ", result.Select(x => x.TextResult));
             }
             screenBuffer.WriteAnswer(FinishResult);
         }

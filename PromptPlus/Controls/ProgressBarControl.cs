@@ -51,7 +51,7 @@ namespace PromptPlusControls.Controls
             if (!summary && CheckDefaultKey(GetKeyAvailable(cancellationToken)))
             {
                 result = _laststatus;
-                if (PipeId != null)
+                if (PipeId != null || AbortedAll)
                 {
                     return null;
                 }
@@ -117,7 +117,14 @@ namespace PromptPlusControls.Controls
         public override void FinishTemplate(ScreenBuffer screenBuffer, ProgressBarInfo result)
         {
             screenBuffer.WriteDone(_options.Message);
-            screenBuffer.WriteAnswer("100%");
+            if (result.Finished)
+            {
+                screenBuffer.WriteAnswer("100%");
+            }
+            else
+            {
+                screenBuffer.WriteAnswer($"{result.PercentValue}% - {Messages.CanceledText}");
+            }
         }
 
 #pragma warning disable IDE0066 // Convert switch statement to expression

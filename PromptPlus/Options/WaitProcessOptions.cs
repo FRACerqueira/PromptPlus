@@ -4,23 +4,15 @@
 // The maintenance and evolution is maintained by the PromptPlus project under same MIT license
 // ********************************************************************************************
 
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Options
 {
-    public class WaitProcessOptions<T> : BaseOptions
+    public class WaitProcessOptions : BaseOptions
     {
         public int SpeedAnimation { get; set; } = PromptPlus.SpeedAnimation;
-        public IEnumerable<SingleProcess<T>> Process { get; set; }
-        public Func<T, string> ProcessTextResult { get; set; } = x => x.ToString();
+        public IEnumerable<SingleProcess> Process { get; set; }
     }
-
-    public class SingleProcess<T>
-    {
-        public string ProcessId { get; set; } = Guid.NewGuid().ToString();
-        public Func<Task<T>> ProcessToRun { get; set; }
-    }
-
 }
