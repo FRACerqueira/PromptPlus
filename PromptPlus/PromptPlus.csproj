@@ -28,6 +28,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="README.txt">
+      <Pack>true</Pack>
+      <PackagePath>README.txt</PackagePath>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\README.md" Pack="false" />
     <None Include="..\NugetREADME.md" Pack="true" PackagePath="\" />
     <None Include="Resources\PromptPlus.config.json" Pack="true" PackagePath="\Resources">

@@ -212,6 +212,11 @@ namespace PromptPlusControls.Internal
             EnsureTerminalPagesize();
 
             InitializeCollection();
+
+            if (Count == 1)
+            {
+                FirstItem();
+            }
         }
 
         public ArraySegment<T> ToSubset()

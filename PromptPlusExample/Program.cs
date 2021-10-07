@@ -106,7 +106,7 @@ namespace PromptPlusExample
                     continue;
                 }
 
-                Console.Clear();
+                //Console.Clear();
 
                 switch (type.Value.Value)
                 {
@@ -205,11 +205,11 @@ namespace PromptPlusExample
                 }
                 if (!_stopApp.IsCancellationRequested && !quit)
                 {
-                    Console.ReadKey(true);
-                    //if (type.Value.Value != ExampleType.AnyKey)
-                    //{
-                    //    PromptPlus.AnyKey(_stopApp);
-                    //}
+                    //Console.ReadKey(true);
+                    if (type.Value.Value != ExampleType.AnyKey)
+                    {
+                        PromptPlus.AnyKey(_stopApp);
+                    }
                 }
             }
             if (!quit)

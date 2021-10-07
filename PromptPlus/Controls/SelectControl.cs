@@ -109,7 +109,17 @@ namespace PromptPlusControls.Controls
             }
             if (Paginator.TryGetSelectedItem(out var result) && !Paginator.IsUnSelected)
             {
-                screenBuffer.WriteAnswer(_options.TextSelector(result));
+                var answ = _options.TextSelector(result);
+                var aux = _filterBuffer.ToBackwardString();
+                if (answ != aux && Paginator.Count == 1)
+                {
+                    screenBuffer.WriteFilter(aux);
+                    screenBuffer.WriteAnswer(answ.Substring(aux.Length));
+                }
+                else
+                {
+                    screenBuffer.WriteAnswer(_options.TextSelector(result));
+                }
             }
             screenBuffer.PushCursor();
             if (Paginator.IsUnSelected)
