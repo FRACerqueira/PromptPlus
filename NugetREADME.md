@@ -51,7 +51,7 @@ if (name.IsAborted)
 Console.WriteLine($"Hello, {name.Result}!");
 ```
 
-## **List Controls**
+## **Api Controls**
 
 | controls | Details |
 | --- | --- |

@@ -1,4 +1,5 @@
 ﻿**Welcome to PromptPlus**
+
 Interactive command-line  toolkit for **C#** with powerful controls.
 PromptPlus was developed in c# with the **netstandard2.1** target framework, with compatibility for:
 
@@ -9,12 +10,14 @@ PromptPlus was developed in c# with the **netstandard2.1** target framework, wit
 https://fracerqueira.github.io/PromptPlus
 
 **Relase Notes (This Version)**
+
 Enhancements
 ------------
 Select control : Enhancement UI to simlify select control when only one item on filter
 Readme.txt : Included in package (this file)
 
 **Sample Usage**
+
 //MaskEdit Generic
 var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, 
     "Inventory Number", 
@@ -56,6 +59,7 @@ if (name.IsAborted)
 Console.WriteLine($"Hello, {name.Result}!");
 
 **Supported platforms**
+
 - Windows
     - Command Prompt, PowerShell, Windows Terminal
 - Linux (Ubuntu, etc)
