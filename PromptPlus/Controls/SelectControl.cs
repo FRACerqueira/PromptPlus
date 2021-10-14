@@ -14,16 +14,26 @@ using PromptPlusControls.Options;
 
 namespace PromptPlusControls.Controls
 {
-    internal class SelectControl<T> : ControlBase<T>
+    internal class SelectControl<T> : ControlBase<T>, IDisposable
     {
         private readonly SelectOptions<T> _options;
         private readonly InputBuffer _filterBuffer = new();
+        private readonly Paginator<T> _localpaginator;
 
         public SelectControl(SelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
-            Paginator = new Paginator<T>(options.Items, options.PageSize, Optional<T>.Create(options.DefaultValue), options.TextSelector);
-            Paginator.FirstItem();
+            _localpaginator = new Paginator<T>(options.Items, options.PageSize, Optional<T>.Create(options.DefaultValue), options.TextSelector);
+            _localpaginator.FirstItem();
             _options = options;
+        }
+
+        public new void Dispose()
+        {
+            if (_localpaginator != null)
+            {
+                _localpaginator.Dispose();
+            }
+            base.Dispose();
         }
 
         public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out T result)
@@ -42,20 +52,20 @@ namespace PromptPlusControls.Controls
                 {
                     continue;
                 }
-                else if (IskeyPageNavagator(keyInfo, Paginator))
+                else if (IskeyPageNavagator(keyInfo, _localpaginator))
                 {
                     continue;
                 }
                 else if (PromptPlus.UnSelectFilter.Equals(keyInfo))
                 {
-                    Paginator.UnSelected();
+                    _localpaginator.UnSelected();
                     result = default;
                     return isvalidhit;
                 }
 
                 switch (keyInfo.Key)
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0 && Paginator.TryGetSelectedItem(out result):
+                    case ConsoleKey.Enter when keyInfo.Modifiers == 0 && _localpaginator.TryGetSelectedItem(out result):
                         return true;
                     case ConsoleKey.Enter when keyInfo.Modifiers == 0:
                     {
@@ -68,16 +78,16 @@ namespace PromptPlusControls.Controls
                         break;
                     }
                     case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_filterBuffer.IsStart:
-                        Paginator.UpdateFilter(_filterBuffer.Backward().ToString());
+                        _localpaginator.UpdateFilter(_filterBuffer.Backward().ToString());
                         break;
                     case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_filterBuffer.IsEnd:
-                        Paginator.UpdateFilter(_filterBuffer.Forward().ToString());
+                        _localpaginator.UpdateFilter(_filterBuffer.Forward().ToString());
                         break;
                     case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_filterBuffer.IsStart:
-                        Paginator.UpdateFilter(_filterBuffer.Backspace().ToString());
+                        _localpaginator.UpdateFilter(_filterBuffer.Backspace().ToString());
                         break;
                     case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_filterBuffer.IsEnd:
-                        Paginator.UpdateFilter(_filterBuffer.Delete().ToString());
+                        _localpaginator.UpdateFilter(_filterBuffer.Delete().ToString());
                         break;
                     default:
                     {
@@ -85,7 +95,7 @@ namespace PromptPlusControls.Controls
                         {
                             if (!char.IsControl(keyInfo.KeyChar))
                             {
-                                Paginator.UpdateFilter(_filterBuffer.Insert(keyInfo.KeyChar).ToString());
+                                _localpaginator.UpdateFilter(_filterBuffer.Insert(keyInfo.KeyChar).ToString());
                             }
                             else
                             {
@@ -103,15 +113,15 @@ namespace PromptPlusControls.Controls
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
-            if (Paginator.IsUnSelected)
+            if (_localpaginator.IsUnSelected)
             {
                 screenBuffer.Write(_filterBuffer.ToBackwardString());
             }
-            if (Paginator.TryGetSelectedItem(out var result) && !Paginator.IsUnSelected)
+            if (_localpaginator.TryGetSelectedItem(out var result) && !_localpaginator.IsUnSelected)
             {
                 var answ = _options.TextSelector(result);
                 var aux = _filterBuffer.ToBackwardString();
-                if (answ != aux && Paginator.Count == 1)
+                if (answ != aux && _localpaginator.Count == 1)
                 {
                     screenBuffer.WriteFilter(aux);
                     screenBuffer.WriteAnswer(answ.Substring(aux.Length));
@@ -122,7 +132,7 @@ namespace PromptPlusControls.Controls
                 }
             }
             screenBuffer.PushCursor();
-            if (Paginator.IsUnSelected)
+            if (_localpaginator.IsUnSelected)
             {
                 screenBuffer.Write(_filterBuffer.ToForwardString());
             }
@@ -133,7 +143,7 @@ namespace PromptPlusControls.Controls
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLine();
-                    if (Paginator.PageCount > 1)
+                    if (_localpaginator.PageCount > 1)
                     {
                         screenBuffer.WriteHint(Messages.KeyNavPaging);
                     }
@@ -148,11 +158,11 @@ namespace PromptPlusControls.Controls
                 screenBuffer.WriteLineFilter(Messages.ItemsFiltered);
                 screenBuffer.WriteFilter(_filterBuffer.ToString());
             }
-            var subset = Paginator.ToSubset();
+            var subset = _localpaginator.ToSubset();
             foreach (var item in subset)
             {
                 var value = _options.TextSelector(item);
-                if (Paginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<T>.Default.Equals(item, selectedItem))
+                if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<T>.Default.Equals(item, selectedItem))
                 {
                     screenBuffer.WriteLineSelector(value);
                 }
@@ -161,9 +171,9 @@ namespace PromptPlusControls.Controls
                     screenBuffer.WriteLineNotSelector(value);
                 }
             }
-            if (Paginator.PageCount > 1)
+            if (_localpaginator.PageCount > 1)
             {
-                screenBuffer.WriteLinePagination(Paginator.PaginationMessage());
+                screenBuffer.WriteLinePagination(_localpaginator.PaginationMessage());
             }
         }
 

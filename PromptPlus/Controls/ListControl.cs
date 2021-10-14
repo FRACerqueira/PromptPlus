@@ -15,7 +15,7 @@ using PromptPlusControls.Resources;
 
 namespace PromptPlusControls.Controls
 {
-    internal class ListControl<T> : ControlBase<IEnumerable<T>>
+    internal class ListControl<T> : ControlBase<IEnumerable<T>>, IDisposable
     {
         private Paginator<T> _localpaginator;
         private readonly ListOptions<T> _options;
@@ -38,6 +38,15 @@ namespace PromptPlusControls.Controls
             _options = options;
             _localpaginator = new Paginator<T>(_inputItems, options.PageSize, Optional<T>.s_empty, options.TextSelector);
             _localpaginator.FirstItem();
+        }
+
+        public new void Dispose()
+        {
+            if (_localpaginator != null)
+            {
+                _localpaginator.Dispose();
+            }
+            base.Dispose();
         }
 
         public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)

@@ -40,21 +40,6 @@ namespace PromptPlusControls.Internal
             _esckeyCancelation = new CancellationTokenSource();
         }
 
-        private Paginator<T> _paginator;
-
-        public Paginator<T> Paginator
-        {
-            get { return _paginator; }
-            set
-            {
-                if (_paginator != null)
-                {
-                    _paginator.Dispose();
-                }
-                _paginator = value;
-            }
-        }
-
         public string PipeId { get; set; }
 
         public string PipeTitle { get; set; }
@@ -86,10 +71,6 @@ namespace PromptPlusControls.Internal
         public void Dispose()
         {
             _screenrender.Dispose();
-            if (Paginator != null)
-            {
-                Paginator.Dispose();
-            }
             if (_esckeyCancelation != null)
             {
                 _esckeyCancelation.Dispose();
@@ -97,7 +78,6 @@ namespace PromptPlusControls.Internal
 
             Thread.CurrentThread.CurrentCulture = PromptPlus.AppCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.AppCultureUI;
-
         }
 
         public ResultPromptPlus<T> StartPipeline(Action<ScreenBuffer> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)

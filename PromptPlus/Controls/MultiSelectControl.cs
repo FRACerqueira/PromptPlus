@@ -15,7 +15,7 @@ using PromptPlusControls.Resources;
 
 namespace PromptPlusControls.Controls
 {
-    internal class MultiSelectControl<T> : ControlBase<IEnumerable<T>>
+    internal class MultiSelectControl<T> : ControlBase<IEnumerable<T>>, IDisposable
     {
 
         private readonly MultiSelectOptions<T> _options;
@@ -41,6 +41,15 @@ namespace PromptPlusControls.Controls
                 _selectedItems.AddRange(options.DefaultValues);
             }
             _options = options;
+        }
+
+        public new void Dispose()
+        {
+            if (_localpaginator != null)
+            {
+                _localpaginator.Dispose();
+            }
+            base.Dispose();
         }
 
         public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)

@@ -19,7 +19,7 @@ using PromptPlusControls.ValueObjects;
 namespace PromptPlusControls.Controls
 {
 
-    internal class BrowserControl : ControlBase<ResultBrowser>
+    internal class BrowserControl : ControlBase<ResultBrowser>, IDisposable
     {
         private ResultBrowser _defaultopt;
         private string _currentPath;
@@ -44,6 +44,15 @@ namespace PromptPlusControls.Controls
                 default:
                     throw new NotImplementedException(string.Format(Exceptions.Ex_FileBrowserNotImplemented, _options.Filter));
             }
+        }
+
+        public new void Dispose()
+        {
+            if (_paginator != null)
+            {
+                _paginator.Dispose();
+            }
+            base.Dispose();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultBrowser result)
