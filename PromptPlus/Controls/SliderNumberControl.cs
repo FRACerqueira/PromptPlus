@@ -1,60 +1,52 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
-using System.Linq.Expressions;
 using System.Threading;
 
 using PromptPlusControls.Internal;
-using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class SliderNumberControl<T> : ControlBase<T> where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+    internal class SliderNumberControl : ControlBase<double>, IControlSliderNumber
     {
-        private T _currentValue;
-        private readonly SliderNumberOptions<T> _options;
-        private readonly double _stepSlider;
-        private readonly T _largestep;
-        private readonly T _shortstep;
-        private readonly T _zerovalue = (T)Convert.ChangeType(0, typeof(T));
+        private readonly SliderNumberOptions _options;
+        private double _currentValue;
+        private double _stepSlider;
+        private double _largestep;
+        private double _shortstep;
 
-        public SliderNumberControl(SliderNumberOptions<T> options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public SliderNumberControl(SliderNumberOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
-            if (!IsValidType())
-            {
-                throw new ArgumentException(string.Format(Exceptions.Ex_SliderNumberType, typeof(T).UnderlyingSystemType));
-            }
-            if (options.Min.CompareTo(_zerovalue) < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(options.Min), string.Format(Exceptions.Ex_MinArgumentOutOfRange, options.Min));
-            }
-            if (options.Min.CompareTo(options.Max) >= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(options.Max), string.Format(Exceptions.Ex_MaxArgumentOutOfRange, options.Max, options.Min));
-            }
-            if (options.Value.CompareTo(options.Max) > 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(options.Value), string.Format(Exceptions.Ex_ValueArgumentOutOfRangeMax, options.Value, options.Max, options.Max));
-            }
-            if (options.Value.CompareTo(options.Min) < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(options.Value), string.Format(Exceptions.Ex_ValueArgumentOutOfRangeMin, options.Value, options.Min, options.Max));
-            }
-            if (options.ShortStep.CompareTo(_zerovalue) < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(options.ShortStep), Exceptions.Ex_ShortvalueArgumentOutOfRangeMin);
-            }
-            if (options.ShortStep.CompareTo(options.Max) >= 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(options.ShortStep), string.Format(Exceptions.Ex_ShortvalueArgumentOutOfRangeMax, options.Max));
-            }
-
             _options = options;
+        }
+
+        public override void InitControl()
+        {
+            if (_options.Min.CompareTo(_options.Max) >= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(_options.Max), string.Format(Exceptions.Ex_MaxArgumentOutOfRange, _options.Max, _options.Min));
+            }
+            if (_options.Value.CompareTo(_options.Max) > 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(_options.Value), string.Format(Exceptions.Ex_ValueArgumentOutOfRangeMax, _options.Value, _options.Max, _options.Max));
+            }
+            if (_options.Value.CompareTo(_options.Min) < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(_options.Value), string.Format(Exceptions.Ex_ValueArgumentOutOfRangeMin, _options.Value, _options.Min, _options.Max));
+            }
+            if (_options.ShortStep < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(_options.ShortStep), Exceptions.Ex_ShortvalueArgumentOutOfRangeMin);
+            }
+            if (_options.ShortStep.CompareTo(_options.Max) >= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(_options.ShortStep), string.Format(Exceptions.Ex_ShortvalueArgumentOutOfRangeMax, _options.Max));
+            }
             _shortstep = _options.ShortStep;
             if (_options.LargeStep.HasValue)
             {
@@ -62,9 +54,9 @@ namespace PromptPlusControls.Controls
             }
             else
             {
-                _largestep = (T)Convert.ChangeType(int.Parse(_options.Max.ToString()) / 10, typeof(T));
+                _largestep = int.Parse(_options.Max.ToString()) / 10;
             }
-            if (_largestep.Equals(_zerovalue))
+            if (_largestep.Equals(0))
             {
                 _largestep = _shortstep;
             }
@@ -72,7 +64,7 @@ namespace PromptPlusControls.Controls
             _stepSlider = TicketStep;
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out T result)
+        public override bool? TryResult(bool summary, CancellationToken cancellationToken, out double result)
         {
             bool? isvalidhit = false;
             if (summary)
@@ -93,7 +85,7 @@ namespace PromptPlusControls.Controls
                 {
                     case ConsoleKey.Enter when keyInfo.Modifiers == 0:
                     {
-                        result = TypeHelper<T>.ConvertTo(ValueToString(_currentValue));
+                        result = double.Parse(ValueToString(_currentValue));
                         return true;
                     }
                     case ConsoleKey.DownArrow when keyInfo.Modifiers == 0 && _options.Type == SliderNumberType.UpDown:
@@ -104,7 +96,7 @@ namespace PromptPlusControls.Controls
                             isvalidhit = null;
                             break;
                         }
-                        var aux = Substract(_currentValue, _shortstep);
+                        var aux = _currentValue - _shortstep;
                         if (aux.CompareTo(_options.Min) < 0)
                         {
                             aux = _options.Min;
@@ -119,7 +111,7 @@ namespace PromptPlusControls.Controls
                             isvalidhit = null;
                             break;
                         }
-                        var aux = Substract(_currentValue, _largestep);
+                        var aux = _currentValue - _largestep;
                         if (aux.CompareTo(_options.Min) < 0)
                         {
                             aux = _options.Min;
@@ -135,7 +127,7 @@ namespace PromptPlusControls.Controls
                             isvalidhit = null;
                             break;
                         }
-                        var aux = Add(_currentValue, _shortstep);
+                        var aux = _currentValue + _shortstep;
                         if (aux.CompareTo(_options.Max) > 0)
                         {
                             aux = _options.Max;
@@ -150,7 +142,7 @@ namespace PromptPlusControls.Controls
                             isvalidhit = null;
                             break;
                         }
-                        var aux = Add(_currentValue, _largestep);
+                        var aux = _currentValue + _largestep;
                         if (aux.CompareTo(_options.Max) > 0)
                         {
                             aux = _options.Max;
@@ -196,7 +188,7 @@ namespace PromptPlusControls.Controls
                 }
 
                 screenBuffer.WriteHint($" | {_options.Min} ");
-                if (valuestep > 0)
+                if (_currentValue > 0)
                 {
                     screenBuffer.WriteSliderOn(valuestep);
                     screenBuffer.WriteSliderOff(_options.Witdth - valuestep);
@@ -227,13 +219,13 @@ namespace PromptPlusControls.Controls
             }
         }
 
-        public override void FinishTemplate(ScreenBuffer screenBuffer, T result)
+        public override void FinishTemplate(ScreenBuffer screenBuffer, double result)
         {
             screenBuffer.WriteDone(_options.Message);
             screenBuffer.WriteAnswer(ValueToString(result));
         }
 
-        private string ValueToString(T value)
+        private string ValueToString(double value)
         {
             var tmp = value.ToString();
             var decsep = PromptPlus.DefaultCulture.NumberFormat.NumberDecimalSeparator;
@@ -268,61 +260,99 @@ namespace PromptPlusControls.Controls
             return tmp;
         }
 
-        private static T Add(T a, T b)
-        {
-            // Declare the parameters
-            var paramA = Expression.Parameter(typeof(T), "a");
-            var paramB = Expression.Parameter(typeof(T), "b");
-
-            // Add the parameters together
-            var body = Expression.Add(paramA, paramB);
-
-            // Compile it
-            var add = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
-
-            // Call it
-            return add(a, b);
-        }
-
-        private static T Substract(T a, T b)
-        {
-            // Declare the parameters
-            var paramA = Expression.Parameter(typeof(T), "a");
-            var paramB = Expression.Parameter(typeof(T), "b");
-
-            // Add the parameters together
-            var body = Expression.Subtract(paramA, paramB);
-
-            // Compile it
-            var substract = Expression.Lambda<Func<T, T, T>>(body, paramA, paramB).Compile();
-
-            // Call it
-            return substract(a, b);
-        }
-
-        private int CurrentValueStep(T value) => (int)Math.Round((_stepSlider * double.Parse(value.ToString())), _options.FracionalDig);
+        private int CurrentValueStep(double value) => (int)Math.Round((_stepSlider * double.Parse(value.ToString())), _options.FracionalDig);
 
         private double TicketStep => double.Parse(_options.Witdth.ToString()) / (int.Parse(_options.Max.ToString()) - int.Parse(_options.Min.ToString()));
 
-        private bool IsValidType()
+        #region IControlSliderNumber
+
+        public IControlSliderNumber Prompt(string value)
         {
-            var type = typeof(T).UnderlyingSystemType;
-            var result = false;
-            switch (Type.GetTypeCode(type))
-            {
-                case TypeCode.Decimal:
-                case TypeCode.Double:
-                case TypeCode.Int16:
-                case TypeCode.Int32:
-                case TypeCode.Int64:
-                case TypeCode.Single:
-                case TypeCode.UInt16:
-                case TypeCode.UInt32:
-                case TypeCode.UInt64:
-                    result = true;
-                    break;
-            }
-            return result;
+            _options.Message = value;
+            return this;
         }
+
+        public IControlSliderNumber Default(double value)
+        {
+            _options.Value = value;
+            return this;
+        }
+
+        public IControlSliderNumber Ranger(double minvalue, double maxvalue)
+        {
+            if (minvalue >= maxvalue)
+            {
+                throw new ArgumentException(Exceptions.Ex_InvalidValue, $"{minvalue},{maxvalue}");
+            }
+            _options.Min = minvalue;
+            _options.Max = maxvalue;
+            return this;
+        }
+
+
+        public IControlSliderNumber Step(double value)
+        {
+            _options.ShortStep = value;
+            return this;
+        }
+
+        public IControlSliderNumber LargeStep(double value)
+        {
+            _options.LargeStep = value;
+            return this;
+        }
+
+        public IControlSliderNumber FracionalDig(int value)
+        {
+            _options.FracionalDig = value;
+            return this;
+        }
+
+        public IPromptControls<double> EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            return this;
+        }
+
+        public IPromptControls<double> EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            return this;
+        }
+
+        public IPromptControls<double> EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            return this;
+        }
+
+        public IPromptControls<double> HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            return this;
+        }
+
+        public ResultPromptPlus<double> Run(CancellationToken? value = null)
+        {
+            InitControl();
+            return Start(value ?? CancellationToken.None);
+        }
+
+        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        {
+            PipeCondition = condition;
+            return this;
+        }
+
+        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            ContextState = state;
+            return this;
+        }
+
+        #endregion
+
     }
 }

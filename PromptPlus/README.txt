@@ -11,18 +11,25 @@ https://fracerqueira.github.io/PromptPlus
 
 **Relase Notes (This Version)**
 
-Enhancements
-------------
-Select control : Enhancement UI to simlify select control when only one item on filter
-Readme.txt : Included in package (this file)
+Enhancements / **Break changes and behavior**
+-----------------------------------------
+
+- Refactored all controls to fluent-interface syntax to improve extensibility points.
+- Adjusted type return to optimize SliderNumber control.
+- Removed pipeline namespace. Now the pipeline syntax is the same as for controls.
+- Removed access to options classes, unified by fluent-interfaces model
+- Changed Type return: ResultMasked for ListMasked Control.
+- Expanded ListMasked control to support all types of MaskEdit.
+- Simplified Select and Multiselect controls for native support of enum types.
+- Changed pipeline extension "Step" to fuent-interface method "AddPipe".
+- Revised all documentation for new changes
 
 **Sample Usage**
 
 //MaskEdit Generic
-var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, 
-    "Inventory Number", 
-    @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", 
-    cancellationToken: _stopApp);
+var mask = PromptPlus.MaskEdit(MaskedType.Generic, "Inventory Number")
+    .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
+    .Run(_stopApp);
 
 if (mask.IsAborted)
 {
@@ -38,7 +45,8 @@ else
 }
 
 //AnyKey
-var key = PromptPlus.AnyKey(_stopApp);
+var key = PromptPlus.KeyPress()
+        .Run(_stopApp);
 
 if (key.IsAborted)
 {
@@ -48,9 +56,11 @@ Console.WriteLine($"Hello, key pressed");
 
 
 //input
-var name = PromptPlus.Input(
-    "What's your name?", 
-    validators: new[] { Validators.Required(), Validators.MinLength(3) });
+var name = PromptPlus.Input("What's your name?")
+    .Default("Peter Parker")
+    .Addvalidator(PromptValidators.Required())
+    .Addvalidator(PromptValidators.MinLength(3))
+    .Run(_stopApp);
 
 if (name.IsAborted)
 {

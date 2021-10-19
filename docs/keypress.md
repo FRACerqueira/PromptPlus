@@ -1,47 +1,46 @@
-# PromptPlus # Key Press
+# PromptPlus # KeyPress
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**KeyPress Options**](keypressoptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
 
 ## Documentation
 Control KeyPress. Simple specific key.
 
 ![](./images/KeyPress.gif)
 
-### Options
-
-[**KeyPress Options**](keypressoptions)
-
 ### Syntax
-[**Top**](#promptplus--key-press)
+[**Top**](#promptplus--keypress)
 
 ```csharp
-//Note: If KeyPressOptions is default create eg.: new KeyPressOptions(), will be the same as the AnyKey control.
-KeyPress(KeyPressOptions options, CancellationToken? cancellationToken = null)
-KeyPress(Action<KeyPressOptions> configure, CancellationToken? cancellationToken = null)
+KeyPress(char? Keypress = null, ConsoleModifiers? keymodifiers = null)
 ````
 
-```csharp
-//Note: The HideAfterFinish property in KeyPress Options will always be True.
-KeyPress(string message, char? Keypress, ConsoleModifiers? keymodifiers = null, CancellationToken? cancellationToken = null)
-````
+### Methods
+[**Top**](#promptplus--keypress)
+
+- Prompt(string value)
+    - set prompt message
 
 ### Return
-[**Top**](#promptplus--key-press)
+[**Top**](#promptplus--keypress)
 
 ```csharp
-ResultPromptPlus<bool>
+IControlKeyPress           //for Control Methods
+IPromptControls<bool>      //for others Base Methods
+ResultPromptPlus<bool>     //for Base Method Run, when execution is direct 
+IPromptPipe                //for Pipe condition 
+IFormPlusBase              //for only definition of pipe to Pipeline Control
 ````
 
 ### Sample
-[**Top**](#promptplus--key-press)
+[**Top**](#promptplus--keypress)
 
 ```csharp
-var key = PromptPlus.KeyPress("Press Ctrl-B to continue", 'B', 
-   ConsoleModifiers.Control, 
-   cancellationToken:_stopApp);
+var key = PromptPlus.KeyPress('B', ConsoleModifiers.Control)
+    .Prompt("Press Ctrl-B to continue")
+    .Run(_stopApp);
 if (key.IsAborted)
 {
     return;
@@ -53,6 +52,5 @@ Console.WriteLine($"Hello,  key Ctrl-B pressed");
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**KeyPress Options**](keypressoptions) |
-[**BaseOptions**](baseoptions)
-
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)

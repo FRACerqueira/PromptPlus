@@ -15,16 +15,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 	ProjectSection(SolutionItems) = preProject
 		docs\_config.yml = docs\_config.yml
 		docs\anykey.md = docs\anykey.md
-		docs\baseoptions.md = docs\baseoptions.md
+		docs\basemethods.md = docs\basemethods.md
 		docs\browser.md = docs\browser.md
-		docs\browseroptions.md = docs\browseroptions.md
 		docs\confirm.md = docs\confirm.md
-		docs\confirmoptions.md = docs\confirmoptions.md
 		docs\index.md = docs\index.md
 		docs\input.md = docs\input.md
-		docs\inputoptions.md = docs\inputoptions.md
 		docs\keypress.md = docs\keypress.md
-		docs\keypressoptions.md = docs\keypressoptions.md
 		docs\list.md = docs\list.md
 		docs\listmasked.md = docs\listmasked.md
 		docs\listoptions.md = docs\listoptions.md
@@ -37,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\password.md = docs\password.md
 		docs\pipeline.md = docs\pipeline.md
 		docs\pipelinestep.md = docs\pipelinestep.md
+		pipemethods.md = pipemethods.md
 		docs\progressbar.md = docs\progressbar.md
 		docs\progressbarinfo.md = docs\progressbarinfo.md
 		docs\progressbaroptions.md = docs\progressbaroptions.md
@@ -107,7 +104,7 @@ Global
 		{0EBFCDFA-D7BC-448D-B396-7179B9B32577} = {640ED284-A90B-43B8-ABA5-66F769752DDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_ShowErrorsInErrorList = False
 		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
+		RESX_ShowErrorsInErrorList = False
 	EndGlobalSection
 EndGlobal

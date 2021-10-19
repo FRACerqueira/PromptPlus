@@ -1,17 +1,17 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 
+using PromptPlusControls.Internal;
 using PromptPlusControls.ValueObjects;
 
-namespace PromptPlusControls.Internal
+namespace PromptPlusControls.Controls
 {
     internal abstract class ControlBase<T> : IFormPlusBase
     {
@@ -40,13 +40,13 @@ namespace PromptPlusControls.Internal
             _esckeyCancelation = new CancellationTokenSource();
         }
 
-        public string PipeId { get; set; }
+        public string PipeId { get; internal set; }
 
-        public string PipeTitle { get; set; }
+        public string PipeTitle { get; internal set; }
 
-        public object ContextState { get; set; }
+        public object ContextState { get; internal set; }
 
-        public Func<ResultPipe[], object, bool> PipeCondition { get; set; }
+        public Func<ResultPipe[], object, bool> PipeCondition { get; internal set; }
 
         public bool OverPipeLine => !string.IsNullOrEmpty(PipeId);
 
@@ -139,7 +139,7 @@ namespace PromptPlusControls.Internal
                         }
                         else
                         {
-                            hit = TryGetResult(false, _linkedCts.Token, out result);
+                            hit = TryResult(false, _linkedCts.Token, out result);
                             if (!hit.HasValue && PromptPlus.EnabledBeep && PipeId == null)
                             {
                                 _screenrender.Beep();
@@ -218,7 +218,7 @@ namespace PromptPlusControls.Internal
                         {
                             _screenrender.ShowCursor();
                         }
-                        hit = TryGetResult(false, _linkedCts.Token, out result);
+                        hit = TryResult(false, _linkedCts.Token, out result);
                         if (!hit.HasValue && PromptPlus.EnabledBeep)
                         {
                             _screenrender.Beep();
@@ -265,7 +265,9 @@ namespace PromptPlusControls.Internal
             return new ResultPromptPlus<T>(result, true);
         }
 
-        public abstract bool? TryGetResult(bool IsSummary, CancellationToken stoptoken, out T result);
+        public abstract bool? TryResult(bool IsSummary, CancellationToken stoptoken, out T result);
+
+        public abstract void InitControl();
 
         public abstract void InputTemplate(ScreenBuffer screenBuffer);
 
@@ -405,7 +407,7 @@ namespace PromptPlusControls.Internal
                     paginator.NextPage(IndexOption.FirstItemWhenHasPages);
                     continue;
                 }
-                var result = TryGetResult(true, stoptoken, out _);
+                var result = TryResult(true, stoptoken, out _);
                 if (result.HasValue && result.Value)
                 {
                     SummaryPipeLine = false;

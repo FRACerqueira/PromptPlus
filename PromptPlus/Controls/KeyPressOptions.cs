@@ -3,14 +3,18 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using System.Collections.Generic;
+using System;
 
-namespace PromptPlusControls.Internal
+namespace PromptPlusControls.Controls
 {
-    internal class ScreenBuffer : List<IList<TextInfo>>
+    internal class KeyPressOptions : BaseOptions
     {
-        public ScreenBuffer() : base(new List<IList<TextInfo>>() { new List<TextInfo>() })
+        public KeyPressOptions() : base(true)
         {
         }
+
+        public ConsoleModifiers? KeyModifiers { get; set; }
+
+        public char? KeyPress { get; set; }
     }
 }

@@ -1,8 +1,7 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
+using PromptPlusControls.Controls;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 

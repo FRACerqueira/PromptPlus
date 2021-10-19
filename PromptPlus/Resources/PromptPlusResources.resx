@@ -318,4 +318,10 @@
   <data name="InvalidTypeNumber" xml:space="preserve">
     <value>Invalid value for number</value>
   </data>
+  <data name="FinishResultList" xml:space="preserve">
+    <value>Finish with {0} items</value>
+  </data>
+  <data name="FinishResultTasks" xml:space="preserve">
+    <value>Finish all tasks({0})</value>
+  </data>
 </root>

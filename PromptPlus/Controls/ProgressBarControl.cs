@@ -1,42 +1,43 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
 using PromptPlusControls.Internal;
-using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class ProgressBarControl : ControlBase<ProgressBarInfo>
+    internal class ProgressBarControl : ControlBase<ProgressBarInfo>, IControlProgressbar
     {
         private ProgressBarInfo _laststatus;
         private Task<ProgressBarInfo> _localTask;
         private bool _newInteration = true;
         private readonly ProgressBarOptions _options;
-        private readonly double _step;
+        private double _step;
 
         public ProgressBarControl(ProgressBarOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
         {
-            if (options.UpdateHandler == null)
-            {
-                throw new ArgumentException(nameof(options.UpdateHandler), Exceptions.Ex_UpdateHandlerProgressBar);
-            }
-
             _options = options;
+        }
 
+        public override void InitControl()
+        {
+            if (_options.UpdateHandler == null)
+            {
+                throw new ArgumentException(nameof(_options.UpdateHandler), Exceptions.Ex_UpdateHandlerProgressBar);
+            }
+            _options.InterationId ??= 0;
             _step = double.Parse(_options.Witdth.ToString()) / 100;
             _laststatus = new ProgressBarInfo(0, false, "", _options.InterationId);
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out ProgressBarInfo result)
+        public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ProgressBarInfo result)
         {
 
             if (_laststatus.Finished)
@@ -127,20 +128,87 @@ namespace PromptPlusControls.Controls
             }
         }
 
-#pragma warning disable IDE0066 // Convert switch statement to expression
         private bool IsEndStaus(TaskStatus status)
         {
-            switch (status)
+            return status switch
             {
-                case TaskStatus.Canceled:
-                case TaskStatus.Faulted:
-                case TaskStatus.RanToCompletion:
-                    return true;
-                default:
-                    return false;
-            }
+                TaskStatus.Canceled or TaskStatus.Faulted or TaskStatus.RanToCompletion => true,
+                _ => false,
+            };
         }
-#pragma warning restore IDE0066 // Convert switch statement to expression
+
+
+        #region IControlProgressbar
+
+        public IControlProgressbar Prompt(string value)
+        {
+            _options.Message = value;
+            return this;
+        }
+
+        public IControlProgressbar UpdateHandler(Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> value)
+        {
+            _options.UpdateHandler = value;
+            return this;
+        }
+
+        public IControlProgressbar Width(int value)
+        {
+            _options.Witdth = value < PromptPlus.ProgressgBarWitdth ? PromptPlus.ProgressgBarWitdth : (value > 100 ? 100 : value);
+            return this;
+        }
+
+        public IControlProgressbar StartInterationId(object value)
+        {
+            _options.InterationId = value ?? 0;
+            return this;
+        }
+
+        public IPromptControls<ProgressBarInfo> EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            return this;
+        }
+
+        public IPromptControls<ProgressBarInfo> EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            return this;
+        }
+
+        public IPromptControls<ProgressBarInfo> EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            return this;
+        }
+
+        public IPromptControls<ProgressBarInfo> HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            return this;
+        }
+
+        public ResultPromptPlus<ProgressBarInfo> Run(CancellationToken? value = null)
+        {
+            InitControl();
+            return Start(value ?? CancellationToken.None);
+        }
+
+        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        {
+            PipeCondition = condition;
+            return this;
+        }
+
+        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            ContextState = state;
+            return this;
+        }
+
+        #endregion
 
     }
 }

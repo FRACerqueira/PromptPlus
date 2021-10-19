@@ -1,8 +1,7 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -14,9 +13,9 @@ using PromptPlusControls.Internal;
 
 namespace PromptPlusControls.ValueObjects
 {
-    public static class Validators
+    public static class PromptValidators
     {
-        public static Func<object, ValidationResult> IsNumber(MaskedOptionNumberType optionmask, CultureInfo? cultureinfo = null, string errorMessage = null)
+        public static Func<object, ValidationResult> IsNumber(CultureInfo? cultureinfo = null, string errorMessage = null)
         {
             return input =>
             {
@@ -33,12 +32,7 @@ namespace PromptPlusControls.ValueObjects
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var numOk = optionmask switch
-                {
-                    MaskedOptionNumberType.Number => double.TryParse(localinput, NumberStyles.Number, cultureinfo ?? Thread.CurrentThread.CurrentUICulture, out _),
-                    MaskedOptionNumberType.Currency => double.TryParse(localinput, NumberStyles.Currency, cultureinfo ?? Thread.CurrentThread.CurrentUICulture, out _),
-                    _ => false,
-                };
+                var numOk = double.TryParse(localinput, NumberStyles.Number, cultureinfo ?? Thread.CurrentThread.CurrentUICulture, out _);
                 if (!numOk)
                 {
                     return new ValidationResult(Messages.Invalid);
@@ -47,6 +41,31 @@ namespace PromptPlusControls.ValueObjects
             };
         }
 
+        public static Func<object, ValidationResult> IsCurrency(CultureInfo? cultureinfo = null, string errorMessage = null)
+        {
+            return input =>
+            {
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else
+                {
+                    return new ValidationResult(errorMessage ?? Messages.Invalid);
+                }
+                var numOk = double.TryParse(localinput, NumberStyles.Currency, cultureinfo ?? Thread.CurrentThread.CurrentUICulture, out _);
+                if (!numOk)
+                {
+                    return new ValidationResult(Messages.Invalid);
+                }
+                return ValidationResult.Success;
+            };
+        }
 
         public static Func<object, ValidationResult> IsDateTime(CultureInfo? cultureinfo = null, string errorMessage = null)
         {

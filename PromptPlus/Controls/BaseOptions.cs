@@ -1,12 +1,11 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
-namespace PromptPlusControls.Options
+namespace PromptPlusControls.Controls
 {
-    public abstract class BaseOptions
+    internal abstract class BaseOptions
     {
         public BaseOptions(bool hideAfterFinish = false)
         {

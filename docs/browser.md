@@ -3,58 +3,69 @@
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
 [**ResultBrowser**](resultbrowser) |
-[**Browser Options**](browseroptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
+
 
 ## Documentation
 Control Browser. Browser files/folder with auto-paginator and tooltips.
 
 ![](./images/Browser.gif)
 
-### Options
-
-[**Browser Options**](browseroptions)
-
 ### Syntax
 [**Top**](#promptplus--browser)
 
 ```csharp
-Browser(BrowserOptions options, CancellationToken? cancellationToken = null)
-Browser(Action<BrowserOptions> configure, CancellationToken? cancellationToken = null)
-```
+ Browser(string prompt = null)
+ ```
 
-```csharp
-Browser(BrowserFilter fileBrowserChoose, string message, string defaultValue = null, string prefixExtension = null, bool allowNotSelected = false, string rootFolder = null, string searchPattern = null, int? pageSize = null, bool supressHidden = true, bool promptCurrentPath = true, bool promptSearchPattern = true, CancellationToken? cancellationToken = null)
-```
+### Methods
+[**Top**](#promptplus--browser)
 
-**Highlighted parameters**
-- defaultValue = full path of file/folder initial selected
-- prefixExtension = prefix to be added to the end of item (only new file/folder)
-- allowNotSelected = accept not seleted item
-- rootFolder = root for discovery
-- searchPattern = Specifies what to search for by the browser
-- supressHidden = supress file/folder with attribute hidden/system
-- promptCurrentPath = split fullpath of seleted item and show then
-- promptSearchPattern = show/hide searchPattern in prompt message
-- pageSize = maximum item per page. Tf the value is null, the value will be calculated according to the screen size 
+- Prompt(string value)
+    - set prompt message 
+- Filter(BrowserFilter value)
+    - Fiter result to only type folder. Default value = BrowserFilter.None (All types)   
+- Default(string value)
+    - full path of file/folder initial selected
+- PrefixExtension(string value)
+    -Prefix to be added to the end of item (only new file/folder)
+- AllowNotSelected(bool value)
+    - Accept not seleted item
+- Root(string value)
+    - Root for dry discovery
+- SearchPattern(string value)
+    - Specifies what to search for by the browser
+- PageSize(int value)
+    - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size 
+- SupressHidden(bool value)
+    - Supress file/folder with attribute hidden/system
+- PromptCurrentPath(bool value)
+    - Split fullpath of seleted item and show then
+- promptSearchPattern(bool value)
+    - Show/Hide searchPattern in prompt message
 
 ### Return
 [**Top**](#promptplus--browser)
 
 ```csharp
-ResultPromptPlus<ResultBrowser>
+IControlBrowser                     //for Control Methods
+IPromptControls<ResultBrowser>      //for others Base Methods
+ResultPromptPlus<ResultBrowser>     //for Base Method Run, when execution is direct 
+IPromptPipe                         //for Pipe condition 
+IFormPlusBase                       //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
 [**Top**](#promptplus--browser)
 
 ```csharp
-var file = PromptPlus.Browser(BrowserFilter.None, 
-    "Select/New file", 
-    cancellationToken: _stopApp, 
-    pageSize: 10, 
-    allowNotSelected: true,
-    prefixExtension: ".cs");
+var file = PromptPlus.Browser("Select/New file")
+    .PageSize(10)
+    .AllowNotSelected(true)
+    .PrefixExtension(".cs")
+    .Run(_stopApp);
+
 if (file.IsAborted)
 {
    return;
@@ -75,5 +86,5 @@ else
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
 [**ResultBrowser**](resultbrowser) |
-[**Browser Options**](browseroptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)

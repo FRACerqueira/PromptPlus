@@ -5,12 +5,13 @@
 
 using System.Collections.Generic;
 
-namespace PromptPlusControls.Internal
+using PromptPlusControls.ValueObjects;
+
+namespace PromptPlusControls.Controls
 {
-    internal class ScreenBuffer : List<IList<TextInfo>>
+    internal class WaitProcessOptions : BaseOptions
     {
-        public ScreenBuffer() : base(new List<IList<TextInfo>>() { new List<TextInfo>() })
-        {
-        }
+        public int SpeedAnimation { get; set; } = PromptPlus.SpeedAnimation;
+        public IList<SingleProcess> Process { get; set; } = new List<SingleProcess>();
     }
 }

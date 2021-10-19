@@ -284,7 +284,7 @@ controls | Details
 [Select](select.md)| Generic select input IEnumerable/Enum with auto-paginator and tooltips and more
 [MultiSelect](multiselect.md) | Generic multi select input IEnumerable/Enum with auto-paginator , tooltips and more
 [List](list.md) | Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more
-[ListMasked](listmasked.md) | Create generic IEnumerable with masked input, auto-paginator, tooptip , input validator
+[ListMasked](listmasked.md) | Create generic IEnumerable with maskededit, auto-paginator, tooptip , input validator
 [Browser](browser.md) | Browser files/folder with auto-paginator and tooltips
 [Slider Number](slidernumber.md) | Numeric ranger with short/large step and tooltips
 [Number Up/Down](numberupdown.md) | Numeric ranger with step and tooltips
@@ -296,7 +296,7 @@ controls | Details
 [**Top**](#help)
 
 ## Extensions
-PromptPlus have a extension to **import validator**. No duplicate code! 
+PromptPlus have a extension to **import validators**. No duplicate code! 
 
 ```csharp
 private class MylCass
@@ -310,8 +310,10 @@ private class MylCass
 ```
 ```csharp
 var inst = new MylCass();
-var name = PromptPlus.Input("Input Value for MyInput", null, 
-    validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
+var name = PromptPlus.Input("Input Value for MyInput")
+    .Addvalidators(inst.ImportValidators(x => x.MyInput))
+    .Run(_stopApp);
+
 if (name.IsAborted)
 {
    return;

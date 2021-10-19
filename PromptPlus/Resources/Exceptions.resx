@@ -141,6 +141,12 @@
   <data name="Ex_InvalidMask" xml:space="preserve">
     <value>Invalid Mask</value>
   </data>
+  <data name="Ex_InvalidType" xml:space="preserve">
+    <value>Invalid type {0}</value>
+  </data>
+  <data name="Ex_InvalidValue" xml:space="preserve">
+    <value>Invalid value {0}</value>
+  </data>
   <data name="Ex_MaxArgumentOutOfRange" xml:space="preserve">
     <value>The maximum ({0}) is not valid when minimum is set to ({1})!</value>
   </data>

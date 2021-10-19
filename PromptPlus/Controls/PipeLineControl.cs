@@ -1,8 +1,7 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -36,7 +35,7 @@ namespace PromptPlusControls.Controls
             }
         }
 
-        public PipeLineControl(IList<IFormPlusBase> steps)
+        public PipeLineControl(IEnumerable<IFormPlusBase> steps)
         {
             foreach (var item in steps)
             {
@@ -75,6 +74,8 @@ namespace PromptPlusControls.Controls
                     _resultpipeline[item.Key].Value.Status = StatusPipe.Running;
                     using (item.Value)
                     {
+                        item.Value.GetType().UnderlyingSystemType.GetMethod("InitControl").Invoke(item.Value, null);
+
                         var start = item.Value.GetType().UnderlyingSystemType.GetMethod("StartPipeline");
                         var result = start.Invoke(item.Value, new object[]
                         {

@@ -318,4 +318,10 @@
   <data name="InvalidTypeBoolean" xml:space="preserve">
     <value>Valor inválido para lógico(0:Falso/1:Verdadeiro)</value>
   </data>
+  <data name="FinishResultList" xml:space="preserve">
+    <value>Terminado  com {0} itens</value>
+  </data>
+  <data name="FinishResultTasks" xml:space="preserve">
+    <value>Terminado todas as tarefas({0})</value>
+  </data>
 </root>

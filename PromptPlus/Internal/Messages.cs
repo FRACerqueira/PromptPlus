@@ -1,8 +1,7 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System.Threading;
 
@@ -82,7 +81,11 @@ namespace PromptPlusControls.Internal
             InvalidTypeNumber = PromptPlusResources.InvalidTypeNumber;
             InvalidTypeDateTime = string.Format(PromptPlusResources.InvalidTypeDateTime, FormatDate(), FormatTime());
             SelectKeyNavigation = string.Format(PromptPlusResources.SelectKeyNavigation, PromptPlus.UnSelectFilter);
+            FinishResultList = PromptPlusResources.FinishResultList;
+            FinishResultTasks = PromptPlusResources.FinishResultTasks;
         }
+
+        public static string FinishResultTasks { get; private set; } = PromptPlusResources.FinishResultTasks;
 
         public static string Pressedkey { get; private set; } = PromptPlusResources.PressedKey;
 
@@ -173,6 +176,7 @@ namespace PromptPlusControls.Internal
                 s_escCancelWithPipeNotAll = value;
             }
         }
+        public static string FinishResultList { get; private set; } = PromptPlusResources.FinishResultList;
 
         public static string PasswordStandardHotkeys { get; private set; } = PromptPlusResources.PasswordStandardHotkeys;
 

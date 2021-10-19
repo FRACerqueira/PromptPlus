@@ -1,17 +1,18 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
+using PromptPlusControls.ValueObjects;
+
 namespace PromptPlusControls.Internal
 {
-    internal static class ValidatorsExtensions
+    internal static class MegerExtensions
     {
         public static void Merge(this IList<Func<object, ValidationResult>> source, IEnumerable<Func<object, ValidationResult>> validators)
         {
@@ -19,6 +20,11 @@ namespace PromptPlusControls.Internal
             {
                 source.Add(validator);
             }
+        }
+
+        public static void Merge(this IList<SingleProcess> source, SingleProcess process)
+        {
+            source.Add(process);
         }
     }
 }

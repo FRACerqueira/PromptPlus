@@ -1,19 +1,20 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 
 using PromptPlusControls.Internal;
-using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class InputControl : ControlBase<string>
+    internal class InputControl : ControlBase<string>, IControlInput
     {
         private readonly InputOptions _options;
         private readonly InputBuffer _inputBuffer = new();
@@ -22,15 +23,19 @@ namespace PromptPlusControls.Controls
 
         public InputControl(InputOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
-            if (options.IsPassword && options.DefaultValue != null)
+            _options = options;
+        }
+
+        public override void InitControl()
+        {
+            if (_options.IsPassword && _options.DefaultValue != null)
             {
                 throw new ArgumentException(Exceptions.Ex_PasswordDefaultValue);
             }
-            _options = options;
             _initform = true;
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out string result)
+        public override bool? TryResult(bool summary, CancellationToken cancellationToken, out string result)
         {
             bool? isvalidhit = false;
             if (summary)
@@ -174,5 +179,80 @@ namespace PromptPlusControls.Controls
                 screenBuffer.WriteAnswer(FinishResult);
             }
         }
+
+        #region IControlInput
+
+        public IControlInput Prompt(string value)
+        {
+            _options.Message = value;
+            return this;
+        }
+        public IControlInput Default(string value)
+        {
+            _options.DefaultValue = value;
+            return this;
+        }
+        public IControlInput IsPassword(bool swithVisible)
+        {
+            _options.SwithVisiblePassword = swithVisible;
+            _options.IsPassword = true;
+            return this;
+        }
+        public IControlInput Addvalidator(Func<object, ValidationResult> validator)
+        {
+            return Addvalidators(new List<Func<object, ValidationResult>> { validator });
+        }
+
+        public IControlInput Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+        {
+            _options.Validators.Merge(validators);
+            return this;
+        }
+
+        public IPromptControls<string> EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            return this;
+        }
+
+        public IPromptControls<string> EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            return this;
+        }
+
+        public IPromptControls<string> EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            return this;
+        }
+
+        public IPromptControls<string> HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            return this;
+        }
+
+        public ResultPromptPlus<string> Run(CancellationToken? value = null)
+        {
+            InitControl();
+            return Start(value ?? CancellationToken.None);
+        }
+
+        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        {
+            PipeCondition = condition;
+            return this;
+        }
+
+        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            ContextState = state;
+            return this;
+        }
+
+        #endregion
     }
 }

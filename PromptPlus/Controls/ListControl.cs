@@ -1,43 +1,32 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 
 using PromptPlusControls.Internal;
-using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class ListControl<T> : ControlBase<IEnumerable<T>>, IDisposable
+    internal class ListControl<T> : ControlBase<IEnumerable<T>>, IDisposable, IControlList<T>
     {
-        private Paginator<T> _localpaginator;
         private readonly ListOptions<T> _options;
         private readonly Type _targetType = typeof(T);
         private readonly Type _underlyingType = Nullable.GetUnderlyingType(typeof(T));
         private readonly InputBuffer _inputBuffer = new();
         private readonly List<T> _inputItems = new();
+        private Paginator<T> _localpaginator;
 
         public ListControl(ListOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
-            if (options.Minimum < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(options.Minimum), string.Format(Exceptions.Ex_MinArgumentOutOfRange, options.Minimum));
-            }
-
-            if (options.Maximum < options.Minimum)
-            {
-                throw new ArgumentException(string.Format(Exceptions.Ex_MaxArgumentOutOfRange, options.Maximum, options.Minimum), nameof(options.Maximum));
-            }
             _options = options;
-            _localpaginator = new Paginator<T>(_inputItems, options.PageSize, Optional<T>.s_empty, options.TextSelector);
-            _localpaginator.FirstItem();
         }
 
         public new void Dispose()
@@ -49,7 +38,13 @@ namespace PromptPlusControls.Controls
             base.Dispose();
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)
+        public override void InitControl()
+        {
+            _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
+            _localpaginator.FirstItem();
+        }
+
+        public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)
         {
             bool? isvalidhit = false;
             if (summary)
@@ -108,19 +103,12 @@ namespace PromptPlusControls.Controls
                             }
 
                             T inputValue;
-                            Thread.CurrentThread.CurrentUICulture = _options.CurrentCulture;
-                            Thread.CurrentThread.CurrentCulture = _options.CurrentCulture;
                             inputValue = TypeHelper<T>.ConvertTo(input);
                             if (!TryValidate(inputValue, _options.Validators))
                             {
-                                Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-                                Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
                                 result = _inputItems;
                                 return false;
                             }
-                            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-                            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-
                             if (!_options.AllowDuplicate)
                             {
                                 if (_inputItems.Contains(inputValue))
@@ -267,8 +255,122 @@ namespace PromptPlusControls.Controls
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<T> result)
         {
             screenBuffer.WriteDone(_options.Message);
-            FinishResult = string.Join(", ", result);
+            FinishResult = string.Format(Messages.FinishResultList, result.Count());
             screenBuffer.WriteAnswer(FinishResult);
         }
+
+        #region IControlList
+
+        public IControlList<T> Prompt(string value)
+        {
+            _options.Message = value;
+            return this;
+        }
+
+        public IControlList<T> PageSize(int value)
+        {
+            if (value < 0)
+            {
+                _options.PageSize = null;
+            }
+            else
+            {
+                _options.PageSize = value;
+            }
+            return this;
+        }
+
+        public IControlList<T> TextSelector(Func<T, string> value)
+        {
+            _options.TextSelector = value ?? (x => x.ToString());
+            return this;
+        }
+
+        public IControlList<T> Range(int minvalue, int maxvalue)
+        {
+            if (minvalue < 0)
+            {
+                minvalue = 0;
+            }
+            if (maxvalue < 0)
+            {
+                maxvalue = minvalue;
+            }
+            if (minvalue > maxvalue)
+            {
+                throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, $"{minvalue},{maxvalue}"));
+            }
+            _options.Minimum = minvalue;
+            _options.Maximum = maxvalue;
+            return this;
+        }
+
+        public IControlList<T> UpperCase(bool value)
+        {
+            _options.UpperCase = value;
+            return this;
+        }
+
+        public IControlList<T> AllowDuplicate(bool value)
+        {
+            _options.AllowDuplicate = value;
+            return this;
+        }
+
+        public IControlList<T> Addvalidator(Func<object, ValidationResult> validator)
+        {
+            return Addvalidators(new List<Func<object, ValidationResult>> { validator });
+        }
+
+        public IControlList<T> Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+        {
+            _options.Validators.Merge(validators);
+            return this;
+        }
+
+        public IPromptControls<IEnumerable<T>> EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            return this;
+        }
+
+        public IPromptControls<IEnumerable<T>> EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            return this;
+        }
+
+        public IPromptControls<IEnumerable<T>> EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            return this;
+        }
+
+        public IPromptControls<IEnumerable<T>> HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            return this;
+        }
+        public ResultPromptPlus<IEnumerable<T>> Run(CancellationToken? value = null)
+        {
+            InitControl();
+            return Start(value ?? CancellationToken.None);
+        }
+
+
+        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        {
+            PipeCondition = condition;
+            return this;
+        }
+
+        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            ContextState = state;
+            return this;
+        }
+        #endregion
     }
 }

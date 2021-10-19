@@ -1,14 +1,13 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using PromptPlusControls.ValueObjects;
 
-namespace PromptPlusControls.Options
+namespace PromptPlusControls.Controls
 {
-    public class BrowserOptions : BaseOptions
+    internal class BrowserOptions : BaseOptions
     {
         public BrowserFilter Filter { get; set; } = BrowserFilter.None;
 

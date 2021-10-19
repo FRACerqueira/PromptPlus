@@ -1,8 +1,7 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -263,7 +262,14 @@ namespace PromptPlusControls.Internal
             _filteredItems = _items.Where(x => _textSelector(x).IndexOf(FilterTerm, StringComparison.OrdinalIgnoreCase) != -1)
                                     .ToArray();
 
-            PageCount = (_filteredItems.Length - 1) / _maxpageSize + 1;
+            if (_filteredItems.Length == 0)
+            {
+                PageCount = 0;
+            }
+            else
+            {
+                PageCount = (_filteredItems.Length - 1) / _maxpageSize + 1;
+            }
         }
 
         private void InitializeDefaults(Optional<T> defaultValue)

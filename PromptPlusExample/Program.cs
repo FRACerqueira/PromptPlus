@@ -13,7 +13,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using PromptPlusControls;
-using PromptPlusControls.Options;
 using PromptPlusControls.ValueObjects;
 
 using PromptPlusExample.Models;
@@ -100,7 +99,9 @@ namespace PromptPlusExample
             while (!_stopApp.IsCancellationRequested && !quit)
             {
 
-                var type = PromptPlus.Select<ExampleType>("Choose prompt example", cancellationToken: _stopApp);
+                var type = PromptPlus.Select<ExampleType>("Choose prompt example")
+                    .Run(_stopApp);
+
                 if (type.IsAborted)
                 {
                     continue;
@@ -108,7 +109,7 @@ namespace PromptPlusExample
 
                 //Console.Clear();
 
-                switch (type.Value.Value)
+                switch (type.Value)
                 {
                     case ExampleType.SaveLoadConfig:
                         RunSaveLoadSample();
@@ -206,9 +207,10 @@ namespace PromptPlusExample
                 if (!_stopApp.IsCancellationRequested && !quit)
                 {
                     //Console.ReadKey(true);
-                    if (type.Value.Value != ExampleType.AnyKey)
+                    if (type.Value != ExampleType.AnyKey)
                     {
-                        PromptPlus.AnyKey(_stopApp);
+                        PromptPlus.KeyPress()
+                            .Run(_stopApp);
                     }
                 }
             }
@@ -233,13 +235,16 @@ namespace PromptPlusExample
 
         private void RunChooseLanguageSample()
         {
-            var envalue = PromptPlus.Select<LanguageOptions>("Select a language", defaultValue: LanguageOptions.English, cancellationToken: _stopApp);
+            var envalue = PromptPlus.Select<LanguageOptions>("Select a language")
+                .Default(LanguageOptions.English)
+                .Run(_stopApp);
+
             if (envalue.IsAborted)
             {
                 return;
             }
-            Console.WriteLine($"You selected {envalue.Value.Value}");
-            switch (envalue.Value.Value)
+            Console.WriteLine($"You selected {envalue.Value}");
+            switch (envalue.Value)
             {
                 case LanguageOptions.English:
                     PromptPlus.DefaultCulture = new CultureInfo("en");
@@ -254,22 +259,34 @@ namespace PromptPlusExample
 
         private void RunMaskEditNumberSample(string numtype)
         {
-            var maskqtdint = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, "Max integer pos.(empty = 5)", @"C[123456789]", "5", cancellationToken: _stopApp);
+            var maskqtdint = PromptPlus.MaskEdit(MaskedType.Generic, "Max integer pos.(empty = 5)")
+                    .Mask("C[0123456789]")
+                    .Default("5")
+                    .Run(_stopApp);
             if (maskqtdint.IsAborted)
             {
                 return;
             }
-            var maskqtddec = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, "Max decimal pos.(empty = 2)", @"C[0123]", "2", cancellationToken: _stopApp);
+            var maskqtddec = PromptPlus.MaskEdit(MaskedType.Generic, "Max decimal pos.(empty = 2)")
+                    .Mask("C[0123]")
+                    .Default("2")
+                    .Run(_stopApp);
             if (maskqtddec.IsAborted)
             {
                 return;
             }
-            var masksignal = PromptPlus.SliderSwitche("Accept negative", true, cancellationToken: _stopApp);
+            var masksignal = PromptPlus.SliderSwitche("Accept negative")
+                .Default(true)
+                .Run(_stopApp);
+
             if (masksignal.IsAborted)
             {
                 return;
             }
-            var opccult = PromptPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil", "French" }, cancellationToken: _stopApp);
+            var opccult = PromptPlus.Select<string>("Select format language")
+                .AddItems(new List<string> { "English", "Portuguese Brazil", "French" })
+                .Run(_stopApp);
+
             if (opccult.IsAborted)
             {
                 return;
@@ -284,27 +301,11 @@ namespace PromptPlusExample
             {
                 qtddec = int.Parse(maskqtddec.Value.ObjectValue.ToString());
             }
-            ResultPromptPlus<ResultMasked> mask;
-            if (numtype == "N")
-            {
-                mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeNumber,
-                    "Number",
-                    qtdint,
-                    qtddec,
-                    null,
-                    opccult.Value[0] == 'E' ? new CultureInfo("en-US") : opccult.Value[0] == 'P' ? new CultureInfo("pt-BR") : new CultureInfo("fr-FR"),
-                    masksignal.Value ? MaskedSignal.Enabled : MaskedSignal.None, cancellationToken: _stopApp);
-            }
-            else
-            {
-                mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeCurrency,
-                    "Currency",
-                    qtdint,
-                    qtddec,
-                    null,
-                    opccult.Value[0] == 'E' ? new CultureInfo("en-US") : opccult.Value[0] == 'P' ? new CultureInfo("pt-BR") : new CultureInfo("fr-FR"),
-                    masksignal.Value ? MaskedSignal.Enabled : MaskedSignal.None, cancellationToken: _stopApp);
-            }
+            var mask = PromptPlus.MaskEdit(numtype == "N" ? MaskedType.Number : MaskedType.Currency, "Number")
+                    .AmmoutPositions(qtdint, qtddec)
+                    .Culture(opccult.Value[0] == 'E' ? new CultureInfo("en-US") : opccult.Value[0] == 'P' ? new CultureInfo("pt-BR") : new CultureInfo("fr-FR"))
+                    .AcceptSignal(masksignal.Value)
+                    .Run(_stopApp);
 
             if (string.IsNullOrEmpty(mask.Value.Input))
             {
@@ -319,32 +320,44 @@ namespace PromptPlusExample
 
         private void RunMaskEditDateTimeSample()
         {
-            var opcyear = PromptPlus.Select("Select format year", new List<string> { "Four digits", "Two digits" }, cancellationToken: _stopApp);
+            var opcyear = PromptPlus.Select<string>("Select format year")
+                .AddItems(new List<string> { "Four digits", "Two digits" })
+                .Run(_stopApp);
+
             if (opcyear.IsAborted)
             {
                 return;
             }
-            var opctime = PromptPlus.Select("Select format time", new List<string> { "1-Hour,minute,Second", "2-Hour,minute", "3-hour" }, cancellationToken: _stopApp);
+            var opctime = PromptPlus.Select<string>("Select format time")
+                .AddItems(new List<string> { "1-Hour,minute,Second", "2-Hour,minute", "3-hour" })
+                .Run(_stopApp);
+
             if (opctime.IsAborted)
             {
                 return;
             }
-            var masfill = PromptPlus.SliderSwitche("Fill with zeros", true, cancellationToken: _stopApp);
+            var masfill = PromptPlus.SliderSwitche("Fill with zeros")
+                .Default(true)
+                .Run(_stopApp);
+
             if (masfill.IsAborted)
             {
                 return;
             }
-            var opccult = PromptPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
+            var opccult = PromptPlus.Select<string>("Select format language")
+                .AddItems(new List<string> { "English", "Portuguese Brazil" })
+                .Run(_stopApp);
+
             if (opccult.IsAborted)
             {
                 return;
             }
-            var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeDateTime, "Date and Time",
-                cultureinfo: opccult.Value[0] == 'E' ? new CultureInfo("en-US") : new CultureInfo("pt-BR"),
-                fyear: opcyear.Value[0] == 'F' ? FormatYear.Y4 : FormatYear.Y2,
-                ftime: opctime.Value[0] == '1' ? FormatTime.HMS : opctime.Value[0] == '2' ? FormatTime.OnlyHM : FormatTime.OnlyH,
-                fillzeros: masfill.Value,
-                cancellationToken: _stopApp);
+            var mask = PromptPlus.MaskEdit(MaskedType.DateTime, "Date and Time")
+                .Culture(opccult.Value[0] == 'E' ? new CultureInfo("en-US") : new CultureInfo("pt-BR"))
+                .FormatYear(opcyear.Value[0] == 'F' ? FormatYear.Y4 : FormatYear.Y2)
+                .FormatTime(opctime.Value[0] == '1' ? FormatTime.HMS : opctime.Value[0] == '2' ? FormatTime.OnlyHM : FormatTime.OnlyH)
+                .FillZeros(masfill.Value)
+                .Run(_stopApp);
 
             if (string.IsNullOrEmpty(mask.Value.Input))
             {
@@ -359,26 +372,35 @@ namespace PromptPlusExample
 
         private void RunMaskEditTimeSample()
         {
-            var opctime = PromptPlus.Select("Select format time", new List<string> { "1-Hour,minute,Second", "2-Hour,minute", "3-hour" }, cancellationToken: _stopApp);
+            var opctime = PromptPlus.Select<string>("Select format time")
+                .AddItems(new List<string> { "1-Hour,minute,Second", "2-Hour,minute", "3-hour" })
+                .Run(_stopApp);
+
             if (opctime.IsAborted)
             {
                 return;
             }
-            var masfill = PromptPlus.SliderSwitche("Fill with zeros", true, cancellationToken: _stopApp);
+            var masfill = PromptPlus.SliderSwitche("Fill with zeros")
+                .Default(true)
+                .Run(_stopApp);
+
             if (masfill.IsAborted)
             {
                 return;
             }
-            var opccult = PromptPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
+            var opccult = PromptPlus.Select<string>("Select format language")
+                .AddItems(new List<string> { "English", "Portuguese Brazil" })
+                .Run(_stopApp);
+
             if (opccult.IsAborted)
             {
                 return;
             }
-            var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeTimeOnly, "Time",
-                cultureinfo: opccult.Value[0] == 'E' ? new CultureInfo("en-US") : new CultureInfo("pt-BR"),
-                ftime: opctime.Value[0] == '1' ? FormatTime.HMS : opctime.Value[0] == '2' ? FormatTime.OnlyHM : FormatTime.OnlyH,
-                fillzeros: masfill.Value,
-                cancellationToken: _stopApp);
+            var mask = PromptPlus.MaskEdit(MaskedType.TimeOnly, "Time")
+                .Culture(opccult.Value[0] == 'E' ? new CultureInfo("en-US") : new CultureInfo("pt-BR"))
+                .FormatTime(opctime.Value[0] == '1' ? FormatTime.HMS : opctime.Value[0] == '2' ? FormatTime.OnlyHM : FormatTime.OnlyH)
+                .FillZeros(masfill.Value)
+                .Run(_stopApp);
 
 
             if (string.IsNullOrEmpty(mask.Value.Input))
@@ -393,26 +415,35 @@ namespace PromptPlusExample
 
         private void RunMaskEditDateSample()
         {
-            var opcyear = PromptPlus.Select("Select format year", new List<string> { "Four digits", "Two digits" }, cancellationToken: _stopApp);
+            var opcyear = PromptPlus.Select<string>("Select format year")
+                .AddItems(new List<string> { "Four digits", "Two digits" })
+                .Run(_stopApp);
+
             if (opcyear.IsAborted)
             {
                 return;
             }
-            var masfill = PromptPlus.SliderSwitche("Fill with zeros", true, cancellationToken: _stopApp);
+            var masfill = PromptPlus.SliderSwitche("Fill with zeros")
+                .Default(true)
+                .Run(_stopApp);
+
             if (masfill.IsAborted)
             {
                 return;
             }
-            var opccult = PromptPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
+            var opccult = PromptPlus.Select<string>("Select format language")
+                .AddItems(new List<string> { "English", "Portuguese Brazil" })
+                .Run(_stopApp);
+
             if (opccult.IsAborted)
             {
                 return;
             }
-            var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeDateOnly, "Date",
-                cultureinfo: opccult.Value[0] == 'E' ? new CultureInfo("en-US") : new CultureInfo("pt-BR"),
-                fyear: opcyear.Value[0] == 'F' ? FormatYear.Y4 : FormatYear.Y2,
-                fillzeros: masfill.Value,
-                cancellationToken: _stopApp);
+            var mask = PromptPlus.MaskEdit(MaskedType.DateOnly, "Date")
+                .Culture(opccult.Value[0] == 'E' ? new CultureInfo("en-US") : new CultureInfo("pt-BR"))
+                .FormatYear(opcyear.Value[0] == 'F' ? FormatYear.Y4 : FormatYear.Y2)
+                .FillZeros(masfill.Value)
+                .Run(_stopApp);
 
             if (string.IsNullOrEmpty(mask.Value.Input))
             {
@@ -426,7 +457,10 @@ namespace PromptPlusExample
 
         private void RunMaskEditGenericSample()
         {
-            var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, "Inventory Number", @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", cancellationToken: _stopApp);
+            var mask = PromptPlus.MaskEdit(MaskedType.Generic, "Inventory Number")
+                .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
+                .Run(_stopApp);
+
             if (mask.IsAborted)
             {
                 return;
@@ -443,7 +477,8 @@ namespace PromptPlusExample
 
         private void RunAnyKeySample()
         {
-            var key = PromptPlus.AnyKey(_stopApp);
+            var key = PromptPlus.KeyPress()
+                    .Run(_stopApp);
             if (key.IsAborted)
             {
                 return;
@@ -453,7 +488,9 @@ namespace PromptPlusExample
 
         private void RunKeyPressSample()
         {
-            var key = PromptPlus.KeyPress("Press Ctrl-B to continue", 'B', ConsoleModifiers.Control, _stopApp);
+            var key = PromptPlus.KeyPress('B', ConsoleModifiers.Control)
+                .Prompt("Press Ctrl-B to continue")
+                .Run(_stopApp);
             if (key.IsAborted)
             {
                 return;
@@ -467,7 +504,10 @@ namespace PromptPlusExample
 
             Console.WriteLine("Imported Validators of Myclass, property MyInput:");
             Console.WriteLine("private class MylCass \n{\n   [Required(ErrorMessage = \"{0} is required!\")] \n   [MinLength(3, ErrorMessage = \"Min. Length = 3.\")] \n   [MaxLength(5, ErrorMessage = \"Max. Length = 5.\")] \n   [Display(Prompt = \"My Input\")]\n   public string MyInput { get; set; }\n}");
-            var name = PromptPlus.Input("Input Value for MyInput", null, validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
+            var name = PromptPlus.Input("Input Value for MyInput")
+                .Addvalidators(inst.ImportValidators(x => x.MyInput))
+                .Run(_stopApp);
+
             if (name.IsAborted)
             {
                 return;
@@ -487,7 +527,11 @@ namespace PromptPlusExample
 
         private void RunInputSample()
         {
-            var name = PromptPlus.Input("What's your name?", "Peter Parker", validators: new[] { Validators.Required(), Validators.MinLength(3) }, cancellationToken: _stopApp);
+            var name = PromptPlus.Input("What's your name?")
+                .Default("Peter Parker")
+                .Addvalidator(PromptValidators.Required())
+                .Addvalidator(PromptValidators.MinLength(3))
+                .Run(_stopApp);
             if (name.IsAborted)
             {
                 return;
@@ -497,7 +541,10 @@ namespace PromptPlusExample
 
         private void RunConfirmSample()
         {
-            var opccult = PromptPlus.Select("Select format language", new List<string> { "English", "Portuguese Brazil" }, cancellationToken: _stopApp);
+            var opccult = PromptPlus.Select<string>("Select format language")
+                .AddItems(new List<string> { "English", "Portuguese Brazil" })
+                .Run(_stopApp);
+
             if (opccult.IsAborted)
             {
                 return;
@@ -505,7 +552,9 @@ namespace PromptPlusExample
             if (opccult.Value[0] == 'E')
             {
                 PromptPlus.DefaultCulture = new CultureInfo("en-US");
-                var answer = PromptPlus.Confirm("Are you ready?", true, _stopApp);
+                var answer = PromptPlus.Confirm("Are you ready?")
+                    .Default(true)
+                    .Run(_stopApp);
                 if (answer.IsAborted)
                 {
                     return;
@@ -522,7 +571,10 @@ namespace PromptPlusExample
             else
             {
                 PromptPlus.DefaultCulture = new CultureInfo("pt-BR");
-                var answer = PromptPlus.Confirm("Você esta pronto?", true, _stopApp);
+                var answer = PromptPlus.Confirm("Você esta pronto?")
+                    .Default(true)
+                    .Run(_stopApp);
+
                 if (answer.IsAborted)
                 {
                     return;
@@ -543,18 +595,20 @@ namespace PromptPlusExample
             Console.WriteLine("Press any key to start...");
             Console.ReadKey(true);
 
-            var process = PromptPlus.WaitProcess("phase 1", new SingleProcess
-            {
-                ProcessToRun = (_stopApp) =>
+            var process = PromptPlus.WaitProcess("phase 1")
+                .AddProcess(new SingleProcess
                 {
-                    _stopApp.WaitHandle.WaitOne(4000);
-                    if (_stopApp.IsCancellationRequested)
+                    ProcessToRun = (_stopApp) =>
                     {
-                        return Task.FromResult<object>("canceled");
-                    }
-                    return Task.FromResult<object>("Done");
-                },
-            }, cancellationToken: _stopApp);
+                        _stopApp.WaitHandle.WaitOne(4000);
+                        if (_stopApp.IsCancellationRequested)
+                        {
+                            return Task.FromResult<object>("canceled");
+                        }
+                        return Task.FromResult<object>("Done");
+                    },
+                })
+                .Run(_stopApp);
 
             var aux = process.Value.First();
 
@@ -566,48 +620,48 @@ namespace PromptPlusExample
             Console.WriteLine("Press any key to start...");
             Console.ReadKey(true);
 
-            var Process = PromptPlus.WaitProcess("My Tasks(3) Async", new List<SingleProcess>
-            {
-                new SingleProcess                {
-                     ProcessId = "Task1",
-                     ProcessToRun = (_stopApp) =>
-                     {
-                         _stopApp.WaitHandle.WaitOne(10000);
-                         if (_stopApp.IsCancellationRequested)
-                         {
+            var Process = PromptPlus.WaitProcess("My Tasks(3) Async")
+                .AddProcess(new SingleProcess
+                {
+                    ProcessId = "Task1",
+                    ProcessToRun = (_stopApp) =>
+                    {
+                        _stopApp.WaitHandle.WaitOne(10000);
+                        if (_stopApp.IsCancellationRequested)
+                        {
                             return Task.FromResult<object>("canceled");
-                         }
-                         return Task.FromResult<object>("Done");
-                     }
-                },
-                new SingleProcess
+                        }
+                        return Task.FromResult<object>("Done");
+                    }
+                })
+                .AddProcess(new SingleProcess
                 {
-                     ProcessId = "Task2",
-                     ProcessToRun = (_stopApp) =>
-                     {
-                         _stopApp.WaitHandle.WaitOne(5000);
-                         if (_stopApp.IsCancellationRequested)
-                         {
+                    ProcessId = "Task2",
+                    ProcessToRun = (_stopApp) =>
+                    {
+                        _stopApp.WaitHandle.WaitOne(5000);
+                        if (_stopApp.IsCancellationRequested)
+                        {
                             return Task.FromResult<object>(-1);
-                         }
-                         return Task.FromResult<object>(1);
-                     }
-                },
-                new SingleProcess
+                        }
+                        return Task.FromResult<object>(1);
+                    }
+                })
+                .AddProcess(new SingleProcess
                 {
-                     ProcessId = "Task3",
-                     ProcessToRun = (_stopApp) =>
-                     {
-                         _stopApp.WaitHandle.WaitOne(7000);
-                         if (_stopApp.IsCancellationRequested)
-                         {
+                    ProcessId = "Task3",
+                    ProcessToRun = (_stopApp) =>
+                    {
+                        _stopApp.WaitHandle.WaitOne(7000);
+                        if (_stopApp.IsCancellationRequested)
+                        {
                             return Task.FromResult<object>("Canceled");
-                         }
-                         return Task.FromResult<object>("Done");
-                     }
-                },
-            }
-            , cancellationToken: _stopApp);
+                        }
+                        return Task.FromResult<object>("Done");
+                    }
+                })
+                .Run(_stopApp);
+
             foreach (var item in Process.Value)
             {
                 Console.WriteLine($"Result tasks ({item.ProcessId}) : {item.ValueProcess}");
@@ -619,7 +673,10 @@ namespace PromptPlusExample
             Console.WriteLine("Press any key to start...");
             Console.ReadKey(true);
 
-            var progress = PromptPlus.Progressbar("Processing Tasks", UpdateSampleHandlerAsync, 0, cancellationToken: _stopApp);
+            var progress = PromptPlus.Progressbar("Processing Tasks")
+                .UpdateHandler(UpdateSampleHandlerAsync)
+                .Run(_stopApp);
+
             if (progress.IsAborted)
             {
                 Console.WriteLine($"Your result is: {progress.Value.Message} Canceled!");
@@ -642,7 +699,13 @@ namespace PromptPlusExample
 
         private void RunNumberUpDownSample()
         {
-            var number = PromptPlus.NumberUpDown("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
+            var number = PromptPlus.NumberUpDown("Select a number")
+                .Default(5.5)
+                .Ranger(0, 10)
+                .Step(0.1)
+                .FracionalDig(1)
+                .Run(_stopApp);
+
             if (number.IsAborted)
             {
                 return;
@@ -652,7 +715,13 @@ namespace PromptPlusExample
 
         private void RunSliderNumberSample()
         {
-            var number = PromptPlus.SliderNumber("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
+            var number = PromptPlus.SliderNumber("Select a number")
+                .Default(5.5)
+                .Ranger(0, 10)
+                .Step(0.1)
+                .FracionalDig(1)
+                .Run(_stopApp);
+
             if (number.IsAborted)
             {
                 return;
@@ -662,7 +731,9 @@ namespace PromptPlusExample
 
         private void RunSliderSwitcheSample()
         {
-            var slider = PromptPlus.SliderSwitche("Turn on/off", false, cancellationToken: _stopApp);
+            var slider = PromptPlus.SliderSwitche("Turn on/off")
+                .Run(_stopApp);
+
             if (slider.IsAborted)
             {
                 return;
@@ -672,7 +743,12 @@ namespace PromptPlusExample
 
         private void RunPasswordSample()
         {
-            var pwd = PromptPlus.Password("Type new password", true, new[] { Validators.Required(), Validators.MinLength(8) }, _stopApp);
+            var pwd = PromptPlus.Input("Type new password")
+                .IsPassword(true)
+                .Addvalidator(PromptValidators.Required())
+                .Addvalidator(PromptValidators.MinLength(8))
+                .Run(_stopApp);
+
             if (pwd.IsAborted)
             {
                 return;
@@ -682,7 +758,11 @@ namespace PromptPlusExample
 
         private void RunListSample()
         {
-            var lst = PromptPlus.List<string>("Please add item(s)", pageSize: 3, uppercase: true, cancellationToken: _stopApp);
+            var lst = PromptPlus.List<string>("Please add item(s)")
+                .PageSize(3)
+                .UpperCase(true)
+                .Run(_stopApp);
+
             if (lst.IsAborted)
             {
                 return;
@@ -692,17 +772,29 @@ namespace PromptPlusExample
 
         private void RunListMaskedSample()
         {
-            var lst = PromptPlus.ListMasked<string>("Please add item(s)", @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", uppercase: true, cancellationToken: _stopApp);
+            var lst = PromptPlus.ListMasked("Please add item(s)")
+                .MaskType(MaskedType.Generic, @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
+                .UpperCase(true)
+                .Run(_stopApp);
+
             if (lst.IsAborted)
             {
                 return;
             }
-            Console.WriteLine($"You picked {string.Join(", ", lst.Value)}");
+            foreach (var item in lst.Value)
+            {
+                Console.WriteLine($"You picked {item.ObjectValue}");
+
+            }
         }
 
         private void RunSelectSample()
         {
-            var city = PromptPlus.Select("Select your city", new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" }, pageSize: 3, cancellationToken: _stopApp);
+            var city = PromptPlus.Select<string>("Select your city")
+                .AddItems(new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" })
+                .PageSize(3)
+                .Run(_stopApp);
+
             if (city.IsAborted)
             {
                 return;
@@ -719,7 +811,12 @@ namespace PromptPlusExample
 
         private void RunMultiSelectSample()
         {
-            var options = PromptPlus.MultiSelect("Which cities would you like to visit?", new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" }, pageSize: 3, defaultValues: new[] { "Tokyo" }, minimum: 0, cancellationToken: _stopApp);
+            var options = PromptPlus.MultiSelect<string>("Which cities would you like to visit?")
+                .AddItems(new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" })
+                .AddDefault("Tokyo")
+                .PageSize(3)
+                .Run(_stopApp);
+
             if (options.IsAborted)
             {
                 return;
@@ -736,59 +833,75 @@ namespace PromptPlusExample
 
         private void RunSelectEnumSample()
         {
-            var envalue = PromptPlus.Select<MyEnum>("Select enum value", defaultValue: MyEnum.Bar, cancellationToken: _stopApp);
+            var envalue = PromptPlus.Select<MyEnum>("Select enum value")
+                .Default(MyEnum.Bar)
+                .Run(_stopApp);
+
             if (envalue.IsAborted)
             {
                 return;
             }
-            Console.WriteLine($"You selected {envalue.Value.DisplayName}");
+            Console.WriteLine($"You selected {envalue.Value}");
         }
 
         private void RunMultiSelectEnumSample()
         {
-            var multvalue = PromptPlus.MultiSelect("Select enum value", defaultValues: new[] { MyEnum.Bar }, cancellationToken: _stopApp);
+            var multvalue = PromptPlus.MultiSelect<MyEnum>("Select enum value")
+                .AddDefault(MyEnum.Bar)
+                .Run(_stopApp);
+
             if (multvalue.IsAborted)
             {
                 return;
             }
-            Console.WriteLine($"You picked {string.Join(", ", multvalue.Value.Select(x => x.DisplayName))}");
+            Console.WriteLine($"You picked {string.Join(", ", multvalue.Value)}");
         }
 
         private void RunPipeLineSample()
         {
             var steps = new List<IFormPlusBase>
             {
-                PromptPlus.Pipe.Input(new InputOptions { Message = "Your first name (empty = skip lastname)" })
-                .Step("First Name"),
+                PromptPlus.Input("Your first name (empty = skip lastname)")
+                .AddPipe(null,"First Name"),
 
-                PromptPlus.Pipe.Input(new InputOptions { Message = "Your last name" })
-                .Step("Last Name",(res,context) =>
+                PromptPlus.Input("Your last name")
+                .Condition((res,context) =>
                 {
                     return !string.IsNullOrEmpty( ((ResultPromptPlus<string>)res[0].ValuePipe).Value);
-                }),
+                })
+                .AddPipe(null,  "Last Name"),
 
-                PromptPlus.Pipe.MaskEdit(PromptPlus.MaskTypeDateOnly, "Your birth date",cancellationToken: _stopApp)
-                .Step("birth date"),
+                PromptPlus.MaskEdit(MaskedType.DateOnly,"Your birth date")
+                    .AddPipe(null,"birth date"),
 
-                PromptPlus.Pipe.WaitProcess("phase 1", new SingleProcess{ ProcessToRun = (_stopApp) =>
-                {
-                    _stopApp.WaitHandle.WaitOne(4000);
-                    if (_stopApp.IsCancellationRequested)
-                    {
-                        return Task.FromResult<object>("canceled");
-                    }
-                    return Task.FromResult<object>("Done");
-                } }).Step("Update phase 1"),
+                PromptPlus.WaitProcess("phase 1")
+                    .AddProcess(new SingleProcess{ ProcessToRun = (_stopApp) =>
+                            {
+                                _stopApp.WaitHandle.WaitOne(4000);
+                                if (_stopApp.IsCancellationRequested)
+                                {
+                                    return Task.FromResult<object>("canceled");
+                                }
+                                return Task.FromResult<object>("Done");
+                            } })
+                    .AddPipe(null,"Update phase 1"),
 
-                PromptPlus.Pipe.Progressbar("Processing Tasks ",  UpdateSampleHandlerAsync)
-                .Step("Update phase 2")
+                PromptPlus.Progressbar("Processing Tasks ")
+                    .UpdateHandler(UpdateSampleHandlerAsync)
+                    .AddPipe(null,"Update phase 2")
+
             };
             _ = PromptPlus.Pipeline(steps, _stopApp);
         }
 
         private void RunFolderSample()
         {
-            var folder = PromptPlus.Browser(BrowserFilter.OnlyFolder, "Select/New folder", cancellationToken: _stopApp, pageSize: 5, promptCurrentPath: false);
+            var folder = PromptPlus.Browser("Select/New folder")
+                .Filter(BrowserFilter.OnlyFolder)
+                .PageSize(5)
+                .PromptCurrentPath(false)
+                .Run(_stopApp);
+
             if (folder.IsAborted)
             {
                 return;
@@ -806,7 +919,12 @@ namespace PromptPlusExample
 
         private void RunFileSample()
         {
-            var file = PromptPlus.Browser(BrowserFilter.None, "Select/New file", cancellationToken: _stopApp, pageSize: 10, allowNotSelected: true, prefixExtension: ".cs");
+            var file = PromptPlus.Browser("Select/New file")
+                .PageSize(10)
+                .AllowNotSelected(true)
+                .PrefixExtension(".cs")
+                .Run(_stopApp);
+
             if (file.IsAborted)
             {
                 return;

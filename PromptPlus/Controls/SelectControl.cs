@@ -1,29 +1,28 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 using PromptPlusControls.Internal;
-using PromptPlusControls.Options;
-
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class SelectControl<T> : ControlBase<T>, IDisposable
+    internal class SelectControl<T> : ControlBase<T>, IDisposable, IControlSelect<T>
     {
         private readonly SelectOptions<T> _options;
         private readonly InputBuffer _filterBuffer = new();
-        private readonly Paginator<T> _localpaginator;
+        private Paginator<T> _localpaginator;
 
         public SelectControl(SelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
-            _localpaginator = new Paginator<T>(options.Items, options.PageSize, Optional<T>.Create(options.DefaultValue), options.TextSelector);
-            _localpaginator.FirstItem();
             _options = options;
         }
 
@@ -36,7 +35,19 @@ namespace PromptPlusControls.Controls
             base.Dispose();
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out T result)
+        public override void InitControl()
+        {
+            if (typeof(T).IsEnum && _options.Items.Count == 0)
+            {
+                AddEnum();
+            }
+            _options.PageSize ??= _options.Items.Count();
+            _options.TextSelector ??= (x => x.ToString());
+            _localpaginator = new Paginator<T>(_options.Items, _options.PageSize, Optional<T>.Create(_options.DefaultValue), _options.TextSelector);
+            _localpaginator.FirstItem();
+        }
+
+        public override bool? TryResult(bool summary, CancellationToken cancellationToken, out T result)
         {
             bool? isvalidhit = false;
             if (summary)
@@ -183,5 +194,124 @@ namespace PromptPlusControls.Controls
             FinishResult = _options.TextSelector(result);
             screenBuffer.WriteAnswer(FinishResult);
         }
+
+        #region IControlSelect
+
+        public IControlSelect<T> Prompt(string value)
+        {
+            _options.Message = value;
+            return this;
+        }
+
+        public IControlSelect<T> Default(T value)
+        {
+            _options.DefaultValue = value;
+            return this;
+        }
+
+        public IControlSelect<T> PageSize(int value)
+        {
+            if (value < 0)
+            {
+                _options.PageSize = null;
+            }
+            else
+            {
+                _options.PageSize = value;
+            }
+            return this;
+        }
+
+        public IControlSelect<T> TextSelector(Func<T, string> value)
+        {
+            _options.TextSelector = value ?? (x => x.ToString());
+            return this;
+        }
+
+        public IControlSelect<T> AddItem(T value)
+        {
+            _options.Items.Add(value);
+            return this;
+        }
+
+        public IControlSelect<T> AddItems(IEnumerable<T> value)
+        {
+            foreach (var item in value)
+            {
+                _options.Items.Add(item);
+            }
+            return this;
+        }
+
+        private void AddEnum()
+        {
+            _options.TextSelector = EnumDisplay;
+            var aux = Enum.GetValues(typeof(T));
+            var result = new List<Tuple<int, T>>();
+            foreach (var item in aux)
+            {
+                var name = item.ToString();
+                var displayAttribute = typeof(T).GetField(name)?.GetCustomAttribute<DisplayAttribute>();
+                var order = displayAttribute?.GetOrder() ?? int.MaxValue;
+                result.Add(new Tuple<int, T>(order, (T)item));
+            }
+            foreach (var item in result.OrderBy(x => x.Item1))
+            {
+                _options.Items.Add(item.Item2);
+            }
+        }
+
+        private string EnumDisplay(T value)
+        {
+            var name = value.ToString();
+            var displayAttribute = value.GetType().GetField(name)?.GetCustomAttribute<DisplayAttribute>();
+            return displayAttribute?.Name ?? name;
+        }
+
+        public IPromptControls<T> EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            return this;
+        }
+
+        public IPromptControls<T> EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            return this;
+        }
+
+        public IPromptControls<T> EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            return this;
+        }
+
+        public IPromptControls<T> HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            return this;
+        }
+
+        public ResultPromptPlus<T> Run(CancellationToken? value = null)
+        {
+            InitControl();
+            return Start(value ?? CancellationToken.None);
+        }
+
+        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        {
+            PipeCondition = condition;
+            return this;
+        }
+
+        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            ContextState = state;
+            return this;
+        }
+
+        #endregion
     }
 }

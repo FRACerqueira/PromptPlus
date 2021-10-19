@@ -133,6 +133,24 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finish with {0} items.
+        /// </summary>
+        internal static string FinishResultList {
+            get {
+                return ResourceManager.GetString("FinishResultList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finish all tasks({0}).
+        /// </summary>
+        internal static string FinishResultTasks {
+            get {
+                return ResourceManager.GetString("FinishResultTasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Folder:.
         /// </summary>
         internal static string FolderCurrentPath {

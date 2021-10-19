@@ -5,7 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 
-**_Interactive command-line  toolkit for C# with powerful controls._** This project is basead on fork of the [Sharprompt](https://github.com/shibayan/Sharprompt). A complete refatoring was done , introducing  **_new features, making the product more complete, more stable and more configurable_**. In all files is showing the reference to original project acconding to the MIT licence.
+**_Interactive command-line  toolkit for C# with powerful controls._** This project was inspired by the work [Sharprompt](https://github.com/shibayan/Sharprompt). A complete refatoring was done , introducing  **_new features and behavior, making the product more complete, more stable and more configurable_**. 
 
 #### [visit the official page for complete documentation](https://fracerqueira.github.io/PromptPlus/)
 
@@ -87,10 +87,9 @@ dotnet run --project PromptPlusExample
 
 ```csharp
 //MaskEdit Generic
-var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, 
-    "Inventory Number", 
-    @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", 
-    cancellationToken: _stopApp);
+var mask = PromptPlus.MaskEdit(MaskedType.Generic, "Inventory Number")
+    .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
+    .Run(_stopApp);
 
 if (mask.IsAborted)
 {
@@ -106,7 +105,8 @@ else
 }
 
 //AnyKey
-var key = PromptPlus.AnyKey(_stopApp);
+var key = PromptPlus.KeyPress()
+        .Run(_stopApp);
 
 if (key.IsAborted)
 {
@@ -116,9 +116,11 @@ Console.WriteLine($"Hello, key pressed");
 
 
 //input
-var name = PromptPlus.Input(
-    "What's your name?", 
-    validators: new[] { Validators.Required(), Validators.MinLength(3) });
+var name = PromptPlus.Input("What's your name?")
+    .Default("Peter Parker")
+    .Addvalidator(PromptValidators.Required())
+    .Addvalidator(PromptValidators.MinLength(3))
+    .Run(_stopApp);
 
 if (name.IsAborted)
 {
@@ -266,7 +268,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [Select](https://fracerqueira.github.io/PromptPlus/select)| Generic select input IEnumerable/Enum with auto-paginator and tooltips and more |
 | [MultiSelect](https://fracerqueira.github.io/PromptPlus/multiselect) | Generic multi select input IEnumerable/Enum with auto-paginator , tooltips and more |
 | [List](https://fracerqueira.github.io/PromptPlus/list) | Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more |
-| [ListMasked](https://fracerqueira.github.io/PromptPlus/listmasked) | Create generic IEnumerable with masked input, auto-paginator, tooptip , input validator |
+| [ListMasked](https://fracerqueira.github.io/PromptPlus/listmasked) | Create generic IEnumerable with maskedit, auto-paginator, tooptip , input validator |
 | [Browser](https://fracerqueira.github.io/PromptPlus/browser) | Browser files/folder with auto-paginator and tooltips |
 | [Slider Number](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with short/large step and tooltips |
 | [Number Up/Down](https://fracerqueira.github.io/PromptPlus/numberupdown) | Numeric ranger with step and tooltips |
@@ -283,15 +285,17 @@ private class MylCass
 {
     [Required(ErrorMessage = "{0} is required!")]
     [MinLength(3, ErrorMessage = "Min. Length = 3.")]
-    [MaxLength(5, ErrorMessage = "Min. Length = 5.")]
+    [MaxLength(5, ErrorMessage = "Max. Length = 5.")]
     [Display(Prompt ="My Input")]
     public string MyInput { get; set; }
 }
 ```
 ```csharp
 var inst = new MylCass();
-var name = PromptPlus.Input("Input Value for MyInput", null, 
-    validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
+var name = PromptPlus.Input("Input Value for MyInput")
+    .Addvalidators(inst.ImportValidators(x => x.MyInput))
+    .Run(_stopApp);
+
 if (name.IsAborted)
 {
    return;

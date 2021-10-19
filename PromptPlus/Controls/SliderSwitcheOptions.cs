@@ -3,14 +3,14 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using System.Collections.Generic;
+using PromptPlusControls.Internal;
 
-namespace PromptPlusControls.Internal
+namespace PromptPlusControls.Controls
 {
-    internal class ScreenBuffer : List<IList<TextInfo>>
+    internal class SliderSwitcheOptions : BaseOptions
     {
-        public ScreenBuffer() : base(new List<IList<TextInfo>>() { new List<TextInfo>() })
-        {
-        }
+        public bool Value { get; set; }
+        public string OffValue { get; set; } = Messages.OffValue;
+        public string OnValue { get; set; } = Messages.OnValue;
     }
 }
