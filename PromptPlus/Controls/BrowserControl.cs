@@ -17,7 +17,7 @@ using PromptPlusControls.ValueObjects;
 namespace PromptPlusControls.Controls
 {
 
-    internal class BrowserControl : ControlBase<ResultBrowser>, IDisposable, IControlBrowser
+    internal class BrowserControl : ControlBase<ResultBrowser>, IControlBrowser
     {
         private ResultBrowser _defaultopt;
         private string _currentPath;
@@ -32,16 +32,6 @@ namespace PromptPlusControls.Controls
         {
             _options = options;
         }
-
-        public new void Dispose()
-        {
-            if (_paginator != null)
-            {
-                _paginator.Dispose();
-            }
-            base.Dispose();
-        }
-
 
         public override void InitControl()
         {
@@ -76,7 +66,7 @@ namespace PromptPlusControls.Controls
 
             if (_filterBuffer.Length > 0 && _paginator.IsUnSelected)
             {
-                screenBuffer.WriteAnswer(_filterBuffer.ToBackwardString());
+                screenBuffer.WriteAnswer(_filterBuffer.ToBackward());
             }
             else
             {
@@ -90,7 +80,7 @@ namespace PromptPlusControls.Controls
 
             if (_filterBuffer.Length > 0 && _paginator.IsUnSelected)
             {
-                screenBuffer.WriteAnswer(_filterBuffer.ToForwardString());
+                screenBuffer.WriteAnswer(_filterBuffer.ToForward());
             }
 
             if (EnabledStandardTooltip)
@@ -556,11 +546,13 @@ namespace PromptPlusControls.Controls
             _options.PrefixExtension = value;
             return this;
         }
+
         public IControlBrowser AllowNotSelected(bool value)
         {
             _options.AllowNotSelected = value;
             return this;
         }
+
         public IControlBrowser Root(string value)
         {
             _options.RootFolder = value;
@@ -572,6 +564,7 @@ namespace PromptPlusControls.Controls
             _options.SearchPattern = value;
             return this;
         }
+
         public IControlBrowser PageSize(int value)
         {
             if (value < 0)
@@ -584,21 +577,25 @@ namespace PromptPlusControls.Controls
             }
             return this;
         }
+
         public IControlBrowser SupressHidden(bool value)
         {
             _options.SupressHidden = value;
             return this;
         }
+
         public IControlBrowser PromptCurrentPath(bool value)
         {
             _options.ShowNavigationCurrentPath = value;
             return this;
         }
+
         public IControlBrowser promptSearchPattern(bool value)
         {
             _options.ShowSearchPattern = value;
             return this;
         }
+
         public IPromptControls<ResultBrowser> EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
@@ -622,18 +619,27 @@ namespace PromptPlusControls.Controls
             _options.HideAfterFinish = value;
             return this;
         }
+
         public ResultPromptPlus<ResultBrowser> Run(CancellationToken? value = null)
         {
             InitControl();
-            return Start(value ?? CancellationToken.None);
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
-        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
         {
-            PipeCondition = condition;
+            Condition = condition;
             return this;
         }
 
-        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
         {
             PipeId = id ?? Guid.NewGuid().ToString();
             PipeTitle = title ?? string.Empty;

@@ -15,7 +15,7 @@ using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class ListControl<T> : ControlBase<IEnumerable<T>>, IDisposable, IControlList<T>
+    internal class ListControl<T> : ControlBase<IEnumerable<T>>, IControlList<T>
     {
         private readonly ListOptions<T> _options;
         private readonly Type _targetType = typeof(T);
@@ -27,15 +27,6 @@ namespace PromptPlusControls.Controls
         public ListControl(ListOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
-        }
-
-        public new void Dispose()
-        {
-            if (_localpaginator != null)
-            {
-                _localpaginator.Dispose();
-            }
-            base.Dispose();
         }
 
         public override void InitControl()
@@ -351,20 +342,27 @@ namespace PromptPlusControls.Controls
             _options.HideAfterFinish = value;
             return this;
         }
+
         public ResultPromptPlus<IEnumerable<T>> Run(CancellationToken? value = null)
         {
             InitControl();
-            return Start(value ?? CancellationToken.None);
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
-
-        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
         {
-            PipeCondition = condition;
+            Condition = condition;
             return this;
         }
 
-        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
         {
             PipeId = id ?? Guid.NewGuid().ToString();
             PipeTitle = title ?? string.Empty;

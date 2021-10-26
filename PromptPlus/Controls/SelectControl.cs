@@ -15,7 +15,7 @@ using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class SelectControl<T> : ControlBase<T>, IDisposable, IControlSelect<T>
+    internal class SelectControl<T> : ControlBase<T>, IControlSelect<T>
     {
         private readonly SelectOptions<T> _options;
         private readonly InputBuffer _filterBuffer = new();
@@ -26,24 +26,33 @@ namespace PromptPlusControls.Controls
             _options = options;
         }
 
-        public new void Dispose()
-        {
-            if (_localpaginator != null)
-            {
-                _localpaginator.Dispose();
-            }
-            base.Dispose();
-        }
-
         public override void InitControl()
         {
+            if (_options.Items is null)
+            {
+                throw new ArgumentNullException(nameof(_options.Items));
+            }
             if (typeof(T).IsEnum && _options.Items.Count == 0)
             {
                 AddEnum();
             }
+            if (_options.HideItems.Count() > 0)
+            {
+                foreach (var item in _options.HideItems)
+                {
+                    _options.Items.Remove(item);
+                }
+            }
             _options.PageSize ??= _options.Items.Count();
-            _options.TextSelector ??= (x => x.ToString());
-            _localpaginator = new Paginator<T>(_options.Items, _options.PageSize, Optional<T>.Create(_options.DefaultValue), _options.TextSelector);
+            _options.TextSelector ??= (x => x?.ToString());
+            if (IsDisabled(_options.DefaultValue))
+            {
+                _localpaginator = new Paginator<T>(_options.Items, _options.PageSize, Optional<T>.s_empty, _options.TextSelector, IsNotDisabled);
+            }
+            else
+            {
+                _localpaginator = new Paginator<T>(_options.Items, _options.PageSize, Optional<T>.Create(_options.DefaultValue), _options.TextSelector, IsNotDisabled);
+            }
             _localpaginator.FirstItem();
         }
 
@@ -80,7 +89,7 @@ namespace PromptPlusControls.Controls
                         return true;
                     case ConsoleKey.Enter when keyInfo.Modifiers == 0:
                     {
-                        if (!typeof(T).Name.StartsWith("EnumValue`"))
+                        if (!typeof(T).IsEnum)
                         {
                             result = default;
                             return true;
@@ -126,12 +135,12 @@ namespace PromptPlusControls.Controls
             screenBuffer.WritePrompt(_options.Message);
             if (_localpaginator.IsUnSelected)
             {
-                screenBuffer.Write(_filterBuffer.ToBackwardString());
+                screenBuffer.Write(_filterBuffer.ToBackward());
             }
             if (_localpaginator.TryGetSelectedItem(out var result) && !_localpaginator.IsUnSelected)
             {
                 var answ = _options.TextSelector(result);
-                var aux = _filterBuffer.ToBackwardString();
+                var aux = _filterBuffer.ToBackward();
                 if (answ != aux && _localpaginator.Count == 1)
                 {
                     screenBuffer.WriteFilter(aux);
@@ -145,7 +154,7 @@ namespace PromptPlusControls.Controls
             screenBuffer.PushCursor();
             if (_localpaginator.IsUnSelected)
             {
-                screenBuffer.Write(_filterBuffer.ToForwardString());
+                screenBuffer.Write(_filterBuffer.ToForward());
             }
 
             if (EnabledStandardTooltip)
@@ -175,11 +184,25 @@ namespace PromptPlusControls.Controls
                 var value = _options.TextSelector(item);
                 if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<T>.Default.Equals(item, selectedItem))
                 {
-                    screenBuffer.WriteLineSelector(value);
+                    if (IsDisabled(item))
+                    {
+                        screenBuffer.WriteLineSelectorDisabled(value);
+                    }
+                    else
+                    {
+                        screenBuffer.WriteLineSelector(value);
+                    }
                 }
                 else
                 {
-                    screenBuffer.WriteLineNotSelector(value);
+                    if (IsDisabled(item))
+                    {
+                        screenBuffer.WriteLineNotSelectorDisabled(value);
+                    }
+                    else
+                    {
+                        screenBuffer.WriteLineNotSelector(value);
+                    }
                 }
             }
             if (_localpaginator.PageCount > 1)
@@ -228,6 +251,36 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
+        public IControlSelect<T> HideItem(T value)
+        {
+            _options.HideItems.Add(value);
+            return this;
+        }
+
+        public IControlSelect<T> HideItems(IEnumerable<T> value)
+        {
+            foreach (var item in value)
+            {
+                _options.HideItems.Add(item);
+            }
+            return this;
+        }
+
+        public IControlSelect<T> DisableItem(T value)
+        {
+            _options.DisableItems.Add(value);
+            return this;
+        }
+
+        public IControlSelect<T> DisableItems(IEnumerable<T> value)
+        {
+            foreach (var item in value)
+            {
+                _options.DisableItems.Add(item);
+            }
+            return this;
+        }
+
         public IControlSelect<T> AddItem(T value)
         {
             _options.Items.Add(value);
@@ -241,6 +294,16 @@ namespace PromptPlusControls.Controls
                 _options.Items.Add(item);
             }
             return this;
+        }
+
+        private bool IsDisabled(T item)
+        {
+            return _options.DisableItems.Contains(item);
+        }
+
+        private bool IsNotDisabled(T item)
+        {
+            return !_options.DisableItems.Contains(item);
         }
 
         private void AddEnum()
@@ -295,16 +358,23 @@ namespace PromptPlusControls.Controls
         public ResultPromptPlus<T> Run(CancellationToken? value = null)
         {
             InitControl();
-            return Start(value ?? CancellationToken.None);
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
-        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
         {
-            PipeCondition = condition;
+            Condition = condition;
             return this;
         }
 
-        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
         {
             PipeId = id ?? Guid.NewGuid().ToString();
             PipeTitle = title ?? string.Empty;

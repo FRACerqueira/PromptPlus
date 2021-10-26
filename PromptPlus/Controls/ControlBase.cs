@@ -46,7 +46,7 @@ namespace PromptPlusControls.Controls
 
         public object ContextState { get; internal set; }
 
-        public Func<ResultPipe[], object, bool> PipeCondition { get; internal set; }
+        public Func<ResultPipe[], object, bool> Condition { get; internal set; }
 
         public bool OverPipeLine => !string.IsNullOrEmpty(PipeId);
 
@@ -70,7 +70,6 @@ namespace PromptPlusControls.Controls
 
         public void Dispose()
         {
-            _screenrender.Dispose();
             if (_esckeyCancelation != null)
             {
                 _esckeyCancelation.Dispose();

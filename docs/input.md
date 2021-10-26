@@ -21,15 +21,25 @@ Input(string prompt = null)
 ### Methods
 [**Top**](#promptplus--input)
 
-- Prompt(string value)
-    - set prompt message
-- Default(string value)
-    - Default value for input. If the input is empty and there is a DefaultValue and the all condition from Validators is true, the return will be DefaultValue
-- IsPassword(bool swithVisible)
+- ```csharp
+  Prompt(string value)
+  ``` 
+  - set prompt message 
+- ```csharp
+  Default(string value)
+  ``` 
+  - Default value for input. If the input is empty and there is a DefaultValue and the all condition from Validators is true, the return will be DefaultValue
+- ```csharp
+  IsPassword(bool swithVisible)
+  ``` 
     - Input is password type.Default Value = false
-- Addvalidator(Func<object, ValidationResult> validator);
+- ```csharp
+  Addvalidator(Func<object, ValidationResult> validator);
+  ``` 
     - item of input validator. See
-- Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+- ```csharp
+  Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+  ``` 
     - List of input validator
 
 ### Return

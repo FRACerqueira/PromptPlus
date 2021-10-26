@@ -8,12 +8,12 @@ using System.Threading;
 
 namespace PromptPlusControls.Drivers
 {
-    public interface IConsoleDriver : IDisposable
+    public interface IConsoleDriver
     {
         ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken);
         void Beep();
-        void Reset();
         void ClearLine(int top);
+        void ClearRestOfLine(ConsoleColor? color);
         ConsoleKeyInfo ReadKey();
         void Write(string value, ConsoleColor color, ConsoleColor? colorbg = null);
         void WriteLine();

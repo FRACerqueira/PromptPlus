@@ -22,27 +22,50 @@ Control Browser. Browser files/folder with auto-paginator and tooltips.
 ### Methods
 [**Top**](#promptplus--browser)
 
-- Prompt(string value)
-    - set prompt message 
-- Filter(BrowserFilter value)
+- ```csharp
+  Prompt(string value)
+  ``` 
+  - set prompt message 
+- ```csharp
+  Filter(BrowserFilter value)
+    ```
     - Fiter result to only type folder. Default value = BrowserFilter.None (All types)   
-- Default(string value)
+
+- ```csharp
+  Default(string value)
+    ```
     - full path of file/folder initial selected
-- PrefixExtension(string value)
-    -Prefix to be added to the end of item (only new file/folder)
-- AllowNotSelected(bool value)
+- ```csharp
+  PrefixExtension(string value)
+    ```
+    - Prefix to be added to the end of item (only new file/folder)
+- ```csharp
+  AllowNotSelected(bool value)
+    ```
     - Accept not seleted item
-- Root(string value)
+- ```csharp
+  Root(string value)
+    ```
     - Root for dry discovery
-- SearchPattern(string value)
+- ```csharp
+  SearchPattern(string value)
+    ```
     - Specifies what to search for by the browser
-- PageSize(int value)
+- ```csharp
+  PageSize(int value)
+    ```
     - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size 
-- SupressHidden(bool value)
+- ```csharp
+   SupressHidden(bool value)
+    ```
     - Supress file/folder with attribute hidden/system
-- PromptCurrentPath(bool value)
+- ```csharp
+  PromptCurrentPath(bool value)
+    ```
     - Split fullpath of seleted item and show then
-- promptSearchPattern(bool value)
+- ```csharp
+  promptSearchPattern(bool value)
+    ```
     - Show/Hide searchPattern in prompt message
 
 ### Return

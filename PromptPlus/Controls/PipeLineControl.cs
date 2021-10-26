@@ -9,19 +9,20 @@ using System.Linq;
 using System.Threading;
 
 using PromptPlusControls.Internal;
+using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class PipeLineControl : IDisposable
+    internal class PipeLineControl : IDisposable, IControlPipeLine
     {
 
         private string _currentPipe;
         private int _currentIndex;
         private readonly Dictionary<string, IFormPlusBase> _steps = new();
         private readonly Dictionary<string, ResultPromptPlus<ResultPipe>> _resultpipeline = new();
-        private readonly Paginator<ResultPromptPlus<ResultPipe>> _summaryPipePaginator;
-        private readonly CancellationTokenSource _esckeyCts;
+        private Paginator<ResultPromptPlus<ResultPipe>> _summaryPipePaginator;
+        private CancellationTokenSource _esckeyCts;
 
         public void Dispose()
         {
@@ -29,20 +30,11 @@ namespace PromptPlusControls.Controls
             {
                 _esckeyCts.Dispose();
             }
-            if (_summaryPipePaginator != null)
-            {
-                _summaryPipePaginator.Dispose();
-            }
         }
 
-        public PipeLineControl(IEnumerable<IFormPlusBase> steps)
+        public void InitControl()
         {
-            foreach (var item in steps)
-            {
-                _steps.Add(item.PipeId, item);
-                _resultpipeline.Add(item.PipeId, new ResultPromptPlus<ResultPipe>(new ResultPipe(item.PipeId, item.PipeTitle, null, item.PipeCondition), false));
-            }
-
+            _currentIndex = 0;
             var resultpipes = new ResultPromptPlus<ResultPipe>[_steps.Count];
             _resultpipeline.Values.CopyTo(resultpipes, 0);
             _summaryPipePaginator = new Paginator<ResultPromptPlus<ResultPipe>>(resultpipes, null, Optional<ResultPromptPlus<ResultPipe>>.Create(null), (_) => string.Empty);
@@ -51,9 +43,7 @@ namespace PromptPlusControls.Controls
 
         public ResultPromptPlus<IEnumerable<ResultPipe>> Start(CancellationToken? stoptoken = null)
         {
-            _currentIndex = 0;
             var abortedall = false;
-
             foreach (var item in _steps)
             {
                 _currentPipe = item.Key;
@@ -167,5 +157,43 @@ namespace PromptPlusControls.Controls
                 screenBuffer.WriteLinePagination(_summaryPipePaginator.PaginationMessage());
             }
         }
+
+        #region IControlPipeLine
+
+        public IControlPipeLine AddPipe(IFormPlusBase value)
+        {
+            _steps.Add(value.PipeId, value);
+            _resultpipeline.Add(value.PipeId, new ResultPromptPlus<ResultPipe>(new ResultPipe(value.PipeId, value.PipeTitle, null, value.Condition), false));
+            return this;
+        }
+
+        public IControlPipeLine AddPipes(IEnumerable<IFormPlusBase> value)
+        {
+            foreach (var item in value)
+            {
+                if (string.IsNullOrEmpty(item.PipeId))
+                {
+                    throw new ArgumentException(Exceptions.EX_PipeLineEmptyId);
+                }
+                _steps.Add(item.PipeId, item);
+                _resultpipeline.Add(item.PipeId, new ResultPromptPlus<ResultPipe>(new ResultPipe(item.PipeId, item.PipeTitle, null, item.Condition), false));
+            }
+            return this;
+        }
+
+        public ResultPromptPlus<IEnumerable<ResultPipe>> Run(CancellationToken? value = null)
+        {
+            InitControl();
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        #endregion
     }
 }

@@ -73,11 +73,24 @@ namespace PromptPlusControls.Internal
             screenBuffer.WriteLine($"{PromptPlus.Symbols.Selector} {message}", PromptPlus.ColorSchema.Select, PromptPlus.ColorSchema.BackColorSchema);
         }
 
+        public static void WriteLineSelectorDisabled(this ScreenBuffer screenBuffer, string message)
+        {
+            screenBuffer.WriteLine($"{PromptPlus.Symbols.Selector} ", PromptPlus.ColorSchema.Select, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write(message, PromptPlus.ColorSchema.Disabled, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
         public static void WriteLineNotSelector(this ScreenBuffer screenBuffer, string message)
         {
             var len = PromptPlus.Symbols.Selector.ToString().Length;
             screenBuffer.WriteLine(new string(' ', len), PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
             screenBuffer.Write($" {message}", PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
+        public static void WriteLineNotSelectorDisabled(this ScreenBuffer screenBuffer, string message)
+        {
+            var len = PromptPlus.Symbols.Selector.ToString().Length;
+            screenBuffer.WriteLine(new string(' ', len), PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write($" {message}", PromptPlus.ColorSchema.Disabled, PromptPlus.ColorSchema.BackColorSchema);
         }
 
         public static void WriteLineTaskRun(this ScreenBuffer screenBuffer, string message)
@@ -97,14 +110,74 @@ namespace PromptPlusControls.Internal
             screenBuffer.Write($" {message}", PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
         }
 
+        public static void WriteLineMarkSelectIndent(this ScreenBuffer screenBuffer, string message)
+        {
+            screenBuffer.WriteLine($"{PromptPlus.Symbols.Selector} {PromptPlus.Symbols.Selected} ", PromptPlus.ColorSchema.Select, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write(message, PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
+        public static void WriteLineMarkNotSelectIndent(this ScreenBuffer screenBuffer, string message)
+        {
+            screenBuffer.WriteLine($"{PromptPlus.Symbols.Selector} ", PromptPlus.ColorSchema.Select, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write($"{PromptPlus.Symbols.NotSelect} ", PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write(message, PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
+        public static void WriteLineGroupIndent(this ScreenBuffer screenBuffer, string message)
+        {
+            screenBuffer.WriteLine($"{PromptPlus.Symbols.Selector} ", PromptPlus.ColorSchema.Select, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write($"{PromptPlus.Symbols.SymbGroup} ", PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write(message, PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
+        public static void WriteLineGroupUnselectIndent(this ScreenBuffer screenBuffer, string message)
+        {
+            var len = PromptPlus.Symbols.Selector.ToString().Length;
+            screenBuffer.WriteLine(new string(' ', len), PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write($"{PromptPlus.Symbols.SymbGroup} ", PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write(message, PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
         public static void WriteLineMarkSelect(this ScreenBuffer screenBuffer, string message)
         {
             screenBuffer.WriteLine($"{PromptPlus.Symbols.Selector} {PromptPlus.Symbols.Selected} {message}", PromptPlus.ColorSchema.Select, PromptPlus.ColorSchema.BackColorSchema);
         }
 
+        public static void WriteMarkSelect(this ScreenBuffer screenBuffer, string message)
+        {
+            screenBuffer.Write(message, PromptPlus.ColorSchema.Select, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
         public static void WriteLineNotMarkSelect(this ScreenBuffer screenBuffer, string message)
         {
             screenBuffer.WriteLine($"{PromptPlus.Symbols.Selector} {PromptPlus.Symbols.NotSelect} {message}", PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
+        public static void WriteLineNotMarkSelectIndent(this ScreenBuffer screenBuffer, string message)
+        {
+            var len = PromptPlus.Symbols.Selector.ToString().Length;
+            screenBuffer.WriteLine(new string(' ', len), PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write($" {PromptPlus.Symbols.Selected} ", PromptPlus.ColorSchema.Select, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write(message, PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
+        public static void WriteLineNotMarkUnSelectIndent(this ScreenBuffer screenBuffer, string message)
+        {
+            var len = PromptPlus.Symbols.Selector.ToString().Length;
+            screenBuffer.WriteLine(new string(' ', len), PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write($" {PromptPlus.Symbols.NotSelect} ", PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+            screenBuffer.Write(message, PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
+
+        public static void WriteNotMarkSelect(this ScreenBuffer screenBuffer, string message)
+        {
+            screenBuffer.Write(message, PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema);
+        }
+
+        public static void WriteNotMarkSelectDisabled(this ScreenBuffer screenBuffer, string message)
+        {
+            screenBuffer.Write(message, PromptPlus.ColorSchema.Disabled, PromptPlus.ColorSchema.BackColorSchema);
         }
 
         public static void WriteLineSelect(this ScreenBuffer screenBuffer, string message)
@@ -240,7 +313,7 @@ namespace PromptPlusControls.Internal
 
         public static void WriteLine(this ScreenBuffer screenBuffer)
         {
-            screenBuffer.Add(new List<TextInfo>());
+            screenBuffer.Add(new List<TextInfo>() { new TextInfo("", PromptPlus.ColorSchema.ForeColorSchema, PromptPlus.ColorSchema.BackColorSchema) });
         }
 
         public static void WriteLine(this ScreenBuffer screenBuffer, string text, ConsoleColor color, ConsoleColor? colorbg = null)
@@ -263,9 +336,9 @@ namespace PromptPlusControls.Internal
 
         public static void PushCursor(this ScreenBuffer screenBuffer, InputBuffer buffer)
         {
-            screenBuffer.WriteAnswer(buffer.ToBackwardString());
+            screenBuffer.WriteAnswer(buffer.ToBackward());
             screenBuffer.PushCursor();
-            screenBuffer.WriteAnswer(buffer.ToForwardString());
+            screenBuffer.WriteAnswer(buffer.ToForward());
         }
 
         public static void PushCursor(this ScreenBuffer screenBuffer, MaskedBuffer buffer)

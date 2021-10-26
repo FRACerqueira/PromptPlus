@@ -295,17 +295,23 @@ namespace PromptPlusControls.Controls
         public ResultPromptPlus<IEnumerable<ResultProcess>> Run(CancellationToken? value = null)
         {
             InitControl();
-            return Start(value ?? CancellationToken.None);
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
-
-        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
         {
-            PipeCondition = condition;
+            Condition = condition;
             return this;
         }
 
-        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
         {
             PipeId = id ?? Guid.NewGuid().ToString();
             PipeTitle = title ?? string.Empty;

@@ -16,28 +16,17 @@ using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class MaskedListControl : ControlBase<IEnumerable<ResultMasked>>, IDisposable, IControlListMasked
+    internal class MaskedListControl : ControlBase<IEnumerable<ResultMasked>>, IControlListMasked
     {
         private static readonly char? s_defaultfill = '0';
         private Paginator<string> _localpaginator;
         private readonly ListOptions<string> _options;
-        //private readonly Type _targetType = typeof(string);
-        //private readonly Type _underlyingType = Nullable.GetUnderlyingType(typeof(string));
         private readonly List<ResultMasked> _inputItems = new();
         private MaskedBuffer _inputBuffer;
 
         public MaskedListControl(ListOptions<string> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
-        }
-
-        public new void Dispose()
-        {
-            if (_localpaginator != null)
-            {
-                _localpaginator.Dispose();
-            }
-            base.Dispose();
         }
 
         public override void InitControl()
@@ -213,35 +202,23 @@ namespace PromptPlusControls.Controls
                         break;
                     }
                     case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _localpaginator.UpdateFilter(_inputBuffer.Backward().ToString());
+                        _localpaginator.UpdateFilter(_inputBuffer.Backward().ToMasked());
                         break;
                     case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _localpaginator.UpdateFilter(_inputBuffer.Forward().ToString());
+                        _localpaginator.UpdateFilter(_inputBuffer.Forward().ToMasked());
                         break;
                     case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _localpaginator.UpdateFilter(_inputBuffer.Backspace().ToString());
+                        _localpaginator.UpdateFilter(_inputBuffer.Backspace().ToMasked());
                         break;
                     case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _localpaginator.UpdateFilter(_inputBuffer.Delete().ToString());
+                        _localpaginator.UpdateFilter(_inputBuffer.Delete().ToMasked());
                         break;
                     case ConsoleKey.Delete when keyInfo.Modifiers == ConsoleModifiers.Control:
                     {
                         if (_localpaginator.TryGetSelectedItem(out var selected))
                         {
                             var inputValue = _inputItems.Where(x => x.Masked == selected).First();
-                            Thread.CurrentThread.CurrentUICulture = _options.MaskedOption.CurrentCulture;
-                            Thread.CurrentThread.CurrentCulture = _options.MaskedOption.CurrentCulture;
-                            if (!TryValidate(inputValue, _options.Validators))
-                            {
-                                Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-                                Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-                                result = _inputItems;
-                                return false;
-                            }
-                            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-                            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-
-                            var aux = _inputItems.Where(x => inputValue.Equals(x.ObjectValue)).FirstOrDefault();
+                            var aux = _inputItems.Where(x => inputValue.Masked.Equals(x.Masked)).FirstOrDefault();
                             if (aux.ObjectValue != null)
                             {
                                 _inputItems.Remove(aux);
@@ -261,7 +238,7 @@ namespace PromptPlusControls.Controls
                         {
                             if (!char.IsControl(keyInfo.KeyChar))
                             {
-                                _localpaginator.UpdateFilter(_inputBuffer.Insert(_options.UpperCase ? char.ToUpper(keyInfo.KeyChar) : keyInfo.KeyChar, out var _).ToString());
+                                _localpaginator.UpdateFilter(_inputBuffer.Insert(_options.UpperCase ? char.ToUpper(keyInfo.KeyChar) : keyInfo.KeyChar, out var _).ToMasked());
                             }
                             else
                             {
@@ -438,6 +415,7 @@ namespace PromptPlusControls.Controls
             _options.MaskedOption.FillNumber = value ? s_defaultfill : null;
             return this;
         }
+
         public IControlListMasked FormatYear(FormatYear value)
         {
             _options.MaskedOption.FmtYear = value;
@@ -449,6 +427,7 @@ namespace PromptPlusControls.Controls
             _options.MaskedOption.FmtTime = value;
             return this;
         }
+
         public IControlListMasked AmmoutPositions(int intvalue, int decimalvalue)
         {
             if (intvalue < 0)
@@ -501,7 +480,14 @@ namespace PromptPlusControls.Controls
         public ResultPromptPlus<IEnumerable<ResultMasked>> Run(CancellationToken? value = null)
         {
             InitControl();
-            return Start(value ?? CancellationToken.None);
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
         private void FmtData()
@@ -606,13 +592,13 @@ namespace PromptPlusControls.Controls
             return result;
         }
 
-        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
         {
-            PipeCondition = condition;
+            Condition = condition;
             return this;
         }
 
-        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
         {
             PipeId = id ?? Guid.NewGuid().ToString();
             PipeTitle = title ?? string.Empty;

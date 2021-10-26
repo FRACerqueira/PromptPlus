@@ -331,12 +331,11 @@ namespace PromptPlusControls.Internal
                     }
                     break;
                 case MaskedType.Number:
+                case MaskedType.Currency:
                     if (_signalNumberInput == _cultureMasked.NumberFormat.NegativeSign[0])
                     {
                         aux = $"{_cultureMasked.NumberFormat.NegativeSign}{aux}";
                     }
-                    break;
-                case MaskedType.Currency:
                     break;
                 default:
                     break;

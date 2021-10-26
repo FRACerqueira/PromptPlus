@@ -5,7 +5,9 @@
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 
-**_Interactive command-line  toolkit for C# with powerful controls._** This project was inspired by the work [Sharprompt](https://github.com/shibayan/Sharprompt). A complete refatoring was done , introducing  **_new features and behavior, making the product more complete, more stable and more configurable_**. 
+**_Interactive command-line toolkit for C# with powerful controls.
+
+[**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis) | [**Extensions**](#extensions) | [**Supported Platforms**](#supported-platforms)
 
 #### [visit the official page for complete documentation](https://fracerqueira.github.io/PromptPlus/)
 
@@ -17,7 +19,6 @@ dotnet run --project PromptPlusExample
 ```
 
 ## Snapshot
-[**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis) | [**Extensions**](#extensions) | [**Supported Platforms**](#supported-platforms)
 
 ### Input
 
@@ -254,6 +255,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 
 | controls | Details |
 | --- | --- |
+| [Banner](https://fracerqueira.github.io/PromptPlus/banner) |  ASCII text banner |
 | [Any key](https://fracerqueira.github.io/PromptPlus/anykey) |  Simple any key press |
 | [Key Press](https://fracerqueira.github.io/PromptPlus/keypress) | Simple specific key |
 | [Confirm](https://fracerqueira.github.io/PromptPlus/confirm) | Simple confirm with  with tool tips and language detection |
@@ -266,7 +268,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [MaskEdit Number](https://fracerqueira.github.io/PromptPlus/maskeditnumber) | Numeric input with language parameter, tooltips and input validator |
 | [MaskEdit Currency](https://fracerqueira.github.io/PromptPlus/maskeditnumber) | Currency input with language parameter, tooltips and input validator |
 | [Select](https://fracerqueira.github.io/PromptPlus/select)| Generic select input IEnumerable/Enum with auto-paginator and tooltips and more |
-| [MultiSelect](https://fracerqueira.github.io/PromptPlus/multiselect) | Generic multi select input IEnumerable/Enum with auto-paginator , tooltips and more |
+| [MultiSelect](https://fracerqueira.github.io/PromptPlus/multiselect) | Generic multi select input IEnumerable/Enum with group, auto-paginator , tooltips and more |
 | [List](https://fracerqueira.github.io/PromptPlus/list) | Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more |
 | [ListMasked](https://fracerqueira.github.io/PromptPlus/listmasked) | Create generic IEnumerable with maskedit, auto-paginator, tooptip , input validator |
 | [Browser](https://fracerqueira.github.io/PromptPlus/browser) | Browser files/folder with auto-paginator and tooltips |
@@ -312,6 +314,11 @@ Console.WriteLine($"Your input: {name.Value}!");
     - Windows Terminal (WSL 2)
 - macOS
     - Terminal.app
+
+## Inspiration notes
+
+- FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
+- The base-control and some of its dependencies, Symbols, beyond console drivers were inspired by the work of [Sharprompt](https://github.com/shibayan/Sharprompt).
 
 ## License
 

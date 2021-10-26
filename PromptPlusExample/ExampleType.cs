@@ -4,6 +4,8 @@ namespace PromptPlusExample
 {
     public enum ExampleType
     {
+        [Display(Name = "Utility: Banner ASCII text")]
+        Banner,
         [Display(Name = "Control: Any key")]
         AnyKey,
         [Display(Name = "Control: Key Press")]
@@ -30,13 +32,15 @@ namespace PromptPlusExample
         Select,
         [Display(Name = "Control: Select - Enum")]
         SelectWithEnum,
+        [Display(Name = "Control: MultiSelect with group")]
+        MultiSelectGroup,
         [Display(Name = "Control: MultiSelect - IEnumerable")]
         MultiSelect,
         [Display(Name = "Control: MultiSelect - Enum")]
         MultiSelectWithEnum,
         [Display(Name = "Control: List - Create IEnumerable with Free Input")]
         List,
-        [Display(Name = "Control: ListMasked - Create IEnumerable with MaskEdit Generic")]
+        [Display(Name = "Control: ListMasked - Create IEnumerable with MaskEdit")]
         ListMasked,
         [Display(Name = "Control: Browser - Filter Only Folder")]
         FolderBrowser,

@@ -4,10 +4,9 @@
 // ***************************************************************************************
 
 using System;
-using System.Collections.Generic;
-using System.Threading;
 
 using PromptPlusControls.Controls;
+using PromptPlusControls.FIGlet;
 using PromptPlusControls.Internal;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
@@ -16,6 +15,12 @@ namespace PromptPlusControls
 {
     public static partial class PromptPlus
     {
+      
+        public static IFIGlet Banner(string value)
+        {
+            return new BannerControl(value);
+        }
+
         public static IControlKeyPress KeyPress(char? Keypress = null, ConsoleModifiers? keymodifiers = null)
         {
             return new keyPressControl(new KeyPressOptions { KeyPress = Keypress, KeyModifiers = keymodifiers });
@@ -95,17 +100,9 @@ namespace PromptPlusControls
             return new MaskedListControl(new ListOptions<string>() { Message = prompt });
         }
 
-        public static ResultPromptPlus<IEnumerable<ResultPipe>> Pipeline(IEnumerable<IFormPlusBase> steps, CancellationToken? cancellationToken = null)
+        public static IControlPipeLine Pipeline()
         {
-            foreach (var item in steps)
-            {
-                if (string.IsNullOrEmpty(item.PipeId))
-                {
-                    throw new ArgumentException(Exceptions.EX_PipeLineEmptyId);
-                }
-            }
-            using var pipeline = new PipeLineControl(steps);
-            return pipeline.Start(cancellationToken ?? CancellationToken.None);
+            return new PipeLineControl();
         }
     }
 }

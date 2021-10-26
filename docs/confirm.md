@@ -20,9 +20,13 @@ Confirm(string prompt = null)
 ### Methods
 [**Top**](#promptplus--confirm)
 
-- Prompt(string value)
-    - set prompt message 
-- Default(bool value)
+- ```csharp
+  Prompt(string value)
+  ``` 
+  - set prompt message 
+- ```csharp
+  Default(bool value)
+  ``` 
     - Default value. True for positive confirm or False for negative confirm.
 
 ### Return

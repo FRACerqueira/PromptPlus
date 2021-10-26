@@ -39,7 +39,7 @@ namespace PromptPlusControls.Controls
                     {
                         throw new ArgumentException(Exceptions.Ex_InvalidMask);
                     }
-                    _options.DefaultValueWitdhoutMask = _options.DefaultObject.ToString();
+                    _options.DefaultValueWitdhoutMask = _options.DefaultObject?.ToString() ?? string.Empty;
                     break;
                 case MaskedType.DateOnly:
                     _options.MaskValue = CreateMaskedOnlyDate();
@@ -359,19 +359,26 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public ResultPromptPlus<ResultMasked> Run(CancellationToken? stoptoken = null)
+        public ResultPromptPlus<ResultMasked> Run(CancellationToken? value = null)
         {
             InitControl();
-            return Start(stoptoken ?? CancellationToken.None);
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
-        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
         {
-            PipeCondition = condition;
+            Condition = condition;
             return this;
         }
 
-        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
         {
             PipeId = id ?? Guid.NewGuid().ToString();
             PipeTitle = title ?? string.Empty;

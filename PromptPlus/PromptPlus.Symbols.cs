@@ -22,6 +22,11 @@ namespace PromptPlusControls
             public static Symbol NotSelect { get; set; } = new Symbol("○", "  ");
             public static Symbol TaskRun { get; set; } = new Symbol("♦", "* ");
             public static Symbol Skiped { get; set; } = new Symbol("×", "x ");
+
+            internal static Symbol IndentGroup => new Symbol("├─", "  |-");
+            internal static Symbol IndentEndGroup => new Symbol("└─", "  |_");
+            internal static Symbol SymbGroup { get; set; } = new Symbol("»", ">>");
+
         }
     }
 }

@@ -270,6 +270,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 
 controls | Details
 --- | ---
+[Banner](banner.md) |  ASCII text banner 
 [Any key](anykey.md) |  Simple any key press
 [Key Press](keypress.md) | Simple specific key
 [Confirm](confirm.md) | Simple confirm with  with tool tips and language detection 
@@ -282,7 +283,7 @@ controls | Details
 [MaskEdit Number](maskeditnumber.md) | Numeric input with language parameter, tooltips and input validator
 [MaskEdit Currency](maskeditnumber.md) | Currency input with language parameter, tooltips and input validator
 [Select](select.md)| Generic select input IEnumerable/Enum with auto-paginator and tooltips and more
-[MultiSelect](multiselect.md) | Generic multi select input IEnumerable/Enum with auto-paginator , tooltips and more
+[MultiSelect](multiselect.md) | Generic multi select input IEnumerable/Enum with grpip, auto-paginator , tooltips and more
 [List](list.md) | Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more
 [ListMasked](listmasked.md) | Create generic IEnumerable with maskededit, auto-paginator, tooptip , input validator
 [Browser](browser.md) | Browser files/folder with auto-paginator and tooltips

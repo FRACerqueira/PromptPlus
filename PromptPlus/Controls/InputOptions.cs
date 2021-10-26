@@ -12,11 +12,8 @@ namespace PromptPlusControls.Controls
     internal class InputOptions : BaseOptions
     {
         public bool SwithVisiblePassword { get; set; } = true;
-
         public bool IsPassword { get; set; }
-
         public string DefaultValue { get; set; }
-
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
     }
 }

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using PromptPlusControls;
+using PromptPlusControls.FIGlet;
 using PromptPlusControls.ValueObjects;
 
 using PromptPlusExample.Models;
@@ -81,25 +82,23 @@ namespace PromptPlusExample
             }
         }
 
+
         public void ShowMenu()
         {
             Console.OutputEncoding = Encoding.UTF8;
-
-            PromptPlus.DefaultCulture = new CultureInfo("en-US");
-
             Console.ForegroundColor = PromptPlus.ColorSchema.ForeColorSchema;
             Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
             Console.Clear();
-            //Console.WriteLine("Attach process to debug..");
-            //Console.ReadKey(false);
+
+            PromptPlus.DefaultCulture = new CultureInfo("en-US");
+
+            Console.WriteLine("Attach process...");
+            Console.ReadKey(false);
 
             var quit = false;
-
-
             while (!_stopApp.IsCancellationRequested && !quit)
             {
-
-                var type = PromptPlus.Select<ExampleType>("Choose prompt example")
+                var type = PromptPlus.Select<ExampleType>("Select Example")
                     .Run(_stopApp);
 
                 if (type.IsAborted)
@@ -107,10 +106,13 @@ namespace PromptPlusExample
                     continue;
                 }
 
-                //Console.Clear();
+                Console.Clear();
 
                 switch (type.Value)
                 {
+                    case ExampleType.Banner:
+                        RunBannerSample();
+                        break;
                     case ExampleType.SaveLoadConfig:
                         RunSaveLoadSample();
                         break;
@@ -152,6 +154,9 @@ namespace PromptPlusExample
                         break;
                     case ExampleType.Select:
                         RunSelectSample();
+                        break;
+                    case ExampleType.MultiSelectGroup:
+                        RunMultiSelectGroupSample();
                         break;
                     case ExampleType.MultiSelect:
                         RunMultiSelectSample();
@@ -206,12 +211,12 @@ namespace PromptPlusExample
                 }
                 if (!_stopApp.IsCancellationRequested && !quit)
                 {
-                    //Console.ReadKey(true);
-                    if (type.Value != ExampleType.AnyKey)
-                    {
-                        PromptPlus.KeyPress()
-                            .Run(_stopApp);
-                    }
+                    Console.ReadKey(true);
+                    //if (type.Value != ExampleType.AnyKey)
+                    //{
+                    //    PromptPlus.KeyPress()
+                    //        .Run(_stopApp);
+                    //}
                 }
             }
             if (!quit)
@@ -219,6 +224,48 @@ namespace PromptPlusExample
                 Environment.ExitCode = -1;
             }
             _appLifetime.StopApplication();
+        }
+
+        private void RunBannerSample()
+        {
+            var colorsel = PromptPlus.Select<ConsoleColor>("Select a color")
+                .HideItem(PromptPlus.ColorSchema.BackColorSchema)
+                .Run(_stopApp);
+
+            if (colorsel.IsAborted)
+            {
+                return;
+            }
+
+            var widthsel = PromptPlus.Select<CharacterWidth>("Select a Character Width")
+                .Run(_stopApp);
+            if (widthsel.IsAborted)
+            {
+                return;
+            }
+
+            var fontsel = PromptPlus.Select<string>("Select a font")
+                  .AddItem("Default")
+                  .AddItem("Starwars")
+                  .Run(_stopApp);
+            if (fontsel.IsAborted)
+            {
+                return;
+            }
+
+            if (fontsel.Value[0] == 'D')
+            {
+                PromptPlus.Banner("PromptPlus")
+                    .FIGletWidth(widthsel.Value)
+                    .Run(colorsel.Value);
+            }
+            else
+            {
+                PromptPlus.Banner("PromptPlus")
+                    .FIGletWidth(widthsel.Value)
+                    .LoadFont("starwars.flf")
+                    .Run(colorsel.Value);
+            }
         }
 
         private void RunSaveLoadSample()
@@ -524,7 +571,6 @@ namespace PromptPlusExample
             public string MyInput { get; set; }
         }
 
-
         private void RunInputSample()
         {
             var name = PromptPlus.Input("What's your name?")
@@ -809,11 +855,36 @@ namespace PromptPlusExample
             }
         }
 
+        private void RunMultiSelectGroupSample()
+        {
+            var options = PromptPlus.MultiSelect<string>("Which cities would you like to visit?")
+                .AddGroup(new[] { "Seattle", "Boston", "New York" }, "North America")
+                .AddGroup(new[] { "Tokyo", "Singapore", "Shanghai" }, "Asia")
+                .AddItem("South America (Any)")
+                .AddItem("Europe (Any)")
+                .DisableItem("Boston")
+                .AddDefault("New York")
+                .Run(_stopApp);
+
+            if (options.IsAborted)
+            {
+                return;
+            }
+            if (options.Value.Any())
+            {
+                Console.WriteLine($"You picked {string.Join(", ", options.Value)}");
+            }
+            else
+            {
+                Console.WriteLine("You chose nothing!");
+            }
+        }
+
         private void RunMultiSelectSample()
         {
             var options = PromptPlus.MultiSelect<string>("Which cities would you like to visit?")
-                .AddItems(new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" })
-                .AddDefault("Tokyo")
+                .AddItems(new[] { "Seattle", "Boston", "New York", "Tokyo", "Singapore", "Shanghai" })
+                .AddDefault("New York")
                 .PageSize(3)
                 .Run(_stopApp);
 
@@ -835,6 +906,7 @@ namespace PromptPlusExample
         {
             var envalue = PromptPlus.Select<MyEnum>("Select enum value")
                 .Default(MyEnum.Bar)
+                .DisableItem(MyEnum.Baz)
                 .Run(_stopApp);
 
             if (envalue.IsAborted)
@@ -848,6 +920,7 @@ namespace PromptPlusExample
         {
             var multvalue = PromptPlus.MultiSelect<MyEnum>("Select enum value")
                 .AddDefault(MyEnum.Bar)
+                .DisableItem(MyEnum.Baz)
                 .Run(_stopApp);
 
             if (multvalue.IsAborted)
@@ -859,23 +932,22 @@ namespace PromptPlusExample
 
         private void RunPipeLineSample()
         {
-            var steps = new List<IFormPlusBase>
-            {
-                PromptPlus.Input("Your first name (empty = skip lastname)")
-                .AddPipe(null,"First Name"),
-
-                PromptPlus.Input("Your last name")
-                .Condition((res,context) =>
-                {
-                    return !string.IsNullOrEmpty( ((ResultPromptPlus<string>)res[0].ValuePipe).Value);
-                })
-                .AddPipe(null,  "Last Name"),
-
-                PromptPlus.MaskEdit(MaskedType.DateOnly,"Your birth date")
-                    .AddPipe(null,"birth date"),
-
-                PromptPlus.WaitProcess("phase 1")
-                    .AddProcess(new SingleProcess{ ProcessToRun = (_stopApp) =>
+            _ = PromptPlus.Pipeline()
+                    .AddPipe(PromptPlus.Input("Your first name (empty = skip lastname)")
+                            .ToPipe(null, "First Name"))
+                    .AddPipe(PromptPlus.Input("Your last name")
+                        .PipeCondition((res, context) =>
+                        {
+                            return !string.IsNullOrEmpty(((ResultPromptPlus<string>)res[0].ValuePipe).Value);
+                        })
+                        .ToPipe(null, "Last Name"))
+                    .AddPipe(PromptPlus.MaskEdit(MaskedType.DateOnly, "Your birth date")
+                        .ToPipe(null, "birth date"))
+                    .AddPipe(
+                        PromptPlus.WaitProcess("phase 1")
+                        .AddProcess(new SingleProcess
+                        {
+                            ProcessToRun = (_stopApp) =>
                             {
                                 _stopApp.WaitHandle.WaitOne(4000);
                                 if (_stopApp.IsCancellationRequested)
@@ -883,15 +955,13 @@ namespace PromptPlusExample
                                     return Task.FromResult<object>("canceled");
                                 }
                                 return Task.FromResult<object>("Done");
-                            } })
-                    .AddPipe(null,"Update phase 1"),
-
-                PromptPlus.Progressbar("Processing Tasks ")
-                    .UpdateHandler(UpdateSampleHandlerAsync)
-                    .AddPipe(null,"Update phase 2")
-
-            };
-            _ = PromptPlus.Pipeline(steps, _stopApp);
+                            }
+                        })
+                        .ToPipe(null, "Update phase 1"))
+                    .AddPipe(PromptPlus.Progressbar("Processing Tasks ")
+                        .UpdateHandler(UpdateSampleHandlerAsync)
+                        .ToPipe(null, "Update phase 2"))
+                    .Run(_stopApp);
         }
 
         private void RunFolderSample()
@@ -920,7 +990,7 @@ namespace PromptPlusExample
         private void RunFileSample()
         {
             var file = PromptPlus.Browser("Select/New file")
-                .PageSize(10)
+                .PageSize(5)
                 .AllowNotSelected(true)
                 .PrefixExtension(".cs")
                 .Run(_stopApp);

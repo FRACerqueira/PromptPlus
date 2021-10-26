@@ -20,8 +20,10 @@ KeyPress(char? Keypress = null, ConsoleModifiers? keymodifiers = null)
 ### Methods
 [**Top**](#promptplus--keypress)
 
-- Prompt(string value)
-    - set prompt message
+- ```csharp
+  Prompt(string value)
+  ``` 
+  - set prompt message 
 
 ### Return
 [**Top**](#promptplus--keypress)

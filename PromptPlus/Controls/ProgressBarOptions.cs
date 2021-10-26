@@ -14,13 +14,9 @@ namespace PromptPlusControls.Controls
     internal class ProgressBarOptions : BaseOptions
     {
         public object InterationId { get; set; }
-
         public Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> UpdateHandler { get; set; }
-
         public int Witdth { get; set; } = PromptPlus.ProgressgBarWitdth;
-
         public int DoneDelay { get; private set; } = PromptPlus.ProgressgBarDoneDelay;
-
         public int ProcessCheckInterval { get; private set; } = PromptPlus.ProgressgBarCheckDelay;
 
     }

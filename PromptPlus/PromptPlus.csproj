@@ -23,7 +23,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controls\StatusBarControl.cs" />
+    <Compile Remove="Internal\StatusBar.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="FIGlet\Fonts\standard.flf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.IO" Version="4.3.0" />
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
   </ItemGroup>
 
@@ -32,6 +42,10 @@
       <Pack>true</Pack>
       <PackagePath>README.txt</PackagePath>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="FIGlet\Fonts\standard.flf" />
   </ItemGroup>
 
   <ItemGroup>

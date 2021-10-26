@@ -1,6 +1,6 @@
 ﻿**Welcome to PromptPlus**
 
-Interactive command-line  toolkit for **C#** with powerful controls.
+Interactive command-line toolkit for **C#** with powerful controls.
 PromptPlus was developed in c# with the **netstandard2.1** target framework, with compatibility for:
 
 - .NET Core 3.1, 5.X, 6.X
@@ -11,20 +11,42 @@ https://fracerqueira.github.io/PromptPlus
 
 **Relase Notes (This Version)**
 
-Enhancements / **Break changes and behavior**
------------------------------------------
+**Break changes and behavior (Previous versions need to be refactored to new syntax) ** 
+---------------------------------------------------------------------------------------
 
 - Refactored all controls to fluent-interface syntax to improve extensibility points.
-- Adjusted type return to optimize SliderNumber control.
 - Removed pipeline namespace. Now the pipeline syntax is the same as for controls.
 - Removed access to options classes, unified by fluent-interfaces model
-- Changed Type return: ResultMasked for ListMasked Control.
-- Expanded ListMasked control to support all types of MaskEdit.
-- Simplified Select and Multiselect controls for native support of enum types.
-- Changed pipeline extension "Step" to fuent-interface method "AddPipe".
-- Revised all documentation for new changes
+- Changed pipeline extension "Step" to fuent-interface method "ToPipe".
+
+**New controls**
+----------------
+- Banner-control        : Show ASCII text banner. 
+
+**Enhancements**
+----------------
+- Select-control        : Added disable and hide items options. 
+- Select-control        : Native support of enum types (removed type  EnumValue<T>). 
+- MultSelect-control    : Native support of enum types (removed type  EnumValue<T>). 
+- MultSelect-control    : Added disable and hide items options.
+- MultSelect-control    : Added group of items for quick multiple selection.
+- MultSelect-control    : Revised the look to keep the selection symbols.
+- ListMasked-control    : Expanded to support all types of MaskEdit-control.
+- ListMasked-Control    : Adjusted type return to ResultMasked.
+- SliderNumber-control  : Adjusted type return to double.
+
+- Revised all documentation for new changes (In progress)
+
+**Fixed bugs**
+--------------
+- ListMasked-control: fixed bug when deleting selection (not deleting).
 
 **Sample Usage**
+----------------
+
+//ASCII text banners
+PromptPlus.Banner("PromptPlus")
+    .Run(ConsoleColor.Green);
 
 //MaskEdit Generic
 var mask = PromptPlus.MaskEdit(MaskedType.Generic, "Inventory Number")
@@ -69,6 +91,7 @@ if (name.IsAborted)
 Console.WriteLine($"Hello, {name.Result}!");
 
 **Supported platforms**
+-----------------------
 
 - Windows
     - Command Prompt, PowerShell, Windows Terminal

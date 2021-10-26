@@ -180,11 +180,13 @@ namespace PromptPlusControls.Controls
             _options.Message = value;
             return this;
         }
+
         public IControlConfirm Default(bool value)
         {
             _options.DefaultValue = value;
             return this;
         }
+
         public IPromptControls<bool> EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
@@ -212,16 +214,23 @@ namespace PromptPlusControls.Controls
         public ResultPromptPlus<bool> Run(CancellationToken? value = null)
         {
             InitControl();
-            return Start(value ?? CancellationToken.None);
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
-        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
         {
-            PipeCondition = condition;
+            Condition = condition;
             return this;
         }
 
-        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
         {
             PipeId = id ?? Guid.NewGuid().ToString();
             PipeTitle = title ?? string.Empty;

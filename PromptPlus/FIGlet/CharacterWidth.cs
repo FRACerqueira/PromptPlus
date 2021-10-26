@@ -2,17 +2,18 @@
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
+// Inspired by the work https://github.com/WenceyWang/FIGlet.Net
+// ***************************************************************************************
 
-using System;
-
-namespace PromptPlusControls.Controls
+namespace PromptPlusControls.FIGlet
 {
-    internal class KeyPressOptions : BaseOptions
+
+    public enum CharacterWidth
     {
-        public KeyPressOptions() : base(true)
-        {
-        }
-        public ConsoleModifiers? KeyModifiers { get; set; }
-        public char? KeyPress { get; set; }
+
+        Smush,
+        Fitted,
+        Full
     }
+
 }

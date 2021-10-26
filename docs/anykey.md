@@ -20,8 +20,10 @@ KeyPress()
 ### Methods
 [**Top**](#promptplus--anykey)
 
-- Prompt(string value)
-    - set prompt message. If omitted, default value is text "Press any key"
+- ```csharp
+  Prompt(string value)
+  ``` 
+  - set prompt message. If omitted, default value is text "Press any key"
 
 ### Returns Types
 [**Top**](#promptplus--anykey)

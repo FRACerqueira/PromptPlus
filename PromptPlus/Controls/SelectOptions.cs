@@ -11,11 +11,10 @@ namespace PromptPlusControls.Controls
     internal class SelectOptions<T> : BaseOptions
     {
         public IList<T> Items { get; set; } = new List<T>();
-
-        public object DefaultValue { get; set; }
-
+        public IList<T> HideItems { get; set; } = new List<T>();
+        public IList<T> DisableItems { get; set; } = new List<T>();
+        public T DefaultValue { get; set; }
         public int? PageSize { get; set; }
-
-        public Func<T, string> TextSelector { get; set; } = x => x.ToString();
+        public Func<T, string> TextSelector { get; set; } = x => x?.ToString();
     }
 }

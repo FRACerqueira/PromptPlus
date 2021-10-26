@@ -134,22 +134,22 @@ namespace PromptPlusControls.Controls
 
             if (_options.IsPassword && !_passwordvisible)
             {
-                screenBuffer.WriteAnswer(new string(PromptPlus.PasswordChar, _inputBuffer.ToBackwardString().Length));
+                screenBuffer.WriteAnswer(new string(PromptPlus.PasswordChar, _inputBuffer.ToBackward().Length));
             }
             else
             {
-                screenBuffer.WriteAnswer(_inputBuffer.ToBackwardString());
+                screenBuffer.WriteAnswer(_inputBuffer.ToBackward());
             }
 
             screenBuffer.PushCursor();
 
             if (_options.IsPassword && !_passwordvisible)
             {
-                screenBuffer.WriteAnswer(new string(PromptPlus.PasswordChar, _inputBuffer.ToForwardString().Length));
+                screenBuffer.WriteAnswer(new string(PromptPlus.PasswordChar, _inputBuffer.ToForward().Length));
             }
             else
             {
-                screenBuffer.WriteAnswer(_inputBuffer.ToForwardString());
+                screenBuffer.WriteAnswer(_inputBuffer.ToForward());
             }
 
             if (EnabledStandardTooltip)
@@ -187,17 +187,20 @@ namespace PromptPlusControls.Controls
             _options.Message = value;
             return this;
         }
+
         public IControlInput Default(string value)
         {
             _options.DefaultValue = value;
             return this;
         }
+
         public IControlInput IsPassword(bool swithVisible)
         {
             _options.SwithVisiblePassword = swithVisible;
             _options.IsPassword = true;
             return this;
         }
+
         public IControlInput Addvalidator(Func<object, ValidationResult> validator)
         {
             return Addvalidators(new List<Func<object, ValidationResult>> { validator });
@@ -236,16 +239,23 @@ namespace PromptPlusControls.Controls
         public ResultPromptPlus<string> Run(CancellationToken? value = null)
         {
             InitControl();
-            return Start(value ?? CancellationToken.None);
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
         }
 
-        public IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
         {
-            PipeCondition = condition;
+            Condition = condition;
             return this;
         }
 
-        public IFormPlusBase AddPipe(string id, string title, object state = null)
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
         {
             PipeId = id ?? Guid.NewGuid().ToString();
             PipeTitle = title ?? string.Empty;

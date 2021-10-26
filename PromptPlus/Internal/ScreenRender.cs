@@ -12,7 +12,7 @@ using PromptPlusControls.Drivers;
 
 namespace PromptPlusControls.Internal
 {
-    internal class ScreenRender : IDisposable
+    internal class ScreenRender 
     {
         private readonly IConsoleDriver _consoleDriver;
         private Cursor _pushedCursor;
@@ -36,7 +36,6 @@ namespace PromptPlusControls.Internal
 
         public ConsoleKeyInfo KeyPressed => _consoleDriver.ReadKey();
 
-        public void Dispose() => _consoleDriver.Dispose();
 
         public void InputRender(Action<ScreenBuffer> template)
         {
@@ -178,7 +177,7 @@ namespace PromptPlusControls.Internal
 
         private bool IsMaxWindowsHeight()
         {
-            if (_consoleDriver.CursorTop == _consoleDriver.BufferHeight - 1)
+            if (_consoleDriver.CursorTop == (_consoleDriver.BufferHeight - 1))
             {
                 return true;
             }

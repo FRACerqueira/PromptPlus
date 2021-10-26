@@ -17,9 +17,6 @@ namespace PromptPlusControls.Drivers
 
         public static int MinBufferHeight = 6;
 
-        private static readonly ConsoleColor s_defaultbackgroundColor;
-        private static readonly ConsoleColor s_defaultforegroundColor;
-
         static ConsoleDriver()
         {
             if (Console.IsInputRedirected || Console.IsOutputRedirected)
@@ -36,26 +33,7 @@ namespace PromptPlusControls.Drivers
                 }
                 NativeMethods.SetConsoleMode(hConsole, mode | NativeMethods.ENABLE_VIRTUAL_TERMINAL_PROCESSING);
             }
-            s_defaultbackgroundColor = Console.BackgroundColor;
-            s_defaultforegroundColor = Console.ForegroundColor;
         }
-
-        public ConsoleDriver()
-        {
-            Console.CancelKeyPress += CancelKeyPressHandler;
-            Console.ForegroundColor = PromptPlus.ColorSchema.ForeColorSchema;
-            Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
-        }
-
-        #region IDisposable
-
-        public void Dispose()
-        {
-            Reset();
-            Console.CancelKeyPress -= CancelKeyPressHandler;
-        }
-
-        #endregion
 
         #region IConsoleDriver
 
@@ -90,18 +68,21 @@ namespace PromptPlusControls.Drivers
 
         public void Beep() => Console.Write("\a");
 
-        public void Reset()
-        {
-            Console.CursorVisible = true;
-            Console.BackgroundColor = s_defaultbackgroundColor;
-            Console.ForegroundColor = s_defaultforegroundColor;
-        }
-
         public void ClearLine(int top)
         {
             SetCursorPosition(0, top);
             Console.Write("\x1b[2K");
         }
+        public void ClearRestOfLine(ConsoleColor? color)
+        {
+            if (color.HasValue)
+            {
+                Console.BackgroundColor = color.Value;
+            }
+            Console.Write("\x1b[0K");
+            Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
+        }
+
 
         public ConsoleKeyInfo ReadKey() => Console.ReadKey(true);
 
@@ -123,10 +104,25 @@ namespace PromptPlusControls.Drivers
 
         public bool KeyAvailable => Console.KeyAvailable;
 
+        private bool _cursorVisible = true;
         public bool CursorVisible
         {
-            get => Console.CursorVisible;
-            set => Console.CursorVisible = value;
+            get
+            {
+                return _cursorVisible;
+            }
+            set
+            {
+                _cursorVisible = value;
+                if (value)
+                {
+                    Console.Write("\x1b[?25h");
+                }
+                else
+                {
+                    Console.Write("\x1b[?25l");
+                }
+            }
         }
 
         public int CursorLeft => Console.CursorLeft;
@@ -139,9 +135,5 @@ namespace PromptPlusControls.Drivers
 
         #endregion
 
-        private void CancelKeyPressHandler(object sender, ConsoleCancelEventArgs e)
-        {
-            Reset();
-        }
     }
 }
