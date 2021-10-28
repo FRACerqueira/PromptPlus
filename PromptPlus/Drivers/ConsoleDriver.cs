@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 
 using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Drivers
 {
@@ -16,6 +17,7 @@ namespace PromptPlusControls.Drivers
         private const int IdleReadKey = 10;
 
         public static int MinBufferHeight = 6;
+
 
         static ConsoleDriver()
         {
@@ -55,54 +57,147 @@ namespace PromptPlusControls.Drivers
 
         public ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken)
         {
-            while (!KeyAvailable && !cancellationToken.IsCancellationRequested)
+            lock (PromptPlus._lockobj)
             {
-                cancellationToken.WaitHandle.WaitOne(IdleReadKey);
+                while (!KeyAvailable && !cancellationToken.IsCancellationRequested)
+                {
+                    cancellationToken.WaitHandle.WaitOne(IdleReadKey);
+                }
+                if (KeyAvailable && !cancellationToken.IsCancellationRequested)
+                {
+                    return ReadKey();
+                }
+                return new ConsoleKeyInfo();
             }
-            if (KeyAvailable && !cancellationToken.IsCancellationRequested)
-            {
-                return ReadKey();
-            }
-            return new ConsoleKeyInfo();
         }
 
         public void Beep() => Console.Write("\a");
 
+        public void Clear()
+        {
+            lock (PromptPlus._lockobj)
+            {
+                Console.Write("\x1b[2J".DefautColor());
+            }
+        }
+
         public void ClearLine(int top)
         {
-            SetCursorPosition(0, top);
-            Console.Write("\x1b[2K");
+            lock (PromptPlus._lockobj)
+            {
+                SetCursorPosition(0, top);
+                Console.Write("\x1b[2K");
+            }
         }
         public void ClearRestOfLine(ConsoleColor? color)
         {
-            if (color.HasValue)
+            lock (PromptPlus._lockobj)
             {
-                Console.BackgroundColor = color.Value;
+                Write("\x1b[0K".Color(PromptPlus._consoleDriver.ForegroundColor, color ?? PromptPlus._consoleDriver.BackgroundColor));
             }
-            Console.Write("\x1b[0K");
-            Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
         }
 
-
-        public ConsoleKeyInfo ReadKey() => Console.ReadKey(true);
-
-        public void Write(string value, ConsoleColor color, ConsoleColor? colorbg = null)
+        public ConsoleKeyInfo ReadKey()
         {
-            Console.ForegroundColor = color;
-            if (colorbg.HasValue)
+            lock (PromptPlus._lockobj)
             {
-                Console.BackgroundColor = colorbg.Value;
+                return Console.ReadKey(true);
             }
-            Console.Write(value);
-            Console.ForegroundColor = PromptPlus.ColorSchema.ForeColorSchema;
-            Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
         }
 
-        public void WriteLine() => Console.WriteLine();
+        public void Write(params ColorToken[] tokens)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                if (tokens == null || tokens.Length == 0)
+                {
+                    return;
+                }
+                foreach (var token in tokens)
+                {
+                    if (!string.IsNullOrEmpty(token.Text))
+                    {
+                        var originalColor = Console.ForegroundColor;
+                        var originalBackgroundColor = Console.BackgroundColor;
+                        try
+                        {
+                            if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
+                            {
+                                Console.Write(token.AnsiColor);
+                            }
+                            Console.Write(token.Text);
+                        }
+                        finally
+                        {
+                            Console.Write(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor);
+                        }
+                    }
+                }
+            }
+        }
 
-        public void SetCursorPosition(int left, int top) => Console.SetCursorPosition(left, top);
+        public ConsoleColor ForegroundColor
+        {
+            get { return Console.ForegroundColor; }
+            set
+            {
+                Console.Write(new ColorToken("", value).AnsiColor);
+                Console.ForegroundColor = value;
+            }
+        }
 
-        public bool KeyAvailable => Console.KeyAvailable;
+        public ConsoleColor BackgroundColor
+        {
+            get { return Console.BackgroundColor; }
+            set
+            {
+                Console.Write(new ColorToken("", null, value).AnsiColor);
+                Console.BackgroundColor = value;
+            }
+        }
+
+        public void WriteLine(params ColorToken[] tokens)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                Write(tokens);
+                Console.WriteLine();
+            }
+        }
+
+        public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                Write(value.Color(color ?? PromptPlus.ForeColor, colorbg ?? PromptPlus.BackColor));
+            }
+        }
+
+        public void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                Write((value ?? string.Empty).Color(color ?? PromptPlus.ForeColor, colorbg ?? PromptPlus.BackColor));
+                Console.WriteLine();
+            }
+        }
+
+
+        public void SetCursorPosition(int left, int top)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                Console.SetCursorPosition(left, top);
+            }
+        }
+
+        public bool KeyAvailable
+        {
+            get
+            {
+                return Console.KeyAvailable;
+            }
+        }
 
         private bool _cursorVisible = true;
         public bool CursorVisible
@@ -113,25 +208,53 @@ namespace PromptPlusControls.Drivers
             }
             set
             {
-                _cursorVisible = value;
-                if (value)
+                lock (PromptPlus._lockobj)
                 {
-                    Console.Write("\x1b[?25h");
-                }
-                else
-                {
-                    Console.Write("\x1b[?25l");
+                    _cursorVisible = value;
+                    if (value)
+                    {
+                        Console.Write("\x1b[?25h");
+                    }
+                    else
+                    {
+                        Console.Write("\x1b[?25l");
+                    }
                 }
             }
         }
 
-        public int CursorLeft => Console.CursorLeft;
+        public int CursorLeft
+        {
+            get
+            {
+                return Console.CursorLeft;
+            }
+        }
 
-        public int CursorTop => Console.CursorTop;
+        public int CursorTop
+        {
+            get
+            {
+                return Console.CursorTop;
+            }
+        }
 
-        public int BufferWidth => Console.WindowWidth;
 
-        public int BufferHeight => Console.WindowHeight;
+        public int BufferWidth
+        {
+            get
+            {
+                return Console.WindowWidth;
+            }
+        }
+
+        public int BufferHeight
+        {
+            get
+            {
+                return Console.WindowHeight;
+            }
+        }
 
         #endregion
 

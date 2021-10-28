@@ -12,9 +12,6 @@ namespace PromptPlusControls.Internal
     {
         private static readonly Type s_targetType = typeof(T);
         private static readonly Type s_underlyingType = Nullable.GetUnderlyingType(typeof(T));
-
-        public static bool IsValueType => s_targetType.IsValueType && s_underlyingType is null;
-
         public static T ConvertTo(string value) => (T)TypeDescriptor.GetConverter(s_underlyingType ?? s_targetType).ConvertFromString(value);
     }
 }

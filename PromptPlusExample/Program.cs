@@ -86,18 +86,16 @@ namespace PromptPlusExample
         public void ShowMenu()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            Console.ForegroundColor = PromptPlus.ColorSchema.ForeColorSchema;
-            Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
-            Console.Clear();
 
             PromptPlus.DefaultCulture = new CultureInfo("en-US");
-
-            Console.WriteLine("Attach process...");
-            Console.ReadKey(false);
+            PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
+            PromptPlus.DefaultCulture = new CultureInfo("en-US");
+            PromptPlus.Clear();
 
             var quit = false;
             while (!_stopApp.IsCancellationRequested && !quit)
             {
+
                 var type = PromptPlus.Select<ExampleType>("Select Example")
                     .Run(_stopApp);
 
@@ -106,10 +104,11 @@ namespace PromptPlusExample
                     continue;
                 }
 
-                Console.Clear();
-
                 switch (type.Value)
                 {
+                    case ExampleType.ColorText:
+                        RunColorTextSample();
+                        break;
                     case ExampleType.Banner:
                         RunBannerSample();
                         break;
@@ -200,6 +199,9 @@ namespace PromptPlusExample
                     case ExampleType.PipeLine:
                         RunPipeLineSample();
                         break;
+                    case ExampleType.StatusBar:
+                        RunStatusBarSample();
+                        break;
                     case ExampleType.ImportValidators:
                         RunImportValidatorsSample();
                         break;
@@ -211,14 +213,18 @@ namespace PromptPlusExample
                 }
                 if (!_stopApp.IsCancellationRequested && !quit)
                 {
-                    Console.ReadKey(true);
-                    //if (type.Value != ExampleType.AnyKey)
-                    //{
-                    //    PromptPlus.KeyPress()
-                    //        .Run(_stopApp);
-                    //}
+                    //Console.ReadKey(true);
+                    if (type.Value != ExampleType.AnyKey)
+                    {
+                        PromptPlus.KeyPress()
+                            .Run(_stopApp);
+                    }
                 }
             }
+
+            PromptPlus.StatusBar()
+                .End();
+
             if (!quit)
             {
                 Environment.ExitCode = -1;
@@ -226,10 +232,102 @@ namespace PromptPlusExample
             _appLifetime.StopApplication();
         }
 
+        private void RunStatusBarSample()
+        {
+            PromptPlus.StatusBar()
+                .Reset()
+                .AddTemplate("Sample1", ConsoleColor.White, ConsoleColor.Blue)
+                    .AddText("SampleText")
+                    .AddSeparator()
+                    .AddColumn("col1", 30)
+                    .AddSeparator()
+                    .AddColumn("col2", 200, StatusBarColAlignment.Right)
+                    .Build()
+                .AddTemplate("Sample2", ConsoleColor.White, ConsoleColor.Green)
+                    .Build()
+                .Run();
+
+            var quit = false;
+            while (!_stopApp.IsCancellationRequested && !quit)
+            {
+                PromptPlus.Clear();
+                PromptPlus.WriteLine("Hello ".Yellow(), "this is a ", "alternate screen ".Cyan(), "with ", "StatusBar!".Cyan());
+                PromptPlus.WriteLine();
+                PromptPlus.WriteLine("* Nix style applications often utilize an ", "alternate screen buffer, ".Cyan(),
+                    "so that they can modify the entire contents of the buffer, ", "without".Cyan(), " affecting the application " +
+                    "that started them.");
+                PromptPlus.WriteLine();
+                PromptPlus.WriteLine("The alternate buffer is ", "exactly the dimensions of the window, without any scrollback region.".Cyan(), 
+                    "For an example of this behavior, consider when vim is launched from bash.Vim uses the entirety of the screen to edit the file, " +
+                    "then returning to bash leaves the original buffer unchanged.");
+
+                PromptPlus.CursorPosition(0, 10);
+                var c1 = PromptPlus.Input("Col1 value to Statubar with color blue")
+                    .Run();
+                if (c1.IsAborted)
+                {
+                    continue;
+                }
+                var c2 = PromptPlus.Input("Col2 value to Statubar with color blue")
+                    .Run();
+                if (c2.IsAborted)
+                {
+                    continue;
+                }
+                var c3 = PromptPlus.Input("value of Statubar with color Green")
+                    .Run();
+                if (c3.IsAborted)
+                {
+                    continue;
+                }
+
+                PromptPlus.StatusBar()
+                    .WithTemplate("Sample1")
+                        .UpdateColumn("col1", c1.Value)
+                        .UpdateColumn("col2", c2.Value)
+                    .WithTemplate("Sample2")
+                        .UpdateColumn(null, c3.Value)
+                    .Run();
+
+                var opc = PromptPlus.Confirm("new values?")
+                    .Run();
+
+                if (opc.IsAborted)
+                {
+                    continue;
+                }
+                if (!opc.Value)
+                {
+                    quit = true;
+                }
+            }
+
+            PromptPlus.StatusBar()
+                .End();
+        }
+
+        private void RunColorTextSample()
+        {
+            PromptPlus.WriteLine("Hello ".Yellow(), "world!".Cyan());
+            PromptPlus.WriteLine(
+                "It's so easy to add some ", "color".Red(), " to your console.");
+            PromptPlus.WriteLine(
+                "Even ", "dynamically!".Color((ConsoleColor)new Random().Next(1, 14)));
+
+            var text = new[] { "You can even use ", "masking".Magenta(), "." };
+            PromptPlus.WriteLine(text.Mask(ConsoleColor.DarkYellow));
+            PromptPlus.WriteLine(text.Mask(ConsoleColor.DarkCyan));
+
+            PromptPlus.WriteLine("Now set ".Yellow().OnBlue(), "the background color too!".Cyan().OnMagenta());
+            text = new[] { "With or without ", "masking".Magenta().OnDarkMagenta(), "." };
+            PromptPlus.WriteLine(text.Mask(ConsoleColor.DarkYellow));
+            PromptPlus.WriteLine(text.Mask(ConsoleColor.DarkCyan, ConsoleColor.DarkRed));
+        }
+
         private void RunBannerSample()
         {
             var colorsel = PromptPlus.Select<ConsoleColor>("Select a color")
-                .HideItem(PromptPlus.ColorSchema.BackColorSchema)
+                .HideItem(PromptPlus.BackColor)
                 .Run(_stopApp);
 
             if (colorsel.IsAborted)

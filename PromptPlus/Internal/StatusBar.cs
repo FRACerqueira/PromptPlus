@@ -5,17 +5,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Internal
 {
-    internal class StatusBar
+    internal struct StatusBar
     {
-        public StatusBar()
+        public StatusBar(int heiht, int width)
         {
             Templates = new Dictionary<string, StatusBarTemplate>();
-            LastTemplatesVisibles = -1;
+            LastTemplatesVisibles = 0;
+            IsRunning = false;
+            LastSize = new() { height = heiht, width = width };
         }
-        public Dictionary<string, StatusBarTemplate> Templates { get; set; }
+
         public bool TryValue(StatusBarTemplate template, string column, out string value)
         {
             var index = template.Columns.FindIndex(x => x.Id == column);
@@ -34,7 +39,7 @@ namespace PromptPlusControls.Internal
             {
                 return false;
             }
-            template.Columns[index].Text = value;
+            UpdateText(template.Id, template.Columns[index].Id, value);
             return true;
         }
         public void AddTemplate(StatusBarTemplate value)
@@ -56,10 +61,45 @@ namespace PromptPlusControls.Internal
         {
             Templates.Clear();
         }
-        public int LastTemplatesVisibles { get; internal set; }
+
+        public Dictionary<string, StatusBarTemplate> Templates { get; set; }
+        public int LastTemplatesVisibles { get; set; }
+        public bool IsRunning { get; set; }
+        public (int width, int height) LastSize { get; set; }
+
+        public void UpdateText(string idtemplate, string idcol, string value)
+        {
+            int index;
+            if (string.IsNullOrEmpty(idcol))
+            {
+                index = Templates[idtemplate].Columns.FindIndex(x => !x.IsText);
+            }
+            else
+            {
+                index = Templates[idtemplate].Columns.FindIndex(x => x.Id == idcol);
+            }
+            var aux = Templates[idtemplate].Columns[index];
+            Templates[idtemplate].Columns[index] = new StatusBarColumn(aux.Id, value, aux.Lenght, aux.IsText, aux.Changed, aux.LeftPos, aux.Alignment);
+        }
+
+        public void UpdateChanged(string idtemplate, string idcol, bool value)
+        {
+            int index;
+            if (string.IsNullOrEmpty(idcol))
+            {
+                index = Templates[idtemplate].Columns.FindIndex(x => !x.IsText);
+            }
+            else
+            {
+                index = Templates[idtemplate].Columns.FindIndex(x => x.Id == idcol);
+            }
+            var aux = Templates[idtemplate].Columns[index];
+            Templates[idtemplate].Columns[index] = new StatusBarColumn(aux.Id, aux.Text, aux.Lenght, aux.IsText, value, aux.LeftPos, aux.Alignment);
+        }
+
     }
 
-    internal class StatusBarTemplate
+    internal struct StatusBarTemplate
     {
         public StatusBarTemplate(string id, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
         {
@@ -71,27 +111,34 @@ namespace PromptPlusControls.Internal
         public string Id { get; private set; }
         public ConsoleColor ForegroundColor { get; private set; }
         public ConsoleColor BackgroundColor { get; private set; }
-        public List<StatusBarColumn> Columns { get; private set; }
-        public void AddColumn(string id, string text, int lenght, bool istext, bool changed)
+        public List<StatusBarColumn> Columns { get; set; }
+        public void AddColumn(string id, string text, int lenght, bool istext, bool changed, StatusBarColAlignment alignment)
         {
-            Columns.Add(new StatusBarColumn(id, text, lenght, istext, changed));
+            var leftpos = Columns.Sum(x => x.IsText ? x.Text.Length : x.Lenght);
+            Columns.Add(new StatusBarColumn(id, text, lenght, istext, changed, leftpos, alignment));
         }
     }
 
-    internal class StatusBarColumn
+    internal struct StatusBarColumn
     {
-        public StatusBarColumn(string id, string text, int lenght, bool istext, bool changed)
+        public StatusBarColumn(string id, string text, int lenght, bool istext, bool changed, int leftpos, StatusBarColAlignment alignment)
         {
             Id = id;
             Lenght = lenght;
             IsText = istext;
             Text = text ?? string.Empty;
             Changed = changed;
+            LeftPos = leftpos;
+            Alignment = alignment;
         }
-        public string Id { get; private set; }
         public string Text { get; set; }
+        public bool Changed { get; set; }
+
+        public string Id { get; private set; }
         public int Lenght { get; private set; }
         public bool IsText { get; private set; }
-        public bool Changed { get; set; }
+        public int LeftPos { get; private set; }
+        public StatusBarColAlignment Alignment { get; private set; }
+
     }
 }

@@ -6,54 +6,62 @@
 using System;
 using System.Linq;
 
-using PromptPlusControls.Drivers;
 using PromptPlusControls.Internal;
 using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
     internal class StatusBarControl : IStatusBar, IStatusbarColumn, IStatusBarActions
     {
-        private readonly IConsoleDriver _consoleDriver;
         private string _idtemplate;
 
-        public StatusBarControl()
+        public IStatusBar Reset()
         {
-            _consoleDriver = new ConsoleDriver();
+            if (PromptPlus._statusBar.IsRunning)
+            {
+                throw new InvalidOperationException(Exceptions.Ex_StatusBarRunning);
+            }
+            PromptPlus._statusBar.Clear();
+            return this;
         }
 
         public IStatusbarColumn AddTemplate(string id, ConsoleColor? foregroundColor = null, ConsoleColor? backgroundColor = null)
         {
+            if (PromptPlus._statusBar.IsRunning)
+            {
+                throw new InvalidOperationException(Exceptions.Ex_StatusBarRunning);
+            }
             if (string.IsNullOrEmpty(id))
             {
                 throw new ArgumentException(Exceptions.Ex_InvalidValue, nameof(id));
             }
             if (!foregroundColor.HasValue)
             {
-                foregroundColor = PromptPlus.ColorSchema.ForeColorSchema;
+                foregroundColor = PromptPlus.ForeColor;
             }
             if (!backgroundColor.HasValue)
             {
-                backgroundColor = PromptPlus.ColorSchema.BackColorSchema;
+                backgroundColor = PromptPlus.BackColor;
             }
             _idtemplate = id;
-            PromptPlus.s_topBarInfo.Templates.Add(id, new StatusBarTemplate(id, foregroundColor.Value, backgroundColor.Value));
+            PromptPlus._statusBar.Templates.Add(id, new StatusBarTemplate(id, foregroundColor.Value, backgroundColor.Value));
             return this;
         }
 
         public IStatusbarColumn AddSeparator()
         {
-            PromptPlus.s_topBarInfo.Templates[_idtemplate].AddColumn(Guid.NewGuid().ToString(), "|", 1, true, true);
+            PromptPlus._statusBar.Templates[_idtemplate].AddColumn(Guid.NewGuid().ToString(), "|", 1, true, true, StatusBarColAlignment.Left);
             return this;
         }
 
-        public IStatusbarColumn AddColumn(string id, int lenght)
+        public IStatusbarColumn AddColumn(string id, int lenght, StatusBarColAlignment alignment = StatusBarColAlignment.Left)
         {
             if (string.IsNullOrEmpty(id))
             {
                 throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, nameof(id)));
             }
-            PromptPlus.s_topBarInfo.Templates[_idtemplate].AddColumn(id, null, lenght, false, false);
+            PromptPlus._statusBar.Templates[_idtemplate].AddColumn(id, null, lenght, false, false, alignment);
             return this;
         }
 
@@ -63,20 +71,20 @@ namespace PromptPlusControls.Controls
             {
                 text = string.Empty;
             }
-            PromptPlus.s_topBarInfo.Templates[_idtemplate].AddColumn(Guid.NewGuid().ToString(), text, text.Length, true, true);
+            PromptPlus._statusBar.Templates[_idtemplate].AddColumn(Guid.NewGuid().ToString(), text, text.Length, true, true, StatusBarColAlignment.Left);
             return this;
         }
 
         public IStatusBar Build(params string[] values)
         {
-            if (PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns.Count == 0)
+            if (PromptPlus._statusBar.Templates[_idtemplate].Columns.Count == 0)
             {
-                PromptPlus.s_topBarInfo.Templates[_idtemplate].AddColumn(Guid.NewGuid().ToString(), null, -1, false, false);
+                PromptPlus._statusBar.Templates[_idtemplate].AddColumn(Guid.NewGuid().ToString(), null, -1, false, false, StatusBarColAlignment.Left);
             }
             UpdateColumns(values);
-            foreach (var item in PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns)
+            foreach (var item in PromptPlus._statusBar.Templates[_idtemplate].Columns.ToArray())
             {
-                item.Changed = true;
+                PromptPlus._statusBar.UpdateChanged(_idtemplate, item.Id, true);
             }
             _idtemplate = null;
             return this;
@@ -84,7 +92,7 @@ namespace PromptPlusControls.Controls
 
         public IStatusBarActions WithTemplate(string id)
         {
-            if (!PromptPlus.s_topBarInfo.Templates.ContainsKey(id))
+            if (!PromptPlus._statusBar.Templates.ContainsKey(id))
             {
                 throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, nameof(id)));
             }
@@ -97,35 +105,35 @@ namespace PromptPlusControls.Controls
             var index = -1;
             if (!string.IsNullOrEmpty(idcolumn))
             {
-                index = PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns.FindIndex(x => x.Id == idcolumn);
+                index = PromptPlus._statusBar.Templates[_idtemplate].Columns.FindIndex(x => x.Id == idcolumn);
             }
             if (index < 0)
             {
                 throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, nameof(idcolumn)));
             }
-            value = PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns[index].Text;
+            value = PromptPlus._statusBar.Templates[_idtemplate].Columns[index].Text;
             return this;
         }
 
-        public IStatusBarActions UpdateColumn(string value, string idcolumn = null)
+        public IStatusBarActions UpdateColumn(string idcolumn, string value)
         {
             var index = -1;
-            if (string.IsNullOrEmpty(idcolumn) && PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns.Count == 1)
+            if (string.IsNullOrEmpty(idcolumn) && PromptPlus._statusBar.Templates[_idtemplate].Columns.Count == 1)
             {
                 index = 0;
             }
             if (!string.IsNullOrEmpty(idcolumn))
             {
-                index = PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns.FindIndex(x => x.Id == idcolumn);
+                index = PromptPlus._statusBar.Templates[_idtemplate].Columns.FindIndex(x => x.Id == idcolumn);
             }
             if (index < 0)
             {
                 throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, nameof(idcolumn)));
             }
-            if (PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns[index].Text != value)
+            if (PromptPlus._statusBar.Templates[_idtemplate].Columns[index].Text != value)
             {
-                PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns[index].Changed = true;
-                PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns[index].Text = value;
+                PromptPlus._statusBar.UpdateChanged(_idtemplate, idcolumn, true);
+                PromptPlus._statusBar.UpdateText(_idtemplate, idcolumn, value);
             }
             return this;
         }
@@ -134,17 +142,17 @@ namespace PromptPlusControls.Controls
         {
             if (values.Length > 0)
             {
-                if (values.Length != PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns.Count(x => !x.IsText))
+                if (values.Length != PromptPlus._statusBar.Templates[_idtemplate].Columns.Count(x => !x.IsText))
                 {
                     throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, nameof(values)));
                 }
                 var i = 0;
-                foreach (var item in PromptPlus.s_topBarInfo.Templates[_idtemplate].Columns)
+                foreach (var item in PromptPlus._statusBar.Templates[_idtemplate].Columns)
                 {
                     if (!item.IsText)
                     {
-                        item.Text = values[i];
-                        item.Changed = true;
+                        PromptPlus._statusBar.UpdateChanged(_idtemplate, item.Id, true);
+                        PromptPlus._statusBar.UpdateText(_idtemplate, item.Id, values[i]);
                         i++;
                     }
                 }
@@ -154,69 +162,120 @@ namespace PromptPlusControls.Controls
 
         public void End()
         {
-            PromptPlus.s_topBarInfo.LastTemplatesVisibles = -1;
-            PromptPlus.s_topBarInfo.Clear();
-            var l = _consoleDriver.CursorLeft;
-            var t = _consoleDriver.CursorTop;
-            _consoleDriver.Write("\x1b[;r", PromptPlus.ColorSchema.ForeColorSchema);
-            _consoleDriver.SetCursorPosition(l, t);
+            PromptPlus._consoleDriver.Write("\x1b[;r".DefautColor());
+            PromptPlus._consoleDriver.Write("\x1b[?1049l".DefautColor());
+            PromptPlus._statusBar.LastTemplatesVisibles = 0;
+            PromptPlus._statusBar.IsRunning = false;
+        }
+
+        public void Refresh()
+        {
+            End();
+            foreach (var item in PromptPlus._statusBar.Templates.ToArray())
+            {
+                foreach (var itemcol in item.Value.Columns.ToArray())
+                {
+                    PromptPlus._statusBar.UpdateChanged(item.Value.Id, itemcol.Id, true);
+                }
+            }
+            Run();
         }
 
         public void Run()
         {
-            var oldcur = _consoleDriver.CursorVisible;
-            _consoleDriver.CursorVisible = false;
-            var l = _consoleDriver.CursorLeft;
-            var t = _consoleDriver.CursorTop;
+            PromptPlus._statusBar.LastSize = new() { width = PromptPlus._consoleDriver.BufferWidth, height = PromptPlus._consoleDriver.BufferHeight };
 
-            var qtd = PromptPlus.s_topBarInfo.Templates.Count;
-            if (PromptPlus.s_topBarInfo.LastTemplatesVisibles < 0)
+            var oldcur = PromptPlus._consoleDriver.CursorVisible;
+            PromptPlus._consoleDriver.CursorVisible = false;
+            var qtd = PromptPlus._statusBar.Templates.Count;
+            if (!PromptPlus._statusBar.IsRunning)
             {
-                _consoleDriver.Write($"\x1b[;{_consoleDriver.BufferHeight-qtd}r", PromptPlus.ColorSchema.ForeColorSchema);
+                PromptPlus._consoleDriver.Write("\x1b[?1049h".DefautColor());
+                if (!PromptPlus._consoleDriver.IsRunningTerminal)
+                {
+                    Console.BufferHeight = Console.WindowHeight;
+                    Console.BufferWidth = Console.WindowWidth;
+                }
+                PromptPlus._consoleDriver.Write($"\x1b[0;{PromptPlus._consoleDriver.BufferHeight - qtd}r".DefautColor());
+                PromptPlus._statusBar.IsRunning = true;
+                PromptPlus._statusBar.LastTemplatesVisibles = qtd;
             }
+            var l = PromptPlus._consoleDriver.CursorLeft;
+            var t = PromptPlus._consoleDriver.CursorTop;
+
             var line = 0;
-            foreach (var item in PromptPlus.s_topBarInfo.Templates)
+            foreach (var item in PromptPlus._statusBar.Templates)
             {
-                _consoleDriver.SetCursorPosition(0, _consoleDriver.BufferHeight - qtd + line);
+                PromptPlus._consoleDriver.SetCursorPosition(0, PromptPlus._consoleDriver.BufferHeight - qtd + line);
                 var left = 0;
-                foreach (var itemcol in item.Value.Columns)
+                foreach (var itemcol in item.Value.Columns.ToArray())
                 {
                     var len = itemcol.Lenght;
-                    if (len <= 0)
+                    if (len < 0)
                     {
-                        len = _consoleDriver.BufferWidth - 1;
+                        len = PromptPlus._consoleDriver.BufferWidth - 1;
                     }
-                    if (itemcol.Changed)
+                    if (itemcol.LeftPos + len > PromptPlus._consoleDriver.BufferWidth - 1)
                     {
-                        WriteColumn(item.Value, itemcol.Text, left, len);
-                        itemcol.Changed = false;
+                        len -= itemcol.LeftPos + len - PromptPlus._consoleDriver.BufferWidth + 1;
+                    }
+                    if (itemcol.Changed && itemcol.LeftPos < PromptPlus._consoleDriver.BufferWidth)
+                    {
+                        WriteColumn(item.Value, itemcol.Text, itemcol.LeftPos, len, itemcol.Alignment);
+                        PromptPlus._statusBar.UpdateChanged(item.Value.Id, itemcol.Id, false);
                     }
                     left += len;
                 }
-                _consoleDriver.SetCursorPosition(left, _consoleDriver.BufferHeight - qtd + line);
-                _consoleDriver.ClearRestOfLine(item.Value.BackgroundColor);
+                PromptPlus._consoleDriver.SetCursorPosition(left, PromptPlus._consoleDriver.BufferHeight - qtd + line);
+                PromptPlus._consoleDriver.ClearRestOfLine(item.Value.BackgroundColor);
                 line++;
             }
-            if (PromptPlus.s_topBarInfo.LastTemplatesVisibles < 0)
+            if (t >= PromptPlus._consoleDriver.BufferHeight - qtd)
             {
-                PromptPlus.s_topBarInfo.LastTemplatesVisibles = qtd;
-           }
-            if (t >= _consoleDriver.BufferHeight - qtd)
-            {
-                t = _consoleDriver.BufferHeight - qtd - 1;
+                t = PromptPlus._consoleDriver.BufferHeight - qtd - 1;
             }
-            _consoleDriver.SetCursorPosition(l, t);
-            _consoleDriver.CursorVisible = oldcur;
+            PromptPlus._consoleDriver.SetCursorPosition(l, t);
+            PromptPlus._consoleDriver.CursorVisible = oldcur;
         }
 
-
-        private void WriteColumn(StatusBarTemplate template, string item, int left, int len)
+        private void WriteColumn(StatusBarTemplate template, string item, int left, int len, StatusBarColAlignment alignment)
         {
-            var result = (item.PadRight(len, ' ')).Substring(0, len);
-            _consoleDriver.SetCursorPosition(left, _consoleDriver.CursorTop);
-            _consoleDriver.Write(result,
-                template.ForegroundColor,
-                template.BackgroundColor);
+            string result;
+            switch (alignment)
+            {
+                case StatusBarColAlignment.Right:
+                {
+                    if (item.Length > len)
+                    {
+                        result = item.Substring(0, len);
+                    }
+                    else
+                    {
+                        result = (new string(' ', len - item.Length) + item).Substring(0, len);
+                    }
+                }
+                break;
+                case StatusBarColAlignment.Center:
+                {
+                    if (item.Length > len)
+                    {
+                        result = item.Substring(0, len);
+                    }
+                    else
+                    {
+                        var mid = (len - item.Length) / 2;
+                        result = new string(' ', mid) + item;
+                        result += new string(' ', mid + 1);
+                        result = result.Substring(0, len);
+                    }
+                }
+                break;
+                default:
+                    result = (item.PadRight(len, ' ')).Substring(0, len);
+                    break;
+            }
+            PromptPlus._consoleDriver.SetCursorPosition(left, PromptPlus._consoleDriver.CursorTop);
+            PromptPlus._consoleDriver.Write(result.Color(template.ForegroundColor, template.BackgroundColor));
         }
 
     }

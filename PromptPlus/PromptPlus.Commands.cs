@@ -15,7 +15,93 @@ namespace PromptPlusControls
 {
     public static partial class PromptPlus
     {
-      
+        public static void CursorPosition(int left, int top)
+        {
+            lock (_lockobj)
+            {
+                if (left < 0)
+                {
+                    left = 0;
+                }
+                if (_statusBar.IsRunning)
+                {
+                    if (top > _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles -1)
+                    {
+                        top = _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1;
+                    }
+                }
+                else
+                {
+                    if (top > _consoleDriver.BufferHeight - 1)
+                    {
+                        top = _consoleDriver.BufferHeight - 1;
+                    }
+                }
+                _consoleDriver.SetCursorPosition(left, top);
+            }
+        }
+
+        public static void ConsoleDefaultColor(ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
+        {
+            lock (_lockobj)
+            {
+                if (forecolor.HasValue)
+                {
+                    _consoleDriver.ForegroundColor = forecolor.Value;
+                }
+                if (backcolor.HasValue)
+                {
+                    _consoleDriver.BackgroundColor = backcolor.Value;
+                }
+            }
+        }
+
+        public static void Clear(ConsoleColor? backcolor = null)
+        {
+            lock (_lockobj)
+            {
+                if (backcolor.HasValue)
+                {
+                    _consoleDriver.BackgroundColor = backcolor.Value;
+                }
+                _consoleDriver.Clear();
+                if (_statusBar.IsRunning)
+                {
+                    StatusBar().Refresh();
+                }
+            }
+        }
+
+
+        public static void Write(params ColorToken[] tokens)
+        {
+            if (_statusBar.IsRunning)
+            {
+                if (_consoleDriver.CursorTop >= _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles -1)
+                {
+                    return;
+                }
+            }
+            _consoleDriver.Write(tokens);
+        }
+
+        public static void WriteLine(params ColorToken[] tokens)
+        {
+            if (_statusBar.IsRunning)
+            {
+                if (_consoleDriver.CursorTop >= _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
+                {
+                    return;
+                }
+            }
+            _consoleDriver.WriteLine(tokens);
+        }
+
+        public static IStatusBar StatusBar()
+        {
+            return new StatusBarControl();
+        }
+
         public static IFIGlet Banner(string value)
         {
             return new BannerControl(value);

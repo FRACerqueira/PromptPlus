@@ -18,10 +18,18 @@ https://fracerqueira.github.io/PromptPlus
 - Removed pipeline namespace. Now the pipeline syntax is the same as for controls.
 - Removed access to options classes, unified by fluent-interfaces model
 - Changed pipeline extension "Step" to fuent-interface method "ToPipe".
+- Refactored render text to use ansi-color
+- Refactored ConsoleDriver
 
-**New controls**
-----------------
-- Banner-control        : Show ASCII text banner. 
+**New controls/Command**
+------------------------
+- Banner-control                : Show ASCII text banner. 
+- StatusBar-control             : Frezeen bottom line(s) with template/columns with alternate Screen
+- Write-Command                 : Colored-text forecolor/backcolor 
+- WriteLine-Command             : Colored-text forecolor/backcolor 
+- Clear-Command                 : Clear screeen with set backcolor
+- ConsoleDefaultColor-Command   : Set forecolor/backcolor screen
+- CursorPosition-Command        : Set cursor position
 
 **Enhancements**
 ----------------

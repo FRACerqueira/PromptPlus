@@ -4,18 +4,21 @@
 // ***************************************************************************************
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Threading;
 
+using PromptPlusControls.Drivers;
 using PromptPlusControls.Internal;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls
 {
+    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "by design")]
     public static partial class PromptPlus
     {
         internal const int MaxShowTasks = 1;
@@ -26,13 +29,23 @@ namespace PromptPlusControls
         internal const int ProgressgBarDoneDelay = 1000;
         internal const int ProgressgBarCheckDelay = 50;
 
+        internal static object _lockobj = new();
+        internal static IConsoleDriver _consoleDriver;
+        internal static StatusBar _statusBar;
+
         static PromptPlus()
         {
+            _consoleDriver = new ConsoleDriver();
+            _statusBar = new(_consoleDriver.BufferHeight, _consoleDriver.BufferWidth);
             AppCulture = Thread.CurrentThread.CurrentCulture;
             AppCultureUI = Thread.CurrentThread.CurrentUICulture;
             s_defaultCulture = AppCulture;
             LoadConfigFromFile();
         }
+
+        public static ConsoleColor ForeColor => Console.ForegroundColor;
+
+        public static ConsoleColor BackColor => Console.BackgroundColor;
 
         internal static CultureInfo AppCulture { get; private set; }
 

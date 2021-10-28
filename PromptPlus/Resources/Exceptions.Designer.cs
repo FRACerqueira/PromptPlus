@@ -214,6 +214,15 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AddTemplate not valid when StatusBar is running.
+        /// </summary>
+        internal static string Ex_StatusBarRunning {
+            get {
+                return ResourceManager.GetString("Ex_StatusBarRunning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UpdateHandler is invalid, value cannot be null!.
         /// </summary>
         internal static string Ex_UpdateHandlerProgressBar {

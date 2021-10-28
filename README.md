@@ -5,7 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 
-**_Interactive command-line toolkit for C# with powerful controls.
+**Interactive command-line toolkit for C# with powerful controls.**
 
 [**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis) | [**Extensions**](#extensions) | [**Supported Platforms**](#supported-platforms)
 
@@ -316,7 +316,7 @@ Console.WriteLine($"Your input: {name.Value}!");
     - Terminal.app
 
 ## Inspiration notes
-
+- Color Text was inspired by the work of [Colored-Console](https://github.com/colored-console/colored-console)
 - FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
 - The base-control and some of its dependencies, Symbols, beyond console drivers were inspired by the work of [Sharprompt](https://github.com/shibayan/Sharprompt).
 

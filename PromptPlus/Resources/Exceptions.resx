@@ -168,6 +168,9 @@
   <data name="Ex_SliderNumberType" xml:space="preserve">
     <value>Invalid type {0}, not a number!</value>
   </data>
+  <data name="Ex_StatusBarRunning" xml:space="preserve">
+    <value>AddTemplate not valid when StatusBar is running</value>
+  </data>
   <data name="Ex_UpdateHandlerProgressBar" xml:space="preserve">
     <value>UpdateHandler is invalid, value cannot be null!</value>
   </data>

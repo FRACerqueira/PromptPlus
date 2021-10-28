@@ -11,19 +11,17 @@ using PromptPlusControls.Drivers;
 
 namespace PromptPlusControls.Internal
 {
-    internal class Paginator<T> 
+    internal class Paginator<T>
     {
         private T[] _filteredItems;
         private int _maxpageSize;
         private readonly T[] _items;
         private readonly int _userpageSize;
         private readonly Func<T, string> _textSelector;
-        private readonly IConsoleDriver _consoleDriver;
         private readonly Func<T, bool> _validatorAction;
 
         public Paginator(IEnumerable<T> items, int? pageSize, Optional<T> defaultValue, Func<T, string> textSelector, Func<T, bool> validatorAction = null)
         {
-            _consoleDriver = new ConsoleDriver();
             _items = items.ToArray();
             _userpageSize = pageSize ?? _items.Length;
             _textSelector = textSelector;
@@ -43,9 +41,9 @@ namespace PromptPlusControls.Internal
             {
                 selectedItem = _items[(_maxpageSize * SelectedPage) + SelectedIndex];
             }
-            if (_consoleDriver.BufferHeight - 1 < _userpageSize + ConsoleDriver.MinBufferHeight)
+            if (PromptPlus._consoleDriver.BufferHeight - 1 < _userpageSize + ConsoleDriver.MinBufferHeight)
             {
-                _maxpageSize = _consoleDriver.BufferHeight - (ConsoleDriver.MinBufferHeight);
+                _maxpageSize = PromptPlus._consoleDriver.BufferHeight - (ConsoleDriver.MinBufferHeight);
             }
             else
             {

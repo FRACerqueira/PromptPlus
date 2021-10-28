@@ -2,6 +2,8 @@
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
+// Inspired by the work https://github.com/shibayan/Sharprompt
+// ***************************************************************************************
 
 using System;
 using System.Runtime.InteropServices;

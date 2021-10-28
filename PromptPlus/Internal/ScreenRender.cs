@@ -12,19 +12,17 @@ using PromptPlusControls.Drivers;
 
 namespace PromptPlusControls.Internal
 {
-    internal class ScreenRender 
+    internal class ScreenRender
     {
-        private readonly IConsoleDriver _consoleDriver;
         private Cursor _pushedCursor;
         private int _cursorBottom = -1;
 
         public ScreenRender()
         {
-            _consoleDriver = new ConsoleDriver();
             FormBuffer = new();
         }
 
-        public void Beep() => _consoleDriver.Beep();
+        public void Beep() => PromptPlus._consoleDriver.Beep();
 
         public string ErrorMessage { get; set; }
 
@@ -32,107 +30,142 @@ namespace PromptPlusControls.Internal
 
         public CancellationToken StopToken { get; set; }
 
-        public bool KeyAvailable => _consoleDriver.KeyAvailable;
+        public bool KeyAvailable => PromptPlus._consoleDriver.KeyAvailable;
 
-        public ConsoleKeyInfo KeyPressed => _consoleDriver.ReadKey();
+        public ConsoleKeyInfo KeyPressed => PromptPlus._consoleDriver.ReadKey();
 
 
         public void InputRender(Action<ScreenBuffer> template)
         {
-            ClearBuffer();
-            template(FormBuffer);
-            if (ErrorMessage != null)
+            lock (PromptPlus._lockobj)
             {
-                FormBuffer.WriteLineError(ErrorMessage);
-                ErrorMessage = null;
+                ClearBuffer();
+                template(FormBuffer);
+                if (ErrorMessage != null)
+                {
+                    FormBuffer.WriteLineError(ErrorMessage);
+                    ErrorMessage = null;
+                }
+                RenderToConsole();
             }
-            RenderToConsole();
         }
 
         public void FinishRender<TModel>(Action<ScreenBuffer, TModel> template, TModel result)
         {
-
-            ClearBuffer();
-            template(FormBuffer, result);
-            FormBuffer.PushCursor();
-            RenderToConsole();
+            lock (PromptPlus._lockobj)
+            {
+                ClearBuffer();
+                template(FormBuffer, result);
+                FormBuffer.PushCursor();
+                RenderToConsole();
+            }
         }
 
         public void NewLine()
         {
-            _consoleDriver.WriteLine();
+            lock (PromptPlus._lockobj)
+            {
+                PromptPlus._consoleDriver.WriteLine();
+            }
         }
 
         public bool HideLastRender(bool skip = false)
         {
-            if (_cursorBottom < 0)
+            lock (PromptPlus._lockobj)
             {
+                if (_cursorBottom < 0)
+                {
+                    return true;
+                }
+
+                if (PromptPlus._statusBar.IsRunning)
+                {
+                    if (_cursorBottom > PromptPlus._consoleDriver.BufferHeight - PromptPlus._statusBar.LastTemplatesVisibles - 1)
+                    {
+                        _cursorBottom = PromptPlus._consoleDriver.BufferHeight - PromptPlus._statusBar.LastTemplatesVisibles - 1;
+                    }
+                }
+
+                if (skip)
+                {
+                    PromptPlus._consoleDriver.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
+                    return true;
+                }
+
+                EnsureScreensizeAndPosition();
+                if (StopToken.IsCancellationRequested)
+                {
+                    return false;
+                }
+
+                var lines = WrittenLineCount + 1;
+
+                if (PromptPlus._consoleDriver.BufferHeight - 1 < _cursorBottom && PromptPlus._consoleDriver.IsRunningTerminal)
+                {
+                    _cursorBottom = PromptPlus._consoleDriver.BufferHeight - 1;
+                    lines = _cursorBottom;
+                }
+
+                for (var i = 0; i < lines; i++)
+                {
+                    if (PromptPlus._statusBar.IsRunning)
+                    {
+                        if (_cursorBottom - i >= 0)
+                        {
+                            PromptPlus._consoleDriver.ClearLine(_cursorBottom - i);
+                        }
+                    }
+                    else
+                    {
+                        PromptPlus._consoleDriver.ClearLine(_cursorBottom - i);
+                    }
+                }
                 return true;
             }
-            if (skip)
-            {
-                _consoleDriver.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
-                return true;
-            }
-
-            EnsureScreensizeAndPosition();
-            if (StopToken.IsCancellationRequested)
-            {
-                return false;
-            }
-
-            var lines = WrittenLineCount + 1;
-
-            if (_consoleDriver.BufferHeight - 1 < _cursorBottom && _consoleDriver.IsRunningTerminal)
-            {
-                _cursorBottom = _consoleDriver.BufferHeight - 1;
-                lines = _cursorBottom;
-            }
-
-            for (var i = 0; i < lines; i++)
-            {
-                _consoleDriver.ClearLine(_cursorBottom - i);
-            }
-            return true;
         }
 
         public void ShowCursor()
         {
-            _consoleDriver.CursorVisible = true;
+            PromptPlus._consoleDriver.CursorVisible = true;
         }
 
         public void HideCursor()
         {
-            _consoleDriver.CursorVisible = false;
+            PromptPlus._consoleDriver.CursorVisible = false;
         }
 
-        private int WrittenLineCount => FormBuffer.Sum(x => (x.Sum(xs => xs.Width) - 1) / _consoleDriver.BufferWidth + 1) - 1;
+        private int WrittenLineCount => FormBuffer.Sum(x => (x.Sum(xs => xs.Width) - 1) / PromptPlus._consoleDriver.BufferWidth + 1) - 1;
 
         private void EnsureScreensizeAndPosition()
         {
-            if (!_consoleDriver.IsRunningTerminal)
+            if (!PromptPlus._consoleDriver.IsRunningTerminal && !PromptPlus._statusBar.IsRunning)
             {
                 return;
             }
-            while (_consoleDriver.BufferHeight - 1 < ConsoleDriver.MinBufferHeight)
+            while (PromptPlus._consoleDriver.BufferHeight - 1 < ConsoleDriver.MinBufferHeight)
             {
-                _consoleDriver.SetCursorPosition(0, 0);
-                _consoleDriver.ClearLine(_consoleDriver.CursorTop);
-                _consoleDriver.SetCursorPosition(0, _consoleDriver.CursorTop);
-                _consoleDriver.Write(string.Format(Messages.ResizeTerminal, _consoleDriver.BufferHeight, ConsoleDriver.MinBufferHeight + 1), ConsoleColor.White, ConsoleColor.Red);
-                _ = _consoleDriver.WaitKeypress(StopToken);
+                PromptPlus._consoleDriver.SetCursorPosition(0, 0);
+                PromptPlus._consoleDriver.ClearLine(PromptPlus._consoleDriver.CursorTop);
+                PromptPlus._consoleDriver.SetCursorPosition(0, PromptPlus._consoleDriver.CursorTop);
+                PromptPlus._consoleDriver.Write(string.Format(Messages.ResizeTerminal, PromptPlus._consoleDriver.BufferHeight, ConsoleDriver.MinBufferHeight + 1), ConsoleColor.White, ConsoleColor.Red);
+                _ = PromptPlus._consoleDriver.WaitKeypress(StopToken);
                 if (StopToken.IsCancellationRequested)
                 {
                     return;
                 }
             }
-            if (_consoleDriver.BufferHeight - 1 < _cursorBottom)
+            if (PromptPlus._consoleDriver.BufferHeight - 1 < _cursorBottom)
             {
-                _consoleDriver.SetCursorPosition(0, 0);
-                _consoleDriver.ClearLine(_consoleDriver.CursorTop);
-                _consoleDriver.Write(Messages.ResizedTerminal, ConsoleColor.White, ConsoleColor.Red);
-                _consoleDriver.WriteLine();
-                return;
+                PromptPlus._consoleDriver.SetCursorPosition(0, 0);
+                PromptPlus._consoleDriver.ClearLine(PromptPlus._consoleDriver.CursorTop);
+                PromptPlus._consoleDriver.Write(Messages.ResizedTerminal, ConsoleColor.White, ConsoleColor.Red);
+                PromptPlus._consoleDriver.WriteLine();
+            }
+            if (PromptPlus._statusBar.IsRunning &&
+                (PromptPlus._statusBar.LastSize.width != PromptPlus._consoleDriver.BufferWidth ||
+                PromptPlus._statusBar.LastSize.height != PromptPlus._consoleDriver.BufferHeight))
+            {
+                PromptPlus.StatusBar().Refresh();
             }
         }
 
@@ -145,13 +178,13 @@ namespace PromptPlusControls.Internal
                 var lineBuffer = FormBuffer[i];
                 foreach (var textInfo in lineBuffer)
                 {
-                    _consoleDriver.Write(textInfo.Text, textInfo.Color, textInfo.ColorBg);
+                    PromptPlus._consoleDriver.Write(textInfo.Text, textInfo.Color, textInfo.ColorBg);
                     if (textInfo.SaveCursor && _pushedCursor == null)
                     {
                         _pushedCursor = new Cursor
                         {
-                            Left = _consoleDriver.CursorLeft,
-                            Top = _consoleDriver.CursorTop
+                            Left = PromptPlus._consoleDriver.CursorLeft,
+                            Top = PromptPlus._consoleDriver.CursorTop
                         };
                     }
                 }
@@ -161,27 +194,40 @@ namespace PromptPlusControls.Internal
                     {
                         scrolls++;
                     }
-                    _consoleDriver.WriteLine();
+                    PromptPlus._consoleDriver.WriteLine();
                 }
             }
-            _cursorBottom = _consoleDriver.CursorTop;
+            _cursorBottom = PromptPlus._consoleDriver.CursorTop;
             if (_pushedCursor != null)
             {
-                if (scrolls > 0 && _consoleDriver.IsRunningTerminal)
+                if (scrolls > 0 && (PromptPlus._consoleDriver.IsRunningTerminal || PromptPlus._statusBar.IsRunning))
                 {
                     _pushedCursor.Top -= scrolls;
                 }
-                _consoleDriver.SetCursorPosition(_pushedCursor.Left, _pushedCursor.Top);
+                PromptPlus._consoleDriver.SetCursorPosition(_pushedCursor.Left, _pushedCursor.Top);
             }
         }
 
         private bool IsMaxWindowsHeight()
         {
-            if (_consoleDriver.CursorTop == (_consoleDriver.BufferHeight - 1))
+            lock (PromptPlus._lockobj)
             {
-                return true;
+                if (PromptPlus._statusBar.IsRunning)
+                {
+                    if (PromptPlus._consoleDriver.CursorTop == PromptPlus._consoleDriver.BufferHeight - 1 - PromptPlus._statusBar.LastTemplatesVisibles)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (PromptPlus._consoleDriver.CursorTop == PromptPlus._consoleDriver.BufferHeight - 1)
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
-            return false;
         }
 
         private void ClearBuffer()

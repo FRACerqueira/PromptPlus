@@ -27,6 +27,7 @@ namespace PromptPlusControls
         Func<ResultPipe[], object, bool> Condition { get; }
     }
 
+
     public interface IPromptControls<T>
     {
         IPromptControls<T> EnabledAbortKey(bool value);
@@ -35,19 +36,24 @@ namespace PromptPlusControls
         IPromptControls<T> HideAfterFinish(bool value);
         ResultPromptPlus<T> Run(CancellationToken? value = null);
     }
+
+    #region POC
     public interface IStatusBar
     {
+        IStatusBar Reset();
         IStatusbarColumn AddTemplate(string id, ConsoleColor? foregroundColor = null, ConsoleColor? backgroundColor = null);
         IStatusBarActions WithTemplate(string id);
         void Run();
         void End();
+        void Refresh();
+
     }
 
     public interface IStatusBarActions
     {
         IStatusBarActions WithTemplate(string id);
         IStatusBarActions UpdateColumns(params string[] values);
-        IStatusBarActions UpdateColumn(string value, string idcolumn = null);
+        IStatusBarActions UpdateColumn(string idcolumn, string value);
         IStatusBarActions TryValue(string idcolumn, out string value);
         void Run();
     }
@@ -55,15 +61,22 @@ namespace PromptPlusControls
     public interface IStatusbarColumn
     {
         IStatusbarColumn AddText(string text);
-        IStatusbarColumn AddColumn(string id, int lenght);
+        IStatusbarColumn AddColumn(string id, int lenght, StatusBarColAlignment alignment = StatusBarColAlignment.Left);
         IStatusbarColumn AddSeparator();
         IStatusBar Build(params string[] values);
     }
+    #endregion
 
     public interface IPromptPipe
     {
         IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition);
         IFormPlusBase ToPipe(string id, string title, object state = null);
+    }
+
+    public interface IPromptColor
+    {
+        void WriteColor(params ColorToken[] texts);
+        void WriteLineColor(params ColorToken[] texts);
     }
 
     public interface IFIGlet

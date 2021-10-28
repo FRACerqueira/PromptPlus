@@ -18,7 +18,7 @@ namespace PromptPlusControls.FIGlet
     internal class BannerControl : IFIGlet
     {
         private readonly ScreenRender _screenrender;
-        private ConsoleColor _color = PromptPlus.ColorSchema.ForeColorSchema;
+        private ConsoleColor _color = PromptPlus.ForeColor;
 
         public BannerControl(string value)
         {
@@ -132,7 +132,7 @@ namespace PromptPlusControls.FIGlet
 
         public void Run(ConsoleColor? color = null)
         {
-            _color = color ?? PromptPlus.ColorSchema.ForeColorSchema;
+            _color = color ?? PromptPlus.ForeColor;
             InitAsciiArt();
             _screenrender.InputRender(InputTemplate);
         }

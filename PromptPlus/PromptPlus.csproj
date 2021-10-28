@@ -23,8 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controls\StatusBarControl.cs" />
-    <Compile Remove="Internal\StatusBar.cs" />
+    <Compile Remove="Internal\ParseColorString.cs" />
   </ItemGroup>
 
   <ItemGroup>
