@@ -36,7 +36,7 @@ Input(string prompt = null)
 - ```csharp
   Addvalidator(Func<object, ValidationResult> validator);
   ``` 
-    - item of input validator. See
+    - item of input validator.
 - ```csharp
   Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
   ``` 

@@ -23,7 +23,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\keypress.md = docs\keypress.md
 		docs\list.md = docs\list.md
 		docs\listmasked.md = docs\listmasked.md
-		docs\listoptions.md = docs\listoptions.md
 		docs\maskeditdate.md = docs\maskeditdate.md
 		docs\maskeditgeneric.md = docs\maskeditgeneric.md
 		docs\maskeditnumber.md = docs\maskeditnumber.md
@@ -104,7 +103,7 @@ Global
 		{0EBFCDFA-D7BC-448D-B396-7179B9B32577} = {640ED284-A90B-43B8-ABA5-66F769752DDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 		RESX_ShowErrorsInErrorList = False
+		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 	EndGlobalSection
 EndGlobal
