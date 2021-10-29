@@ -18,7 +18,10 @@ namespace PromptPlusControls.ValueObjects
             Color = color ?? PromptPlus._consoleDriver.ForegroundColor;
             BackgroundColor = backgroundColor ?? PromptPlus._consoleDriver.BackgroundColor;
             AnsiColor = string.Format("\x1b[{0};{1}m", ToAnsiColor(Color), ToAnsiBgColor(BackgroundColor));
+            Underline = false;
         }
+
+        public bool Underline { get; set; }
 
         public string AnsiColor { get; }
 
@@ -34,7 +37,7 @@ namespace PromptPlusControls.ValueObjects
 
         public ColorToken Mask(ConsoleColor? defaultColor, ConsoleColor? defaultBackgroundColor)
         {
-           return new(Text, Color == PromptPlus._consoleDriver.ForegroundColor?defaultColor:Color, BackgroundColor == PromptPlus._consoleDriver.BackgroundColor?defaultBackgroundColor:BackgroundColor);
+            return new(Text, Color == PromptPlus._consoleDriver.ForegroundColor ? defaultColor : Color, BackgroundColor == PromptPlus._consoleDriver.BackgroundColor ? defaultBackgroundColor : BackgroundColor);
         }
 
         public static implicit operator ColorToken(string text)

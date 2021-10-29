@@ -18,6 +18,8 @@ namespace PromptPlusControls
 {
     public static partial class PromptPlus
     {
+        #region Validators
+
         public static IList<Func<object, ValidationResult>> ImportValidators<T>(this T instance, Expression<Func<T, object>> expression)
         {
             return ImportValidators(instance, expression.Body);
@@ -106,6 +108,10 @@ namespace PromptPlusControls
             .ToList();
         }
 
+        #endregion
+
+        #region colors
+
         public static ColorToken[] Mask(this IEnumerable<ColorToken> tokens, ConsoleColor? color = null, ConsoleColor? backgroundColor = null)
         {
             return tokens?.Select(token => token.Mask(color, backgroundColor)).ToArray();
@@ -184,6 +190,11 @@ namespace PromptPlusControls
         public static ColorToken Magenta(this string text)
         {
             return text.Color(ConsoleColor.Magenta);
+        }
+
+        public static ColorToken Underline(this string text)
+        {
+            return text.DefautColor().Underline();
         }
 
         public static ColorToken Red(this string text)
@@ -281,6 +292,12 @@ namespace PromptPlusControls
         public static ColorToken OnYellow(this string text)
         {
             return text.On(ConsoleColor.Yellow);
+        }
+
+        public static ColorToken Underline(this ColorToken token)
+        {
+            token.Underline = true;
+            return token;
         }
 
         public static ColorToken On(this ColorToken token, ConsoleColor? backgroundColor)
@@ -453,6 +470,6 @@ namespace PromptPlusControls
             return token.Color(ConsoleColor.Yellow);
         }
 
-
+        #endregion
     }
 }

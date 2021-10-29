@@ -37,16 +37,21 @@ namespace PromptPlusControls
         ResultPromptPlus<T> Run(CancellationToken? value = null);
     }
 
-    #region POC
+    public interface IScreen
+    {
+        IStatusBar StatusBar();
+        void Switch(ConsoleColor? forecorlor = null, ConsoleColor? backcorlor = null);
+    }
+
     public interface IStatusBar
     {
         IStatusBar Reset();
         IStatusbarColumn AddTemplate(string id, ConsoleColor? foregroundColor = null, ConsoleColor? backgroundColor = null);
         IStatusBarActions WithTemplate(string id);
-        void Run();
-        void End();
+        void Show();
+        void Stop();
         void Refresh();
-
+        void Hide();
     }
 
     public interface IStatusBarActions
@@ -55,7 +60,7 @@ namespace PromptPlusControls
         IStatusBarActions UpdateColumns(params string[] values);
         IStatusBarActions UpdateColumn(string idcolumn, string value);
         IStatusBarActions TryValue(string idcolumn, out string value);
-        void Run();
+        void Show();
     }
 
     public interface IStatusbarColumn
@@ -65,7 +70,6 @@ namespace PromptPlusControls
         IStatusbarColumn AddSeparator();
         IStatusBar Build(params string[] values);
     }
-    #endregion
 
     public interface IPromptPipe
     {

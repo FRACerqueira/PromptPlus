@@ -12,12 +12,12 @@ namespace PromptPlusControls.Drivers
 {
     internal interface IConsoleDriver
     {
-        ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken);
-        void Beep();
         void Clear();
         void ClearLine(int top);
         void ClearRestOfLine(ConsoleColor? color);
         ConsoleKeyInfo ReadKey();
+        ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken);
+        void Beep();
         void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null);
         void Write(params ColorToken[] tokens);
         void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null);

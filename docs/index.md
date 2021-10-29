@@ -268,8 +268,9 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 ## Apis
 [**Top**](#help)
 
-controls | Details
+Controls/Commands | Details
 --- | ---
+[Color](colorcmd.md) | Easy to add some color-text and underline
 [Banner](banner.md) |  ASCII text banner 
 [Any key](anykey.md) |  Simple any key press
 [Key Press](keypress.md) | Simple specific key
@@ -293,10 +294,14 @@ controls | Details
 [Progress Bar](progressbar.md) | Progress Bar with interation customization
 [WaitProcess](waitprocess.md) | Wait process with animation
 [PipeLine](pipeline.md) | Pipeline sequence to all prompts with condition by pipe and status summary
-
-[**Top**](#help)
+[Screen](screen.md) | Swith principal/alternate screen including StatusBar
+[StatusBar](statusbar.md) | StatusBar with template and columns
+[Commands](commands.md) |  Command set for PromptPlus console
+[Validators](validators.md) | Built-in validators with PromptPlus
 
 ## Extensions
+[**Top**](#help)
+
 PromptPlus have a extension to **import validators**. No duplicate code! 
 
 ```csharp
@@ -323,7 +328,6 @@ Console.WriteLine($"Your input: {name.Value}!");
 ```
 
 ## Snapshot
-[**Top**](#help)
 
 ### Input
 [**Top**](#help) | [Input](input.md) | [Password](password.md)
@@ -388,6 +392,23 @@ Console.WriteLine($"Your input: {name.Value}!");
 [**Top**](#help) | [PipeLine](pipeline.md)
 
 ![](./images/PipeLine.gif)
+
+### Screen / StatusBar
+[**Top**](#help) | [Screen](screen.md) | [StatusBar](statusbar.md)
+
+![](./images/ScreenStatusBar.gif)
+
+
+### Colors
+[**Top**](#help) | [Colors](colorcmd.md)
+
+![](./images/Colors.gif)
+
+### Commands
+[**Top**](#help) | [Commands](commands.md)
+
+![](./images/Commands.gif)
+
 
 ## Supported platforms
 [**Top**](#help)

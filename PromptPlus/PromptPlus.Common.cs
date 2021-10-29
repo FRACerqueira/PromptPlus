@@ -30,8 +30,9 @@ namespace PromptPlusControls
         internal const int ProgressgBarCheckDelay = 50;
 
         internal static object _lockobj = new();
-        internal static IConsoleDriver _consoleDriver;
+        internal static ConsoleDriver _consoleDriver;
         internal static StatusBar _statusBar;
+        internal static bool _isAlternateScreen;
 
         static PromptPlus()
         {
@@ -43,9 +44,9 @@ namespace PromptPlusControls
             LoadConfigFromFile();
         }
 
-        public static ConsoleColor ForeColor => Console.ForegroundColor;
+        public static bool IsAlternateScreen => _isAlternateScreen;
 
-        public static ConsoleColor BackColor => Console.BackgroundColor;
+        public static bool IsStatusBarRunning => _statusBar.IsRunning;
 
         internal static CultureInfo AppCulture { get; private set; }
 

@@ -75,10 +75,8 @@ namespace PromptPlusControls.Drivers
 
         public void Clear()
         {
-            lock (PromptPlus._lockobj)
-            {
-                Console.Write("\x1b[2J".DefautColor());
-            }
+            SetCursorPosition(0, 0);
+            Console.Write("\x1b[2J");
         }
 
         public void ClearLine(int top)
@@ -89,6 +87,7 @@ namespace PromptPlusControls.Drivers
                 Console.Write("\x1b[2K");
             }
         }
+
         public void ClearRestOfLine(ConsoleColor? color)
         {
             lock (PromptPlus._lockobj)
@@ -115,22 +114,27 @@ namespace PromptPlusControls.Drivers
                 }
                 foreach (var token in tokens)
                 {
-                    if (!string.IsNullOrEmpty(token.Text))
+                    var originalColor = Console.ForegroundColor;
+                    var originalBackgroundColor = Console.BackgroundColor;
+                    try
                     {
-                        var originalColor = Console.ForegroundColor;
-                        var originalBackgroundColor = Console.BackgroundColor;
-                        try
+                        if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
                         {
-                            if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
-                            {
-                                Console.Write(token.AnsiColor);
-                            }
-                            Console.Write(token.Text);
+                            Console.Write(token.AnsiColor);
                         }
-                        finally
+                        if (token.Underline)
                         {
-                            Console.Write(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor);
+                            Console.Write("\x1b[4m");
                         }
+                        Console.Write(token.Text ?? string.Empty);
+                    }
+                    finally
+                    {
+                        if (token.Underline)
+                        {
+                            Console.Write("\x1b[24m");
+                        }
+                        Console.Write(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor);
                     }
                 }
             }
@@ -141,7 +145,7 @@ namespace PromptPlusControls.Drivers
             get { return Console.ForegroundColor; }
             set
             {
-                Console.Write(new ColorToken("", value).AnsiColor);
+                Console.Write(new ColorToken("", value, Console.BackgroundColor).AnsiColor);
                 Console.ForegroundColor = value;
             }
         }
@@ -151,7 +155,7 @@ namespace PromptPlusControls.Drivers
             get { return Console.BackgroundColor; }
             set
             {
-                Console.Write(new ColorToken("", null, value).AnsiColor);
+                Console.Write(new ColorToken("", Console.ForegroundColor, value).AnsiColor);
                 Console.BackgroundColor = value;
             }
         }
@@ -165,11 +169,12 @@ namespace PromptPlusControls.Drivers
             }
         }
 
+
         public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
         {
             lock (PromptPlus._lockobj)
             {
-                Write(value.Color(color ?? PromptPlus.ForeColor, colorbg ?? PromptPlus.BackColor));
+                Write(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
             }
         }
 
@@ -177,7 +182,7 @@ namespace PromptPlusControls.Drivers
         {
             lock (PromptPlus._lockobj)
             {
-                Write((value ?? string.Empty).Color(color ?? PromptPlus.ForeColor, colorbg ?? PromptPlus.BackColor));
+                Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
                 Console.WriteLine();
             }
         }
@@ -200,6 +205,7 @@ namespace PromptPlusControls.Drivers
         }
 
         private bool _cursorVisible = true;
+
         public bool CursorVisible
         {
             get

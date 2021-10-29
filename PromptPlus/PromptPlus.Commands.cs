@@ -15,17 +15,69 @@ namespace PromptPlusControls
 {
     public static partial class PromptPlus
     {
+
+        #region Console Commands
+
+        public static void ClearLine(int top)
+        {
+            if (top < 0)
+            {
+                top = 0;
+            }
+            if (_statusBar.IsRunning)
+            {
+                if (top > _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
+                {
+                    top = _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1;
+                }
+            }
+            else
+            {
+                if (top > _consoleDriver.BufferHeight - 1)
+                {
+                    top = _consoleDriver.BufferHeight - 1;
+                }
+            }
+            _consoleDriver.ClearLine(top);
+        }
+
+        public static void ClearRestOfLine(ConsoleColor? color = null) => _consoleDriver.ClearRestOfLine(color ?? BackgroundColor);
+
+        public static void Beep() => _consoleDriver.Beep();
+
+        public static int CursorLeft => _consoleDriver.CursorLeft;
+
+        public static int CursorTop => _consoleDriver.CursorTop;
+
+        public static int BufferWidth => Console.BufferWidth;
+
+        public static int BufferHeight => Console.BufferHeight;
+
+        public static int WindowWidth => Console.WindowWidth;
+
+        public static int WindowHeight => Console.WindowHeight;
+
+        public static bool IsRunningTerminal => _consoleDriver.IsRunningTerminal;
+
+        public static ConsoleColor ForegroundColor => _consoleDriver.ForegroundColor;
+
+        public static ConsoleColor BackgroundColor => _consoleDriver.BackgroundColor;
+
         public static void CursorPosition(int left, int top)
         {
             lock (_lockobj)
             {
+                if (top < 0)
+                {
+                    top = 0;
+                }
                 if (left < 0)
                 {
                     left = 0;
                 }
                 if (_statusBar.IsRunning)
                 {
-                    if (top > _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles -1)
+                    if (top > _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
                     {
                         top = _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1;
                     }
@@ -67,17 +119,16 @@ namespace PromptPlusControls
                 _consoleDriver.Clear();
                 if (_statusBar.IsRunning)
                 {
-                    StatusBar().Refresh();
+                    Screen().StatusBar().Refresh();
                 }
             }
         }
-
 
         public static void Write(params ColorToken[] tokens)
         {
             if (_statusBar.IsRunning)
             {
-                if (_consoleDriver.CursorTop >= _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles -1)
+                if (_consoleDriver.CursorTop >= _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
                 {
                     return;
                 }
@@ -97,9 +148,26 @@ namespace PromptPlusControls
             _consoleDriver.WriteLine(tokens);
         }
 
-        public static IStatusBar StatusBar()
+        public static void WriteLines(int value = 1)
         {
-            return new StatusBarControl();
+            if (value < 1)
+            {
+                value = 1;
+            }
+            for (var i = 0; i < value; i++)
+            {
+                Console.WriteLine();
+            }
+        }
+
+
+        #endregion
+
+        #region controls
+
+        public static IScreen Screen()
+        {
+            return new ScreenControl();
         }
 
         public static IFIGlet Banner(string value)
@@ -190,6 +258,8 @@ namespace PromptPlusControls
         {
             return new PipeLineControl();
         }
+
+        #endregion
     }
 }
 

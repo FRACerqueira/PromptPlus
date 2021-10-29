@@ -165,7 +165,7 @@ namespace PromptPlusControls.Internal
                 (PromptPlus._statusBar.LastSize.width != PromptPlus._consoleDriver.BufferWidth ||
                 PromptPlus._statusBar.LastSize.height != PromptPlus._consoleDriver.BufferHeight))
             {
-                PromptPlus.StatusBar().Refresh();
+                PromptPlus.Screen().StatusBar().Refresh();
             }
         }
 

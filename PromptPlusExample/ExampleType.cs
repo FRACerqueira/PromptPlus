@@ -4,9 +4,19 @@ namespace PromptPlusExample
 {
     public enum ExampleType
     {
-        [Display(Name = "Utility: Color text")]
+        [Display(Name = "Command: Color text - So easy to add some color-text to your console")]
         ColorText,
-        [Display(Name = "Utility: Banner ASCII text")]
+        [Display(Name = "Utility: Save and Load Config")]
+        SaveLoadConfig,
+        [Display(Name = "Utility: Change Language")]
+        ChooseLanguage,
+        [Display(Name = "Extension: Import Validators")]
+        ImportValidators,
+        [Display(Name = "Extension: Command set for PromptPlus console")]
+        ConsoleCmd,
+        [Display(Name = "Control: Screen - swith principal/alternate screen including StatusBar")]
+        Screen,
+        [Display(Name = "Control: Banner ASCII text")]
         Banner,
         [Display(Name = "Control: Any key")]
         AnyKey,
@@ -62,14 +72,6 @@ namespace PromptPlusExample
         WaitManyProcess,
         [Display(Name = "Control: PipeLine - IEnumerable Prompt sequential with conditions")]
         PipeLine,
-        [Display(Name = "Control: StatusBar (frezeen bottom line(s) with template/columns)")]
-        StatusBar,
-        [Display(Name = "Extension: Import Validators")]
-        ImportValidators,
-        [Display(Name = "Utility: Save and Load Config")]
-        SaveLoadConfig,
-        [Display(Name = "Utility: Change Language")]
-        ChooseLanguage,
         Quit
     }
 }

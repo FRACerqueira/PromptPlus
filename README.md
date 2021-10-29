@@ -5,7 +5,7 @@
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 
-**Interactive command-line toolkit for C# with powerful controls.**
+**Interactive command-line toolkit for C# with powerful controls and commands.**
 
 [**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis) | [**Extensions**](#extensions) | [**Supported Platforms**](#supported-platforms)
 
@@ -82,6 +82,23 @@ dotnet run --project PromptPlusExample
 [**Top**](#welcome-to-promptplus)
 
 ![](./docs/images/PipeLine.gif)
+
+### Screen / StatusBar
+[**Top**](#welcome-to-promptplus)
+
+![](./docs/images/ScreenStatusBar.gif)
+
+
+### Colors
+[**Top**](#welcome-to-promptplus)
+
+![](./docs/images/Colors.gif)
+
+### Commands
+[**Top**](#welcome-to-promptplus)
+
+![](./docs/images/Commands.gif)
+
 
 ## Usage
 [**Top**](#welcome-to-promptplus)
@@ -253,8 +270,9 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 ## Apis
 [**Top**](#welcome-to-promptplus)
 
-| controls | Details |
+| Controls/Commands | Details |
 | --- | --- |
+| [Color](https://fracerqueira.github.io/PromptPlus/colorcmd) | Easy to add some color-text and underline |
 | [Banner](https://fracerqueira.github.io/PromptPlus/banner) |  ASCII text banner |
 | [Any key](https://fracerqueira.github.io/PromptPlus/anykey) |  Simple any key press |
 | [Key Press](https://fracerqueira.github.io/PromptPlus/keypress) | Simple specific key |
@@ -278,6 +296,10 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [Progress Bar](https://fracerqueira.github.io/PromptPlus/progressbar) | Progress Bar with interation customization |
 | [WaitProcess](https://fracerqueira.github.io/PromptPlus/waitprocess) | Wait process with animation |
 | [PipeLine](https://fracerqueira.github.io/PromptPlus/pipeline) | Pipeline sequence to all prompts with condition by pipe and status summary |
+| [Screen](https://fracerqueira.github.io/PromptPlus/screen) | Swith principal/alternate screen including StatusBar |
+| [StatusBar](https://fracerqueira.github.io/PromptPlus/statusbar) | StatusBar with template and columns |
+| [Commands](https://fracerqueira.github.io/PromptPlus/commands) | Command set for PromptPlus console |
+| [Validators](https://fracerqueira.github.io/PromptPlus/validators) | Built-in validators with PromptPlus |
 
 ## Extensions
 PromptPlus have a extension to **import validator**. No duplicate code! 

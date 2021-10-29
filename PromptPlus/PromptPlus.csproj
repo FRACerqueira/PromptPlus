@@ -11,7 +11,7 @@
 
   <PropertyGroup>
     <Authors>Fernando Cerqueira</Authors>
-    <Description>Interactive command-line  toolkit for C# with powerful controls.</Description>
+    <Description>Interactive command-line  toolkit for C# with powerful controls and commands.</Description>
     <PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>cli;command-line;console;interactive;prompt;terminal;c#;toolkit</PackageTags>
@@ -20,6 +20,7 @@
     <PackageId>PromptPlus</PackageId>
     <PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
     <PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
