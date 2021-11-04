@@ -14,8 +14,8 @@ namespace PromptPlusExample
         ImportValidators,
         [Display(Name = "Extension: Command set for PromptPlus console")]
         ConsoleCmd,
-        [Display(Name = "Control: Screen - swith principal/alternate screen including StatusBar")]
-        Screen,
+        //[Display(Name = "Control: Screen - swith principal/alternate screen including StatusBar")]
+        //Screen,
         [Display(Name = "Control: Banner ASCII text")]
         Banner,
         [Display(Name = "Control: Any key")]

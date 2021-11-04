@@ -296,7 +296,6 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [Progress Bar](https://fracerqueira.github.io/PromptPlus/progressbar) | Progress Bar with interation customization |
 | [WaitProcess](https://fracerqueira.github.io/PromptPlus/waitprocess) | Wait process with animation |
 | [PipeLine](https://fracerqueira.github.io/PromptPlus/pipeline) | Pipeline sequence to all prompts with condition by pipe and status summary |
-| [Screen/StatusBar](https://fracerqueira.github.io/PromptPlus/screen) | Swith principal/alternate screen including StatusBar with template and columns|
 | [Commands](https://fracerqueira.github.io/PromptPlus/commands) | Command set for PromptPlus console |
 | [Validators](https://fracerqueira.github.io/PromptPlus/validators) | Built-in validators with PromptPlus |
 

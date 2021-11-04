@@ -31,8 +31,8 @@ namespace PromptPlusControls
 
         internal static object _lockobj = new();
         internal static ConsoleDriver _consoleDriver;
-        internal static StatusBar _statusBar;
-        internal static bool _isAlternateScreen;
+        //internal static StatusBar _statusBar;
+        //internal static bool _isAlternateScreen;
 
         static PromptPlus()
         {
@@ -53,16 +53,16 @@ namespace PromptPlusControls
             Symbols.SymbGroup = new("»", ">>");
 
             _consoleDriver = new ConsoleDriver();
-            _statusBar = new(_consoleDriver.BufferHeight, _consoleDriver.BufferWidth);
+            //_statusBar = new(_consoleDriver.BufferHeight, _consoleDriver.BufferWidth);
             AppCulture = Thread.CurrentThread.CurrentCulture;
             AppCultureUI = Thread.CurrentThread.CurrentUICulture;
             s_defaultCulture = AppCulture;
             LoadConfigFromFile();
         }
 
-        public static bool IsAlternateScreen => _isAlternateScreen;
+        //public static bool IsAlternateScreen => _isAlternateScreen;
 
-        public static bool IsStatusBarRunning => _statusBar.IsRunning;
+        //public static bool IsStatusBarRunning => _statusBar.IsRunning;
 
         internal static CultureInfo AppCulture { get; private set; }
 

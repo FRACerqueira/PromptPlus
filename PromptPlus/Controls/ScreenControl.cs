@@ -75,7 +75,7 @@ namespace PromptPlusControls.Controls
                 {
                     PromptPlus.ConsoleDefaultColor(_prinipalforecolor, _prinipalbackcolor);
                     PromptPlus.Clear();
-                    PromptPlus._consoleDriver.Write("\x1b[?1049l".DefautColor());
+                    PromptPlus._consoleDriver.Write("\x1b[?1049l");
                     PromptPlus._isAlternateScreen = false;
                     PromptPlus.ConsoleDefaultColor(_prinipalforecolor, _prinipalbackcolor);
                 }
@@ -83,7 +83,7 @@ namespace PromptPlusControls.Controls
                 {
                     _prinipalforecolor = PromptPlus.ForegroundColor;
                     _prinipalbackcolor = PromptPlus.BackgroundColor;
-                    PromptPlus._consoleDriver.Write("\x1b[?1049h".DefautColor());
+                    PromptPlus._consoleDriver.Write("\x1b[?1049h");
                     PromptPlus._isAlternateScreen = true;
                     PromptPlus.ConsoleDefaultColor(forecorlor ?? _prinipalforecolor, backcorlor ?? _prinipalbackcolor);
                     PromptPlus.Clear();

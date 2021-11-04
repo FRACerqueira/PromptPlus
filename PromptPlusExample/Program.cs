@@ -109,9 +109,9 @@ namespace PromptPlusExample
                     case ExampleType.ConsoleCmd:
                         RunCommandsSample();
                         break;
-                    case ExampleType.Screen:
-                        RunScrennSample();
-                        break;
+                    //case ExampleType.Screen:
+                    //    RunScrennSample();
+                    //    break;
                     case ExampleType.ColorText:
                         RunColorTextSample();
                         break;
@@ -225,19 +225,19 @@ namespace PromptPlusExample
                 }
             }
 
-            if (PromptPlus.IsAlternateScreen)
-            {
-                if (PromptPlus.IsRunningTerminal)
-                {
-                    PromptPlus.Screen()
-                        .StatusBar()
-                        .Stop();
-                }
-                else
-                {
-                    PromptPlus.Screen().Switch();
-                }
-            }
+            //if (PromptPlus.IsAlternateScreen)
+            //{
+            //    if (PromptPlus.IsRunningTerminal)
+            //    {
+            //        PromptPlus.Screen()
+            //            .StatusBar()
+            //            .Stop();
+            //    }
+            //    else
+            //    {
+            //        PromptPlus.Screen().Switch();
+            //    }
+            //}
 
             if (!quit)
             {
@@ -334,150 +334,150 @@ namespace PromptPlusExample
             }
         }
 
-        private void RunScrennSample()
-        {
-            var quit = false;
-            while (!_stopApp.IsCancellationRequested && !quit)
-            {
-                PromptPlus.Clear();
-                PromptPlus.WriteLine("Current Screen is ", (PromptPlus.IsAlternateScreen ? "Alternate" : "Principal").Yellow());
-                PromptPlus.WriteLine();
-                var opc = PromptPlus.Select<string>("Select Screen Sample");
-                if (!PromptPlus.IsAlternateScreen)
-                {
-                    opc.AddItem("1 - Switch to alternate screen");
-                    opc.AddItem("2 - Switch to alternate screen and show Status bar");
-                }
-                else
-                {
-                    opc.AddItem("1 - Switch to principal screen");
-                    opc.AddItem("2 - Show/change values StatusBar");
-                    if (PromptPlus.IsStatusBarRunning)
-                    {
-                        opc.AddItem("3 - Hide StatusBar");
-                    }
-                }
-                var cmd = opc.AddItem("X - End Samples")
-                    .Run();
+        //private void RunScrennSample()
+        //{
+        //    var quit = false;
+        //    while (!_stopApp.IsCancellationRequested && !quit)
+        //    {
+        //        PromptPlus.Clear();
+        //        PromptPlus.WriteLine("Current Screen is ", (PromptPlus.IsAlternateScreen ? "Alternate" : "Principal").Yellow());
+        //        PromptPlus.WriteLine();
+        //        var opc = PromptPlus.Select<string>("Select Screen Sample");
+        //        if (!PromptPlus.IsAlternateScreen)
+        //        {
+        //            opc.AddItem("1 - Switch to alternate screen");
+        //            opc.AddItem("2 - Switch to alternate screen and show Status bar");
+        //        }
+        //        else
+        //        {
+        //            opc.AddItem("1 - Switch to principal screen");
+        //            opc.AddItem("2 - Show/change values StatusBar");
+        //            if (PromptPlus.IsStatusBarRunning)
+        //            {
+        //                opc.AddItem("3 - Hide StatusBar");
+        //            }
+        //        }
+        //        var cmd = opc.AddItem("X - End Samples")
+        //            .Run();
 
-                if (cmd.IsAborted)
-                {
-                    continue;
-                }
-                if (cmd.Value[0] == '1')
-                {
-                    PromptPlus.Screen()
-                        .Switch();
-                }
-                else if (cmd.Value[0] == '2')
-                {
-                    StatusBarSample();
-                    PromptPlus.Clear();
-                }
-                else if (cmd.Value[0] == '3')
-                {
-                    PromptPlus.Screen()
-                        .StatusBar()
-                        .Hide();
-                }
-                else if (cmd.Value[0] == 'X')
-                {
-                    quit = true;
-                }
-            }
-            if (PromptPlus.IsAlternateScreen)
-            {
-                PromptPlus.Screen()
-                    .Switch();
-            }
-        }
+        //        if (cmd.IsAborted)
+        //        {
+        //            continue;
+        //        }
+        //        if (cmd.Value[0] == '1')
+        //        {
+        //            PromptPlus.Screen()
+        //                .Switch();
+        //        }
+        //        else if (cmd.Value[0] == '2')
+        //        {
+        //            StatusBarSample();
+        //            PromptPlus.Clear();
+        //        }
+        //        else if (cmd.Value[0] == '3')
+        //        {
+        //            PromptPlus.Screen()
+        //                .StatusBar()
+        //                .Hide();
+        //        }
+        //        else if (cmd.Value[0] == 'X')
+        //        {
+        //            quit = true;
+        //        }
+        //    }
+        //    if (PromptPlus.IsAlternateScreen)
+        //    {
+        //        PromptPlus.Screen()
+        //            .Switch();
+        //    }
+        //}
 
 
-        private void StatusBarSample()
-        {
-            if (!PromptPlus.IsStatusBarRunning)
-            {
-                PromptPlus.Screen()
-                    .StatusBar()
-                    .Reset()
-                    .AddTemplate("Sample1", ConsoleColor.White, ConsoleColor.Blue)
-                        .AddText("SampleText")
-                        .AddSeparator()
-                        .AddColumn("col1", 30)
-                        .AddSeparator()
-                        .AddColumn("col2", 200, StatusBarColAlignment.Right)
-                        .Build()
-                    .AddTemplate("Sample2", ConsoleColor.White, ConsoleColor.Green)
-                        .Build()
-                    .Show();
-            }
-            else
-            {
-                PromptPlus.Screen()
-                    .StatusBar()
-                    .Refresh();
-            }
+        //private void StatusBarSample()
+        //{
+        //    if (!PromptPlus.IsStatusBarRunning)
+        //    {
+        //        PromptPlus.Screen()
+        //            .StatusBar()
+        //            .Reset()
+        //            .AddTemplate("Sample1", ConsoleColor.White, ConsoleColor.Blue)
+        //                .AddText("SampleText")
+        //                .AddSeparator()
+        //                .AddColumn("col1", 30)
+        //                .AddSeparator()
+        //                .AddColumn("col2", 200, StatusBarColAlignment.Right)
+        //                .Build()
+        //            .AddTemplate("Sample2", ConsoleColor.White, ConsoleColor.Green)
+        //                .Build()
+        //            .Show();
+        //    }
+        //    else
+        //    {
+        //        PromptPlus.Screen()
+        //            .StatusBar()
+        //            .Refresh();
+        //    }
 
-            var quit = false;
-            while (!_stopApp.IsCancellationRequested && !quit)
-            {
-                PromptPlus.Clear();
-                PromptPlus.WriteLine("Hello ".Yellow(), "this is a ", "alternate screen ".Cyan(), "with ", "StatusBar!".Cyan());
-                PromptPlus.WriteLine();
-                PromptPlus.WriteLine("* Nix style applications often utilize an ", "alternate screen buffer, ".Cyan(),
-                    "so that they can modify the entire contents of the buffer, ", "without".Cyan(), " affecting the application " +
-                    "that started them.");
-                PromptPlus.WriteLine();
-                PromptPlus.WriteLine("The alternate buffer is ", "exactly the dimensions of the window, without any scrollback region.".Cyan(),
-                    "For an example of this behavior, consider when vim is launched from bash.Vim uses the entirety of the screen to edit the file, " +
-                    "then returning to bash leaves the original buffer unchanged.");
+        //    var quit = false;
+        //    while (!_stopApp.IsCancellationRequested && !quit)
+        //    {
+        //        PromptPlus.Clear();
+        //        PromptPlus.WriteLine("Hello ".Yellow(), "this is a ", "alternate screen ".Cyan(), "with ", "StatusBar!".Cyan());
+        //        PromptPlus.WriteLine();
+        //        PromptPlus.WriteLine("* Nix style applications often utilize an ", "alternate screen buffer, ".Cyan(),
+        //            "so that they can modify the entire contents of the buffer, ", "without".Cyan(), " affecting the application " +
+        //            "that started them.");
+        //        PromptPlus.WriteLine();
+        //        PromptPlus.WriteLine("The alternate buffer is ", "exactly the dimensions of the window, without any scrollback region.".Cyan(),
+        //            "For an example of this behavior, consider when vim is launched from bash.Vim uses the entirety of the screen to edit the file, " +
+        //            "then returning to bash leaves the original buffer unchanged.");
 
-                PromptPlus.CursorPosition(0, 10);
+        //        PromptPlus.CursorPosition(0, 10);
 
-                var c1 = PromptPlus.Input("Col1 value to Statubar with color blue")
-                    .Run();
+        //        var c1 = PromptPlus.Input("Col1 value to Statubar with color blue")
+        //            .Run();
 
-                if (c1.IsAborted)
-                {
-                    quit = true;
-                    continue;
-                }
-                var c2 = PromptPlus.Input("Col2 value to Statubar with color blue")
-                    .Run();
+        //        if (c1.IsAborted)
+        //        {
+        //            quit = true;
+        //            continue;
+        //        }
+        //        var c2 = PromptPlus.Input("Col2 value to Statubar with color blue")
+        //            .Run();
 
-                if (c2.IsAborted)
-                {
-                    quit = true;
-                    continue;
-                }
-                var c3 = PromptPlus.Input("value of Statubar with color Green")
-                    .Run();
+        //        if (c2.IsAborted)
+        //        {
+        //            quit = true;
+        //            continue;
+        //        }
+        //        var c3 = PromptPlus.Input("value of Statubar with color Green")
+        //            .Run();
 
-                if (c3.IsAborted)
-                {
-                    quit = true;
-                    continue;
-                }
+        //        if (c3.IsAborted)
+        //        {
+        //            quit = true;
+        //            continue;
+        //        }
 
-                PromptPlus.Screen()
-                    .StatusBar()
-                    .WithTemplate("Sample1")
-                        .UpdateColumn("col1", c1.Value)
-                        .UpdateColumn("col2", c2.Value)
-                    .WithTemplate("Sample2")
-                        .UpdateColumn(null, c3.Value)
-                    .Show();
+        //        PromptPlus.Screen()
+        //            .StatusBar()
+        //            .WithTemplate("Sample1")
+        //                .UpdateColumn("col1", c1.Value)
+        //                .UpdateColumn("col2", c2.Value)
+        //            .WithTemplate("Sample2")
+        //                .UpdateColumn(null, c3.Value)
+        //            .Show();
 
-                var opc = PromptPlus.Confirm("new values?")
-                    .Default(false)
-                    .Run();
+        //        var opc = PromptPlus.Confirm("new values?")
+        //            .Default(false)
+        //            .Run();
 
-                if (!opc.IsAborted && !opc.Value)
-                {
-                    quit = true;
-                }
-            }
-        }
+        //        if (!opc.IsAborted && !opc.Value)
+        //        {
+        //            quit = true;
+        //        }
+        //    }
+        //}
 
         private void RunColorTextSample()
         {

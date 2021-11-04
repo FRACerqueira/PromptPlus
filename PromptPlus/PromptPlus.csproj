@@ -24,6 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controls\ScreenControl.cs" />
     <Compile Remove="Internal\ParseColorString.cs" />
   </ItemGroup>
 

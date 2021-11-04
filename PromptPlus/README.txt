@@ -25,8 +25,6 @@ https://fracerqueira.github.io/PromptPlus
 **New controls/Command**
 ------------------------
 - Banner-control                : Show ASCII text banner. 
-- screen-control                : Switch screen (principal/alternate Screen)
-- StatusBar-control             : Frezeen bottom line(s) with template/columns over alternate Screen
 - Write-Command                 : Colored-text forecolor/backcolor and undeline
 - WriteLine-Command             : Colored-text forecolor/backcolor, undeline and multiples lines
 - Clear-Command                 : Clear screeen with set backcolor

@@ -294,7 +294,6 @@ Controls/Commands | Details
 [Progress Bar](progressbar.md) | Progress Bar with interation customization
 [WaitProcess](waitprocess.md) | Wait process with animation
 [PipeLine](pipeline.md) | Pipeline sequence to all prompts with condition by pipe and status summary
-[Screen/StatusBar](screen.md) | Swith principal/alternate screen including StatusBar with template and columns
 [Commands](commands.md) |  Command set for PromptPlus console
 [Validators](validators.md) | Built-in validators with PromptPlus
 

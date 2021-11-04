@@ -31,20 +31,20 @@ namespace PromptPlusControls
             {
                 top = 0;
             }
-            if (_statusBar.IsRunning)
+            //if (_statusBar.IsRunning)
+            //{
+            //    if (top > _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
+            //    {
+            //        top = _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1;
+            //    }
+            //}
+            //else
+            //{
+            if (top > _consoleDriver.BufferHeight - 1)
             {
-                if (top > _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
-                {
-                    top = _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1;
-                }
+                top = _consoleDriver.BufferHeight - 1;
             }
-            else
-            {
-                if (top > _consoleDriver.BufferHeight - 1)
-                {
-                    top = _consoleDriver.BufferHeight - 1;
-                }
-            }
+            //}
             _consoleDriver.ClearLine(top);
         }
 
@@ -82,20 +82,20 @@ namespace PromptPlusControls
                 {
                     left = 0;
                 }
-                if (_statusBar.IsRunning)
+                //if (_statusBar.IsRunning)
+                //{
+                //    if (top > _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
+                //    {
+                //        top = _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1;
+                //    }
+                //}
+                //else
+                //{
+                if (top > _consoleDriver.BufferHeight - 1)
                 {
-                    if (top > _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
-                    {
-                        top = _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1;
-                    }
+                    top = _consoleDriver.BufferHeight - 1;
                 }
-                else
-                {
-                    if (top > _consoleDriver.BufferHeight - 1)
-                    {
-                        top = _consoleDriver.BufferHeight - 1;
-                    }
-                }
+                //}
                 _consoleDriver.SetCursorPosition(left, top);
             }
         }
@@ -124,10 +124,10 @@ namespace PromptPlusControls
                     _consoleDriver.BackgroundColor = backcolor.Value;
                 }
                 _consoleDriver.Clear();
-                if (_statusBar.IsRunning)
-                {
-                    Screen().StatusBar().Refresh();
-                }
+                //if (_statusBar.IsRunning)
+                //{
+                //    Screen().StatusBar().Refresh();
+                //}
             }
         }
 
@@ -180,25 +180,25 @@ namespace PromptPlusControls
 
         public static void Write(params ColorToken[] tokens)
         {
-            if (_statusBar.IsRunning)
-            {
-                if (_consoleDriver.CursorTop >= _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
-                {
-                    return;
-                }
-            }
+            //if (_statusBar.IsRunning)
+            //{
+            //    if (_consoleDriver.CursorTop >= _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
+            //    {
+            //        return;
+            //    }
+            //}
             _consoleDriver.Write(tokens);
         }
 
         public static void WriteLine(params ColorToken[] tokens)
         {
-            if (_statusBar.IsRunning)
-            {
-                if (_consoleDriver.CursorTop >= _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
-                {
-                    return;
-                }
-            }
+            //if (_statusBar.IsRunning)
+            //{
+            //    if (_consoleDriver.CursorTop >= _consoleDriver.BufferHeight - _statusBar.LastTemplatesVisibles - 1)
+            //    {
+            //        return;
+            //    }
+            //}
             _consoleDriver.WriteLine(tokens);
         }
 
@@ -293,10 +293,10 @@ namespace PromptPlusControls
 
         #region controls
 
-        public static IScreen Screen()
-        {
-            return new ScreenControl();
-        }
+        //public static IScreen Screen()
+        //{
+        //    return new ScreenControl();
+        //}
 
         public static IFIGlet Banner(string value)
         {

@@ -93,7 +93,7 @@ IPromptControls<ResultMasked>   //for others Base Methods
 ResultPromptPlus<ResultMasked>  //for Base Method Run, when execution is direct 
 IPromptPipe                     //for Pipe condition 
 IFormPlusBase                   //for only definition of pipe to Pipeline Control
-
+```
 
 ### Sample
 [**Top**](#promptplus--maskeditnumber)
