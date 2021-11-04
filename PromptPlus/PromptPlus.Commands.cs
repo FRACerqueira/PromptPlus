@@ -4,10 +4,12 @@
 // ***************************************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 using PromptPlusControls.Controls;
 using PromptPlusControls.FIGlet;
-using PromptPlusControls.Internal;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 
@@ -17,6 +19,11 @@ namespace PromptPlusControls
     {
 
         #region Console Commands
+
+        public static ResultPromptPlus<ConsoleKeyInfo> WaitKeypress(CancellationToken cancellationToken)
+        {
+            return new ResultPromptPlus<ConsoleKeyInfo>(_consoleDriver.WaitKeypress(cancellationToken), cancellationToken.IsCancellationRequested);
+        }
 
         public static void ClearLine(int top)
         {
@@ -124,6 +131,53 @@ namespace PromptPlusControls
             }
         }
 
+        public static void WriteLineSkipColors(string value)
+        {
+            _consoleDriver.WriteLine(value);
+        }
+
+        public static void WriteLine(Exception value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
+        {
+            WriteLine(value.ToString().Color(forecolor ?? PromptPlus.ForegroundColor, backcolor));
+        }
+
+        public static void WriteLine(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
+        {
+            if (underline)
+            {
+                var aux = ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor);
+                foreach (var item in aux)
+                {
+                    WriteLine(item.Underline());
+                }
+            }
+            else
+            {
+                WriteLine(ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor));
+            }
+        }
+
+        public static void Write(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
+        {
+            if (underline)
+            {
+                var aux = ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor);
+                foreach (var item in aux)
+                {
+                    Write(item.Underline());
+                }
+            }
+            else
+            {
+                Write(ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor));
+            }
+        }
+
+        public static void WriteSkipColors(string value)
+        {
+            _consoleDriver.Write(value);
+        }
+
         public static void Write(params ColorToken[] tokens)
         {
             if (_statusBar.IsRunning)
@@ -152,7 +206,7 @@ namespace PromptPlusControls
         {
             if (value < 1)
             {
-                value = 1;
+                return;
             }
             for (var i = 0; i < value; i++)
             {
@@ -160,6 +214,80 @@ namespace PromptPlusControls
             }
         }
 
+        /// <summary>
+        /// Allows a string to be written with embedded color values using:
+        /// This is [red]Red[/red] text and this is [white:blue!u]Blue[/white:blue!u] text
+        /// </summary>
+        /// <param name="text">Text to display</param>
+        private static ColorToken[] ConvertEmbeddedColorLine(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return new[] { new ColorToken(text) };
+            }
+
+            var at = text.IndexOf("[");
+            var at2 = text.IndexOf("]");
+            if (at == -1 || at2 <= at)
+            {
+                return new[] { new ColorToken(text) };
+            }
+
+            var result = new List<ColorToken>();
+            var match = colorBlockRegEx.Value.Match(text);
+            while (match.Length >= 1)
+            {
+                // write up to expression
+                result.Add(new ColorToken(text.Substring(0, match.Index)));
+
+                // strip out the expression
+                var highlightText = match.Groups["text"].Value;
+                var colvalfc = _consoleDriver.ForegroundColor;
+                var colvalbc = _consoleDriver.BackgroundColor;
+
+                var underline = false;
+                var mathgrp = match.Groups["color"].Value;
+                if (mathgrp.StartsWith("!!"))
+                {
+                    result.Add(new ColorToken(highlightText));
+                }
+                else
+                {
+                    //find underline tolen
+                    if (mathgrp.IndexOf("!u", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                    {
+                        underline = true;
+                        mathgrp = mathgrp.Replace("!u", "", StringComparison.InvariantCultureIgnoreCase);
+                    }
+                    //split color
+
+                    var colors = mathgrp.Split(':', StringSplitOptions.RemoveEmptyEntries);
+                    if (colors.Length == 1)
+                    {
+                        Enum.TryParse(colors[0], true, out colvalfc);
+                    }
+                    else if (colors.Length == 2)
+                    {
+                        Enum.TryParse(colors[0], true, out colvalfc);
+                        Enum.TryParse(colors[1], true, out colvalbc);
+                    }
+                    result.Add(new ColorToken(highlightText, colvalfc, colvalbc, underline));
+                }
+
+                // remainder of string
+                text = text.Substring(match.Index + match.Value.Length);
+                match = colorBlockRegEx.Value.Match(text);
+                if (match.Length < 1 && text.Length > 0)
+                {
+                    result.Add(new ColorToken(text));
+                }
+            }
+            return result.ToArray();
+        }
+
+        private static readonly Lazy<Regex> colorBlockRegEx = new(
+            () => new Regex("\\[(?<color>.*?)\\](?<text>[^[]*)\\[/\\k<color>\\]", RegexOptions.IgnoreCase),
+            isThreadSafe: true);
 
         #endregion
 
@@ -204,14 +332,9 @@ namespace PromptPlusControls
             return new ConfirmControl(new ConfirmOptions() { Message = prompt });
         }
 
-        public static IControlSliderNumber SliderNumber(string prompt = null)
+        public static IControlSliderNumber SliderNumber(SliderNumberType type, string prompt = null)
         {
-            return new SliderNumberControl(new SliderNumberOptions() { Message = prompt, Type = SliderNumberType.LeftRight });
-        }
-
-        public static IControlSliderNumber NumberUpDown(string prompt = null)
-        {
-            return new SliderNumberControl(new SliderNumberOptions() { Message = prompt, Type = SliderNumberType.UpDown });
+            return new SliderNumberControl(new SliderNumberOptions() { Message = prompt, Type = type });
         }
 
         public static IControlSliderSwitche SliderSwitche(string prompt = null)

@@ -43,13 +43,19 @@ https://fracerqueira.github.io/PromptPlus
 - MultSelect-control    : Revised the look to keep the selection symbols.
 - ListMasked-control    : Expanded to support all types of MaskEdit-control.
 - ListMasked-Control    : Adjusted type return to ResultMasked.
+- ListMasked-Control    : Added method to run the validators on each interaction.
 - SliderNumber-control  : Adjusted type return to double.
+- Input-Control         : Added method to run the validators on each interaction.
+- List-Control          : Added method to run the validators on each interaction.
+- MaskedInput-Control   : Added method to run the validators on each interaction.
+- MaskedInput-Control   : Added method to show day week for mask-type date/datetime.
 
 - Revised documentation for new changes (In progress)
 
 **Fixed bugs**
 --------------
-- ListMasked-control: fixed bug when deleting selection (not deleting).
+- ListMasked-control: bug fixed when deleting selection (not deleting).
+- Masked-control : bug fixed in delete/backspace key behaviors
 
 **Sample Usage**
 ----------------

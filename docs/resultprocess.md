@@ -4,7 +4,7 @@
 [**WaitProcess Control**](waitprocess) 
 
 ## Documentation
-Default return class for [**WaitProcess Control**](waitprocess) .
+Default return struct for [**WaitProcess Control**](waitprocess) .
 
 ### Properties
 [**Top**](#promptplus--resultprocess)

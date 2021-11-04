@@ -34,6 +34,10 @@ Input(string prompt = null)
   ``` 
     - Input is password type.Default Value = false
 - ```csharp
+  ValidateOnDemand()
+  ``` 
+    - Run the validators on each interaction
+- ```csharp
   Addvalidator(Func<object, ValidationResult> validator);
   ``` 
     - item of input validator.

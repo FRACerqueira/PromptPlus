@@ -40,7 +40,7 @@ namespace PromptPlusControls.Controls
             }
             foreach (var item in _options.Process)
             {
-                if (item == null)
+                if (item.ProcessToRun == null)
                 {
                     throw new ArgumentException(nameof(SingleProcess), Exceptions.Ex_WaitTaskToRun);
                 }

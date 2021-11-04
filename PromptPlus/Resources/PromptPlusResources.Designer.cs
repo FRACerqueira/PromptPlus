@@ -403,7 +403,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value is too long.
+        ///   Looks up a localized string similar to Value is too long. Max({0}).
         /// </summary>
         internal static string MaxLength {
             get {
@@ -412,7 +412,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value is too short.
+        ///   Looks up a localized string similar to Value is too short. Min({0}).
         /// </summary>
         internal static string MinLength {
             get {

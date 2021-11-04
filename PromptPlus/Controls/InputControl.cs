@@ -63,7 +63,7 @@ namespace PromptPlusControls.Controls
                         }
                         try
                         {
-                            if (!TryValidate((object)result, _options.Validators))
+                            if (!TryValidate(result, _options.Validators))
                             {
                                 result = default;
                                 return false;
@@ -160,6 +160,12 @@ namespace PromptPlusControls.Controls
                     screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, string.Join("", Messages.EnterFininsh, Messages.MaskEditErase));
                 }
             }
+
+            if (_options.ValidateOnDemand && !_initform && _options.Validators.Count > 0)
+            {
+                TryValidate(_inputBuffer.ToString(), _options.Validators);
+            }
+
             _initform = false;
         }
 
@@ -185,6 +191,12 @@ namespace PromptPlusControls.Controls
         public IControlInput Prompt(string value)
         {
             _options.Message = value;
+            return this;
+        }
+
+        public IControlInput ValidateOnDemand()
+        {
+            _options.ValidateOnDemand = true;
             return this;
         }
 

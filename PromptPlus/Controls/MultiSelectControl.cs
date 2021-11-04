@@ -132,7 +132,9 @@ namespace PromptPlusControls.Controls
                     {
                         if (currentItem.IsGroup)
                         {
-                            if (currentItem.IsSelected)
+                            var maxgrp = _options.Items.Count(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled);
+                            var selgrp = _selectedItems.Count(y => _options.Items.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled).Contains(y));
+                            if (maxgrp == selgrp)
                             {
                                 var aux = _selectedItems.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled).ToArray();
                                 foreach (var item in aux)
@@ -145,18 +147,26 @@ namespace PromptPlusControls.Controls
                             else
                             {
                                 var aux = _options.Items.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled);
-                                foreach (var item in aux)
+                                var qtd = aux.Sum(x => _selectedItems.FindIndex(x => x.Value.Equals(x.Value)) >= 0 ? 1 : 0);
+                                if (_selectedItems.Count + qtd > _options.Maximum)
                                 {
-                                    var index = _selectedItems.FindIndex(x => x.Value.Equals(item.Value));
-                                    if (index < 0)
-                                    {
-                                        _selectedItems.Add(item);
-                                    }
+                                    SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
                                 }
-                                var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
-                                _selectedItems.Clear();
-                                _selectedItems.AddRange(auxsel);
-                                currentItem.IsSelected = true;
+                                else
+                                {
+                                    foreach (var item in aux)
+                                    {
+                                        var index = _selectedItems.FindIndex(x => x.Value.Equals(item.Value));
+                                        if (index < 0)
+                                        {
+                                            _selectedItems.Add(item);
+                                        }
+                                    }
+                                    var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
+                                    _selectedItems.Clear();
+                                    _selectedItems.AddRange(auxsel);
+                                    currentItem.IsSelected = true;
+                                }
                             }
                         }
                         else
@@ -339,6 +349,7 @@ namespace PromptPlusControls.Controls
 
         #region IControlMultiSelect
 
+
         public IControlMultiSelect<T> Prompt(string value)
         {
             _options.Message = value;
@@ -450,7 +461,7 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IControlMultiSelect<T> Ranger(int minvalue, int maxvalue)
+        public IControlMultiSelect<T> Range(int minvalue, int maxvalue)
         {
             if (minvalue < 0)
             {

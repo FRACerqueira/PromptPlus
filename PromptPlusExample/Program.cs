@@ -65,7 +65,7 @@ namespace PromptPlusExample
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex);
+                    PromptPlus.WriteLine(ex);
                     throw;
                 }
             }, stoppingToken);
@@ -328,7 +328,6 @@ namespace PromptPlusExample
                     PromptPlus.WriteLine("LINE REF");
                     PromptPlus.WriteLine("after pressing the key, 3 new lines will be added");
                     PromptPlus.KeyPress().Run();
-                    var line = PromptPlus.CursorTop;
                     PromptPlus.WriteLines(3);
                     PromptPlus.KeyPress().Run();
                 }
@@ -483,29 +482,15 @@ namespace PromptPlusExample
         private void RunColorTextSample()
         {
             PromptPlus.WriteLine();
-            PromptPlus.WriteLine(
-                "PromptPlus".Cyan(),
-                ".",
-                "WriteLine".DarkYellow(),
-                "(",
-                "\"Now set\"".Red(),
-                ".",
-                "Yellow().OnBlue()".DarkYellow(),
-                ", ",
-                "\" the \", ",
-                "\"background\"",
-                ".",
-                "Underline()".DarkYellow(),
-                ", \" \" , ",
-                "\"color too!\"".Red(),
-                ".",
-                "Cyan().OnBlue()".DarkYellow(),
-                ");");
-
+            PromptPlus.WriteLine("PromptPlus.WriteLine(\"Output1:\",ConsoleColor.White, ConsoleColor.Blue, true)");
+            PromptPlus.WriteLineSkipColors("PromptPlus.WriteLine(\"[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].\")");
+            PromptPlus.WriteLine("PromptPlus.WriteLine(\"Output2:\".White().OnBlue().Underline())");
+            PromptPlus.WriteLineSkipColors("PromptPlus.WriteLine(\"[cyan]This[/cyan] is another [white:blue]simples[/white:blue] line using [red!u]Mask[/red!u].\".Mask(ConsoleColor.DarkRed))");
             PromptPlus.WriteLine();
-            PromptPlus.WriteLine("Output:".Yellow());
-            PromptPlus.WriteLine();
-            PromptPlus.WriteLine("Now set".Yellow().OnBlue(), " the ", "background".Underline(), " ", "color too!".Cyan().OnBlue());
+            PromptPlus.WriteLine("Output1:", ConsoleColor.White, ConsoleColor.Blue, true);
+            PromptPlus.WriteLine("[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].");
+            PromptPlus.WriteLine("Output2:".White().OnBlue().Underline());
+            PromptPlus.WriteLine("[cyan]This[/cyan] is another [white:blue]simples[/white:blue] line using [red!u]Mask[/red!u].".Mask(ConsoleColor.DarkRed));
             PromptPlus.WriteLine();
         }
 
@@ -560,7 +545,7 @@ namespace PromptPlusExample
 
             var filecfg = PromptPlus.SaveConfigToFile();
             PromptPlus.LoadConfigFromFile();
-            Console.WriteLine($"PromptPlus file saved and readed. Location: {filecfg}");
+            PromptPlus.WriteLine($"PromptPlus file [cyan]saved and readed[/cyan]. Location: {filecfg}");
         }
 
         private void RunChooseLanguageSample()
@@ -573,7 +558,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            Console.WriteLine($"You selected {envalue.Value}");
+            PromptPlus.WriteLine($"You selected [cyan]{envalue.Value}[/cyan]");
             switch (envalue.Value)
             {
                 case LanguageOptions.English:
@@ -639,11 +624,11 @@ namespace PromptPlusExample
 
             if (string.IsNullOrEmpty(mask.Value.Input))
             {
-                Console.WriteLine($"your input was empty!");
+                PromptPlus.WriteLine($"your input was empty!");
             }
             else
             {
-                Console.WriteLine($"your input was {mask.Value.ObjectValue}!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
             }
 
         }
@@ -691,13 +676,12 @@ namespace PromptPlusExample
 
             if (string.IsNullOrEmpty(mask.Value.Input))
             {
-                Console.WriteLine($"your input was empty!");
+                PromptPlus.WriteLine($"your input was empty!");
             }
             else
             {
-                Console.WriteLine($"your input was {mask.Value.ObjectValue}!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
             }
-
         }
 
         private void RunMaskEditTimeSample()
@@ -735,11 +719,11 @@ namespace PromptPlusExample
 
             if (string.IsNullOrEmpty(mask.Value.Input))
             {
-                Console.WriteLine($"your input was empty!");
+                PromptPlus.WriteLine($"your input was empty!");
             }
             else
             {
-                Console.WriteLine($"your input was {mask.Value.ObjectValue}!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
             }
         }
 
@@ -761,6 +745,17 @@ namespace PromptPlusExample
             {
                 return;
             }
+
+            var week = PromptPlus.SliderSwitche("Show day week")
+                .Default(true)
+                .Run(_stopApp);
+
+            if (week.IsAborted)
+            {
+                return;
+            }
+
+
             var opccult = PromptPlus.Select<string>("Select format language")
                 .AddItems(new List<string> { "English", "Portuguese Brazil" })
                 .Run(_stopApp);
@@ -773,15 +768,17 @@ namespace PromptPlusExample
                 .Culture(opccult.Value[0] == 'E' ? new CultureInfo("en-US") : new CultureInfo("pt-BR"))
                 .FormatYear(opcyear.Value[0] == 'F' ? FormatYear.Y4 : FormatYear.Y2)
                 .FillZeros(masfill.Value)
+                .ShowDayWeek(week.Value ? FormatWeek.Short : FormatWeek.None)
+                .ValidateOnDemand()
                 .Run(_stopApp);
 
             if (string.IsNullOrEmpty(mask.Value.Input))
             {
-                Console.WriteLine($"your input was empty!");
+                PromptPlus.WriteLine($"your input was empty!");
             }
             else
             {
-                Console.WriteLine($"your input was {mask.Value.ObjectValue}!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
             }
         }
 
@@ -797,11 +794,11 @@ namespace PromptPlusExample
             }
             if (string.IsNullOrEmpty(mask.Value.Input))
             {
-                Console.WriteLine($"your input was empty!");
+                PromptPlus.WriteLine($"your input was empty!");
             }
             else
             {
-                Console.WriteLine($"your input was {mask.Value.ObjectValue}!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
             }
         }
 
@@ -813,7 +810,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            Console.WriteLine($"Hello, key pressed");
+            PromptPlus.WriteLine($"Hello, key [cyan]pressed[/cyan]");
         }
 
         private void RunKeyPressSample()
@@ -825,15 +822,15 @@ namespace PromptPlusExample
             {
                 return;
             }
-            Console.WriteLine($"Hello,  key Ctrl-B pressed");
+            PromptPlus.WriteLine($"Hello, key [cyan]Ctrl-B pressed[/cyan]");
         }
 
         private void RunImportValidatorsSample()
         {
             var inst = new MylCass();
 
-            Console.WriteLine("Imported Validators of Myclass, property MyInput:");
-            Console.WriteLine("private class MylCass \n{\n   [Required(ErrorMessage = \"{0} is required!\")] \n   [MinLength(3, ErrorMessage = \"Min. Length = 3.\")] \n   [MaxLength(5, ErrorMessage = \"Max. Length = 5.\")] \n   [Display(Prompt = \"My Input\")]\n   public string MyInput { get; set; }\n}");
+            PromptPlus.WriteLine("Imported Validators of Myclass, property MyInput:");
+            PromptPlus.WriteLine("private class MylCass \n{\n   [Required(ErrorMessage = \"{0} is required!\")] \n   [MinLength(3, ErrorMessage = \"Min. Length = 3.\")] \n   [MaxLength(5, ErrorMessage = \"Max. Length = 5.\")] \n   [Display(Prompt = \"My Input\")]\n   public string MyInput { get; set; }\n}");
             var name = PromptPlus.Input("Input Value for MyInput")
                 .Addvalidators(inst.ImportValidators(x => x.MyInput))
                 .Run(_stopApp);
@@ -842,7 +839,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            Console.WriteLine($"Your input: {name.Value}!");
+            PromptPlus.WriteLine($"Your input: [cyan]{name.Value}[/cyan]!");
         }
 
         private class MylCass
@@ -865,7 +862,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            Console.WriteLine($"Hello, {name.Value}!");
+            PromptPlus.WriteLine($"Hello, [cyan]{name.Value}[/cyan]!");
         }
 
         private void RunConfirmSample()
@@ -890,11 +887,11 @@ namespace PromptPlusExample
                 }
                 if (answer.Value)
                 {
-                    Console.WriteLine($"Sua resposta é Yes");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]Yes[/cyan]");
                 }
                 else
                 {
-                    Console.WriteLine($"Sua resposta é No");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]No[/cyan]");
                 }
             }
             else
@@ -910,108 +907,84 @@ namespace PromptPlusExample
                 }
                 if (answer.Value)
                 {
-                    Console.WriteLine($"Sua resposta é Sim");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]Sim[/cyan]");
                 }
                 else
                 {
-                    Console.WriteLine($"Sua resposta é Não");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]Não[/cyan]");
                 }
             }
         }
 
         private void RunWaitSingleProcessSample()
         {
-            Console.WriteLine("Press any key to start...");
-            Console.ReadKey(true);
-
             var process = PromptPlus.WaitProcess("phase 1")
-                .AddProcess(new SingleProcess
-                {
-                    ProcessToRun = (_stopApp) =>
-                    {
-                        _stopApp.WaitHandle.WaitOne(4000);
-                        if (_stopApp.IsCancellationRequested)
-                        {
-                            return Task.FromResult<object>("canceled");
-                        }
-                        return Task.FromResult<object>("Done");
-                    },
-                })
-                .Run(_stopApp);
+                 .AddProcess(new SingleProcess((_stopApp) =>
+                     {
+                         _stopApp.WaitHandle.WaitOne(4000);
+                         if (_stopApp.IsCancellationRequested)
+                         {
+                             return Task.FromResult<object>("canceled");
+                         }
+                         return Task.FromResult<object>("Done");
+                     }))
+                 .Run(_stopApp);
 
             var aux = process.Value.First();
 
-            Console.WriteLine($"Result task ({aux.ProcessId}) : {aux.TextResult}. Property IsCanceled = {aux.IsCanceled}");
+            PromptPlus.WriteLine($"Result task ({aux.ProcessId}) : {aux.TextResult}. Property IsCanceled = {aux.IsCanceled}");
         }
 
         private void RunWaitManyProcessSample()
         {
-            Console.WriteLine("Press any key to start...");
-            Console.ReadKey(true);
-
             var Process = PromptPlus.WaitProcess("My Tasks(3) Async")
-                .AddProcess(new SingleProcess
-                {
-                    ProcessId = "Task1",
-                    ProcessToRun = (_stopApp) =>
-                    {
-                        _stopApp.WaitHandle.WaitOne(10000);
-                        if (_stopApp.IsCancellationRequested)
-                        {
-                            return Task.FromResult<object>("canceled");
-                        }
-                        return Task.FromResult<object>("Done");
-                    }
-                })
-                .AddProcess(new SingleProcess
-                {
-                    ProcessId = "Task2",
-                    ProcessToRun = (_stopApp) =>
-                    {
-                        _stopApp.WaitHandle.WaitOne(5000);
-                        if (_stopApp.IsCancellationRequested)
-                        {
-                            return Task.FromResult<object>(-1);
-                        }
-                        return Task.FromResult<object>(1);
-                    }
-                })
-                .AddProcess(new SingleProcess
-                {
-                    ProcessId = "Task3",
-                    ProcessToRun = (_stopApp) =>
-                    {
-                        _stopApp.WaitHandle.WaitOne(7000);
-                        if (_stopApp.IsCancellationRequested)
-                        {
-                            return Task.FromResult<object>("Canceled");
-                        }
-                        return Task.FromResult<object>("Done");
-                    }
-                })
-                .Run(_stopApp);
+                 .AddProcess(new SingleProcess((_stopApp) =>
+                     {
+                         _stopApp.WaitHandle.WaitOne(10000);
+                         if (_stopApp.IsCancellationRequested)
+                         {
+                             return Task.FromResult<object>("canceled");
+                         }
+                         return Task.FromResult<object>("Done");
+                     }, "Task1"))
+                 .AddProcess(new SingleProcess((_stopApp) =>
+                     {
+                         _stopApp.WaitHandle.WaitOne(5000);
+                         if (_stopApp.IsCancellationRequested)
+                         {
+                             return Task.FromResult<object>(-1);
+                         }
+                         return Task.FromResult<object>(1);
+                     }, "Task2"))
+                 .AddProcess(new SingleProcess((_stopApp) =>
+                     {
+                         _stopApp.WaitHandle.WaitOne(7000);
+                         if (_stopApp.IsCancellationRequested)
+                         {
+                             return Task.FromResult<object>("Canceled");
+                         }
+                         return Task.FromResult<object>("Done");
+                     }, "Task3"))
+                 .Run(_stopApp);
 
             foreach (var item in Process.Value)
             {
-                Console.WriteLine($"Result tasks ({item.ProcessId}) : {item.ValueProcess}");
+                PromptPlus.WriteLine($"Result tasks ({item.ProcessId}) : {item.ValueProcess}");
             }
         }
 
         private void RunProgressbarSample()
         {
-            Console.WriteLine("Press any key to start...");
-            Console.ReadKey(true);
-
             var progress = PromptPlus.Progressbar("Processing Tasks")
                 .UpdateHandler(UpdateSampleHandlerAsync)
                 .Run(_stopApp);
 
             if (progress.IsAborted)
             {
-                Console.WriteLine($"Your result is: {progress.Value.Message} Canceled!");
+                PromptPlus.WriteLine($"Your result is: {progress.Value.Message} Canceled!");
                 return;
             }
-            Console.WriteLine($"Your result is: {progress.Value.Message}");
+            PromptPlus.WriteLine($"Your result is: {progress.Value.Message}");
         }
 
         private async Task<ProgressBarInfo> UpdateSampleHandlerAsync(ProgressBarInfo status, CancellationToken cancellationToken)
@@ -1028,9 +1001,9 @@ namespace PromptPlusExample
 
         private void RunNumberUpDownSample()
         {
-            var number = PromptPlus.NumberUpDown("Select a number")
+            var number = PromptPlus.SliderNumber(SliderNumberType.UpDown, "Select a number")
                 .Default(5.5)
-                .Ranger(0, 10)
+                .Range(0, 10)
                 .Step(0.1)
                 .FracionalDig(1)
                 .Run(_stopApp);
@@ -1039,14 +1012,14 @@ namespace PromptPlusExample
             {
                 return;
             }
-            Console.WriteLine($"Your answer is: {number.Value}");
+            PromptPlus.WriteLine($"Your answer is: {number.Value}");
         }
 
         private void RunSliderNumberSample()
         {
-            var number = PromptPlus.SliderNumber("Select a number")
+            var number = PromptPlus.SliderNumber(SliderNumberType.LeftRight, "Select a number")
                 .Default(5.5)
-                .Ranger(0, 10)
+                .Range(0, 10)
                 .Step(0.1)
                 .FracionalDig(1)
                 .Run(_stopApp);
@@ -1055,7 +1028,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            Console.WriteLine($"Your answer is: {number.Value}");
+            PromptPlus.WriteLine($"Your answer is: {number.Value}");
         }
 
         private void RunSliderSwitcheSample()
@@ -1067,7 +1040,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            Console.WriteLine($"Your answer is: {slider.Value}");
+            PromptPlus.WriteLine($"Your answer is: {slider.Value}");
         }
 
         private void RunPasswordSample()
@@ -1076,13 +1049,14 @@ namespace PromptPlusExample
                 .IsPassword(true)
                 .Addvalidator(PromptValidators.Required())
                 .Addvalidator(PromptValidators.MinLength(8))
+                .ValidateOnDemand()
                 .Run(_stopApp);
 
             if (pwd.IsAborted)
             {
                 return;
             }
-            Console.WriteLine($"Password OK : {pwd.Value}");
+            PromptPlus.WriteLine($"Password OK : {pwd.Value}");
         }
 
         private void RunListSample()
@@ -1090,13 +1064,15 @@ namespace PromptPlusExample
             var lst = PromptPlus.List<string>("Please add item(s)")
                 .PageSize(3)
                 .UpperCase(true)
+                .Addvalidator(PromptValidators.MinLength(3))
+                .ValidateOnDemand()
                 .Run(_stopApp);
 
             if (lst.IsAborted)
             {
                 return;
             }
-            Console.WriteLine($"You picked {string.Join(", ", lst.Value)}");
+            PromptPlus.WriteLine($"You picked {string.Join(", ", lst.Value)}");
         }
 
         private void RunListMaskedSample()
@@ -1104,6 +1080,8 @@ namespace PromptPlusExample
             var lst = PromptPlus.ListMasked("Please add item(s)")
                 .MaskType(MaskedType.Generic, @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
                 .UpperCase(true)
+                .Addvalidator(PromptValidators.MinLength(6))
+                .ValidateOnDemand()
                 .Run(_stopApp);
 
             if (lst.IsAborted)
@@ -1112,7 +1090,7 @@ namespace PromptPlusExample
             }
             foreach (var item in lst.Value)
             {
-                Console.WriteLine($"You picked {item.ObjectValue}");
+                PromptPlus.WriteLine($"You picked {item.ObjectValue}");
 
             }
         }
@@ -1130,11 +1108,11 @@ namespace PromptPlusExample
             }
             if (!string.IsNullOrEmpty(city.Value))
             {
-                Console.WriteLine($"Hello, {city.Value}!");
+                PromptPlus.WriteLine($"Hello, {city.Value}!");
             }
             else
             {
-                Console.WriteLine("You chose nothing!");
+                PromptPlus.WriteLine("You chose nothing!");
             }
         }
 
@@ -1147,6 +1125,7 @@ namespace PromptPlusExample
                 .AddItem("Europe (Any)")
                 .DisableItem("Boston")
                 .AddDefault("New York")
+                .Range(1, 3)
                 .Run(_stopApp);
 
             if (options.IsAborted)
@@ -1155,11 +1134,11 @@ namespace PromptPlusExample
             }
             if (options.Value.Any())
             {
-                Console.WriteLine($"You picked {string.Join(", ", options.Value)}");
+                PromptPlus.WriteLine($"You picked {string.Join(", ", options.Value)}");
             }
             else
             {
-                Console.WriteLine("You chose nothing!");
+                PromptPlus.WriteLine("You chose nothing!");
             }
         }
 
@@ -1177,11 +1156,11 @@ namespace PromptPlusExample
             }
             if (options.Value.Any())
             {
-                Console.WriteLine($"You picked {string.Join(", ", options.Value)}");
+                PromptPlus.WriteLine($"You picked {string.Join(", ", options.Value)}");
             }
             else
             {
-                Console.WriteLine("You chose nothing!");
+                PromptPlus.WriteLine("You chose nothing!");
             }
         }
 
@@ -1196,7 +1175,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            Console.WriteLine($"You selected {envalue.Value}");
+            PromptPlus.WriteLine($"You selected {envalue.Value}");
         }
 
         private void RunMultiSelectEnumSample()
@@ -1210,7 +1189,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            Console.WriteLine($"You picked {string.Join(", ", multvalue.Value)}");
+            PromptPlus.WriteLine($"You picked {string.Join(", ", multvalue.Value)}");
         }
 
         private void RunPipeLineSample()
@@ -1228,9 +1207,7 @@ namespace PromptPlusExample
                         .ToPipe(null, "birth date"))
                     .AddPipe(
                         PromptPlus.WaitProcess("phase 1")
-                        .AddProcess(new SingleProcess
-                        {
-                            ProcessToRun = (_stopApp) =>
+                        .AddProcess(new SingleProcess((_stopApp) =>
                             {
                                 _stopApp.WaitHandle.WaitOne(4000);
                                 if (_stopApp.IsCancellationRequested)
@@ -1238,8 +1215,7 @@ namespace PromptPlusExample
                                     return Task.FromResult<object>("canceled");
                                 }
                                 return Task.FromResult<object>("Done");
-                            }
-                        })
+                            }))
                         .ToPipe(null, "Update phase 1"))
                     .AddPipe(PromptPlus.Progressbar("Processing Tasks ")
                         .UpdateHandler(UpdateSampleHandlerAsync)
@@ -1261,12 +1237,12 @@ namespace PromptPlusExample
             }
             if (string.IsNullOrEmpty(folder.Value.SelectedValue))
             {
-                Console.WriteLine("You chose nothing!");
+                PromptPlus.WriteLine("You chose nothing!");
             }
             else
             {
                 var dirfound = folder.Value.NotFound ? "not found" : "found";
-                Console.WriteLine($"You picked, {Path.Combine(folder.Value.PathValue, folder.Value.SelectedValue)} and {dirfound}");
+                PromptPlus.WriteLine($"You picked, {Path.Combine(folder.Value.PathValue, folder.Value.SelectedValue)} and {dirfound}");
             }
         }
 
@@ -1284,12 +1260,12 @@ namespace PromptPlusExample
             }
             if (string.IsNullOrEmpty(file.Value.SelectedValue))
             {
-                Console.WriteLine("You chose nothing!");
+                PromptPlus.WriteLine("You chose nothing!");
             }
             else
             {
                 var filefound = file.Value.NotFound ? "not found" : "found";
-                Console.WriteLine($"You picked, {Path.Combine(file.Value.PathValue, file.Value.SelectedValue)} and {filefound}");
+                PromptPlus.WriteLine($"You picked, {Path.Combine(file.Value.PathValue, file.Value.SelectedValue)} and {filefound}");
             }
         }
     }

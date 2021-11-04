@@ -12,13 +12,13 @@ namespace PromptPlusControls.ValueObjects
 {
     public struct ColorToken : IEquatable<ColorToken>
     {
-        public ColorToken(string text, ConsoleColor? color = null, ConsoleColor? backgroundColor = null)
+        internal ColorToken(string text, ConsoleColor? color = null, ConsoleColor? backgroundColor = null, bool underline = false)
         {
             Text = text;
             Color = color ?? PromptPlus._consoleDriver.ForegroundColor;
             BackgroundColor = backgroundColor ?? PromptPlus._consoleDriver.BackgroundColor;
             AnsiColor = string.Format("\x1b[{0};{1}m", ToAnsiColor(Color), ToAnsiBgColor(BackgroundColor));
-            Underline = false;
+            Underline = underline;
         }
 
         public bool Underline { get; set; }
@@ -37,7 +37,11 @@ namespace PromptPlusControls.ValueObjects
 
         public ColorToken Mask(ConsoleColor? defaultColor, ConsoleColor? defaultBackgroundColor)
         {
-            return new(Text, Color == PromptPlus._consoleDriver.ForegroundColor ? defaultColor : Color, BackgroundColor == PromptPlus._consoleDriver.BackgroundColor ? defaultBackgroundColor : BackgroundColor);
+            if (Color != PromptPlus._consoleDriver.ForegroundColor || BackgroundColor != PromptPlus._consoleDriver.BackgroundColor)
+            {
+                return this;
+            }
+            return new(Text, Color == PromptPlus._consoleDriver.ForegroundColor ? defaultColor : Color, BackgroundColor == PromptPlus._consoleDriver.BackgroundColor ? defaultBackgroundColor : BackgroundColor, Underline = Underline);
         }
 
         public static implicit operator ColorToken(string text)
@@ -51,7 +55,7 @@ namespace PromptPlusControls.ValueObjects
 
         public override bool Equals(object obj) => obj is ColorToken token && Equals(token);
 
-        public bool Equals(ColorToken other) => Text == other.Text && Color == other.Color && BackgroundColor == other.BackgroundColor;
+        public bool Equals(ColorToken other) => Text == other.Text && Color == other.Color && BackgroundColor == other.BackgroundColor && Underline == other.Underline;
 
         private static string ToAnsiColor(ConsoleColor color)
         {

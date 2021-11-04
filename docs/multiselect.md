@@ -2,89 +2,122 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**MultiSelect Options**](multiselectoptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
+
 
 ## Documentation
 Control MultSelect. Generic multi select input IEnumerable/Enum with auto-paginator , tooltips and more.
 
 ![](./images/MultSelect.gif)
 
-### Options
-
-[**MultiSelect Options**](multiselectoptions)
-
 ### Syntax
 [**Top**](#promptplus--multiselect)
 
 ```csharp
-MultiSelect<T>(MultiSelectOptions<T> options, CancellationToken? cancellationToken = null)
-MultiSelect<T>(Action<MultiSelectOptions<T>> configure, CancellationToken? cancellationToken = null)
+MultiSelect<T>(string prompt = null)
 ```
 
-```csharp
-//Note : for enum values , Where T is type from enum
-MultiSelect<T>(string message, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, CancellationToken? cancellationToken = null)
-//Note : for  IEnumerable type
-MultiSelect<T>(string message, IEnumerable<T> items, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, Func<T, string> textSelector = null, CancellationToken? cancellationToken = null)
-```
+ ### Methods
+ [**Top**](#promptplus--multiselect)
 
-**Highlighted parameters**
-- pageSize = maximum item per page. Tf the value is null, the value will be calculated according to the screen size 
-- minimum = minimum items selected
-- maximum = maximum items selected
-- defaultValues = initial IEnumerable items seleted
-- textSelector (for  IEnumerable type)= Function that returns the string that will be displayed. Tf the value is null,the value will be item => item.ToString()
-- textSelector (for  enum values)= Function that returns the string that will be displayed. Tf the value is null,the value will be the \[Display\] attribute if it exists or an enum string.
+
+- ```csharp
+ Prompt(string value)
+  ``` 
+  - set prompt message
+- ```csharp
+  PageSize(int value)
+    ```
+    - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size
+- ```csharp
+  TextSelector(Func<T, string> value)
+    ```
+    - Function to extract value with type T from string and displayed.
+    - For IEnumerable type, if ommited,the value will be item => item.ToString()
+    - For enum value, if ommited,the value will be the \[Display\] attribute if it exists or an enum string.
+- ```csharp
+  Range(int minvalue, int maxvalue)
+    ```
+    - Minimum and maximum items seleted
+- ```csharp
+  AddItem(T value)
+    ```
+    - Add item to list.
+- ```csharp
+  AddItems(IEnumerable<T> value)
+    ```
+    - Add IEnumerable item to list.
+- ```csharp
+  AddGroup(IEnumerable<T> value, string group)
+    ```
+    - Add IEnumerable item to list over a group.
+- ```csharp
+  AddDefault(T value)
+    ```
+    - Add initial item seleted.
+- ```csharp
+  AddDefaults(IEnumerable<T> value)
+    ```
+    - Addd initial IEnumerable items seleted.
+- ```csharp
+  HideItem(T value)
+    ```
+    - Hide item in list.
+- ```csharp
+  HideItems(IEnumerable<T> value)
+    ```
+    - Hide IEnumerable items in list.
+- ```csharp
+  DisableItem(T value)
+    ```
+    - Tick disabled item in list .
+- ```csharp
+  DisableItems(IEnumerable<T> value)
+    ```
+    - Tick disabled IEnumerable items in list.
 
 ### Return
 [**Top**](#promptplus--multiselect)
 
 ```csharp
-//for  IEnumerable type
-ResultPromptPlus<IEnumerable<T>> 
-//for  enum values
-ResultPromptPlus<IEnumerable<EnumValue<T>>>
+IControlMultiSelect<T>              //for Control Methods
+IPromptControls<IEnumerable<T>>     //for others Base Methods
+ResultPromptPlus<IEnumerable<T>>    //for Base Method Run, when execution is direct 
+IPromptPipe                         //for Pipe condition 
+IFormPlusBase                       //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
 [**Top**](#promptplus--multiselect)
 
 ```csharp
-var options = PromptPlus.MultiSelect("Which cities would you like to visit?", 
-                new[] { "Seattle", "London", "Tokyo", "New York", "Singapore", "Shanghai" }, 
-                pageSize: 3, 
-                defaultValues: new[] { "Tokyo" }, 
-                minimum: 0, 
-                cancellationToken: _stopApp);
+var options = PromptPlus.MultiSelect<string>("Which cities would you like to visit?")
+    .AddGroup(new[] { "Seattle", "Boston", "New York" }, "North America")
+    .AddGroup(new[] { "Tokyo", "Singapore", "Shanghai" }, "Asia")
+    .AddItem("South America (Any)")
+    .AddItem("Europe (Any)")
+    .DisableItem("Boston")
+    .AddDefault("New York")
+    .Run(_stopApp);
+
 if (options.IsAborted)
 {
-   return;
+    return;
 }
 if (options.Value.Any())
 {
-   Console.WriteLine($"You picked {string.Join(", ", options.Value)}");
+    Console.WriteLine($"You picked {string.Join(", ", options.Value)}");
 }
 else
 {
-   Console.WriteLine("You chose nothing!");
+    Console.WriteLine("You chose nothing!");
 }
-```
-
-```csharp
-var multvalue = PromptPlus.MultiSelect("Select enum value", 
-                   defaultValues: new[] { MyEnum.Foo,MyEnum.Bar }, 
-                   cancellationToken: _stopApp);
-if (multvalue.IsAborted)
-{
-   return;
-}
-Console.WriteLine($"You picked {string.Join(", ", multvalue.Value.Select(x => x.DisplayName))}");
 ```
 
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**MultiSelect Options**](multiselectoptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)

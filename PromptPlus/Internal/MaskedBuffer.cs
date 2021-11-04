@@ -232,9 +232,21 @@ namespace PromptPlusControls.Internal
         {
             if (_isTypeNumber)
             {
-                return this;
+                if (Position > _decimalPosition)
+                {
+                    _inputBuffer.Remove(Position, 1);
+                    _inputBuffer.Append(_maskInputOptions.FillNumber.Value);
+                    return this;
+                }
+                else
+                {
+                    return Backspace();
+                }
             }
-            _inputBuffer.Remove(Position, 1);
+            if (_inputBuffer.Length > 0 && Position < _inputBuffer.Length)
+            {
+                _inputBuffer.Remove(Position, 1);
+            }
             return this;
         }
 
@@ -261,7 +273,35 @@ namespace PromptPlusControls.Internal
         {
             if (Position > 0)
             {
+                if (_isTypeNumber)
+                {
+                    if (Position > _decimalPosition)
+                    {
+                        _inputBuffer[Position--] = _maskInputOptions.FillNumber.Value;
+                    }
+                    else
+                    {
+                        _inputBuffer.Remove(Position, 1);
+                        _inputBuffer.Insert(0, _maskInputOptions.FillNumber.Value);
+                    }
+                    return this;
+                }
                 _inputBuffer.Remove(--Position, 1);
+            }
+            else
+            {
+                if (_inputBuffer.Length > 0 && Position < _inputBuffer.Length)
+                {
+                    if (_isTypeNumber)
+                    {
+                        _inputBuffer.Remove(Position, 1);
+                        _inputBuffer.Insert(0, _maskInputOptions.FillNumber.Value);
+                    }
+                    else
+                    {
+                        _inputBuffer.Remove(Position, 1);
+                    }
+                }
             }
             return this;
         }

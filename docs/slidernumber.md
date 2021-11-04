@@ -2,60 +2,83 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**SliderNumber Options**](slidernumberoptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
 
 ## Documentation
 Control SliderNumber. Numeric ranger with short/large step and tooltips.
 
 ![](./images/SliderNumber.gif)
 
-### Options
-
-[**SliderNumber Options**](slidernumberoptions)
 
 ### Syntax
 [**Top**](#promptplus--slidernumber)
 
 ```csharp
-SliderNumberForm<T>(SliderNumberOptions<T> options)
-SliderNumber<T>(Action<SliderNumberOptions<T>> configure, CancellationToken? cancellationToken = null)
+SliderNumber( SliderNumberType.UpDown,string prompt = null)
+SliderNumber( SliderNumberType.LeftRightstring prompt = null)
 ```
 
-```csharp
-SliderNumber<T>(string message, T value, T min, T max, T shortstep, T? largestep = null, int fracionalDig = 0, CancellationToken? cancellationToken = null)
-```
+### Methods
+[**Top**](#promptplus--slidernumber)
 
-**Highlighted parameters**
-- value = initial value 
-- min = minimum value
-- max = maximum value
-- shortstep = shortstep increment/decrement of value
-- largestep = largestep increment/decrement of value. If null value, largestep equal maximum value divide by 10
-- fracionalDig = Amount decimals of value
+- ```csharp
+  Prompt(string value)
+  ``` 
+  - set prompt message 
+- ```csharp
+  Default(double value)
+  ``` 
+  - initial value
+- ```csharp
+  Range(double minvalue, double maxvalue)
+  ``` 
+  - Range values
+- ```csharp
+  Step(double value)
+  ``` 
+  - shortstep increment/decrement of value
+- ```csharp
+  LargeStep(double value)
+  ``` 
+  - largestep increment/decrement of value. If ommited, largestep equal maximum value divide by 10.For type = UpDown will be ignored.
+- ```csharp
+  FracionalDig(int value)
+  ``` 
+  - precision increment/decrement . If ommited, precison = 0.
 
 ### Return
 [**Top**](#promptplus--slidernumber)
 
 ```csharp
-ResultPromptPlus<T>
+IControlSliderNumber         //for Control Methods
+IPromptControls<double>      //for others Base Methods
+ResultPromptPlus<double>     //for Base Method Run, when execution is direct 
+IPromptPipe                  //for Pipe condition 
+IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
 [**Top**](#promptplus--slidernumber)
 
 ```csharp
-var number = PromptPlus.SliderNumber("Select a number", 5.5, 0, 10, 0.1, fracionalDig: 1, cancellationToken: _stopApp);
+var number = PromptPlus.SliderNumber(SliderNumberType.LeftRight,"Select a number")
+    .Default(5.5)
+    .Range(0, 10)
+    .Step(0.1)
+    .FracionalDig(1)
+    .Run(_stopApp);
+
 if (number.IsAborted)
 {
-   Return;
+    return;
 }
-Console.WriteLine($"Your answer is: {number.Value}");
+PromptPlus.WriteLine($"Your answer is: {number.Value}");
 ```
 
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**SliderNumber Options**](slidernumberoptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)

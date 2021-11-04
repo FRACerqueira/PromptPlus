@@ -5,7 +5,6 @@
 [**Base Methods**](basemethods) |
 [**Pipe Methods**](pipemethods)
 
-
 ## Documentation
 Control List. Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more.
 
@@ -42,7 +41,7 @@ List<T>(string prompt = null)
     ```
     - UpperCase input
 - ```csharp
-  UpperCase(bool value)
+  AllowDuplicate(bool value)
     ```
     - Allow duplicate input
 - ```csharp
@@ -53,6 +52,10 @@ List<T>(string prompt = null)
   Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
   ``` 
     - List of input validator
+- ```csharp
+  ValidateOnDemand()
+  ``` 
+    - Run the validators on each interaction
 
 ### Return
 [**Top**](#promptplus--list)

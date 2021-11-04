@@ -36,6 +36,22 @@ namespace PromptPlusControls
 
         static PromptPlus()
         {
+            Symbols.MaskEmpty = new("■", "  ");
+            Symbols.File = new("■", "- ");
+            Symbols.Folder = new("►", "> ");
+            Symbols.Prompt = new("→", "->");
+            Symbols.Done = new("√", "V ");
+            Symbols.Error = new("»", ">>");
+            Symbols.Selector = new("›", "> ");
+            Symbols.Selected = new("♦", "* ");
+            Symbols.NotSelect = new("○", "  ");
+            Symbols.TaskRun = new("♦", "* ");
+            Symbols.Skiped = new("×", "x ");
+
+            Symbols.IndentGroup = new("├─", "  |-");
+            Symbols.IndentEndGroup = new("└─", "  |_");
+            Symbols.SymbGroup = new("»", ">>");
+
             _consoleDriver = new ConsoleDriver();
             _statusBar = new(_consoleDriver.BufferHeight, _consoleDriver.BufferWidth);
             AppCulture = Thread.CurrentThread.CurrentCulture;

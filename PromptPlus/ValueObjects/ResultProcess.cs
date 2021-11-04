@@ -5,7 +5,7 @@
 
 namespace PromptPlusControls.ValueObjects
 {
-    public class ResultProcess
+    public struct ResultProcess
     {
         internal ResultProcess(string id, object value, bool iscanceled, string textresult)
         {
@@ -14,10 +14,10 @@ namespace PromptPlusControls.ValueObjects
             IsCanceled = iscanceled;
             TextResult = textresult;
         }
-        public string ProcessId { get; private set; }
-        public object ValueProcess { get; private set; }
-        public bool IsCanceled { get; private set; }
-        public string TextResult { get; private set; }
+        public string ProcessId { get; }
+        public object ValueProcess { get; }
+        public bool IsCanceled { get; }
+        public string TextResult { get; }
 
     }
 }

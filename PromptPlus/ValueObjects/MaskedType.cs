@@ -21,6 +21,13 @@ namespace PromptPlusControls.ValueObjects
         Y2,
     }
 
+    public enum FormatWeek
+    {
+        None,
+        Short,
+        Long
+    }
+
     public enum FormatTime
     {
         HMS,

@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 //  Extension color Inspired by the work https://github.com/colored-console/colored-console
+//  and https://gist.github.com/RickStrahl/52c9ee43bd2723bcdf7bf4d24b029768
 // ***************************************************************************************
 
 using System;
@@ -111,6 +112,11 @@ namespace PromptPlusControls
         #endregion
 
         #region colors
+
+        public static ColorToken[] Mask(this string text, ConsoleColor? color = null, ConsoleColor? backgroundColor = null)
+        {
+            return ConvertEmbeddedColorLine(text)?.Select(token => token.Mask(color, backgroundColor)).ToArray();
+        }
 
         public static ColorToken[] Mask(this IEnumerable<ColorToken> tokens, ConsoleColor? color = null, ConsoleColor? backgroundColor = null)
         {

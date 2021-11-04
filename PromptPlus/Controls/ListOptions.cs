@@ -19,5 +19,7 @@ namespace PromptPlusControls.Controls
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
         public Func<T, string> TextSelector { get; set; } = x => x.ToString();
         public MaskedOptions MaskedOption { get; set; } = new MaskedOptions();
+        public bool ValidateOnDemand { get; set; }
+
     }
 }

@@ -9,11 +9,17 @@ using System.Threading.Tasks;
 
 namespace PromptPlusControls.ValueObjects
 {
-    public class SingleProcess
+    public struct SingleProcess
     {
-        public string ProcessId { get; set; } = Guid.NewGuid().ToString();
-        public Func<CancellationToken, Task<object>> ProcessToRun { get; set; }
-        public Func<object, string> ProcessTextResult { get; set; } = x => x == null ? "" : x.ToString();
+        public SingleProcess(Func<CancellationToken, Task<object>> processToRun, string idProcess = null, Func<object, string> processTextResult = null)
+        {
+            ProcessToRun = processToRun;
+            ProcessId = idProcess ?? Guid.NewGuid().ToString();
+            ProcessTextResult = processTextResult ?? (x => x == null ? "" : x.ToString());
+        }
+        public string ProcessId { get; }
+        public Func<CancellationToken, Task<object>> ProcessToRun { get; }
+        public Func<object, string> ProcessTextResult { get; }
 
     }
 }

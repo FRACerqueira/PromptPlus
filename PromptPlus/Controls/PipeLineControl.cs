@@ -49,19 +49,21 @@ namespace PromptPlusControls.Controls
                 _currentPipe = item.Key;
                 if ((stoptoken ?? CancellationToken.None).IsCancellationRequested || abortedall)
                 {
-                    _resultpipeline[item.Key].Value.Status = StatusPipe.Aborted;
-                    _resultpipeline[item.Key].IsAborted = true;
+                    _resultpipeline[item.Key] = new ResultPromptPlus<ResultPipe>(_resultpipeline[item.Key].Value.UpdateStatus(StatusPipe.Aborted), true);
+                    _summaryPipePaginator = new Paginator<ResultPromptPlus<ResultPipe>>(_resultpipeline.Values, null, Optional<ResultPromptPlus<ResultPipe>>.Create(null), (_) => string.Empty);
                 }
                 else
                 {
                     if (!_resultpipeline[_currentPipe].Value.Condition?.Invoke(_resultpipeline.Values.Select(x => x.Value).ToArray(), item.Value.ContextState) ?? false)
                     {
-                        _resultpipeline[item.Key].Value.Status = StatusPipe.Skiped;
+                        _resultpipeline[item.Key] = new ResultPromptPlus<ResultPipe>(_resultpipeline[item.Key].Value.UpdateStatus(StatusPipe.Skiped), false);
+                        _summaryPipePaginator = new Paginator<ResultPromptPlus<ResultPipe>>(_resultpipeline.Values, null, Optional<ResultPromptPlus<ResultPipe>>.Create(null), (_) => string.Empty);
                     }
                 }
                 if (_resultpipeline[item.Key].Value.Status == StatusPipe.Waitting)
                 {
-                    _resultpipeline[item.Key].Value.Status = StatusPipe.Running;
+                    _resultpipeline[item.Key] = new ResultPromptPlus<ResultPipe>(_resultpipeline[item.Key].Value.UpdateStatus(StatusPipe.Running), false);
+                    _summaryPipePaginator = new Paginator<ResultPromptPlus<ResultPipe>>(_resultpipeline.Values, null, Optional<ResultPromptPlus<ResultPipe>>.Create(null), (_) => string.Empty);
                     using (item.Value)
                     {
                         item.Value.GetType().UnderlyingSystemType.GetMethod("InitControl").Invoke(item.Value, null);
@@ -74,23 +76,23 @@ namespace PromptPlusControls.Controls
                                 _currentIndex,
                                 stoptoken
                         });
-                        _resultpipeline[_currentPipe].Value.ValuePipe = result;
                         abortedall = (bool)item.Value.GetType().UnderlyingSystemType.GetProperty("AbortedAll").GetValue(item.Value);
                         if (abortedall)
                         {
-                            _resultpipeline[item.Key].IsAborted = true;
-                            _resultpipeline[item.Key].Value.Status = StatusPipe.Aborted;
+                            _resultpipeline[item.Key] = new ResultPromptPlus<ResultPipe>(_resultpipeline[item.Key].Value.UpdateValue(result, StatusPipe.Aborted), true);
                         }
                         else
                         {
-                            _resultpipeline[item.Key].Value.Status = StatusPipe.Done;
+                            _resultpipeline[item.Key] = new ResultPromptPlus<ResultPipe>(_resultpipeline[item.Key].Value.UpdateValue(result, StatusPipe.Done), false);
                         }
+                        _summaryPipePaginator = new Paginator<ResultPromptPlus<ResultPipe>>(_resultpipeline.Values, null, Optional<ResultPromptPlus<ResultPipe>>.Create(null), (_) => string.Empty);
                     }
                 }
                 else
                 {
                     item.Value.Dispose();
                 }
+                _summaryPipePaginator = new Paginator<ResultPromptPlus<ResultPipe>>(_resultpipeline.Values, null, Optional<ResultPromptPlus<ResultPipe>>.Create(null), (_) => string.Empty);
                 _currentIndex++;
             }
             return new ResultPromptPlus<IEnumerable<ResultPipe>>(_resultpipeline.Values.Select(x => x.Value).ToArray(), abortedall);

@@ -278,7 +278,7 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IControlSliderNumber Ranger(double minvalue, double maxvalue)
+        public IControlSliderNumber Range(double minvalue, double maxvalue)
         {
             if (minvalue >= maxvalue)
             {

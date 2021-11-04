@@ -117,6 +117,8 @@ namespace PromptPlusControls
         IControlMaskEdit FormatTime(FormatTime value);
         IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue);
         IControlMaskEdit AcceptSignal(bool value);
+        IControlMaskEdit ShowDayWeek(FormatWeek value);
+        IControlMaskEdit ValidateOnDemand();
     }
 
     public interface IControlInput : IPromptControls<string>, IPromptPipe
@@ -126,13 +128,14 @@ namespace PromptPlusControls
         IControlInput IsPassword(bool swithVisible);
         IControlInput Addvalidator(Func<object, ValidationResult> validator);
         IControlInput Addvalidators(IEnumerable<Func<object, ValidationResult>> validators);
+        IControlInput ValidateOnDemand();
     }
 
     public interface IControlSliderNumber : IPromptControls<double>, IPromptPipe
     {
         IControlSliderNumber Prompt(string value);
         IControlSliderNumber Default(double value);
-        IControlSliderNumber Ranger(double minvalue, double maxvalue);
+        IControlSliderNumber Range(double minvalue, double maxvalue);
         IControlSliderNumber Step(double value);
         IControlSliderNumber LargeStep(double value);
         IControlSliderNumber FracionalDig(int value);
@@ -195,7 +198,7 @@ namespace PromptPlusControls
         IControlMultiSelect<T> HideItems(IEnumerable<T> value);
         IControlMultiSelect<T> DisableItem(T value);
         IControlMultiSelect<T> DisableItems(IEnumerable<T> value);
-        IControlMultiSelect<T> Ranger(int minvalue, int maxvalue);
+        IControlMultiSelect<T> Range(int minvalue, int maxvalue);
     }
 
     public interface IControlList<T> : IPromptControls<IEnumerable<T>>, IPromptPipe
@@ -208,6 +211,8 @@ namespace PromptPlusControls
         IControlList<T> AllowDuplicate(bool value);
         IControlList<T> Addvalidator(Func<object, ValidationResult> validator);
         IControlList<T> Addvalidators(IEnumerable<Func<object, ValidationResult>> validators);
+        IControlList<T> ValidateOnDemand();
+
     }
 
     public interface IControlListMasked : IPromptControls<IEnumerable<ResultMasked>>, IPromptPipe
@@ -226,6 +231,8 @@ namespace PromptPlusControls
         IControlListMasked FormatTime(FormatTime value);
         IControlListMasked AmmoutPositions(int intvalue, int decimalvalue);
         IControlListMasked AcceptSignal(bool signal);
+        IControlListMasked ValidateOnDemand();
+
     }
 
     public interface IControlBrowser : IPromptControls<ResultBrowser>, IPromptPipe

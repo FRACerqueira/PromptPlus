@@ -82,7 +82,7 @@ namespace PromptPlusControls
                 Converters = { new JsonStringEnumConverter() },
                 IgnoreReadOnlyProperties = false,
                 PropertyNameCaseInsensitive = true,
-                IgnoreNullValues = true
+                IgnoreNullValues = true,
             };
             var pathfile = Path.Combine(folderfile, "PromptPlus.config.json");
             if (File.Exists(pathfile))

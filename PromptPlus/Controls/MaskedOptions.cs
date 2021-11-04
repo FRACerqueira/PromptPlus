@@ -30,13 +30,16 @@ namespace PromptPlusControls.Controls
         private string _maskValue;
         public string MaskValue
         {
-            get { return (_maskValue ?? string.Empty).Trim(); }
+            get { return _maskValue ?? string.Empty; }
             set
             {
                 _maskValue = value;
             }
         }
+
+        public bool ValidateOnDemand { get; set; }
         public bool ShowInputType { get; set; } = true;
+        public FormatWeek ShowDayWeek { get; set; } = FormatWeek.None;
         public string DefaultValueWitdhoutMask { get; set; }
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
     }

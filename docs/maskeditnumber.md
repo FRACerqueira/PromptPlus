@@ -2,16 +2,15 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**ResultMasked**](resultmasked)
+[**ResultMasked**](resultmasked) |
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
 
 ## Documentation
-Control MaskEdit. Numeric/Currency input with language parameter, tooltips and input validator.
+Control MaskEdit. Numeric/Currency input with language/culture, tooltips and input validator.
 
 ![](./images/MaskEditNumber.gif)
 ![](./images/MaskEditCurrency.gif)
-
-### Options
-Not have options
 
 ### Shortcuts
 
@@ -21,35 +20,91 @@ Not have options
 [**Top**](#promptplus--maskeditnumber)
 
 ```csharp
-MaskEdit(MaskedNumberType masktype, string message, int ammoutInteger, int ammoutDecimal, double? defaultValue = null, CultureInfo cultureinfo = null, MaskedSignal signal = MaskedSignal.None, bool showtypeinput = true, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
-```
+ MaskEdit([MaskedType.Number, string prompt = null)
+ MaskEdit([MaskedType.Currency, string prompt = null)
+ ````
 
-**Highlighted parameters**
-- masktype = Must be MaskTypeNumber or MaskTypeCurrency
-- defaultValue = Initial value
-- cultureinfo = Language/Culture of date. If null value, culture is DefaultCulture of PromptPlus
-- ammoutInteger = Amount of integers
-- ammoutDecimal = Amount of decimals
-- signal = Accept signal. MaskedSignal.None = only positive number
-- showtypeinput = Show tooptip of type input 
-- enabledAbortKey = Enabled/Disabled Hotkey AbortKeyPress
-- enabledAbortAllPipes = Enabled/Disabled Hotkey AbortAllPipesKeyPress
-- enabledPromptTooltip = Enabled/disabled control´s tootip
-- hideAfterFinish = Hide result after finish
+### Methods
+[**Top**](#promptplus--maskeditnumber)
+
+ ```csharp
+  Prompt(string value)
+  ``` 
+  - set prompt message 
+- ```csharp
+  MaskType(MaskedType value, string mask = null)
+  ``` 
+  - set masked type and valid mask input for  MaskedType = Generic.For other type mask will be ignored.
+- ```csharp
+  PageSize(int value)
+    ```
+    - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size 
+- ```csharp
+  Addvalidator(Func<object, ValidationResult> validator);
+  ``` 
+    - item of input validator
+- ```csharp
+  Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+  ``` 
+    - List of input validator
+- ```csharp
+  ValidateOnDemand()
+  ``` 
+    - Run the validators on each interaction
+- ```csharp
+  Culture(CultureInfo cultureinfo)
+  ``` 
+    - Language/Culture of date/time/number/currency. If null value, culture is DefaultCulture of PromptPlus.
+- ```csharp
+   FillZeros(bool value)
+  ``` 
+    - Fill input type with zeros for number types.
+- ```csharp
+   ShowInputType(bool value)
+  ``` 
+    - Show tooptip of type input.
+ - ```csharp
+   ShowDayWeek(FormatWeek value)
+  ``` 
+    - Show day week of type input date-type.For other type format will be ignored
+- ```csharp
+   FormatYear(FormatYear value)
+  ``` 
+    - Formart year(Y4,Y2) to input date-type.Default vaue is Y4 (4 positions).For other type format will be ignored
+- ```csharp
+   FormatTime(FormatTime value)
+  ``` 
+    - Formart time(HMS,OnlyHM,OnlyH) to input time-type.Default value is HMS (Hours, minutes, seconds).For other type format will be ignored
+- ```csharp
+    AmmoutPositions(int intvalue, int decimalvalue)
+  ``` 
+    - Ammout max. positions of integers and decimals to input number-type/currency-type.For other type ammount will be ignored
+- ```csharp
+    AcceptSignal(bool signal)
+  ``` 
+    -  Accept signal to input number-type/currency-type. If not defined, only positive number.For other type signal will be ignored
 
 ### Return
 [**Top**](#promptplus--maskeditnumber)
 
 ```csharp
-ResultPromptPlus<ResultMasked>
-```
+IControlMaskEdit                //for Control Methods
+IPromptControls<ResultMasked>   //for others Base Methods
+ResultPromptPlus<ResultMasked>  //for Base Method Run, when execution is direct 
+IPromptPipe                     //for Pipe condition 
+IFormPlusBase                   //for only definition of pipe to Pipeline Control
+
 
 ### Sample
 [**Top**](#promptplus--maskeditnumber)
 
 ```csharp
- var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeNumber,"Number", 5, 2, null
-                    new CultureInfo("fr-FR"),MaskedSignal.Enabled, cancellationToken: _stopApp);
+var mask = PromptPlus.MaskEdit(MaskedType.Currency)
+        .AmmoutPositions(5, 2)
+        .Culture(new CultureInfo("en-US"))
+        .AcceptSignal(true)
+        .Run(_stopApp);
+
 if (string.IsNullOrEmpty(mask.Value.Input))
 {
     Console.WriteLine($"your input was empty!");
@@ -64,4 +119,7 @@ else
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**ResultMasked**](resultmasked)
+[**ResultMasked**](resultmasked) |
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
+

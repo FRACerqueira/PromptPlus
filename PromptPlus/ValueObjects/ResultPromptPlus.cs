@@ -5,23 +5,24 @@
 
 namespace PromptPlusControls.ValueObjects
 {
-    public class ResultPromptPlus<T>
+    public struct ResultPromptPlus<T>
     {
 
-        public ResultPromptPlus(T value, bool aborted)
+        internal ResultPromptPlus(T value, bool aborted, bool? abortall = null)
         {
             Value = value;
             IsAborted = aborted;
+            IsAllAborted = abortall ?? false;
         }
 
-        internal bool IsAllAborted { get; private set; }
+        internal bool IsAllAborted { get; }
 
         internal static ResultPromptPlus<T> AbortAll()
         {
-            return new ResultPromptPlus<T>(default, true) { IsAllAborted = true };
+            return new ResultPromptPlus<T>(default, true, true);
         }
 
         public T Value { get; }
-        public bool IsAborted { get; internal set; }
+        public bool IsAborted { get; }
     }
 }

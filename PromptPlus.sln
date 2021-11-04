@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\anykey.md = docs\anykey.md
 		docs\basemethods.md = docs\basemethods.md
 		docs\browser.md = docs\browser.md
+		docs\colorcmd.md = docs\colorcmd.md
+		docs\commands.md = docs\commands.md
 		docs\confirm.md = docs\confirm.md
 		docs\index.md = docs\index.md
 		docs\input.md = docs\input.md
@@ -27,35 +29,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\maskeditgeneric.md = docs\maskeditgeneric.md
 		docs\maskeditnumber.md = docs\maskeditnumber.md
 		docs\multiselect.md = docs\multiselect.md
-		docs\multiselectoptions.md = docs\multiselectoptions.md
-		docs\numberupdown.md = docs\numberupdown.md
-		docs\password.md = docs\password.md
 		docs\pipeline.md = docs\pipeline.md
 		docs\pipelinestep.md = docs\pipelinestep.md
-		pipemethods.md = pipemethods.md
 		docs\progressbar.md = docs\progressbar.md
 		docs\progressbarinfo.md = docs\progressbarinfo.md
-		docs\progressbaroptions.md = docs\progressbaroptions.md
 		docs\resultbrowser.md = docs\resultbrowser.md
 		docs\resultmasked.md = docs\resultmasked.md
 		docs\resultpipe.md = docs\resultpipe.md
 		docs\resultprocess.md = docs\resultprocess.md
 		docs\resultpromptplus.md = docs\resultpromptplus.md
+		docs\screen.md = docs\screen.md
 		docs\select.md = docs\select.md
-		docs\selectoptions.md = docs\selectoptions.md
 		docs\singleprocess.md = docs\singleprocess.md
 		docs\slidernumber.md = docs\slidernumber.md
-		docs\slidernumberoptions.md = docs\slidernumberoptions.md
 		docs\sliderswitche.md = docs\sliderswitche.md
-		docs\sliderswitcheoptions.md = docs\sliderswitcheoptions.md
+		docs\validators.md = docs\validators.md
 		docs\waitprocess.md = docs\waitprocess.md
-		docs\waitprocessoptions.md = docs\waitprocessoptions.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{0EBFCDFA-D7BC-448D-B396-7179B9B32577}"
 	ProjectSection(SolutionItems) = preProject
 		docs\images\Anykey.gif = docs\images\Anykey.gif
 		docs\images\Browser.gif = docs\images\Browser.gif
+		docs\images\Colors.gif = docs\images\Colors.gif
+		docs\images\Commands.gif = docs\images\Commands.gif
 		docs\images\Confirm.gif = docs\images\Confirm.gif
 		docs\images\HowtoAutoConfig.PNG = docs\images\HowtoAutoConfig.PNG
 		docs\images\Input.gif = docs\images\Input.gif
@@ -73,6 +70,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{0EBFCD
 		docs\images\Password.gif = docs\images\Password.gif
 		docs\images\PipeLine.gif = docs\images\PipeLine.gif
 		docs\images\ProgressBar.gif = docs\images\ProgressBar.gif
+		docs\images\ScreenStatusBar.gif = docs\images\ScreenStatusBar.gif
 		docs\images\Select.gif = docs\images\Select.gif
 		docs\images\SliderNumber.gif = docs\images\SliderNumber.gif
 		docs\images\SliderSwitche.gif = docs\images\SliderSwitche.gif
@@ -103,7 +101,7 @@ Global
 		{0EBFCDFA-D7BC-448D-B396-7179B9B32577} = {640ED284-A90B-43B8-ABA5-66F769752DDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_ShowErrorsInErrorList = False
 		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
+		RESX_ShowErrorsInErrorList = False
 	EndGlobalSection
 EndGlobal

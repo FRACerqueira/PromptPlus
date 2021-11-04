@@ -278,7 +278,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [Key Press](https://fracerqueira.github.io/PromptPlus/keypress) | Simple specific key |
 | [Confirm](https://fracerqueira.github.io/PromptPlus/confirm) | Simple confirm with  with tool tips and language detection |
 | [Input](https://fracerqueira.github.io/PromptPlus/input) | Input text with input validator with tooltips |
-| [Password](https://fracerqueira.github.io/PromptPlus/password) | Input password with input validator and show/hide(optional) input value |
+| [Password](https://fracerqueira.github.io/PromptPlus/input) | Input password with input validator and show/hide(optional) input value |
 | [MaskEdit Generic](https://fracerqueira.github.io/PromptPlus/maskeditgeneric) | Input with masked input , tooltips and input validator |
 | [MaskEdit Date](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Date input with language parameter, tooltips and input validator |
 | [MaskEdit Time](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Time input with language parameter, tooltips and input validator |
@@ -291,13 +291,12 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [ListMasked](https://fracerqueira.github.io/PromptPlus/listmasked) | Create generic IEnumerable with maskedit, auto-paginator, tooptip , input validator |
 | [Browser](https://fracerqueira.github.io/PromptPlus/browser) | Browser files/folder with auto-paginator and tooltips |
 | [Slider Number](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with short/large step and tooltips |
-| [Number Up/Down](https://fracerqueira.github.io/PromptPlus/numberupdown) | Numeric ranger with step and tooltips |
+| [Number Up/Down](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with step and tooltips |
 | [Slider Switche](https://fracerqueira.github.io/PromptPlus/sliderswitche) | Generic choice with customization and tooltips |
 | [Progress Bar](https://fracerqueira.github.io/PromptPlus/progressbar) | Progress Bar with interation customization |
 | [WaitProcess](https://fracerqueira.github.io/PromptPlus/waitprocess) | Wait process with animation |
 | [PipeLine](https://fracerqueira.github.io/PromptPlus/pipeline) | Pipeline sequence to all prompts with condition by pipe and status summary |
-| [Screen](https://fracerqueira.github.io/PromptPlus/screen) | Swith principal/alternate screen including StatusBar |
-| [StatusBar](https://fracerqueira.github.io/PromptPlus/statusbar) | StatusBar with template and columns |
+| [Screen/StatusBar](https://fracerqueira.github.io/PromptPlus/screen) | Swith principal/alternate screen including StatusBar with template and columns|
 | [Commands](https://fracerqueira.github.io/PromptPlus/commands) | Command set for PromptPlus console |
 | [Validators](https://fracerqueira.github.io/PromptPlus/validators) | Built-in validators with PromptPlus |
 
@@ -338,7 +337,7 @@ Console.WriteLine($"Your input: {name.Value}!");
     - Terminal.app
 
 ## Inspiration notes
-- Color Text was inspired by the work of [Colored-Console](https://github.com/colored-console/colored-console)
+- Color Text was inspired by the work of [Colored-Console](https://github.com/colored-console/colored-console) and [Rick Strahl](https://gist.github.com/RickStrahl/52c9ee43bd2723bcdf7bf4d24b029768)
 - FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
 - The base-control and some of its dependencies, Symbols, beyond console drivers were inspired by the work of [Sharprompt](https://github.com/shibayan/Sharprompt).
 

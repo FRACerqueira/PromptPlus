@@ -101,12 +101,14 @@ namespace PromptPlusControls.ValueObjects
                 {
                     return new ValidationResult(errorMessage ?? Messages.Required);
                 }
-
+                if (input is not string)
+                {
+                    return new ValidationResult(errorMessage ?? Messages.Invalid);
+                }
                 if (input is string strValue && string.IsNullOrEmpty(strValue))
                 {
                     return new ValidationResult(errorMessage ?? Messages.Required);
                 }
-
                 return ValidationResult.Success;
             };
         }
@@ -117,7 +119,7 @@ namespace PromptPlusControls.ValueObjects
             {
                 if (input is not string strValue)
                 {
-                    return ValidationResult.Success;
+                    return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
 
                 if (strValue.Length >= length)
@@ -125,7 +127,7 @@ namespace PromptPlusControls.ValueObjects
                     return ValidationResult.Success;
                 }
 
-                return new ValidationResult(errorMessage ?? Messages.MinLength);
+                return new ValidationResult(errorMessage ?? string.Format(Messages.MinLength, length));
             };
         }
 
@@ -135,7 +137,7 @@ namespace PromptPlusControls.ValueObjects
             {
                 if (input is not string strValue)
                 {
-                    return ValidationResult.Success;
+                    return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
 
                 if (strValue.Length <= length)
@@ -143,7 +145,7 @@ namespace PromptPlusControls.ValueObjects
                     return ValidationResult.Success;
                 }
 
-                return new ValidationResult(errorMessage ?? Messages.MaxLength);
+                return new ValidationResult(errorMessage ?? string.Format(Messages.MaxLength, length));
             };
         }
 
@@ -153,7 +155,7 @@ namespace PromptPlusControls.ValueObjects
             {
                 if (input is not string strValue)
                 {
-                    return ValidationResult.Success;
+                    return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
 
                 if (Regex.IsMatch(strValue, pattern))

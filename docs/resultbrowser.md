@@ -4,7 +4,7 @@
 [**Browser Control**](browser)
 
 ## Documentation
-Default return class for [**Browser Control**](browser).
+Default return struct for [**Browser Control**](browser).
 
 ### Properties
 [**Top**](#promptplus--resultbrowser)

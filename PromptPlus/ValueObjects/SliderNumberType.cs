@@ -3,9 +3,9 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-namespace PromptPlusControls.Internal
+namespace PromptPlusControls.ValueObjects
 {
-    internal enum SliderNumberType
+    public enum SliderNumberType
     {
         LeftRight,
         UpDown

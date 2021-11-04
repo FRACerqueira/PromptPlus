@@ -276,7 +276,7 @@ Controls/Commands | Details
 [Key Press](keypress.md) | Simple specific key
 [Confirm](confirm.md) | Simple confirm with  with tool tips and language detection 
 [Input](input.md) | Input text with input validator with tooltips
-[Password](password.md) | Input password with input validator and show/hide(optional) input value
+[Password](input.md) | Input password with input validator and show/hide(optional) input value
 [MaskEdit Generic](maskeditgeneric.md) | Input with masked input , tooltips and input validator
 [MaskEdit Date](maskeditdate.md) | Date input with language parameter, tooltips and input validator
 [MaskEdit Time](maskeditdate.md) | Time input with language parameter, tooltips and input validator
@@ -289,13 +289,12 @@ Controls/Commands | Details
 [ListMasked](listmasked.md) | Create generic IEnumerable with maskededit, auto-paginator, tooptip , input validator
 [Browser](browser.md) | Browser files/folder with auto-paginator and tooltips
 [Slider Number](slidernumber.md) | Numeric ranger with short/large step and tooltips
-[Number Up/Down](numberupdown.md) | Numeric ranger with step and tooltips
+[Number Up/Down](slidernumber.md) | Numeric ranger with step and tooltips
 [Slider Switche](sliderswitche.md) | Generic choice with customization and tooltips
 [Progress Bar](progressbar.md) | Progress Bar with interation customization
 [WaitProcess](waitprocess.md) | Wait process with animation
 [PipeLine](pipeline.md) | Pipeline sequence to all prompts with condition by pipe and status summary
-[Screen](screen.md) | Swith principal/alternate screen including StatusBar
-[StatusBar](statusbar.md) | StatusBar with template and columns
+[Screen/StatusBar](screen.md) | Swith principal/alternate screen including StatusBar with template and columns
 [Commands](commands.md) |  Command set for PromptPlus console
 [Validators](validators.md) | Built-in validators with PromptPlus
 

@@ -164,14 +164,11 @@ namespace PromptPlusControls.Controls
                     case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_maskedBuffer.IsEnd:
                         _maskedBuffer.Forward();
                         break;
-                    case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_maskedBuffer.IsStart:
+                    case ConsoleKey.Backspace when keyInfo.Modifiers == 0:
                         _maskedBuffer.Backspace();
                         break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_maskedBuffer.IsEnd && _maskedBuffer.Position == _maskedBuffer.Length - 1:
+                    case ConsoleKey.Delete when keyInfo.Modifiers == 0:
                         _maskedBuffer.Delete();
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == 0 && _maskedBuffer.IsEnd && _maskedBuffer.IsMaxInput:
-                        _maskedBuffer.Backspace();
                         break;
                     case ConsoleKey.Delete when keyInfo.Modifiers == ConsoleModifiers.Control && _maskedBuffer.Length > 0:
                         _maskedBuffer.Clear();
@@ -212,6 +209,20 @@ namespace PromptPlusControls.Controls
 
             screenBuffer.PushCursor(_maskedBuffer);
 
+            if (_options.ShowDayWeek != FormatWeek.None && (_options.Type == MaskedType.DateOnly || _options.Type == MaskedType.DateTime))
+            {
+                if (DateTime.TryParse(_maskedBuffer.ToMasked(), _options.CurrentCulture, DateTimeStyles.None, out var dtaux))
+                {
+                    var fmt = "ddd";
+                    if (_options.ShowDayWeek == FormatWeek.Long)
+                    {
+                        fmt = "dddd";
+                    }
+                    var wd = dtaux.ToString(fmt, _options.CurrentCulture);
+                    screenBuffer.WriteAnswer($" {wd}");
+                }
+            }
+
             if (_options.ShowInputType)
             {
                 screenBuffer.WriteLine();
@@ -226,6 +237,12 @@ namespace PromptPlusControls.Controls
                     screenBuffer.WriteLineHint($"{Messages.EnterFininsh}{Messages.MaskEditErase}");
                 }
             }
+
+            if (_options.ValidateOnDemand && _options.Validators.Count > 0)
+            {
+                var aux = new ResultMasked(_maskedBuffer.ToString(), _maskedBuffer.ToMasked());
+                TryValidate(aux, _options.Validators);
+            }
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultMasked result)
@@ -233,9 +250,36 @@ namespace PromptPlusControls.Controls
             screenBuffer.WriteDone(_options.Message);
             FinishResult = result.Masked;
             screenBuffer.WriteAnswer(FinishResult);
+            if (_options.ShowDayWeek != FormatWeek.None && (_options.Type == MaskedType.DateOnly || _options.Type == MaskedType.DateTime))
+            {
+                if (DateTime.TryParse(FinishResult, _options.CurrentCulture, DateTimeStyles.None, out var dtaux))
+                {
+                    var fmt = "ddd";
+                    if (_options.ShowDayWeek == FormatWeek.Long)
+                    {
+                        fmt = "dddd";
+                    }
+                    var wd = dtaux.ToString(fmt, _options.CurrentCulture);
+                    screenBuffer.WriteAnswer($" {wd}");
+                }
+            }
+
         }
 
         #region IControlMaskEdit
+
+        public IControlMaskEdit ValidateOnDemand()
+        {
+            _options.ValidateOnDemand = true;
+            return this;
+        }
+
+        public IControlMaskEdit ShowDayWeek(FormatWeek value)
+        {
+            _options.ShowDayWeek = value;
+            return this;
+        }
+
 
         public IControlMaskEdit Prompt(string value)
         {

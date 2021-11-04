@@ -23,10 +23,12 @@ namespace PromptPlusControls.Controls
         private readonly ListOptions<string> _options;
         private readonly List<ResultMasked> _inputItems = new();
         private MaskedBuffer _inputBuffer;
+        private bool _firstinput;
 
         public MaskedListControl(ListOptions<string> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
+            _firstinput = true;
         }
 
         public override void InitControl()
@@ -167,7 +169,7 @@ namespace PromptPlusControls.Controls
                                         .Replace(_options.MaskedOption.CurrentCulture.NumberFormat.CurrencySymbol, "").Trim());
                                     break;
                             }
-                            if (!TryValidate(input, _options.Validators))
+                            if (!TryValidate(input.Masked, _options.Validators))
                             {
                                 Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
                                 Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
@@ -189,6 +191,7 @@ namespace PromptPlusControls.Controls
                             _inputItems.Add(input);
                             _localpaginator = new Paginator<string>(_inputItems.Select(x => x.Masked), _options.PageSize, Optional<string>.s_empty, _options.TextSelector);
                             result = _inputItems;
+                            _firstinput = true;
                             return false;
                         }
                         catch (FormatException)
@@ -318,6 +321,12 @@ namespace PromptPlusControls.Controls
             {
                 screenBuffer.WriteLinePagination(_localpaginator.PaginationMessage());
             }
+
+            if (_options.ValidateOnDemand && _options.Validators.Count > 0 && !_firstinput)
+            {
+                TryValidate(_inputBuffer.ToString(), _options.Validators);
+            }
+            _firstinput = false;
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<ResultMasked> result)
@@ -364,6 +373,12 @@ namespace PromptPlusControls.Controls
             }
             _options.Minimum = minvalue;
             _options.Maximum = maxvalue;
+            return this;
+        }
+
+        public IControlListMasked ValidateOnDemand()
+        {
+            _options.ValidateOnDemand = true;
             return this;
         }
 

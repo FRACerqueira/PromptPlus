@@ -241,6 +241,11 @@ namespace PromptPlusControls.Controls
             {
                 screenBuffer.WriteLinePagination(_localpaginator.PaginationMessage());
             }
+
+            if (_options.ValidateOnDemand && _options.Validators.Count > 0)
+            {
+                TryValidate(_inputBuffer.ToString(), _options.Validators);
+            }
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<T> result)
@@ -252,6 +257,11 @@ namespace PromptPlusControls.Controls
 
         #region IControlList
 
+        public IControlList<T> ValidateOnDemand()
+        {
+            _options.ValidateOnDemand = true;
+            return this;
+        }
         public IControlList<T> Prompt(string value)
         {
             _options.Message = value;
