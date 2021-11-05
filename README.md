@@ -5,7 +5,9 @@
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 
-**_Interactive command-line  toolkit for C# with powerful controls._** This project is basead on fork of the [Sharprompt](https://github.com/shibayan/Sharprompt). A complete refatoring was done , introducing  **_new features, making the product more complete, more stable and more configurable_**. In all files is showing the reference to original project acconding to the MIT licence.
+**Interactive command-line toolkit for C# with powerful controls and commands.**
+
+[**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis) | [**Extensions**](#extensions) | [**Supported Platforms**](#supported-platforms)
 
 #### [visit the official page for complete documentation](https://fracerqueira.github.io/PromptPlus/)
 
@@ -17,7 +19,6 @@ dotnet run --project PromptPlusExample
 ```
 
 ## Snapshot
-[**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis) | [**Extensions**](#extensions) | [**Supported Platforms**](#supported-platforms)
 
 ### Input
 
@@ -82,15 +83,31 @@ dotnet run --project PromptPlusExample
 
 ![](./docs/images/PipeLine.gif)
 
+### Banner
+[**Top**](#welcome-to-promptplus)
+
+![](./docs/images/Banner.gif)
+
+
+### Colors
+[**Top**](#welcome-to-promptplus)
+
+![](./docs/images/Colors.gif)
+
+### Commands
+[**Top**](#welcome-to-promptplus)
+
+![](./docs/images/Commands.gif)
+
+
 ## Usage
 [**Top**](#welcome-to-promptplus)
 
 ```csharp
 //MaskEdit Generic
-var mask = PromptPlus.MaskEdit(PromptPlus.MaskTypeGeneric, 
-    "Inventory Number", 
-    @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}", 
-    cancellationToken: _stopApp);
+var mask = PromptPlus.MaskEdit(MaskedType.Generic, "Inventory Number")
+    .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
+    .Run(_stopApp);
 
 if (mask.IsAborted)
 {
@@ -106,7 +123,8 @@ else
 }
 
 //AnyKey
-var key = PromptPlus.AnyKey(_stopApp);
+var key = PromptPlus.KeyPress()
+        .Run(_stopApp);
 
 if (key.IsAborted)
 {
@@ -116,9 +134,11 @@ Console.WriteLine($"Hello, key pressed");
 
 
 //input
-var name = PromptPlus.Input(
-    "What's your name?", 
-    validators: new[] { Validators.Required(), Validators.MinLength(3) });
+var name = PromptPlus.Input("What's your name?")
+    .Default("Peter Parker")
+    .Addvalidator(PromptValidators.Required())
+    .Addvalidator(PromptValidators.MinLength(3))
+    .Run(_stopApp);
 
 if (name.IsAborted)
 {
@@ -250,13 +270,16 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 ## Apis
 [**Top**](#welcome-to-promptplus)
 
-| controls | Details |
+| Controls/Commands | Details |
 | --- | --- |
+| [Commands](https://fracerqueira.github.io/PromptPlus/commands) | Command set for PromptPlus console |
+| [Color](https://fracerqueira.github.io/PromptPlus/colorcmd) | Easy to add some color-text and underline |
+| [Banner](https://fracerqueira.github.io/PromptPlus/banner) |  ASCII text banner |
 | [Any key](https://fracerqueira.github.io/PromptPlus/anykey) |  Simple any key press |
 | [Key Press](https://fracerqueira.github.io/PromptPlus/keypress) | Simple specific key |
 | [Confirm](https://fracerqueira.github.io/PromptPlus/confirm) | Simple confirm with  with tool tips and language detection |
 | [Input](https://fracerqueira.github.io/PromptPlus/input) | Input text with input validator with tooltips |
-| [Password](https://fracerqueira.github.io/PromptPlus/password) | Input password with input validator and show/hide(optional) input value |
+| [Password](https://fracerqueira.github.io/PromptPlus/input) | Input password with input validator and show/hide(optional) input value |
 | [MaskEdit Generic](https://fracerqueira.github.io/PromptPlus/maskeditgeneric) | Input with masked input , tooltips and input validator |
 | [MaskEdit Date](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Date input with language parameter, tooltips and input validator |
 | [MaskEdit Time](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Time input with language parameter, tooltips and input validator |
@@ -264,12 +287,12 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [MaskEdit Number](https://fracerqueira.github.io/PromptPlus/maskeditnumber) | Numeric input with language parameter, tooltips and input validator |
 | [MaskEdit Currency](https://fracerqueira.github.io/PromptPlus/maskeditnumber) | Currency input with language parameter, tooltips and input validator |
 | [Select](https://fracerqueira.github.io/PromptPlus/select)| Generic select input IEnumerable/Enum with auto-paginator and tooltips and more |
-| [MultiSelect](https://fracerqueira.github.io/PromptPlus/multiselect) | Generic multi select input IEnumerable/Enum with auto-paginator , tooltips and more |
+| [MultiSelect](https://fracerqueira.github.io/PromptPlus/multiselect) | Generic multi select input IEnumerable/Enum with group, auto-paginator , tooltips and more |
 | [List](https://fracerqueira.github.io/PromptPlus/list) | Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more |
-| [ListMasked](https://fracerqueira.github.io/PromptPlus/listmasked) | Create generic IEnumerable with masked input, auto-paginator, tooptip , input validator |
+| [ListMasked](https://fracerqueira.github.io/PromptPlus/listmasked) | Create generic IEnumerable with maskedit, auto-paginator, tooptip , input validator |
 | [Browser](https://fracerqueira.github.io/PromptPlus/browser) | Browser files/folder with auto-paginator and tooltips |
 | [Slider Number](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with short/large step and tooltips |
-| [Number Up/Down](https://fracerqueira.github.io/PromptPlus/numberupdown) | Numeric ranger with step and tooltips |
+| [Number Up/Down](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with step and tooltips |
 | [Slider Switche](https://fracerqueira.github.io/PromptPlus/sliderswitche) | Generic choice with customization and tooltips |
 | [Progress Bar](https://fracerqueira.github.io/PromptPlus/progressbar) | Progress Bar with interation customization |
 | [WaitProcess](https://fracerqueira.github.io/PromptPlus/waitprocess) | Wait process with animation |
@@ -283,15 +306,17 @@ private class MylCass
 {
     [Required(ErrorMessage = "{0} is required!")]
     [MinLength(3, ErrorMessage = "Min. Length = 3.")]
-    [MaxLength(5, ErrorMessage = "Min. Length = 5.")]
+    [MaxLength(5, ErrorMessage = "Max. Length = 5.")]
     [Display(Prompt ="My Input")]
     public string MyInput { get; set; }
 }
 ```
 ```csharp
 var inst = new MylCass();
-var name = PromptPlus.Input("Input Value for MyInput", null, 
-    validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
+var name = PromptPlus.Input("Input Value for MyInput")
+    .Addvalidators(inst.ImportValidators(x => x.MyInput))
+    .Run(_stopApp);
+
 if (name.IsAborted)
 {
    return;
@@ -308,6 +333,11 @@ Console.WriteLine($"Your input: {name.Value}!");
     - Windows Terminal (WSL 2)
 - macOS
     - Terminal.app
+
+## Inspiration notes
+- Color Text was inspired by the work of [Colored-Console](https://github.com/colored-console/colored-console) and [Rick Strahl](https://gist.github.com/RickStrahl/52c9ee43bd2723bcdf7bf4d24b029768)
+- FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
+- The base-control and some of its dependencies, Symbols, beyond console drivers were inspired by the work of [Sharprompt](https://github.com/shibayan/Sharprompt).
 
 ## License
 

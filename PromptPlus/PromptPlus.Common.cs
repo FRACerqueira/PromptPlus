@@ -1,22 +1,24 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Threading;
 
+using PromptPlusControls.Drivers;
 using PromptPlusControls.Internal;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls
 {
+    [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "by design")]
     public static partial class PromptPlus
     {
         internal const int MaxShowTasks = 1;
@@ -27,8 +29,28 @@ namespace PromptPlusControls
         internal const int ProgressgBarDoneDelay = 1000;
         internal const int ProgressgBarCheckDelay = 50;
 
+        internal static object _lockobj = new();
+        internal static ConsoleDriver _consoleDriver;
+
         static PromptPlus()
         {
+            Symbols.MaskEmpty = new("■", "  ");
+            Symbols.File = new("■", "- ");
+            Symbols.Folder = new("►", "> ");
+            Symbols.Prompt = new("→", "->");
+            Symbols.Done = new("√", "V ");
+            Symbols.Error = new("»", ">>");
+            Symbols.Selector = new("›", "> ");
+            Symbols.Selected = new("♦", "* ");
+            Symbols.NotSelect = new("○", "  ");
+            Symbols.TaskRun = new("♦", "* ");
+            Symbols.Skiped = new("×", "x ");
+
+            Symbols.IndentGroup = new("├─", "  |-");
+            Symbols.IndentEndGroup = new("└─", "  |_");
+            Symbols.SymbGroup = new("»", ">>");
+
+            _consoleDriver = new ConsoleDriver();
             AppCulture = Thread.CurrentThread.CurrentCulture;
             AppCultureUI = Thread.CurrentThread.CurrentUICulture;
             s_defaultCulture = AppCulture;

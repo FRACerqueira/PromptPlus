@@ -133,6 +133,24 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid type {0}.
+        /// </summary>
+        internal static string Ex_InvalidType {
+            get {
+                return ResourceManager.GetString("Ex_InvalidType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid value {0}.
+        /// </summary>
+        internal static string Ex_InvalidValue {
+            get {
+                return ResourceManager.GetString("Ex_InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The maximum ({0}) is not valid when minimum is set to ({1})!.
         /// </summary>
         internal static string Ex_MaxArgumentOutOfRange {
@@ -192,6 +210,15 @@ namespace PromptPlusControls.Resources {
         internal static string Ex_SliderNumberType {
             get {
                 return ResourceManager.GetString("Ex_SliderNumberType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AddTemplate not valid when StatusBar is running.
+        /// </summary>
+        internal static string Ex_StatusBarRunning {
+            get {
+                return ResourceManager.GetString("Ex_StatusBarRunning", resourceCulture);
             }
         }
         

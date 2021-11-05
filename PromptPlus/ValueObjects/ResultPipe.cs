@@ -1,32 +1,41 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 
 namespace PromptPlusControls.ValueObjects
 {
-    public class ResultPipe
+    public struct ResultPipe
     {
-        internal ResultPipe(string id, string title, object value, Func<ResultPipe[], object, bool> condition)
+        internal ResultPipe(string id, string title, object value, Func<ResultPipe[], object, bool> condition, StatusPipe? status = null)
         {
             PipeId = id;
             Title = title;
             ValuePipe = value;
-            Status = StatusPipe.Waitting;
+            Status = status ?? StatusPipe.Waitting;
             Condition = condition;
         }
 
-        public string PipeId { get; private set; }
+        internal ResultPipe UpdateStatus(StatusPipe value)
+        {
+            return new ResultPipe(PipeId, Title, ValuePipe, Condition, value);
+        }
 
-        public string Title { get; private set; }
+        internal ResultPipe UpdateValue(object value, StatusPipe status)
+        {
+            return new ResultPipe(PipeId, Title, value, Condition, status);
+        }
 
-        public StatusPipe Status { get; internal set; }
+        public string PipeId { get; }
 
-        public object ValuePipe { get; internal set; }
+        public string Title { get; }
 
-        internal Func<ResultPipe[], object, bool> Condition { get; set; }
+        public StatusPipe Status { get; private set; }
+
+        public object ValuePipe { get; }
+
+        internal Func<ResultPipe[], object, bool> Condition { get; }
     }
 }

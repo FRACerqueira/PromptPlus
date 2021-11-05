@@ -1,8 +1,7 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -12,14 +11,13 @@ using System.Security;
 using System.Threading;
 
 using PromptPlusControls.Internal;
-using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
 
-    internal class BrowserControl : ControlBase<ResultBrowser>, IDisposable
+    internal class BrowserControl : ControlBase<ResultBrowser>, IControlBrowser
     {
         private ResultBrowser _defaultopt;
         private string _currentPath;
@@ -33,6 +31,10 @@ namespace PromptPlusControls.Controls
         public BrowserControl(BrowserOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
+        }
+
+        public override void InitControl()
+        {
             switch (_options.Filter)
             {
                 case BrowserFilter.None:
@@ -44,15 +46,6 @@ namespace PromptPlusControls.Controls
                 default:
                     throw new NotImplementedException(string.Format(Exceptions.Ex_FileBrowserNotImplemented, _options.Filter));
             }
-        }
-
-        public new void Dispose()
-        {
-            if (_paginator != null)
-            {
-                _paginator.Dispose();
-            }
-            base.Dispose();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultBrowser result)
@@ -73,7 +66,7 @@ namespace PromptPlusControls.Controls
 
             if (_filterBuffer.Length > 0 && _paginator.IsUnSelected)
             {
-                screenBuffer.WriteAnswer(_filterBuffer.ToBackwardString());
+                screenBuffer.WriteAnswer(_filterBuffer.ToBackward());
             }
             else
             {
@@ -87,7 +80,7 @@ namespace PromptPlusControls.Controls
 
             if (_filterBuffer.Length > 0 && _paginator.IsUnSelected)
             {
-                screenBuffer.WriteAnswer(_filterBuffer.ToForwardString());
+                screenBuffer.WriteAnswer(_filterBuffer.ToForward());
             }
 
             if (EnabledStandardTooltip)
@@ -134,7 +127,7 @@ namespace PromptPlusControls.Controls
             }
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out ResultBrowser result)
+        public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ResultBrowser result)
         {
             bool? isvalidhit = false;
             if (summary)
@@ -527,5 +520,134 @@ namespace PromptPlusControls.Controls
             }
             return false;
         }
+
+        #region IControlBrowser
+
+        public IControlBrowser Prompt(string value)
+        {
+            _options.Message = value;
+            return this;
+        }
+
+        public IControlBrowser Filter(BrowserFilter value)
+        {
+            _options.Filter = value;
+            return this;
+        }
+
+        public IControlBrowser Default(string value)
+        {
+            _options.DefaultValue = value;
+            return this;
+        }
+
+        public IControlBrowser PrefixExtension(string value)
+        {
+            _options.PrefixExtension = value;
+            return this;
+        }
+
+        public IControlBrowser AllowNotSelected(bool value)
+        {
+            _options.AllowNotSelected = value;
+            return this;
+        }
+
+        public IControlBrowser Root(string value)
+        {
+            _options.RootFolder = value;
+            return this;
+        }
+
+        public IControlBrowser SearchPattern(string value)
+        {
+            _options.SearchPattern = value;
+            return this;
+        }
+
+        public IControlBrowser PageSize(int value)
+        {
+            if (value < 0)
+            {
+                _options.PageSize = null;
+            }
+            else
+            {
+                _options.PageSize = value;
+            }
+            return this;
+        }
+
+        public IControlBrowser SupressHidden(bool value)
+        {
+            _options.SupressHidden = value;
+            return this;
+        }
+
+        public IControlBrowser PromptCurrentPath(bool value)
+        {
+            _options.ShowNavigationCurrentPath = value;
+            return this;
+        }
+
+        public IControlBrowser promptSearchPattern(bool value)
+        {
+            _options.ShowSearchPattern = value;
+            return this;
+        }
+
+        public IPromptControls<ResultBrowser> EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            return this;
+        }
+
+        public IPromptControls<ResultBrowser> EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            return this;
+        }
+
+        public IPromptControls<ResultBrowser> EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            return this;
+        }
+
+        public IPromptControls<ResultBrowser> HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            return this;
+        }
+
+        public ResultPromptPlus<ResultBrowser> Run(CancellationToken? value = null)
+        {
+            InitControl();
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
+        {
+            Condition = condition;
+            return this;
+        }
+
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            ContextState = state;
+            return this;
+        }
+
+        #endregion
+
     }
 }

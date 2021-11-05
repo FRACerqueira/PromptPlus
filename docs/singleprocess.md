@@ -1,22 +1,27 @@
 # PromptPlus # SingleProcess
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**WaitProcess Control**](waitprocess) |
-[**WaitProcess Options**](waitprocessoptions)
+[**WaitProcess Control**](waitprocess) 
 
 ## Documentation
-Class for [**WaitProcess Control**](waitprocess) and [**WaitProcess Options**](waitprocessoptions).
+struct for definition of single process to [**WaitProcess Control**](waitprocess). 
 
-### Properties
+### Syntax
+
+```csharp
+ SingleProcess(Func<CancellationToken, Task<object>> processToRun, string idProcess =null, Func<object, string> processTextResult = null)
+````
+
+### Parameters
 [**Top**](#promptplus--singleprocess)
-
-- ProcessId
-	- Type : string
-	- Process identification. If null value, ProcessId = Guid.NewGuid().ToString()
 
 - ProcessToRun   
 	- Type : Func<CancellationToken, Task<object>>
 	- function that will perform the Task
+
+- ProcessId
+	- Type : string
+	- Process identification. If null value, ProcessId = Guid.NewGuid().ToString()
 
 - ProcessTextResult   
 	- Type : Func<object, string>
@@ -26,6 +31,5 @@ Class for [**WaitProcess Control**](waitprocess) and [**WaitProcess Options**](w
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**WaitProcess Control**](waitprocess) |
-[**WaitProcess Options**](waitprocessoptions)
+[**WaitProcess Control**](waitprocess) 
 

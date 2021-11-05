@@ -2,120 +2,93 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**ResulProcess**](resultprocess) |
-[**WaitProcess Options**](waitprocessoptions) |
 [**SingleProcess**](singleprocess) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
 
 ## Documentation
 Control WaitProcess. Wait process with animation.
 
 ![](./images/WaitProcess.gif)
 
-### Options
-
-[**WaitProcess Options**](waitprocess)
-
 ### Syntax
 [**Top**](#promptplus--waitprocess)
 
 ```csharp
-WaitProcess(WaitProcessOptions options, CancellationToken? cancellationToken = null)
-WaitProcess(Action<WaitProcessOptions> configure, CancellationToken? cancellationToken = null)
+WaitProcess(string prompt = null)
 ```
 
-```csharp
-//Note : for single process
-WaitProcess(string title, SingleProcess process, CancellationToken? cancellationToken = null)
-//Note : for many process
-WaitProcess(string title, IEnumerable<SingleProcess> process, CancellationToken? cancellationToken = null)
-```
+### Methods
+[**Top**](#promptplus--sliderswitche)
 
-**Highlighted parameters**
-- title = Title of process
-- process(single process) = class SingleProcess with function that will perform the Task 
-- process(many process) = IEnumerable of [**SingleProcess**](singleprocess) will perform the Tasks 
+- ```csharp
+  Prompt(string value)
+  ``` 
+  - set prompt message
+- ```csharp
+  AddProcess(SingleProcess process)
+``` 
+  - Add struct-process will perform the Task. See [**SingleProcess**](singleprocess)
+- ```csharp
+  SpeedAnimation(int value)
+``` 
+  - Animation speed.If value < 10, value = 10. If value > 1000, value = 1000.
 
 ### Return
-[**Top**](#promptplus--waitprocess)
+[**Top**](#promptplus--sliderswitche)
 
 ```csharp
-ResultPromptPlus<IEnumerable<ResultProcess>>
+IControlSliderSwitche      //for Control Methods
+IPromptControls<bool>      //for others Base Methods
+ResultPromptPlus<bool>     //for Base Method Run, when execution is direct 
+IPromptPipe                //for Pipe condition and transform to IFormPlusBase 
+IFormPlusBase              //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
 [**Top**](#promptplus--waitprocess)
 
 ```csharp
-var process = PromptPlus.WaitProcess("phase 1", new SingleProcess
-{
-    ProcessToRun = (_stopApp) =>
-    {
-        _stopApp.WaitHandle.WaitOne(4000);
-        if (_stopApp.IsCancellationRequested)
-        {
-            return Task.FromResult<object>("canceled");
-        }
-        return Task.FromResult<object>("Done");
-    },
-}, cancellationToken: _stopApp);
-var aux = process.Value.First();
-Console.WriteLine($"Result task ({aux.ProcessId}) : {aux.TextResult}. Canceled = {aux.IsCanceled}");
-```
-
-```csharp
-var Process = PromptPlus.WaitProcess("My Tasks(3) Async", new List<SingleProcess>
-{
-    new SingleProcess                {
-            ProcessId = "Task1",
-            ProcessToRun = (_stopApp) =>
+var Process = PromptPlus.WaitProcess("My Tasks(3) Async")
+        .AddProcess(new SingleProcess((_stopApp) =>
             {
                 _stopApp.WaitHandle.WaitOne(10000);
                 if (_stopApp.IsCancellationRequested)
                 {
-                return Task.FromResult<object>("canceled");
+                    return Task.FromResult<object>("canceled");
                 }
                 return Task.FromResult<object>("Done");
-            }
-    },
-    new SingleProcess
-    {
-            ProcessId = "Task2",
-            ProcessToRun = (_stopApp) =>
+            }, "Task1"))
+        .AddProcess(new SingleProcess((_stopApp) =>
             {
                 _stopApp.WaitHandle.WaitOne(5000);
                 if (_stopApp.IsCancellationRequested)
                 {
-                return Task.FromResult<object>(-1);
+                    return Task.FromResult<object>(-1);
                 }
                 return Task.FromResult<object>(1);
-            }
-    },
-    new SingleProcess
-    {
-            ProcessId = "Task3",
-            ProcessToRun = (_stopApp) =>
+            }, "Task2"))
+        .AddProcess(new SingleProcess((_stopApp) =>
             {
                 _stopApp.WaitHandle.WaitOne(7000);
                 if (_stopApp.IsCancellationRequested)
                 {
-                return Task.FromResult<object>("Canceled");
+                    return Task.FromResult<object>("Canceled");
                 }
                 return Task.FromResult<object>("Done");
-            }
-    },
-}
-, cancellationToken: _stopApp);
+            }, "Task3"))
+        .Run(_stopApp);
+
 foreach (var item in Process.Value)
 {
-    Console.WriteLine($"Result tasks ({item.ProcessId}) : {item.ValueProcess}");
+    PromptPlus.WriteLine($"Result tasks ({item.ProcessId}) : {item.ValueProcess}");
 }
 ```
+
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**ResulProcess**](resultprocess) |
-[**WaitProcess Options**](waitprocessoptions) |
 [**SingleProcess**](singleprocess) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)

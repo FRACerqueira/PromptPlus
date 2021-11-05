@@ -3,65 +3,81 @@
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
 [**ProgressBarInfo**](progressbarinfo) |
-[**ProgressBar Options**](progressbaroptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
+
 
 ## Documentation
 Control ProgressBar. Progress Bar with interation customization.
 
 ![](./images/ProgressBar.gif)
 
-### Options
-
-[**ProgressBar Options**](progressbaroptions)
-
 ### Syntax
 [**Top**](#promptplus--progressbar)
 
 ```csharp
-Progressbar(ProgressBarOptions options, CancellationToken? cancellationToken = null)
-Progressbar(Action<ProgressBarOptions> configure, CancellationToken? cancellationToken = null)
+Progressbar(string prompt = null)
 ```
 
-```csharp
-ResultPromptPlus<ProgressBarInfo> Progressbar(string title, Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> updateHandler,int width = 30, object interationId = null, CancellationToken? cancellationToken = null)
-```
+### Methods
+[**Top**](#promptplus--progressbar)
 
-**Highlighted parameters**
-- title = Title of progress bar 
-- updateHandler = function that will be performed for each interaction
-- interationId = identification last interaction. If null value, interationId = 0 (int)
-- width = Width of Progressbar. If Width < 30, Width = 30.  If Width > 100, Width = 100
+- ```csharp
+  Prompt(string value)
+  ``` 
+  - set prompt message 
+- ```csharp
+  Width(int value)
+  ``` 
+  - Width bar. If the ommited Width = 100. If Width < 30, Width = 30.  If Width > 200, Width = 200
+- ```csharp
+  UpdateHandler(Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> value)
+  ``` 
+    - function that will be performed for each interaction
+- ```csharp
+  StartInterationId(object value)
+  ``` 
+    - Identification start interaction. If ommited , value = 0 (int)
 
 ### Return
 [**Top**](#promptplus--progressbar)
 
 ```csharp
-ResultPromptPlus<ProgressBarInfo>
+IControlProgressbar                 //for Control Methods
+IPromptControls<ProgressBarInfo>    //for others Base Methods
+ResultPromptPlus<ProgressBarInfo>   //for Base Method Run, when execution is direct 
+IPromptPipe                         //for Pipe condition and transform to IFormPlusBase 
+IFormPlusBase                       //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
 [**Top**](#promptplus--progressbar)
 
 ```csharp
-var progress = PromptPlus.Progressbar("Processing Tasks", UpdateSampleHandlerAsync, cancellationToken: _stopApp);
-if (progress.IsAborted)
-{
-   return;
-}
-Console.WriteLine($"Your result is: {progress.Value.Message}");
-...
 private async Task<ProgressBarInfo> UpdateSampleHandlerAsync(ProgressBarInfo status, CancellationToken cancellationToken)
 {
-   await Task.Delay(10);
-   var aux = (int)status.InterationId + 1;
-   var endupdate = true;
-   if (aux < 100)
-   {
-      endupdate = false;
-   }
-   return new ProgressBarInfo(aux, endupdate, $"Interation {aux}", aux);
+    await Task.Delay(10);
+    var aux = (int)status.InterationId + 1;
+    var endupdate = true;
+    if (aux < 100)
+    {
+        endupdate = false;
+    }
+    return new ProgressBarInfo(aux, endupdate, $"Interation {aux}", aux);
 }
+```
+
+```csharp
+var progress = PromptPlus.Progressbar("Processing Tasks")
+    .UpdateHandler(UpdateSampleHandlerAsync)
+    .Run(_stopApp);
+
+if (progress.IsAborted)
+{
+    PromptPlus.WriteLine($"Your result is: {progress.Value.Message} Canceled!");
+    return;
+}
+PromptPlus.WriteLine($"Your result is: {progress.Value.Message}");
 ```
 
 ### Links
@@ -69,5 +85,5 @@ private async Task<ProgressBarInfo> UpdateSampleHandlerAsync(ProgressBarInfo sta
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
 [**ProgressBarInfo**](progressbarinfo) |
-[**ProgressBar Options**](progressbaroptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)

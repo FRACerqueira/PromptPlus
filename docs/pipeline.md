@@ -3,67 +3,75 @@
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
 [**ResultPipe**](resultpipe) |
-[**Step Extension**](pipelinestep) 
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
 
 ## Documentation
 Control PipeLine. Pipeline sequence to **all prompts** with **condition by pipe** and status summary.
 
 ![](./images/PipeLine.gif)
 
-### Options
-
-Not have options
-
 ### Syntax
 [**Top**](#promptplus--pipeline)
 
 ```csharp
-Pipeline(IList<IFormPlusBase> steps, CancellationToken? cancellationToken = null)
+Pipeline()
 ```
+### Methods
+[**Top**](#promptplus--pipeline)
 
-**_Note1: All controls inherit from IFormPlusBase. All controls that inherit from IFormPlusBase are in the namespece PromptPlus.Pipe_**
+- ```csharp
+  AddPipe(IFormPlusBase value)
+  ``` 
+  - Add PromptPlus-Control to pipeline. All controls inherit from IFormPlusBase.
+- ```csharp
+  AddPipes(IEnumerable<IFormPlusBase> value)
+  ``` 
+  - Add IEnumerable PromptPlus-Control to pipeline. All controls inherit from IFormPlusBase.  
 
-**_Note2: It is mandatory to tell the control to use the Step extension to define a pipe for a contro´s Pipeline. See examples below!_**
 
 ### Return
-[**Top**](#promptplus--input)
+[**Top**](#promptplus--pipeline)
 
 ```csharp
-ResultPromptPlus<IEnumerable<ResultPipe>>
+IControlPipeLine                            //for Control Methods
+ResultPromptPlus<IEnumerable<ResultPipe>>   //for Base Method Run, when execution is direct 
+IPromptPipe                                 //for Pipe condition and transform to IFormPlusBase 
+IFormPlusBase                               //for only definition of pipe to Pipeline Control
 ```
 
+
 ### Sample
-[**Top**](#promptplus--input)
+[**Top**](#promptplus--pipeline)
 
 ```csharp
-var steps = new List<IFormPlusBase>
-{
-    PromptPlus.Pipe.Input(new InputOptions { Message = "Your first name (empty = skip lastname)" })
-    .Step("First Name"),
-
-    PromptPlus.Pipe.Input(new InputOptions { Message = "Your last name" })
-    .Step("Last Name",(res,context) =>
-    {
-        return !string.IsNullOrEmpty( ((ResultPromptPlus<string>)res[0].ValuePipe).Value);
-    }),
-
-    PromptPlus.Pipe.MaskEdit(PromptPlus.MaskTypeDateOnly, "Your birth date",cancellationToken: _stopApp)
-    .Step("birth date"),
-
-    PromptPlus.Pipe.WaitProcess("phase 1", new SingleProcess{ ProcessToRun = (_stopApp) =>
-    {
-        _stopApp.WaitHandle.WaitOne(4000);
-        if (_stopApp.IsCancellationRequested)
+var pipeline = PromptPlus.Pipeline()
+    .AddPipe(PromptPlus.Input("Your first name (empty = skip lastname)")
+            .ToPipe(null, "First Name"))
+    .AddPipe(PromptPlus.Input("Your last name")
+        .PipeCondition((res, context) =>
         {
-            return Task.FromResult<object>("canceled");
-        }
-        return Task.FromResult<object>("Done");
-    } }).Step("Update phase 1"),
-
-    PromptPlus.Pipe.Progressbar("Processing Tasks ",  UpdateSampleHandlerAsync)
-    .Step("Update phase 2")
-};
-var pipeline = PromptPlus.Pipeline(steps, _stopApp);
+            return !string.IsNullOrEmpty(((ResultPromptPlus<string>)res[0].ValuePipe).Value);
+        })
+        .ToPipe(null, "Last Name"))
+    .AddPipe(PromptPlus.MaskEdit(MaskedType.DateOnly, "Your birth date")
+        .ToPipe(null, "birth date"))
+    .AddPipe(
+        PromptPlus.WaitProcess("phase 1")
+        .AddProcess(new SingleProcess((_stopApp) =>
+            {
+                _stopApp.WaitHandle.WaitOne(4000);
+                if (_stopApp.IsCancellationRequested)
+                {
+                    return Task.FromResult<object>("canceled");
+                }
+                return Task.FromResult<object>("Done");
+            }))
+        .ToPipe(null, "Update phase 1"))
+    .AddPipe(PromptPlus.Progressbar("Processing Tasks ")
+        .UpdateHandler(UpdateSampleHandlerAsync)
+        .ToPipe(null, "Update phase 2"))
+    .Run(_stopApp);
 ```
 
 ### Links
@@ -71,5 +79,8 @@ var pipeline = PromptPlus.Pipeline(steps, _stopApp);
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
 [**ResultPipe**](resultpipe) |
-[**Step Extension**](pipelinestep) 
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
+
+
 

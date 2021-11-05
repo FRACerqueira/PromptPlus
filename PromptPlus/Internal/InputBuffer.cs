@@ -1,8 +1,9 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+// Inspired by the work https://github.com/shibayan/Sharprompt
+// ***************************************************************************************
 
 using System.Text;
 
@@ -64,9 +65,9 @@ namespace PromptPlusControls.Internal
             return this;
         }
 
-        public string ToBackwardString() => _inputBuffer.ToString(0, Position);
+        public string ToBackward() => _inputBuffer.ToString(0, Position);
 
-        public string ToForwardString() => _inputBuffer.ToString(Position, _inputBuffer.Length - Position);
+        public string ToForward() => _inputBuffer.ToString(Position, _inputBuffer.Length - Position);
 
         public override string ToString() => _inputBuffer.ToString();
 

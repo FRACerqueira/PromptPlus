@@ -1,23 +1,27 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Threading;
 
+using PromptPlusControls.ValueObjects;
+
 namespace PromptPlusControls.Drivers
 {
-    public interface IConsoleDriver : IDisposable
+    internal interface IConsoleDriver
     {
+        void Clear();
+        void ClearLine(int top);
+        void ClearRestOfLine(ConsoleColor? color);
+        ConsoleKeyInfo ReadKey();
         ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken);
         void Beep();
-        void Reset();
-        void ClearLine(int top);
-        ConsoleKeyInfo ReadKey();
-        void Write(string value, ConsoleColor color, ConsoleColor? colorbg = null);
-        void WriteLine();
+        void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null);
+        void Write(params ColorToken[] tokens);
+        void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null);
+        void WriteLine(params ColorToken[] tokens);
         void SetCursorPosition(int left, int top);
         bool KeyAvailable { get; }
         bool CursorVisible { get; set; }
@@ -26,5 +30,8 @@ namespace PromptPlusControls.Drivers
         int BufferWidth { get; }
         int BufferHeight { get; }
         bool IsRunningTerminal { get; }
+        ConsoleColor ForegroundColor { get; set; }
+        ConsoleColor BackgroundColor { get; set; }
+
     }
 }

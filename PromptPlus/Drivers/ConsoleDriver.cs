@@ -1,14 +1,14 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 
 using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Drivers
 {
@@ -18,8 +18,6 @@ namespace PromptPlusControls.Drivers
 
         public static int MinBufferHeight = 6;
 
-        private static readonly ConsoleColor s_defaultbackgroundColor;
-        private static readonly ConsoleColor s_defaultforegroundColor;
 
         static ConsoleDriver()
         {
@@ -37,26 +35,7 @@ namespace PromptPlusControls.Drivers
                 }
                 NativeMethods.SetConsoleMode(hConsole, mode | NativeMethods.ENABLE_VIRTUAL_TERMINAL_PROCESSING);
             }
-            s_defaultbackgroundColor = Console.BackgroundColor;
-            s_defaultforegroundColor = Console.ForegroundColor;
         }
-
-        public ConsoleDriver()
-        {
-            Console.CancelKeyPress += CancelKeyPressHandler;
-            Console.ForegroundColor = PromptPlus.ColorSchema.ForeColorSchema;
-            Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
-        }
-
-        #region IDisposable
-
-        public void Dispose()
-        {
-            Reset();
-            Console.CancelKeyPress -= CancelKeyPressHandler;
-        }
-
-        #endregion
 
         #region IConsoleDriver
 
@@ -78,71 +57,212 @@ namespace PromptPlusControls.Drivers
 
         public ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken)
         {
-            while (!KeyAvailable && !cancellationToken.IsCancellationRequested)
+            lock (PromptPlus._lockobj)
             {
-                cancellationToken.WaitHandle.WaitOne(IdleReadKey);
+                while (!KeyAvailable && !cancellationToken.IsCancellationRequested)
+                {
+                    cancellationToken.WaitHandle.WaitOne(IdleReadKey);
+                }
+                if (KeyAvailable && !cancellationToken.IsCancellationRequested)
+                {
+                    return ReadKey();
+                }
+                return new ConsoleKeyInfo();
             }
-            if (KeyAvailable && !cancellationToken.IsCancellationRequested)
-            {
-                return ReadKey();
-            }
-            return new ConsoleKeyInfo();
         }
 
         public void Beep() => Console.Write("\a");
 
-        public void Reset()
+        public void Clear()
         {
-            Console.CursorVisible = true;
-            Console.BackgroundColor = s_defaultbackgroundColor;
-            Console.ForegroundColor = s_defaultforegroundColor;
+            SetCursorPosition(0, 0);
+            Console.Write("\x1b[2J");
         }
 
         public void ClearLine(int top)
         {
-            SetCursorPosition(0, top);
-            Console.Write("\x1b[2K");
-        }
-
-        public ConsoleKeyInfo ReadKey() => Console.ReadKey(true);
-
-        public void Write(string value, ConsoleColor color, ConsoleColor? colorbg = null)
-        {
-            Console.ForegroundColor = color;
-            if (colorbg.HasValue)
+            lock (PromptPlus._lockobj)
             {
-                Console.BackgroundColor = colorbg.Value;
+                SetCursorPosition(0, top);
+                Console.Write("\x1b[2K");
             }
-            Console.Write(value);
-            Console.ForegroundColor = PromptPlus.ColorSchema.ForeColorSchema;
-            Console.BackgroundColor = PromptPlus.ColorSchema.BackColorSchema;
         }
 
-        public void WriteLine() => Console.WriteLine();
+        public void ClearRestOfLine(ConsoleColor? color)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                Write("\x1b[0K".Color(PromptPlus._consoleDriver.ForegroundColor, color ?? PromptPlus._consoleDriver.BackgroundColor));
+            }
+        }
 
-        public void SetCursorPosition(int left, int top) => Console.SetCursorPosition(left, top);
+        public ConsoleKeyInfo ReadKey()
+        {
+            lock (PromptPlus._lockobj)
+            {
+                return Console.ReadKey(true);
+            }
+        }
 
-        public bool KeyAvailable => Console.KeyAvailable;
+        public void Write(params ColorToken[] tokens)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                if (tokens == null || tokens.Length == 0)
+                {
+                    return;
+                }
+                foreach (var token in tokens)
+                {
+                    var originalColor = Console.ForegroundColor;
+                    var originalBackgroundColor = Console.BackgroundColor;
+                    try
+                    {
+                        if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
+                        {
+                            Console.Write(token.AnsiColor);
+                        }
+                        if (token.Underline)
+                        {
+                            Console.Write("\x1b[4m");
+                        }
+                        Console.Write(token.Text ?? string.Empty);
+                    }
+                    finally
+                    {
+                        if (token.Underline)
+                        {
+                            Console.Write("\x1b[24m");
+                        }
+                        Console.Write(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor);
+                    }
+                }
+            }
+        }
+
+        public ConsoleColor ForegroundColor
+        {
+            get { return Console.ForegroundColor; }
+            set
+            {
+                Console.Write(new ColorToken("", value, Console.BackgroundColor).AnsiColor);
+                Console.ForegroundColor = value;
+            }
+        }
+
+        public ConsoleColor BackgroundColor
+        {
+            get { return Console.BackgroundColor; }
+            set
+            {
+                Console.Write(new ColorToken("", Console.ForegroundColor, value).AnsiColor);
+                Console.BackgroundColor = value;
+            }
+        }
+
+        public void WriteLine(params ColorToken[] tokens)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                Write(tokens);
+                Console.WriteLine();
+            }
+        }
+
+
+        public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                Write(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
+            }
+        }
+
+        public void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
+                Console.WriteLine();
+            }
+        }
+
+
+        public void SetCursorPosition(int left, int top)
+        {
+            lock (PromptPlus._lockobj)
+            {
+                Console.SetCursorPosition(left, top);
+            }
+        }
+
+        public bool KeyAvailable
+        {
+            get
+            {
+                return Console.KeyAvailable;
+            }
+        }
+
+        private bool _cursorVisible = true;
 
         public bool CursorVisible
         {
-            get => Console.CursorVisible;
-            set => Console.CursorVisible = value;
+            get
+            {
+                return _cursorVisible;
+            }
+            set
+            {
+                lock (PromptPlus._lockobj)
+                {
+                    _cursorVisible = value;
+                    if (value)
+                    {
+                        Console.Write("\x1b[?25h");
+                    }
+                    else
+                    {
+                        Console.Write("\x1b[?25l");
+                    }
+                }
+            }
         }
 
-        public int CursorLeft => Console.CursorLeft;
+        public int CursorLeft
+        {
+            get
+            {
+                return Console.CursorLeft;
+            }
+        }
 
-        public int CursorTop => Console.CursorTop;
+        public int CursorTop
+        {
+            get
+            {
+                return Console.CursorTop;
+            }
+        }
 
-        public int BufferWidth => Console.WindowWidth;
 
-        public int BufferHeight => Console.WindowHeight;
+        public int BufferWidth
+        {
+            get
+            {
+                return Console.WindowWidth;
+            }
+        }
+
+        public int BufferHeight
+        {
+            get
+            {
+                return Console.WindowHeight;
+            }
+        }
 
         #endregion
 
-        private void CancelKeyPressHandler(object sender, ConsoleCancelEventArgs e)
-        {
-            Reset();
-        }
     }
 }

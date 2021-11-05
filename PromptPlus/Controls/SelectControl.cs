@@ -1,42 +1,63 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 
 using PromptPlusControls.Internal;
-using PromptPlusControls.Options;
-
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class SelectControl<T> : ControlBase<T>, IDisposable
+    internal class SelectControl<T> : ControlBase<T>, IControlSelect<T>
     {
         private readonly SelectOptions<T> _options;
         private readonly InputBuffer _filterBuffer = new();
-        private readonly Paginator<T> _localpaginator;
+        private Paginator<T> _localpaginator;
+        private bool _autoselect = false;
 
         public SelectControl(SelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
-            _localpaginator = new Paginator<T>(options.Items, options.PageSize, Optional<T>.Create(options.DefaultValue), options.TextSelector);
-            _localpaginator.FirstItem();
             _options = options;
         }
 
-        public new void Dispose()
+        public override void InitControl()
         {
-            if (_localpaginator != null)
+            if (_options.Items is null)
             {
-                _localpaginator.Dispose();
+                throw new ArgumentNullException(nameof(_options.Items));
             }
-            base.Dispose();
+            if (typeof(T).IsEnum && _options.Items.Count == 0)
+            {
+                AddEnum();
+            }
+            if (_options.HideItems.Count() > 0)
+            {
+                foreach (var item in _options.HideItems)
+                {
+                    _options.Items.Remove(item);
+                }
+            }
+            _options.PageSize ??= _options.Items.Count();
+            _options.TextSelector ??= (x => x?.ToString());
+            if (IsDisabled(_options.DefaultValue))
+            {
+                _localpaginator = new Paginator<T>(_options.Items, _options.PageSize, Optional<T>.s_empty, _options.TextSelector, IsNotDisabled);
+            }
+            else
+            {
+                _localpaginator = new Paginator<T>(_options.Items, _options.PageSize, Optional<T>.Create(_options.DefaultValue), _options.TextSelector, IsNotDisabled);
+            }
+            _localpaginator.FirstItem();
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out T result)
+        public override bool? TryResult(bool summary, CancellationToken cancellationToken, out T result)
         {
             bool? isvalidhit = false;
             if (summary)
@@ -46,7 +67,15 @@ namespace PromptPlusControls.Controls
             }
             do
             {
-                var keyInfo = WaitKeypress(cancellationToken);
+                ConsoleKeyInfo keyInfo;
+                if (_autoselect)
+                {
+                    keyInfo = new ConsoleKeyInfo((char)13, ConsoleKey.Enter, false, false, false);
+                }
+                else
+                {
+                    keyInfo = WaitKeypress(cancellationToken);
+                }
 
                 if (CheckDefaultKey(keyInfo))
                 {
@@ -69,7 +98,7 @@ namespace PromptPlusControls.Controls
                         return true;
                     case ConsoleKey.Enter when keyInfo.Modifiers == 0:
                     {
-                        if (!typeof(T).Name.StartsWith("EnumValue`"))
+                        if (!typeof(T).IsEnum)
                         {
                             result = default;
                             return true;
@@ -105,6 +134,14 @@ namespace PromptPlusControls.Controls
                         break;
                     }
                 }
+                if (_localpaginator.Count == 1 && _options.AutoSelectIfOne)
+                {
+                    _autoselect = true;
+                }
+                else
+                {
+                    _autoselect = false;
+                }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
             result = default;
             return isvalidhit;
@@ -115,12 +152,12 @@ namespace PromptPlusControls.Controls
             screenBuffer.WritePrompt(_options.Message);
             if (_localpaginator.IsUnSelected)
             {
-                screenBuffer.Write(_filterBuffer.ToBackwardString());
+                screenBuffer.Write(_filterBuffer.ToBackward());
             }
             if (_localpaginator.TryGetSelectedItem(out var result) && !_localpaginator.IsUnSelected)
             {
                 var answ = _options.TextSelector(result);
-                var aux = _filterBuffer.ToBackwardString();
+                var aux = _filterBuffer.ToBackward();
                 if (answ != aux && _localpaginator.Count == 1)
                 {
                     screenBuffer.WriteFilter(aux);
@@ -134,7 +171,7 @@ namespace PromptPlusControls.Controls
             screenBuffer.PushCursor();
             if (_localpaginator.IsUnSelected)
             {
-                screenBuffer.Write(_filterBuffer.ToForwardString());
+                screenBuffer.Write(_filterBuffer.ToForward());
             }
 
             if (EnabledStandardTooltip)
@@ -164,11 +201,25 @@ namespace PromptPlusControls.Controls
                 var value = _options.TextSelector(item);
                 if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<T>.Default.Equals(item, selectedItem))
                 {
-                    screenBuffer.WriteLineSelector(value);
+                    if (IsDisabled(item))
+                    {
+                        screenBuffer.WriteLineSelectorDisabled(value);
+                    }
+                    else
+                    {
+                        screenBuffer.WriteLineSelector(value);
+                    }
                 }
                 else
                 {
-                    screenBuffer.WriteLineNotSelector(value);
+                    if (IsDisabled(item))
+                    {
+                        screenBuffer.WriteLineNotSelectorDisabled(value);
+                    }
+                    else
+                    {
+                        screenBuffer.WriteLineNotSelector(value);
+                    }
                 }
             }
             if (_localpaginator.PageCount > 1)
@@ -183,5 +234,177 @@ namespace PromptPlusControls.Controls
             FinishResult = _options.TextSelector(result);
             screenBuffer.WriteAnswer(FinishResult);
         }
+
+        #region IControlSelect
+
+        public IControlSelect<T> AutoSelectIfOne()
+        {
+            _options.AutoSelectIfOne = true;
+            return this;
+        }
+
+        public IControlSelect<T> Prompt(string value)
+        {
+            _options.Message = value;
+            return this;
+        }
+
+        public IControlSelect<T> Default(T value)
+        {
+            _options.DefaultValue = value;
+            return this;
+        }
+
+        public IControlSelect<T> PageSize(int value)
+        {
+            if (value < 0)
+            {
+                _options.PageSize = null;
+            }
+            else
+            {
+                _options.PageSize = value;
+            }
+            return this;
+        }
+
+        public IControlSelect<T> TextSelector(Func<T, string> value)
+        {
+            _options.TextSelector = value ?? (x => x.ToString());
+            return this;
+        }
+
+        public IControlSelect<T> HideItem(T value)
+        {
+            _options.HideItems.Add(value);
+            return this;
+        }
+
+        public IControlSelect<T> HideItems(IEnumerable<T> value)
+        {
+            foreach (var item in value)
+            {
+                _options.HideItems.Add(item);
+            }
+            return this;
+        }
+
+        public IControlSelect<T> DisableItem(T value)
+        {
+            _options.DisableItems.Add(value);
+            return this;
+        }
+
+        public IControlSelect<T> DisableItems(IEnumerable<T> value)
+        {
+            foreach (var item in value)
+            {
+                _options.DisableItems.Add(item);
+            }
+            return this;
+        }
+
+        public IControlSelect<T> AddItem(T value)
+        {
+            _options.Items.Add(value);
+            return this;
+        }
+
+        public IControlSelect<T> AddItems(IEnumerable<T> value)
+        {
+            foreach (var item in value)
+            {
+                _options.Items.Add(item);
+            }
+            return this;
+        }
+
+        private bool IsDisabled(T item)
+        {
+            return _options.DisableItems.Contains(item);
+        }
+
+        private bool IsNotDisabled(T item)
+        {
+            return !_options.DisableItems.Contains(item);
+        }
+
+        private void AddEnum()
+        {
+            _options.TextSelector = EnumDisplay;
+            var aux = Enum.GetValues(typeof(T));
+            var result = new List<Tuple<int, T>>();
+            foreach (var item in aux)
+            {
+                var name = item.ToString();
+                var displayAttribute = typeof(T).GetField(name)?.GetCustomAttribute<DisplayAttribute>();
+                var order = displayAttribute?.GetOrder() ?? int.MaxValue;
+                result.Add(new Tuple<int, T>(order, (T)item));
+            }
+            foreach (var item in result.OrderBy(x => x.Item1))
+            {
+                _options.Items.Add(item.Item2);
+            }
+        }
+
+        private string EnumDisplay(T value)
+        {
+            var name = value.ToString();
+            var displayAttribute = value.GetType().GetField(name)?.GetCustomAttribute<DisplayAttribute>();
+            return displayAttribute?.Name ?? name;
+        }
+
+        public IPromptControls<T> EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            return this;
+        }
+
+        public IPromptControls<T> EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            return this;
+        }
+
+        public IPromptControls<T> EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            return this;
+        }
+
+        public IPromptControls<T> HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            return this;
+        }
+
+        public ResultPromptPlus<T> Run(CancellationToken? value = null)
+        {
+            InitControl();
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
+        {
+            Condition = condition;
+            return this;
+        }
+
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            ContextState = state;
+            return this;
+        }
+
+        #endregion
     }
 }

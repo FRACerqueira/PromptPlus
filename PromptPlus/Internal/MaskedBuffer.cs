@@ -1,8 +1,7 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -10,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
+using PromptPlusControls.Controls;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 
@@ -232,9 +232,21 @@ namespace PromptPlusControls.Internal
         {
             if (_isTypeNumber)
             {
-                return this;
+                if (Position > _decimalPosition)
+                {
+                    _inputBuffer.Remove(Position, 1);
+                    _inputBuffer.Append(_maskInputOptions.FillNumber.Value);
+                    return this;
+                }
+                else
+                {
+                    return Backspace();
+                }
             }
-            _inputBuffer.Remove(Position, 1);
+            if (_inputBuffer.Length > 0 && Position < _inputBuffer.Length)
+            {
+                _inputBuffer.Remove(Position, 1);
+            }
             return this;
         }
 
@@ -261,7 +273,35 @@ namespace PromptPlusControls.Internal
         {
             if (Position > 0)
             {
+                if (_isTypeNumber)
+                {
+                    if (Position > _decimalPosition)
+                    {
+                        _inputBuffer[Position--] = _maskInputOptions.FillNumber.Value;
+                    }
+                    else
+                    {
+                        _inputBuffer.Remove(Position, 1);
+                        _inputBuffer.Insert(0, _maskInputOptions.FillNumber.Value);
+                    }
+                    return this;
+                }
                 _inputBuffer.Remove(--Position, 1);
+            }
+            else
+            {
+                if (_inputBuffer.Length > 0 && Position < _inputBuffer.Length)
+                {
+                    if (_isTypeNumber)
+                    {
+                        _inputBuffer.Remove(Position, 1);
+                        _inputBuffer.Insert(0, _maskInputOptions.FillNumber.Value);
+                    }
+                    else
+                    {
+                        _inputBuffer.Remove(Position, 1);
+                    }
+                }
             }
             return this;
         }
@@ -331,12 +371,11 @@ namespace PromptPlusControls.Internal
                     }
                     break;
                 case MaskedType.Number:
+                case MaskedType.Currency:
                     if (_signalNumberInput == _cultureMasked.NumberFormat.NegativeSign[0])
                     {
                         aux = $"{_cultureMasked.NumberFormat.NegativeSign}{aux}";
                     }
-                    break;
-                case MaskedType.Currency:
                     break;
                 default:
                     break;

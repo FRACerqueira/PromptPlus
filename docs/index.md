@@ -268,13 +268,16 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 ## Apis
 [**Top**](#help)
 
-controls | Details
+Controls/Commands | Details
 --- | ---
+[Commands](commands.md) |  Command set for PromptPlus console
+[Color](colorcmd.md) | Easy to add some color-text and underline
+[Banner](banner.md) |  ASCII text banner 
 [Any key](anykey.md) |  Simple any key press
 [Key Press](keypress.md) | Simple specific key
 [Confirm](confirm.md) | Simple confirm with  with tool tips and language detection 
 [Input](input.md) | Input text with input validator with tooltips
-[Password](password.md) | Input password with input validator and show/hide(optional) input value
+[Password](input.md) | Input password with input validator and show/hide(optional) input value
 [MaskEdit Generic](maskeditgeneric.md) | Input with masked input , tooltips and input validator
 [MaskEdit Date](maskeditdate.md) | Date input with language parameter, tooltips and input validator
 [MaskEdit Time](maskeditdate.md) | Time input with language parameter, tooltips and input validator
@@ -282,21 +285,21 @@ controls | Details
 [MaskEdit Number](maskeditnumber.md) | Numeric input with language parameter, tooltips and input validator
 [MaskEdit Currency](maskeditnumber.md) | Currency input with language parameter, tooltips and input validator
 [Select](select.md)| Generic select input IEnumerable/Enum with auto-paginator and tooltips and more
-[MultiSelect](multiselect.md) | Generic multi select input IEnumerable/Enum with auto-paginator , tooltips and more
+[MultiSelect](multiselect.md) | Generic multi select input IEnumerable/Enum with grpip, auto-paginator , tooltips and more
 [List](list.md) | Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more
-[ListMasked](listmasked.md) | Create generic IEnumerable with masked input, auto-paginator, tooptip , input validator
+[ListMasked](listmasked.md) | Create generic IEnumerable with maskededit, auto-paginator, tooptip , input validator
 [Browser](browser.md) | Browser files/folder with auto-paginator and tooltips
 [Slider Number](slidernumber.md) | Numeric ranger with short/large step and tooltips
-[Number Up/Down](numberupdown.md) | Numeric ranger with step and tooltips
+[Number Up/Down](slidernumber.md) | Numeric ranger with step and tooltips
 [Slider Switche](sliderswitche.md) | Generic choice with customization and tooltips
 [Progress Bar](progressbar.md) | Progress Bar with interation customization
 [WaitProcess](waitprocess.md) | Wait process with animation
 [PipeLine](pipeline.md) | Pipeline sequence to all prompts with condition by pipe and status summary
 
+## Extensions
 [**Top**](#help)
 
-## Extensions
-PromptPlus have a extension to **import validator**. No duplicate code! 
+PromptPlus have a extension to **import validators**. No duplicate code! 
 
 ```csharp
 private class MylCass
@@ -310,8 +313,10 @@ private class MylCass
 ```
 ```csharp
 var inst = new MylCass();
-var name = PromptPlus.Input("Input Value for MyInput", null, 
-    validators: inst.ImportValidators(x => x.MyInput), cancellationToken: _stopApp);
+var name = PromptPlus.Input("Input Value for MyInput")
+    .Addvalidators(inst.ImportValidators(x => x.MyInput))
+    .Run(_stopApp);
+
 if (name.IsAborted)
 {
    return;
@@ -320,10 +325,9 @@ Console.WriteLine($"Your input: {name.Value}!");
 ```
 
 ## Snapshot
-[**Top**](#help)
 
 ### Input
-[**Top**](#help) | [Input](input.md) | [Password](password.md)
+[**Top**](#help) | [Input](input.md) | [Password](input.md)
 
 ![](./images/Input.gif)
 ![](./images/Password.gif)
@@ -349,7 +353,7 @@ Console.WriteLine($"Your input: {name.Value}!");
 ![](./images/MultSelect.gif)
 
 ### Confirm
-[**Top**](#help) | [Confirm](confirm.md) | [Slider Switche](sliderswitche.md)[Slider Switche](sliderswitche.md)
+[**Top**](#help) | [Confirm](confirm.md) | [Slider Switche](sliderswitche.md)
 
 ![](./images/Confirm.gif)
 ![](./images/SliderSwitche.gif)
@@ -365,7 +369,7 @@ Console.WriteLine($"Your input: {name.Value}!");
 ![](./images/ProgressBar.gif)
 
 ### Slider Number
-[**Top**](#help) | [Slider Number](slidernumber.md) | [Number Up/Down](numberupdown.md)
+[**Top**](#help) | [Slider Number](slidernumber.md) | [Number Up/Down](slidernumber.md)
 
 ![](./images/SliderNumber.gif)
 ![](./images/NumberUpDown.gif)
@@ -385,6 +389,23 @@ Console.WriteLine($"Your input: {name.Value}!");
 [**Top**](#help) | [PipeLine](pipeline.md)
 
 ![](./images/PipeLine.gif)
+
+### Banner
+[**Top**](#help) | [Banner](banner.md)
+
+![](./images/Banner.gif)
+
+
+### Colors
+[**Top**](#help) | [Colors](colorcmd.md)
+
+![](./images/Colors.gif)
+
+### Commands
+[**Top**](#help) | [Commands](commands.md)
+
+![](./images/Commands.gif)
+
 
 ## Supported platforms
 [**Top**](#help)

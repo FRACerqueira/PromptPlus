@@ -1,19 +1,20 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Threading;
 
 using PromptPlusControls.Internal;
-using PromptPlusControls.Options;
 using PromptPlusControls.Resources;
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class InputControl : ControlBase<string>
+    internal class InputControl : ControlBase<string>, IControlInput
     {
         private readonly InputOptions _options;
         private readonly InputBuffer _inputBuffer = new();
@@ -22,15 +23,23 @@ namespace PromptPlusControls.Controls
 
         public InputControl(InputOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
-            if (options.IsPassword && options.DefaultValue != null)
+            _options = options;
+        }
+
+        public override void InitControl()
+        {
+            if (_options.IsPassword && _options.DefaultValue != null)
             {
                 throw new ArgumentException(Exceptions.Ex_PasswordDefaultValue);
             }
-            _options = options;
+            if (!string.IsNullOrEmpty(_options.DefaultValue))
+            {
+                _inputBuffer.Load(_options.DefaultValue);
+            }
             _initform = true;
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out string result)
+        public override bool? TryResult(bool summary, CancellationToken cancellationToken, out string result)
         {
             bool? isvalidhit = false;
             if (summary)
@@ -58,7 +67,7 @@ namespace PromptPlusControls.Controls
                         }
                         try
                         {
-                            if (!TryValidate((object)result, _options.Validators))
+                            if (!TryValidate(result, _options.Validators))
                             {
                                 result = default;
                                 return false;
@@ -105,6 +114,7 @@ namespace PromptPlusControls.Controls
                         break;
                     }
                 }
+                _initform = _inputBuffer.Length == 0;
 
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
 
@@ -118,10 +128,6 @@ namespace PromptPlusControls.Controls
             var prompt = _options.Message;
             if (!string.IsNullOrEmpty(_options.DefaultValue))
             {
-                if (_initform)
-                {
-                    _inputBuffer.Load(_options.DefaultValue);
-                }
                 prompt = $"{_options.Message} ({_options.DefaultValue})";
             }
 
@@ -129,22 +135,22 @@ namespace PromptPlusControls.Controls
 
             if (_options.IsPassword && !_passwordvisible)
             {
-                screenBuffer.WriteAnswer(new string(PromptPlus.PasswordChar, _inputBuffer.ToBackwardString().Length));
+                screenBuffer.WriteAnswer(new string(PromptPlus.PasswordChar, _inputBuffer.ToBackward().Length));
             }
             else
             {
-                screenBuffer.WriteAnswer(_inputBuffer.ToBackwardString());
+                screenBuffer.WriteAnswer(_inputBuffer.ToBackward());
             }
 
             screenBuffer.PushCursor();
 
             if (_options.IsPassword && !_passwordvisible)
             {
-                screenBuffer.WriteAnswer(new string(PromptPlus.PasswordChar, _inputBuffer.ToForwardString().Length));
+                screenBuffer.WriteAnswer(new string(PromptPlus.PasswordChar, _inputBuffer.ToForward().Length));
             }
             else
             {
-                screenBuffer.WriteAnswer(_inputBuffer.ToForwardString());
+                screenBuffer.WriteAnswer(_inputBuffer.ToForward());
             }
 
             if (EnabledStandardTooltip)
@@ -155,6 +161,12 @@ namespace PromptPlusControls.Controls
                     screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, string.Join("", Messages.EnterFininsh, Messages.MaskEditErase));
                 }
             }
+
+            if (_options.ValidateOnDemand && !_initform && _options.Validators.Count > 0)
+            {
+                TryValidate(_inputBuffer.ToString(), _options.Validators);
+            }
+
             _initform = false;
         }
 
@@ -174,5 +186,96 @@ namespace PromptPlusControls.Controls
                 screenBuffer.WriteAnswer(FinishResult);
             }
         }
+
+        #region IControlInput
+
+        public IControlInput Prompt(string value)
+        {
+            _options.Message = value;
+            return this;
+        }
+
+        public IControlInput ValidateOnDemand()
+        {
+            _options.ValidateOnDemand = true;
+            return this;
+        }
+
+        public IControlInput Default(string value)
+        {
+            _options.DefaultValue = value;
+            return this;
+        }
+
+        public IControlInput IsPassword(bool swithVisible)
+        {
+            _options.SwithVisiblePassword = swithVisible;
+            _options.IsPassword = true;
+            return this;
+        }
+
+        public IControlInput Addvalidator(Func<object, ValidationResult> validator)
+        {
+            return Addvalidators(new List<Func<object, ValidationResult>> { validator });
+        }
+
+        public IControlInput Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+        {
+            _options.Validators.Merge(validators);
+            return this;
+        }
+
+        public IPromptControls<string> EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            return this;
+        }
+
+        public IPromptControls<string> EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            return this;
+        }
+
+        public IPromptControls<string> EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            return this;
+        }
+
+        public IPromptControls<string> HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            return this;
+        }
+
+        public ResultPromptPlus<string> Run(CancellationToken? value = null)
+        {
+            InitControl();
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
+        {
+            Condition = condition;
+            return this;
+        }
+
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            ContextState = state;
+            return this;
+        }
+
+        #endregion
     }
 }

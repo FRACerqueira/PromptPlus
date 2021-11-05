@@ -1,42 +1,27 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+// Inspired by the work https://github.com/shibayan/Sharprompt
+// ***************************************************************************************
 
 using System;
 using System.Runtime.InteropServices;
 
 namespace PromptPlusControls.ValueObjects
 {
-    public class Symbol
+    public struct Symbol
     {
-        private string _value;
-        private string _fallbackValue;
-
-        public Symbol()
-        {
-            _value = " ";
-            _fallbackValue = "  ";
-        }
 
         public Symbol(string value, string fallbackValue)
         {
-            _value = value ?? " ";
-            _fallbackValue = fallbackValue ?? " ";
+            Value = value ?? " ";
+            FallbackValue = fallbackValue ?? " ";
         }
 
-        public string Value
-        {
-            get { return _value; }
-            set { _value = value ?? " "; }
-        }
+        public string Value { get; set; }
 
-        public string FallbackValue
-        {
-            get { return _fallbackValue; }
-            set { _fallbackValue = value ?? " "; }
-        }
+        public string FallbackValue { get; set; }
 
         public override string ToString()
         {

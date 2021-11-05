@@ -1,8 +1,9 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+// Inspired by the work https://github.com/shibayan/Sharprompt
+// ***************************************************************************************
 
 using System.Collections.Generic;
 using System.Linq;

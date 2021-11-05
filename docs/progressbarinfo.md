@@ -4,7 +4,7 @@
 [**ProgressBar Control**](progressbar)
 
 ## Documentation
-Default return class for [**ProgressBar Control**](progressbar).
+Default return struct for [**ProgressBar Control**](progressbar). 
 
 ### Syntax
 

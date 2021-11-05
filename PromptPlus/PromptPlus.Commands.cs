@@ -1,20 +1,15 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Globalization;
-using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 
 using PromptPlusControls.Controls;
-using PromptPlusControls.Internal;
-using PromptPlusControls.Options;
+using PromptPlusControls.FIGlet;
 using PromptPlusControls.Resources;
 using PromptPlusControls.ValueObjects;
 
@@ -22,1001 +17,329 @@ namespace PromptPlusControls
 {
     public static partial class PromptPlus
     {
-        private static readonly char? s_defaultfill = '0';
 
-        public static ResultPromptPlus<IEnumerable<ResultPipe>> Pipeline(IList<IFormPlusBase> steps, CancellationToken? cancellationToken = null)
+        #region Console Commands
+
+        public static ResultPromptPlus<ConsoleKeyInfo> WaitKeypress(CancellationToken cancellationToken)
         {
-            foreach (var item in steps)
+            return new ResultPromptPlus<ConsoleKeyInfo>(_consoleDriver.WaitKeypress(cancellationToken), cancellationToken.IsCancellationRequested);
+        }
+
+        public static void ClearLine(int top)
+        {
+            if (top < 0)
             {
-                if (string.IsNullOrEmpty(item.PipeId))
+                top = 0;
+            }
+            if (top > _consoleDriver.BufferHeight - 1)
+            {
+                top = _consoleDriver.BufferHeight - 1;
+            }
+            _consoleDriver.ClearLine(top);
+        }
+
+        public static void ClearRestOfLine(ConsoleColor? color = null) => _consoleDriver.ClearRestOfLine(color ?? BackgroundColor);
+
+        public static void Beep() => _consoleDriver.Beep();
+
+        public static int CursorLeft => _consoleDriver.CursorLeft;
+
+        public static int CursorTop => _consoleDriver.CursorTop;
+
+        public static int BufferWidth => Console.BufferWidth;
+
+        public static int BufferHeight => Console.BufferHeight;
+
+        public static int WindowWidth => Console.WindowWidth;
+
+        public static int WindowHeight => Console.WindowHeight;
+
+        public static bool IsRunningTerminal => _consoleDriver.IsRunningTerminal;
+
+        public static ConsoleColor ForegroundColor => _consoleDriver.ForegroundColor;
+
+        public static ConsoleColor BackgroundColor => _consoleDriver.BackgroundColor;
+
+        public static void CursorPosition(int left, int top)
+        {
+            lock (_lockobj)
+            {
+                if (top < 0)
                 {
-                    throw new ArgumentException(Exceptions.EX_PipeLineEmptyId);
+                    top = 0;
+                }
+                if (left < 0)
+                {
+                    left = 0;
+                }
+                if (top > _consoleDriver.BufferHeight - 1)
+                {
+                    top = _consoleDriver.BufferHeight - 1;
+                }
+                _consoleDriver.SetCursorPosition(left, top);
+            }
+        }
+
+        public static void ConsoleDefaultColor(ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
+        {
+            lock (_lockobj)
+            {
+                if (forecolor.HasValue)
+                {
+                    _consoleDriver.ForegroundColor = forecolor.Value;
+                }
+                if (backcolor.HasValue)
+                {
+                    _consoleDriver.BackgroundColor = backcolor.Value;
                 }
             }
-            using var pipeline = new PipeLineControl(steps);
-            return pipeline.Start(cancellationToken ?? CancellationToken.None);
         }
 
-        public static ResultPromptPlus<bool> AnyKey(CancellationToken? cancellationToken = null)
+        public static void Clear(ConsoleColor? backcolor = null)
         {
-            using var form = KeyPressForm(new KeyPressOptions { });
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<bool> KeyPress(Action<KeyPressOptions> configure, CancellationToken? cancellationToken = null)
-        {
-            var options = new KeyPressOptions();
-            configure(options);
-            return KeyPress(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<bool> KeyPress(KeyPressOptions options, CancellationToken? cancellationToken = null)
-        {
-            using var form = KeyPressForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static keyPressControl KeyPressForm(KeyPressOptions options)
-        {
-            return new keyPressControl(options);
-        }
-
-        public static ResultPromptPlus<bool> KeyPress(string message, char? Keypress, ConsoleModifiers? keymodifiers = null, CancellationToken? cancellationToken = null)
-        {
-            using var form = KeyPressForm(message, Keypress, keymodifiers);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static keyPressControl KeyPressForm(string message, char? Keypress, ConsoleModifiers? keymodifiers = null)
-        {
-            var options = new KeyPressOptions
+            lock (_lockobj)
             {
-                KeyPress = Keypress,
-                Message = message,
-                KeyModifiers = keymodifiers
-            };
-            return KeyPressForm(options);
-        }
-
-        internal static ResultPromptPlus<ResultMasked> MaskEdit(MaskedOptions options, CancellationToken? cancellationToken = null)
-        {
-            using var form = MaskEditForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static MaskedInputControl MaskEditForm(MaskedOptions options)
-        {
-            return new MaskedInputControl(options);
-        }
-
-        public static ResultPromptPlus<ResultMasked> MaskEdit(MaskedGenericType masktype, string message, string maskedvalue, string defaultValue = null, bool upperCase = true, bool showtypeinput = true, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
-        {
-            using var form = MaskEditForm(masktype, message, maskedvalue, defaultValue, upperCase, showtypeinput, validators, enabledPromptTooltip, enabledAbortKey, enabledAbortAllPipes, hideAfterFinish);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static MaskedInputControl MaskEditForm(MaskedGenericType masktype, string message, string maskedvalue, string defaultValue, bool upperCase, bool showtypeinput, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
-        {
-            var options = new MaskedOptions
-            {
-                Type = masktype.SeletedOption,
-                FmtYear = FormatYear.Y4,
-                FmtTime = FormatTime.HMS,
-                AcceptSignal = MaskedSignal.None,
-                CurrentCulture = DefaultCulture,
-                ShowInputType = showtypeinput,
-                Message = message,
-                MaskValue = maskedvalue,
-                DefaultValueWitdhoutMask = defaultValue,
-                UpperCase = upperCase,
-                EnabledAbortAllPipes = enabledAbortAllPipes,
-                EnabledPromptTooltip = enabledPromptTooltip,
-                EnabledAbortKey = enabledAbortKey,
-                HideAfterFinish = hideAfterFinish
-            };
-
-            if (validators != null)
-            {
-                options.Validators.Merge(validators);
-            }
-
-            return MaskEditForm(options);
-        }
-
-        public static ResultPromptPlus<ResultMasked> MaskEdit(MaskedDateType masktype, string message, DateTime? defaultValue = null, CultureInfo cultureinfo = null, bool fillzeros = false, bool showtypeinput = true, FormatYear fyear = FormatYear.Y4, FormatTime ftime = FormatTime.HMS, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
-        {
-            using var form = MaskEditForm(masktype, message, defaultValue, cultureinfo, fillzeros, showtypeinput, fyear, ftime, validators, enabledPromptTooltip, enabledAbortKey, enabledAbortAllPipes, hideAfterFinish);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static MaskedInputControl MaskEditForm(MaskedDateType masktype, string message, DateTime? defaultValue, CultureInfo? cultureinfo, bool fillzeros, bool showtypeinput, FormatYear fyear, FormatTime ftime, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
-        {
-            var paramAM = DefaultCulture.DateTimeFormat.AMDesignator;
-            if (cultureinfo == null)
-            {
-                cultureinfo = DefaultCulture;
-            }
-
-            string defaultdateValue = null;
-            var stddtfmt = cultureinfo.DateTimeFormat.ShortDatePattern.ToUpper().Split(cultureinfo.DateTimeFormat.DateSeparator[0]);
-            var yearlen = "4";
-            if (fyear == FormatYear.Y2)
-            {
-                yearlen = "2";
-            }
-            var fmtdate = $"{yearlen}:{stddtfmt[0][0]}{stddtfmt[1][0]}{stddtfmt[2][0]}";
-            if (defaultValue.HasValue)
-            {
-                defaultdateValue = defaultValue.Value.ToString(cultureinfo.DateTimeFormat.UniversalSortableDateTimePattern);
-                var dtstring = defaultdateValue.Substring(0, defaultdateValue.IndexOf(' '));
-                switch (fyear)
+                if (backcolor.HasValue)
                 {
-                    case FormatYear.Y4:
-                        break;
-                    case FormatYear.Y2:
-                        dtstring = dtstring.Substring(2);
-                        break;
-                    default:
-                        break;
+                    _consoleDriver.BackgroundColor = backcolor.Value;
                 }
-                var dtelem = dtstring.Split('-');
-                for (var i = 0; i < stddtfmt.Length; i++)
+                _consoleDriver.Clear();
+            }
+        }
+
+        public static void WriteLineSkipColors(string value)
+        {
+            _consoleDriver.WriteLine(value);
+        }
+
+        public static void WriteLine(Exception value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
+        {
+            WriteLine(value.ToString().Color(forecolor ?? PromptPlus.ForegroundColor, backcolor));
+        }
+
+        public static void WriteLine(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
+        {
+            if (underline)
+            {
+                var aux = ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor);
+                foreach (var item in aux)
                 {
-                    if (stddtfmt[i][0] == 'D')
+                    WriteLine(item.Underline());
+                }
+            }
+            else
+            {
+                WriteLine(ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor));
+            }
+        }
+
+        public static void Write(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
+        {
+            if (underline)
+            {
+                var aux = ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor);
+                foreach (var item in aux)
+                {
+                    Write(item.Underline());
+                }
+            }
+            else
+            {
+                Write(ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor));
+            }
+        }
+
+        public static void WriteSkipColors(string value)
+        {
+            _consoleDriver.Write(value);
+        }
+
+        public static void Write(params ColorToken[] tokens)
+        {
+            _consoleDriver.Write(tokens);
+        }
+
+        public static void WriteLine(params ColorToken[] tokens)
+        {
+            _consoleDriver.WriteLine(tokens);
+        }
+
+        public static void WriteLines(int value = 1)
+        {
+            if (value < 1)
+            {
+                return;
+            }
+            for (var i = 0; i < value; i++)
+            {
+                Console.WriteLine();
+            }
+        }
+
+        /// <summary>
+        /// Allows a string to be written with embedded color values using:
+        /// This is [red]Red[/red] text and this is [white:blue!u]Blue[/white:blue!u] text
+        /// </summary>
+        /// <param name="text">Text to display</param>
+        private static ColorToken[] ConvertEmbeddedColorLine(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return new[] { new ColorToken(text) };
+            }
+
+            var at = text.IndexOf("[");
+            var at2 = text.IndexOf("]");
+            if (at == -1 || at2 <= at)
+            {
+                return new[] { new ColorToken(text) };
+            }
+
+            var result = new List<ColorToken>();
+            var match = colorBlockRegEx.Value.Match(text);
+            while (match.Length >= 1)
+            {
+                // write up to expression
+                result.Add(new ColorToken(text.Substring(0, match.Index)));
+
+                // strip out the expression
+                var highlightText = match.Groups["text"].Value;
+                var colvalfc = _consoleDriver.ForegroundColor;
+                var colvalbc = _consoleDriver.BackgroundColor;
+
+                var underline = false;
+                var mathgrp = match.Groups["color"].Value;
+                if (mathgrp.StartsWith("!!"))
+                {
+                    result.Add(new ColorToken(highlightText));
+                }
+                else
+                {
+                    //find underline tolen
+                    if (mathgrp.IndexOf("!u", StringComparison.InvariantCultureIgnoreCase) >= 0)
                     {
-                        stddtfmt[i] = dtelem[2];
+                        underline = true;
+                        mathgrp = mathgrp.Replace("!u", "", StringComparison.InvariantCultureIgnoreCase);
                     }
-                    else if (stddtfmt[i][0] == 'M')
+                    //split color
+
+                    var colors = mathgrp.Split(':', StringSplitOptions.RemoveEmptyEntries);
+                    if (colors.Length == 1)
                     {
-                        stddtfmt[i] = dtelem[1];
+                        Enum.TryParse(colors[0], true, out colvalfc);
                     }
-                    else if (stddtfmt[i][0] == 'Y')
+                    else if (colors.Length == 2)
                     {
-                        stddtfmt[i] = dtelem[0];
+                        Enum.TryParse(colors[0], true, out colvalfc);
+                        Enum.TryParse(colors[1], true, out colvalbc);
                     }
+                    result.Add(new ColorToken(highlightText, colvalfc, colvalbc, underline));
                 }
-                dtstring = $"{stddtfmt[0]}{cultureinfo.DateTimeFormat.DateSeparator}{stddtfmt[1]}{cultureinfo.DateTimeFormat.DateSeparator}{stddtfmt[2]}";
-                var tmstring = defaultdateValue.Substring(defaultdateValue.IndexOf(' ') + 1);
-                tmstring = tmstring.Replace("Z", "");
-                var tmelem = tmstring.Split(':');
-                var hr = int.Parse(tmstring.Substring(0, 2));
-                string tmsignal;
-                if (hr > 12)
-                {
-                    tmsignal = cultureinfo.DateTimeFormat.PMDesignator.ToUpper()[0].ToString();
-                }
-                else
-                {
-                    tmsignal = cultureinfo.DateTimeFormat.AMDesignator.ToUpper()[0].ToString();
-                }
-                if (string.IsNullOrEmpty(paramAM) && !string.IsNullOrEmpty(cultureinfo.DateTimeFormat.AMDesignator))
-                {
-                    hr -= 12;
-                    tmstring = $"{hr.ToString().PadLeft(2, '0')}{cultureinfo.DateTimeFormat.TimeSeparator}{tmelem[1]}{cultureinfo.DateTimeFormat.TimeSeparator}{tmelem[1]}";
-                }
-                else if (!string.IsNullOrEmpty(paramAM) && string.IsNullOrEmpty(cultureinfo.DateTimeFormat.AMDesignator))
-                {
-                    hr += 12;
-                    tmstring = $"{hr.ToString().PadLeft(2, '0')}{cultureinfo.DateTimeFormat.TimeSeparator}{tmelem[1]}{cultureinfo.DateTimeFormat.TimeSeparator}{tmelem[1]}";
-                }
-                else
-                {
-                    tmstring = $"{tmelem[0]}{cultureinfo.DateTimeFormat.TimeSeparator}{tmelem[1]}{cultureinfo.DateTimeFormat.TimeSeparator}{tmelem[1]}";
-                }
-                switch (masktype.Option)
-                {
-                    case MaskedOptionDateType.DateOnly:
-                        defaultdateValue = dtstring;
-                        break;
-                    case MaskedOptionDateType.TimeOnly:
-                        defaultdateValue = $"{tmstring}{tmsignal}";
-                        break;
-                    case MaskedOptionDateType.DateTime:
-                        defaultdateValue = $"{dtstring}{tmstring}{tmsignal}";
-                        break;
-                }
-                defaultdateValue = defaultdateValue.Replace(cultureinfo.DateTimeFormat.DateSeparator, "");
-                defaultdateValue = defaultdateValue.Replace(cultureinfo.DateTimeFormat.TimeSeparator, "");
-            }
 
-            var maskvalue = masktype.SeletedOption switch
-            {
-                MaskedType.Generic or MaskedType.Number or MaskedType.Currency => throw new ArgumentException(masktype.SeletedOption.ToString()),
-                MaskedType.DateOnly => CreateMaskedOnlyDate(fyear, cultureinfo),
-                MaskedType.TimeOnly => CreateMaskedOnlyTime(ftime, cultureinfo),
-                MaskedType.DateTime => CreateMaskedOnlyDateTime(fyear, ftime, cultureinfo),
-                _ => throw new ArgumentException(masktype.SeletedOption.ToString()),
-            };
-
-            var options = new MaskedOptions
-            {
-                DateFmt = fmtdate,
-                Type = masktype.SeletedOption,
-                FmtYear = fyear,
-                FmtTime = ftime,
-                AcceptSignal = MaskedSignal.None,
-                CurrentCulture = cultureinfo,
-                ShowInputType = showtypeinput,
-                Message = message,
-                MaskValue = maskvalue,
-                FillNumber = fillzeros ? s_defaultfill : null,
-                DefaultValueWitdhoutMask = defaultdateValue,
-                EnabledAbortAllPipes = enabledAbortAllPipes,
-                EnabledPromptTooltip = enabledPromptTooltip,
-                EnabledAbortKey = enabledAbortKey,
-                HideAfterFinish = hideAfterFinish
-            };
-            options.Validators.Add(Validators.IsDateTime(cultureinfo, Messages.Invalid));
-
-            if (validators != null)
-            {
-                options.Validators.Merge(validators);
-            }
-
-            return MaskEditForm(options);
-        }
-
-        public static ResultPromptPlus<ResultMasked> MaskEdit(MaskedNumberType masktype, string message, int ammoutInteger, int ammoutDecimal, double? defaultValue = null, CultureInfo cultureinfo = null, MaskedSignal signal = MaskedSignal.None, bool showtypeinput = true, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
-        {
-            using var form = MaskEditForm(masktype, message, ammoutInteger, ammoutDecimal, defaultValue, cultureinfo, signal, showtypeinput, validators, enabledPromptTooltip, enabledAbortKey, enabledAbortAllPipes, hideAfterFinish);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static MaskedInputControl MaskEditForm(MaskedNumberType masktype, string message, int ammoutInteger, int ammoutDecimal, double? defaultValue, CultureInfo cultureinfo, MaskedSignal signal, bool showtypeinput, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
-        {
-            string defaultnumValue = null;
-            if (defaultValue.HasValue)
-            {
-                var sep = DefaultCulture.NumberFormat.NumberDecimalSeparator[0];
-                if (masktype.Option == MaskedOptionNumberType.Currency)
+                // remainder of string
+                text = text.Substring(match.Index + match.Value.Length);
+                match = colorBlockRegEx.Value.Match(text);
+                if (match.Length < 1 && text.Length > 0)
                 {
-                    sep = DefaultCulture.NumberFormat.CurrencyDecimalSeparator[0];
-                }
-                var aux = defaultValue.ToString();
-                var pos = aux.IndexOf(sep);
-                string intvalue;
-                var decvalue = new string('0', ammoutDecimal);
-                if (pos >= 0)
-                {
-                    intvalue = aux.Substring(0, pos).PadLeft(ammoutInteger, '0');
-                    decvalue = aux.Substring(pos + 1).PadRight(ammoutDecimal, '0');
-                }
-                else
-                {
-                    intvalue = aux.PadLeft(ammoutInteger, '0');
-                }
-                var defsignal = "";
-                if (signal == MaskedSignal.Enabled && defaultValue < 0)
-                {
-                    defsignal = "-";
-                }
-                if (signal == MaskedSignal.Enabled && defaultValue > 0)
-                {
-                    defsignal = "+";
-                }
-                if (ammoutInteger == 0)
-                {
-                    defaultnumValue = $"{decvalue}{defsignal}";
-                }
-                else
-                {
-                    defaultnumValue = $"{intvalue}{decvalue}{defsignal}";
+                    result.Add(new ColorToken(text));
                 }
             }
-            if (cultureinfo == null)
+            return result.ToArray();
+        }
+
+        private static readonly Lazy<Regex> colorBlockRegEx = new(
+            () => new Regex("\\[(?<color>.*?)\\](?<text>[^[]*)\\[/\\k<color>\\]", RegexOptions.IgnoreCase),
+            isThreadSafe: true);
+
+        #endregion
+
+        #region controls
+
+        public static IFIGlet Banner(string value)
+        {
+            return new BannerControl(value);
+        }
+
+        public static IControlKeyPress KeyPress(char? Keypress = null, ConsoleModifiers? keymodifiers = null)
+        {
+            return new keyPressControl(new KeyPressOptions { KeyPress = Keypress, KeyModifiers = keymodifiers });
+        }
+
+        public static IControlMaskEdit MaskEdit(MaskedType type, string prompt = null)
+        {
+            return type switch
             {
-                cultureinfo = DefaultCulture;
-            }
-
-            var maskvalue = masktype.SeletedOption switch
-            {
-                MaskedType.Generic or MaskedType.DateOnly or MaskedType.TimeOnly or MaskedType.DateTime => throw new ArgumentException(masktype.SeletedOption.ToString()),
-                MaskedType.Number => CreateMaskedNumber(cultureinfo, ammoutInteger, ammoutDecimal),
-                MaskedType.Currency => CreateMaskedCurrency(cultureinfo, ammoutInteger, ammoutDecimal),
-                _ => throw new ArgumentException(masktype.SeletedOption.ToString()),
-            };
-            var options = new MaskedOptions
-            {
-                Type = masktype.SeletedOption,
-                FmtYear = FormatYear.Y4,
-                FmtTime = FormatTime.HMS,
-                AcceptSignal = signal,
-                CurrentCulture = cultureinfo,
-                ShowInputType = showtypeinput,
-                Message = message,
-                MaskValue = maskvalue,
-                FillNumber = s_defaultfill,
-                OnlyDecimal = ammoutInteger == 0,
-                DefaultValueWitdhoutMask = defaultnumValue,
-                EnabledAbortAllPipes = enabledAbortAllPipes,
-                EnabledPromptTooltip = enabledPromptTooltip,
-                EnabledAbortKey = enabledAbortKey,
-                HideAfterFinish = hideAfterFinish
-            };
-            options.Validators.Add(Validators.IsNumber(masktype.Option, cultureinfo, Messages.Invalid));
-            if (validators != null)
-            {
-                options.Validators.Merge(validators);
-            }
-
-            return MaskEditForm(options);
-        }
-
-        public static MaskedDateType MaskTypeDateOnly => new() { Option = MaskedOptionDateType.DateOnly };
-
-        public static MaskedDateType MaskTypeDateTime => new() { Option = MaskedOptionDateType.DateTime };
-
-        public static MaskedDateType MaskTypeTimeOnly => new() { Option = MaskedOptionDateType.TimeOnly };
-
-        public static MaskedNumberType MaskTypeNumber => new() { Option = MaskedOptionNumberType.Number };
-
-        public static MaskedNumberType MaskTypeCurrency => new() { Option = MaskedOptionNumberType.Currency };
-
-        public static MaskedGenericType MaskTypeGeneric => new();
-
-        public static ResultPromptPlus<string> Input(InputOptions options, CancellationToken? cancellationToken = null)
-        {
-            using var form = InputForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static InputControl InputForm(InputOptions options)
-        {
-            return new InputControl(options);
-        }
-
-        public static ResultPromptPlus<string> Input(Action<InputOptions> configure, CancellationToken? cancellationToken = null)
-        {
-            var options = new InputOptions();
-            configure(options);
-            return Input(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<string> Input(string message, string defaultValue = null, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
-        {
-            using var form = InputForm(message, defaultValue, validators, false, false);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<string> Password(string message, bool swithVisible = true, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
-        {
-            var options = new InputOptions
-            {
-                Message = message,
-                IsPassword = true,
-                SwithVisiblePassword = swithVisible
-            };
-
-            if (validators != null)
-            {
-                options.Validators.Merge(validators);
-            }
-
-            return Input(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static InputControl InputForm(string message, string defaultValue = null, IList<Func<object, ValidationResult>> validators = null, bool ispassword = false, bool swithVisible = true)
-        {
-            var options = new InputOptions
-            {
-                Message = message,
-                DefaultValue = defaultValue,
-                IsPassword = ispassword,
-                SwithVisiblePassword = swithVisible
-            };
-
-            if (validators != null)
-            {
-                options.Validators.Merge(validators);
-            }
-            return InputForm(options);
-        }
-
-        public static ResultPromptPlus<T> SliderNumber<T>(SliderNumberOptions<T> options, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
-        {
-            using var form = SliderNumberForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static SliderNumberControl<T> SliderNumberForm<T>(SliderNumberOptions<T> options) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
-        {
-            return new SliderNumberControl<T>(options);
-        }
-
-        public static ResultPromptPlus<T> SliderNumber<T>(Action<SliderNumberOptions<T>> configure, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
-        {
-            var options = new SliderNumberOptions<T>();
-
-            configure(options);
-
-            return SliderNumber(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<T> SliderNumber<T>(string message, T value, T min, T max, T shortstep, T? largestep = null, int fracionalDig = 0, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
-        {
-            T large;
-            if (largestep == null)
-            {
-                large = (T)Convert.ChangeType(int.Parse(max.ToString()) / 10, typeof(T));
-            }
-            else
-            {
-                large = largestep.Value;
-            }
-            using var form = SliderNumberForm(message, value, min, max, shortstep, large, fracionalDig);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static SliderNumberControl<T> SliderNumberForm<T>(string message, T value, T min, T max, T shortstep, T? largestep = null, int fracionalDig = 0) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
-        {
-            var options = new SliderNumberOptions<T>
-            {
-                FracionalDig = fracionalDig,
-                LargeStep = largestep,
-                Max = max,
-                Message = message,
-                Min = min,
-                ShortStep = shortstep,
-                Value = value
-            };
-            return SliderNumberForm(options);
-        }
-
-        public static ResultPromptPlus<T> NumberUpDown<T>(SliderNumberOptions<T> options, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
-        {
-            options.Type = SliderNumberType.UpDown;
-            using var form = SliderNumberForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<T> NumberUpDown<T>(Action<SliderNumberOptions<T>> configure, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
-        {
-            var options = new SliderNumberOptions<T>();
-            configure(options);
-            options.Type = SliderNumberType.UpDown;
-            return SliderNumber(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<T> NumberUpDown<T>(string message, T value, T min, T max, T step, int fracionalDig = 0, CancellationToken? cancellationToken = null) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
-        {
-            using var form = NumberUpDownForm(message, value, min, max, step, fracionalDig);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static SliderNumberControl<T> NumberUpDownForm<T>(string message, T value, T min, T max, T step, int fracionalDig = 0) where T : struct, IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
-        {
-            var options = new SliderNumberOptions<T>
-            {
-                Type = SliderNumberType.UpDown,
-                FracionalDig = fracionalDig,
-                LargeStep = step,
-                Max = max,
-                Message = message,
-                Min = min,
-                ShortStep = step,
-                Value = value
-            };
-            return SliderNumberForm(options);
-        }
-
-        public static ResultPromptPlus<bool> SliderSwitche(SliderSwitcheOptions options, CancellationToken? cancellationToken = null)
-        {
-            using var form = SliderSwitcheForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static SliderSwitcheControl SliderSwitcheForm(SliderSwitcheOptions options)
-        {
-            return new SliderSwitcheControl(options);
-        }
-
-        public static ResultPromptPlus<bool> SliderSwitche(Action<SliderSwitcheOptions> configure, CancellationToken? cancellationToken = null)
-        {
-            var options = new SliderSwitcheOptions();
-
-            configure(options);
-
-            return SliderSwitche(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<bool> SliderSwitche(string message, bool value, string offvalue = null, string onvalue = null, CancellationToken? cancellationToken = null)
-        {
-            using var form = SliderSwitcheForm(message, value, offvalue, onvalue);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-
-        }
-
-        internal static SliderSwitcheControl SliderSwitcheForm(string message, bool value, string offvalue, string onvalue)
-        {
-            var options = new SliderSwitcheOptions
-            {
-                Message = message,
-                Value = value,
-                OffValue = offvalue ?? Messages.OffValue,
-                OnValue = onvalue ?? Messages.OnValue
-            };
-            return SliderSwitcheForm(options);
-        }
-
-        public static ResultPromptPlus<ProgressBarInfo> Progressbar(ProgressBarOptions options, CancellationToken? cancellationToken = null)
-        {
-            using var form = ProgressbarForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static ProgressBarControl ProgressbarForm(ProgressBarOptions options)
-        {
-            return new ProgressBarControl(options);
-        }
-
-        public static ResultPromptPlus<ProgressBarInfo> Progressbar(Action<ProgressBarOptions> configure, CancellationToken? cancellationToken = null)
-        {
-            var options = new ProgressBarOptions();
-
-            configure(options);
-
-            return Progressbar(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<ProgressBarInfo> Progressbar(string title, Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> updateHandler, int width = ProgressgBarWitdth, object interationId = null, CancellationToken? cancellationToken = null)
-        {
-            using var form = ProgressbarForm(title, interationId, updateHandler, width);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-
-        }
-
-        internal static ProgressBarControl ProgressbarForm(string title, object interationId, Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> updateHandler, int width)
-        {
-            var options = new ProgressBarOptions
-            {
-                Message = title,
-                InterationId = interationId ?? 0,
-                UpdateHandler = updateHandler,
-                Witdth = width < ProgressgBarWitdth ? ProgressgBarWitdth : (width > 100 ? 100 : width)
-            };
-            return ProgressbarForm(options);
-        }
-
-        public static ResultPromptPlus<IEnumerable<ResultProcess>> WaitProcess(WaitProcessOptions options, CancellationToken? cancellationToken = null)
-        {
-            using var form = WaitProcessForm(options);
-            var res = form.Start(cancellationToken ?? CancellationToken.None);
-            if (res.IsAborted)
-            {
-                return new ResultPromptPlus<IEnumerable<ResultProcess>>(res.Value, true);
-            }
-            return new ResultPromptPlus<IEnumerable<ResultProcess>>(res.Value, res.IsAborted);
-        }
-
-        internal static WaitProcessControl WaitProcessForm(WaitProcessOptions options)
-        {
-            return new WaitProcessControl(options);
-        }
-
-        public static ResultPromptPlus<IEnumerable<ResultProcess>> WaitProcess(Action<WaitProcessOptions> configure, CancellationToken? cancellationToken = null)
-        {
-            var options = new WaitProcessOptions();
-
-            configure(options);
-
-            return WaitProcess(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<IEnumerable<ResultProcess>> WaitProcess(string title, SingleProcess process, CancellationToken? cancellationToken = null)
-        {
-            return WaitProcess(
-                title,
-                new List<SingleProcess>()
-                {
-                     process
-                }, cancellationToken);
-        }
-
-        public static ResultPromptPlus<IEnumerable<ResultProcess>> WaitProcess(string title, IEnumerable<SingleProcess> process, CancellationToken? cancellationToken = null)
-        {
-            using var form = WaitProcessForm(title, process);
-            var res = form.Start(cancellationToken ?? CancellationToken.None);
-            return new ResultPromptPlus<IEnumerable<ResultProcess>>(res.Value, res.IsAborted);
-        }
-
-        internal static WaitProcessControl WaitProcessForm(string title, IEnumerable<SingleProcess> process)
-        {
-            var options = new WaitProcessOptions
-            {
-                Message = title,
-                Process = process
-            };
-            return WaitProcessForm(options);
-        }
-
-        public static ResultPromptPlus<bool> Confirm(ConfirmOptions options, CancellationToken? cancellationToken = null)
-        {
-            using var form = ConfirmForm(options);
-
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static ConfirmControl ConfirmForm(ConfirmOptions options)
-        {
-            return new ConfirmControl(options);
-        }
-
-        public static ResultPromptPlus<bool> Confirm(Action<ConfirmOptions> configure, CancellationToken? cancellationToken = null)
-        {
-            var options = new ConfirmOptions();
-            configure(options);
-            return Confirm(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<bool> Confirm(string message, bool? defaultValue = null, CancellationToken? cancellationToken = null)
-        {
-            using var form = ConfirmForm(message, defaultValue);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static ConfirmControl ConfirmForm(string message, bool? defaultValue = null)
-        {
-            var options = new ConfirmOptions
-            {
-                Message = message,
-                DefaultValue = defaultValue
-            };
-
-            return ConfirmForm(options);
-        }
-
-        public static ResultPromptPlus<T> Select<T>(SelectOptions<T> options, CancellationToken? cancellationToken = null)
-        {
-            using var form = SelectForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static SelectControl<T> SelectForm<T>(SelectOptions<T> options)
-        {
-            return new SelectControl<T>(options);
-        }
-
-        public static ResultPromptPlus<T> Select<T>(Action<SelectOptions<T>> configure, CancellationToken? cancellationToken = null)
-        {
-            var options = new SelectOptions<T>();
-            configure(options);
-            return Select(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<EnumValue<T>> Select<T>(string message, T? defaultValue = null, int? pageSize = null, CancellationToken? cancellationToken = null) where T : struct, Enum
-        {
-            using var form = SelectForm(message, defaultValue, pageSize);
-            var aux = form.Start(cancellationToken ?? CancellationToken.None);
-            if (aux.IsAborted)
-            {
-                return new ResultPromptPlus<EnumValue<T>>(default, true);
-            }
-            return new ResultPromptPlus<EnumValue<T>>(aux.Value, aux.IsAborted);
-
-        }
-
-        internal static SelectControl<EnumValue<T>> SelectForm<T>(string message, T? defaultValue = null, int? pageSize = null) where T : struct, Enum
-        {
-            var items = EnumValue<T>.GetValues();
-            var options = new SelectOptions<EnumValue<T>>
-            {
-                Message = message,
-                Items = items,
-                DefaultValue = (EnumValue<T>)defaultValue,
-                PageSize = pageSize ?? items.Count(),
-                TextSelector = x => x?.DisplayName
-            };
-            return SelectForm(options);
-        }
-
-        public static ResultPromptPlus<T> Select<T>(string message, IEnumerable<T> items, object defaultValue = null, int? pageSize = null, Func<T, string> textSelector = null, CancellationToken? cancellationToken = null)
-        {
-            using var form = SelectForm(message, items, defaultValue, pageSize, textSelector);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static SelectControl<T> SelectForm<T>(string message, IEnumerable<T> items, object defaultValue = null, int? pageSize = null, Func<T, string> textSelector = null)
-        {
-            var options = new SelectOptions<T>
-            {
-                Message = message,
-                Items = items,
-                DefaultValue = defaultValue,
-                PageSize = pageSize ?? items.Count(),
-                TextSelector = textSelector ?? (x => x?.ToString())
-            };
-
-            return SelectForm(options);
-        }
-
-        public static ResultPromptPlus<IEnumerable<T>> MultiSelect<T>(MultiSelectOptions<T> options, CancellationToken? cancellationToken = null)
-        {
-            using var form = MultiSelectForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static MultiSelectControl<T> MultiSelectForm<T>(MultiSelectOptions<T> options)
-        {
-            return new MultiSelectControl<T>(options);
-        }
-
-        public static ResultPromptPlus<IEnumerable<T>> MultiSelect<T>(Action<MultiSelectOptions<T>> configure, CancellationToken? cancellationToken = null)
-        {
-            var options = new MultiSelectOptions<T>();
-            configure(options);
-            return MultiSelect(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<IEnumerable<EnumValue<T>>> MultiSelect<T>(string message, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, CancellationToken? cancellationToken = null) where T : struct, Enum
-        {
-            using var form = MultiSelectForm(message, minimum, maximum, defaultValues, pageSize);
-            var aux = form.Start(cancellationToken ?? CancellationToken.None);
-            if (aux.IsAborted)
-            {
-                return new ResultPromptPlus<IEnumerable<EnumValue<T>>>(default, true);
-            }
-            return new ResultPromptPlus<IEnumerable<EnumValue<T>>>(aux.Value, aux.IsAborted);
-
-        }
-
-        internal static MultiSelectControl<EnumValue<T>> MultiSelectForm<T>(string message, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null) where T : struct, Enum
-        {
-            var items = EnumValue<T>.GetValues();
-
-            var options = new MultiSelectOptions<EnumValue<T>>
-            {
-                Message = message,
-                Items = items,
-                DefaultValues = defaultValues?.Select(x => (EnumValue<T>)x),
-                PageSize = pageSize ?? items.Count(),
-                Minimum = minimum < 0 ? 0 : minimum,
-                Maximum = maximum < 0 ? int.MaxValue : maximum,
-                TextSelector = x => x.DisplayName
-            };
-            return MultiSelectForm(options);
-        }
-
-        public static ResultPromptPlus<IEnumerable<T>> MultiSelect<T>(string message, IEnumerable<T> items, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, Func<T, string> textSelector = null, CancellationToken? cancellationToken = null)
-        {
-            using var form = MultiSelectForm(message, items, minimum, maximum, defaultValues, pageSize, textSelector);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static MultiSelectControl<T> MultiSelectForm<T>(string message, IEnumerable<T> items, int minimum = 1, int maximum = -1, IEnumerable<T> defaultValues = null, int? pageSize = null, Func<T, string> textSelector = null)
-        {
-            var options = new MultiSelectOptions<T>
-            {
-                Message = message,
-                Items = items,
-                DefaultValues = defaultValues,
-                PageSize = pageSize ?? items.Count(),
-                Minimum = minimum < 0 ? 0 : minimum,
-                Maximum = maximum < 0 ? int.MaxValue : maximum,
-                TextSelector = textSelector ?? (x => x?.ToString())
-            };
-
-            return MultiSelectForm(options);
-        }
-
-        public static ResultPromptPlus<IEnumerable<T>> List<T>(ListOptions<T> options, CancellationToken? cancellationToken = null)
-        {
-            using var form = ListForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static ListControl<T> ListForm<T>(ListOptions<T> options)
-        {
-            return new ListControl<T>(options);
-        }
-
-        public static ResultPromptPlus<IEnumerable<T>> List<T>(Action<ListOptions<T>> configure, CancellationToken? cancellationToken = null)
-        {
-            var options = new ListOptions<T>();
-            configure(options);
-            return List(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<IEnumerable<T>> List<T>(string message, int minimum = 0, int maximum = int.MaxValue, int? pageSize = null, bool uppercase = false, bool allowduplicate = true, IList<Func<object, ValidationResult>> validators = null, CancellationToken? cancellationToken = null)
-        {
-            using var form = ListForm<T>(message, minimum, maximum, pageSize, uppercase, allowduplicate, validators);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-
-        }
-
-        internal static ListControl<T> ListForm<T>(string message, int minimum, int maximum, int? pageSize, bool uppercase, bool allowduplicate, IList<Func<object, ValidationResult>> validators)
-        {
-            var options = new ListOptions<T>
-            {
-                Message = message,
-                Minimum = minimum < 0 ? 0 : minimum,
-                Maximum = maximum < 0 ? int.MaxValue : maximum,
-                PageSize = pageSize ?? int.MaxValue,
-                UpperCase = uppercase,
-                AllowDuplicate = allowduplicate
-            };
-
-            if (validators != null)
-            {
-                options.Validators.Merge(validators);
-
-            }
-            return ListForm(options);
-        }
-
-        public static ResultPromptPlus<IEnumerable<T>> ListMasked<T>(string message, string maskValue, int minimum = 0, int maximum = int.MaxValue, bool uppercase = false, bool showInputType = true, bool fillzeros = false, CultureInfo? cultureInfo = null, int? pageSize = null, IList<Func<object, ValidationResult>> validators = null, bool enabledPromptTooltip = true, bool enabledAbortKey = true, bool enabledAbortAllPipes = true, bool hideAfterFinish = false, CancellationToken? cancellationToken = null)
-        {
-            using var form = ListMaskedForm<T>(message, maskValue, minimum, maximum, uppercase, showInputType, fillzeros, cultureInfo, pageSize, validators, enabledPromptTooltip, enabledAbortKey, enabledAbortAllPipes, hideAfterFinish);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static MaskedListControl<T> ListMaskedForm<T>(string message, string maskValue, int minimum, int maximum, bool uppercase, bool showInputType, bool fillzeros, CultureInfo? cultureInfo, int? pageSize, IList<Func<object, ValidationResult>> validators, bool enabledPromptTooltip, bool enabledAbortKey, bool enabledAbortAllPipes, bool hideAfterFinish)
-        {
-            var localopc = new MaskedOptions
-            {
-                Type = MaskedType.Generic,
-                FmtYear = FormatYear.Y4,
-                FmtTime = FormatTime.HMS,
-                AcceptSignal = MaskedSignal.None,
-                CurrentCulture = cultureInfo ?? DefaultCulture,
-                ShowInputType = showInputType,
-                Message = message,
-                MaskValue = maskValue,
-                DefaultValueWitdhoutMask = null,
-                FillNumber = fillzeros ? s_defaultfill : null,
-                UpperCase = uppercase,
-                EnabledAbortAllPipes = enabledAbortAllPipes,
-                EnabledPromptTooltip = enabledPromptTooltip,
-                EnabledAbortKey = enabledAbortKey,
-                HideAfterFinish = hideAfterFinish
-            };
-            var options = new ListOptions<T>
-            {
-                Message = message,
-                Minimum = minimum < 0 ? 0 : minimum,
-                Maximum = maximum < 0 ? int.MaxValue : maximum,
-                PageSize = pageSize ?? int.MaxValue,
-                MaskedOption = localopc,
-                UpperCase = uppercase
-            };
-
-            if (validators != null)
-            {
-                options.Validators.Merge(validators);
-
-            }
-            return new MaskedListControl<T>(options);
-        }
-
-        public static ResultPromptPlus<ResultBrowser> Browser(BrowserOptions options, CancellationToken? cancellationToken = null)
-        {
-            using var form = BrowserForm(options);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static BrowserControl BrowserForm(BrowserOptions options)
-        {
-            return new BrowserControl(options);
-        }
-
-        public static ResultPromptPlus<ResultBrowser> Browser(Action<BrowserOptions> configure, CancellationToken? cancellationToken = null)
-        {
-            var options = new BrowserOptions();
-            configure(options);
-            return Browser(options, cancellationToken ?? CancellationToken.None);
-        }
-
-        public static ResultPromptPlus<ResultBrowser> Browser(BrowserFilter fileBrowserChoose, string message, string defaultValue = null, string prefixExtension = null, bool allowNotSelected = false, string rootFolder = null, string searchPattern = null, int? pageSize = null, bool supressHidden = true, bool promptCurrentPath = true, bool promptSearchPattern = true, CancellationToken? cancellationToken = null)
-        {
-            using var form = BrowserForm(fileBrowserChoose, message, defaultValue, prefixExtension, allowNotSelected, rootFolder, searchPattern, pageSize, supressHidden, promptCurrentPath, promptSearchPattern);
-            return form.Start(cancellationToken ?? CancellationToken.None);
-        }
-
-        internal static BrowserControl BrowserForm(BrowserFilter fileBrowserChoose, string message, string defaultValue = null, string prefixExtension = null, bool allowNotSelected = false, string rootFolder = null, string searchPattern = null, int? pageSize = null, bool supressHidden = true, bool promptCurrentPath = true, bool promptSearchPattern = true)
-        {
-            var options = new BrowserOptions
-            {
-                AllowNotSelected = allowNotSelected,
-                Filter = fileBrowserChoose,
-                DefaultValue = defaultValue,
-                PageSize = pageSize ?? int.MaxValue,
-                PrefixExtension = prefixExtension,
-                ShowNavigationCurrentPath = promptCurrentPath,
-                ShowSearchPattern = promptSearchPattern,
-                RootFolder = rootFolder,
-                SearchPattern = searchPattern,
-                SupressHidden = supressHidden,
-                Message = message
-            };
-            return BrowserForm(options);
-        }
-
-        private static string CreateMaskedOnlyDate(FormatYear dateplaceholder, CultureInfo cultureInfo)
-        {
-            return dateplaceholder switch
-            {
-                FormatYear.Y2 => $"99\\{cultureInfo.DateTimeFormat.DateSeparator}99\\{cultureInfo.DateTimeFormat.DateSeparator}99",
-                FormatYear.Y4 => $"99\\{cultureInfo.DateTimeFormat.DateSeparator}99\\{cultureInfo.DateTimeFormat.DateSeparator}9999",
-                _ => throw new ArgumentException(dateplaceholder.ToString()),
+                MaskedType.Generic => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Generic, Message = prompt }),
+                MaskedType.DateOnly => new MaskedInputControl(new MaskedOptions { Type = MaskedType.DateOnly, Message = prompt }),
+                MaskedType.TimeOnly => new MaskedInputControl(new MaskedOptions { Type = MaskedType.TimeOnly, Message = prompt }),
+                MaskedType.DateTime => new MaskedInputControl(new MaskedOptions { Type = MaskedType.DateTime, Message = prompt }),
+                MaskedType.Number => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Number, Message = prompt }),
+                MaskedType.Currency => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Currency, Message = prompt }),
+                _ => throw new ArgumentException(string.Format(Exceptions.Ex_InvalidType, type))
             };
         }
 
-        private static string CreateMaskedOnlyTime(FormatTime timePlaceholder, CultureInfo cultureInfo)
+        public static IControlInput Input(string prompt = null)
         {
-            return timePlaceholder switch
-            {
-                FormatTime.HMS => $"99\\{cultureInfo.DateTimeFormat.TimeSeparator}99\\{cultureInfo.DateTimeFormat.TimeSeparator}99",
-                FormatTime.OnlyHM => $"99\\{cultureInfo.DateTimeFormat.TimeSeparator}99\\{cultureInfo.DateTimeFormat.TimeSeparator}00",
-                FormatTime.OnlyH => $"99\\{cultureInfo.DateTimeFormat.TimeSeparator}00\\{cultureInfo.DateTimeFormat.TimeSeparator}00",
-                _ => throw new ArgumentException(timePlaceholder.ToString()),
-            };
+            return new InputControl(new InputOptions() { Message = prompt });
         }
 
-        private static string CreateMaskedOnlyDateTime(FormatYear dateplaceholder, FormatTime timePlaceholder, CultureInfo cultureInfo)
+        public static IControlConfirm Confirm(string prompt = null)
         {
-            return CreateMaskedOnlyDate(dateplaceholder, cultureInfo) + " " + CreateMaskedOnlyTime(timePlaceholder, cultureInfo);
+            return new ConfirmControl(new ConfirmOptions() { Message = prompt });
         }
 
-        private static string CreateMaskedNumber(CultureInfo cultureInfo, int integerplacehold, int decimalplacehold)
+        public static IControlSliderNumber SliderNumber(SliderNumberType type, string prompt = null)
         {
-            var topmask = string.Empty;
-            if (integerplacehold % cultureInfo.NumberFormat.NumberGroupSizes[0] > 0)
-            {
-                topmask = new string('9', integerplacehold % cultureInfo.NumberFormat.NumberGroupSizes[0]);
-            }
-            else
-            {
-                if (integerplacehold == 0)
-                {
-                    topmask = "0";
-                }
-            }
-            var result = topmask;
-            for (var i = 0; i < integerplacehold / cultureInfo.NumberFormat.NumberGroupSizes[0]; i++)
-            {
-                result += cultureInfo.NumberFormat.NumberGroupSeparator + new string('9', cultureInfo.NumberFormat.NumberGroupSizes[0]);
-            }
-            if (decimalplacehold > 0)
-            {
-                result += cultureInfo.NumberFormat.NumberDecimalSeparator + new string('9', decimalplacehold);
-            }
-            return result;
+            return new SliderNumberControl(new SliderNumberOptions() { Message = prompt, Type = type });
         }
 
-        private static string CreateMaskedCurrency(CultureInfo cultureInfo, int integerplacehold, int decimalplacehold)
+        public static IControlSliderSwitche SliderSwitche(string prompt = null)
         {
-            var csymb = cultureInfo.NumberFormat.CurrencySymbol.ToCharArray();
-            var topmask = string.Empty;
-            foreach (var item in csymb)
-            {
-                topmask += "\\" + item;
-            }
-            topmask += " ";
-
-            if (integerplacehold % cultureInfo.NumberFormat.CurrencyGroupSizes[0] > 0)
-            {
-                topmask += new string('9', integerplacehold % cultureInfo.NumberFormat.CurrencyGroupSizes[0]);
-            }
-            else
-            {
-                if (integerplacehold == 0)
-                {
-                    topmask += "0";
-                }
-            }
-            var result = topmask;
-            for (var i = 0; i < integerplacehold / cultureInfo.NumberFormat.CurrencyGroupSizes[0]; i++)
-            {
-                result += cultureInfo.NumberFormat.CurrencyGroupSeparator + new string('9', cultureInfo.NumberFormat.CurrencyGroupSizes[0]);
-            }
-            if (decimalplacehold > 0)
-            {
-                result += cultureInfo.NumberFormat.CurrencyDecimalSeparator + new string('9', decimalplacehold);
-            }
-            else
-            {
-                result += cultureInfo.NumberFormat.CurrencyDecimalSeparator + new string('0', cultureInfo.NumberFormat.CurrencyDecimalDigits);
-            }
-            return result;
+            return new SliderSwitcheControl(new SliderSwitcheOptions() { Message = prompt });
         }
+
+        public static IControlProgressbar Progressbar(string prompt = null)
+        {
+            return new ProgressBarControl(new ProgressBarOptions() { Message = prompt });
+        }
+
+        public static IControlWaitProcess WaitProcess(string prompt = null)
+        {
+            return new WaitProcessControl(new WaitProcessOptions() { Message = prompt });
+        }
+
+        public static IControlSelect<T> Select<T>(string prompt = null)
+        {
+            return new SelectControl<T>(new SelectOptions<T>() { Message = prompt });
+        }
+
+        public static IControlMultiSelect<T> MultiSelect<T>(string prompt = null)
+        {
+            return new MultiSelectControl<T>(new MultiSelectOptions<T>() { Message = prompt });
+        }
+
+        public static IControlBrowser Browser(string prompt = null)
+        {
+            return new BrowserControl(new BrowserOptions() { Message = prompt });
+        }
+
+        public static IControlList<T> List<T>(string prompt = null)
+        {
+            return new ListControl<T>(new ListOptions<T>() { Message = prompt });
+        }
+
+        public static IControlListMasked ListMasked(string prompt = null)
+        {
+            return new MaskedListControl(new ListOptions<string>() { Message = prompt });
+        }
+
+        public static IControlPipeLine Pipeline()
+        {
+            return new PipeLineControl();
+        }
+
+        #endregion
     }
 }
+

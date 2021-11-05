@@ -1,8 +1,7 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Globalization;
@@ -31,12 +30,12 @@ namespace PromptPlusControls
             };
 
             theme.Colors.Answer = ColorSchema.Answer;
-            theme.Colors.BackColorSchema = ColorSchema.BackColorSchema;
+            theme.Colors.BackColorSchema = _consoleDriver.BackgroundColor;
             theme.Colors.Disabled = ColorSchema.Disabled;
             theme.Colors.DoneSymbol = ColorSchema.DoneSymbol;
             theme.Colors.Error = ColorSchema.Error;
             theme.Colors.Filter = ColorSchema.Filter;
-            theme.Colors.ForeColorSchema = ColorSchema.ForeColorSchema;
+            theme.Colors.ForeColorSchema = _consoleDriver.ForegroundColor;
             theme.Colors.Hint = ColorSchema.Hint;
             theme.Colors.Pagination = ColorSchema.Pagination;
             theme.Colors.PromptSymbol = ColorSchema.PromptSymbol;
@@ -83,7 +82,7 @@ namespace PromptPlusControls
                 Converters = { new JsonStringEnumConverter() },
                 IgnoreReadOnlyProperties = false,
                 PropertyNameCaseInsensitive = true,
-                IgnoreNullValues = true
+                IgnoreNullValues = true,
             };
             var pathfile = Path.Combine(folderfile, "PromptPlus.config.json");
             if (File.Exists(pathfile))
@@ -118,12 +117,10 @@ namespace PromptPlusControls
                 Symbols.TaskRun = theme.Symbols.TaskRun;
 
                 ColorSchema.Answer = theme.Colors.Answer;
-                ColorSchema.BackColorSchema = theme.Colors.BackColorSchema;
                 ColorSchema.Disabled = theme.Colors.Disabled;
                 ColorSchema.DoneSymbol = theme.Colors.DoneSymbol;
                 ColorSchema.Error = theme.Colors.Error;
                 ColorSchema.Filter = theme.Colors.Filter;
-                ColorSchema.ForeColorSchema = theme.Colors.ForeColorSchema;
                 ColorSchema.Hint = theme.Colors.Hint;
                 ColorSchema.Pagination = theme.Colors.Pagination;
                 ColorSchema.PromptSymbol = theme.Colors.PromptSymbol;
@@ -140,6 +137,9 @@ namespace PromptPlusControls
                 SelectAll = ConverteThemeHotkey(theme.HotKeys.SelectAll);
                 InvertSelect = ConverteThemeHotkey(theme.HotKeys.InvertSelect);
                 RemoveAll = ConverteThemeHotkey(theme.HotKeys.RemoveAll);
+
+                ConsoleDefaultColor(theme.Colors.ForeColorSchema, theme.Colors.BackColorSchema);
+
             }
         }
 

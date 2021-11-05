@@ -133,6 +133,24 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finish with {0} items.
+        /// </summary>
+        internal static string FinishResultList {
+            get {
+                return ResourceManager.GetString("FinishResultList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finish all tasks({0}).
+        /// </summary>
+        internal static string FinishResultTasks {
+            get {
+                return ResourceManager.GetString("FinishResultTasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Folder:.
         /// </summary>
         internal static string FolderCurrentPath {
@@ -385,7 +403,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value is too long.
+        ///   Looks up a localized string similar to Value is too long. Max({0}).
         /// </summary>
         internal static string MaxLength {
             get {
@@ -394,7 +412,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Value is too short.
+        ///   Looks up a localized string similar to Value is too short. Min({0}).
         /// </summary>
         internal static string MinLength {
             get {
@@ -403,7 +421,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Space: Select, Enter: Finish, {0}: Filter, {1}: Toggle, {2}:Invert.
+        ///   Looks up a localized string similar to Space: Select, Enter: Finish, {0}: Filter, {1}: All, {2}:Invert.
         /// </summary>
         internal static string MultiSelectKeyNavigation {
             get {

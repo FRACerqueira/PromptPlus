@@ -2,46 +2,52 @@
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**Confirm Options**](confirmoptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)
 
 ## Documentation
 Control Confirm. Simple confirm with with tool tips and language detection.
 
 ![](./images/Confirm.gif)
 
-### Options
-
-[**Confirm Options**](confirmoptions)
-
 ### Syntax
 [**Top**](#promptplus--confirm)
 
 ```csharp
-Confirm(ConfirmOptions options, CancellationToken? cancellationToken = null)
-Confirm(Action<ConfirmOptions> configure, CancellationToken? cancellationToken = null)
-Confirm(string message, bool? defaultValue = null, CancellationToken? cancellationToken = null)  
+Confirm(string prompt = null)
 ````
 
-**_Note1: defaultValue is true for positive confirm , false for negative confirm._**
+### Methods
+[**Top**](#promptplus--confirm)
 
-**_Note2: The text for positive/negative confirm is extract from resx._**
+- ```csharp
+  Prompt(string value)
+  ``` 
+  - set prompt message 
+- ```csharp
+  Default(bool value)
+  ``` 
+    - Default value. True for positive confirm or False for negative confirm.
 
 ### Return
 [**Top**](#promptplus--confirm)
 
 ```csharp
-ResultPromptPlus<bool>
-````
-**_Note: [ResultPromptPlus](resultpromptplus).Value is true for positive confirm , false for negative confirm._**
-
+IControlConfirm            //for Control Methods
+IPromptControls<bool>      //for others Base Methods
+ResultPromptPlus<bool>     //for Base Method Run, when execution is direct 
+IPromptPipe                //for Pipe condition and transform to IFormPlusBase 
+IFormPlusBase              //for only definition of pipe to Pipeline Control
+```
 
 ### Sample
 [**Top**](#promptplus--confirm)
 
 ```csharp
 PromptPlus.DefaultCulture = new CultureInfo("en-US");
-var answer = PromptPlus.Confirm("Are you ready?", true, cancellationToken:_stopApp);
+var answer = PromptPlus.Confirm("Are you ready?")
+    .Default(true)
+    .Run(_stopApp);
 if (answer.IsAborted)
 {
     return;
@@ -58,7 +64,10 @@ else
 
 ```csharp
 PromptPlus.DefaultCulture = new CultureInfo("pt-BR");
-var answer = PromptPlus.Confirm("Você esta pronto?", true, cancellationToken:_stopApp);
+var answer = PromptPlus.Confirm("Você esta pronto?")
+    .Default(true)
+    .Run(_stopApp);
+
 if (answer.IsAborted)
 {
     return;
@@ -77,5 +86,5 @@ else
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
-[**Confirm Options**](confirmoptions) |
-[**BaseOptions**](baseoptions)
+[**Base Methods**](basemethods) |
+[**Pipe Methods**](pipemethods)

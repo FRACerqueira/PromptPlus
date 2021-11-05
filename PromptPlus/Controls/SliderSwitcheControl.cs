@@ -1,18 +1,17 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 using System.Threading;
 
 using PromptPlusControls.Internal;
-using PromptPlusControls.Options;
+using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class SliderSwitcheControl : ControlBase<bool>
+    internal class SliderSwitcheControl : ControlBase<bool>, IControlSliderSwitche
     {
         private bool _currentValue;
         private readonly SliderSwitcheOptions _options;
@@ -20,10 +19,14 @@ namespace PromptPlusControls.Controls
         public SliderSwitcheControl(SliderSwitcheOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
+        }
+
+        public override void InitControl()
+        {
             _currentValue = _options.Value;
         }
 
-        public override bool? TryGetResult(bool summary, CancellationToken cancellationToken, out bool result)
+        public override bool? TryResult(bool summary, CancellationToken cancellationToken, out bool result)
         {
             bool? isvalidhit = false;
             if (summary)
@@ -128,5 +131,84 @@ namespace PromptPlusControls.Controls
             screenBuffer.WriteAnswer(FinishResult);
         }
 
+        #region IControlSliderSwitche
+
+        public IControlSliderSwitche Prompt(string value)
+        {
+            _options.Message = value;
+            return this;
+        }
+
+        public IControlSliderSwitche Default(bool value)
+
+        {
+            _options.Value = value;
+            return this;
+        }
+
+        public IControlSliderSwitche Offvalue(string value)
+        {
+            _options.OffValue = value;
+            return this;
+        }
+
+        public IControlSliderSwitche Onvalue(string value)
+        {
+            _options.OnValue = value;
+            return this;
+        }
+
+        public IPromptControls<bool> EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            return this;
+        }
+
+        public IPromptControls<bool> EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            return this;
+        }
+
+        public IPromptControls<bool> EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            return this;
+        }
+
+        public IPromptControls<bool> HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            return this;
+        }
+
+        public ResultPromptPlus<bool> Run(CancellationToken? value = null)
+        {
+            InitControl();
+            try
+            {
+                return Start(value ?? CancellationToken.None);
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
+        {
+            Condition = condition;
+            return this;
+        }
+
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            ContextState = state;
+            return this;
+        }
+
+        #endregion
     }
 }

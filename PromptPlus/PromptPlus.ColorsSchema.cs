@@ -1,8 +1,7 @@
-﻿// ********************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
-// This project is based on a fork of the Sharprompt project on github.
-// The maintenance and evolution is maintained by the PromptPlus project under same MIT license
-// ********************************************************************************************
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
 using System;
 
@@ -12,8 +11,6 @@ namespace PromptPlusControls
     {
         public static class ColorSchema
         {
-            public static ConsoleColor ForeColorSchema { get; set; } = Console.ForegroundColor;
-            public static ConsoleColor BackColorSchema { get; set; } = Console.BackgroundColor;
             public static ConsoleColor Pagination { get; set; } = ConsoleColor.DarkGray;
             public static ConsoleColor Hint { get; set; } = ConsoleColor.DarkGray;
             public static ConsoleColor Answer { get; set; } = ConsoleColor.Cyan;

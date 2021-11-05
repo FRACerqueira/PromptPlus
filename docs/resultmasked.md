@@ -4,9 +4,10 @@
 [**MaskEditGeneric Control**](maskeditgeneric) |
 [**MaskEditDate Control**](maskeditdate) |
 [**MaskEditNumber Control**](maskeditnumber)
+[**ListMasked Control**](listmasked)
 
 ## Documentation
-Default return class for MaskEdit controls.
+Default return struct for MaskEdit controls. 
 
 ### Properties
 [**Top**](#promptplus--resultmasked)
@@ -35,3 +36,4 @@ Default return class for MaskEdit controls.
 [**MaskEditGeneric Control**](maskeditgeneric) |
 [**MaskEditDate Control**](maskeditdate) |
 [**MaskEditNumber Control**](maskeditnumber)
+[**ListMasked Control**](listmasked)

@@ -3,7 +3,7 @@
 [**Controls**](index.md#apis)
 
 ## Documentation
-Default return class for all controls.
+Default return struct for all controls. 
 
 ### Properties
 [**Top**](#promptplus--resultpromptplus)

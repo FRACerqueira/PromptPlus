@@ -4,6 +4,18 @@ namespace PromptPlusExample
 {
     public enum ExampleType
     {
+        [Display(Name = "Command: Color text - So easy to add some color-text to your console")]
+        ColorText,
+        [Display(Name = "Utility: Save and Load Config")]
+        SaveLoadConfig,
+        [Display(Name = "Utility: Change Language")]
+        ChooseLanguage,
+        [Display(Name = "Extension: Import Validators")]
+        ImportValidators,
+        [Display(Name = "Extension: Command set for PromptPlus console")]
+        ConsoleCmd,
+        [Display(Name = "Control: Banner ASCII text")]
+        Banner,
         [Display(Name = "Control: Any key")]
         AnyKey,
         [Display(Name = "Control: Key Press")]
@@ -30,13 +42,17 @@ namespace PromptPlusExample
         Select,
         [Display(Name = "Control: Select - Enum")]
         SelectWithEnum,
+        [Display(Name = "Control: Select - AutoSelect")]
+        SelectWithAutoSelect,
+        [Display(Name = "Control: MultiSelect with group")]
+        MultiSelectGroup,
         [Display(Name = "Control: MultiSelect - IEnumerable")]
         MultiSelect,
         [Display(Name = "Control: MultiSelect - Enum")]
         MultiSelectWithEnum,
         [Display(Name = "Control: List - Create IEnumerable with Free Input")]
         List,
-        [Display(Name = "Control: ListMasked - Create IEnumerable with MaskEdit Generic")]
+        [Display(Name = "Control: ListMasked - Create IEnumerable with MaskEdit")]
         ListMasked,
         [Display(Name = "Control: Browser - Filter Only Folder")]
         FolderBrowser,
@@ -56,12 +72,6 @@ namespace PromptPlusExample
         WaitManyProcess,
         [Display(Name = "Control: PipeLine - IEnumerable Prompt sequential with conditions")]
         PipeLine,
-        [Display(Name = "Extension: Import Validators")]
-        ImportValidators,
-        [Display(Name = "Utility: Save and Load Config")]
-        SaveLoadConfig,
-        [Display(Name = "Utility: Change Language")]
-        ChooseLanguage,
         Quit
     }
 }
