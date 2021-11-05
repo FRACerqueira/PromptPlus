@@ -16,5 +16,6 @@ namespace PromptPlusControls.Controls
         public T DefaultValue { get; set; }
         public int? PageSize { get; set; }
         public Func<T, string> TextSelector { get; set; } = x => x?.ToString();
+        public bool AutoSelectIfOne { get; set; }
     }
 }

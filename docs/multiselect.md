@@ -19,7 +19,7 @@ MultiSelect<T>(string prompt = null)
 ```
 
  ### Methods
- [**Top**](#promptplus--multiselect)
+[**Top**](#promptplus--multiselect)
 
 
 - ```csharp
@@ -84,7 +84,7 @@ MultiSelect<T>(string prompt = null)
 IControlMultiSelect<T>              //for Control Methods
 IPromptControls<IEnumerable<T>>     //for others Base Methods
 ResultPromptPlus<IEnumerable<T>>    //for Base Method Run, when execution is direct 
-IPromptPipe                         //for Pipe condition 
+IPromptPipe                         //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                       //for only definition of pipe to Pipeline Control
 ```
 

@@ -53,7 +53,7 @@ Input(string prompt = null)
 IControlInput                //for Control Methods
 IPromptControls<string>      //for others Base Methods
 ResultPromptPlus<string>     //for Base Method Run, when execution is direct 
-IPromptPipe                  //for Pipe condition 
+IPromptPipe                  //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```
 

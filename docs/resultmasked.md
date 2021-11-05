@@ -7,7 +7,7 @@
 [**ListMasked Control**](listmasked)
 
 ## Documentation
-Default return struct for MaskEdit controls.
+Default return struct for MaskEdit controls. 
 
 ### Properties
 [**Top**](#promptplus--resultmasked)

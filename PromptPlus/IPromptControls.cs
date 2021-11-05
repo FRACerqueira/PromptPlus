@@ -16,6 +16,23 @@ using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls
 {
+    public interface IPromptControls<T>
+    {
+        IPromptControls<T> EnabledAbortKey(bool value);
+        IPromptControls<T> EnabledAbortAllPipes(bool value);
+        IPromptControls<T> EnabledPromptTooltip(bool value);
+        IPromptControls<T> HideAfterFinish(bool value);
+        ResultPromptPlus<T> Run(CancellationToken? value = null);
+    }
+
+    public interface IFIGlet
+    {
+        IFIGlet LoadFont(string value);
+        IFIGlet LoadFont(Stream value);
+        IFIGlet FIGletWidth(CharacterWidth value);
+        void Run(ConsoleColor? color = null);
+    }
+
     public interface IFormPlusBase : IDisposable
     {
         string PipeId { get; }
@@ -27,69 +44,12 @@ namespace PromptPlusControls
         Func<ResultPipe[], object, bool> Condition { get; }
     }
 
-
-    public interface IPromptControls<T>
-    {
-        IPromptControls<T> EnabledAbortKey(bool value);
-        IPromptControls<T> EnabledAbortAllPipes(bool value);
-        IPromptControls<T> EnabledPromptTooltip(bool value);
-        IPromptControls<T> HideAfterFinish(bool value);
-        ResultPromptPlus<T> Run(CancellationToken? value = null);
-    }
-
-    public interface IScreen
-    {
-        IStatusBar StatusBar();
-        void Switch(ConsoleColor? forecorlor = null, ConsoleColor? backcorlor = null);
-    }
-
-    public interface IStatusBar
-    {
-        IStatusBar Reset();
-        IStatusbarColumn AddTemplate(string id, ConsoleColor? foregroundColor = null, ConsoleColor? backgroundColor = null);
-        IStatusBarActions WithTemplate(string id);
-        void Show();
-        void Stop();
-        void Refresh();
-        void Hide();
-    }
-
-    public interface IStatusBarActions
-    {
-        IStatusBarActions WithTemplate(string id);
-        IStatusBarActions UpdateColumns(params string[] values);
-        IStatusBarActions UpdateColumn(string idcolumn, string value);
-        IStatusBarActions TryValue(string idcolumn, out string value);
-        void Show();
-    }
-
-    public interface IStatusbarColumn
-    {
-        IStatusbarColumn AddText(string text);
-        IStatusbarColumn AddColumn(string id, int lenght, StatusBarColAlignment alignment = StatusBarColAlignment.Left);
-        IStatusbarColumn AddSeparator();
-        IStatusBar Build(params string[] values);
-    }
-
     public interface IPromptPipe
     {
         IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition);
         IFormPlusBase ToPipe(string id, string title, object state = null);
     }
 
-    public interface IPromptColor
-    {
-        void WriteColor(params ColorToken[] texts);
-        void WriteLineColor(params ColorToken[] texts);
-    }
-
-    public interface IFIGlet
-    {
-        IFIGlet LoadFont(string value);
-        IFIGlet LoadFont(Stream value);
-        IFIGlet FIGletWidth(CharacterWidth value);
-        void Run(ConsoleColor? color = null);
-    }
     public interface IControlPipeLine
     {
         IControlPipeLine AddPipe(IFormPlusBase value);
@@ -182,6 +142,7 @@ namespace PromptPlusControls
         IControlSelect<T> HideItems(IEnumerable<T> value);
         IControlSelect<T> DisableItem(T value);
         IControlSelect<T> DisableItems(IEnumerable<T> value);
+        IControlSelect<T> AutoSelectIfOne();
     }
 
     public interface IControlMultiSelect<T> : IPromptControls<IEnumerable<T>>, IPromptPipe

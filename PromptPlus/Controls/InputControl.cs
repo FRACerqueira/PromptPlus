@@ -32,6 +32,10 @@ namespace PromptPlusControls.Controls
             {
                 throw new ArgumentException(Exceptions.Ex_PasswordDefaultValue);
             }
+            if (!string.IsNullOrEmpty(_options.DefaultValue))
+            {
+                _inputBuffer.Load(_options.DefaultValue);
+            }
             _initform = true;
         }
 
@@ -110,6 +114,7 @@ namespace PromptPlusControls.Controls
                         break;
                     }
                 }
+                _initform = _inputBuffer.Length == 0;
 
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
 
@@ -123,10 +128,6 @@ namespace PromptPlusControls.Controls
             var prompt = _options.Message;
             if (!string.IsNullOrEmpty(_options.DefaultValue))
             {
-                if (_initform)
-                {
-                    _inputBuffer.Load(_options.DefaultValue);
-                }
                 prompt = $"{_options.Message} ({_options.DefaultValue})";
             }
 

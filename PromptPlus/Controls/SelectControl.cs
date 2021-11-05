@@ -20,6 +20,7 @@ namespace PromptPlusControls.Controls
         private readonly SelectOptions<T> _options;
         private readonly InputBuffer _filterBuffer = new();
         private Paginator<T> _localpaginator;
+        private bool _autoselect = false;
 
         public SelectControl(SelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
@@ -66,7 +67,15 @@ namespace PromptPlusControls.Controls
             }
             do
             {
-                var keyInfo = WaitKeypress(cancellationToken);
+                ConsoleKeyInfo keyInfo;
+                if (_autoselect)
+                {
+                    keyInfo = new ConsoleKeyInfo((char)13, ConsoleKey.Enter, false, false, false);
+                }
+                else
+                {
+                    keyInfo = WaitKeypress(cancellationToken);
+                }
 
                 if (CheckDefaultKey(keyInfo))
                 {
@@ -124,6 +133,14 @@ namespace PromptPlusControls.Controls
                         }
                         break;
                     }
+                }
+                if (_localpaginator.Count == 1 && _options.AutoSelectIfOne)
+                {
+                    _autoselect = true;
+                }
+                else
+                {
+                    _autoselect = false;
                 }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
             result = default;
@@ -219,6 +236,12 @@ namespace PromptPlusControls.Controls
         }
 
         #region IControlSelect
+
+        public IControlSelect<T> AutoSelectIfOne()
+        {
+            _options.AutoSelectIfOne = true;
+            return this;
+        }
 
         public IControlSelect<T> Prompt(string value)
         {

@@ -97,26 +97,32 @@ namespace PromptPlusControls.Controls
                 }
                 else if (PromptPlus.SelectAll.Equals(keyInfo))
                 {
-                    var disabledselect = _selectedItems.Where(x => x.Disabled).Select(x => x.Value).ToArray();
 
-                    if (_selectedItems.Count < _options.Items.Count(x => !x.IsGroup) - _options.DisableItems.Count + disabledselect.Length)
+                    var maxqtd = _options.Items.Count(x => !x.IsGroup && !x.Disabled);
+                    if (_selectedItems.Count == maxqtd)
                     {
-                        _selectedItems.Clear();
-                        _selectedItems.AddRange(_options.Items.Where(x => (!x.IsGroup && !x.Disabled) || disabledselect.Contains(x.Value)));
+                        continue;
                     }
-                    else
+                    if (maxqtd > _options.Maximum)
                     {
-                        _selectedItems.Clear();
-                        _selectedItems.AddRange(_options.Items.Where(x => !x.IsGroup && disabledselect.Contains(x.Value)));
+                        SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
+                        continue;
                     }
+                    _selectedItems.Clear();
+                    _selectedItems.AddRange(_options.Items.Where(x => !x.IsGroup && !x.Disabled));
                     continue;
                 }
                 else if (PromptPlus.InvertSelect.Equals(keyInfo))
                 {
-                    var disabledselect = _selectedItems.Where(x => x.Disabled).Select(x => x.Value).ToArray();
-                    var aux = _options.Items.Where(x => !x.IsGroup && (!_selectedItems.Contains(x) && !x.Disabled) || disabledselect.Contains(x.Value)).ToArray();
+                    var maxqtd = _options.Items.Count(x => !x.IsGroup && !x.Disabled && !_selectedItems.Contains(x));
+                    if (maxqtd > _options.Maximum)
+                    {
+                        SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
+                        continue;
+                    }
+                    var aux = _selectedItems.ToArray();
                     _selectedItems.Clear();
-                    _selectedItems.AddRange(aux);
+                    _selectedItems.AddRange(_options.Items.Where(x => !x.IsGroup && !x.Disabled && !aux.Contains(x)));
                     continue;
                 }
 

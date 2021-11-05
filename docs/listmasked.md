@@ -101,7 +101,7 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
 IControlListMasked                          //for Control Methods
 IPromptControls<IEnumerable<ResultMasked>>  //for others Base Methods
 ResultPromptPlus<IEnumerable<ResultMasked>> //for Base Method Run, when execution is direct 
-IPromptPipe                                 //for Pipe condition 
+IPromptPipe                                 //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                               //for only definition of pipe to Pipeline Control
 ```
 

@@ -54,7 +54,7 @@ SliderNumber( SliderNumberType.LeftRightstring prompt = null)
 IControlSliderNumber         //for Control Methods
 IPromptControls<double>      //for others Base Methods
 ResultPromptPlus<double>     //for Base Method Run, when execution is direct 
-IPromptPipe                  //for Pipe condition 
+IPromptPipe                  //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```
 

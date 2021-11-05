@@ -36,7 +36,7 @@ Confirm(string prompt = null)
 IControlConfirm            //for Control Methods
 IPromptControls<bool>      //for others Base Methods
 ResultPromptPlus<bool>     //for Base Method Run, when execution is direct 
-IPromptPipe                //for Pipe condition 
+IPromptPipe                //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase              //for only definition of pipe to Pipeline Control
 ```
 

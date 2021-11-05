@@ -272,6 +272,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 
 | Controls/Commands | Details |
 | --- | --- |
+| [Commands](https://fracerqueira.github.io/PromptPlus/commands) | Command set for PromptPlus console |
 | [Color](https://fracerqueira.github.io/PromptPlus/colorcmd) | Easy to add some color-text and underline |
 | [Banner](https://fracerqueira.github.io/PromptPlus/banner) |  ASCII text banner |
 | [Any key](https://fracerqueira.github.io/PromptPlus/anykey) |  Simple any key press |
@@ -296,8 +297,6 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [Progress Bar](https://fracerqueira.github.io/PromptPlus/progressbar) | Progress Bar with interation customization |
 | [WaitProcess](https://fracerqueira.github.io/PromptPlus/waitprocess) | Wait process with animation |
 | [PipeLine](https://fracerqueira.github.io/PromptPlus/pipeline) | Pipeline sequence to all prompts with condition by pipe and status summary |
-| [Commands](https://fracerqueira.github.io/PromptPlus/commands) | Command set for PromptPlus console |
-| [Validators](https://fracerqueira.github.io/PromptPlus/validators) | Built-in validators with PromptPlus |
 
 ## Extensions
 PromptPlus have a extension to **import validator**. No duplicate code! 

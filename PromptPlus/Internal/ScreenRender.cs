@@ -78,14 +78,6 @@ namespace PromptPlusControls.Internal
                     return true;
                 }
 
-                //if (PromptPlus._statusBar.IsRunning)
-                //{
-                //    if (_cursorBottom > PromptPlus._consoleDriver.BufferHeight - PromptPlus._statusBar.LastTemplatesVisibles - 1)
-                //    {
-                //        _cursorBottom = PromptPlus._consoleDriver.BufferHeight - PromptPlus._statusBar.LastTemplatesVisibles - 1;
-                //    }
-                //}
-
                 if (skip)
                 {
                     PromptPlus._consoleDriver.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
@@ -108,17 +100,7 @@ namespace PromptPlusControls.Internal
 
                 for (var i = 0; i < lines; i++)
                 {
-                    //if (PromptPlus._statusBar.IsRunning)
-                    //{
-                    //    if (_cursorBottom - i >= 0)
-                    //    {
-                    //        PromptPlus._consoleDriver.ClearLine(_cursorBottom - i);
-                    //    }
-                    //}
-                    //else
-                    //{
                     PromptPlus._consoleDriver.ClearLine(_cursorBottom - i);
-                    //}
                 }
                 return true;
             }
@@ -138,7 +120,7 @@ namespace PromptPlusControls.Internal
 
         private void EnsureScreensizeAndPosition()
         {
-            if (!PromptPlus._consoleDriver.IsRunningTerminal) // && !PromptPlus._statusBar.IsRunning)
+            if (!PromptPlus._consoleDriver.IsRunningTerminal)
             {
                 return;
             }
@@ -161,12 +143,6 @@ namespace PromptPlusControls.Internal
                 PromptPlus._consoleDriver.Write(Messages.ResizedTerminal, ConsoleColor.White, ConsoleColor.Red);
                 PromptPlus._consoleDriver.WriteLine();
             }
-            //if (PromptPlus._statusBar.IsRunning &&
-            //    (PromptPlus._statusBar.LastSize.width != PromptPlus._consoleDriver.BufferWidth ||
-            //    PromptPlus._statusBar.LastSize.height != PromptPlus._consoleDriver.BufferHeight))
-            //{
-            //    PromptPlus.Screen().StatusBar().Refresh();
-            //}
         }
 
         private void RenderToConsole()
@@ -200,7 +176,7 @@ namespace PromptPlusControls.Internal
             _cursorBottom = PromptPlus._consoleDriver.CursorTop;
             if (_pushedCursor != null)
             {
-                if (scrolls > 0 && PromptPlus._consoleDriver.IsRunningTerminal) // || PromptPlus._statusBar.IsRunning))
+                if (scrolls > 0 && PromptPlus._consoleDriver.IsRunningTerminal)
                 {
                     _pushedCursor.Top -= scrolls;
                 }
@@ -212,20 +188,10 @@ namespace PromptPlusControls.Internal
         {
             lock (PromptPlus._lockobj)
             {
-                //if (PromptPlus._statusBar.IsRunning)
-                //{
-                //    if (PromptPlus._consoleDriver.CursorTop == PromptPlus._consoleDriver.BufferHeight - 1 - PromptPlus._statusBar.LastTemplatesVisibles)
-                //    {
-                //        return true;
-                //    }
-                //}
-                //else
-                //{
                 if (PromptPlus._consoleDriver.CursorTop == PromptPlus._consoleDriver.BufferHeight - 1)
                 {
                     return true;
                 }
-                //}
                 return false;
             }
         }

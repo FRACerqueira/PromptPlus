@@ -154,7 +154,7 @@ namespace PromptPlusControls.Controls
 
         public IControlProgressbar Width(int value)
         {
-            _options.Witdth = value < PromptPlus.ProgressgBarWitdth ? PromptPlus.ProgressgBarWitdth : (value > 100 ? 100 : value);
+            _options.Witdth = value < PromptPlus.ProgressgBarWitdth ? PromptPlus.ProgressgBarWitdth : (value > 200 ? 200 : value);
             return this;
         }
 

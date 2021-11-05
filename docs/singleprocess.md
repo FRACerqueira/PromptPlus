@@ -4,7 +4,7 @@
 [**WaitProcess Control**](waitprocess) 
 
 ## Documentation
-struct for definition of single process to [**WaitProcess Control**](waitprocess).
+struct for definition of single process to [**WaitProcess Control**](waitprocess). 
 
 ### Syntax
 

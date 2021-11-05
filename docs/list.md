@@ -64,7 +64,7 @@ List<T>(string prompt = null)
 IControlList<T>                     //for Control Methods
 IPromptControls<ResultBrowser>      //for others Base Methods
 ResultPromptPlus<ResultBrowser>     //for Base Method Run, when execution is direct 
-IPromptPipe                         //for Pipe condition 
+IPromptPipe                         //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                       //for only definition of pipe to Pipeline Control
 ```
 

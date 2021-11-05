@@ -1,29 +1,26 @@
 # PromptPlus # PipeMethods
-
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**Hotkeys**](index.md#hotkeys) |
-[**Global Settings**](index.md#global-settings)
+[**PipeLine Control**](pipeline)
 
 ## Documentation
-Base Methods for all controls.
+Methods to Control PipeLine.
 
 ### Methods
 [**Top**](#promptplus--pipemethods)
 
-- IPromptPipe Condition(Func<ResultPipe[], object, bool> condition)
-    - Function to validate execute pipe. If result is false, the pipe is skipped.
-
-- IFormPlusBase AddPipe(string id, string title, object state = null)
-	- id = id identification. If ommited = Guid.NewGuid().ToString()
-    - Tile = Title of pipe
-	- state = object state of executation
+- ```csharp
+   PipeCondition(Func<ResultPipe[], object, bool> condition)
+  ``` 
+  - Set condition to run pipe.
+- ```csharp
+   ToPipe(string id, string title, object state = null)
+  ``` 
+  - Transform control to IFormPlusBase.
+  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
 
 ### Links
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
-[**Hotkeys**](index.md#hotkeys) |
-[**Global Settings**](index.md#global-settings)
-
-
+[**PipeLine Control**](pipeline)
 

@@ -4,7 +4,7 @@
 [**PipeLine Control**](pipeline)
 
 ## Documentation
-Default return struct for [**PipeLine Control**](pipeline).
+Default return struct for [**PipeLine Control**](pipeline). 
 
 ### Properties
 [**Top**](#promptplus--resultmasked)

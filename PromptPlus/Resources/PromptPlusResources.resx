@@ -181,7 +181,7 @@
     <value>Value is too short. Min({0})</value>
   </data>
   <data name="MultiSelectKeyNavigation" xml:space="preserve">
-    <value>Space: Select, Enter: Finish, {0}: Filter, {1}: Toggle, {2}:Invert</value>
+    <value>Space: Select, Enter: Finish, {0}: Filter, {1}: All, {2}:Invert</value>
   </data>
   <data name="MultiSelectMaxSelection" xml:space="preserve">
     <value>A maximum selection of {0} items has already been reached</value>

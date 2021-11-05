@@ -35,7 +35,8 @@ https://fracerqueira.github.io/PromptPlus
 ----------------
 - Select-control        : Added disable and hide items options. 
 - Select-control        : Native support of enum types (removed type  EnumValue<T>). 
-- MultSelect-control    : Native support of enum types (removed type  EnumValue<T>). 
+- Select-control        : Added Autoselect method to select when there is only one option. 
+- MultSelect-control    : Native support of enum types (removed type  EnumValue<T>).
 - MultSelect-control    : Added disable and hide items options.
 - MultSelect-control    : Added group of items for quick multiple selection.
 - MultSelect-control    : Revised the look to keep the selection symbols.

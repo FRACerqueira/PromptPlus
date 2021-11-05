@@ -14,8 +14,6 @@ namespace PromptPlusExample
         ImportValidators,
         [Display(Name = "Extension: Command set for PromptPlus console")]
         ConsoleCmd,
-        //[Display(Name = "Control: Screen - swith principal/alternate screen including StatusBar")]
-        //Screen,
         [Display(Name = "Control: Banner ASCII text")]
         Banner,
         [Display(Name = "Control: Any key")]
@@ -44,6 +42,8 @@ namespace PromptPlusExample
         Select,
         [Display(Name = "Control: Select - Enum")]
         SelectWithEnum,
+        [Display(Name = "Control: Select - AutoSelect")]
+        SelectWithAutoSelect,
         [Display(Name = "Control: MultiSelect with group")]
         MultiSelectGroup,
         [Display(Name = "Control: MultiSelect - IEnumerable")]

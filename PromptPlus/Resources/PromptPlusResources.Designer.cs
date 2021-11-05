@@ -421,7 +421,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Space: Select, Enter: Finish, {0}: Filter, {1}: Toggle, {2}:Invert.
+        ///   Looks up a localized string similar to Space: Select, Enter: Finish, {0}: Filter, {1}: All, {2}:Invert.
         /// </summary>
         internal static string MultiSelectKeyNavigation {
             get {

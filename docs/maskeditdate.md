@@ -96,7 +96,7 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
 IControlMaskEdit                //for Control Methods
 IPromptControls<ResultMasked>   //for others Base Methods
 ResultPromptPlus<ResultMasked>  //for Base Method Run, when execution is direct 
-IPromptPipe                     //for Pipe condition 
+IPromptPipe                     //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                   //for only definition of pipe to Pipeline Control
 ```
 

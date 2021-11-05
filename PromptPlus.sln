@@ -30,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\maskeditnumber.md = docs\maskeditnumber.md
 		docs\multiselect.md = docs\multiselect.md
 		docs\pipeline.md = docs\pipeline.md
-		docs\pipelinestep.md = docs\pipelinestep.md
+		docs\pipemethods.md = docs\pipemethods.md
 		docs\progressbar.md = docs\progressbar.md
 		docs\progressbarinfo.md = docs\progressbarinfo.md
 		docs\resultbrowser.md = docs\resultbrowser.md
@@ -38,12 +38,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\resultpipe.md = docs\resultpipe.md
 		docs\resultprocess.md = docs\resultprocess.md
 		docs\resultpromptplus.md = docs\resultpromptplus.md
-		docs\screen.md = docs\screen.md
 		docs\select.md = docs\select.md
 		docs\singleprocess.md = docs\singleprocess.md
 		docs\slidernumber.md = docs\slidernumber.md
 		docs\sliderswitche.md = docs\sliderswitche.md
-		docs\validators.md = docs\validators.md
 		docs\waitprocess.md = docs\waitprocess.md
 	EndProjectSection
 EndProject
@@ -101,7 +99,7 @@ Global
 		{0EBFCDFA-D7BC-448D-B396-7179B9B32577} = {640ED284-A90B-43B8-ABA5-66F769752DDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 		RESX_ShowErrorsInErrorList = False
+		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 	EndGlobalSection
 EndGlobal

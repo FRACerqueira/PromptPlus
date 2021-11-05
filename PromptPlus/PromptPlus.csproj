@@ -26,6 +26,7 @@
   <ItemGroup>
     <Compile Remove="Controls\ScreenControl.cs" />
     <Compile Remove="Internal\ParseColorString.cs" />
+    <Compile Remove="Internal\StatusBar.cs" />
   </ItemGroup>
 
   <ItemGroup>
