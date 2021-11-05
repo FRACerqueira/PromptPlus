@@ -49,7 +49,7 @@ https://fracerqueira.github.io/PromptPlus
 - MaskedInput-Control   : Added method to run the validators on each interaction.
 - MaskedInput-Control   : Added method to show day week for mask-type date/datetime.
 
-- Revised documentation for new changes (In progress)
+- Revised documentation for new changes 
 
 **Fixed bugs**
 --------------

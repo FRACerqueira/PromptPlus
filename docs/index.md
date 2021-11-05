@@ -327,7 +327,7 @@ Console.WriteLine($"Your input: {name.Value}!");
 ## Snapshot
 
 ### Input
-[**Top**](#help) | [Input](input.md) | [Password](password.md)
+[**Top**](#help) | [Input](input.md) | [Password](input.md)
 
 ![](./images/Input.gif)
 ![](./images/Password.gif)
@@ -369,7 +369,7 @@ Console.WriteLine($"Your input: {name.Value}!");
 ![](./images/ProgressBar.gif)
 
 ### Slider Number
-[**Top**](#help) | [Slider Number](slidernumber.md) | [Number Up/Down](numberupdown.md)
+[**Top**](#help) | [Slider Number](slidernumber.md) | [Number Up/Down](slidernumber.md)
 
 ![](./images/SliderNumber.gif)
 ![](./images/NumberUpDown.gif)
@@ -391,7 +391,7 @@ Console.WriteLine($"Your input: {name.Value}!");
 ![](./images/PipeLine.gif)
 
 ### Banner
-[**Top**](#help) | [Screen](banner.md)
+[**Top**](#help) | [Banner](banner.md)
 
 ![](./images/Banner.gif)
 
