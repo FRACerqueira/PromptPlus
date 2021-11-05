@@ -83,10 +83,10 @@ dotnet run --project PromptPlusExample
 
 ![](./docs/images/PipeLine.gif)
 
-### Screen / StatusBar
+### Banner
 [**Top**](#welcome-to-promptplus)
 
-![](./docs/images/ScreenStatusBar.gif)
+![](./docs/images/Banner.gif)
 
 
 ### Colors

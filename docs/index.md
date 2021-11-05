@@ -390,10 +390,10 @@ Console.WriteLine($"Your input: {name.Value}!");
 
 ![](./images/PipeLine.gif)
 
-### Screen / StatusBar
-[**Top**](#help) | [Screen](screen.md) | [StatusBar](statusbar.md)
+### Banner
+[**Top**](#help) | [Screen](banner.md)
 
-![](./images/ScreenStatusBar.gif)
+![](./images/Banner.gif)
 
 
 ### Colors
