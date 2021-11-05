@@ -353,7 +353,7 @@ Console.WriteLine($"Your input: {name.Value}!");
 ![](./images/MultSelect.gif)
 
 ### Confirm
-[**Top**](#help) | [Confirm](confirm.md) | [Slider Switche](sliderswitche.md)[Slider Switche](sliderswitche.md)
+[**Top**](#help) | [Confirm](confirm.md) | [Slider Switche](sliderswitche.md)
 
 ![](./images/Confirm.gif)
 ![](./images/SliderSwitche.gif)
