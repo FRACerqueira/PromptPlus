@@ -2,8 +2,6 @@
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
-// Inspired by the work https://github.com/shibayan/Sharprompt
-// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -295,7 +293,7 @@ namespace PromptPlusControls.Controls
             return true;
         }
 
-        public bool IskeyPageNavagator<Tkey>(ConsoleKeyInfo consoleKeyInfo, Paginator<Tkey> paginator)
+        public static bool IskeyPageNavagator<Tkey>(ConsoleKeyInfo consoleKeyInfo, Paginator<Tkey> paginator)
         {
             if (consoleKeyInfo.Key == ConsoleKey.PageUp && consoleKeyInfo.Modifiers == 0 && paginator.PageCount > 1)
             {
