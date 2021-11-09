@@ -150,7 +150,7 @@ Console.WriteLine($"Hello, {name.Result}!");
 ## Install
 [**Top**](#welcome-to-promptplus)
 
-PromptPlus was developed in c# with the **netstandard2.1** target framework, with compatibility for:
+PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
 
 - NET Framework 4.8
 - .NET Core 3.1
@@ -274,28 +274,28 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | --- | --- |
 | [Commands](https://fracerqueira.github.io/PromptPlus/commands) | Command set for PromptPlus console |
 | [Color](https://fracerqueira.github.io/PromptPlus/colorcmd) | Easy to add some color-text and underline |
-| [Banner](https://fracerqueira.github.io/PromptPlus/banner) |  ASCII text banner |
-| [Any key](https://fracerqueira.github.io/PromptPlus/anykey) |  Simple any key press |
-| [Key Press](https://fracerqueira.github.io/PromptPlus/keypress) | Simple specific key |
+| [ASCII-Banner](https://fracerqueira.github.io/PromptPlus/banner) |  ASCII text banner |
+| [Any-key](https://fracerqueira.github.io/PromptPlus/anykey) |  Simple any key press |
+| [Key-Press](https://fracerqueira.github.io/PromptPlus/keypress) | Simple specific key |
 | [Confirm](https://fracerqueira.github.io/PromptPlus/confirm) | Simple confirm with  with tool tips and language detection |
 | [Input](https://fracerqueira.github.io/PromptPlus/input) | Input text with input validator with tooltips |
 | [Password](https://fracerqueira.github.io/PromptPlus/input) | Input password with input validator and show/hide(optional) input value |
-| [MaskEdit Generic](https://fracerqueira.github.io/PromptPlus/maskeditgeneric) | Input with masked input , tooltips and input validator |
-| [MaskEdit Date](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Date input with language parameter, tooltips and input validator |
-| [MaskEdit Time](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Time input with language parameter, tooltips and input validator |
-| [MaskEdit Date and Time](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Date and time input with language parameter, tooltips and input validator |
-| [MaskEdit Number](https://fracerqueira.github.io/PromptPlus/maskeditnumber) | Numeric input with language parameter, tooltips and input validator |
-| [MaskEdit Currency](https://fracerqueira.github.io/PromptPlus/maskeditnumber) | Currency input with language parameter, tooltips and input validator |
+| [MaskEdit-Generic](https://fracerqueira.github.io/PromptPlus/maskeditgeneric) | Input with masked input , tooltips and input validator |
+| [MaskEdit-Date](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Date input with language parameter, tooltips and input validator |
+| [MaskEdit-Time](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Time input with language parameter, tooltips and input validator |
+| [MaskEdit-Date/Time](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Date and time input with language parameter, tooltips and input validator |
+| [MaskEdit-Number](https://fracerqueira.github.io/PromptPlus/maskeditnumber) | Numeric input with language parameter, tooltips and input validator |
+| [MaskEdit-Currency](https://fracerqueira.github.io/PromptPlus/maskeditnumber) | Currency input with language parameter, tooltips and input validator |
 | [Select](https://fracerqueira.github.io/PromptPlus/select)| Generic select input IEnumerable/Enum with auto-paginator and tooltips and more |
 | [MultiSelect](https://fracerqueira.github.io/PromptPlus/multiselect) | Generic multi select input IEnumerable/Enum with group, auto-paginator , tooltips and more |
 | [List](https://fracerqueira.github.io/PromptPlus/list) | Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more |
 | [ListMasked](https://fracerqueira.github.io/PromptPlus/listmasked) | Create generic IEnumerable with maskedit, auto-paginator, tooptip , input validator |
 | [Browser](https://fracerqueira.github.io/PromptPlus/browser) | Browser files/folder with auto-paginator and tooltips |
-| [Slider Number](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with short/large step and tooltips |
-| [Number Up/Down](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with step and tooltips |
-| [Slider Switche](https://fracerqueira.github.io/PromptPlus/sliderswitche) | Generic choice with customization and tooltips |
-| [Progress Bar](https://fracerqueira.github.io/PromptPlus/progressbar) | Progress Bar with interation customization |
-| [WaitProcess](https://fracerqueira.github.io/PromptPlus/waitprocess) | Wait process with animation |
+| [Slider-Number](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with short/large step and tooltips |
+| [Number-Up/Down](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with step and tooltips |
+| [Slider-Switche](https://fracerqueira.github.io/PromptPlus/sliderswitche) | Generic choice with customization and tooltips |
+| [Progress-Bar](https://fracerqueira.github.io/PromptPlus/progressbar) | Progress Bar with interation customization |
+| [Wait-Process](https://fracerqueira.github.io/PromptPlus/waitprocess) | Wait process with animation |
 | [PipeLine](https://fracerqueira.github.io/PromptPlus/pipeline) | Pipeline sequence to all prompts with condition by pipe and status summary |
 
 ## Extensions

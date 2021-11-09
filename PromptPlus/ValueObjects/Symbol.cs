@@ -11,7 +11,7 @@ namespace PromptPlusControls.ValueObjects
     public struct Symbol
     {
 
-        public Symbol(string value, string fallbackValue)
+        public Symbol(string value = null, string fallbackValue = null)
         {
             Value = value ?? " ";
             FallbackValue = fallbackValue ?? " ";

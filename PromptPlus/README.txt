@@ -1,7 +1,7 @@
 ﻿**Welcome to PromptPlus**
 
 Interactive command-line toolkit for **C#** with powerful controls.
-PromptPlus was developed in c# with the **netstandard2.1** target framework, with compatibility for:
+PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
 
 - .NET Core 3.1, 5.X, 6.X
 - NET Framework 4.8
@@ -9,11 +9,15 @@ PromptPlus was developed in c# with the **netstandard2.1** target framework, wit
 **visit the official page for complete documentation** :
 https://fracerqueira.github.io/PromptPlus
 
-**Relase Notes (This Version)**
+**Relase Notes (V.2.0.0)**
 
-**Break changes and behavior (Previous versions need to be refactored to new syntax) ** 
+- Same features with V.2.0.0-RC (promoted to production)
+- New target frameworks: netstandard2.1, .NET 5 AND .NET6 
+
+**Relase Notes (V.2.0.0-RC)**
+
+**Break changes and behavior (Previous versions (< 2.0.0-rc) need to be refactored to new syntax) ** 
 ---------------------------------------------------------------------------------------
-
 - Refactored all controls to fluent-interface syntax to improve extensibility points.
 - Removed pipeline namespace. Now the pipeline syntax is the same as for controls.
 - Removed access to options classes, unified by fluent-interfaces model

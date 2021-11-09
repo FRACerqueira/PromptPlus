@@ -12,7 +12,7 @@ Interactive command-line based application framework for **C# with powerful cont
 ## Help
 - [Install](#install)
 - [Organization](#organization)
-    - [Paging Behavior](#paging-behavior)
+    - [Pagination Behavior](#pagination-behavior)
 - [Global Settings](#global-settings)
     - [Culture](#culture)
     - [Colors](#colors)
@@ -29,7 +29,7 @@ Interactive command-line based application framework for **C# with powerful cont
 ## Install
 [**Top**](#help)
 
-PromptPlus was developed in c# with the **netstandard2.1** target framework, with compatibility for:
+PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
 
 - NET Framework 4.8
 - .NET Core 3.1
@@ -60,7 +60,7 @@ All controls have the same lines organization:
 
 tooltips can be global (hotkey always active - default F1) and control specific. All controls have the properties to show hide tooltips.
 
-### Paging behavior
+### Pagination Behavior
 [**Top**](#help)
 
 When a control has a collection it can be paged with a limit of items per page. When the item per page limit is not entered, the number of items per page is set to the maximum allowed by the console/terminal size. If the console/terminal is resized, an adjustment will be made to a number of items per page and a message will be issued on the console (only when it is a terminal)
@@ -69,7 +69,7 @@ When a control has a collection it can be paged with a limit of items per page. 
 [**Top**](#help)
 
 - EnabledBeep 
-    - Enabled/disabled beep. Default = true
+    - Enabled/disabled beep. Default = false
 - EnabledStandardTooltip 
     - Show/Hide global tooltip. Default = true. When false then control´s tooltip not show.
 - EnabledPromptTooltip
@@ -150,7 +150,7 @@ PromptPlus.ColorSchema.Answer = ConsoleColor.Cyan;
 ### Symbols
 [**Top**](#help)
 
-PromptPlus has a configurable symbos with Unicode support and Fallback.
+PromptPlus has a configurable symbols with Unicode support and Fallback.
 
 - MaskEmpty
     - Symbol : ■
@@ -272,28 +272,28 @@ Controls/Commands | Details
 --- | ---
 [Commands](commands.md) |  Command set for PromptPlus console
 [Color](colorcmd.md) | Easy to add some color-text and underline
-[Banner](banner.md) |  ASCII text banner 
-[Any key](anykey.md) |  Simple any key press
-[Key Press](keypress.md) | Simple specific key
+[ASCII-Banner](banner.md) |  ASCII text banner 
+[Any-key](anykey.md) |  Simple any key press
+[Key-Press](keypress.md) | Simple specific key
 [Confirm](confirm.md) | Simple confirm with  with tool tips and language detection 
 [Input](input.md) | Input text with input validator with tooltips
 [Password](input.md) | Input password with input validator and show/hide(optional) input value
-[MaskEdit Generic](maskeditgeneric.md) | Input with masked input , tooltips and input validator
-[MaskEdit Date](maskeditdate.md) | Date input with language parameter, tooltips and input validator
-[MaskEdit Time](maskeditdate.md) | Time input with language parameter, tooltips and input validator
-[MaskEdit Date and Time](maskeditdate.md) | Date and time input with language parameter, tooltips and input validator
-[MaskEdit Number](maskeditnumber.md) | Numeric input with language parameter, tooltips and input validator
-[MaskEdit Currency](maskeditnumber.md) | Currency input with language parameter, tooltips and input validator
+[MaskEdit-Generic](maskeditgeneric.md) | Input with masked input , tooltips and input validator
+[MaskEdit-Date](maskeditdate.md) | Date input with language parameter, tooltips and input validator
+[MaskEdit-Time](maskeditdate.md) | Time input with language parameter, tooltips and input validator
+[MaskEdit-Date/Time](maskeditdate.md) | Date and time input with language parameter, tooltips and input validator
+[MaskEdit-Number](maskeditnumber.md) | Numeric input with language parameter, tooltips and input validator
+[MaskEdit-Currency](maskeditnumber.md) | Currency input with language parameter, tooltips and input validator
 [Select](select.md)| Generic select input IEnumerable/Enum with auto-paginator and tooltips and more
-[MultiSelect](multiselect.md) | Generic multi select input IEnumerable/Enum with grpip, auto-paginator , tooltips and more
+[MultiSelect](multiselect.md) | Generic multi select input IEnumerable/Enum with group, auto-paginator , tooltips and more
 [List](list.md) | Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more
 [ListMasked](listmasked.md) | Create generic IEnumerable with maskededit, auto-paginator, tooptip , input validator
 [Browser](browser.md) | Browser files/folder with auto-paginator and tooltips
-[Slider Number](slidernumber.md) | Numeric ranger with short/large step and tooltips
-[Number Up/Down](slidernumber.md) | Numeric ranger with step and tooltips
-[Slider Switche](sliderswitche.md) | Generic choice with customization and tooltips
-[Progress Bar](progressbar.md) | Progress Bar with interation customization
-[WaitProcess](waitprocess.md) | Wait process with animation
+[Slider-Number](slidernumber.md) | Numeric range with short/large step and tooltips
+[Number-Up/Down](slidernumber.md) | Numeric range with step and tooltips
+[Slider-Switche](sliderswitche.md) | Generic choice with customization and tooltips
+[Progress-Bar](progressbar.md) | Progress Bar with interation customization
+[Wait-Process](waitprocess.md) | Wait process with animation
 [PipeLine](pipeline.md) | Pipeline sequence to all prompts with condition by pipe and status summary
 
 ## Extensions
@@ -390,8 +390,8 @@ Console.WriteLine($"Your input: {name.Value}!");
 
 ![](./images/PipeLine.gif)
 
-### Banner
-[**Top**](#help) | [Banner](banner.md)
+### ASCII-Banner
+[**Top**](#help) | [ASCII-Banner](banner.md)
 
 ![](./images/Banner.gif)
 
