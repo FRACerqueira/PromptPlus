@@ -39,27 +39,27 @@ AutoComplete(string prompt = null)
     - List of input validator
 - ```csharp
   PageSize(int value)
-    ```
+  ```
     - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size
 - ```csharp
   SpeedAnimation(int value)
-``` 
+  ``` 
   - Animation speed.If value < 10, value = 10. If value > 1000, value = 1000.
 - ```csharp
   MinimumPrefixLength(int value)
-``` 
+  ``` 
   - Minimum number of characters that must be entered before getting suggestions.
 - ```csharp
   CompletionInterval(int value)
-``` 
+  ``` 
   - Time in milliseconds when the timer will kick in to get suggestions.
 - ```csharp
   CompletionMaxCount(int value)
-``` 
+  ``` 
   - Number of suggestions to be retrieved.
 - ```csharp
   CompletionAsyncService(Func<string,int,CancellationToken, Task<string[]>> value);
-``` 
+  ``` 
   - service function to be called to get suggestions.
 
 ### Return
