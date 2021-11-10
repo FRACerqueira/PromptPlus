@@ -328,7 +328,7 @@ Console.WriteLine($"Your input: {name.Value}!");
 ### Input
 [**Top**](#help) | [AutoComplete](autocomplete.md) | [Input](input.md) | [Password](input.md) 
 
-![](./images/Autocomplete.gif)
+![](./images/AutoComplete.gif)
 ![](./images/Input.gif)
 ![](./images/Password.gif)
 
