@@ -23,7 +23,7 @@ namespace PromptPlusControls
     {
         internal const int MaxShowTasks = 1;
         internal const int RollupFactor = 13;
-        internal const int SpeedAnimation = 100;
+        internal const int SpeedAnimation = 50;
         internal const int SliderWitdth = 30;
         internal const int ProgressgBarWitdth = 30;
         internal const int ProgressgBarDoneDelay = 1000;

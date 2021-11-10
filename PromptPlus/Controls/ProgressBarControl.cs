@@ -71,7 +71,7 @@ namespace PromptPlusControls.Controls
                 }
             }
 
-            if (IsEndStaus(_localTask.Status))
+            if (IsEndStatus(_localTask.Status))
             {
                 if (cancellationToken.IsCancellationRequested)
                 {
@@ -128,7 +128,7 @@ namespace PromptPlusControls.Controls
             }
         }
 
-        private bool IsEndStaus(TaskStatus status)
+        private bool IsEndStatus(TaskStatus status)
         {
             return status switch
             {

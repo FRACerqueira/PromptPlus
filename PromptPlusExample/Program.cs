@@ -82,7 +82,6 @@ namespace PromptPlusExample
             }
         }
 
-
         public void ShowMenu()
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -106,6 +105,9 @@ namespace PromptPlusExample
 
                 switch (type.Value)
                 {
+                    case ExampleType.AutoComplete:
+                        RunAutoCompleteSample();
+                        break;
                     case ExampleType.ConsoleCmd:
                         RunCommandsSample();
                         break;
@@ -231,6 +233,54 @@ namespace PromptPlusExample
             }
             _appLifetime.StopApplication();
         }
+
+        private void RunAutoCompleteSample()
+        {
+            var macth = PromptPlus.SliderSwitche("Accept Without Match sugestions")
+                .Run(_stopApp);
+            if (macth.IsAborted)
+            {
+                return;
+            }
+            var ctrlinput = PromptPlus.AutoComplete("Input value")
+                .Addvalidator(PromptValidators.Required())
+                .Addvalidator(PromptValidators.MinLength(3))
+                .CompletionInterval(1000)
+                .CompletionMaxCount(10)
+                .ValidateOnDemand()
+                .PageSize(5)
+                .CompletionAsyncService(MYServiceCompleteAsync);
+            if (macth.Value)
+            {
+                ctrlinput.AcceptWithoutMatch();
+            }
+            var input = ctrlinput.Run(_stopApp);
+            if (input.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"Result : [cyan]{input.Value}[/cyan]!");
+        }
+
+        private async Task<string[]> MYServiceCompleteAsync(string prefixText, int count, CancellationToken cancellationToken)
+        {
+            if (count == 0)
+            {
+                count = 10;
+            }
+            var random = new Random();
+            var items = new List<string>(count);
+            for (var i = 0; i < count; i++)
+            {
+                var c1 = (char)random.Next(65, 90);
+                var c2 = (char)random.Next(97, 122);
+                var c3 = (char)random.Next(97, 122);
+
+                items.Add(prefixText + c1 + c2 + c3);
+            }
+            return await Task.FromResult(items.ToArray());
+        }
+
 
         private void RunCommandsSample()
         {

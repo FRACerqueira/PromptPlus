@@ -50,6 +50,8 @@ namespace PromptPlusControls.Internal
             ResizeTerminal = PromptPlusResources.ResizeTerminal;
             RunningText = PromptPlusResources.RunningText;
             SelectKeyNavigation = PromptPlusResources.SelectKeyNavigation;
+            AutoCompleteKeyNavigation = string.Format(PromptPlusResources.AutoCompleteKeyNavigation, PromptPlus.UnSelectFilter);
+            AutoCompleteKeyNotfound = PromptPlusResources.AutoCompleteKeyNotfound;
             ShowKeyPressStandardHotKeys = PromptPlusResources.ShowKeyPressStandardHotKeys;
             ShowKeyPressStandardHotKeysWithPipeline = PromptPlusResources.ShowKeyPressStandardHotKeysWithPipeline;
             ShowProcessStandardHotKeysWithPipeline = PromptPlusResources.ShowProcessStandardHotKeysWithPipeline;
@@ -217,6 +219,10 @@ namespace PromptPlusControls.Internal
         public static string ListItemAlreadyexists { get; private set; } = PromptPlusResources.ListItemAlreadyexists;
 
         public static string SelectKeyNavigation { get; private set; } = string.Format(PromptPlusResources.SelectKeyNavigation, PromptPlus.UnSelectFilter);
+
+        public static string AutoCompleteKeyNotfound { get; private set; } = PromptPlusResources.AutoCompleteKeyNavigation;
+
+        public static string AutoCompleteKeyNavigation { get; private set; } = string.Format(PromptPlusResources.AutoCompleteKeyNavigation, PromptPlus.UnSelectFilter);
 
         public static string KeyNavPaging { get; private set; } = PromptPlusResources.KeyNavPaging;
 

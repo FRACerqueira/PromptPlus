@@ -41,7 +41,7 @@ SliderNumber( SliderNumberType.LeftRightstring prompt = null)
 - ```csharp
   LargeStep(double value)
   ``` 
-  - largestep increment/decrement of value. If ommited, largestep equal maximum value divide by 10.For type = UpDown will be ignored.
+  - largestep increment/decrement of value. If ommited, largestep equal maximum value divide by 10.
 - ```csharp
   FracionalDig(int value)
   ``` 

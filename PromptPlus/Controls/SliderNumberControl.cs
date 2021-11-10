@@ -104,7 +104,7 @@ namespace PromptPlusControls.Controls
                         _currentValue = aux;
                         break;
                     }
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == ConsoleModifiers.Control && _options.Type == SliderNumberType.LeftRight:
+                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == ConsoleModifiers.Control:
                     {
                         if (_currentValue.CompareTo(_options.Min) == 0)
                         {
@@ -135,7 +135,7 @@ namespace PromptPlusControls.Controls
                         _currentValue = aux;
                         break;
                     }
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == ConsoleModifiers.Control && _options.Type == SliderNumberType.LeftRight:
+                    case ConsoleKey.RightArrow when keyInfo.Modifiers == ConsoleModifiers.Control:
                     {
                         if (_currentValue.CompareTo(_options.Max) == 0)
                         {

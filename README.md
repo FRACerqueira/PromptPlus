@@ -22,6 +22,7 @@ dotnet run --project PromptPlusExample
 
 ### Input
 
+![](./docs/images/AutoComplete.gif)
 ![](./docs/images/Input.gif)
 ![](./docs/images/Password.gif)
 
@@ -152,7 +153,6 @@ Console.WriteLine($"Hello, {name.Result}!");
 
 PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
 
-- NET Framework 4.8
 - .NET Core 3.1
 - .NET Core 5.0
 - .NET Core 6.X
@@ -278,6 +278,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [Any-key](https://fracerqueira.github.io/PromptPlus/anykey) |  Simple any key press |
 | [Key-Press](https://fracerqueira.github.io/PromptPlus/keypress) | Simple specific key |
 | [Confirm](https://fracerqueira.github.io/PromptPlus/confirm) | Simple confirm with  with tool tips and language detection |
+| [AutoComplete](https://fracerqueira.github.io/PromptPlus/autocomplete) | Input text with sugestions, validator, and tooltips |
 | [Input](https://fracerqueira.github.io/PromptPlus/input) | Input text with input validator with tooltips |
 | [Password](https://fracerqueira.github.io/PromptPlus/input) | Input password with input validator and show/hide(optional) input value |
 | [MaskEdit-Generic](https://fracerqueira.github.io/PromptPlus/maskeditgeneric) | Input with masked input , tooltips and input validator |

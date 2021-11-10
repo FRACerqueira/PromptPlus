@@ -31,11 +31,9 @@ Interactive command-line based application framework for **C# with powerful cont
 
 PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
 
-- NET Framework 4.8
 - .NET Core 3.1
 - .NET Core 5.0
 - .NET Core 6.X
-
 
 ```
 Install-Package PromptPlus [-pre]
@@ -276,6 +274,7 @@ Controls/Commands | Details
 [Any-key](anykey.md) |  Simple any key press
 [Key-Press](keypress.md) | Simple specific key
 [Confirm](confirm.md) | Simple confirm with  with tool tips and language detection 
+[AutoComplete](autocomplete.md) | Input text with sugestions, validator, and tooltips 
 [Input](input.md) | Input text with input validator with tooltips
 [Password](input.md) | Input password with input validator and show/hide(optional) input value
 [MaskEdit-Generic](maskeditgeneric.md) | Input with masked input , tooltips and input validator

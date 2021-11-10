@@ -297,9 +297,6 @@
   <data name="MaskEditErase" xml:space="preserve">
     <value>,Ctrl+Del: Erase all</value>
   </data>
-  <data name="NumberUpDownKeyNavigator" xml:space="preserve">
-    <value>Up/Down: Change, Enter: Finish</value>
-  </data>
   <data name="MaskEditInputType" xml:space="preserve">
     <value>Input type: {0}</value>
   </data>
@@ -323,5 +320,14 @@
   </data>
   <data name="FinishResultTasks" xml:space="preserve">
     <value>Finish all tasks({0})</value>
+  </data>
+  <data name="NumberUpDownKeyNavigator" xml:space="preserve">
+    <value>Up/Down: Short change, Crtl+Left/Right: Larger change, Enter: Finish</value>
+  </data>
+  <data name="AutoCompleteKeyNavigation" xml:space="preserve">
+    <value>Enter: Select, {0}: Unselect, Ctrl-Enter: Change to selected</value>
+  </data>
+  <data name="AutoCompleteKeyNotfound" xml:space="preserve">
+    <value>{0} not found in sugestions</value>
   </data>
 </root>

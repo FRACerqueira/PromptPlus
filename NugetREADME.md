@@ -1,9 +1,8 @@
 # **Welcome to PromptPlus**
 
 Interactive command-line  toolkit for **C#** with powerful controls and commands.
-PromptPlus was developed in c# with the **netstandard2.1** target framework, with compatibility for:
+PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
 - .NET Core 3.1, 5.X, 6.X
-- NET Framework 4.8
 
 [**visit the official page for complete documentation**](https://fracerqueira.github.io/PromptPlus/)
 

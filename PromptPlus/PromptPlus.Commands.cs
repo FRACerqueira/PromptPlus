@@ -255,6 +255,11 @@ namespace PromptPlusControls
 
         #region controls
 
+        public static IControlAutoComplete AutoComplete(string prompt)
+        {
+            return new AutoCompleteControl(new AutoCompleteOptions() { Message = prompt });
+        }
+
         public static IFIGlet Banner(string value)
         {
             return new BannerControl(value);

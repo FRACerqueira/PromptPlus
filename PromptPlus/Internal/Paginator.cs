@@ -104,6 +104,8 @@ namespace PromptPlusControls.Internal
             return true;
         }
 
+        public int MaxPageSize => _maxpageSize;
+
         public bool IsFistPageItem => SelectedIndex == 0 && Count > 0;
 
         public bool IsLastPageItem => SelectedIndex == Count - 1 && Count > 0;

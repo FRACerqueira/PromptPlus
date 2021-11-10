@@ -94,7 +94,7 @@ namespace PromptPlusControls.Controls
             }
             if (!summary)
             {
-                Thread.Sleep(_options.SpeedAnimation);
+                cancellationToken.WaitHandle.WaitOne(_options.SpeedAnimation);
             }
             if (IsListEndStaus(_localTask.Select(x => x.Status)))
             {

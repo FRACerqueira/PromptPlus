@@ -38,6 +38,8 @@ namespace PromptPlusExample
         Input,
         [Display(Name = "Control: Input - Password")]
         Password,
+        [Display(Name = "Control: Input - Auto Complete")]
+        AutoComplete,
         [Display(Name = "Control: Select - IEnumerable")]
         Select,
         [Display(Name = "Control: Select - Enum")]

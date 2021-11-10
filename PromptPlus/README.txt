@@ -11,8 +11,12 @@ https://fracerqueira.github.io/PromptPlus
 
 **Relase Notes (V.2.0.0)**
 
-- Same features with V.2.0.0-RC (promoted to production)
-- New target frameworks: netstandard2.1, .NET 5 AND .NET6 
+- AutoComplete-Control : **New Control** Input with sugestions 
+
+- New target frameworks: netstandard2.1, .NET 5 AND .NET6
+- Masked-control : bug fixed in create mask for number/currency (Wrongly created Group separator)
+- Masked-control : bug fixed in Backspace/del for number/currency when not have decimal. 
+- Number-Up/Down-control : Added larger-step
 
 **Relase Notes (V.2.0.0-RC)**
 

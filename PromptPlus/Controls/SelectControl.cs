@@ -81,7 +81,7 @@ namespace PromptPlusControls.Controls
                 {
                     continue;
                 }
-                else if (ControlBase<T>.IskeyPageNavagator(keyInfo, _localpaginator))
+                else if (IskeyPageNavagator(keyInfo, _localpaginator))
                 {
                     continue;
                 }

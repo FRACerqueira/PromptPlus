@@ -130,6 +130,22 @@ namespace PromptPlusControls
         IControlConfirm Default(bool value);
     }
 
+    public interface IControlAutoComplete : IPromptControls<string>, IPromptPipe
+    {
+        IControlAutoComplete Prompt(string value);
+        IControlAutoComplete PageSize(int value);
+        IControlAutoComplete Addvalidator(Func<object, ValidationResult> validator);
+        IControlAutoComplete Addvalidators(IEnumerable<Func<object, ValidationResult>> validators);
+        IControlAutoComplete ValidateOnDemand();
+        IControlAutoComplete AcceptWithoutMatch();
+        IControlAutoComplete SpeedAnimation(int value);
+        IControlAutoComplete MinimumPrefixLength(int value);
+        IControlAutoComplete CompletionInterval(int value);
+        IControlAutoComplete CompletionMaxCount(int value);
+        IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<string[]>> value);
+    }
+
+
     public interface IControlSelect<T> : IPromptControls<T>, IPromptPipe
     {
         IControlSelect<T> Prompt(string value);

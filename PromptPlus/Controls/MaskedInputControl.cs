@@ -620,6 +620,10 @@ namespace PromptPlusControls.Controls
             {
                 result += _options.CurrentCulture.NumberFormat.NumberGroupSeparator + new string('9', _options.CurrentCulture.NumberFormat.NumberGroupSizes[0]);
             }
+            if (result.StartsWith(_options.CurrentCulture.NumberFormat.NumberGroupSeparator))
+            {
+                result = result.Substring(1);
+            }
             if (_options.AmmountDecimal > 0)
             {
                 result += _options.CurrentCulture.NumberFormat.NumberDecimalSeparator + new string('9', _options.AmmountDecimal);
@@ -652,6 +656,10 @@ namespace PromptPlusControls.Controls
             for (var i = 0; i < _options.AmmountInteger / _options.CurrentCulture.NumberFormat.CurrencyGroupSizes[0]; i++)
             {
                 result += _options.CurrentCulture.NumberFormat.CurrencyGroupSeparator + new string('9', _options.CurrentCulture.NumberFormat.CurrencyGroupSizes[0]);
+            }
+            if (result.StartsWith(_options.CurrentCulture.NumberFormat.CurrencyGroupSeparator))
+            {
+                result = result.Substring(1);
             }
             if (_options.AmmountDecimal > 0)
             {
