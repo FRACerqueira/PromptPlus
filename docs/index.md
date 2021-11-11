@@ -27,7 +27,7 @@ Interactive command-line based application framework for **C# with powerful cont
 # Documentation
 
 ## Install
-[**Top**](#-help)
+[**Top**](#help)
 
 PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
 
@@ -46,7 +46,7 @@ dotnet add package PromptPlus [--prerelease]
 **_Note:  [-pre]/[--prerelease] usage for pre-release versions_**
 
 ## Organization
-[**Top**](#-help)
+[**Top**](#help)
 
 All controls have the same lines organization:
 - Message and data entry (ever)
@@ -59,12 +59,12 @@ All controls have the same lines organization:
 tooltips can be global (hotkey always active - default F1) and control specific. All controls have the properties to show hide tooltips.
 
 ### Pagination Behavior
-[**Top**](#-help)
+[**Top**](#help)
 
 When a control has a collection it can be paged with a limit of items per page. When the item per page limit is not entered, the number of items per page is set to the maximum allowed by the console/terminal size. If the console/terminal is resized, an adjustment will be made to a number of items per page and a message will be issued on the console (only when it is a terminal)
 
 ## Global Settings
-[**Top**](#-help)
+[**Top**](#help)
 
 - EnabledBeep 
     - Enabled/disabled beep. Default = false
@@ -88,7 +88,7 @@ PromptPlus.EnabledAbortKey = false;
 ```
 
 ### Culture
-[**Top**](#-help)
+[**Top**](#help)
 
 PromptPlus applies the language/culture **only when running controls**. The language/culture of the application is **not affected**. If language/culture is not informed, the application's language/culture will be used with fallback to en-US.
 
@@ -109,7 +109,7 @@ To use a non-embedded language/culture:
 - Publish the compiled file (**PromptPlus.{Language}.resources**) in the same folder as the binaries.
 
 ### Colors
-[**Top**](#-help)
+[**Top**](#help)
 
 PromptPlus has a configurable color(16 color) schema.
 
@@ -158,7 +158,7 @@ PromptPlus.WriteLine("This is a simples ","line".White().OnBlue().Underline(), "
 ````
 
 ### Symbols
-[**Top**](#-help)
+[**Top**](#help)
 
 PromptPlus has a configurable symbols with Unicode support and Fallback.
 
@@ -214,7 +214,7 @@ PromptPlus.Symbols.Done = new Symbol("√", "V ");
 **_Note: new Symbol() return : Symbol = single space and Fallback = double space._**
 
 ### Hotkeys
-[**Top**](#-help)
+[**Top**](#help)
 
 Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
 
@@ -262,7 +262,7 @@ PromptPlus.AbortAllPipesKeyPress = new HotKey(key: "X", alt: true, ctrl: false, 
 **_Note: the key parameter is case-insentive;_**
 
 ## Load and Save Settings
-[**Top**](#-help)
+[**Top**](#help)
 
 PromptPlus allows saving and loading a previous configuration of culture, behavior, hotkeys, colors and symbols.A file with the default configuration is available in the package in the Resources folder named **PromptPlus.config.json** . To load automatically the file must be placed in your project and published in the **same folder** as the binaries.
 
@@ -276,7 +276,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 **_Note: if the folderfile parameter is omitted, it will be saved/loaded from the default application folder_**
 
 ## Apis
-[**Top**](#-help)
+[**Top**](#help)
 
 Controls/Commands | Details
 --- | ---
@@ -308,7 +308,7 @@ Controls/Commands | Details
 [PipeLine](pipeline.md) | Pipeline sequence to all prompts with condition by pipe and status summary
 
 ## Extensions
-[**Top**](#-help)
+[**Top**](#help)
 
 PromptPlus have a extension to **import validators**. No duplicate code! 
 
@@ -338,14 +338,14 @@ Console.WriteLine($"Your input: {name.Value}!");
 ## Snapshot
 
 ### Input
-[**Top**](#-help) | [AutoComplete](autocomplete.md) | [Input](input.md) | [Password](input.md) 
+[**Top**](#help) | [AutoComplete](autocomplete.md) | [Input](input.md) | [Password](input.md) 
 
 ![](./images/AutoComplete.gif)
 ![](./images/Input.gif)
 ![](./images/Password.gif)
 
 ### MaskEdit
-[**Top**](#-help) | [MaskEdit Generic](maskeditgeneric.md) | [MaskEdit Date/Time](maskeditdate.md) | [MaskEdit Number/Currency](maskeditnumber.md) 
+[**Top**](#help) | [MaskEdit Generic](maskeditgeneric.md) | [MaskEdit Date/Time](maskeditdate.md) | [MaskEdit Number/Currency](maskeditnumber.md) 
 
 ![](./images/MaskEditGeneric.gif)
 ![](./images/MaskEditDateTime.gif)
@@ -353,74 +353,74 @@ Console.WriteLine($"Your input: {name.Value}!");
 ![](./images/MaskEditCurrency.gif)
 
 ### KeyPress
-[**Top**](#-help) | [Any key](anykey.md) | [Key Press](keypress.md)
+[**Top**](#help) | [Any key](anykey.md) | [Key Press](keypress.md)
 
 ![](./images/Anykey.gif)
 ![](./images/KeyPress.gif)
 
 ### Selectors
-[**Top**](#-help) | [Select](select.md) | [MultiSelect](multiselect.md)
+[**Top**](#help) | [Select](select.md) | [MultiSelect](multiselect.md)
 
 ![](./images/Select.gif)
 ![](./images/MultSelect.gif)
 
 ### Confirm
-[**Top**](#-help) | [Confirm](confirm.md) | [Slider Switch](sliderswitch.md)
+[**Top**](#help) | [Confirm](confirm.md) | [Slider Switch](sliderswitch.md)
 
 ![](./images/Confirm.gif)
 ![](./images/SliderSwitch.gif)
 
 ### WaitProcess
-[**Top**](#-help) | [WaitProcess](waitprocess.md) 
+[**Top**](#help) | [WaitProcess](waitprocess.md) 
 
 ![](./images/WaitProcess.gif)
 
 ### ProgressBar
-[**Top**](#-help) | [Progress Bar](progressbar.md)
+[**Top**](#help) | [Progress Bar](progressbar.md)
 
 ![](./images/ProgressBar.gif)
 
 ### Slider Number
-[**Top**](#-help) | [Slider Number](slidernumber.md) | [Number Up/Down](slidernumber.md)
+[**Top**](#help) | [Slider Number](slidernumber.md) | [Number Up/Down](slidernumber.md)
 
 ![](./images/SliderNumber.gif)
 ![](./images/NumberUpDown.gif)
 
 ### List
-[**Top**](#-help) | [List](list.md) | [ListMasked](listmasked.md)
+[**Top**](#help) | [List](list.md) | [ListMasked](listmasked.md)
 
 ![](./images/List.gif)
 ![](./images/MaskedList.gif)
 
 ### Browser
-[**Top**](#-help) | [Browser](browser.md)
+[**Top**](#help) | [Browser](browser.md)
 
 ![](./images/Browser.gif)
 
 ### PipeLine
-[**Top**](#-help) | [PipeLine](pipeline.md)
+[**Top**](#help) | [PipeLine](pipeline.md)
 
 ![](./images/PipeLine.gif)
 
 ### ASCII-Banner
-[**Top**](#-help) | [ASCII-Banner](banner.md)
+[**Top**](#help) | [ASCII-Banner](banner.md)
 
 ![](./images/Banner.gif)
 
 
 ### Colors
-[**Top**](#-help) | [Colors](colorcmd.md)
+[**Top**](#help) | [Colors](colorcmd.md)
 
 ![](./images/Colors.gif)
 
 ### Commands
-[**Top**](#-help) | [Commands](commands.md)
+[**Top**](#help) | [Commands](commands.md)
 
 ![](./images/Commands.gif)
 
 
 ## Supported platforms
-[**Top**](#-help)
+[**Top**](#help)
 
 - Windows
     - Command Prompt, PowerShell, Windows Terminal
