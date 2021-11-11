@@ -7,7 +7,7 @@
 Methods to Control PipeLine.
 
 ### Methods
-[**Top**](#promptplus--pipemethods)
+[**Top**](#-promptplus--pipemethods)
 
 - ```csharp
    PipeCondition(Func<ResultPipe[], object, bool> condition)

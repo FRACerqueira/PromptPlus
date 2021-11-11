@@ -12,7 +12,7 @@ Control SliderNumber. Numeric ranger with short/large step and tooltips.
 
 
 ### Syntax
-[**Top**](#promptplus--slidernumber)
+[**Top**](#-promptplus--slidernumber)
 
 ```csharp
 SliderNumber( SliderNumberType.UpDown,string prompt = null)
@@ -20,7 +20,7 @@ SliderNumber( SliderNumberType.LeftRightstring prompt = null)
 ```
 
 ### Methods
-[**Top**](#promptplus--slidernumber)
+[**Top**](#-promptplus--slidernumber)
 
 - ```csharp
   Prompt(string value)
@@ -48,7 +48,7 @@ SliderNumber( SliderNumberType.LeftRightstring prompt = null)
   - precision increment/decrement . If ommited, precison = 0.
 
 ### Return
-[**Top**](#promptplus--slidernumber)
+[**Top**](#-promptplus--slidernumber)
 
 ```csharp
 IControlSliderNumber         //for Control Methods
@@ -59,7 +59,7 @@ IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#promptplus--slidernumber)
+[**Top**](#-promptplus--slidernumber)
 
 ```csharp
 var number = PromptPlus.SliderNumber(SliderNumberType.LeftRight,"Select a number")

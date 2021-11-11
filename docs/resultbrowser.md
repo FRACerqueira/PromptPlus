@@ -7,7 +7,7 @@
 Default return struct for [**Browser Control**](browser). 
 
 ### Properties
-[**Top**](#promptplus--resultbrowser)
+[**Top**](#-promptplus--resultbrowser)
 
 - PathValue
 	- Type : string

@@ -12,13 +12,13 @@ Control PipeLine. Pipeline sequence to **all prompts** with **condition by pipe*
 ![](./images/PipeLine.gif)
 
 ### Syntax
-[**Top**](#promptplus--pipeline)
+[**Top**](#-promptplus--pipeline)
 
 ```csharp
 Pipeline()
 ```
 ### Methods
-[**Top**](#promptplus--pipeline)
+[**Top**](#-promptplus--pipeline)
 
 - ```csharp
   AddPipe(IFormPlusBase value)
@@ -31,7 +31,7 @@ Pipeline()
 
 
 ### Return
-[**Top**](#promptplus--pipeline)
+[**Top**](#-promptplus--pipeline)
 
 ```csharp
 IControlPipeLine                            //for Control Methods
@@ -42,7 +42,7 @@ IFormPlusBase                               //for only definition of pipe to Pip
 
 
 ### Sample
-[**Top**](#promptplus--pipeline)
+[**Top**](#-promptplus--pipeline)
 
 ```csharp
 var pipeline = PromptPlus.Pipeline()

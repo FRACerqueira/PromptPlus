@@ -9,7 +9,7 @@
 Base Methods for all controls.
 
 ### Methods
-[**Top**](#promptplus--basemethods)
+[**Top**](#-promptplus--basemethods)
 
 - ```csharp
   IPromptControls<T> EnabledAbortKey(bool value)

@@ -12,14 +12,14 @@ Control Input. Generic input with input validator with tooltips.
 ![](./images/Input.gif)
 
 ### Syntax
-[**Top**](#promptplus--input)
+[**Top**](#-promptplus--input)
 
 ```csharp
 Input(string prompt = null)
 ```
 
 ### Methods
-[**Top**](#promptplus--input)
+[**Top**](#-promptplus--input)
 
 - ```csharp
   Prompt(string value)
@@ -47,7 +47,7 @@ Input(string prompt = null)
     - List of input validator
 
 ### Return
-[**Top**](#promptplus--input)
+[**Top**](#-promptplus--input)
 
 ```csharp
 IControlInput                //for Control Methods
@@ -58,7 +58,7 @@ IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#promptplus--input)
+[**Top**](#-promptplus--input)
 
 ```csharp
 var name = PromptPlus.Input("What's your name?")

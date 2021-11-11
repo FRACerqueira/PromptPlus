@@ -7,7 +7,7 @@
 Default return struct for [**PipeLine Control**](pipeline). 
 
 ### Properties
-[**Top**](#promptplus--resultmasked)
+[**Top**](#-promptplus--resultmasked)
 
 - PipeId
 	- Type : string

@@ -12,14 +12,14 @@ Control AutoComplete. Generic input with sugestions, validator and tooltips.
 ![](./images/AutoComplete.gif)
 
 ### Syntax
-[**Top**](#promptplus--autocomplete)
+[**Top**](#-promptplus--autocomplete)
 
 ```csharp
 AutoComplete(string prompt = null)
 ```
 
 ### Methods
-[**Top**](#promptplus--autocomplete)
+[**Top**](#-promptplus--autocomplete)
 
 - ```csharp
   Prompt(string value)
@@ -63,7 +63,7 @@ AutoComplete(string prompt = null)
   - service function to be called to get suggestions.
 
 ### Return
-[**Top**](#promptplus--autocomplete)
+[**Top**](#-promptplus--autocomplete)
 
 
 ```csharp
@@ -75,7 +75,7 @@ IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#promptplus--autocomplete)
+[**Top**](#-promptplus--autocomplete)
 ```csharp
 private async Task<string[]> MYServiceCompleteAsync(string prefixText, int count, CancellationToken cancellationToken)
 {

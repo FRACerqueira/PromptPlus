@@ -10,7 +10,7 @@
 Default return struct for MaskEdit controls. 
 
 ### Properties
-[**Top**](#promptplus--resultmasked)
+[**Top**](#-promptplus--resultmasked)
 
 - ObjectValue
 	- Type : Object
