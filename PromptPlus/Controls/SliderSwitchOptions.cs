@@ -7,7 +7,7 @@ using PromptPlusControls.Internal;
 
 namespace PromptPlusControls.Controls
 {
-    internal class SliderSwitcheOptions : BaseOptions
+    internal class SliderSwitchOptions : BaseOptions
     {
         public bool Value { get; set; }
         public string OffValue { get; set; } = Messages.OffValue;

@@ -1,4 +1,4 @@
-# PromptPlus # SliderSwitche
+# PromptPlus # SliderSwitch
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -6,19 +6,19 @@
 [**Pipe Methods**](pipemethods)
 
 ## Documentation
-Control SliderSwitche. Generic choice with customization and tooltips.
+Control SliderSwitch. Generic choice with customization and tooltips.
 
-![](./images/SliderSwitche.gif)
+![](./images/SliderSwitch.gif)
 
 ### Syntax
-[**Top**](#promptplus--sliderswitche)
+[**Top**](#promptplus--sliderswitch)
 
 ```csharp
 SliderSwitche(string prompt = null)
 ```
 
 ### Methods
-[**Top**](#promptplus--sliderswitche)
+[**Top**](#promptplus--sliderswitch)
 
 - ```csharp
   Prompt(string value)
@@ -29,19 +29,19 @@ SliderSwitche(string prompt = null)
   ``` 
   - initial value
 - ```csharp
-  Offvalue(string value)
+  OffValue(string value)
 ``` 
   - value to off state. If ommited, value = OffValue in resx.
 - ```csharp
-  Onvalue(string value)
+  OnValue(string value)
   ``` 
   - Value to on state. If ommited, value = OnValue in resx.
 
 ### Return
-[**Top**](#promptplus--sliderswitche)
+[**Top**](#promptplus--sliderswitch)
 
 ```csharp
-IControlSliderSwitche      //for Control Methods
+IControlSliderSwitch       //for Control Methods
 IPromptControls<bool>      //for others Base Methods
 ResultPromptPlus<bool>     //for Base Method Run, when execution is direct 
 IPromptPipe                //for Pipe condition and transform to IFormPlusBase 
@@ -49,10 +49,10 @@ IFormPlusBase              //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#promptplus--sliderswitche)
+[**Top**](#promptplus--sliderswitch)
 
 ```csharp
-var slider = PromptPlus.SliderSwitche("Turn on/off")
+var slider = PromptPlus.SliderSwitch("Turn on/off")
     .Run(_stopApp);
 
 if (slider.IsAborted)

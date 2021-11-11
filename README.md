@@ -50,7 +50,7 @@ dotnet run --project PromptPlusExample
 [**Top**](#welcome-to-promptplus)
 
 ![](./docs/images/Confirm.gif)
-![](./docs/images/SliderSwitche.gif)
+![](./docs/images/SliderSwitch.gif)
 
 ### WaitProcess
 [**Top**](#welcome-to-promptplus)
@@ -216,6 +216,16 @@ PromptPlus.ColorSchema.Answer = ConsoleColor.DarkRed;
 PromptPlus.ColorSchema.Select = ConsoleColor.DarkCyan;
 ```
 
+Prompt Plus also has commands for parts of text and underlining.
+
+```csharp
+PromptPlus.WriteLine("[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].");
+````
+
+```csharp
+PromptPlus.WriteLine("This is a simples ","line".White().OnBlue().Underline(), " with ", "color".Red());
+````
+
 ### Symbols
 [**Top**](#welcome-to-promptplus)
 
@@ -294,7 +304,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [Browser](https://fracerqueira.github.io/PromptPlus/browser) | Browser files/folder with auto-paginator and tooltips |
 | [Slider-Number](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with short/large step and tooltips |
 | [Number-Up/Down](https://fracerqueira.github.io/PromptPlus/slidernumber) | Numeric ranger with step and tooltips |
-| [Slider-Switche](https://fracerqueira.github.io/PromptPlus/sliderswitche) | Generic choice with customization and tooltips |
+| [Slider-Switch](https://fracerqueira.github.io/PromptPlus/sliderswitch) | Generic choice with customization and tooltips |
 | [Progress-Bar](https://fracerqueira.github.io/PromptPlus/progressbar) | Progress Bar with interation customization |
 | [Wait-Process](https://fracerqueira.github.io/PromptPlus/waitprocess) | Wait process with animation |
 | [PipeLine](https://fracerqueira.github.io/PromptPlus/pipeline) | Pipeline sequence to all prompts with condition by pipe and status summary |

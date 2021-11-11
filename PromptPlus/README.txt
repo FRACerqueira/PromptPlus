@@ -11,12 +11,15 @@ https://fracerqueira.github.io/PromptPlus
 
 **Relase Notes (V.2.0.0)**
 
+- Added Product logo/icon
 - AutoComplete-Control : **New Control** Input with sugestions 
-
 - New target frameworks: netstandard2.1, .NET 5 AND .NET6
 - Masked-control : bug fixed in create mask for number/currency (Wrongly created Group separator)
 - Masked-control : bug fixed in Backspace/del for number/currency when not have decimal. 
 - Number-Up/Down-control : Added larger-step
+- Method Syntax Adjustment (need to be refactored to new syntax):
+    Addvalidator -> AddValidator (Input-Control/List-Control/MaskEditList-Control)
+    Offvalue -> Offvalue, Offvalue -> OnValue (SliderSwitch-Control)
 
 **Relase Notes (V.2.0.0-RC)**
 

@@ -299,9 +299,9 @@ namespace PromptPlusControls
             return new SliderNumberControl(new SliderNumberOptions() { Message = prompt, Type = type });
         }
 
-        public static IControlSliderSwitche SliderSwitche(string prompt = null)
+        public static IControlSliderSwitch SliderSwitch(string prompt = null)
         {
-            return new SliderSwitcheControl(new SliderSwitcheOptions() { Message = prompt });
+            return new SliderSwitchControl(new SliderSwitchOptions() { Message = prompt });
         }
 
         public static IControlProgressbar Progressbar(string prompt = null)

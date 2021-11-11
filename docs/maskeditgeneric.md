@@ -56,11 +56,11 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
     ```
     - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size 
 - ```csharp
-  Addvalidator(Func<object, ValidationResult> validator);
+  AddValidator(Func<object, ValidationResult> validator);
   ``` 
     - item of input validator
 - ```csharp
-  Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+  AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
   ``` 
     - List of input validator
 - ```csharp

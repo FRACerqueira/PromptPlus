@@ -21,7 +21,9 @@
     <PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
     <PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
     <Version>2.0.0</Version>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Copyright>© 2021 - Fernando Cerqueira </Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|.net6|AnyCPU'">
@@ -85,6 +87,7 @@
   <ItemGroup>
     <None Include="..\README.md" Pack="false" />
     <None Include="..\NugetREADME.md" Pack="true" PackagePath="\" />
+    <None Include="..\icon.png" Pack="true" PackagePath="\" />
     <None Include="Resources\PromptPlus.config.json" Pack="true" PackagePath="\Resources">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>      
     </None> 
@@ -92,7 +95,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
   <ItemGroup>
     <Compile Update="Resources\Exceptions.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -105,23 +107,4 @@
       <DependentUpon>PromptPlusResources.resx</DependentUpon>
     </Compile>
   </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\Exceptions.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\PromptPlusResources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Resources\PromptPlus.config.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

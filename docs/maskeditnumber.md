@@ -40,11 +40,11 @@ Control MaskEdit. Numeric/Currency input with language/culture, tooltips and inp
     ```
     - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size 
 - ```csharp
-  Addvalidator(Func<object, ValidationResult> validator);
+  AddValidator(Func<object, ValidationResult> validator);
   ``` 
     - item of input validator
 - ```csharp
-  Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+  AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
   ``` 
     - List of input validator
 - ```csharp

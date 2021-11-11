@@ -20,12 +20,12 @@ namespace PromptPlusControls.Controls
         private readonly AutoCompleteOptions _options;
         private readonly InputBuffer _filterBuffer = new();
         private readonly List<string> _inputItems = new();
+        private readonly CancellationTokenSource _ctsObserver = new();
         private Paginator<string> _localpaginator;
         private CancellationTokenSource _cts = new();
         private string _prefixstart = string.Empty;
         private int _index = -1;
         private Task _observerAutocomplete;
-        private CancellationTokenSource _ctsObserver = new();
         private bool _autoCompleteSendStart;
         private bool _autoCompleteRunning;
 
@@ -318,13 +318,21 @@ namespace PromptPlusControls.Controls
                         using (var lcts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, cancellationToken))
                         {
                             lcts.Token.WaitHandle.WaitOne(_options.CompletionInterval);
-                            _tasksRunning = _options.CompletionAsyncService.Invoke(_filterBuffer.ToString(), _options.CompletionMaxCount, lcts.Token);
-                            if (_tasksRunning.IsCompletedSuccessfully)
+                            try
+                            {
+                                _tasksRunning = _options.CompletionAsyncService.Invoke(_filterBuffer.ToString(), _options.CompletionMaxCount, lcts.Token);
+                                if (_tasksRunning.IsCompletedSuccessfully)
+                                {
+                                    _inputItems.Clear();
+                                    _inputItems.AddRange(_tasksRunning.Result);
+                                    _localpaginator = new Paginator<string>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<string>.s_empty, x => x);
+                                    _localpaginator.UnSelected();
+                                }
+                            }
+                            catch
                             {
                                 _inputItems.Clear();
-                                _inputItems.AddRange(_tasksRunning.Result);
                                 _localpaginator = new Paginator<string>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<string>.s_empty, x => x);
-                                _localpaginator.UnSelected();
                             }
                         }
                         _tasksRunning = null;
@@ -340,6 +348,11 @@ namespace PromptPlusControls.Controls
                     }
                 }
             }
+            if (_tasksRunning != null)
+            {
+                _tasksRunning.Dispose();
+            }
+
         }
 
         #region IControlAutoComplete
@@ -378,12 +391,12 @@ namespace PromptPlusControls.Controls
 
         }
 
-        public IControlAutoComplete Addvalidator(Func<object, ValidationResult> validator)
+        public IControlAutoComplete AddValidator(Func<object, ValidationResult> validator)
         {
-            return Addvalidators(new List<Func<object, ValidationResult>> { validator });
+            return AddValidators(new List<Func<object, ValidationResult>> { validator });
         }
 
-        public IControlAutoComplete Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+        public IControlAutoComplete AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
         {
             _options.Validators.Merge(validators);
             return this;

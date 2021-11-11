@@ -145,6 +145,18 @@ PromptPlus has a configurable color(16 color) schema.
 PromptPlus.ColorSchema.Answer = ConsoleColor.Cyan;
 ```
 
+Prompt Plus also has commands for parts of text and underlining.
+
+```csharp
+//sample
+PromptPlus.WriteLine("[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].");
+````
+
+```csharp
+//sample
+PromptPlus.WriteLine("This is a simples ","line".White().OnBlue().Underline(), " with ", "color".Red());
+````
+
 ### Symbols
 [**Top**](#help)
 
@@ -290,7 +302,7 @@ Controls/Commands | Details
 [Browser](browser.md) | Browser files/folder with auto-paginator and tooltips
 [Slider-Number](slidernumber.md) | Numeric range with short/large step and tooltips
 [Number-Up/Down](slidernumber.md) | Numeric range with step and tooltips
-[Slider-Switche](sliderswitche.md) | Generic choice with customization and tooltips
+[Slider-Switch](sliderswitch.md) | Generic choice with customization and tooltips
 [Progress-Bar](progressbar.md) | Progress Bar with interation customization
 [Wait-Process](waitprocess.md) | Wait process with animation
 [PipeLine](pipeline.md) | Pipeline sequence to all prompts with condition by pipe and status summary
@@ -353,10 +365,10 @@ Console.WriteLine($"Your input: {name.Value}!");
 ![](./images/MultSelect.gif)
 
 ### Confirm
-[**Top**](#help) | [Confirm](confirm.md) | [Slider Switche](sliderswitche.md)
+[**Top**](#help) | [Confirm](confirm.md) | [Slider Switch](sliderswitch.md)
 
 ![](./images/Confirm.gif)
-![](./images/SliderSwitche.gif)
+![](./images/SliderSwitch.gif)
 
 ### WaitProcess
 [**Top**](#help) | [WaitProcess](waitprocess.md) 
