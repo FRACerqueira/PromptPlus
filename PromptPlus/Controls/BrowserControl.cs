@@ -143,7 +143,7 @@ namespace PromptPlusControls.Controls
                 {
                     continue;
                 }
-                else if (ControlBase<ResultBrowser>.IskeyPageNavagator(keyInfo, _paginator))
+                else if (IskeyPageNavagator(keyInfo, _paginator))
                 {
                     continue;
                 }

@@ -109,7 +109,7 @@ namespace PromptPlusControls.Controls
                 {
                     continue;
                 }
-                else if (ControlBase<IEnumerable<ResultMasked>>.IskeyPageNavagator(keyInfo, _localpaginator))
+                else if (IskeyPageNavagator(keyInfo, _localpaginator))
                 {
                     continue;
                 }
