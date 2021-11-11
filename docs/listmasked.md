@@ -1,4 +1,4 @@
-# PromptPlus # ListMasked
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # ListMasked
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
