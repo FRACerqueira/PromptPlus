@@ -1,4 +1,4 @@
-# PromptPlus # WaitProcess
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # WaitProcess
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -12,14 +12,14 @@ Control WaitProcess. Wait process with animation.
 ![](./images/WaitProcess.gif)
 
 ### Syntax
-[**Top**](#promptplus--waitprocess)
+[**Top**](#-promptplus--waitprocess)
 
 ```csharp
 WaitProcess(string prompt = null)
 ```
 
 ### Methods
-[**Top**](#promptplus--sliderswitche)
+[**Top**](#-promptplus--sliderswitche)
 
 - ```csharp
   Prompt(string value)
@@ -35,7 +35,7 @@ WaitProcess(string prompt = null)
   - Animation speed.If value < 10, value = 10. If value > 1000, value = 1000.
 
 ### Return
-[**Top**](#promptplus--sliderswitche)
+[**Top**](#-promptplus--sliderswitche)
 
 ```csharp
 IControlSliderSwitche      //for Control Methods
@@ -46,7 +46,7 @@ IFormPlusBase              //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#promptplus--waitprocess)
+[**Top**](#-promptplus--waitprocess)
 
 ```csharp
 var Process = PromptPlus.WaitProcess("My Tasks(3) Async")

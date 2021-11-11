@@ -86,8 +86,8 @@ namespace PromptPlusControls
         IControlInput Prompt(string value);
         IControlInput Default(string value);
         IControlInput IsPassword(bool swithVisible);
-        IControlInput Addvalidator(Func<object, ValidationResult> validator);
-        IControlInput Addvalidators(IEnumerable<Func<object, ValidationResult>> validators);
+        IControlInput AddValidators(Func<object, ValidationResult> validator);
+        IControlInput AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlInput ValidateOnDemand();
     }
 
@@ -101,12 +101,12 @@ namespace PromptPlusControls
         IControlSliderNumber FracionalDig(int value);
     }
 
-    public interface IControlSliderSwitche : IPromptControls<bool>, IPromptPipe
+    public interface IControlSliderSwitch : IPromptControls<bool>, IPromptPipe
     {
-        IControlSliderSwitche Prompt(string value);
-        IControlSliderSwitche Default(bool value);
-        IControlSliderSwitche Offvalue(string value);
-        IControlSliderSwitche Onvalue(string value);
+        IControlSliderSwitch Prompt(string value);
+        IControlSliderSwitch Default(bool value);
+        IControlSliderSwitch OffValue(string value);
+        IControlSliderSwitch OnValue(string value);
     }
 
     public interface IControlProgressbar : IPromptControls<ProgressBarInfo>, IPromptPipe
@@ -129,6 +129,22 @@ namespace PromptPlusControls
         IControlConfirm Prompt(string value);
         IControlConfirm Default(bool value);
     }
+
+    public interface IControlAutoComplete : IPromptControls<string>, IPromptPipe
+    {
+        IControlAutoComplete Prompt(string value);
+        IControlAutoComplete PageSize(int value);
+        IControlAutoComplete AddValidator(Func<object, ValidationResult> validator);
+        IControlAutoComplete AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
+        IControlAutoComplete ValidateOnDemand();
+        IControlAutoComplete AcceptWithoutMatch();
+        IControlAutoComplete SpeedAnimation(int value);
+        IControlAutoComplete MinimumPrefixLength(int value);
+        IControlAutoComplete CompletionInterval(int value);
+        IControlAutoComplete CompletionMaxCount(int value);
+        IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<string[]>> value);
+    }
+
 
     public interface IControlSelect<T> : IPromptControls<T>, IPromptPipe
     {
@@ -170,8 +186,8 @@ namespace PromptPlusControls
         IControlList<T> Range(int minvalue, int maxvalue);
         IControlList<T> UpperCase(bool value);
         IControlList<T> AllowDuplicate(bool value);
-        IControlList<T> Addvalidator(Func<object, ValidationResult> validator);
-        IControlList<T> Addvalidators(IEnumerable<Func<object, ValidationResult>> validators);
+        IControlList<T> AddValidator(Func<object, ValidationResult> validator);
+        IControlList<T> AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlList<T> ValidateOnDemand();
 
     }
@@ -182,8 +198,8 @@ namespace PromptPlusControls
         IControlListMasked PageSize(int value);
         IControlListMasked Range(int minvalue, int maxvalue);
         IControlListMasked ShowInputType(bool value);
-        IControlListMasked Addvalidator(Func<object, ValidationResult> validator);
-        IControlListMasked Addvalidators(IEnumerable<Func<object, ValidationResult>> validators);
+        IControlListMasked AddValidator(Func<object, ValidationResult> validator);
+        IControlListMasked AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlListMasked MaskType(MaskedType value, string mask = null);
         IControlListMasked UpperCase(bool value);
         IControlListMasked Culture(CultureInfo cultureinfo);

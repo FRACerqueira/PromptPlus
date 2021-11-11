@@ -1,4 +1,4 @@
-# PromptPlus # Select
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # Select
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -11,14 +11,14 @@ Control Select. Generic select IEnumerable/Enum with auto-paginator and tooltips
 ![](./images/Select.gif)
 
 ### Syntax
-[**Top**](#promptplus--select)
+[**Top**](#-promptplus--select)
 
 ```csharp
  Select<T>(string prompt = null)
 ```
 
 ### Methods
-[**Top**](#promptplus--select)
+[**Top**](#-promptplus--select)
 
  - ```csharp
  Prompt(string value)
@@ -68,7 +68,7 @@ Control Select. Generic select IEnumerable/Enum with auto-paginator and tooltips
     - Automatically selects the item when there is only a single filtered item
 
 ### Return
-[**Top**](#promptplus--select)
+[**Top**](#-promptplus--select)
 
 ```csharp
 IControlSelect<T>      //for Control Methods
@@ -79,7 +79,7 @@ IFormPlusBase          //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#promptplus--select)
+[**Top**](#-promptplus--select)
 
 ```csharp
 var city = PromptPlus.Select<string>("Select your city")

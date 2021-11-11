@@ -1,20 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29123.88
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlus", "PromptPlus\PromptPlus.csproj", "{B4F50CA1-7DBB-411D-8D09-0E26B83337FE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlusExample", "PromptPlusExample\PromptPlusExample.csproj", "{56DA0F00-A45D-4A4C-B13A-F2AD2A6C3C52}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{1D88B60E-F8D4-494F-BF56-940EA9DDAB0D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{1697A2D6-9353-4291-AB40-376068E0BFC6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A90B-43B8-ABA5-66F769752DDD}"
 	ProjectSection(SolutionItems) = preProject
 		docs\_config.yml = docs\_config.yml
 		docs\anykey.md = docs\anykey.md
+		docs\autocomplete.md = docs\autocomplete.md
 		docs\banner.md = docs\banner.md
 		docs\basemethods.md = docs\basemethods.md
 		docs\browser.md = docs\browser.md
@@ -42,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\select.md = docs\select.md
 		docs\singleprocess.md = docs\singleprocess.md
 		docs\slidernumber.md = docs\slidernumber.md
-		docs\sliderswitche.md = docs\sliderswitche.md
+		docs\sliderswitch.md = docs\sliderswitch.md
 		docs\waitprocess.md = docs\waitprocess.md
 	EndProjectSection
 EndProject
@@ -53,7 +50,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{0EBFCD
 		docs\images\Colors.gif = docs\images\Colors.gif
 		docs\images\Commands.gif = docs\images\Commands.gif
 		docs\images\Confirm.gif = docs\images\Confirm.gif
-		docs\images\HowtoAutoConfig.PNG = docs\images\HowtoAutoConfig.PNG
+		docs\images\icon.png = docs\images\icon.png
 		docs\images\Input.gif = docs\images\Input.gif
 		docs\images\KeyPress.gif = docs\images\KeyPress.gif
 		docs\images\List.gif = docs\images\List.gif
@@ -72,9 +69,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{0EBFCD
 		docs\images\ScreenStatusBar.gif = docs\images\ScreenStatusBar.gif
 		docs\images\Select.gif = docs\images\Select.gif
 		docs\images\SliderNumber.gif = docs\images\SliderNumber.gif
-		docs\images\SliderSwitche.gif = docs\images\SliderSwitche.gif
+		docs\images\SliderSwitch.gif = docs\images\SliderSwitch.gif
 		docs\images\WaitProcess.gif = docs\images\WaitProcess.gif
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlusExample", "PromptPlusExample\PromptPlusExample.csproj", "{E6909664-814A-4663-845D-19D236CBC749}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,21 +85,20 @@ Global
 		{B4F50CA1-7DBB-411D-8D09-0E26B83337FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4F50CA1-7DBB-411D-8D09-0E26B83337FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4F50CA1-7DBB-411D-8D09-0E26B83337FE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56DA0F00-A45D-4A4C-B13A-F2AD2A6C3C52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56DA0F00-A45D-4A4C-B13A-F2AD2A6C3C52}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56DA0F00-A45D-4A4C-B13A-F2AD2A6C3C52}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56DA0F00-A45D-4A4C-B13A-F2AD2A6C3C52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6909664-814A-4663-845D-19D236CBC749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6909664-814A-4663-845D-19D236CBC749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6909664-814A-4663-845D-19D236CBC749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6909664-814A-4663-845D-19D236CBC749}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B4F50CA1-7DBB-411D-8D09-0E26B83337FE} = {1D88B60E-F8D4-494F-BF56-940EA9DDAB0D}
-		{56DA0F00-A45D-4A4C-B13A-F2AD2A6C3C52} = {1697A2D6-9353-4291-AB40-376068E0BFC6}
 		{0EBFCDFA-D7BC-448D-B396-7179B9B32577} = {640ED284-A90B-43B8-ABA5-66F769752DDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_ShowErrorsInErrorList = False
 		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
+		RESX_ShowErrorsInErrorList = False
 	EndGlobalSection
 EndGlobal

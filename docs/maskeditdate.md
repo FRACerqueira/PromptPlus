@@ -1,4 +1,4 @@
-# PromptPlus # MaskEditDate
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # MaskEditDate
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -21,7 +21,7 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
 
 
 ### Syntax
-[**Top**](#promptplus--maskeditdate)
+[**Top**](#-promptplus--maskeditdate)
 
 ```csharp
  MaskEdit([MaskedType.DateOnly, string prompt = null)
@@ -30,7 +30,7 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
  ````
 
 ### Methods
-[**Top**](#promptplus--maskeditdate)
+[**Top**](#-promptplus--maskeditdate)
 
  ```csharp
   Prompt(string value)
@@ -45,11 +45,11 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
     ```
     - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size 
 - ```csharp
-  Addvalidator(Func<object, ValidationResult> validator);
+  AddValidator(Func<object, ValidationResult> validator);
   ``` 
     - item of input validator
 - ```csharp
-  Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+  AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
   ``` 
     - List of input validator
 - ```csharp
@@ -90,7 +90,7 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
     -  Accept signal to input number-type/currency-type. If not defined, only positive number.For other type signal will be ignored
 
 ### Return
-[**Top**](#promptplus--maskeditdate)
+[**Top**](#-promptplus--maskeditdate)
 
 ```csharp
 IControlMaskEdit                //for Control Methods
@@ -101,7 +101,7 @@ IFormPlusBase                   //for only definition of pipe to Pipeline Contro
 ```
 
 ### Sample
-[**Top**](#promptplus--maskeditdate)
+[**Top**](#-promptplus--maskeditdate)
 
 ```csharp
 var mask = PromptPlus.MaskEdit(MaskedType.DateOnly, "Date")

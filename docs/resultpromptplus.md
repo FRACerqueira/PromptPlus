@@ -1,4 +1,4 @@
-# PromptPlus # ResultPromptPlus
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # ResultPromptPlus
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis)
 
@@ -6,7 +6,7 @@
 Default return struct for all controls. 
 
 ### Properties
-[**Top**](#promptplus--resultpromptplus)
+[**Top**](#-promptplus--resultpromptplus)
 
 - IsAborted
 	- Type : bool

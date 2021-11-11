@@ -1,4 +1,4 @@
-# PromptPlus # Commands
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # Commands
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus)
@@ -9,7 +9,7 @@ Command set for PromptPlus console
 ![](./images/Commands.gif)
 
 ### Syntax
-[**Top**](#promptplus--commands)
+[**Top**](#-promptplus--commands)
 
 Using simple command to change forecolor and backcolor.
 

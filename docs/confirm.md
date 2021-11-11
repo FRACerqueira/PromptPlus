@@ -1,4 +1,4 @@
-# PromptPlus # Confirm
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # Confirm
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -11,14 +11,14 @@ Control Confirm. Simple confirm with with tool tips and language detection.
 ![](./images/Confirm.gif)
 
 ### Syntax
-[**Top**](#promptplus--confirm)
+[**Top**](#-promptplus--confirm)
 
 ```csharp
 Confirm(string prompt = null)
 ````
 
 ### Methods
-[**Top**](#promptplus--confirm)
+[**Top**](#-promptplus--confirm)
 
 - ```csharp
   Prompt(string value)
@@ -30,7 +30,7 @@ Confirm(string prompt = null)
     - Default value. True for positive confirm or False for negative confirm.
 
 ### Return
-[**Top**](#promptplus--confirm)
+[**Top**](#-promptplus--confirm)
 
 ```csharp
 IControlConfirm            //for Control Methods
@@ -41,7 +41,7 @@ IFormPlusBase              //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#promptplus--confirm)
+[**Top**](#-promptplus--confirm)
 
 ```csharp
 PromptPlus.DefaultCulture = new CultureInfo("en-US");

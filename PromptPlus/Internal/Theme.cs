@@ -29,6 +29,7 @@ namespace PromptPlusControls.ValueObjects
         public bool EnabledAbortAllPipes { get; set; }
 
         public char? PasswordChar { get; set; }
+
         public ThemeHotKeys HotKeys { get; set; }
 
         public class ThemeHotKeys

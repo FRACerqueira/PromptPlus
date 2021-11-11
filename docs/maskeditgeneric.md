@@ -1,4 +1,4 @@
-# PromptPlus # MaskEditGeneric
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # MaskEditGeneric
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -12,7 +12,7 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
 ![](./images/MaskEditGeneric.gif)
 
 ### Syntax
-[**Top**](#promptplus--maskeditgeneric)
+[**Top**](#-promptplus--maskeditgeneric)
 
 **Mask Characters and Delimiters**
 
@@ -38,10 +38,10 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
 
 ```csharp
  MaskEdit([MaskedType.Generic, string prompt = null)
- ```
+```
 
- ### Methods
-[**Top**](#promptplus--maskeditdate)
+### Methods
+[**Top**](#-promptplus--maskeditgeneric)
 
  ```csharp
   Prompt(string value)
@@ -56,11 +56,11 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
     ```
     - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size 
 - ```csharp
-  Addvalidator(Func<object, ValidationResult> validator);
+  AddValidator(Func<object, ValidationResult> validator);
   ``` 
     - item of input validator
 - ```csharp
-  Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+  AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
   ``` 
     - List of input validator
 - ```csharp
@@ -101,7 +101,7 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
     -  Accept signal to input number-type/currency-type. If not defined, only positive number.For other type signal will be ignored
 
 ### Return
-[**Top**](#promptplus--maskeditdate)
+[**Top**](#-promptplus--maskeditgeneric)
 
 ```csharp
 IControlMaskEdit                //for Control Methods
@@ -112,7 +112,7 @@ IFormPlusBase                   //for only definition of pipe to Pipeline Contro
 ```
 
 ### Sample
-[**Top**](#promptplus--maskeditgeneric)
+[**Top**](#-promptplus--maskeditgeneric)
 
 ```csharp
 var mask = PromptPlus.MaskEdit(MaskedType.Generic, "Inventory Number")

@@ -1,4 +1,4 @@
-# PromptPlus # MaskEditNumber
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # MaskEditNumber
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -17,7 +17,7 @@ Control MaskEdit. Numeric/Currency input with language/culture, tooltips and inp
 - If the Decimal Separator is typed, the cursor advances to part decimal
 
 ### Syntax
-[**Top**](#promptplus--maskeditnumber)
+[**Top**](#-promptplus--maskeditnumber)
 
 ```csharp
  MaskEdit([MaskedType.Number, string prompt = null)
@@ -25,7 +25,7 @@ Control MaskEdit. Numeric/Currency input with language/culture, tooltips and inp
  ````
 
 ### Methods
-[**Top**](#promptplus--maskeditnumber)
+[**Top**](#-promptplus--maskeditnumber)
 
  ```csharp
   Prompt(string value)
@@ -40,11 +40,11 @@ Control MaskEdit. Numeric/Currency input with language/culture, tooltips and inp
     ```
     - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size 
 - ```csharp
-  Addvalidator(Func<object, ValidationResult> validator);
+  AddValidator(Func<object, ValidationResult> validator);
   ``` 
     - item of input validator
 - ```csharp
-  Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+  AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
   ``` 
     - List of input validator
 - ```csharp
@@ -85,7 +85,7 @@ Control MaskEdit. Numeric/Currency input with language/culture, tooltips and inp
     -  Accept signal to input number-type/currency-type. If not defined, only positive number.For other type signal will be ignored
 
 ### Return
-[**Top**](#promptplus--maskeditnumber)
+[**Top**](#-promptplus--maskeditnumber)
 
 ```csharp
 IControlMaskEdit                //for Control Methods
@@ -96,7 +96,7 @@ IFormPlusBase                   //for only definition of pipe to Pipeline Contro
 ```
 
 ### Sample
-[**Top**](#promptplus--maskeditnumber)
+[**Top**](#-promptplus--maskeditnumber)
 
 ```csharp
 var mask = PromptPlus.MaskEdit(MaskedType.Currency)

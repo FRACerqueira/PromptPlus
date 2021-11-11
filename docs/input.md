@@ -1,4 +1,4 @@
-# PromptPlus # Input
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # Input
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -12,14 +12,14 @@ Control Input. Generic input with input validator with tooltips.
 ![](./images/Input.gif)
 
 ### Syntax
-[**Top**](#promptplus--input)
+[**Top**](#-promptplus--input)
 
 ```csharp
 Input(string prompt = null)
 ```
 
 ### Methods
-[**Top**](#promptplus--input)
+[**Top**](#-promptplus--input)
 
 - ```csharp
   Prompt(string value)
@@ -38,16 +38,16 @@ Input(string prompt = null)
   ``` 
     - Run the validators on each interaction
 - ```csharp
-  Addvalidator(Func<object, ValidationResult> validator);
+  AddValidator(Func<object, ValidationResult> validator);
   ``` 
     - item of input validator.
 - ```csharp
-  Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+  AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
   ``` 
     - List of input validator
 
 ### Return
-[**Top**](#promptplus--input)
+[**Top**](#-promptplus--input)
 
 ```csharp
 IControlInput                //for Control Methods
@@ -58,7 +58,7 @@ IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#promptplus--input)
+[**Top**](#-promptplus--input)
 
 ```csharp
 var name = PromptPlus.Input("What's your name?")

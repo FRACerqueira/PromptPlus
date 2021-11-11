@@ -1,4 +1,4 @@
-# PromptPlus # ListMasked
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # ListMasked
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -12,14 +12,14 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
 ![](./images/MaskedList.gif)
 
 ### Syntax
-[**Top**](#promptplus--listmasked)
+[**Top**](#-promptplus--listmasked)
 
 ```csharp
  ListMasked(string prompt = null)
 ````
 
 ### Methods
-[**Top**](#promptplus--listmasked)
+[**Top**](#-promptplus--listmasked)
 
 - ```csharp
   Prompt(string value)
@@ -50,11 +50,11 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
     ```
     - Allow duplicate input
 - ```csharp
-  Addvalidator(Func<object, ValidationResult> validator);
+  AddValidator(Func<object, ValidationResult> validator);
   ``` 
     - item of input validator
 - ```csharp
-  Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+  AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
   ``` 
     - List of input validator
 - ```csharp
@@ -95,7 +95,7 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
     -  Accept signal to input number-type/currency-type. If not defined, only positive number.For other type signal will be ignored
 
 ### Return
-[**Top**](#promptplus--listmasked)
+[**Top**](#-promptplus--listmasked)
 
 ```csharp
 IControlListMasked                          //for Control Methods
@@ -107,7 +107,7 @@ IFormPlusBase                               //for only definition of pipe to Pip
 
 
 ### Sample
-[**Top**](#promptplus--listmasked)
+[**Top**](#-promptplus--listmasked)
 
 
 ```csharp

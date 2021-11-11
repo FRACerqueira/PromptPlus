@@ -82,7 +82,6 @@ namespace PromptPlusExample
             }
         }
 
-
         public void ShowMenu()
         {
             Console.OutputEncoding = Encoding.UTF8;
@@ -106,6 +105,9 @@ namespace PromptPlusExample
 
                 switch (type.Value)
                 {
+                    case ExampleType.AutoComplete:
+                        RunAutoCompleteSample();
+                        break;
                     case ExampleType.ConsoleCmd:
                         RunCommandsSample();
                         break;
@@ -232,6 +234,54 @@ namespace PromptPlusExample
             _appLifetime.StopApplication();
         }
 
+        private void RunAutoCompleteSample()
+        {
+            var macth = PromptPlus.SliderSwitch("Accept Without Match sugestions")
+                .Run(_stopApp);
+            if (macth.IsAborted)
+            {
+                return;
+            }
+            var ctrlinput = PromptPlus.AutoComplete("Input value")
+                .AddValidator(PromptValidators.Required())
+                .AddValidator(PromptValidators.MinLength(3))
+                .CompletionInterval(1000)
+                .CompletionMaxCount(10)
+                .ValidateOnDemand()
+                .PageSize(5)
+                .CompletionAsyncService(MYServiceCompleteAsync);
+            if (macth.Value)
+            {
+                ctrlinput.AcceptWithoutMatch();
+            }
+            var input = ctrlinput.Run(_stopApp);
+            if (input.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"Result : [cyan]{input.Value}[/cyan]!");
+        }
+
+        private async Task<string[]> MYServiceCompleteAsync(string prefixText, int count, CancellationToken cancellationToken)
+        {
+            if (count == 0)
+            {
+                count = 10;
+            }
+            var random = new Random();
+            var items = new List<string>(count);
+            for (var i = 0; i < count; i++)
+            {
+                var c1 = (char)random.Next(65, 90);
+                var c2 = (char)random.Next(97, 122);
+                var c3 = (char)random.Next(97, 122);
+
+                items.Add(prefixText + c1 + c2 + c3);
+            }
+            return await Task.FromResult(items.ToArray());
+        }
+
+
         private void RunCommandsSample()
         {
             var quit = false;
@@ -245,6 +295,7 @@ namespace PromptPlusExample
                     .AddItem("3 - ClearRestOfLine")
                     .AddItem("4 - WriteLines")
                     .AddItem("X - End Samples")
+                    .AutoSelectIfOne()
                     .Run();
 
                 if (opc.IsAborted)
@@ -431,7 +482,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            var masksignal = PromptPlus.SliderSwitche("Accept negative")
+            var masksignal = PromptPlus.SliderSwitch("Accept negative")
                 .Default(true)
                 .Run(_stopApp);
 
@@ -492,7 +543,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            var masfill = PromptPlus.SliderSwitche("Fill with zeros")
+            var masfill = PromptPlus.SliderSwitch("Fill with zeros")
                 .Default(true)
                 .Run(_stopApp);
 
@@ -535,7 +586,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            var masfill = PromptPlus.SliderSwitche("Fill with zeros")
+            var masfill = PromptPlus.SliderSwitch("Fill with zeros")
                 .Default(true)
                 .Run(_stopApp);
 
@@ -578,7 +629,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            var masfill = PromptPlus.SliderSwitche("Fill with zeros")
+            var masfill = PromptPlus.SliderSwitch("Fill with zeros")
                 .Default(true)
                 .Run(_stopApp);
 
@@ -587,7 +638,7 @@ namespace PromptPlusExample
                 return;
             }
 
-            var week = PromptPlus.SliderSwitche("Show day week")
+            var week = PromptPlus.SliderSwitch("Show day week")
                 .Default(true)
                 .Run(_stopApp);
 
@@ -673,7 +724,7 @@ namespace PromptPlusExample
             PromptPlus.WriteLine("Imported Validators of Myclass, property MyInput:");
             PromptPlus.WriteLine("private class MylCass \n{\n   [Required(ErrorMessage = \"{0} is required!\")] \n   [MinLength(3, ErrorMessage = \"Min. Length = 3.\")] \n   [MaxLength(5, ErrorMessage = \"Max. Length = 5.\")] \n   [Display(Prompt = \"My Input\")]\n   public string MyInput { get; set; }\n}");
             var name = PromptPlus.Input("Input Value for MyInput")
-                .Addvalidators(inst.ImportValidators(x => x.MyInput))
+                .AddValidators(inst.ImportValidators(x => x.MyInput))
                 .Run(_stopApp);
 
             if (name.IsAborted)
@@ -696,8 +747,8 @@ namespace PromptPlusExample
         {
             var name = PromptPlus.Input("What's your name?")
                 .Default("Peter Parker")
-                .Addvalidator(PromptValidators.Required())
-                .Addvalidator(PromptValidators.MinLength(3))
+                .AddValidators(PromptValidators.Required())
+                .AddValidators(PromptValidators.MinLength(3))
                 .Run(_stopApp);
             if (name.IsAborted)
             {
@@ -874,7 +925,7 @@ namespace PromptPlusExample
 
         private void RunSliderSwitcheSample()
         {
-            var slider = PromptPlus.SliderSwitche("Turn on/off")
+            var slider = PromptPlus.SliderSwitch("Turn on/off")
                 .Run(_stopApp);
 
             if (slider.IsAborted)
@@ -882,14 +933,25 @@ namespace PromptPlusExample
                 return;
             }
             PromptPlus.WriteLine($"Your answer is: {slider.Value}");
+
+            var slider1 = PromptPlus.SliderSwitch("Custom")
+                .OnValue("My On-Value")
+                .OffValue("My Off-Value")
+                .Run(_stopApp);
+
+            if (slider1.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"Your answer is: {slider1.Value}");
         }
 
         private void RunPasswordSample()
         {
             var pwd = PromptPlus.Input("Type new password")
                 .IsPassword(true)
-                .Addvalidator(PromptValidators.Required())
-                .Addvalidator(PromptValidators.MinLength(8))
+                .AddValidators(PromptValidators.Required())
+                .AddValidators(PromptValidators.MinLength(8))
                 .ValidateOnDemand()
                 .Run(_stopApp);
 
@@ -905,7 +967,7 @@ namespace PromptPlusExample
             var lst = PromptPlus.List<string>("Please add item(s)")
                 .PageSize(3)
                 .UpperCase(true)
-                .Addvalidator(PromptValidators.MinLength(3))
+                .AddValidator(PromptValidators.MinLength(3))
                 .ValidateOnDemand()
                 .Run(_stopApp);
 
@@ -921,7 +983,7 @@ namespace PromptPlusExample
             var lst = PromptPlus.ListMasked("Please add item(s)")
                 .MaskType(MaskedType.Generic, @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
                 .UpperCase(true)
-                .Addvalidator(PromptValidators.MinLength(6))
+                .AddValidator(PromptValidators.MinLength(6))
                 .ValidateOnDemand()
                 .Run(_stopApp);
 

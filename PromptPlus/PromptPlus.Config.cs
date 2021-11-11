@@ -82,8 +82,11 @@ namespace PromptPlusControls
                 Converters = { new JsonStringEnumConverter() },
                 IgnoreReadOnlyProperties = false,
                 PropertyNameCaseInsensitive = true,
+#pragma warning disable SYSLIB0020 // Type or member is obsolete
                 IgnoreNullValues = true,
+#pragma warning restore SYSLIB0020 // Type or member is obsolete
             };
+
             var pathfile = Path.Combine(folderfile, "PromptPlus.config.json");
             if (File.Exists(pathfile))
             {

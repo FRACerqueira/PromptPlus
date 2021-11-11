@@ -2,9 +2,6 @@
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
-//  Extension color Inspired by the work https://github.com/colored-console/colored-console
-//  and https://gist.github.com/RickStrahl/52c9ee43bd2723bcdf7bf4d24b029768
-// ***************************************************************************************
 
 using System;
 using System.Collections.Generic;

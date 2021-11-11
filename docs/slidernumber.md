@@ -1,4 +1,4 @@
-# PromptPlus # SliderNumber
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # SliderNumber
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -12,7 +12,7 @@ Control SliderNumber. Numeric ranger with short/large step and tooltips.
 
 
 ### Syntax
-[**Top**](#promptplus--slidernumber)
+[**Top**](#-promptplus--slidernumber)
 
 ```csharp
 SliderNumber( SliderNumberType.UpDown,string prompt = null)
@@ -20,7 +20,7 @@ SliderNumber( SliderNumberType.LeftRightstring prompt = null)
 ```
 
 ### Methods
-[**Top**](#promptplus--slidernumber)
+[**Top**](#-promptplus--slidernumber)
 
 - ```csharp
   Prompt(string value)
@@ -41,14 +41,14 @@ SliderNumber( SliderNumberType.LeftRightstring prompt = null)
 - ```csharp
   LargeStep(double value)
   ``` 
-  - largestep increment/decrement of value. If ommited, largestep equal maximum value divide by 10.For type = UpDown will be ignored.
+  - largestep increment/decrement of value. If ommited, largestep equal maximum value divide by 10.
 - ```csharp
   FracionalDig(int value)
   ``` 
   - precision increment/decrement . If ommited, precison = 0.
 
 ### Return
-[**Top**](#promptplus--slidernumber)
+[**Top**](#-promptplus--slidernumber)
 
 ```csharp
 IControlSliderNumber         //for Control Methods
@@ -59,7 +59,7 @@ IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#promptplus--slidernumber)
+[**Top**](#-promptplus--slidernumber)
 
 ```csharp
 var number = PromptPlus.SliderNumber(SliderNumberType.LeftRight,"Select a number")

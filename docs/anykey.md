@@ -1,4 +1,4 @@
-# PromptPlus # AnyKey
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # AnyKey
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -11,14 +11,14 @@ Simple any key press.
 ![](./images/Anykey.gif)
 
 ### Syntax
-[**Top**](#promptplus--anykey)
+[**Top**](#-promptplus--anykey)
 
 ```csharp
 KeyPress() 
 ```
 
 ### Methods
-[**Top**](#promptplus--anykey)
+[**Top**](#-promptplus--anykey)
 
 - ```csharp
   Prompt(string value)
@@ -26,7 +26,7 @@ KeyPress()
   - set prompt message. If omitted, default value is text "Press any key"
 
 ### Returns Types
-[**Top**](#promptplus--anykey)
+[**Top**](#-promptplus--anykey)
 
 ```csharp
 IControlKeyPress        //for Control Methods
@@ -35,10 +35,8 @@ ResultPromptPlus<bool>  //for Base Method Run, when execution is direct
 IPromptPipe             //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase           //for only definition of pipe to Pipeline Control
 ```
-
-
 ### Sample
-[**Top**](#promptplus--anykey)
+[**Top**](#-promptplus--anykey)
 
 ```csharp
 var key = PromptPlus.KeyPress()

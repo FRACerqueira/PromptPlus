@@ -19,7 +19,7 @@ namespace PromptPlusControls.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class PromptPlusResources {
@@ -66,6 +66,24 @@ namespace PromptPlusControls.Resources {
         internal static string AnyKey {
             get {
                 return ResourceManager.GetString("AnyKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter: Select, {0}: Unselect, Ctrl-Enter: Change to selected.
+        /// </summary>
+        internal static string AutoCompleteKeyNavigation {
+            get {
+                return ResourceManager.GetString("AutoCompleteKeyNavigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} not found in sugestions.
+        /// </summary>
+        internal static string AutoCompleteKeyNotfound {
+            get {
+                return ResourceManager.GetString("AutoCompleteKeyNotfound", resourceCulture);
             }
         }
         
@@ -466,7 +484,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Up/Down: Change, Enter: Finish.
+        ///   Looks up a localized string similar to Up/Down: Short change, Crtl+Left/Right: Larger change, Enter: Finish.
         /// </summary>
         internal static string NumberUpDownKeyNavigator {
             get {

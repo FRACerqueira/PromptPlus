@@ -1,4 +1,4 @@
-# PromptPlus # ProgressBar
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # ProgressBar
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -13,14 +13,14 @@ Control ProgressBar. Progress Bar with interation customization.
 ![](./images/ProgressBar.gif)
 
 ### Syntax
-[**Top**](#promptplus--progressbar)
+[**Top**](#-promptplus--progressbar)
 
 ```csharp
 Progressbar(string prompt = null)
 ```
 
 ### Methods
-[**Top**](#promptplus--progressbar)
+[**Top**](#-promptplus--progressbar)
 
 - ```csharp
   Prompt(string value)
@@ -40,7 +40,7 @@ Progressbar(string prompt = null)
     - Identification start interaction. If ommited , value = 0 (int)
 
 ### Return
-[**Top**](#promptplus--progressbar)
+[**Top**](#-promptplus--progressbar)
 
 ```csharp
 IControlProgressbar                 //for Control Methods
@@ -51,7 +51,7 @@ IFormPlusBase                       //for only definition of pipe to Pipeline Co
 ```
 
 ### Sample
-[**Top**](#promptplus--progressbar)
+[**Top**](#-promptplus--progressbar)
 
 ```csharp
 private async Task<ProgressBarInfo> UpdateSampleHandlerAsync(ProgressBarInfo status, CancellationToken cancellationToken)

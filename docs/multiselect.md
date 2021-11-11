@@ -1,4 +1,4 @@
-# PromptPlus # MultiSelect
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # MultiSelect
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -12,14 +12,14 @@ Control MultSelect. Generic multi select input IEnumerable/Enum with auto-pagina
 ![](./images/MultSelect.gif)
 
 ### Syntax
-[**Top**](#promptplus--multiselect)
+[**Top**](#-promptplus--multiselect)
 
 ```csharp
 MultiSelect<T>(string prompt = null)
 ```
 
  ### Methods
-[**Top**](#promptplus--multiselect)
+[**Top**](#-promptplus--multiselect)
 
 
 - ```csharp
@@ -78,7 +78,7 @@ MultiSelect<T>(string prompt = null)
     - Tick disabled IEnumerable items in list.
 
 ### Return
-[**Top**](#promptplus--multiselect)
+[**Top**](#-promptplus--multiselect)
 
 ```csharp
 IControlMultiSelect<T>              //for Control Methods
@@ -89,7 +89,7 @@ IFormPlusBase                       //for only definition of pipe to Pipeline Co
 ```
 
 ### Sample
-[**Top**](#promptplus--multiselect)
+[**Top**](#-promptplus--multiselect)
 
 ```csharp
 var options = PromptPlus.MultiSelect<string>("Which cities would you like to visit?")

@@ -1,4 +1,4 @@
-# PromptPlus # ResultBrowser
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # ResultBrowser
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**Browser Control**](browser)
@@ -7,7 +7,7 @@
 Default return struct for [**Browser Control**](browser). 
 
 ### Properties
-[**Top**](#promptplus--resultbrowser)
+[**Top**](#-promptplus--resultbrowser)
 
 - PathValue
 	- Type : string

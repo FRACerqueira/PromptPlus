@@ -11,12 +11,12 @@ using PromptPlusControls.ValueObjects;
 
 namespace PromptPlusControls.Controls
 {
-    internal class SliderSwitcheControl : ControlBase<bool>, IControlSliderSwitche
+    internal class SliderSwitchControl : ControlBase<bool>, IControlSliderSwitch
     {
         private bool _currentValue;
-        private readonly SliderSwitcheOptions _options;
+        private readonly SliderSwitchOptions _options;
 
-        public SliderSwitcheControl(SliderSwitcheOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public SliderSwitchControl(SliderSwitchOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
         }
@@ -133,26 +133,26 @@ namespace PromptPlusControls.Controls
 
         #region IControlSliderSwitche
 
-        public IControlSliderSwitche Prompt(string value)
+        public IControlSliderSwitch Prompt(string value)
         {
             _options.Message = value;
             return this;
         }
 
-        public IControlSliderSwitche Default(bool value)
+        public IControlSliderSwitch Default(bool value)
 
         {
             _options.Value = value;
             return this;
         }
 
-        public IControlSliderSwitche Offvalue(string value)
+        public IControlSliderSwitch OffValue(string value)
         {
             _options.OffValue = value;
             return this;
         }
 
-        public IControlSliderSwitche Onvalue(string value)
+        public IControlSliderSwitch OnValue(string value)
         {
             _options.OnValue = value;
             return this;

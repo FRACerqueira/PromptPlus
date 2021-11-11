@@ -1,4 +1,4 @@
-# PromptPlus # ResultPipe
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # ResultPipe
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**PipeLine Control**](pipeline)
@@ -7,7 +7,7 @@
 Default return struct for [**PipeLine Control**](pipeline). 
 
 ### Properties
-[**Top**](#promptplus--resultmasked)
+[**Top**](#-promptplus--resultmasked)
 
 - PipeId
 	- Type : string

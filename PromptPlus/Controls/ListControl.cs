@@ -318,12 +318,12 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IControlList<T> Addvalidator(Func<object, ValidationResult> validator)
+        public IControlList<T> AddValidator(Func<object, ValidationResult> validator)
         {
-            return Addvalidators(new List<Func<object, ValidationResult>> { validator });
+            return AddValidators(new List<Func<object, ValidationResult>> { validator });
         }
 
-        public IControlList<T> Addvalidators(IEnumerable<Func<object, ValidationResult>> validators)
+        public IControlList<T> AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
         {
             _options.Validators.Merge(validators);
             return this;

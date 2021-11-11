@@ -1,4 +1,4 @@
-# PromptPlus # Browser
+# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus # Browser
 [**Main**](index.md#help) | 
 [**Controls**](index.md#apis) |
 [**ResultPromptPlus**](resultpromptplus) |
@@ -13,14 +13,14 @@ Control Browser. Browser files/folder with auto-paginator and tooltips.
 ![](./images/Browser.gif)
 
 ### Syntax
-[**Top**](#promptplus--browser)
+[**Top**](#-promptplus--browser)
 
 ```csharp
  Browser(string prompt = null)
  ```
 
 ### Methods
-[**Top**](#promptplus--browser)
+[**Top**](#-promptplus--browser)
 
 - ```csharp
   Prompt(string value)
@@ -69,7 +69,7 @@ Control Browser. Browser files/folder with auto-paginator and tooltips.
     - Show/Hide searchPattern in prompt message
 
 ### Return
-[**Top**](#promptplus--browser)
+[**Top**](#-promptplus--browser)
 
 ```csharp
 IControlBrowser                     //for Control Methods
@@ -80,7 +80,7 @@ IFormPlusBase                       //for only definition of pipe to Pipeline Co
 ```
 
 ### Sample
-[**Top**](#promptplus--browser)
+[**Top**](#-promptplus--browser)
 
 ```csharp
 var file = PromptPlus.Browser("Select/New file")

@@ -275,7 +275,7 @@ namespace PromptPlusControls.Internal
             {
                 if (_isTypeNumber)
                 {
-                    if (Position > _decimalPosition)
+                    if (Position > _decimalPosition && _decimalPosition > 0)
                     {
                         _inputBuffer[Position--] = _maskInputOptions.FillNumber.Value;
                     }
@@ -656,13 +656,6 @@ namespace PromptPlusControls.Internal
             }
             else
             {
-                if (Position == _validPosition.Length - 1 && _isTypeNumber)
-                {
-                    if (_decimalPosition == -1)
-                    {
-                        return false;
-                    }
-                }
                 if (_isTypeNumber && !_maskInputOptions.OnlyDecimal)
                 {
                     if (FreeSpaceIntNumber && (Position <= _decimalPosition || _decimalPosition == -1))

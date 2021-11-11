@@ -1,19 +1,38 @@
-﻿**Welcome to PromptPlus**
+﻿ ____                             _   ____  _
+|  _ \ _ __  ___  _ __ ___  _ __ | |_|  _ \| |_   _ ___
+| |_) | '__|/ _ \| '_ ` _ \| '_ \| __| |_) | | | | | __|
+|  __/| |  | (_) | | | | | | |_) | |_|  __/| | |_| |__ \
+|_|   |_|   \___/|_| |_| |_| .__/ \__|_|   |_|\__,_|___/
+                           |_|
+
+**Welcome to PromptPlus**
 
 Interactive command-line toolkit for **C#** with powerful controls.
-PromptPlus was developed in c# with the **netstandard2.1** target framework, with compatibility for:
+PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
 
 - .NET Core 3.1, 5.X, 6.X
 - NET Framework 4.8
 
 **visit the official page for complete documentation** :
+
 https://fracerqueira.github.io/PromptPlus
 
-**Relase Notes (This Version)**
+**Relase Notes (V.2.0.0)**
 
-**Break changes and behavior (Previous versions need to be refactored to new syntax) ** 
+- Added Product logo/icon
+- AutoComplete-Control : **New Control** Input with sugestions 
+- New target frameworks: netstandard2.1, .NET 5 AND .NET6
+- Masked-control : bug fixed in create mask for number/currency (Wrongly created Group separator)
+- Masked-control : bug fixed in Backspace/del for number/currency when not have decimal. 
+- Number-Up/Down-control : Added larger-step
+- Method Syntax Adjustment (need to be refactored to new syntax):
+    Addvalidator -> AddValidator (Input-Control/List-Control/MaskEditList-Control)
+    Offvalue -> Offvalue, OffValue -> OnValue (SliderSwitch-Control)
+
+**Relase Notes (V.2.0.0-RC)**
+
+**Break changes and behavior (Previous versions (< 2.0.0-rc) need to be refactored to new syntax) ** 
 ---------------------------------------------------------------------------------------
-
 - Refactored all controls to fluent-interface syntax to improve extensibility points.
 - Removed pipeline namespace. Now the pipeline syntax is the same as for controls.
 - Removed access to options classes, unified by fluent-interfaces model
