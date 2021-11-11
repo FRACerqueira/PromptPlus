@@ -41,7 +41,7 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
 ```
 
 ### Methods
-[**Top**](#-promptplus--maskeditdate)
+[**Top**](#-promptplus--maskeditgeneric)
 
  ```csharp
   Prompt(string value)
@@ -101,7 +101,7 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
     -  Accept signal to input number-type/currency-type. If not defined, only positive number.For other type signal will be ignored
 
 ### Return
-[**Top**](#-promptplus--maskeditdate)
+[**Top**](#-promptplus--maskeditgeneric)
 
 ```csharp
 IControlMaskEdit                //for Control Methods
