@@ -38,9 +38,9 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
 
 ```csharp
  MaskEdit([MaskedType.Generic, string prompt = null)
- ```
+```
 
- ### Methods
+### Methods
 [**Top**](#-promptplus--maskeditdate)
 
  ```csharp
