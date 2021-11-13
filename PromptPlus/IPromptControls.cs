@@ -145,7 +145,7 @@ namespace PromptPlusControls
         IControlAutoComplete CompletionInterval(int value);
         IControlAutoComplete CompletionMaxCount(int value);
         IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<string[]>> value);
-        IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value);
+        IControlAutoComplete CompletionWithDescriptionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value);
     }
 
 

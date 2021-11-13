@@ -493,7 +493,7 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value)
+        public IControlAutoComplete CompletionWithDescriptionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value)
         {
             _options.CompletionAsyncService = null;
             _options.CompletionWithDescriptionAsyncService = value;

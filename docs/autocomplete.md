@@ -62,7 +62,7 @@ AutoComplete(string prompt, string description = null)
   ``` 
   - service function to be called to get suggestions.
 - ```csharp
-  CompletionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value)
+  CompletionWithDescriptionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value)
   ``` 
   - service function to be called to get suggestions and description. The description is showed in description line.
 

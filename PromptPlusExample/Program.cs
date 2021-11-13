@@ -250,7 +250,7 @@ namespace PromptPlusExample
                 .CompletionMaxCount(10)
                 .ValidateOnDemand()
                 .PageSize(5)
-                .CompletionAsyncService(MYServiceCompleteAsync);
+                .CompletionWithDescriptionAsyncService(MYServiceCompleteAsync);
             if (macth.Value)
             {
                 ctrlinput.AcceptWithoutMatch();
