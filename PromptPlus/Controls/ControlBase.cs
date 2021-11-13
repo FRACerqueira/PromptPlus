@@ -50,6 +50,8 @@ namespace PromptPlusControls.Controls
 
         public bool OverPipeLine => !string.IsNullOrEmpty(PipeId);
 
+        public bool HideDescription { get; set; }
+
         public bool SummaryPipeLine { get; set; }
 
         public bool AbortedAll { get; set; }
@@ -334,6 +336,11 @@ namespace PromptPlusControls.Controls
 
         public bool CheckDefaultKey(ConsoleKeyInfo keyInfo)
         {
+            if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo))
+            {
+                HideDescription = !HideDescription;
+                return true;
+            }
             if (PromptPlus.TooltipKeyPress.Equals(keyInfo))
             {
                 EnabledStandardTooltip = !EnabledStandardTooltip;

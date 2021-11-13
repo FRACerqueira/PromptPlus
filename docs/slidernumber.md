@@ -15,17 +15,16 @@ Control SliderNumber. Numeric ranger with short/large step and tooltips.
 [**Top**](#-promptplus--slidernumber)
 
 ```csharp
-SliderNumber( SliderNumberType.UpDown,string prompt = null)
-SliderNumber( SliderNumberType.LeftRightstring prompt = null)
+SliderNumber( SliderNumberType.UpDown,string prompt, string description = null)
+SliderNumber( SliderNumberType.LeftRightstring prompt, string description = null)
 ```
 
 ### Methods
 [**Top**](#-promptplus--slidernumber)
-
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   Default(double value)
   ``` 

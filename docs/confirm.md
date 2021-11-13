@@ -14,16 +14,16 @@ Control Confirm. Simple confirm with with tool tips and language detection.
 [**Top**](#-promptplus--confirm)
 
 ```csharp
-Confirm(string prompt = null)
+Confirm(string prompt, string description = null)
 ````
 
 ### Methods
 [**Top**](#-promptplus--confirm)
 
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   Default(bool value)
   ``` 

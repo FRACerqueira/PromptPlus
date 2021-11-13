@@ -15,16 +15,15 @@ Control WaitProcess. Wait process with animation.
 [**Top**](#-promptplus--waitprocess)
 
 ```csharp
-WaitProcess(string prompt = null)
+WaitProcess(string prompt, string description = null)
 ```
 
 ### Methods
 [**Top**](#-promptplus--sliderswitche)
-
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message
+  - set prompt message and optional description
 - ```csharp
   AddProcess(SingleProcess process)
 ``` 

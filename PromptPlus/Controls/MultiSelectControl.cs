@@ -27,6 +27,7 @@ namespace PromptPlusControls.Controls
         public MultiSelectControl(MultiSelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
+            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -250,6 +251,11 @@ namespace PromptPlusControls.Controls
                 screenBuffer.Write(_filterBuffer.ToForward());
             }
 
+            if (!HideDescription)
+            {
+                screenBuffer.WriteLineDescription(_options.Description);
+            }
+
             if (EnabledStandardTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
@@ -294,7 +300,7 @@ namespace PromptPlusControls.Controls
                     }
                 }
 
-                if (_selectedItems.Count(x => !x.IsGroup && x.Value.Equals(item.Value)) > 0)
+                if (_selectedItems.Any(x => !x.IsGroup && x.Value.Equals(item.Value)))
                 {
                     if (_localpaginator.TryGetSelectedItem(out var selectedItem) && item.Value.Equals(selectedItem.Value))
                     {
@@ -356,9 +362,13 @@ namespace PromptPlusControls.Controls
         #region IControlMultiSelect
 
 
-        public IControlMultiSelect<T> Prompt(string value)
+        public IControlMultiSelect<T> Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 

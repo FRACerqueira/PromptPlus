@@ -32,6 +32,7 @@ namespace PromptPlusControls.Controls
         public AutoCompleteControl(AutoCompleteOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
+            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public new void Dispose()
@@ -254,9 +255,13 @@ namespace PromptPlusControls.Controls
                 }
                 screenBuffer.WriteAnswer($" {Twirl[_index]}");
             }
+            if (!HideDescription)
+            {
+                screenBuffer.WriteLineDescription(_options.Description);
+            }
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, HideDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLine();
@@ -357,9 +362,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlAutoComplete
 
-        public IControlAutoComplete Prompt(string value)
+        public IControlAutoComplete Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 

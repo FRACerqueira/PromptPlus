@@ -15,16 +15,16 @@ Control Input. Generic input with input validator with tooltips.
 [**Top**](#-promptplus--input)
 
 ```csharp
-Input(string prompt = null)
+Input(string prompt, string description = null)
 ```
 
 ### Methods
 [**Top**](#-promptplus--input)
 
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   Default(string value)
   ``` 

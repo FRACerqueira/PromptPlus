@@ -255,9 +255,9 @@ namespace PromptPlusControls
 
         #region controls
 
-        public static IControlAutoComplete AutoComplete(string prompt)
+        public static IControlAutoComplete AutoComplete(string prompt, string description = null)
         {
-            return new AutoCompleteControl(new AutoCompleteOptions() { Message = prompt });
+            return new AutoCompleteControl(new AutoCompleteOptions() { Message = prompt, Description = description });
         }
 
         public static IFIGlet Banner(string value)
@@ -270,73 +270,73 @@ namespace PromptPlusControls
             return new keyPressControl(new KeyPressOptions { KeyPress = Keypress, KeyModifiers = keymodifiers });
         }
 
-        public static IControlMaskEdit MaskEdit(MaskedType type, string prompt = null)
+        public static IControlMaskEdit MaskEdit(MaskedType type, string prompt = null, string description = null)
         {
             return type switch
             {
-                MaskedType.Generic => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Generic, Message = prompt }),
-                MaskedType.DateOnly => new MaskedInputControl(new MaskedOptions { Type = MaskedType.DateOnly, Message = prompt }),
-                MaskedType.TimeOnly => new MaskedInputControl(new MaskedOptions { Type = MaskedType.TimeOnly, Message = prompt }),
-                MaskedType.DateTime => new MaskedInputControl(new MaskedOptions { Type = MaskedType.DateTime, Message = prompt }),
-                MaskedType.Number => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Number, Message = prompt }),
-                MaskedType.Currency => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Currency, Message = prompt }),
+                MaskedType.Generic => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Generic, Message = prompt, Description = description }),
+                MaskedType.DateOnly => new MaskedInputControl(new MaskedOptions { Type = MaskedType.DateOnly, Message = prompt, Description = description }),
+                MaskedType.TimeOnly => new MaskedInputControl(new MaskedOptions { Type = MaskedType.TimeOnly, Message = prompt, Description = description }),
+                MaskedType.DateTime => new MaskedInputControl(new MaskedOptions { Type = MaskedType.DateTime, Message = prompt, Description = description }),
+                MaskedType.Number => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Number, Message = prompt, Description = description }),
+                MaskedType.Currency => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Currency, Message = prompt, Description = description }),
                 _ => throw new ArgumentException(string.Format(Exceptions.Ex_InvalidType, type))
             };
         }
 
-        public static IControlInput Input(string prompt = null)
+        public static IControlInput Input(string prompt = null, string description = null)
         {
-            return new InputControl(new InputOptions() { Message = prompt });
+            return new InputControl(new InputOptions() { Message = prompt, Description = description });
         }
 
-        public static IControlConfirm Confirm(string prompt = null)
+        public static IControlConfirm Confirm(string prompt = null, string description = null)
         {
-            return new ConfirmControl(new ConfirmOptions() { Message = prompt });
+            return new ConfirmControl(new ConfirmOptions() { Message = prompt, Description = description });
         }
 
-        public static IControlSliderNumber SliderNumber(SliderNumberType type, string prompt = null)
+        public static IControlSliderNumber SliderNumber(SliderNumberType type, string prompt = null, string description = null)
         {
-            return new SliderNumberControl(new SliderNumberOptions() { Message = prompt, Type = type });
+            return new SliderNumberControl(new SliderNumberOptions() { Message = prompt, Type = type, Description = description });
         }
 
-        public static IControlSliderSwitch SliderSwitch(string prompt = null)
+        public static IControlSliderSwitch SliderSwitch(string prompt = null, string description = null)
         {
-            return new SliderSwitchControl(new SliderSwitchOptions() { Message = prompt });
+            return new SliderSwitchControl(new SliderSwitchOptions() { Message = prompt, Description = description });
         }
 
-        public static IControlProgressbar Progressbar(string prompt = null)
+        public static IControlProgressbar Progressbar(string prompt = null, string description = null)
         {
-            return new ProgressBarControl(new ProgressBarOptions() { Message = prompt });
+            return new ProgressBarControl(new ProgressBarOptions() { Message = prompt, Description = description });
         }
 
-        public static IControlWaitProcess WaitProcess(string prompt = null)
+        public static IControlWaitProcess WaitProcess(string prompt = null, string description = null)
         {
-            return new WaitProcessControl(new WaitProcessOptions() { Message = prompt });
+            return new WaitProcessControl(new WaitProcessOptions() { Message = prompt, Description = description });
         }
 
-        public static IControlSelect<T> Select<T>(string prompt = null)
+        public static IControlSelect<T> Select<T>(string prompt = null, string description = null)
         {
-            return new SelectControl<T>(new SelectOptions<T>() { Message = prompt });
+            return new SelectControl<T>(new SelectOptions<T>() { Message = prompt, Description = description });
         }
 
-        public static IControlMultiSelect<T> MultiSelect<T>(string prompt = null)
+        public static IControlMultiSelect<T> MultiSelect<T>(string prompt = null, string description = null)
         {
-            return new MultiSelectControl<T>(new MultiSelectOptions<T>() { Message = prompt });
+            return new MultiSelectControl<T>(new MultiSelectOptions<T>() { Message = prompt, Description = description });
         }
 
-        public static IControlBrowser Browser(string prompt = null)
+        public static IControlBrowser Browser(string prompt = null, string description = null)
         {
-            return new BrowserControl(new BrowserOptions() { Message = prompt });
+            return new BrowserControl(new BrowserOptions() { Message = prompt, Description = description });
         }
 
-        public static IControlList<T> List<T>(string prompt = null)
+        public static IControlList<T> List<T>(string prompt = null, string description = null)
         {
-            return new ListControl<T>(new ListOptions<T>() { Message = prompt });
+            return new ListControl<T>(new ListOptions<T>() { Message = prompt, Description = description });
         }
 
-        public static IControlListMasked ListMasked(string prompt = null)
+        public static IControlListMasked ListMasked(string prompt = null, string description = null)
         {
-            return new MaskedListControl(new ListOptions<string>() { Message = prompt });
+            return new MaskedListControl(new ListOptions<string>() { Message = prompt, Description = description });
         }
 
         public static IControlPipeLine Pipeline()

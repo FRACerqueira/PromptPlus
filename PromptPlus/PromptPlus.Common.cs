@@ -69,6 +69,8 @@ namespace PromptPlusControls
 
         public static HotKey ResumePipesKeyPress { get; set; } = new(ConsoleKey.F2, false, false, false);
 
+        public static HotKey ToggleVisibleDescription { get; set; } = new(ConsoleKey.F3, false, false, false);
+
         public static HotKey UnSelectFilter { get; set; } = new(ConsoleKey.F, true, false, false);
 
         public static HotKey SwitchViewPassword { get; set; } = new(ConsoleKey.V, true, false, false);

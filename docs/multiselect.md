@@ -15,17 +15,16 @@ Control MultSelect. Generic multi select input IEnumerable/Enum with auto-pagina
 [**Top**](#-promptplus--multiselect)
 
 ```csharp
-MultiSelect<T>(string prompt = null)
+MultiSelect<T>(string prompt, string description = null)
 ```
 
  ### Methods
 [**Top**](#-promptplus--multiselect)
 
-
 - ```csharp
- Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message
+  - set prompt message and optional description
 - ```csharp
   PageSize(int value)
     ```

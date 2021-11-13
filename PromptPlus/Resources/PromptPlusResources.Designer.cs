@@ -187,6 +187,15 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Show/Hide description.
+        /// </summary>
+        internal static string HotKeyDescription {
+            get {
+                return ResourceManager.GetString("HotKeyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Value is invalid.
         /// </summary>
         internal static string Invalid {
@@ -610,11 +619,20 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Swith pipes summary{1}.
+        ///   Looks up a localized string similar to {0}, Swith pipes summary{1}.
         /// </summary>
         internal static string ShowProcessStandardHotKeysWithPipeline {
             get {
                 return ResourceManager.GetString("ShowProcessStandardHotKeysWithPipeline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}, {1} Show/Hide description, {2} Swith pipes summary.
+        /// </summary>
+        internal static string ShowProcessStandardHotKeysWithPipelineDesc {
+            get {
+                return ResourceManager.GetString("ShowProcessStandardHotKeysWithPipelineDesc", resourceCulture);
             }
         }
         
@@ -628,11 +646,29 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} Show/Hide tooltips, {1} Show/Hide description{2}.
+        /// </summary>
+        internal static string ShowStandardHotKeysDesc {
+            get {
+                return ResourceManager.GetString("ShowStandardHotKeysDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} Show/Hide keys, {1} Swith pipes summary{2}.
         /// </summary>
         internal static string ShowStandardHotKeysWithPipeline {
             get {
                 return ResourceManager.GetString("ShowStandardHotKeysWithPipeline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Show/Hide keys, {1} Show/Hide description, {2} Swith pipes summary{3}.
+        /// </summary>
+        internal static string ShowStandardHotKeysWithPipelineDesc {
+            get {
+                return ResourceManager.GetString("ShowStandardHotKeysWithPipelineDesc", resourceCulture);
             }
         }
         

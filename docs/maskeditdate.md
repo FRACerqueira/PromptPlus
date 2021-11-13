@@ -24,18 +24,18 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
 [**Top**](#-promptplus--maskeditdate)
 
 ```csharp
- MaskEdit([MaskedType.DateOnly, string prompt = null)
- MaskEdit([MaskedType.TimeOnly, string prompt = null)
- MaskEdit([MaskedType.DateTime, string prompt = null)
+ MaskEdit([MaskedType.DateOnly, string prompt, string description = null)
+ MaskEdit([MaskedType.TimeOnly, string prompt, string description = null)
+ MaskEdit([MaskedType.DateTime, string prompt, string description = null)
  ````
 
 ### Methods
 [**Top**](#-promptplus--maskeditdate)
 
- ```csharp
-  Prompt(string value)
+- ```csharp
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   MaskType(MaskedType value, string mask = null)
   ``` 

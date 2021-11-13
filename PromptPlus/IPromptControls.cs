@@ -64,7 +64,7 @@ namespace PromptPlusControls
 
     public interface IControlMaskEdit : IPromptControls<ResultMasked>, IPromptPipe
     {
-        IControlMaskEdit Prompt(string value);
+        IControlMaskEdit Prompt(string value, string description = null);
         IControlMaskEdit ShowInputType(bool value);
         IControlMaskEdit AddValidator(Func<object, ValidationResult> value);
         IControlMaskEdit AddValidators(IEnumerable<Func<object, ValidationResult>> value);
@@ -83,7 +83,7 @@ namespace PromptPlusControls
 
     public interface IControlInput : IPromptControls<string>, IPromptPipe
     {
-        IControlInput Prompt(string value);
+        IControlInput Prompt(string value, string description = null);
         IControlInput Default(string value);
         IControlInput IsPassword(bool swithVisible);
         IControlInput AddValidators(Func<object, ValidationResult> validator);
@@ -93,7 +93,7 @@ namespace PromptPlusControls
 
     public interface IControlSliderNumber : IPromptControls<double>, IPromptPipe
     {
-        IControlSliderNumber Prompt(string value);
+        IControlSliderNumber Prompt(string value, string description = null);
         IControlSliderNumber Default(double value);
         IControlSliderNumber Range(double minvalue, double maxvalue);
         IControlSliderNumber Step(double value);
@@ -103,7 +103,7 @@ namespace PromptPlusControls
 
     public interface IControlSliderSwitch : IPromptControls<bool>, IPromptPipe
     {
-        IControlSliderSwitch Prompt(string value);
+        IControlSliderSwitch Prompt(string value, string description = null);
         IControlSliderSwitch Default(bool value);
         IControlSliderSwitch OffValue(string value);
         IControlSliderSwitch OnValue(string value);
@@ -111,7 +111,7 @@ namespace PromptPlusControls
 
     public interface IControlProgressbar : IPromptControls<ProgressBarInfo>, IPromptPipe
     {
-        IControlProgressbar Prompt(string value);
+        IControlProgressbar Prompt(string value, string description = null);
         IControlProgressbar UpdateHandler(Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> value);
         IControlProgressbar Width(int value);
         IControlProgressbar StartInterationId(object value);
@@ -119,20 +119,20 @@ namespace PromptPlusControls
 
     public interface IControlWaitProcess : IPromptControls<IEnumerable<ResultProcess>>, IPromptPipe
     {
-        IControlWaitProcess Prompt(string value);
+        IControlWaitProcess Prompt(string value, string description = null);
         IControlWaitProcess AddProcess(SingleProcess process);
         IControlWaitProcess SpeedAnimation(int value);
     }
 
     public interface IControlConfirm : IPromptControls<bool>, IPromptPipe
     {
-        IControlConfirm Prompt(string value);
+        IControlConfirm Prompt(string value, string description = null);
         IControlConfirm Default(bool value);
     }
 
     public interface IControlAutoComplete : IPromptControls<string>, IPromptPipe
     {
-        IControlAutoComplete Prompt(string value);
+        IControlAutoComplete Prompt(string value, string description = null);
         IControlAutoComplete PageSize(int value);
         IControlAutoComplete AddValidator(Func<object, ValidationResult> validator);
         IControlAutoComplete AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
@@ -148,7 +148,7 @@ namespace PromptPlusControls
 
     public interface IControlSelect<T> : IPromptControls<T>, IPromptPipe
     {
-        IControlSelect<T> Prompt(string value);
+        IControlSelect<T> Prompt(string value, string description = null);
         IControlSelect<T> Default(T value);
         IControlSelect<T> PageSize(int value);
         IControlSelect<T> TextSelector(Func<T, string> value);
@@ -163,7 +163,7 @@ namespace PromptPlusControls
 
     public interface IControlMultiSelect<T> : IPromptControls<IEnumerable<T>>, IPromptPipe
     {
-        IControlMultiSelect<T> Prompt(string value);
+        IControlMultiSelect<T> Prompt(string value, string description = null);
         IControlMultiSelect<T> AddDefault(T value);
         IControlMultiSelect<T> AddDefaults(IEnumerable<T> value);
         IControlMultiSelect<T> PageSize(int value);
@@ -180,7 +180,7 @@ namespace PromptPlusControls
 
     public interface IControlList<T> : IPromptControls<IEnumerable<T>>, IPromptPipe
     {
-        IControlList<T> Prompt(string value);
+        IControlList<T> Prompt(string value, string description = null);
         IControlList<T> PageSize(int value);
         IControlList<T> TextSelector(Func<T, string> value);
         IControlList<T> Range(int minvalue, int maxvalue);
@@ -194,7 +194,7 @@ namespace PromptPlusControls
 
     public interface IControlListMasked : IPromptControls<IEnumerable<ResultMasked>>, IPromptPipe
     {
-        IControlListMasked Prompt(string value);
+        IControlListMasked Prompt(string value, string description = null);
         IControlListMasked PageSize(int value);
         IControlListMasked Range(int minvalue, int maxvalue);
         IControlListMasked ShowInputType(bool value);
@@ -214,7 +214,7 @@ namespace PromptPlusControls
 
     public interface IControlBrowser : IPromptControls<ResultBrowser>, IPromptPipe
     {
-        IControlBrowser Prompt(string value);
+        IControlBrowser Prompt(string value, string description = null);
         IControlBrowser Filter(BrowserFilter value);
         IControlBrowser Default(string value);
         IControlBrowser PrefixExtension(string value);

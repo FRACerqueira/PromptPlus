@@ -20,17 +20,17 @@ Control MaskEdit. Numeric/Currency input with language/culture, tooltips and inp
 [**Top**](#-promptplus--maskeditnumber)
 
 ```csharp
- MaskEdit([MaskedType.Number, string prompt = null)
- MaskEdit([MaskedType.Currency, string prompt = null)
+ MaskEdit([MaskedType.Number, string prompt, string description = null)
+ MaskEdit([MaskedType.Currency, string prompt, string description = null)
  ````
 
 ### Methods
 [**Top**](#-promptplus--maskeditnumber)
 
- ```csharp
-  Prompt(string value)
+- ```csharp
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   MaskType(MaskedType value, string mask = null)
   ``` 

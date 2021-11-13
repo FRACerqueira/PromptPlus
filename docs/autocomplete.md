@@ -15,16 +15,16 @@ Control AutoComplete. Generic input with sugestions, validator and tooltips.
 [**Top**](#-promptplus--autocomplete)
 
 ```csharp
-AutoComplete(string prompt = null)
+AutoComplete(string prompt, string description = null)
 ```
 
 ### Methods
 [**Top**](#-promptplus--autocomplete)
 
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   ValidateOnDemand()
   ``` 

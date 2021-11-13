@@ -20,6 +20,7 @@ namespace PromptPlusControls.Controls
         public ConfirmControl(ConfirmOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
+            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -155,6 +156,11 @@ namespace PromptPlusControls.Controls
 
             screenBuffer.PushCursor(_inputBuffer);
 
+            if (!HideDescription)
+            {
+                screenBuffer.WriteLineDescription(_options.Description);
+            }
+
             if (EnabledStandardTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
@@ -175,9 +181,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlConfirm
 
-        public IControlConfirm Prompt(string value)
+        public IControlConfirm Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 

@@ -26,9 +26,11 @@ namespace PromptPlusControls
                 EnabledStandardTooltip = EnabledStandardTooltip,
                 EnabledPromptTooltip = EnabledPromptTooltip,
                 PasswordChar = PasswordChar,
-                Culture = DefaultCulture.Name
+                Culture = DefaultCulture.Name,
+                Version = Theme.CurrentVersion
             };
 
+            theme.Colors.Description = ColorSchema.Description;
             theme.Colors.Answer = ColorSchema.Answer;
             theme.Colors.BackColorSchema = _consoleDriver.BackgroundColor;
             theme.Colors.Disabled = ColorSchema.Disabled;
@@ -43,6 +45,7 @@ namespace PromptPlusControls
             theme.Colors.SliderBackcolor = ColorSchema.SliderBackcolor;
             theme.Colors.SliderForecolor = ColorSchema.SliderForecolor;
 
+            theme.HotKeys.ToggleVisibleDescription = ToggleVisibleDescription.ToString();
             theme.HotKeys.AbortAllPipesKeyPress = AbortAllPipesKeyPress.ToString();
             theme.HotKeys.AbortKeyPress = AbortKeyPress.ToString();
             theme.HotKeys.TooltipKeyPress = TooltipKeyPress.ToString();
@@ -92,6 +95,11 @@ namespace PromptPlusControls
             {
                 var theme = JsonSerializer.Deserialize<Theme>(File.ReadAllText(pathfile), options);
 
+                if (theme.Version < 1)
+                {
+                    theme.Version = 1;
+                }
+
                 if (string.IsNullOrEmpty(theme.Culture))
                 {
                     DefaultCulture = new CultureInfo(AppCulture.Name);
@@ -119,6 +127,7 @@ namespace PromptPlusControls
                 Symbols.Skiped = theme.Symbols.Skiped;
                 Symbols.TaskRun = theme.Symbols.TaskRun;
 
+                ColorSchema.Description = theme.Colors.Description;
                 ColorSchema.Answer = theme.Colors.Answer;
                 ColorSchema.Disabled = theme.Colors.Disabled;
                 ColorSchema.DoneSymbol = theme.Colors.DoneSymbol;
@@ -131,6 +140,15 @@ namespace PromptPlusControls
                 ColorSchema.SliderBackcolor = theme.Colors.SliderBackcolor;
                 ColorSchema.SliderForecolor = theme.Colors.SliderForecolor;
 
+                if (theme.Version >= 2)
+                {
+                    ToggleVisibleDescription = ConverteThemeHotkey(theme.HotKeys.ToggleVisibleDescription);
+                }
+                else
+                {
+                    ToggleVisibleDescription = ToggleVisibleDescription;
+                    ColorSchema.Description = ColorSchema.Answer;
+                }
                 AbortAllPipesKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortAllPipesKeyPress);
                 AbortKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortKeyPress);
                 TooltipKeyPress = ConverteThemeHotkey(theme.HotKeys.TooltipKeyPress);

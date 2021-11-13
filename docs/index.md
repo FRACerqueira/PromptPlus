@@ -51,6 +51,7 @@ dotnet add package PromptPlus [--prerelease]
 All controls have the same lines organization:
 - Message and data entry (ever)
 - Filter (depends on the control)
+- Description (configurable/optional)
 - Tooltips (configurable)
 - Collection subset items (depends on the control, page size and size of console/terminal)
 - Page information (depends on size colletion, page size and size of console/terminal)

@@ -25,6 +25,7 @@ namespace PromptPlusControls.Controls
         public SelectControl(SelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
+            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -174,6 +175,11 @@ namespace PromptPlusControls.Controls
                 screenBuffer.Write(_filterBuffer.ToForward());
             }
 
+            if (!HideDescription)
+            {
+                screenBuffer.WriteLineDescription(_options.Description);
+            }
+
             if (EnabledStandardTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
@@ -243,9 +249,13 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IControlSelect<T> Prompt(string value)
+        public IControlSelect<T> Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 

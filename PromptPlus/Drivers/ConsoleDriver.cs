@@ -16,7 +16,7 @@ namespace PromptPlusControls.Drivers
     {
         private const int IdleReadKey = 10;
 
-        public static int MinBufferHeight = 6;
+        public static int MinBufferHeight = 7;
 
 
         static ConsoleDriver()

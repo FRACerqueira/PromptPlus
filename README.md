@@ -12,10 +12,17 @@
 #### [visit the official page for complete documentation](https://fracerqueira.github.io/PromptPlus/)
 
 ## Examples
-The project in the folder **PromptPlusExample** contains all the samples.
+
+The project in the folder **PromptPlusExample** contains all the samples to controls and commands.
 
 ```
 dotnet run --project PromptPlusExample
+```
+
+The project in the folder **PromptPlusCommandLineExample** contains all the samples to integrate with [System.CommandLine](https://github.com/dotnet/command-line-api)
+
+```
+dotnet run --project PromptPlusCommandLineExample
 ```
 
 ## Snapshot
@@ -173,6 +180,7 @@ dotnet add package PromptPlus [--prerelease]
 All controls have the same lines organization:
 - Message and data entry (ever)
 - Filter (depends on the control)
+- Description (configurable/optional)
 - Tooltips (configurable)
 - Collection subset items (depends on the control, page size and size of console/terminal)
 - Page information (depends on size colletion, page size and size of console/terminal)

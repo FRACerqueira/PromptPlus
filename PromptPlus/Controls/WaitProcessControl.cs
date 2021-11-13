@@ -26,10 +26,13 @@ namespace PromptPlusControls.Controls
         private readonly Dictionary<string, ResultProcess> _lastresult = new();
         private readonly List<int> _index = new();
         private readonly List<Task> _localTask = new();
+        private bool _hasDescription;
 
         public WaitProcessControl(WaitProcessOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
         {
             _options = options;
+            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
+            _hasDescription = !HideDescription;
         }
 
         public override void InitControl()
@@ -128,9 +131,22 @@ namespace PromptPlusControls.Controls
                     screenBuffer.Write("...");
                 }
                 screenBuffer.PushCursor();
+                if (_hasDescription)
+                {
+                    if (!HideDescription)
+                    {
+                        screenBuffer.WriteLineDescription(_options.Description);
+                    }
+                    else
+                    {
+                        screenBuffer.WriteLineDescription(" ");
+                    }
+                    screenBuffer.ClearRestOfLine();
+                }
                 if (_options.EnabledPromptTooltip)
                 {
-                    screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey);
+                    screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _hasDescription);
+                    screenBuffer.ClearRestOfLine();
                 }
                 return;
             }
@@ -140,9 +156,23 @@ namespace PromptPlusControls.Controls
             screenBuffer.WriteAnswer(string.Format(Messages.WaittingProcess, waittasks, runningtasks));
             screenBuffer.PushCursor();
             screenBuffer.ClearRestOfLine();
+
+            if (_hasDescription)
+            {
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
+                else
+                {
+                    screenBuffer.WriteLineDescription(" ");
+                }
+                screenBuffer.ClearRestOfLine();
+            }
             if (_options.EnabledPromptTooltip)
             {
-                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey);
+                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _hasDescription);
+                screenBuffer.ClearRestOfLine();
             }
 
             for (var i = 0; i < PromptPlus.MaxShowTasks; i++)
@@ -242,9 +272,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlWaitProcess
 
-        public IControlWaitProcess Prompt(string value)
+        public IControlWaitProcess Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 

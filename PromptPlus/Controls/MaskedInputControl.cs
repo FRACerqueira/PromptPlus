@@ -24,6 +24,7 @@ namespace PromptPlusControls.Controls
         public MaskedInputControl(MaskedOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
+            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -229,6 +230,11 @@ namespace PromptPlusControls.Controls
                 screenBuffer.WriteAnswer(string.Format(Messages.MaskEditInputType, _maskedBuffer.Tooltip));
             }
 
+            if (!HideDescription)
+            {
+                screenBuffer.WriteLineDescription(_options.Description);
+            }
+
             if (EnabledStandardTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
@@ -281,9 +287,13 @@ namespace PromptPlusControls.Controls
         }
 
 
-        public IControlMaskEdit Prompt(string value)
+        public IControlMaskEdit Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 
@@ -437,7 +447,7 @@ namespace PromptPlusControls.Controls
                 _options.DefaultValueWitdhoutMask = null;
                 return;
             }
-            if (!(_options.DefaultObject is double))
+            if (_options.DefaultObject is not double)
             {
                 throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, _options.DefaultObject));
             }
@@ -495,7 +505,7 @@ namespace PromptPlusControls.Controls
                 _options.DateFmt = fmtdate;
                 return;
             }
-            if (!(_options.DefaultObject is DateTime))
+            if (_options.DefaultObject is not DateTime)
             {
                 throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, _options.DefaultObject));
             }

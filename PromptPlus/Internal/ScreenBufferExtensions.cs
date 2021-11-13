@@ -209,10 +209,14 @@ namespace PromptPlusControls.Internal
             screenBuffer.WriteLine(message, PromptPlus.ColorSchema.Pagination);
         }
 
-        public static void WriteLineProcessStandardHotKeys(this ScreenBuffer screenBuffer, bool overpipeline, bool enabledabortkey, int extraspace = 0)
+        public static void WriteLineProcessStandardHotKeys(this ScreenBuffer screenBuffer, bool overpipeline, bool enabledabortkey,bool hasdescription, int extraspace = 0)
         {
             var msg = Messages.EscCancel.Replace(",", "").Trim();
             msg = string.Format(msg, PromptPlus.AbortKeyPress.ToString());
+            if (hasdescription)
+            {
+                msg = $"{msg}, {string.Format(Messages.HotKeyDescription, PromptPlus.ToggleVisibleDescription)}";
+            }
             screenBuffer.WriteLine();
             if (extraspace != 0)
             {
@@ -222,7 +226,14 @@ namespace PromptPlusControls.Internal
             {
                 if (overpipeline)
                 {
-                    screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipeline, PromptPlus.ResumePipesKeyPress, Messages.EscCancel), PromptPlus.ColorSchema.Hint);
+                    if (hasdescription)
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipelineDesc,PromptPlus.ToggleVisibleDescription, PromptPlus.ResumePipesKeyPress, Messages.EscCancel), PromptPlus.ColorSchema.Hint);
+                    }
+                    else
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipeline, PromptPlus.ResumePipesKeyPress, Messages.EscCancel), PromptPlus.ColorSchema.Hint);
+                    }
                 }
                 else
                 {
@@ -233,34 +244,78 @@ namespace PromptPlusControls.Internal
             {
                 if (overpipeline)
                 {
-                    screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipeline, PromptPlus.ResumePipesKeyPress, ""), PromptPlus.ColorSchema.Hint);
+                    if (hasdescription)
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipelineDesc, PromptPlus.ToggleVisibleDescription, PromptPlus.ResumePipesKeyPress, ""), PromptPlus.ColorSchema.Hint);
+                    }
+                    else
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipeline, PromptPlus.ResumePipesKeyPress, ""), PromptPlus.ColorSchema.Hint);
+                    }
+                }
+                else
+                {
+                    screenBuffer.Write(msg, PromptPlus.ColorSchema.Hint);
                 }
             }
         }
 
-        public static void WriteLineStandardHotKeys(this ScreenBuffer screenBuffer, bool overpipeline, bool enabledabortkey, bool enabledabortAllpipes)
+        public static void WriteLineDescription(this ScreenBuffer screenBuffer, string description)
+        {
+            screenBuffer.WriteLine(description, PromptPlus.ColorSchema.Description);
+        }
+
+        public static void WriteLineStandardHotKeys(this ScreenBuffer screenBuffer, bool overpipeline, bool enabledabortkey, bool enabledabortAllpipes, bool hidedescription = true)
         {
             screenBuffer.WriteLine();
             if (enabledabortkey)
             {
                 if (overpipeline)
                 {
-                    screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysWithPipeline, PromptPlus.TooltipKeyPress, PromptPlus.ResumePipesKeyPress, enabledabortAllpipes ? Messages.EscCancelWithPipeline : Messages.EscCancelWithPipeNotAll), PromptPlus.ColorSchema.Hint, PromptPlus._consoleDriver.BackgroundColor);
+                    if (!hidedescription)
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysWithPipelineDesc, PromptPlus.TooltipKeyPress, PromptPlus.ToggleVisibleDescription, PromptPlus.ResumePipesKeyPress, enabledabortAllpipes ? Messages.EscCancelWithPipeline : Messages.EscCancelWithPipeNotAll), PromptPlus.ColorSchema.Hint, PromptPlus._consoleDriver.BackgroundColor);
+                    }
+                    else
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysWithPipeline, PromptPlus.TooltipKeyPress, PromptPlus.ResumePipesKeyPress, enabledabortAllpipes ? Messages.EscCancelWithPipeline : Messages.EscCancelWithPipeNotAll), PromptPlus.ColorSchema.Hint, PromptPlus._consoleDriver.BackgroundColor);
+                    }
                 }
                 else
                 {
-                    screenBuffer.Write(string.Format(Messages.ShowStandardHotKeys, PromptPlus.TooltipKeyPress, Messages.EscCancel), PromptPlus.ColorSchema.Hint);
+                    if (!hidedescription)
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysDesc, PromptPlus.TooltipKeyPress, PromptPlus.ToggleVisibleDescription, Messages.EscCancel), PromptPlus.ColorSchema.Hint);
+                    }
+                    else
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeys, PromptPlus.TooltipKeyPress, Messages.EscCancel), PromptPlus.ColorSchema.Hint);
+                    }
                 }
             }
             else
             {
                 if (overpipeline)
                 {
-                    screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysWithPipeline, PromptPlus.TooltipKeyPress, PromptPlus.ResumePipesKeyPress, ""), PromptPlus.ColorSchema.Hint);
+                    if (!hidedescription)
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysWithPipelineDesc, PromptPlus.TooltipKeyPress, PromptPlus.ToggleVisibleDescription, PromptPlus.ResumePipesKeyPress, ""), PromptPlus.ColorSchema.Hint);
+                    }
+                    else
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysWithPipeline, PromptPlus.TooltipKeyPress, PromptPlus.ResumePipesKeyPress, ""), PromptPlus.ColorSchema.Hint);
+                    }
                 }
                 else
                 {
-                    screenBuffer.Write(string.Format(Messages.ShowStandardHotKeys, PromptPlus.TooltipKeyPress, ""), PromptPlus.ColorSchema.Hint);
+                    if (!hidedescription)
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysDesc, PromptPlus.ToggleVisibleDescription, PromptPlus.TooltipKeyPress, ""), PromptPlus.ColorSchema.Hint);
+                    }
+                    else
+                    {
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeys, PromptPlus.TooltipKeyPress, ""), PromptPlus.ColorSchema.Hint);
+                    }
                 }
             }
         }

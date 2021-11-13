@@ -14,17 +14,17 @@ Control Select. Generic select IEnumerable/Enum with auto-paginator and tooltips
 [**Top**](#-promptplus--select)
 
 ```csharp
- Select<T>(string prompt = null)
+ Select<T>(string prompt, string description = null)
 ```
 
 ### Methods
 [**Top**](#-promptplus--select)
 
- - ```csharp
- Prompt(string value)
+- ```csharp
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message
- - ```csharp
+  - set prompt message and optional description
+- ```csharp
  Default(T value)
  ``` 
   - initial item seleted.

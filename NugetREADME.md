@@ -54,3 +54,4 @@ Console.WriteLine($"Hello, key pressed");
 ## **License**
 
 This project is licensed under the [MIT License](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+

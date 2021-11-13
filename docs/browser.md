@@ -16,16 +16,16 @@ Control Browser. Browser files/folder with auto-paginator and tooltips.
 [**Top**](#-promptplus--browser)
 
 ```csharp
- Browser(string prompt = null)
+ Browser(string prompt, string description = null)
  ```
 
 ### Methods
 [**Top**](#-promptplus--browser)
 
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   Filter(BrowserFilter value)
     ```

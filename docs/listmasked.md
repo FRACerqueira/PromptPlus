@@ -15,16 +15,16 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
 [**Top**](#-promptplus--listmasked)
 
 ```csharp
- ListMasked(string prompt = null)
+ ListMasked(string prompt, string description = null)
 ````
 
 ### Methods
 [**Top**](#-promptplus--listmasked)
 
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   MaskType(MaskedType value, string mask = null)
   ``` 

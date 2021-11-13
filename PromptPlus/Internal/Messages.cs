@@ -55,6 +55,7 @@ namespace PromptPlusControls.Internal
             ShowKeyPressStandardHotKeys = PromptPlusResources.ShowKeyPressStandardHotKeys;
             ShowKeyPressStandardHotKeysWithPipeline = PromptPlusResources.ShowKeyPressStandardHotKeysWithPipeline;
             ShowProcessStandardHotKeysWithPipeline = PromptPlusResources.ShowProcessStandardHotKeysWithPipeline;
+            ShowProcessStandardHotKeysWithPipelineDesc = PromptPlusResources.ShowProcessStandardHotKeysWithPipelineDesc;
             ShowStandardHotKeys = PromptPlusResources.ShowStandardHotKeys;
             ShowStandardHotKeysWithPipeline = PromptPlusResources.ShowStandardHotKeysWithPipeline;
             SkipedText = PromptPlusResources.SkipedText;
@@ -85,6 +86,7 @@ namespace PromptPlusControls.Internal
             SelectKeyNavigation = string.Format(PromptPlusResources.SelectKeyNavigation, PromptPlus.UnSelectFilter);
             FinishResultList = PromptPlusResources.FinishResultList;
             FinishResultTasks = PromptPlusResources.FinishResultTasks;
+            HotKeyDescription = PromptPlusResources.HotKeyDescription;
         }
 
         public static string FinishResultTasks { get; private set; } = PromptPlusResources.FinishResultTasks;
@@ -230,6 +232,8 @@ namespace PromptPlusControls.Internal
 
         public static string PaginationTemplate { get; private set; } = PromptPlusResources.PaginationTemplate;
 
+        public static string HotKeyDescription { get; private set; } = PromptPlusResources.HotKeyDescription;
+
         public static string FolderKeyNavigation { get; private set; } = string.Format(PromptPlusResources.FolderKeyNavigation, PromptPlus.UnSelectFilter);
 
         public static string FolderCurrentPath { get; private set; } = PromptPlusResources.FolderCurrentPath;
@@ -262,9 +266,15 @@ namespace PromptPlusControls.Internal
 
         public static string ShowStandardHotKeys { get; private set; } = PromptPlusResources.ShowStandardHotKeys;
 
+        public static string ShowStandardHotKeysDesc { get; private set; } = PromptPlusResources.ShowStandardHotKeysDesc;
+
         public static string ShowStandardHotKeysWithPipeline { get; private set; } = PromptPlusResources.ShowStandardHotKeysWithPipeline;
 
+        public static string ShowStandardHotKeysWithPipelineDesc { get; private set; } = PromptPlusResources.ShowStandardHotKeysWithPipelineDesc;
+
         public static string ShowProcessStandardHotKeysWithPipeline { get; private set; } = PromptPlusResources.ShowProcessStandardHotKeysWithPipeline;
+
+        public static string ShowProcessStandardHotKeysWithPipelineDesc { get; private set; } = PromptPlusResources.ShowProcessStandardHotKeysWithPipelineDesc;
 
         public static string ShowKeyPressStandardHotKeys { get; private set; } = PromptPlusResources.ShowKeyPressStandardHotKeys;
 

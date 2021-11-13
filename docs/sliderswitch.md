@@ -14,16 +14,16 @@ Control SliderSwitch. Generic choice with customization and tooltips.
 [**Top**](#-promptplus--sliderswitch)
 
 ```csharp
-SliderSwitche(string prompt = null)
+SliderSwitche(string prompt, string description = null)
 ```
 
 ### Methods
 [**Top**](#-promptplus--sliderswitch)
 
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   Default(double value)
   ``` 

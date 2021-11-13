@@ -31,6 +31,7 @@ namespace PromptPlusControls.Controls
         public BrowserControl(BrowserOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
+            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -81,6 +82,11 @@ namespace PromptPlusControls.Controls
             if (_filterBuffer.Length > 0 && _paginator.IsUnSelected)
             {
                 screenBuffer.WriteAnswer(_filterBuffer.ToForward());
+            }
+
+            if (!HideDescription)
+            {
+                screenBuffer.WriteLineDescription(_options.Description);
             }
 
             if (EnabledStandardTooltip)
@@ -523,9 +529,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlBrowser
 
-        public IControlBrowser Prompt(string value)
+        public IControlBrowser Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 

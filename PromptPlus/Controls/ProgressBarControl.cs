@@ -20,10 +20,13 @@ namespace PromptPlusControls.Controls
         private bool _newInteration = true;
         private readonly ProgressBarOptions _options;
         private double _step;
+        private bool _hasDescription;
 
         public ProgressBarControl(ProgressBarOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
         {
             _options = options;
+            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
+            _hasDescription = !HideDescription;
         }
 
         public override void InitControl()
@@ -101,6 +104,19 @@ namespace PromptPlusControls.Controls
             screenBuffer.PushCursor();
             screenBuffer.ClearRestOfLine();
 
+            if (_hasDescription)
+            {
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
+                else
+                {
+                    screenBuffer.WriteLineDescription("");
+                }
+                screenBuffer.ClearRestOfLine();
+            }
+
             var bar = Barlength(_laststatus.PercentValue);
             screenBuffer.WriteLineHint("0% ");
             screenBuffer.WriteSliderOn(bar);
@@ -108,7 +124,7 @@ namespace PromptPlusControls.Controls
             screenBuffer.WriteHint(" 100%");
             if (_options.EnabledPromptTooltip)
             {
-                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, 3);
+                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey,_hasDescription, 3);
             }
             screenBuffer.ClearRestOfLine();
         }
@@ -140,9 +156,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlProgressbar
 
-        public IControlProgressbar Prompt(string value)
+        public IControlProgressbar Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 

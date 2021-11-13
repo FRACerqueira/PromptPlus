@@ -242,7 +242,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            var ctrlinput = PromptPlus.AutoComplete("Input value")
+            var ctrlinput = PromptPlus.AutoComplete("Input value", "Sample autocomplete control")
                 .AddValidator(PromptValidators.Required())
                 .AddValidator(PromptValidators.MinLength(3))
                 .CompletionInterval(1000)
@@ -867,7 +867,7 @@ namespace PromptPlusExample
 
         private void RunProgressbarSample()
         {
-            var progress = PromptPlus.Progressbar("Processing Tasks")
+            var progress = PromptPlus.Progressbar("Processing Tasks","My Process")
                 .UpdateHandler(UpdateSampleHandlerAsync)
                 .Run(_stopApp);
 

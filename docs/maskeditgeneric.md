@@ -37,16 +37,16 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
 - C{2}\[ABC\] = two characters with ony A,B,C valid char.
 
 ```csharp
- MaskEdit([MaskedType.Generic, string prompt = null)
+ MaskEdit([MaskedType.Generic, string prompt, string description = null)
 ```
 
 ### Methods
 [**Top**](#-promptplus--maskeditgeneric)
 
- ```csharp
-  Prompt(string value)
+- ```csharp
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   MaskType(MaskedType value, string mask = null)
   ``` 

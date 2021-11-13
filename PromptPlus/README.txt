@@ -4,7 +4,6 @@
 |  __/| |  | (_) | | | | | | |_) | |_|  __/| | |_| |__ \
 |_|   |_|   \___/|_| |_| |_| .__/ \__|_|   |_|\__,_|___/
                            |_|
-
 **Welcome to PromptPlus**
 
 Interactive command-line toolkit for **C#** with powerful controls.
@@ -16,7 +15,13 @@ PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** ta
 
 https://fracerqueira.github.io/PromptPlus
 
-**Relase Notes (V.2.0.0)**
+**Relase Notes (V.2.2.0)**
+
+- Added Description parameter to all controls
+- Added global hotkey (default value = F3) show/hide Description
+- Added color Schema Description (default value = ConsoleColor.Cyan)
+
+**Relase Notes (V.2.1.0)**
 
 - Added Product logo/icon
 - AutoComplete-Control : **New Control** Input with sugestions 
@@ -26,53 +31,7 @@ https://fracerqueira.github.io/PromptPlus
 - Number-Up/Down-control : Added larger-step
 - Method Syntax Adjustment (need to be refactored to new syntax):
     Addvalidator -> AddValidator (Input-Control/List-Control/MaskEditList-Control)
-    Offvalue -> Offvalue, OffValue -> OnValue (SliderSwitch-Control)
-
-**Relase Notes (V.2.0.0-RC)**
-
-**Break changes and behavior (Previous versions (< 2.0.0-rc) need to be refactored to new syntax) ** 
----------------------------------------------------------------------------------------
-- Refactored all controls to fluent-interface syntax to improve extensibility points.
-- Removed pipeline namespace. Now the pipeline syntax is the same as for controls.
-- Removed access to options classes, unified by fluent-interfaces model
-- Changed pipeline extension "Step" to fuent-interface method "ToPipe".
-- Refactored ConsoleDriver
-- Added ansi color for terminal compatibility 
-- Refactored render text to use ansi-color and underline
-
-**New controls/Command**
-------------------------
-- Banner-control                : Show ASCII text banner. 
-- Write-Command                 : Colored-text forecolor/backcolor and undeline
-- WriteLine-Command             : Colored-text forecolor/backcolor, undeline and multiples lines
-- Clear-Command                 : Clear screeen with set backcolor
-- ClearRestOfLine-Command       : Clear rest of line
-- ConsoleDefaultColor-Command   : Set forecolor/backcolor screen
-
-**Enhancements**
-----------------
-- Select-control        : Added disable and hide items options. 
-- Select-control        : Native support of enum types (removed type  EnumValue<T>). 
-- Select-control        : Added Autoselect method to select when there is only one option. 
-- MultSelect-control    : Native support of enum types (removed type  EnumValue<T>).
-- MultSelect-control    : Added disable and hide items options.
-- MultSelect-control    : Added group of items for quick multiple selection.
-- MultSelect-control    : Revised the look to keep the selection symbols.
-- ListMasked-control    : Expanded to support all types of MaskEdit-control.
-- ListMasked-Control    : Adjusted type return to ResultMasked.
-- ListMasked-Control    : Added method to run the validators on each interaction.
-- SliderNumber-control  : Adjusted type return to double.
-- Input-Control         : Added method to run the validators on each interaction.
-- List-Control          : Added method to run the validators on each interaction.
-- MaskedInput-Control   : Added method to run the validators on each interaction.
-- MaskedInput-Control   : Added method to show day week for mask-type date/datetime.
-
-- Revised documentation for new changes 
-
-**Fixed bugs**
---------------
-- ListMasked-control: bug fixed when deleting selection (not deleting).
-- Masked-control : bug fixed in delete/backspace key behaviors
+    Offvalue -> OffValue, Onvalue -> OnValue (SliderSwitch-Control)
 
 **Sample Usage**
 ----------------

@@ -16,16 +16,16 @@ Control ProgressBar. Progress Bar with interation customization.
 [**Top**](#-promptplus--progressbar)
 
 ```csharp
-Progressbar(string prompt = null)
+Progressbar(string prompt, string description = null)
 ```
 
 ### Methods
 [**Top**](#-promptplus--progressbar)
 
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   Width(int value)
   ``` 

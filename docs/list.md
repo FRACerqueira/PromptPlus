@@ -14,16 +14,16 @@ Control List. Create Generic IEnumerable with auto-paginator, tooptip , input va
 [**Top**](#-promptplus--list)
 
 ```csharp
-List<T>(string prompt = null)
+List<T>(string prompt, string description = null)
 ````
 
 ### Methods
 [**Top**](#-promptplus--list)
 
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
 - ```csharp
   PageSize(int value)
     ```

@@ -20,7 +20,7 @@
     <PackageId>PromptPlus</PackageId>
     <PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
     <PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
-    <Version>2.0.0</Version>
+    <Version>2.2.0</Version>
     <PackageIcon>icon.png</PackageIcon>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>© 2021 - Fernando Cerqueira </Copyright>
@@ -93,6 +93,8 @@
     </None> 
     <None Include="Resources\PromptPlusResources.resx" Pack="true" PackagePath="\Resources">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>

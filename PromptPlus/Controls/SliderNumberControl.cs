@@ -23,6 +23,7 @@ namespace PromptPlusControls.Controls
         public SliderNumberControl(SliderNumberOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
         {
             _options = options;
+            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -202,6 +203,11 @@ namespace PromptPlusControls.Controls
 
             screenBuffer.PushCursor();
 
+            if (!HideDescription)
+            {
+                screenBuffer.WriteLineDescription(_options.Description);
+            }
+
             if (EnabledStandardTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
@@ -266,9 +272,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlSliderNumber
 
-        public IControlSliderNumber Prompt(string value)
+        public IControlSliderNumber Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 
