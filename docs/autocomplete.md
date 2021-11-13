@@ -61,6 +61,10 @@ AutoComplete(string prompt, string description = null)
   CompletionAsyncService(Func<string,int,CancellationToken, Task<string[]>> value);
   ``` 
   - service function to be called to get suggestions.
+- ```csharp
+  CompletionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value)
+  ``` 
+  - service function to be called to get suggestions and description. The description is showed in description line.
 
 ### Return
 [**Top**](#-promptplus--autocomplete)

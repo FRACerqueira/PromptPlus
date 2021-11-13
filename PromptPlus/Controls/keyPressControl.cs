@@ -15,7 +15,7 @@ namespace PromptPlusControls.Controls
     {
         private readonly KeyPressOptions _options;
 
-        public keyPressControl(KeyPressOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public keyPressControl(KeyPressOptions options) : base(options, true)
         {
             _options = options;
         }

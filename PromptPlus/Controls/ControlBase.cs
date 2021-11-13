@@ -20,23 +20,19 @@ namespace PromptPlusControls.Controls
         private readonly CancellationTokenSource _esckeyCancelation;
         private readonly ScreenRender _screenrender;
         private readonly bool _showcursor;
-        private readonly bool _enabledAbortEscKey;
-        private readonly bool _enabledAbortAllPipes;
-        private readonly bool _hideAfterFinish;
         private readonly bool _skiplastrender;
+        private readonly BaseOptions _options;
         private bool _toggleSummary = false;
 
-        protected ControlBase(bool hideafterFinish, bool showcursor, bool enabledAbortEscKey, bool enabledAbortAllPipes, bool skiplastrender = false)
+        protected ControlBase(BaseOptions options, bool showcursor, bool skiplastrender = false)
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
 
+            _options = options;
             _skiplastrender = skiplastrender;
             _screenrender = new ScreenRender();
-            _hideAfterFinish = hideafterFinish;
             _showcursor = showcursor;
-            _enabledAbortEscKey = enabledAbortEscKey;
-            _enabledAbortAllPipes = enabledAbortAllPipes;
             _esckeyCancelation = new CancellationTokenSource();
         }
 
@@ -171,7 +167,7 @@ namespace PromptPlusControls.Controls
                             continue;
                         }
                         _screenrender.FinishRender(FinishTemplate, result);
-                        if (_hideAfterFinish)
+                        if (_options.HideAfterFinish)
                         {
                             _ = _screenrender.HideLastRender();
                         }
@@ -249,7 +245,7 @@ namespace PromptPlusControls.Controls
                             continue;
                         }
                         _screenrender.FinishRender(FinishTemplate, result);
-                        if (_hideAfterFinish)
+                        if (_options.HideAfterFinish)
                         {
                             _ = _screenrender.HideLastRender();
                         }
@@ -336,7 +332,7 @@ namespace PromptPlusControls.Controls
 
         public bool CheckDefaultKey(ConsoleKeyInfo keyInfo)
         {
-            if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo))
+            if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
             {
                 HideDescription = !HideDescription;
                 return true;
@@ -346,13 +342,13 @@ namespace PromptPlusControls.Controls
                 EnabledStandardTooltip = !EnabledStandardTooltip;
                 return true;
             }
-            else if (PromptPlus.AbortKeyPress.Equals(keyInfo) && _enabledAbortEscKey)
+            else if (PromptPlus.AbortKeyPress.Equals(keyInfo) && _options.EnabledAbortKey)
             {
                 _esckeyCancelation.Cancel();
                 AbortedAll = !OverPipeLine;
                 return true;
             }
-            else if (OverPipeLine && PromptPlus.AbortAllPipesKeyPress.Equals(keyInfo) && _enabledAbortAllPipes)
+            else if (OverPipeLine && PromptPlus.AbortAllPipesKeyPress.Equals(keyInfo) && _options.EnabledAbortAllPipes)
             {
                 _esckeyCancelation.Cancel();
                 AbortedAll = true;
@@ -384,6 +380,8 @@ namespace PromptPlusControls.Controls
         }
 
         public bool KeyAvailable => _screenrender.KeyAvailable;
+
+        public bool HasDescription => _options.HasDescription;
 
         private void SummaryPipeLineToPrompt(Paginator<ResultPromptPlus<ResultPipe>> paginator, CancellationToken stoptoken)
         {

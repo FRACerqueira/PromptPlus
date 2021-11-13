@@ -16,10 +16,9 @@ namespace PromptPlusControls.Controls
         private bool _currentValue;
         private readonly SliderSwitchOptions _options;
 
-        public SliderSwitchControl(SliderSwitchOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public SliderSwitchControl(SliderSwitchOptions options) : base(options, false)
         {
             _options = options;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -115,14 +114,17 @@ namespace PromptPlusControls.Controls
 
             screenBuffer.PushCursor();
 
-            if (!HideDescription)
+            if (HasDescription)
             {
-                screenBuffer.WriteLineDescription(_options.Description);
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
             }
 
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes,!HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteHint(Messages.SliderSwitcheKeyNavigator);

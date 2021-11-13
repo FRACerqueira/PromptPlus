@@ -24,10 +24,9 @@ namespace PromptPlusControls.Controls
         private readonly InputBuffer _filterBuffer = new();
         private Paginator<ItemMultSelect<T>> _localpaginator;
 
-        public MultiSelectControl(MultiSelectOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public MultiSelectControl(MultiSelectOptions<T> options) : base(options, true)
         {
             _options = options;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -67,6 +66,38 @@ namespace PromptPlusControls.Controls
                     _selectedItems.Add(new ItemMultSelect<T> { Value = item, Text = _options.TextSelector.Invoke(item), Group = grp, Disabled = aux.Disabled });
                 }
             }
+            if (_options.DescriptionSelector != null)
+            {
+                if (_localpaginator.SelectedIndex < 0)
+                {
+                    _options.Description = null;
+                }
+                else
+                {
+                    if (_localpaginator.SelectedItem.IsGroup)
+                    {
+                        _options.Description = _localpaginator.SelectedItem.Group;
+                    }
+                    else
+                    {
+                        if (_options.ShowGroupOnDescription)
+                        {
+                            if (string.IsNullOrEmpty(_localpaginator.SelectedItem.Group))
+                            {
+                                _options.Description = _options.NoGroupDescription??" ";
+                            }
+                            else
+                            {
+                                _options.Description = _localpaginator.SelectedItem.Group;
+                            }
+                        }
+                        else
+                        {
+                            _options.Description = _options.DescriptionSelector.Invoke(_localpaginator.SelectedItem.Value);
+                        }
+                    }
+                }
+            }
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)
@@ -93,8 +124,7 @@ namespace PromptPlusControls.Controls
                 else if (PromptPlus.UnSelectFilter.Equals(keyInfo))
                 {
                     _localpaginator.UnSelected();
-                    result = default;
-                    return isvalidhit;
+                    continue;
                 }
                 else if (PromptPlus.SelectAll.Equals(keyInfo))
                 {
@@ -229,6 +259,38 @@ namespace PromptPlusControls.Controls
                     }
                 }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
+            if (_options.DescriptionSelector != null)
+            {
+                if (_localpaginator.SelectedIndex < 0)
+                {
+                    _options.Description = null;
+                }
+                else
+                {
+                    if (_localpaginator.SelectedItem.IsGroup)
+                    {
+                        _options.Description = _localpaginator.SelectedItem.Group;
+                    }
+                    else
+                    {
+                        if (_options.ShowGroupOnDescription)
+                        {
+                            if (string.IsNullOrEmpty(_localpaginator.SelectedItem.Group))
+                            {
+                                _options.Description = _options.NoGroupDescription ?? " ";
+                            }
+                            else
+                            {
+                                _options.Description = _localpaginator.SelectedItem.Group;
+                            }
+                        }
+                        else
+                        {
+                            _options.Description = _options.DescriptionSelector.Invoke(_localpaginator.SelectedItem.Value);
+                        }
+                    }
+                }
+            }
             result = null;
             return isvalidhit;
         }
@@ -251,14 +313,17 @@ namespace PromptPlusControls.Controls
                 screenBuffer.Write(_filterBuffer.ToForward());
             }
 
-            if (!HideDescription)
+            if (HasDescription)
             {
-                screenBuffer.WriteLineDescription(_options.Description);
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
             }
 
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes,!HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLine();
@@ -372,6 +437,13 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
+        public IControlMultiSelect<T> ShowGroupOnDescription(string noGroupMessage)
+        {
+            _options.ShowGroupOnDescription = true;
+            _options.NoGroupDescription = noGroupMessage;
+            return this;
+        }
+
         public IControlMultiSelect<T> AddDefault(T value)
         {
             _options.DefaultValues.Add(value);
@@ -468,6 +540,12 @@ namespace PromptPlusControls.Controls
             {
                 _options.PageSize = value;
             }
+            return this;
+        }
+
+        public IControlMultiSelect<T> DescriptionSelector(Func<T, string> value)
+        {
+            _options.DescriptionSelector = value;
             return this;
         }
 

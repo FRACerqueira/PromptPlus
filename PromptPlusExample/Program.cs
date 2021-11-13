@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -262,21 +263,21 @@ namespace PromptPlusExample
             PromptPlus.WriteLine($"Result : [cyan]{input.Value}[/cyan]!");
         }
 
-        private async Task<string[]> MYServiceCompleteAsync(string prefixText, int count, CancellationToken cancellationToken)
+        private async Task<ValueDescription<string>[]> MYServiceCompleteAsync(string prefixText, int count, CancellationToken cancellationToken)
         {
             if (count == 0)
             {
                 count = 10;
             }
             var random = new Random();
-            var items = new List<string>(count);
+            var items = new List<ValueDescription<string>>();
             for (var i = 0; i < count; i++)
             {
                 var c1 = (char)random.Next(65, 90);
                 var c2 = (char)random.Next(97, 122);
                 var c3 = (char)random.Next(97, 122);
 
-                items.Add(prefixText + c1 + c2 + c3);
+                items.Add(new ValueDescription<string>(prefixText + c1 + c2 + c3,$"Description {i}"));
             }
             return await Task.FromResult(items.ToArray());
         }
@@ -678,6 +679,7 @@ namespace PromptPlusExample
         {
             var mask = PromptPlus.MaskEdit(MaskedType.Generic, "Inventory Number")
                 .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
+                .DescriptionSelector(MyDescMaskedirGeneric)
                 .Run(_stopApp);
 
             if (mask.IsAborted)
@@ -692,6 +694,23 @@ namespace PromptPlusExample
             {
                 PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
             }
+        }
+
+        private string MyDescMaskedirGeneric(ResultMasked arg)
+        {
+            if (string.IsNullOrEmpty(arg.Input))
+                return null;
+            if (arg.Input.Length < 3)
+            {
+                return "Code of Region";
+            }
+            if (arg.Input.Length < 6)
+                return "Code of Coutry";
+            if (arg.Input.Length == 6)
+                return "Code of type";
+            if (arg.Input.Length == 7)
+                return "Code of type-level";
+            return "item Id";
         }
 
         private void RunAnyKeySample()
@@ -945,14 +964,49 @@ namespace PromptPlusExample
             }
             PromptPlus.WriteLine($"Your answer is: {slider1.Value}");
         }
+        public enum PasswordScore
+        {
+            Blank = 0,
+            VeryWeak = 1,
+            Weak = 2,
+            Medium = 3,
+            Strong = 4,
+            VeryStrong = 5
+        }
+
+
+        public static PasswordScore CheckStrength(string password)
+        {
+            int score = 1;
+            if (password.Length < 1)
+                return PasswordScore.Blank;
+            if (password.Length < 4)
+                return PasswordScore.VeryWeak;
+            if (password.Length >= 5)
+                score++;
+            if (password.Length >= 7)
+                score++;
+            if (Regex.IsMatch(password, @"[0-9]+(\.[0-9][0-9]?)?", RegexOptions.ECMAScript))   //number only //"^\d+$" if you need to match more than one digit.
+                score++;
+            if (Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z]).+$", RegexOptions.ECMAScript)) //both, lower and upper case
+                score++;
+            if (Regex.IsMatch(password, @"[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript)) //^[A-Z]+$
+                score++;
+            return (PasswordScore)score;
+        }
+
 
         private void RunPasswordSample()
         {
             var pwd = PromptPlus.Input("Type new password")
                 .IsPassword(true)
                 .AddValidators(PromptValidators.Required())
-                .AddValidators(PromptValidators.MinLength(8))
+                .AddValidators(PromptValidators.MinLength(5))
                 .ValidateOnDemand()
+                .DescriptionSelector(x =>
+                {
+                    return $"password has {CheckStrength(x)}";
+                })
                 .Run(_stopApp);
 
             if (pwd.IsAborted)
@@ -964,10 +1018,23 @@ namespace PromptPlusExample
 
         private void RunListSample()
         {
-            var lst = PromptPlus.List<string>("Please add item(s)")
+            var lst = PromptPlus.List<string>("Please add item(s)", "Sample List")
                 .PageSize(3)
                 .UpperCase(true)
                 .AddValidator(PromptValidators.MinLength(3))
+                .DescriptionSelector(x =>
+                {
+                    var result = x;
+                    var random = new Random();
+                    for (var i = 0; i < 5; i++)
+                    {
+                        var c1 = (char)random.Next(65, 90);
+                        var c2 = (char)random.Next(97, 122);
+                        var c3 = (char)random.Next(97, 122);
+                        result = result +c1 + c2 + c3;
+                    }
+                    return result;
+                })
                 .ValidateOnDemand()
                 .Run(_stopApp);
 
@@ -983,7 +1050,7 @@ namespace PromptPlusExample
             var lst = PromptPlus.ListMasked("Please add item(s)")
                 .MaskType(MaskedType.Generic, @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
                 .UpperCase(true)
-                .AddValidator(PromptValidators.MinLength(6))
+                .DescriptionSelector(MyDescMaskedirGeneric)
                 .ValidateOnDemand()
                 .Run(_stopApp);
 
@@ -1050,6 +1117,8 @@ namespace PromptPlusExample
                 .AddItem("Europe (Any)")
                 .DisableItem("Boston")
                 .AddDefault("New York")
+                .DescriptionSelector(x => x)
+                .ShowGroupOnDescription("No group")
                 .Range(1, 3)
                 .Run(_stopApp);
 

@@ -20,6 +20,7 @@ namespace PromptPlusControls.Controls
         public Func<T, string> TextSelector { get; set; } = x => x.ToString();
         public MaskedOptions MaskedOption { get; set; } = new MaskedOptions();
         public bool ValidateOnDemand { get; set; }
+        public Func<string, string> DescriptionSelector { get; set; }
 
     }
 }

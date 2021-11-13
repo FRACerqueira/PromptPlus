@@ -42,5 +42,6 @@ namespace PromptPlusControls.Controls
         public FormatWeek ShowDayWeek { get; set; } = FormatWeek.None;
         public string DefaultValueWitdhoutMask { get; set; }
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
+        public Func<ResultMasked, string> DescriptionSelector { get; set; }
     }
 }

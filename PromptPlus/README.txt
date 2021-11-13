@@ -20,6 +20,15 @@ https://fracerqueira.github.io/PromptPlus
 - Added Description parameter to all controls
 - Added global hotkey (default value = F3) show/hide Description
 - Added color Schema Description (default value = ConsoleColor.Cyan)
+- Added Description parameter to all controls
+- Added Dynamic Description -  DescriptionSelector Method for Description change on each interaction
+    - Input-Control
+    - AutoComplete-Control
+    - Listmasked-Control
+    - List-Control
+    - MaskEdit-Control
+    - Select-Control
+    - MultSelect-Control
 
 **Relase Notes (V.2.1.0)**
 

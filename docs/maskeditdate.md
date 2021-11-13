@@ -57,6 +57,10 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
   ``` 
     - Run the validators on each interaction
 - ```csharp
+  DescriptionSelector(Func<ResultMasked,string> value)
+  ``` 
+    - Run the fucntion on each interaction and show result in description line.
+- ```csharp
   Culture(CultureInfo cultureinfo)
   ``` 
     - Language/Culture of date/time/number/currency. If null value, culture is DefaultCulture of PromptPlus.

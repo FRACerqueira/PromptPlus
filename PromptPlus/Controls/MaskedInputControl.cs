@@ -20,11 +20,11 @@ namespace PromptPlusControls.Controls
         private static readonly char? s_defaultfill = '0';
         private readonly MaskedOptions _options;
         private MaskedBuffer _maskedBuffer;
+        private string _inputDesc;
 
-        public MaskedInputControl(MaskedOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public MaskedInputControl(MaskedOptions options) : base(options, true)
         {
             _options = options;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -196,9 +196,15 @@ namespace PromptPlusControls.Controls
                 }
 
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
-
+            if (_inputDesc != _maskedBuffer.ToString())
+            {
+                _inputDesc = _maskedBuffer.ToString();
+                if (_options.DescriptionSelector != null)
+                {
+                    _options.Description = _options.DescriptionSelector.Invoke(new ResultMasked(_inputDesc,_maskedBuffer.ToMasked()));
+                }
+            }
             result = default;
-
             return isvalidhit;
         }
 
@@ -224,20 +230,23 @@ namespace PromptPlusControls.Controls
                 }
             }
 
+            if (HasDescription)
+            {
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
+            }
+
             if (_options.ShowInputType)
             {
                 screenBuffer.WriteLine();
                 screenBuffer.WriteAnswer(string.Format(Messages.MaskEditInputType, _maskedBuffer.Tooltip));
             }
 
-            if (!HideDescription)
-            {
-                screenBuffer.WriteLineDescription(_options.Description);
-            }
-
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes,!HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLineHint($"{Messages.EnterFininsh}{Messages.MaskEditErase}");
@@ -380,6 +389,12 @@ namespace PromptPlusControls.Controls
             }
             _options.AmmountInteger = intvalue;
             _options.AmmountDecimal = decimalvalue;
+            return this;
+        }
+
+        public IControlMaskEdit DescriptionSelector(Func<ResultMasked, string> value)
+        {
+            _options.DescriptionSelector = value;
             return this;
         }
 

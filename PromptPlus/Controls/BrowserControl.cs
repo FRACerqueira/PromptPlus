@@ -28,10 +28,9 @@ namespace PromptPlusControls.Controls
         private readonly Func<ResultBrowser, string> _textSelector = x => x.SelectedValue;
         private readonly Func<ResultBrowser, string> _fullPathSelector = x => Path.Combine(x.PathValue, x.SelectedValue);
 
-        public BrowserControl(BrowserOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public BrowserControl(BrowserOptions options) : base(options, true)
         {
             _options = options;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -84,14 +83,17 @@ namespace PromptPlusControls.Controls
                 screenBuffer.WriteAnswer(_filterBuffer.ToForward());
             }
 
-            if (!HideDescription)
+            if (HasDescription)
             {
-                screenBuffer.WriteLineDescription(_options.Description);
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
             }
 
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes,!HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLine();

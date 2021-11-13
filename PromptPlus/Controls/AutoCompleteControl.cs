@@ -19,20 +19,21 @@ namespace PromptPlusControls.Controls
         private const string Twirl = "|/-\\";
         private readonly AutoCompleteOptions _options;
         private readonly InputBuffer _filterBuffer = new();
-        private readonly List<string> _inputItems = new();
+        private readonly List<ValueDescription<string>> _inputItems = new();
         private readonly CancellationTokenSource _ctsObserver = new();
-        private Paginator<string> _localpaginator;
+        private readonly string _startDescription;
+
+        private Paginator<ValueDescription<string>> _localpaginator;
         private CancellationTokenSource _cts = new();
         private string _prefixstart = string.Empty;
         private int _index = -1;
         private Task _observerAutocomplete;
         private bool _autoCompleteSendStart;
         private bool _autoCompleteRunning;
-
-        public AutoCompleteControl(AutoCompleteOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public AutoCompleteControl(AutoCompleteOptions options) : base(options, true)
         {
             _options = options;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
+            _startDescription = _options.Description;
         }
 
         public new void Dispose()
@@ -68,11 +69,11 @@ namespace PromptPlusControls.Controls
             {
                 _options.PageSize = 1;
             }
-            if (_options.CompletionAsyncService == null)
+            if (_options.CompletionAsyncService == null && _options.CompletionWithDescriptionAsyncService ==null)
             {
                 throw new ArgumentNullException(nameof(_options.CompletionAsyncService));
             }
-            _localpaginator = new Paginator<string>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<string>.s_empty, x => x);
+            _localpaginator = new Paginator<ValueDescription<string>>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<ValueDescription<string>>.s_empty, x => x.Value);
             _localpaginator.FirstItem();
             _observerAutocomplete = Task.Run(() => ObserverAutoComplete(CancellationToken.None));
         }
@@ -116,15 +117,15 @@ namespace PromptPlusControls.Controls
                     else if (PromptPlus.UnSelectFilter.Equals(keyInfo))
                     {
                         _localpaginator.UnSelected();
-                        result = default;
-                        return isvalidhit;
+                        continue;
                     }
                 }
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.Enter when keyInfo.Modifiers == ConsoleModifiers.Control:
                     {
-                        var findok = _localpaginator.TryGetSelectedItem(out result);
+                        var findok = _localpaginator.TryGetSelectedItem(out var aux);
+                        result = aux.Value;
                         try
                         {
                             if (!TryValidate(result, _options.Validators))
@@ -170,7 +171,8 @@ namespace PromptPlusControls.Controls
                         }
                         if (!_options.AcceptWithoutMatch)
                         {
-                            var findok = _localpaginator.TryGetSelectedItem(out result);
+                            var findok = _localpaginator.TryGetSelectedItem(out var aux);
+                            result = aux.Value;
                             if (findok)
                             {
                                 _filterBuffer.Clear();
@@ -228,13 +230,31 @@ namespace PromptPlusControls.Controls
                     _autoCompleteSendStart = false;
                     _autoCompleteRunning = false;
                     _inputItems.Clear();
-                    _localpaginator = new Paginator<string>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<string>.s_empty, x => x);
+                    _localpaginator = new Paginator<ValueDescription<string>>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<ValueDescription<string>>.s_empty, x => x.Value);
                     _localpaginator.UnSelected();
                 }
                 else
                 {
                     _autoCompleteSendStart = true;
                     _autoCompleteRunning = true;
+                }
+            }
+            if (_options.DynamicDescription)
+            {
+                if (_inputItems.Count == 0 || _autoCompleteRunning)
+                {
+                    _options.Description = _startDescription;
+                }
+                else
+                {
+                    if (_localpaginator.SelectedIndex < 0)
+                    {
+                        _options.Description = _startDescription;
+                    }
+                    else
+                    {
+                        _options.Description = _localpaginator.SelectedItem.Description;
+                    }
                 }
             }
             result = default;
@@ -255,13 +275,16 @@ namespace PromptPlusControls.Controls
                 }
                 screenBuffer.WriteAnswer($" {Twirl[_index]}");
             }
-            if (!HideDescription)
+            if (HasDescription)
             {
-                screenBuffer.WriteLineDescription(_options.Description);
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
             }
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, HideDescription);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLine();
@@ -277,13 +300,13 @@ namespace PromptPlusControls.Controls
                 var subset = _localpaginator.ToSubset();
                 foreach (var item in subset)
                 {
-                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<string>.Default.Equals(item, selectedItem))
+                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<string>.Default.Equals(item.Value, selectedItem.Value))
                     {
-                        screenBuffer.WriteLineSelector(item);
+                        screenBuffer.WriteLineSelector(item.Value);
                     }
                     else
                     {
-                        screenBuffer.WriteLineNotSelector(item);
+                        screenBuffer.WriteLineNotSelector(item.Value);
                     }
                 }
                 if (_localpaginator.PageCount > 1)
@@ -312,6 +335,7 @@ namespace PromptPlusControls.Controls
         private void ObserverAutoComplete(CancellationToken cancellationToken)
         {
             Task<string[]> _tasksRunning = null;
+            Task<ValueDescription<string>[]> _tasksDescriptionRunning = null;
             while (!_ctsObserver.IsCancellationRequested)
             {
                 Thread.Sleep(100);
@@ -325,19 +349,36 @@ namespace PromptPlusControls.Controls
                             lcts.Token.WaitHandle.WaitOne(_options.CompletionInterval);
                             try
                             {
-                                _tasksRunning = _options.CompletionAsyncService.Invoke(_filterBuffer.ToString(), _options.CompletionMaxCount, lcts.Token);
-                                if (_tasksRunning.IsCompletedSuccessfully)
+                                if (!_options.DynamicDescription)
                                 {
-                                    _inputItems.Clear();
-                                    _inputItems.AddRange(_tasksRunning.Result);
-                                    _localpaginator = new Paginator<string>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<string>.s_empty, x => x);
-                                    _localpaginator.UnSelected();
+                                    _tasksRunning = _options.CompletionAsyncService.Invoke(_filterBuffer.ToString(), _options.CompletionMaxCount, lcts.Token);
+                                    if (_tasksRunning.IsCompletedSuccessfully)
+                                    {
+                                        _inputItems.Clear();
+                                        foreach (var item in _tasksRunning.Result)
+                                        {
+                                            _inputItems.Add(new ValueDescription<string>(item, null));
+                                        }
+                                        _localpaginator = new Paginator<ValueDescription<string>>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<ValueDescription<string>>.s_empty, x => x.Value);
+                                        _localpaginator.UnSelected();
+                                    }
+                                }
+                                else
+                                {
+                                    _tasksDescriptionRunning = _options.CompletionWithDescriptionAsyncService.Invoke(_filterBuffer.ToString(), _options.CompletionMaxCount, lcts.Token);
+                                    if (_tasksDescriptionRunning.IsCompletedSuccessfully)
+                                    {
+                                        _inputItems.Clear();
+                                        _inputItems.AddRange(_tasksDescriptionRunning.Result);
+                                        _localpaginator = new Paginator<ValueDescription<string>>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<ValueDescription<string>>.s_empty, x => x.Value);
+                                        _localpaginator.UnSelected();
+                                    }
                                 }
                             }
                             catch
                             {
                                 _inputItems.Clear();
-                                _localpaginator = new Paginator<string>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<string>.s_empty, x => x);
+                                _localpaginator = new Paginator<ValueDescription<string>>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<ValueDescription<string>>.s_empty, x => x.Value);
                             }
                         }
                         _tasksRunning = null;
@@ -357,7 +398,10 @@ namespace PromptPlusControls.Controls
             {
                 _tasksRunning.Dispose();
             }
-
+            if (_tasksDescriptionRunning != null)
+            {
+                _tasksDescriptionRunning.Dispose();
+            }
         }
 
         #region IControlAutoComplete
@@ -443,7 +487,17 @@ namespace PromptPlusControls.Controls
 
         public IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<string[]>> value)
         {
+            _options.CompletionWithDescriptionAsyncService = null;
             _options.CompletionAsyncService = value;
+            _options.DynamicDescription = false;
+            return this;
+        }
+
+        public IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value)
+        {
+            _options.CompletionAsyncService = null;
+            _options.CompletionWithDescriptionAsyncService = value;
+            _options.DynamicDescription = true;
             return this;
         }
 

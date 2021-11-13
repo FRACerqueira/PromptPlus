@@ -15,7 +15,22 @@ namespace PromptPlusControls.Controls
         public IList<T> DisableItems { get; set; } = new List<T>();
         public T DefaultValue { get; set; }
         public int? PageSize { get; set; }
-        public Func<T, string> TextSelector { get; set; } = x => x?.ToString();
+
+        Func<T, string> _textSelector = x => x?.ToString();
+        public Func<T, string> TextSelector
+        {
+            get { return _textSelector; }
+            set
+            {
+                if (value == null)
+                {
+                    value = x => x?.ToString();
+                }
+                _textSelector = value;
+            }
+        }
+
+        public Func<T, string> DescriptionSelector { get; set; } = null;
         public bool AutoSelectIfOne { get; set; }
     }
 }

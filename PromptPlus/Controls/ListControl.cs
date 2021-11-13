@@ -23,11 +23,13 @@ namespace PromptPlusControls.Controls
         private readonly InputBuffer _inputBuffer = new();
         private readonly List<T> _inputItems = new();
         private Paginator<T> _localpaginator;
+        private string _inputDesc;
+        private string _startDesc;
 
-        public ListControl(ListOptions<T> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public ListControl(ListOptions<T> options) : base(options, true)
         {
             _options = options;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
+            _startDesc = _options.Description;
         }
 
         public override void InitControl()
@@ -64,8 +66,7 @@ namespace PromptPlusControls.Controls
                     _inputBuffer.Clear();
                     _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
                     _localpaginator.FirstItem();
-                    result = _inputItems;
-                    return false;
+                    continue;
                 }
 
 
@@ -85,13 +86,13 @@ namespace PromptPlusControls.Controls
                                     return true;
                                 }
                                 SetError(string.Format(Messages.ListMinSelection, _options.Minimum));
-                                return false;
+                                break;
                             }
 
                             if (_inputItems.Count >= _options.Maximum)
                             {
                                 SetError(string.Format(Messages.ListMaxSelection, _options.Maximum));
-                                return false;
+                                break;
                             }
 
                             T inputValue;
@@ -99,21 +100,19 @@ namespace PromptPlusControls.Controls
                             if (!TryValidate(inputValue, _options.Validators))
                             {
                                 result = _inputItems;
-                                return false;
+                                break;
                             }
                             if (!_options.AllowDuplicate)
                             {
                                 if (_inputItems.Contains(inputValue))
                                 {
                                     SetError(Messages.ListItemAlreadyexists);
-                                    return false;
+                                    break;
                                 }
                             }
                             _inputBuffer.Clear();
                             _inputItems.Add(inputValue);
                             _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
-                            result = _inputItems;
-                            return false;
                         }
                         catch (FormatException)
                         {
@@ -146,7 +145,7 @@ namespace PromptPlusControls.Controls
                             if (!TryValidate(inputValue, _options.Validators))
                             {
                                 result = _inputItems;
-                                return false;
+                                break;
                             }
 
                             if (_inputItems.Contains(inputValue))
@@ -157,8 +156,6 @@ namespace PromptPlusControls.Controls
                             _inputBuffer.Clear();
                             _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
                             _localpaginator.FirstItem();
-                            result = _inputItems;
-                            return false;
                         }
                         break;
                     }
@@ -180,6 +177,21 @@ namespace PromptPlusControls.Controls
                 }
 
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
+            if (_inputDesc != _inputBuffer.ToString())
+            {
+                _inputDesc = _inputBuffer.ToString();
+                if (string.IsNullOrEmpty(_inputDesc))
+                {
+                    _options.Description = _startDesc;
+                }
+                else
+                {
+                    if (_options.DescriptionSelector != null)
+                    {
+                        _options.Description = _options.DescriptionSelector.Invoke(_inputDesc);
+                    }
+                }
+            }
             result = null;
             return isvalidhit;
         }
@@ -190,14 +202,17 @@ namespace PromptPlusControls.Controls
 
             screenBuffer.PushCursor(_inputBuffer);
 
-            if (!HideDescription)
+            if (HasDescription)
             {
-                screenBuffer.WriteLineDescription(_options.Description);
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
             }
 
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes,!HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLine();
@@ -268,6 +283,13 @@ namespace PromptPlusControls.Controls
             _options.ValidateOnDemand = true;
             return this;
         }
+        public IControlList<T> DescriptionSelector(Func<string, string> value)
+        {
+            _options.DescriptionSelector = value;
+            return this;
+        }
+
+
         public IControlList<T> Prompt(string value, string description = null)
         {
             _options.Message = value;

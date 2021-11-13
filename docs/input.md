@@ -38,6 +38,10 @@ Input(string prompt, string description = null)
   ``` 
     - Run the validators on each interaction
 - ```csharp
+  DescriptionSelector(Func<string, string> value)
+  ``` 
+    - Run the fucntion on each interaction and show result in description line.
+- ```csharp
   AddValidator(Func<object, ValidationResult> validator);
   ``` 
     - item of input validator.

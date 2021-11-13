@@ -32,5 +32,11 @@ namespace PromptPlusControls.Controls
                 _textSelector = value;
             }
         }
+        public Func<T, string> DescriptionSelector { get; set; } = null;
+        public bool ShowGroupOnDescription { get; set; }
+        public string NoGroupDescription { get; set; }
+
+
+
     }
 }

@@ -17,10 +17,9 @@ namespace PromptPlusControls.Controls
         private readonly ConfirmOptions _options;
         private readonly InputBuffer _inputBuffer = new();
 
-        public ConfirmControl(ConfirmOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public ConfirmControl(ConfirmOptions options) : base(options, true)
         {
             _options = options;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -156,14 +155,17 @@ namespace PromptPlusControls.Controls
 
             screenBuffer.PushCursor(_inputBuffer);
 
-            if (!HideDescription)
+            if (HasDescription)
             {
-                screenBuffer.WriteLineDescription(_options.Description);
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
             }
 
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes,!HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLineHint(Messages.EnterFininsh);

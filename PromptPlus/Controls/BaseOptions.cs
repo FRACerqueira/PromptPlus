@@ -28,6 +28,8 @@ namespace PromptPlusControls.Controls
                 }
             }
         }
+
+        public bool HasDescription => !string.IsNullOrEmpty(_description);
         public string Message { get; set; }
         public bool EnabledAbortKey { get; set; } = PromptPlus.EnabledAbortKey;
         public bool EnabledAbortAllPipes { get; set; } = PromptPlus.EnabledAbortAllPipes;

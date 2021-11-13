@@ -20,11 +20,10 @@ namespace PromptPlusControls.Controls
         private readonly InputBuffer _inputBuffer = new();
         private bool _initform;
         private bool _passwordvisible;
-
-        public InputControl(InputOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        private string _inputDesc;
+        public InputControl(InputOptions options) : base(options, true)
         {
             _options = options;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -118,9 +117,15 @@ namespace PromptPlusControls.Controls
                 _initform = _inputBuffer.Length == 0;
 
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
-
+            if (_inputDesc != _inputBuffer.ToString())
+            {
+                _inputDesc = _inputBuffer.ToString();
+                if (_options.DescriptionSelector != null)
+                {
+                    _options.Description = _options.DescriptionSelector.Invoke(_inputDesc);
+                }
+            }
             result = default;
-
             return isvalidhit;
         }
 
@@ -154,14 +159,17 @@ namespace PromptPlusControls.Controls
                 screenBuffer.WriteAnswer(_inputBuffer.ToForward());
             }
 
-            if (!HideDescription)
+            if (HasDescription)
             {
-                screenBuffer.WriteLineDescription(_options.Description);
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
             }
 
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes,!HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, string.Join("", Messages.EnterFininsh, Messages.MaskEditErase));
@@ -235,6 +243,11 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
+        public IControlInput DescriptionSelector(Func<string, string> value)
+        {
+            _options.DescriptionSelector = value;
+            return this;
+        }
         public IPromptControls<string> EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;

@@ -35,9 +35,13 @@ Control Select. Generic select IEnumerable/Enum with auto-paginator and tooltips
 - ```csharp
   TextSelector(Func<T, string> value)
     ```
-    - Function to extract value with type T from string and displayed.
+    - Function to extract value with type T to string and displayed.
     - For IEnumerable type, if ommited,the value will be item => item.ToString()
     - For enum value, if ommited,the value will be the \[Display\] attribute if it exists or an enum string.
+- ```csharp
+  DescriptionSelector(Func<T, string> value)
+    ```
+    - Function to extract the value with type T to string and displayed in the description line.
 - ```csharp
   AddItem(T value)
     ```

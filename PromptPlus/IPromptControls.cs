@@ -79,6 +79,7 @@ namespace PromptPlusControls
         IControlMaskEdit AcceptSignal(bool value);
         IControlMaskEdit ShowDayWeek(FormatWeek value);
         IControlMaskEdit ValidateOnDemand();
+        IControlMaskEdit DescriptionSelector(Func<ResultMasked,string> value);
     }
 
     public interface IControlInput : IPromptControls<string>, IPromptPipe
@@ -89,6 +90,7 @@ namespace PromptPlusControls
         IControlInput AddValidators(Func<object, ValidationResult> validator);
         IControlInput AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlInput ValidateOnDemand();
+        IControlInput DescriptionSelector(Func<string, string> value);
     }
 
     public interface IControlSliderNumber : IPromptControls<double>, IPromptPipe
@@ -143,6 +145,7 @@ namespace PromptPlusControls
         IControlAutoComplete CompletionInterval(int value);
         IControlAutoComplete CompletionMaxCount(int value);
         IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<string[]>> value);
+        IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value);
     }
 
 
@@ -152,6 +155,7 @@ namespace PromptPlusControls
         IControlSelect<T> Default(T value);
         IControlSelect<T> PageSize(int value);
         IControlSelect<T> TextSelector(Func<T, string> value);
+        IControlSelect<T> DescriptionSelector(Func<T, string> value);
         IControlSelect<T> AddItem(T value);
         IControlSelect<T> AddItems(IEnumerable<T> value);
         IControlSelect<T> HideItem(T value);
@@ -168,6 +172,8 @@ namespace PromptPlusControls
         IControlMultiSelect<T> AddDefaults(IEnumerable<T> value);
         IControlMultiSelect<T> PageSize(int value);
         IControlMultiSelect<T> TextSelector(Func<T, string> value);
+        IControlMultiSelect<T> DescriptionSelector(Func<T, string> value);
+        IControlMultiSelect<T> ShowGroupOnDescription(string noGroupMessage);
         IControlMultiSelect<T> AddItem(T value);
         IControlMultiSelect<T> AddItems(IEnumerable<T> value);
         IControlMultiSelect<T> AddGroup(IEnumerable<T> value, string group);
@@ -189,7 +195,7 @@ namespace PromptPlusControls
         IControlList<T> AddValidator(Func<object, ValidationResult> validator);
         IControlList<T> AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlList<T> ValidateOnDemand();
-
+        IControlList<T> DescriptionSelector(Func<string, string> value);
     }
 
     public interface IControlListMasked : IPromptControls<IEnumerable<ResultMasked>>, IPromptPipe
@@ -209,7 +215,7 @@ namespace PromptPlusControls
         IControlListMasked AmmoutPositions(int intvalue, int decimalvalue);
         IControlListMasked AcceptSignal(bool signal);
         IControlListMasked ValidateOnDemand();
-
+        IControlListMasked DescriptionSelector(Func<ResultMasked, string> value);
     }
 
     public interface IControlBrowser : IPromptControls<ResultBrowser>, IPromptPipe

@@ -24,12 +24,13 @@ namespace PromptPlusControls.Controls
         private readonly List<ResultMasked> _inputItems = new();
         private MaskedBuffer _inputBuffer;
         private bool _firstinput;
-
-        public MaskedListControl(ListOptions<string> options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        private string _inputDesc;
+        private string _startDesc;
+        public MaskedListControl(ListOptions<string> options) : base(options, true)
         {
             _options = options;
+            _startDesc = _options.Description;
             _firstinput = true;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
         }
 
         public override void InitControl()
@@ -121,8 +122,7 @@ namespace PromptPlusControls.Controls
                     _inputBuffer.Clear();
                     _localpaginator = new Paginator<string>(_inputItems.Select(x => x.Masked), _options.PageSize, Optional<string>.s_empty, _options.TextSelector);
                     _localpaginator.FirstItem();
-                    result = _inputItems;
-                    return false;
+                    continue;
                 }
 
                 switch (keyInfo.Key)
@@ -141,13 +141,13 @@ namespace PromptPlusControls.Controls
                                     return true;
                                 }
                                 SetError(string.Format(Messages.ListMinSelection, _options.Minimum));
-                                return false;
+                                break;
                             }
 
                             if (_inputItems.Count >= _options.Maximum)
                             {
                                 SetError(string.Format(Messages.ListMaxSelection, _options.Maximum));
-                                return false;
+                                break;
                             }
 
                             object inputValue = input.Masked;
@@ -174,8 +174,7 @@ namespace PromptPlusControls.Controls
                             {
                                 Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
                                 Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-                                result = _inputItems;
-                                return false;
+                                break;
                             }
                             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
                             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
@@ -184,16 +183,14 @@ namespace PromptPlusControls.Controls
                                 if (_inputItems.Any(x => x.Masked == input.Masked))
                                 {
                                     SetError(Messages.ListItemAlreadyexists);
-                                    return false;
+                                    break;
                                 }
                             }
                             _inputBuffer.Clear();
                             input.ObjectValue = inputValue;
                             _inputItems.Add(input);
                             _localpaginator = new Paginator<string>(_inputItems.Select(x => x.Masked), _options.PageSize, Optional<string>.s_empty, _options.TextSelector);
-                            result = _inputItems;
                             _firstinput = true;
-                            return false;
                         }
                         catch (FormatException)
                         {
@@ -231,8 +228,6 @@ namespace PromptPlusControls.Controls
                             _inputBuffer.Clear();
                             _localpaginator = new Paginator<string>(_inputItems.Select(x => x.Masked), _options.PageSize, Optional<string>.s_empty, _options.TextSelector);
                             _localpaginator.FirstItem();
-                            result = _inputItems;
-                            return false;
                         }
                         break;
                     }
@@ -254,6 +249,21 @@ namespace PromptPlusControls.Controls
                 }
 
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
+            if (_inputDesc != _inputBuffer.ToString())
+            {
+                _inputDesc = _inputBuffer.ToString();
+                if (string.IsNullOrEmpty(_inputDesc))
+                {
+                    _options.Description = _startDesc;
+                }
+                else
+                {
+                    if (_options.MaskedOption.DescriptionSelector != null)
+                    {
+                        _options.Description = _options.MaskedOption.DescriptionSelector.Invoke(new ResultMasked(_inputDesc, _inputBuffer.ToMasked()));
+                    }
+                }
+            }
             result = null;
             return isvalidhit;
         }
@@ -264,20 +274,23 @@ namespace PromptPlusControls.Controls
 
             screenBuffer.PushCursor(_inputBuffer);
 
+            if (HasDescription)
+            {
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
+            }
+
             if (_options.MaskedOption.ShowInputType)
             {
                 screenBuffer.WriteLine();
                 screenBuffer.WriteAnswer(string.Format(Messages.MaskEditInputType, _inputBuffer.Tooltip));
             }
 
-            if (!HideDescription)
-            {
-                screenBuffer.WriteLineDescription(_options.Description);
-            }
-
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes,!HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLine();
@@ -351,6 +364,12 @@ namespace PromptPlusControls.Controls
             {
                 _options.Description = description;
             }
+            return this;
+        }
+
+        public IControlListMasked DescriptionSelector(Func<ResultMasked, string> value)
+        {
+            _options.MaskedOption.DescriptionSelector = value;
             return this;
         }
 

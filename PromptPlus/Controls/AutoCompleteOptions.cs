@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Threading.Tasks;
 
+using PromptPlusControls.ValueObjects;
+
 namespace PromptPlusControls.Controls
 {
     internal class AutoCompleteOptions : BaseOptions
@@ -19,7 +21,10 @@ namespace PromptPlusControls.Controls
         public int CompletionInterval { get; set; } = 1000;
         public int CompletionMaxCount { get; set; } = 10;
         public Func<string, int, CancellationToken, Task<string[]>> CompletionAsyncService { get; set; }
+        public Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> CompletionWithDescriptionAsyncService { get; set; }
         public int SpeedAnimation { get; set; } = PromptPlus.SpeedAnimation;
+        public bool DynamicDescription { get; set; }
+
 
     }
 }

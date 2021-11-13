@@ -265,7 +265,7 @@ namespace PromptPlusControls.Internal
             screenBuffer.WriteLine(description, PromptPlus.ColorSchema.Description);
         }
 
-        public static void WriteLineStandardHotKeys(this ScreenBuffer screenBuffer, bool overpipeline, bool enabledabortkey, bool enabledabortAllpipes, bool hidedescription = true)
+        public static void WriteLineStandardHotKeys(this ScreenBuffer screenBuffer, bool overpipeline, bool enabledabortkey, bool enabledabortAllpipes, bool hidedescription)
         {
             screenBuffer.WriteLine();
             if (enabledabortkey)

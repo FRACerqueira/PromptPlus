@@ -38,6 +38,10 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
     ```
     - Function to extract value with type T from string and displayed. If not defined, the value will be item => item.ToString()
 - ```csharp
+  DescriptionSelector(Func<string,string> value)
+  ``` 
+    - Run the fucntion on each interaction and show result in description line.
+- ```csharp
   Range(int minvalue, int maxvalue)
     ```
     - Minimum and maximum items added
@@ -61,6 +65,10 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
   ValidateOnDemand()
   ``` 
     - Run the validators on each interaction
+- ```csharp
+  DescriptionSelector(Func<ResultMasked,string> value)
+  ``` 
+    - Run the fucntion on each interaction and show result in description line.
 - ```csharp
   Culture(CultureInfo cultureinfo)
   ``` 

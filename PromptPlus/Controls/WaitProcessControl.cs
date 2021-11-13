@@ -26,13 +26,10 @@ namespace PromptPlusControls.Controls
         private readonly Dictionary<string, ResultProcess> _lastresult = new();
         private readonly List<int> _index = new();
         private readonly List<Task> _localTask = new();
-        private bool _hasDescription;
 
-        public WaitProcessControl(WaitProcessOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
+        public WaitProcessControl(WaitProcessOptions options) : base(options, false, true)
         {
             _options = options;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
-            _hasDescription = !HideDescription;
         }
 
         public override void InitControl()
@@ -131,7 +128,7 @@ namespace PromptPlusControls.Controls
                     screenBuffer.Write("...");
                 }
                 screenBuffer.PushCursor();
-                if (_hasDescription)
+                if (HasDescription)
                 {
                     if (!HideDescription)
                     {
@@ -145,7 +142,7 @@ namespace PromptPlusControls.Controls
                 }
                 if (_options.EnabledPromptTooltip)
                 {
-                    screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _hasDescription);
+                    screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, !HasDescription);
                     screenBuffer.ClearRestOfLine();
                 }
                 return;
@@ -157,7 +154,7 @@ namespace PromptPlusControls.Controls
             screenBuffer.PushCursor();
             screenBuffer.ClearRestOfLine();
 
-            if (_hasDescription)
+            if (HasDescription)
             {
                 if (!HideDescription)
                 {
@@ -171,7 +168,7 @@ namespace PromptPlusControls.Controls
             }
             if (_options.EnabledPromptTooltip)
             {
-                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _hasDescription);
+                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, !HasDescription);
                 screenBuffer.ClearRestOfLine();
             }
 

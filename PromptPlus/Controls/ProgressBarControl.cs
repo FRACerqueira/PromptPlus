@@ -20,13 +20,10 @@ namespace PromptPlusControls.Controls
         private bool _newInteration = true;
         private readonly ProgressBarOptions _options;
         private double _step;
-        private bool _hasDescription;
 
-        public ProgressBarControl(ProgressBarOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
+        public ProgressBarControl(ProgressBarOptions options) : base(options, false, true)
         {
             _options = options;
-            HideDescription = string.IsNullOrEmpty(_options.Description ?? string.Empty);
-            _hasDescription = !HideDescription;
         }
 
         public override void InitControl()
@@ -104,7 +101,7 @@ namespace PromptPlusControls.Controls
             screenBuffer.PushCursor();
             screenBuffer.ClearRestOfLine();
 
-            if (_hasDescription)
+            if (HasDescription)
             {
                 if (!HideDescription)
                 {
@@ -124,7 +121,7 @@ namespace PromptPlusControls.Controls
             screenBuffer.WriteHint(" 100%");
             if (_options.EnabledPromptTooltip)
             {
-                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey,_hasDescription, 3);
+                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey,!HasDescription, 3);
             }
             screenBuffer.ClearRestOfLine();
         }
