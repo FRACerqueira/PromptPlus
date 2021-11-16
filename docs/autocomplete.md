@@ -103,8 +103,8 @@ private async Task<string[]> MYServiceCompleteAsync(string prefixText, int count
 
 ```csharp
 var input = PromptPlus.AutoComplete("Input value")
-    .Addvalidator(PromptValidators.Required())
-    .Addvalidator(PromptValidators.MinLength(3))
+    .Addvalidator(PromptPlusValidators.Required())
+    .Addvalidator(PromptPlusValidators.MinLength(3))
     .CompletionInterval(1000)
     .CompletionMaxCount(10)
     .PageSize(5)

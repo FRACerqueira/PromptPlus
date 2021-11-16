@@ -144,8 +144,8 @@ Console.WriteLine($"Hello, key pressed");
 //input
 var name = PromptPlus.Input("What's your name?")
     .Default("Peter Parker")
-    .Addvalidator(PromptValidators.Required())
-    .Addvalidator(PromptValidators.MinLength(3))
+    .Addvalidator(PromptPlusValidators.Required())
+    .Addvalidator(PromptPlusValidators.MinLength(3))
     .Run(_stopApp);
 
 if (name.IsAborted)
