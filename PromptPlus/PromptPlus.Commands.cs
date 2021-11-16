@@ -2,16 +2,14 @@
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
-
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-using PromptPlusControls.Controls;
-using PromptPlusControls.FIGlet;
 using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
+
+using PromptPlusObjects;
 
 namespace PromptPlusControls
 {
@@ -20,9 +18,9 @@ namespace PromptPlusControls
 
         #region Console Commands
 
-        public static ResultPromptPlus<ConsoleKeyInfo> WaitKeypress(CancellationToken cancellationToken)
+        public static ResultPromptPlus<ConsoleKeyInfo> WaitKeypress(bool intercept, CancellationToken cancellationToken)
         {
-            return new ResultPromptPlus<ConsoleKeyInfo>(_consoleDriver.WaitKeypress(cancellationToken), cancellationToken.IsCancellationRequested);
+            return new ResultPromptPlus<ConsoleKeyInfo>(_consoleDriver.WaitKeypress(intercept, cancellationToken), cancellationToken.IsCancellationRequested);
         }
 
         public static void ClearLine(int top)
@@ -114,14 +112,14 @@ namespace PromptPlusControls
 
         public static void WriteLine(Exception value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
         {
-            WriteLine(value.ToString().Color(forecolor ?? PromptPlus.ForegroundColor, backcolor));
+            WriteLine(value.ToString().Color(forecolor ?? _consoleDriver.ForegroundColor, backcolor));
         }
 
         public static void WriteLine(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
         {
             if (underline)
             {
-                var aux = ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor);
+                var aux = PromptPlus.ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor);
                 foreach (var item in aux)
                 {
                     WriteLine(item.Underline());
@@ -181,7 +179,7 @@ namespace PromptPlusControls
         /// This is [red]Red[/red] text and this is [white:blue!u]Blue[/white:blue!u] text
         /// </summary>
         /// <param name="text">Text to display</param>
-        private static ColorToken[] ConvertEmbeddedColorLine(string text)
+        internal static ColorToken[] ConvertEmbeddedColorLine(string text)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -216,14 +214,30 @@ namespace PromptPlusControls
                 else
                 {
                     //find underline tolen
-                    if (mathgrp.IndexOf("!u", StringComparison.InvariantCultureIgnoreCase) >= 0)
+                    if (mathgrp.Contains("!u", StringComparison.InvariantCultureIgnoreCase))
                     {
                         underline = true;
+#if NETSTANDARD2_0
+                        mathgrp = mathgrp.Replace("!u", "");
+#endif
+#if NETSTANDARD2_1
                         mathgrp = mathgrp.Replace("!u", "", StringComparison.InvariantCultureIgnoreCase);
+#endif
+#if NET5_0_OR_GREATER
+                        mathgrp = mathgrp.Replace("!u", "", StringComparison.InvariantCultureIgnoreCase);
+#endif
                     }
                     //split color
 
+#if NETSTANDARD2_0
+                    var colors = mathgrp.Split(':');
+#endif
+#if NETSTANDARD2_1
                     var colors = mathgrp.Split(':', StringSplitOptions.RemoveEmptyEntries);
+#endif
+#if NET5_0_OR_GREATER
+                    var colors = mathgrp.Split(':', StringSplitOptions.RemoveEmptyEntries);
+#endif
                     if (colors.Length == 1)
                     {
                         Enum.TryParse(colors[0], true, out colvalfc);

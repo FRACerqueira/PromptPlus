@@ -17,6 +17,10 @@ https://fracerqueira.github.io/PromptPlus
 
 **Relase Notes (V.2.2.0)**
 
+- Renamed namespace PromptValidators to PromptPlusValidators (requires refactoring)
+- Renamed namespace PromptPlusControls.FIGlet to PromptPlusFIGlet (requires refactoring)
+- Renamed namespace PromptPlusControls.ValueObjects to PromptPlusObjects (requires refactoring)
+
 - Added Description parameter to all controls
 - Added global hotkey (default value = F3) show/hide Description
 - Added color Schema Description (default value = ConsoleColor.Cyan)

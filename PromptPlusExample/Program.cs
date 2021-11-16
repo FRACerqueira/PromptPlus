@@ -14,10 +14,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using PromptPlusControls;
-using PromptPlusControls.FIGlet;
-using PromptPlusControls.ValueObjects;
 
 using PromptPlusExample.Models;
+
+using PromptPlusFIGlet;
+
+using PromptPlusObjects;
 
 namespace PromptPlusExample
 {
@@ -244,8 +246,8 @@ namespace PromptPlusExample
                 return;
             }
             var ctrlinput = PromptPlus.AutoComplete("Input value", "Sample autocomplete control")
-                .AddValidator(PromptValidators.Required())
-                .AddValidator(PromptValidators.MinLength(3))
+                .AddValidator(PromptPlusValidators.Required())
+                .AddValidator(PromptPlusValidators.MinLength(3))
                 .CompletionInterval(1000)
                 .CompletionMaxCount(10)
                 .ValidateOnDemand()
@@ -277,7 +279,7 @@ namespace PromptPlusExample
                 var c2 = (char)random.Next(97, 122);
                 var c3 = (char)random.Next(97, 122);
 
-                items.Add(new ValueDescription<string>(prefixText + c1 + c2 + c3,$"Description {i}"));
+                items.Add(new ValueDescription<string>(prefixText + c1 + c2 + c3, $"Description {i}"));
             }
             return await Task.FromResult(items.ToArray());
         }
@@ -766,8 +768,8 @@ namespace PromptPlusExample
         {
             var name = PromptPlus.Input("What's your name?")
                 .Default("Peter Parker")
-                .AddValidators(PromptValidators.Required())
-                .AddValidators(PromptValidators.MinLength(3))
+                .AddValidators(PromptPlusValidators.Required())
+                .AddValidators(PromptPlusValidators.MinLength(3))
                 .Run(_stopApp);
             if (name.IsAborted)
             {
@@ -886,7 +888,7 @@ namespace PromptPlusExample
 
         private void RunProgressbarSample()
         {
-            var progress = PromptPlus.Progressbar("Processing Tasks","My Process")
+            var progress = PromptPlus.Progressbar("Processing Tasks", "My Process")
                 .UpdateHandler(UpdateSampleHandlerAsync)
                 .Run(_stopApp);
 
@@ -977,7 +979,7 @@ namespace PromptPlusExample
 
         public static PasswordScore CheckStrength(string password)
         {
-            int score = 1;
+            var score = 1;
             if (password.Length < 1)
                 return PasswordScore.Blank;
             if (password.Length < 4)
@@ -1000,8 +1002,8 @@ namespace PromptPlusExample
         {
             var pwd = PromptPlus.Input("Type new password")
                 .IsPassword(true)
-                .AddValidators(PromptValidators.Required())
-                .AddValidators(PromptValidators.MinLength(5))
+                .AddValidators(PromptPlusValidators.Required())
+                .AddValidators(PromptPlusValidators.MinLength(5))
                 .ValidateOnDemand()
                 .DescriptionSelector(x =>
                 {
@@ -1021,7 +1023,7 @@ namespace PromptPlusExample
             var lst = PromptPlus.List<string>("Please add item(s)", "Sample List")
                 .PageSize(3)
                 .UpperCase(true)
-                .AddValidator(PromptValidators.MinLength(3))
+                .AddValidator(PromptPlusValidators.MinLength(3))
                 .DescriptionSelector(x =>
                 {
                     var result = x;
@@ -1031,7 +1033,7 @@ namespace PromptPlusExample
                         var c1 = (char)random.Next(65, 90);
                         var c2 = (char)random.Next(97, 122);
                         var c3 = (char)random.Next(97, 122);
-                        result = result +c1 + c2 + c3;
+                        result = result + c1 + c2 + c3;
                     }
                     return result;
                 })

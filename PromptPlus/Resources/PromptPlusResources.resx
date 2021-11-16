@@ -325,7 +325,7 @@
     <value>Up/Down: Short change, Crtl+Left/Right: Larger change, Enter: Finish</value>
   </data>
   <data name="AutoCompleteKeyNavigation" xml:space="preserve">
-    <value>Enter: Select, {0}: Unselect, Ctrl-Enter: Change to selected</value>
+    <value>Enter: Select, {0}: Unselect, Ctrl-Enter: Update text input</value>
   </data>
   <data name="AutoCompleteKeyNotfound" xml:space="preserve">
     <value>{0} not found in sugestions</value>

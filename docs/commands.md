@@ -43,7 +43,7 @@ Using simple command to clear a line.
 Using simple command to wait a ConsoleKeyInfo with CancellationToken.
 
 ```csharp
-ResultPromptPlus<ConsoleKeyInfo> keyinfo = PromptPlus.WaitKeypress(CancellationToken cancellationToken)
+ResultPromptPlus<ConsoleKeyInfo> keyinfo = PromptPlus.WaitKeypress(bool intercept, CancellationToken cancellationToken)
 ````
 
 ### Links

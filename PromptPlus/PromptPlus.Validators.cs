@@ -9,11 +9,13 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-using PromptPlusControls.Internal;
+using PromptPlusInternal;
 
-namespace PromptPlusControls.ValueObjects
+using PromptPlusObjects;
+
+namespace PromptPlusControls
 {
-    public static class PromptValidators
+    public static class PromptPlusValidators
     {
         public static Func<object, ValidationResult> IsNumber(CultureInfo? cultureinfo = null, string errorMessage = null)
         {

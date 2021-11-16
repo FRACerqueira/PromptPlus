@@ -11,10 +11,13 @@ using System.Reflection;
 using System.Resources;
 using System.Threading;
 
-using PromptPlusControls.Drivers;
-using PromptPlusControls.Internal;
 using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
+
+using PromptPlusDrivers;
+
+using PromptPlusInternal;
+
+using PromptPlusObjects;
 
 namespace PromptPlusControls
 {

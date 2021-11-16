@@ -9,8 +9,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 
+
 using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
+
+using PromptPlusObjects;
 
 namespace PromptPlusControls
 {
@@ -112,7 +114,7 @@ namespace PromptPlusControls
 
         public static ColorToken[] Mask(this string text, ConsoleColor? color = null, ConsoleColor? backgroundColor = null)
         {
-            return ConvertEmbeddedColorLine(text)?.Select(token => token.Mask(color, backgroundColor)).ToArray();
+            return PromptPlus.ConvertEmbeddedColorLine(text)?.Select(token => token.Mask(color, backgroundColor)).ToArray();
         }
 
         public static ColorToken[] Mask(this IEnumerable<ColorToken> tokens, ConsoleColor? color = null, ConsoleColor? backgroundColor = null)
@@ -122,7 +124,7 @@ namespace PromptPlusControls
 
         public static ColorToken DefautColor(this string text)
         {
-            return new ColorToken(text, _consoleDriver.ForegroundColor, _consoleDriver.BackgroundColor);
+            return new ColorToken(text, PromptPlus._consoleDriver.ForegroundColor, PromptPlus._consoleDriver.BackgroundColor);
         }
 
         public static ColorToken Color(this string text, ConsoleColor forecolor, ConsoleColor? backcolor = null)

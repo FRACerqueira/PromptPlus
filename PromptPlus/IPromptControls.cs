@@ -11,8 +11,9 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PromptPlusControls.FIGlet;
-using PromptPlusControls.ValueObjects;
+using PromptPlusFIGlet;
+
+using PromptPlusObjects;
 
 namespace PromptPlusControls
 {
@@ -79,7 +80,7 @@ namespace PromptPlusControls
         IControlMaskEdit AcceptSignal(bool value);
         IControlMaskEdit ShowDayWeek(FormatWeek value);
         IControlMaskEdit ValidateOnDemand();
-        IControlMaskEdit DescriptionSelector(Func<ResultMasked,string> value);
+        IControlMaskEdit DescriptionSelector(Func<ResultMasked, string> value);
     }
 
     public interface IControlInput : IPromptControls<string>, IPromptPipe

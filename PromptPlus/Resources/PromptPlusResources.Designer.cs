@@ -70,7 +70,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter: Select, {0}: Unselect, Ctrl-Enter: Change to selected.
+        ///   Looks up a localized string similar to Enter: Select, {0}: Unselect, Ctrl-Enter: Update text input.
         /// </summary>
         internal static string AutoCompleteKeyNavigation {
             get {
