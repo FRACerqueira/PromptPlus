@@ -403,14 +403,12 @@ namespace PromptPlusCommandDotNet
                         var att = PromptPlusUtil.FindAttribute<PromptPlusTypeBrowserAttribute>(argument);
                         var p1 = PromptPlus.Browser(promptText, description)
                             .AllowNotSelected(att.AllowNotSelected)
-                            .Default(att.DefaultValue)
                             .Filter(att.Kind)
                             .PageSize(_pageSize)
                             .PrefixExtension(att.PrefixExtension)
                             .PromptCurrentPath(true)
                             .SupressHidden(true)
                             .promptSearchPattern(true)
-                            .Root(att.Root)
                             .SearchPattern(att.SearchPattern)
                             .HideAfterFinish(true)
                             .Run(ctx.CancellationToken);

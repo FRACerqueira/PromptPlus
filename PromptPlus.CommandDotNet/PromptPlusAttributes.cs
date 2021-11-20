@@ -119,16 +119,12 @@ namespace PromptPlusCommandDotNet
 
         public PromptPlusTypeBrowserAttribute(
             BrowserFilter kind = BrowserFilter.None,
-            string defaultvalue = null,
             string prefixExtension = null,
-            string root = null,
             string searchPattern = null,
             bool allowNotSelected = false)
         {
             Kind = kind;
-            DefaultValue = defaultvalue;
             PrefixExtension = prefixExtension;
-            Root = root;
             SearchPattern = searchPattern;
             AllowNotSelected = allowNotSelected;
         }
@@ -137,9 +133,7 @@ namespace PromptPlusCommandDotNet
 
         public bool AllowNotSelected { get; private set; }
         public BrowserFilter Kind { get; private set; }
-        public string DefaultValue { get; private set; }
         public string PrefixExtension { get; private set; }
-        public string Root { get; private set; }
         public string SearchPattern { get; private set; }
     }
 

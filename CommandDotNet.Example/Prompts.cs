@@ -61,13 +61,14 @@ namespace CommandDotNet.Example
                 [PromptValidatorUri(UriKind.Absolute,"http;https")]
                 string url,
                 [Description("Destination File Path")]
-                [PromptPlusTypeBrowser(BrowserFilter.OnlyFolder,"C:\\")]
+                [PromptPlusTypeBrowser(BrowserFilter.OnlyFolder)]
                 string filepath,
                 DateTime refdate,
                 IConsole console)
             {
                 console.Out.WriteLine($"Pretending to download {url} to {filepath} by ref: {refdate}");
             }
+
         }
 
         [Command(Description = "Echos the given text, demonstrating prompting for a single item")]
