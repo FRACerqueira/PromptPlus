@@ -37,7 +37,7 @@ dotnet run --project PromptPlusExample
 The project in the folder **PromptPlusCommandLineExample** contains all the samples to integrate with [CommandDotNet](https://commanddotnet.bilal-fazlani.com)
 
 ```
-dotnet run --project PromptPlusCommandLineExample
+dotnet run --project CommandDotNet.Example prompts secure --username admin download
 ```
 
 ## Snapshot
