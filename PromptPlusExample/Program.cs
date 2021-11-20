@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,13 +12,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using PromptPlusControls;
-
 using PromptPlusExample.Models;
-
-using PromptPlusFIGlet;
-
-using PromptPlusObjects;
+using PPlus.FIGlet;
+using PPlus.Objects;
+using PPlus;
 
 namespace PromptPlusExample
 {
@@ -87,8 +83,6 @@ namespace PromptPlusExample
 
         public void ShowMenu()
         {
-            Console.OutputEncoding = Encoding.UTF8;
-
             PromptPlus.DefaultCulture = new CultureInfo("en-US");
             PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
             PromptPlus.DefaultCulture = new CultureInfo("en-US");
@@ -768,8 +762,8 @@ namespace PromptPlusExample
         {
             var name = PromptPlus.Input("What's your name?")
                 .Default("Peter Parker")
-                .AddValidators(PromptPlusValidators.Required())
-                .AddValidators(PromptPlusValidators.MinLength(3))
+                .AddValidator(PromptPlusValidators.Required())
+                .AddValidator(PromptPlusValidators.MinLength(3))
                 .Run(_stopApp);
             if (name.IsAborted)
             {
@@ -1002,8 +996,8 @@ namespace PromptPlusExample
         {
             var pwd = PromptPlus.Input("Type new password")
                 .IsPassword(true)
-                .AddValidators(PromptPlusValidators.Required())
-                .AddValidators(PromptPlusValidators.MinLength(5))
+                .AddValidator(PromptPlusValidators.Required())
+                .AddValidator(PromptPlusValidators.MinLength(5))
                 .ValidateOnDemand()
                 .DescriptionSelector(x =>
                 {

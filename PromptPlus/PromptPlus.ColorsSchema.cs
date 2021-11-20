@@ -5,7 +5,7 @@
 
 using System;
 
-namespace PromptPlusControls
+namespace PPlus
 {
     public static partial class PromptPlus
     {

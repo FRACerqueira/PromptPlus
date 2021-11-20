@@ -5,9 +5,15 @@
     <LangVersion>9.0</LangVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <AssemblyName>PromptPlus</AssemblyName>
-    <RootNamespace>PromptPlusControls</RootNamespace>
+    <RootNamespace>PPlus</RootNamespace>
     <Nullable>annotations</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="FIGletPPlus.FIGlet\**" />
+    <EmbeddedResource Remove="FIGletPPlus.FIGlet\**" />
+    <None Remove="FIGletPPlus.FIGlet\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
@@ -30,7 +36,7 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>© 2021 - Fernando Cerqueira </Copyright>
-    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|.net6|AnyCPU'">
@@ -82,8 +88,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="PromptPlusControls\ScreenControl.cs" />
-    <Compile Remove="PromptPlusInternal\StatusBar.cs" />
+    <Compile Remove="ControlsPPlus.Controls\ScreenControl.cs" />
+    <Compile Remove="InternalPPlus.Internal\StatusBar.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="FIGlet\Fonts\standard.flf" />
   </ItemGroup>
   
   <ItemGroup>
@@ -92,9 +102,9 @@
       <PackagePath>README.txt</PackagePath>
     </Content>
   </ItemGroup>
-
+  
   <ItemGroup>
-    <EmbeddedResource Include="PromptPlusFIGlet\Fonts\standard.flf" />
+    <EmbeddedResource Include="FIGlet\Fonts\standard.flf" />
   </ItemGroup>
 
   <ItemGroup>

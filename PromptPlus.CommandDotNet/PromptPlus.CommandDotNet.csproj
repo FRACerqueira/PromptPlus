@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;.net5;.net6</TargetFrameworks>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>annotations</Nullable>
+    <RootNamespace>PromptPlusCommandDotNet</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Fernando Cerqueira</Authors>
+    <Description>Integration with the Command DotNet package with interactive command-line for  toolkit for C# with powerful controls and commands.</Description>
+    <PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>cli;command-line;console;interactive;prompt;terminal;c#;toolkit</PackageTags>
+    <RepositoryUrl>https://fracerqueira.github.io/PromptPlus</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>PromptPlusCommandDotNet</PackageId>
+    <PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
+    <PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
+    <Version>1.0.0.220</Version>
+    <PackageIcon>iconCmdNet.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Copyright>© 2021 - Fernando Cerqueira </Copyright>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
+    <PackageReference Include="CommandDotNet" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='.net5'">
+    <PackageReference Include="CommandDotNet" Version="5.0.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='.net6'">
+    <PackageReference Include="CommandDotNet" Version="5.0.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\PromptPlus\PromptPlus.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\iconCmdNet.png" Pack="true" PackagePath="\" />
+    <None Include="..\NugetREADME.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

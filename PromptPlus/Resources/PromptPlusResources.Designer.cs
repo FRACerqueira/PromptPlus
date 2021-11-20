@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PromptPlusControls.Resources {
+namespace PPlus.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace PromptPlusControls.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PromptPlusControls.Resources.PromptPlusResources", typeof(PromptPlusResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PPlus.Resources.PromptPlusResources", typeof(PromptPlusResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

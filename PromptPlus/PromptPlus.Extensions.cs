@@ -10,11 +10,11 @@ using System.Linq;
 using System.Linq.Expressions;
 
 
-using PromptPlusControls.Resources;
+using PPlus.Controls.Resources;
 
-using PromptPlusObjects;
+using PPlus.Objects;
 
-namespace PromptPlusControls
+namespace PPlus
 {
     public static partial class PromptPlus
     {
@@ -124,7 +124,7 @@ namespace PromptPlusControls
 
         public static ColorToken DefautColor(this string text)
         {
-            return new ColorToken(text, PromptPlus._consoleDriver.ForegroundColor, PromptPlus._consoleDriver.BackgroundColor);
+            return new ColorToken(text, PromptPlus.ConsoleDriver.ForegroundColor, PromptPlus.ConsoleDriver.BackgroundColor);
         }
 
         public static ColorToken Color(this string text, ConsoleColor forecolor, ConsoleColor? backcolor = null)

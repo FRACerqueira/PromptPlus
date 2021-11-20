@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading;
 
-using PromptPlusControls.Resources;
+using PPlus.Controls;
+using PPlus.Controls.Resources;
+using PPlus.Drivers;
+using PPlus.Objects;
 
-using PromptPlusObjects;
-
-namespace PromptPlusControls
+namespace PPlus
 {
     public static partial class PromptPlus
     {
@@ -20,7 +21,7 @@ namespace PromptPlusControls
 
         public static ResultPromptPlus<ConsoleKeyInfo> WaitKeypress(bool intercept, CancellationToken cancellationToken)
         {
-            return new ResultPromptPlus<ConsoleKeyInfo>(_consoleDriver.WaitKeypress(intercept, cancellationToken), cancellationToken.IsCancellationRequested);
+            return new ResultPromptPlus<ConsoleKeyInfo>(ConsoleDriver.WaitKeypress(intercept, cancellationToken), cancellationToken.IsCancellationRequested);
         }
 
         public static void ClearLine(int top)
@@ -29,20 +30,20 @@ namespace PromptPlusControls
             {
                 top = 0;
             }
-            if (top > _consoleDriver.BufferHeight - 1)
+            if (top > ConsoleDriver.BufferHeight - 1)
             {
-                top = _consoleDriver.BufferHeight - 1;
+                top = ConsoleDriver.BufferHeight - 1;
             }
-            _consoleDriver.ClearLine(top);
+            ConsoleDriver.ClearLine(top);
         }
 
-        public static void ClearRestOfLine(ConsoleColor? color = null) => _consoleDriver.ClearRestOfLine(color ?? BackgroundColor);
+        public static void ClearRestOfLine(ConsoleColor? color = null) => ConsoleDriver.ClearRestOfLine(color ?? BackgroundColor);
 
-        public static void Beep() => _consoleDriver.Beep();
+        public static void Beep() => ConsoleDriver.Beep();
 
-        public static int CursorLeft => _consoleDriver.CursorLeft;
+        public static int CursorLeft => ConsoleDriver.CursorLeft;
 
-        public static int CursorTop => _consoleDriver.CursorTop;
+        public static int CursorTop => ConsoleDriver.CursorTop;
 
         public static int BufferWidth => Console.BufferWidth;
 
@@ -52,11 +53,11 @@ namespace PromptPlusControls
 
         public static int WindowHeight => Console.WindowHeight;
 
-        public static bool IsRunningTerminal => _consoleDriver.IsRunningTerminal;
+        public static bool IsRunningTerminal => ConsoleDriver.IsRunningTerminal;
 
-        public static ConsoleColor ForegroundColor => _consoleDriver.ForegroundColor;
+        public static ConsoleColor ForegroundColor => ConsoleDriver.ForegroundColor;
 
-        public static ConsoleColor BackgroundColor => _consoleDriver.BackgroundColor;
+        public static ConsoleColor BackgroundColor => ConsoleDriver.BackgroundColor;
 
         public static void CursorPosition(int left, int top)
         {
@@ -70,11 +71,11 @@ namespace PromptPlusControls
                 {
                     left = 0;
                 }
-                if (top > _consoleDriver.BufferHeight - 1)
+                if (top > ConsoleDriver.BufferHeight - 1)
                 {
-                    top = _consoleDriver.BufferHeight - 1;
+                    top = ConsoleDriver.BufferHeight - 1;
                 }
-                _consoleDriver.SetCursorPosition(left, top);
+                ConsoleDriver.SetCursorPosition(left, top);
             }
         }
 
@@ -84,11 +85,11 @@ namespace PromptPlusControls
             {
                 if (forecolor.HasValue)
                 {
-                    _consoleDriver.ForegroundColor = forecolor.Value;
+                    ConsoleDriver.ForegroundColor = forecolor.Value;
                 }
                 if (backcolor.HasValue)
                 {
-                    _consoleDriver.BackgroundColor = backcolor.Value;
+                    ConsoleDriver.BackgroundColor = backcolor.Value;
                 }
             }
         }
@@ -99,20 +100,20 @@ namespace PromptPlusControls
             {
                 if (backcolor.HasValue)
                 {
-                    _consoleDriver.BackgroundColor = backcolor.Value;
+                    ConsoleDriver.BackgroundColor = backcolor.Value;
                 }
-                _consoleDriver.Clear();
+                ConsoleDriver.Clear();
             }
         }
 
         public static void WriteLineSkipColors(string value)
         {
-            _consoleDriver.WriteLine(value);
+            ConsoleDriver.WriteLine(value);
         }
 
         public static void WriteLine(Exception value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
         {
-            WriteLine(value.ToString().Color(forecolor ?? _consoleDriver.ForegroundColor, backcolor));
+            WriteLine(value.ToString().Color(forecolor ?? ConsoleDriver.ForegroundColor, backcolor));
         }
 
         public static void WriteLine(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
@@ -149,17 +150,17 @@ namespace PromptPlusControls
 
         public static void WriteSkipColors(string value)
         {
-            _consoleDriver.Write(value);
+            ConsoleDriver.Write(value);
         }
 
         public static void Write(params ColorToken[] tokens)
         {
-            _consoleDriver.Write(tokens);
+            ConsoleDriver.Write(tokens);
         }
 
         public static void WriteLine(params ColorToken[] tokens)
         {
-            _consoleDriver.WriteLine(tokens);
+            ConsoleDriver.WriteLine(tokens);
         }
 
         public static void WriteLines(int value = 1)
@@ -202,8 +203,8 @@ namespace PromptPlusControls
 
                 // strip out the expression
                 var highlightText = match.Groups["text"].Value;
-                var colvalfc = _consoleDriver.ForegroundColor;
-                var colvalbc = _consoleDriver.BackgroundColor;
+                var colvalfc = ConsoleDriver.ForegroundColor;
+                var colvalbc = ConsoleDriver.BackgroundColor;
 
                 var underline = false;
                 var mathgrp = match.Groups["color"].Value;

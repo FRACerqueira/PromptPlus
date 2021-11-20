@@ -10,11 +10,11 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using PromptPlusInternal;
+using PPlus.Internal;
 
-using PromptPlusObjects;
+using PPlus.Objects;
 
-namespace PromptPlusControls
+namespace PPlus
 {
     public static partial class PromptPlus
     {
@@ -34,12 +34,12 @@ namespace PromptPlusControls
 
             theme.Colors.Description = PromptPlus.ColorSchema.Description;
             theme.Colors.Answer = PromptPlus.ColorSchema.Answer;
-            theme.Colors.BackColorSchema = PromptPlus._consoleDriver.BackgroundColor;
+            theme.Colors.BackColorSchema = PromptPlus.ConsoleDriver.BackgroundColor;
             theme.Colors.Disabled = PromptPlus.ColorSchema.Disabled;
             theme.Colors.DoneSymbol = PromptPlus.ColorSchema.DoneSymbol;
             theme.Colors.Error = PromptPlus.ColorSchema.Error;
             theme.Colors.Filter = PromptPlus.ColorSchema.Filter;
-            theme.Colors.ForeColorSchema = PromptPlus._consoleDriver.ForegroundColor;
+            theme.Colors.ForeColorSchema = PromptPlus.ConsoleDriver.ForegroundColor;
             theme.Colors.Hint = PromptPlus.ColorSchema.Hint;
             theme.Colors.Pagination = PromptPlus.ColorSchema.Pagination;
             theme.Colors.PromptSymbol = PromptPlus.ColorSchema.PromptSymbol;

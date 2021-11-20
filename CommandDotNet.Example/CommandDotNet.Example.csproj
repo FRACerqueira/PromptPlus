@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PromptPlus.CommandDotNet\PromptPlus.CommandDotNet.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='.net5'">
+    <PackageReference Include="CommandDotNet.FluentValidation" Version="5.0.0" />
+    <PackageReference Include="CommandDotNet.NameCasing" Version="3.0.1" />
+    <PackageReference Include="FluentValidation" Version="10.3.4" />
+    <PackageReference Include="Humanizer.Core" Version="2.11.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='.net6'">
+    <PackageReference Include="CommandDotNet.FluentValidation" Version="5.0.0" />
+    <PackageReference Include="CommandDotNet.NameCasing" Version="3.0.1" />
+    <PackageReference Include="FluentValidation" Version="10.3.4" />
+    <PackageReference Include="Humanizer.Core" Version="2.11.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+</Project>

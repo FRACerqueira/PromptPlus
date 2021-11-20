@@ -11,11 +11,11 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PromptPlusFIGlet;
+using PPlus.FIGlet;
 
-using PromptPlusObjects;
+using PPlus.Objects;
 
-namespace PromptPlusControls
+namespace PPlus
 {
     public interface IPromptControls<T>
     {
@@ -88,7 +88,7 @@ namespace PromptPlusControls
         IControlInput Prompt(string value, string description = null);
         IControlInput Default(string value);
         IControlInput IsPassword(bool swithVisible);
-        IControlInput AddValidators(Func<object, ValidationResult> validator);
+        IControlInput AddValidator(Func<object, ValidationResult> validator);
         IControlInput AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlInput ValidateOnDemand();
         IControlInput DescriptionSelector(Func<string, string> value);

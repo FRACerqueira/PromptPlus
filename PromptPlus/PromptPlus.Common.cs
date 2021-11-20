@@ -9,17 +9,18 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Text;
 using System.Threading;
 
-using PromptPlusControls.Resources;
+using PPlus.Resources;
 
-using PromptPlusDrivers;
+using PPlus.Drivers;
 
-using PromptPlusInternal;
+using PPlus.Internal;
 
-using PromptPlusObjects;
+using PPlus.Objects;
 
-namespace PromptPlusControls
+namespace PPlus
 {
     [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "by design")]
     public static partial class PromptPlus
@@ -33,7 +34,8 @@ namespace PromptPlusControls
         internal const int ProgressgBarCheckDelay = 50;
 
         internal static object _lockobj = new();
-        internal static ConsoleDriver _consoleDriver;
+
+        public static IConsoleDriver ConsoleDriver { get; private set; }
 
         static PromptPlus()
         {
@@ -53,7 +55,10 @@ namespace PromptPlusControls
             Symbols.IndentEndGroup = new("└─", "  |_");
             Symbols.SymbGroup = new("»", ">>");
 
-            _consoleDriver = new ConsoleDriver();
+            ConsoleDriver = new ConsoleDriver
+            {
+                OutputEncoding = Encoding.UTF8
+            };
             AppCulture = Thread.CurrentThread.CurrentCulture;
             AppCultureUI = Thread.CurrentThread.CurrentUICulture;
             s_defaultCulture = AppCulture;
@@ -63,6 +68,15 @@ namespace PromptPlusControls
         internal static CultureInfo AppCulture { get; private set; }
 
         internal static CultureInfo AppCultureUI { get; private set; }
+
+        public static void DriveConsole(IConsoleDriver value)
+        {
+            if (value == null)
+            {
+                return;
+            }
+            ConsoleDriver = value;
+        }
 
         public static HotKey AbortAllPipesKeyPress { get; set; } = new(ConsoleKey.X, true, false, false);
 
