@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="./docs/images/icon.png"> Welcome to PromptPlus
+# <img align="left" width="100" height="100" src="./docs/images/icon.png">Welcome to PromptPlus
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
@@ -9,7 +9,22 @@
 
 [**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis) | [**Extensions**](#extensions) | [**Supported Platforms**](#supported-platforms)
 
-#### [visit the official page for complete documentation](https://fracerqueira.github.io/PromptPlus/)
+**PromptPlus** and **PromptPlus.CommandDotNet** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks, with compatibility for:
+
+- .NET Core 3.1, 5.X, 6.X
+
+**PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**: 
+<p align="left">
+    <img valign="middle" width="50" height="50" src="./docs/images/iconCmdNet.png">
+    <b>PromptPlus.CommandDotNet!!</b>
+</p>
+
+
+### **Official pages** :
+
+#### **[Visit the PromptPlus official page for complete documentation](https://fracerqueira.github.io/PromptPlus)**
+
+#### **[Visit the CommandDotNet official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
 
 ## Examples
 
@@ -19,7 +34,7 @@ The project in the folder **PromptPlusExample** contains all the samples to cont
 dotnet run --project PromptPlusExample
 ```
 
-The project in the folder **PromptPlusCommandLineExample** contains all the samples to integrate with [System.CommandLine](https://github.com/dotnet/command-line-api)
+The project in the folder **PromptPlusCommandLineExample** contains all the samples to integrate with [CommandDotNet](https://commanddotnet.bilal-fazlani.com)
 
 ```
 dotnet run --project PromptPlusCommandLineExample
