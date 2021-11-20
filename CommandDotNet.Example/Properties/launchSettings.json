@@ -1,14 +1,6 @@
 {
   "profiles": {
-    "Prompt": {
-      "commandName": "Project",
-      "commandLineArgs": "prompts confirm"
-    },
-    "Default": {
-      "commandName": "Project",
-      "commandLineArgs": "-h"
-    },
-    "Profile 1": {
+    "Sample": {
       "commandName": "Project",
       "commandLineArgs": "prompts secure --username admin download"
     }

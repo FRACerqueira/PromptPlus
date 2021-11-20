@@ -10,12 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="FIGletPPlus.FIGlet\**" />
-    <EmbeddedResource Remove="FIGletPPlus.FIGlet\**" />
-    <None Remove="FIGletPPlus.FIGlet\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
     <_Parameter1>$(AssemblyName).CommandDotNet</_Parameter1> 
     </AssemblyAttribute>
@@ -88,18 +82,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="ControlsPPlus.Controls\ScreenControl.cs" />
-    <Compile Remove="InternalPPlus.Internal\StatusBar.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="FIGlet\Fonts\standard.flf" />
+    <EmbeddedResource Remove="Resources\PromptPlusResources.pt-BR.resx" />
   </ItemGroup>
   
   <ItemGroup>
     <Content Include="README.txt">
       <Pack>true</Pack>
       <PackagePath>README.txt</PackagePath>
+    </Content>
+    <Content Include="Resources\PromptPlusResources.Designer.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   
@@ -111,14 +103,10 @@
     <None Include="..\README.md" Pack="false" />
     <None Include="..\NugetREADME.md" Pack="true" PackagePath="\" />
     <None Include="..\icon.png" Pack="true" PackagePath="\" />
-    <None Include="Resources\PromptPlus.config.json" Pack="true" PackagePath="\Resources">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>      
-    </None> 
-    <None Include="Resources\PromptPlusResources.resx" Pack="true" PackagePath="\Resources">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
-    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\PromptPlusResources.pt-BR.resx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Resources\Exceptions.Designer.cs">
@@ -126,10 +114,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\PromptPlusResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PromptPlusResources.resx</DependentUpon>
-    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\PromptPlusResources.resx" Pack="true" PackagePath="\Resources">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Resources\PromptPlus.config.json" Pack="true" PackagePath="\Resources">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
