@@ -8,9 +8,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 
 using PPlus.Controls;
-using PPlus.Controls.Resources;
-using PPlus.Drivers;
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus
 {

@@ -8,10 +8,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
-using PPlus.Controls;
-using PPlus.Controls.Resources;
 
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus.Drivers
 {
@@ -19,8 +18,7 @@ namespace PPlus.Drivers
     {
         private const int IdleReadKey = 10;
 
-        public static int MinBufferHeight = 7;
-
+        public static int MinBufferHeight = 10;
 
         static ConsoleDriver()
         {

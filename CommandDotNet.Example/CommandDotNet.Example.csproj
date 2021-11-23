@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFrameworks>net5.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\PromptPlus.CommandDotNet\PromptPlus.CommandDotNet.csproj" />
@@ -10,10 +10,10 @@
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp3.1'">
     <PackageReference Include="CommandDotNet.NameCasing" Version="2.0.0" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='.net6'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
     <PackageReference Include="CommandDotNet.NameCasing" Version="3.0.1" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='.net6'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net6.0'">
     <PackageReference Include="CommandDotNet.NameCasing" Version="3.0.1" />
   </ItemGroup>
 </Project>

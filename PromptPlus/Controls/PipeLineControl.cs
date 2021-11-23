@@ -8,11 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-using PPlus.Controls.Resources;
-
 using PPlus.Internal;
 
 using PPlus.Objects;
+using PPlus.Resources;
 
 using static PPlus.PromptPlus;
 

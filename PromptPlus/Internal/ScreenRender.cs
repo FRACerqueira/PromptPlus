@@ -22,7 +22,7 @@ namespace PPlus.Internal
             FormBuffer = new();
         }
 
-        public static void Beep() => PPlus.PromptPlus.ConsoleDriver.Beep();
+        public static void Beep() => ConsoleDriver.Beep();
 
         public string ErrorMessage { get; set; }
 
@@ -30,23 +30,25 @@ namespace PPlus.Internal
 
         public CancellationToken StopToken { get; set; }
 
-        public static bool KeyAvailable => PPlus.PromptPlus.ConsoleDriver.KeyAvailable;
+        public static bool KeyAvailable => ConsoleDriver.KeyAvailable;
 
-        public static ConsoleKeyInfo KeyPressed => PPlus.PromptPlus.ConsoleDriver.ReadKey(true);
+        public static ConsoleKeyInfo KeyPressed => ConsoleDriver.ReadKey(true);
 
 
-        public void InputRender(Action<ScreenBuffer> template)
+        public void InputRender(Action<ScreenBuffer> template,bool onlyTemplate = false)
         {
             lock (_lockobj)
             {
-                ClearBuffer();
                 template(FormBuffer);
-                if (ErrorMessage != null)
+                if (!onlyTemplate)
                 {
-                    FormBuffer.WriteLineError(ErrorMessage);
-                    ErrorMessage = null;
+                    if (ErrorMessage != null)
+                    {
+                        FormBuffer.WriteLineError(ErrorMessage);
+                        ErrorMessage = null;
+                    }
+                    RenderToConsole();
                 }
-                RenderToConsole();
             }
         }
 
@@ -65,7 +67,7 @@ namespace PPlus.Internal
         {
             lock (_lockobj)
             {
-                PPlus.PromptPlus.ConsoleDriver.WriteLine();
+                ConsoleDriver.WriteLine();
             }
         }
 
@@ -80,7 +82,7 @@ namespace PPlus.Internal
 
                 if (skip)
                 {
-                    PPlus.PromptPlus.ConsoleDriver.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
+                    ConsoleDriver.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
                     return true;
                 }
 
@@ -92,15 +94,15 @@ namespace PPlus.Internal
 
                 var lines = WrittenLineCount + 1;
 
-                if (PPlus.PromptPlus.ConsoleDriver.BufferHeight - 1 < _cursorBottom && PPlus.PromptPlus.ConsoleDriver.IsRunningTerminal)
+                if (ConsoleDriver.BufferHeight - 1 < _cursorBottom && ConsoleDriver.IsRunningTerminal)
                 {
-                    _cursorBottom = PPlus.PromptPlus.ConsoleDriver.BufferHeight - 1;
+                    _cursorBottom = ConsoleDriver.BufferHeight - 1;
                     lines = _cursorBottom;
                 }
 
                 for (var i = 0; i < lines; i++)
                 {
-                    PPlus.PromptPlus.ConsoleDriver.ClearLine(_cursorBottom - i);
+                    ConsoleDriver.ClearLine(_cursorBottom - i);
                 }
                 return true;
             }
@@ -108,40 +110,40 @@ namespace PPlus.Internal
 
         public static void ShowCursor()
         {
-            PPlus.PromptPlus.ConsoleDriver.CursorVisible = true;
+            ConsoleDriver.CursorVisible = true;
         }
 
         public static void HideCursor()
         {
-            PPlus.PromptPlus.ConsoleDriver.CursorVisible = false;
+            ConsoleDriver.CursorVisible = false;
         }
 
-        private int WrittenLineCount => FormBuffer.Sum(x => (x.Sum<TextInfo>(xs => xs.Width) - 1) / PPlus.PromptPlus.ConsoleDriver.BufferWidth + 1) - 1;
+        private int WrittenLineCount => FormBuffer.Sum(x => (x.Sum(xs => xs.Width) - 1) / ConsoleDriver.BufferWidth + 1) - 1;
 
         private void EnsureScreensizeAndPosition()
         {
-            if (!PPlus.PromptPlus.ConsoleDriver.IsRunningTerminal)
+            if (!ConsoleDriver.IsRunningTerminal)
             {
                 return;
             }
-            while (PPlus.PromptPlus.ConsoleDriver.BufferHeight - 1 < PPlus.Drivers.ConsoleDriver.MinBufferHeight)
+            while (ConsoleDriver.BufferHeight - 1 < Drivers.ConsoleDriver.MinBufferHeight)
             {
-                PPlus.PromptPlus.ConsoleDriver.SetCursorPosition(0, 0);
-                PPlus.PromptPlus.ConsoleDriver.ClearLine(PPlus.PromptPlus.ConsoleDriver.CursorTop);
-                PPlus.PromptPlus.ConsoleDriver.SetCursorPosition(0, PPlus.PromptPlus.ConsoleDriver.CursorTop);
-                PPlus.PromptPlus.ConsoleDriver.Write(string.Format(Messages.ResizeTerminal, PPlus.PromptPlus.ConsoleDriver.BufferHeight, PPlus.Drivers.ConsoleDriver.MinBufferHeight + 1), ConsoleColor.White, ConsoleColor.Red);
-                _ = PPlus.PromptPlus.ConsoleDriver.WaitKeypress(true, StopToken);
+                ConsoleDriver.SetCursorPosition(0, 0);
+                ConsoleDriver.ClearLine(ConsoleDriver.CursorTop);
+                ConsoleDriver.SetCursorPosition(0, ConsoleDriver.CursorTop);
+                ConsoleDriver.Write(string.Format(Messages.ResizeTerminal, ConsoleDriver.BufferHeight, Drivers.ConsoleDriver.MinBufferHeight + 1), ConsoleColor.White, ConsoleColor.Red);
+                _ = ConsoleDriver.WaitKeypress(true, StopToken);
                 if (StopToken.IsCancellationRequested)
                 {
                     return;
                 }
             }
-            if (PPlus.PromptPlus.ConsoleDriver.BufferHeight - 1 < _cursorBottom)
+            if (ConsoleDriver.BufferHeight - 1 < _cursorBottom)
             {
-                PPlus.PromptPlus.ConsoleDriver.SetCursorPosition(0, 0);
-                PPlus.PromptPlus.ConsoleDriver.ClearLine(PPlus.PromptPlus.ConsoleDriver.CursorTop);
-                PPlus.PromptPlus.ConsoleDriver.Write(Messages.ResizedTerminal, ConsoleColor.White, ConsoleColor.Red);
-                PPlus.PromptPlus.ConsoleDriver.WriteLine();
+                ConsoleDriver.SetCursorPosition(0, 0);
+                ConsoleDriver.ClearLine(ConsoleDriver.CursorTop);
+                ConsoleDriver.Write(Messages.ResizedTerminal, ConsoleColor.White, ConsoleColor.Red);
+                ConsoleDriver.WriteLine();
             }
         }
 
@@ -154,33 +156,33 @@ namespace PPlus.Internal
                 var lineBuffer = FormBuffer[i];
                 foreach (var textInfo in lineBuffer)
                 {
-                    PPlus.PromptPlus.ConsoleDriver.Write(textInfo.Text, textInfo.Color, textInfo.ColorBg);
+                    ConsoleDriver.Write(textInfo.Text, textInfo.Color, textInfo.ColorBg);
                     if (textInfo.SaveCursor && _pushedCursor == null)
                     {
                         _pushedCursor = new Cursor
                         {
-                            Left = PPlus.PromptPlus.ConsoleDriver.CursorLeft,
-                            Top = PPlus.PromptPlus.ConsoleDriver.CursorTop
+                            Left = ConsoleDriver.CursorLeft,
+                            Top = ConsoleDriver.CursorTop
                         };
                     }
                 }
                 if (i < FormBuffer.Count - 1)
                 {
-                    if (ScreenRender.IsMaxWindowsHeight() && _pushedCursor != null)
+                    if (IsMaxWindowsHeight() && _pushedCursor != null)
                     {
                         scrolls++;
                     }
-                    PPlus.PromptPlus.ConsoleDriver.WriteLine();
+                    ConsoleDriver.WriteLine();
                 }
             }
-            _cursorBottom = PPlus.PromptPlus.ConsoleDriver.CursorTop;
+            _cursorBottom = ConsoleDriver.CursorTop;
             if (_pushedCursor != null)
             {
-                if (scrolls > 0 && PPlus.PromptPlus.ConsoleDriver.IsRunningTerminal)
+                if (scrolls > 0 && ConsoleDriver.IsRunningTerminal)
                 {
                     _pushedCursor.Top -= scrolls;
                 }
-                PPlus.PromptPlus.ConsoleDriver.SetCursorPosition(_pushedCursor.Left, _pushedCursor.Top);
+                ConsoleDriver.SetCursorPosition(_pushedCursor.Left, _pushedCursor.Top);
             }
         }
 
@@ -188,7 +190,7 @@ namespace PPlus.Internal
         {
             lock (_lockobj)
             {
-                if (PPlus.PromptPlus.ConsoleDriver.CursorTop == PPlus.PromptPlus.ConsoleDriver.BufferHeight - 1)
+                if (ConsoleDriver.CursorTop == ConsoleDriver.BufferHeight - 1)
                 {
                     return true;
                 }
@@ -196,7 +198,7 @@ namespace PPlus.Internal
             }
         }
 
-        private void ClearBuffer()
+        public void ClearBuffer()
         {
             FormBuffer.Clear();
             FormBuffer.Add(new List<TextInfo>());

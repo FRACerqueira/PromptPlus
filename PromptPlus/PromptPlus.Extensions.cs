@@ -10,9 +10,8 @@ using System.Linq;
 using System.Linq.Expressions;
 
 
-using PPlus.Controls.Resources;
-
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus
 {

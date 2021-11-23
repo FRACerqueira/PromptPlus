@@ -10,11 +10,10 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 
-using PPlus.Controls.Resources;
-
 using PPlus.Internal;
 
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus.Controls
 {
@@ -37,6 +36,10 @@ namespace PPlus.Controls
 
         public override void InitControl()
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
+
             if (_options.MaskedOption.CurrentCulture == null)
             {
                 _options.MaskedOption.CurrentCulture = PromptPlus.DefaultCulture;
@@ -95,6 +98,10 @@ namespace PPlus.Controls
             _inputBuffer = new MaskedBuffer(_options.MaskedOption);
             _localpaginator = new Paginator<string>(_inputItems.Select(x => x.Masked), _options.PageSize, Optional<string>.s_empty, _options.TextSelector);
             _localpaginator.FirstItem();
+
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<ResultMasked> result)
@@ -514,25 +521,31 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptControls<IEnumerable<ResultMasked>> EnabledAbortKey(bool value)
+        public IControlListMasked Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<ResultMasked>> EnabledAbortAllPipes(bool value)
+        public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<ResultMasked>> EnabledPromptTooltip(bool value)
+        public IPromptConfig EnabledPromptTooltip(bool value)
         {
             _options.EnabledPromptTooltip = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<ResultMasked>> HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value)
         {
             _options.HideAfterFinish = value;
             return this;
@@ -555,7 +568,7 @@ namespace PPlus.Controls
         {
             var stddtfmt = _options.MaskedOption.CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpper().Split(_options.MaskedOption.CurrentCulture.DateTimeFormat.DateSeparator[0]);
             var yearlen = "4";
-            if (_options.MaskedOption.FmtYear == PPlus.Objects.FormatYear.Y2)
+            if (_options.MaskedOption.FmtYear == Objects.FormatYear.Y2)
             {
                 yearlen = "2";
             }
@@ -568,8 +581,8 @@ namespace PPlus.Controls
         {
             return _options.MaskedOption.FmtYear switch
             {
-                PPlus.Objects.FormatYear.Y4 => $"99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.DateSeparator}99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.DateSeparator}9999",
-                PPlus.Objects.FormatYear.Y2 => $"99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.DateSeparator}99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.DateSeparator}99",
+                Objects.FormatYear.Y4 => $"99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.DateSeparator}99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.DateSeparator}9999",
+                Objects.FormatYear.Y2 => $"99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.DateSeparator}99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.DateSeparator}99",
                 _ => throw new ArgumentException(_options.MaskedOption.FmtYear.ToString()),
             };
         }
@@ -578,9 +591,9 @@ namespace PPlus.Controls
         {
             return _options.MaskedOption.FmtTime switch
             {
-                PPlus.Objects.FormatTime.HMS => $"99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}99",
-                PPlus.Objects.FormatTime.OnlyHM => $"99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}00",
-                PPlus.Objects.FormatTime.OnlyH => $"99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}00\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}00",
+                Objects.FormatTime.HMS => $"99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}99",
+                Objects.FormatTime.OnlyHM => $"99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}00",
+                Objects.FormatTime.OnlyH => $"99\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}00\\{_options.MaskedOption.CurrentCulture.DateTimeFormat.TimeSeparator}00",
                 _ => throw new ArgumentException(_options.MaskedOption.FmtTime.ToString()),
             };
         }

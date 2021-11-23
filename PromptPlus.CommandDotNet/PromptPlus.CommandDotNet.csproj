@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.1;.net5;.net6</TargetFrameworks>
     <LangVersion>9.0</LangVersion>
     <Nullable>annotations</Nullable>
-    <RootNamespace>PromptPlusCommandDotNet</RootNamespace>
+    <RootNamespace>PPlus.CommandDotNet</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -43,6 +43,30 @@
   <ItemGroup>
     <None Include="..\iconCmdNet.png" Pack="true" PackagePath="\" />
     <None Include="..\NugetREADME.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Exceptions.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Messages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Exceptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

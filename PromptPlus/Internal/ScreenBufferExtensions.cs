@@ -92,7 +92,7 @@ namespace PPlus.Internal
         {
             var len = Symbols.Selector.ToString().Length;
             screenBuffer.WriteLine(new string(' ', len));
-            screenBuffer.Write($" {message}");
+            screenBuffer.Write($" {message}",ColorSchema.Disabled);
         }
 
         public static void WriteLineTaskRun(this ScreenBuffer screenBuffer, string message)
@@ -363,7 +363,7 @@ namespace PPlus.Internal
         {
             if (string.IsNullOrEmpty(text))
             {
-                return;
+                text = string.Empty;
             }
             screenBuffer.Last().Add(new TextInfo(text, color, colorbg ?? ConsoleDriver.BackgroundColor));
         }
@@ -383,7 +383,10 @@ namespace PPlus.Internal
         {
             if (!screenBuffer.Any(x => x.Any(x => x.SaveCursor)))
             {
-                screenBuffer.Last().Last().SaveCursor = true;
+                if (screenBuffer.Last().Any())
+                {
+                    screenBuffer.Last().Last().SaveCursor = true;
+                }
             }
         }
 

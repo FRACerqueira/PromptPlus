@@ -10,11 +10,10 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 
-using PPlus.Controls.Resources;
-
 using PPlus.Internal;
 
 using PPlus.Objects;
+using PPlus.Resources;
 
 using static PPlus.PromptPlus;
 
@@ -35,6 +34,9 @@ namespace PPlus.Controls
 
         public override void InitControl()
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
             if (_options.Items is null)
             {
                 throw new ArgumentNullException(nameof(_options.Items));
@@ -102,6 +104,9 @@ namespace PPlus.Controls
                     }
                 }
             }
+
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)
@@ -125,12 +130,12 @@ namespace PPlus.Controls
                     continue;
                 }
 
-                else if (PromptPlus.UnSelectFilter.Equals(keyInfo))
+                else if (UnSelectFilter.Equals(keyInfo))
                 {
                     _localpaginator.UnSelected();
                     continue;
                 }
-                else if (PromptPlus.SelectAll.Equals(keyInfo))
+                else if (SelectAll.Equals(keyInfo))
                 {
 
                     var maxqtd = _options.Items.Count(x => !x.IsGroup && !x.Disabled);
@@ -147,7 +152,7 @@ namespace PPlus.Controls
                     _selectedItems.AddRange(_options.Items.Where(x => !x.IsGroup && !x.Disabled));
                     continue;
                 }
-                else if (PromptPlus.InvertSelect.Equals(keyInfo))
+                else if (InvertSelect.Equals(keyInfo))
                 {
                     var maxqtd = _options.Items.Count(x => !x.IsGroup && !x.Disabled && !_selectedItems.Contains(x));
                     if (maxqtd > _options.Maximum)
@@ -614,25 +619,31 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptControls<IEnumerable<T>> EnabledAbortKey(bool value)
+        public IControlMultiSelect<T> Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<T>> EnabledAbortAllPipes(bool value)
+        public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<T>> EnabledPromptTooltip(bool value)
+        public IPromptConfig EnabledPromptTooltip(bool value)
         {
             _options.EnabledPromptTooltip = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<T>> HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value)
         {
             _options.HideAfterFinish = value;
             return this;

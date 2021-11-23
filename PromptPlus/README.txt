@@ -21,8 +21,11 @@ For PromptPlus controls
 https://commanddotnet.bilal-fazlani.com/
 For command line parser framework
 
-**Relase Notes PromptPlus.CommandDotNet (V1.0.0.220-beta)**
+**Relase Notes PromptPlus.CommandDotNet (V1.0.0.220)**
+-----------------------------------------------------------
 
+- Added Middleware ** UsePromptPlusWizard **
+    - Directive to wizard find commands/options and arguments with prompt and execute!!!
 - Added Middleware UsePromptPlusAnsiConsole
     - Makes the IConsoleDriver available as a command parameter and will forward IConsole.Out to the PromptPLus IConsoleDriver.
 - Added Middleware UsePromptPlusArgumentPrompter
@@ -30,8 +33,8 @@ For command line parser framework
 - Added Middleware UsePromptPlusConfig
     - Load custom config(Colors/hotkeys/and so on) for PromptPlus.Remark: This method is only necessary when the file is in a custom folder. Prompt Plus automatically loads the file if the file is placed in the same folder as the binaries.
 
-**Sample Usage PromptPlus.CommandDotNet **
-------------------------------------------
+**PromptPlus.CommandDotNet - Sample Usage**
+-------------------------------------------
 
 var AppCmd = new AppRunner<Examples>()
     .UseDefaultMiddleware()
@@ -43,15 +46,22 @@ var AppCmd = new AppRunner<Examples>()
 //for usage AppRunner see https://commanddotnet.bilal-fazlani.com/
 
 **Relase Notes PromptPlus (V.2.2.0)**
+-------------------------------------
 
 - Renamed root namespace to PPlus (requires refactoring)
+- Moved EnabledAbortKey/EnabledAbortAllPipes/EnabledPromptTooltip/HideAfterFinish to IPromptConfig (maybe requires refactoring)
 - Method Syntax Adjustment to Input-Control (need to be refactored to new syntax):
     AddValidators(Func<object, ValidationResult> validator) -> AddValidator(Func<object, ValidationResult> validator) 
+
+- Added Config(Action<IPromptConfig> context) method to config and return to interface control for better usability.
 - Added check Nullabled to AddDefault(s)/AddItem(s)/AddGroup/HideItem(s)/DisableItem(s)/Default methods
 - Added New Embeded Validator : IsUriScheme(UriKind uriKind = UriKind.Absolute,string allowedUriSchemes = null, string errorMessage = null)
 - Added Description parameter to all controls
 - Added global hotkey (default value = F3) show/hide Description
 - Added color Schema Description (default value = ConsoleColor.Cyan)
+- Added color Schema CurrentTokenForeColor (for PromptPlus.CommandDotNet, default value = ConsoleColor.Yellow)
+- Fixed bug color when item disabled
+    - Select-Control
 - Added Dynamic Description -  DescriptionSelector Method for Description change on each interaction
     - Input-Control
     - AutoComplete-Control
@@ -62,6 +72,7 @@ var AppCmd = new AppRunner<Examples>()
     - MultSelect-Control
 
 **Relase Notes PromptPlus (V.2.1.0)**
+-------------------------------------
 
 - Added Product logo/icon
 - AutoComplete-Control : **New Control** Input with sugestions 
@@ -73,8 +84,8 @@ var AppCmd = new AppRunner<Examples>()
     Addvalidator -> AddValidator (Input-Control/List-Control/MaskEditList-Control)
     Offvalue -> OffValue, Onvalue -> OnValue (SliderSwitch-Control)
 
-**Sample Usage PromptPlus **
-----------------------------
+**PromptPlus Controls - Sample Usage**
+--------------------------------------
 
 //ASCII text banners
 PromptPlus.Banner("PromptPlus")

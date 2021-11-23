@@ -23,6 +23,11 @@ namespace PPlus.Controls
 
         public override void InitControl()
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+            ///do init
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out bool result)
@@ -141,7 +146,13 @@ namespace PPlus.Controls
         }
 
 
-        #region IControlKeyPress     
+        #region IControlKeyPress
+
+        public IControlKeyPress Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
 
         public IControlKeyPress Prompt(string value)
         {
@@ -149,25 +160,25 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptControls<bool> EnabledAbortKey(bool value)
+        public IPromptConfig EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
             return this;
         }
 
-        public IPromptControls<bool> EnabledAbortAllPipes(bool value)
+        public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;
             return this;
         }
 
-        public IPromptControls<bool> EnabledPromptTooltip(bool value)
+        public IPromptConfig EnabledPromptTooltip(bool value)
         {
             _options.EnabledPromptTooltip = value;
             return this;
         }
 
-        public IPromptControls<bool> HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value)
         {
             _options.HideAfterFinish = value;
             return this;

@@ -53,6 +53,9 @@ namespace PPlus.Controls
 
         public override void InitControl()
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
             if (_options.MinimumPrefixLength < AutoCompleteOptions.MinPrefixLength)
             {
                 _options.MinimumPrefixLength = AutoCompleteOptions.MinPrefixLength;
@@ -77,6 +80,11 @@ namespace PPlus.Controls
             _localpaginator = new Paginator<ValueDescription<string>>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<ValueDescription<string>>.s_empty, x => x.Value);
             _localpaginator.FirstItem();
             _observerAutocomplete = Task.Run(() => ObserverAutoComplete(CancellationToken.None));
+
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
+
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out string result)
@@ -489,25 +497,31 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptControls<string> EnabledAbortKey(bool value)
+        public IControlAutoComplete Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
             return this;
         }
 
-        public IPromptControls<string> EnabledAbortAllPipes(bool value)
+        public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;
             return this;
         }
 
-        public IPromptControls<string> EnabledPromptTooltip(bool value)
+        public IPromptConfig EnabledPromptTooltip(bool value)
         {
             _options.EnabledPromptTooltip = value;
             return this;
         }
 
-        public IPromptControls<string> HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value)
         {
             _options.HideAfterFinish = value;
             return this;

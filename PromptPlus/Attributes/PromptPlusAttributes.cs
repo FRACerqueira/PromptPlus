@@ -2,11 +2,9 @@
 using System.Globalization;
 using System.Threading;
 
-using CommandDotNet;
-
 using PPlus.Objects;
 
-namespace PromptPlusCommandDotNet
+namespace PPlus.Attributes
 {
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
@@ -29,7 +27,7 @@ namespace PromptPlusCommandDotNet
         {
             if (integerpart + decimalpart == 0)
             {
-                throw new InvalidConfigurationException(
+                throw new ArgumentException(
                  $"{nameof(integerpart)} or {nameof(decimalpart)} must be greater than zero.");
             }
             IntegerPart = integerpart;
@@ -42,7 +40,7 @@ namespace PromptPlusCommandDotNet
         {
             if (integerpart + decimalpart == 0)
             {
-                throw new InvalidConfigurationException(
+                throw new ArgumentException(
                  $"{nameof(integerpart)} or {nameof(decimalpart)} must be greater than zero.");
             }
             IntegerPart = integerpart;
@@ -66,7 +64,7 @@ namespace PromptPlusCommandDotNet
         {
             if (integerpart + decimalpart == 0)
             {
-                throw new InvalidConfigurationException(
+                throw new ArgumentException(
                  $"{nameof(integerpart)} or {nameof(decimalpart)} must be greater than zero.");
             }
             IntegerPart = integerpart;

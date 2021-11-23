@@ -1,13 +1,16 @@
 ﻿using System;
+#if NET5_0_OR_GREATER
 using System.IO;
+#endif
 using System.Threading;
-
+#if NETSTANDARD2_1
 using CommandDotNet;
+#endif
 using CommandDotNet.Rendering;
 
 using PPlus.Drivers;
 
-namespace PromptPlusCommandDotNet
+namespace PPlus.CommandDotNet
 {
 #if NETSTANDARD2_1
     public class AnsiConsoleForwardingConsole : IConsole
@@ -25,29 +28,29 @@ namespace PromptPlusCommandDotNet
             In = StandardStreamReader.Create(Console.In);
         }
 
-        #region Implementation of IStandardOut
+#region Implementation of IStandardOut
 
         public IStandardStreamWriter Out { get; }
         public bool IsOutputRedirected => Console.IsOutputRedirected;
 
-        #endregion
+#endregion
 
-        #region Implementation of IStandardError
+#region Implementation of IStandardError
 
         public IStandardStreamWriter Error { get; }
         public bool IsErrorRedirected => Console.IsErrorRedirected;
 
-        #endregion
+#endregion
 
-        #region Implementation of IStandardIn
+#region Implementation of IStandardIn
 
         public IStandardStreamReader In { get; }
 
         public bool IsInputRedirected => Console.IsInputRedirected;
 
-        #endregion
+#endregion
 
-        #region Implementation of IConsole
+#region Implementation of IConsole
 
         public ConsoleKeyInfo ReadKey(bool intercept = false)
         {
@@ -60,7 +63,7 @@ namespace PromptPlusCommandDotNet
             set => Console.TreatControlCAsInput = value;
         }
 
-        #endregion
+#endregion
     }
 #endif
 #if NET5_0_OR_GREATER

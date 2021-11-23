@@ -10,11 +10,10 @@ using System.Linq;
 using System.Threading;
 
 
-using PPlus.Controls.Resources;
-
 using PPlus.Internal;
 
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus.Controls
 {
@@ -37,8 +36,15 @@ namespace PPlus.Controls
 
         public override void InitControl()
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
             _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
             _localpaginator.FirstItem();
+
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)
@@ -372,25 +378,31 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptControls<IEnumerable<T>> EnabledAbortKey(bool value)
+        public IControlList<T> Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<T>> EnabledAbortAllPipes(bool value)
+        public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<T>> EnabledPromptTooltip(bool value)
+        public IPromptConfig EnabledPromptTooltip(bool value)
         {
             _options.EnabledPromptTooltip = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<T>> HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value)
         {
             _options.HideAfterFinish = value;
             return this;

@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Threading;
 
 using PPlus.Internal;
@@ -18,23 +19,24 @@ namespace PPlus.Controls
     {
         private const int IdleReadKey = 8;
         private string _finishResult;
-        private readonly CancellationTokenSource _esckeyCancelation;
+        private CancellationTokenSource _esckeyCancelation;
         private readonly ScreenRender _screenrender;
         private readonly bool _showcursor;
         private readonly bool _skiplastrender;
         private readonly BaseOptions _options;
         private bool _toggleSummary = false;
 
+        public readonly CultureInfo AppcurrentCulture;
+        public readonly CultureInfo AppcurrentUICulture;
+
         protected ControlBase(BaseOptions options, bool showcursor, bool skiplastrender = false)
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
+            AppcurrentCulture = Thread.CurrentThread.CurrentCulture;
+            AppcurrentUICulture = Thread.CurrentThread.CurrentUICulture;
             _options = options;
             _skiplastrender = skiplastrender;
             _screenrender = new ScreenRender();
             _showcursor = showcursor;
-            _esckeyCancelation = new CancellationTokenSource();
         }
 
         public string PipeId { get; internal set; }
@@ -42,6 +44,8 @@ namespace PPlus.Controls
         public string PipeTitle { get; internal set; }
 
         public object ContextState { get; internal set; }
+
+        public Action<ScreenBuffer> Wizardtemplate { get; set; }
 
         public Func<ResultPipe[], object, bool> Condition { get; internal set; }
 
@@ -74,12 +78,13 @@ namespace PPlus.Controls
                 _esckeyCancelation.Dispose();
             }
 
-            Thread.CurrentThread.CurrentCulture = PromptPlus.AppCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.AppCultureUI;
         }
 
         public ResultPromptPlus<T> StartPipeline(Action<ScreenBuffer> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
             _screenrender.StopToken = stoptoken;
             if (!_showcursor)
             {
@@ -114,11 +119,13 @@ namespace PPlus.Controls
                         }
                         if (SummaryPipeLine)
                         {
+                            _screenrender.ClearBuffer();
                             _screenrender.InputRender(summarypipeline);
                         }
                         else
                         {
                             pipePaginator.EnsureVisibleIndex(currentStep);
+                            _screenrender.ClearBuffer();
                             _screenrender.InputRender(InputTemplate);
                         }
                     }
@@ -177,22 +184,30 @@ namespace PPlus.Controls
                             ScreenRender.NewLine();
                         }
                         ScreenRender.ShowCursor();
+                        Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+                        Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
                         return new ResultPromptPlus<T>(result, false);
                     }
                 }
             }
             ScreenRender.ShowCursor();
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
             return new ResultPromptPlus<T>(default, true);
         }
 
         public ResultPromptPlus<T> Start(CancellationToken stoptoken)
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
             _screenrender.StopToken = stoptoken;
             if (!_showcursor)
             {
                 ScreenRender.HideCursor();
             }
             T result = default;
+            _esckeyCancelation = new CancellationTokenSource();
             using (var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_esckeyCancelation.Token, stoptoken))
             {
                 bool? hit = true;
@@ -205,6 +220,11 @@ namespace PPlus.Controls
                         {
                             _linkedCts.Cancel();
                             continue;
+                        }
+                        _screenrender.ClearBuffer();
+                        if (Wizardtemplate is not null)
+                        {
+                            _screenrender.InputRender(Wizardtemplate,true);
                         }
                         _screenrender.InputRender(InputTemplate);
                     }
@@ -260,6 +280,10 @@ namespace PPlus.Controls
                 }
             }
             ScreenRender.ShowCursor();
+
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
             return new ResultPromptPlus<T>(result, true);
         }
 
@@ -326,6 +350,32 @@ namespace PPlus.Controls
                 {
                     paginator.NextItem();
                 }
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckDefaultWizardKey(ConsoleKeyInfo keyInfo)
+        {
+            if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
+            {
+                HideDescription = !HideDescription;
+                return true;
+            }
+            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo))
+            {
+                EnabledStandardTooltip = !EnabledStandardTooltip;
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckAbortKey(ConsoleKeyInfo keyInfo)
+        {
+            if (PromptPlus.AbortKeyPress.Equals(keyInfo) && _options.EnabledAbortKey)
+            {
+                _esckeyCancelation.Cancel();
+                AbortedAll = !OverPipeLine;
                 return true;
             }
             return false;

@@ -4,9 +4,29 @@ Interactive command-line  toolkit for **C#** with powerful controls and commands
 PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
 - .NET Core 3.1, 5.X, 6.X
 
-[**visit the official page for complete documentation**](https://fracerqueira.github.io/PromptPlus/)
+**PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**:
+- PromptPlus.CommandDotNet
 
-## **Sample Usage**
+## **Official pages** :
+
+#### **[Visit the PromptPlus official page for complete documentation](https://fracerqueira.github.io/PromptPlus)**
+
+#### **[Visit the CommandDotNet official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
+
+## **PromptPlus.CommandDotNet - Sample Usage**
+
+```csharp
+var AppCmd = new AppRunner<Examples>()
+    .UseDefaultMiddleware()
+    .UsePrompter()
+    .UsePromptPlusAnsiConsole(cultureInfo: new CultureInfo("en"))
+    .UsePromptPlusArgumentPrompter()
+    .UsePromptPlusConfig("ConfigFolder")
+
+//for usage AppRunner see https://commanddotnet.bilal-fazlani.com/
+```
+
+## **PromptPlus Controls - Sample Usage**
 
 ```csharp
 //ASCII text banners

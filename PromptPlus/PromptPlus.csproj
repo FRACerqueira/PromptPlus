@@ -116,6 +116,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Exceptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\PromptPlusResources.resx" Pack="true" PackagePath="\Resources">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Generator>ResXFileCodeGenerator</Generator>

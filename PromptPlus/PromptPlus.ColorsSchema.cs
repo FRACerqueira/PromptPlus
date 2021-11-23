@@ -23,7 +23,6 @@ namespace PPlus
             public static ConsoleColor PromptSymbol { get; set; } = ConsoleColor.Green;
             public static ConsoleColor SliderBackcolor { get; set; } = ConsoleColor.DarkGray;
             public static ConsoleColor SliderForecolor { get; set; } = ConsoleColor.Cyan;
-
         }
     }
 }

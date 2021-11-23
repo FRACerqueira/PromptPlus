@@ -8,11 +8,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-using PPlus.Controls.Resources;
-
 using PPlus.Internal;
 
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus.Controls
 {
@@ -31,6 +30,9 @@ namespace PPlus.Controls
 
         public override void InitControl()
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
             if (_options.UpdateHandler == null)
             {
                 throw new ArgumentException(nameof(_options.UpdateHandler), Exceptions.Ex_UpdateHandlerProgressBar);
@@ -38,6 +40,10 @@ namespace PPlus.Controls
             _options.InterationId ??= 0;
             _step = double.Parse(_options.Witdth.ToString()) / 100;
             _laststatus = new ProgressBarInfo(0, false, "", _options.InterationId);
+
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ProgressBarInfo result)
@@ -184,25 +190,31 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptControls<ProgressBarInfo> EnabledAbortKey(bool value)
+        public IControlProgressbar Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
             return this;
         }
 
-        public IPromptControls<ProgressBarInfo> EnabledAbortAllPipes(bool value)
+        public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;
             return this;
         }
 
-        public IPromptControls<ProgressBarInfo> EnabledPromptTooltip(bool value)
+        public IPromptConfig EnabledPromptTooltip(bool value)
         {
             _options.EnabledPromptTooltip = value;
             return this;
         }
 
-        public IPromptControls<ProgressBarInfo> HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value)
         {
             _options.HideAfterFinish = value;
             return this;

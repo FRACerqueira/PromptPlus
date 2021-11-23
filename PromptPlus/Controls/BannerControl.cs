@@ -134,6 +134,7 @@ namespace PPlus.Controls
         {
             _color = color ?? PromptPlus.ForegroundColor;
             InitAsciiArt();
+            _screenrender.ClearBuffer();
             _screenrender.InputRender(InputTemplate);
         }
 

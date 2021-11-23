@@ -20,6 +20,11 @@
 </p>
 
 
+#### Innovative middleware policy for CommandDotNet:
+
+- Wizard to find all the commands/options and arguments with prompt and run.
+    - Now you can discover and learn the existing commands, options and arguments.
+
 ### **Official pages** :
 
 #### **[Visit the PromptPlus official page for complete documentation](https://fracerqueira.github.io/PromptPlus)**
@@ -34,7 +39,7 @@ The project in the folder **PromptPlusExample** contains all the samples to cont
 dotnet run --project PromptPlusExample
 ```
 
-The project in the folder **PromptPlusCommandLineExample** contains all the samples to integrate with [CommandDotNet](https://commanddotnet.bilal-fazlani.com)
+The project in the folder **CommandDotNet.Example** contains all the samples to integrate with [CommandDotNet](https://commanddotnet.bilal-fazlani.com)
 
 ```
 dotnet run --project CommandDotNet.Example prompts secure --username admin download

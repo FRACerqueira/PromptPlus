@@ -22,53 +22,54 @@ namespace PPlus
         {
             var theme = new Theme
             {
-                EnabledBeep = PromptPlus.EnabledBeep,
-                EnabledAbortAllPipes = PromptPlus.EnabledAbortAllPipes,
-                EnabledAbortKey = PromptPlus.EnabledAbortKey,
-                EnabledStandardTooltip = PromptPlus.EnabledStandardTooltip,
-                EnabledPromptTooltip = PromptPlus.EnabledPromptTooltip,
-                PasswordChar = PromptPlus.PasswordChar,
-                Culture = PromptPlus.DefaultCulture.Name,
+                EnabledBeep = EnabledBeep,
+                EnabledAbortAllPipes = EnabledAbortAllPipes,
+                EnabledAbortKey = EnabledAbortKey,
+                EnabledStandardTooltip = EnabledStandardTooltip,
+                EnabledPromptTooltip = EnabledPromptTooltip,
+                PasswordChar = PasswordChar,
+                Culture = DefaultCulture.Name,
                 Version = Theme.CurrentVersion
             };
 
-            theme.Colors.Description = PromptPlus.ColorSchema.Description;
-            theme.Colors.Answer = PromptPlus.ColorSchema.Answer;
-            theme.Colors.BackColorSchema = PromptPlus.ConsoleDriver.BackgroundColor;
-            theme.Colors.Disabled = PromptPlus.ColorSchema.Disabled;
-            theme.Colors.DoneSymbol = PromptPlus.ColorSchema.DoneSymbol;
-            theme.Colors.Error = PromptPlus.ColorSchema.Error;
-            theme.Colors.Filter = PromptPlus.ColorSchema.Filter;
-            theme.Colors.ForeColorSchema = PromptPlus.ConsoleDriver.ForegroundColor;
-            theme.Colors.Hint = PromptPlus.ColorSchema.Hint;
-            theme.Colors.Pagination = PromptPlus.ColorSchema.Pagination;
-            theme.Colors.PromptSymbol = PromptPlus.ColorSchema.PromptSymbol;
-            theme.Colors.Select = PromptPlus.ColorSchema.Select;
-            theme.Colors.SliderBackcolor = PromptPlus.ColorSchema.SliderBackcolor;
-            theme.Colors.SliderForecolor = PromptPlus.ColorSchema.SliderForecolor;
+            theme.Colors.Answer = ColorSchema.Answer;
+            theme.Colors.BackColorSchema = ConsoleDriver.BackgroundColor;
+            theme.Colors.Disabled = ColorSchema.Disabled;
+            theme.Colors.DoneSymbol = ColorSchema.DoneSymbol;
+            theme.Colors.Error = ColorSchema.Error;
+            theme.Colors.Filter = ColorSchema.Filter;
+            theme.Colors.ForeColorSchema = ConsoleDriver.ForegroundColor;
+            theme.Colors.Hint = ColorSchema.Hint;
+            theme.Colors.Pagination = ColorSchema.Pagination;
+            theme.Colors.PromptSymbol = ColorSchema.PromptSymbol;
+            theme.Colors.Select = ColorSchema.Select;
+            theme.Colors.SliderBackcolor = ColorSchema.SliderBackcolor;
+            theme.Colors.SliderForecolor = ColorSchema.SliderForecolor;
 
-            theme.HotKeys.ToggleVisibleDescription = PromptPlus.ToggleVisibleDescription.ToString();
-            theme.HotKeys.AbortAllPipesKeyPress = PromptPlus.AbortAllPipesKeyPress.ToString();
-            theme.HotKeys.AbortKeyPress = PromptPlus.AbortKeyPress.ToString();
-            theme.HotKeys.TooltipKeyPress = PromptPlus.TooltipKeyPress.ToString();
-            theme.HotKeys.ResumePipesKeyPress = PromptPlus.ResumePipesKeyPress.ToString();
-            theme.HotKeys.UnSelectFilter = PromptPlus.UnSelectFilter.ToString();
-            theme.HotKeys.SwitchViewPassword = PromptPlus.SwitchViewPassword.ToString();
-            theme.HotKeys.SelectAll = PromptPlus.SelectAll.ToString();
-            theme.HotKeys.InvertSelect = PromptPlus.InvertSelect.ToString();
-            theme.HotKeys.RemoveAll = PromptPlus.RemoveAll.ToString();
+            theme.Colors.Description = ColorSchema.Description;
 
-            theme.Symbols.MaskEmpty = PromptPlus.Symbols.MaskEmpty;
-            theme.Symbols.Done = PromptPlus.Symbols.Done;
-            theme.Symbols.Error = PromptPlus.Symbols.Error;
-            theme.Symbols.File = PromptPlus.Symbols.File;
-            theme.Symbols.Folder = PromptPlus.Symbols.Folder;
-            theme.Symbols.NotSelect = PromptPlus.Symbols.NotSelect;
-            theme.Symbols.Prompt = PromptPlus.Symbols.Prompt;
-            theme.Symbols.Selected = PromptPlus.Symbols.Selected;
-            theme.Symbols.Selector = PromptPlus.Symbols.Selector;
-            theme.Symbols.Skiped = PromptPlus.Symbols.Skiped;
-            theme.Symbols.TaskRun = PromptPlus.Symbols.TaskRun;
+            theme.HotKeys.ToggleVisibleDescription = ToggleVisibleDescription.ToString();
+            theme.HotKeys.AbortAllPipesKeyPress = AbortAllPipesKeyPress.ToString();
+            theme.HotKeys.AbortKeyPress = AbortKeyPress.ToString();
+            theme.HotKeys.TooltipKeyPress = TooltipKeyPress.ToString();
+            theme.HotKeys.ResumePipesKeyPress = ResumePipesKeyPress.ToString();
+            theme.HotKeys.UnSelectFilter = UnSelectFilter.ToString();
+            theme.HotKeys.SwitchViewPassword = SwitchViewPassword.ToString();
+            theme.HotKeys.SelectAll = SelectAll.ToString();
+            theme.HotKeys.InvertSelect = InvertSelect.ToString();
+            theme.HotKeys.RemoveAll = RemoveAll.ToString();
+
+            theme.Symbols.MaskEmpty = Symbols.MaskEmpty;
+            theme.Symbols.Done = Symbols.Done;
+            theme.Symbols.Error = Symbols.Error;
+            theme.Symbols.File = Symbols.File;
+            theme.Symbols.Folder = Symbols.Folder;
+            theme.Symbols.NotSelect = Symbols.NotSelect;
+            theme.Symbols.Prompt = Symbols.Prompt;
+            theme.Symbols.Selected = Symbols.Selected;
+            theme.Symbols.Selector = Symbols.Selector;
+            theme.Symbols.Skiped = Symbols.Skiped;
+            theme.Symbols.TaskRun = Symbols.TaskRun;
 
             var options = new JsonSerializerOptions
             {
@@ -104,63 +105,63 @@ namespace PPlus
 
                 if (string.IsNullOrEmpty(theme.Culture))
                 {
-                    PromptPlus.DefaultCulture = new CultureInfo(PromptPlus.AppCulture.Name);
+                    DefaultCulture = new CultureInfo(AppCulture.Name);
                 }
                 else
                 {
-                    PromptPlus.DefaultCulture = new CultureInfo(theme.Culture);
+                    DefaultCulture = new CultureInfo(theme.Culture);
                 }
-                PromptPlus.EnabledBeep = theme.EnabledBeep;
-                PromptPlus.EnabledAbortAllPipes = theme.EnabledAbortAllPipes;
-                PromptPlus.EnabledAbortKey = theme.EnabledAbortKey;
-                PromptPlus.EnabledStandardTooltip = theme.EnabledStandardTooltip;
-                PromptPlus.EnabledPromptTooltip = theme.EnabledPromptTooltip;
-                PromptPlus.PasswordChar = theme.PasswordChar ?? '#';
+                EnabledBeep = theme.EnabledBeep;
+                EnabledAbortAllPipes = theme.EnabledAbortAllPipes;
+                EnabledAbortKey = theme.EnabledAbortKey;
+                EnabledStandardTooltip = theme.EnabledStandardTooltip;
+                EnabledPromptTooltip = theme.EnabledPromptTooltip;
+                PasswordChar = theme.PasswordChar ?? '#';
 
-                PromptPlus.Symbols.MaskEmpty = theme.Symbols.MaskEmpty;
-                PromptPlus.Symbols.Done = theme.Symbols.Done;
-                PromptPlus.Symbols.Error = theme.Symbols.Error;
-                PromptPlus.Symbols.File = theme.Symbols.File;
-                PromptPlus.Symbols.Folder = theme.Symbols.Folder;
-                PromptPlus.Symbols.NotSelect = theme.Symbols.NotSelect;
-                PromptPlus.Symbols.Prompt = theme.Symbols.Prompt;
-                PromptPlus.Symbols.Selected = theme.Symbols.Selected;
-                PromptPlus.Symbols.Selector = theme.Symbols.Selector;
-                PromptPlus.Symbols.Skiped = theme.Symbols.Skiped;
-                PromptPlus.Symbols.TaskRun = theme.Symbols.TaskRun;
+                Symbols.MaskEmpty = theme.Symbols.MaskEmpty;
+                Symbols.Done = theme.Symbols.Done;
+                Symbols.Error = theme.Symbols.Error;
+                Symbols.File = theme.Symbols.File;
+                Symbols.Folder = theme.Symbols.Folder;
+                Symbols.NotSelect = theme.Symbols.NotSelect;
+                Symbols.Prompt = theme.Symbols.Prompt;
+                Symbols.Selected = theme.Symbols.Selected;
+                Symbols.Selector = theme.Symbols.Selector;
+                Symbols.Skiped = theme.Symbols.Skiped;
+                Symbols.TaskRun = theme.Symbols.TaskRun;
 
-                PromptPlus.ColorSchema.Description = theme.Colors.Description;
-                PromptPlus.ColorSchema.Answer = theme.Colors.Answer;
-                PromptPlus.ColorSchema.Disabled = theme.Colors.Disabled;
-                PromptPlus.ColorSchema.DoneSymbol = theme.Colors.DoneSymbol;
-                PromptPlus.ColorSchema.Error = theme.Colors.Error;
-                PromptPlus.ColorSchema.Filter = theme.Colors.Filter;
-                PromptPlus.ColorSchema.Hint = theme.Colors.Hint;
-                PromptPlus.ColorSchema.Pagination = theme.Colors.Pagination;
-                PromptPlus.ColorSchema.PromptSymbol = theme.Colors.PromptSymbol;
-                PromptPlus.ColorSchema.Select = theme.Colors.Select;
-                PromptPlus.ColorSchema.SliderBackcolor = theme.Colors.SliderBackcolor;
-                PromptPlus.ColorSchema.SliderForecolor = theme.Colors.SliderForecolor;
+                ColorSchema.Answer = theme.Colors.Answer;
+                ColorSchema.Disabled = theme.Colors.Disabled;
+                ColorSchema.DoneSymbol = theme.Colors.DoneSymbol;
+                ColorSchema.Error = theme.Colors.Error;
+                ColorSchema.Filter = theme.Colors.Filter;
+                ColorSchema.Hint = theme.Colors.Hint;
+                ColorSchema.Pagination = theme.Colors.Pagination;
+                ColorSchema.PromptSymbol = theme.Colors.PromptSymbol;
+                ColorSchema.Select = theme.Colors.Select;
+                ColorSchema.SliderBackcolor = theme.Colors.SliderBackcolor;
+                ColorSchema.SliderForecolor = theme.Colors.SliderForecolor;
 
                 if (theme.Version >= 2)
                 {
-                    PromptPlus.ToggleVisibleDescription = ConverteThemeHotkey(theme.HotKeys.ToggleVisibleDescription);
+                    ToggleVisibleDescription = ConverteThemeHotkey(theme.HotKeys.ToggleVisibleDescription);
+                    ColorSchema.Description = theme.Colors.Description;
                 }
                 else
                 {
-                    PromptPlus.ToggleVisibleDescription = ToggleVisibleDescription;
-                    PromptPlus.ColorSchema.Description = ColorSchema.Answer;
+                    ToggleVisibleDescription = ToggleVisibleDescription;
+                    ColorSchema.Description = ColorSchema.Answer;
                 }
-                PromptPlus.AbortAllPipesKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortAllPipesKeyPress);
-                PromptPlus.AbortKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortKeyPress);
-                PromptPlus.TooltipKeyPress = ConverteThemeHotkey(theme.HotKeys.TooltipKeyPress);
-                PromptPlus.ResumePipesKeyPress = ConverteThemeHotkey(theme.HotKeys.ResumePipesKeyPress);
-                PromptPlus.UnSelectFilter = ConverteThemeHotkey(theme.HotKeys.UnSelectFilter);
-                PromptPlus.SwitchViewPassword = ConverteThemeHotkey(theme.HotKeys.SwitchViewPassword);
-                PromptPlus.SelectAll = ConverteThemeHotkey(theme.HotKeys.SelectAll);
-                PromptPlus.InvertSelect = ConverteThemeHotkey(theme.HotKeys.InvertSelect);
-                PromptPlus.RemoveAll = ConverteThemeHotkey(theme.HotKeys.RemoveAll);
-                PromptPlus.ConsoleDefaultColor(theme.Colors.ForeColorSchema, theme.Colors.BackColorSchema);
+                AbortAllPipesKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortAllPipesKeyPress);
+                AbortKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortKeyPress);
+                TooltipKeyPress = ConverteThemeHotkey(theme.HotKeys.TooltipKeyPress);
+                ResumePipesKeyPress = ConverteThemeHotkey(theme.HotKeys.ResumePipesKeyPress);
+                UnSelectFilter = ConverteThemeHotkey(theme.HotKeys.UnSelectFilter);
+                SwitchViewPassword = ConverteThemeHotkey(theme.HotKeys.SwitchViewPassword);
+                SelectAll = ConverteThemeHotkey(theme.HotKeys.SelectAll);
+                InvertSelect = ConverteThemeHotkey(theme.HotKeys.InvertSelect);
+                RemoveAll = ConverteThemeHotkey(theme.HotKeys.RemoveAll);
+                ConsoleDefaultColor(theme.Colors.ForeColorSchema, theme.Colors.BackColorSchema);
 
             }
         }

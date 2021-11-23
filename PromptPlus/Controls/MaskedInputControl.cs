@@ -9,12 +9,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Threading;
 
-
-using PPlus.Controls.Resources;
-
 using PPlus.Internal;
-
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus.Controls
 {
@@ -32,6 +29,9 @@ namespace PPlus.Controls
 
         public override void InitControl()
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
             if (_options.CurrentCulture == null)
             {
                 _options.CurrentCulture = PromptPlus.DefaultCulture;
@@ -91,6 +91,9 @@ namespace PPlus.Controls
                     throw new ArgumentException(string.Format(Exceptions.Ex_InvalidType, _options.Type));
             }
             _maskedBuffer = new MaskedBuffer(_options);
+
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ResultMasked result)
@@ -426,25 +429,31 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptControls<ResultMasked> EnabledAbortKey(bool value)
+        public IControlMaskEdit Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
             return this;
         }
 
-        public IPromptControls<ResultMasked> EnabledAbortAllPipes(bool value)
+        public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;
             return this;
         }
 
-        public IPromptControls<ResultMasked> EnabledPromptTooltip(bool value)
+        public IPromptConfig EnabledPromptTooltip(bool value)
         {
             _options.EnabledPromptTooltip = value;
             return this;
         }
 
-        public IPromptControls<ResultMasked> HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value)
         {
             _options.HideAfterFinish = value;
             return this;
@@ -530,7 +539,7 @@ namespace PPlus.Controls
             var paramAM = _options.CurrentCulture.DateTimeFormat.AMDesignator;
             var stddtfmt = _options.CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpper().Split(_options.CurrentCulture.DateTimeFormat.DateSeparator[0]);
             var yearlen = "4";
-            if (_options.FmtYear == PPlus.Objects.FormatYear.Y2)
+            if (_options.FmtYear == Objects.FormatYear.Y2)
             {
                 yearlen = "2";
             }
@@ -552,9 +561,9 @@ namespace PPlus.Controls
             var dtstring = defaultdateValue.Substring(0, defaultdateValue.IndexOf(' '));
             switch (_options.FmtYear)
             {
-                case PPlus.Objects.FormatYear.Y4:
+                case Objects.FormatYear.Y4:
                     break;
-                case PPlus.Objects.FormatYear.Y2:
+                case Objects.FormatYear.Y2:
                     dtstring = dtstring.Substring(2);
                     break;
                 default:
@@ -626,8 +635,8 @@ namespace PPlus.Controls
         {
             return _options.FmtYear switch
             {
-                PPlus.Objects.FormatYear.Y4 => $"99\\{_options.CurrentCulture.DateTimeFormat.DateSeparator}99\\{_options.CurrentCulture.DateTimeFormat.DateSeparator}9999",
-                PPlus.Objects.FormatYear.Y2 => $"99\\{_options.CurrentCulture.DateTimeFormat.DateSeparator}99\\{_options.CurrentCulture.DateTimeFormat.DateSeparator}99",
+                Objects.FormatYear.Y4 => $"99\\{_options.CurrentCulture.DateTimeFormat.DateSeparator}99\\{_options.CurrentCulture.DateTimeFormat.DateSeparator}9999",
+                Objects.FormatYear.Y2 => $"99\\{_options.CurrentCulture.DateTimeFormat.DateSeparator}99\\{_options.CurrentCulture.DateTimeFormat.DateSeparator}99",
                 _ => throw new ArgumentException(_options.FmtYear.ToString()),
             };
         }
@@ -636,9 +645,9 @@ namespace PPlus.Controls
         {
             return _options.FmtTime switch
             {
-                PPlus.Objects.FormatTime.HMS => $"99\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}99\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}99",
-                PPlus.Objects.FormatTime.OnlyHM => $"99\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}99\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}00",
-                PPlus.Objects.FormatTime.OnlyH => $"99\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}00\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}00",
+                Objects.FormatTime.HMS => $"99\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}99\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}99",
+                Objects.FormatTime.OnlyHM => $"99\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}99\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}00",
+                Objects.FormatTime.OnlyH => $"99\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}00\\{_options.CurrentCulture.DateTimeFormat.TimeSeparator}00",
                 _ => throw new ArgumentException(_options.FmtTime.ToString()),
             };
         }

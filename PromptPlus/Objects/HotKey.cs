@@ -4,14 +4,13 @@
 // ***************************************************************************************
 
 using System;
-
-using PPlus.Controls.Resources;
+using PPlus.Resources;
 
 namespace PPlus.Objects
 {
     public struct HotKey : IEquatable<ConsoleKeyInfo>
     {
-        public HotKey(ConsoleKey key, bool alt, bool ctrl, bool shift)
+        public HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false)
         {
             Key = key;
             Alt = alt;

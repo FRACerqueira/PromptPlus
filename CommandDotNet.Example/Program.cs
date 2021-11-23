@@ -1,8 +1,7 @@
 ﻿using System.Globalization;
 
+using PPlus.CommandDotNet;
 using CommandDotNet.NameCasing;
-
-using PromptPlusCommandDotNet;
 
 namespace CommandDotNet.Example
 {
@@ -15,6 +14,7 @@ namespace CommandDotNet.Example
                 .UsePrompter()
                 .UsePromptPlusAnsiConsole(cultureInfo: new CultureInfo("en"))
                 .UsePromptPlusArgumentPrompter()
+                .UsePromptPlusWizard()
                 .UseNameCasing(Case.KebabCase)
                 .Run(args);
         }

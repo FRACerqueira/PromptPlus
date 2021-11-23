@@ -1,8 +1,16 @@
 {
   "profiles": {
-    "Sample": {
+    "Choose": {
       "commandName": "Project",
-      "commandLineArgs": "prompts secure --username admin download"
+      "commandLineArgs": "prompts choose"
+    },
+    "Secure": {
+      "commandName": "Project",
+      "commandLineArgs": "prompts secure download"
+    },
+    "Wizard": {
+      "commandName": "Project",
+      "commandLineArgs": "[wizard]"
     }
   }
 }

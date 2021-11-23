@@ -9,11 +9,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PPlus.Controls.Resources;
-
 using PPlus.Internal;
 
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus.Controls
 {
@@ -36,6 +35,9 @@ namespace PPlus.Controls
 
         public override void InitControl()
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
             if (_options.Process == null)
             {
                 throw new ArgumentException(nameof(_options.Process), Exceptions.Ex_WaitTaskToRun);
@@ -56,6 +58,10 @@ namespace PPlus.Controls
             {
                 _options.SpeedAnimation = 1000;
             }
+
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<ResultProcess> result)
@@ -301,25 +307,31 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptControls<IEnumerable<ResultProcess>> EnabledAbortKey(bool value)
+        public IControlWaitProcess Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<ResultProcess>> EnabledAbortAllPipes(bool value)
+        public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<ResultProcess>> EnabledPromptTooltip(bool value)
+        public IPromptConfig EnabledPromptTooltip(bool value)
         {
             _options.EnabledPromptTooltip = value;
             return this;
         }
 
-        public IPromptControls<IEnumerable<ResultProcess>> HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value)
         {
             _options.HideAfterFinish = value;
             return this;

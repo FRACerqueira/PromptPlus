@@ -17,12 +17,16 @@ using PPlus.Objects;
 
 namespace PPlus
 {
-    public interface IPromptControls<T>
+    public interface IPromptConfig
     {
-        IPromptControls<T> EnabledAbortKey(bool value);
-        IPromptControls<T> EnabledAbortAllPipes(bool value);
-        IPromptControls<T> EnabledPromptTooltip(bool value);
-        IPromptControls<T> HideAfterFinish(bool value);
+        IPromptConfig EnabledAbortKey(bool value);
+        IPromptConfig EnabledAbortAllPipes(bool value);
+        IPromptConfig EnabledPromptTooltip(bool value);
+        IPromptConfig HideAfterFinish(bool value);
+    }
+
+    public interface IPromptControls<T>: IPromptConfig
+    {
         ResultPromptPlus<T> Run(CancellationToken? value = null);
     }
 
@@ -61,6 +65,7 @@ namespace PPlus
     public interface IControlKeyPress : IPromptControls<bool>, IPromptPipe
     {
         IControlKeyPress Prompt(string value);
+        IControlKeyPress Config(Action<IPromptConfig> context);
     }
 
     public interface IControlMaskEdit : IPromptControls<ResultMasked>, IPromptPipe
@@ -81,6 +86,8 @@ namespace PPlus
         IControlMaskEdit ShowDayWeek(FormatWeek value);
         IControlMaskEdit ValidateOnDemand();
         IControlMaskEdit DescriptionSelector(Func<ResultMasked, string> value);
+        IControlMaskEdit Config(Action<IPromptConfig> context);
+
     }
 
     public interface IControlInput : IPromptControls<string>, IPromptPipe
@@ -92,6 +99,7 @@ namespace PPlus
         IControlInput AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlInput ValidateOnDemand();
         IControlInput DescriptionSelector(Func<string, string> value);
+        IControlInput Config(Action<IPromptConfig> context);
     }
 
     public interface IControlSliderNumber : IPromptControls<double>, IPromptPipe
@@ -102,6 +110,8 @@ namespace PPlus
         IControlSliderNumber Step(double value);
         IControlSliderNumber LargeStep(double value);
         IControlSliderNumber FracionalDig(int value);
+        IControlSliderNumber Config(Action<IPromptConfig> context);
+
     }
 
     public interface IControlSliderSwitch : IPromptControls<bool>, IPromptPipe
@@ -110,6 +120,7 @@ namespace PPlus
         IControlSliderSwitch Default(bool value);
         IControlSliderSwitch OffValue(string value);
         IControlSliderSwitch OnValue(string value);
+        IControlSliderSwitch Config(Action<IPromptConfig> context);
     }
 
     public interface IControlProgressbar : IPromptControls<ProgressBarInfo>, IPromptPipe
@@ -118,6 +129,8 @@ namespace PPlus
         IControlProgressbar UpdateHandler(Func<ProgressBarInfo, CancellationToken, Task<ProgressBarInfo>> value);
         IControlProgressbar Width(int value);
         IControlProgressbar StartInterationId(object value);
+        IControlProgressbar Config(Action<IPromptConfig> context);
+
     }
 
     public interface IControlWaitProcess : IPromptControls<IEnumerable<ResultProcess>>, IPromptPipe
@@ -125,12 +138,15 @@ namespace PPlus
         IControlWaitProcess Prompt(string value, string description = null);
         IControlWaitProcess AddProcess(SingleProcess process);
         IControlWaitProcess SpeedAnimation(int value);
+        IControlWaitProcess Config(Action<IPromptConfig> context);
     }
 
     public interface IControlConfirm : IPromptControls<bool>, IPromptPipe
     {
         IControlConfirm Prompt(string value, string description = null);
         IControlConfirm Default(bool value);
+        IControlConfirm Config(Action<IPromptConfig> context);
+
     }
 
     public interface IControlAutoComplete : IPromptControls<string>, IPromptPipe
@@ -147,6 +163,7 @@ namespace PPlus
         IControlAutoComplete CompletionMaxCount(int value);
         IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<string[]>> value);
         IControlAutoComplete CompletionWithDescriptionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value);
+        IControlAutoComplete Config(Action<IPromptConfig> context);
     }
 
 
@@ -164,6 +181,8 @@ namespace PPlus
         IControlSelect<T> DisableItem(T value);
         IControlSelect<T> DisableItems(IEnumerable<T> value);
         IControlSelect<T> AutoSelectIfOne();
+        IControlSelect<T> Config(Action<IPromptConfig> context);
+
     }
 
     public interface IControlMultiSelect<T> : IPromptControls<IEnumerable<T>>, IPromptPipe
@@ -183,6 +202,7 @@ namespace PPlus
         IControlMultiSelect<T> DisableItem(T value);
         IControlMultiSelect<T> DisableItems(IEnumerable<T> value);
         IControlMultiSelect<T> Range(int minvalue, int maxvalue);
+        IControlMultiSelect<T> Config(Action<IPromptConfig> context);
     }
 
     public interface IControlList<T> : IPromptControls<IEnumerable<T>>, IPromptPipe
@@ -197,6 +217,7 @@ namespace PPlus
         IControlList<T> AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlList<T> ValidateOnDemand();
         IControlList<T> DescriptionSelector(Func<string, string> value);
+        IControlList<T> Config(Action<IPromptConfig> context);
     }
 
     public interface IControlListMasked : IPromptControls<IEnumerable<ResultMasked>>, IPromptPipe
@@ -217,6 +238,7 @@ namespace PPlus
         IControlListMasked AcceptSignal(bool signal);
         IControlListMasked ValidateOnDemand();
         IControlListMasked DescriptionSelector(Func<ResultMasked, string> value);
+        IControlListMasked Config(Action<IPromptConfig> context);
     }
 
     public interface IControlBrowser : IPromptControls<ResultBrowser>, IPromptPipe
@@ -232,6 +254,6 @@ namespace PPlus
         IControlBrowser SupressHidden(bool value);
         IControlBrowser PromptCurrentPath(bool value);
         IControlBrowser promptSearchPattern(bool value);
-
+        IControlBrowser Config(Action<IPromptConfig> context);
     }
 }

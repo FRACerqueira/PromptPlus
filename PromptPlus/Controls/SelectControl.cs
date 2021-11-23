@@ -29,6 +29,9 @@ namespace PPlus.Controls
 
         public override void InitControl()
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
             if (_options.Items is null)
             {
                 throw new ArgumentNullException(nameof(_options.Items));
@@ -59,6 +62,10 @@ namespace PPlus.Controls
             {
                 _options.Description = _options.DescriptionSelector.Invoke(_localpaginator.SelectedItem);
             }
+
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out T result)
@@ -379,12 +386,12 @@ namespace PPlus.Controls
 
         private bool IsDisabled(T item)
         {
-            return _options.DisableItems.Contains(item);
+            return _options.DisableItems.Any(x => x.Equals(item));
         }
 
         private bool IsNotDisabled(T item)
         {
-            return !_options.DisableItems.Contains(item);
+            return !_options.DisableItems.Any(x => x.Equals(item));
         }
 
         private void AddEnum()
@@ -412,25 +419,31 @@ namespace PPlus.Controls
             return displayAttribute?.Name ?? name;
         }
 
-        public IPromptControls<T> EnabledAbortKey(bool value)
+        public IControlSelect<T> Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
             return this;
         }
 
-        public IPromptControls<T> EnabledAbortAllPipes(bool value)
+        public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;
             return this;
         }
 
-        public IPromptControls<T> EnabledPromptTooltip(bool value)
+        public IPromptConfig EnabledPromptTooltip(bool value)
         {
             _options.EnabledPromptTooltip = value;
             return this;
         }
 
-        public IPromptControls<T> HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value)
         {
             _options.HideAfterFinish = value;
             return this;

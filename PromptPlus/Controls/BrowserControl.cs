@@ -10,11 +10,10 @@ using System.Linq;
 using System.Security;
 using System.Threading;
 
-using PPlus.Controls.Resources;
-
 using PPlus.Internal;
 
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus.Controls
 {
@@ -36,6 +35,9 @@ namespace PPlus.Controls
 
         public override void InitControl()
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
             switch (_options.Filter)
             {
                 case BrowserFilter.None:
@@ -47,6 +49,10 @@ namespace PPlus.Controls
                 default:
                     throw new NotImplementedException(string.Format(Exceptions.Ex_FileBrowserNotImplemented, _options.Filter));
             }
+
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultBrowser result)
@@ -612,25 +618,31 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptControls<ResultBrowser> EnabledAbortKey(bool value)
+        public IControlBrowser Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortKey(bool value)
         {
             _options.EnabledAbortKey = value;
             return this;
         }
 
-        public IPromptControls<ResultBrowser> EnabledAbortAllPipes(bool value)
+        public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;
             return this;
         }
 
-        public IPromptControls<ResultBrowser> EnabledPromptTooltip(bool value)
+        public IPromptConfig EnabledPromptTooltip(bool value)
         {
             _options.EnabledPromptTooltip = value;
             return this;
         }
 
-        public IPromptControls<ResultBrowser> HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value)
         {
             _options.HideAfterFinish = value;
             return this;

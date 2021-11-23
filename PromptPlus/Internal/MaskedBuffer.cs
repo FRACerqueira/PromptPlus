@@ -11,9 +11,8 @@ using System.Text;
 
 using PPlus.Controls;
 
-using PPlus.Controls.Resources;
-
 using PPlus.Objects;
+using PPlus.Resources;
 
 using static PPlus.PromptPlus;
 
