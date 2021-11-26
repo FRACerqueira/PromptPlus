@@ -24,26 +24,49 @@ SliderSwitche(string prompt, string description = null)
   Prompt(string value, string description = null)
   ``` 
   - set prompt message and optional description
+
 - ```csharp
   Default(double value)
   ``` 
   - initial value
+
 - ```csharp
   OffValue(string value)
 ``` 
   - value to off state. If ommited, value = OffValue in resx.
+
 - ```csharp
   OnValue(string value)
   ``` 
   - Value to on state. If ommited, value = OnValue in resx.
+
+- ```csharp
+  Config(Action<IPromptConfig> context)
+  ``` 
+  - For access [**base methods**](basemethods) common to all controls.
+
+- ```csharp
+   PipeCondition(Func<ResultPipe[], object, bool> condition)
+  ``` 
+  - Set condition to run pipe.
+
+- ```csharp
+   ToPipe(string id, string title, object state = null)
+  ``` 
+  - Transform control to IFormPlusBase.
+  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+
+- ```csharp
+  ResultPromptPlus<bool> Run(CancellationToken? value = null)
+  ``` 
+	- Control execution
 
 ### Return
 [**Top**](#-promptplus--sliderswitch)
 
 ```csharp
 IControlSliderSwitch       //for Control Methods
-IPromptControls<bool>      //for others Base Methods
-ResultPromptPlus<bool>     //for Base Method Run, when execution is direct 
+ResultPromptPlus<bool>     //After execute method Run
 IPromptPipe                //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase              //for only definition of pipe to Pipeline Control
 ```

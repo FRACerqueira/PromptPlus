@@ -21,19 +21,21 @@ Banner(string value)
 LoadFont(string value)
 ``` 
   -  path file of type "flf". see [figlet](http://www.figlet.org/)
+
 - ```csharp
 LoadFont(Stream value)
 ``` 
   - stream file of type "flf". see [figlet](http://www.figlet.org/)
+
 - ```csharp
 FIGletWidth(CharacterWidth value)
 ``` 
   - Width FIGlet-type (Smush,Fitted,Full)
+
 - ```csharp
 Run(ConsoleColor? color = null)
 ``` 
   - Show Banner with forecolor paramater.
- 
 
 ### Return
 [**Top**](#-promptplus--banner)

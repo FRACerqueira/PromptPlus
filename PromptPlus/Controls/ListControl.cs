@@ -39,6 +39,31 @@ namespace PPlus.Controls
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
 
+            foreach (var item in _options.InitialItems)
+            {
+                var localitem = item;
+                if (typeof(T).Equals(typeof(string)))
+                {
+                    localitem = TypeHelper<T>.ConvertTo(item.ToString().ToUpperInvariant());
+                }
+                if (TryValidate(localitem, _options.Validators))
+                {
+                    if (!_options.AllowDuplicate)
+                    {
+                        if (!_inputItems.Contains(localitem))
+                        {
+                            _inputItems.Add(localitem);
+                        }
+                    }
+                    else
+                    {
+                        _inputItems.Add(localitem);
+                    }
+                }
+            }
+
+            ClearError();
+
             _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
             _localpaginator.FirstItem();
 
@@ -81,6 +106,11 @@ namespace PPlus.Controls
 
                 switch (keyInfo.Key)
                 {
+                    case ConsoleKey.Enter when keyInfo.Modifiers == ConsoleModifiers.Control:
+                    {
+                        result = _inputItems;
+                        return true;
+                    }
                     case ConsoleKey.Enter when keyInfo.Modifiers == 0:
                     {
                         var input = _inputBuffer.ToString();
@@ -134,28 +164,22 @@ namespace PPlus.Controls
                         break;
                     }
                     case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _localpaginator.UpdateFilter(_inputBuffer.Backward().ToString());
+                        _inputBuffer.Backward();
                         break;
                     case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _localpaginator.UpdateFilter(_inputBuffer.Forward().ToString());
+                        _inputBuffer.Forward();
                         break;
                     case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _localpaginator.UpdateFilter(_inputBuffer.Backspace().ToString());
+                        _inputBuffer.Backspace();
                         break;
                     case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _localpaginator.UpdateFilter(_inputBuffer.Delete().ToString());
+                        _inputBuffer.Delete();
                         break;
                     case ConsoleKey.Delete when keyInfo.Modifiers == ConsoleModifiers.Control:
                     {
                         if (_localpaginator.TryGetSelectedItem(out var selected))
                         {
                             var inputValue = (T)Convert.ChangeType(selected, _underlyingType ?? _targetType);
-
-                            if (!TryValidate(inputValue, _options.Validators))
-                            {
-                                result = _inputItems;
-                                break;
-                            }
 
                             if (_inputItems.Contains(inputValue))
                             {
@@ -174,7 +198,7 @@ namespace PPlus.Controls
                         {
                             if (!char.IsControl(keyInfo.KeyChar))
                             {
-                                _localpaginator.UpdateFilter(_inputBuffer.Insert(_options.UpperCase ? char.ToUpper(keyInfo.KeyChar) : keyInfo.KeyChar).ToString());
+                                _inputBuffer.Insert(_options.UpperCase ? char.ToUpper(keyInfo.KeyChar) : keyInfo.KeyChar);
                             }
                             else
                             {
@@ -232,12 +256,6 @@ namespace PPlus.Controls
                     screenBuffer.WriteHint(Messages.ListKeyNavigation);
                 }
             }
-
-            if (_inputBuffer.Length > 0)
-            {
-                screenBuffer.WriteLineFilter(Messages.ItemsFiltered);
-                screenBuffer.WriteFilter($" ({_inputBuffer})");
-            }
             var subset = _localpaginator.ToSubset();
             var index = 0;
             foreach (var item in subset)
@@ -272,7 +290,7 @@ namespace PPlus.Controls
                 screenBuffer.WriteLinePagination(_localpaginator.PaginationMessage());
             }
 
-            if (_options.ValidateOnDemand && _options.Validators.Count > 0)
+            if (_options.ValidateOnDemand && _options.Validators.Count > 0 && _inputBuffer.Length > 0)
             {
                 TryValidate(_inputBuffer.ToString(), _options.Validators);
             }
@@ -344,6 +362,50 @@ namespace PPlus.Controls
             }
             _options.Minimum = minvalue;
             _options.Maximum = maxvalue;
+            return this;
+        }
+
+        public IControlList<T> AddItem(T value)
+        {
+            if (value is not null)
+            {
+                if (typeof(T).Equals(typeof(string)))
+                {
+                    if (!string.IsNullOrEmpty(value.ToString()))
+                    {
+                        _options.InitialItems.Add(value);
+                    }
+                }
+                else
+                {
+                    _options.InitialItems.Add(value);
+                }
+            }
+            return this;
+        }
+
+        public IControlList<T> AddItems(IEnumerable<T> value)
+        {
+            if (value is not null)
+            {
+                foreach (var item in value)
+                {
+                    if (item is not null)
+                    {
+                        if (typeof(T).Equals(typeof(string)))
+                        {
+                            if (!string.IsNullOrEmpty(item.ToString()))
+                            {
+                                _options.InitialItems.Add(item);
+                            }
+                        }
+                        else
+                        {
+                            _options.InitialItems.Add(item);
+                        }
+                    }
+                }
+            }
             return this;
         }
 

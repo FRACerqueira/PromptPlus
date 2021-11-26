@@ -118,27 +118,27 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="WizardCommandFor" xml:space="preserve">
-    <value>Command for {0}: {1}</value>
+    <value>Comando para {0}: {1}</value>
   </data>
   <data name="WizardHelpText" xml:space="preserve">
-    <value>Directive for wizard prompt:%\n%[{0}] to wizard find commands, options and arguments with prompt and execute!!! (Remark: Shouldn't have any more arguments)%\n%%\n%Example: %AppName% [{0}].</value>
+    <value>Diretiva para assistente de prompt:%\n%[{0}] para o assistente procurar  comandos, opções e argumentos com prompt e executar!!! (Obs.: Não deve ter nenum argumento depois)%\n%%\n%Exemplo: %AppName% [{0}].</value>
   </data>
   <data name="WizardMissingOperands" xml:space="preserve">
-    <value>Missing Argument(s)</value>
+    <value>Argumento(s) ausente(s)</value>
   </data>
   <data name="WizardNext" xml:space="preserve">
-    <value>Next</value>
+    <value>Próximo</value>
   </data>
   <data name="WizardNoDescription" xml:space="preserve">
-    <value>no description</value>
+    <value>Sem Decrição</value>
   </data>
   <data name="WizardOperandFor" xml:space="preserve">
-    <value>Argument for {0}: {1}</value>
+    <value>Argumento para {0}: {1}</value>
   </data>
   <data name="WizardOptionFor" xml:space="preserve">
-    <value>Option for {0}: {1}</value>
+    <value>Opção para {0}: {1}</value>
   </data>
   <data name="WizardTypeInfo" xml:space="preserve">
-    <value>Type({0})</value>
+    <value>Tipo({0})</value>
   </data>
 </root>

@@ -339,4 +339,10 @@
   <data name="ShowProcessStandardHotKeysWithPipelineDesc" xml:space="preserve">
     <value>{0}, {1} Mostrar/Esconder descrição, {2} Mostrar resumo dos pipes</value>
   </data>
+  <data name="EscCancelWizard" xml:space="preserve">
+    <value>, {0}: Voltar para Wizard</value>
+  </data>
+  <data name="ListKeyNavigationFillZeros" xml:space="preserve">
+    <value>Ctrl+Del: Remove selecionado, {0}: Remove tudo, Ctrl+Enter: Terminar, Enter : Incluir</value>
+  </data>
 </root>

@@ -1,3 +1,6 @@
+# tag patterns example: v.2.2.0:pplus
+# tag patterns example: v.1.0.0.220:cmd.dotnet
+
 name: Publish
 
 on:

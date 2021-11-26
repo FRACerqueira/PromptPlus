@@ -94,6 +94,7 @@ namespace PPlus
     {
         IControlInput Prompt(string value, string description = null);
         IControlInput Default(string value);
+        IControlInput InitialValue(string value);
         IControlInput IsPassword(bool swithVisible);
         IControlInput AddValidator(Func<object, ValidationResult> validator);
         IControlInput AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
@@ -208,6 +209,8 @@ namespace PPlus
     public interface IControlList<T> : IPromptControls<IEnumerable<T>>, IPromptPipe
     {
         IControlList<T> Prompt(string value, string description = null);
+        IControlList<T> AddItem(T value);
+        IControlList<T> AddItems(IEnumerable<T> value);
         IControlList<T> PageSize(int value);
         IControlList<T> TextSelector(Func<T, string> value);
         IControlList<T> Range(int minvalue, int maxvalue);
@@ -226,6 +229,8 @@ namespace PPlus
         IControlListMasked PageSize(int value);
         IControlListMasked Range(int minvalue, int maxvalue);
         IControlListMasked ShowInputType(bool value);
+        IControlListMasked AddItem(string value);
+        IControlListMasked AddItems(IEnumerable<string> value);
         IControlListMasked AddValidator(Func<object, ValidationResult> validator);
         IControlListMasked AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlListMasked MaskType(MaskedType value, string mask = null);
@@ -234,6 +239,7 @@ namespace PPlus
         IControlListMasked FillZeros(bool value);
         IControlListMasked FormatYear(FormatYear value);
         IControlListMasked FormatTime(FormatTime value);
+        IControlListMasked ShowDayWeek(FormatWeek value);
         IControlListMasked AmmoutPositions(int intvalue, int decimalvalue);
         IControlListMasked AcceptSignal(bool signal);
         IControlListMasked ValidateOnDemand();

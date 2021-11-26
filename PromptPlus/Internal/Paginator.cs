@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using PPlus.Controls;
-
 using PPlus.Drivers;
 
 namespace PPlus.Internal

@@ -5,9 +5,25 @@
 
 Interactive command-line based application framework for **C# with powerful controls**.
 
+**PromptPlus** and **PromptPlus.CommandDotNet** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
+
+**PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**: 
+<p align="left">
+    <img valign="middle" width="50" height="50" src="./docs/images/iconCmdNet.png">
+    <b>PromptPlus.CommandDotNet!!</b>
+</p>
+
+**[Visit official page for complete documentation of the CommandDotNet](https://commanddotnet.bilal-fazlani.com)**
+
+#### Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet:
+
+- Wizard to find all the commands/options and arguments with prompt and run.
+    - Now you can discover and learn the existing commands, options and arguments.
+
 [**Snapshot of All Controls**](#snapshot)
 
 ![](./images/PipeLine.gif)
+![](./images/PplusCmddotnet.gif)
 
 ## Help
 - [Install](#install)
@@ -20,6 +36,7 @@ Interactive command-line based application framework for **C# with powerful cont
     - [Hotkeys](#hotkeys)
 - [Load and Save Settings](#load-and-save-settings)
 - [**Api Controls**](#apis)
+- [**PromptPlus.CommandDotNet**](ppluscmddotnet.md)
 - [**Extensions**](#extensions)
 - [Snapshot of All Controls](#snapshot)
 - [Supported Platforms](#supported-platforms)
@@ -104,7 +121,7 @@ PromptPlus.DefaultCulture = new CultureInfo("en-US");
 
 To use a non-embedded language/culture:
 
-- Use the **PromptPlusResources.resx** file that already has the package in the resources folder
+- Use the **PromptPlusResources.resx** file in folder PromptPlus/Resources
 - Translate messages with same format to your language/culture
 - Convert .resx files to binary .resources files ([**reference link here**](https://docs.microsoft.com/en-us/dotnet/core/extensions/work-with-resx-files-programmatically))
 - Publish the compiled file (**PromptPlus.{Language}.resources**) in the same folder as the binaries.

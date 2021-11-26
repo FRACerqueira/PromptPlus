@@ -285,13 +285,27 @@ namespace PPlus.Internal
                 }
                 else
                 {
-                    if (!hidedescription)
+                    if (IsRunningWithCommandDotNet)
                     {
-                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysDesc, TooltipKeyPress, ToggleVisibleDescription, Messages.EscCancel), ColorSchema.Hint);
+                        if (!hidedescription)
+                        {
+                            screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysDesc, TooltipKeyPress, ToggleVisibleDescription, Messages.EscCancelWizard), ColorSchema.Hint);
+                        }
+                        else
+                        {
+                            screenBuffer.Write(string.Format(Messages.ShowStandardHotKeys, TooltipKeyPress, Messages.EscCancelWizard), ColorSchema.Hint);
+                        }
                     }
                     else
                     {
-                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeys, TooltipKeyPress, Messages.EscCancel), ColorSchema.Hint);
+                        if (!hidedescription)
+                        {
+                            screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysDesc, TooltipKeyPress, ToggleVisibleDescription, Messages.EscCancel), ColorSchema.Hint);
+                        }
+                        else
+                        {
+                            screenBuffer.Write(string.Format(Messages.ShowStandardHotKeys, TooltipKeyPress, Messages.EscCancel), ColorSchema.Hint);
+                        }
                     }
                 }
             }

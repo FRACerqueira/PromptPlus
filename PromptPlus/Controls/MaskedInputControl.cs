@@ -43,7 +43,7 @@ namespace PPlus.Controls
                     {
                         throw new ArgumentException(Exceptions.Ex_InvalidMask);
                     }
-                    _options.DefaultValueWitdhoutMask = _options.DefaultObject?.ToString() ?? string.Empty;
+                    _options.DefaultValueWitdMask = _options.DefaultObject?.ToString() ?? string.Empty;
                     break;
                 case MaskedType.DateOnly:
                     _options.MaskValue = CreateMaskedOnlyDate();
@@ -490,48 +490,14 @@ namespace PPlus.Controls
         {
             if (_options.DefaultObject == null)
             {
-                _options.DefaultValueWitdhoutMask = null;
+                _options.DefaultValueWitdMask = null;
                 return;
             }
             if (_options.DefaultObject is not double)
             {
                 throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, _options.DefaultObject));
             }
-            var sep = _options.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
-            if (_options.Type == MaskedType.Currency)
-            {
-                sep = _options.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
-            }
-            var aux = Convert.ToDouble(_options.DefaultObject).ToString();
-            var pos = aux.IndexOf(sep);
-            string intvalue;
-            var decvalue = new string('0', _options.AmmountDecimal);
-            if (pos >= 0)
-            {
-                intvalue = aux.Substring(0, pos).PadLeft(_options.AmmountInteger, '0');
-                decvalue = aux.Substring(pos + 1).PadRight(_options.AmmountDecimal, '0');
-            }
-            else
-            {
-                intvalue = aux.PadLeft(_options.AmmountInteger, '0');
-            }
-            var defsignal = "";
-            if (_options.AcceptSignal == MaskedSignal.Enabled && Convert.ToDouble(_options.DefaultObject) < 0)
-            {
-                defsignal = _options.CurrentCulture.NumberFormat.NegativeSign;
-            }
-            if (_options.AcceptSignal == MaskedSignal.Enabled && Convert.ToDouble(_options.DefaultObject) > 0)
-            {
-                defsignal = _options.CurrentCulture.NumberFormat.PositiveSign;
-            }
-            if (_options.AmmountInteger == 0)
-            {
-                _options.DefaultValueWitdhoutMask = $"{decvalue}{defsignal}";
-            }
-            else
-            {
-                _options.DefaultValueWitdhoutMask = $"{intvalue}{decvalue}{defsignal}";
-            }
+            _options.DefaultValueWitdMask = ((double)_options.DefaultObject).ToString($"N{_options.AmmountDecimal}", _options.CurrentCulture);
         }
 
         private void ConvertDefaultDateValue()
@@ -547,7 +513,7 @@ namespace PPlus.Controls
 
             if (_options.DefaultObject == null)
             {
-                _options.DefaultValueWitdhoutMask = null;
+                _options.DefaultValueWitdMask = null;
                 _options.DateFmt = fmtdate;
                 return;
             }
@@ -625,9 +591,7 @@ namespace PPlus.Controls
                     defaultdateValue = $"{dtstring}{tmstring}{tmsignal}";
                     break;
             }
-            defaultdateValue = defaultdateValue.Replace(_options.CurrentCulture.DateTimeFormat.DateSeparator, "");
-            defaultdateValue = defaultdateValue.Replace(_options.CurrentCulture.DateTimeFormat.TimeSeparator, "");
-            _options.DefaultValueWitdhoutMask = defaultdateValue;
+            _options.DefaultValueWitdMask = defaultdateValue;
             _options.DateFmt = fmtdate;
         }
 

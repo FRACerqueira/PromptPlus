@@ -342,4 +342,10 @@
   <data name="ShowProcessStandardHotKeysWithPipelineDesc" xml:space="preserve">
     <value>{0}, {1} Show/Hide description, {2} Swith pipes summary</value>
   </data>
+  <data name="EscCancelWizard" xml:space="preserve">
+    <value>, {0}: To Wizard</value>
+  </data>
+  <data name="ListKeyNavigationFillZeros" xml:space="preserve">
+    <value>Ctrl+Del: Remove seleted , {0}: Remove all, Ctrl+Enter: Finish, Enter: Add</value>
+  </data>
 </root>

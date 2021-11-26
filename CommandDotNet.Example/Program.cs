@@ -2,6 +2,8 @@
 
 using PPlus.CommandDotNet;
 using CommandDotNet.NameCasing;
+using System;
+using PPlus;
 
 namespace CommandDotNet.Example
 {
@@ -9,15 +11,20 @@ namespace CommandDotNet.Example
     {
         static int Main(string[] args)
         {
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
+
+            PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
+            PromptPlus.Clear();
+
             return new AppRunner<Examples>()
                 .UseDefaultMiddleware()
                 .UsePrompter()
-                .UsePromptPlusAnsiConsole(cultureInfo: new CultureInfo("en"))
+                .UseNameCasing(Case.KebabCase)
+                .UsePromptPlusAnsiConsole()
                 .UsePromptPlusArgumentPrompter()
                 .UsePromptPlusWizard()
-                .UseNameCasing(Case.KebabCase)
                 .Run(args);
         }
-
     }
 }

@@ -35,77 +35,65 @@ namespace PPlus.Internal
         public static ConsoleKeyInfo KeyPressed => ConsoleDriver.ReadKey(true);
 
 
-        public void InputRender(Action<ScreenBuffer> template,bool onlyTemplate = false)
+        public void InputRender(Action<ScreenBuffer> template, bool onlyTemplate = false)
         {
-            lock (_lockobj)
+            template(FormBuffer);
+            if (!onlyTemplate)
             {
-                template(FormBuffer);
-                if (!onlyTemplate)
+                if (ErrorMessage != null)
                 {
-                    if (ErrorMessage != null)
-                    {
-                        FormBuffer.WriteLineError(ErrorMessage);
-                        ErrorMessage = null;
-                    }
-                    RenderToConsole();
+                    FormBuffer.WriteLineError(ErrorMessage);
+                    ErrorMessage = null;
                 }
+                RenderToConsole();
             }
         }
 
         public void FinishRender<TModel>(Action<ScreenBuffer, TModel> template, TModel result)
         {
-            lock (_lockobj)
-            {
-                ClearBuffer();
-                template(FormBuffer, result);
-                FormBuffer.PushCursor();
-                RenderToConsole();
-            }
+            ClearBuffer();
+            template(FormBuffer, result);
+            FormBuffer.PushCursor();
+            RenderToConsole();
         }
 
         public static void NewLine()
         {
-            lock (_lockobj)
-            {
-                ConsoleDriver.WriteLine();
-            }
+            ConsoleDriver.WriteLine();
         }
 
         public bool HideLastRender(bool skip = false)
         {
-            lock (_lockobj)
+            if (_cursorBottom < 0)
             {
-                if (_cursorBottom < 0)
-                {
-                    return true;
-                }
-
-                if (skip)
-                {
-                    ConsoleDriver.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
-                    return true;
-                }
-
-                EnsureScreensizeAndPosition();
-                if (StopToken.IsCancellationRequested)
-                {
-                    return false;
-                }
-
-                var lines = WrittenLineCount + 1;
-
-                if (ConsoleDriver.BufferHeight - 1 < _cursorBottom && ConsoleDriver.IsRunningTerminal)
-                {
-                    _cursorBottom = ConsoleDriver.BufferHeight - 1;
-                    lines = _cursorBottom;
-                }
-
-                for (var i = 0; i < lines; i++)
-                {
-                    ConsoleDriver.ClearLine(_cursorBottom - i);
-                }
                 return true;
             }
+
+            if (skip)
+            {
+                ConsoleDriver.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
+                return true;
+            }
+
+            EnsureScreensizeAndPosition();
+            if (StopToken.IsCancellationRequested)
+            {
+                return false;
+            }
+
+            var lines = WrittenLineCount + 1;
+
+            if (ConsoleDriver.BufferHeight - 1 < _cursorBottom && ConsoleDriver.IsRunningTerminal)
+            {
+                _cursorBottom = ConsoleDriver.BufferHeight - 1;
+                lines = _cursorBottom;
+            }
+
+            for (var i = 0; i < lines; i++)
+            {
+                ConsoleDriver.ClearLine(_cursorBottom - i);
+            }
+            return true;
         }
 
         public static void ShowCursor()
@@ -188,14 +176,11 @@ namespace PPlus.Internal
 
         private static bool IsMaxWindowsHeight()
         {
-            lock (_lockobj)
+            if (ConsoleDriver.CursorTop == ConsoleDriver.BufferHeight - 1)
             {
-                if (ConsoleDriver.CursorTop == ConsoleDriver.BufferHeight - 1)
-                {
-                    return true;
-                }
-                return false;
+                return true;
             }
+            return false;
         }
 
         public void ClearBuffer()

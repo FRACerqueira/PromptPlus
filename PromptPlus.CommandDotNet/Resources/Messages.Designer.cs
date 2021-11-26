@@ -70,11 +70,20 @@ namespace PPlus.CommandDotNet.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Directive for wizard prompt:\n[{0}] to wizard find commands/options and arguments with prompt and execute!!! (Remark: Shouldn&apos;t have any more arguments)\n\nExample: %AppName% [{0}]..
+        ///   Looks up a localized string similar to Directive for wizard prompt:%\n%[{0}] to wizard find commands, options and arguments with prompt and execute!!! (Remark: Shouldn&apos;t have any more arguments)%\n%%\n%Example: %AppName% [{0}]..
         /// </summary>
         internal static string WizardHelpText {
             get {
                 return ResourceManager.GetString("WizardHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing Argument(s).
+        /// </summary>
+        internal static string WizardMissingOperands {
+            get {
+                return ResourceManager.GetString("WizardMissingOperands", resourceCulture);
             }
         }
         
@@ -97,7 +106,7 @@ namespace PPlus.CommandDotNet.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operand  for {0}: {1}.
+        ///   Looks up a localized string similar to Argument for {0}: {1}.
         /// </summary>
         internal static string WizardOperandFor {
             get {

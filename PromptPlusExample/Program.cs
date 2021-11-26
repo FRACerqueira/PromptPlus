@@ -85,7 +85,6 @@ namespace PromptPlusExample
         {
             PromptPlus.DefaultCulture = new CultureInfo("en-US");
             PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
-            PromptPlus.DefaultCulture = new CultureInfo("en-US");
             PromptPlus.Clear();
 
             var quit = false;
@@ -1017,6 +1016,9 @@ namespace PromptPlusExample
             var lst = PromptPlus.List<string>("Please add item(s)", "Sample List")
                 .PageSize(3)
                 .UpperCase(true)
+                .AddItem("aaa")
+                .AddItem("bbb")
+                .AddItem("ccc")
                 .AddValidator(PromptPlusValidators.MinLength(3))
                 .DescriptionSelector(x =>
                 {
@@ -1046,6 +1048,8 @@ namespace PromptPlusExample
             var lst = PromptPlus.ListMasked("Please add item(s)")
                 .MaskType(MaskedType.Generic, @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
                 .UpperCase(true)
+                .AddItem("XYZ 123-EUA-A1-AAA")
+                .AddItem("XYZ 123-EUA-A2-AAA")
                 .DescriptionSelector(MyDescMaskedirGeneric)
                 .ValidateOnDemand()
                 .Run(_stopApp);

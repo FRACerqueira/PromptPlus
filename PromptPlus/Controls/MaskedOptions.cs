@@ -41,7 +41,7 @@ namespace PPlus.Controls
         public bool ValidateOnDemand { get; set; }
         public bool ShowInputType { get; set; } = true;
         public FormatWeek ShowDayWeek { get; set; } = FormatWeek.None;
-        public string DefaultValueWitdhoutMask { get; set; }
+        public string DefaultValueWitdMask { get; set; }
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
         public Func<ResultMasked, string> DescriptionSelector { get; set; }
     }

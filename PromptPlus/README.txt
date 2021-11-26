@@ -35,34 +35,63 @@ For command line parser framework
 
 **PromptPlus.CommandDotNet - Sample Usage**
 -------------------------------------------
+public class Program
+{
+    static int Main(string[] args)
+    {
+        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
 
-var AppCmd = new AppRunner<Examples>()
-    .UseDefaultMiddleware()
-    .UsePrompter()
-    .UsePromptPlusAnsiConsole(cultureInfo: new CultureInfo("en"))
-    .UsePromptPlusArgumentPrompter()
-    .UsePromptPlusConfig("ConfigFolder")
+        PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
+        PromptPlus.Clear();
+
+        return new AppRunner<Examples>()
+            .UseDefaultMiddleware()
+            .UsePrompter()
+            .UseNameCasing(Case.KebabCase)
+            .UsePromptPlusAnsiConsole()
+            .UsePromptPlusArgumentPrompter()
+            .UsePromptPlusWizard()
+            .Run(args);
+    }
+}
 
 //for usage AppRunner see https://commanddotnet.bilal-fazlani.com/
 
 **Relase Notes PromptPlus (V.2.2.0)**
 -------------------------------------
 
-- Renamed root namespace to PPlus (requires refactoring)
-- Moved EnabledAbortKey/EnabledAbortAllPipes/EnabledPromptTooltip/HideAfterFinish to IPromptConfig (maybe requires refactoring)
-- Method Syntax Adjustment to Input-Control (need to be refactored to new syntax):
-    AddValidators(Func<object, ValidationResult> validator) -> AddValidator(Func<object, ValidationResult> validator) 
+- Refactoring - Renamed root namespace to PPlus (requires refactoring)
+- Refactoring - Moved EnabledAbortKey/EnabledAbortAllPipes/EnabledPromptTooltip/HideAfterFinish to IPromptConfig (maybe requires refactoring)
+- Refactoring - Added Config(Action<IPromptConfig> context) method to config and return to interface control for better usability.
+- Refactoring - Method Syntax Adjustment to Input-Control (need to be refactored to new syntax):
+    - AddValidators(Func<object, ValidationResult> validator) -> AddValidator(Func<object, ValidationResult> validator) 
 
-- Added Config(Action<IPromptConfig> context) method to config and return to interface control for better usability.
-- Added check Nullabled to AddDefault(s)/AddItem(s)/AddGroup/HideItem(s)/DisableItem(s)/Default methods
-- Added New Embeded Validator : IsUriScheme(UriKind uriKind = UriKind.Absolute,string allowedUriSchemes = null, string errorMessage = null)
-- Added Description parameter to all controls
-- Added global hotkey (default value = F3) show/hide Description
-- Added color Schema Description (default value = ConsoleColor.Cyan)
-- Added color Schema CurrentTokenForeColor (for PromptPlus.CommandDotNet, default value = ConsoleColor.Yellow)
-- Fixed bug color when item disabled
-    - Select-Control
-- Added Dynamic Description -  DescriptionSelector Method for Description change on each interaction
+- Improvement - Check Nullabled to AddDefault(s)/AddItem(s)/AddGroup/HideItem(s)/DisableItem(s)/Default methods
+- Improvement - New Embededs Validator :
+    - IsUriScheme(UriKind uriKind = UriKind.Absolute,string allowedUriSchemes = null, string errorMessage = null)
+    - IsTypeBoolean(string errorMessage = null)
+    - IsTypeByte(string errorMessage = null)
+    - IsTypeChar(string errorMessage = null)
+    - IsTypeDecimal(string errorMessage = null)
+    - IsTypeDouble(string errorMessage = null)
+    - IsTypeSByte(string errorMessage = null)
+    - IsTypeDateTime(string errorMessage = null)
+    - IsTypeShort(string errorMessage = null) / IsTypeInt16(string errorMessage = null)
+    - IsTypeInt(string errorMessage = null) / IsTypeInt32(string errorMessage = null)
+    - IsTypeLong(string errorMessage = null) / IsTypeInt64(string errorMessage = null)
+    - IsTypeFloat(string errorMessage = null) / IsTypeSingle(string errorMessage = null)
+    - IsTypeUshort(string errorMessage = null) /IsTypeUInt16(string errorMessage = null)
+    - IsTypeUInt(string errorMessage = null) / IsTypeUInt32(string errorMessage = null)
+    - IsTypeULong(string errorMessage = null) / IsTypeUInt64(string errorMessage = null)
+- Improvement - Added Description parameter to all controls
+- Improvement - Added Method InitialValue(string value) to Input-Control
+- Improvement - Added Methods AddItem(T value)/AddItems(IEnumerable<T> value) to List-Controls
+    - Now the List-Control and Listmasked-Control can start with values
+- Improvement - Added global hotkey (default value = F3) show/hide Description
+- Improvement - Added color Schema Description (default value = ConsoleColor.Cyan)
+- Improvement - Added color Schema CurrentTokenForeColor (for PromptPlus.CommandDotNet, default value = ConsoleColor.Yellow)
+- Improvement - Added Dynamic Description. DescriptionSelector Method for Description change on each interaction
     - Input-Control
     - AutoComplete-Control
     - Listmasked-Control
@@ -70,6 +99,16 @@ var AppCmd = new AppRunner<Examples>()
     - MaskEdit-Control
     - Select-Control
     - MultSelect-Control
+- Improvement - Reviewed Defaut value to input with masked (maybe requires refactoring)
+    - MaskEdit-Control/Listmasked-Control
+- Improvement - Added Ctrl-Enter to Finish widthout added last input
+    - List-Control/Listmasked-Control
+- Fixed bug - Defaut value to Browser-Control
+- Fixed bug - Added masked item widthout Leading Zeros for MaskedType.Number/MaskedType.NumberCurrency (Listmasked-Control)
+- Fixed bug - Embededs Validator for many kind-input types
+- Fixed bug - Isolate thread Culture for all controls
+- Fixed bug - Color when item disabled (Select-Control)
+- Fixed bug - Added missing method: ShowDayWeek (Listmasked-Control)
 
 **Relase Notes PromptPlus (V.2.1.0)**
 -------------------------------------

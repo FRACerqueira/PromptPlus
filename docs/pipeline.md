@@ -24,11 +24,11 @@ Pipeline()
   AddPipe(IFormPlusBase value)
   ``` 
   - Add PromptPlus-Control to pipeline. All controls inherit from IFormPlusBase.
+
 - ```csharp
   AddPipes(IEnumerable<IFormPlusBase> value)
   ``` 
   - Add IEnumerable PromptPlus-Control to pipeline. All controls inherit from IFormPlusBase.  
-
 
 ### Return
 [**Top**](#-promptplus--pipeline)
@@ -39,7 +39,6 @@ ResultPromptPlus<IEnumerable<ResultPipe>>   //for Base Method Run, when executio
 IPromptPipe                                 //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                               //for only definition of pipe to Pipeline Control
 ```
-
 
 ### Sample
 [**Top**](#-promptplus--pipeline)

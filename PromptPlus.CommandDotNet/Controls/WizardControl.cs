@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 using CommandDotNet.Builders;
@@ -43,18 +44,25 @@ namespace PPlus.CommandDotNet.Controls
 
         public void WizardTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.Write(_options.Message, _options.ForeColor ?? Console.ForegroundColor, _options.BackColor ?? Console.BackgroundColor);
+            screenBuffer.Write(_options.Message, _options.ForeColor , _options.BackColor );
             if (_options.TokenArgs is not null)
             {
                 foreach (var item in _options.TokenArgs)
                 {
-                    if (item.IsSecret)
+                    if (!item.IsEnabled)
                     {
-                        screenBuffer.Write($" {new string(PromptPlus.PasswordChar, 5)}", _options.ForeColor ?? Console.ForegroundColor, _options.BackColor ?? Console.BackgroundColor);
+                        screenBuffer.Write($" {item.ArgValue}", _options.MissingForeColor, _options.BackColor );
                     }
                     else
                     {
-                        screenBuffer.Write($" {item.ArgValue}", _options.ForeColor ?? Console.ForegroundColor, _options.BackColor ?? Console.BackgroundColor);
+                        if (item.IsSecret)
+                        {
+                            screenBuffer.Write($" {new string(PromptPlus.PasswordChar, 3)}", _options.ForeColor, _options.BackColor);
+                        }
+                        else
+                        {
+                            screenBuffer.Write($" {item.ArgValue}", _options.ForeColor, _options.BackColor);
+                        }
                     }
                 }
             }
@@ -112,18 +120,25 @@ namespace PPlus.CommandDotNet.Controls
 
         private void ShowInputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.Write(_options.Message,_options.ForeColor??Console.ForegroundColor, _options.BackColor ?? Console.BackgroundColor);
+            screenBuffer.Write(_options.Message,_options.ForeColor, _options.BackColor);
             if (_options.TokenArgs is not null)
             {
                 foreach (var item in _options.TokenArgs)
                 {
-                    if (item.IsSecret)
+                    if (!item.IsEnabled)
                     {
-                        screenBuffer.Write($" {new string(PromptPlus.PasswordChar,5)}", _options.ForeColor ?? Console.ForegroundColor, _options.BackColor ?? Console.BackgroundColor);
+                        screenBuffer.Write($" {item.ArgValue}", _options.MissingForeColor, _options.BackColor);
                     }
                     else
                     {
-                        screenBuffer.Write($" {item.ArgValue}", _options.ForeColor ?? Console.ForegroundColor, _options.BackColor ?? Console.BackgroundColor);
+                        if (item.IsSecret)
+                        {
+                            screenBuffer.Write($" {new string(PromptPlus.PasswordChar, 3)}", _options.ForeColor, _options.BackColor);
+                        }
+                        else
+                        {
+                            screenBuffer.Write($" {item.ArgValue}", _options.ForeColor, _options.BackColor);
+                        }
                     }
                 }
             }
@@ -177,6 +192,11 @@ namespace PPlus.CommandDotNet.Controls
                     }
                     else if (_options.Build.Equals(keyInfo))
                     {
+                        if (_options.TokenArgs.Any(t => !t.IsEnabled))
+                        {
+                            SetError(Resources.Messages.WizardMissingOperands);
+                            return false;
+                        }
                         result = _resultControl;
                         return true;
                     }

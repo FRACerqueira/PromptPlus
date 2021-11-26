@@ -49,7 +49,6 @@ namespace PPlus.Internal
         private readonly string _logicalMaskNumeric;
         private readonly string _logicalMaskCurrency;
 
-        private readonly string _localDefaultValue;
         private readonly CultureInfo _cultureMasked;
 
         private readonly string[] _tooltips;
@@ -94,7 +93,7 @@ namespace PPlus.Internal
             _isTypeGeneric = _maskInputOptions.Type == MaskedType.Generic;
             _acceptSignal = _maskInputOptions.AcceptSignal != MaskedSignal.None;
 
-            _localMask = MaskedBuffer.ConvertAndValidateMaskNotation(_maskInputOptions.MaskValue, _charCustoms);
+            _localMask = ConvertAndValidateMaskNotation(_maskInputOptions.MaskValue, _charCustoms);
             _logicalMaskGeneric = CreateLogicalMaskGenericNotation();
             _logicalMaskDateTime = CreateLogicalMaskDateTimeNotation();
             _logicalMaskNumeric = CreateLogicalMaskNumericNotation();
@@ -148,9 +147,8 @@ namespace PPlus.Internal
             _signalTimeInput = string.Empty;
             _validSignalNumber = $"{_cultureMasked.NumberFormat.PositiveSign[0]}{_cultureMasked.NumberFormat.NegativeSign[0]}";
 
-            _localDefaultValue = PreparationDefaultValue();
-
-            Load(_localDefaultValue);
+            Clear();
+            Load(PreparationDefaultValue());
 
             Position = 0;
         }
@@ -315,9 +313,13 @@ namespace PPlus.Internal
             _signalTimeInput = string.Empty;
             if (!_isTypeGeneric && _maskInputOptions.FillNumber.HasValue)
             {
-                for (var i = 0; i < _inputBuffer.Length; i++)
+                _inputBuffer.Clear();
+                foreach (var item in _localMask)
                 {
-                    _inputBuffer[i] = _maskInputOptions.FillNumber.Value;
+                    if (item == '9')
+                    {
+                        _inputBuffer.Append(_maskInputOptions.FillNumber.Value);
+                    }
                 }
             }
             else
@@ -336,11 +338,12 @@ namespace PPlus.Internal
 
         public string ToMasked()
         {
-            var poslast = _validPosition.Select((poschar, index) => new { poschar, index }).Last().index;
+            var poslast = _validPosition.Length;
             if (poslast == Length)
             {
                 return OutputMask.Replace(_promptmask.ToString(), string.Empty);
             }
+
             if (Length == 0)
             {
                 return string.Empty;
@@ -496,42 +499,7 @@ namespace PPlus.Internal
             _signalNumberInput = " "[0];
             _signalTimeInput = string.Empty;
             _validSignalNumber = $"{_cultureMasked.NumberFormat.PositiveSign[0]}{_cultureMasked.NumberFormat.NegativeSign[0]}";
-
-            var origdefaultvalue = _maskInputOptions.DefaultValueWitdhoutMask ?? string.Empty;
-            if (_isTypeTime)
-            {
-                var aux = (origdefaultvalue).ToCharArray();
-                if (aux.Length > 0)
-                {
-                    var last = aux.Last();
-                    if (char.IsLetter(last))
-                    {
-                        if (_cultureMasked.DateTimeFormat.AMDesignator[0] == last)
-                        {
-                            _signalTimeInput = _cultureMasked.DateTimeFormat.AMDesignator;
-                        }
-                        else if (_cultureMasked.DateTimeFormat.PMDesignator[0] == last)
-                        {
-                            _signalTimeInput = _cultureMasked.DateTimeFormat.PMDesignator;
-                        }
-                        origdefaultvalue = origdefaultvalue.Substring(0, origdefaultvalue.Length - 1);
-                    }
-                }
-            }
-            else if (_isTypeNumber)
-            {
-                var aux = (origdefaultvalue).ToCharArray();
-                if (aux.Length > 0)
-                {
-                    var last = aux.Last();
-                    if ("+-".IndexOf(last) != -1)
-                    {
-                        _signalNumberInput = last;
-                        origdefaultvalue = origdefaultvalue.Substring(0, origdefaultvalue.Length - 1);
-                    }
-                }
-            }
-            return FillDefaultChar(origdefaultvalue, _maskInputOptions.FillNumber);
+            return FillDefaultGeneric(_maskInputOptions.DefaultValueWitdMask ?? string.Empty);
         }
 
         private bool InputTypeCurrrency(char value)
@@ -735,44 +703,134 @@ namespace PPlus.Internal
 
         private bool FreeSpaceIntNumber => _inputBuffer.Length != 0 && _inputBuffer[0] == '0';
 
-        private MaskedBuffer Load(string value)
+        public MaskedBuffer Load(string value)
         {
             if (string.IsNullOrEmpty(value))
             {
                 return this;
             }
-            _inputBuffer.Append(value);
-            Position += value.Length;
+            _inputBuffer.Clear();
+            switch (_maskInputOptions.Type)
+            {
+                case MaskedType.Generic:
+                    _inputBuffer.Append(FillDefaultGeneric(value));
+                    break;
+                case MaskedType.DateOnly:
+                case MaskedType.TimeOnly:
+                case MaskedType.DateTime:
+                {
+                    _signalTimeInput = string.Empty;
+                    var aux = value
+                        .Replace(_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator, "")
+                        .Replace(_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator, "")
+                        .Replace(" ", "");
+                    if (aux.Contains(_maskInputOptions.CurrentCulture.DateTimeFormat.AMDesignator))
+                    {
+                        _signalTimeInput = _maskInputOptions.CurrentCulture.DateTimeFormat.AMDesignator;
+                    }
+                    else if (aux.Contains(_maskInputOptions.CurrentCulture.DateTimeFormat.AMDesignator))
+                    {
+                        _signalTimeInput = _maskInputOptions.CurrentCulture.DateTimeFormat.PMDesignator;
+                    }
+                    aux = aux.Replace(_signalTimeInput, "");
+                    _inputBuffer.Append(aux.Trim());
+                    break;
+                }
+                case MaskedType.Number:
+                case MaskedType.Currency:
+                {
+                    _signalNumberInput = " "[0];
+                    var aux = double.Parse(value).ToString()
+                        .Replace(_maskInputOptions.CurrentCulture.NumberFormat.NumberGroupSeparator, "")
+                        .Replace(_maskInputOptions.CurrentCulture.NumberFormat.CurrencyGroupSeparator, "");
+
+                    if (aux.Contains(_maskInputOptions.CurrentCulture.NumberFormat.PositiveSign))
+                    {
+                        _signalNumberInput = _maskInputOptions.CurrentCulture.NumberFormat.PositiveSign[0];
+                    }
+                    else if (aux.Contains(_maskInputOptions.CurrentCulture.NumberFormat.NegativeSign))
+                    {
+                        _signalNumberInput = _maskInputOptions.CurrentCulture.NumberFormat.NegativeSign[0];
+                    }
+                    aux = aux.Replace(_signalNumberInput.ToString(), "");
+                    _inputBuffer.Append(aux.Trim());
+                    break;
+                }
+            }
             return this;
         }
 
-        private string FillDefaultChar(string origdefaultvalue, char? defaultchar)
+        public string FillDefaultGeneric(string origdefaultvalue)
         {
-
+            if (!_isTypeGeneric)
+            {
+                return origdefaultvalue;
+            }
+            if (origdefaultvalue.Length != _logicalMaskGeneric.Length)
+            {
+                return string.Empty;
+            }
             var result = new StringBuilder();
             for (var pos = 0; pos < _validPosition.Length; pos++)
             {
-                if (_logicalMaskGeneric[_validPosition[pos]] == '9')
+                var indexori = _validPosition[pos];
+                if (_logicalMaskGeneric[indexori] == 'L')
                 {
-                    if (pos > origdefaultvalue.Length - 1)
+                    if (CharLetters.IndexOf(origdefaultvalue[indexori]) != -1)
                     {
-                        if (defaultchar.HasValue)
-                        {
-                            result.Append(defaultchar.Value);
-                        }
+                        result.Append(origdefaultvalue[indexori]);
                     }
-                    else if (CharNumbers.IndexOf(origdefaultvalue[pos]) != -1)
+                }
+                else if (_logicalMaskGeneric[indexori] == 'C')
+                {
+                    if (_charCustoms[pos].IndexOf(origdefaultvalue[indexori]) != -1)
                     {
-                        result.Append(origdefaultvalue[pos]);
+                        result.Append(origdefaultvalue[indexori]);
+                    }
+                }
+                else if (_logicalMaskGeneric[indexori] == 'N')
+                {
+                    if (CharNumbers.IndexOf(origdefaultvalue[indexori]) != -1)
+                    {
+                        result.Append(origdefaultvalue[indexori]);
                     }
                     else
                     {
-                        if (defaultchar.HasValue)
+                        if (_charCustoms[pos].IndexOf(origdefaultvalue[indexori]) != -1)
                         {
-                            result.Append(defaultchar.Value);
+                            result.Append(origdefaultvalue[indexori]);
                         }
                     }
                 }
+                else if (_logicalMaskGeneric[indexori] == 'X')
+                {
+                    if (CharLetters.IndexOf(origdefaultvalue[indexori]) != -1)
+                    {
+                        result.Append(origdefaultvalue[indexori]);
+                    }
+                    else
+                    {
+                        if (_charCustoms[pos].IndexOf(origdefaultvalue[indexori]) != -1)
+                        {
+                            result.Append(origdefaultvalue[indexori]);
+                        }
+                    }
+                }
+                else if (_logicalMaskGeneric[indexori] == 'A')
+                {
+                    result.Append(origdefaultvalue[indexori]);
+                }
+                else if (_logicalMaskGeneric[indexori] == '9')
+                {
+                    if (CharNumbers.IndexOf(origdefaultvalue[indexori]) != -1)
+                    {
+                        result.Append(origdefaultvalue[indexori]);
+                    }
+                }
+            }
+            if (result.ToString().Length != _validPosition.Length)
+            {
+                return string.Empty;
             }
             return result.ToString();
         }

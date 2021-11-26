@@ -376,8 +376,8 @@ namespace PPlus.Controls
             }
             var di = new DirectoryInfo(defvalue);
             _defaultopt = new ResultBrowser(di.Parent?.FullName ?? "", di.Name, false, false, !_options.ShowNavigationCurrentPath);
-            _currentPath = defvalue;
-            _paginator = new Paginator<ResultBrowser>(ItensFolders(defvalue), _options.PageSize, Optional<ResultBrowser>.Create(_defaultopt), _aliasSelector);
+            _currentPath = _defaultopt.PathValue;
+            _paginator = new Paginator<ResultBrowser>(ItensFolders(_defaultopt.PathValue), _options.PageSize, Optional<ResultBrowser>.Create(_defaultopt), _aliasSelector);
             if (_paginator.IsUnSelected)
             {
                 _paginator.FirstItem();
@@ -518,13 +518,16 @@ namespace PPlus.Controls
                 {
                     return false;
                 }
-                if (di.Attributes.HasFlag(FileAttributes.System))
+                if (di.Attributes >= 0)
                 {
-                    return false;
-                }
-                if (_options.SupressHidden && di.Attributes.HasFlag(FileAttributes.Hidden))
-                {
-                    return false;
+                    if (di.Attributes.HasFlag(FileAttributes.System))
+                    {
+                        return false;
+                    }
+                    if (_options.SupressHidden && di.Attributes.HasFlag(FileAttributes.Hidden))
+                    {
+                        return false;
+                    }
                 }
                 return true;
             }

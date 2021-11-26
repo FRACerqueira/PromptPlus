@@ -34,7 +34,9 @@ namespace CommandDotNet.Example
                 Password password,
                 IConsole console,
                 [Option(Description = "username to secure download")]
-                string username = "admin")
+                string username = "admin",
+                [PromptPlusTypeMasked("TK-C[ABC]9{3}-L{2}",true)]
+                string extratoken = "TK-A333-QQ")
             {
                 // mimic auth
 
@@ -95,7 +97,7 @@ namespace CommandDotNet.Example
         [Command(Description = "Echos the list of items")]
         public void List(
             IConsole console,
-            [Description("Items do list")]
+            [Description("Items to list")]
             ICollection<string> items)
         {
             console.Out.WriteLine(string.Join(Environment.NewLine, items));

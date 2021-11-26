@@ -12,8 +12,9 @@ namespace PPlus.CommandDotNet.Controls
         public  HotKey Build { get; set; } = new HotKey(ConsoleKey.F5);
         public IFormPlusBase WizardControl { get; set; } = null;
         public IEnumerable<WizardArgs> TokenArgs { get; set; }
-        public ConsoleColor? ForeColor { get; set; }
-        public ConsoleColor? BackColor { get; set; }
+        public ConsoleColor ForeColor { get; set; }
+        public ConsoleColor BackColor { get; set; }
+        public ConsoleColor MissingForeColor { get; set; }
 
     }
 }

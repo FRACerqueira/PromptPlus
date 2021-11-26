@@ -21,6 +21,6 @@ namespace PPlus.Controls
         public MaskedOptions MaskedOption { get; set; } = new MaskedOptions();
         public bool ValidateOnDemand { get; set; }
         public Func<string, string> DescriptionSelector { get; set; }
-
+        public IList<T> InitialItems { get; set; } = new List<T>();
     }
 }

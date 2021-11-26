@@ -1,8 +1,7 @@
 # **Welcome to PromptPlus**
 
 Interactive command-line  toolkit for **C#** with powerful controls and commands.
-PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
-- .NET Core 3.1, 5.X, 6.X
+PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks.
 
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**:
 - PromptPlus.CommandDotNet
@@ -16,13 +15,26 @@ PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** ta
 ## **PromptPlus.CommandDotNet - Sample Usage**
 
 ```csharp
-var AppCmd = new AppRunner<Examples>()
-    .UseDefaultMiddleware()
-    .UsePrompter()
-    .UsePromptPlusAnsiConsole(cultureInfo: new CultureInfo("en"))
-    .UsePromptPlusArgumentPrompter()
-    .UsePromptPlusConfig("ConfigFolder")
+public class Program
+{
+    static int Main(string[] args)
+    {
+        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
 
+        PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
+        PromptPlus.Clear();
+
+        return new AppRunner<Examples>()
+            .UseDefaultMiddleware()
+            .UsePrompter()
+            .UseNameCasing(Case.KebabCase)
+            .UsePromptPlusAnsiConsole()
+            .UsePromptPlusArgumentPrompter()
+            .UsePromptPlusWizard()
+            .Run(args);
+    }
+}
 //for usage AppRunner see https://commanddotnet.bilal-fazlani.com/
 ```
 

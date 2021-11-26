@@ -30,7 +30,20 @@ namespace PPlus
             return input =>
             {
                 var allowedScheme = (allowedUriSchemes ?? string.Empty).Split(";", StringSplitOptions.RemoveEmptyEntries);
-                if (input is not string strValue)
+                string localinput = null;
+                if (input is string)
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (input.GetType().Equals(typeof(Uri)))
+                {
+                    localinput = input.ToString();
+                }
+                if (localinput is null)
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
@@ -64,6 +77,10 @@ namespace PPlus
                 {
                     localinput = ((ResultMasked)input).Masked;
                 }
+                else if (IsNumber(input.GetType()))
+                {
+                    return ValidationResult.Success;
+                }
                 else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
@@ -90,6 +107,10 @@ namespace PPlus
                 {
                     localinput = ((ResultMasked)input).Masked;
                 }
+                else if (IsNumber(input.GetType()))
+                {
+                    return ValidationResult.Success;
+                }
                 else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
@@ -115,6 +136,10 @@ namespace PPlus
                 else if (input.GetType().Equals(typeof(ResultMasked)))
                 {
                     localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.DateTime)
+                {
+                    return ValidationResult.Success;
                 }
                 else
                 {
@@ -208,11 +233,24 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.Boolean)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = bool.TryParse(input.ToString(), out _);
+                var result = bool.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -226,11 +264,24 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.Byte)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = byte.TryParse(input.ToString(), out _);
+                var result = byte.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -239,15 +290,29 @@ namespace PPlus
                 return new ValidationResult(errorMessage ?? Messages.Invalid);
             };
         }
+
         public static Func<object, ValidationResult> IsTypeChar(string errorMessage = null)
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.Char)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = char.TryParse(input.ToString(), out _);
+                var result = char.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -261,11 +326,25 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.Decimal)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = decimal.TryParse(input.ToString(), out _);
+                localinput = NormalizeFormatNumber(localinput);
+                var result = decimal.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -279,11 +358,25 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.Decimal)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = double.TryParse(input.ToString(), out _);
+                localinput = NormalizeFormatNumber(localinput);
+                var result = double.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -302,11 +395,25 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.Int16)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = short.TryParse(input.ToString(), out _);
+                localinput = NormalizeFormatNumber(localinput);
+                var result = short.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -324,11 +431,25 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.Int32)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = int.TryParse(input.ToString(), out _);
+                localinput = NormalizeFormatNumber(localinput);
+                var result = int.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -336,6 +457,21 @@ namespace PPlus
 
                 return new ValidationResult(errorMessage ?? Messages.Invalid);
             };
+        }
+
+        private static string NormalizeFormatNumber(string value)
+        {
+            var grpsep = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberGroupSeparator;
+            value = value
+                .Replace(grpsep, "")
+                .Replace(Thread.CurrentThread.CurrentCulture.NumberFormat.PositiveSign, "");
+            if (value.Contains(Thread.CurrentThread.CurrentCulture.NumberFormat.NegativeSign))
+            {
+                value = value
+                .Replace(Thread.CurrentThread.CurrentCulture.NumberFormat.NegativeSign, "");
+                value = $"{Thread.CurrentThread.CurrentCulture.NumberFormat.NegativeSign}{value}";
+            }
+            return value;
         }
 
         public static Func<object, ValidationResult> IsTypeLong(string errorMessage = null)
@@ -346,11 +482,25 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.Int64)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = long.TryParse(input.ToString(), out _);
+                localinput = NormalizeFormatNumber(localinput);
+                var result = long.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -364,11 +514,25 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.SByte)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = sbyte.TryParse(input.ToString(), out _);
+                localinput = NormalizeFormatNumber(localinput);
+                var result = sbyte.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -386,11 +550,25 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.Single)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = float.TryParse(input.ToString(), out _);
+                localinput = NormalizeFormatNumber(localinput);
+                var result = float.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -408,11 +586,25 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.UInt16)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = ushort.TryParse(input.ToString(), out _);
+                localinput = NormalizeFormatNumber(localinput);
+                var result = ushort.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -430,11 +622,25 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.UInt32)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = uint.TryParse(input.ToString(), out _);
+                localinput = NormalizeFormatNumber(localinput);
+                var result = uint.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -452,11 +658,25 @@ namespace PPlus
         {
             return input =>
             {
-                if (input is not string strValue)
+                var localinput = string.Empty;
+                if (input.GetType().Equals(typeof(string)))
+                {
+                    localinput = input.ToString();
+                }
+                else if (input.GetType().Equals(typeof(ResultMasked)))
+                {
+                    localinput = ((ResultMasked)input).Masked;
+                }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.UInt64)
+                {
+                    return ValidationResult.Success;
+                }
+                else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
                 }
-                var result = ulong.TryParse(input.ToString(), out _);
+                localinput = NormalizeFormatNumber(localinput);
+                var result = ulong.TryParse(localinput, out _);
                 if (result)
                 {
                     return ValidationResult.Success;
@@ -479,6 +699,10 @@ namespace PPlus
                 {
                     localinput = ((ResultMasked)input).Masked;
                 }
+                else if (Type.GetTypeCode(input.GetType()) == TypeCode.DateTime)
+                {
+                    return ValidationResult.Success;
+                }
                 else
                 {
                     return new ValidationResult(errorMessage ?? Messages.Invalid);
@@ -491,6 +715,26 @@ namespace PPlus
                 }
                 return ValidationResult.Success;
             };
+        }
+
+        private static bool IsNumber(Type value)
+        {
+            switch (Type.GetTypeCode(value))
+            {
+                case TypeCode.SByte:
+                case TypeCode.Byte:
+                case TypeCode.Int16:
+                case TypeCode.UInt16:
+                case TypeCode.Int32:
+                case TypeCode.UInt32:
+                case TypeCode.Int64:
+                case TypeCode.UInt64:
+                case TypeCode.Single:
+                case TypeCode.Double:
+                case TypeCode.Decimal:
+                    return true;
+            }
+            return false;
         }
     }
 }

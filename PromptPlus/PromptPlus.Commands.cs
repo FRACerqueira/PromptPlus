@@ -60,49 +60,40 @@ namespace PPlus
 
         public static void CursorPosition(int left, int top)
         {
-            lock (_lockobj)
+            if (top < 0)
             {
-                if (top < 0)
-                {
-                    top = 0;
-                }
-                if (left < 0)
-                {
-                    left = 0;
-                }
-                if (top > ConsoleDriver.BufferHeight - 1)
-                {
-                    top = ConsoleDriver.BufferHeight - 1;
-                }
-                ConsoleDriver.SetCursorPosition(left, top);
+                top = 0;
             }
+            if (left < 0)
+            {
+                left = 0;
+            }
+            if (top > ConsoleDriver.BufferHeight - 1)
+            {
+                top = ConsoleDriver.BufferHeight - 1;
+            }
+            ConsoleDriver.SetCursorPosition(left, top);
         }
 
         public static void ConsoleDefaultColor(ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
         {
-            lock (_lockobj)
+            if (forecolor.HasValue)
             {
-                if (forecolor.HasValue)
-                {
-                    ConsoleDriver.ForegroundColor = forecolor.Value;
-                }
-                if (backcolor.HasValue)
-                {
-                    ConsoleDriver.BackgroundColor = backcolor.Value;
-                }
+                ConsoleDriver.ForegroundColor = forecolor.Value;
+            }
+            if (backcolor.HasValue)
+            {
+                ConsoleDriver.BackgroundColor = backcolor.Value;
             }
         }
 
         public static void Clear(ConsoleColor? backcolor = null)
         {
-            lock (_lockobj)
+            if (backcolor.HasValue)
             {
-                if (backcolor.HasValue)
-                {
-                    ConsoleDriver.BackgroundColor = backcolor.Value;
-                }
-                ConsoleDriver.Clear();
+                ConsoleDriver.BackgroundColor = backcolor.Value;
             }
+            ConsoleDriver.Clear();
         }
 
         public static void WriteLineSkipColors(string value)

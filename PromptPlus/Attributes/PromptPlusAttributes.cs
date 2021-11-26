@@ -111,10 +111,6 @@ namespace PPlus.Attributes
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
     public class PromptPlusTypeBrowserAttribute : Attribute, IPromptType
     {
-        public PromptPlusTypeBrowserAttribute()
-        {
-        }
-
         public PromptPlusTypeBrowserAttribute(
             BrowserFilter kind = BrowserFilter.None,
             string prefixExtension = null,
@@ -135,6 +131,22 @@ namespace PPlus.Attributes
         public string SearchPattern { get; private set; }
     }
 
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
+    public class PromptPlusTypeMaskedAttribute : Attribute, IPromptType
+    {
+        public PromptPlusTypeMaskedAttribute(
+            string mask,
+            bool uppercase)
+        {
+            Mask = mask;
+            Uppercase = uppercase;
+        }
+
+        public PromptPlusTypeKind TypeKind => PromptPlusTypeKind.Generic;
+        public string Mask { get; private set; }
+        public bool Uppercase { get; private set; }
+    }
+
     internal interface IPromptType
     {
         PromptPlusTypeKind TypeKind { get; }
@@ -146,7 +158,8 @@ namespace PPlus.Attributes
         Number,
         Currency,
         DateTime,
-        Browser
+        Browser,
+        Generic
     }
 
 }

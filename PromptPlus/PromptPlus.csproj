@@ -81,17 +81,11 @@
     <PackageReference Include="System.Text.Json" Version="4.7.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Remove="Resources\PromptPlusResources.pt-BR.resx" />
-  </ItemGroup>
-  
+ 
   <ItemGroup>
     <Content Include="README.txt">
       <Pack>true</Pack>
       <PackagePath>README.txt</PackagePath>
-    </Content>
-    <Content Include="Resources\PromptPlusResources.Designer.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   
@@ -114,21 +108,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Exceptions.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\PromptPlusResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PromptPlusResources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Exceptions.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\PromptPlusResources.resx" Pack="true" PackagePath="\Resources">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <EmbeddedResource Update="Resources\PromptPlusResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Resources\PromptPlus.config.json" Pack="true" PackagePath="\Resources">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

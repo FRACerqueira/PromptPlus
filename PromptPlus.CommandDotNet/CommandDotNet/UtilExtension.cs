@@ -18,7 +18,7 @@ namespace PPlus.CommandDotNet
 {
     public static class UtilExtension
     {
-        internal static ICollection<string> PromptForTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize,bool disableEscAbort,  out bool isCancellationRequested)
+        internal static ICollection<string> PromptForTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize,string[] lastvalue,  out bool isCancellationRequested)
         {
             isCancellationRequested = false;
             if (string.IsNullOrEmpty(description))
@@ -32,22 +32,14 @@ namespace PPlus.CommandDotNet
             var typeinf = string.Format(Messages.WizardTypeInfo, argument.TypeInfo.DisplayName);
             if (string.IsNullOrEmpty(description))
             {
-                if (argument.TypeInfo.Type == typeof(DateTime))
-                {
-                    description = $"{typeinf} - YYYY/MM/DD";
-                }
-                else
+                if (argument.TypeInfo.Type != typeof(DateTime))
                 {
                     description = $"{typeinf}";
                 }
             }
             else
             {
-                if (argument.TypeInfo.Type == typeof(DateTime))
-                {
-                    description = $". {typeinf} - YYYY/MM/DD";
-                }
-                else
+                if (argument.TypeInfo.Type != typeof(DateTime))
                 {
                     description += $". {typeinf}";
                 }
@@ -58,7 +50,12 @@ namespace PPlus.CommandDotNet
             var defaultValue = argument.Default?.Value;
 
             Func<object, ValidationResult> validatetypeRecognized;
+
             var mask = string.Empty;
+            (int intpos, int decpos) range = new(-1, -1);
+            var accepSignal = false;
+            var ctrlmasktype = MaskedType.Generic;
+
             TypeCode typeCodearg;
             if (argument.TypeInfo.Type.IsGenericType && argument.TypeInfo.Type.GenericTypeArguments.Length == 1)
             {
@@ -75,7 +72,8 @@ namespace PPlus.CommandDotNet
                     break;
                 case TypeCode.Byte:
                     validatetypeRecognized = PromptPlusValidators.IsTypeByte();
-                    mask = "9{3}";
+                    range.intpos = 3;
+                    range.decpos = 0;
                     break;
                 case TypeCode.Char:
                     validatetypeRecognized = PromptPlusValidators.IsTypeChar();
@@ -83,47 +81,74 @@ namespace PPlus.CommandDotNet
                     break;
                 case TypeCode.DateTime:
                     validatetypeRecognized = PromptPlusValidators.IsTypeDateTime();
-                    mask = "9{4}" + Thread.CurrentThread.CurrentCulture.DateTimeFormat.DateSeparator + "C{1}[01]9{1}" + Thread.CurrentThread.CurrentCulture.DateTimeFormat.DateSeparator + "C{1}[0123]9{1}";
+                    ctrlmasktype = MaskedType.DateOnly;
                     break;
                 case TypeCode.Decimal:
                     validatetypeRecognized = PromptPlusValidators.IsTypeDecimal();
-                    mask = "C{1}[+-]9{15}" + Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator + "9{5}";
+                    ctrlmasktype = MaskedType.Number;
+                    range.intpos = 15;
+                    range.decpos = 5;
+                    accepSignal = true;
                     break;
                 case TypeCode.Double:
                     validatetypeRecognized = PromptPlusValidators.IsTypeDouble();
-                    mask = "C{1}[+-]9{15}" + Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator + "9{5}";
+                    ctrlmasktype = MaskedType.Number;
+                    range.intpos = 15;
+                    range.decpos = 5;
+                    accepSignal = true;
                     break;
                 case TypeCode.Int16:
                     validatetypeRecognized = PromptPlusValidators.IsTypeInt16();
-                    mask = "9{5}";
+                    ctrlmasktype = MaskedType.Number;
+                    range.intpos = 5;
+                    range.decpos = 0;
+                    accepSignal = true;
                     break;
                 case TypeCode.Int32:
                     validatetypeRecognized = PromptPlusValidators.IsTypeInt32();
-                    mask = "9{10}";
+                    ctrlmasktype = MaskedType.Number;
+                    range.intpos = 10;
+                    range.decpos = 0;
+                    accepSignal = true;
                     break;
                 case TypeCode.Int64:
                     validatetypeRecognized = PromptPlusValidators.IsTypeInt64();
-                    mask = "9{20}";
+                    ctrlmasktype = MaskedType.Number;
+                    range.intpos = 20;
+                    range.decpos = 0;
+                    accepSignal = true;
                     break;
                 case TypeCode.SByte:
                     validatetypeRecognized = PromptPlusValidators.IsTypeSByte();
-                    mask = "C{1}[+-]9{3}";
+                    ctrlmasktype = MaskedType.Number;
+                    range.intpos = 3;
+                    range.decpos = 0;
+                    accepSignal = true;
                     break;
                 case TypeCode.Single:
                     validatetypeRecognized = PromptPlusValidators.IsTypeSingle();
-                    mask = "9{10}";
+                    ctrlmasktype = MaskedType.Number;
+                    range.intpos = 10;
+                    range.decpos = 0;
+                    accepSignal = true;
                     break;
                 case TypeCode.UInt16:
                     validatetypeRecognized = PromptPlusValidators.IsTypeUInt16();
-                    mask = "C{1}[+-]9{5}";
+                    ctrlmasktype = MaskedType.Number;
+                    range.intpos = 5;
+                    range.decpos = 0;
                     break;
                 case TypeCode.UInt32:
                     validatetypeRecognized = PromptPlusValidators.IsTypeUInt32();
-                    mask = "C{1}[+-]9{10}";
+                    ctrlmasktype = MaskedType.Number;
+                    range.intpos = 10;
+                    range.decpos = 0;
                     break;
                 case TypeCode.UInt64:
                     validatetypeRecognized = PromptPlusValidators.IsTypeUInt64();
-                    mask = "C{1}[+-]9{20}";
+                    ctrlmasktype = MaskedType.Number;
+                    range.intpos = 20;
+                    range.decpos = 0;
                     break;
                 default:
                     validatetypeRecognized = null;
@@ -134,29 +159,77 @@ namespace PPlus.CommandDotNet
             {
                 if (argument.AllowedValues.Any())
                 {
-
-                    return PromptAllowedManyValues(ctx, pageSize, promptText, description, argument, disableEscAbort, out isCancellationRequested);
+                    return PromptAllowedManyValues(ctx, pageSize, promptText, description, argument,lastvalue, out isCancellationRequested);
                 }
                 else
                 {
                     if (validatetypeRecognized != null)
                     {
-                        var p = PromptPlus
-                                .ListMasked(promptText, description)
-                                .MaskType(MaskedType.Generic, mask)
-                                .PageSize(pageSize)
-                                .ShowInputType(false)
-                                .Range(argument.Arity.Minimum, argument.Arity.Maximum)
-                                .AddValidators(argument.ImportDataAnnotationsValidations())
-                                .AddValidator(validatetypeRecognized)
-                                .Config(ctx => ctx.HideAfterFinish(true))
-                                .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
-                                .Run(ctx.CancellationToken);
-
+                        var p = new ResultPromptPlus<IEnumerable<ResultMasked>>(null,true);
+                        switch (ctrlmasktype)
+                        {
+                            case MaskedType.DateOnly:
+                                p = PromptPlus
+                                    .ListMasked(promptText, description)
+                                    .MaskType(MaskedType.DateOnly)
+                                    .FillZeros(true)
+                                    .AddItems(lastvalue)
+                                    .PageSize(pageSize)
+                                    .ShowInputType(true)
+                                    .ShowDayWeek(FormatWeek.Short)
+                                    .Range(argument.Arity.Minimum, argument.Arity.Maximum)
+                                    .AddValidators(argument.ImportDataAnnotationsValidations())
+                                    .AddValidator(validatetypeRecognized)
+                                    .Config(ctx => ctx.HideAfterFinish(true))
+                                    .Run(ctx.CancellationToken);
+                                break;
+                            case MaskedType.Number:
+                                p = PromptPlus
+                                    .ListMasked(promptText, description)
+                                    .MaskType(MaskedType.Number)
+                                    .AmmoutPositions(range.intpos,range.decpos)
+                                    .AddItems(lastvalue)
+                                    .AcceptSignal(accepSignal)
+                                    .PageSize(pageSize)
+                                    .ShowInputType(false)
+                                    .Range(argument.Arity.Minimum, argument.Arity.Maximum)
+                                    .AddValidators(argument.ImportDataAnnotationsValidations())
+                                    .AddValidator(validatetypeRecognized)
+                                    .Config(ctx => ctx.HideAfterFinish(true))
+                                    .Run(ctx.CancellationToken);
+                                break;
+                            case MaskedType.Generic:
+                                p = PromptPlus
+                                    .ListMasked(promptText, description)
+                                    .MaskType(MaskedType.Generic, mask)
+                                    .PageSize(pageSize)
+                                    .AddItems(lastvalue)
+                                    .ShowInputType(true)
+                                    .Range(argument.Arity.Minimum, argument.Arity.Maximum)
+                                    .AddValidators(argument.ImportDataAnnotationsValidations())
+                                    .AddValidator(validatetypeRecognized)
+                                    .Config(ctx => ctx.HideAfterFinish(true))
+                                    .Run(ctx.CancellationToken);
+                                break;
+                        }
                         if (p.IsAborted)
                         {
                             isCancellationRequested = true;
                             return Array.Empty<string>();
+                        }
+                        if (ctrlmasktype == MaskedType.Number)
+                        {
+                            var aux = p.Value.Select(x => x.Masked).ToArray();
+                            var grpsep = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberGroupSeparator;
+                            for (var i = 0; i < aux.Length; i++)
+                            {
+                                aux[i] = aux[i].Replace(grpsep, "").TrimStart('0');
+                                if (string.IsNullOrEmpty(aux[i]))
+                                {
+                                    aux[i] = "0";
+                                }
+                            }
+                            return aux;
                         }
                         return p.Value.Select(x => x.Masked).ToArray();
                     }
@@ -166,8 +239,8 @@ namespace PPlus.CommandDotNet
                         var c = PromptPlus
                                 .List<string>(promptText, description)
                                 .PageSize(pageSize)
+                                .AddItems(lastvalue)
                                 .Config(ctx => ctx.HideAfterFinish(true))
-                                .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                                 .Range(argument.Arity.Minimum, argument.Arity.Maximum)
                                 .AddValidators(argument.ImportDataAnnotationsValidations());
 
@@ -190,7 +263,7 @@ namespace PPlus.CommandDotNet
             {
                 if (argument.AllowedValues.Any() && argument.TypeInfo.Type != typeof(bool))
                 {
-                    return PromptAllowedOnlyValue(ctx, pageSize, promptText, description, argument, disableEscAbort, out isCancellationRequested);
+                    return PromptAllowedOnlyValue(ctx, pageSize, promptText, description, argument,lastvalue, out isCancellationRequested);
                 }
                 else
                 {
@@ -198,33 +271,103 @@ namespace PPlus.CommandDotNet
                     {
                         if (argument.TypeInfo.Type == typeof(bool))
                         {
-                            return PromptBooleanValue(ctx, defaultValue != null && (bool)defaultValue, promptText, description, argument.AllowedValues.ToArray(),disableEscAbort, out isCancellationRequested);
+                            var defvalue = defaultValue != null && (bool)defaultValue;
+                            if (lastvalue is not null)
+                            {
+                                if (lastvalue.Length == 1)
+                                {
+                                    bool.TryParse(lastvalue[0], out defvalue);
+                                }
+                            }
+                            return PromptBooleanValue(ctx, defvalue, promptText, description, argument.AllowedValues.ToArray(), out isCancellationRequested);
                         }
-                        var p = PromptPlus
-                             .MaskEdit(MaskedType.Generic, promptText, description)
-                             .Mask(mask)
-                             .AddValidators(argument.ImportDataAnnotationsValidations())
-                             .AddValidator(validatetypeRecognized)
-                             .Config(ctx=> ctx.HideAfterFinish(true))
-                             .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
-                             .Run(ctx.CancellationToken);
-
+                        object defmaskvalue = null;
+                        var p = new ResultPromptPlus<ResultMasked>(new ResultMasked(), true);
+                          switch (ctrlmasktype)
+                        {
+                            case MaskedType.DateOnly:
+                                if (lastvalue is not null)
+                                {
+                                    if (lastvalue.Length == 1)
+                                    {
+                                        defmaskvalue = DateTime.Parse(lastvalue[0]);
+                                    }
+                                }
+                                p = PromptPlus
+                                    .MaskEdit(MaskedType.DateOnly, promptText, description)
+                                    .Default(defmaskvalue)
+                                    .FillZeros(true)
+                                    .ShowInputType(true)
+                                    .ShowDayWeek(FormatWeek.Short)
+                                    .AddValidators(argument.ImportDataAnnotationsValidations())
+                                    .AddValidator(validatetypeRecognized)
+                                    .Config(ctx => ctx.HideAfterFinish(true))
+                                    .Run(ctx.CancellationToken); break;
+                            case MaskedType.Number:
+                                if (lastvalue is not null)
+                                {
+                                    if (lastvalue.Length == 1)
+                                    {
+                                        defmaskvalue = double.Parse(lastvalue[0]);
+                                    }
+                                }
+                                p = PromptPlus
+                                    .MaskEdit(MaskedType.Number,promptText, description)
+                                    .AmmoutPositions(range.intpos, range.decpos)
+                                    .Default(defmaskvalue)
+                                    .AcceptSignal(accepSignal)
+                                    .ShowInputType(false)
+                                    .AddValidators(argument.ImportDataAnnotationsValidations())
+                                    .AddValidator(validatetypeRecognized)
+                                    .Config(ctx => ctx.HideAfterFinish(true))
+                                    .Run(ctx.CancellationToken);
+                                break;
+                            case MaskedType.Generic:
+                                if (lastvalue is not null)
+                                {
+                                    if (lastvalue.Length == 1)
+                                    {
+                                        defmaskvalue = lastvalue[0];
+                                    }
+                                }
+                                p = PromptPlus
+                                     .MaskEdit(MaskedType.Generic, promptText, description)
+                                     .Mask(mask)
+                                     .Default(defmaskvalue)
+                                     .ShowInputType(true)
+                                     .AddValidators(argument.ImportDataAnnotationsValidations())
+                                     .AddValidator(validatetypeRecognized)
+                                     .Config(ctx => ctx.HideAfterFinish(true))
+                                     .Run(ctx.CancellationToken);
+                                break;
+                        }
                         if (p.IsAborted)
                         {
                             isCancellationRequested = true;
                             return Array.Empty<string>();
                         }
+                        if (ctrlmasktype == MaskedType.Number)
+                        {
+                            var aux = p.Value.Masked;
+                            var grpsep = Thread.CurrentThread.CurrentCulture.NumberFormat.NumberGroupSeparator;
+                            aux = aux.Replace(grpsep, "").TrimStart('0');
+                            if (string.IsNullOrEmpty(aux))
+                            {
+                                aux = "0";
+                            }
+                            return new[] { aux };
+                        }
                         return new[] { p.Value.Masked };
                     }
                     else
                     {
-                        return PromptSingleValue(ctx, isPassword, promptText, description, argument, disableEscAbort, out isCancellationRequested);
+                        return PromptSingleValue(ctx, isPassword, promptText, description, argument, DefaultValueForType(defaultValue), lastvalue, out isCancellationRequested);
                     }
                 }
             }
         }
 
-        internal static ICollection<string> PromptForPromptPlusTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize, PromptPlusTypeKind kind, bool disableEscAbort, out bool isCancellationRequested)
+        internal static ICollection<string> PromptForPromptPlusTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize, PromptPlusTypeKind kind,string[] lastvalue, out bool isCancellationRequested)
         {
 
             isCancellationRequested = false;
@@ -250,12 +393,12 @@ namespace PPlus.CommandDotNet
                             .MaskType(MaskedType.Number)
                             .AmmoutPositions(numberAtt.IntegerPart, numberAtt.DecimalPart)
                             .AcceptSignal(numberAtt.AccepSignal)
+                            .AddItems(lastvalue)
                             .PageSize(pageSize)
                             .Culture(numberAtt.Culture)
                             .Range(argument.Arity.Minimum, argument.Arity.Maximum)
                             .AddValidators(argument.ImportDataAnnotationsValidations())
                             .Config(ctx => ctx.HideAfterFinish(true))
-                            .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                             .Run(ctx.CancellationToken);
                         if (p1.IsAborted)
                         {
@@ -271,12 +414,12 @@ namespace PPlus.CommandDotNet
                             .MaskType(MaskedType.Currency)
                             .AmmoutPositions(currencyAtt.IntegerPart, currencyAtt.DecimalPart)
                             .AcceptSignal(currencyAtt.AccepSignal)
+                            .AddItems(lastvalue)
                             .PageSize(pageSize)
                             .Culture(currencyAtt.Culture)
                             .Range(argument.Arity.Minimum, argument.Arity.Maximum)
                             .AddValidators(argument.ImportDataAnnotationsValidations())
                             .Config(ctx => ctx.HideAfterFinish(true))
-                            .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                             .Run(ctx.CancellationToken);
                         if (p1.IsAborted)
                         {
@@ -294,11 +437,12 @@ namespace PPlus.CommandDotNet
                             .FillZeros(true)
                             .FormatTime(DateTimeAtt.TimeKind)
                             .FormatYear(DateTimeAtt.YearKind)
+                            .ShowDayWeek(FormatWeek.Short)
                             .Culture(DateTimeAtt.Culture)
+                            .AddItems(lastvalue)
                             .Range(argument.Arity.Minimum, argument.Arity.Maximum)
                             .AddValidators(argument.ImportDataAnnotationsValidations())
                             .Config(ctx => ctx.HideAfterFinish(true))
-                            .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                             .Run(ctx.CancellationToken);
                         if (p1.IsAborted)
                         {
@@ -309,23 +453,44 @@ namespace PPlus.CommandDotNet
                     }
                     default:
                         throw new InvalidConfigurationException(
-                         $"Invalid PromptTypeKind {kind} for {argument.Name}. Remove PromptPlus Type!");
+                            string.Format(Exceptions.Ex_PromptTypeKind,kind,argument.Name));
                 }
             }
             else
             {
+                if (lastvalue is not null && lastvalue.Length == 1)
+                {
+                    defaultValue = lastvalue[0];
+                }
                 switch (kind)
                 {
+                    case PromptPlusTypeKind.Generic:
+                    {
+                        var att = argument.FindArgumentAttribute<PromptPlusTypeMaskedAttribute>();
+                        var p1 = PromptPlus.MaskEdit(MaskedType.Generic, promptText, description)
+                            .Mask(att.Mask)
+                            .Default(defaultValue)
+                            .UpperCase(att.Uppercase)
+                            .AddValidators(argument.ImportDataAnnotationsValidations())
+                            .Config(ctx => ctx.HideAfterFinish(true))
+                            .Run(ctx.CancellationToken);
+                        if (p1.IsAborted)
+                        {
+                            isCancellationRequested = true;
+                            return Array.Empty<string>();
+                        }
+                        return new string[] { p1.Value.Masked };
+                    }
                     case PromptPlusTypeKind.Number:
                     {
                         var att = argument.FindArgumentAttribute<PromptPlusTypeNumberAttribute>();
                         var p1 = PromptPlus.MaskEdit(MaskedType.Number, promptText, description)
                             .AmmoutPositions(att.IntegerPart, att.DecimalPart)
                             .AcceptSignal(att.AccepSignal)
+                            .Default(defaultValue)
                             .Culture(att.Culture)
                             .AddValidators(argument.ImportDataAnnotationsValidations())
                             .Config(ctx => ctx.HideAfterFinish(true))
-                            .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                             .Run(ctx.CancellationToken);
                         if (p1.IsAborted)
                         {
@@ -340,10 +505,10 @@ namespace PPlus.CommandDotNet
                         var p1 = PromptPlus.MaskEdit(MaskedType.Currency, promptText, description)
                             .AmmoutPositions(att.IntegerPart, att.DecimalPart)
                             .AcceptSignal(att.AccepSignal)
+                            .Default(defaultValue)
                             .Culture(att.Culture)
                             .AddValidators(argument.ImportDataAnnotationsValidations())
                             .Config(ctx => ctx.HideAfterFinish(true))
-                            .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                             .Run(ctx.CancellationToken);
                         if (p1.IsAborted)
                         {
@@ -359,10 +524,11 @@ namespace PPlus.CommandDotNet
                             .FillZeros(true)
                             .FormatTime(att.TimeKind)
                             .FormatYear(att.YearKind)
+                            .ShowDayWeek(FormatWeek.Short)
                             .Culture(att.Culture)
+                            .Default(defaultValue)
                             .AddValidators(argument.ImportDataAnnotationsValidations())
                             .Config(ctx => ctx.HideAfterFinish(true))
-                            .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                             .Run(ctx.CancellationToken);
                         if (p1.IsAborted)
                         {
@@ -378,13 +544,13 @@ namespace PPlus.CommandDotNet
                             .AllowNotSelected(att.AllowNotSelected)
                             .Filter(att.Kind)
                             .PageSize(pageSize)
+                            .Default(defaultValue?.ToString())
                             .PrefixExtension(att.PrefixExtension)
                             .PromptCurrentPath(true)
                             .SupressHidden(true)
                             .promptSearchPattern(true)
                             .SearchPattern(att.SearchPattern)
                             .Config(ctx => ctx.HideAfterFinish(true))
-                            .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                             .Run(ctx.CancellationToken);
                         if (p1.IsAborted)
                         {
@@ -400,13 +566,13 @@ namespace PPlus.CommandDotNet
             }
         }
 
-        private static ICollection<string> PromptBooleanValue(CommandContext ctx, bool defaultValue, string promptText, string description, string[] allowervalues, bool disableEscAbort, out bool isCancellationRequested)
+        private static ICollection<string> PromptBooleanValue(CommandContext ctx, bool defaultValue, string promptText, string description, string[] allowervalues, out bool isCancellationRequested)
         {
+
             isCancellationRequested = false;
             var c = PromptPlus
                 .SliderSwitch(promptText, description)
                 .Config(ctx => ctx.HideAfterFinish(true))
-                .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                 .Default(defaultValue);
 
             if (allowervalues.Length == 2)
@@ -424,17 +590,26 @@ namespace PPlus.CommandDotNet
             return new[] { p.Value.ToString() };
         }
 
-        private static ICollection<string> PromptSingleValue(CommandContext ctx, bool isPassword, string promptText, string description, IArgument argument, bool disableEscAbort, out bool isCancellationRequested)
+        private static ICollection<string> PromptSingleValue(CommandContext ctx, bool isPassword, string promptText, string description, IArgument argument, string defaultvalue,string[] lastvalue, out bool isCancellationRequested)
         {
+            string initvalue = null;
+            if (lastvalue is not null)
+            {
+                if (lastvalue.Length == 1)
+                {
+                    initvalue = lastvalue[0];
+                }
+            }
+
             isCancellationRequested = false;
             var uriAtt = argument.FindArgumentAttribute<PromptValidatorUriAttribute>();
 
             var c = PromptPlus
                 .Input(promptText, description)
-                .Default(argument.Default?.Value?.ToString())
+                .Default(defaultvalue)
+                .InitialValue(initvalue)
                 .AddValidators(argument.ImportDataAnnotationsValidations())
                 .Config(ctx => ctx.HideAfterFinish(true))
-                .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                 .AddValidator(argument.Arity.Minimum > 0 ? PromptPlusValidators.Required() : null);
             if (isPassword)
             {
@@ -454,17 +629,16 @@ namespace PPlus.CommandDotNet
             return new[] { p.Value };
         }
 
-        private static ICollection<string> PromptAllowedManyValues(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument, bool disableEscAbort, out bool isCancellationRequested)
+        private static ICollection<string> PromptAllowedManyValues(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument,string[] lastvalue, out bool isCancellationRequested)
         {
             isCancellationRequested = false;
             var p = PromptPlus
                 .MultiSelect<string>(promptText, description)
                 .AddItems(argument.AllowedValues)
-                .AddDefault(argument.Default?.Value?.ToString())
+                .AddDefaults(lastvalue)
                 .Range(argument.Arity.Minimum, argument.Arity.Maximum)
                 .PageSize(pageSize)
                 .Config(ctx => ctx.HideAfterFinish(true))
-                .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                 .Run(ctx.CancellationToken);
             if (p.IsAborted)
             {
@@ -474,16 +648,23 @@ namespace PPlus.CommandDotNet
             return p.Value.ToArray();
         }
 
-        private static ICollection<string> PromptAllowedOnlyValue(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument, bool disableEscAbort, out bool isCancellationRequested)
+        private static ICollection<string> PromptAllowedOnlyValue(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument,string[] lastvalue, out bool isCancellationRequested)
         {
+            string defvalue = null;
+            if (lastvalue is not null)
+            {
+                if (lastvalue.Length == 1)
+                {
+                    defvalue = lastvalue[0];
+                }
+            }
             isCancellationRequested = false;
             var p = PromptPlus
                 .Select<string>(promptText, description)
                 .AddItems(argument.AllowedValues)
-                .Default(argument.Default?.Value?.ToString())
+                .Default(defvalue)
                 .PageSize(pageSize)
                 .Config(ctx => ctx.HideAfterFinish(true))
-                .Config(ctx => ctx.EnabledAbortKey(!disableEscAbort))
                 .Run(ctx.CancellationToken);
             if (p.IsAborted)
             {
@@ -491,6 +672,35 @@ namespace PPlus.CommandDotNet
                 return Array.Empty<string>();
             }
             return new[] { p.Value };
+        }
+
+        private static string DefaultValueForType(object value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+            switch (Type.GetTypeCode(value.GetType()))
+            {
+                case TypeCode.String:
+                case TypeCode.Char:
+                case TypeCode.Byte:
+                case TypeCode.Boolean:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.SByte:
+                case TypeCode.Single:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                    return value.ToString();
+                case TypeCode.DateTime:
+                    return ((DateTime)value).ToString("D");
+            }
+            return null;
         }
 
         public static string CopyCallerDescription(this Type source, [CallerMemberName] string? caller = null)

@@ -58,18 +58,15 @@ namespace PPlus.Drivers
 
         public ConsoleKeyInfo WaitKeypress(bool intercept, CancellationToken cancellationToken)
         {
-            lock (PromptPlus._lockobj)
+            while (!KeyAvailable && !cancellationToken.IsCancellationRequested)
             {
-                while (!KeyAvailable && !cancellationToken.IsCancellationRequested)
-                {
-                    cancellationToken.WaitHandle.WaitOne(IdleReadKey);
-                }
-                if (KeyAvailable && !cancellationToken.IsCancellationRequested)
-                {
-                    return ReadKey(intercept);
-                }
-                return new ConsoleKeyInfo();
+                cancellationToken.WaitHandle.WaitOne(IdleReadKey);
             }
+            if (KeyAvailable && !cancellationToken.IsCancellationRequested)
+            {
+                return ReadKey(intercept);
+            }
+            return new ConsoleKeyInfo();
         }
 
         public Encoding OutputEncoding
@@ -89,61 +86,49 @@ namespace PPlus.Drivers
 
         public void ClearLine(int top)
         {
-            lock (PromptPlus._lockobj)
-            {
-                SetCursorPosition(0, top);
-                Console.Write("\x1b[2K");
-            }
+            SetCursorPosition(0, top);
+            Console.Write("\x1b[2K");
         }
 
         public void ClearRestOfLine(ConsoleColor? color)
         {
-            lock (PromptPlus._lockobj)
-            {
-                Write("\x1b[0K".Color(PromptPlus.ConsoleDriver.ForegroundColor, color ?? PromptPlus.ConsoleDriver.BackgroundColor));
-            }
+            Write("\x1b[0K".Color(PromptPlus.ConsoleDriver.ForegroundColor, color ?? PromptPlus.ConsoleDriver.BackgroundColor));
         }
 
         public ConsoleKeyInfo ReadKey(bool intercept)
         {
-            lock (PromptPlus._lockobj)
-            {
-                return Console.ReadKey(intercept);
-            }
+            return Console.ReadKey(intercept);
         }
 
         public void Write(params ColorToken[] tokens)
         {
-            lock (PromptPlus._lockobj)
+            if (tokens == null || tokens.Length == 0)
             {
-                if (tokens == null || tokens.Length == 0)
+                return;
+            }
+            foreach (var token in tokens)
+            {
+                var originalColor = Console.ForegroundColor;
+                var originalBackgroundColor = Console.BackgroundColor;
+                try
                 {
-                    return;
+                    if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
+                    {
+                        Console.Write(token.AnsiColor);
+                    }
+                    if (token.Underline)
+                    {
+                        Console.Write("\x1b[4m");
+                    }
+                    Console.Write(token.Text ?? string.Empty);
                 }
-                foreach (var token in tokens)
+                finally
                 {
-                    var originalColor = Console.ForegroundColor;
-                    var originalBackgroundColor = Console.BackgroundColor;
-                    try
+                    if (token.Underline)
                     {
-                        if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
-                        {
-                            Console.Write(token.AnsiColor);
-                        }
-                        if (token.Underline)
-                        {
-                            Console.Write("\x1b[4m");
-                        }
-                        Console.Write(token.Text ?? string.Empty);
+                        Console.Write("\x1b[24m");
                     }
-                    finally
-                    {
-                        if (token.Underline)
-                        {
-                            Console.Write("\x1b[24m");
-                        }
-                        Console.Write(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor);
-                    }
+                    Console.Write(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor);
                 }
             }
         }
@@ -170,38 +155,26 @@ namespace PPlus.Drivers
 
         public void WriteLine(params ColorToken[] tokens)
         {
-            lock (PromptPlus._lockobj)
-            {
-                Write(tokens);
-                Console.WriteLine();
-            }
+            Write(tokens);
+            Console.WriteLine();
         }
 
 
         public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
         {
-            lock (PromptPlus._lockobj)
-            {
-                Write(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
-            }
+            Write(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
         }
 
         public void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null)
         {
-            lock (PromptPlus._lockobj)
-            {
-                Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
-                Console.WriteLine();
-            }
+            Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
+            Console.WriteLine();
         }
 
 
         public void SetCursorPosition(int left, int top)
         {
-            lock (PromptPlus._lockobj)
-            {
-                Console.SetCursorPosition(left, top);
-            }
+            Console.SetCursorPosition(left, top);
         }
 
         public bool KeyAvailable
@@ -222,17 +195,14 @@ namespace PPlus.Drivers
             }
             set
             {
-                lock (PromptPlus._lockobj)
+                _cursorVisible = value;
+                if (value)
                 {
-                    _cursorVisible = value;
-                    if (value)
-                    {
-                        Console.Write("\x1b[?25h");
-                    }
-                    else
-                    {
-                        Console.Write("\x1b[?25l");
-                    }
+                    Console.Write("\x1b[?25h");
+                }
+                else
+                {
+                    Console.Write("\x1b[?25l");
                 }
             }
         }

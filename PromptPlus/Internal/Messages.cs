@@ -21,6 +21,7 @@ namespace PPlus.Internal
             EmptyTitle = PromptPlusResources.EmptyTitle;
             EnterFininsh = PromptPlusResources.EnterFininsh;
             EscCancel = PromptPlusResources.EscCancel;
+            EscCancelWizard = PromptPlusResources.EscCancelWizard;
             EscCancelWithPipeline = PromptPlusResources.EscCancelWithPipeline;
             EscCancelWithPipeNotAll = PromptPlusResources.EscCancelWithPipeNotAll;
             FileNotSelected = PromptPlusResources.FileNotSelected;
@@ -31,6 +32,7 @@ namespace PPlus.Internal
             KeyNavPaging = PromptPlusResources.KeyNavPaging;
             ListItemAlreadyexists = PromptPlusResources.ListItemAlreadyexists;
             ListKeyNavigation = string.Format(PromptPlusResources.ListKeyNavigation, RemoveAll);
+            ListKeyNavigationFillZeros = string.Format(PromptPlusResources.ListKeyNavigationFillZeros, RemoveAll);
             ListMaxSelection = PromptPlusResources.ListMaxSelection;
             ListMinSelection = PromptPlusResources.ListMinSelection;
             LongNoKey = PromptPlusResources.LongNoKey;
@@ -100,6 +102,35 @@ namespace PPlus.Internal
         public static string ResizeTerminal { get; private set; } = PromptPlusResources.ResizeTerminal;
 
         public static string EmptyTitle { get; private set; } = PromptPlusResources.EmptyTitle;
+
+
+        private static string s_escCancelCmdDotNet;
+        public static string EscCancelWizard
+        {
+            get
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(s_escCancelCmdDotNet))
+                    {
+                        return string.Format(PromptPlusResources.EscCancelWizard, AbortKeyPress);
+                    }
+                    else
+                    {
+                        return string.Format(s_escCancelCmdDotNet, AbortKeyPress);
+                    }
+                }
+                catch (System.Exception)
+                {
+                    return string.Format(PromptPlusResources.EscCancelWizard, AbortKeyPress);
+                }
+            }
+            private set
+            {
+                s_escCancelCmdDotNet = value;
+            }
+        }
+
 
         private static string s_escCancel;
         public static string EscCancel
@@ -219,6 +250,8 @@ namespace PPlus.Internal
         public static string ListMaxSelection { get; private set; } = PromptPlusResources.ListMaxSelection;
 
         public static string ListKeyNavigation { get; private set; } = string.Format(PromptPlusResources.ListKeyNavigation, RemoveAll);
+
+        public static string ListKeyNavigationFillZeros { get; private set; } = string.Format(PromptPlusResources.ListKeyNavigationFillZeros, RemoveAll);
 
         public static string ListItemAlreadyexists { get; private set; } = PromptPlusResources.ListItemAlreadyexists;
 

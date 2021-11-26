@@ -14,6 +14,8 @@ namespace PPlus.Controls
         public bool SwithVisiblePassword { get; set; } = true;
         public bool IsPassword { get; set; }
         public string DefaultValue { get; set; }
+        public string InitialValue { get; set; }
+
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
         public bool ValidateOnDemand { get; set; }
         public Func<string, string> DescriptionSelector { get; set; }

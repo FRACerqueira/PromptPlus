@@ -16,7 +16,6 @@ namespace PPlus.CommandDotNet
     {
         private readonly int _pageSize;
         private readonly Func<CommandContext, IArgument, string>? _getPromptTextCallback;
-        private readonly bool _disableEscAbort;
 
         /// <summary>
         /// Contains the logic to prompt for the various types of arguments.
@@ -24,11 +23,10 @@ namespace PPlus.CommandDotNet
         /// <param name="pageSize">the page size for selection lists.</param>
         /// <param name="getPromptTextCallback">Used to customize the generation of the prompt text.</param>
         public PromptPlusArgumentPrompter(
-            int pageSize = 10,bool disableEscAbort = false,
+            int pageSize = 10,
             Func<CommandContext, IArgument, string>? getPromptTextCallback = null)
         {
             _pageSize = pageSize;
-            _disableEscAbort = disableEscAbort;
             _getPromptTextCallback = getPromptTextCallback;
         }
 
@@ -42,11 +40,11 @@ namespace PPlus.CommandDotNet
             var description = _getPromptTextCallback?.Invoke(ctx, argument) ?? string.Empty;
             if (kindprompt == PromptPlusTypeKind.None)
             {
-                return UtilExtension.PromptForTypeArgumentValues(ctx, argument,description, _pageSize, _disableEscAbort, out isCancellationRequested);
+                return UtilExtension.PromptForTypeArgumentValues(ctx, argument,description, _pageSize,null, out isCancellationRequested);
             }
             else
             {
-                return UtilExtension.PromptForPromptPlusTypeArgumentValues(ctx, argument, description,_pageSize, kindprompt, _disableEscAbort, out isCancellationRequested);
+                return UtilExtension.PromptForPromptPlusTypeArgumentValues(ctx, argument, description,_pageSize, kindprompt,null, out isCancellationRequested);
             }
         }
     }

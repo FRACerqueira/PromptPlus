@@ -13,6 +13,7 @@ Methods to Control PipeLine.
    PipeCondition(Func<ResultPipe[], object, bool> condition)
   ``` 
   - Set condition to run pipe.
+
 - ```csharp
    ToPipe(string id, string title, object state = null)
   ``` 

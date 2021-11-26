@@ -225,8 +225,10 @@ namespace PPlus.Controls
                         if (Wizardtemplate is not null)
                         {
                             _screenrender.InputRender(Wizardtemplate,true);
+                            PromptPlus.IsRunningWithCommandDotNet = true;
                         }
                         _screenrender.InputRender(InputTemplate);
+                        PromptPlus.IsRunningWithCommandDotNet = false;
                     }
 
                     result = default;
@@ -295,6 +297,10 @@ namespace PPlus.Controls
 
         public abstract void FinishTemplate(ScreenBuffer screenBuffer, T result);
 
+        public void ClearError()
+        {
+            _screenrender.ErrorMessage = null;
+        }
         public void SetError(string errorMessage) => _screenrender.ErrorMessage = errorMessage;
 
         public void SetError(ValidationResult validationResult) => _screenrender.ErrorMessage = validationResult.ErrorMessage;

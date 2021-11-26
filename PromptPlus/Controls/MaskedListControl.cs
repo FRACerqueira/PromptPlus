@@ -95,7 +95,66 @@ namespace PPlus.Controls
                     throw new ArgumentException(string.Format(Exceptions.Ex_InvalidType, _options.MaskedOption.Type));
             }
 
+            var oldvale = _options.MaskedOption.DefaultValueWitdMask;
+            _options.MaskedOption.DefaultValueWitdMask = null;
             _inputBuffer = new MaskedBuffer(_options.MaskedOption);
+
+            foreach (var item in _options.InitialItems)
+            {
+                if (!string.IsNullOrEmpty(item))
+                {
+                    if (_inputItems.Count < _options.Maximum)
+                    {
+                        _inputBuffer.Load(item);
+                        var result = new ResultMasked(_inputBuffer.ToString(), FilterInput(_inputBuffer));
+                        if (!TryValidate(result.Masked, _options.Validators))
+                        {
+                            continue;
+                        }
+                        if (!_options.AllowDuplicate)
+                        {
+                            if (_inputItems.Any(x => x.Masked == result.Masked))
+                            {
+                                continue;
+                            }
+                        }
+                        switch (_options.MaskedOption.Type)
+                        {
+                            case MaskedType.Generic:
+                                result.ObjectValue = result.Masked;
+                                break;
+                            case MaskedType.DateOnly:
+                            case MaskedType.TimeOnly:
+                            case MaskedType.DateTime:
+                                DateTime.TryParseExact(result.Masked, _options.MaskedOption.CurrentCulture.DateTimeFormat.GetAllDateTimePatterns(), _options.MaskedOption.CurrentCulture, DateTimeStyles.None, out var dt);
+                                result.ObjectValue = dt;
+                                break;
+                            case MaskedType.Number:
+                            {
+                                double.TryParse(result.Masked, NumberStyles.Number, _options.MaskedOption.CurrentCulture, out var numout);
+                                result.ObjectValue = numout;
+                            }
+                            break;
+                            case MaskedType.Currency:
+                            {
+                                double.TryParse(result.Masked, NumberStyles.Currency, _options.MaskedOption.CurrentCulture, out var numout);
+                                result.ObjectValue = numout;
+                            }
+                            break;
+                            default:
+                                result.ObjectValue = null;
+                                break;
+                        }
+                        _inputItems.Add(result);
+                        _inputBuffer.Clear();
+                    }
+                }
+            }
+
+            ClearError();
+
+            _options.MaskedOption.DefaultValueWitdMask = oldvale;
+            _inputBuffer.Load(_options.MaskedOption.DefaultValueWitdMask);
             _localpaginator = new Paginator<string>(_inputItems.Select(x => x.Masked), _options.PageSize, Optional<string>.s_empty, _options.TextSelector);
             _localpaginator.FirstItem();
 
@@ -136,6 +195,11 @@ namespace PPlus.Controls
 
                 switch (keyInfo.Key)
                 {
+                    case ConsoleKey.Enter when keyInfo.Modifiers == ConsoleModifiers.Control: 
+                    {
+                        result = _inputItems;
+                        return true;
+                    }
                     case ConsoleKey.Enter when keyInfo.Modifiers == 0:
                     {
                         var input = new ResultMasked(_inputBuffer.ToString(), _inputBuffer.ToMasked());
@@ -160,33 +224,33 @@ namespace PPlus.Controls
                             }
 
                             object inputValue = input.Masked;
-                            Thread.CurrentThread.CurrentUICulture = _options.MaskedOption.CurrentCulture;
-                            Thread.CurrentThread.CurrentCulture = _options.MaskedOption.CurrentCulture;
                             switch (_options.MaskedOption.Type)
                             {
                                 case MaskedType.DateOnly:
                                 case MaskedType.TimeOnly:
                                 case MaskedType.DateTime:
-                                    inputValue = TypeHelper<DateTime>.ConvertTo(input.Masked);
+                                {
+                                    DateTime.TryParseExact(input.Masked, _options.MaskedOption.CurrentCulture.DateTimeFormat.GetAllDateTimePatterns(), _options.MaskedOption.CurrentCulture, DateTimeStyles.None, out var dt);
+                                    inputValue = dt;
                                     break;
+                                }
                                 case MaskedType.Number:
-                                    inputValue = TypeHelper<double>.ConvertTo(input.Masked
-                                        .Replace(_options.MaskedOption.CurrentCulture.NumberFormat.NumberGroupSeparator, "").Trim());
+                                {
+                                    double.TryParse(input.Masked, NumberStyles.Number, _options.MaskedOption.CurrentCulture, out var numout);
+                                    inputValue = numout;
                                     break;
+                                }
                                 case MaskedType.Currency:
-                                    inputValue = TypeHelper<double>.ConvertTo(input.Masked
-                                        .Replace(_options.MaskedOption.CurrentCulture.NumberFormat.CurrencyGroupSeparator, "").Trim()
-                                        .Replace(_options.MaskedOption.CurrentCulture.NumberFormat.CurrencySymbol, "").Trim());
+                                {
+                                    double.TryParse(input.Masked, NumberStyles.Currency, _options.MaskedOption.CurrentCulture, out var numout);
+                                    inputValue = numout;
                                     break;
+                                }
                             }
                             if (!TryValidate(input.Masked, _options.Validators))
                             {
-                                Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-                                Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
                                 break;
                             }
-                            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-                            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
                             if (!_options.AllowDuplicate)
                             {
                                 if (_inputItems.Any(x => x.Masked == input.Masked))
@@ -197,6 +261,14 @@ namespace PPlus.Controls
                             }
                             _inputBuffer.Clear();
                             input.ObjectValue = inputValue;
+                            if (_options.MaskedOption.Type == MaskedType.Number)
+                            {
+                                input.Masked = ((double)inputValue).ToString($"N{_options.MaskedOption.AmmountDecimal}",_options.MaskedOption.CurrentCulture);
+                            }
+                            else if (_options.MaskedOption.Type == MaskedType.Currency)
+                            {
+                                input.Masked = ((double)inputValue).ToString($"C{_options.MaskedOption.AmmountDecimal}",_options.MaskedOption.CurrentCulture);
+                            }
                             _inputItems.Add(input);
                             _localpaginator = new Paginator<string>(_inputItems.Select(x => x.Masked), _options.PageSize, Optional<string>.s_empty, _options.TextSelector);
                             _firstinput = true;
@@ -212,16 +284,16 @@ namespace PPlus.Controls
                         break;
                     }
                     case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _localpaginator.UpdateFilter(_inputBuffer.Backward().ToMasked());
+                        _inputBuffer.Backward();
                         break;
                     case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _localpaginator.UpdateFilter(_inputBuffer.Forward().ToMasked());
+                        _inputBuffer.Forward();
                         break;
                     case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _localpaginator.UpdateFilter(_inputBuffer.Backspace().ToMasked());
+                        _inputBuffer.Backspace();
                         break;
                     case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _localpaginator.UpdateFilter(_inputBuffer.Delete().ToMasked());
+                        _inputBuffer.Delete();
                         break;
                     case ConsoleKey.Delete when keyInfo.Modifiers == ConsoleModifiers.Control:
                     {
@@ -246,7 +318,7 @@ namespace PPlus.Controls
                         {
                             if (!char.IsControl(keyInfo.KeyChar))
                             {
-                                _localpaginator.UpdateFilter(_inputBuffer.Insert(_options.UpperCase ? char.ToUpper(keyInfo.KeyChar) : keyInfo.KeyChar, out var _).ToMasked());
+                                _inputBuffer.Insert(_options.UpperCase ? char.ToUpper(keyInfo.KeyChar) : keyInfo.KeyChar, out var _);
                             }
                             else
                             {
@@ -277,23 +349,51 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
+        private string FilterInput(MaskedBuffer maskedBuffer)
+        {
+            var result = maskedBuffer.ToMasked();
+            if (_options.MaskedOption.Type == MaskedType.Number)
+            {
+                var inputValue = TypeHelper<double>.ConvertTo(result
+                    .Replace(_options.MaskedOption.CurrentCulture.NumberFormat.NumberGroupSeparator, "").Trim());
+                result = ((double)inputValue).ToString($"N{_options.MaskedOption.AmmountDecimal}", _options.MaskedOption.CurrentCulture);
+            }
+            else if (_options.MaskedOption.Type == MaskedType.Currency)
+            {
+                var inputValue = TypeHelper<double>.ConvertTo(result
+                    .Replace(_options.MaskedOption.CurrentCulture.NumberFormat.CurrencyGroupSeparator, "").Trim()
+                    .Replace(_options.MaskedOption.CurrentCulture.NumberFormat.CurrencySymbol, "").Trim());
+                result = ((double)inputValue).ToString($"C{_options.MaskedOption.AmmountDecimal}", _options.MaskedOption.CurrentCulture);
+            }
+            return result;
+        }
+
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
 
             screenBuffer.PushCursor(_inputBuffer);
 
+            var writedesc = false;
             if (HasDescription)
             {
                 if (!HideDescription)
                 {
                     screenBuffer.WriteLineDescription(_options.Description);
+                    writedesc = true; 
                 }
             }
 
             if (_options.MaskedOption.ShowInputType)
             {
-                screenBuffer.WriteLine();
+                if (!writedesc)
+                {
+                    screenBuffer.WriteLine();
+                }
+                else
+                {
+                    screenBuffer.WriteAnswer(". ");
+                }
                 screenBuffer.WriteAnswer(string.Format(Messages.MaskEditInputType, _inputBuffer.Tooltip));
             }
 
@@ -307,14 +407,22 @@ namespace PPlus.Controls
                     {
                         screenBuffer.WriteHint(Messages.KeyNavPaging);
                     }
-                    screenBuffer.WriteHint(Messages.ListKeyNavigation);
+                    if (_options.MaskedOption.FillNumber == s_defaultfill)
+                    {
+                        if (_inputBuffer.Length > 0)
+                        {
+                            screenBuffer.WriteHint(Messages.ListKeyNavigationFillZeros);
+                        }
+                        else
+                        {
+                            screenBuffer.WriteHint(Messages.ListKeyNavigation);
+                        }
+                    }
+                    else
+                    {
+                        screenBuffer.WriteHint(Messages.ListKeyNavigation);
+                    }
                 }
-            }
-
-            if (_inputBuffer.Length > 0)
-            {
-                screenBuffer.WriteLineFilter(Messages.ItemsFiltered);
-                screenBuffer.WriteFilter($" ({_inputBuffer.ToMasked()})");
             }
             var subset = _localpaginator.ToSubset();
             var index = 0;
@@ -521,6 +629,36 @@ namespace PPlus.Controls
             return this;
         }
 
+        public IControlListMasked ShowDayWeek(FormatWeek value)
+        {
+            _options.MaskedOption.ShowDayWeek = value;
+            return this;
+        }
+
+        public IControlListMasked AddItem(string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                _options.InitialItems.Add(value);
+            }
+            return this;
+        }
+
+        public IControlListMasked AddItems(IEnumerable<string> value)
+        {
+            if (value is not null)
+            {
+                foreach (var item in value)
+                {
+                    if (!string.IsNullOrEmpty(item))
+                    {
+                        _options.InitialItems.Add(item);
+                    }
+                }
+            }
+            return this;
+        }
+
         public IControlListMasked Config(Action<IPromptConfig> context)
         {
             context.Invoke(this);
@@ -621,6 +759,10 @@ namespace PPlus.Controls
             for (var i = 0; i < _options.MaskedOption.AmmountInteger / _options.MaskedOption.CurrentCulture.NumberFormat.NumberGroupSizes[0]; i++)
             {
                 result += _options.MaskedOption.CurrentCulture.NumberFormat.NumberGroupSeparator + new string('9', _options.MaskedOption.CurrentCulture.NumberFormat.NumberGroupSizes[0]);
+            }
+            if (result.StartsWith(_options.MaskedOption.CurrentCulture.NumberFormat.NumberGroupSeparator))
+            {
+                result = result.Substring(1);
             }
             if (_options.MaskedOption.AmmountDecimal > 0)
             {

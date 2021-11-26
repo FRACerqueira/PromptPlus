@@ -25,38 +25,64 @@ Input(string prompt, string description = null)
   Prompt(string value, string description = null)
   ``` 
   - set prompt message and optional description
+
 - ```csharp
   Default(string value)
   ``` 
   - Default value for input. If the input is empty and there is a DefaultValue and the all condition from Validators is true, the return will be DefaultValue
+
 - ```csharp
   IsPassword(bool swithVisible)
   ``` 
     - Input is password type.Default Value = false
+
 - ```csharp
   ValidateOnDemand()
   ``` 
     - Run the validators on each interaction
+
 - ```csharp
   DescriptionSelector(Func<string, string> value)
   ``` 
     - Run the fucntion on each interaction and show result in description line.
+
 - ```csharp
   AddValidator(Func<object, ValidationResult> validator);
   ``` 
     - item of input validator.
+
 - ```csharp
   AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
   ``` 
     - List of input validator
+
+- ```csharp
+  Config(Action<IPromptConfig> context)
+  ``` 
+  - For access [**base methods**](basemethods) common to all controls.
+
+- ```csharp
+   PipeCondition(Func<ResultPipe[], object, bool> condition)
+  ``` 
+  - Set condition to run pipe.
+
+- ```csharp
+   ToPipe(string id, string title, object state = null)
+  ``` 
+  - Transform control to IFormPlusBase.
+  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+
+- ```csharp
+  ResultPromptPlus<string> Run(CancellationToken? value = null)
+  ``` 
+	- Control execution
 
 ### Return
 [**Top**](#-promptplus--input)
 
 ```csharp
 IControlInput                //for Control Methods
-IPromptControls<string>      //for others Base Methods
-ResultPromptPlus<string>     //for Base Method Run, when execution is direct 
+ResultPromptPlus<string>     //After execute method Run
 IPromptPipe                  //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```

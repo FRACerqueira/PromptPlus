@@ -142,6 +142,15 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to , {0}: To Wizard.
+        /// </summary>
+        internal static string EscCancelWizard {
+            get {
+                return ResourceManager.GetString("EscCancelWizard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to item not a file!.
         /// </summary>
         internal static string FileNotSelected {
@@ -282,6 +291,15 @@ namespace PPlus.Resources {
         internal static string ListKeyNavigation {
             get {
                 return ResourceManager.GetString("ListKeyNavigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+Del: Remove seleted , {0}: Remove all, Ctrl+Enter: Finish, Enter: Add.
+        /// </summary>
+        internal static string ListKeyNavigationFillZeros {
+            get {
+                return ResourceManager.GetString("ListKeyNavigationFillZeros", resourceCulture);
             }
         }
         

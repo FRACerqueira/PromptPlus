@@ -9,9 +9,7 @@
 
 [**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis) | [**Extensions**](#extensions) | [**Supported Platforms**](#supported-platforms)
 
-**PromptPlus** and **PromptPlus.CommandDotNet** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks, with compatibility for:
-
-- .NET Core 3.1, 5.X, 6.X
+**PromptPlus** and **PromptPlus.CommandDotNet** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**: 
 <p align="left">
@@ -19,17 +17,16 @@
     <b>PromptPlus.CommandDotNet!!</b>
 </p>
 
-
-#### Innovative middleware policy for CommandDotNet:
+#### Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet:
 
 - Wizard to find all the commands/options and arguments with prompt and run.
     - Now you can discover and learn the existing commands, options and arguments.
 
 ### **Official pages** :
 
-#### **[Visit the PromptPlus official page for complete documentation](https://fracerqueira.github.io/PromptPlus)**
+#### **[Visit the official page for complete documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
 
-#### **[Visit the CommandDotNet official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
+#### **[Visit the official page for complete documentation of CommandDotNet](https://commanddotnet.bilal-fazlani.com)**
 
 ## Examples
 
@@ -42,7 +39,7 @@ dotnet run --project PromptPlusExample
 The project in the folder **CommandDotNet.Example** contains all the samples to integrate with [CommandDotNet](https://commanddotnet.bilal-fazlani.com)
 
 ```
-dotnet run --project CommandDotNet.Example prompts secure --username admin download
+dotnet run --project CommandDotNet.Example [wizard]
 ```
 
 ## Snapshot
@@ -127,8 +124,35 @@ dotnet run --project CommandDotNet.Example prompts secure --username admin downl
 
 ![](./docs/images/Commands.gif)
 
-
 ## Usage
+
+### PromptPlus.CommandDotNet
+[**Top**](#-welcome-to-promptplus)
+
+```csharp
+public class Program
+{
+    static int Main(string[] args)
+    {
+        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
+        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
+
+        PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
+        PromptPlus.Clear();
+
+        return new AppRunner<Examples>()
+            .UseDefaultMiddleware()
+            .UsePrompter()
+            .UseNameCasing(Case.KebabCase)
+            .UsePromptPlusAnsiConsole()
+            .UsePromptPlusArgumentPrompter()
+            .UsePromptPlusWizard()
+            .Run(args);
+    }
+}
+```
+
+### PromptPlus.CommandDotNet
 [**Top**](#-welcome-to-promptplus)
 
 ```csharp
@@ -229,7 +253,7 @@ PromptPlus.DefaultCulture = new CultureInfo("en-US");
 
 To use a non-embedded language/culture:
 
-- Use the **PromptPlusResources.resx** file that already has the package in the resources folder
+- Use the **PromptPlusResources.resx** file in folder PromptPlus/Resources
 - Translate messages with same format to your language/culture
 - Convert .resx files to binary .resources files ([**reference link here**](https://docs.microsoft.com/en-us/dotnet/core/extensions/work-with-resx-files-programmatically))
 - Publish the compiled file (**PromptPlus.{Language}.resources**) in the same folder as the binaries.

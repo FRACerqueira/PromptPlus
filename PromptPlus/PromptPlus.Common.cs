@@ -33,10 +33,6 @@ namespace PPlus
         internal const int ProgressgBarDoneDelay = 1000;
         internal const int ProgressgBarCheckDelay = 50;
 
-        internal static object _lockobj = new();
-
-        public static IConsoleDriver ConsoleDriver { get; private set; }
-
         static PromptPlus()
         {
             Symbols.MaskEmpty = new("■", "  ");
@@ -61,13 +57,49 @@ namespace PPlus
             };
             AppCulture = Thread.CurrentThread.CurrentCulture;
             AppCultureUI = Thread.CurrentThread.CurrentUICulture;
-            s_defaultCulture = AppCulture;
+            DefaultCulture = AppCulture;
             LoadConfigFromFile();
         }
 
-        internal static CultureInfo AppCulture { get; private set; }
+        public static IConsoleDriver ConsoleDriver { get; private set; }
 
-        internal static CultureInfo AppCultureUI { get; private set; }
+        internal static CultureInfo AppCulture { get; set; }
+
+        internal static CultureInfo AppCultureUI { get; set; }
+
+        internal static bool IsRunningWithCommandDotNet { get; set; }
+
+        internal static string LocalizateFormatException(Type type)
+        {
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.Boolean:
+                    return Messages.InvalidTypeBoolean;
+                case TypeCode.Byte:
+                    return Messages.InvalidTypeByte;
+                case TypeCode.Char:
+                    return Messages.InvalidTypeChar;
+                case TypeCode.DateTime:
+                    return Messages.InvalidTypeDateTime;
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.SByte:
+                case TypeCode.Single:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                    return Messages.InvalidTypeNumber;
+                case TypeCode.DBNull:
+                case TypeCode.Empty:
+                case TypeCode.Object:
+                case TypeCode.String:
+                    break;
+            }
+            return Messages.Invalid;
+        }
 
         public static void DriveConsole(IConsoleDriver value)
         {
@@ -155,36 +187,5 @@ namespace PPlus
             return false;
         }
 
-        internal static string LocalizateFormatException(Type type)
-        {
-            switch (Type.GetTypeCode(type))
-            {
-                case TypeCode.Boolean:
-                    return Messages.InvalidTypeBoolean;
-                case TypeCode.Byte:
-                    return Messages.InvalidTypeByte;
-                case TypeCode.Char:
-                    return Messages.InvalidTypeChar;
-                case TypeCode.DateTime:
-                    return Messages.InvalidTypeDateTime;
-                case TypeCode.Decimal:
-                case TypeCode.Double:
-                case TypeCode.Int16:
-                case TypeCode.Int32:
-                case TypeCode.Int64:
-                case TypeCode.SByte:
-                case TypeCode.Single:
-                case TypeCode.UInt16:
-                case TypeCode.UInt32:
-                case TypeCode.UInt64:
-                    return Messages.InvalidTypeNumber;
-                case TypeCode.DBNull:
-                case TypeCode.Empty:
-                case TypeCode.Object:
-                case TypeCode.String:
-                    break;
-            }
-            return Messages.Invalid;
-        }
     }
 }

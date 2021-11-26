@@ -23,15 +23,35 @@ KeyPress(char? Keypress = null, ConsoleModifiers? keymodifiers = null)
 - ```csharp
   Prompt(string value)
   ``` 
-  - set prompt message 
+  - set prompt message
+
+- ```csharp
+  Config(Action<IPromptConfig> context)
+  ``` 
+  - For access [**base methods**](basemethods) common to all controls.
+
+- ```csharp
+   PipeCondition(Func<ResultPipe[], object, bool> condition)
+  ``` 
+  - Set condition to run pipe.
+
+- ```csharp
+   ToPipe(string id, string title, object state = null)
+  ``` 
+  - Transform control to IFormPlusBase.
+  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+
+- ```csharp
+  ResultPromptPlus<bool> Run(CancellationToken? value = null)
+  ``` 
+	- Control execution
 
 ### Return
 [**Top**](#-promptplus--keypress)
 
 ```csharp
 IControlKeyPress           //for Control Methods
-IPromptControls<bool>      //for others Base Methods
-ResultPromptPlus<bool>     //for Base Method Run, when execution is direct 
+ResultPromptPlus<bool>     //After execute method Run
 IPromptPipe                //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase              //for only definition of pipe to Pipeline Control
 ````

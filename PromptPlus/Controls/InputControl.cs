@@ -36,9 +36,17 @@ namespace PPlus.Controls
             {
                 throw new ArgumentException(Exceptions.Ex_PasswordDefaultValue);
             }
-            if (!string.IsNullOrEmpty(_options.DefaultValue))
+
+            if (!string.IsNullOrEmpty(_options.InitialValue))
             {
-                _inputBuffer.Load(_options.DefaultValue);
+                _inputBuffer.Load(_options.InitialValue);
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(_options.DefaultValue))
+                {
+                    _inputBuffer.Load(_options.DefaultValue);
+                }
             }
 
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
@@ -224,6 +232,16 @@ namespace PPlus.Controls
         public IControlInput ValidateOnDemand()
         {
             _options.ValidateOnDemand = true;
+            return this;
+        }
+
+        public IControlInput InitialValue(string value)
+        {
+            if (value == null)
+            {
+                return this;
+            }
+            _options.InitialValue = value;
             return this;
         }
 

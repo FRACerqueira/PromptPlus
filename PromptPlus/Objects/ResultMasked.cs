@@ -15,6 +15,6 @@ namespace PPlus.Objects
         }
         public object ObjectValue { get; internal set; }
         public string Input { get; private set; }
-        public string Masked { get; private set; }
+        public string Masked { get; internal set; }
     }
 }
