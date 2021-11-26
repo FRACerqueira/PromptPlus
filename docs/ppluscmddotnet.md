@@ -12,7 +12,7 @@ Interactive command-line based application framework for **C# with powerful cont
 ![](./images/PplusCmddotnet.gif)
 
 ## Help
-- [Main PromptPlus](index.md)
+- [Main PromptPlus](index.md#help)
 - [Install](#install)
 - [Sample](#sample)
 - [Middlewares to CommandDotNet](#middlewares-to-commanddotnet)
