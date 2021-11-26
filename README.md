@@ -13,7 +13,7 @@
 
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**: 
 <p align="left">
-    <img valign="middle" width="50" height="50" src="./docs/images/iconCmdNet.png">
+    <img valign="middle" width="80" height="80" src="./docs/images/iconCmdNet.png">
     <b>PromptPlus.CommandDotNet!!</b>
 </p>
 
