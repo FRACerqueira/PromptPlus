@@ -101,11 +101,17 @@ namespace PPlus.Controls
 
             foreach (var item in _options.InitialItems)
             {
-                if (!string.IsNullOrEmpty(item))
+                var localitem = item;
+                if (_options.MaskedOption.TransformItems != null)
+                {
+                    localitem = _options.MaskedOption.TransformItems.Invoke(item);
+                }
+
+                if (!string.IsNullOrEmpty(localitem))
                 {
                     if (_inputItems.Count < _options.Maximum)
                     {
-                        _inputBuffer.Load(item);
+                        _inputBuffer.Load(localitem);
                         var result = new ResultMasked(_inputBuffer.ToString(), FilterInput(_inputBuffer));
                         if (!TryValidate(result.Masked, _options.Validators))
                         {
@@ -519,6 +525,12 @@ namespace PPlus.Controls
             }
             _options.Minimum = minvalue;
             _options.Maximum = maxvalue;
+            return this;
+        }
+
+        public IControlListMasked TransformItems(Func<string, string> value)
+        {
+            _options.MaskedOption.TransformItems = value;
             return this;
         }
 

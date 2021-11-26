@@ -53,7 +53,7 @@ namespace CommandDotNet.Example
                     return ExitCodes.Error;
                 }
 
-                console.Out.WriteLine($"authenticated as user:{username} with password:{password}  (actual password:{pwd})");
+                console.Out.WriteLine($"authenticated as user:{username} with password:{password} and token {extratoken} (actual password:{pwd})");
 
                 return next();
             }
@@ -94,15 +94,32 @@ namespace CommandDotNet.Example
                 : $"{string.Join(" + ", numbers)} = {numbers.Sum()}");
         }
 
-        [Command(Description = "Echos the list of items")]
+        [Command(Description = "Echos the list of items string")]
         public void List(
             IConsole console,
-            [Description("Items to list")]
+            [Description("string to list")]
             ICollection<string> items)
         {
             console.Out.WriteLine(string.Join(Environment.NewLine, items));
         }
 
+        [Command(Description = "Echos the list of items Dates")]
+        public void ListDates(
+            IConsole console,
+            [Description("date to list")]
+            ICollection<DateTime> items)
+        {
+            console.Out.WriteLine(string.Join(Environment.NewLine, items));
+        }
+
+        [Command(Description = "Echos the list of items boolean")]
+        public void ListBoolean(
+            IConsole console,
+            [Description("boolean to list")]
+            ICollection<bool> items)
+        {
+            console.Out.WriteLine(string.Join(Environment.NewLine, items));
+        }
 
         [Command(Description = "Confirms required boolean arguments")]
         public void Confirm(
@@ -118,7 +135,7 @@ namespace CommandDotNet.Example
         {
             var answer = PromptPlus.Select<string>(
                 "What is your favorite color ?",
-                GetType().CopyCallerDescription()?? string.Empty)
+                this.CopyCallerDescription()?? string.Empty)
                     .PageSize(pageSize)
                     .AddItems(new string[] { "blue", "purple", "red", "orange", "yellow", "green" })
                     .Run(cancellationToken);

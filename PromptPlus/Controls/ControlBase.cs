@@ -77,7 +77,6 @@ namespace PPlus.Controls
             {
                 _esckeyCancelation.Dispose();
             }
-
         }
 
         public ResultPromptPlus<T> StartPipeline(Action<ScreenBuffer> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
@@ -190,6 +189,7 @@ namespace PPlus.Controls
                     }
                 }
             }
+
             ScreenRender.ShowCursor();
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
@@ -277,6 +277,10 @@ namespace PPlus.Controls
                             ScreenRender.NewLine();
                         }
                         ScreenRender.ShowCursor();
+                        if (result == null)
+                        {
+                            return new ResultPromptPlus<T>(result, true,true);
+                        }
                         return new ResultPromptPlus<T>(result, false);
                     }
                 }
@@ -301,6 +305,7 @@ namespace PPlus.Controls
         {
             _screenrender.ErrorMessage = null;
         }
+
         public void SetError(string errorMessage) => _screenrender.ErrorMessage = errorMessage;
 
         public void SetError(ValidationResult validationResult) => _screenrender.ErrorMessage = validationResult.ErrorMessage;

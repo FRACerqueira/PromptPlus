@@ -231,6 +231,7 @@ namespace PPlus
         IControlListMasked ShowInputType(bool value);
         IControlListMasked AddItem(string value);
         IControlListMasked AddItems(IEnumerable<string> value);
+        IControlListMasked TransformItems(Func<string, string> value);
         IControlListMasked AddValidator(Func<object, ValidationResult> validator);
         IControlListMasked AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlListMasked MaskType(MaskedType value, string mask = null);

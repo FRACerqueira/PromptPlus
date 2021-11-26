@@ -79,6 +79,24 @@ namespace PPlus.CommandDotNet.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to , Enter: Next, {0}: Run, {1}: Back command.
+        /// </summary>
+        internal static string WizardKeyNavigation {
+            get {
+                return ResourceManager.GetString("WizardKeyNavigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to , Enter: Next, {0}: Run.
+        /// </summary>
+        internal static string WizardKeyNavigationNoBack {
+            get {
+                return ResourceManager.GetString("WizardKeyNavigationNoBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Missing Argument(s).
         /// </summary>
         internal static string WizardMissingOperands {

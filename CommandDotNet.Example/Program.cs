@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-
 using PPlus.CommandDotNet;
 using CommandDotNet.NameCasing;
 using System;

@@ -41,32 +41,47 @@ namespace PPlus.Internal
         private const string CharNumbers = "0123456789";
         private const string CharLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
+        //storage char custom from mask . key = valid position
         private readonly Dictionary<int, string> _charCustoms = new();
         private readonly StringBuilder _inputBuffer = new();
+
+        //only char input
         private readonly string _localMask;
+        //logical mask for generic
         private readonly string _logicalMaskGeneric;
+        //logical mask for kind datetime
         private readonly string _logicalMaskDateTime;
+        //logical mask for kind numeric
         private readonly string _logicalMaskNumeric;
+        //logical mask for kind currency
         private readonly string _logicalMaskCurrency;
 
         private readonly CultureInfo _cultureMasked;
 
         private readonly string[] _tooltips;
+        // list of valid positions to using un logical masks
         private readonly int[] _validPosition;
+        //position of separator decimal
         private readonly int _decimalPosition;
+
+        //suggar to kind types
         private readonly bool _isTypeTime;
         private readonly bool _isTypeDateTime;
         private readonly bool _isTypeNumber;
         private readonly bool _isTypeGeneric;
+
         private readonly bool _acceptSignal;
+
         private readonly char _notationAMDesignator;
         private readonly char _notationPMDesignator;
+
         private readonly int _maskIniTime;
         private readonly int _diffIniTime;
         private readonly int _iniTime;
 
         private readonly char _promptmask = Symbols.MaskEmpty.ToString()[0];
         private readonly MaskedOptions _maskInputOptions;
+
         private char _signalNumberInput;
         private string _signalTimeInput;
         private string _validSignalNumber;
@@ -85,7 +100,6 @@ namespace PPlus.Internal
             {
                 _notationPMDesignator = _cultureMasked.DateTimeFormat.PMDesignator.ToUpper()[0];
             }
-
 
             _isTypeTime = _maskInputOptions.Type == MaskedType.TimeOnly || _maskInputOptions.Type == MaskedType.DateTime;
             _isTypeDateTime = _maskInputOptions.Type == MaskedType.TimeOnly || _maskInputOptions.Type == MaskedType.DateTime || _maskInputOptions.Type == MaskedType.DateOnly;
@@ -148,6 +162,7 @@ namespace PPlus.Internal
             _validSignalNumber = $"{_cultureMasked.NumberFormat.PositiveSign[0]}{_cultureMasked.NumberFormat.NegativeSign[0]}";
 
             Clear();
+            //load initial values(PreparationDefaultValue = transform mask to widthoutmask)
             Load(PreparationDefaultValue());
 
             Position = 0;
@@ -349,6 +364,7 @@ namespace PPlus.Internal
                 return string.Empty;
             }
             var aux = OutputMask.Substring(0, _validPosition[Length - 1] + 1).Replace(_promptmask.ToString(), string.Empty);
+
             switch (_maskInputOptions.Type)
             {
                 case MaskedType.Generic:
@@ -713,7 +729,7 @@ namespace PPlus.Internal
             switch (_maskInputOptions.Type)
             {
                 case MaskedType.Generic:
-                    _inputBuffer.Append(FillDefaultGeneric(value));
+                    _inputBuffer.Append(value);
                     break;
                 case MaskedType.DateOnly:
                 case MaskedType.TimeOnly:

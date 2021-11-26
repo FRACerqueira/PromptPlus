@@ -162,7 +162,14 @@ namespace PPlus.CommandDotNet.Controls
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
-                    screenBuffer.WriteHint($", Enter: Next, {_options.Build} Run");
+                    if (!_options.EnabledBackCommand)
+                    {
+                        screenBuffer.WriteHint(string.Format(Resources.Messages.WizardKeyNavigationNoBack, _options.Build));
+                    }
+                    else
+                    {
+                        screenBuffer.WriteHint(string.Format(Resources.Messages.WizardKeyNavigation, _options.Build, _options.BackCommand));
+                    }
                 }
             }
         }
@@ -197,7 +204,14 @@ namespace PPlus.CommandDotNet.Controls
                             SetError(Resources.Messages.WizardMissingOperands);
                             return false;
                         }
-                        result = _resultControl;
+                        result = _options.RootCommand;
+                        AbortedAll = false;
+                        return true;
+                    }
+                    else if (_options.BackCommand.Equals(keyInfo) && _options.EnabledBackCommand)
+                    {
+                        result = null;
+                        AbortedAll = true;
                         return true;
                     }
                     switch (keyInfo.Key)
@@ -228,7 +242,6 @@ namespace PPlus.CommandDotNet.Controls
             _options.EnabledAbortKey = value;
             return this;
         }
-
 
         public IPromptConfig EnabledAbortAllPipes(bool value)
         {

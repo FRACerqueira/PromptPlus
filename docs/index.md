@@ -46,11 +46,7 @@ Interactive command-line based application framework for **C# with powerful cont
 ## Install
 [**Top**](#help)
 
-PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
-
-- .NET Core 3.1
-- .NET Core 5.0
-- .NET Core 6.X
+PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks.
 
 ```
 Install-Package PromptPlus [-pre]

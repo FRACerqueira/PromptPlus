@@ -32,85 +32,112 @@ namespace PPlus.Internal
 
         public static bool KeyAvailable => ConsoleDriver.KeyAvailable;
 
-        public static ConsoleKeyInfo KeyPressed => ConsoleDriver.ReadKey(true);
+        public static ConsoleKeyInfo KeyPressed
+        {
+            get
+            {
+                lock (LockObj)
+                {
+                    return ConsoleDriver.ReadKey(true);
+                }
+            }
 
+        }
 
         public void InputRender(Action<ScreenBuffer> template, bool onlyTemplate = false)
         {
-            template(FormBuffer);
-            if (!onlyTemplate)
+            lock (LockObj)
             {
-                if (ErrorMessage != null)
+                template(FormBuffer);
+                if (!onlyTemplate)
                 {
-                    FormBuffer.WriteLineError(ErrorMessage);
-                    ErrorMessage = null;
+                    if (ErrorMessage != null)
+                    {
+                        FormBuffer.WriteLineError(ErrorMessage);
+                        ErrorMessage = null;
+                    }
+                    RenderToConsole();
                 }
-                RenderToConsole();
             }
         }
 
         public void FinishRender<TModel>(Action<ScreenBuffer, TModel> template, TModel result)
         {
-            ClearBuffer();
-            template(FormBuffer, result);
-            FormBuffer.PushCursor();
-            RenderToConsole();
+            lock (LockObj)
+            {
+                ClearBuffer();
+                template(FormBuffer, result);
+                FormBuffer.PushCursor();
+                RenderToConsole();
+            }
         }
 
         public static void NewLine()
         {
-            ConsoleDriver.WriteLine();
+            lock (LockObj)
+            {
+                ConsoleDriver.WriteLine();
+            }
         }
 
         public bool HideLastRender(bool skip = false)
         {
-            if (_cursorBottom < 0)
+            lock (LockObj)
             {
+                if (_cursorBottom < 0)
+                {
+                    return true;
+                }
+
+                if (skip)
+                {
+                    ConsoleDriver.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
+                    return true;
+                }
+
+                EnsureScreensizeAndPosition();
+                if (StopToken.IsCancellationRequested)
+                {
+                    return false;
+                }
+
+                var lines = WrittenLineCount + 1;
+
+                if (ConsoleDriver.BufferHeight - 1 < _cursorBottom && ConsoleDriver.IsRunningTerminal)
+                {
+                    _cursorBottom = ConsoleDriver.BufferHeight - 1;
+                    lines = _cursorBottom;
+                }
+
+                for (var i = 0; i < lines; i++)
+                {
+                    ConsoleDriver.ClearLine(_cursorBottom - i);
+                }
                 return true;
             }
-
-            if (skip)
-            {
-                ConsoleDriver.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
-                return true;
-            }
-
-            EnsureScreensizeAndPosition();
-            if (StopToken.IsCancellationRequested)
-            {
-                return false;
-            }
-
-            var lines = WrittenLineCount + 1;
-
-            if (ConsoleDriver.BufferHeight - 1 < _cursorBottom && ConsoleDriver.IsRunningTerminal)
-            {
-                _cursorBottom = ConsoleDriver.BufferHeight - 1;
-                lines = _cursorBottom;
-            }
-
-            for (var i = 0; i < lines; i++)
-            {
-                ConsoleDriver.ClearLine(_cursorBottom - i);
-            }
-            return true;
         }
 
         public static void ShowCursor()
         {
-            ConsoleDriver.CursorVisible = true;
+            lock (LockObj)
+            {
+                ConsoleDriver.CursorVisible = true;
+            }
         }
 
         public static void HideCursor()
         {
-            ConsoleDriver.CursorVisible = false;
+            lock (LockObj)
+            {
+                ConsoleDriver.CursorVisible = false;
+            }
         }
 
         private int WrittenLineCount => FormBuffer.Sum(x => (x.Sum(xs => xs.Width) - 1) / ConsoleDriver.BufferWidth + 1) - 1;
 
         private void EnsureScreensizeAndPosition()
         {
-            if (!ConsoleDriver.IsRunningTerminal)
+            if (!ConsoleDriver.IsRunningTerminal || ConsoleDriver.NoInterative)
             {
                 return;
             }
@@ -185,8 +212,11 @@ namespace PPlus.Internal
 
         public void ClearBuffer()
         {
-            FormBuffer.Clear();
-            FormBuffer.Add(new List<TextInfo>());
+            lock (LockObj)
+            {
+                FormBuffer.Clear();
+                FormBuffer.Add(new List<TextInfo>());
+            }
         }
 
         private class Cursor

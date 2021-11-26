@@ -29,6 +29,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\multiselect.md = docs\multiselect.md
 		docs\pipeline.md = docs\pipeline.md
 		docs\pipemethods.md = docs\pipemethods.md
+		docs\ppluscmddotnet.attributes.md = docs\ppluscmddotnet.attributes.md
+		docs\ppluscmddotnet.md = docs\ppluscmddotnet.md
+		docs\ppluscmddotnet.wizard.md = docs\ppluscmddotnet.wizard.md
 		docs\progressbar.md = docs\progressbar.md
 		docs\progressbarinfo.md = docs\progressbarinfo.md
 		docs\resultbrowser.md = docs\resultbrowser.md
@@ -111,7 +114,7 @@ Global
 		{BAA6FC9A-9334-41D1-9EBC-3964786E1E67} = {1D88B60E-F8D4-494F-BF56-940EA9DDAB0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_ShowErrorsInErrorList = False
 		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
+		RESX_ShowErrorsInErrorList = False
 	EndGlobalSection
 EndGlobal

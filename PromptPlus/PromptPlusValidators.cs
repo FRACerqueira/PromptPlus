@@ -237,10 +237,26 @@ namespace PPlus
                 if (input.GetType().Equals(typeof(string)))
                 {
                     localinput = input.ToString();
+                    if (localinput == "0")
+                    {
+                        localinput = false.ToString();
+                    }
+                    else if (localinput == "1")
+                    {
+                        localinput = true.ToString();
+                    }
                 }
                 else if (input.GetType().Equals(typeof(ResultMasked)))
                 {
                     localinput = ((ResultMasked)input).Masked;
+                    if (localinput == "0")
+                    {
+                        localinput = false.ToString();
+                    }
+                    else if (localinput == "1")
+                    {
+                        localinput = true.ToString();
+                    }
                 }
                 else if (Type.GetTypeCode(input.GetType()) == TypeCode.Boolean)
                 {

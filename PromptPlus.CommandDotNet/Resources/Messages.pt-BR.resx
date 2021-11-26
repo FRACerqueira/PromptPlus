@@ -123,6 +123,12 @@
   <data name="WizardHelpText" xml:space="preserve">
     <value>Diretiva para assistente de prompt:%\n%[{0}] para o assistente procurar  comandos, opções e argumentos com prompt e executar!!! (Obs.: Não deve ter nenum argumento depois)%\n%%\n%Exemplo: %AppName% [{0}].</value>
   </data>
+  <data name="WizardKeyNavigation" xml:space="preserve">
+    <value>, Enter: Próximo, {0}: Executar, {1}: Voltar comando</value>
+  </data>
+  <data name="WizardKeyNavigationNoBack" xml:space="preserve">
+    <value>, Enter: Próximo, {0}: Executar</value>
+  </data>
   <data name="WizardMissingOperands" xml:space="preserve">
     <value>Argumento(s) ausente(s)</value>
   </data>

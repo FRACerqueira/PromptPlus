@@ -13,6 +13,7 @@ namespace PPlus.Drivers
 {
     public interface IConsoleDriver
     {
+        bool NoInterative { get; }
         Encoding OutputEncoding { get; set; }
         void Clear();
         void ClearLine(int top);

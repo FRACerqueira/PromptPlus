@@ -16,9 +16,9 @@ using PPlus.Objects;
 
 namespace PPlus.CommandDotNet
 {
-    public static class UtilExtension
+    internal static class Common
     {
-        internal static ICollection<string> PromptForTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize,string[] lastvalue,  out bool isCancellationRequested)
+        public static ICollection<string> PromptForTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize,string[] lastvalue,  out bool isCancellationRequested)
         {
             isCancellationRequested = false;
             if (string.IsNullOrEmpty(description))
@@ -170,7 +170,7 @@ namespace PPlus.CommandDotNet
                         {
                             case MaskedType.DateOnly:
                                 p = PromptPlus
-                                    .ListMasked(promptText, description)
+                                    .ListMasked(promptText,description) 
                                     .MaskType(MaskedType.DateOnly)
                                     .FillZeros(true)
                                     .AddItems(lastvalue)
@@ -367,7 +367,7 @@ namespace PPlus.CommandDotNet
             }
         }
 
-        internal static ICollection<string> PromptForPromptPlusTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize, PromptPlusTypeKind kind,string[] lastvalue, out bool isCancellationRequested)
+        public static ICollection<string> PromptForPromptPlusTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize, PromptPlusTypeKind kind,string[] lastvalue, out bool isCancellationRequested)
         {
 
             isCancellationRequested = false;
@@ -428,11 +428,34 @@ namespace PPlus.CommandDotNet
                         }
                         return p1.Value.Select(x => x.Masked).ToArray();
                     }
-                    case PromptPlusTypeKind.DateTime:
+                    case PromptPlusTypeKind.DateOnly:
                     {
-                        var DateTimeAtt = argument.FindArgumentAttribute<PromptPlusTypeDateTimeAttribute>();
+                        var DateTimeAtt = argument.FindArgumentAttribute<PromptPlusTypeDateAttribute>();
                         var p1 = PromptPlus.ListMasked(promptText, description)
-                            .MaskType((MaskedType)Enum.Parse(typeof(MaskedType), DateTimeAtt.DateTimeKind.ToString(), true))
+                            .MaskType(MaskedType.DateOnly)
+                            .PageSize(pageSize)
+                            .FillZeros(true)
+                            .FormatTime(DateTimeAtt.TimeKind)
+                            .FormatYear(DateTimeAtt.YearKind)
+                            .ShowDayWeek(FormatWeek.Short)
+                            .Culture(DateTimeAtt.Culture)
+                            .AddItems(lastvalue)
+                            .Range(argument.Arity.Minimum, argument.Arity.Maximum)
+                            .AddValidators(argument.ImportDataAnnotationsValidations())
+                            .Config(ctx => ctx.HideAfterFinish(true))
+                            .Run(ctx.CancellationToken);
+                        if (p1.IsAborted)
+                        {
+                            isCancellationRequested = true;
+                            return Array.Empty<string>();
+                        }
+                        return p1.Value.Select(x => x.Masked).ToArray();
+                    }
+                    case PromptPlusTypeKind.TimeOnly:
+                    {
+                        var DateTimeAtt = argument.FindArgumentAttribute<PromptPlusTypeTimeAttribute>();
+                        var p1 = PromptPlus.ListMasked(promptText, description)
+                            .MaskType(MaskedType.TimeOnly)
                             .PageSize(pageSize)
                             .FillZeros(true)
                             .FormatTime(DateTimeAtt.TimeKind)
@@ -517,10 +540,30 @@ namespace PPlus.CommandDotNet
                         }
                         return new string[] { p1.Value.Masked };
                     }
-                    case PromptPlusTypeKind.DateTime:
+                    case PromptPlusTypeKind.DateOnly:
                     {
-                        var att = argument.FindArgumentAttribute<PromptPlusTypeDateTimeAttribute>();
-                        var p1 = PromptPlus.MaskEdit((MaskedType)Enum.Parse(typeof(MaskedType), att.DateTimeKind.ToString()), promptText, description)
+                        var att = argument.FindArgumentAttribute<PromptPlusTypeDateAttribute>();
+                        var p1 = PromptPlus.MaskEdit(MaskedType.DateOnly, promptText, description)
+                            .FillZeros(true)
+                            .FormatTime(att.TimeKind)
+                            .FormatYear(att.YearKind)
+                            .ShowDayWeek(FormatWeek.Short)
+                            .Culture(att.Culture)
+                            .Default(defaultValue)
+                            .AddValidators(argument.ImportDataAnnotationsValidations())
+                            .Config(ctx => ctx.HideAfterFinish(true))
+                            .Run(ctx.CancellationToken);
+                        if (p1.IsAborted)
+                        {
+                            isCancellationRequested = true;
+                            return Array.Empty<string>();
+                        }
+                        return new string[] { p1.Value.Masked };
+                    }
+                    case PromptPlusTypeKind.TimeOnly:
+                    {
+                        var att = argument.FindArgumentAttribute<PromptPlusTypeDateAttribute>();
+                        var p1 = PromptPlus.MaskEdit(MaskedType.TimeOnly, promptText, description)
                             .FillZeros(true)
                             .FormatTime(att.TimeKind)
                             .FormatYear(att.YearKind)
@@ -566,7 +609,7 @@ namespace PPlus.CommandDotNet
             }
         }
 
-        private static ICollection<string> PromptBooleanValue(CommandContext ctx, bool defaultValue, string promptText, string description, string[] allowervalues, out bool isCancellationRequested)
+        public static ICollection<string> PromptBooleanValue(CommandContext ctx, bool defaultValue, string promptText, string description, string[] allowervalues, out bool isCancellationRequested)
         {
 
             isCancellationRequested = false;
@@ -590,7 +633,7 @@ namespace PPlus.CommandDotNet
             return new[] { p.Value.ToString() };
         }
 
-        private static ICollection<string> PromptSingleValue(CommandContext ctx, bool isPassword, string promptText, string description, IArgument argument, string defaultvalue,string[] lastvalue, out bool isCancellationRequested)
+        public static ICollection<string> PromptSingleValue(CommandContext ctx, bool isPassword, string promptText, string description, IArgument argument, string defaultvalue,string[] lastvalue, out bool isCancellationRequested)
         {
             string initvalue = null;
             if (lastvalue is not null)
@@ -629,26 +672,75 @@ namespace PPlus.CommandDotNet
             return new[] { p.Value };
         }
 
-        private static ICollection<string> PromptAllowedManyValues(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument,string[] lastvalue, out bool isCancellationRequested)
+        public static ICollection<string> PromptAllowedManyValues(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument,string[] lastvalue, out bool isCancellationRequested)
         {
             isCancellationRequested = false;
-            var p = PromptPlus
-                .MultiSelect<string>(promptText, description)
-                .AddItems(argument.AllowedValues)
-                .AddDefaults(lastvalue)
-                .Range(argument.Arity.Minimum, argument.Arity.Maximum)
-                .PageSize(pageSize)
-                .Config(ctx => ctx.HideAfterFinish(true))
-                .Run(ctx.CancellationToken);
-            if (p.IsAborted)
+
+            if (argument.TypeInfo.UnderlyingType == typeof(bool))
             {
-                isCancellationRequested = true;
-                return Array.Empty<string>();
+                var p = PromptPlus
+                    .ListMasked(promptText, $"{description}. [0]False [1]True")
+                    .MaskType(MaskedType.Generic, "C[01]")
+                    .PageSize(pageSize)
+                    .UpperCase(true)
+                    .AddItems(lastvalue)
+                    .TransformItems((item) =>
+                    {
+                        if (item.ToLowerInvariant() == "true")
+                        {
+                            return "1";
+                        }
+                        if (item.ToLowerInvariant() == "false")
+                        {
+                            return "0";
+                        }
+                        return item;
+                    })
+                    .ShowInputType(false)
+                    .Range(argument.Arity.Minimum, argument.Arity.Maximum)
+                    .AddValidators(argument.ImportDataAnnotationsValidations())
+                    .AddValidator(PromptPlusValidators.IsTypeBoolean())
+                    .Config(ctx => ctx.HideAfterFinish(true))
+                    .Run(ctx.CancellationToken);
+                if (p.IsAborted)
+                {
+                    isCancellationRequested = true;
+                    return Array.Empty<string>();
+                }
+                var result = new List<string>();
+                foreach (var item in p.Value)
+                {
+                    if (item.Masked == "1" || item.Masked == "T")
+                    {
+                        result.Add("true");
+                    }
+                    else
+                    {
+                        result.Add("false");
+                    }
+                }
+                return result.ToArray();
             }
-            return p.Value.ToArray();
+            else
+            {
+                var p = PromptPlus
+                    .MultiSelect<string>(promptText, description)
+                    .AddItems(argument.AllowedValues)
+                    .AddDefaults(lastvalue)
+                    .Range(argument.Arity.Minimum, argument.Arity.Maximum)
+                    .PageSize(pageSize)
+                    .Config(ctx => ctx.HideAfterFinish(true))
+                    .Run(ctx.CancellationToken);
+                if (p.IsAborted)
+                {
+                    isCancellationRequested = true;
+                    return Array.Empty<string>();
+                }
+                return p.Value.ToArray();
+            }
         }
 
-        private static ICollection<string> PromptAllowedOnlyValue(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument,string[] lastvalue, out bool isCancellationRequested)
+        public static ICollection<string> PromptAllowedOnlyValue(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument,string[] lastvalue, out bool isCancellationRequested)
         {
             string defvalue = null;
             if (lastvalue is not null)
@@ -674,7 +766,7 @@ namespace PPlus.CommandDotNet
             return new[] { p.Value };
         }
 
-        private static string DefaultValueForType(object value)
+        public static string DefaultValueForType(object value)
         {
             if (value is null)
             {
@@ -699,22 +791,6 @@ namespace PPlus.CommandDotNet
                     return value.ToString();
                 case TypeCode.DateTime:
                     return ((DateTime)value).ToString("D");
-            }
-            return null;
-        }
-
-        public static string CopyCallerDescription(this Type source, [CallerMemberName] string? caller = null)
-        {
-            var m = source.GetMethod(caller);
-            var att = m.GetCustomAttributes().FirstOrDefault(a => a as INameAndDescription != null);
-            if (att != null)
-            {
-                return ((INameAndDescription)att).Description;
-            }
-            att = m.GetCustomAttributes().FirstOrDefault(a => a as DescriptionAttribute != null);
-            if (att != null)
-            {
-                return ((DescriptionAttribute)att).Description;
             }
             return null;
         }

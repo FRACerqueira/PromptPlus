@@ -87,6 +87,11 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
     - Add IEnumerable item to list.
 
 - ```csharp
+  TransformItems(Func<string, string> value)
+    ```
+    - Function that transforms items during startup.
+
+- ```csharp
   DescriptionSelector(Func<ResultMasked,string> value)
   ``` 
     - Run the fucntion on each interaction and show result in description line.

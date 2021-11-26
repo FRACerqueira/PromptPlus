@@ -44,5 +44,6 @@ namespace PPlus.Controls
         public string DefaultValueWitdMask { get; set; }
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
         public Func<ResultMasked, string> DescriptionSelector { get; set; }
+        public Func<string, string> TransformItems { get; set; }
     }
 }

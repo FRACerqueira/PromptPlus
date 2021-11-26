@@ -301,7 +301,6 @@ namespace PPlus.Controls
             return this;
         }
 
-
         public IControlMaskEdit Prompt(string value, string description = null)
         {
             _options.Message = value;

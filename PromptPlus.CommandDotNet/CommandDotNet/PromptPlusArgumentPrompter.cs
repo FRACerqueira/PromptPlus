@@ -40,11 +40,11 @@ namespace PPlus.CommandDotNet
             var description = _getPromptTextCallback?.Invoke(ctx, argument) ?? string.Empty;
             if (kindprompt == PromptPlusTypeKind.None)
             {
-                return UtilExtension.PromptForTypeArgumentValues(ctx, argument,description, _pageSize,null, out isCancellationRequested);
+                return Common.PromptForTypeArgumentValues(ctx, argument,description, _pageSize,null, out isCancellationRequested);
             }
             else
             {
-                return UtilExtension.PromptForPromptPlusTypeArgumentValues(ctx, argument, description,_pageSize, kindprompt,null, out isCancellationRequested);
+                return Common.PromptForPromptPlusTypeArgumentValues(ctx, argument, description,_pageSize, kindprompt,null, out isCancellationRequested);
             }
         }
     }

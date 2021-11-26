@@ -33,6 +33,8 @@ namespace PPlus
         internal const int ProgressgBarDoneDelay = 1000;
         internal const int ProgressgBarCheckDelay = 50;
 
+        internal static object LockObj = new object();
+
         static PromptPlus()
         {
             Symbols.MaskEmpty = new("■", "  ");
@@ -62,6 +64,8 @@ namespace PPlus
         }
 
         public static IConsoleDriver ConsoleDriver { get; private set; }
+
+        internal static bool NoInterative => ConsoleDriver.NoInterative;
 
         internal static CultureInfo AppCulture { get; set; }
 

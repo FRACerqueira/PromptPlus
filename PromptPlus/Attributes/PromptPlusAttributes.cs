@@ -83,9 +83,9 @@ namespace PPlus.Attributes
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
-    public class PromptPlusTypeDateTimeAttribute : Attribute, IPromptType
+    public class PromptPlusTypeDateAttribute : Attribute, IPromptType
     {
-        public PromptPlusTypeDateTimeAttribute()
+        public PromptPlusTypeDateAttribute()
         {
             DateTimeKind = PromptDateTimeKind.DateOnly;
             YearKind = FormatYear.Y4;
@@ -93,15 +93,42 @@ namespace PPlus.Attributes
             Culture = Thread.CurrentThread.CurrentCulture;
         }
 
-        public PromptPlusTypeDateTimeAttribute(PromptDateTimeKind dateTimeKind = PromptDateTimeKind.DateOnly, FormatYear formatYear = FormatYear.Y4, FormatTime formatTime = FormatTime.HMS, CultureInfo? cultureInfo = null)
+        public PromptPlusTypeDateAttribute(FormatYear formatYear = FormatYear.Y4,CultureInfo? cultureInfo = null)
         {
-            DateTimeKind = dateTimeKind;
+            DateTimeKind = PromptDateTimeKind.DateOnly;
             YearKind = formatYear;
+            TimeKind = FormatTime.HMS;
+            Culture = cultureInfo ?? Thread.CurrentThread.CurrentCulture;
+        }
+
+        public PromptPlusTypeKind TypeKind => PromptPlusTypeKind.DateOnly;
+        public PromptDateTimeKind DateTimeKind { get; private set; }
+        public virtual FormatYear YearKind { get; private set; }
+        public virtual FormatTime TimeKind { get; private set; }
+        public virtual CultureInfo Culture { get; private set; }
+    }
+
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
+    public class PromptPlusTypeTimeAttribute : Attribute, IPromptType
+    {
+        public PromptPlusTypeTimeAttribute()
+        {
+            DateTimeKind = PromptDateTimeKind.TimeOnly;
+            YearKind = FormatYear.Y4;
+            TimeKind = FormatTime.HMS;
+            Culture = Thread.CurrentThread.CurrentCulture;
+        }
+
+        public PromptPlusTypeTimeAttribute(FormatTime formatTime = FormatTime.HMS, CultureInfo? cultureInfo = null)
+        {
+            DateTimeKind = PromptDateTimeKind.TimeOnly;
+            YearKind = FormatYear.Y4;
             TimeKind = formatTime;
             Culture = cultureInfo ?? Thread.CurrentThread.CurrentCulture;
         }
 
-        public PromptPlusTypeKind TypeKind => PromptPlusTypeKind.DateTime;
+        public PromptPlusTypeKind TypeKind => PromptPlusTypeKind.TimeOnly;
         public PromptDateTimeKind DateTimeKind { get; private set; }
         public virtual FormatYear YearKind { get; private set; }
         public virtual FormatTime TimeKind { get; private set; }
@@ -157,7 +184,8 @@ namespace PPlus.Attributes
         None,
         Number,
         Currency,
-        DateTime,
+        DateOnly,
+        TimeOnly,
         Browser,
         Generic
     }

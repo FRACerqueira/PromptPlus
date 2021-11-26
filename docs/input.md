@@ -27,6 +27,11 @@ Input(string prompt, string description = null)
   - set prompt message and optional description
 
 - ```csharp
+  InitialValue(string value)
+  ``` 
+  -  Initial value for input.
+
+- ```csharp
   Default(string value)
   ``` 
   - Default value for input. If the input is empty and there is a DefaultValue and the all condition from Validators is true, the return will be DefaultValue

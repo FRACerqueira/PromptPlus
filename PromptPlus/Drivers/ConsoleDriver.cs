@@ -17,15 +17,12 @@ namespace PPlus.Drivers
     internal sealed class ConsoleDriver : IConsoleDriver
     {
         private const int IdleReadKey = 10;
-
         public static int MinBufferHeight = 10;
+
+        public bool NoInterative => (Console.IsInputRedirected || Console.IsOutputRedirected);
 
         static ConsoleDriver()
         {
-            if (Console.IsInputRedirected || Console.IsOutputRedirected)
-            {
-                throw new InvalidOperationException(Exceptions.Ex_InputOutPutRedirected);
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 var hConsole = NativeMethods.GetStdHandle(NativeMethods.STD_OUTPUT_HANDLE);
@@ -74,7 +71,6 @@ namespace PPlus.Drivers
             get { return Console.OutputEncoding; }
             set { Console.OutputEncoding = value; }
         }
-
 
         public void Beep() => Console.Write("\a");
 
@@ -159,7 +155,6 @@ namespace PPlus.Drivers
             Console.WriteLine();
         }
 
-
         public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
         {
             Write(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
@@ -170,7 +165,6 @@ namespace PPlus.Drivers
             Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
             Console.WriteLine();
         }
-
 
         public void SetCursorPosition(int left, int top)
         {
@@ -223,11 +217,14 @@ namespace PPlus.Drivers
             }
         }
 
-
         public int BufferWidth
         {
             get
             {
+                if (NoInterative)
+                {
+                    return 2000;
+                }
                 return Console.WindowWidth;
             }
         }
@@ -236,6 +233,10 @@ namespace PPlus.Drivers
         {
             get
             {
+                if (NoInterative)
+                {
+                    return 2000;
+                }
                 return Console.WindowHeight;
             }
         }

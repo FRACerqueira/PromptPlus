@@ -123,6 +123,12 @@
   <data name="WizardHelpText" xml:space="preserve">
     <value>Directive for wizard prompt:%\n%[{0}] to wizard find commands, options and arguments with prompt and execute!!! (Remark: Shouldn't have any more arguments)%\n%%\n%Example: %AppName% [{0}].</value>
   </data>
+  <data name="WizardKeyNavigation" xml:space="preserve">
+    <value>, Enter: Next, {0}: Run, {1}: Back command</value>
+  </data>
+  <data name="WizardKeyNavigationNoBack" xml:space="preserve">
+    <value>, Enter: Next, {0}: Run</value>
+  </data>
   <data name="WizardMissingOperands" xml:space="preserve">
     <value>Missing Argument(s)</value>
   </data>

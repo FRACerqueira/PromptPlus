@@ -10,6 +10,21 @@ namespace PPlus.Objects
 {
     public struct HotKey : IEquatable<ConsoleKeyInfo>
     {
+        internal HotKey(bool skipvalid,ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false)
+        {
+            Key = key;
+            Alt = alt;
+            Ctrl = ctrl;
+            Shift = shift;
+            if (!skipvalid)
+            {
+                if (!IsValidHotKey())
+                {
+                    throw new ArgumentException(Exceptions.Ex_InvalidHotKey);
+                }
+            }
+        }
+
         public HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false)
         {
             Key = key;
