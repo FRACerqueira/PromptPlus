@@ -77,6 +77,16 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
     - Run the validators on each interaction
 
 - ```csharp
+  AddItem(string value)
+    ```
+    - Add item to list.
+
+- ```csharp
+  AddItems(IEnumerable<string> value)
+    ```
+    - Add IEnumerable item to list.
+
+- ```csharp
   DescriptionSelector(Func<ResultMasked,string> value)
   ``` 
     - Run the fucntion on each interaction and show result in description line.
