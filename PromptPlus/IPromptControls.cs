@@ -221,6 +221,7 @@ namespace PPlus
         IControlList<T> ValidateOnDemand();
         IControlList<T> DescriptionSelector(Func<string, string> value);
         IControlList<T> Config(Action<IPromptConfig> context);
+        IControlList<T> InitialValue(T value, bool ever = false);
     }
 
     public interface IControlListMasked : IPromptControls<IEnumerable<ResultMasked>>, IPromptPipe
@@ -246,6 +247,8 @@ namespace PPlus
         IControlListMasked ValidateOnDemand();
         IControlListMasked DescriptionSelector(Func<ResultMasked, string> value);
         IControlListMasked Config(Action<IPromptConfig> context);
+        IControlListMasked InitialValue(string value, bool ever = false);
+
     }
 
     public interface IControlBrowser : IPromptControls<ResultBrowser>, IPromptPipe

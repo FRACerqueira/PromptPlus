@@ -46,7 +46,7 @@ MultiSelect<T>(string prompt, string description = null)
   ShowGroupOnDescription(string noGroupMessage)
     ```
     - Show the description line with the group name or use the noGroupMessage parameter when there is no group.
-    - Must have declared method DescriptionSelector
+    - Must have declared DescriptionSelector method 
 
 - ```csharp
   Range(int minvalue, int maxvalue)
@@ -112,7 +112,7 @@ MultiSelect<T>(string prompt, string description = null)
    ToPipe(string id, string title, object state = null)
   ``` 
   - Transform control to IFormPlusBase.
-  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
 
 - ```csharp
   ResultPromptPlus<IEnumerable<T>> Run(CancellationToken? value = null)
@@ -124,7 +124,7 @@ MultiSelect<T>(string prompt, string description = null)
 
 ```csharp
 IControlMultiSelect<T>              //for Control Methods
-ResultPromptPlus<IEnumerable<T>>    //After execute method Run
+ResultPromptPlus<IEnumerable<T>>    //After execute Run method
 IPromptPipe                         //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                       //for only definition of pipe to Pipeline Control
 ```

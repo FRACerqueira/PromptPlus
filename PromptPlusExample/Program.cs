@@ -1019,6 +1019,7 @@ namespace PromptPlusExample
                 .AddItem("aaa")
                 .AddItem("bbb")
                 .AddItem("ccc")
+                .InitialValue("teste")
                 .AddValidator(PromptPlusValidators.MinLength(3))
                 .DescriptionSelector(x =>
                 {
@@ -1050,6 +1051,7 @@ namespace PromptPlusExample
                 .UpperCase(true)
                 .AddItem("XYZ 123-EUA-A1-AAA")
                 .AddItem("XYZ 123-EUA-A2-AAA")
+                .InitialValue("XYZ 123", true)
                 .DescriptionSelector(MyDescMaskedirGeneric)
                 .ValidateOnDemand()
                 .Run(_stopApp);

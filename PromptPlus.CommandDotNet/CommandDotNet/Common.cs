@@ -244,6 +244,15 @@ namespace PPlus.CommandDotNet
                                 .Range(argument.Arity.Minimum, argument.Arity.Maximum)
                                 .AddValidators(argument.ImportDataAnnotationsValidations());
 
+                        if (lastvalue is null)
+                        {
+                            var iniAtt = argument.FindArgumentAttribute<PromptInitialValueAttribute>();
+                            if (iniAtt is not null)
+                            {
+                                c.InitialValue(iniAtt.InitialValue,iniAtt.EverInitialValue);
+                            }
+                        }
+
                         if (uriAtt is not null)
                         {
                             c.AddValidator(PromptPlusValidators.IsUriScheme(uriAtt.Kind, uriAtt.AllowedUriScheme));
@@ -643,7 +652,14 @@ namespace PPlus.CommandDotNet
                     initvalue = lastvalue[0];
                 }
             }
-
+            else
+            {
+                var iniAtt = argument.FindArgumentAttribute<PromptInitialValueAttribute>();
+                if (iniAtt is not null)
+                {
+                    initvalue = iniAtt.InitialValue;
+                }
+            }
             isCancellationRequested = false;
             var uriAtt = argument.FindArgumentAttribute<PromptValidatorUriAttribute>();
 

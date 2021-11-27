@@ -91,7 +91,7 @@ Control Browser. Browser files/folder with auto-paginator and tooltips.
    ToPipe(string id, string title, object state = null)
   ``` 
   - Transform control to IFormPlusBase.
-  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
 
 - ```csharp
   ResultPromptPlus<ResultBrowser> Run(CancellationToken? value = null)
@@ -103,7 +103,7 @@ Control Browser. Browser files/folder with auto-paginator and tooltips.
 
 ```csharp
 IControlBrowser                     //for Control Methods
-ResultPromptPlus<ResultBrowser>     //After execute method Run
+ResultPromptPlus<ResultBrowser>     //After execute Run method
 IPromptPipe                         //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                       //for only definition of pipe to Pipeline Control
 ```

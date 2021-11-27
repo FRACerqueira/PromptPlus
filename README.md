@@ -26,7 +26,7 @@
 
 #### **[Visit the official page for complete documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
 
-#### **[Visit the official page for complete documentation of CommandDotNet](https://commanddotnet.bilal-fazlani.com)**
+#### **[CommandDotNet is third party applications Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
 
 ## Examples
 

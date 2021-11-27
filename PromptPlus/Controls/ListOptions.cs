@@ -22,5 +22,8 @@ namespace PPlus.Controls
         public bool ValidateOnDemand { get; set; }
         public Func<string, string> DescriptionSelector { get; set; }
         public IList<T> InitialItems { get; set; } = new List<T>();
+        public T InitialValue { get; set; }
+        public bool EverInitialValue { get; set; }
+
     }
 }

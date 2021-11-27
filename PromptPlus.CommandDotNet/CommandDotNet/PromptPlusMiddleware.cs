@@ -623,24 +623,21 @@ namespace PPlus.CommandDotNet
 
         private static List<WizardArgs> RemoveOperandIfAllEmpty(List<WizardArgs> args)
         {
-            var qtdenabled = 0;
-            var qtdope = 0;
+            var qtdenabled = false;
             for (var i = args.Count - 1; i >= 0; i--)
             {
-                if (args[i].IsEnabled)
+                if (args[i].ArgNode.GetType() == typeof(Command))
                 {
-                    if (args[i].ArgNode.GetType() != typeof(Command) && args[i].ArgNode.GetType() != typeof(Operand))
-                    {
-                        qtdenabled++;
-                    }
-                    else
-                    {
-                        break;
-                    }
+                    break;
                 }
-                qtdope++;
+                if (args[i].IsEnabled && args[i].ArgNode.GetType() == typeof(Operand))
+                {
+                    qtdenabled = true;
+                    break;
+
+                }
             }
-            if (qtdenabled == 0)
+            if (!qtdenabled)
             {
                 args = RemovePreviusOptionsAndOperands(args);
             }

@@ -55,7 +55,7 @@ Progressbar(string prompt, string description = null)
    ToPipe(string id, string title, object state = null)
   ``` 
   - Transform control to IFormPlusBase.
-  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
 
 - ```csharp
   ResultPromptPlus<ProgressBarInfo> Run(CancellationToken? value = null)
@@ -67,7 +67,7 @@ Progressbar(string prompt, string description = null)
 
 ```csharp
 IControlProgressbar                 //for Control Methods
-ResultPromptPlus<ProgressBarInfo>   //After execute method Run
+ResultPromptPlus<ProgressBarInfo>   //After execute Run method
 IPromptPipe                         //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                       //for only definition of pipe to Pipeline Control
 ```

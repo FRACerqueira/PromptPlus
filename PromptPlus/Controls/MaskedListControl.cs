@@ -95,7 +95,6 @@ namespace PPlus.Controls
                     throw new ArgumentException(string.Format(Exceptions.Ex_InvalidType, _options.MaskedOption.Type));
             }
 
-            var oldvale = _options.MaskedOption.DefaultValueWitdMask;
             _options.MaskedOption.DefaultValueWitdMask = null;
             _inputBuffer = new MaskedBuffer(_options.MaskedOption);
 
@@ -111,7 +110,7 @@ namespace PPlus.Controls
                 {
                     if (_inputItems.Count < _options.Maximum)
                     {
-                        _inputBuffer.Load(localitem);
+                        _inputBuffer.Load(_inputBuffer.PreparationDefaultValue(localitem,false));
                         var result = new ResultMasked(_inputBuffer.ToString(), FilterInput(_inputBuffer));
                         if (!TryValidate(result.Masked, _options.Validators))
                         {
@@ -159,8 +158,16 @@ namespace PPlus.Controls
 
             ClearError();
 
-            _options.MaskedOption.DefaultValueWitdMask = oldvale;
-            _inputBuffer.Load(_options.MaskedOption.DefaultValueWitdMask);
+            if (_options.InitialValue != null && _inputItems.Count < _options.Maximum)
+            {
+                var localitem = _options.InitialValue;
+                if (_options.MaskedOption.TransformItems != null)
+                {
+                    localitem = _options.MaskedOption.TransformItems.Invoke(_options.InitialValue);
+                }
+                _inputBuffer.Load(_inputBuffer.PreparationDefaultValue(localitem,true));
+            }
+
             _localpaginator = new Paginator<string>(_inputItems.Select(x => x.Masked), _options.PageSize, Optional<string>.s_empty, _options.TextSelector);
             _localpaginator.FirstItem();
 
@@ -278,6 +285,15 @@ namespace PPlus.Controls
                             _inputItems.Add(input);
                             _localpaginator = new Paginator<string>(_inputItems.Select(x => x.Masked), _options.PageSize, Optional<string>.s_empty, _options.TextSelector);
                             _firstinput = true;
+                            if (_options.InitialValue != null && _options.EverInitialValue && _inputItems.Count < _options.Maximum)
+                            {
+                                var localitem = _options.InitialValue;
+                                if (_options.MaskedOption.TransformItems != null)
+                                {
+                                    localitem = _options.MaskedOption.TransformItems.Invoke(_options.InitialValue);
+                                }
+                                _inputBuffer.Load(_inputBuffer.PreparationDefaultValue(localitem,true));
+                            }
                         }
                         catch (FormatException)
                         {
@@ -486,6 +502,16 @@ namespace PPlus.Controls
             if (description != null)
             {
                 _options.Description = description;
+            }
+            return this;
+        }
+
+        public IControlListMasked InitialValue(string value, bool ever = false)
+        {
+            if (value is not null)
+            {
+                _options.InitialValue = value;
+                _options.EverInitialValue = ever;
             }
             return this;
         }

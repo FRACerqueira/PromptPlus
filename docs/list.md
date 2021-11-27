@@ -51,6 +51,11 @@ List<T>(string prompt, string description = null)
     - Add item to list.
 
 - ```csharp
+  InitialValue(T value, bool ever = false)
+    ```
+    - Set initial input value. Optionally always start with the value when ever is true
+
+- ```csharp
   AddItems(IEnumerable<T> value)
     ```
     - Add IEnumerable item to list.
@@ -89,7 +94,7 @@ List<T>(string prompt, string description = null)
    ToPipe(string id, string title, object state = null)
   ``` 
   - Transform control to IFormPlusBase.
-  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
 
 - ```csharp
   ResultPromptPlus<IEnumerable<T>> Run(CancellationToken? value = null)
@@ -101,7 +106,7 @@ List<T>(string prompt, string description = null)
 
 ```csharp
 IControlList<T>                     //for Control Methods
-ResultPromptPlus<IEnumerable<T>>    //After execute method Run
+ResultPromptPlus<IEnumerable<T>>    //After execute Run method
 IPromptPipe                         //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                       //for only definition of pipe to Pipeline Control
 ```

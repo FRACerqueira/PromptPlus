@@ -67,6 +67,11 @@ namespace PPlus.Controls
             _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
             _localpaginator.FirstItem();
 
+            if (_options.InitialValue != null)
+            {
+                _inputBuffer.Load(_options.TextSelector(_options.InitialValue));
+            }
+
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
 
@@ -152,6 +157,10 @@ namespace PPlus.Controls
                             _inputBuffer.Clear();
                             _inputItems.Add(inputValue);
                             _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
+                            if (_options.InitialValue != null && _options.EverInitialValue)
+                            {
+                                _inputBuffer.Load(_options.TextSelector(_options.InitialValue));
+                            }
                         }
                         catch (FormatException)
                         {
@@ -362,6 +371,16 @@ namespace PPlus.Controls
             }
             _options.Minimum = minvalue;
             _options.Maximum = maxvalue;
+            return this;
+        }
+
+        public IControlList<T> InitialValue(T value, bool ever = false)
+        {
+            if (value is not null)
+            {
+                _options.InitialValue = value;
+                _options.EverInitialValue = ever;
+            }
             return this;
         }
 

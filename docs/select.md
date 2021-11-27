@@ -96,7 +96,7 @@ Control Select. Generic select IEnumerable/Enum with auto-paginator and tooltips
    ToPipe(string id, string title, object state = null)
   ``` 
   - Transform control to IFormPlusBase.
-  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
 
 - ```csharp
   ResultPromptPlus<T> Run(CancellationToken? value = null)
@@ -108,7 +108,7 @@ Control Select. Generic select IEnumerable/Enum with auto-paginator and tooltips
 
 ```csharp
 IControlSelect<T>      //for Control Methods
-ResultPromptPlus<T>    //After execute method Run
+ResultPromptPlus<T>    //After execute Run method
 IPromptPipe            //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase          //for only definition of pipe to Pipeline Control
 ```

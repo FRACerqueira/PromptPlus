@@ -8,6 +8,19 @@ namespace PPlus.Attributes
 {
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
+    public class PromptInitialValueAttribute : Attribute
+    {
+        public PromptInitialValueAttribute(string initialValue = null, bool ever = false)
+        {
+            InitialValue = initialValue;
+            EverInitialValue = ever;
+        }
+
+        public virtual string InitialValue { get; private set; }
+        public virtual bool EverInitialValue { get; private set; }
+    }
+
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
     public class PromptValidatorUriAttribute : Attribute
     {
         public PromptValidatorUriAttribute(UriKind uriKind = UriKind.Absolute, string allowedUriScheme = null)

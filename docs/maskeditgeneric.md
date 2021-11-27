@@ -136,7 +136,7 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
    ToPipe(string id, string title, object state = null)
   ``` 
   - Transform control to IFormPlusBase.
-  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
 
 - ```csharp
   ResultPromptPlus<ResultMasked> Run(CancellationToken? value = null)
@@ -148,7 +148,7 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
 
 ```csharp
 IControlMaskEdit                //for Control Methods
-ResultPromptPlus<ResultMasked>  //After execute method Run
+ResultPromptPlus<ResultMasked>  //After execute Run method
 IPromptPipe                     //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                   //for only definition of pipe to Pipeline Control
 ```

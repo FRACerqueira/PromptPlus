@@ -90,7 +90,7 @@ AutoComplete(string prompt, string description = null)
    ToPipe(string id, string title, object state = null)
   ``` 
   - Transform control to IFormPlusBase.
-  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
 
 - ```csharp
   ResultPromptPlus<string> Run(CancellationToken? value = null)
@@ -102,7 +102,7 @@ AutoComplete(string prompt, string description = null)
 
 ```csharp
 IControlAutoComplete         //for Control Methods
-ResultPromptPlus<string>     //After execute method Run
+ResultPromptPlus<string>     //After execute Run method
 IPromptPipe                  //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```

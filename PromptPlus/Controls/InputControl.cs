@@ -37,16 +37,19 @@ namespace PPlus.Controls
                 throw new ArgumentException(Exceptions.Ex_PasswordDefaultValue);
             }
 
+            if (!string.IsNullOrEmpty(_options.DefaultValue))
+            {
+                _options.InitialValue = _options.DefaultValue;
+            }
+
+            if (_options.IsPassword)
+            {
+                _options.InitialValue = null;
+            }
+
             if (!string.IsNullOrEmpty(_options.InitialValue))
             {
                 _inputBuffer.Load(_options.InitialValue);
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(_options.DefaultValue))
-                {
-                    _inputBuffer.Load(_options.DefaultValue);
-                }
             }
 
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;

@@ -10,15 +10,15 @@ Interactive command-line based application framework for **C# with powerful cont
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**: 
 <p align="left">
     <img valign="middle" width="80" height="80" src="./images/iconCmdNet.png">
-    <b>PromptPlus.CommandDotNet!!</b>
+    <a href="https://fracerqueira.github.io/PromptPlus/ppluscmddotnet.html"><b>PromptPlus.CommandDotNet!!</b></a>
 </p>
 
-**[Visit official page for complete documentation of the CommandDotNet](https://commanddotnet.bilal-fazlani.com)**
-
-#### Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet:
+**Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet**:
 
 - Wizard to find all the commands/options and arguments with prompt and run.
     - Now you can discover and learn the existing commands, options and arguments.
+
+**[CommandDotNet is third party applications Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
 
 [**Snapshot of All Controls**](#snapshot)
 
@@ -159,7 +159,7 @@ PromptPlus has a configurable color(16 color) schema.
 PromptPlus.ColorSchema.Answer = ConsoleColor.Cyan;
 ```
 
-Prompt Plus also has commands for parts of text and underlining.
+PromptPlus also has commands **for coloring parts of text and underlining**.
 
 ```csharp
 //sample

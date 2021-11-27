@@ -60,6 +60,7 @@ namespace CommandDotNet.Example
 
             public void Download(
                 [Description("Url (http/https) to download")]
+                [PromptInitialValue("https://")]
                 [PromptValidatorUri(UriKind.Absolute,"http;https")]
                 string url,
                 [Description("Destination File Path")]

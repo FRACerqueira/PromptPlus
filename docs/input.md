@@ -29,13 +29,13 @@ Input(string prompt, string description = null)
 - ```csharp
   InitialValue(string value)
   ``` 
-  -  Initial value for input.
+  -  Initial value for input.If IsPassword = true , the InitValue method will be ignored.
 
 - ```csharp
   Default(string value)
   ``` 
   - Default value for input. If the input is empty and there is a DefaultValue and the all condition from Validators is true, the return will be DefaultValue
-
+  - When there is a default value, the InitValue method will be ignored and replaced by the default value  
 - ```csharp
   IsPassword(bool swithVisible)
   ``` 
@@ -75,7 +75,7 @@ Input(string prompt, string description = null)
    ToPipe(string id, string title, object state = null)
   ``` 
   - Transform control to IFormPlusBase.
-  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
 
 - ```csharp
   ResultPromptPlus<string> Run(CancellationToken? value = null)
@@ -87,7 +87,7 @@ Input(string prompt, string description = null)
 
 ```csharp
 IControlInput                //for Control Methods
-ResultPromptPlus<string>     //After execute method Run
+ResultPromptPlus<string>     //After execute Run method
 IPromptPipe                  //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                //for only definition of pipe to Pipeline Control
 ```

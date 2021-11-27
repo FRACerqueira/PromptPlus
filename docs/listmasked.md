@@ -150,7 +150,7 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
    ToPipe(string id, string title, object state = null)
   ``` 
   - Transform control to IFormPlusBase.
-  - It is mandatory to use this method to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
 
 - ```csharp
   ResultPromptPlus<IEnumerable<ResultMasked>> Run(CancellationToken? value = null)
@@ -162,7 +162,7 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
 
 ```csharp
 IControlListMasked                          //for Control Methods
-ResultPromptPlus<IEnumerable<ResultMasked>> //After execute method Run
+ResultPromptPlus<IEnumerable<ResultMasked>> //After execute Run method
 IPromptPipe                                 //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase                               //for only definition of pipe to Pipeline Control
 ```

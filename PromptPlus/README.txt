@@ -21,7 +21,7 @@ https://fracerqueira.github.io/PromptPlus
 For PromptPlus controls
 
 https://commanddotnet.bilal-fazlani.com/
-For command line parser framework
+CommandDotNet is third party applications
 
 **Relase Notes PromptPlus.CommandDotNet (V1.0.0.300)**
 -----------------------------------------------------------
@@ -102,15 +102,17 @@ public class Program
     - IsTypeUInt(string errorMessage = null) / IsTypeUInt32(string errorMessage = null)
     - IsTypeULong(string errorMessage = null) / IsTypeUInt64(string errorMessage = null)
 - Improvement - Added Description parameter to all controls
-- Improvement - Added Method InitialValue(string value) to Input-Control
-- Improvement - Added Methods AddItem(T value)/AddItems(IEnumerable<T> value) to List-Controls
+- Improvement - Added InitialValue(string value) method  to Input-Control
+- Improvement - Added InitialValue(T value, bool ever = false) method to List-Control
+- Improvement - Added InitialValue(string value, bool ever = false) method to Listmasked-Control
+- Improvement - Added AddItem(T value)/AddItems(IEnumerable<T> value) method to List-Controls
     - Now the List-Control and Listmasked-Control can start with values
-- Improvement - Added Methods TransformItems(Func<string, string> value) Listmasked-Control
+- Improvement - Added TransformItems(Func<string, string> value) method to Listmasked-Control
     - Now the added items can be transformed during startup.
 - Improvement - Added global hotkey (default value = F3) show/hide Description
 - Improvement - Added color Schema Description (default value = ConsoleColor.Cyan)
 - Improvement - Added color Schema CurrentTokenForeColor (for PromptPlus.CommandDotNet, default value = ConsoleColor.Yellow)
-- Improvement - Added Dynamic Description. DescriptionSelector Method for Description change on each interaction
+- Improvement - Added DescriptionSelector method for Description change on each interaction
     - Input-Control
     - AutoComplete-Control
     - Listmasked-Control
@@ -124,11 +126,11 @@ public class Program
     - List-Control/Listmasked-Control
 
 - Fixed bug - Defaut value to Browser-Control
-- Fixed bug - Added masked item widthout Leading Zeros for MaskedType.Number/MaskedType.NumberCurrency (Listmasked-Control)
+- Fixed bug - Added masked item in list widthout Leading Zeros for MaskedType.Number/MaskedType.NumberCurrency (Listmasked-Control)
 - Fixed bug - Embededs Validator for many kind-input types
 - Fixed bug - Isolate thread Culture for all controls
 - Fixed bug - Color when item disabled (Select-Control)
-- Fixed bug - Added missing method: ShowDayWeek (Listmasked-Control)
+- Fixed bug - Added missing ShowDayWeek method to Listmasked-Control
 
 **PromptPlus Controls - Sample Usage**
 --------------------------------------
