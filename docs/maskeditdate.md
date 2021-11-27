@@ -112,6 +112,11 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
     -  Accept signal to input number-type/currency-type. If not defined, only positive number.For other type signal will be ignored
 
 - ```csharp
+    UpperCase(bool value)
+  ``` 
+    -  Upper case input value to generic-type.For other type will be ignored
+
+- ```csharp
   Config(Action<IPromptConfig> context)
   ``` 
   - For access [**base methods**](basemethods) common to all controls.

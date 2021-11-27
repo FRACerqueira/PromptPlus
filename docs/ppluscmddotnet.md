@@ -113,7 +113,7 @@ UsePromptPlusArgumentPrompter(this AppRunner appRunner,
     - Filter the arguments that will be prompted. i.e. Create a [PromptWhenMissing] attribute, or only prompt for operands.Default filter includes only arguments where IArgumentArity.IArgumentArity.Minimum is greater than zero.
 
 
-### UsePromptPlusArgumentPrompter
+### UsePromptPlusConfig
 [**Top**](#help)
 
 Load custom config file (Colors/hotkeys/and so on) for PromptPlus. see in [**PromptPlus-Config**](index.md#load-and-save-settings)

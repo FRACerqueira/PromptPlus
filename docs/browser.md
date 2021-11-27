@@ -30,7 +30,7 @@ Control Browser. Browser files/folder with auto-paginator and tooltips.
 - ```csharp
   Filter(BrowserFilter value)
     ```
-    - Fiter result to only type folder. Default value = BrowserFilter.None (All types)   
+    - Fiter result to kind (Folder/File). Default value = BrowserFilter.None (All types)   
 
 - ```csharp
   Default(string value)

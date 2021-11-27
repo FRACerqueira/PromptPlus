@@ -59,7 +59,7 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
 
 - ```csharp
   PageSize(int value)
-    ```
+  ```
     - Maximum item per page. If the value is ommited, the value will be calculated according to the screen size 
 
 - ```csharp
@@ -121,6 +121,11 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
     AcceptSignal(bool signal)
   ``` 
     -  Accept signal to input number-type/currency-type. If not defined, only positive number.For other type signal will be ignored
+
+- ```csharp
+    UpperCase(bool value)
+  ``` 
+    -  Upper case input value to generic-type.For other type will be ignored
 
 - ```csharp
   Config(Action<IPromptConfig> context)

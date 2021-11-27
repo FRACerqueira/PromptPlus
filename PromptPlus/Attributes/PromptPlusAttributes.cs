@@ -10,7 +10,7 @@ namespace PPlus.Attributes
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
     public class PromptInitialValueAttribute : Attribute
     {
-        public PromptInitialValueAttribute(string initialValue = null, bool ever = false)
+        public PromptInitialValueAttribute(string initialValue, bool ever = false)
         {
             InitialValue = initialValue;
             EverInitialValue = ever;
@@ -71,6 +71,7 @@ namespace PPlus.Attributes
     }
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Parameter)]
+
     public class PromptPlusTypeCurrencyAttribute : Attribute, IPromptType
     {
         public PromptPlusTypeCurrencyAttribute(int integerpart, int decimalpart, bool accepSignal = true, CultureInfo? cultureInfo = null)
@@ -154,13 +155,12 @@ namespace PPlus.Attributes
         public PromptPlusTypeBrowserAttribute(
             BrowserFilter kind = BrowserFilter.None,
             string prefixExtension = null,
-            string searchPattern = null,
-            bool allowNotSelected = false)
+            string searchPattern = null)
         {
             Kind = kind;
             PrefixExtension = prefixExtension;
             SearchPattern = searchPattern;
-            AllowNotSelected = allowNotSelected;
+            AllowNotSelected = false;
         }
 
         public PromptPlusTypeKind TypeKind => PromptPlusTypeKind.Browser;
@@ -176,7 +176,7 @@ namespace PPlus.Attributes
     {
         public PromptPlusTypeMaskedAttribute(
             string mask,
-            bool uppercase)
+            bool uppercase = false)
         {
             Mask = mask;
             Uppercase = uppercase;
