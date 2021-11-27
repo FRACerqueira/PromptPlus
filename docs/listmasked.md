@@ -12,14 +12,14 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
 ![](./images/MaskedList.gif)
 
 ### Syntax
-[**Top**](#-promptplus--listmasked)
+[**Top**](#promptplus--listmasked)
 
 ```csharp
  ListMasked(string prompt, string description = null)
 ````
 
 ### Methods
-[**Top**](#-promptplus--listmasked)
+[**Top**](#promptplus--listmasked)
 
 - ```csharp
   Prompt(string value, string description = null)
@@ -158,7 +158,7 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
 	- Control execution
 
 ### Return
-[**Top**](#-promptplus--listmasked)
+[**Top**](#promptplus--listmasked)
 
 ```csharp
 IControlListMasked                          //for Control Methods
@@ -169,7 +169,7 @@ IFormPlusBase                               //for only definition of pipe to Pip
 
 
 ### Sample
-[**Top**](#-promptplus--listmasked)
+[**Top**](#promptplus--listmasked)
 
 
 ```csharp

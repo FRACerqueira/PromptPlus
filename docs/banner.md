@@ -8,14 +8,14 @@ Control Banner. Simple ASCII text banner.
 ![](./images/Banner.gif)
 
 ### Syntax
-[**Top**](#-promptplus--banner)
+[**Top**](#promptplus--banner)
 
 ```csharp
 Banner(string value)
 ````
 
 ### Methods
-[**Top**](#-promptplus--banner)
+[**Top**](#promptplus--banner)
 
 - ```csharp
 LoadFont(string value)
@@ -38,14 +38,14 @@ Run(ConsoleColor? color = null)
   - Show Banner with forecolor paramater.
 
 ### Return
-[**Top**](#-promptplus--banner)
+[**Top**](#promptplus--banner)
 
 ```csharp
 IFIGlet            //for Control Methods
 ```
 
 ### Sample
-[**Top**](#-promptplus--banner)
+[**Top**](#promptplus--banner)
 
 ```csharp
 var colorsel = PromptPlus.Select<ConsoleColor>("Select a color")

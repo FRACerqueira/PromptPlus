@@ -8,7 +8,7 @@ Command Color. Commands to write text easily with color.
 ![](./images/Color.gif)
 
 ### Syntax 1
-[**Top**](#-promptplus--colors)
+[**Top**](#promptplus--colors)
 Using simple commands for all text.
 
 ```csharp
@@ -24,7 +24,7 @@ PromptPlus.Write(string value, ConsoleColor? forecolor = null, ConsoleColor? bac
 ````
 
 ### Syntax 2
-[**Top**](#-promptplus--colors)
+[**Top**](#promptplus--colors)
 Using color extensions to colorize parts of a text.
 
 ```csharp
@@ -32,7 +32,7 @@ PromptPlus.WriteLine("This is a simples ","line".White().OnBlue().Underline(), "
 ````
 
 ### Syntax 3
-[**Top**](#-promptplus--colors)
+[**Top**](#promptplus--colors)
 Using markup style to colorize parts of a text.
 
 ```csharp

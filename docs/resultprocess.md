@@ -7,7 +7,7 @@
 Default return struct for [**WaitProcess Control**](waitprocess).
 
 ### Properties
-[**Top**](#-promptplus--resultprocess)
+[**Top**](#promptplus--resultprocess)
 
 - ProcessId 
 	- Type : string

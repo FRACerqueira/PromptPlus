@@ -6,7 +6,7 @@
 Default return struct for all controls. 
 
 ### Properties
-[**Top**](#-promptplus--resultpromptplus)
+[**Top**](#promptplus--resultpromptplus)
 
 - IsAborted
 	- Type : bool

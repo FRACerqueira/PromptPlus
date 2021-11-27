@@ -11,14 +11,14 @@ Simple any key press.
 ![](./images/Anykey.gif)
 
 ### Syntax
-[**Top**](#-promptplus--anykey)
+[**Top**](#promptplus--anykey)
 
 ```csharp
 KeyPress() 
 ```
 
 ### Methods
-[**Top**](#-promptplus--anykey)
+[**Top**](#promptplus--anykey)
 
 - ```csharp
   Prompt(string value)
@@ -47,7 +47,7 @@ KeyPress()
 	- Control execution
 
 ### Returns Types
-[**Top**](#-promptplus--anykey)
+[**Top**](#promptplus--anykey)
 
 ```csharp
 IControlKeyPress        //for Control Methods
@@ -56,7 +56,7 @@ IPromptPipe             //for Pipe condition and transform to IFormPlusBase
 IFormPlusBase           //for only definition of pipe to Pipeline Control
 ```
 ### Sample
-[**Top**](#-promptplus--anykey)
+[**Top**](#promptplus--anykey)
 
 ```csharp
 var key = PromptPlus.KeyPress()

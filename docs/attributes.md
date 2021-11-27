@@ -5,7 +5,7 @@
 ## Wizard
 Find all the commands/options and arguments with prompt and run. Now you can discover and learn the existing commands, options and arguments.
 
-[**Top**](#-promptplus--wizard)
+[**Top**](#promptplus--wizard)
 
 ![](./images/PplusCmddotnet.gif)
 

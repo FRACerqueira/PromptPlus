@@ -11,7 +11,7 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
 ![](./images/MaskEditGeneric.gif)
 
 ### Syntax
-[**Top**](#-promptplus--maskeditgeneric)
+[**Top**](#promptplus--maskeditgeneric)
 
 **Mask Characters and Delimiters**
 
@@ -40,7 +40,7 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
 ```
 
 ### Methods
-[**Top**](#-promptplus--maskeditgeneric)
+[**Top**](#promptplus--maskeditgeneric)
 
 - ```csharp
   Prompt(string value, string description = null)
@@ -144,7 +144,7 @@ Control MaskEdit. Generic input with masked input, tooltips and input validator
 	- Control execution
 
 ### Return
-[**Top**](#-promptplus--maskeditgeneric)
+[**Top**](#promptplus--maskeditgeneric)
 
 ```csharp
 IControlMaskEdit                //for Control Methods
@@ -154,7 +154,7 @@ IFormPlusBase                   //for only definition of pipe to Pipeline Contro
 ```
 
 ### Sample
-[**Top**](#-promptplus--maskeditgeneric)
+[**Top**](#promptplus--maskeditgeneric)
 
 ```csharp
 var mask = PromptPlus.MaskEdit(MaskedType.Generic, "Inventory Number")

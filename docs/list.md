@@ -11,14 +11,14 @@ Control List. Create Generic IEnumerable with auto-paginator, tooptip , input va
 ![](./images/List.gif)
 
 ### Syntax
-[**Top**](#-promptplus--list)
+[**Top**](#promptplus--list)
 
 ```csharp
 List<T>(string prompt, string description = null)
 ````
 
 ### Methods
-[**Top**](#-promptplus--list)
+[**Top**](#promptplus--list)
 
 - ```csharp
   Prompt(string value, string description = null)
@@ -102,7 +102,7 @@ List<T>(string prompt, string description = null)
 	- Control execution
 
 ### Return
-[**Top**](#-promptplus--list)
+[**Top**](#promptplus--list)
 
 ```csharp
 IControlList<T>                     //for Control Methods
@@ -112,7 +112,7 @@ IFormPlusBase                       //for only definition of pipe to Pipeline Co
 ```
 
 ### Sample
-[**Top**](#-promptplus--list)
+[**Top**](#promptplus--list)
 
 ```csharp
 var lst = PromptPlus.List<string>("Please add item(s)")

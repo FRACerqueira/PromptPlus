@@ -12,14 +12,14 @@ Control WaitProcess. Wait process with animation.
 ![](./images/WaitProcess.gif)
 
 ### Syntax
-[**Top**](#-promptplus--waitprocess)
+[**Top**](#promptplus--waitprocess)
 
 ```csharp
 WaitProcess(string prompt, string description = null)
 ```
 
 ### Methods
-[**Top**](#-promptplus--waitprocess)
+[**Top**](#promptplus--waitprocess)
 
 - ```csharp
   Prompt(string value, string description = null)
@@ -58,7 +58,7 @@ WaitProcess(string prompt, string description = null)
 	- Control execution
 
 ### Return
-[**Top**](#-promptplus--waitprocess)
+[**Top**](#promptplus--waitprocess)
 
 ```csharp
 IControlWaitProcess                           //for Control Methods
@@ -68,7 +68,7 @@ IFormPlusBase                                 //for only definition of pipe to P
 ```
 
 ### Sample
-[**Top**](#-promptplus--waitprocess)
+[**Top**](#promptplus--waitprocess)
 
 ```csharp
 var Process = PromptPlus.WaitProcess("My Tasks(3) Async")

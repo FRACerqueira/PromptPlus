@@ -14,7 +14,7 @@ ProgressBarInfo(int percentValue, bool finished, string message, object interati
 ```
 
 ### Properties
-[**Top**](#-promptplus--progressbarinfo)
+[**Top**](#promptplus--progressbarinfo)
 
 - Finished
 	- Type : bool

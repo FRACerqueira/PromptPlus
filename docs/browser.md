@@ -13,14 +13,14 @@ Control Browser. Browser files/folder with auto-paginator and tooltips.
 ![](./images/Browser.gif)
 
 ### Syntax
-[**Top**](#-promptplus--browser)
+[**Top**](#promptplus--browser)
 
 ```csharp
  Browser(string prompt, string description = null)
  ```
 
 ### Methods
-[**Top**](#-promptplus--browser)
+[**Top**](#promptplus--browser)
 
 - ```csharp
   Prompt(string value, string description = null)
@@ -99,7 +99,7 @@ Control Browser. Browser files/folder with auto-paginator and tooltips.
 	- Control execution
 
 ### Return
-[**Top**](#-promptplus--browser)
+[**Top**](#promptplus--browser)
 
 ```csharp
 IControlBrowser                     //for Control Methods
@@ -109,7 +109,7 @@ IFormPlusBase                       //for only definition of pipe to Pipeline Co
 ```
 
 ### Sample
-[**Top**](#-promptplus--browser)
+[**Top**](#promptplus--browser)
 
 ```csharp
 var file = PromptPlus.Browser("Select/New file")

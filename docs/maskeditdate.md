@@ -20,7 +20,7 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
 
 
 ### Syntax
-[**Top**](#-promptplus--maskeditdate)
+[**Top**](#promptplus--maskeditdate)
 
 ```csharp
  MaskEdit([MaskedType.DateOnly, string prompt, string description = null)
@@ -29,7 +29,7 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
  ````
 
 ### Methods
-[**Top**](#-promptplus--maskeditdate)
+[**Top**](#promptplus--maskeditdate)
 
 - ```csharp
   Prompt(string value, string description = null)
@@ -133,7 +133,7 @@ Control MaskEdit. Date input with language/culture, tooltips and input validator
 	- Control execution
 
 ### Return
-[**Top**](#-promptplus--maskeditdate)
+[**Top**](#promptplus--maskeditdate)
 
 ```csharp
 IControlMaskEdit                //for Control Methods
@@ -143,7 +143,7 @@ IFormPlusBase                   //for only definition of pipe to Pipeline Contro
 ```
 
 ### Sample
-[**Top**](#-promptplus--maskeditdate)
+[**Top**](#promptplus--maskeditdate)
 
 ```csharp
 var mask = PromptPlus.MaskEdit(MaskedType.DateOnly, "Date")

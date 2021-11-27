@@ -9,7 +9,7 @@ Command set for PromptPlus console
 ![](./images/Commands.gif)
 
 ### Syntax
-[**Top**](#-promptplus--commands)
+[**Top**](#promptplus--commands)
 
 Using simple command to change forecolor and backcolor.
 

@@ -11,14 +11,14 @@ Control SliderSwitch. Generic choice with customization and tooltips.
 ![](./images/SliderSwitch.gif)
 
 ### Syntax
-[**Top**](#-promptplus--sliderswitch)
+[**Top**](#promptplus--sliderswitch)
 
 ```csharp
 SliderSwitche(string prompt, string description = null)
 ```
 
 ### Methods
-[**Top**](#-promptplus--sliderswitch)
+[**Top**](#promptplus--sliderswitch)
 
 - ```csharp
   Prompt(string value, string description = null)
@@ -62,7 +62,7 @@ SliderSwitche(string prompt, string description = null)
 	- Control execution
 
 ### Return
-[**Top**](#-promptplus--sliderswitch)
+[**Top**](#promptplus--sliderswitch)
 
 ```csharp
 IControlSliderSwitch       //for Control Methods
@@ -72,7 +72,7 @@ IFormPlusBase              //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#-promptplus--sliderswitch)
+[**Top**](#promptplus--sliderswitch)
 
 ```csharp
 var slider = PromptPlus.SliderSwitch("Turn on/off")

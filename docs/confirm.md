@@ -11,14 +11,14 @@ Control Confirm. Simple confirm with with tool tips and language detection.
 ![](./images/Confirm.gif)
 
 ### Syntax
-[**Top**](#-promptplus--confirm)
+[**Top**](#promptplus--confirm)
 
 ```csharp
 Confirm(string prompt, string description = null)
 ````
 
 ### Methods
-[**Top**](#-promptplus--confirm)
+[**Top**](#promptplus--confirm)
 
 - ```csharp
   Prompt(string value, string description = null)
@@ -52,7 +52,7 @@ Confirm(string prompt, string description = null)
 	- Control execution
 
 ### Return
-[**Top**](#-promptplus--confirm)
+[**Top**](#promptplus--confirm)
 
 ```csharp
 IControlConfirm            //for Control Methods
@@ -62,7 +62,7 @@ IFormPlusBase              //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#-promptplus--confirm)
+[**Top**](#promptplus--confirm)
 
 ```csharp
 PromptPlus.DefaultCulture = new CultureInfo("en-US");
