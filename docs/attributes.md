@@ -11,7 +11,7 @@ the attributes allow you to identify PromptPlus's native types and controls to e
 ## Attributes
 
 ### PromptInitialValue
-[**Top**](#attributes)
+[**Top**](#documentation)
 
 Binds the property or parameters with initial value to be used in the prompt control when applicable.
 
@@ -25,7 +25,7 @@ PromptInitialValue(string initialValue, bool ever = false)
     - If true for each interaction of a new value the initial value will be loaded
 
 ### PromptValidatorUri
-[**Top**](#attributes)
+[**Top**](#documentation)
 
 Binds the property or parameters to Uri validator into the prompt control, where applicable.
 
@@ -39,7 +39,7 @@ PromptValidatorUri(UriKind uriKind = UriKind.Absolute, string allowedUriScheme =
     - List of valid Uri-Scheme separated by semicolon
 
 ### PromptPlusTypeNumber
-[**Top**](#attributes)
+[**Top**](#documentation)
 
 Binds the property or parameters to a kind MaskEdit Numeric control, where applicable
 
@@ -59,7 +59,7 @@ PromptPlusTypeNumber(int integerpart, int decimalpart, bool accepSignal = true, 
     -  Language/Culture of number. If null value, culture is current.
 
 ### PromptPlusTypeCurrency
-[**Top**](#attributes)
+[**Top**](#documentation)
 
 Binds the property or parameters to a kind MaskEdit Currency control, where applicable
 
@@ -79,7 +79,7 @@ PromptPlusTypeCurrency(int integerpart, int decimalpart, bool accepSignal = true
     -  Language/Culture of number. If null value, culture is current.
 
 ### PromptPlusTypeDate
-[**Top**](#attributes)
+[**Top**](#documentation)
 
 Binds the property or parameters to a kind MaskEdit Date-Only control, where applicable
 
@@ -93,7 +93,7 @@ PromptPlusTypeDate(FormatYear formatYear = FormatYear.Y4,CultureInfo? cultureInf
     -  Language/Culture of number. If null value, culture is current.
 
 ### PromptPlusTypeTime
-[**Top**](#attributes)
+[**Top**](#documentation)
 
 Binds the property or parameters to a kind MaskEdit Time-Only control, where applicable
 
@@ -107,6 +107,7 @@ PromptPlusTypeTime(FormatTime formatTime = FormatTime.HMS, CultureInfo? cultureI
     -  Language/Culture of number. If null value, culture is current.
 
 ### PromptPlusTypeBrowser
+[**Top**](#documentation)
 
 Binds the property or parameters to a kind Browser control, where applicable
 
@@ -126,6 +127,7 @@ PromptPlusTypeBrowser(
     -  Specifies what to search for by the browser
 
 ### PromptPlusTypeMasked
+[**Top**](#documentation)
 
 Binds the property or parameters to a kind MaskEdit Generic control, where applicable
 
