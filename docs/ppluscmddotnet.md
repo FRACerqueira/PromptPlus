@@ -4,8 +4,15 @@
 [![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 
 Interactive command-line based application framework for **C# with powerful controls** integrate command line parse **CommandDotNet(4.3.0/5.0.1)**
+**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
-**[Visit official page for complete documentation of the CommandDotNet](https://commanddotnet.bilal-fazlani.com)**
+![](./images/PipeLine.gif)
+
+### **Official pages** :
+
+#### **[Visit the official page for complete documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
+
+#### **[CommandDotNet is third party applications. Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
 
 ## Snapshot of PromptPlus-Wizard using some PromptPlus-Attributes
 
