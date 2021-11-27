@@ -7,6 +7,8 @@ Interactive command-line based application framework for **C# with powerful cont
 
 **PromptPlus** and **PromptPlus.CommandDotNet** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
+![](./images/PipeLine.gif)
+
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**: 
 <p align="left">
     <img valign="middle" width="80" height="80" src="./images/iconCmdNet.png">
@@ -18,12 +20,9 @@ Interactive command-line based application framework for **C# with powerful cont
 - Wizard to find all the commands/options and arguments with prompt and run.
     - Now you can discover and learn the existing commands, options and arguments.
 
-**[CommandDotNet is third party applications Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
-
-[**Snapshot of All Controls**](#snapshot)
-
-![](./images/PipeLine.gif)
 ![](./images/PplusCmddotnet.gif)
+
+**[CommandDotNet is third party applications. Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
 
 ## Help
 - [Install](#install)

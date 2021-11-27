@@ -13,8 +13,8 @@
 
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**: 
 <p align="left">
-    <img valign="middle" width="80" height="80" src="./docs/images/iconCmdNet.png">
-    <b>PromptPlus.CommandDotNet!!</b>
+    <img valign="middle" width="80" height="80" src="./images/iconCmdNet.png">
+    <a href="https://fracerqueira.github.io/PromptPlus/ppluscmddotnet.html"><b>PromptPlus.CommandDotNet!!</b></a>
 </p>
 
 #### Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet:
@@ -26,7 +26,7 @@
 
 #### **[Visit the official page for complete documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
 
-#### **[CommandDotNet is third party applications Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
+#### **[CommandDotNet is third party applications. Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
 
 ## Examples
 
@@ -43,6 +43,10 @@ dotnet run --project CommandDotNet.Example [wizard]
 ```
 
 ## Snapshot
+
+### Wizard (PromptPlus.CommandDotNet)
+
+![](./images/PplusCmddotnet.gif)
 
 ### Input
 
