@@ -11,6 +11,8 @@
 
 **PromptPlus** and **PromptPlus.CommandDotNet** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
+![](./docs/images/PipeLine.gif)
+
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**: 
 <p align="left">
     <img valign="middle" width="80" height="80" src="./docs/images/iconCmdNet.png">
@@ -21,6 +23,8 @@
 
 - Wizard to find all the commands/options and arguments with prompt and then run.
     - Now you can discover and learn the existing commands, options and arguments.
+
+![](./docs/images/PplusCmddotnet.gif)
 
 ### **Official pages** :
 
@@ -43,10 +47,6 @@ dotnet run --project CommandDotNet.Example [wizard]
 ```
 
 ## Snapshot
-
-### Wizard (PromptPlus.CommandDotNet)
-
-![](./images/PplusCmddotnet.gif)
 
 ### Input
 

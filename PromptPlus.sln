@@ -48,11 +48,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{0EBFCDFA-D7BC-448D-B396-7179B9B32577}"
 	ProjectSection(SolutionItems) = preProject
 		docs\images\Anykey.gif = docs\images\Anykey.gif
+		docs\images\ArgTermsExample.png = docs\images\ArgTermsExample.png
 		docs\images\Browser.gif = docs\images\Browser.gif
 		docs\images\Colors.gif = docs\images\Colors.gif
 		docs\images\Commands.gif = docs\images\Commands.gif
 		docs\images\Confirm.gif = docs\images\Confirm.gif
 		docs\images\icon.png = docs\images\icon.png
+		docs\images\iconCmdNet.png = docs\images\iconCmdNet.png
 		docs\images\Input.gif = docs\images\Input.gif
 		docs\images\KeyPress.gif = docs\images\KeyPress.gif
 		docs\images\List.gif = docs\images\List.gif
@@ -67,6 +69,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{0EBFCD
 		docs\images\NumberUpDown.gif = docs\images\NumberUpDown.gif
 		docs\images\Password.gif = docs\images\Password.gif
 		docs\images\PipeLine.gif = docs\images\PipeLine.gif
+		docs\images\PplusCmddotnet.gif = docs\images\PplusCmddotnet.gif
 		docs\images\ProgressBar.gif = docs\images\ProgressBar.gif
 		docs\images\ScreenStatusBar.gif = docs\images\ScreenStatusBar.gif
 		docs\images\Select.gif = docs\images\Select.gif
@@ -113,7 +116,7 @@ Global
 		{BAA6FC9A-9334-41D1-9EBC-3964786E1E67} = {1D88B60E-F8D4-494F-BF56-940EA9DDAB0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 		RESX_ShowErrorsInErrorList = False
+		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 	EndGlobalSection
 EndGlobal
