@@ -25,9 +25,6 @@ namespace PPlus.CommandDotNet
 {
     public static class PromptPlusMiddleware
     {
-        private const string DefSourcePPlus = "PromptPlus.CommandDotNet.UsePromptPlusWizard";
-        private const string DefSourceHelp = "CommandDotNet.Help.HelpMiddleware";
-
         public static string CopyCallerDescription(this object source, [CallerMemberName] string? caller = null)
         {
             var m = source.GetType().GetMethod(caller);
@@ -429,13 +426,13 @@ namespace PPlus.CommandDotNet
                     currentCommand = (Command)sel.Value;
                     isroot = true;
                     finishwizard = false;
-                    return RemovePreviusHelp(promptargs).ToArray(); ;
+                    return RemoveMidleOptions(promptargs).ToArray(); ;
                 }
                 if (sel.Value.GetType().Name == nameof(Option))
                 {
                     var opt = (Option)sel.Value;
-                    promptargs = RemovePreviusHelp(promptargs);
-                    if (opt.DefinitionSource == DefSourceHelp)
+                    promptargs = RemoveMidleOptions(promptargs);
+                    if (opt.IsMiddlewareOption)
                     {
                         promptargs = RemovePreviusOptionsAndOperands(promptargs);
                         if (opt.ShortName is not null)
@@ -603,12 +600,12 @@ namespace PPlus.CommandDotNet
             return false;
         }
 
-        private static List<WizardArgs> RemovePreviusHelp(List<WizardArgs> args)
+        private static List<WizardArgs> RemoveMidleOptions(List<WizardArgs> args)
         {
             var lstdel = new List<WizardArgs>();
             for (var i = args.Count - 1; i >= 0; i--)
             {
-                if (args[i].ArgNode.GetType() != typeof(Command) && args[i].ArgNode.DefinitionSource == DefSourceHelp)
+                if (args[i].ArgNode.GetType() == typeof(Option) && ((Option)args[i].ArgNode).IsMiddlewareOption)
                 {
                     lstdel.Add(args[i]);
                     break;

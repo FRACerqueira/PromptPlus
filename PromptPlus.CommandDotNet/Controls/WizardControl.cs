@@ -199,14 +199,18 @@ namespace PPlus.CommandDotNet.Controls
                     }
                     else if (_options.Build.Equals(keyInfo))
                     {
-                        if (_options.TokenArgs.Any(t => !t.IsEnabled))
+                        if (_options.TokenArgs != null)
                         {
-                            SetError(Resources.Messages.WizardMissingOperands);
-                            return false;
+                            if (_options.TokenArgs.Any(t => !t.IsEnabled))
+                            {
+                                SetError(Resources.Messages.WizardMissingOperands);
+                                return false;
+                            }
+                            result = _options.RootCommand;
+                            AbortedAll = false;
+                            return true;
                         }
-                        result = _options.RootCommand;
-                        AbortedAll = false;
-                        return true;
+                        continue;
                     }
                     else if (_options.BackCommand.Equals(keyInfo) && _options.EnabledBackCommand)
                     {
