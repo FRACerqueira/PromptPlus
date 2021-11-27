@@ -404,7 +404,7 @@ Console.WriteLine($"Your input: {name.Value}!");
 ## Inspiration notes
 - Color Text was inspired by the work of [Colored-Console](https://github.com/colored-console/colored-console) and [Rick Strahl](https://gist.github.com/RickStrahl/52c9ee43bd2723bcdf7bf4d24b029768)
 - FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
-- The base-control and some of its dependencies, Symbols, beyond console drivers were inspired by the work of [Sharprompt](https://github.com/shibayan/Sharprompt).
+- The base-control and some of its dependencies were inspired by the work of [Sharprompt](https://github.com/shibayan/Sharprompt).
 
 ## License
 
