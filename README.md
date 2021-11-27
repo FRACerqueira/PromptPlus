@@ -9,7 +9,7 @@
 
 [**Usage**](#usage) | [**Install**](#install) | [**Organization**](#organization) | [**Api Controls**](#apis) | [**Extensions**](#extensions) | [**Supported Platforms**](#supported-platforms)
 
-**PromptPlus** and **PromptPlus.CommandDotNet** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
+**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
 ![](./docs/images/PipeLine.gif)
 

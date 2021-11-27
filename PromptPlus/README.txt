@@ -7,15 +7,18 @@
 **Welcome to PromptPlus**
 
 Interactive command-line toolkit for **C#** with powerful controls.
-PromptPlus has separate pakage integrate command line parse CommandDotNet(4.3.0/5.0.1): PromptPlus.CommandDotNet (V1.0.0.220-beta)!!!
 
-PromptPlus and PromptPlus.CommandDotNet was developed in c# with target frameworks:
+PromptPlus was developed in c# with target frameworks:
 
 - netstandard2.1
 - .NET 5
 - .NET 6
 
-**visit the official page for complete documentation** :
+PromptPlus has separate pakage integrate command line parse CommandDotNet(4.3.0/5.0.1):
+
+- PromptPlus.CommandDotNet (V1.0.0.220-beta)!!!
+
+**visit the official pages for complete documentation** :
 
 https://fracerqueira.github.io/PromptPlus
 For PromptPlus controls
@@ -36,19 +39,19 @@ CommandDotNet is third party applications
 - Added Middleware UsePromptPlusConfig
     - Load custom config(Colors/hotkeys/and so on) for PromptPlus.Remark: This method is only necessary when the file is in a custom folder. Prompt Plus automatically loads the file if the file is placed in the same folder as the binaries.
 - Added PromptValidatorUri attribute
-    - Attribute to validate Uri format using control from PromptPlus.CommandDotNet
+    - Attribute to Bind the property or parameters with validate Uri format using PromptPlus-Control
 - Added PromptPlusTypeNumber attribute
-    - Attribute to validate number using control from PromptPlus.CommandDotNet
+    - Attribute to Bind the property or parameters with validate number format using PromptPlus-MaskEdit-Control
 - Added PromptPlusTypeCurrency attribute
-    - Attribute to validate currency using control from PromptPlus.CommandDotNet
+    - Attribute to Bind the property or parameters with validate Currency format using PromptPlus-MaskEdit-Control
 - Added PromptPlusTypeDate attribute
-    - Attribute to validate Date using control from PromptPlus.CommandDotNet
+    - Attribute to Bind the property or parameters with validate date format using PromptPlus-MaskEdit-Control
 - Added PromptPlusTypeTime attribute
-    - Attribute to validate Time using control from PromptPlus.CommandDotNet
+    - Attribute to Bind the property or parameters with validate Time format using PromptPlus-MaskEdit-Control
 - Added PromptPlusTypeBrowser attribute
-    - Attribute to validate Diretory/File path using control from PromptPlus.CommandDotNet
+    - Attribute to Bind the property or parameters with validate input using PromptPlus-Browser-Control
 - Added PromptPlusTypeMasked attribute
-    - Attribute to validate input with mask using control from PromptPlus.CommandDotNet
+    - Attribute to Bind the property or parameters with validate generic format using PromptPlus-MaskEdit-Control
 
 **PromptPlus.CommandDotNet - Sample Usage**
 -------------------------------------------

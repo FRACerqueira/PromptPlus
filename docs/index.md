@@ -5,7 +5,7 @@
 
 Interactive command-line based application framework for **C# with powerful controls**.
 
-**PromptPlus** and **PromptPlus.CommandDotNet** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
+**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
 ![](./images/PipeLine.gif)
 
