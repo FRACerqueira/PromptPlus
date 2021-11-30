@@ -6,7 +6,7 @@
 Interactive command-line based application framework for **C# with powerful controls** integrate command line parse **CommandDotNet(4.3.0/6.0.0)**
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
-![](./images/PipeLine.gif)
+![](./images/PplusCmddotnet.gif)
 
 ### **Official pages** :
 
@@ -17,10 +17,6 @@ Interactive command-line based application framework for **C# with powerful cont
 An open-source guide to help you write better command-line programs, taking traditional UNIX principles and updating them for the modern day.
 
 #### **[Command Line Interface Guidelines](https://clig.dev/)**
-
-## Snapshot of PromptPlus-Wizard using some PromptPlus-Attributes
-
-![](./images/PplusCmddotnet.gif)
 
 ## Help
 - [Main PromptPlus](index.md#help)
