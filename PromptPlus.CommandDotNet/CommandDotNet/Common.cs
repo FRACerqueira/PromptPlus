@@ -29,7 +29,20 @@ namespace PPlus.CommandDotNet
                     description = aux.Description;
                 }
             }
+
             var typeinf = string.Format(Messages.WizardTypeInfo, argument.TypeInfo.DisplayName);
+            var att = argument.TypeInfo.UnderlyingType.FindAttribute<DescriptionAttribute>();
+            if (att is not null)
+            {
+                if (string.IsNullOrEmpty(att.Description))
+                {
+                    typeinf = string.Empty;
+                }
+                else
+                {
+                    typeinf = string.Format(Messages.WizardTypeInfo, att.Description);
+                }
+            }
             if (string.IsNullOrEmpty(description))
             {
                 if (argument.TypeInfo.Type != typeof(DateTime))
@@ -788,7 +801,9 @@ namespace PPlus.CommandDotNet
             {
                 return null;
             }
+#pragma warning disable IDE0066 // Convert switch statement to expression
             switch (Type.GetTypeCode(value.GetType()))
+#pragma warning restore IDE0066 // Convert switch statement to expression
             {
                 case TypeCode.String:
                 case TypeCode.Char:
@@ -852,6 +867,16 @@ namespace PPlus.CommandDotNet
             }
             return null;
         }
+        public static T? FindAttribute<T>(this Type instance) where T : Attribute
+        {
+            var att = instance.GetCustomAttributes(false).FirstOrDefault(a => a as T != null);
+            if (att != null)
+            {
+                return (T)att;
+            }
+            return null;
+        }
+
 
         public static IList<Func<object, ValidationResult>>? ImportDataAnnotationsValidations(this IArgument argument)
         {

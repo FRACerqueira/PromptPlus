@@ -24,10 +24,15 @@ namespace CommandDotNet.Example
         Usage = "prompts ")]
     public class Prompts
     {
+#if NETCOREAPP3_1
         [SubCommand]
+#else
+        [Subcommand]
+#endif
         [Description("Secure download")]
         public class Secure
         {
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
             public Task<int> Intercept(InterceptorExecutionDelegate next,
                 [MinLength(5)]
                 [Description("password to secure download")]
@@ -58,6 +63,7 @@ namespace CommandDotNet.Example
                 return next();
             }
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
             public void Download(
                 [Description("Url (http/https) to download")]
                 [PromptInitialValue("https://")]
@@ -75,15 +81,22 @@ namespace CommandDotNet.Example
 
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
         [Command(Description = "Echos the given text, demonstrating prompting for a single item")]
         public void Echo(
             IConsole console,
-            [Operand(Description = "the text to echo")]
-            string text)
+#if NETCOREAPP3_1
+        [Option(LongName = "texts",Description = "list text to show")]
+#else
+        [Option(LongName = "texts",Description = "list text to show separate by comma", Split = ',')]
+#endif
+            IEnumerable<string> texts
+            )
         {
-            console.Out.WriteLine(text);
+            console.Out.WriteLine(string.Join(",", texts));
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
         [Command(Description = "sums the list of numbers, demonstrating prompting for a list")]
         public void Sum(
             IConsole console,
@@ -95,6 +108,7 @@ namespace CommandDotNet.Example
                 : $"{string.Join(" + ", numbers)} = {numbers.Sum()}");
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
         [Command(Description = "Echos the list of items string")]
         public void List(
             IConsole console,
@@ -104,6 +118,7 @@ namespace CommandDotNet.Example
             console.Out.WriteLine(string.Join(Environment.NewLine, items));
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
         [Command(Description = "Echos the list of items Dates")]
         public void ListDates(
             IConsole console,
@@ -113,6 +128,7 @@ namespace CommandDotNet.Example
             console.Out.WriteLine(string.Join(Environment.NewLine, items));
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
         [Command(Description = "Echos the list of items boolean")]
         public void ListBoolean(
             IConsole console,
@@ -122,6 +138,7 @@ namespace CommandDotNet.Example
             console.Out.WriteLine(string.Join(Environment.NewLine, items));
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
         [Command(Description = "Confirms required boolean arguments")]
         public void Confirm(
             IConsoleDriver console,
@@ -151,6 +168,17 @@ namespace CommandDotNet.Example
         }
 
 
+        [Command(Description = "demonstrating prompt with enum")]
+        public void ChooseColor(
+            IConsole console,
+            [Description("My Colors Preference")]
+            IEnumerable<ColorPreference> mycolor)
+        {
+            console.Out.WriteLine(mycolor);
+        }
+
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
         [Command(Description = "knock-knock joke, demonstrating use of IPrompter")]
         public void Knock(IConsole console, IPrompter prompter)
         {

@@ -13,7 +13,7 @@
 
 ![](./docs/images/PipeLine.gif)
 
-**PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**: 
+**PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/6.0.0)**: 
 <p align="left">
     <img valign="middle" width="80" height="80" src="./docs/images/iconCmdNet.png">
     <a href="https://fracerqueira.github.io/PromptPlus/ppluscmddotnet.html"><b>PromptPlus.CommandDotNet!!</b></a>
@@ -31,6 +31,11 @@
 #### **[Visit the official page for complete documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
 
 #### **[CommandDotNet is third party applications. Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
+
+An open-source guide to help you write better command-line programs, taking traditional UNIX principles and updating them for the modern day.
+
+**[Command Line Interface Guidelines](https://clig.dev/)**
+
 
 ## Examples
 

@@ -460,9 +460,15 @@ namespace PPlus.CommandDotNet
                         var findvalues = promptargs
                                 .Where(a => a.ArgNode.GetType() == typeof(Option) && a.ArgNode.Name == opt.Name && a.ArgNode.DefinitionSource == opt.DefinitionSource)
                                 .Skip(1);
-                        if (findvalues.Count() > 0)
+                        if (findvalues.Any())
                         {
                             lastvalue = findvalues.Select(f => f.ArgValue).ToArray();
+#if NET5_0_OR_GREATER
+                            if (opt.Split.HasValue)
+                            {
+                                lastvalue = findvalues.Select(f => f.ArgValue).First().Split(opt.Split.Value);
+                            }
+#endif
                         }
 
                         if (kindprompt == PromptPlusTypeKind.None)
@@ -486,6 +492,23 @@ namespace PPlus.CommandDotNet
                                 }
                             } while (indexopt >= 0);
 
+#if NETSTANDARD2_1_OR_GREATER
+                            foreach (var item in resultope)
+                            {
+                                indexparent++;
+                                if (opt.ShortName is not null)
+                                {
+                                    promptargs.Insert(indexparent, new WizardArgs($"-{opt.ShortName}", sel.Value, false, true));
+                                }
+                                else if (opt.LongName is not null)
+                                {
+                                    promptargs.Insert(indexparent, new WizardArgs($"--{opt.LongName}", sel.Value, false, true));
+                                }
+                                indexparent++;
+                                promptargs.Insert(indexparent, new WizardArgs(item, sel.Value, ispassword, true));
+                            }
+#endif
+#if NET5_0_OR_GREATER
                             indexparent++;
                             if (opt.ShortName is not null)
                             {
@@ -495,11 +518,21 @@ namespace PPlus.CommandDotNet
                             {
                                 promptargs.Insert(indexparent, new WizardArgs($"--{opt.LongName}", sel.Value, false, true));
                             }
-                            foreach (var item in resultope)
+                            if (opt.Split.HasValue)
                             {
+                                var joinresult = string.Join(opt.Split.Value, resultope);
                                 indexparent++;
-                                promptargs.Insert(indexparent, new WizardArgs(item, sel.Value, ispassword, true));
+                                promptargs.Insert(indexparent, new WizardArgs(joinresult, sel.Value, ispassword, true));
                             }
+                            else
+                            {
+                                foreach (var item in resultope)
+                                {
+                                    indexparent++;
+                                    promptargs.Insert(indexparent, new WizardArgs(item, sel.Value, ispassword, true));
+                                }
+                            }
+#endif
                         }
                         currentCommand = inicommand;
                         isroot = false;
@@ -529,7 +562,7 @@ namespace PPlus.CommandDotNet
                     else
                     {
                         var findvalues = promptargs.Where(a => a.IsEnabled && a.ArgNode.GetType() == typeof(Operand) && a.ArgNode.Name == ope.Name && a.ArgNode.DefinitionSource == ope.DefinitionSource);
-                        if (findvalues.Count() > 0)
+                        if (findvalues.Any())
                         {
                             lastvalue = findvalues.Select(f => f.ArgValue).ToArray();
                         }
@@ -549,7 +582,7 @@ namespace PPlus.CommandDotNet
                     }
                     if (!iscancelrequest)
                     {
-                        if (resultope.Count() > 1)
+                        if (resultope.Count > 1)
                         {
                             var indexope = promptargs.FindIndex(a => a.ArgNode.GetType() == typeof(Operand) && a.ArgNode.Name == ope.Name && a.ArgNode.DefinitionSource == ope.DefinitionSource);
                             promptargs = promptargs.Take(indexope).ToList();

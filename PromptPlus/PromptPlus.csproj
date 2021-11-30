@@ -11,7 +11,10 @@
 
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-    <_Parameter1>$(AssemblyName).CommandDotNet</_Parameter1> 
+      <_Parameter1>$(AssemblyName).CommandDotNet</_Parameter1> 
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>$(AssemblyName).SystemCommandLine</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
       

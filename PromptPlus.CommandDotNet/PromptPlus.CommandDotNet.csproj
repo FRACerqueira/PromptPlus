@@ -30,10 +30,10 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='.net5'">
-    <PackageReference Include="CommandDotNet" Version="5.0.1" />
+    <PackageReference Include="CommandDotNet" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='.net6'">
-    <PackageReference Include="CommandDotNet" Version="5.0.1" />
+    <PackageReference Include="CommandDotNet" Version="6.0.0" />
   </ItemGroup>
   
   <ItemGroup>

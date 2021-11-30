@@ -11,6 +11,10 @@
     "Wizard": {
       "commandName": "Project",
       "commandLineArgs": "[wizard]"
+    },
+    "Texts split": {
+      "commandName": "Project",
+      "commandLineArgs": "prompts echo --texts a,b,c"
     }
   }
 }

@@ -14,9 +14,9 @@ PromptPlus was developed in c# with target frameworks:
 - .NET 5
 - .NET 6
 
-PromptPlus has separate pakage integrate command line parse CommandDotNet(4.3.0/5.0.1):
+PromptPlus has separate pakage integrate command line parse CommandDotNet(4.3.0/6.0.0):
 
-- PromptPlus.CommandDotNet (V1.0.0.220-beta)!!!
+- PromptPlus.CommandDotNet (V1.0.0.300)!!!
 
 **visit the official pages for complete documentation** :
 
