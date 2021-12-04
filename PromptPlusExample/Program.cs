@@ -371,14 +371,14 @@ namespace PromptPlusExample
         {
             PromptPlus.WriteLine();
             PromptPlus.WriteLine("PromptPlus.WriteLine(\"Output1:\",ConsoleColor.White, ConsoleColor.Blue, true)");
-            PromptPlus.WriteLineSkipColors("PromptPlus.WriteLine(\"[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].\")");
+            PromptPlus.WriteLineSkipColors("PromptPlus.WriteLine(\"This [cyan]is [red]a [white:blue]simples[/] line with [yellow!u]color[/]. End [/]line.\")");
             PromptPlus.WriteLine("PromptPlus.WriteLine(\"Output2:\".White().OnBlue().Underline())");
-            PromptPlus.WriteLineSkipColors("PromptPlus.WriteLine(\"[cyan]This[/cyan] is another [white:blue]simples[/white:blue] line using [red!u]Mask[/red!u].\".Mask(ConsoleColor.DarkRed))");
+            PromptPlus.WriteLineSkipColors("PromptPlus.WriteLine(\"[cyan]This[/] is another [white:blue]simples[/] line using [red!u]Mask[/].\".Mask(ConsoleColor.yellow))");
             PromptPlus.WriteLine();
             PromptPlus.WriteLine("Output1:", ConsoleColor.White, ConsoleColor.Blue, true);
-            PromptPlus.WriteLine("[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].");
+            PromptPlus.WriteLine("This [cyan]is [red]a [white:blue]simples[/] line with [yellow!u]color[/]. End [/]line.");
             PromptPlus.WriteLine("Output2:".White().OnBlue().Underline());
-            PromptPlus.WriteLine("[cyan]This[/cyan] is another [white:blue]simples[/white:blue] line using [red!u]Mask[/red!u].".Mask(ConsoleColor.DarkRed));
+            PromptPlus.WriteLine("[cyan]This[/] is another [white:blue]simples[/] line using [red!u]Mask[/].".Mask(ConsoleColor.Yellow));
             PromptPlus.WriteLine();
         }
 

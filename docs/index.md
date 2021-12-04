@@ -166,7 +166,7 @@ PromptPlus also has commands **for coloring parts of text and underlining**.
 
 ```csharp
 //sample
-PromptPlus.WriteLine("[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].");
+PromptPlus.WriteLine("This [cyan]is [red]a [white:blue]simples[/] line with [yellow!u]color[/]. End [/]line.");
 ````
 
 ```csharp

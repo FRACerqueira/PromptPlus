@@ -33,16 +33,16 @@ PromptPlus.WriteLine("This is a simples ","line".White().OnBlue().Underline(), "
 
 ### Syntax 3
 [**Top**](#promptplus--colors)
-Using markup style to colorize parts of a text.
+Using markup style to colorize parts of a text with stacked colors ("LIFO").
 
 ```csharp
-PromptPlus.WriteLine("[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].");
+PromptPlus.WriteLine("This [cyan]is [red]a [white:blue]simples[/] line with [yellow!u]color[/]. End [/]line.");
 ````
 ### Syntax 4
 Using all together to colorize parts of a text.
 
 ```csharp
-PromptPlus.WriteLine("[cyan]This[/cyan] is another [white:blue]simples[/white:blue] line using [red!u]Mask[/red!u].".Mask(ConsoleColor.DarkRed));
+PromptPlus.WriteLine("[cyan]This[/] is another [white:blue]simples[/] line using [red!u]Mask[/].".Mask(ConsoleColor.Yellow));
 ````
 
 ### Links

@@ -127,6 +127,7 @@ public class Program
     - MaskEdit-Control/Listmasked-Control
 - Improvement - Added Ctrl-Enter to Finish widthout added last input
     - List-Control/Listmasked-Control
+- Improvement - Color the text with stacked colors ("LIFO") and simplified the final color token to "[/]"
 
 - Fixed bug - Defaut value to Browser-Control
 - Fixed bug - Added masked item in list widthout Leading Zeros for MaskedType.Number/MaskedType.NumberCurrency (Listmasked-Control)

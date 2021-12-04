@@ -88,7 +88,7 @@ namespace CommandDotNet.Example
 #if NETCOREAPP3_1
         [Option(LongName = "texts",Description = "list text to show")]
 #else
-        [Option(LongName = "texts",Description = "list text to show separate by comma", Split = ',')]
+        [Option(longName:"texts",Description = "list text to show separate by comma", Split = ',')]
 #endif
             IEnumerable<string> texts
             )

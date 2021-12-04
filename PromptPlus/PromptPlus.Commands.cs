@@ -4,6 +4,7 @@
 // ***************************************************************************************
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -186,75 +187,121 @@ namespace PPlus
 
             var result = new List<ColorToken>();
             var match = colorBlockRegEx.Value.Match(text);
+
+            var ColorsSet = colorBlockRegEx.Value
+                .Matches(text);
+
+            var Lifocolor = new Stack<itemColor>();
+
+            var currentcolor = new itemColor
+            {
+                Forecolor = ConsoleDriver.ForegroundColor,
+                Backcolor = ConsoleDriver.BackgroundColor,
+                Underline = false
+            };
+            Lifocolor.Push(currentcolor);
+
             while (match.Length >= 1)
             {
-                // write up to expression
-                result.Add(new ColorToken(text.Substring(0, match.Index)));
+                if (match.Index > 0)
+                {
+                    result.Add(new ColorToken(text.Substring(0, match.Index),
+                        currentcolor.Forecolor,
+                        currentcolor.Backcolor,
+                        currentcolor.Underline));
+                }
 
                 // strip out the expression
                 var highlightText = match.Groups["text"].Value;
-                var colvalfc = ConsoleDriver.ForegroundColor;
-                var colvalbc = ConsoleDriver.BackgroundColor;
+                var colvalfc = currentcolor.Forecolor;
+                var colvalbc = currentcolor.Backcolor;
+                var underline = currentcolor.Underline;
+                var setcolor = match.Groups["color"].Value;
 
-                var underline = false;
-                var mathgrp = match.Groups["color"].Value;
-                if (mathgrp.StartsWith("!!"))
-                {
-                    result.Add(new ColorToken(highlightText));
-                }
-                else
+                if (!setcolor.StartsWith("/"))
                 {
                     //find underline tolen
-                    if (mathgrp.Contains("!u", StringComparison.InvariantCultureIgnoreCase))
+                    if (setcolor.Contains("!u", StringComparison.InvariantCultureIgnoreCase))
                     {
                         underline = true;
-#if NETSTANDARD2_0
-                        mathgrp = mathgrp.Replace("!u", "");
-#endif
-#if NETSTANDARD2_1
-                        mathgrp = mathgrp.Replace("!u", "", StringComparison.InvariantCultureIgnoreCase);
-#endif
-#if NET5_0_OR_GREATER
-                        mathgrp = mathgrp.Replace("!u", "", StringComparison.InvariantCultureIgnoreCase);
-#endif
+                        setcolor = setcolor.Replace("!u", "", StringComparison.InvariantCultureIgnoreCase);
                     }
                     //split color
 
 #if NETSTANDARD2_0
-                    var colors = mathgrp.Split(':');
+                    var colors = setcolor.Split(':');
 #endif
 #if NETSTANDARD2_1
-                    var colors = mathgrp.Split(':', StringSplitOptions.RemoveEmptyEntries);
+                    var colors = setcolor.Split(':', StringSplitOptions.RemoveEmptyEntries);
 #endif
 #if NET5_0_OR_GREATER
-                    var colors = mathgrp.Split(':', StringSplitOptions.RemoveEmptyEntries);
+                    var colors = setcolor.Split(':', StringSplitOptions.RemoveEmptyEntries);
 #endif
                     if (colors.Length == 1)
                     {
-                        Enum.TryParse(colors[0], true, out colvalfc);
+                        if (Enum.TryParse(colors[0], true, out ConsoleColor auxcor))
+                        {
+                            colvalfc = auxcor;
+                        }
                     }
                     else if (colors.Length == 2)
                     {
-                        Enum.TryParse(colors[0], true, out colvalfc);
-                        Enum.TryParse(colors[1], true, out colvalbc);
+                        if (Enum.TryParse(colors[0], true, out ConsoleColor auxcorfc))
+                        {
+                            colvalfc = auxcorfc;
+                        }
+                        if (Enum.TryParse(colors[1], true, out ConsoleColor auxcorbc))
+                        {
+                            colvalbc = auxcorbc;
+                        }
                     }
-                    result.Add(new ColorToken(highlightText, colvalfc, colvalbc, underline));
+                    currentcolor.Forecolor = colvalfc;
+                    currentcolor.Backcolor = colvalbc;
+                    currentcolor.Underline = underline;
                 }
+
+                result.Add(new ColorToken(highlightText,
+                    currentcolor.Forecolor,
+                    currentcolor.Backcolor,
+                    currentcolor.Underline));
 
                 // remainder of string
                 text = text.Substring(match.Index + match.Value.Length);
                 match = colorBlockRegEx.Value.Match(text);
+
                 if (match.Length < 1 && text.Length > 0)
                 {
-                    result.Add(new ColorToken(text));
+                    result.Add(new ColorToken(text,
+                        currentcolor.Forecolor,
+                        currentcolor.Backcolor,
+                        currentcolor.Underline));
+                }
+                else
+                {
+                    if (match.Value.StartsWith("[/"))
+                    {
+                        currentcolor = Lifocolor.Pop();
+                    }
+                    else
+                    {
+                        Lifocolor.Push(currentcolor);
+                    }
                 }
             }
+
             return result.ToArray();
         }
 
         private static readonly Lazy<Regex> colorBlockRegEx = new(
-            () => new Regex("\\[(?<color>.*?)\\](?<text>[^[]*)\\[/\\k<color>\\]", RegexOptions.IgnoreCase),
+            () => new Regex("\\[(?<color>.*?)\\](?<text>[^[]*)", RegexOptions.IgnoreCase),
             isThreadSafe: true);
+
+        private struct itemColor
+        {
+            public ConsoleColor Forecolor { get; set; }
+            public ConsoleColor Backcolor { get; set; }
+            public bool Underline { get; set; }
+        }
 
         #endregion
 

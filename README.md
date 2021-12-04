@@ -280,7 +280,7 @@ PromptPlus.ColorSchema.Select = ConsoleColor.DarkCyan;
 Prompt Plus also has commands for parts of text and underlining.
 
 ```csharp
-PromptPlus.WriteLine("[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].");
+PromptPlus.WriteLine("This [cyan]is [red]a [white:blue]simples[/] line with [yellow!u]color[/]. End [/]line.");
 ````
 
 ```csharp
