@@ -257,8 +257,8 @@ Hotkeys (global and control-specific) are configurable. Some hotkeys are interna
     - Key for remove all items. Default = F4
 - MarkSelect
     - Key for mark item in multi-select. Default = F8
--
- ```csharp
+
+```csharp
 //sample
 PromptPlus.AbortAllPipesKeyPress = new HotKey(UserHotKey.F7, alt: true, ctrl: false, shift: false);
 ```
