@@ -11,6 +11,8 @@
 
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
+All input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
+
 ![](./docs/images/PipeLine.gif)
 
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/6.0.0)**: 
@@ -305,7 +307,7 @@ Hotkeys (global and control-specific) are configurable. Some hotkeys are interna
 
  ```csharp
 //sample
-PromptPlus.TooltipKeyPress = new HotKey(key: "F1", alt: false, ctrl: false, shift: false);
+PromptPlus.AbortAllPipesKeyPress = new HotKey(UserHotKey.F7, alt: true, ctrl: false, shift: false);
 ```
 
 **_Note: the key parameter is case-insentive;_**
@@ -336,6 +338,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [Key-Press](https://fracerqueira.github.io/PromptPlus/keypress) | Simple specific key |
 | [Confirm](https://fracerqueira.github.io/PromptPlus/confirm) | Simple confirm with  with tool tips and language detection |
 | [AutoComplete](https://fracerqueira.github.io/PromptPlus/autocomplete) | Input text with sugestions, validator, and tooltips |
+| [Readline](https://fracerqueira.github.io/PromptPlus/readline) | Input text with GNU Readline Emacs keyboard shortcuts, sugestions and historic |
 | [Input](https://fracerqueira.github.io/PromptPlus/input) | Input text with input validator with tooltips |
 | [Password](https://fracerqueira.github.io/PromptPlus/input) | Input password with input validator and show/hide(optional) input value |
 | [MaskEdit-Generic](https://fracerqueira.github.io/PromptPlus/maskeditgeneric) | Input with masked input , tooltips and input validator |
