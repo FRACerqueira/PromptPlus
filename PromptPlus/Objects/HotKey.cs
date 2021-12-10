@@ -25,9 +25,9 @@ namespace PPlus.Objects
             }
         }
 
-        public HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false)
+        public HotKey(UserHotKey key, bool alt = false, bool ctrl = false, bool shift = false)
         {
-            Key = key;
+            Key = Enum.Parse<ConsoleKey>(key.ToString(),true);
             Alt = alt;
             Ctrl = ctrl;
             Shift = shift;

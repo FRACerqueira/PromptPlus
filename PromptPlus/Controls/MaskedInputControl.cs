@@ -21,8 +21,9 @@ namespace PPlus.Controls
         private readonly MaskedOptions _options;
         private MaskedBuffer _maskedBuffer;
         private string _inputDesc;
+        private const string Namecontrol = "PromptPlus.MaskedInput";
 
-        public MaskedInputControl(MaskedOptions options) : base(options, true)
+        public MaskedInputControl(MaskedOptions options) : base(Namecontrol, options, true)
         {
             _options = options;
         }
@@ -92,6 +93,22 @@ namespace PPlus.Controls
             }
             _maskedBuffer = new MaskedBuffer(_options);
 
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("UpperCase", _options.UpperCase.ToString(), LogKind.Property);
+                AddLog("AcceptSignal", _options.AcceptSignal.ToString(), LogKind.Property);
+                AddLog("AmmountDecimal", _options.AmmountDecimal.ToString(), LogKind.Property);
+                AddLog("AmmountInteger", _options.AmmountInteger.ToString(), LogKind.Property);
+                AddLog("OnlyDecimal", _options.OnlyDecimal.ToString(), LogKind.Property);
+                AddLog("CurrentCulture", _options.CurrentCulture.Name, LogKind.Property);
+                AddLog("DateFmt", _options.DateFmt??"", LogKind.Property);
+                AddLog("FillNumber", _options.FillNumber?.ToString() ?? "", LogKind.Property);
+                AddLog("ShowDayWeek", _options.ShowDayWeek.ToString() ?? "", LogKind.Property);
+                AddLog("MaskValue", _options.MaskValue, LogKind.Property);
+                AddLog("MaskType", _options.Type.ToString(), LogKind.Property);
+            }
+
+
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
         }
@@ -110,97 +127,107 @@ namespace PPlus.Controls
 
                 if (CheckDefaultKey(keyInfo))
                 {
-                    continue;
+                    ///none;
                 }
-
-                switch (keyInfo.Key)
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.L, ConsoleModifiers.Control))
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0:
-                    {
+                    _maskedBuffer.Clear();
+                }
+                else if (keyInfo.IsPressEnterKey())
+                {
 
-                        result = new ResultMasked(_maskedBuffer.ToString(), _maskedBuffer.ToMasked());
-                        try
-                        {
-                            if (!TryValidate(result, _options.Validators))
-                            {
-                                result = default;
-                                return false;
-                            }
-                            switch (_options.Type)
-                            {
-                                case MaskedType.Generic:
-                                    result.ObjectValue = result.Masked;
-                                    break;
-                                case MaskedType.DateOnly:
-                                case MaskedType.TimeOnly:
-                                case MaskedType.DateTime:
-                                    DateTime.TryParseExact(result.Masked, _options.CurrentCulture.DateTimeFormat.GetAllDateTimePatterns(), _options.CurrentCulture, DateTimeStyles.None, out var dt);
-                                    result.ObjectValue = dt;
-                                    break;
-                                case MaskedType.Number:
-                                {
-                                    double.TryParse(result.Masked, NumberStyles.Number, _options.CurrentCulture, out var numout);
-                                    result.ObjectValue = numout;
-                                }
-                                break;
-                                case MaskedType.Currency:
-                                {
-                                    double.TryParse(result.Masked, NumberStyles.Currency, _options.CurrentCulture, out var numout);
-                                    result.ObjectValue = numout;
-                                }
-                                break;
-                                default:
-                                    result.ObjectValue = null;
-                                    break;
-                            }
-                            return true;
-                        }
-                        catch (FormatException)
-                        {
-                            SetError(PromptPlus.LocalizateFormatException(typeof(string)));
-                        }
-                        catch (Exception ex)
-                        {
-                            SetError(ex);
-                        }
-                        break;
-                    }
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_maskedBuffer.IsStart:
-                        _maskedBuffer.Backward();
-                        break;
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_maskedBuffer.IsEnd:
-                        _maskedBuffer.Forward();
-                        break;
-                    case ConsoleKey.Backspace when keyInfo.Modifiers == 0:
-                        _maskedBuffer.Backspace();
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == 0:
-                        _maskedBuffer.Delete();
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == ConsoleModifiers.Control && _maskedBuffer.Length > 0:
-                        _maskedBuffer.Clear();
-                        break;
-                    default:
+                    result = new ResultMasked(_maskedBuffer.ToString(), _maskedBuffer.ToMasked());
+                    try
                     {
-                        if (!cancellationToken.IsCancellationRequested)
+                        if (!TryValidate(result, _options.Validators, false))
                         {
-                            if (!char.IsControl(keyInfo.KeyChar))
+                            result = default;
+                            return false;
+                        }
+                        switch (_options.Type)
+                        {
+                            case MaskedType.Generic:
+                                result.ObjectValue = result.Masked;
+                                break;
+                            case MaskedType.DateOnly:
+                            case MaskedType.TimeOnly:
+                            case MaskedType.DateTime:
+                                DateTime.TryParseExact(result.Masked, _options.CurrentCulture.DateTimeFormat.GetAllDateTimePatterns(), _options.CurrentCulture, DateTimeStyles.None, out var dt);
+                                result.ObjectValue = dt;
+                                break;
+                            case MaskedType.Number:
                             {
-                                _maskedBuffer.Insert(keyInfo.KeyChar, out var isvalid);
-                                if (!isvalid)
-                                {
-                                    isvalidhit = null;
-                                }
+                                double.TryParse(result.Masked, NumberStyles.Number, _options.CurrentCulture, out var numout);
+                                result.ObjectValue = numout;
                             }
-                            else
+                            break;
+                            case MaskedType.Currency:
+                            {
+                                double.TryParse(result.Masked, NumberStyles.Currency, _options.CurrentCulture, out var numout);
+                                result.ObjectValue = numout;
+                            }
+                            break;
+                            default:
+                                result.ObjectValue = null;
+                                break;
+                        }
+                        return true;
+                    }
+                    catch (FormatException)
+                    {
+                        SetError(PromptPlus.LocalizateFormatException(typeof(string)));
+                    }
+                    catch (Exception ex)
+                    {
+                        SetError(ex);
+                    }
+                }
+                else if (keyInfo.IsPressLeftArrowKey() && !_maskedBuffer.IsStart)
+                {
+                    _maskedBuffer.Backward();
+                }
+                else if (keyInfo.IsPressRightArrowKey() && !_maskedBuffer.IsEnd)
+                {
+                    _maskedBuffer.Forward();
+                }
+                else if (keyInfo.IsPressBackspaceKey() && !_maskedBuffer.IsStart)
+                {
+                    _maskedBuffer.Backspace();
+                }
+                else if (keyInfo.IsPressDeleteKey())
+                {
+                    _maskedBuffer.Delete();
+                }
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.Delete, ConsoleModifiers.Control) && _maskedBuffer.Length > 0)
+                {
+                    _maskedBuffer.Clear();
+                }
+                else if (keyInfo.IsPressEndKey())
+                {
+                    _maskedBuffer.ToEnd();
+                }
+                else if (keyInfo.IsPressHomeKey())
+                {
+                    _maskedBuffer.ToStart();
+                }
+                else
+                {
+                    if (!cancellationToken.IsCancellationRequested)
+                    {
+                        if (!char.IsControl(keyInfo.KeyChar))
+                        {
+                            _maskedBuffer.Insert(keyInfo.KeyChar, out var isvalid);
+                            if (!isvalid)
                             {
                                 isvalidhit = null;
                             }
                         }
-                        break;
+                        else
+                        {
+                            isvalidhit = null;
+                        }
                     }
                 }
-
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
             if (_inputDesc != _maskedBuffer.ToString())
             {
@@ -262,7 +289,7 @@ namespace PPlus.Controls
             if (_options.ValidateOnDemand && _options.Validators.Count > 0)
             {
                 var aux = new ResultMasked(_maskedBuffer.ToString(), _maskedBuffer.ToMasked());
-                TryValidate(aux, _options.Validators);
+                TryValidate(aux, _options.Validators,true);
             }
         }
 
@@ -431,57 +458,6 @@ namespace PPlus.Controls
         public IControlMaskEdit Config(Action<IPromptConfig> context)
         {
             context.Invoke(this);
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortKey(bool value)
-        {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptConfig HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<ResultMasked> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
             return this;
         }
 

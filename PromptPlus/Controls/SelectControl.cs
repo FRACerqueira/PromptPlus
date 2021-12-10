@@ -11,7 +11,6 @@ using System.Reflection;
 using System.Threading;
 
 using PPlus.Internal;
-
 using PPlus.Objects;
 
 namespace PPlus.Controls
@@ -19,10 +18,12 @@ namespace PPlus.Controls
     internal class SelectControl<T> : ControlBase<T>, IControlSelect<T>
     {
         private readonly SelectOptions<T> _options;
-        private readonly InputBuffer _filterBuffer = new();
+        private readonly ReadLineBuffer _filterBuffer = new();
         private Paginator<T> _localpaginator;
         private bool _autoselect = false;
-        public SelectControl(SelectOptions<T> options) : base(options, true)
+        private const string Namecontrol = "PromptPlus.Select";
+
+        public SelectControl(SelectOptions<T> options) : base(Namecontrol, options, true)
         {
             _options = options;
         }
@@ -63,6 +64,15 @@ namespace PPlus.Controls
                 _options.Description = _options.DescriptionSelector.Invoke(_localpaginator.SelectedItem);
             }
 
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("DisableItems", _options.DisableItems.Count.ToString(), LogKind.Property);
+                AddLog("HideItems", _options.HideItems.Count.ToString(), LogKind.Property);
+                AddLog("Items", _options.Items.Count.ToString(), LogKind.Property);
+                AddLog("AutoSelectIfOne", _options.AutoSelectIfOne.ToString(), LogKind.Property);
+                AddLog("PageSize", _options.PageSize.ToString(), LogKind.Property);
+            }
+
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
 
@@ -86,71 +96,49 @@ namespace PPlus.Controls
                 else
                 {
                     keyInfo = WaitKeypress(cancellationToken);
+                    _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                    if (acceptedkey)
+                    {
+                        _localpaginator.UpdateFilter(_filterBuffer.ToString());
+                        if (_localpaginator.Count == 1 && _options.AutoSelectIfOne)
+                        {
+                            _autoselect = true;
+                        }
+                        else
+                        {
+                            _autoselect = false;
+                        }
+                        continue;
+                    }
                 }
-
                 if (CheckDefaultKey(keyInfo))
                 {
-                    continue;
+                    ///none
                 }
                 else if (IskeyPageNavagator(keyInfo, _localpaginator))
                 {
-                    continue;
+                    ///none
                 }
                 else if (PromptPlus.UnSelectFilter.Equals(keyInfo))
                 {
                     _localpaginator.UnSelected();
-                    continue;
                 }
-
-                switch (keyInfo.Key)
+                else if (keyInfo.IsPressEnterKey())
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0 && _localpaginator.TryGetSelectedItem(out result):
+                    if (_localpaginator.TryGetSelectedItem(out result))
+                    {
                         return true;
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0:
-                    {
-                        if (!typeof(T).IsEnum)
-                        {
-                            result = default;
-                            return true;
-                        }
-                        SetError(Messages.Required);
-                        break;
                     }
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_filterBuffer.IsStart:
-                        _localpaginator.UpdateFilter(_filterBuffer.Backward().ToString());
-                        break;
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_filterBuffer.IsEnd:
-                        _localpaginator.UpdateFilter(_filterBuffer.Forward().ToString());
-                        break;
-                    case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_filterBuffer.IsStart:
-                        _localpaginator.UpdateFilter(_filterBuffer.Backspace().ToString());
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_filterBuffer.IsEnd:
-                        _localpaginator.UpdateFilter(_filterBuffer.Delete().ToString());
-                        break;
-                    default:
+                    if (!typeof(T).IsEnum)
                     {
-                        if (!cancellationToken.IsCancellationRequested)
-                        {
-                            if (!char.IsControl(keyInfo.KeyChar))
-                            {
-                                _localpaginator.UpdateFilter(_filterBuffer.Insert(keyInfo.KeyChar).ToString());
-                            }
-                            else
-                            {
-                                isvalidhit = null;
-                            }
-                        }
-                        break;
+                        result = default;
+                        return true;
                     }
-                }
-                if (_localpaginator.Count == 1 && _options.AutoSelectIfOne)
-                {
-                    _autoselect = true;
+                    SetError(Messages.Required);
                 }
                 else
                 {
-                    _autoselect = false;
+                    isvalidhit = null;
                 }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
             if (_options.DescriptionSelector != null)
@@ -422,57 +410,6 @@ namespace PPlus.Controls
         public IControlSelect<T> Config(Action<IPromptConfig> context)
         {
             context.Invoke(this);
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortKey(bool value)
-        {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptConfig HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<T> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
             return this;
         }
 

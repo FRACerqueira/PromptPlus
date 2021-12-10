@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 
 using PPlus.Internal;
-
 using PPlus.Objects;
 using PPlus.Resources;
 
@@ -18,11 +17,13 @@ namespace PPlus.Controls
     internal class InputControl : ControlBase<string>, IControlInput
     {
         private readonly InputOptions _options;
-        private readonly InputBuffer _inputBuffer = new();
+        private readonly ReadLineBuffer _inputBuffer = new();
         private bool _initform;
         private bool _passwordvisible;
         private string _inputDesc;
-        public InputControl(InputOptions options) : base(options, true)
+        private const string Namecontrol = "PromptPlus.Input";
+
+        public InputControl(InputOptions options) : base(Namecontrol,options, true)
         {
             _options = options;
         }
@@ -52,6 +53,14 @@ namespace PPlus.Controls
                 _inputBuffer.Load(_options.InitialValue);
             }
 
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("IsPassword", _options.IsPassword.ToString(), LogKind.Property);
+                AddLog("DefaultValue", _options.DefaultValue?.ToString() ?? "", LogKind.Property);
+                AddLog("InitialValue", _options.InitialValue?.ToString() ?? "", LogKind.Property);
+                AddLog("Validators", _options.Validators.Count.ToString(), LogKind.Property);
+            }
+
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
 
@@ -69,73 +78,51 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
-
-                if (CheckDefaultKey(keyInfo))
+                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                if (acceptedkey)
                 {
-                    continue;
+                    ///none
                 }
-
-                switch (keyInfo.Key)
+                else if (CheckDefaultKey(keyInfo))
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0:
+                    ///none
+                }
+                else if (keyInfo.IsPressEnterKey())
+                {
+                    result = _inputBuffer.ToString();
+                    if (!string.IsNullOrEmpty(_options.DefaultValue) && result.Length == 0)
                     {
-                        result = _inputBuffer.ToString();
-                        if (!string.IsNullOrEmpty(_options.DefaultValue) && result.Length == 0)
-                        {
-                            result = _options.DefaultValue;
-                        }
-                        try
-                        {
-                            if (!TryValidate(result, _options.Validators))
-                            {
-                                result = default;
-                                return false;
-                            }
-                            return true;
-                        }
-                        catch (Exception ex)
-                        {
-                            SetError(ex);
-                        }
-                        break;
+                        result = _options.DefaultValue;
                     }
-                    case ConsoleKey.V when keyInfo.Modifiers == ConsoleModifiers.Alt && _options.IsPassword:
-                        _passwordvisible = !_passwordvisible;
-                        break;
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _inputBuffer.Backward();
-                        break;
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _inputBuffer.Forward();
-                        break;
-                    case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _inputBuffer.Backspace();
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _inputBuffer.Delete();
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == ConsoleModifiers.Control && _inputBuffer.Length > 0:
-                        _inputBuffer.Clear();
-                        break;
-                    default:
+                    try
                     {
-                        if (!cancellationToken.IsCancellationRequested)
+                        if (!TryValidate(result, _options.Validators, false))
                         {
-                            if (!char.IsControl(keyInfo.KeyChar))
-                            {
-                                _inputBuffer.Insert(keyInfo.KeyChar);
-                            }
-                            else
-                            {
-                                isvalidhit = null;
-                            }
+                            result = default;
+                            return false;
                         }
-                        break;
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        SetError(ex);
                     }
                 }
-                _initform = _inputBuffer.Length == 0;
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.V, ConsoleModifiers.Alt) && _options.IsPassword)
+                {
+                    _passwordvisible = !_passwordvisible;
+                }
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.Delete, ConsoleModifiers.Control) && _inputBuffer.Length > 0)
+                {
+                    _inputBuffer.Clear();
+                }
+                else
+                {
+                    isvalidhit = null;
+                }
 
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
+            _initform = _inputBuffer.Length == 0;
             if (_inputDesc != _inputBuffer.ToString())
             {
                 _inputDesc = _inputBuffer.ToString();
@@ -197,7 +184,7 @@ namespace PPlus.Controls
 
             if (_options.ValidateOnDemand && !_initform && _options.Validators.Count > 0)
             {
-                TryValidate(_inputBuffer.ToString(), _options.Validators);
+                TryValidate(_inputBuffer.ToString(), _options.Validators,true);
             }
 
             _initform = false;
@@ -293,57 +280,6 @@ namespace PPlus.Controls
         public IControlInput Config(Action<IPromptConfig> context)
         {
             context.Invoke(this);
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortKey(bool value)
-        {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptConfig HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<string> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
             return this;
         }
 

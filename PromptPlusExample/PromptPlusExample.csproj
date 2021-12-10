@@ -5,6 +5,7 @@
     <AssemblyName>PromptPlus.Example</AssemblyName>
     <RootNamespace>PromptPlus.Example</RootNamespace>
     <Configurations>Debug;Release</Configurations>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -32,9 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="PromptPlus.config.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="starwars.flf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

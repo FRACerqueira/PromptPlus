@@ -81,12 +81,14 @@ public class Program
 **Relase Notes PromptPlus (V.3.0.0)**
 -------------------------------------
 
+- Refactoring - Changed HotKeys to only F1~F12 keys (maybe requires refactoring)
 - Refactoring - Renamed root namespace to PPlus (requires refactoring)
 - Refactoring - Moved EnabledAbortKey/EnabledAbortAllPipes/EnabledPromptTooltip/HideAfterFinish to IPromptConfig (maybe requires refactoring)
 - Refactoring - Added Config(Action<IPromptConfig> context) method to config and return to interface control for better usability.
 - Refactoring - Method Syntax Adjustment to Input-Control (need to be refactored to new syntax):
     - AddValidators(Func<object, ValidationResult> validator) -> AddValidator(Func<object, ValidationResult> validator) 
 
+- Improvement - Apply GNU Readline - Emacs keyboard shortcuts for all controls
 - Improvement - Check Nullabled to AddDefault(s)/AddItem(s)/AddGroup/HideItem(s)/DisableItem(s)/Default methods
 - Improvement - New Embededs Validator :
     - IsUriScheme(UriKind uriKind = UriKind.Absolute,string allowedUriSchemes = null, string errorMessage = null)

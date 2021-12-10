@@ -27,8 +27,9 @@ namespace PPlus.Controls
         private readonly Dictionary<string, ResultProcess> _lastresult = new();
         private readonly List<int> _index = new();
         private readonly List<Task> _localTask = new();
+        private const string Namecontrol = "PromptPlus.WaitProcess";
 
-        public WaitProcessControl(WaitProcessOptions options) : base(options, false, true)
+        public WaitProcessControl(WaitProcessOptions options) : base(Namecontrol, options, false, true)
         {
             _options = options;
         }
@@ -59,6 +60,11 @@ namespace PPlus.Controls
                 _options.SpeedAnimation = 1000;
             }
 
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("SpeedAnimation", _options.SpeedAnimation.ToString(), LogKind.Property);
+                AddLog("Process", _options.Process.Count.ToString(), LogKind.Property);
+            }
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
 
@@ -104,7 +110,7 @@ namespace PPlus.Controls
             {
                 cancellationToken.WaitHandle.WaitOne(_options.SpeedAnimation);
             }
-            if (WaitProcessControl.IsListEndStaus(_localTask.Select(x => x.Status)))
+            if (IsListEndStaus(_localTask.Select(x => x.Status)))
             {
                 result = _lastresult.Values;
                 _localTask.ForEach(x => x.Dispose());
@@ -157,7 +163,7 @@ namespace PPlus.Controls
             }
 
             var runningtasks = _localTask.Count;
-            var waittasks = runningtasks - WaitProcessControl.CountEndStaus(_localTask.Select(x => x.Status));
+            var waittasks = runningtasks - CountEndStaus(_localTask.Select(x => x.Status));
             screenBuffer.WriteAnswer(string.Format(Messages.WaittingProcess, waittasks, runningtasks));
             screenBuffer.PushCursor();
             screenBuffer.ClearRestOfLine();
@@ -236,7 +242,7 @@ namespace PPlus.Controls
 
         private static bool IsListEndStaus(IEnumerable<TaskStatus> status)
         {
-            return WaitProcessControl.CountEndStaus(status) == status.Count();
+            return CountEndStaus(status) == status.Count();
         }
 
         private static int CountEndStaus(IEnumerable<TaskStatus> status)
@@ -310,57 +316,6 @@ namespace PPlus.Controls
         public IControlWaitProcess Config(Action<IPromptConfig> context)
         {
             context.Invoke(this);
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortKey(bool value)
-        {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptConfig HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<IEnumerable<ResultProcess>> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
             return this;
         }
 

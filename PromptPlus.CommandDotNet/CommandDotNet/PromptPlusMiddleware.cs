@@ -55,7 +55,7 @@ namespace PPlus.CommandDotNet
         {
             return appRunner.Configure(c =>
             {
-                ansiConsole ??= PromptPlus.ConsoleDriver;
+                ansiConsole ??= PPlusConsole;
                 c.Console = ansiConsole as IConsole ?? new AnsiConsoleForwardingConsole(ansiConsole);
                 c.UseParameterResolver(_ => ansiConsole);
                 c.Services.Add(ansiConsole);
@@ -150,7 +150,7 @@ namespace PPlus.CommandDotNet
             }
             if (runwizard is null)
             {
-                runwizard = new HotKey(ConsoleKey.F5);
+                runwizard = new HotKey(UserHotKey.F5);
             }
             if (backcommand is null)
             {

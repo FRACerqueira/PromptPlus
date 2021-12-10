@@ -15,8 +15,9 @@ namespace PPlus.Controls
     internal class keyPressControl : ControlBase<bool>, IControlKeyPress
     {
         private readonly KeyPressOptions _options;
+        private const string Namecontrol = "PromptPlus.keyPress";
 
-        public keyPressControl(KeyPressOptions options) : base(options, true)
+        public keyPressControl(KeyPressOptions options) : base(Namecontrol, options, true)
         {
             _options = options;
         }
@@ -157,57 +158,6 @@ namespace PPlus.Controls
         public IControlKeyPress Prompt(string value)
         {
             _options.Message = value ?? string.Empty;
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortKey(bool value)
-        {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptConfig HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<bool> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
             return this;
         }
 

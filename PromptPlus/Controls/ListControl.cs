@@ -22,13 +22,15 @@ namespace PPlus.Controls
         private readonly ListOptions<T> _options;
         private readonly Type _targetType = typeof(T);
         private readonly Type _underlyingType = Nullable.GetUnderlyingType(typeof(T));
-        private readonly InputBuffer _inputBuffer = new();
+        private readonly ReadLineBuffer _inputBuffer = new();
         private readonly List<T> _inputItems = new();
         private Paginator<T> _localpaginator;
         private string _inputDesc;
         private readonly string _startDesc;
+        private const string Namecontrol = "PromptPlus.List";
 
-        public ListControl(ListOptions<T> options) : base(options, true)
+
+        public ListControl(ListOptions<T> options) : base(Namecontrol, options, true)
         {
             _options = options;
             _startDesc = _options.Description;
@@ -46,7 +48,7 @@ namespace PPlus.Controls
                 {
                     localitem = TypeHelper<T>.ConvertTo(item.ToString().ToUpperInvariant());
                 }
-                if (TryValidate(localitem, _options.Validators))
+                if (TryValidate(localitem, _options.Validators,true))
                 {
                     if (!_options.AllowDuplicate)
                     {
@@ -72,6 +74,18 @@ namespace PPlus.Controls
                 _inputBuffer.Load(_options.TextSelector(_options.InitialValue));
             }
 
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("PageSize", _options.PageSize.ToString(), LogKind.Property);
+                AddLog("AllowDuplicate", _options.AllowDuplicate.ToString(), LogKind.Property);
+                AddLog("Maximum", _options.Maximum.ToString(), LogKind.Property);
+                AddLog("Minimum", _options.Minimum.ToString(), LogKind.Property);
+                AddLog("UpperCase", _options.UpperCase.ToString(), LogKind.Property);
+                AddLog("EverInitialValue", _options.EverInitialValue.ToString(), LogKind.Property);
+                AddLog("InitialItems", _options.InitialItems.Count.ToString(), LogKind.Property);
+                AddLog("LoadItems", _inputItems.Count.ToString(), LogKind.Property);
+            }
+
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
 
@@ -88,16 +102,19 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
-
-                if (CheckDefaultKey(keyInfo))
+                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                if (acceptedkey)
                 {
-                    continue;
+                    ///none
+                }
+                else if (CheckDefaultKey(keyInfo))
+                {
+                    ///none
                 }
                 else if (IskeyPageNavagator(keyInfo, _localpaginator))
                 {
-                    continue;
+                    ///none
                 }
-
                 else if (PromptPlus.RemoveAll.Equals(keyInfo))
                 {
                     var aux = _inputItems.Where(x => _options.TextSelector(x).IndexOf(_inputBuffer.ToString(), StringComparison.OrdinalIgnoreCase) != -1).ToArray();
@@ -105,119 +122,88 @@ namespace PPlus.Controls
                     _inputBuffer.Clear();
                     _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
                     _localpaginator.FirstItem();
-                    continue;
                 }
-
-
-                switch (keyInfo.Key)
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.Enter, ConsoleModifiers.Control))
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == ConsoleModifiers.Control:
+                    result = _inputItems;
+                    return true;
+                }
+                else if (keyInfo.IsPressEnterKey())
+                {
+                    var input = _inputBuffer.ToString();
+                    try
                     {
                         result = _inputItems;
-                        return true;
-                    }
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0:
-                    {
-                        var input = _inputBuffer.ToString();
-                        try
+
+                        if (string.IsNullOrEmpty(input))
+                        {
+                            if (_inputItems.Count >= _options.Minimum)
+                            {
+                                return true;
+                            }
+                            SetError(string.Format(Messages.ListMinSelection, _options.Minimum));
+                            break;
+                        }
+
+                        if (_inputItems.Count >= _options.Maximum)
+                        {
+                            SetError(string.Format(Messages.ListMaxSelection, _options.Maximum));
+                            break;
+                        }
+
+                        T inputValue;
+                        inputValue = TypeHelper<T>.ConvertTo(input);
+                        if (!TryValidate(inputValue, _options.Validators, false))
                         {
                             result = _inputItems;
-
-                            if (string.IsNullOrEmpty(input))
-                            {
-                                if (_inputItems.Count >= _options.Minimum)
-                                {
-                                    return true;
-                                }
-                                SetError(string.Format(Messages.ListMinSelection, _options.Minimum));
-                                break;
-                            }
-
-                            if (_inputItems.Count >= _options.Maximum)
-                            {
-                                SetError(string.Format(Messages.ListMaxSelection, _options.Maximum));
-                                break;
-                            }
-
-                            T inputValue;
-                            inputValue = TypeHelper<T>.ConvertTo(input);
-                            if (!TryValidate(inputValue, _options.Validators))
-                            {
-                                result = _inputItems;
-                                break;
-                            }
-                            if (!_options.AllowDuplicate)
-                            {
-                                if (_inputItems.Contains(inputValue))
-                                {
-                                    SetError(Messages.ListItemAlreadyexists);
-                                    break;
-                                }
-                            }
-                            _inputBuffer.Clear();
-                            _inputItems.Add(inputValue);
-                            _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
-                            if (_options.InitialValue != null && _options.EverInitialValue)
-                            {
-                                _inputBuffer.Load(_options.TextSelector(_options.InitialValue));
-                            }
+                            break;
                         }
-                        catch (FormatException)
+                        if (!_options.AllowDuplicate)
                         {
-                            SetError(PromptPlus.LocalizateFormatException(typeof(T)));
-                        }
-                        catch (Exception ex)
-                        {
-                            SetError(ex);
-                        }
-                        break;
-                    }
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _inputBuffer.Backward();
-                        break;
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _inputBuffer.Forward();
-                        break;
-                    case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _inputBuffer.Backspace();
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _inputBuffer.Delete();
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == ConsoleModifiers.Control:
-                    {
-                        if (_localpaginator.TryGetSelectedItem(out var selected))
-                        {
-                            var inputValue = (T)Convert.ChangeType(selected, _underlyingType ?? _targetType);
-
                             if (_inputItems.Contains(inputValue))
                             {
-                                _inputItems.Remove(inputValue);
+                                SetError(Messages.ListItemAlreadyexists);
+                                break;
                             }
-
-                            _inputBuffer.Clear();
-                            _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
-                            _localpaginator.FirstItem();
                         }
-                        break;
-                    }
-                    default:
-                    {
-                        if (!cancellationToken.IsCancellationRequested)
+                        _inputBuffer.Clear();
+                        _inputItems.Add(inputValue);
+                        _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
+                        if (_options.InitialValue != null && _options.EverInitialValue)
                         {
-                            if (!char.IsControl(keyInfo.KeyChar))
-                            {
-                                _inputBuffer.Insert(_options.UpperCase ? char.ToUpper(keyInfo.KeyChar) : keyInfo.KeyChar);
-                            }
-                            else
-                            {
-                                isvalidhit = null;
-                            }
+                            _inputBuffer.Load(_options.TextSelector(_options.InitialValue));
                         }
-                        break;
+                    }
+                    catch (FormatException)
+                    {
+                        SetError(PromptPlus.LocalizateFormatException(typeof(T)));
+                    }
+                    catch (Exception ex)
+                    {
+                        SetError(ex);
+                    }
+                    break;
+                }
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.Decimal, ConsoleModifiers.Control))
+                {
+                    if (_localpaginator.TryGetSelectedItem(out var selected))
+                    {
+                        var inputValue = (T)Convert.ChangeType(selected, _underlyingType ?? _targetType);
+
+                        if (_inputItems.Contains(inputValue))
+                        {
+                            _inputItems.Remove(inputValue);
+                        }
+
+                        _inputBuffer.Clear();
+                        _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
+                        _localpaginator.FirstItem();
                     }
                 }
-
+                else
+                {
+                    isvalidhit = null;
+                }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
             if (_inputDesc != _inputBuffer.ToString())
             {
@@ -301,7 +287,7 @@ namespace PPlus.Controls
 
             if (_options.ValidateOnDemand && _options.Validators.Count > 0 && _inputBuffer.Length > 0)
             {
-                TryValidate(_inputBuffer.ToString(), _options.Validators);
+                TryValidate(_inputBuffer.ToString(), _options.Validators,true);
             }
         }
 
@@ -465,56 +451,6 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptConfig EnabledAbortKey(bool value)
-        {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptConfig HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<IEnumerable<T>> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
-            return this;
-        }
         #endregion
     }
 }

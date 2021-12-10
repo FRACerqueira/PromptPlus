@@ -14,6 +14,8 @@ namespace PromptPlusExample
         ImportValidators,
         [Display(Name = "Extension: Command set for PromptPlus console")]
         ConsoleCmd,
+        [Display(Name = "Control: GNU - ReadLine with sugestion and history")]
+        Readline,
         [Display(Name = "Control: Banner ASCII text")]
         Banner,
         [Display(Name = "Control: Any key")]

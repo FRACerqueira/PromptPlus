@@ -181,7 +181,7 @@
     <value>Valor é muito pequeno. Min({0})</value>
   </data>
   <data name="MultiSelectKeyNavigation" xml:space="preserve">
-    <value>Space: Marcar, Enter: Terminar,  {0}: Filtro {1}: Todos, {2}:Inverter</value>
+    <value>{0}: Marcar, Enter: Terminar,  {1}: Filtro {2}: Todos, {3}:Inverter</value>
   </data>
   <data name="MultiSelectMaxSelection" xml:space="preserve">
     <value>O máximo de seleção({0}) foi atingido</value>

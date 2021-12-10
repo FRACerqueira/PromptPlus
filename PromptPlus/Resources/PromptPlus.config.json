@@ -8,16 +8,15 @@
   "EnabledAbortAllPipes": true,
   "PasswordChar": "#",
   "HotKeys": {
-    "AbortAllPipesKeyPress": "Crtl\u002BX",
-    "AbortKeyPress": "Esc",
+    "AbortAllPipesKeyPress": "F7",
     "TooltipKeyPress": "F1",
     "ResumePipesKeyPress": "F2",
     "ToggleVisibleDescription": "F3",
-    "UnSelectFilter": "Alt\u002BF",
-    "SwitchViewPassword": "Alt\u002BV",
-    "SelectAll": "Alt\u002BA",
-    "InvertSelect": "Alt\u002BI",
-    "RemoveAll": "Alt\u002BR"
+    "UnSelectFilter": "F4",
+    "SwitchViewPassword": "F5",
+    "SelectAll": "F5",
+    "InvertSelect": "F6",
+    "RemoveAll": "F4"
   },
   "Colors": {
     "ForeColorSchema": "White",

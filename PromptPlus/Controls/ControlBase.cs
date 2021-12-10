@@ -7,7 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
+
+using Microsoft.Extensions.Logging;
 
 using PPlus.Internal;
 
@@ -26,10 +30,13 @@ namespace PPlus.Controls
         private readonly BaseOptions _options;
         private bool _toggleSummary = false;
 
+        public readonly ControlLog Logs = new();
+
+
         public readonly CultureInfo AppcurrentCulture;
         public readonly CultureInfo AppcurrentUICulture;
 
-        protected ControlBase(BaseOptions options, bool showcursor, bool skiplastrender = false)
+        protected ControlBase(string sourcelog,BaseOptions options, bool showcursor, bool skiplastrender = false)
         {
             AppcurrentCulture = Thread.CurrentThread.CurrentCulture;
             AppcurrentUICulture = Thread.CurrentThread.CurrentUICulture;
@@ -37,7 +44,10 @@ namespace PPlus.Controls
             _skiplastrender = skiplastrender;
             _screenrender = new ScreenRender();
             _showcursor = showcursor;
+            SourceLog = sourcelog;
         }
+
+        public string SourceLog { get; }
 
         public string PipeId { get; internal set; }
 
@@ -68,6 +78,11 @@ namespace PPlus.Controls
             set
             {
                 _finishResult = value;
+                if (PromptPlus.EnabledLogControl)
+                {
+                    AddLog("FinishResult",_finishResult,LogKind.Property);
+                }
+
             }
         }
 
@@ -79,10 +94,36 @@ namespace PPlus.Controls
             }
         }
 
+        public void AddLog(string key, string message, LogKind logKind, LogLevel level = LogLevel.Debug)
+        {
+            Logs.Add(level, key, message, SourceLog, logKind);
+        }
+       
+
+        public ResultPromptPlus<T> Run(CancellationToken? value)
+        {
+            InitControl();
+            try
+            {
+                var aux = Start(value ?? CancellationToken.None);
+                if (PromptPlus.EnabledLogControl)
+                {
+                    aux.LogControl = Logs;
+                }
+                PromptPlus.WriteLog(aux.LogControl);
+                return aux;
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+
         public ResultPromptPlus<T> StartPipeline(Action<ScreenBuffer> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+
 
             _screenrender.StopToken = stoptoken;
             if (!_showcursor)
@@ -91,6 +132,11 @@ namespace PPlus.Controls
             }
 
             pipePaginator.EnsureVisibleIndex(currentStep);
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("StartPipeline.Culture", Thread.CurrentThread.CurrentCulture.Name, LogKind.Method);
+            }
 
             using (var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_esckeyCancelation.Token, stoptoken))
             {
@@ -182,6 +228,17 @@ namespace PPlus.Controls
                         {
                             ScreenRender.NewLine();
                         }
+                        if (PromptPlus.EnabledLogControl)
+                        {
+                            if (_esckeyCancelation.IsCancellationRequested)
+                            {
+                                AddLog("EscCancelation", "true", LogKind.Abort);
+                            }
+                            else if (stoptoken.IsCancellationRequested)
+                            {
+                                AddLog("MainCancelation", "true", LogKind.Abort);
+                            }
+                        }
                         ScreenRender.ShowCursor();
                         Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
                         Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
@@ -190,6 +247,17 @@ namespace PPlus.Controls
                 }
             }
 
+            if (PromptPlus.EnabledLogControl)
+            {
+                if (_esckeyCancelation.IsCancellationRequested)
+                {
+                    AddLog("EscCancelation", "true", LogKind.Abort);
+                }
+                else if (stoptoken.IsCancellationRequested)
+                {
+                    AddLog("MainCancelation", "true", LogKind.Abort);
+                }
+            }
             ScreenRender.ShowCursor();
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
@@ -208,6 +276,12 @@ namespace PPlus.Controls
             }
             T result = default;
             _esckeyCancelation = new CancellationTokenSource();
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("Start.Culture", Thread.CurrentThread.CurrentCulture.Name, LogKind.Method);
+            }
+
             using (var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_esckeyCancelation.Token, stoptoken))
             {
                 bool? hit = true;
@@ -276,6 +350,17 @@ namespace PPlus.Controls
                         {
                             ScreenRender.NewLine();
                         }
+                        if (PromptPlus.EnabledLogControl)
+                        {
+                            if (_esckeyCancelation.IsCancellationRequested)
+                            {
+                                AddLog("EscCancelation", "true", LogKind.Abort);
+                            }
+                            else if (stoptoken.IsCancellationRequested)
+                            {
+                                AddLog("MainCancelation", "true", LogKind.Abort);
+                            }
+                        }
                         ScreenRender.ShowCursor();
                         if (result == null)
                         {
@@ -285,8 +370,20 @@ namespace PPlus.Controls
                     }
                 }
             }
-            ScreenRender.ShowCursor();
 
+            if (PromptPlus.EnabledLogControl)
+            {
+                if (_esckeyCancelation.IsCancellationRequested)
+                {
+                    AddLog("EscCancelation", "true", LogKind.Abort);
+                }
+                else if (stoptoken.IsCancellationRequested)
+                {
+                    AddLog("MainCancelation", "true", LogKind.Abort);
+                }
+            }
+
+            ScreenRender.ShowCursor();
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
 
@@ -306,13 +403,30 @@ namespace PPlus.Controls
             _screenrender.ErrorMessage = null;
         }
 
-        public void SetError(string errorMessage) => _screenrender.ErrorMessage = errorMessage;
+        public void SetError(string errorMessage)
+        {
+            _screenrender.ErrorMessage = errorMessage;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("SetError", errorMessage, LogKind.MsgErro);
+            }
+        }
 
-        public void SetError(ValidationResult validationResult) => _screenrender.ErrorMessage = validationResult.ErrorMessage;
+        private void SetError(ValidationResult validationResult)
+        {
+            _screenrender.ErrorMessage = validationResult.ErrorMessage;
+        }
 
-        public void SetError(Exception exception) => _screenrender.ErrorMessage = exception.Message;
+        public void SetError(Exception exception)
+        {
+            _screenrender.ErrorMessage = exception.Message;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("SetError", exception.Message, LogKind.MsgErro);
+            }
+        }
 
-        public bool TryValidate(object input, IList<Func<object, ValidationResult>> validators)
+        public bool TryValidate(object input, IList<Func<object, ValidationResult>> validators, bool ondemand)
         {
             foreach (var validator in validators)
             {
@@ -321,25 +435,47 @@ namespace PPlus.Controls
                 if (result != ValidationResult.Success)
                 {
                     SetError(result);
+                    if (!ondemand && PromptPlus.EnabledLogControl)
+                    {
+                        AddLog("SetError", result.ErrorMessage, LogKind.MsgErro);
+                    }
                     return false;
+                }
+                if (PromptPlus.EnabledLogControl)
+                {
+                    foreach (var item in validator.GetInvocationList())
+                    {
+                        var match = nameblockRegEx.Value.Match(item.Method.Name);
+                        if (match.Captures.Count == 1)
+                        {
+                            AddLog("ValidationResult", match.Groups["name"].Value, LogKind.Validator);
+                        }
+
+                    }
                 }
             }
             return true;
         }
 
-        public static bool IskeyPageNavagator<Tkey>(ConsoleKeyInfo consoleKeyInfo, Paginator<Tkey> paginator)
+        private static readonly Lazy<Regex> nameblockRegEx = new(
+            () => new Regex("\\<(?<name>.*?)\\>", RegexOptions.IgnoreCase),
+            isThreadSafe: true);
+
+
+
+        public bool IskeyPageNavagator<Tkey>(ConsoleKeyInfo consoleKeyInfo, Paginator<Tkey> paginator)
         {
-            if (consoleKeyInfo.Key == ConsoleKey.PageUp && consoleKeyInfo.Modifiers == 0 && paginator.PageCount > 1)
+            if (consoleKeyInfo.IsPressPageUpKey() && paginator.PageCount > 1)
             {
                 paginator.PreviousPage(IndexOption.LastItemWhenHasPages);
                 return true;
             }
-            else if (consoleKeyInfo.Key == ConsoleKey.PageDown && consoleKeyInfo.Modifiers == 0 && paginator.PageCount > 1)
+            else if (consoleKeyInfo.IsPressPageDownKey() && paginator.PageCount > 1) 
             {
                 paginator.NextPage(IndexOption.FirstItemWhenHasPages);
                 return true;
             }
-            else if (consoleKeyInfo.Key == ConsoleKey.UpArrow && consoleKeyInfo.Modifiers == 0 && paginator.Count > 0)
+            else if (consoleKeyInfo.IsPressUpArrowKey() && paginator.Count > 0)
             {
                 if (paginator.IsFistPageItem)
                 {
@@ -351,7 +487,7 @@ namespace PPlus.Controls
                 }
                 return true;
             }
-            else if (consoleKeyInfo.Key == ConsoleKey.DownArrow && consoleKeyInfo.Modifiers == 0 && paginator.Count > 0)
+            else if (consoleKeyInfo.IsPressDownArrowKey()&& paginator.Count > 0)
             {
                 if (paginator.IsLastPageItem)
                 {
@@ -418,12 +554,11 @@ namespace PPlus.Controls
             else if (OverPipeLine && PromptPlus.ResumePipesKeyPress.Equals(keyInfo))
             {
                 SummaryPipeLine = !SummaryPipeLine;
-                return true;
             }
             return false;
         }
 
-        public ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken)
+        public static ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken)
         {
             while (!ScreenRender.KeyAvailable && !cancellationToken.IsCancellationRequested)
             {
@@ -432,7 +567,7 @@ namespace PPlus.Controls
             return GetKeyAvailable(cancellationToken);
         }
 
-        public ConsoleKeyInfo GetKeyAvailable(CancellationToken cancellationToken)
+        public static ConsoleKeyInfo GetKeyAvailable(CancellationToken cancellationToken)
         {
             if (ScreenRender.KeyAvailable && !cancellationToken.IsCancellationRequested)
             {
@@ -441,9 +576,63 @@ namespace PPlus.Controls
             return new ConsoleKeyInfo();
         }
 
-        public bool KeyAvailable => ScreenRender.KeyAvailable;
+        public static bool KeyAvailable => ScreenRender.KeyAvailable;
 
         public bool HasDescription => _options.HasDescription;
+
+        public IPromptConfig EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("EnabledAbortKey", value.ToString(), LogKind.Property);
+            }
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("EnabledAbortAllPipes", value.ToString(), LogKind.Property);
+            }
+            return this;
+        }
+
+        public IPromptConfig EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("EnabledPromptTooltip", value.ToString(), LogKind.Property);
+            }
+            return this;
+        }
+
+        public IPromptConfig HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("HideAfterFinish", value.ToString(), LogKind.Property);
+            }
+            return this;
+        }
+
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
+        {
+            Condition = condition;
+            return this;
+        }
+
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            ContextState = state;
+            return this;
+        }
 
         private void SummaryPipeLineToPrompt(Paginator<ResultPromptPlus<ResultPipe>> paginator, CancellationToken stoptoken)
         {

@@ -235,45 +235,30 @@ PromptPlus.Symbols.Done = new Symbol("√", "V ");
 
 Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
 
-**internal and reserved hotkeys:**
-
-- Enter (all Modifiers)
-- Delete (all Modifiers)
-- LeftArrow (all Modifiers)
-- RightArrow (all Modifiers)
-- UpArrow (all Modifiers)
-- DownArrow (all Modifiers)
-- PageUp (all Modifiers)
-- PageDown (all Modifiers)
-- Backspace (all Modifiers)
-
-**_Note: If you use one of these keys, an ArgumentException will be generated._**
-
-
 **Hotkeys Configurables:**
 
 - AbortAllPipesKeyPress
-    - Key for abort all pipes. Default = Alt+X
-- AbortKeyPress
-    - Key for abort current control. Default = Escape
+    - Key for abort all pipes. Default = F7
 - TooltipKeyPress
     - Key for Show/Hide tooltips. Default = F1
 - ResumePipesKeyPress
     - Key for Show/Hide summary pipes. Default = F2
 - UnSelectFilter
-    - Key for Show input filter. Default = Alt+F
+    - Key for Show input filter. Default = F4
 - SwitchViewPassword
-    - Key for Show/hide input password. Default = Alt+V
+    - Key for Show/hide input password. Default = F5
 - SelectAll
-    - Key for toggle all items to selected. Default = Alt+A
+    - Key for toggle all items to selected. Default = F5
 - InvertSelect
-    - Key for invet selection to all items. Default = Alt+I
+    - Key for invet selection to all items. Default = F6
 - RemoveAll
-    - Key for remove all items. Default = Alt+R
- 
+    - Key for remove all items. Default = F4
+- MarkSelect
+    - Key for mark item in multi-select. Default = F8
+-
  ```csharp
 //sample
-PromptPlus.AbortAllPipesKeyPress = new HotKey(key: "X", alt: true, ctrl: false, shift: false);
+PromptPlus.AbortAllPipesKeyPress = new HotKey(UserHotKey.F7, alt: true, ctrl: false, shift: false);
 ```
 
 **_Note: the key parameter is case-insentive;_**

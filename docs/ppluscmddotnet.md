@@ -94,11 +94,11 @@ dotnet run --project CommandDotNet.Example [wizard]
 Forward Out to the **PromptPlus-Console Driver** with ansi terminal commands.
 
 ```csharp
-UsePromptPlusAnsiConsole(this AppRunner appRunner, IConsoleDriver? ansiConsole = null)
+UsePromptPlusAnsiConsole(this AppRunner appRunner, ISystemConsole? ansiConsole = null)
 ```
 
-- **IConsoleDriver**
-    - Optionally, the IConsoleDriver to use else will use PromptPlus console driver
+- **ISystemConsole**
+    - Optionally, the ISystemConsole to use else will use PromptPlus console driver
 
 ### UsePromptPlusArgumentPrompter
 [**Top**](#help)
@@ -188,7 +188,7 @@ CopyCallerDescription(this object source, [CallerMemberName] string? caller = nu
 ##### Sample
 ```csharp
 [Command(Description = "knock-knock joke, demonstrating use of IAnsiConsole")]
-public void Choose(IConsoleDriver console, CancellationToken cancellationToken, int pageSize = 5)
+public void Choose(ISystemConsole console, CancellationToken cancellationToken, int pageSize = 5)
 {
     var answer = PromptPlus.Select<string>(
         "What is your favorite color ?", this.CopyCallerDescription()?? string.Empty)

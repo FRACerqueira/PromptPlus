@@ -276,11 +276,11 @@ namespace PPlus.Internal
                 {
                     if (!hidedescription)
                     {
-                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysWithPipelineDesc, TooltipKeyPress, ToggleVisibleDescription, ResumePipesKeyPress, enabledabortAllpipes ? Messages.EscCancelWithPipeline : Messages.EscCancelWithPipeNotAll), ColorSchema.Hint, ConsoleDriver.BackgroundColor);
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysWithPipelineDesc, TooltipKeyPress, ToggleVisibleDescription, ResumePipesKeyPress, enabledabortAllpipes ? Messages.EscCancelWithPipeline : Messages.EscCancelWithPipeNotAll), ColorSchema.Hint, PPlusConsole.BackgroundColor);
                     }
                     else
                     {
-                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysWithPipeline, TooltipKeyPress, ResumePipesKeyPress, enabledabortAllpipes ? Messages.EscCancelWithPipeline : Messages.EscCancelWithPipeNotAll), ColorSchema.Hint, ConsoleDriver.BackgroundColor);
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysWithPipeline, TooltipKeyPress, ResumePipesKeyPress, enabledabortAllpipes ? Messages.EscCancelWithPipeline : Messages.EscCancelWithPipeNotAll), ColorSchema.Hint, PPlusConsole.BackgroundColor);
                     }
                 }
                 else
@@ -370,7 +370,7 @@ namespace PPlus.Internal
 
         public static void Write(this ScreenBuffer screenBuffer, string text)
         {
-            screenBuffer.Write(text, ConsoleDriver.ForegroundColor, ConsoleDriver.BackgroundColor);
+            screenBuffer.Write(text, PPlusConsole.ForegroundColor, PPlusConsole.BackgroundColor);
         }
 
         public static void Write(this ScreenBuffer screenBuffer, string text, ConsoleColor color, ConsoleColor? colorbg = null)
@@ -379,18 +379,18 @@ namespace PPlus.Internal
             {
                 text = string.Empty;
             }
-            screenBuffer.Last().Add(new TextInfo(text, color, colorbg ?? ConsoleDriver.BackgroundColor));
+            screenBuffer.Last().Add(new TextInfo(text, color, colorbg ?? PPlusConsole.BackgroundColor));
         }
 
         public static void WriteLine(this ScreenBuffer screenBuffer)
         {
-            screenBuffer.Add(new List<TextInfo>() { new TextInfo("", ConsoleDriver.ForegroundColor, ConsoleDriver.BackgroundColor) });
+            screenBuffer.Add(new List<TextInfo>() { new TextInfo("", PPlusConsole.ForegroundColor, PPlusConsole.BackgroundColor) });
         }
 
         public static void WriteLine(this ScreenBuffer screenBuffer, string text, ConsoleColor? color = null, ConsoleColor? colorbg = null)
         {
             screenBuffer.WriteLine();
-            screenBuffer.Last().Add(new TextInfo(text ?? string.Empty, color ?? ConsoleDriver.ForegroundColor, colorbg ?? ConsoleDriver.BackgroundColor));
+            screenBuffer.Last().Add(new TextInfo(text ?? string.Empty, color ?? PPlusConsole.ForegroundColor, colorbg ?? PPlusConsole.BackgroundColor));
         }
 
         public static void PushCursor(this ScreenBuffer screenBuffer)
@@ -404,7 +404,7 @@ namespace PPlus.Internal
             }
         }
 
-        public static void PushCursor(this ScreenBuffer screenBuffer, InputBuffer buffer)
+        public static void PushCursor(this ScreenBuffer screenBuffer, ReadLineBuffer buffer)
         {
             screenBuffer.WriteAnswer(buffer.ToBackward());
             screenBuffer.PushCursor();

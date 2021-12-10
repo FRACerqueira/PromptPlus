@@ -466,7 +466,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Space: Select, Enter: Finish, {0}: Filter, {1}: All, {2}:Invert.
+        ///   Looks up a localized string similar to {0} Select, Enter: Finish, {1}: Filter, {2}: All, {3}:Invert.
         /// </summary>
         internal static string MultiSelectKeyNavigation {
             get {
@@ -570,6 +570,60 @@ namespace PPlus.Resources {
         internal static string PressedKey {
             get {
                 return ResourceManager.GetString("PressedKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter: Select and fisnish input.
+        /// </summary>
+        internal static string ReadlineFisnishHistoryhit {
+            get {
+                return ResourceManager.GetString("ReadlineFisnishHistoryhit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esc: Cancel historic and restore original input.
+        /// </summary>
+        internal static string ReadlineHistoryEsc {
+            get {
+                return ResourceManager.GetString("ReadlineHistoryEsc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Down/PgDown: Historic(Min. {0} chars).
+        /// </summary>
+        internal static string ReadlineHistoryhit {
+            get {
+                return ResourceManager.GetString("ReadlineHistoryhit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter: Select and close historic.
+        /// </summary>
+        internal static string ReadlineNotFisnishHistoryhit {
+            get {
+                return ResourceManager.GetString("ReadlineNotFisnishHistoryhit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab/Shift+Tab: Sugestions.
+        /// </summary>
+        internal static string ReadlineSugestionhit {
+            get {
+                return ResourceManager.GetString("ReadlineSugestionhit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esc: Cancel sugestion and restore original input.
+        /// </summary>
+        internal static string ReadlineSugestionMode {
+            get {
+                return ResourceManager.GetString("ReadlineSugestionMode", resourceCulture);
             }
         }
         

@@ -11,8 +11,8 @@ namespace PPlus.CommandDotNet.Controls
     internal class WizardOptions: BaseOptions
     {
         public bool IsRootControl { get; set; }
-        public HotKey Build { get; set; } = new HotKey(ConsoleKey.F5);
-        public HotKey BackCommand { get; set; } = new HotKey(ConsoleKey.F4);
+        public HotKey Build { get; set; } = new HotKey(UserHotKey.F5);
+        public HotKey BackCommand { get; set; } = new HotKey(UserHotKey.F4);
         public IFormPlusBase WizardControl { get; set; } = null;
         public IEnumerable<WizardArgs> TokenArgs { get; set; }
         public ConsoleColor ForeColor { get; set; }

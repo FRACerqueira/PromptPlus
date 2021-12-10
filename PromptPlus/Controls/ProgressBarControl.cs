@@ -22,8 +22,9 @@ namespace PPlus.Controls
         private bool _newInteration = true;
         private readonly ProgressBarOptions _options;
         private double _step;
+        private const string Namecontrol = "PromptPlus.ProgressBar";
 
-        public ProgressBarControl(ProgressBarOptions options) : base(options, false, true)
+        public ProgressBarControl(ProgressBarOptions options) : base(Namecontrol, options, false, true)
         {
             _options = options;
         }
@@ -40,6 +41,13 @@ namespace PPlus.Controls
             _options.InterationId ??= 0;
             _step = double.Parse(_options.Witdth.ToString()) / 100;
             _laststatus = new ProgressBarInfo(0, false, "", _options.InterationId);
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("DoneDelay", _options.DoneDelay.ToString(), LogKind.Property);
+                AddLog("ProcessCheckInterval", _options.ProcessCheckInterval.ToString(), LogKind.Property);
+                AddLog("Witdth", _options.Witdth.ToString(), LogKind.Property);
+            }
 
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
@@ -80,7 +88,7 @@ namespace PPlus.Controls
                 }
             }
 
-            if (ProgressBarControl.IsEndStatus(_localTask.Status))
+            if (IsEndStatus(_localTask.Status))
             {
                 if (cancellationToken.IsCancellationRequested)
                 {
@@ -193,57 +201,6 @@ namespace PPlus.Controls
         public IControlProgressbar Config(Action<IPromptConfig> context)
         {
             context.Invoke(this);
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortKey(bool value)
-        {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptConfig HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<ProgressBarInfo> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
             return this;
         }
 

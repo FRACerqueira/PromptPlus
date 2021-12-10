@@ -11,7 +11,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 using PPlus.Internal;
-
 using PPlus.Objects;
 
 namespace PPlus
@@ -33,12 +32,12 @@ namespace PPlus
             };
 
             theme.Colors.Answer = ColorSchema.Answer;
-            theme.Colors.BackColorSchema = ConsoleDriver.BackgroundColor;
+            theme.Colors.BackColorSchema = PPlusConsole.BackgroundColor;
             theme.Colors.Disabled = ColorSchema.Disabled;
             theme.Colors.DoneSymbol = ColorSchema.DoneSymbol;
             theme.Colors.Error = ColorSchema.Error;
             theme.Colors.Filter = ColorSchema.Filter;
-            theme.Colors.ForeColorSchema = ConsoleDriver.ForegroundColor;
+            theme.Colors.ForeColorSchema = PPlusConsole.ForegroundColor;
             theme.Colors.Hint = ColorSchema.Hint;
             theme.Colors.Pagination = ColorSchema.Pagination;
             theme.Colors.PromptSymbol = ColorSchema.PromptSymbol;
@@ -48,9 +47,9 @@ namespace PPlus
 
             theme.Colors.Description = ColorSchema.Description;
 
+            theme.HotKeys.MarkSelect = MarkSelect.ToString();
             theme.HotKeys.ToggleVisibleDescription = ToggleVisibleDescription.ToString();
             theme.HotKeys.AbortAllPipesKeyPress = AbortAllPipesKeyPress.ToString();
-            theme.HotKeys.AbortKeyPress = AbortKeyPress.ToString();
             theme.HotKeys.TooltipKeyPress = TooltipKeyPress.ToString();
             theme.HotKeys.ResumePipesKeyPress = ResumePipesKeyPress.ToString();
             theme.HotKeys.UnSelectFilter = UnSelectFilter.ToString();
@@ -144,16 +143,17 @@ namespace PPlus
 
                 if (theme.Version >= 2)
                 {
+                    MarkSelect = ConverteThemeHotkey(theme.HotKeys.MarkSelect);
                     ToggleVisibleDescription = ConverteThemeHotkey(theme.HotKeys.ToggleVisibleDescription);
                     ColorSchema.Description = theme.Colors.Description;
                 }
                 else
                 {
+                    MarkSelect = ConverteThemeHotkey(UserHotKey.F8.ToString());
                     ToggleVisibleDescription = ToggleVisibleDescription;
                     ColorSchema.Description = ColorSchema.Answer;
                 }
                 AbortAllPipesKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortAllPipesKeyPress);
-                AbortKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortKeyPress);
                 TooltipKeyPress = ConverteThemeHotkey(theme.HotKeys.TooltipKeyPress);
                 ResumePipesKeyPress = ConverteThemeHotkey(theme.HotKeys.ResumePipesKeyPress);
                 UnSelectFilter = ConverteThemeHotkey(theme.HotKeys.UnSelectFilter);
@@ -173,21 +173,17 @@ namespace PPlus
             var shiftkey = elem.Any(x => x.ToLower() == "shift");
             var ctrlkey = elem.Any(x => x.ToLower() == "crtl");
             var key = elem.Last().ToLower();
-            if (key == "esc" || key == "escape")
-            {
-                return new HotKey(ConsoleKey.Escape, altkey, ctrlkey, shiftkey);
-            }
             return new HotKey(FindByText(key), altkey, ctrlkey, shiftkey);
         }
 
-        private static ConsoleKey FindByText(string key)
+        private static UserHotKey FindByText(string key)
         {
-            var itens = Enum.GetValues(typeof(ConsoleKey));
+            var itens = Enum.GetValues(typeof(UserHotKey));
             foreach (var item in itens)
             {
                 if (item.ToString().ToLower() == key.ToLower())
                 {
-                    return (ConsoleKey)item;
+                    return (UserHotKey)item;
                 }
             }
             throw new ArgumentException(key);

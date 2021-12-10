@@ -9,7 +9,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 
-
 using PPlus.Objects;
 using PPlus.Resources;
 
@@ -123,7 +122,7 @@ namespace PPlus
 
         public static ColorToken DefautColor(this string text)
         {
-            return new ColorToken(text, PromptPlus.ConsoleDriver.ForegroundColor, PromptPlus.ConsoleDriver.BackgroundColor);
+            return new ColorToken(text, PPlusConsole.ForegroundColor, PPlusConsole.BackgroundColor);
         }
 
         public static ColorToken Color(this string text, ConsoleColor forecolor, ConsoleColor? backcolor = null)

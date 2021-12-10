@@ -15,6 +15,13 @@ namespace PPlus.Internal
     {
         public static void UpdateCulture()
         {
+            ReadlineNotFisnishHistoryhit = PromptPlusResources.ReadlineNotFisnishHistoryhit;
+            ReadlineFisnishHistoryhit = PromptPlusResources.ReadlineFisnishHistoryhit;
+            ReadlineSugestionMode = PromptPlusResources.ReadlineSugestionMode;
+            ReadlineHistoryEsc = PromptPlusResources.ReadlineHistoryEsc;
+            ReadlineHistoryhit = PromptPlusResources.ReadlineHistoryhit;
+            ReadlineSugestionhit = PromptPlusResources.ReadlineSugestionhit;
+            ReadlineSugestionMode = PromptPlusResources.ReadlineSugestionMode;
             PasswordStandardHotkeys = PromptPlusResources.PasswordStandardHotkeys;
             AnyKey = PromptPlusResources.AnyKey;
             CanceledText = PromptPlusResources.CanceledText;
@@ -41,7 +48,7 @@ namespace PPlus.Internal
             MinLength = PromptPlusResources.MinLength;
             MultiSelectMinSelection = PromptPlusResources.MultiSelectMinSelection;
             MultiSelectMaxSelection = PromptPlusResources.MultiSelectMaxSelection;
-            MultiSelectKeyNavigation = string.Format(PromptPlusResources.MultiSelectKeyNavigation, UnSelectFilter, SelectAll, InvertSelect);
+            MultiSelectKeyNavigation = string.Format(PromptPlusResources.MultiSelectKeyNavigation, MarkSelect, UnSelectFilter, SelectAll, InvertSelect);
             NoKey = PromptPlusResources.NoKey.ToCharArray()[0];
             NoMatchRegex = PromptPlusResources.NoMatchRegex;
             OffValue = PromptPlusResources.OffValue;
@@ -243,7 +250,7 @@ namespace PPlus.Internal
 
         public static string MultiSelectMaxSelection { get; private set; } = PromptPlusResources.MultiSelectMaxSelection;
 
-        public static string MultiSelectKeyNavigation { get; private set; } = string.Format(PromptPlusResources.MultiSelectKeyNavigation, UnSelectFilter, SelectAll, InvertSelect);
+        public static string MultiSelectKeyNavigation { get; private set; } = string.Format(PromptPlusResources.MultiSelectKeyNavigation,MarkSelect, UnSelectFilter, SelectAll, InvertSelect);
 
         public static string ListMinSelection { get; private set; } = PromptPlusResources.ListMinSelection;
 
@@ -347,6 +354,18 @@ namespace PPlus.Internal
 
         public static string InvalidTypeDateTime { get; private set; } = string.Format(PromptPlusResources.InvalidTypeDateTime, FormatDate(), FormatTime());
 
+        public static string ReadlineFisnishHistoryhit { get; private set; } = PromptPlusResources.ReadlineFisnishHistoryhit;
+
+        public static string ReadlineSugestionMode { get; private set; } = PromptPlusResources.ReadlineSugestionMode;
+
+        public static string ReadlineHistoryEsc { get; private set; } = PromptPlusResources.ReadlineHistoryEsc;
+
+        public static string ReadlineHistoryhit { get; private set; } = PromptPlusResources.ReadlineHistoryhit;
+
+        public static string ReadlineSugestionhit { get; private set; } = PromptPlusResources.ReadlineSugestionhit;
+
+        public static string ReadlineNotFisnishHistoryhit { get; private set; } = PromptPlusResources.ReadlineNotFisnishHistoryhit;
+
         private static string FormatDate()
         {
             var dtsep = Thread.CurrentThread.CurrentCulture.DateTimeFormat.DateSeparator;
@@ -360,7 +379,6 @@ namespace PPlus.Internal
             var stdtmfmt = Thread.CurrentThread.CurrentCulture.DateTimeFormat.LongTimePattern.ToUpper().Split(Thread.CurrentThread.CurrentCulture.DateTimeFormat.TimeSeparator[0]);
             return $"{stdtmfmt[0][0]}{tmsep}{stdtmfmt[1][0]}{tmsep}{stdtmfmt[2][0]}";
         }
-
 
         public static string InvalidTypeNumber { get; private set; } = PromptPlusResources.InvalidTypeNumber;
     }

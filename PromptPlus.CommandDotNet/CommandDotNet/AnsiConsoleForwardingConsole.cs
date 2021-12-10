@@ -28,33 +28,33 @@ namespace PPlus.CommandDotNet
             In = StandardStreamReader.Create(Console.In);
         }
 
-#region Implementation of IStandardOut
+    #region Implementation of IStandardOut
 
         public IStandardStreamWriter Out { get; }
         public bool IsOutputRedirected => Console.IsOutputRedirected;
 
-#endregion
+    #endregion
 
-#region Implementation of IStandardError
+    #region Implementation of IStandardError
 
         public IStandardStreamWriter Error { get; }
         public bool IsErrorRedirected => Console.IsErrorRedirected;
 
-#endregion
+    #endregion
 
-#region Implementation of IStandardIn
+    #region Implementation of IStandardIn
 
         public IStandardStreamReader In { get; }
 
         public bool IsInputRedirected => Console.IsInputRedirected;
 
-#endregion
+    #endregion
 
-#region Implementation of IConsole
+    #region Implementation of IConsole
 
         public ConsoleKeyInfo ReadKey(bool intercept = false)
         {
-            return _ansiConsole.WaitKeypress(intercept, CancellationToken.None);
+            return _ansiConsole.ReadKey(intercept);
         }
 
         public bool TreatControlCAsInput
@@ -63,7 +63,7 @@ namespace PPlus.CommandDotNet
             set => Console.TreatControlCAsInput = value;
         }
 
-#endregion
+    #endregion
     }
 #endif
 #if NET5_0_OR_GREATER
@@ -74,14 +74,14 @@ namespace PPlus.CommandDotNet
         public AnsiConsoleForwardingConsole(IConsoleDriver ansiConsole)
         {
             _ansiConsole = ansiConsole;
-            Out = new ForwardingTextWriter(ansiConsole.WriteAnsiConsole!);
+            Out = new ForwardingTextWriter(ansiConsole.Write!);
         }
 
         public override TextWriter Out { get; }
 
         public override ConsoleKeyInfo? ReadKey(bool intercept = false)
         {
-            return _ansiConsole.WaitKeypress(intercept, CancellationToken.None);
+            return _ansiConsole.ReadKey(intercept);
         }
     }
 #endif

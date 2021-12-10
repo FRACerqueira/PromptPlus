@@ -16,8 +16,9 @@ namespace PPlus.Controls
     {
         private bool _currentValue;
         private readonly SliderSwitchOptions _options;
+        private const string Namecontrol = "PromptPlus.SliderSwitch";
 
-        public SliderSwitchControl(SliderSwitchOptions options) : base(options, false)
+        public SliderSwitchControl(SliderSwitchOptions options) : base(Namecontrol, options, false)
         {
             _options = options;
         }
@@ -28,6 +29,12 @@ namespace PPlus.Controls
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
 
             _currentValue = _options.Value;
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("OffValue", _options.OffValue, LogKind.Property);
+                AddLog("OnValue", _options.OnValue, LogKind.Property);
+            }
 
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
@@ -47,33 +54,25 @@ namespace PPlus.Controls
 
                 if (CheckDefaultKey(keyInfo))
                 {
-                    continue;
+                    ///none
                 }
-
-                switch (keyInfo.Key)
+                else if (keyInfo.IsPressEnterKey())
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0:
-                    {
-                        result = _currentValue;
-                        return true;
-                    }
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && _currentValue:
-                    {
-                        _currentValue = false;
-                        break;
-                    }
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_currentValue:
-                    {
-                        _currentValue = true;
-                        break;
-                    }
-                    default:
-                    {
-                        isvalidhit = null;
-                        break;
-                    }
+                    result = _currentValue;
+                    return true;
                 }
-
+                else if (keyInfo.IsPressLeftArrowKey() && _currentValue)
+                {
+                    _currentValue = false;
+                }
+                else if (keyInfo.IsPressRightArrowKey() && !_currentValue)
+                {
+                    _currentValue = true;
+                }
+                else
+                {
+                    isvalidhit = null;
+                }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
 
             result = default;
@@ -180,57 +179,6 @@ namespace PPlus.Controls
         public IControlSliderSwitch Config(Action<IPromptConfig> context)
         {
             context.Invoke(this);
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortKey(bool value)
-        {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptConfig HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<bool> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
             return this;
         }
 

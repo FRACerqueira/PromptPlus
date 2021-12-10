@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>.net6;.net5;netstandard2.1</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>latest</LangVersion>
     <NeutralLanguage>en</NeutralLanguage>
     <AssemblyName>PromptPlus</AssemblyName>
     <RootNamespace>PPlus</RootNamespace>
@@ -15,6 +15,9 @@
     </AssemblyAttribute>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>$(AssemblyName).SystemCommandLine</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>$(AssemblyName).Tests</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
       
@@ -100,6 +103,11 @@
     <None Include="..\README.md" Pack="false" />
     <None Include="..\NugetREADME.md" Pack="true" PackagePath="\" />
     <None Include="..\icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

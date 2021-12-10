@@ -16,6 +16,7 @@ using PromptPlusExample.Models;
 using PPlus.FIGlet;
 using PPlus.Objects;
 using PPlus;
+using PPlus.Drivers;
 
 namespace PromptPlusExample
 {
@@ -32,12 +33,17 @@ namespace PromptPlusExample
                         services.AddLogging(
                           builder =>
                           {
+                              builder.SetMinimumLevel(LogLevel.Information);
                               builder.AddFilter("Microsoft", LogLevel.Warning)
                                      .AddFilter("System", LogLevel.Warning);
                           });
                         services.AddHostedService<MainProgram>();
                     }).Build();
 
+            //PromptPlus.EnabledLogControl = true;
+            //PromptPlus.LoggerFactory = host.Services.GetService<ILoggerFactory>();
+            //PromptPlus.ForwardingLogToLoggerProvider = true;
+            //PromptPlus.DriveConsole(new MemoryConsoleDriver());
             await host.RunAsync();
         }
     }
@@ -86,11 +92,10 @@ namespace PromptPlusExample
             PromptPlus.DefaultCulture = new CultureInfo("en-US");
             PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
             PromptPlus.Clear();
-
+            //PromptPlus.LoadInputConsole("\r");
             var quit = false;
             while (!_stopApp.IsCancellationRequested && !quit)
             {
-
                 var type = PromptPlus.Select<ExampleType>("Select Example")
                     .Run(_stopApp);
 
@@ -101,6 +106,9 @@ namespace PromptPlusExample
 
                 switch (type.Value)
                 {
+                    case ExampleType.Readline:
+                        RunReadlineSample();
+                        break;
                     case ExampleType.AutoComplete:
                         RunAutoCompleteSample();
                         break;
@@ -229,6 +237,77 @@ namespace PromptPlusExample
             }
             _appLifetime.StopApplication();
         }
+
+        private void RunReadlineSample()
+        {
+            var enterHist = PromptPlus.SliderSwitch("Finish When History Enter")
+                .Default(true)
+                .Run(_stopApp);
+            if (enterHist.IsAborted)
+            {
+                return;
+            }
+
+            var enabledhis = PromptPlus.SliderSwitch("Enabled History")
+                .Default(true)
+                .Run(_stopApp);
+            if (enabledhis.IsAborted)
+            {
+                return;
+            }
+            var timeout = 0;
+            if (enabledhis.Value)
+            {
+                var timeouthis = PromptPlus.Select<int>("Timeout(seconds) History")
+                        .AddItem(5)
+                        .AddItem(10)
+                        .AddItem(600)
+                        .Run(_stopApp);
+                if (enabledhis.IsAborted)
+                {
+                    return;
+                }
+                timeout = timeouthis.Value;
+            }
+
+            var ctrlreadline = PromptPlus.Readline("Readline>", "Sample Readline control")
+                .AddValidator(PromptPlusValidators.Required())
+                .PageSize(5)
+                .EnabledHistory(enabledhis.Value)
+                .TimeoutHistory(new TimeSpan(0,0, timeout))
+                .FinisWhenHistoryEnter(enterHist.Value)
+                .SuggestionHandler(mysugestion)
+                .Run(_stopApp);
+
+            if (ctrlreadline.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"Result : [cyan]{ctrlreadline.Value}[/cyan]!");
+        }
+        private SugestionOutput mysugestion(SugestionInput arg)
+        {
+            var aux = new SugestionOutput();
+            var word = arg.CurrentWord();
+            if (word.ToLowerInvariant() == "prompt")
+            {
+                aux.Add("choose");
+                aux.Add("secure");
+                aux.Add("help", true);
+                return aux;
+            }
+            var random = new Random();
+            for (var i = 0; i < 3; i++)
+            {
+                var c1 = (char)random.Next(65, 90);
+                var c2 = (char)random.Next(97, 122);
+                var c3 = (char)random.Next(97, 122);
+                aux.Add($"Opc {c1}{c2}{c3}");
+            }
+            aux.Add("opc Clearline -test a b c", true);
+            return aux;
+        }
+
 
         private void RunAutoCompleteSample()
         {
@@ -426,10 +505,8 @@ namespace PromptPlusExample
 
         private void RunSaveLoadSample()
         {
-            PromptPlus.AbortAllPipesKeyPress = new HotKey(ConsoleKey.X, false, true, false);
-            PromptPlus.AbortKeyPress = new HotKey(ConsoleKey.Escape, false, false, false);
-            PromptPlus.TooltipKeyPress = new HotKey(ConsoleKey.F1, false, false, false);
-            PromptPlus.ResumePipesKeyPress = new HotKey(ConsoleKey.F2, false, false, false);
+            PromptPlus.TooltipKeyPress = new HotKey(UserHotKey.F1, false, false, false);
+            PromptPlus.ResumePipesKeyPress = new HotKey(UserHotKey.F2, false, false, false);
 
             var filecfg = PromptPlus.SaveConfigToFile();
             PromptPlus.LoadConfigFromFile();

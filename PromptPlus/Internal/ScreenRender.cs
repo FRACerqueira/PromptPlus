@@ -22,7 +22,7 @@ namespace PPlus.Internal
             FormBuffer = new();
         }
 
-        public static void Beep() => ConsoleDriver.Beep();
+        public static void Beep() => PPlusConsole.Beep();
 
         public string ErrorMessage { get; set; }
 
@@ -30,7 +30,7 @@ namespace PPlus.Internal
 
         public CancellationToken StopToken { get; set; }
 
-        public static bool KeyAvailable => ConsoleDriver.KeyAvailable;
+        public static bool KeyAvailable => PPlusConsole.KeyAvailable;
 
         public static ConsoleKeyInfo KeyPressed
         {
@@ -38,7 +38,7 @@ namespace PPlus.Internal
             {
                 lock (LockObj)
                 {
-                    return ConsoleDriver.ReadKey(true);
+                    return PPlusConsole.ReadKey(true);
                 }
             }
 
@@ -76,7 +76,7 @@ namespace PPlus.Internal
         {
             lock (LockObj)
             {
-                ConsoleDriver.WriteLine();
+                PPlusConsole.WriteLine();
             }
         }
 
@@ -91,7 +91,7 @@ namespace PPlus.Internal
 
                 if (skip)
                 {
-                    ConsoleDriver.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
+                    PPlusConsole.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
                     return true;
                 }
 
@@ -103,15 +103,15 @@ namespace PPlus.Internal
 
                 var lines = WrittenLineCount + 1;
 
-                if (ConsoleDriver.BufferHeight - 1 < _cursorBottom && ConsoleDriver.IsRunningTerminal)
+                if (PPlusConsole.BufferHeight - 1 < _cursorBottom && PPlusConsole.IsRunningTerminal)
                 {
-                    _cursorBottom = ConsoleDriver.BufferHeight - 1;
+                    _cursorBottom = PPlusConsole.BufferHeight - 1;
                     lines = _cursorBottom;
                 }
 
                 for (var i = 0; i < lines; i++)
                 {
-                    ConsoleDriver.ClearLine(_cursorBottom - i);
+                    PPlusConsole.ClearLine(_cursorBottom - i);
                 }
                 return true;
             }
@@ -121,7 +121,7 @@ namespace PPlus.Internal
         {
             lock (LockObj)
             {
-                ConsoleDriver.CursorVisible = true;
+                PPlusConsole.CursorVisible = true;
             }
         }
 
@@ -129,36 +129,36 @@ namespace PPlus.Internal
         {
             lock (LockObj)
             {
-                ConsoleDriver.CursorVisible = false;
+                PPlusConsole.CursorVisible = false;
             }
         }
 
-        private int WrittenLineCount => FormBuffer.Sum(x => (x.Sum(xs => xs.Width) - 1) / ConsoleDriver.BufferWidth + 1) - 1;
+        private int WrittenLineCount => FormBuffer.Sum(x => (x.Sum(xs => xs.Width) - 1) / PPlusConsole.BufferWidth + 1) - 1;
 
         private void EnsureScreensizeAndPosition()
         {
-            if (!ConsoleDriver.IsRunningTerminal || ConsoleDriver.NoInterative)
+            if (!PPlusConsole.IsRunningTerminal || PPlusConsole.NoInterative)
             {
                 return;
             }
-            while (ConsoleDriver.BufferHeight - 1 < Drivers.ConsoleDriver.MinBufferHeight)
+            while (PPlusConsole.BufferHeight - 1 < MinBufferHeight)
             {
-                ConsoleDriver.SetCursorPosition(0, 0);
-                ConsoleDriver.ClearLine(ConsoleDriver.CursorTop);
-                ConsoleDriver.SetCursorPosition(0, ConsoleDriver.CursorTop);
-                ConsoleDriver.Write(string.Format(Messages.ResizeTerminal, ConsoleDriver.BufferHeight, Drivers.ConsoleDriver.MinBufferHeight + 1), ConsoleColor.White, ConsoleColor.Red);
-                _ = ConsoleDriver.WaitKeypress(true, StopToken);
+                PPlusConsole.SetCursorPosition(0, 0);
+                PPlusConsole.ClearLine(PPlusConsole.CursorTop);
+                PPlusConsole.SetCursorPosition(0, PPlusConsole.CursorTop);
+                PPlusConsole.Write(string.Format(Messages.ResizeTerminal, PPlusConsole.BufferHeight, MinBufferHeight + 1), ConsoleColor.White, ConsoleColor.Red);
+                _ = PPlusConsole.WaitKeypress(true, StopToken);
                 if (StopToken.IsCancellationRequested)
                 {
                     return;
                 }
             }
-            if (ConsoleDriver.BufferHeight - 1 < _cursorBottom)
+            if (PPlusConsole.BufferHeight - 1 < _cursorBottom)
             {
-                ConsoleDriver.SetCursorPosition(0, 0);
-                ConsoleDriver.ClearLine(ConsoleDriver.CursorTop);
-                ConsoleDriver.Write(Messages.ResizedTerminal, ConsoleColor.White, ConsoleColor.Red);
-                ConsoleDriver.WriteLine();
+                PPlusConsole.SetCursorPosition(0, 0);
+                PPlusConsole.ClearLine(PPlusConsole.CursorTop);
+                PPlusConsole.Write(Messages.ResizedTerminal, ConsoleColor.White, ConsoleColor.Red);
+                PPlusConsole.WriteLine();
             }
         }
 
@@ -171,13 +171,13 @@ namespace PPlus.Internal
                 var lineBuffer = FormBuffer[i];
                 foreach (var textInfo in lineBuffer)
                 {
-                    ConsoleDriver.Write(textInfo.Text, textInfo.Color, textInfo.ColorBg);
+                    PPlusConsole.Write(textInfo.Text, textInfo.Color, textInfo.ColorBg);
                     if (textInfo.SaveCursor && _pushedCursor == null)
                     {
                         _pushedCursor = new Cursor
                         {
-                            Left = ConsoleDriver.CursorLeft,
-                            Top = ConsoleDriver.CursorTop
+                            Left = PPlusConsole.CursorLeft,
+                            Top = PPlusConsole.CursorTop
                         };
                     }
                 }
@@ -187,23 +187,23 @@ namespace PPlus.Internal
                     {
                         scrolls++;
                     }
-                    ConsoleDriver.WriteLine();
+                    PPlusConsole.WriteLine();
                 }
             }
-            _cursorBottom = ConsoleDriver.CursorTop;
+            _cursorBottom = PPlusConsole.CursorTop;
             if (_pushedCursor != null)
             {
-                if (scrolls > 0 && ConsoleDriver.IsRunningTerminal)
+                if (scrolls > 0 && PPlusConsole.IsRunningTerminal)
                 {
                     _pushedCursor.Top -= scrolls;
                 }
-                ConsoleDriver.SetCursorPosition(_pushedCursor.Left, _pushedCursor.Top);
+                PPlusConsole.SetCursorPosition(_pushedCursor.Left, _pushedCursor.Top);
             }
         }
 
         private static bool IsMaxWindowsHeight()
         {
-            if (ConsoleDriver.CursorTop == ConsoleDriver.BufferHeight - 1)
+            if (PPlusConsole.CursorTop == PPlusConsole.BufferHeight - 1)
             {
                 return true;
             }

@@ -40,9 +40,9 @@ namespace PPlus.Internal
 
         public class ThemeHotKeys
         {
+            public string MarkSelect { get; set; }
             public string ToggleVisibleDescription { get; set; }
             public string AbortAllPipesKeyPress { get; set; }
-            public string AbortKeyPress { get; set; }
             public string TooltipKeyPress { get; set; }
             public string ResumePipesKeyPress { get; set; }
             public string UnSelectFilter { get; set; }

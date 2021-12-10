@@ -15,6 +15,7 @@ namespace PPlus.Controls
 
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
         public bool ValidateOnDemand { get; set; }
+        public bool CaseInsensitive { get; set; } = true;
         public bool AcceptWithoutMatch { get; set; } = false;
         public int? PageSize { get; set; }
         public int MinimumPrefixLength { get; set; } = 3;

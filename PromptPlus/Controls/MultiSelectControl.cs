@@ -24,18 +24,19 @@ namespace PPlus.Controls
 
         private readonly MultiSelectOptions<T> _options;
         private readonly List<ItemMultSelect<T>> _selectedItems = new();
-        private readonly InputBuffer _filterBuffer = new();
+        private readonly ReadLineBuffer _filterBuffer = new();
         private Paginator<ItemMultSelect<T>> _localpaginator;
+        private const string Namecontrol = "PromptPlus.MultiSelect";
 
-        public MultiSelectControl(MultiSelectOptions<T> options) : base(options, true)
+        public MultiSelectControl(MultiSelectOptions<T> options) : base(Namecontrol, options, true)
         {
             _options = options;
         }
 
         public override void InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentCulture = DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = DefaultCulture;
 
             if (_options.Items is null)
             {
@@ -45,6 +46,8 @@ namespace PPlus.Controls
             {
                 AddEnum();
             }
+            var qtdgrp = _options.Items.Count(x => x.IsGroup);
+
             foreach (var item in _options.Items.Where(x => !x.IsGroup))
             {
                 item.Disabled = _options.DisableItems.Contains(item.Value);
@@ -105,6 +108,18 @@ namespace PPlus.Controls
                 }
             }
 
+            if (EnabledLogControl)
+            {
+                AddLog("Groups", qtdgrp.ToString(), LogKind.Property);
+                AddLog("DefaultValues", _options.DefaultValues.Count.ToString(), LogKind.Property);
+                AddLog("DisableItems", _options.DisableItems.Count.ToString(), LogKind.Property);
+                AddLog("HideItems", _options.HideItems.Count.ToString(), LogKind.Property);
+                AddLog("Items", _options.Items.Count.ToString(), LogKind.Property);
+                AddLog("Maximum", _options.Maximum.ToString(), LogKind.Property);
+                AddLog("Minimum", _options.Minimum.ToString(), LogKind.Property);
+                AddLog("PageSize", _options.PageSize.ToString(), LogKind.Property);
+            }
+
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
         }
@@ -120,20 +135,22 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
-
-                if (CheckDefaultKey(keyInfo))
+                _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                if (acceptedkey)
                 {
-                    continue;
+                    _localpaginator.UpdateFilter(_filterBuffer.ToString());
+                }
+                else if (CheckDefaultKey(keyInfo))
+                {
+                    ///none
                 }
                 else if (IskeyPageNavagator(keyInfo, _localpaginator))
                 {
-                    continue;
+                    ///none
                 }
-
                 else if (UnSelectFilter.Equals(keyInfo))
                 {
                     _localpaginator.UnSelected();
-                    continue;
                 }
                 else if (SelectAll.Equals(keyInfo))
                 {
@@ -150,7 +167,6 @@ namespace PPlus.Controls
                     }
                     _selectedItems.Clear();
                     _selectedItems.AddRange(_options.Items.Where(x => !x.IsGroup && !x.Disabled));
-                    continue;
                 }
                 else if (InvertSelect.Equals(keyInfo))
                 {
@@ -163,109 +179,87 @@ namespace PPlus.Controls
                     var aux = _selectedItems.ToArray();
                     _selectedItems.Clear();
                     _selectedItems.AddRange(_options.Items.Where(x => !x.IsGroup && !x.Disabled && !aux.Contains(x)));
-                    continue;
                 }
-
-                switch (keyInfo.Key)
+                else if (MarkSelect.Equals(keyInfo))
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0 && _selectedItems.Count >= _options.Minimum:
-                        result = _selectedItems.Select(x => x.Value);
-                        return true;
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0:
-                        SetError(string.Format(Messages.MultiSelectMinSelection, _options.Minimum));
-                        break;
-                    case ConsoleKey.Spacebar when keyInfo.Modifiers == 0 && _localpaginator.TryGetSelectedItem(out var currentItem):
+                    _localpaginator.TryGetSelectedItem(out var currentItem);
+                    if (currentItem.IsGroup)
                     {
-                        if (currentItem.IsGroup)
+                        var maxgrp = _options.Items.Count(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled);
+                        var selgrp = _selectedItems.Count(y => _options.Items.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled).Contains(y));
+                        if (maxgrp == selgrp)
                         {
-                            var maxgrp = _options.Items.Count(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled);
-                            var selgrp = _selectedItems.Count(y => _options.Items.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled).Contains(y));
-                            if (maxgrp == selgrp)
+                            var aux = _selectedItems.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled).ToArray();
+                            foreach (var item in aux)
                             {
-                                var aux = _selectedItems.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled).ToArray();
-                                foreach (var item in aux)
-                                {
-                                    var index = _selectedItems.FindIndex(x => x.Value.Equals(item.Value));
-                                    _selectedItems.RemoveAt(index);
-                                }
-                                currentItem.IsSelected = false;
+                                var index = _selectedItems.FindIndex(x => x.Value.Equals(item.Value));
+                                _selectedItems.RemoveAt(index);
                             }
-                            else
-                            {
-                                var aux = _options.Items.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled);
-                                var qtd = aux.Sum(x => _selectedItems.FindIndex(x => x.Value.Equals(x.Value)) >= 0 ? 1 : 0);
-                                if (_selectedItems.Count + qtd > _options.Maximum)
-                                {
-                                    SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
-                                }
-                                else
-                                {
-                                    foreach (var item in aux)
-                                    {
-                                        var index = _selectedItems.FindIndex(x => x.Value.Equals(item.Value));
-                                        if (index < 0)
-                                        {
-                                            _selectedItems.Add(item);
-                                        }
-                                    }
-                                    var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
-                                    _selectedItems.Clear();
-                                    _selectedItems.AddRange(auxsel);
-                                    currentItem.IsSelected = true;
-                                }
-                            }
+                            currentItem.IsSelected = false;
                         }
                         else
                         {
-                            var index = _selectedItems.FindIndex(x => x.Value.Equals(currentItem.Value));
-                            if (index >= 0)
+                            var aux = _options.Items.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled);
+                            var qtd = aux.Sum(x => _selectedItems.FindIndex(x => x.Value.Equals(x.Value)) >= 0 ? 1 : 0);
+                            if (_selectedItems.Count + qtd > _options.Maximum)
                             {
-                                _selectedItems.RemoveAt(index);
+                                SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
                             }
                             else
                             {
-                                if (_selectedItems.Count >= _options.Maximum)
+                                foreach (var item in aux)
                                 {
-                                    SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
+                                    var index = _selectedItems.FindIndex(x => x.Value.Equals(item.Value));
+                                    if (index < 0)
+                                    {
+                                        _selectedItems.Add(item);
+                                    }
                                 }
-                                else
-                                {
-                                    _selectedItems.Add(currentItem);
-                                    var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
-                                    _selectedItems.Clear();
-                                    _selectedItems.AddRange(auxsel);
-                                }
+                                var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
+                                _selectedItems.Clear();
+                                _selectedItems.AddRange(auxsel);
+                                currentItem.IsSelected = true;
                             }
                         }
-                        break;
                     }
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_filterBuffer.IsStart:
-                        _localpaginator.UpdateFilter(_filterBuffer.Backward().ToString());
-                        break;
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_filterBuffer.IsEnd:
-                        _localpaginator.UpdateFilter(_filterBuffer.Forward().ToString());
-                        break;
-                    case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_filterBuffer.IsStart:
-                        _localpaginator.UpdateFilter(_filterBuffer.Backspace().ToString());
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_filterBuffer.IsEnd:
-                        _localpaginator.UpdateFilter(_filterBuffer.Delete().ToString());
-                        break;
-                    default:
+                    else
                     {
-                        if (!cancellationToken.IsCancellationRequested)
+                        var index = _selectedItems.FindIndex(x => x.Value.Equals(currentItem.Value));
+                        if (index >= 0)
                         {
-                            if (!char.IsControl(keyInfo.KeyChar))
+                            _selectedItems.RemoveAt(index);
+                        }
+                        else
+                        {
+                            if (_selectedItems.Count >= _options.Maximum)
                             {
-                                _localpaginator.UpdateFilter(_filterBuffer.Insert(keyInfo.KeyChar).ToString());
+                                SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
                             }
                             else
                             {
-                                isvalidhit = null;
+                                _selectedItems.Add(currentItem);
+                                var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
+                                _selectedItems.Clear();
+                                _selectedItems.AddRange(auxsel);
                             }
                         }
-                        break;
                     }
+                }
+                else if (keyInfo.IsPressEnterKey())
+                {
+                    if (_selectedItems.Count < _options.Minimum)
+                    {
+                        SetError(string.Format(Messages.MultiSelectMinSelection, _options.Minimum));
+                    }
+                    else
+                    {
+                        result = _selectedItems.Select(x => x.Value);
+                        return true;
+                    }
+                }
+                else
+                {
+                    isvalidhit = null;
                 }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
             if (_options.DescriptionSelector != null)
@@ -340,7 +334,7 @@ namespace PPlus.Controls
                     {
                         screenBuffer.WriteHint(Messages.KeyNavPaging);
                     }
-                    screenBuffer.WriteHint(Messages.MultiSelectKeyNavigation);
+                    screenBuffer.WriteHint(string.Format(Messages.MultiSelectKeyNavigation));
                 }
             }
 
@@ -625,43 +619,6 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IPromptConfig EnabledAbortKey(bool value)
-        {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptConfig EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptConfig HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<IEnumerable<T>> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
         private void AddEnum()
         {
             _options.TextSelector = EnumDisplay;
@@ -685,20 +642,6 @@ namespace PPlus.Controls
             var name = value.ToString();
             var displayAttribute = value.GetType().GetField(name)?.GetCustomAttribute<DisplayAttribute>();
             return displayAttribute?.Name ?? name;
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
-            return this;
         }
 
         #endregion

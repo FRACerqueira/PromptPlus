@@ -303,20 +303,6 @@ PromptPlus.Symbols.Done = new Symbol("√", "V ");
 
 Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
 
-**internal and reserved hotkeys:**
-
-- Enter (all Modifiers)
-- Delete (all Modifiers)
-- LeftArrow (all Modifiers)
-- RightArrow (all Modifiers)
-- UpArrow (all Modifiers)
-- DownArrow (all Modifiers)
-- PageUp (all Modifiers)
-- PageDown (all Modifiers)
-- Backspace (all Modifiers)
-
-**_Note: If you use one of these keys, an ArgumentException will be generated._**
-
  ```csharp
 //sample
 PromptPlus.TooltipKeyPress = new HotKey(key: "F1", alt: false, ctrl: false, shift: false);

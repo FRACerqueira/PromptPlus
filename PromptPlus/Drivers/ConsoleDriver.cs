@@ -4,22 +4,20 @@
 // ***************************************************************************************
 
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
-
 using PPlus.Objects;
-using PPlus.Resources;
 
 namespace PPlus.Drivers
 {
     internal sealed class ConsoleDriver : IConsoleDriver
     {
         private const int IdleReadKey = 10;
-        public static int MinBufferHeight = 10;
 
-        public bool NoInterative => (Console.IsInputRedirected || Console.IsOutputRedirected);
+        public bool NoInterative => (IsInputRedirected || IsOutputRedirected || IsErrorRedirected);
 
         static ConsoleDriver()
         {
@@ -36,6 +34,12 @@ namespace PPlus.Drivers
         }
 
         #region IConsoleDriver
+
+        public bool IsErrorRedirected => Console.IsErrorRedirected;
+
+        public bool IsInputRedirected => Console.IsInputRedirected;
+
+        public bool IsOutputRedirected => Console.IsOutputRedirected;
 
         // Indicates if the current process is running:
         //  * on Windows: in a console window visible to the user.
@@ -72,28 +76,75 @@ namespace PPlus.Drivers
             set { Console.OutputEncoding = value; }
         }
 
-        public void Beep() => Console.Write("\a");
+        public void ResetColor()
+        {
+            ForegroundColor = ConsoleColor.White;
+            BackgroundColor = ConsoleColor.Black;
+        }
+
+
+        public Encoding InputEncoding
+        {
+            get { return Console.InputEncoding; }
+            set { Console.InputEncoding = value; }
+        }
+
+        public TextWriter Out
+        {
+            get { return Console.Out; }
+        }
+
+        public TextReader In
+        {
+            get { return Console.In; }
+        }
+
+        public TextWriter Error
+        {
+            get { return Console.Error; }
+        }
+
+        public void SetIn(TextReader value)
+        {
+            Console.SetIn(value);
+        }
+
+        public void SetOut(TextWriter value)
+        {
+            Console.SetOut(value);
+        }
+        public void SetError(TextWriter value)
+        {
+            Console.SetError(value);
+        }
+
+        public void Beep() => Console.Out.Write("\a");
 
         public void Clear()
         {
             SetCursorPosition(0, 0);
-            Console.Write("\x1b[2J");
+            Out.Write("\x1b[2J");
         }
 
         public void ClearLine(int top)
         {
             SetCursorPosition(0, top);
-            Console.Write("\x1b[2K");
+            Out.Write("\x1b[2K");
         }
 
         public void ClearRestOfLine(ConsoleColor? color)
         {
-            Write("\x1b[0K".Color(PromptPlus.ConsoleDriver.ForegroundColor, color ?? PromptPlus.ConsoleDriver.BackgroundColor));
+            Write("\x1b[0K".Color(PromptPlus.PPlusConsole.ForegroundColor, color ?? PromptPlus.PPlusConsole.BackgroundColor));
         }
 
         public ConsoleKeyInfo ReadKey(bool intercept)
         {
             return Console.ReadKey(intercept);
+        }
+
+        public void Write(string value)
+        {
+            Write(new  ColorToken(value));
         }
 
         public void Write(params ColorToken[] tokens)
@@ -110,21 +161,21 @@ namespace PPlus.Drivers
                 {
                     if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
                     {
-                        Console.Write(token.AnsiColor);
+                        Out.Write(token.AnsiColor);
                     }
                     if (token.Underline)
                     {
-                        Console.Write("\x1b[4m");
+                        Out.Write("\x1b[4m");
                     }
-                    Console.Write(token.Text ?? string.Empty);
+                    Out.Write(token.Text ?? string.Empty);
                 }
                 finally
                 {
                     if (token.Underline)
                     {
-                        Console.Write("\x1b[24m");
+                        Out.Write("\x1b[24m");
                     }
-                    Console.Write(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor);
+                    Out.Write(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor);
                 }
             }
         }
@@ -134,7 +185,7 @@ namespace PPlus.Drivers
             get { return Console.ForegroundColor; }
             set
             {
-                Console.Write(new ColorToken("", value, Console.BackgroundColor).AnsiColor);
+                Out.Write(new ColorToken("", value, Console.BackgroundColor).AnsiColor);
                 Console.ForegroundColor = value;
             }
         }
@@ -144,15 +195,19 @@ namespace PPlus.Drivers
             get { return Console.BackgroundColor; }
             set
             {
-                Console.Write(new ColorToken("", Console.ForegroundColor, value).AnsiColor);
+                Out.Write(new ColorToken("", Console.ForegroundColor, value).AnsiColor);
                 Console.BackgroundColor = value;
             }
+        }
+        public void WriteLine(string value)
+        {
+            WriteLine(new ColorToken(value));
         }
 
         public void WriteLine(params ColorToken[] tokens)
         {
             Write(tokens);
-            Console.WriteLine();
+            Out.WriteLine();
         }
 
         public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
@@ -163,7 +218,7 @@ namespace PPlus.Drivers
         public void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null)
         {
             Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
-            Console.WriteLine();
+            Out.WriteLine();
         }
 
         public void SetCursorPosition(int left, int top)
@@ -192,11 +247,11 @@ namespace PPlus.Drivers
                 _cursorVisible = value;
                 if (value)
                 {
-                    Console.Write("\x1b[?25h");
+                    Out.Write("\x1b[?25h");
                 }
                 else
                 {
-                    Console.Write("\x1b[?25l");
+                    Out.Write("\x1b[?25l");
                 }
             }
         }
@@ -223,7 +278,7 @@ namespace PPlus.Drivers
             {
                 if (NoInterative)
                 {
-                    return 2000;
+                    return 5000;
                 }
                 return Console.WindowWidth;
             }
@@ -235,7 +290,7 @@ namespace PPlus.Drivers
             {
                 if (NoInterative)
                 {
-                    return 2000;
+                    return 5000;
                 }
                 return Console.WindowHeight;
             }

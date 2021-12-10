@@ -15,8 +15,8 @@ namespace PPlus.Objects
         internal ColorToken(string text, ConsoleColor? color = null, ConsoleColor? backgroundColor = null, bool underline = false)
         {
             Text = text;
-            Color = color ?? ConsoleDriver.ForegroundColor;
-            BackgroundColor = backgroundColor ?? ConsoleDriver.BackgroundColor;
+            Color = color ?? PPlusConsole.ForegroundColor;
+            BackgroundColor = backgroundColor ?? PPlusConsole.BackgroundColor;
             AnsiColor = string.Format("\x1b[{0};{1}m", ToAnsiColor(Color), ToAnsiBgColor(BackgroundColor));
             Underline = underline;
         }
@@ -37,11 +37,11 @@ namespace PPlus.Objects
 
         public ColorToken Mask(ConsoleColor? defaultColor, ConsoleColor? defaultBackgroundColor)
         {
-            if (Color != ConsoleDriver.ForegroundColor || BackgroundColor != ConsoleDriver.BackgroundColor)
+            if (Color != PPlusConsole.ForegroundColor || BackgroundColor != PPlusConsole.BackgroundColor)
             {
                 return this;
             }
-            return new(Text, Color == ConsoleDriver.ForegroundColor ? defaultColor : Color, BackgroundColor == ConsoleDriver.BackgroundColor ? defaultBackgroundColor : BackgroundColor, Underline);
+            return new(Text, Color == PPlusConsole.ForegroundColor ? defaultColor : Color, BackgroundColor == PPlusConsole.BackgroundColor ? defaultBackgroundColor : BackgroundColor, Underline);
         }
 
         public static implicit operator ColorToken(string text)

@@ -344,6 +344,21 @@ namespace PPlus.Internal
             return this;
         }
 
+        public MaskedBuffer ToEnd()
+        {
+            if (_inputBuffer.Length > 0)
+            {
+                Position = _inputBuffer.Length - 1;
+            }
+            return this;
+        }
+
+        public MaskedBuffer ToStart()
+        {
+            Position = 0;
+            return this;
+        }
+
         public string ToBackwardString() => OutputMask.Substring(0, LogicalPosition);
 
         public string ToForwardString() => OutputMask.Substring(LogicalPosition);

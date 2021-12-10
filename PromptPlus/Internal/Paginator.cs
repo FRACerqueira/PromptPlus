@@ -41,9 +41,9 @@ namespace PPlus.Internal
             {
                 selectedItem = _items[(_maxpageSize * SelectedPage) + SelectedIndex];
             }
-            if (PromptPlus.ConsoleDriver.BufferHeight - 1 < _userpageSize + ConsoleDriver.MinBufferHeight)
+            if (PromptPlus.PPlusConsole.BufferHeight - 1 < _userpageSize + PromptPlus.MinBufferHeight)
             {
-                _maxpageSize = PromptPlus.ConsoleDriver.BufferHeight - (ConsoleDriver.MinBufferHeight);
+                _maxpageSize = PromptPlus.PPlusConsole.BufferHeight - (PromptPlus.MinBufferHeight);
             }
             else
             {

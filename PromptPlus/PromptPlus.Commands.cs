@@ -4,11 +4,16 @@
 // ***************************************************************************************
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
+using Microsoft.Extensions.Logging;
+
 using PPlus.Controls;
+using PPlus.Drivers;
+using PPlus.Internal;
 using PPlus.Objects;
 using PPlus.Resources;
 
@@ -16,75 +21,128 @@ namespace PPlus
 {
     public static partial class PromptPlus
     {
+        private const string msglog = "[{0}]{1}-{2}:{3}({4})";
+
+        #region internal functions
+
+        internal static void WriteLog(ControlLog? controllog)
+        {
+            if (!ForwardingLogToLoggerProvider || PPlusLog is null || controllog is null)
+            {
+                return;
+            }
+            if (ForwardingLogToLoggerProvider)
+            {
+                foreach (var item in controllog.Value.Logs)
+                {
+                    if (PPlusLog.IsEnabled(item.Level))
+                    {
+                        LoggerExtensions.Log(PPlusLog, item.Level, msglog, item.LogDate.ToString("u"), item.Source,item.Key, item.Message,item.Kind);
+                    }
+                }
+            }
+        }
+
+        internal static string LocalizateFormatException(Type type)
+        {
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.Boolean:
+                    return Messages.InvalidTypeBoolean;
+                case TypeCode.Byte:
+                    return Messages.InvalidTypeByte;
+                case TypeCode.Char:
+                    return Messages.InvalidTypeChar;
+                case TypeCode.DateTime:
+                    return Messages.InvalidTypeDateTime;
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.SByte:
+                case TypeCode.Single:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                    return Messages.InvalidTypeNumber;
+                case TypeCode.DBNull:
+                case TypeCode.Empty:
+                case TypeCode.Object:
+                case TypeCode.String:
+                    break;
+            }
+            return Messages.Invalid;
+        }
+
+        #endregion
 
         #region Console Commands
 
-        public static ResultPromptPlus<ConsoleKeyInfo> WaitKeypress(bool intercept, CancellationToken cancellationToken)
+        static PromptPlus()
         {
-            return new ResultPromptPlus<ConsoleKeyInfo>(ConsoleDriver.WaitKeypress(intercept, cancellationToken), cancellationToken.IsCancellationRequested);
+            Symbols.MaskEmpty = new("■", "  ");
+            Symbols.File = new("■", "- ");
+            Symbols.Folder = new("►", "> ");
+            Symbols.Prompt = new("→", "->");
+            Symbols.Done = new("√", "V ");
+            Symbols.Error = new("»", ">>");
+            Symbols.Selector = new("›", "> ");
+            Symbols.Selected = new("♦", "* ");
+            Symbols.NotSelect = new("○", "  ");
+            Symbols.TaskRun = new("♦", "* ");
+            Symbols.Skiped = new("×", "x ");
+
+            Symbols.IndentGroup = new("├─", "  |-");
+            Symbols.IndentEndGroup = new("└─", "  |_");
+            Symbols.SymbGroup = new("»", ">>");
+
+            PPlusConsole = new ConsoleDriver
+            {
+                OutputEncoding = Encoding.UTF8
+            };
+
+            AppCulture = Thread.CurrentThread.CurrentCulture;
+            AppCultureUI = Thread.CurrentThread.CurrentUICulture;
+            DefaultCulture = AppCulture;
+            LoadConfigFromFile();
         }
 
-        public static void ClearLine(int top)
+        public static void DriveConsole(IConsoleDriver value)
         {
-            if (top < 0)
+            if (value == null)
             {
-                top = 0;
+                return;
             }
-            if (top > ConsoleDriver.BufferHeight - 1)
+            PPlusConsole = value;
+        }
+        public static void LoadInputConsole(string value)
+        {
+            if (value == null)
             {
-                top = ConsoleDriver.BufferHeight - 1;
+                return;
             }
-            ConsoleDriver.ClearLine(top);
+            if (!PPlusConsole.IsInputRedirected)
+            {
+                throw new ArgumentException("IConsoleDriver not state input-redirected");
+            }
+            using (TextReader sr = new StringReader(value))
+            {
+                PPlusConsole.SetIn(sr);
+            }
         }
 
-        public static void ClearRestOfLine(ConsoleColor? color = null) => ConsoleDriver.ClearRestOfLine(color ?? BackgroundColor);
-
-        public static void Beep() => ConsoleDriver.Beep();
-
-        public static int CursorLeft => ConsoleDriver.CursorLeft;
-
-        public static int CursorTop => ConsoleDriver.CursorTop;
-
-        public static int BufferWidth => Console.BufferWidth;
-
-        public static int BufferHeight => Console.BufferHeight;
-
-        public static int WindowWidth => Console.WindowWidth;
-
-        public static int WindowHeight => Console.WindowHeight;
-
-        public static bool IsRunningTerminal => ConsoleDriver.IsRunningTerminal;
-
-        public static ConsoleColor ForegroundColor => ConsoleDriver.ForegroundColor;
-
-        public static ConsoleColor BackgroundColor => ConsoleDriver.BackgroundColor;
-
-        public static void CursorPosition(int left, int top)
-        {
-            if (top < 0)
-            {
-                top = 0;
-            }
-            if (left < 0)
-            {
-                left = 0;
-            }
-            if (top > ConsoleDriver.BufferHeight - 1)
-            {
-                top = ConsoleDriver.BufferHeight - 1;
-            }
-            ConsoleDriver.SetCursorPosition(left, top);
-        }
+        public static void ClearRestOfLine(ConsoleColor? color = null) => PPlusConsole.ClearRestOfLine(color ?? BackgroundColor);
 
         public static void ConsoleDefaultColor(ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
         {
             if (forecolor.HasValue)
             {
-                ConsoleDriver.ForegroundColor = forecolor.Value;
+                PPlusConsole.ForegroundColor = forecolor.Value;
             }
             if (backcolor.HasValue)
             {
-                ConsoleDriver.BackgroundColor = backcolor.Value;
+                PPlusConsole.BackgroundColor = backcolor.Value;
             }
         }
 
@@ -92,26 +150,26 @@ namespace PPlus
         {
             if (backcolor.HasValue)
             {
-                ConsoleDriver.BackgroundColor = backcolor.Value;
+                PPlusConsole.BackgroundColor = backcolor.Value;
             }
-            ConsoleDriver.Clear();
+            PPlusConsole.Clear();
         }
 
         public static void WriteLineSkipColors(string value)
         {
-            ConsoleDriver.WriteLine(value);
+            PPlusConsole.WriteLine(value);
         }
 
         public static void WriteLine(Exception value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
         {
-            WriteLine(value.ToString().Color(forecolor ?? ConsoleDriver.ForegroundColor, backcolor));
+            WriteLine(value.ToString().Color(forecolor ?? PPlusConsole.ForegroundColor, backcolor));
         }
 
         public static void WriteLine(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
         {
             if (underline)
             {
-                var aux = PromptPlus.ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor);
+                var aux = ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor);
                 foreach (var item in aux)
                 {
                     WriteLine(item.Underline());
@@ -141,17 +199,64 @@ namespace PPlus
 
         public static void WriteSkipColors(string value)
         {
-            ConsoleDriver.Write(value);
+            PPlusConsole.Write(value);
         }
 
         public static void Write(params ColorToken[] tokens)
         {
-            ConsoleDriver.Write(tokens);
+            PPlusConsole.Write(tokens);
         }
 
         public static void WriteLine(params ColorToken[] tokens)
         {
-            ConsoleDriver.WriteLine(tokens);
+            PPlusConsole.WriteLine(tokens);
+        }
+
+        public static ConsoleKeyInfo WaitKeypress(bool intercept, CancellationToken cancellationToken)
+        {
+            return PPlusConsole.WaitKeypress(intercept, cancellationToken);
+        }
+
+        public static void ClearLine(int top)
+        {
+            if (top < 0)
+            {
+                top = 0;
+            }
+            if (top > PPlusConsole.BufferHeight - 1)
+            {
+                top = PPlusConsole.BufferHeight - 1;
+            }
+            PPlusConsole.ClearLine(top);
+        }
+
+        public static void Beep() => PPlusConsole.Beep();
+
+        public static int CursorLeft => PPlusConsole.CursorLeft;
+
+        public static int CursorTop => PPlusConsole.CursorTop;
+
+        public static int BufferWidth => PPlusConsole.BufferWidth;
+
+        public static int BufferHeight => PPlusConsole.BufferHeight;
+
+        public static bool IsRunningTerminal => PPlusConsole.IsRunningTerminal;
+
+        public static void CursorPosition(int left, int top)
+        {
+            if (top < 0)
+            {
+                top = 0;
+            }
+            if (left < 0)
+            {
+                left = 0;
+            }
+            if (top > PPlusConsole.BufferHeight - 1)
+            {
+                top = PPlusConsole.BufferHeight - 1;
+            }
+            PPlusConsole.SetCursorPosition(left, top);
         }
 
         public static void WriteLines(int value = 1)
@@ -162,9 +267,116 @@ namespace PPlus
             }
             for (var i = 0; i < value; i++)
             {
-                Console.WriteLine();
+                PPlusConsole.WriteLine(string.Empty);
             }
         }
+
+        #endregion
+
+        #region controls
+
+        public static IControlReadline Readline(string prompt, string description = null)
+        {
+            return new ReadlineControl(new ReadlineOptions() { Message = prompt, Description = description });
+        }
+
+        public static IControlAutoComplete AutoComplete(string prompt, string description = null)
+        {
+            return new AutoCompleteControl(new AutoCompleteOptions() { Message = prompt, Description = description });
+        }
+
+        public static IFIGlet Banner(string value)
+        {
+            return new BannerControl(value);
+        }
+
+        public static IControlKeyPress KeyPress(char? Keypress = null, ConsoleModifiers? keymodifiers = null)
+        {
+            return new keyPressControl(new KeyPressOptions { KeyPress = Keypress, KeyModifiers = keymodifiers });
+        }
+
+        public static IControlMaskEdit MaskEdit(MaskedType type, string prompt = null, string description = null)
+        {
+            return type switch
+            {
+                MaskedType.Generic => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Generic, Message = prompt, Description = description }),
+                MaskedType.DateOnly => new MaskedInputControl(new MaskedOptions { Type = MaskedType.DateOnly, Message = prompt, Description = description }),
+                MaskedType.TimeOnly => new MaskedInputControl(new MaskedOptions { Type = MaskedType.TimeOnly, Message = prompt, Description = description }),
+                MaskedType.DateTime => new MaskedInputControl(new MaskedOptions { Type = MaskedType.DateTime, Message = prompt, Description = description }),
+                MaskedType.Number => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Number, Message = prompt, Description = description }),
+                MaskedType.Currency => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Currency, Message = prompt, Description = description }),
+                _ => throw new ArgumentException(string.Format(Exceptions.Ex_InvalidType, type))
+            };
+        }
+
+        public static IControlInput Input(string prompt = null, string description = null)
+        {
+            return new InputControl(new InputOptions() { Message = prompt, Description = description });
+        }
+
+        public static IControlConfirm Confirm(string prompt = null, string description = null)
+        {
+            return new ConfirmControl(new ConfirmOptions() { Message = prompt, Description = description });
+        }
+
+        public static IControlSliderNumber SliderNumber(SliderNumberType type, string prompt = null, string description = null)
+        {
+            return new SliderNumberControl(new SliderNumberOptions() { Message = prompt, Type = type, Description = description });
+        }
+
+        public static IControlSliderSwitch SliderSwitch(string prompt = null, string description = null)
+        {
+            return new SliderSwitchControl(new SliderSwitchOptions() { Message = prompt, Description = description });
+        }
+
+        public static IControlProgressbar Progressbar(string prompt = null, string description = null)
+        {
+            return new ProgressBarControl(new ProgressBarOptions() { Message = prompt, Description = description });
+        }
+
+        public static IControlWaitProcess WaitProcess(string prompt = null, string description = null)
+        {
+            return new WaitProcessControl(new WaitProcessOptions() { Message = prompt, Description = description });
+        }
+
+        public static IControlSelect<T> Select<T>(string prompt = null, string description = null)
+        {
+            return new SelectControl<T>(new SelectOptions<T>() { Message = prompt, Description = description });
+        }
+
+        public static IControlMultiSelect<T> MultiSelect<T>(string prompt = null, string description = null)
+        {
+            return new MultiSelectControl<T>(new MultiSelectOptions<T>() { Message = prompt, Description = description });
+        }
+
+        public static IControlBrowser Browser(string prompt = null, string description = null)
+        {
+            return new BrowserControl(new BrowserOptions() { Message = prompt, Description = description });
+        }
+
+        public static IControlList<T> List<T>(string prompt = null, string description = null)
+        {
+            return new ListControl<T>(new ListOptions<T>() { Message = prompt, Description = description });
+        }
+
+        public static IControlListMasked ListMasked(string prompt = null, string description = null)
+        {
+            return new MaskedListControl(new ListOptions<string>() { Message = prompt, Description = description });
+        }
+
+        public static IControlPipeLine Pipeline()
+        {
+            return new PipeLineControl();
+        }
+
+        #endregion
+
+        #region embeddedColors
+
+        public static ConsoleColor ForegroundColor => PPlusConsole.ForegroundColor;
+
+        public static ConsoleColor BackgroundColor => PPlusConsole.BackgroundColor;
+
 
         /// <summary>
         /// Allows a string to be written with embedded color values using:
@@ -195,8 +407,8 @@ namespace PPlus
 
             var currentcolor = new itemColor
             {
-                Forecolor = ConsoleDriver.ForegroundColor,
-                Backcolor = ConsoleDriver.BackgroundColor,
+                Forecolor = PPlusConsole.ForegroundColor,
+                Backcolor = PPlusConsole.BackgroundColor,
                 Underline = false
             };
             Lifocolor.Push(currentcolor);
@@ -302,100 +514,6 @@ namespace PPlus
             public ConsoleColor Backcolor { get; set; }
             public bool Underline { get; set; }
         }
-
-        #endregion
-
-        #region controls
-
-        public static IControlAutoComplete AutoComplete(string prompt, string description = null)
-        {
-            return new AutoCompleteControl(new AutoCompleteOptions() { Message = prompt, Description = description });
-        }
-
-        public static IFIGlet Banner(string value)
-        {
-            return new BannerControl(value);
-        }
-
-        public static IControlKeyPress KeyPress(char? Keypress = null, ConsoleModifiers? keymodifiers = null)
-        {
-            return new keyPressControl(new KeyPressOptions { KeyPress = Keypress, KeyModifiers = keymodifiers });
-        }
-
-        public static IControlMaskEdit MaskEdit(MaskedType type, string prompt = null, string description = null)
-        {
-            return type switch
-            {
-                MaskedType.Generic => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Generic, Message = prompt, Description = description }),
-                MaskedType.DateOnly => new MaskedInputControl(new MaskedOptions { Type = MaskedType.DateOnly, Message = prompt, Description = description }),
-                MaskedType.TimeOnly => new MaskedInputControl(new MaskedOptions { Type = MaskedType.TimeOnly, Message = prompt, Description = description }),
-                MaskedType.DateTime => new MaskedInputControl(new MaskedOptions { Type = MaskedType.DateTime, Message = prompt, Description = description }),
-                MaskedType.Number => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Number, Message = prompt, Description = description }),
-                MaskedType.Currency => new MaskedInputControl(new MaskedOptions { Type = MaskedType.Currency, Message = prompt, Description = description }),
-                _ => throw new ArgumentException(string.Format(Exceptions.Ex_InvalidType, type))
-            };
-        }
-
-        public static IControlInput Input(string prompt = null, string description = null)
-        {
-            return new InputControl(new InputOptions() { Message = prompt, Description = description });
-        }
-
-        public static IControlConfirm Confirm(string prompt = null, string description = null)
-        {
-            return new ConfirmControl(new ConfirmOptions() { Message = prompt, Description = description });
-        }
-
-        public static IControlSliderNumber SliderNumber(SliderNumberType type, string prompt = null, string description = null)
-        {
-            return new SliderNumberControl(new SliderNumberOptions() { Message = prompt, Type = type, Description = description });
-        }
-
-        public static IControlSliderSwitch SliderSwitch(string prompt = null, string description = null)
-        {
-            return new SliderSwitchControl(new SliderSwitchOptions() { Message = prompt, Description = description });
-        }
-
-        public static IControlProgressbar Progressbar(string prompt = null, string description = null)
-        {
-            return new ProgressBarControl(new ProgressBarOptions() { Message = prompt, Description = description });
-        }
-
-        public static IControlWaitProcess WaitProcess(string prompt = null, string description = null)
-        {
-            return new WaitProcessControl(new WaitProcessOptions() { Message = prompt, Description = description });
-        }
-
-        public static IControlSelect<T> Select<T>(string prompt = null, string description = null)
-        {
-            return new SelectControl<T>(new SelectOptions<T>() { Message = prompt, Description = description });
-        }
-
-        public static IControlMultiSelect<T> MultiSelect<T>(string prompt = null, string description = null)
-        {
-            return new MultiSelectControl<T>(new MultiSelectOptions<T>() { Message = prompt, Description = description });
-        }
-
-        public static IControlBrowser Browser(string prompt = null, string description = null)
-        {
-            return new BrowserControl(new BrowserOptions() { Message = prompt, Description = description });
-        }
-
-        public static IControlList<T> List<T>(string prompt = null, string description = null)
-        {
-            return new ListControl<T>(new ListOptions<T>() { Message = prompt, Description = description });
-        }
-
-        public static IControlListMasked ListMasked(string prompt = null, string description = null)
-        {
-            return new MaskedListControl(new ListOptions<string>() { Message = prompt, Description = description });
-        }
-
-        public static IControlPipeLine Pipeline()
-        {
-            return new PipeLineControl();
-        }
-
         #endregion
     }
 }

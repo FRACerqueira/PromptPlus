@@ -25,7 +25,7 @@ namespace PPlus
         IPromptConfig HideAfterFinish(bool value);
     }
 
-    public interface IPromptControls<T>: IPromptConfig
+    public interface IPromptControls<T>
     {
         ResultPromptPlus<T> Run(CancellationToken? value = null);
     }
@@ -35,10 +35,10 @@ namespace PPlus
         IFIGlet LoadFont(string value);
         IFIGlet LoadFont(Stream value);
         IFIGlet FIGletWidth(CharacterWidth value);
-        void Run(ConsoleColor? color = null);
+        ResultPromptPlus<string> Run(ConsoleColor? color = null);
     }
 
-    public interface IFormPlusBase : IDisposable
+    public interface IFormPlusBase : IPromptPipe, IPromptConfig, IDisposable
     {
         string PipeId { get; }
 
@@ -62,6 +62,22 @@ namespace PPlus
         ResultPromptPlus<IEnumerable<ResultPipe>> Run(CancellationToken? value = null);
     }
 
+    public interface IControlReadline : IPromptControls<string>, IPromptPipe
+    {
+        IControlReadline MinimumPrefixLength(int value);
+        IControlReadline FinisWhenHistoryEnter(bool value);
+        IControlReadline AcceptInputTab(bool value);
+        IControlReadline EnabledHistory(bool value);
+        IControlReadline TimeoutHistory(TimeSpan value);
+        IControlReadline FileNameHistory(string value);
+        IControlReadline MaxHistory(byte value);
+        IControlReadline SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
+        IControlReadline PageSize(int value);
+        IControlReadline Prompt(string value, string description = null);
+        IControlReadline AddValidator(Func<object, ValidationResult> validator);
+        IControlReadline AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
+
+    }
     public interface IControlKeyPress : IPromptControls<bool>, IPromptPipe
     {
         IControlKeyPress Prompt(string value);
@@ -154,6 +170,7 @@ namespace PPlus
     {
         IControlAutoComplete Prompt(string value, string description = null);
         IControlAutoComplete PageSize(int value);
+        IControlAutoComplete CaseInsensitive(bool value);
         IControlAutoComplete AddValidator(Func<object, ValidationResult> validator);
         IControlAutoComplete AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlAutoComplete ValidateOnDemand();

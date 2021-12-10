@@ -181,7 +181,7 @@
     <value>Value is too short. Min({0})</value>
   </data>
   <data name="MultiSelectKeyNavigation" xml:space="preserve">
-    <value>Space: Select, Enter: Finish, {0}: Filter, {1}: All, {2}:Invert</value>
+    <value>{0} Select, Enter: Finish, {1}: Filter, {2}: All, {3}:Invert</value>
   </data>
   <data name="MultiSelectMaxSelection" xml:space="preserve">
     <value>A maximum selection of {0} items has already been reached</value>
@@ -347,5 +347,23 @@
   </data>
   <data name="ListKeyNavigationFillZeros" xml:space="preserve">
     <value>Ctrl+Del: Remove seleted , {0}: Remove all, Ctrl+Enter: Finish, Enter: Add</value>
+  </data>
+  <data name="ReadlineFisnishHistoryhit" xml:space="preserve">
+    <value>Enter: Select and fisnish input</value>
+  </data>
+  <data name="ReadlineHistoryEsc" xml:space="preserve">
+    <value>Esc: Cancel historic and restore original input</value>
+  </data>
+  <data name="ReadlineHistoryhit" xml:space="preserve">
+    <value>Down/PgDown: Historic(Min. {0} chars)</value>
+  </data>
+  <data name="ReadlineNotFisnishHistoryhit" xml:space="preserve">
+    <value>Enter: Select and close historic</value>
+  </data>
+  <data name="ReadlineSugestionhit" xml:space="preserve">
+    <value>Tab/Shift+Tab: Sugestions</value>
+  </data>
+  <data name="ReadlineSugestionMode" xml:space="preserve">
+    <value>Esc: Cancel sugestion and restore original input</value>
   </data>
 </root>
