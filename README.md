@@ -11,7 +11,7 @@
 
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
-All input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
+All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
 
 ![](./docs/images/PipeLine.gif)
 

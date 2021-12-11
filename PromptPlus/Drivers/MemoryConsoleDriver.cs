@@ -50,7 +50,6 @@ namespace PPlus.Drivers
         /// </summary>
         public virtual string? ErrorText() => Error.ToString();
 
-
         public bool NoInterative => true;
 
         public bool IsRunningTerminal => true;
@@ -62,6 +61,7 @@ namespace PPlus.Drivers
         public bool IsErrorRedirected => true;
 
         public Encoding OutputEncoding { get; set; }
+
         public Encoding InputEncoding { get; set; }
 
         public TextWriter Out { get; set; }
@@ -83,6 +83,7 @@ namespace PPlus.Drivers
         public int BufferHeight => TesteRows;
 
         public ConsoleColor ForegroundColor { get; set; }
+
         public ConsoleColor BackgroundColor { get; set; }
 
         public void Beep() { }
@@ -97,7 +98,6 @@ namespace PPlus.Drivers
         {
             var input = (char)In.Read();
             return new ConsoleKeyInfo(input, ToConsoleKey(input), false, false, false);
-            //return WaitKeypress(intercept, CancellationToken.None);
         }
 
         public void ResetColor() { }
@@ -108,11 +108,11 @@ namespace PPlus.Drivers
         {
             ((MemoryConsoleWriter)Error).Replaced = value;
         }
+
         public void SetIn(TextReader value)
         {
             ((MemoryConsoleReader)In).LoadInput(value.ReadToEnd());
         }
-
 
         public void SetOut(TextWriter value)
         {
@@ -137,6 +137,7 @@ namespace PPlus.Drivers
         {
             Out.Write(value);
         }
+
         public void Write(params ColorToken[] tokens)
         {
             foreach (var item in tokens)
@@ -164,6 +165,7 @@ namespace PPlus.Drivers
             }
             Out.WriteLine(aux.ToString());
         }
+
         public void WriteLine(string value)
         {
             Out.WriteLine(value);

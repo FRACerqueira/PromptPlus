@@ -3,6 +3,8 @@
 Interactive command-line  toolkit for **C#** with powerful controls and commands.
 PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks.
 
+All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
+
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/5.0.1)**:
 - PromptPlus.CommandDotNet
 

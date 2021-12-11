@@ -52,6 +52,7 @@ namespace PPlus.Drivers
                 _viewConsole[TopPos,c] = (char)0;
             }
         }
+
         public void ClearViewLine(int top)
         {
             if (_rows == 0 || _cols == 0)
@@ -175,8 +176,8 @@ namespace PPlus.Drivers
             }
         }
 
-
         public override Encoding Encoding { get; } = Encoding.Unicode;
+
         public override void Write(char value)
         {
             Replaced?.Write(value);

@@ -99,7 +99,6 @@ namespace PPlus.Controls
             Logs.Add(level, key, message, SourceLog, logKind);
         }
        
-
         public ResultPromptPlus<T> Run(CancellationToken? value)
         {
             InitControl();

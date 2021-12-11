@@ -15,6 +15,7 @@ namespace PPlus.Drivers
 
             console.Write(text);
         }
+
         public static void WriteAnsiConsole(this IConsoleDriver console, params ColorToken[] tokens)
         {
             if (console == null)
@@ -24,7 +25,6 @@ namespace PPlus.Drivers
 
             console.Write(tokens);
         }
-
 
         public static void WriteLineAnsiConsole(this IConsoleDriver console, string text)
         {

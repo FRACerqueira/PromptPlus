@@ -14,7 +14,9 @@ PromptPlus was developed in c# with target frameworks:
 - .NET 5
 - .NET 6
 
-PromptPlus has separate pakage integrate command line parse CommandDotNet(4.3.0/6.0.0):
+All controls input/filter using **GNU Readline ** https://en.wikipedia.org/wiki/GNU_Readline Emacs keyboard shortcuts.
+
+PromptPlus has **separate pakage** integrate command line parse CommandDotNet(4.3.0/6.0.0):
 
 - PromptPlus.CommandDotNet (V1.0.0.300)!!!
 
