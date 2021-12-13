@@ -105,6 +105,9 @@ namespace PPlus
             AppCulture = Thread.CurrentThread.CurrentCulture;
             AppCultureUI = Thread.CurrentThread.CurrentUICulture;
             DefaultCulture = AppCulture;
+            DefaultForeColor = Console.ForegroundColor;
+            DefaultBackColor= Console.BackgroundColor;
+
             LoadConfigFromFile();
         }
 
@@ -139,10 +142,13 @@ namespace PPlus
             if (forecolor.HasValue)
             {
                 PPlusConsole.ForegroundColor = forecolor.Value;
+                DefaultForeColor = forecolor.Value;
+
             }
             if (backcolor.HasValue)
             {
                 PPlusConsole.BackgroundColor = backcolor.Value;
+                DefaultBackColor = backcolor.Value;
             }
         }
 

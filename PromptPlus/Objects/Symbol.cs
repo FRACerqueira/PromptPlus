@@ -10,6 +10,11 @@ namespace PPlus.Objects
 {
     public struct Symbol
     {
+        public Symbol()
+        {
+            Value = " ";
+            FallbackValue = " ";
+        }
 
         public Symbol(string value = null, string fallbackValue = null)
         {
@@ -17,9 +22,9 @@ namespace PPlus.Objects
             FallbackValue = fallbackValue ?? " ";
         }
 
-        public string Value { get; set; }
+        public string Value { get; }
 
-        public string FallbackValue { get; set; }
+        public string FallbackValue { get; }
 
         public override string ToString()
         {

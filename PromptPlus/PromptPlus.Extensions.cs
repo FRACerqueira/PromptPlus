@@ -112,7 +112,7 @@ namespace PPlus
 
         public static ColorToken[] Mask(this string text, ConsoleColor? color = null, ConsoleColor? backgroundColor = null)
         {
-            return PromptPlus.ConvertEmbeddedColorLine(text)?.Select(token => token.Mask(color, backgroundColor)).ToArray();
+            return ConvertEmbeddedColorLine(text)?.Select(token => token.Mask(color, backgroundColor)).ToArray();
         }
 
         public static ColorToken[] Mask(this IEnumerable<ColorToken> tokens, ConsoleColor? color = null, ConsoleColor? backgroundColor = null)
@@ -122,7 +122,7 @@ namespace PPlus
 
         public static ColorToken DefautColor(this string text)
         {
-            return new ColorToken(text, PPlusConsole.ForegroundColor, PPlusConsole.BackgroundColor);
+            return new ColorToken(text,  PPlusConsole.ForegroundColor, PPlusConsole.BackgroundColor);
         }
 
         public static ColorToken Color(this string text, ConsoleColor forecolor, ConsoleColor? backcolor = null)

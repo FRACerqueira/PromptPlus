@@ -4,11 +4,13 @@
 // ***************************************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 
+using PPlus.Internal;
 using PPlus.Objects;
 
 namespace PPlus.Drivers
@@ -16,6 +18,7 @@ namespace PPlus.Drivers
     internal sealed class ConsoleDriver : IConsoleDriver
     {
         private const int IdleReadKey = 10;
+        private static readonly bool _nocolor;
 
         public bool NoInterative => (IsInputRedirected || IsOutputRedirected || IsErrorRedirected);
 
@@ -31,9 +34,12 @@ namespace PPlus.Drivers
                 }
                 NativeMethods.SetConsoleMode(hConsole, mode | NativeMethods.ENABLE_VIRTUAL_TERMINAL_PROCESSING);
             }
+            _nocolor = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("NO_COLOR")) ? false : true;
         }
 
         #region IConsoleDriver
+
+        public bool NoColor => _nocolor;
 
         public bool IsErrorRedirected => Console.IsErrorRedirected;
 
@@ -78,10 +84,15 @@ namespace PPlus.Drivers
 
         public void ResetColor()
         {
-            ForegroundColor = ConsoleColor.White;
-            BackgroundColor = ConsoleColor.Black;
+            if (NoColor)
+            {
+                ForegroundColor = ConsoleColor.White;
+                BackgroundColor = ConsoleColor.Black;
+                return;
+            }
+            ForegroundColor = PromptPlus.DefaultForeColor;
+            BackgroundColor = PromptPlus.DefaultBackColor;
         }
-
 
         public Encoding InputEncoding
         {
@@ -113,6 +124,7 @@ namespace PPlus.Drivers
         {
             Console.SetOut(value);
         }
+
         public void SetError(TextWriter value)
         {
             Console.SetError(value);
@@ -134,6 +146,11 @@ namespace PPlus.Drivers
 
         public void ClearRestOfLine(ConsoleColor? color)
         {
+            if (NoColor)
+            {
+                Write("\x1b[0K");
+                return;
+            }
             Write("\x1b[0K".Color(PromptPlus.PPlusConsole.ForegroundColor, color ?? PromptPlus.PPlusConsole.BackgroundColor));
         }
 
@@ -142,9 +159,52 @@ namespace PPlus.Drivers
             return Console.ReadKey(intercept);
         }
 
+
+        public ConsoleColor ForegroundColor
+        {
+            get
+            {
+                if (NoColor)
+                {
+                    return ConsoleColor.White;
+                }
+                return Console.ForegroundColor;
+            }
+            set
+            {
+                if (NoColor)
+                {
+                    return;
+                }
+                Out.Write(new ColorToken("", value, Console.BackgroundColor).AnsiColor);
+                Console.ForegroundColor = value;
+            }
+        }
+
+        public ConsoleColor BackgroundColor
+        {
+            get
+            {
+                if (NoColor)
+                {
+                    return ConsoleColor.Black;
+                }
+                return Console.BackgroundColor;
+            }
+            set
+            {
+                if (NoColor)
+                {
+                    return;
+                }
+                Out.Write(new ColorToken("", Console.ForegroundColor, value).AnsiColor);
+                Console.BackgroundColor = value;
+            }
+        }
+
         public void Write(string value)
         {
-            Write(new  ColorToken(value));
+            Write(new ColorToken(value));
         }
 
         public void Write(params ColorToken[] tokens)
@@ -153,52 +213,40 @@ namespace PPlus.Drivers
             {
                 return;
             }
+            var lstcmd = new List<string>();
             foreach (var token in tokens)
             {
                 var originalColor = Console.ForegroundColor;
                 var originalBackgroundColor = Console.BackgroundColor;
-                try
+                var restorecolor = false;
+                if (!NoColor)
                 {
                     if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
                     {
-                        Out.Write(token.AnsiColor);
+                        lstcmd.AddRange(CSIAnsiConsole.SplitCommands(token.AnsiColor));
+                        restorecolor = true;
                     }
-                    if (token.Underline)
-                    {
-                        Out.Write("\x1b[4m");
-                    }
-                    Out.Write(token.Text ?? string.Empty);
                 }
-                finally
+                if (token.Underline)
                 {
-                    if (token.Underline)
-                    {
-                        Out.Write("\x1b[24m");
-                    }
-                    Out.Write(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor);
+                    lstcmd.AddRange(CSIAnsiConsole.SplitCommands("\x1b[4m"));
+                }
+                lstcmd.AddRange(CSIAnsiConsole.SplitCommands(token.Text));
+                if (token.Underline)
+                {
+                    lstcmd.AddRange(CSIAnsiConsole.SplitCommands("\x1b[24m"));
+                }
+                if (!NoColor && restorecolor)
+                {
+                    lstcmd.AddRange(CSIAnsiConsole.SplitCommands(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor));
                 }
             }
-        }
-
-        public ConsoleColor ForegroundColor
-        {
-            get { return Console.ForegroundColor; }
-            set
+            foreach (var item in lstcmd)
             {
-                Out.Write(new ColorToken("", value, Console.BackgroundColor).AnsiColor);
-                Console.ForegroundColor = value;
+                Out.Write(item);
             }
         }
 
-        public ConsoleColor BackgroundColor
-        {
-            get { return Console.BackgroundColor; }
-            set
-            {
-                Out.Write(new ColorToken("", Console.ForegroundColor, value).AnsiColor);
-                Console.BackgroundColor = value;
-            }
-        }
         public void WriteLine(string value)
         {
             WriteLine(new ColorToken(value));

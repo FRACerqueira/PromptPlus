@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
 
+using PPlus.Internal;
 using PPlus.Objects;
 
 namespace PPlus.Drivers
@@ -11,17 +13,21 @@ namespace PPlus.Drivers
     {
         private readonly MemoryConsoleWriter _allOutput;
         private const int IdleReadKey = 10;
-        private const int TesteRows = 80;
-        private const int TesteCols = 132;
+        private readonly int _viewerRows;
+        private readonly int _viewerCols;
+        private readonly bool _nocolor;
 
-        public MemoryConsoleDriver()
+        public MemoryConsoleDriver(int viewrows = 80, int viewcols = 132,  bool nocolor= false)
         {
-            _allOutput = new MemoryConsoleWriter(TesteRows,TesteCols);
+            _viewerRows = viewrows;
+            _viewerCols = viewcols;
+            _allOutput = new MemoryConsoleWriter(_viewerRows,_viewerCols);
             Out = new MemoryConsoleWriter(0, 0,_allOutput);
             Error = new MemoryConsoleWriter(0, 0,_allOutput);
             In = new MemoryConsoleReader();
             OutputEncoding = Encoding.Unicode;
             InputEncoding = Encoding.Unicode;
+            _nocolor = nocolor;
         }
 
         public void LoadInput(string value)
@@ -29,16 +35,23 @@ namespace PPlus.Drivers
             ((MemoryConsoleReader)In).LoadInput(value);
         }
 
-        public void LoadInput(char value)
+        public void LoadInput(ConsoleKeyInfo value)
         {
             ((MemoryConsoleReader)In).LoadInput(value);
+        }
+
+        public void LoadInput(IEnumerable<ConsoleKeyInfo> values)
+        {
+            foreach (var item in values)
+            {
+                ((MemoryConsoleReader)In).LoadInput(item);
+            }
         }
 
         /// <summary>
         /// The accumulated text stream.
         /// </summary>
         public virtual string? AllText() => _allOutput.ToString();
-
 
         /// <summary>
         /// The accumulated text of the <see cref="Console.Out"/> stream.
@@ -49,6 +62,8 @@ namespace PPlus.Drivers
         /// The accumulated text of the <see cref="Console.Error"/> stream.
         /// </summary>
         public virtual string? ErrorText() => Error.ToString();
+
+        public bool NoColor => _nocolor;
 
         public bool NoInterative => true;
 
@@ -78,21 +93,37 @@ namespace PPlus.Drivers
 
         public int CursorTop => _allOutput.TopPos;
 
-        public int BufferWidth => TesteCols;
+        public int BufferWidth => _viewerCols;
 
-        public int BufferHeight => TesteRows;
+        public int BufferHeight => _viewerRows;
 
         public ConsoleColor ForegroundColor { get; set; }
 
         public ConsoleColor BackgroundColor { get; set; }
 
-        public void Beep() { }
+        public void Beep() => Write("\a");
 
-        public void Clear() => _allOutput.ClearView();
+        public void Clear()
+        {
+            SetCursorPosition(0, 0);
+            Out.Write("\x1b[2J");
+        }
 
-        public void ClearLine(int top) => _allOutput.ClearViewLine(top);
+        public void ClearLine(int top)
+        {
+            SetCursorPosition(0, top);
+            Out.Write("\x1b[2K");
+        }
 
-        public void ClearRestOfLine(ConsoleColor? color) => _allOutput.ClearRestOfLine();
+        public void ClearRestOfLine(ConsoleColor? color)
+        {
+            if (NoColor)
+            {
+                Write("\x1b[0K");
+                return;
+            }
+            Write("\x1b[0K".Color(PromptPlus.PPlusConsole.ForegroundColor, color ?? PromptPlus.PPlusConsole.BackgroundColor));
+        }
 
         public ConsoleKeyInfo ReadKey(bool intercept)
         {
@@ -100,9 +131,23 @@ namespace PPlus.Drivers
             return new ConsoleKeyInfo(input, ToConsoleKey(input), false, false, false);
         }
 
-        public void ResetColor() { }
+        public void ResetColor()
+        {
+            if (NoColor)
+            {
+                ForegroundColor = ConsoleColor.White;
+                BackgroundColor = ConsoleColor.Black;
+                return;
+            }
+            ForegroundColor = PromptPlus.DefaultForeColor;
+            BackgroundColor = PromptPlus.DefaultBackColor;
 
-        public void SetCursorPosition(int left, int top) => _allOutput.SetCursorPosition(left, top);
+        }
+
+        public void SetCursorPosition(int left, int top)
+        {
+            ((MemoryConsoleWriter)Out).SetCursorPosition(left, top);
+        }
 
         public void SetError(TextWriter value) 
         {
@@ -133,42 +178,71 @@ namespace PPlus.Drivers
             return new ConsoleKeyInfo();
         }
 
-        public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
+        public void Write(string value)
         {
-            Out.Write(value);
+            Write(new ColorToken(value));
         }
 
         public void Write(params ColorToken[] tokens)
         {
-            foreach (var item in tokens)
+            if (tokens == null || tokens.Length == 0)
             {
-                Out.Write(item.Text);
+                return;
             }
-        }
-
-        public void Write(string value)
-        {
-            Out.Write(value);
-        }
-
-        public void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null)
-        {
-            Out.WriteLine(value);
-        }
-
-        public void WriteLine(params ColorToken[] tokens)
-        {
-            var aux = new StringBuilder();
-            foreach (var item in tokens)
+            var lstcmd = new List<string>();
+            foreach (var token in tokens)
             {
-                aux.Append(item.Text);
+                var originalColor = Console.ForegroundColor;
+                var originalBackgroundColor = Console.BackgroundColor;
+                var restorecolor = false;
+                if (!NoColor)
+                {
+                    if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
+                    {
+                        lstcmd.AddRange(CSIAnsiConsole.SplitCommands(token.AnsiColor));
+                        restorecolor = true;
+                    }
+                }
+                if (token.Underline)
+                {
+                    lstcmd.AddRange(CSIAnsiConsole.SplitCommands("\x1b[4m"));
+                }
+                lstcmd.AddRange(CSIAnsiConsole.SplitCommands(token.Text));
+                if (token.Underline)
+                {
+                    lstcmd.AddRange(CSIAnsiConsole.SplitCommands("\x1b[24m"));
+                }
+                if (!NoColor && restorecolor)
+                {
+                    lstcmd.AddRange(CSIAnsiConsole.SplitCommands(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor));
+                }
             }
-            Out.WriteLine(aux.ToString());
+            foreach (var item in lstcmd)
+            {
+                Out.Write(item);
+            }
         }
 
         public void WriteLine(string value)
         {
-            Out.WriteLine(value);
+            WriteLine(new ColorToken(value));
+        }
+
+        public void WriteLine(params ColorToken[] tokens)
+        {
+            Write(tokens);
+            Out.WriteLine();
+        }
+
+        public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
+        {
+            Write(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
+        }
+
+        public void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null)
+        {
+            Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
+            Out.WriteLine();
         }
 
         private static ConsoleKey ToConsoleKey(char c)

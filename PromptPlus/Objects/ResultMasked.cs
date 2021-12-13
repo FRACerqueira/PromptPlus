@@ -7,6 +7,13 @@ namespace PPlus.Objects
 {
     public struct ResultMasked
     {
+        public ResultMasked()
+        {
+            Input = null;
+            Masked = null;
+            ObjectValue = null;
+        }
+
         internal ResultMasked(string value, string valueMask)
         {
             Input = value;

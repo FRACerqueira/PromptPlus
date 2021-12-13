@@ -9,6 +9,13 @@ namespace PPlus.Objects
 {
     public struct ResultPromptPlus<T>
     {
+        public ResultPromptPlus()
+        {
+            Value = default;
+            IsAborted = false;
+            IsAllAborted = false;
+            LogControl = null;
+        }
 
         internal ResultPromptPlus(T value, bool aborted, bool? abortall = null, ControlLog? log = null)
         {
@@ -20,12 +27,8 @@ namespace PPlus.Objects
 
         internal bool IsAllAborted { get; }
 
-        internal static ResultPromptPlus<T> AbortAll()
-        {
-            return new ResultPromptPlus<T>(default, true, true);
-        }
-
         public T Value { get; }
+
         public bool IsAborted { get; }
 
         public ControlLog? LogControl { get; set; }

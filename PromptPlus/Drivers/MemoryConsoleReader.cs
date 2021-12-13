@@ -18,6 +18,10 @@ namespace PPlus.Drivers
                 _currentLine.Enqueue(item);
             }
         }
+        public void LoadInput(ConsoleKeyInfo value)
+        {
+            _currentLine.Enqueue(value.KeyChar);
+        }
 
         public void LoadInput(char value)
         {

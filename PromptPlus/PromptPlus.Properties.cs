@@ -34,6 +34,10 @@ namespace PPlus
 
         #region internal properties
 
+        internal static ConsoleColor DefaultForeColor { get; private set; }
+
+        internal static ConsoleColor DefaultBackColor { get; private set; }
+
         internal static ILogger PPlusLog { get; private set; }
 
         internal static IConsoleDriver PPlusConsole { get; private set; }
@@ -50,7 +54,7 @@ namespace PPlus
 
         public static HotKey AbortAllPipesKeyPress { get; set; } = new(UserHotKey.F7, true, false, false);
 
-        internal static HotKey AbortKeyPress { get; set; } = new(true, ConsoleKey.Escape, false, false, false);
+        internal static HotKey AbortKeyPress { get; set; } = new(ConsoleKey.Escape, false, false, false);
 
         public static HotKey TooltipKeyPress { get; set; } = new(UserHotKey.F1, false, false, false);
 

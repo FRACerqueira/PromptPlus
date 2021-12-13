@@ -9,6 +9,15 @@ namespace PPlus.Objects
 {
     public struct ResultPipe
     {
+        public ResultPipe()
+        {
+            PipeId = null;
+            Title = null;
+            ValuePipe = null;
+            Status = StatusPipe.Done;
+            Condition = null;
+        }
+
         internal ResultPipe(string id, string title, object value, Func<ResultPipe[], object, bool> condition, StatusPipe? status = null)
         {
             PipeId = id;

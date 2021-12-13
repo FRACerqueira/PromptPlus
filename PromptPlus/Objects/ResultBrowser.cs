@@ -11,6 +11,15 @@ namespace PPlus.Objects
 {
     public struct ResultBrowser
     {
+        public ResultBrowser()
+        {
+            PathValue = null;
+            SelectedValue = null;
+            NotFound = true;
+            IsFile = false;
+            AliasSelected = null;
+        }
+
         internal ResultBrowser(string folder, string vale, bool notfound)
         {
             PathValue = folder;

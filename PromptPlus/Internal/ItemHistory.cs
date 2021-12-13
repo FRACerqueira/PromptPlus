@@ -10,12 +10,19 @@ namespace PPlus.Internal
     {
         public const string Separator = "|%PPlus.TimeOut%|";
 
+
         public static ItemHistory CreateItemHistory(string history, TimeSpan timeout)
         {
             return new ItemHistory(history, DateTime.Now.Add(timeout).Ticks);
         }
 
-        public ItemHistory(string history, long dateTicks)
+        public ItemHistory()
+        {
+            History = "";
+            TimeOutTicks = DateTime.Now.Ticks;
+        }
+
+        internal ItemHistory(string history, long dateTicks)
         {
             History = history;
             TimeOutTicks = dateTicks;

@@ -10,19 +10,12 @@ namespace PPlus.Objects
 {
     public struct HotKey : IEquatable<ConsoleKeyInfo>
     {
-        internal HotKey(bool skipvalid,ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false)
+        internal HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false)
         {
             Key = key;
             Alt = alt;
             Ctrl = ctrl;
             Shift = shift;
-            if (!skipvalid)
-            {
-                if (!IsValidHotKey())
-                {
-                    throw new ArgumentException(Exceptions.Ex_InvalidHotKey);
-                }
-            }
         }
 
         public HotKey(UserHotKey key, bool alt = false, bool ctrl = false, bool shift = false)
@@ -31,13 +24,9 @@ namespace PPlus.Objects
             Alt = alt;
             Ctrl = ctrl;
             Shift = shift;
-            if (!IsValidHotKey())
-            {
-                throw new ArgumentException(Exceptions.Ex_InvalidHotKey);
-            }
         }
 
-        public ConsoleKeyInfo KeyInfo => new(char.MinValue, Key, Shift, Alt, Ctrl);
+        public ConsoleKeyInfo KeyInfo => new((char)Key, Key, Shift, Alt, Ctrl);
         public ConsoleKey Key { get; private set; }
         public bool Alt { get; private set; }
         public bool Ctrl { get; private set; }
@@ -67,47 +56,5 @@ namespace PPlus.Objects
 
         public bool Equals(ConsoleKeyInfo other) => Key == other.Key && KeyInfo.Modifiers == other.Modifiers;
 
-        public bool IsValidHotKey()
-        {
-            var localinfo = KeyInfo;
-            if (localinfo.Key == ConsoleKey.Enter)
-            {
-                return false;
-            }
-            if (localinfo.Key == ConsoleKey.Delete)
-            {
-                return false;
-            }
-
-            if (localinfo.Key == ConsoleKey.LeftArrow)
-            {
-                return false;
-            }
-            if (localinfo.Key == ConsoleKey.RightArrow)
-            {
-                return false;
-            }
-            if (localinfo.Key == ConsoleKey.UpArrow)
-            {
-                return false;
-            }
-            if (localinfo.Key == ConsoleKey.DownArrow)
-            {
-                return false;
-            }
-            if (localinfo.Key == ConsoleKey.PageUp)
-            {
-                return false;
-            }
-            if (localinfo.Key == ConsoleKey.PageDown)
-            {
-                return false;
-            }
-            if (localinfo.Key == ConsoleKey.Backspace)
-            {
-                return false;
-            }
-            return true;
-        }
     }
 }

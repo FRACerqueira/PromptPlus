@@ -24,7 +24,7 @@ namespace PPlus.Controls
 
         private readonly ScreenRender _screenrender;
         private ConsoleColor _color = PromptPlus.ForegroundColor;
-        private readonly ControlLog _logs = new();
+        private readonly ControlLog _logs = new(SourceLog);
 
         public BannerControl(string value)
         {
@@ -115,7 +115,7 @@ namespace PPlus.Controls
             LoadFont(value);
             if (withlog)
             {
-                _logs.Add(LogLevel.Debug, "LoadFont", "stream", SourceLog, LogKind.Property);
+                _logs.Add(LogLevel.Debug, "LoadFont", "stream", LogKind.Property);
             }
         }
 
@@ -134,7 +134,7 @@ namespace PPlus.Controls
             using (var fso = File.Open(value, FileMode.Open))
             {
                 LoadFont(fso,false);
-                _logs.Add(LogLevel.Debug, "LoadFont", value, SourceLog, LogKind.Property);
+                _logs.Add(LogLevel.Debug, "LoadFont", value, LogKind.Property);
 
             }
             return this;
@@ -151,8 +151,8 @@ namespace PPlus.Controls
         {
             _color = color ?? PromptPlus.ForegroundColor;
             InitAsciiArt();
-            _logs.Add(LogLevel.Debug, "CharacterWidth", CharacterWidth.ToString(), SourceLog, LogKind.Property);
-            _logs.Add(LogLevel.Debug, "Color", _color.ToString(), SourceLog, LogKind.Property);
+            _logs.Add(LogLevel.Debug, "CharacterWidth", CharacterWidth.ToString(), LogKind.Property);
+            _logs.Add(LogLevel.Debug, "Color", _color.ToString(), LogKind.Property);
 
             _screenrender.ClearBuffer();
             _screenrender.InputRender(InputTemplate);

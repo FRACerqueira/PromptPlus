@@ -419,6 +419,8 @@ namespace PPlus.Internal
             return aux;
         }
 
+        #region private methods
+
         private bool InputTypeGeneric(char value)
         {
             var mask = _logicalMaskGeneric[LogicalPosition];
@@ -1506,5 +1508,7 @@ namespace PPlus.Internal
             public int Position { get; set; }
             public string Tooltip { get; set; }
         }
+
+        #endregion
     }
 }

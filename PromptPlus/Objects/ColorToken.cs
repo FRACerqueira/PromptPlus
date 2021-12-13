@@ -12,6 +12,15 @@ namespace PPlus.Objects
 {
     public struct ColorToken : IEquatable<ColorToken>
     {
+        public ColorToken()
+        {
+            Text = string.Empty;
+            Color = PPlusConsole.ForegroundColor;
+            BackgroundColor = PPlusConsole.BackgroundColor;
+            AnsiColor = string.Format("\x1b[{0};{1}m", ToAnsiColor(Color), ToAnsiBgColor(BackgroundColor));
+            Underline = false;
+        }
+
         internal ColorToken(string text, ConsoleColor? color = null, ConsoleColor? backgroundColor = null, bool underline = false)
         {
             Text = text;

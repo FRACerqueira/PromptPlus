@@ -7,6 +7,14 @@ namespace PPlus.Objects
 {
     public struct ResultProcess
     {
+        public ResultProcess()
+        {
+            ProcessId = null;
+            ValueProcess = null;
+            IsCanceled = false;
+            TextResult = null;
+        }
+
         internal ResultProcess(string id, object value, bool iscanceled, string textresult)
         {
             ProcessId = id;

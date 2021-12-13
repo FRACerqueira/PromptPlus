@@ -12,6 +12,7 @@ namespace PPlus.Drivers
 {
     public interface IConsoleDriver: ISystemConsole
     {
+        bool NoColor { get; }
         bool NoInterative { get; }
         void ClearLine(int top);
         void ClearRestOfLine(ConsoleColor? color);

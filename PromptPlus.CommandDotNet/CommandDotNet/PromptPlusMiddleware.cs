@@ -154,7 +154,7 @@ namespace PPlus.CommandDotNet
             }
             if (backcommand is null)
             {
-                backcommand = new HotKey(true,ConsoleKey.Backspace);
+                backcommand = new HotKey(ConsoleKey.Backspace);
             }
             if (!forecolorwizard.HasValue)
             {

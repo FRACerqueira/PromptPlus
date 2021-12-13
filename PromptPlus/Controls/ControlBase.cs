@@ -30,7 +30,7 @@ namespace PPlus.Controls
         private readonly BaseOptions _options;
         private bool _toggleSummary = false;
 
-        public readonly ControlLog Logs = new();
+        public readonly ControlLog Logs;
 
 
         public readonly CultureInfo AppcurrentCulture;
@@ -40,14 +40,12 @@ namespace PPlus.Controls
         {
             AppcurrentCulture = Thread.CurrentThread.CurrentCulture;
             AppcurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+            Logs = new ControlLog(sourcelog);
             _options = options;
             _skiplastrender = skiplastrender;
             _screenrender = new ScreenRender();
             _showcursor = showcursor;
-            SourceLog = sourcelog;
         }
-
-        public string SourceLog { get; }
 
         public string PipeId { get; internal set; }
 
@@ -96,7 +94,7 @@ namespace PPlus.Controls
 
         public void AddLog(string key, string message, LogKind logKind, LogLevel level = LogLevel.Debug)
         {
-            Logs.Add(level, key, message, SourceLog, logKind);
+            Logs.Add(level, key, message, logKind);
         }
        
         public ResultPromptPlus<T> Run(CancellationToken? value)

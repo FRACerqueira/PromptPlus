@@ -9,6 +9,16 @@ namespace PPlus.Objects
 {
     public struct ItemPromptLog
     {
+        public ItemPromptLog()
+        {
+            LogDate = DateTime.Now;
+            Level = LogLevel.None;
+            Key = null;
+            Message = null;
+            Source = null;
+            Kind = LogKind.Property;
+        }
+
         internal ItemPromptLog(LogLevel level,string key, string message, string source, LogKind logKind)
         {
             LogDate = DateTime.Now;

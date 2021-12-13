@@ -6,6 +6,12 @@ namespace PPlus.Objects
 {
     public struct SugestionInput
     {
+        public SugestionInput()
+        {
+            PromptText = null;
+            CursorPrompt = 0;
+        }
+
         internal SugestionInput(string input, int cursorPrompt)
         {
             PromptText = input;
@@ -13,6 +19,7 @@ namespace PPlus.Objects
         }
         public string PromptText { get; }
         public int CursorPrompt { get; }
+
         public string CurrentWord()
         {
             var pos = CursorPrompt;
@@ -78,6 +85,12 @@ namespace PPlus.Objects
 
     public struct ItemSugestion
     {
+        public ItemSugestion()
+        {
+            Sugestion = null;
+            ClearRestline = false;
+        }
+
         internal ItemSugestion(string value, bool clearRest)
         {
             Sugestion = value;
