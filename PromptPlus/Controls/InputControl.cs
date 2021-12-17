@@ -33,12 +33,12 @@ namespace PPlus.Controls
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
 
-            if (_options.IsPassword && _options.DefaultValue != null)
+            if (_options.IsPassword && (_options.DefaultValue != null || _options.InitialValue != null))
             {
                 throw new ArgumentException(Exceptions.Ex_PasswordDefaultValue);
             }
 
-            if (!string.IsNullOrEmpty(_options.DefaultValue))
+            if (!string.IsNullOrEmpty(_options.DefaultValue) && string.IsNullOrEmpty(_options.InitialValue))
             {
                 _options.InitialValue = _options.DefaultValue;
             }
@@ -50,7 +50,7 @@ namespace PPlus.Controls
 
             if (!string.IsNullOrEmpty(_options.InitialValue))
             {
-                _inputBuffer.Load(_options.InitialValue);
+                _inputBuffer.LoadPrintable(_options.InitialValue);
             }
 
             if (PromptPlus.EnabledLogControl)

@@ -20,11 +20,11 @@ namespace PPlus.Internal
         private readonly Func<T, string> _textSelector;
         private readonly Func<T, bool> _validatorAction;
 
-        public Paginator(IEnumerable<T> items, int? pageSize, Optional<T> defaultValue, Func<T, string> textSelector, Func<T, bool> validatorAction = null)
+        public Paginator(IEnumerable<T> items, int? pageSize, Optional<T> defaultValue, Func<T, string> textSelector = null, Func<T, bool> validatorAction = null)
         {
             _items = items.ToArray();
             _userpageSize = pageSize ?? _items.Length;
-            _textSelector = textSelector;
+            _textSelector = textSelector?? ((x) => x.ToString());
             EnsureTerminalPagesize();
             _validatorAction = validatorAction;
             if (validatorAction == null)
@@ -36,6 +36,15 @@ namespace PPlus.Internal
 
         private void EnsureTerminalPagesize()
         {
+            if (PromptPlus.PPlusConsole.BufferHeight == 0  || PromptPlus.PPlusConsole.BufferWidth == 0)
+            {
+                _maxpageSize = _userpageSize;
+                return;
+            }
+            if ((PromptPlus.MinBufferHeight - 1) >= PromptPlus.PPlusConsole.BufferHeight)
+            {
+                throw new InvalidOperationException($"BufferHeight < {PromptPlus.MinBufferHeight - 1}");
+            }
             T selectedItem = default;
             if (SelectedIndex >= 0 && (_maxpageSize * SelectedPage) + SelectedIndex <= _items.Length - 1)
             {
@@ -80,7 +89,17 @@ namespace PPlus.Internal
 
         public int SelectedIndex { get; private set; } = 0;
 
-        public T SelectedItem => _filteredItems[(_maxpageSize * SelectedPage) + SelectedIndex];
+        public T SelectedItem
+        {
+            get
+            {
+                if (SelectedIndex < 0)
+                {
+                    return default;
+                }
+                return _filteredItems[(_maxpageSize * SelectedPage) + SelectedIndex];
+            }
+        }
 
         public int TotalCount => _filteredItems.Length;
 

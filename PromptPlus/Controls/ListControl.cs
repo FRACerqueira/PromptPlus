@@ -71,7 +71,7 @@ namespace PPlus.Controls
 
             if (_options.InitialValue != null)
             {
-                _inputBuffer.Load(_options.TextSelector(_options.InitialValue));
+                _inputBuffer.LoadPrintable(_options.TextSelector(_options.InitialValue));
             }
 
             if (PromptPlus.EnabledLogControl)
@@ -171,7 +171,7 @@ namespace PPlus.Controls
                         _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
                         if (_options.InitialValue != null && _options.EverInitialValue)
                         {
-                            _inputBuffer.Load(_options.TextSelector(_options.InitialValue));
+                            _inputBuffer.LoadPrintable(_options.TextSelector(_options.InitialValue));
                         }
                     }
                     catch (FormatException)

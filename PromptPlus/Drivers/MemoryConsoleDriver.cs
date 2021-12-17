@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -9,25 +10,51 @@ using PPlus.Objects;
 
 namespace PPlus.Drivers
 {
-    public class MemoryConsoleDriver : IConsoleDriver
+    public class MemoryConsoleDriver : IConsoleDriver, IDisposable
     {
         private readonly MemoryConsoleWriter _allOutput;
         private const int IdleReadKey = 10;
         private readonly int _viewerRows;
         private readonly int _viewerCols;
-        private readonly bool _nocolor;
 
-        public MemoryConsoleDriver(int viewrows = 80, int viewcols = 132,  bool nocolor= false)
+        public MemoryConsoleDriver(int viewrows = 80, int viewcols = 132)
         {
             _viewerRows = viewrows;
             _viewerCols = viewcols;
             _allOutput = new MemoryConsoleWriter(_viewerRows,_viewerCols);
-            Out = new MemoryConsoleWriter(0, 0,_allOutput);
-            Error = new MemoryConsoleWriter(0, 0,_allOutput);
+            Out = new MemoryConsoleWriter(0, 0, _allOutput);
+            Error = new MemoryConsoleWriter(0, 0, _allOutput);
             In = new MemoryConsoleReader();
             OutputEncoding = Encoding.Unicode;
             InputEncoding = Encoding.Unicode;
-            _nocolor = nocolor;
+        }
+
+        public void Dispose()
+        {
+            _allOutput.Dispose();
+            Out.Dispose();
+            Error.Dispose();
+            In.Dispose();   
+        }
+
+        public string GetText(int left, int top, int lenght = -1)
+        {
+            return _allOutput.GetText(left, top, lenght);
+        }
+
+
+        public string[] GetScreen()
+        {
+            var aux = _allOutput.GetScreen();
+            var lastline = 0;
+            for (var i = 0; i < aux.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(aux[i]))
+                {
+                    lastline = i+1;
+                }
+            }
+            return aux.Take(lastline).ToArray();
         }
 
         public void LoadInput(string value)
@@ -48,22 +75,7 @@ namespace PPlus.Drivers
             }
         }
 
-        /// <summary>
-        /// The accumulated text stream.
-        /// </summary>
-        public virtual string? AllText() => _allOutput.ToString();
-
-        /// <summary>
-        /// The accumulated text of the <see cref="Console.Out"/> stream.
-        /// </summary>
-        public virtual string? OutText() => Out.ToString();
-
-        /// <summary>
-        /// The accumulated text of the <see cref="Console.Error"/> stream.
-        /// </summary>
-        public virtual string? ErrorText() => Error.ToString();
-
-        public bool NoColor => _nocolor;
+        public bool NoColor => true;
 
         public bool NoInterative => true;
 
@@ -85,7 +97,19 @@ namespace PPlus.Drivers
 
         public TextWriter Error { get; set; }
 
-        public bool KeyAvailable => In.Peek() > 0;
+        public  bool KeyAvailable
+        {
+            get
+            {
+                var aux = ((MemoryConsoleReader)In).Peek();
+                if (aux == -2)
+                {
+                    ((MemoryConsoleReader)In).ReadLoadInput();
+                    return false;
+                }
+                return ((MemoryConsoleReader)In).Peek() >= 0;
+            }
+        }
 
         public bool CursorVisible { get; set; }
 
@@ -127,8 +151,7 @@ namespace PPlus.Drivers
 
         public ConsoleKeyInfo ReadKey(bool intercept)
         {
-            var input = (char)In.Read();
-            return new ConsoleKeyInfo(input, ToConsoleKey(input), false, false, false);
+            return ((MemoryConsoleReader)In).ReadLoadInput();
         }
 
         public void ResetColor()
@@ -151,17 +174,17 @@ namespace PPlus.Drivers
 
         public void SetError(TextWriter value) 
         {
-            ((MemoryConsoleWriter)Error).Replaced = value;
+            throw new NotImplementedException();
         }
 
         public void SetIn(TextReader value)
         {
-            ((MemoryConsoleReader)In).LoadInput(value.ReadToEnd());
+            throw new NotImplementedException();
         }
 
         public void SetOut(TextWriter value)
         {
-            ((MemoryConsoleWriter)Out).Replaced = value;
+            throw new NotImplementedException();
         }
 
         public ConsoleKeyInfo WaitKeypress(bool intercept, CancellationToken cancellationToken)
@@ -172,8 +195,7 @@ namespace PPlus.Drivers
             }
             if (KeyAvailable && !cancellationToken.IsCancellationRequested)
             {
-                var input = (char)In.Read();
-                return new ConsoleKeyInfo(input, ToConsoleKey(input), false,false,false);
+                return ((MemoryConsoleReader)In).ReadLoadInput();
             }
             return new ConsoleKeyInfo();
         }
@@ -219,8 +241,13 @@ namespace PPlus.Drivers
             }
             foreach (var item in lstcmd)
             {
-                Out.Write(item);
+                ((MemoryConsoleWriter)Out).Write(item);
             }
+        }
+
+        public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
+        {
+            Write(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
         }
 
         public void WriteLine(string value)
@@ -231,46 +258,13 @@ namespace PPlus.Drivers
         public void WriteLine(params ColorToken[] tokens)
         {
             Write(tokens);
-            Out.WriteLine();
+            Write(new ColorToken(((char)13).ToString()));
         }
 
-        public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
+        public void WriteLine(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
         {
-            Write(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
+            WriteLine(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
         }
-
-        public void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null)
-        {
-            Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
-            Out.WriteLine();
-        }
-
-        private static ConsoleKey ToConsoleKey(char c)
-        {
-            return c switch
-            {
-                ' ' => ConsoleKey.Spacebar,
-                '+' => ConsoleKey.Add,
-                '-' => ConsoleKey.Subtract,
-                '*' => ConsoleKey.Multiply,
-                '/' => ConsoleKey.Divide,
-                '\b' => ConsoleKey.Backspace,
-                '\t' => ConsoleKey.Tab,
-                '\n' => ConsoleKey.Enter,
-                '\r' => ConsoleKey.Enter,
-                _ => char.IsNumber(c)
-                    ? ParseEnum<ConsoleKey>($"D{c}", true)
-                    : TryParseEnum<ConsoleKey>(c.ToString(), out var result, true)
-                    ? result
-                    : ConsoleKey.Oem1,// any Oem would do
-            };
-        }
-
-        private static T ParseEnum<T>( string text, bool ignoreCase = false) =>
-            (T)Enum.Parse(typeof(T), text, ignoreCase);
-
-        private static bool TryParseEnum<T>( string text, out T result, bool ignoreCase = false) where T : struct =>
-            Enum.TryParse(text, ignoreCase, out result);
 
     }
 }

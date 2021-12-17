@@ -7,11 +7,15 @@ using Xunit;
 
 namespace PPlus.Tests.Objects
 {
-    public class ColorTokenTest
+    public class ColorTokenTest: IDisposable
     {
         public ColorTokenTest()
         {
-            PromptPlus.DriveConsole(new MemoryConsoleDriver(nocolor: true));
+            PromptPlus.ExclusiveDriveConsole(new MemoryConsoleDriver());
+        }
+        public void Dispose()
+        {
+            PromptPlus.ExclusiveMode = false;
         }
 
         [Fact]

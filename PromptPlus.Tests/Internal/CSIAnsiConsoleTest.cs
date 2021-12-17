@@ -17,8 +17,6 @@ namespace PPlus.Tests.Internal
         {
             // Given
             var csi = CSIAnsiConsole.SplitCommands(value);
-            // When
-            //none
             // Then
             if (!empty)
             {
@@ -38,14 +36,27 @@ namespace PPlus.Tests.Internal
         {
             // Given
             var csi = CSIAnsiConsole.SplitCommands(value);
-            // When
-            //none
             // Then
             Assert.True(csi.Length == resuts.Length);
             for (var i = 0; i < csi.Length; i++)
             {
                 Assert.True(csi[i] == resuts[i]);
             }
+        }
+
+        [Theory]
+        [InlineData("teste\x1b[\x2f;10")]
+        [InlineData("teste\x1b[0\x1f;10")]
+        [InlineData("teste\x1b[10;0\x7f")]
+        public void Should_have_Ansivalue_exception(string value)
+        {
+            // Given
+            var ex = Record.Exception(() =>
+            {
+                CSIAnsiConsole.SplitCommands(value);
+            });
+            // Then
+            Assert.NotNull(ex);
         }
     }
 }

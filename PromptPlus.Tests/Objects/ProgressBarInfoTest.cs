@@ -14,8 +14,6 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var pbi = new ProgressBarInfo(percentValue,finished,message,interationId);
-            // When
-            //none
             // Then
             Assert.True(pbi.PercentValue == percentValue);
             Assert.True(pbi.Finished == finished);

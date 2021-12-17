@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -37,6 +38,8 @@ namespace PPlus.Internal
             }
         }
 
+        public string[] InputWithSugestion { get; private set; }
+
         public int Position { get; private set; }
 
         public int Length => _inputBuffer.Length;
@@ -58,6 +61,7 @@ namespace PPlus.Internal
             if (isvalid)
             {
                 Insert(keyinfo.KeyChar);
+                ResetAutoComplete();
                 return;
             }
 
@@ -79,6 +83,7 @@ namespace PPlus.Internal
                 case ConsoleKey.Escape when IsInAutoCompleteMode():
                     //reset with original text 
                     ApplyAutoComplete(new ItemSugestion("", false));
+                    foundautocomplete = false;
                     break;
                 //implemenattion autocomplete mode when have any text and exist handler-AutoComplete
                 case ConsoleKey.Tab when _handlerAutoComplete != null:
@@ -109,11 +114,6 @@ namespace PPlus.Internal
                         Clear();
                     }
                     break;
-                //Emacs keyboard shortcut  when when have any text
-                // Clears the line content before the cursor
-                case ConsoleKey.U when keyinfo.Modifiers == ConsoleModifiers.Alt:
-                    UpperAfterCursor();
-                    break;
                 //Emacs keyboard shortcut when when have any text
                 //Lowers the case of every character from the cursor's position to the end of the current word
                 case ConsoleKey.L when keyinfo.Modifiers == ConsoleModifiers.Alt:
@@ -122,18 +122,23 @@ namespace PPlus.Internal
                 //Emacs keyboard shortcut when when have any text
                 // Clears the line content before the cursor
                 case ConsoleKey.U when keyinfo.Modifiers == ConsoleModifiers.Control:
-                    {
-                        var aux = ToForward();
-                        Clear().Load(aux);
-                        Position = 0;
-                    }
+                {
+                    var aux = ToForward();
+                    Clear().LoadPrintable(aux);
+                    Position = 0;
+                }
+                break;
+                //Emacs keyboard shortcut  when when have any text
+                //Upper the case of every character from the cursor's position to the end of the current word
+                case ConsoleKey.U when keyinfo.Modifiers == ConsoleModifiers.Alt:
+                    UpperAfterCursor();
                     break;
                 //Emacs keyboard shortcut when when have any text
                 //Clears the line content after the cursor
                 case ConsoleKey.K when keyinfo.Modifiers == ConsoleModifiers.Control:
                     {
                         var aux = ToBackward();
-                        Clear().Load(aux);
+                        Clear().LoadPrintable(aux);
                         Position = Length;
                     }
                     break;
@@ -205,14 +210,11 @@ namespace PPlus.Internal
             if (isvalid && !foundautocomplete)
             {
                 //if valid any key reset mode
-                if (IsInAutoCompleteMode())
-                {
-                    ResetAutoComplete();
-                }
+                ResetAutoComplete();
             }
         }
 
-        public ReadLineBuffer Load(string value)
+        public ReadLineBuffer LoadPrintable(string value)
         {
             foreach (var item in value)
             {
@@ -282,14 +284,14 @@ namespace PPlus.Internal
             var origtext = _originalText;
             if (_inputBuffer.ToString() != origtext)
             {
-                Clear().Load(origtext);
+                Clear().LoadPrintable(origtext);
             }
             Position = _completionsStartPosition;
 
             if (item.ClearRestline)
             {
                 origtext = ToBackward();
-                Clear().Load(origtext);
+                Clear().LoadPrintable(origtext);
             }
 
             if (string.IsNullOrEmpty(item.Sugestion))
@@ -298,6 +300,8 @@ namespace PPlus.Internal
             }
 
             var localpos = _completionsStartPosition;
+            var lstinput = new List<string>();
+            lstinput.Add(_inputBuffer.ToString().Substring(0, _completionsStartPosition));
             string localsugestion = item.Sugestion;
             if (_inputBuffer[localpos-1] != ' ')
             {
@@ -306,14 +310,18 @@ namespace PPlus.Internal
                     localsugestion = localsugestion.Insert(0, " ");
                 }
             }
-            Load(localsugestion);
+            lstinput.Add(localsugestion);
+
+            LoadPrintable(localsugestion);
             if (!IsEnd())
             {
                 if (_inputBuffer[Position] != ' ')
                 {
-                    Load(" ");
+                    LoadPrintable(" ");
                 }
             }
+            lstinput.Add(_inputBuffer.ToString().Substring(_completionsStartPosition+ localsugestion.Length));
+            InputWithSugestion = lstinput.ToArray();
             return true;
         }
 
@@ -376,6 +384,7 @@ namespace PPlus.Internal
             _completionsIndex = 0;
             _completionsStartPosition = 0;
             _originalText  = null;
+            InputWithSugestion = null;
         }
 
         private ReadLineBuffer TransposeChars()
@@ -591,7 +600,11 @@ namespace PPlus.Internal
 
         private bool IsPrintable(char c)
         {
-            return char.IsWhiteSpace(c) ||
+            if (char.IsControl(c))
+            {
+                return false;
+            }
+            return char.IsWhiteSpace(c) || 
                 !_nonRenderingCategories.Contains(char.GetUnicodeCategory(c));
         }
 

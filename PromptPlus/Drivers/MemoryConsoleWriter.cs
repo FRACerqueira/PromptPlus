@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
-using PPlus.Internal;
+using PPlus.Objects;
 
 namespace PPlus.Drivers
 {
@@ -14,19 +13,16 @@ namespace PPlus.Drivers
         /// </summary>
         public const string ESC = "\u001b";
 
-        internal TextWriter? Replaced { get; set; }
-        private readonly TextWriter? _inner;
-        private readonly StringBuilder _stringBuilder = new();
+        private readonly MemoryConsoleWriter? _inner;
+        private readonly char[,] _viewConsole;
         private readonly int _rows;
         private readonly int _cols;
-        private readonly char[,] _viewConsole;
-        private readonly Dictionary<string, StyleTextConsole> _styleChar = new();
 
-        public MemoryConsoleWriter(int rows, int cols, TextWriter? inner = null)
+        public MemoryConsoleWriter(int rows, int cols, MemoryConsoleWriter? inner = null)
         {
             _rows = rows;
             _cols = cols;
-            _viewConsole = new char[_rows,_cols];
+            _viewConsole = new char[_rows, _cols];
             ClearView();
             _inner = inner;
         }
@@ -37,105 +33,53 @@ namespace PPlus.Drivers
 
         public int ViewTopPos { get; private set; }
 
-        private void scroll()
-        {
-            if (_rows == 0 || _cols == 0)
-            {
-                return;
-            }
-            for (var c = 0; c < _cols; c++)
-            {
-                for (var r = 0; r < _rows - 1; r++)
-                {
-                    if (_styleChar.ContainsKey($"{r}:{c}"))
-                    {
-                        _styleChar.Remove($"{r}:{c}");
-                    }
-                    _viewConsole[r, c] = _viewConsole[r + 1,c];
-                    if (_styleChar.ContainsKey($"{r+1}:{c}"))
-                    {
-                        var aux = _styleChar[$"{r + 1}:{c}"];
-                        _styleChar[$"{r}:{c}"] = new StyleTextConsole(aux.ForeColor, aux.BackColor, aux.Underline);
-                    }
-                }
-            }
-            for (var c = 0; c < _cols; c++)
-            {
-                _viewConsole[_rows-1,c] = (char)0;
-                _styleChar.Remove($"{_rows-1}:{c}");
-            }
-        }
-
         public void ClearRestOfLine()
         {
-            ClearRestOfLine(null);
-        }
-
-        public void ClearRestOfLine(ConsoleColor? color)
-        {
-            for (var c = LeftPos; c < _cols; c++)
+            if (_rows != 0 && _cols != 0)
             {
-                _viewConsole[TopPos, c] = (char)0;
-                if (!color.HasValue)
+                for (var c = LeftPos; c < _cols; c++)
                 {
-                    _styleChar.Remove($"{TopPos}:{c}");
-                }
-                else
-                {
-                    if (_styleChar.ContainsKey($"{TopPos}:{c}"))
-                    {
-                        _styleChar.Add($"{TopPos}:{c}", new StyleTextConsole(color, null, null));
-                    }
-                    else
-                    {
-                        _styleChar[$"{TopPos}:{c}"] = new StyleTextConsole(color, null, null);
-                    }
+                    _viewConsole[TopPos, c] = (char)0;
                 }
             }
+            _inner?.ClearRestOfLine();
         }
 
         public void ClearViewLine(int top)
         {
-            if (_rows == 0 || _cols == 0)
+            if (_rows != 0 && _cols != 0)
             {
-                return ;
-            }
-            if (top >= 0 && top <= _rows - 1)
-            {
-                SetCursorPosition(0, top);
-                for (var c = 0; c < _cols; c++)
+                if (top >= 0 && top <= _rows - 1)
                 {
-                    _viewConsole[TopPos,c] = (char)0;
-                    _styleChar.Remove($"{TopPos}:{c}");
+                    SetCursorPosition(0, top);
+                    for (var c = 0; c < _cols; c++)
+                    {
+                        _viewConsole[TopPos, c] = (char)0;
+                    }
+                    LeftPos = 0;
                 }
-                LeftPos = 0;
             }
+            _inner?.ClearViewLine(top);
         }
 
         public void ClearView()
         {
-            for (var c = 0; c < _cols; c++)
+            if (_rows != 0 && _cols != 0)
             {
-                for (var r = 0; r < _rows; r++)
+                for (var c = 0; c < _cols; c++)
                 {
-                    _viewConsole[r,c] = (char)0;
+                    for (var r = 0; r < _rows; r++)
+                    {
+                        _viewConsole[r, c] = (char)0;
+                    }
                 }
+                LeftPos = 0;
+                TopPos = 0;
             }
-            _styleChar.Clear();
-            LeftPos = 0;
-            TopPos = 0;
+            _inner?.ClearView();
         }
 
-        public StyleTextConsole? GetStyleChar(int left, int top)
-        {
-            if (_styleChar.ContainsKey($"{top}:{left}"))
-            {
-                return _styleChar[$"{top}:{left}"];
-            }
-            return null;
-        }
-
-        public string GetText(int left,int top,int lenght =-1)
+        public string GetText(int left, int top, int lenght = -1)
         {
             if (_rows == 0 || _cols == 0)
             {
@@ -150,17 +94,17 @@ namespace PPlus.Drivers
                     {
                         lenght = _cols;
                     }
-                    for (var c = left; c < left+lenght; c++)
+                    for (var c = left; c < left + lenght; c++)
                     {
                         if (c > _cols - 1)
                         {
                             break;
                         }
-                        if (_viewConsole[top,c] == (char)0)
+                        if (_viewConsole[top, c] == (char)0)
                         {
                             break;
                         }
-                        result.Append(_viewConsole[top,c]);
+                        result.Append(_viewConsole[top, c]);
                     }
                     return result.ToString();
                 }
@@ -168,98 +112,84 @@ namespace PPlus.Drivers
             throw new ArgumentException($"left >=0 and left <={_cols - 1}/ top >=0 and top <= {_rows - 1} ");
         }
 
-        public void SetCursorPosition(int left, int top)
+        public List<string> GetScreen()
         {
+            var result = new List<string>();
             if (_rows == 0 || _cols == 0)
             {
-                return;
+                return result;
             }
-            if (left >= 0 && left <= _cols - 1)
+            for (var i = 0; i < _rows; i++)
             {
-                if (top >= 0 && top <= _rows - 1)
-                {
-                    LeftPos = left;
-                    TopPos = top;
-                    return;
-                }
+                result.Add(GetText(0, i));
             }
-            throw new ArgumentException($"left >=0 and left <={_cols - 1}/ top >=0 and top <= {_rows - 1} ");
+            return result;
+        }
+
+        public void SetCursorPosition(int left, int top)
+        {
+            if (_rows != 0 && _cols != 0)
+            {
+                if (left >= 0 && left <= _cols - 1)
+                {
+                    if (top >= 0 && top <= _rows - 1)
+                    {
+                        LeftPos = left;
+                        TopPos = top;
+                        return;
+                    }
+                }
+                throw new ArgumentException($"left >=0 and left <={_cols - 1}/ top >=0 and top <= {_rows - 1} ");
+            }
+            _inner?.SetCursorPosition(left, top);
         }
 
         public override Encoding Encoding { get; } = Encoding.Unicode;
 
         public override void Write(char value)
         {
-            Replaced?.Write(value);
-            _inner?.Write(value);
-            if (value == 7) // bell
-            {
-                return;
-            }
-            else if (value == 9) // ctrl+I - tab
-            {
-                return;
-            }
-            else if (value == 0x0C) // ctrl+L - FF
-            {
-                return;
-            }
-            else if (value == 0x0A ) //LF WINDOWS
-            {
-                return;
-            }
-            else if (value == 0x0D) // ctrl+J - enter or Carriage Return
-            {
-                WriteLine("");
-            }
-            else if ((value == '\b' || value == 8 ) && _stringBuilder.Length > 0)
-            {
-                _stringBuilder.Length -= 1;
-                LeftPos--;
-                if (LeftPos < 0)
-                {
-                    LeftPos = 0;
-                }
-            }
-            else
-            {
-                _stringBuilder.Append(value);
-                EnsurePosition(value.ToString(), false);
-            }
+            throw new NotImplementedException();
         }
 
         public override void Write(string value)
         {
-            Replaced?.Write(value);
+            if (_rows != 0 && _cols != 0)
+            {
+                EnsurePosition(value, _rows, _cols);
+            }
             _inner?.Write(value);
-            _stringBuilder.Append(value);
-            EnsurePosition(value, false);
         }
 
         public override void WriteLine(string value)
         {
-            Replaced?.WriteLine(value);
-            _inner?.WriteLine(value);
-            _stringBuilder.AppendLine(value);
-            EnsurePosition(value, true);
+            throw new NotImplementedException();
         }
 
-        public override string ToString()
+        #region private
+        private void scroll()
         {
-            return _stringBuilder.ToString();
-        }
-
-        #region private methods
-
-        private void EnsurePosition(string text, bool newline)
-        {
-            if (_rows == 0 || _cols == 0 || string.IsNullOrEmpty(text))
+            if (_rows == 0 || _cols == 0)
             {
                 return;
             }
-            if (newline)
+            for (var c = 0; c < _cols; c++)
             {
-                text += (char)13;
+                for (var r = 0; r < _rows - 1; r++)
+                {
+                    _viewConsole[r, c] = _viewConsole[r + 1, c];
+                }
+            }
+            for (var c = 0; c < _cols; c++)
+            {
+                _viewConsole[_rows - 1, c] = (char)0;
+            }
+        }
+
+        private void EnsurePosition(string text,int rows, int cols)
+        {
+            if (rows == 0 || cols == 0 || string.IsNullOrEmpty(text))
+            {
+                return;
             }
             if (IsAnsiConsole(text))
             {
@@ -274,11 +204,12 @@ namespace PPlus.Drivers
         private void AcceptAnsiViewConsole(string value)
         {
             //last pos is type of csi command
-            switch (value[value.Length - 1])
+            var lastcmd = value[value.Length - 1].ToString();
+            switch (lastcmd)
             {
-                case 'A': // CUU- Cursor Up (pplus not implemented)
+                case "A": // CUU- Cursor Up
                 {
-                    for (var i = 0; i < ValueCommand(value, "A"); i++)
+                    for (var i = 0; i < ValueCommand(value, lastcmd); i++)
                     {
                         if (TopPos > 1)
                         {
@@ -291,9 +222,9 @@ namespace PPlus.Drivers
                     }
                     break;
                 }
-                case 'B': // CUD- Cursor Down (pplus not implemented)
+                case "B": // CUD- Cursor Down
                 {
-                    for (var i = 0; i < ValueCommand(value, "B"); i++)
+                    for (var i = 0; i < ValueCommand(value, lastcmd); i++)
                     {
                         if (TopPos < _rows - 1)
                         {
@@ -306,9 +237,9 @@ namespace PPlus.Drivers
                     }
                     break;
                 }
-                case 'C': // CUF- Cursor Forward (pplus not implemented)
+                case "C": // CUF- Cursor Forward
                 {
-                    for (var i = 0; i < ValueCommand(value, "C"); i++)
+                    for (var i = 0; i < ValueCommand(value, lastcmd); i++)
                     {
                         if (LeftPos > 1)
                         {
@@ -321,9 +252,9 @@ namespace PPlus.Drivers
                     }
                     break;
                 }
-                case 'D': // CUB - Cursor  Back (pplus not implemented)
+                case "D": // CUB - Cursor  Back
                 {
-                    for (var i = 0; i < ValueCommand(value, "D"); i++)
+                    for (var i = 0; i < ValueCommand(value, lastcmd); i++)
                     {
                         if (LeftPos < _cols - 1)
                         {
@@ -336,7 +267,7 @@ namespace PPlus.Drivers
                     }
                     break;
                 }
-                case 'H': // CUP - Cursor Position (pplus not implemented)
+                case "H": // CUP - Cursor Position
                 {
                     var parts = value
                         .Replace(ESC, "")
@@ -363,54 +294,33 @@ namespace PPlus.Drivers
                     }
                     else
                     {
-                        TopPos = ValueCommand(value, "H") - 1;
+                        TopPos = ValueCommand(value, lastcmd) - 1;
                         LeftPos = 0;
                     }
                     break;
                 }
-                case 'J': // ED -  Erase in Display (implemented only cmd = 2)
+                case "J": // ED -  Erase in Display
                 {
-                    var cmd = ValueCommand(value, "J");
+                    var cmd = ValueCommand(value, lastcmd);
                     if (cmd == 2)
                     {
                         ClearView();
                     }
                     break;
                 }
-                case 'K': // El -  Erase in Line (implemented only cmd = 2)
+                case "K": // El -  Erase in Line 
                 {
-                    var cmd = ValueCommand(value, "J");
+                    var cmd = ValueCommand(value, lastcmd);
                     if (cmd == 2)
                     {
                         ClearViewLine(TopPos);
                     }
                     break;
                 }
-                case 'm': // color
+                case "m": // color 
                 {
-                    var st = GraphicRendition(value);
-                    if (_styleChar.ContainsKey($"{TopPos}:{LeftPos}"))
-                    {
-                        var old = _styleChar[$"{TopPos}:{LeftPos}"];
-                        var fc = old.ForeColor;
-                        var bc = old.BackColor;
-                        var ud = old.Underline;
-                        if (st.ForeColor.HasValue)
-                        {
-                            fc = st.ForeColor;
-                        }
-                        if (st.BackColor.HasValue)
-                        {
-                            bc = st.BackColor;
-                        }
-                        if (st.Underline.HasValue)
-                        {
-                            ud = st.Underline;
-                        }
-                        st = new StyleTextConsole(fc, bc, ud);
-                        _styleChar.Remove($"{TopPos}:{LeftPos}");
-                    }
-                    _styleChar.Add($"{TopPos}:{LeftPos}", st);
+                    //todo create mapcolor srceen
+                    //var st = GraphicRendition(value);
                     break;
                 }
                 default:
@@ -434,6 +344,7 @@ namespace PPlus.Drivers
                 }
                 else
                 {
+                    _viewConsole[TopPos, LeftPos] = item;
                     LeftPos++;
                     if (LeftPos > _cols - 1)
                     {
@@ -445,24 +356,23 @@ namespace PPlus.Drivers
                             TopPos = _rows - 1;
                         }
                     }
-                    _viewConsole[TopPos, LeftPos] = item;
                 }
             }
         }
 
-        private bool IsAnsiConsole(string value) => value.StartsWith(ESC);
+        private static bool IsAnsiConsole(string value) => Encoding.Unicode.GetBytes(value)[0] == 27;
 
-        private int ValueCommand(string s,string cmd)
+        private static int ValueCommand(string s,string cmd)
         {
-            var aux = s.Replace(ESC, "").Replace(cmd, "").Trim();
-            if (int.TryParse(aux, out int result))
+            var aux = s.Replace(ESC, "").Replace("[","").Replace(cmd, "").Trim();
+            if (int.TryParse(aux, out var result))
             {
                 return result;
             }
             return -1;
         }
 
-        private StyleTextConsole GraphicRendition(string s)
+        private static StyleTextConsole GraphicRendition(string s)
         {
             ConsoleColor? forecolor = null;
             ConsoleColor? backcolor = null;

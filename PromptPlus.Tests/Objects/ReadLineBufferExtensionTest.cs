@@ -18,7 +18,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, true, true, true);
-            // When
+            // then
             Assert.True(k.IsPressSpecialKey(consoleKey, ConsoleModifiers.Control | ConsoleModifiers.Shift | ConsoleModifiers.Alt));
             Assert.False(k.IsPressSpecialKey(other, ConsoleModifiers.Control | ConsoleModifiers.Shift | ConsoleModifiers.Alt));
         }
@@ -36,7 +36,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressLeftArrowKey() == result);
         }
 
@@ -53,7 +53,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressRightArrowKey() == result);
         }
 
@@ -66,7 +66,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // ghen
             Assert.True(k.IsPressCtrlCKey() == result);
         }
 
@@ -83,7 +83,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressEnterKey() == result);
         }
 
@@ -100,7 +100,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressBackspaceKey() == result);
         }
 
@@ -118,7 +118,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressDeleteKey() == result);
         }
 
@@ -135,7 +135,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressDownArrowKey() == result);
         }
 
@@ -152,7 +152,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressUpArrowKey() == result);
         }
 
@@ -169,7 +169,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressEndKey() == result);
         }
 
@@ -182,7 +182,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressTabKey() == result);
         }
 
@@ -196,7 +196,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressEscKey() == result);
         }
 
@@ -213,7 +213,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressHomeKey() == result);
         }
 
@@ -230,7 +230,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressPageDownKey() == result);
         }
 
@@ -247,7 +247,7 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var k = new ConsoleKeyInfo((char)consoleKey, consoleKey, shift, alt, ctrl);
-            // When
+            // then
             Assert.True(k.IsPressPageUpKey() == result);
         }
 

@@ -18,9 +18,6 @@ namespace PPlus.Tests.Internal
         [InlineData("aあ🍣", 5)]
         public void Should_have_GetWidth(string value, int width)
         {
-            // Given
-            // When
-            //none
             // Then
             Assert.Equal(width, value.GetWidth());
         }

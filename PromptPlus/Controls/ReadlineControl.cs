@@ -166,19 +166,19 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        _inputBuffer.Clear().Load(_localpaginator.SelectedItem.History);
+                        _inputBuffer.Clear().LoadPrintable(_localpaginator.SelectedItem.History);
                         _showingHistory = true;
                     }
                 }
                 else if (_showingHistory && keyInfo.IsPressEscKey())
                 {
-                    _inputBuffer.Clear().Load(_originalText);
+                    _inputBuffer.Clear().LoadPrintable(_originalText);
                     _showingHistory = false;
                     _localpaginator = null;
                 }
                 else if (_showingHistory && IskeyPageNavagator(keyInfo, _localpaginator))
                 {
-                    _inputBuffer.Clear().Load(_localpaginator.SelectedItem.History);
+                    _inputBuffer.Clear().LoadPrintable(_localpaginator.SelectedItem.History);
                 }
                 else if (keyInfo.IsPressEnterKey())
                 {
@@ -186,7 +186,7 @@ namespace PPlus.Controls
                     {
                         if (_localpaginator.TryGetSelectedItem(out var resulthist))
                         {
-                            _inputBuffer.Clear().Load(resulthist.History);
+                            _inputBuffer.Clear().LoadPrintable(resulthist.History);
                             _localpaginator = null;
                         }
                         _originalText = null;
@@ -237,7 +237,17 @@ namespace PPlus.Controls
             }
             else
             {
-                screenBuffer.PushCursor(_inputBuffer);
+                if (_inputBuffer.InputWithSugestion != null)
+                {
+                    screenBuffer.WriteAnswer(_inputBuffer.InputWithSugestion[0]);
+                    screenBuffer.WriteFilter(_inputBuffer.InputWithSugestion[1]);
+                    screenBuffer.PushCursor();
+                    screenBuffer.WriteAnswer(_inputBuffer.InputWithSugestion[2]);
+                }
+                else
+                {
+                    screenBuffer.PushCursor(_inputBuffer);
+                }
             }
             if (HasDescription)
             {

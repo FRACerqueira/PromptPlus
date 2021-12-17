@@ -144,7 +144,7 @@ namespace PPlus.Controls
                     if (findok)
                     {
                         _inputBuffer.Clear();
-                        _inputBuffer.Load(aux.Value);
+                        _inputBuffer.LoadPrintable(aux.Value);
                         _prefixstart = aux.Value;
                     }
                 }
@@ -175,7 +175,7 @@ namespace PPlus.Controls
                         }
                         result = aux.Value;
                         _inputBuffer.Clear();
-                        _inputBuffer.Load(result);
+                        _inputBuffer.LoadPrintable(result);
                         _prefixstart = result;
                     }
                     return true;

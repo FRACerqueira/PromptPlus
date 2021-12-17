@@ -23,6 +23,7 @@ namespace PPlus
         IPromptConfig EnabledAbortAllPipes(bool value);
         IPromptConfig EnabledPromptTooltip(bool value);
         IPromptConfig HideAfterFinish(bool value);
+        IFormPlusBase AddExtraAction(StageControl stage, Action<string> useraction);
     }
 
     public interface IPromptControls<T>
@@ -47,6 +48,7 @@ namespace PPlus
         object ContextState { get; }
 
         Func<ResultPipe[], object, bool> Condition { get; }
+
     }
 
     public interface IPromptPipe

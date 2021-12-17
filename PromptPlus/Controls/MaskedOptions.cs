@@ -28,6 +28,7 @@ namespace PPlus.Controls
         public int AmmountInteger { get; set; }
         public object DefaultObject { get; set; }
         public bool UpperCase { get; set; } = true;
+
         private string _maskValue;
         public string MaskValue
         {

@@ -14,8 +14,6 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var rb = new ResultBrowser("folder", "file", false);
-            // When
-            //none
             // Then
             Assert.True(rb.AliasSelected == rb.SelectedValue);
         }
@@ -27,8 +25,6 @@ namespace PPlus.Tests.Objects
         {
             // Given
             var rb = new ResultBrowser(folder, file, false,false,showfile);
-            // When
-            //none
             // Then
             Assert.True(rb.SelectedValue == "file");
             if (!showfile)
@@ -49,7 +45,7 @@ namespace PPlus.Tests.Objects
         [InlineData(101, true, "msg", 10)]
         public void Should_have_exception(int percentValue, bool finished, string message, object interationId)
         {
-            // Given When
+            // Given
             var ex = Record.Exception(() =>
             {
                 var pbi = new ProgressBarInfo(percentValue, finished, message, interationId);

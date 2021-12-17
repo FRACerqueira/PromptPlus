@@ -111,28 +111,46 @@ namespace PPlus
             LoadConfigFromFile();
         }
 
+
+        ///for testing purposes only!!!.
+        internal static void ExclusiveDriveConsole(IConsoleDriver value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentException(nameof(value));
+            }
+            lock (LockObj)
+            {
+                if (ExclusiveMode)
+                {
+                    while (ExclusiveMode)
+                    {
+                        Thread.Sleep(100);
+                    }
+                }
+                ExclusiveMode = true;
+                PPlusConsole = value;
+            }
+        }
+
         public static void DriveConsole(IConsoleDriver value)
         {
             if (value == null)
             {
-                return;
+                throw new ArgumentException(nameof(value));
+            }
+            lock (LockObj)
+            {
+                if (ExclusiveMode)
+                {
+                    while (ExclusiveMode)
+                    {
+                        Thread.Sleep(1000);
+                    }
+                }
+                PPlusConsole = value;
             }
             PPlusConsole = value;
-        }
-        public static void LoadInputConsole(string value)
-        {
-            if (value == null)
-            {
-                return;
-            }
-            if (!PPlusConsole.IsInputRedirected)
-            {
-                throw new ArgumentException("IConsoleDriver not state input-redirected");
-            }
-            using (TextReader sr = new StringReader(value))
-            {
-                PPlusConsole.SetIn(sr);
-            }
         }
 
         public static void ClearRestOfLine(ConsoleColor? color = null) => PPlusConsole.ClearRestOfLine(color ?? BackgroundColor);

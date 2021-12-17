@@ -3,6 +3,12 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
+using PPlus.Objects;
+
 namespace PPlus.Controls
 {
     internal abstract class BaseOptions
@@ -35,5 +41,6 @@ namespace PPlus.Controls
         public bool EnabledAbortAllPipes { get; set; } = PromptPlus.EnabledAbortAllPipes;
         public bool EnabledPromptTooltip { get; set; } = PromptPlus.EnabledPromptTooltip;
         public bool HideAfterFinish { get; set; }
+        public Dictionary<StageControl, Action<string>> UserActions { get; set; } = new();
     }
 }

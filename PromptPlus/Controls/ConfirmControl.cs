@@ -124,11 +124,11 @@ namespace PPlus.Controls
                 {
                     if (_options.DefaultValue.Value)
                     {
-                        _inputBuffer.Load(Messages.YesKey.ToString());
+                        _inputBuffer.LoadPrintable(Messages.YesKey.ToString());
                     }
                     else
                     {
-                        _inputBuffer.Load(Messages.NoKey.ToString());
+                        _inputBuffer.LoadPrintable(Messages.NoKey.ToString());
                     }
                 }
             }

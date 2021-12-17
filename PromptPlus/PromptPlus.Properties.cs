@@ -21,6 +21,7 @@ namespace PPlus
     [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "by design")]
     public static partial class PromptPlus
     {
+        internal const int DefaultMinBufferHeight = 10;
         internal const int MaxShowTasks = 1;
         internal const int RollupFactor = 13;
         internal const int SpeedAnimation = 50;
@@ -28,11 +29,12 @@ namespace PPlus
         internal const int ProgressgBarWitdth = 30;
         internal const int ProgressgBarDoneDelay = 1000;
         internal const int ProgressgBarCheckDelay = 50;
-        internal static int MinBufferHeight = 10;
+
         internal static object LockObj = new();
 
-
         #region internal properties
+
+        internal static int MinBufferHeight { get; set; } = DefaultMinBufferHeight;
 
         internal static ConsoleColor DefaultForeColor { get; private set; }
 
@@ -40,7 +42,21 @@ namespace PPlus
 
         internal static ILogger PPlusLog { get; private set; }
 
-        internal static IConsoleDriver PPlusConsole { get; private set; }
+        [ThreadStatic]
+        internal static bool ExclusiveMode = false;
+        [ThreadStatic]
+        private static IConsoleDriver _PPlusConsole;
+        internal static IConsoleDriver PPlusConsole
+        {
+            get
+            {
+                return _PPlusConsole;
+            }
+            private set
+            {
+                _PPlusConsole = value;
+            }
+        }
 
         internal static bool NoInterative => PPlusConsole.IsInputRedirected || PPlusConsole.IsOutputRedirected;
 
