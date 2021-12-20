@@ -35,6 +35,8 @@ namespace PPlus.Tests.Controls
             var first = true;
             string[] viewstart = null;
             string[] viewend = null;
+            var initialvalue = string.Empty;
+            var finalvalue = string.Empty;
 
             _reader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.L, false, false, true));
             _reader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.Enter, false, false, false));
@@ -43,7 +45,11 @@ namespace PPlus.Tests.Controls
                 .InitialValue("teste")
                 .Config((ctx) =>
                 {
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender,(_) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnStartControl, (object value) =>
+                    {
+                        initialvalue = value.ToString();
+                    });
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender,(object value) =>
                     {
                         if (first)
                         {
@@ -51,13 +57,16 @@ namespace PPlus.Tests.Controls
                             viewstart = _memoryconsole.GetScreen();
                         }
                     });
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishRender, (_) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object value) =>
                     {
                         viewend = _memoryconsole.GetScreen();
+                        finalvalue = value.ToString();
                     });
                 })
                 .Run();
             Assert.Equal("default", result.Value);
+            Assert.Equal("default", finalvalue);
+            Assert.Equal("teste", initialvalue);
         }
     }
 }

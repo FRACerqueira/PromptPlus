@@ -34,6 +34,8 @@ namespace PPlus
 
         #region internal properties
 
+        internal static int CurrentThread { get; private set; }
+
         internal static int MinBufferHeight { get; set; } = DefaultMinBufferHeight;
 
         internal static ConsoleColor DefaultForeColor { get; private set; }
@@ -43,9 +45,19 @@ namespace PPlus
         internal static ILogger PPlusLog { get; private set; }
 
         [ThreadStatic]
+        /// <summary>
+        ///for testing purposes only!!!.
+        /// </summary>
         internal static bool ExclusiveMode = false;
+
         [ThreadStatic]
         private static IConsoleDriver _PPlusConsole;
+
+        /// <summary>
+        /// only used by GetConsoleUnsafeBound when it is executed in another thread(eg: autocomplete control)
+        /// </summary>
+        private static IConsoleDriver _PPlusConsoleUnsafe;
+
         internal static IConsoleDriver PPlusConsole
         {
             get
@@ -55,6 +67,8 @@ namespace PPlus
             private set
             {
                 _PPlusConsole = value;
+                _PPlusConsoleUnsafe = value;
+                CurrentThread = System.Threading.Thread.CurrentThread.ManagedThreadId;
             }
         }
 

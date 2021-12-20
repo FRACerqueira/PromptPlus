@@ -366,4 +366,7 @@
   <data name="ReadlineSugestionMode" xml:space="preserve">
     <value>Esc: Cancel sugestion and restore original input</value>
   </data>
+  <data name="EnterAcceptSugestion" xml:space="preserve">
+    <value>Enter: Accept suggestion</value>
+  </data>
 </root>

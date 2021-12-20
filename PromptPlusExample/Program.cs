@@ -17,6 +17,8 @@ using PPlus.FIGlet;
 using PPlus.Objects;
 using PPlus;
 using PPlus.Drivers;
+using static System.Environment;
+using System.Text;
 
 namespace PromptPlusExample
 {
@@ -840,12 +842,98 @@ namespace PromptPlusExample
                 .Default("Peter Parker")
                 .AddValidator(PromptPlusValidators.Required())
                 .AddValidator(PromptPlusValidators.MinLength(3))
+                .SuggestionHandler(SugestionInputSample, true)
+                .Config( (ctx) =>
+                {
+                    ctx.AddExtraAction(StageControl.OnStartControl, LoadSampleHistInputSugestion)
+                       .AddExtraAction(StageControl.OnFinishControl, SaveSampleHistSugestion);
+                })
                 .Run(_stopApp);
             if (name.IsAborted)
             {
                 return;
             }
             PromptPlus.WriteLine($"Hello, [cyan]{name.Value}[/cyan]!");
+        }
+
+        private IList<ItemHistory> _itemsInputSampleHistory;
+        private const string Folderhistory = "PromptPlus.Controls";
+        private const string Filehistory = "{0}_{1}.txt";
+
+
+        private SugestionOutput SugestionInputSample(SugestionInput arg)
+        {
+            var result = new SugestionOutput();
+            if (_itemsInputSampleHistory.Count > 0)
+            {
+                foreach (var item in _itemsInputSampleHistory
+                    .OrderByDescending(x => x.TimeOutTicks))
+                {
+                    result.Add(item.History, true);
+                }
+            }
+            return result;
+        }
+
+        private void LoadSampleHistInputSugestion(object _)
+        {
+            var file = string.Format(Filehistory, AppDomain.CurrentDomain.FriendlyName, "SampleHistInputSugestion");
+            var userProfile = GetFolderPath(SpecialFolder.UserProfile);
+            _itemsInputSampleHistory = new List<ItemHistory>();
+            if (File.Exists(Path.Combine(userProfile, Folderhistory, file)))
+            {
+                var aux = File.ReadAllLines(Path.Combine(userProfile, Folderhistory, file));
+                foreach (var item in aux)
+                {
+                    var itemhist = item.Split(ItemHistory.Separator, StringSplitOptions.RemoveEmptyEntries);
+                    if (itemhist.Length == 2)
+                    {
+                        if (long.TryParse(itemhist[1], out var dtTicks))
+                        {
+                            if (DateTime.Now < new DateTime(dtTicks))
+                            {
+                                _itemsInputSampleHistory.Add(new ItemHistory(itemhist[0], dtTicks));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void SaveSampleHistSugestion(object value)
+        {
+            if (value is null)
+            {
+                return;
+            }
+            var localnewhis = value.ToString().Trim();
+            var found = _itemsInputSampleHistory
+                .Where(x => x.History.ToLowerInvariant() == localnewhis.ToLowerInvariant())
+                .ToArray();
+            if (found.Length > 0)
+            {
+                foreach (var item in found)
+                {
+                    _itemsInputSampleHistory.Remove(item);
+                }
+            }
+            if (_itemsInputSampleHistory.Count >= byte.MaxValue)
+            {
+                _itemsInputSampleHistory.RemoveAt(_itemsInputSampleHistory.Count - 1);
+            }
+            _itemsInputSampleHistory.Insert(0,
+                ItemHistory.CreateItemHistory(localnewhis, new TimeSpan(1,0,0,0)));
+
+            var file = string.Format(Filehistory, AppDomain.CurrentDomain.FriendlyName, "SampleHistInputSugestion");
+            var userProfile = GetFolderPath(SpecialFolder.UserProfile);
+            if (!Directory.Exists(Path.Combine(userProfile, Folderhistory)))
+            {
+                Directory.CreateDirectory(Path.Combine(userProfile, Folderhistory));
+            }
+
+            File.WriteAllLines(Path.Combine(userProfile, Folderhistory, file),
+                _itemsInputSampleHistory.Where(x => DateTime.Now < new DateTime(x.TimeOutTicks))
+                    .Select(x => x.ToString()), Encoding.UTF8);
         }
 
         private void RunConfirmSample()

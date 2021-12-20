@@ -106,6 +106,15 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter: Accept suggestion.
+        /// </summary>
+        internal static string EnterAcceptSugestion {
+            get {
+                return ResourceManager.GetString("EnterAcceptSugestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter: Finish.
         /// </summary>
         internal static string EnterFininsh {

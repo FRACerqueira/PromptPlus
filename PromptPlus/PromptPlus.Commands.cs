@@ -133,6 +133,18 @@ namespace PPlus
             }
         }
 
+        /// <summary>
+        /// only used by class Paginator(EnsureTerminalPagesize) when it is executed in another thread(eg: autocomplete control)
+        /// </summary>
+        internal static Tuple<int,int>  GetConsoleUnsafeBound()
+        {
+            if (CurrentThread != Environment.CurrentManagedThreadId)
+            {
+                return new Tuple<int, int>(_PPlusConsoleUnsafe.BufferWidth, _PPlusConsoleUnsafe.BufferHeight);
+            }
+            return new Tuple<int, int>(_PPlusConsole.BufferWidth, _PPlusConsole.BufferHeight);
+        }
+
         public static void DriveConsole(IConsoleDriver value)
         {
             if (value == null)

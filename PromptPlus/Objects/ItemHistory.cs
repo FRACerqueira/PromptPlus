@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace PPlus.Internal
+namespace PPlus.Objects
 {
-    internal struct ItemHistory: IComparer<ItemHistory>
+    public struct ItemHistory: IComparer<ItemHistory>
     {
         public const string Separator = "|%PPlus.TimeOut%|";
 
@@ -22,7 +19,7 @@ namespace PPlus.Internal
             TimeOutTicks = DateTime.Now.Ticks;
         }
 
-        internal ItemHistory(string history, long dateTicks)
+        public ItemHistory(string history, long dateTicks)
         {
             History = history;
             TimeOutTicks = dateTicks;

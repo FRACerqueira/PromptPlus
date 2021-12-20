@@ -34,13 +34,15 @@ namespace PPlus.CommandDotNet.Controls
             }
         }
 
-        public override void InitControl()
+        public override IArgumentNode InitControl()
         {
             if (_options.WizardControl is null)
             {
                 throw new ArgumentException(Exceptions.Ex_WizardControl);
             }
             _options.WizardControl.GetType().UnderlyingSystemType.GetProperty("PipeId").SetValue(_options.WizardControl, null);
+
+            return _options.RootCommand;
         }
 
         public void WizardTemplate(ScreenBuffer screenBuffer)

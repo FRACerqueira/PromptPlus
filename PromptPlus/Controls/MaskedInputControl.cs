@@ -27,7 +27,7 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override void InitControl()
+        public override ResultMasked InitControl()
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
@@ -52,6 +52,8 @@ namespace PPlus.Controls
 
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
+            return new ResultMasked(_maskedBuffer.ToString(), _maskedBuffer.ToMasked());
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ResultMasked result)

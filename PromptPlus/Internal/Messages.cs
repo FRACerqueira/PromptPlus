@@ -15,6 +15,7 @@ namespace PPlus.Internal
     {
         public static void UpdateCulture()
         {
+            EnterAcceptSugestion = PromptPlusResources.EnterAcceptSugestion;
             ReadlineNotFisnishHistoryhit = PromptPlusResources.ReadlineNotFisnishHistoryhit;
             ReadlineFisnishHistoryhit = PromptPlusResources.ReadlineFisnishHistoryhit;
             ReadlineSugestionMode = PromptPlusResources.ReadlineSugestionMode;
@@ -353,6 +354,8 @@ namespace PPlus.Internal
         public static string InvalidTypeChar { get; private set; } = PromptPlusResources.InvalidTypeChar;
 
         public static string InvalidTypeDateTime { get; private set; } = string.Format(PromptPlusResources.InvalidTypeDateTime, FormatDate(), FormatTime());
+
+        public static string EnterAcceptSugestion { get; private set; } = PromptPlusResources.EnterAcceptSugestion;
 
         public static string ReadlineFisnishHistoryhit { get; private set; } = PromptPlusResources.ReadlineFisnishHistoryhit;
 

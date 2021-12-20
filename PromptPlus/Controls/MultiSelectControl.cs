@@ -33,7 +33,7 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override void InitControl()
+        public override IEnumerable<T> InitControl()
         {
             Thread.CurrentThread.CurrentCulture = DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = DefaultCulture;
@@ -122,6 +122,8 @@ namespace PPlus.Controls
 
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
+            return _selectedItems.Select(x => x.Value);
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)

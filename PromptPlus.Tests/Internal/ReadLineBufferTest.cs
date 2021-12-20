@@ -19,7 +19,7 @@ namespace PPlus.Tests.Internal
         public ReadLineBufferTest()
         {
             PromptPlus.ExclusiveDriveConsole(new MemoryConsoleDriver());
-            _readlinedefault = new ReadLineBuffer(testsugestion);
+            _readlinedefault = new ReadLineBuffer(false,testsugestion);
         }
         public void Dispose()
         {

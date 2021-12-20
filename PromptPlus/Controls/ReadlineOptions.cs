@@ -11,8 +11,6 @@ namespace PPlus.Controls
         public int? PageSize { get; set; }
         public int MinimumPrefixLength { get; set; } = 3;
         public bool FinishWhenHistoryEnter { get; set; }
-        public bool AcceptInputTab { get; set; }
-        public Func<SugestionInput, SugestionOutput> SuggestionHandler { get; set; }
         public byte MaxHistory { get; set; } = byte.MaxValue;
         public TimeSpan TimeoutHistory { get; set; } = new TimeSpan(365, 0, 0, 0, 0);
         public string FileNameHistory { get; set; }

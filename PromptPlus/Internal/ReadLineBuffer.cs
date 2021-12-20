@@ -24,8 +24,23 @@ namespace PPlus.Internal
         private int _completionsStartPosition = 0;
         private string _originalText = null;
         private SugestionOutput? _completions = null;
+        private bool _enabledSugestClearInputParentControl = false;
 
-        public ReadLineBuffer(Func<SugestionInput,SugestionOutput> suggestion = null,bool acceptinputtab = false)
+        internal ReadLineBuffer(Func<SugestionInput, SugestionOutput> suggestion)
+        {
+            _handlerAutoComplete = suggestion;
+            if (suggestion != null)
+            {
+                _enabledSugestClearInputParentControl = true;
+            }
+            else
+            {
+                _enabledSugestClearInputParentControl = false;
+            }
+            _acceptinputtab = false;
+        }
+
+        public ReadLineBuffer(bool acceptinputtab = false,Func < SugestionInput,SugestionOutput> suggestion = null)
         {
             _handlerAutoComplete = suggestion;
             if (_handlerAutoComplete != null)
@@ -66,7 +81,7 @@ namespace PPlus.Internal
             }
 
             //if not input, skip all to externally inspected to determine action
-            if (_inputBuffer.Length == 0)
+            if (_inputBuffer.Length == 0 && !_enabledSugestClearInputParentControl)
             {
                 return;
             }
@@ -81,8 +96,8 @@ namespace PPlus.Internal
                     break;
                 //cutom implemenattion to abort autocomplete mode and restore original text
                 case ConsoleKey.Escape when IsInAutoCompleteMode():
-                    //reset with original text 
-                    ApplyAutoComplete(new ItemSugestion("", false));
+                    //reset with original text
+                    CancelAutoComplete();
                     foundautocomplete = false;
                     break;
                 //implemenattion autocomplete mode when have any text and exist handler-AutoComplete
@@ -238,6 +253,22 @@ namespace PPlus.Internal
 
         public bool IsInAutoCompleteMode() => _completions.HasValue;
 
+        public void CancelAutoComplete()
+        {
+            if (IsInAutoCompleteMode())
+            {
+                ApplyAutoComplete(new ItemSugestion("", false));
+            }
+        }
+
+        public void ResetAutoComplete()
+        {
+            _completions = null;
+            _completionsIndex = 0;
+            _completionsStartPosition = 0;
+            _originalText = null;
+            InputWithSugestion = null;
+        }
 
         #region private
 
@@ -281,6 +312,16 @@ namespace PPlus.Internal
         private bool ApplyAutoComplete(ItemSugestion item)
         {
 
+            if (_enabledSugestClearInputParentControl)
+            {
+                if (string.IsNullOrEmpty(item.Sugestion))
+                {
+                    Clear().LoadPrintable(_originalText);
+                    return false;
+                }
+                Clear().LoadPrintable(item.Sugestion);
+                return true;
+            }
             var origtext = _originalText;
             if (_inputBuffer.ToString() != origtext)
             {
@@ -376,15 +417,6 @@ namespace PPlus.Internal
             {
                 _completionsIndex = _completions.Value.Sugestions.Count - 1;
             }
-        }
-
-        private void ResetAutoComplete()
-        {
-            _completions = null;
-            _completionsIndex = 0;
-            _completionsStartPosition = 0;
-            _originalText  = null;
-            InputWithSugestion = null;
         }
 
         private ReadLineBuffer TransposeChars()

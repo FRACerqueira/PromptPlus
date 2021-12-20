@@ -22,13 +22,15 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override void InitControl()
+        public override bool InitControl()
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
             ///do init
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
+            return false;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out bool result)

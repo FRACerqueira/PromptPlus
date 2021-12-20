@@ -30,7 +30,7 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override void InitControl()
+        public override string InitControl()
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
@@ -54,7 +54,7 @@ namespace PPlus.Controls
                 AddLog("Validators", _options.Validators.Count.ToString(), LogKind.Property);
             }
 
-            _inputBuffer = new ReadLineBuffer(_options.SuggestionHandler, _options.AcceptInputTab);
+            _inputBuffer = new ReadLineBuffer(_options.AcceptInputTab,_options.SuggestionHandler);
 
             if (_options.EnabledHistory)
             {
@@ -63,6 +63,8 @@ namespace PPlus.Controls
 
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
+            return _inputBuffer.ToString();
 
         }
 
@@ -347,15 +349,12 @@ namespace PPlus.Controls
 
         #region IControlReadline
 
-        public IControlReadline AcceptInputTab(bool value)
+        public IControlReadline SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
         {
-            if (_options.SuggestionHandler != null)
+            _options.SuggestionHandler = value;
+            if (value is not null)
             {
                 _options.AcceptInputTab = false;
-            }
-            else
-            {
-                _options.AcceptInputTab = value;
             }
             return this;
         }
@@ -432,16 +431,6 @@ namespace PPlus.Controls
             if (description != null)
             {
                 _options.Description = description;
-            }
-            return this;
-        }
-
-        public IControlReadline SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
-        {
-            _options.SuggestionHandler = value;
-            if (value != null)
-            {
-                _options.AcceptInputTab = false;
             }
             return this;
         }

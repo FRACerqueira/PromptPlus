@@ -2,7 +2,9 @@
 {
     public enum StageControl
     {
-        OnInputRender = 1,
-        OnFinishRender = 2,
+        OnStartControl = 1,
+        OnInputRender = 2,
+        OnInputAccept = 3,
+        OnFinishControl = 4,
     }
 }

@@ -36,7 +36,7 @@ namespace PPlus.Controls
             _startDesc = _options.Description;
         }
 
-        public override void InitControl()
+        public override IEnumerable<T> InitControl()
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
@@ -88,6 +88,8 @@ namespace PPlus.Controls
 
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
+            return _inputItems;
 
         }
 

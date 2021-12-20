@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -102,8 +103,17 @@ namespace PPlus.Controls
             try
             {
                 PromptPlus.ExclusiveMode = true;
-                InitControl();
+
+                var initvalue = InitControl();
+                if (FindAction(StageControl.OnStartControl, out var useractin))
+                {
+                    useractin.Invoke(initvalue);
+                }
                 var aux = Start(value ?? CancellationToken.None);
+                if (FindAction(StageControl.OnFinishControl, out var useractout))
+                {
+                    useractout.Invoke(aux.Value);
+                }
                 if (PromptPlus.EnabledLogControl)
                 {
                     aux.LogControl = Logs;
@@ -138,7 +148,6 @@ namespace PPlus.Controls
                 {
                     AddLog("StartPipeline.Culture", Thread.CurrentThread.CurrentCulture.Name, LogKind.Method);
                 }
-                StageControl stage = 0;
                 using (var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_esckeyCancelation.Token, stoptoken))
                 {
                     bool? hit = true;
@@ -173,10 +182,9 @@ namespace PPlus.Controls
                                 pipePaginator.EnsureVisibleIndex(currentStep);
                                 _screenrender.ClearBuffer();
                                 _screenrender.InputRender(InputTemplate);
-                                stage = StageControl.OnInputRender;
-                                if (FindAction(stage, out var useract))
+                                if (FindAction(StageControl.OnInputRender, out var useract))
                                 {
-                                    useract.Invoke(PipeId);
+                                    useract.Invoke(null);
                                 }
                             }
                         }
@@ -226,11 +234,6 @@ namespace PPlus.Controls
                                 continue;
                             }
                             _screenrender.FinishRender(FinishTemplate, result);
-                            stage = StageControl.OnFinishRender;
-                            if (FindAction(stage, out var useract))
-                            {
-                                useract.Invoke(PipeId);
-                            }
                             if (_options.HideAfterFinish)
                             {
                                 _ = _screenrender.HideLastRender();
@@ -298,7 +301,6 @@ namespace PPlus.Controls
                 AddLog("Start.Culture", Thread.CurrentThread.CurrentCulture.Name, LogKind.Method);
             }
 
-            StageControl stage = 0;
             using (var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_esckeyCancelation.Token, stoptoken))
             {
                 bool? hit = true;
@@ -319,8 +321,7 @@ namespace PPlus.Controls
                             PromptPlus.IsRunningWithCommandDotNet = true;
                         }
                         _screenrender.InputRender(InputTemplate);
-                        stage = StageControl.OnInputRender;
-                        if (FindAction(stage, out var useractin))
+                        if (FindAction(StageControl.OnInputRender, out var useractin))
                         {
                             useractin.Invoke(null);
                         }
@@ -362,11 +363,6 @@ namespace PPlus.Controls
                             continue;
                         }
                         _screenrender.FinishRender(FinishTemplate, result);
-                        stage = StageControl.OnFinishRender;
-                        if (FindAction(stage, out var useractout))
-                        {
-                            useractout.Invoke(null);
-                        }
                         if (_options.HideAfterFinish)
                         {
                             _ = _screenrender.HideLastRender();
@@ -417,7 +413,7 @@ namespace PPlus.Controls
 
         public abstract bool? TryResult(bool IsSummary, CancellationToken stoptoken, out T result);
 
-        public abstract void InitControl();
+        public abstract T InitControl();
 
         public abstract void InputTemplate(ScreenBuffer screenBuffer);
 
@@ -486,7 +482,24 @@ namespace PPlus.Controls
             () => new Regex("\\<(?<name>.*?)\\>", RegexOptions.IgnoreCase),
             isThreadSafe: true);
 
-
+        public static string CreateMessageHitSugestion(bool tryfinish,string entertext)
+        {
+            var msg = new StringBuilder();
+            msg.Append(Messages.ReadlineSugestionhit);
+            msg.Append(", ");
+            msg.Append(Messages.ReadlineSugestionMode);
+            if (!tryfinish)
+            {
+                msg.Append(", ");
+                msg.Append(Messages.EnterAcceptSugestion);
+            }
+            else
+            {
+                msg.Append(", ");
+                msg.Append(entertext);
+            }
+            return msg.ToString();
+        }
 
         public bool IskeyPageNavagator<Tkey>(ConsoleKeyInfo consoleKeyInfo, Paginator<Tkey> paginator)
         {
@@ -645,6 +658,20 @@ namespace PPlus.Controls
             return this;
         }
 
+        public IPromptConfig AcceptInputTab(bool value)
+        {
+            if (_options.SuggestionHandler != null)
+            {
+                _options.AcceptInputTab = false;
+            }
+            else
+            {
+                _options.AcceptInputTab = value;
+            }
+            AddLog("AcceptInputTab", value.ToString(), LogKind.Property);
+            return this;
+        }
+
         public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
         {
             Condition = condition;
@@ -659,8 +686,8 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IFormPlusBase AddExtraAction(StageControl stage, Action<string> useraction)
-        {
+        public IFormPlusBase AddExtraAction(StageControl stage, Action<object> useraction)
+        { 
             if (useraction is null)
             {
                 throw new ArgumentException(nameof(useraction));
@@ -673,7 +700,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        private bool FindAction(StageControl value, out Action<string> action)
+        private bool FindAction(StageControl value, out Action<object> action)
         {
             action = null;
             if (_options.UserActions.ContainsKey(value))

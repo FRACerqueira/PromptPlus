@@ -17,7 +17,7 @@ namespace PPlus.Controls
     internal class InputControl : ControlBase<string>, IControlInput
     {
         private readonly InputOptions _options;
-        private readonly ReadLineBuffer _inputBuffer = new();
+        private ReadLineBuffer _inputBuffer;
         private bool _initform;
         private bool _passwordvisible;
         private string _inputDesc;
@@ -28,8 +28,16 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override void InitControl()
+        public override string InitControl()
         {
+
+            if (_options.IsPassword)
+            {
+                _options.SuggestionHandler = null;
+            }
+
+            _inputBuffer = new(_options.SuggestionHandler);
+
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
 
@@ -65,6 +73,8 @@ namespace PPlus.Controls
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
 
             _initform = true;
+
+            return _inputBuffer.ToString();
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out string result)
@@ -89,6 +99,23 @@ namespace PPlus.Controls
                 }
                 else if (keyInfo.IsPressEnterKey())
                 {
+                    if (_inputBuffer.IsInAutoCompleteMode())
+                    {
+                        var aux = _inputBuffer.ToString();
+                        _inputBuffer.Clear().LoadPrintable(aux);
+                        if (aux != _inputBuffer.ToString())
+                        {
+                            _inputBuffer.CancelAutoComplete();
+                        }
+                        else
+                        {
+                            if (!_options.EnterSuggestionTryFininsh)
+                            {
+                                _inputBuffer.ResetAutoComplete();
+                                break;
+                            }
+                        }
+                    }
                     result = _inputBuffer.ToString();
                     if (!string.IsNullOrEmpty(_options.DefaultValue) && result.Length == 0)
                     {
@@ -151,7 +178,14 @@ namespace PPlus.Controls
             }
             else
             {
-                screenBuffer.WriteAnswer(_inputBuffer.ToBackward());
+                if (_inputBuffer.IsInAutoCompleteMode())
+                {
+                    screenBuffer.WriteFilter(_inputBuffer.ToBackward());
+                }
+                else
+                {
+                    screenBuffer.WriteAnswer(_inputBuffer.ToBackward());
+                }
             }
 
             screenBuffer.PushCursor();
@@ -172,13 +206,25 @@ namespace PPlus.Controls
                     screenBuffer.WriteLineDescription(_options.Description);
                 }
             }
-
             if (EnabledStandardTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledPromptTooltip)
+                if (_inputBuffer.IsInAutoCompleteMode())
                 {
-                    screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, string.Join("", Messages.EnterFininsh, Messages.MaskEditErase));
+                    screenBuffer.WriteLineHint(
+                        CreateMessageHitSugestion(_options.EnterSuggestionTryFininsh,
+                        Messages.EnterFininsh));
+                }
+                else
+                {
+                    if (_options.EnabledPromptTooltip)
+                    {
+                        screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, string.Join("", Messages.EnterFininsh, Messages.MaskEditErase));
+                        if (_options.SuggestionHandler != null)
+                        {
+                            screenBuffer.WriteHint($", {Messages.ReadlineSugestionhit}");
+                        }
+                    }
                 }
             }
 
@@ -270,6 +316,21 @@ namespace PPlus.Controls
             _options.Validators.Merge(validators);
             return this;
         }
+
+        public IControlInput SuggestionHandler(Func<SugestionInput, SugestionOutput> value, bool enterKeyTryFininsh = false)
+        {
+            _options.SuggestionHandler = value;
+            _options.EnterSuggestionTryFininsh = enterKeyTryFininsh;
+            if (_options.SuggestionHandler is not null)
+            {
+                AddLog("SuggestionHandler", true.ToString(), LogKind.Property);
+                _options.AcceptInputTab = false;
+            }
+            AddLog("AcceptInputTab", _options.AcceptInputTab.ToString(), LogKind.Property);
+            AddLog("EnterSuggestionTryFininsh", enterKeyTryFininsh.ToString(), LogKind.Property);
+            return this;
+        }
+
 
         public IControlInput DescriptionSelector(Func<string, string> value)
         {

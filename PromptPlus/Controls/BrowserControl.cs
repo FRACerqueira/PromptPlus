@@ -34,18 +34,18 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override void InitControl()
+        public override ResultBrowser InitControl()
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
+            ResultBrowser result;
             switch (_options.Filter)
             {
                 case BrowserFilter.None:
-                    InitFilebrowser();
+                    result = InitFilebrowser();
                     break;
                 case BrowserFilter.OnlyFolder:
-                    InitFolderbrowser();
+                    result = InitFolderbrowser();
                     break;
                 default:
                     throw new NotImplementedException(string.Format(Exceptions.Ex_FileBrowserNotImplemented, _options.Filter));
@@ -64,6 +64,8 @@ namespace PPlus.Controls
 
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
+            return result;
 
         }
 
@@ -323,7 +325,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        private void InitFilebrowser()
+        private ResultBrowser InitFilebrowser()
         {
             var defvalue = _options.DefaultValue;
             if (!string.IsNullOrEmpty(defvalue) && !IsValidFile(defvalue))
@@ -351,9 +353,11 @@ namespace PPlus.Controls
             {
                 _paginator.FirstItem();
             }
+
+            return _defaultopt;
         }
 
-        private void InitFolderbrowser()
+        private ResultBrowser InitFolderbrowser()
         {
             var defvalue = _options.DefaultValue;
             if (string.IsNullOrEmpty(defvalue))
@@ -379,6 +383,8 @@ namespace PPlus.Controls
             {
                 _paginator.FirstItem();
             }
+
+            return _defaultopt;
         }
 
         private IEnumerable<ResultBrowser> ItensFolders(string folder)

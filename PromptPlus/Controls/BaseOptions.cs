@@ -34,13 +34,15 @@ namespace PPlus.Controls
                 }
             }
         }
-
         public bool HasDescription => !string.IsNullOrEmpty(_description);
         public string Message { get; set; }
         public bool EnabledAbortKey { get; set; } = PromptPlus.EnabledAbortKey;
         public bool EnabledAbortAllPipes { get; set; } = PromptPlus.EnabledAbortAllPipes;
         public bool EnabledPromptTooltip { get; set; } = PromptPlus.EnabledPromptTooltip;
         public bool HideAfterFinish { get; set; }
-        public Dictionary<StageControl, Action<string>> UserActions { get; set; } = new();
+        public Dictionary<StageControl, Action<object>> UserActions { get; set; } = new();
+        public Func<SugestionInput, SugestionOutput> SuggestionHandler { get; set; }
+        public bool EnterSuggestionTryFininsh { get; set; }
+        public bool AcceptInputTab { get; set; }
     }
 }

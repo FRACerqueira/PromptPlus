@@ -36,12 +36,16 @@ namespace PPlus.Internal
 
         private void EnsureTerminalPagesize()
         {
-            if (PromptPlus.PPlusConsole.BufferHeight == 0  || PromptPlus.PPlusConsole.BufferWidth == 0)
+            var aux = PromptPlus.GetConsoleUnsafeBound();
+            var BufferHeight = aux.Item2;
+            var BufferWidth = aux.Item1;
+
+            if (BufferHeight == 0  || BufferWidth == 0)
             {
                 _maxpageSize = _userpageSize;
                 return;
             }
-            if ((PromptPlus.MinBufferHeight - 1) >= PromptPlus.PPlusConsole.BufferHeight)
+            if ((PromptPlus.MinBufferHeight - 1) >= BufferHeight)
             {
                 throw new InvalidOperationException($"BufferHeight < {PromptPlus.MinBufferHeight - 1}");
             }
@@ -50,9 +54,9 @@ namespace PPlus.Internal
             {
                 selectedItem = _items[(_maxpageSize * SelectedPage) + SelectedIndex];
             }
-            if (PromptPlus.PPlusConsole.BufferHeight - 1 < _userpageSize + PromptPlus.MinBufferHeight)
+            if (BufferHeight - 1 < _userpageSize + PromptPlus.MinBufferHeight)
             {
-                _maxpageSize = PromptPlus.PPlusConsole.BufferHeight - (PromptPlus.MinBufferHeight);
+                _maxpageSize = BufferHeight - PromptPlus.MinBufferHeight;
             }
             else
             {

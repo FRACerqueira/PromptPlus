@@ -345,4 +345,25 @@
   <data name="ListKeyNavigationFillZeros" xml:space="preserve">
     <value>Ctrl+Del: Remove selecionado, {0}: Remove tudo, Ctrl+Enter: Terminar, Enter : Incluir</value>
   </data>
+  <data name="EnterAcceptSugestion" xml:space="preserve">
+    <value>Enter: Aceitar sugestão</value>
+  </data>
+  <data name="ReadlineFisnishHistoryhit" xml:space="preserve">
+    <value>Enter: Selecionar e terminar</value>
+  </data>
+  <data name="ReadlineHistoryEsc" xml:space="preserve">
+    <value>Esc: Cancela histórico e retorna entrada original</value>
+  </data>
+  <data name="ReadlineHistoryhit" xml:space="preserve">
+    <value>Down/PgDown: Histórico(Min. {0} chars)</value>
+  </data>
+  <data name="ReadlineNotFisnishHistoryhit" xml:space="preserve">
+    <value>Enter: Seleciona e  fecha histórico</value>
+  </data>
+  <data name="ReadlineSugestionhit" xml:space="preserve">
+    <value>Tab/Shift+Tab: Sugestões</value>
+  </data>
+  <data name="ReadlineSugestionMode" xml:space="preserve">
+    <value>Esc: Cancelar sugestão e retorna entrada original</value>
+  </data>
 </root>

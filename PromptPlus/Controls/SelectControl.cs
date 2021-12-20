@@ -28,7 +28,7 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override void InitControl()
+        public override T InitControl()
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
@@ -50,12 +50,14 @@ namespace PPlus.Controls
             }
             _options.PageSize ??= _options.Items.Count;
             _options.TextSelector ??= (x => x?.ToString());
+            T result = default;
             if (IsDisabled(_options.DefaultValue))
             {
                 _localpaginator = new Paginator<T>(_options.Items, _options.PageSize, Optional<T>.s_empty, _options.TextSelector, IsNotDisabled);
             }
             else
             {
+                result = _options.DefaultValue;
                 _localpaginator = new Paginator<T>(_options.Items, _options.PageSize, Optional<T>.Create(_options.DefaultValue), _options.TextSelector, IsNotDisabled);
             }
             _localpaginator.FirstItem();
@@ -75,6 +77,8 @@ namespace PPlus.Controls
 
             Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
             Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
+            return result;
 
         }
 

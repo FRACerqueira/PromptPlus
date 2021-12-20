@@ -23,7 +23,9 @@ namespace PPlus
         IPromptConfig EnabledAbortAllPipes(bool value);
         IPromptConfig EnabledPromptTooltip(bool value);
         IPromptConfig HideAfterFinish(bool value);
-        IFormPlusBase AddExtraAction(StageControl stage, Action<string> useraction);
+        IFormPlusBase AddExtraAction(StageControl stage, Action<object> useraction);
+        IPromptConfig AcceptInputTab(bool value);
+
     }
 
     public interface IPromptControls<T>
@@ -68,16 +70,15 @@ namespace PPlus
     {
         IControlReadline MinimumPrefixLength(int value);
         IControlReadline FinisWhenHistoryEnter(bool value);
-        IControlReadline AcceptInputTab(bool value);
         IControlReadline EnabledHistory(bool value);
         IControlReadline TimeoutHistory(TimeSpan value);
         IControlReadline FileNameHistory(string value);
         IControlReadline MaxHistory(byte value);
-        IControlReadline SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
         IControlReadline PageSize(int value);
         IControlReadline Prompt(string value, string description = null);
         IControlReadline AddValidator(Func<object, ValidationResult> validator);
         IControlReadline AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
+        IControlReadline SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
 
     }
     public interface IControlKeyPress : IPromptControls<bool>, IPromptPipe
@@ -105,7 +106,6 @@ namespace PPlus
         IControlMaskEdit ValidateOnDemand();
         IControlMaskEdit DescriptionSelector(Func<ResultMasked, string> value);
         IControlMaskEdit Config(Action<IPromptConfig> context);
-
     }
 
     public interface IControlInput : IPromptControls<string>, IPromptPipe
@@ -119,6 +119,7 @@ namespace PPlus
         IControlInput ValidateOnDemand();
         IControlInput DescriptionSelector(Func<string, string> value);
         IControlInput Config(Action<IPromptConfig> context);
+        IControlInput SuggestionHandler(Func<SugestionInput, SugestionOutput> value, bool EnterTryFininsh = false);
     }
 
     public interface IControlSliderNumber : IPromptControls<double>, IPromptPipe
@@ -202,7 +203,6 @@ namespace PPlus
         IControlSelect<T> DisableItems(IEnumerable<T> value);
         IControlSelect<T> AutoSelectIfOne();
         IControlSelect<T> Config(Action<IPromptConfig> context);
-
     }
 
     public interface IControlMultiSelect<T> : IPromptControls<IEnumerable<T>>, IPromptPipe
