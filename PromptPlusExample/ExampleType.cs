@@ -38,6 +38,10 @@ namespace PromptPlusExample
         MaskEditCurrrency,
         [Display(Name = "Control: Input - Text")]
         Input,
+        [Display(Name = "Control: Input - Text with suggestion history")]
+        InputWithHistoric,
+        [Display(Name = "Control: Input - Text with custom suggestions")]
+        InputWithsuggestions,
         [Display(Name = "Control: Input - Password")]
         Password,
         [Display(Name = "Control: Input - Auto Complete")]

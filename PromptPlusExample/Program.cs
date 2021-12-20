@@ -138,6 +138,12 @@ namespace PromptPlusExample
                     case ExampleType.Input:
                         RunInputSample();
                         break;
+                    case ExampleType.InputWithHistoric:
+                        RunInputWithHistoricSample();
+                        break;
+                    case ExampleType.InputWithsuggestions:
+                        RunInputWithsuggestionsSample();
+                        break;
                     case ExampleType.Confirm:
                         RunConfirmSample();
                         break;
@@ -285,7 +291,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"Result : [cyan]{ctrlreadline.Value}[/cyan]!");
+            PromptPlus.WriteLine($"Result : [cyan]{ctrlreadline.Value}[/]!");
         }
         private SugestionOutput mysugestion(SugestionInput arg)
         {
@@ -336,7 +342,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"Result : [cyan]{input.Value}[/cyan]!");
+            PromptPlus.WriteLine($"Result : [cyan]{input.Value}[/]!");
         }
 
         private async Task<ValueDescription<string>[]> MYServiceCompleteAsync(string prefixText, int count, CancellationToken cancellationToken)
@@ -512,7 +518,7 @@ namespace PromptPlusExample
 
             var filecfg = PromptPlus.SaveConfigToFile();
             PromptPlus.LoadConfigFromFile();
-            PromptPlus.WriteLine($"PromptPlus file [cyan]saved and readed[/cyan]. Location: {filecfg}");
+            PromptPlus.WriteLine($"PromptPlus file [cyan]saved and readed[/]. Location: {filecfg}");
         }
 
         private void RunChooseLanguageSample()
@@ -525,7 +531,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"You selected [cyan]{envalue.Value}[/cyan]");
+            PromptPlus.WriteLine($"You selected [cyan]{envalue.Value}[/]");
             switch (envalue.Value)
             {
                 case LanguageOptions.English:
@@ -595,7 +601,7 @@ namespace PromptPlusExample
             }
             else
             {
-                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/]!");
             }
 
         }
@@ -647,7 +653,7 @@ namespace PromptPlusExample
             }
             else
             {
-                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/]!");
             }
         }
 
@@ -690,7 +696,7 @@ namespace PromptPlusExample
             }
             else
             {
-                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/]!");
             }
         }
 
@@ -745,7 +751,7 @@ namespace PromptPlusExample
             }
             else
             {
-                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/]!");
             }
         }
 
@@ -766,7 +772,7 @@ namespace PromptPlusExample
             }
             else
             {
-                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/]!");
             }
         }
 
@@ -795,7 +801,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"Hello, key [cyan]pressed[/cyan]");
+            PromptPlus.WriteLine($"Hello, key [cyan]pressed[/]");
         }
 
         private void RunKeyPressSample()
@@ -807,7 +813,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"Hello, key [cyan]Ctrl-B pressed[/cyan]");
+            PromptPlus.WriteLine($"Hello, key [cyan]Ctrl-B pressed[/]");
         }
 
         private void RunImportValidatorsSample()
@@ -824,7 +830,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"Your input: [cyan]{name.Value}[/cyan]!");
+            PromptPlus.WriteLine($"Your input: [cyan]{name.Value}[/]!");
         }
 
         private class MylCass
@@ -842,8 +848,22 @@ namespace PromptPlusExample
                 .Default("Peter Parker")
                 .AddValidator(PromptPlusValidators.Required())
                 .AddValidator(PromptPlusValidators.MinLength(3))
+                .Run(_stopApp);
+            if (name.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"Hello, [cyan]{name.Value}[/]!");
+        }
+
+        private void RunInputWithHistoricSample()
+        {
+            var name = PromptPlus.Input("What's your name?")
+                .Default("Peter Parker")
+                .AddValidator(PromptPlusValidators.Required())
+                .AddValidator(PromptPlusValidators.MinLength(3))
                 .SuggestionHandler(SugestionInputSample, true)
-                .Config( (ctx) =>
+                .Config((ctx) =>
                 {
                     ctx.AddExtraAction(StageControl.OnStartControl, LoadSampleHistInputSugestion)
                        .AddExtraAction(StageControl.OnFinishControl, SaveSampleHistSugestion);
@@ -853,13 +873,33 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"Hello, [cyan]{name.Value}[/cyan]!");
+            PromptPlus.WriteLine($"Hello, [cyan]{name.Value}[/]!");
         }
+        private void RunInputWithsuggestionsSample()
+        {
+            var name = PromptPlus.Input("what is your favorite color?")
+                .SuggestionHandler(SugestionInputColorSample, true)
+                .Run(_stopApp);
+            if (name.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"[cyan]{name.Value}[/]!");
+        }
+
 
         private IList<ItemHistory> _itemsInputSampleHistory;
         private const string Folderhistory = "PromptPlus.Controls";
         private const string Filehistory = "{0}_{1}.txt";
 
+        private SugestionOutput SugestionInputColorSample(SugestionInput arg)
+        {
+            var result = new SugestionOutput();
+            result.Add("Red");
+            result.Add("Blue");
+            result.Add("Green");
+            return result;
+        }
 
         private SugestionOutput SugestionInputSample(SugestionInput arg)
         {
@@ -958,11 +998,11 @@ namespace PromptPlusExample
                 }
                 if (answer.Value)
                 {
-                    PromptPlus.WriteLine($"Sua resposta é [cyan]Yes[/cyan]");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]Yes[/]");
                 }
                 else
                 {
-                    PromptPlus.WriteLine($"Sua resposta é [cyan]No[/cyan]");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]No[/]");
                 }
             }
             else
@@ -978,11 +1018,11 @@ namespace PromptPlusExample
                 }
                 if (answer.Value)
                 {
-                    PromptPlus.WriteLine($"Sua resposta é [cyan]Sim[/cyan]");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]Sim[/]");
                 }
                 else
                 {
-                    PromptPlus.WriteLine($"Sua resposta é [cyan]Não[/cyan]");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]Não[/]");
                 }
             }
         }
