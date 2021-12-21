@@ -130,6 +130,10 @@ namespace PPlus.Controls
 
         public ResultPromptPlus<T> StartPipeline(Action<ScreenBuffer> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
         {
+            if (PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = false;
+            }
             try
             {
                 PromptPlus.ExclusiveMode = true;
@@ -287,12 +291,17 @@ namespace PPlus.Controls
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+            if (PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = false;
+            }
 
             _screenrender.StopToken = stoptoken;
             if (!_showcursor)
             {
                 ScreenRender.HideCursor();
             }
+
             T result = default;
             _esckeyCancelation = new CancellationTokenSource();
 
@@ -568,12 +577,16 @@ namespace PPlus.Controls
 
         public bool CheckDefaultKey(ConsoleKeyInfo keyInfo)
         {
+            if (PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = false;
+            }
             if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
             {
                 HideDescription = !HideDescription;
                 return true;
             }
-            if (PromptPlus.TooltipKeyPress.Equals(keyInfo))
+            if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
             {
                 EnabledStandardTooltip = !EnabledStandardTooltip;
                 return true;

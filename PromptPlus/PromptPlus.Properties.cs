@@ -82,6 +82,8 @@ namespace PPlus
 
         #endregion
 
+        public static bool DisabledAllTooltips { get; set; } = false;
+
         public static HotKey AbortAllPipesKeyPress { get; set; } = new(UserHotKey.F7, true, false, false);
 
         internal static HotKey AbortKeyPress { get; set; } = new(ConsoleKey.Escape, false, false, false);

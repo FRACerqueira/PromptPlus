@@ -88,7 +88,8 @@ When a control has a collection it can be paged with a limit of items per page. 
 
 ## Global Settings
 [**Top**](#help)
-
+- DisabledAllTooltips 
+    - Override options to EnabledStandardTooltip and EnabledPromptTooltip . Default = false
 - EnabledBeep 
     - Enabled/disabled beep. Default = false
 - EnabledStandardTooltip 
