@@ -81,6 +81,7 @@ namespace PPlus
         IControlReadline SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
 
     }
+
     public interface IControlKeyPress : IPromptControls<bool>, IPromptPipe
     {
         IControlKeyPress Prompt(string value);
@@ -187,7 +188,6 @@ namespace PPlus
         IControlAutoComplete Config(Action<IPromptConfig> context);
     }
 
-
     public interface IControlSelect<T> : IPromptControls<T>, IPromptPipe
     {
         IControlSelect<T> Prompt(string value, string description = null);
@@ -285,4 +285,5 @@ namespace PPlus
         IControlBrowser promptSearchPattern(bool value);
         IControlBrowser Config(Action<IPromptConfig> context);
     }
+
 }
