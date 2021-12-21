@@ -13,7 +13,7 @@ All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/G
 
 ![](./images/Readline.gif)
 ![](./images/InputHistory.gif)
-![](./images/PInputSugestion.gif)
+![](./images/InputSugestion.gif)
 
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/6.0.0)**: 
 <p align="left">
