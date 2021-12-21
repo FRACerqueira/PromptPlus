@@ -134,6 +134,7 @@ To use a non-embedded language/culture:
 
 ### Colors
 [**Top**](#help)
+
 PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-color.org/). when there is the environment variable "no_color" the colors are disabled.
 PromptPlus has a configurable color(16 color) schema.
 
