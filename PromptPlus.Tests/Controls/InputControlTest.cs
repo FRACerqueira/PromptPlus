@@ -39,6 +39,7 @@ namespace PPlus.Tests.Controls
             var finalvalue = string.Empty;
 
             _reader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.L, false, false, true));
+            _reader.WaitRender(); //PPLUS custom code for KeyAvailable = false => ConsoleKeyInfo((char)0, 0, true, true, true)
             _reader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.Enter, false, false, false));
             var result = PromptPlus.Input("teste", "teste description")
                 .Default("default")
@@ -65,6 +66,8 @@ namespace PPlus.Tests.Controls
                 })
                 .Run();
             Assert.Equal("default", result.Value);
+            Assert.False(result.IsAborted);
+            Assert.False(result.IsAllAborted);
             Assert.Equal("default", finalvalue);
             Assert.Equal("teste", initialvalue);
         }

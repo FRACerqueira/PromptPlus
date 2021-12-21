@@ -75,6 +75,34 @@ namespace PPlus
             return Messages.Invalid;
         }
 
+
+        ///for testing purposes only!!!.
+        internal static void ExclusiveDriveConsole(IConsoleDriver value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentException(nameof(value));
+            }
+            if (ExclusiveMode)
+            {
+                while (ExclusiveMode)
+                {
+                    Thread.Sleep(50);
+                }
+            }
+            ExclusiveMode = true;
+            PPlusConsole = value;
+        }
+
+        /// <summary>
+        /// only used by class Paginator(EnsureTerminalPagesize) when it is executed in another thread(eg: autocomplete control)
+        /// </summary>
+        internal static Tuple<int, int> GetConsoleBound()
+        {
+            return new Tuple<int, int>(_PPlusConsole.Value.BufferWidth, _PPlusConsole.Value.BufferHeight);
+        }
+
+
         #endregion
 
         #region Console Commands
@@ -111,56 +139,18 @@ namespace PPlus
             LoadConfigFromFile();
         }
 
-
-        ///for testing purposes only!!!.
-        internal static void ExclusiveDriveConsole(IConsoleDriver value)
-        {
-            if (value == null)
-            {
-                throw new ArgumentException(nameof(value));
-            }
-            lock (LockObj)
-            {
-                if (ExclusiveMode)
-                {
-                    while (ExclusiveMode)
-                    {
-                        Thread.Sleep(100);
-                    }
-                }
-                ExclusiveMode = true;
-                PPlusConsole = value;
-            }
-        }
-
-        /// <summary>
-        /// only used by class Paginator(EnsureTerminalPagesize) when it is executed in another thread(eg: autocomplete control)
-        /// </summary>
-        internal static Tuple<int,int>  GetConsoleUnsafeBound()
-        {
-            if (CurrentThread != Environment.CurrentManagedThreadId)
-            {
-                return new Tuple<int, int>(_PPlusConsoleUnsafe.BufferWidth, _PPlusConsoleUnsafe.BufferHeight);
-            }
-            return new Tuple<int, int>(_PPlusConsole.BufferWidth, _PPlusConsole.BufferHeight);
-        }
-
         public static void DriveConsole(IConsoleDriver value)
         {
             if (value == null)
             {
                 throw new ArgumentException(nameof(value));
             }
-            lock (LockObj)
+            if (ExclusiveMode)
             {
-                if (ExclusiveMode)
+                while (ExclusiveMode)
                 {
-                    while (ExclusiveMode)
-                    {
-                        Thread.Sleep(1000);
-                    }
+                    Thread.Sleep(50);
                 }
-                PPlusConsole = value;
             }
             PPlusConsole = value;
         }

@@ -36,101 +36,80 @@ namespace PPlus.Internal
         {
             get
             {
-                lock (LockObj)
-                {
-                    return PPlusConsole.ReadKey(true);
-                }
+                return PPlusConsole.ReadKey(true);
             }
 
         }
 
         public void InputRender(Action<ScreenBuffer> template, bool onlyTemplate = false)
         {
-            lock (LockObj)
+            template(FormBuffer);
+            if (!onlyTemplate)
             {
-                template(FormBuffer);
-                if (!onlyTemplate)
+                if (ErrorMessage != null)
                 {
-                    if (ErrorMessage != null)
-                    {
-                        FormBuffer.WriteLineError(ErrorMessage);
-                        ErrorMessage = null;
-                    }
-                    RenderToConsole();
+                    FormBuffer.WriteLineError(ErrorMessage);
+                    ErrorMessage = null;
                 }
+                RenderToConsole();
             }
         }
 
         public void FinishRender<TModel>(Action<ScreenBuffer, TModel> template, TModel result)
         {
-            lock (LockObj)
-            {
-                ClearBuffer();
-                template(FormBuffer, result);
-                FormBuffer.PushCursor();
-                RenderToConsole();
-            }
+            ClearBuffer();
+            template(FormBuffer, result);
+            FormBuffer.PushCursor();
+            RenderToConsole();
         }
 
         public static void NewLine()
         {
-            lock (LockObj)
-            {
-                PPlusConsole.WriteLine();
-            }
+            PPlusConsole.WriteLine();
         }
 
         public bool HideLastRender(bool skip = false)
         {
-            lock (LockObj)
+            if (_cursorBottom < 0)
             {
-                if (_cursorBottom < 0)
-                {
-                    return true;
-                }
-
-                if (skip)
-                {
-                    PPlusConsole.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
-                    return true;
-                }
-
-                EnsureScreensizeAndPosition();
-                if (StopToken.IsCancellationRequested)
-                {
-                    return false;
-                }
-
-                var lines = WrittenLineCount + 1;
-
-                if (PPlusConsole.BufferHeight - 1 < _cursorBottom && PPlusConsole.IsRunningTerminal)
-                {
-                    _cursorBottom = PPlusConsole.BufferHeight - 1;
-                    lines = _cursorBottom;
-                }
-
-                for (var i = 0; i < lines; i++)
-                {
-                    PPlusConsole.ClearLine(_cursorBottom - i);
-                }
                 return true;
             }
+
+            if (skip)
+            {
+                PPlusConsole.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
+                return true;
+            }
+
+            EnsureScreensizeAndPosition();
+            if (StopToken.IsCancellationRequested)
+            {
+                return false;
+            }
+
+            var lines = WrittenLineCount + 1;
+
+            if (PPlusConsole.BufferHeight - 1 < _cursorBottom && PPlusConsole.IsRunningTerminal)
+            {
+                _cursorBottom = PPlusConsole.BufferHeight - 1;
+                lines = _cursorBottom;
+            }
+
+            for (var i = 0; i < lines; i++)
+            {
+                PPlusConsole.ClearLine(_cursorBottom - i);
+            }
+            return true;
         }
 
         public static void ShowCursor()
         {
-            lock (LockObj)
-            {
-                PPlusConsole.CursorVisible = true;
-            }
+            PPlusConsole.CursorVisible = true;
         }
 
         public static void HideCursor()
         {
-            lock (LockObj)
-            {
-                PPlusConsole.CursorVisible = false;
-            }
+            PPlusConsole.CursorVisible = false;
         }
 
         private int WrittenLineCount => FormBuffer.Sum(x => (x.Sum(xs => xs.Width) - 1) / PPlusConsole.BufferWidth + 1) - 1;
@@ -212,11 +191,8 @@ namespace PPlus.Internal
 
         public void ClearBuffer()
         {
-            lock (LockObj)
-            {
-                FormBuffer.Clear();
-                FormBuffer.Add(new List<TextInfo>());
-            }
+            FormBuffer.Clear();
+            FormBuffer.Add(new List<TextInfo>());
         }
 
         private class Cursor

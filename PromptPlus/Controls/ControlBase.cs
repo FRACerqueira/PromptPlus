@@ -93,7 +93,7 @@ namespace PPlus.Controls
             }
         }
 
-        public void AddLog(string key, string message, LogKind logKind, LogLevel level = LogLevel.Debug)
+        public void AddLog(string key, string message, LogKind logKind, LogLevel level = LogLevel.Trace)
         {
             Logs.Add(level, key, message, logKind);
         }
@@ -551,12 +551,16 @@ namespace PPlus.Controls
 
         public bool CheckDefaultWizardKey(ConsoleKeyInfo keyInfo)
         {
+            if (PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = false;
+            }
             if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
             {
                 HideDescription = !HideDescription;
                 return true;
             }
-            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo))
+            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
             {
                 EnabledStandardTooltip = !EnabledStandardTooltip;
                 return true;
@@ -570,6 +574,8 @@ namespace PPlus.Controls
             {
                 _esckeyCancelation.Cancel();
                 AbortedAll = !OverPipeLine;
+                AddLog("AbortKeyPress", true.ToString(), LogKind.Abort);
+                AddLog("AbortedAll", AbortedAll.ToString(), LogKind.Abort);
                 return true;
             }
             return false;
@@ -595,12 +601,16 @@ namespace PPlus.Controls
             {
                 _esckeyCancelation.Cancel();
                 AbortedAll = !OverPipeLine;
+                AddLog("AbortKeyPress", true.ToString(), LogKind.Abort);
+                AddLog("AbortedAll", AbortedAll.ToString(), LogKind.Abort);
                 return true;
             }
             else if (OverPipeLine && PromptPlus.AbortAllPipesKeyPress.Equals(keyInfo) && _options.EnabledAbortAllPipes)
             {
                 _esckeyCancelation.Cancel();
                 AbortedAll = true;
+                AddLog("AbortKeyPress", true.ToString(), LogKind.Abort);
+                AddLog("AbortedAll", AbortedAll.ToString(), LogKind.Abort);
             }
             else if (OverPipeLine && PromptPlus.ResumePipesKeyPress.Equals(keyInfo))
             {

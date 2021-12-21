@@ -15,6 +15,7 @@ using PPlus.Drivers;
 using PPlus.Internal;
 using PPlus.Objects;
 using Microsoft.Extensions.Logging;
+using System.Threading;
 
 namespace PPlus
 {
@@ -30,11 +31,7 @@ namespace PPlus
         internal const int ProgressgBarDoneDelay = 1000;
         internal const int ProgressgBarCheckDelay = 50;
 
-        internal static object LockObj = new();
-
         #region internal properties
-
-        internal static int CurrentThread { get; private set; }
 
         internal static int MinBufferHeight { get; set; } = DefaultMinBufferHeight;
 
@@ -50,25 +47,18 @@ namespace PPlus
         /// </summary>
         internal static bool ExclusiveMode = false;
 
-        [ThreadStatic]
-        private static IConsoleDriver _PPlusConsole;
 
-        /// <summary>
-        /// only used by GetConsoleUnsafeBound when it is executed in another thread(eg: autocomplete control)
-        /// </summary>
-        private static IConsoleDriver _PPlusConsoleUnsafe;
+        private static readonly AsyncLocal<IConsoleDriver> _PPlusConsole = new();
 
         internal static IConsoleDriver PPlusConsole
         {
             get
             {
-                return _PPlusConsole;
+                return _PPlusConsole.Value;
             }
             private set
             {
-                _PPlusConsole = value;
-                _PPlusConsoleUnsafe = value;
-                CurrentThread = System.Threading.Thread.CurrentThread.ManagedThreadId;
+                _PPlusConsole.Value = value;
             }
         }
 

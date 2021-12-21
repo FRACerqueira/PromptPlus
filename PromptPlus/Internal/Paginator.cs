@@ -36,7 +36,7 @@ namespace PPlus.Internal
 
         private void EnsureTerminalPagesize()
         {
-            var aux = PromptPlus.GetConsoleUnsafeBound();
+            var aux = PromptPlus.GetConsoleBound();
             var BufferHeight = aux.Item2;
             var BufferWidth = aux.Item1;
 
