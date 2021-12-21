@@ -344,6 +344,7 @@ PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
 | [AutoComplete](https://fracerqueira.github.io/PromptPlus/autocomplete) | Input text with sugestions, validator, and tooltips |
 | [Readline](https://fracerqueira.github.io/PromptPlus/readline) | Input text with GNU Readline Emacs keyboard shortcuts, sugestions and historic |
 | [Input](https://fracerqueira.github.io/PromptPlus/input) | Input text with input validator with tooltips |
+| [Extensions points](https://fracerqueira.github.io/PromptPlus/inputhistsugest.md) | Input text with history/suguestions using extensions points |
 | [Password](https://fracerqueira.github.io/PromptPlus/input) | Input password with input validator and show/hide(optional) input value |
 | [MaskEdit-Generic](https://fracerqueira.github.io/PromptPlus/maskeditgeneric) | Input with masked input , tooltips and input validator |
 | [MaskEdit-Date](https://fracerqueira.github.io/PromptPlus/maskeditdate) | Date input with language parameter, tooltips and input validator |

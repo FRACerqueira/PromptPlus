@@ -299,8 +299,7 @@ Controls/Commands | Details
 [AutoComplete](autocomplete.md) | Input text with sugestions, validator, and tooltips
 [Readline](readline.md) | Input text with GNU Readline Emacs keyboard shortcuts, sugestions and historic
 [Input](input.md) | Input text with input validator with tooltips
-[Input with history](inputhistory.md) | Input text with history using extensions points
-[Input with custom sugestion](inputsugestion.md) | Input text with custom sugestion using extensions points
+[Extensions points](inputhistsugest.md) | Input text with history/suguestions using extensions points
 [Password](input.md) | Input password with input validator and show/hide(optional) input value
 [MaskEdit-Generic](maskeditgeneric.md) | Input with masked input , tooltips and input validator
 [MaskEdit-Date](maskeditdate.md) | Date input with language parameter, tooltips and input validator
