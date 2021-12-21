@@ -89,6 +89,8 @@ public class Program
 - Refactoring - Added Config(Action<IPromptConfig> context) method to config and return to interface control for better usability.
 - Refactoring - Method Syntax Adjustment to Input-Control (need to be refactored to new syntax):
     - AddValidators(Func<object, ValidationResult> validator) -> AddValidator(Func<object, ValidationResult> validator) 
+- Improvement -  Accordance with informal standard [NO COLOR]https://no-color.org/.
+    - When there is the environment variable "no_color"" the colors are disabled.
 - Improvement - Apply GNU Readline - Emacs keyboard shortcuts for all controls
 - Improvement - Added Extensions points to all controls (AddExtraAction)
     - OnStartControl

@@ -220,11 +220,7 @@ Console.WriteLine($"Hello, {name.Result}!");
 ## Install
 [**Top**](#welcome-to-promptplus)
 
-PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
-
-- .NET Core 3.1
-- .NET Core 5.0
-- .NET Core 6.X
+PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks.
 
 ```
 Install-Package PromptPlus [-pre]
@@ -279,6 +275,7 @@ To use a non-embedded language/culture:
 ### Colors
 [**Top**](#welcome-to-promptplus)
 
+PromptPlus is in accordance with informal standard [NO COLOR]https://no-color.org/. when there is the environment variable "no_color"" the colors are disabled.
 PromptPlus has a configurable color(16 color) schema.
 
 ```csharp
