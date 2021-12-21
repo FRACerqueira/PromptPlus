@@ -11,9 +11,13 @@
 
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
+![](./docs/images/PipeLine.gif)
+
 All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
 
-![](./docs/images/PipeLine.gif)
+![](./docs/images/Readline.gif)
+![](./docs/images/InputHistory.gif)
+![](./docs/images/PInputSugestion.gif)
 
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/6.0.0)**: 
 <p align="left">
@@ -60,6 +64,9 @@ dotnet run --project CommandDotNet.Example [wizard]
 ![](./docs/images/AutoComplete.gif)
 ![](./docs/images/Input.gif)
 ![](./docs/images/Password.gif)
+![](./docs/images/Readline.gif)
+![](./docs/images/InputHistory.gif)
+![](./docs/images/PInputSugestion.gif)
 
 ### MaskEdit
 [**Top**](#welcome-to-promptplus)

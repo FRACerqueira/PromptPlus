@@ -89,8 +89,15 @@ public class Program
 - Refactoring - Added Config(Action<IPromptConfig> context) method to config and return to interface control for better usability.
 - Refactoring - Method Syntax Adjustment to Input-Control (need to be refactored to new syntax):
     - AddValidators(Func<object, ValidationResult> validator) -> AddValidator(Func<object, ValidationResult> validator) 
-
 - Improvement - Apply GNU Readline - Emacs keyboard shortcuts for all controls
+- Improvement - Added Extensions points to all controls (AddExtraAction)
+    - OnStartControl
+    - OnInputRender
+    - OnInputAccept
+    - OnFinishControl
+- Improvement - Add New Control ***ReadLine** with sugestion and history capacity
+- Improvement - AddSugestion (Tab/ShiftTab) to input control (with Extensions points)
+- Improvement - AddHistory (Down/ShiftDown) to input control (with Extensions points)
 - Improvement - Check Nullabled to AddDefault(s)/AddItem(s)/AddGroup/HideItem(s)/DisableItem(s)/Default methods
 - Improvement - New Embededs Validator :
     - IsUriScheme(UriKind uriKind = UriKind.Absolute,string allowedUriSchemes = null, string errorMessage = null)

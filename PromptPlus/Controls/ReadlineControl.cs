@@ -233,8 +233,8 @@ namespace PPlus.Controls
             {
                 var part1 = _inputBuffer.ToString().Substring(0, _originalText.Length);
                 var part2 = _inputBuffer.ToString().Substring(_originalText.Length);
-                screenBuffer.WriteFilter(part1);
-                screenBuffer.WriteAnswer(part2);
+                screenBuffer.WriteAnswer(part1);
+                screenBuffer.WriteFilter(part2);
                 screenBuffer.PushCursor();
             }
             else

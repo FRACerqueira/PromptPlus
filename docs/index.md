@@ -7,9 +7,13 @@ Interactive command-line based application framework for **C# with powerful cont
 
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
+![](./images/PipeLine.gif)
+
 All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
 
-![](./images/PipeLine.gif)
+![](./images/Readline.gif)
+![](./images/InputHistory.gif)
+![](./images/PInputSugestion.gif)
 
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/6.0.0)**: 
 <p align="left">
@@ -293,6 +297,8 @@ Controls/Commands | Details
 [AutoComplete](autocomplete.md) | Input text with sugestions, validator, and tooltips
 [Readline](readline.md) | Input text with GNU Readline Emacs keyboard shortcuts, sugestions and historic
 [Input](input.md) | Input text with input validator with tooltips
+[Input with history](inputhistory.md) | Input text with history using extensions points
+[Input with custom sugestion](inputsugestion.md) | Input text with custom sugestion using extensions points
 [Password](input.md) | Input password with input validator and show/hide(optional) input value
 [MaskEdit-Generic](maskeditgeneric.md) | Input with masked input , tooltips and input validator
 [MaskEdit-Date](maskeditdate.md) | Date input with language parameter, tooltips and input validator

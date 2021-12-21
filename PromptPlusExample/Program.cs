@@ -241,7 +241,7 @@ namespace PromptPlusExample
 
             if (!quit)
             {
-                Environment.ExitCode = -1;
+                ExitCode = -1;
             }
             _appLifetime.StopApplication();
         }
