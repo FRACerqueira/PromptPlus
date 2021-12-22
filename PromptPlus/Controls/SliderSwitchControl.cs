@@ -25,9 +25,6 @@ namespace PPlus.Controls
 
         public override bool InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
             _currentValue = _options.Value;
 
             if (PromptPlus.EnabledLogControl)
@@ -35,10 +32,6 @@ namespace PPlus.Controls
                 AddLog("OffValue", _options.OffValue, LogKind.Property);
                 AddLog("OnValue", _options.OnValue, LogKind.Property);
             }
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return _currentValue;
         }
 

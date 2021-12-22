@@ -241,6 +241,8 @@ namespace PPlus
         IControlList<T> DescriptionSelector(Func<string, string> value);
         IControlList<T> Config(Action<IPromptConfig> context);
         IControlList<T> InitialValue(T value, bool ever = false);
+        IControlList<T> SuggestionHandler(Func<SugestionInput, SugestionOutput> value, bool EnterTryFininsh = false);
+
     }
 
     public interface IControlListMasked : IPromptControls<IEnumerable<ResultMasked>>, IPromptPipe

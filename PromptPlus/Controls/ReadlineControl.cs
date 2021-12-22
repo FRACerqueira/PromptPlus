@@ -32,9 +32,6 @@ namespace PPlus.Controls
 
         public override string InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
             if (string.IsNullOrEmpty(_options.FileNameHistory?.Trim()??""))
             {
                 _options.FileNameHistory = AppDomain.CurrentDomain.FriendlyName;
@@ -60,12 +57,7 @@ namespace PPlus.Controls
             {
                 LoadHistory();
             }
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return _inputBuffer.ToString();
-
         }
 
         private void AddHistory(string value)
@@ -139,7 +131,7 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(stoptoken);
-                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _inputBuffer.ToString(), out var acceptedkey);
                 if (acceptedkey)
                 {
                     _showingHistory = false;

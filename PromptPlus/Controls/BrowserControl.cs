@@ -36,8 +36,6 @@ namespace PPlus.Controls
 
         public override ResultBrowser InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
             ResultBrowser result;
             switch (_options.Filter)
             {
@@ -60,11 +58,6 @@ namespace PPlus.Controls
                 AddLog("RootFolder", _options.RootFolder, LogKind.Property);
                 AddLog("SearchPattern", _options.SearchPattern, LogKind.Property);
             }
-
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return result;
 
         }
@@ -167,7 +160,7 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
-                _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _filterBuffer.ToString(), out var acceptedkey);
                 if (acceptedkey)
                 {
                     _paginator.UpdateFilter(_filterBuffer.ToString());

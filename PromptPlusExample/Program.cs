@@ -189,6 +189,9 @@ namespace PromptPlusExample
                     case ExampleType.List:
                         RunListSample();
                         break;
+                    case ExampleType.ListWithsuggestions:
+                        ListWithsuggestionsSample();
+                        break;
                     case ExampleType.ListMasked:
                         RunListMaskedSample();
                         break;
@@ -1226,6 +1229,7 @@ namespace PromptPlusExample
                 .AddItem("ccc")
                 .InitialValue("teste")
                 .AddValidator(PromptPlusValidators.MinLength(3))
+
                 .DescriptionSelector(x =>
                 {
                     var result = x;
@@ -1247,6 +1251,65 @@ namespace PromptPlusExample
                 return;
             }
             PromptPlus.WriteLine($"You picked {string.Join(", ", lst.Value)}");
+        }
+
+        private void ListWithsuggestionsSample()
+        {
+            var lst = PromptPlus.List<string>("Please add item(s)", "Sample List")
+                .PageSize(3)
+                .UpperCase(true)
+                .AddItem("aaa")
+                .AddItem("bbb")
+                .AddItem("ccc")
+                .InitialValue("teste")
+                .AddValidator(PromptPlusValidators.MinLength(3))
+                .AllowDuplicate(false)
+                .SuggestionHandler(SugestionListSample, true)
+
+                .DescriptionSelector(x =>
+                {
+                    var result = x;
+                    var random = new Random();
+                    for (var i = 0; i < 5; i++)
+                    {
+                        var c1 = (char)random.Next(65, 90);
+                        var c2 = (char)random.Next(97, 122);
+                        var c3 = (char)random.Next(97, 122);
+                        result = result + c1 + c2 + c3;
+                    }
+                    return result;
+                })
+                .ValidateOnDemand()
+                .Run(_stopApp);
+
+            if (lst.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"You picked {string.Join(", ", lst.Value)}");
+        }
+
+        private SugestionOutput SugestionListSample(SugestionInput arg)
+        {
+            var result = new SugestionOutput();
+            var random = new Random();
+            for (var i = 0; i < 10; i++)
+            {
+                var c1 = new string((char)random.Next(65, 90),5);
+                if (arg.Context != null)
+                {
+                    var ctx = (IEnumerable<string>)arg.Context;
+                    if (!ctx.Contains(c1))
+                    {
+                        result.Add(c1);
+                    }
+                }
+                else
+                {
+                    result.Add(c1);
+                }
+            }
+            return result;
         }
 
         private void RunListMaskedSample()

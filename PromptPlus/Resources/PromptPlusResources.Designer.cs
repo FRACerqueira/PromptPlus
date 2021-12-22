@@ -556,7 +556,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}, {1}:Show/Hide password.
+        ///   Looks up a localized string similar to {0}, {1}:Toggle password.
         /// </summary>
         internal static string PasswordStandardHotkeys {
             get {
@@ -583,7 +583,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter: Select and fisnish input.
+        ///   Looks up a localized string similar to Enter: Select&amp;Fisnish.
         /// </summary>
         internal static string ReadlineFisnishHistoryhit {
             get {
@@ -592,7 +592,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Esc: Cancel historic and restore original input.
+        ///   Looks up a localized string similar to Esc: Cancel historic.
         /// </summary>
         internal static string ReadlineHistoryEsc {
             get {
@@ -610,7 +610,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter: Select and close historic.
+        ///   Looks up a localized string similar to Enter: Select&amp;Close.
         /// </summary>
         internal static string ReadlineNotFisnishHistoryhit {
             get {
@@ -619,7 +619,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tab/Shift+Tab: Sugestions.
+        ///   Looks up a localized string similar to Tab/Shift: Sugestions.
         /// </summary>
         internal static string ReadlineSugestionhit {
             get {
@@ -628,7 +628,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Esc: Cancel sugestion and restore original input.
+        ///   Looks up a localized string similar to Esc: Cancel sugestion.
         /// </summary>
         internal static string ReadlineSugestionMode {
             get {
@@ -709,7 +709,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}, {1} Show/Hide description, {2} Swith pipes summary.
+        ///   Looks up a localized string similar to {0}, {1} Toggle description, {2} Toggle pipes summary.
         /// </summary>
         internal static string ShowProcessStandardHotKeysWithPipelineDesc {
             get {
@@ -718,7 +718,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Show/Hide tooltips{1}.
+        ///   Looks up a localized string similar to {0} Toggle tooltips{1}.
         /// </summary>
         internal static string ShowStandardHotKeys {
             get {
@@ -727,7 +727,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Show/Hide tooltips, {1} Show/Hide description{2}.
+        ///   Looks up a localized string similar to {0} Toggle tooltips, {1} Toggle description{2}.
         /// </summary>
         internal static string ShowStandardHotKeysDesc {
             get {
@@ -736,7 +736,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Show/Hide keys, {1} Swith pipes summary{2}.
+        ///   Looks up a localized string similar to {0} Toggle tooltips, {1} Toggle pipes summary{2}.
         /// </summary>
         internal static string ShowStandardHotKeysWithPipeline {
             get {
@@ -745,7 +745,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Show/Hide keys, {1} Show/Hide description, {2} Swith pipes summary{3}.
+        ///   Looks up a localized string similar to {0} Toggle tooltips, {1} Toggle description, {2} Toggle pipes summary{3}.
         /// </summary>
         internal static string ShowStandardHotKeysWithPipelineDesc {
             get {

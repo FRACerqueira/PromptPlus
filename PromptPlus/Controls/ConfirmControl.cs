@@ -26,16 +26,8 @@ namespace PPlus.Controls
 
         public override bool InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
             _initform = true;
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return _options.DefaultValue ?? false;
-
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out bool result)
@@ -49,7 +41,7 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
-                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _inputBuffer.ToString(), out var acceptedkey);
                 if (acceptedkey)
                 {
                     continue;

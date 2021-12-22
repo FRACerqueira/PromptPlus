@@ -103,8 +103,12 @@ namespace PPlus.Controls
             try
             {
                 PromptPlus.ExclusiveMode = true;
-
+                Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+                Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
                 var initvalue = InitControl();
+                Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+                Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
                 if (FindAction(StageControl.OnStartControl, out var useractin))
                 {
                     useractin.Invoke(initvalue);
@@ -723,7 +727,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        private bool FindAction(StageControl value, out Action<object> action)
+        public bool FindAction(StageControl value, out Action<object> action)
         {
             action = null;
             if (_options.UserActions.ContainsKey(value))

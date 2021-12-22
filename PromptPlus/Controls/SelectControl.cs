@@ -30,9 +30,6 @@ namespace PPlus.Controls
 
         public override T InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
             if (_options.Items is null)
             {
                 throw new ArgumentNullException(nameof(_options.Items));
@@ -74,12 +71,7 @@ namespace PPlus.Controls
                 AddLog("AutoSelectIfOne", _options.AutoSelectIfOne.ToString(), LogKind.Property);
                 AddLog("PageSize", _options.PageSize.ToString(), LogKind.Property);
             }
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return result;
-
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out T result)
@@ -100,7 +92,7 @@ namespace PPlus.Controls
                 else
                 {
                     keyInfo = WaitKeypress(cancellationToken);
-                    _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                    _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo,_options.Items, out var acceptedkey);
                     if (acceptedkey)
                     {
                         _localpaginator.UpdateFilter(_filterBuffer.ToString());

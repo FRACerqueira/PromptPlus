@@ -64,7 +64,9 @@ namespace PPlus.Internal
             SelectKeyNavigation = PromptPlusResources.SelectKeyNavigation;
             AutoCompleteKeyNavigation = string.Format(PromptPlusResources.AutoCompleteKeyNavigation, UnSelectFilter);
             AutoCompleteKeyNotfound = PromptPlusResources.AutoCompleteKeyNotfound;
+            ShowStandardHotKeysDesc = PromptPlusResources.ShowStandardHotKeysDesc;
             ShowKeyPressStandardHotKeys = PromptPlusResources.ShowKeyPressStandardHotKeys;
+            ShowStandardHotKeysWithPipelineDesc = PromptPlusResources.ShowStandardHotKeysWithPipelineDesc;
             ShowKeyPressStandardHotKeysWithPipeline = PromptPlusResources.ShowKeyPressStandardHotKeysWithPipeline;
             ShowProcessStandardHotKeysWithPipeline = PromptPlusResources.ShowProcessStandardHotKeysWithPipeline;
             ShowProcessStandardHotKeysWithPipelineDesc = PromptPlusResources.ShowProcessStandardHotKeysWithPipelineDesc;

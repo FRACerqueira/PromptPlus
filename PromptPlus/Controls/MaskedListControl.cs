@@ -38,10 +38,6 @@ namespace PPlus.Controls
 
         public override IEnumerable<ResultMasked> InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
-
             _options.MaskedOption.DefaultValueWitdMask = null;
             _inputBuffer = new MaskedBuffer(_options.MaskedOption);
 
@@ -139,10 +135,6 @@ namespace PPlus.Controls
                 AddLog("MaskValue", _options.MaskedOption.MaskValue, LogKind.Property);
                 AddLog("MaskType", _options.MaskedOption.Type.ToString(), LogKind.Property);
             }
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return _inputItems;
 
         }

@@ -38,9 +38,6 @@ namespace PPlus.Controls
 
             _inputBuffer = new(_options.SuggestionHandler);
 
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
             if (_options.IsPassword && (_options.DefaultValue != null || _options.InitialValue != null))
             {
                 throw new ArgumentException(Exceptions.Ex_PasswordDefaultValue);
@@ -68,10 +65,6 @@ namespace PPlus.Controls
                 AddLog("InitialValue", _options.InitialValue?.ToString() ?? "", LogKind.Property);
                 AddLog("Validators", _options.Validators.Count.ToString(), LogKind.Property);
             }
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             _initform = true;
 
             return _inputBuffer.ToString();
@@ -88,7 +81,7 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
-                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo,_inputBuffer.ToString(), out var acceptedkey);
                 if (acceptedkey)
                 {
                     ///none
@@ -217,13 +210,19 @@ namespace PPlus.Controls
                 }
                 else
                 {
+                    var aux = ", ";
                     if (_options.EnabledPromptTooltip)
                     {
                         screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, string.Join("", Messages.EnterFininsh, Messages.MaskEditErase));
-                        if (_options.SuggestionHandler != null)
-                        {
-                            screenBuffer.WriteHint($", {Messages.ReadlineSugestionhit}");
-                        }
+                    }
+                    else
+                    {
+                        screenBuffer.WriteLine();
+                        aux = string.Empty;
+                    }
+                    if (_options.SuggestionHandler != null)
+                    {
+                        screenBuffer.WriteHint($"{aux}{Messages.ReadlineSugestionhit}");
                     }
                 }
             }

@@ -60,6 +60,8 @@ namespace PromptPlusExample
         MultiSelectWithEnum,
         [Display(Name = "Control: List - Create IEnumerable with Free Input")]
         List,
+        [Display(Name = "Control: List - Create IEnumerable with Free Input and custom suggestions")]
+        ListWithsuggestions,
         [Display(Name = "Control: ListMasked - Create IEnumerable with MaskEdit")]
         ListMasked,
         [Display(Name = "Control: Browser - Filter Only Folder")]

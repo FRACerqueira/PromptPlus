@@ -20,9 +20,9 @@ namespace PPlus.Internal
         private readonly Func<SugestionInput, SugestionOutput> _handlerAutoComplete;
         private readonly bool _acceptinputtab;
 
+        private string _originalText = null;
         private int _completionsIndex = 0;
         private int _completionsStartPosition = 0;
-        private string _originalText = null;
         private SugestionOutput? _completions = null;
         private bool _enabledSugestClearInputParentControl = false;
 
@@ -59,7 +59,7 @@ namespace PPlus.Internal
 
         public int Length => _inputBuffer.Length;
 
-        public void TryAcceptedReadlineConsoleKey(ConsoleKeyInfo keyinfo, out bool isvalid)
+        public void TryAcceptedReadlineConsoleKey(ConsoleKeyInfo keyinfo,object context, out bool isvalid)
         {
             isvalid = false;
 
@@ -92,7 +92,7 @@ namespace PPlus.Internal
                 //Emacs keyboard shortcut, when when have any text and exist handler-AutoComplete
                 //Equivalent to the tab key. 
                 case ConsoleKey.I when keyinfo.Modifiers == ConsoleModifiers.Control && _handlerAutoComplete != null:
-                    foundautocomplete = ExecuteAutoComplete(true);
+                    foundautocomplete = ExecuteAutoComplete(true, context);
                     break;
                 //cutom implemenattion to abort autocomplete mode and restore original text
                 case ConsoleKey.Escape when IsInAutoCompleteMode():
@@ -106,12 +106,12 @@ namespace PPlus.Internal
                         if (keyinfo.Modifiers == 0 )
                         {
                             //next sugestion
-                            foundautocomplete = ExecuteAutoComplete(true);
+                            foundautocomplete = ExecuteAutoComplete(true, context);
                         }
                         else if (keyinfo.Modifiers == ConsoleModifiers.Shift)
                         {
                             //previus sugestion
-                            foundautocomplete = ExecuteAutoComplete(false);
+                            foundautocomplete = ExecuteAutoComplete(false, context);
                         }
                     }
                     break;
@@ -272,13 +272,13 @@ namespace PPlus.Internal
 
         #region private
 
-        private bool ExecuteAutoComplete(bool next)
+        private bool ExecuteAutoComplete(bool next,object context)
         {
             var result = true;
             var apply = false;
             if (!IsInAutoCompleteMode())
             {
-                _completions = _handlerAutoComplete.Invoke(new SugestionInput(_inputBuffer.ToString(), Position));
+                _completions = _handlerAutoComplete.Invoke(new SugestionInput(_inputBuffer.ToString(), Position,context));
                 _completionsStartPosition = SetAutoCompletePositionCursor();
                 _originalText = _inputBuffer.ToString();
             }

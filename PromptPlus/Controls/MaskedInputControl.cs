@@ -29,9 +29,6 @@ namespace PPlus.Controls
 
         public override ResultMasked InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
             _maskedBuffer = new MaskedBuffer(_options);
 
             if (PromptPlus.EnabledLogControl)
@@ -48,11 +45,6 @@ namespace PPlus.Controls
                 AddLog("MaskValue", _options.MaskValue, LogKind.Property);
                 AddLog("MaskType", _options.Type.ToString(), LogKind.Property);
             }
-
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return new ResultMasked(_maskedBuffer.ToString(), _maskedBuffer.ToMasked());
         }
 

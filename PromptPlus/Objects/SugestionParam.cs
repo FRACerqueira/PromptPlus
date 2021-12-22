@@ -10,15 +10,18 @@ namespace PPlus.Objects
         {
             PromptText = null;
             CursorPrompt = 0;
+            Context = null;
         }
 
-        internal SugestionInput(string input, int cursorPrompt)
+        internal SugestionInput(string input, int cursorPrompt,object context)
         {
             PromptText = input;
             CursorPrompt = cursorPrompt;
+            Context = context;  
         }
         public string PromptText { get; }
         public int CursorPrompt { get; }
+        public object Context { get; }
 
         public string CurrentWord()
         {

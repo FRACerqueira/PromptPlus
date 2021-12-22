@@ -31,9 +31,6 @@ namespace PPlus.Controls
 
         public override ProgressBarInfo InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
             if (_options.UpdateHandler == null)
             {
                 throw new ArgumentException(nameof(_options.UpdateHandler), Exceptions.Ex_UpdateHandlerProgressBar);
@@ -48,12 +45,7 @@ namespace PPlus.Controls
                 AddLog("ProcessCheckInterval", _options.ProcessCheckInterval.ToString(), LogKind.Property);
                 AddLog("Witdth", _options.Witdth.ToString(), LogKind.Property);
             }
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return _laststatus;
-
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ProgressBarInfo result)

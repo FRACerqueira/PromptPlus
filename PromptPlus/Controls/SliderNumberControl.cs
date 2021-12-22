@@ -29,9 +29,6 @@ namespace PPlus.Controls
 
         public override double InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
             if (_options.Min.CompareTo(_options.Max) >= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(_options.Max), string.Format(Exceptions.Ex_MaxArgumentOutOfRange, _options.Max, _options.Min));
@@ -79,10 +76,6 @@ namespace PPlus.Controls
                 AddLog("Value", _options.Value.ToString(), LogKind.Property);
                 AddLog("Witdth", _options.Witdth.ToString(), LogKind.Property);
             }
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return _currentValue;
         }
 

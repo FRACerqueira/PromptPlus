@@ -98,8 +98,7 @@ public class Program
     - OnInputAccept
     - OnFinishControl
 - Improvement - Add New Control ***ReadLine** with sugestion and history capacity
-- Improvement - AddSugestion (Tab/ShiftTab) to input control (with Extensions points)
-- Improvement - AddHistory (Down/ShiftDown) to input control (with Extensions points)
+- Improvement - Add Sugestion (Tab/ShiftTab) to input and List control by method SuggestionHandler
 - Improvement - Check Nullabled to AddDefault(s)/AddItem(s)/AddGroup/HideItem(s)/DisableItem(s)/Default methods
 - Improvement - New Embededs Validator :
     - IsUriScheme(UriKind uriKind = UriKind.Absolute,string allowedUriSchemes = null, string errorMessage = null)

@@ -35,9 +35,6 @@ namespace PPlus.Controls
 
         public override IEnumerable<T> InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = DefaultCulture;
-
             if (_options.Items is null)
             {
                 throw new ArgumentNullException(nameof(_options.Items));
@@ -119,10 +116,6 @@ namespace PPlus.Controls
                 AddLog("Minimum", _options.Minimum.ToString(), LogKind.Property);
                 AddLog("PageSize", _options.PageSize.ToString(), LogKind.Property);
             }
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return _selectedItems.Select(x => x.Value);
         }
 
@@ -137,7 +130,7 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
-                _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _options.Items, out var acceptedkey);
                 if (acceptedkey)
                 {
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
@@ -185,64 +178,67 @@ namespace PPlus.Controls
                 else if (MarkSelect.Equals(keyInfo))
                 {
                     _localpaginator.TryGetSelectedItem(out var currentItem);
-                    if (currentItem.IsGroup)
+                    if (currentItem != null)
                     {
-                        var maxgrp = _options.Items.Count(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled);
-                        var selgrp = _selectedItems.Count(y => _options.Items.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled).Contains(y));
-                        if (maxgrp == selgrp)
+                        if (currentItem.IsGroup)
                         {
-                            var aux = _selectedItems.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled).ToArray();
-                            foreach (var item in aux)
+                            var maxgrp = _options.Items.Count(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled);
+                            var selgrp = _selectedItems.Count(y => _options.Items.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled).Contains(y));
+                            if (maxgrp == selgrp)
                             {
-                                var index = _selectedItems.FindIndex(x => x.Value.Equals(item.Value));
-                                _selectedItems.RemoveAt(index);
-                            }
-                            currentItem.IsSelected = false;
-                        }
-                        else
-                        {
-                            var aux = _options.Items.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled);
-                            var qtd = aux.Sum(x => _selectedItems.FindIndex(x => x.Value.Equals(x.Value)) >= 0 ? 1 : 0);
-                            if (_selectedItems.Count + qtd > _options.Maximum)
-                            {
-                                SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
-                            }
-                            else
-                            {
+                                var aux = _selectedItems.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled).ToArray();
                                 foreach (var item in aux)
                                 {
                                     var index = _selectedItems.FindIndex(x => x.Value.Equals(item.Value));
-                                    if (index < 0)
-                                    {
-                                        _selectedItems.Add(item);
-                                    }
+                                    _selectedItems.RemoveAt(index);
                                 }
-                                var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
-                                _selectedItems.Clear();
-                                _selectedItems.AddRange(auxsel);
-                                currentItem.IsSelected = true;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        var index = _selectedItems.FindIndex(x => x.Value.Equals(currentItem.Value));
-                        if (index >= 0)
-                        {
-                            _selectedItems.RemoveAt(index);
-                        }
-                        else
-                        {
-                            if (_selectedItems.Count >= _options.Maximum)
-                            {
-                                SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
+                                currentItem.IsSelected = false;
                             }
                             else
                             {
-                                _selectedItems.Add(currentItem);
-                                var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
-                                _selectedItems.Clear();
-                                _selectedItems.AddRange(auxsel);
+                                var aux = _options.Items.Where(x => x.Group == currentItem.Group && !x.IsGroup && !x.Disabled);
+                                var qtd = aux.Sum(x => _selectedItems.FindIndex(x => x.Value.Equals(x.Value)) >= 0 ? 1 : 0);
+                                if (_selectedItems.Count + qtd > _options.Maximum)
+                                {
+                                    SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
+                                }
+                                else
+                                {
+                                    foreach (var item in aux)
+                                    {
+                                        var index = _selectedItems.FindIndex(x => x.Value.Equals(item.Value));
+                                        if (index < 0)
+                                        {
+                                            _selectedItems.Add(item);
+                                        }
+                                    }
+                                    var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
+                                    _selectedItems.Clear();
+                                    _selectedItems.AddRange(auxsel);
+                                    currentItem.IsSelected = true;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            var index = _selectedItems.FindIndex(x => x.Value.Equals(currentItem.Value));
+                            if (index >= 0)
+                            {
+                                _selectedItems.RemoveAt(index);
+                            }
+                            else
+                            {
+                                if (_selectedItems.Count >= _options.Maximum)
+                                {
+                                    SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
+                                }
+                                else
+                                {
+                                    _selectedItems.Add(currentItem);
+                                    var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
+                                    _selectedItems.Clear();
+                                    _selectedItems.AddRange(auxsel);
+                                }
                             }
                         }
                     }

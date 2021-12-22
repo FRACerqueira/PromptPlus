@@ -54,9 +54,6 @@ namespace PPlus.Controls
 
         public override string InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
             if (_options.MinimumPrefixLength < AutoCompleteOptions.MinPrefixLength)
             {
                 _options.MinimumPrefixLength = AutoCompleteOptions.MinPrefixLength;
@@ -90,9 +87,6 @@ namespace PPlus.Controls
             _localpaginator = new Paginator<ValueDescription<string>>(_inputItems, Math.Min(_options.PageSize.Value, _options.CompletionMaxCount), Optional<ValueDescription<string>>.s_empty, x => x.Value);
             _localpaginator.FirstItem();
             _observerAutocomplete = Task.Run(() => ObserverAutoComplete(CancellationToken.None));
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
 
             return string.Empty;
 
@@ -190,7 +184,7 @@ namespace PPlus.Controls
                     if (!cancellationToken.IsCancellationRequested)
                     {
                         var oldiput = _inputBuffer.ToString().ToLowerInvariant();
-                        _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                        _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _inputBuffer.ToString(), out var acceptedkey);
                         if (!acceptedkey)
                         {
                             isvalidhit = null;

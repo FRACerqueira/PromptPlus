@@ -4,7 +4,6 @@
     {
         OnStartControl = 1,
         OnInputRender = 2,
-        OnInputAccept = 3,
-        OnFinishControl = 4,
+        OnFinishControl = 3,
     }
 }

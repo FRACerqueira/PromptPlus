@@ -22,9 +22,9 @@ namespace PPlus.Controls
         private readonly ListOptions<T> _options;
         private readonly Type _targetType = typeof(T);
         private readonly Type _underlyingType = Nullable.GetUnderlyingType(typeof(T));
-        private readonly ReadLineBuffer _inputBuffer = new();
         private readonly List<T> _inputItems = new();
         private Paginator<T> _localpaginator;
+        private ReadLineBuffer _inputBuffer = new();
         private string _inputDesc;
         private readonly string _startDesc;
         private const string Namecontrol = "PromptPlus.List";
@@ -38,8 +38,7 @@ namespace PPlus.Controls
 
         public override IEnumerable<T> InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+            _inputBuffer = new(_options.SuggestionHandler);
 
             foreach (var item in _options.InitialItems)
             {
@@ -85,10 +84,6 @@ namespace PPlus.Controls
                 AddLog("InitialItems", _options.InitialItems.Count.ToString(), LogKind.Property);
                 AddLog("LoadItems", _inputItems.Count.ToString(), LogKind.Property);
             }
-
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return _inputItems;
 
         }
@@ -104,7 +99,7 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
-                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, out var acceptedkey);
+                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _inputItems, out var acceptedkey);
                 if (acceptedkey)
                 {
                     ///none
@@ -132,7 +127,24 @@ namespace PPlus.Controls
                 }
                 else if (keyInfo.IsPressEnterKey())
                 {
+                    if (_inputBuffer.IsInAutoCompleteMode())
+                    {
+                        var aux = _inputBuffer.ToString();
+                        if (_options.UpperCase)
+                        {
+                            aux = aux.ToUpperInvariant();
+                        }
+                        _inputBuffer.Clear().LoadPrintable(aux);
+                        if (aux != _inputBuffer.ToString())
+                        {
+                            _inputBuffer.CancelAutoComplete();
+                        }
+                    }
                     var input = _inputBuffer.ToString();
+                    if (_options.UpperCase)
+                    {
+                        input = input.ToUpperInvariant();
+                    }
                     try
                     {
                         result = _inputItems;
@@ -168,6 +180,7 @@ namespace PPlus.Controls
                                 break;
                             }
                         }
+                        _inputBuffer.ResetAutoComplete();
                         _inputBuffer.Clear();
                         _inputItems.Add(inputValue);
                         _localpaginator = new Paginator<T>(_inputItems, _options.PageSize, Optional<T>.s_empty, _options.TextSelector);
@@ -186,7 +199,7 @@ namespace PPlus.Controls
                     }
                     break;
                 }
-                else if (keyInfo.IsPressSpecialKey(ConsoleKey.Decimal, ConsoleModifiers.Control))
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.Delete, ConsoleModifiers.Control))
                 {
                     if (_localpaginator.TryGetSelectedItem(out var selected))
                     {
@@ -230,8 +243,16 @@ namespace PPlus.Controls
         {
             screenBuffer.WritePrompt(_options.Message);
 
-            screenBuffer.PushCursor(_inputBuffer);
-
+            if (_inputBuffer.IsInAutoCompleteMode())
+            {
+                screenBuffer.WriteFilter(_inputBuffer.ToBackward());
+            }
+            else
+            {
+                screenBuffer.WriteAnswer(_inputBuffer.ToBackward());
+            }
+            screenBuffer.WriteAnswer(_inputBuffer.ToForward());
+            screenBuffer.PushCursor();
             if (HasDescription)
             {
                 if (!HideDescription)
@@ -243,14 +264,33 @@ namespace PPlus.Controls
             if (EnabledStandardTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledPromptTooltip)
+                if (_inputBuffer.IsInAutoCompleteMode())
                 {
-                    screenBuffer.WriteLine();
-                    if (_localpaginator.PageCount > 1)
+                    screenBuffer.WriteLineHint(
+                        CreateMessageHitSugestion(_options.EnterSuggestionTryFininsh,
+                        Messages.EnterFininsh));
+                }
+                else
+                {
+                    var aux = ", ";
+                    if (_options.EnabledPromptTooltip)
                     {
-                        screenBuffer.WriteHint(Messages.KeyNavPaging);
+                        screenBuffer.WriteLine();
+                        if (_localpaginator.PageCount > 1)
+                        {
+                            screenBuffer.WriteHint(Messages.KeyNavPaging);
+                        }
+                        screenBuffer.WriteHint(Messages.ListKeyNavigation);
                     }
-                    screenBuffer.WriteHint(Messages.ListKeyNavigation);
+                    else
+                    {
+                        screenBuffer.WriteLine();
+                        aux = string.Empty;
+                    }
+                    if (_options.SuggestionHandler != null)
+                    {
+                        screenBuffer.WriteHint($"{aux}{Messages.ReadlineSugestionhit}");
+                    }
                 }
             }
             var subset = _localpaginator.ToSubset();
@@ -301,6 +341,20 @@ namespace PPlus.Controls
         }
 
         #region IControlList
+
+        public IControlList<T> SuggestionHandler(Func<SugestionInput, SugestionOutput> value, bool enterKeyTryFininsh = false)
+        {
+            _options.SuggestionHandler = value;
+            _options.EnterSuggestionTryFininsh = enterKeyTryFininsh;
+            if (_options.SuggestionHandler is not null)
+            {
+                AddLog("SuggestionHandler", true.ToString(), LogKind.Property);
+                _options.AcceptInputTab = false;
+            }
+            AddLog("AcceptInputTab", _options.AcceptInputTab.ToString(), LogKind.Property);
+            AddLog("EnterSuggestionTryFininsh", enterKeyTryFininsh.ToString(), LogKind.Property);
+            return this;
+        }
 
         public IControlList<T> ValidateOnDemand()
         {

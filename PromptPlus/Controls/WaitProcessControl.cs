@@ -36,9 +36,6 @@ namespace PPlus.Controls
 
         public override IEnumerable<ResultProcess> InitControl()
         {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-
             if (_options.Process == null)
             {
                 throw new ArgumentException(nameof(_options.Process), Exceptions.Ex_WaitTaskToRun);
@@ -65,11 +62,7 @@ namespace PPlus.Controls
                 AddLog("SpeedAnimation", _options.SpeedAnimation.ToString(), LogKind.Property);
                 AddLog("Process", _options.Process.Count.ToString(), LogKind.Property);
             }
-            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
-            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
-
             return _lastresult.Values;
-
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<ResultProcess> result)
