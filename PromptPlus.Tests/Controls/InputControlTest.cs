@@ -27,7 +27,7 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        internal void Should_have_accept_defaultvalue_with_enter()
+        internal void Should_have_accept_defaultvalue_with_InitialValue_and_enter()
         {
             var first = true;
             string[] viewstart = null;
@@ -68,6 +68,50 @@ namespace PPlus.Tests.Controls
             Assert.False(result.IsAborted);
             Assert.False(result.IsAllAborted);
             Assert.Equal("default", finalvalue);
+            Assert.Equal("teste", initialvalue);
+        }
+
+        [Fact]
+        internal void Should_have_accept_with_InitialValue_and_enter()
+        {
+            var first = true;
+            string[] viewstart = null;
+            string[] viewend = null;
+            var initialvalue = string.Empty;
+            var finalvalue = string.Empty;
+
+            _reader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.L, false, false, true));
+            _reader.WaitRender(); //PPLUS custom code for KeyAvailable = false => ConsoleKeyInfo((char)0, 0, true, true, true)
+            _reader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.Enter, false, false, false));
+            var result = PromptPlus.Input("Prompt teste", "teste description")
+                .InitialValue("teste")
+                .Config((ctx) =>
+                {
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnStartControl, (object value) =>
+                    {
+                        initialvalue = value.ToString();
+                    });
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object value) =>
+                    {
+                        if (first)
+                        {
+                            first = false;
+                            viewstart = _memoryconsole.GetScreen();
+                        }
+                    });
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object value) =>
+                    {
+                        viewend = _memoryconsole.GetScreen();
+                        finalvalue = value.ToString();
+                    });
+                })
+                .Run();
+            Assert.Equal("", result.Value);
+            Assert.Contains("Prompt teste", viewstart[0]);
+            Assert.Equal("teste description", viewstart[1]);
+            Assert.False(result.IsAborted);
+            Assert.False(result.IsAllAborted);
+            Assert.Equal("", finalvalue);
             Assert.Equal("teste", initialvalue);
         }
 

@@ -16,7 +16,7 @@ namespace PPlus.Internal
     {
         private Cursor _pushedCursor;
         private int _cursorBottom = -1;
-
+ 
         public ScreenRender()
         {
             FormBuffer = new();
@@ -27,7 +27,6 @@ namespace PPlus.Internal
         public string ErrorMessage { get; set; }
 
         public ScreenBuffer FormBuffer { get; }
-
         public CancellationToken StopToken { get; set; }
 
         public static bool KeyAvailable => PPlusConsole.KeyAvailable;
@@ -39,6 +38,21 @@ namespace PPlus.Internal
                 return PPlusConsole.ReadKey(true);
             }
 
+        }
+
+        public ScreenBuffer SaveRender(Action<ScreenBuffer> template, bool onlyTemplate = false)
+        {
+            var lastFormBuffer = new ScreenBuffer();
+            template(lastFormBuffer);
+            if (!onlyTemplate)
+            {
+                if (ErrorMessage != null)
+                {
+                    lastFormBuffer.WriteLineError(ErrorMessage);
+                    ErrorMessage = null;
+                }
+            }
+            return lastFormBuffer;
         }
 
         public void InputRender(Action<ScreenBuffer> template, bool onlyTemplate = false)
@@ -68,16 +82,17 @@ namespace PPlus.Internal
             PPlusConsole.WriteLine();
         }
 
-        public bool HideLastRender(bool skip = false)
+        public bool HideLastRender(int diff, bool skip = false)
         {
-            if (_cursorBottom < 0)
+            var _cursorBottomdiff = _cursorBottom + diff;
+            if (_cursorBottomdiff < 0)
             {
                 return true;
             }
 
             if (skip)
             {
-                PPlusConsole.SetCursorPosition(0, _cursorBottom - WrittenLineCount);
+                PPlusConsole.SetCursorPosition(0, _cursorBottomdiff - WrittenLineCount + diff);
                 return true;
             }
 
@@ -89,7 +104,7 @@ namespace PPlus.Internal
 
             var lines = WrittenLineCount + 1;
 
-            if (PPlusConsole.BufferHeight - 1 < _cursorBottom && PPlusConsole.IsRunningTerminal)
+            if (PPlusConsole.BufferHeight - 1 < _cursorBottomdiff && PPlusConsole.IsRunningTerminal)
             {
                 _cursorBottom = PPlusConsole.BufferHeight - 1;
                 lines = _cursorBottom;
@@ -97,7 +112,7 @@ namespace PPlus.Internal
 
             for (var i = 0; i < lines; i++)
             {
-                PPlusConsole.ClearLine(_cursorBottom - i);
+                PPlusConsole.ClearLine(_cursorBottomdiff - i);
             }
             return true;
         }
@@ -112,7 +127,12 @@ namespace PPlus.Internal
             PPlusConsole.CursorVisible = false;
         }
 
-        private int WrittenLineCount => FormBuffer.Sum(x => (x.Sum(xs => xs.Width) - 1) / PPlusConsole.BufferWidth + 1) - 1;
+        public int CountLines(int consolewidth)
+        {
+            return FormBuffer.Sum(x => (x.Sum(xs => xs.Width) - 1) / consolewidth + 1) - 1;
+        }
+
+        private int WrittenLineCount => CountLines(PPlusConsole.BufferWidth);
 
         private void EnsureScreensizeAndPosition()
         {

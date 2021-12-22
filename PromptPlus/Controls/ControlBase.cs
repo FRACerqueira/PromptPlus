@@ -160,8 +160,11 @@ namespace PPlus.Controls
                 {
                     bool? hit = true;
                     var fistskip = true;
+                    int oldwidth = PromptPlus.PPlusConsole.BufferWidth;
                     while (!_linkedCts.IsCancellationRequested)
                     {
+                        var diff = _screenrender.CountLines(PromptPlus.PPlusConsole.BufferWidth) - _screenrender.CountLines(oldwidth);
+
                         var skip = _skiplastrender;
                         if (SummaryPipeLine && fistskip)
                         {
@@ -175,7 +178,7 @@ namespace PPlus.Controls
                         }
                         if (hit.HasValue)
                         {
-                            if (!_screenrender.HideLastRender(skip))
+                            if (!_screenrender.HideLastRender(diff,skip))
                             {
                                 _linkedCts.Cancel();
                                 continue;
@@ -194,6 +197,7 @@ namespace PPlus.Controls
                                 {
                                     useract.Invoke(null);
                                 }
+                                oldwidth = PromptPlus.BufferWidth;
                             }
                         }
                         T result = default;
@@ -225,7 +229,7 @@ namespace PPlus.Controls
                             ScreenRender.HideCursor();
                             if (_linkedCts.IsCancellationRequested && !_esckeyCancelation.IsCancellationRequested)
                             {
-                                if (!_screenrender.HideLastRender())
+                                if (!_screenrender.HideLastRender(diff))
                                 {
                                     _linkedCts.Cancel();
                                     continue;
@@ -236,7 +240,7 @@ namespace PPlus.Controls
 
                         if (_esckeyCancelation.IsCancellationRequested || (hit.HasValue && hit.Value))
                         {
-                            if (!_screenrender.HideLastRender())
+                            if (!_screenrender.HideLastRender(diff))
                             {
                                 _linkedCts.Cancel();
                                 continue;
@@ -244,7 +248,7 @@ namespace PPlus.Controls
                             _screenrender.FinishRender(FinishTemplate, result);
                             if (_options.HideAfterFinish)
                             {
-                                _ = _screenrender.HideLastRender();
+                                _ = _screenrender.HideLastRender(diff);
                             }
                             else
                             {
@@ -318,11 +322,14 @@ namespace PPlus.Controls
             {
                 bool? hit = true;
                 var skip = _skiplastrender;
+                int oldwidth = PromptPlus.PPlusConsole.BufferWidth;
                 while (!_linkedCts.IsCancellationRequested)
                 {
+                    var diff = _screenrender.CountLines(PromptPlus.PPlusConsole.BufferWidth) - _screenrender.CountLines(oldwidth);
+
                     if (hit.HasValue)
                     {
-                        if (!_screenrender.HideLastRender(skip))
+                        if (!_screenrender.HideLastRender(diff,skip))
                         {
                             _linkedCts.Cancel();
                             continue;
@@ -333,6 +340,7 @@ namespace PPlus.Controls
                             _screenrender.InputRender(Wizardtemplate,true);
                             PromptPlus.IsRunningWithCommandDotNet = true;
                         }
+                        oldwidth = PromptPlus.BufferWidth;
                         _screenrender.InputRender(InputTemplate);
                         if (FindAction(StageControl.OnInputRender, out var useractin))
                         {
@@ -360,7 +368,7 @@ namespace PPlus.Controls
                         ScreenRender.HideCursor();
                         if (_linkedCts.IsCancellationRequested)
                         {
-                            if (!_screenrender.HideLastRender(skip))
+                            if (!_screenrender.HideLastRender(diff,skip))
                             {
                                 _linkedCts.Cancel();
                             }
@@ -370,7 +378,7 @@ namespace PPlus.Controls
 
                     if (!_linkedCts.IsCancellationRequested && hit.HasValue && hit.Value)
                     {
-                        if (!_screenrender.HideLastRender())
+                        if (!_screenrender.HideLastRender(diff))
                         {
                             _linkedCts.Cancel();
                             continue;
@@ -378,7 +386,7 @@ namespace PPlus.Controls
                         _screenrender.FinishRender(FinishTemplate, result);
                         if (_options.HideAfterFinish)
                         {
-                            _ = _screenrender.HideLastRender();
+                            _ = _screenrender.HideLastRender(diff);
                         }
                         else
                         {

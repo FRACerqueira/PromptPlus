@@ -43,14 +43,14 @@ namespace PPlus.Controls
                 throw new ArgumentException(Exceptions.Ex_PasswordDefaultValue);
             }
 
+            if (_options.IsPassword && _options.SuggestionHandler != null)
+            {
+                throw new ArgumentException(nameof(SuggestionHandler));
+            }
+
             if (!string.IsNullOrEmpty(_options.DefaultValue) && string.IsNullOrEmpty(_options.InitialValue))
             {
                 _options.InitialValue = _options.DefaultValue;
-            }
-
-            if (_options.IsPassword)
-            {
-                _options.InitialValue = null;
             }
 
             if (!string.IsNullOrEmpty(_options.InitialValue))
