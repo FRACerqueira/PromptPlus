@@ -23,9 +23,9 @@ namespace PPlus
         IPromptConfig EnabledAbortAllPipes(bool value);
         IPromptConfig EnabledPromptTooltip(bool value);
         IPromptConfig HideAfterFinish(bool value);
-        IFormPlusBase AddExtraAction(StageControl stage, Action<object> useraction);
+        IFormPlusBase AddExtraAction(StageControl stage, Action<object, string> useraction);
         IPromptConfig AcceptInputTab(bool value);
-
+        IPromptConfig SetContext(object value);
     }
 
     public interface IPromptControls<T>
@@ -47,7 +47,7 @@ namespace PPlus
 
         string PipeTitle { get; }
 
-        object ContextState { get; }
+        object PipeContext { get; }
 
         Func<ResultPipe[], object, bool> Condition { get; }
 
@@ -72,6 +72,7 @@ namespace PPlus
         IControlReadline FinisWhenHistoryEnter(bool value);
         IControlReadline EnabledHistory(bool value);
         IControlReadline TimeoutHistory(TimeSpan value);
+        IControlReadline SaveHistoryAtFinish(bool value);
         IControlReadline FileNameHistory(string value);
         IControlReadline MaxHistory(byte value);
         IControlReadline PageSize(int value);
@@ -79,7 +80,8 @@ namespace PPlus
         IControlReadline AddValidator(Func<object, ValidationResult> validator);
         IControlReadline AddValidators(IEnumerable<Func<object, ValidationResult>> validators);
         IControlReadline SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
-
+        IControlReadline Config(Action<IPromptConfig> context);
+        IControlReadline InitialValue(string value, string error = null);
     }
 
     public interface IControlKeyPress : IPromptControls<bool>, IPromptPipe

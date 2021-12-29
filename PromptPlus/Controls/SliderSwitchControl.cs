@@ -23,7 +23,7 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override bool InitControl()
+        public override string InitControl()
         {
             _currentValue = _options.Value;
 
@@ -32,7 +32,14 @@ namespace PPlus.Controls
                 AddLog("OffValue", _options.OffValue, LogKind.Property);
                 AddLog("OnValue", _options.OnValue, LogKind.Property);
             }
-            return _currentValue;
+            if (_currentValue)
+            {
+                return _options.OnValue;
+            }
+            else
+            {
+                return _options.OffValue;
+            }
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out bool result)
@@ -75,7 +82,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
 
@@ -130,6 +137,14 @@ namespace PPlus.Controls
                 {
                     screenBuffer.WriteHint(Messages.SliderSwitcheKeyNavigator);
                 }
+            }
+            if (_currentValue)
+            {
+                return _options.OnValue;
+            }
+            else
+            {
+                return _options.OffValue;
             }
         }
 

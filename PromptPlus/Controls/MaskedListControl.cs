@@ -36,7 +36,7 @@ namespace PPlus.Controls
             _firstinput = true;
         }
 
-        public override IEnumerable<ResultMasked> InitControl()
+        public override string InitControl()
         {
             _options.MaskedOption.DefaultValueWitdMask = null;
             _inputBuffer = new MaskedBuffer(_options.MaskedOption);
@@ -53,9 +53,9 @@ namespace PPlus.Controls
                 {
                     if (_inputItems.Count < _options.Maximum)
                     {
-                        _inputBuffer.Load(_inputBuffer.PreparationDefaultValue(localitem,false));
+                        _inputBuffer.Load(_inputBuffer.PreparationDefaultValue(localitem, false));
                         var result = new ResultMasked(_inputBuffer.ToString(), FilterInput(_inputBuffer));
-                        if (!TryValidate(result.Masked, _options.Validators,true))
+                        if (!TryValidate(result.Masked, _options.Validators, true))
                         {
                             continue;
                         }
@@ -108,7 +108,7 @@ namespace PPlus.Controls
                 {
                     localitem = _options.MaskedOption.TransformItems.Invoke(_options.InitialValue);
                 }
-                _inputBuffer.Load(_inputBuffer.PreparationDefaultValue(localitem,true));
+                _inputBuffer.Load(_inputBuffer.PreparationDefaultValue(localitem, true));
             }
 
             _localpaginator = new Paginator<string>(_inputItems.Select(x => x.Masked), _options.PageSize, Optional<string>.s_empty, _options.TextSelector);
@@ -135,8 +135,7 @@ namespace PPlus.Controls
                 AddLog("MaskValue", _options.MaskedOption.MaskValue, LogKind.Property);
                 AddLog("MaskType", _options.MaskedOption.Type.ToString(), LogKind.Property);
             }
-            return _inputItems;
-
+            return _inputBuffer.ToString();
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<ResultMasked> result)
@@ -357,7 +356,7 @@ namespace PPlus.Controls
             return result;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
 
@@ -369,7 +368,7 @@ namespace PPlus.Controls
                 if (!HideDescription)
                 {
                     screenBuffer.WriteLineDescription(_options.Description);
-                    writedesc = true; 
+                    writedesc = true;
                 }
             }
 
@@ -449,9 +448,10 @@ namespace PPlus.Controls
 
             if (_options.ValidateOnDemand && _options.Validators.Count > 0 && !_firstinput)
             {
-                TryValidate(_inputBuffer.ToString(), _options.Validators,true);
+                TryValidate(_inputBuffer.ToString(), _options.Validators, true);
             }
             _firstinput = false;
+            return _inputBuffer.ToString();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<ResultMasked> result)

@@ -18,7 +18,7 @@ namespace PPlus.Drivers
     internal sealed class ConsoleDriver : IConsoleDriver
     {
         private const int IdleReadKey = 10;
-        private static readonly bool _nocolor;
+        private static readonly bool s_nocolor;
 
         public bool NoInterative => (IsInputRedirected || IsOutputRedirected || IsErrorRedirected);
 
@@ -34,12 +34,12 @@ namespace PPlus.Drivers
                 }
                 NativeMethods.SetConsoleMode(hConsole, mode | NativeMethods.ENABLE_VIRTUAL_TERMINAL_PROCESSING);
             }
-            _nocolor = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("NO_COLOR")) ? false : true;
+            s_nocolor = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("NO_COLOR"));
         }
 
         #region IConsoleDriver
 
-        public bool NoColor => _nocolor;
+        public bool NoColor => s_nocolor;
 
         public bool IsErrorRedirected => Console.IsErrorRedirected;
 

@@ -22,12 +22,12 @@ namespace PPlus.Controls
         private double _shortstep;
         private const string Namecontrol = "PromptPlus.SliderNumber";
 
-        public SliderNumberControl(SliderNumberOptions options) : base (Namecontrol, options, false)
+        public SliderNumberControl(SliderNumberOptions options) : base(Namecontrol, options, false)
         {
             _options = options;
         }
 
-        public override double InitControl()
+        public override string InitControl()
         {
             if (_options.Min.CompareTo(_options.Max) >= 0)
             {
@@ -76,7 +76,7 @@ namespace PPlus.Controls
                 AddLog("Value", _options.Value.ToString(), LogKind.Property);
                 AddLog("Witdth", _options.Witdth.ToString(), LogKind.Property);
             }
-            return _currentValue;
+            return _currentValue.ToString();
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out double result)
@@ -169,7 +169,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             if (_options.Type == SliderNumberType.UpDown)
             {
@@ -230,6 +230,7 @@ namespace PPlus.Controls
                     }
                 }
             }
+            return ValueToString(_currentValue);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, double result)

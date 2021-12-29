@@ -28,7 +28,7 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override T InitControl()
+        public override string InitControl()
         {
             if (_options.Items is null)
             {
@@ -71,7 +71,7 @@ namespace PPlus.Controls
                 AddLog("AutoSelectIfOne", _options.AutoSelectIfOne.ToString(), LogKind.Property);
                 AddLog("PageSize", _options.PageSize.ToString(), LogKind.Property);
             }
-            return result;
+            return _options.TextSelector(result);
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out T result)
@@ -92,7 +92,7 @@ namespace PPlus.Controls
                 else
                 {
                     keyInfo = WaitKeypress(cancellationToken);
-                    _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo,_options.Items, out var acceptedkey);
+                    _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _options.Items, out var acceptedkey);
                     if (acceptedkey)
                     {
                         _localpaginator.UpdateFilter(_filterBuffer.ToString());
@@ -152,8 +152,9 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
+            string resulttrempl = null;
             screenBuffer.WritePrompt(_options.Message);
             if (_localpaginator.IsUnSelected)
             {
@@ -161,16 +162,16 @@ namespace PPlus.Controls
             }
             if (_localpaginator.TryGetSelectedItem(out var result) && !_localpaginator.IsUnSelected)
             {
-                var answ = _options.TextSelector(result);
+                resulttrempl = _options.TextSelector(result);
                 var aux = _filterBuffer.ToBackward();
-                if (answ != aux && _localpaginator.Count == 1)
+                if (resulttrempl != aux && _localpaginator.Count == 1)
                 {
                     screenBuffer.WriteFilter(aux);
-                    screenBuffer.WriteAnswer(answ.Substring(aux.Length));
+                    screenBuffer.WriteAnswer(resulttrempl.Substring(aux.Length));
                 }
                 else
                 {
-                    screenBuffer.WriteAnswer(_options.TextSelector(result));
+                    screenBuffer.WriteAnswer(resulttrempl);
                 }
             }
             screenBuffer.PushCursor();
@@ -237,6 +238,7 @@ namespace PPlus.Controls
             {
                 screenBuffer.WriteLinePagination(_localpaginator.PaginationMessage());
             }
+            return resulttrempl;
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, T result)

@@ -31,15 +31,23 @@ CommandDotNet is third party applications
 **Relase Notes PromptPlus.CommandDotNet (V1.0.0.300)**
 -----------------------------------------------------------
 
+- Added Middleware ** UsePromptPlusRepl **
+    - Start interative session with readline prompt, Sugestions and History
+    - Now you can help to discover arguments (Sugestions) and history actions in interactive sessions.
+
 - Added Middleware ** UsePromptPlusWizard **
     - Directive to wizard find all the commands/options and arguments with prompt and then run.
     - Now you can discover and learn the existing commands, options and arguments.
+
 - Added Middleware UsePromptPlusAnsiConsole
     - Makes the IConsoleDriver available as a command parameter and will forward IConsole.Out to the PromptPLus IConsoleDriver.
+
 - Added Middleware UsePromptPlusArgumentPrompter
     - Adds support for prompting arguments.By default, prompts for arguments missing a required value. Missing is determined by IArgumentArity, not by any validation frameworks.
+
 - Added Middleware UsePromptPlusConfig
     - Load custom config(Colors/hotkeys/and so on) for PromptPlus.Remark: This method is only necessary when the file is in a custom folder. Prompt Plus automatically loads the file if the file is placed in the same folder as the binaries.
+
 - Added PromptValidatorUri attribute
     - Attribute to Bind the property or parameters with validate Uri format using PromptPlus-Control
 - Added PromptPlusTypeNumber attribute
@@ -74,6 +82,7 @@ public class Program
             .UsePromptPlusAnsiConsole()
             .UsePromptPlusArgumentPrompter()
             .UsePromptPlusWizard()
+            .UsePromptPlusRepl(colorizeSessionInitMessage: (msg) => msg.Yellow().Underline())
             .Run(args);
     }
 }
@@ -89,17 +98,22 @@ public class Program
 - Refactoring - Added Config(Action<IPromptConfig> context) method to config and return to interface control for better usability.
 - Refactoring - Method Syntax Adjustment to Input-Control (need to be refactored to new syntax):
     - AddValidators(Func<object, ValidationResult> validator) -> AddValidator(Func<object, ValidationResult> validator) 
+
 - Improvement -  Accordance with informal standard [NO COLOR]https://no-color.org/.
     - When there is the environment variable "no_color"" the colors are disabled.
+
+- Improvement - Add New Control ***ReadLine** with sugestion and history capacity
 - Improvement - Apply GNU Readline - Emacs keyboard shortcuts for all controls
+
 - Improvement - Added Extensions points to all controls (AddExtraAction)
     - OnStartControl
     - OnInputRender
-    - OnInputAccept
     - OnFinishControl
-- Improvement - Add New Control ***ReadLine** with sugestion and history capacity
+
 - Improvement - Add Sugestion (Tab/ShiftTab) to input and List control by method SuggestionHandler
+
 - Improvement - Check Nullabled to AddDefault(s)/AddItem(s)/AddGroup/HideItem(s)/DisableItem(s)/Default methods
+
 - Improvement - New Embededs Validator :
     - IsUriScheme(UriKind uriKind = UriKind.Absolute,string allowedUriSchemes = null, string errorMessage = null)
     - IsTypeBoolean(string errorMessage = null)
@@ -116,17 +130,25 @@ public class Program
     - IsTypeUshort(string errorMessage = null) /IsTypeUInt16(string errorMessage = null)
     - IsTypeUInt(string errorMessage = null) / IsTypeUInt32(string errorMessage = null)
     - IsTypeULong(string errorMessage = null) / IsTypeUInt64(string errorMessage = null)
+
 - Improvement - Added Description parameter to all controls
+
 - Improvement - Added InitialValue(string value) method  to Input-Control
 - Improvement - Added InitialValue(T value, bool ever = false) method to List-Control
 - Improvement - Added InitialValue(string value, bool ever = false) method to Listmasked-Control
+
 - Improvement - Added AddItem(T value)/AddItems(IEnumerable<T> value) method to List-Controls
     - Now the List-Control and Listmasked-Control can start with values
+
 - Improvement - Added TransformItems(Func<string, string> value) method to Listmasked-Control
     - Now the added items can be transformed during startup.
+
 - Improvement - Added global hotkey (default value = F3) show/hide Description
+
 - Improvement - Added color Schema Description (default value = ConsoleColor.Cyan)
+
 - Improvement - Added color Schema CurrentTokenForeColor (for PromptPlus.CommandDotNet, default value = ConsoleColor.Yellow)
+
 - Improvement - Added DescriptionSelector method for Description change on each interaction
     - Input-Control
     - AutoComplete-Control
@@ -134,11 +156,14 @@ public class Program
     - List-Control
     - MaskEdit-Control
     - Select-Control
+
     - MultSelect-Control
 - Improvement - Reviewed Defaut value to input with masked (maybe requires refactoring)
     - MaskEdit-Control/Listmasked-Control
+
 - Improvement - Added Ctrl-Enter to Finish widthout added last input
     - List-Control/Listmasked-Control
+
 - Improvement - Color the text with stacked colors ("LIFO") and simplified the final color token to "[/]"
 
 - Fixed bug - Defaut value to Browser-Control

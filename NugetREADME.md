@@ -34,6 +34,7 @@ public class Program
             .UsePromptPlusAnsiConsole()
             .UsePromptPlusArgumentPrompter()
             .UsePromptPlusWizard()
+            .UsePromptPlusRepl(colorizeSessionInitMessage: (msg) => msg.Yellow().Underline())
             .Run(args);
     }
 }

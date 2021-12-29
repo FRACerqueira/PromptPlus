@@ -1,8 +1,10 @@
-﻿using System.Globalization;
-using PPlus.CommandDotNet;
+﻿using System;
+using System.Globalization;
+
 using CommandDotNet.NameCasing;
-using System;
+
 using PPlus;
+using PPlus.CommandDotNet;
 
 namespace CommandDotNet.Example
 {
@@ -23,6 +25,7 @@ namespace CommandDotNet.Example
                 .UsePromptPlusAnsiConsole()
                 .UsePromptPlusArgumentPrompter()
                 .UsePromptPlusWizard()
+                .UsePromptPlusRepl(colorizeSessionInitMessage: (msg) => msg.Yellow().Underline())
                 .Run(args);
         }
     }

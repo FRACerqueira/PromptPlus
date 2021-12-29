@@ -32,7 +32,7 @@ namespace PPlus.Controls
         private Task _observerAutocomplete;
         private bool _autoCompleteSendStart;
         private bool _autoCompleteRunning;
-        public AutoCompleteControl(AutoCompleteOptions options) : base(Namecontrol,options, true)
+        public AutoCompleteControl(AutoCompleteOptions options) : base(Namecontrol, options, true)
         {
             _options = options;
             _startDescription = _options.Description;
@@ -88,7 +88,7 @@ namespace PPlus.Controls
             _localpaginator.FirstItem();
             _observerAutocomplete = Task.Run(() => ObserverAutoComplete(CancellationToken.None));
 
-            return string.Empty;
+            return _inputBuffer.ToString();
 
         }
 
@@ -242,7 +242,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
             screenBuffer.Write(_inputBuffer.ToBackward());
@@ -298,8 +298,9 @@ namespace PPlus.Controls
             }
             if (_options.ValidateOnDemand && _options.Validators.Count > 0 && _inputBuffer.Length > 0)
             {
-                TryValidate(_inputBuffer.ToString(), _options.Validators,true);
+                TryValidate(_inputBuffer.ToString(), _options.Validators, true);
             }
+            return _inputBuffer.ToString();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, string result)
@@ -376,7 +377,7 @@ namespace PPlus.Controls
                     }
                 }
             }
- 
+
             if (_tasksRunning != null)
             {
                 _tasksRunning.Dispose();

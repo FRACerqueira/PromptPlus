@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using System;
-using PPlus.Resources;
 
 namespace PPlus.Objects
 {
@@ -20,7 +19,7 @@ namespace PPlus.Objects
 
         public HotKey(UserHotKey key, bool alt = false, bool ctrl = false, bool shift = false)
         {
-            Key = Enum.Parse<ConsoleKey>(key.ToString(),true);
+            Key = Enum.Parse<ConsoleKey>(key.ToString(), true);
             Alt = alt;
             Ctrl = ctrl;
             Shift = shift;

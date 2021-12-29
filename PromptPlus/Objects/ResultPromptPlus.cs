@@ -3,8 +3,6 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using Microsoft.Extensions.Logging;
-
 namespace PPlus.Objects
 {
     public struct ResultPromptPlus<T>

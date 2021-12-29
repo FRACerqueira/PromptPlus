@@ -131,7 +131,7 @@ namespace PPlus.Controls
         {
             using (var fso = File.Open(value, FileMode.Open))
             {
-                LoadFont(fso,false);
+                LoadFont(fso, false);
                 _logs.Add(LogLevel.Debug, "LoadFont", value, LogKind.Property);
 
             }
@@ -160,7 +160,7 @@ namespace PPlus.Controls
             return new ResultPromptPlus<string>(Text, false, false, _logs);
         }
 
-        private void InputTemplate(ScreenBuffer screenBuffer)
+        private string InputTemplate(ScreenBuffer screenBuffer)
         {
             foreach (var item in _result)
             {
@@ -168,6 +168,7 @@ namespace PPlus.Controls
             }
             screenBuffer.WriteLine();
             screenBuffer.PushCursor();
+            return null;
         }
     }
 }

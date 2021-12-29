@@ -1,11 +1,14 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading;
 
 using CommandDotNet;
@@ -18,7 +21,15 @@ namespace PPlus.CommandDotNet
 {
     internal static class Common
     {
-        public static ICollection<string> PromptForTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize,string[] lastvalue,  out bool isCancellationRequested)
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action)
+        {
+            foreach (var item in items)
+            {
+                action(item);
+            }
+        }
+
+        public static ICollection<string> PromptForTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize, string[] lastvalue, out bool isCancellationRequested)
         {
             isCancellationRequested = false;
             if (string.IsNullOrEmpty(description))
@@ -172,18 +183,18 @@ namespace PPlus.CommandDotNet
             {
                 if (argument.AllowedValues.Any())
                 {
-                    return PromptAllowedManyValues(ctx, pageSize, promptText, description, argument,lastvalue, out isCancellationRequested);
+                    return PromptAllowedManyValues(ctx, pageSize, promptText, description, argument, lastvalue, out isCancellationRequested);
                 }
                 else
                 {
                     if (validatetypeRecognized != null)
                     {
-                        var p = new ResultPromptPlus<IEnumerable<ResultMasked>>(null,true);
+                        var p = new ResultPromptPlus<IEnumerable<ResultMasked>>(null, true);
                         switch (ctrlmasktype)
                         {
                             case MaskedType.DateOnly:
                                 p = PromptPlus
-                                    .ListMasked(promptText,description) 
+                                    .ListMasked(promptText, description)
                                     .MaskType(MaskedType.DateOnly)
                                     .FillZeros(true)
                                     .AddItems(lastvalue)
@@ -200,7 +211,7 @@ namespace PPlus.CommandDotNet
                                 p = PromptPlus
                                     .ListMasked(promptText, description)
                                     .MaskType(MaskedType.Number)
-                                    .AmmoutPositions(range.intpos,range.decpos)
+                                    .AmmoutPositions(range.intpos, range.decpos)
                                     .AddItems(lastvalue)
                                     .AcceptSignal(accepSignal)
                                     .PageSize(pageSize)
@@ -262,7 +273,7 @@ namespace PPlus.CommandDotNet
                             var iniAtt = argument.FindArgumentAttribute<PromptInitialValueAttribute>();
                             if (iniAtt is not null)
                             {
-                                c.InitialValue(iniAtt.InitialValue,iniAtt.EverInitialValue);
+                                c.InitialValue(iniAtt.InitialValue, iniAtt.EverInitialValue);
                             }
                         }
 
@@ -285,7 +296,7 @@ namespace PPlus.CommandDotNet
             {
                 if (argument.AllowedValues.Any() && argument.TypeInfo.Type != typeof(bool))
                 {
-                    return PromptAllowedOnlyValue(ctx, pageSize, promptText, description, argument,lastvalue, out isCancellationRequested);
+                    return PromptAllowedOnlyValue(ctx, pageSize, promptText, description, argument, lastvalue, out isCancellationRequested);
                 }
                 else
                 {
@@ -298,14 +309,14 @@ namespace PPlus.CommandDotNet
                             {
                                 if (lastvalue.Length == 1)
                                 {
-                                    bool.TryParse(lastvalue[0], out defvalue);
+                                    _ = bool.TryParse(lastvalue[0], out defvalue);
                                 }
                             }
                             return PromptBooleanValue(ctx, defvalue, promptText, description, argument.AllowedValues.ToArray(), out isCancellationRequested);
                         }
                         object defmaskvalue = null;
                         var p = new ResultPromptPlus<ResultMasked>(new ResultMasked(), true);
-                          switch (ctrlmasktype)
+                        switch (ctrlmasktype)
                         {
                             case MaskedType.DateOnly:
                                 if (lastvalue is not null)
@@ -334,7 +345,7 @@ namespace PPlus.CommandDotNet
                                     }
                                 }
                                 p = PromptPlus
-                                    .MaskEdit(MaskedType.Number,promptText, description)
+                                    .MaskEdit(MaskedType.Number, promptText, description)
                                     .AmmoutPositions(range.intpos, range.decpos)
                                     .Default(defmaskvalue)
                                     .AcceptSignal(accepSignal)
@@ -389,7 +400,7 @@ namespace PPlus.CommandDotNet
             }
         }
 
-        public static ICollection<string> PromptForPromptPlusTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize, PromptPlusTypeKind kind,string[] lastvalue, out bool isCancellationRequested)
+        public static ICollection<string> PromptForPromptPlusTypeArgumentValues(CommandContext ctx, IArgument argument, string description, int pageSize, PromptPlusTypeKind kind, string[] lastvalue, out bool isCancellationRequested)
         {
 
             isCancellationRequested = false;
@@ -498,7 +509,7 @@ namespace PPlus.CommandDotNet
                     }
                     default:
                         throw new InvalidConfigurationException(
-                            string.Format(Exceptions.Ex_PromptTypeKind,kind,argument.Name));
+                            string.Format(Exceptions.Ex_PromptTypeKind, kind, argument.Name));
                 }
             }
             else
@@ -626,7 +637,7 @@ namespace PPlus.CommandDotNet
                     }
                     default:
                         throw new InvalidConfigurationException(
-                            string.Format(Exceptions.Ex_PromptTypeKind,kind,argument.Name));
+                            string.Format(Exceptions.Ex_PromptTypeKind, kind, argument.Name));
                 }
             }
         }
@@ -655,7 +666,7 @@ namespace PPlus.CommandDotNet
             return new[] { p.Value.ToString() };
         }
 
-        public static ICollection<string> PromptSingleValue(CommandContext ctx, bool isPassword, string promptText, string description, IArgument argument, string defaultvalue,string[] lastvalue, out bool isCancellationRequested)
+        public static ICollection<string> PromptSingleValue(CommandContext ctx, bool isPassword, string promptText, string description, IArgument argument, string defaultvalue, string[] lastvalue, out bool isCancellationRequested)
         {
             string initvalue = null;
             if (lastvalue is not null)
@@ -701,7 +712,7 @@ namespace PPlus.CommandDotNet
             return new[] { p.Value };
         }
 
-        public static ICollection<string> PromptAllowedManyValues(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument,string[] lastvalue, out bool isCancellationRequested)
+        public static ICollection<string> PromptAllowedManyValues(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument, string[] lastvalue, out bool isCancellationRequested)
         {
             isCancellationRequested = false;
 
@@ -769,7 +780,7 @@ namespace PPlus.CommandDotNet
             }
         }
 
-        public static ICollection<string> PromptAllowedOnlyValue(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument,string[] lastvalue, out bool isCancellationRequested)
+        public static ICollection<string> PromptAllowedOnlyValue(CommandContext ctx, int pageSize, string promptText, string description, IArgument argument, string[] lastvalue, out bool isCancellationRequested)
         {
             string defvalue = null;
             if (lastvalue is not null)
@@ -838,12 +849,12 @@ namespace PPlus.CommandDotNet
             if (qtd > 1)
             {
                 throw new InvalidConfigurationException(
-                    string.Format(Exceptions.Ex_PromptTypeMany,instance.Name));
+                    string.Format(Exceptions.Ex_PromptTypeMany, instance.Name));
             }
             if (instance.AllowedValues.Any() || instance.TypeInfo.Type == typeof(bool) || isPassword)
             {
                 throw new InvalidConfigurationException(
-                    string.Format(Exceptions.Ex_PromptTypeError,instance.Name));
+                    string.Format(Exceptions.Ex_PromptTypeError, instance.Name));
             }
             var result = PromptPlusTypeKind.None;
             if (aux is not null)
@@ -853,7 +864,7 @@ namespace PPlus.CommandDotNet
             if (instance.Arity.AllowsMany() && result == PromptPlusTypeKind.Browser)
             {
                 throw new InvalidConfigurationException(
-                    string.Format(Exceptions.Ex_PromptTypeBrowser,instance.Name));
+                    string.Format(Exceptions.Ex_PromptTypeBrowser, instance.Name));
             }
             return result;
         }
@@ -867,6 +878,7 @@ namespace PPlus.CommandDotNet
             }
             return null;
         }
+
         public static T? FindAttribute<T>(this Type instance) where T : Attribute
         {
             var att = instance.GetCustomAttributes(false).FirstOrDefault(a => a as T != null);
@@ -876,7 +888,6 @@ namespace PPlus.CommandDotNet
             }
             return null;
         }
-
 
         public static IList<Func<object, ValidationResult>>? ImportDataAnnotationsValidations(this IArgument argument)
         {

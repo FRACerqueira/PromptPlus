@@ -1,7 +1,13 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+
 using PPlus.Objects;
 
 namespace PPlus.Drivers
@@ -185,7 +191,7 @@ namespace PPlus.Drivers
             }
         }
 
-        private void EnsurePosition(string text,int rows, int cols)
+        private void EnsurePosition(string text, int rows, int cols)
         {
             if (rows == 0 || cols == 0 || string.IsNullOrEmpty(text))
             {
@@ -362,143 +368,15 @@ namespace PPlus.Drivers
 
         private static bool IsAnsiConsole(string value) => Encoding.Unicode.GetBytes(value)[0] == 27;
 
-        private static int ValueCommand(string s,string cmd)
+        private static int ValueCommand(string s, string cmd)
         {
-            var aux = s.Replace(ESC, "").Replace("[","").Replace(cmd, "").Trim();
+            var aux = s.Replace(ESC, "").Replace("[", "").Replace(cmd, "").Trim();
             if (int.TryParse(aux, out var result))
             {
                 return result;
             }
             return -1;
         }
-
-        private static StyleTextConsole GraphicRendition(string s)
-        {
-            ConsoleColor? forecolor = null;
-            ConsoleColor? backcolor = null;
-            bool? underline = null;
-            var parts = s.Split(';');
-            foreach (var part in parts)
-            {
-                switch (part)
-                {
-                    case "0":
-                        forecolor = null;
-                        backcolor = null;
-                        break;
-                    case "4":
-                        underline = true;
-                        break;
-                    case "24":
-                        underline = false;
-                        break;
-                    case "30":
-                        forecolor = ConsoleColor.Black;
-                        break;
-                    case "31":
-                        forecolor = ConsoleColor.DarkRed;
-                        break;
-                    case "32":
-                        forecolor = ConsoleColor.DarkGreen;
-                        break;
-                    case "33":
-                        forecolor = ConsoleColor.DarkYellow;
-                        break;
-                    case "34":
-                        forecolor = ConsoleColor.DarkBlue;
-                        break;
-                    case "35":
-                        forecolor = ConsoleColor.DarkMagenta;
-                        break;
-                    case "36":
-                        forecolor = ConsoleColor.DarkCyan;
-                        break;
-                    case "37":
-                        forecolor = ConsoleColor.Gray;
-                        break;
-                    case "39":
-                        forecolor = null;
-                        break;
-                    case "40":
-                        backcolor = ConsoleColor.Black;
-                        break;
-                    case "41":
-                        backcolor = ConsoleColor.DarkRed;
-                        break;
-                    case "42":
-                        backcolor = ConsoleColor.DarkGreen;
-                        break;
-                    case "43":
-                        backcolor = ConsoleColor.DarkYellow;
-                        break;
-                    case "44":
-                        backcolor = ConsoleColor.DarkBlue;
-                        break;
-                    case "45":
-                        backcolor = ConsoleColor.DarkMagenta;
-                        break;
-                    case "46":
-                        backcolor = ConsoleColor.DarkCyan;
-                        break;
-                    case "47":
-                        backcolor = ConsoleColor.Gray;
-                        break;
-                    case "49":
-                        backcolor = null;
-                        break;
-                    case "90":
-                        forecolor = ConsoleColor.Black;
-                        break;
-                    case "91":
-                        forecolor = ConsoleColor.Red;
-                        break;
-                    case "92":
-                        forecolor = ConsoleColor.Green;
-                        break;
-                    case "93":
-                        forecolor = ConsoleColor.Yellow;
-                        break;
-                    case "94":
-                        forecolor = ConsoleColor.Blue;
-                        break;
-                    case "95":
-                        forecolor = ConsoleColor.Magenta;
-                        break;
-                    case "96":
-                        forecolor = ConsoleColor.Cyan;
-                        break;
-                    case "97":
-                        forecolor = ConsoleColor.White;
-                        break;
-                    case "100":
-                        backcolor = ConsoleColor.Black;
-                        break;
-                    case "101":
-                        backcolor = ConsoleColor.Red;
-                        break;
-                    case "102":
-                        backcolor = ConsoleColor.Green;
-                        break;
-                    case "103":
-                        backcolor = ConsoleColor.Yellow;
-                        break;
-                    case "104":
-                        backcolor = ConsoleColor.Blue;
-                        break;
-                    case "105":
-                        backcolor = ConsoleColor.Magenta;
-                        break;
-                    case "106":
-                        backcolor = ConsoleColor.Cyan;
-                        break;
-                    case "107":
-                        backcolor = ConsoleColor.White;
-                        break;
-                }
-            }
-            return new StyleTextConsole(forecolor, backcolor, underline);
-        }
-
         #endregion
 
     }

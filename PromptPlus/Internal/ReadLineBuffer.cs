@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -11,20 +16,21 @@ namespace PPlus.Internal
     internal class ReadLineBuffer
     {
         private readonly StringBuilder _inputBuffer = new();
-        private readonly UnicodeCategory[] _nonRenderingCategories = new [] 
+        private readonly UnicodeCategory[] _nonRenderingCategories = new[]
         {
             UnicodeCategory.Control,
             UnicodeCategory.OtherNotAssigned,
-            UnicodeCategory.Surrogate 
+            UnicodeCategory.Surrogate
         };
         private readonly Func<SugestionInput, SugestionOutput> _handlerAutoComplete;
         private readonly bool _acceptinputtab;
 
         private string _originalText = null;
+
         private int _completionsIndex = 0;
         private int _completionsStartPosition = 0;
         private SugestionOutput? _completions = null;
-        private bool _enabledSugestClearInputParentControl = false;
+        private readonly bool _enabledSugestClearInputParentControl = false;
 
         internal ReadLineBuffer(Func<SugestionInput, SugestionOutput> suggestion)
         {
@@ -40,7 +46,7 @@ namespace PPlus.Internal
             _acceptinputtab = false;
         }
 
-        public ReadLineBuffer(bool acceptinputtab = false,Func < SugestionInput,SugestionOutput> suggestion = null)
+        public ReadLineBuffer(bool acceptinputtab = false, Func<SugestionInput, SugestionOutput> suggestion = null)
         {
             _handlerAutoComplete = suggestion;
             if (_handlerAutoComplete != null)
@@ -57,9 +63,11 @@ namespace PPlus.Internal
 
         public int Position { get; private set; }
 
+        public string SugestionError { get; private set; }
+
         public int Length => _inputBuffer.Length;
 
-        public void TryAcceptedReadlineConsoleKey(ConsoleKeyInfo keyinfo,object context, out bool isvalid)
+        public void TryAcceptedReadlineConsoleKey(ConsoleKeyInfo keyinfo, object context, out bool isvalid)
         {
             isvalid = false;
 
@@ -69,7 +77,7 @@ namespace PPlus.Internal
                 isvalid = IsPrintable(keyinfo.KeyChar);
             }
             //if accept tab (not auto-complete enabled) insert input tab 
-            if (_acceptinputtab && keyinfo.Key == ConsoleKey.Tab)
+            if (_acceptinputtab && (keyinfo.Key == ConsoleKey.Tab || (keyinfo.Key == ConsoleKey.I && keyinfo.Modifiers == ConsoleModifiers.Control)))
             {
                 isvalid = true;
             }
@@ -83,7 +91,10 @@ namespace PPlus.Internal
             //if not input, skip all to externally inspected to determine action
             if (_inputBuffer.Length == 0 && !_enabledSugestClearInputParentControl)
             {
-                return;
+                if (!(keyinfo.Key == ConsoleKey.Tab || (keyinfo.Key == ConsoleKey.I && keyinfo.Modifiers == ConsoleModifiers.Control)))
+                {
+                    return;
+                }
             }
             isvalid = true;
             var foundautocomplete = false;
@@ -102,33 +113,33 @@ namespace PPlus.Internal
                     break;
                 //implemenattion autocomplete mode when have any text and exist handler-AutoComplete
                 case ConsoleKey.Tab when _handlerAutoComplete != null:
+                {
+                    if (keyinfo.Modifiers == 0)
                     {
-                        if (keyinfo.Modifiers == 0 )
-                        {
-                            //next sugestion
-                            foundautocomplete = ExecuteAutoComplete(true, context);
-                        }
-                        else if (keyinfo.Modifiers == ConsoleModifiers.Shift)
-                        {
-                            //previus sugestion
-                            foundautocomplete = ExecuteAutoComplete(false, context);
-                        }
+                        //next sugestion
+                        foundautocomplete = ExecuteAutoComplete(true, context);
                     }
-                    break;
+                    else if (keyinfo.Modifiers == ConsoleModifiers.Shift)
+                    {
+                        //previus sugestion
+                        foundautocomplete = ExecuteAutoComplete(false, context);
+                    }
+                }
+                break;
                 //Emacs keyboard shortcut when when have any text with lenght > 1
                 //Transpose the previous two characters
                 case ConsoleKey.T when keyinfo.Modifiers == ConsoleModifiers.Control && _inputBuffer.Length > 1:
-                    {
-                        TransposeChars();
-                    }
-                    break;
+                {
+                    TransposeChars();
+                }
+                break;
                 //Emacs keyboard shortcut, when when have any text
                 // Clears the content
                 case ConsoleKey.L when keyinfo.Modifiers == ConsoleModifiers.Control:
-                    {
-                        Clear();
-                    }
-                    break;
+                {
+                    Clear();
+                }
+                break;
                 //Emacs keyboard shortcut when when have any text
                 //Lowers the case of every character from the cursor's position to the end of the current word
                 case ConsoleKey.L when keyinfo.Modifiers == ConsoleModifiers.Alt:
@@ -151,12 +162,12 @@ namespace PPlus.Internal
                 //Emacs keyboard shortcut when when have any text
                 //Clears the line content after the cursor
                 case ConsoleKey.K when keyinfo.Modifiers == ConsoleModifiers.Control:
-                    {
-                        var aux = ToBackward();
-                        Clear().LoadPrintable(aux);
-                        Position = Length;
-                    }
-                    break;
+                {
+                    var aux = ToBackward();
+                    Clear().LoadPrintable(aux);
+                    Position = Length;
+                }
+                break;
                 //Emacs keyboard shortcut when when have any text
                 //Clears the word before the cursor
                 case ConsoleKey.W when keyinfo.Modifiers == ConsoleModifiers.Control:
@@ -257,7 +268,7 @@ namespace PPlus.Internal
         {
             if (IsInAutoCompleteMode())
             {
-                ApplyAutoComplete(new ItemSugestion("", false));
+                ApplyAutoComplete(new ItemSugestion("", false, null, null));
             }
         }
 
@@ -270,43 +281,46 @@ namespace PPlus.Internal
             InputWithSugestion = null;
         }
 
+        public void ClearError()
+        {
+            SugestionError = null;
+        }
+
         #region private
 
-        private bool ExecuteAutoComplete(bool next,object context)
+        private bool ExecuteAutoComplete(bool next, object context)
         {
-            var result = true;
-            var apply = false;
+            var firstComplete = false;
             if (!IsInAutoCompleteMode())
             {
-                _completions = _handlerAutoComplete.Invoke(new SugestionInput(_inputBuffer.ToString(), Position,context));
+                firstComplete = true;
+                SugestionError = null;
+                _completions = _handlerAutoComplete.Invoke(new SugestionInput(_inputBuffer.ToString(), Position, context));
                 _completionsStartPosition = SetAutoCompletePositionCursor();
+                if (_completions.Value.CursorPrompt.HasValue)
+                {
+                    _completionsStartPosition = _completions.Value.CursorPrompt.Value;
+                }
                 _originalText = _inputBuffer.ToString();
             }
             if (_completions.Value.Sugestions.Count == 0)
             {
-                return apply;
+                SugestionError = _completions.Value.MsgError;
+                return false;
             }
             if (next)
             {
-                apply = ApplyAutoComplete(_completions.Value.Sugestions[_completionsIndex]);
-                if (apply)
+                if (!firstComplete)
                 {
                     NextCompletions();
                 }
-                else
-                {
-                    result = false;
-                }
+                return ApplyAutoComplete(_completions.Value.Sugestions[_completionsIndex]);
             }
-            else
+            if (!firstComplete)
             {
                 PreviusCompletions();
-                if (!ApplyAutoComplete(_completions.Value.Sugestions[_completionsIndex]))
-                {
-                    result = false;
-                }
             }
-            return result;  
+            return ApplyAutoComplete(_completions.Value.Sugestions[_completionsIndex]);
         }
 
         private bool ApplyAutoComplete(ItemSugestion item)
@@ -339,12 +353,13 @@ namespace PPlus.Internal
             {
                 return false;
             }
-
             var localpos = _completionsStartPosition;
-            var lstinput = new List<string>();
-            lstinput.Add(_inputBuffer.ToString().Substring(0, _completionsStartPosition));
-            string localsugestion = item.Sugestion;
-            if (_inputBuffer[localpos-1] != ' ')
+            var lstinput = new List<string>
+            {
+                _inputBuffer.ToString().Substring(0, _completionsStartPosition)
+            };
+            var localsugestion = item.Sugestion;
+            if (localpos > 0 && _inputBuffer[localpos - 1] != ' ')
             {
                 if (!localsugestion.StartsWith(" "))
                 {
@@ -361,7 +376,8 @@ namespace PPlus.Internal
                     LoadPrintable(" ");
                 }
             }
-            lstinput.Add(_inputBuffer.ToString().Substring(_completionsStartPosition+ localsugestion.Length));
+            lstinput.Add(_inputBuffer.ToString().Substring(_completionsStartPosition + localsugestion.Length));
+            lstinput.Add(item.Description);
             InputWithSugestion = lstinput.ToArray();
             return true;
         }
@@ -371,7 +387,7 @@ namespace PPlus.Internal
             var pos = Position;
             if (!IsEnd())
             {
-                while (pos >=0)
+                while (pos >= 0)
                 {
                     if (_inputBuffer[pos] != ' ')
                     {
@@ -490,7 +506,7 @@ namespace PPlus.Internal
             {
                 Position--;
             }
-            bool firstspace = false;
+            var firstspace = false;
             if (!IsStart())
             {
                 firstspace = _inputBuffer[Position] == ' ';
@@ -526,7 +542,7 @@ namespace PPlus.Internal
             {
                 _inputBuffer[Position] = char.ToUpperInvariant(_inputBuffer[Position]);
                 Position++;
-                if (_inputBuffer[Position-1] == ' ')
+                if (_inputBuffer[Position - 1] == ' ')
                 {
                     break;
                 }
@@ -580,7 +596,7 @@ namespace PPlus.Internal
             {
                 _inputBuffer[Position] = char.ToLowerInvariant(_inputBuffer[Position]);
                 Position++;
-                if (_inputBuffer[Position-1] == ' ')
+                if (_inputBuffer[Position - 1] == ' ')
                 {
                     break;
                 }
@@ -636,7 +652,7 @@ namespace PPlus.Internal
             {
                 return false;
             }
-            return char.IsWhiteSpace(c) || 
+            return char.IsWhiteSpace(c) ||
                 !_nonRenderingCategories.Contains(char.GetUnicodeCategory(c));
         }
 
@@ -660,7 +676,7 @@ namespace PPlus.Internal
             }
             else
             {
-                _inputBuffer.Insert(Position,value);
+                _inputBuffer.Insert(Position, value);
             }
             Position++;
         }

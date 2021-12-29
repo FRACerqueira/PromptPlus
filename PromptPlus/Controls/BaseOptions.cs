@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 
 using PPlus.Objects;
 
@@ -40,9 +39,11 @@ namespace PPlus.Controls
         public bool EnabledAbortAllPipes { get; set; } = PromptPlus.EnabledAbortAllPipes;
         public bool EnabledPromptTooltip { get; set; } = PromptPlus.EnabledPromptTooltip;
         public bool HideAfterFinish { get; set; }
-        public Dictionary<StageControl, Action<object>> UserActions { get; set; } = new();
+        public Dictionary<StageControl, Action<object, string>> UserActions { get; set; } = new();
         public Func<SugestionInput, SugestionOutput> SuggestionHandler { get; set; }
         public bool EnterSuggestionTryFininsh { get; set; }
         public bool AcceptInputTab { get; set; }
+        public object Context { get; set; }
+
     }
 }

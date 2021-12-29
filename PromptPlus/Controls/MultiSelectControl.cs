@@ -33,7 +33,7 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override IEnumerable<T> InitControl()
+        public override string InitControl()
         {
             if (_options.Items is null)
             {
@@ -116,7 +116,7 @@ namespace PPlus.Controls
                 AddLog("Minimum", _options.Minimum.ToString(), LogKind.Property);
                 AddLog("PageSize", _options.PageSize.ToString(), LogKind.Property);
             }
-            return _selectedItems.Select(x => x.Value);
+            return string.Join(", ", _selectedItems.Select(x => x.Text));
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)
@@ -296,7 +296,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
             var showSelected = (_selectedItems.Count > 0 && _filterBuffer.Length == 0) || !_localpaginator.IsUnSelected;
@@ -416,6 +416,9 @@ namespace PPlus.Controls
             {
                 screenBuffer.WriteLinePagination(_localpaginator.PaginationMessage());
             }
+
+            return string.Join(", ", _selectedItems.Select(x => x.Text));
+
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<T> result)

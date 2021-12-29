@@ -34,7 +34,7 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override IEnumerable<ResultProcess> InitControl()
+        public override string InitControl()
         {
             if (_options.Process == null)
             {
@@ -62,7 +62,7 @@ namespace PPlus.Controls
                 AddLog("SpeedAnimation", _options.SpeedAnimation.ToString(), LogKind.Property);
                 AddLog("Process", _options.Process.Count.ToString(), LogKind.Property);
             }
-            return _lastresult.Values;
+            return null;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<ResultProcess> result)
@@ -117,7 +117,7 @@ namespace PPlus.Controls
             return false;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
             if (_options.Process.Count == 1)
@@ -154,7 +154,7 @@ namespace PPlus.Controls
                     screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, !HasDescription);
                     screenBuffer.ClearRestOfLine();
                 }
-                return;
+                return null;
             }
 
             var runningtasks = _localTask.Count;
@@ -233,6 +233,7 @@ namespace PPlus.Controls
                     }
                 }
             }
+            return null;
         }
 
         private static bool IsListEndStaus(IEnumerable<TaskStatus> status)

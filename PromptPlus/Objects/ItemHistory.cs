@@ -1,9 +1,14 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 
 namespace PPlus.Objects
 {
-    public struct ItemHistory: IComparer<ItemHistory>
+    public struct ItemHistory : IComparer<ItemHistory>
     {
         public const string Separator = "|%PPlus.TimeOut%|";
 
@@ -25,7 +30,7 @@ namespace PPlus.Objects
             TimeOutTicks = dateTicks;
         }
 
-        public string History { get;  }
+        public string History { get; }
         public long TimeOutTicks { get; }
 
         public override string ToString()

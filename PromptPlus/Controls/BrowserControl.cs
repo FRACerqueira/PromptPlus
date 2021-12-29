@@ -34,16 +34,15 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override ResultBrowser InitControl()
+        public override string InitControl()
         {
-            ResultBrowser result;
             switch (_options.Filter)
             {
                 case BrowserFilter.None:
-                    result = InitFilebrowser();
+                    InitFilebrowser();
                     break;
                 case BrowserFilter.OnlyFolder:
-                    result = InitFolderbrowser();
+                    InitFolderbrowser();
                     break;
                 default:
                     throw new NotImplementedException(string.Format(Exceptions.Ex_FileBrowserNotImplemented, _options.Filter));
@@ -58,8 +57,7 @@ namespace PPlus.Controls
                 AddLog("RootFolder", _options.RootFolder, LogKind.Property);
                 AddLog("SearchPattern", _options.SearchPattern, LogKind.Property);
             }
-            return result;
-
+            return _filterBuffer.ToString();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultBrowser result)
@@ -69,7 +67,7 @@ namespace PPlus.Controls
             screenBuffer.WriteAnswer(FinishResult);
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             var prompt = $"{ _options.Message}";
             if (_options.SearchPattern != "*" && _options.ShowSearchPattern)
@@ -147,6 +145,7 @@ namespace PPlus.Controls
             {
                 screenBuffer.WriteLinePagination(_paginator.PaginationMessage());
             }
+            return _filterBuffer.ToString();
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ResultBrowser result)
@@ -318,7 +317,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        private ResultBrowser InitFilebrowser()
+        private void InitFilebrowser()
         {
             var defvalue = _options.DefaultValue;
             if (!string.IsNullOrEmpty(defvalue) && !IsValidFile(defvalue))
@@ -346,11 +345,9 @@ namespace PPlus.Controls
             {
                 _paginator.FirstItem();
             }
-
-            return _defaultopt;
         }
 
-        private ResultBrowser InitFolderbrowser()
+        private void InitFolderbrowser()
         {
             var defvalue = _options.DefaultValue;
             if (string.IsNullOrEmpty(defvalue))
@@ -376,8 +373,6 @@ namespace PPlus.Controls
             {
                 _paginator.FirstItem();
             }
-
-            return _defaultopt;
         }
 
         private IEnumerable<ResultBrowser> ItensFolders(string folder)

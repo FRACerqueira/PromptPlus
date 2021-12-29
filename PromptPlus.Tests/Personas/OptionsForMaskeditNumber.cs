@@ -8,7 +8,7 @@ namespace PPlus.Tests.Personas
 {
     internal class OptionsForMaskeditNumber : MaskedOptions
     {
-        public OptionsForMaskeditNumber(CultureInfo culture,int ammountInteger, int ammountDecimal, MaskedSignal acceptSignal,  string defaultvalue) : base()
+        public OptionsForMaskeditNumber(CultureInfo culture, int ammountInteger, int ammountDecimal, MaskedSignal acceptSignal, string defaultvalue) : base()
         {
             Type = MaskedType.Number;
             DefaultValueWitdMask = defaultvalue;

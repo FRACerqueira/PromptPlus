@@ -8,8 +8,6 @@ using System.Threading;
 
 using PPlus.Internal;
 
-using PPlus.Objects;
-
 namespace PPlus.Controls
 {
     internal class keyPressControl : ControlBase<bool>, IControlKeyPress
@@ -22,10 +20,10 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override bool InitControl()
+        public override string InitControl()
         {
             ///do init
-            return false;
+            return null;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out bool result)
@@ -69,7 +67,7 @@ namespace PPlus.Controls
             return null;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             string aux;
             if (!_options.KeyPress.HasValue && string.IsNullOrEmpty(_options.Message))
@@ -108,6 +106,7 @@ namespace PPlus.Controls
             screenBuffer.WriteSymbolPrompt();
             screenBuffer.WriteHint($" {aux}");
             screenBuffer.PushCursor();
+            return null;
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, bool result)

@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 namespace PPlus.Objects
 {
     public struct StyleTextConsole
@@ -10,7 +15,7 @@ namespace PPlus.Objects
             Underline = null;
         }
 
-        internal StyleTextConsole(ConsoleColor? forecolor, ConsoleColor? backcolor,bool? undeline)
+        internal StyleTextConsole(ConsoleColor? forecolor, ConsoleColor? backcolor, bool? undeline)
         {
             ForeColor = forecolor;
             BackColor = backcolor;

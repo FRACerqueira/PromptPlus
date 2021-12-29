@@ -1,8 +1,14 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
+
 #if NET5_0_OR_GREATER
 using System.IO;
 #endif
-using System.Threading;
+
 #if NETSTANDARD2_1
 using CommandDotNet;
 #endif

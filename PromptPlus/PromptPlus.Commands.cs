@@ -4,7 +4,6 @@
 // ***************************************************************************************
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -37,7 +36,7 @@ namespace PPlus
                 {
                     if (PPlusLog.IsEnabled(item.Level))
                     {
-                        LoggerExtensions.Log(PPlusLog, item.Level, msglog, item.LogDate.ToString("u"), item.Source,item.Key, item.Message,item.Kind);
+                        LoggerExtensions.Log(PPlusLog, item.Level, msglog, item.LogDate.ToString("u"), item.Source, item.Key, item.Message, item.Kind);
                     }
                 }
             }
@@ -79,10 +78,6 @@ namespace PPlus
         ///for testing purposes only!!!.
         internal static void ExclusiveDriveConsole(IConsoleDriver value)
         {
-            if (value == null)
-            {
-                throw new ArgumentException(nameof(value));
-            }
             if (ExclusiveMode)
             {
                 while (ExclusiveMode)
@@ -91,7 +86,7 @@ namespace PPlus
                 }
             }
             ExclusiveMode = true;
-            PPlusConsole = value;
+            PPlusConsole = value ?? throw new ArgumentException(Messages.Invalid, nameof(value));
         }
 
         /// <summary>
@@ -134,17 +129,13 @@ namespace PPlus
             AppCultureUI = Thread.CurrentThread.CurrentUICulture;
             DefaultCulture = AppCulture;
             DefaultForeColor = Console.ForegroundColor;
-            DefaultBackColor= Console.BackgroundColor;
+            DefaultBackColor = Console.BackgroundColor;
 
             LoadConfigFromFile();
         }
 
         public static void DriveConsole(IConsoleDriver value)
         {
-            if (value == null)
-            {
-                throw new ArgumentException(nameof(value));
-            }
             if (ExclusiveMode)
             {
                 while (ExclusiveMode)
@@ -152,7 +143,7 @@ namespace PPlus
                     Thread.Sleep(50);
                 }
             }
-            PPlusConsole = value;
+            PPlusConsole = value ?? throw new ArgumentException(Messages.Invalid, nameof(value));
         }
 
         public static void ClearRestOfLine(ConsoleColor? color = null) => PPlusConsole.ClearRestOfLine(color ?? BackgroundColor);

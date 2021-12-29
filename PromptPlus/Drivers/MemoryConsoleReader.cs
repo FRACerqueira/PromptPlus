@@ -1,4 +1,8 @@
-﻿
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -33,7 +37,7 @@ namespace PPlus.Drivers
         {
             if (Enum.TryParse<ConsoleKey>(value.ToString(), true, out var result))
             {
-                LoadInput(new ConsoleKeyInfo(value, result, char.IsLetter(value)?char.IsUpper(value):false, false, false));
+                LoadInput(new ConsoleKeyInfo(value, result, char.IsLetter(value) && char.IsUpper(value), false, false));
             }
             else
             {

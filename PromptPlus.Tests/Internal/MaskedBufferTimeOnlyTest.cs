@@ -1,7 +1,5 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
-using PPlus.Drivers;
 using PPlus.Internal;
 using PPlus.Tests.Personas;
 
@@ -94,7 +92,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_Load_partial_validvalues_en_us_withFill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("en-US"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("en-US"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("11:34", true));
             //then
             Assert.Equal("11:34:00 AM", maskedBuffer.ToMasked());
@@ -126,7 +124,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_Load_partial_validvalues_pt_br_withFill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("pt-BR"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("pt-BR"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("23:34", true));
             // then
             Assert.Equal("23:34:00", maskedBuffer.ToMasked());
@@ -160,7 +158,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_Clear_withFill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("en-US"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("en-US"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("11:34", true));
             //when
             maskedBuffer.Clear();
@@ -302,7 +300,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_Delete_withFill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("en-US"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("en-US"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("11:34", true));
             //when
             maskedBuffer.ToStart();
@@ -344,7 +342,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_insert_valid_reject_invalid__withFill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("en-US"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("en-US"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("11:34", true));
             //when
             maskedBuffer.Insert('2', out _);

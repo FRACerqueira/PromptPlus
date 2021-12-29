@@ -29,7 +29,7 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override ProgressBarInfo InitControl()
+        public override string InitControl()
         {
             if (_options.UpdateHandler == null)
             {
@@ -45,7 +45,7 @@ namespace PPlus.Controls
                 AddLog("ProcessCheckInterval", _options.ProcessCheckInterval.ToString(), LogKind.Property);
                 AddLog("Witdth", _options.Witdth.ToString(), LogKind.Property);
             }
-            return _laststatus;
+            return null;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ProgressBarInfo result)
@@ -100,7 +100,7 @@ namespace PPlus.Controls
             return false;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
             screenBuffer.WriteAnswer($" {_laststatus.PercentValue}% ");
@@ -135,6 +135,7 @@ namespace PPlus.Controls
                 screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, !HasDescription, 3);
             }
             screenBuffer.ClearRestOfLine();
+            return null;
         }
 
         private int Barlength(int value) => (int)(value * _step);

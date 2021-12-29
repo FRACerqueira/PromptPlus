@@ -30,7 +30,11 @@ All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/G
 - Wizard to find all the commands/options and arguments with prompt and then run.
     - Now you can discover and learn the existing commands, options and arguments.
 
-![](./docs/images/PplusCmddotnet.gif)
+- Interative session with readline prompt, Sugestions and History.
+    - Now you can help to discover arguments (Sugestions) and history actions in interactive sessions.
+
+![](./docs/images/PplusCmddotnetWizard.gif)
+![](./docs/images/PplusCmddotnetRepl.gif)
 
 ### **Official pages** :
 
@@ -66,7 +70,7 @@ dotnet run --project CommandDotNet.Example [wizard]
 ![](./docs/images/Password.gif)
 ![](./docs/images/Readline.gif)
 ![](./docs/images/InputHistory.gif)
-![](./docs/images/PInputSugestion.gif)
+![](./docs/images/InputSugestion.gif)
 
 ### MaskEdit
 [**Top**](#welcome-to-promptplus)
@@ -165,6 +169,7 @@ public class Program
             .UsePromptPlusAnsiConsole()
             .UsePromptPlusArgumentPrompter()
             .UsePromptPlusWizard()
+            .UsePromptPlusRepl(colorizeSessionInitMessage: (msg) => msg.Yellow().Underline())
             .Run(args);
     }
 }

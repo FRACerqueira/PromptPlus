@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,13 +13,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using PromptPlusExample.Models;
+using PPlus;
 using PPlus.FIGlet;
 using PPlus.Objects;
-using PPlus;
-using PPlus.Drivers;
+
+using PromptPlusExample.Models;
+
 using static System.Environment;
-using System.Text;
 
 namespace PromptPlusExample
 {
@@ -285,7 +286,7 @@ namespace PromptPlusExample
                 .AddValidator(PromptPlusValidators.Required())
                 .PageSize(5)
                 .EnabledHistory(enabledhis.Value)
-                .TimeoutHistory(new TimeSpan(0,0, timeout))
+                .TimeoutHistory(new TimeSpan(0, 0, timeout))
                 .FinisWhenHistoryEnter(enterHist.Value)
                 .SuggestionHandler(mysugestion)
                 .Run(_stopApp);
@@ -918,7 +919,7 @@ namespace PromptPlusExample
             return result;
         }
 
-        private void LoadSampleHistInputSugestion(object _)
+        private void LoadSampleHistInputSugestion(object ctx, string value)
         {
             var file = string.Format(Filehistory, AppDomain.CurrentDomain.FriendlyName, "SampleHistInputSugestion");
             var userProfile = GetFolderPath(SpecialFolder.UserProfile);
@@ -943,13 +944,13 @@ namespace PromptPlusExample
             }
         }
 
-        private void SaveSampleHistSugestion(object value)
+        private void SaveSampleHistSugestion(object ctx, string value)
         {
             if (value is null)
             {
                 return;
             }
-            var localnewhis = value.ToString().Trim();
+            var localnewhis = value.Trim();
             var found = _itemsInputSampleHistory
                 .Where(x => x.History.ToLowerInvariant() == localnewhis.ToLowerInvariant())
                 .ToArray();
@@ -965,7 +966,7 @@ namespace PromptPlusExample
                 _itemsInputSampleHistory.RemoveAt(_itemsInputSampleHistory.Count - 1);
             }
             _itemsInputSampleHistory.Insert(0,
-                ItemHistory.CreateItemHistory(localnewhis, new TimeSpan(1,0,0,0)));
+                ItemHistory.CreateItemHistory(localnewhis, new TimeSpan(1, 0, 0, 0)));
 
             var file = string.Format(Filehistory, AppDomain.CurrentDomain.FriendlyName, "SampleHistInputSugestion");
             var userProfile = GetFolderPath(SpecialFolder.UserProfile);
@@ -1295,7 +1296,7 @@ namespace PromptPlusExample
             var random = new Random();
             for (var i = 0; i < 10; i++)
             {
-                var c1 = new string((char)random.Next(65, 90),5);
+                var c1 = new string((char)random.Next(65, 90), 5);
                 if (arg.Context != null)
                 {
                     var ctx = (IEnumerable<string>)arg.Context;
@@ -1460,6 +1461,16 @@ namespace PromptPlusExample
         {
             _ = PromptPlus.Pipeline()
                     .AddPipe(PromptPlus.Input("Your first name (empty = skip lastname)")
+                            .Config(ctx =>
+                            {
+                                ctx
+                                .AddExtraAction(StageControl.OnStartControl, (ctx, value) =>
+                                {
+                                })
+                                .AddExtraAction(StageControl.OnFinishControl, (ctx, value) =>
+                               {
+                               });
+                            })
                             .ToPipe(null, "First Name"))
                     .AddPipe(PromptPlus.Input("Your last name")
                         .PipeCondition((res, context) =>

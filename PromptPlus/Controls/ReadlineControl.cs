@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -9,14 +8,10 @@ using System.Threading;
 using PPlus.Internal;
 using PPlus.Objects;
 
-using static System.Environment;
-
 namespace PPlus.Controls
 {
     internal class ReadlineControl : ControlBase<string>, IControlReadline
     {
-        private const string Folderhistory = "PromptPlus.Readline";
-        private const string Filehistory = "{0}.txt";
         private const string Namecontrol = "PromptPlus.Readline";
         private readonly ReadlineOptions _options;
         private Paginator<ItemHistory> _localpaginator;
@@ -32,7 +27,7 @@ namespace PPlus.Controls
 
         public override string InitControl()
         {
-            if (string.IsNullOrEmpty(_options.FileNameHistory?.Trim()??""))
+            if (string.IsNullOrEmpty(_options.FileNameHistory?.Trim() ?? ""))
             {
                 _options.FileNameHistory = AppDomain.CurrentDomain.FriendlyName;
             }
@@ -51,73 +46,37 @@ namespace PPlus.Controls
                 AddLog("Validators", _options.Validators.Count.ToString(), LogKind.Property);
             }
 
-            _inputBuffer = new ReadLineBuffer(_options.AcceptInputTab,_options.SuggestionHandler);
+            _inputBuffer = new ReadLineBuffer(_options.AcceptInputTab, _options.SuggestionHandler);
 
             if (_options.EnabledHistory)
             {
                 LoadHistory();
             }
+
+            if (!string.IsNullOrEmpty(_options.InitialValue))
+            {
+                _inputBuffer.LoadPrintable(_options.InitialValue);
+            }
+            if (_options.InitialError is not null)
+            {
+                SetError(_options.InitialError);
+            }
+            if (_options.Context is null)
+            {
+                _options.Context = _inputBuffer.ToString();
+            }
             return _inputBuffer.ToString();
         }
 
-        private void AddHistory(string value)
+        private void AddAndSaveHistory(string value)
         {
-            var localnewhis = value.Trim();
-            var found = _itemsHistory
-                .Where(x => x.History.ToLowerInvariant() == localnewhis.ToLowerInvariant())
-                .ToArray();
-            if (found.Length > 0)
-            {
-                foreach (var item in found)
-                {
-                    _itemsHistory.Remove(item);
-                }
-            }
-            if (_itemsHistory.Count >= byte.MaxValue)
-            {
-                _itemsHistory.RemoveAt(_itemsHistory.Count - 1);
-            }
-            _itemsHistory.Insert(0,
-                ItemHistory.CreateItemHistory(localnewhis, _options.TimeoutHistory));
-
-            var file = string.Format(Filehistory, _options.FileNameHistory);
-            var userProfile = GetFolderPath(SpecialFolder.UserProfile);
-            if (!Directory.Exists(Path.Combine(userProfile, Folderhistory)))
-            {
-                Directory.CreateDirectory(Path.Combine(userProfile, Folderhistory));
-            }
-
-            File.WriteAllLines(Path.Combine(userProfile, Folderhistory, file),
-                _itemsHistory.Where(x => DateTime.Now < new DateTime(x.TimeOutTicks))
-                    .Select(x => x.ToString()), Encoding.UTF8);
+            FileHistory.AddHistory(value, _options.TimeoutHistory, _itemsHistory);
+            FileHistory.SaveHistory(_options.FileNameHistory, _itemsHistory);
         }
 
         private void LoadHistory()
         {
-            var file = string.Format(Filehistory, _options.FileNameHistory);
-            var userProfile = GetFolderPath(SpecialFolder.UserProfile);
-            var result = new List<ItemHistory>();
-            if (File.Exists(Path.Combine(userProfile, Folderhistory, file)))
-            {
-                var aux = File.ReadAllLines(Path.Combine(userProfile, Folderhistory, file));
-                foreach (var item in aux)
-                {
-                    var itemhist = item.Split(ItemHistory.Separator, StringSplitOptions.RemoveEmptyEntries);
-                    if (itemhist.Length == 2)
-                    {
-                        if (long.TryParse(itemhist[1], out var dtTicks))
-                        {
-                            if (DateTime.Now < new DateTime(dtTicks))
-                            {
-                                result.Add(new ItemHistory(itemhist[0], dtTicks));
-                            }
-                        }
-                    }
-                }
-            }
-            _itemsHistory = result
-                .OrderByDescending(x => x.TimeOutTicks)
-                .ToList();
+            _itemsHistory = FileHistory.LoadHistory(_options.FileNameHistory);
         }
 
         public override bool? TryResult(bool IsSummary, CancellationToken stoptoken, out string result)
@@ -131,14 +90,19 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(stoptoken);
-                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _inputBuffer.ToString(), out var acceptedkey);
+                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _options.Context, out var acceptedkey);
                 if (acceptedkey)
                 {
                     _showingHistory = false;
                     _originalText = null;
+                    if (_inputBuffer.SugestionError is not null)
+                    {
+                        SetError(_inputBuffer.SugestionError);
+                        _inputBuffer.ClearError();
+                    }
                 }
                 else if (!_showingHistory && (keyInfo.IsPressDownArrowKey() || keyInfo.IsPressPageDownKey())
-                    && _itemsHistory.Count > 0 &&  _inputBuffer.Length >= _options.MinimumPrefixLength)
+                    && _itemsHistory.Count > 0 && _inputBuffer.Length >= _options.MinimumPrefixLength)
                 {
                     _originalText = _inputBuffer.ToString();
                     if (_inputBuffer.Length > 0)
@@ -180,6 +144,9 @@ namespace PPlus.Controls
                     {
                         if (_localpaginator.TryGetSelectedItem(out var resulthist))
                         {
+                            var oldprompt = _inputBuffer.ToString();
+                            var oldcursor = _inputBuffer.Position;
+
                             _inputBuffer.Clear().LoadPrintable(resulthist.History);
                             _localpaginator = null;
                         }
@@ -195,7 +162,10 @@ namespace PPlus.Controls
                                 result = default;
                                 return false;
                             }
-                            AddHistory(result);
+                            if (_options.SaveHistoryAtFinish)
+                            {
+                                AddAndSaveHistory(result);
+                            }
                             return true;
                         }
                         catch (Exception ex)
@@ -218,7 +188,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.Write(_options.Message);
             if (_showingHistory)
@@ -247,7 +217,14 @@ namespace PPlus.Controls
             {
                 if (!HideDescription)
                 {
-                    screenBuffer.WriteLineDescription(_options.Description);
+                    if (_inputBuffer.InputWithSugestion != null && !string.IsNullOrEmpty(_inputBuffer.InputWithSugestion[3]))
+                    {
+                        screenBuffer.WriteLineDescription(_inputBuffer.InputWithSugestion[3]);
+                    }
+                    else
+                    {
+                        screenBuffer.WriteLineDescription(_options.Description);
+                    }
                 }
             }
 
@@ -276,6 +253,7 @@ namespace PPlus.Controls
                     screenBuffer.WriteLinePagination(_localpaginator.PaginationMessage());
                 }
             }
+            return _inputBuffer.ToString();
         }
 
 
@@ -291,6 +269,7 @@ namespace PPlus.Controls
             }
 
         }
+
         private void CreateMessageHit(ScreenBuffer screenBuffer)
         {
             var msg = new StringBuilder();
@@ -341,6 +320,23 @@ namespace PPlus.Controls
 
         #region IControlReadline
 
+        public IControlReadline Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
+
+        public IControlReadline InitialValue(string value, string error = null)
+        {
+            if (value == null)
+            {
+                value = string.Empty;
+            }
+            _options.InitialValue = value;
+            _options.InitialError = error;
+            return this;
+        }
+
         public IControlReadline SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
         {
             _options.SuggestionHandler = value;
@@ -367,6 +363,12 @@ namespace PPlus.Controls
                 return this;
             }
             _options.Validators.Merge(validators);
+            return this;
+        }
+
+        public IControlReadline SaveHistoryAtFinish(bool value)
+        {
+            _options.SaveHistoryAtFinish = value;
             return this;
         }
 

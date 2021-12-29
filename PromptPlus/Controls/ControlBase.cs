@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -17,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using PPlus.Internal;
 
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus.Controls
 {
@@ -37,7 +37,7 @@ namespace PPlus.Controls
         public readonly CultureInfo AppcurrentCulture;
         public readonly CultureInfo AppcurrentUICulture;
 
-        protected ControlBase(string sourcelog,BaseOptions options, bool showcursor, bool skiplastrender = false)
+        protected ControlBase(string sourcelog, BaseOptions options, bool showcursor, bool skiplastrender = false)
         {
             AppcurrentCulture = Thread.CurrentThread.CurrentCulture;
             AppcurrentUICulture = Thread.CurrentThread.CurrentUICulture;
@@ -52,9 +52,11 @@ namespace PPlus.Controls
 
         public string PipeTitle { get; internal set; }
 
-        public object ContextState { get; internal set; }
+        public object PipeContext { get; internal set; }
 
-        public Action<ScreenBuffer> Wizardtemplate { get; set; }
+        public object ContextControl => _options.Context;
+
+        public Func<ScreenBuffer, string> Wizardtemplate { get; set; }
 
         public Func<ResultPipe[], object, bool> Condition { get; internal set; }
 
@@ -79,7 +81,7 @@ namespace PPlus.Controls
                 _finishResult = value;
                 if (PromptPlus.EnabledLogControl)
                 {
-                    AddLog("FinishResult",_finishResult,LogKind.Property);
+                    AddLog("FinishResult", _finishResult, LogKind.Property);
                 }
 
             }
@@ -97,7 +99,7 @@ namespace PPlus.Controls
         {
             Logs.Add(level, key, message, logKind);
         }
-       
+
         public ResultPromptPlus<T> Run(CancellationToken? value)
         {
             try
@@ -111,12 +113,12 @@ namespace PPlus.Controls
 
                 if (FindAction(StageControl.OnStartControl, out var useractin))
                 {
-                    useractin.Invoke(initvalue);
+                    useractin.Invoke(ContextControl, initvalue);
                 }
                 var aux = Start(value ?? CancellationToken.None);
                 if (FindAction(StageControl.OnFinishControl, out var useractout))
                 {
-                    useractout.Invoke(aux.Value);
+                    useractout.Invoke(ContextControl, FinishResult);
                 }
                 if (PromptPlus.EnabledLogControl)
                 {
@@ -132,7 +134,7 @@ namespace PPlus.Controls
             }
         }
 
-        public ResultPromptPlus<T> StartPipeline(Action<ScreenBuffer> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
+        public ResultPromptPlus<T> StartPipeline(Func<ScreenBuffer, string> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
         {
             if (PromptPlus.DisabledAllTooltips)
             {
@@ -160,7 +162,7 @@ namespace PPlus.Controls
                 {
                     bool? hit = true;
                     var fistskip = true;
-                    int oldwidth = PromptPlus.PPlusConsole.BufferWidth;
+                    var oldwidth = PromptPlus.PPlusConsole.BufferWidth;
                     while (!_linkedCts.IsCancellationRequested)
                     {
                         var diff = _screenrender.CountLines(PromptPlus.PPlusConsole.BufferWidth) - _screenrender.CountLines(oldwidth);
@@ -178,7 +180,7 @@ namespace PPlus.Controls
                         }
                         if (hit.HasValue)
                         {
-                            if (!_screenrender.HideLastRender(diff,skip))
+                            if (!_screenrender.HideLastRender(diff, skip))
                             {
                                 _linkedCts.Cancel();
                                 continue;
@@ -192,10 +194,10 @@ namespace PPlus.Controls
                             {
                                 pipePaginator.EnsureVisibleIndex(currentStep);
                                 _screenrender.ClearBuffer();
-                                _screenrender.InputRender(InputTemplate);
+                                var input = _screenrender.InputRender(InputTemplate);
                                 if (FindAction(StageControl.OnInputRender, out var useract))
                                 {
-                                    useract.Invoke(null);
+                                    useract.Invoke(ContextControl, input);
                                 }
                                 oldwidth = PromptPlus.BufferWidth;
                             }
@@ -289,7 +291,7 @@ namespace PPlus.Controls
                 Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
                 return new ResultPromptPlus<T>(default, true);
             }
-            finally 
+            finally
             {
                 PromptPlus.ExclusiveMode = false;
             }
@@ -322,14 +324,14 @@ namespace PPlus.Controls
             {
                 bool? hit = true;
                 var skip = _skiplastrender;
-                int oldwidth = PromptPlus.PPlusConsole.BufferWidth;
+                var oldwidth = PromptPlus.PPlusConsole.BufferWidth;
                 while (!_linkedCts.IsCancellationRequested)
                 {
                     var diff = _screenrender.CountLines(PromptPlus.PPlusConsole.BufferWidth) - _screenrender.CountLines(oldwidth);
 
                     if (hit.HasValue)
                     {
-                        if (!_screenrender.HideLastRender(diff,skip))
+                        if (!_screenrender.HideLastRender(diff, skip))
                         {
                             _linkedCts.Cancel();
                             continue;
@@ -337,14 +339,14 @@ namespace PPlus.Controls
                         _screenrender.ClearBuffer();
                         if (Wizardtemplate is not null)
                         {
-                            _screenrender.InputRender(Wizardtemplate,true);
+                            _screenrender.InputRender(Wizardtemplate, true);
                             PromptPlus.IsRunningWithCommandDotNet = true;
                         }
                         oldwidth = PromptPlus.BufferWidth;
-                        _screenrender.InputRender(InputTemplate);
+                        var input = _screenrender.InputRender(InputTemplate);
                         if (FindAction(StageControl.OnInputRender, out var useractin))
                         {
-                            useractin.Invoke(null);
+                            useractin.Invoke(ContextControl, input);
                         }
                         PromptPlus.IsRunningWithCommandDotNet = false;
                     }
@@ -368,7 +370,7 @@ namespace PPlus.Controls
                         ScreenRender.HideCursor();
                         if (_linkedCts.IsCancellationRequested)
                         {
-                            if (!_screenrender.HideLastRender(diff,skip))
+                            if (!_screenrender.HideLastRender(diff, skip))
                             {
                                 _linkedCts.Cancel();
                             }
@@ -406,7 +408,7 @@ namespace PPlus.Controls
                         ScreenRender.ShowCursor();
                         if (result == null)
                         {
-                            return new ResultPromptPlus<T>(result, true,true);
+                            return new ResultPromptPlus<T>(result, true, true);
                         }
                         return new ResultPromptPlus<T>(result, false);
                     }
@@ -434,9 +436,9 @@ namespace PPlus.Controls
 
         public abstract bool? TryResult(bool IsSummary, CancellationToken stoptoken, out T result);
 
-        public abstract T InitControl();
+        public abstract string InitControl();
 
-        public abstract void InputTemplate(ScreenBuffer screenBuffer);
+        public abstract string InputTemplate(ScreenBuffer screenBuffer);
 
         public abstract void FinishTemplate(ScreenBuffer screenBuffer, T result);
 
@@ -487,7 +489,7 @@ namespace PPlus.Controls
                 {
                     foreach (var item in validator.GetInvocationList())
                     {
-                        var match = nameblockRegEx.Value.Match(item.Method.Name);
+                        var match = s_nameblockRegEx.Value.Match(item.Method.Name);
                         if (match.Captures.Count == 1)
                         {
                             AddLog("ValidationResult", match.Groups["name"].Value, LogKind.Validator);
@@ -499,11 +501,11 @@ namespace PPlus.Controls
             return true;
         }
 
-        private static readonly Lazy<Regex> nameblockRegEx = new(
+        private static readonly Lazy<Regex> s_nameblockRegEx = new(
             () => new Regex("\\<(?<name>.*?)\\>", RegexOptions.IgnoreCase),
             isThreadSafe: true);
 
-        public static string CreateMessageHitSugestion(bool tryfinish,string entertext)
+        public static string CreateMessageHitSugestion(bool tryfinish, string entertext)
         {
             var msg = new StringBuilder();
             msg.Append(Messages.ReadlineSugestionhit);
@@ -522,14 +524,14 @@ namespace PPlus.Controls
             return msg.ToString();
         }
 
-        public bool IskeyPageNavagator<Tkey>(ConsoleKeyInfo consoleKeyInfo, Paginator<Tkey> paginator)
+        public static bool IskeyPageNavagator<Tkey>(ConsoleKeyInfo consoleKeyInfo, Paginator<Tkey> paginator)
         {
             if (consoleKeyInfo.IsPressPageUpKey() && paginator.PageCount > 1)
             {
                 paginator.PreviousPage(IndexOption.LastItemWhenHasPages);
                 return true;
             }
-            else if (consoleKeyInfo.IsPressPageDownKey() && paginator.PageCount > 1) 
+            else if (consoleKeyInfo.IsPressPageDownKey() && paginator.PageCount > 1)
             {
                 paginator.NextPage(IndexOption.FirstItemWhenHasPages);
                 return true;
@@ -546,7 +548,7 @@ namespace PPlus.Controls
                 }
                 return true;
             }
-            else if (consoleKeyInfo.IsPressDownArrowKey()&& paginator.Count > 0)
+            else if (consoleKeyInfo.IsPressDownArrowKey() && paginator.Count > 0)
             {
                 if (paginator.IsLastPageItem)
                 {
@@ -604,7 +606,7 @@ namespace PPlus.Controls
                 HideDescription = !HideDescription;
                 return true;
             }
-            if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
+            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
             {
                 EnabledStandardTooltip = !EnabledStandardTooltip;
                 return true;
@@ -623,10 +625,12 @@ namespace PPlus.Controls
                 AbortedAll = true;
                 AddLog("AbortKeyPress", true.ToString(), LogKind.Abort);
                 AddLog("AbortedAll", AbortedAll.ToString(), LogKind.Abort);
+                return true;
             }
             else if (OverPipeLine && PromptPlus.ResumePipesKeyPress.Equals(keyInfo))
             {
                 SummaryPipeLine = !SummaryPipeLine;
+                return true;
             }
             return false;
         }
@@ -707,6 +711,12 @@ namespace PPlus.Controls
             return this;
         }
 
+        public IPromptConfig SetContext(object value)
+        {
+            _options.Context = value;
+            return this;
+        }
+
         public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
         {
             Condition = condition;
@@ -717,15 +727,15 @@ namespace PPlus.Controls
         {
             PipeId = id ?? Guid.NewGuid().ToString();
             PipeTitle = title ?? string.Empty;
-            ContextState = state;
+            PipeContext = state;
             return this;
         }
 
-        public IFormPlusBase AddExtraAction(StageControl stage, Action<object> useraction)
-        { 
+        public IFormPlusBase AddExtraAction(StageControl stage, Action<object, string> useraction)
+        {
             if (useraction is null)
             {
-                throw new ArgumentException(nameof(useraction));
+                throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, "null"), nameof(useraction));
             }
             if (_options.UserActions.ContainsKey(stage))
             {
@@ -735,7 +745,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public bool FindAction(StageControl value, out Action<object> action)
+        public bool FindAction(StageControl value, out Action<object, string> action)
         {
             action = null;
             if (_options.UserActions.ContainsKey(value))

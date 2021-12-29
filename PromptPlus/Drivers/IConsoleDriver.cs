@@ -10,7 +10,7 @@ using PPlus.Objects;
 
 namespace PPlus.Drivers
 {
-    public interface IConsoleDriver: ISystemConsole
+    public interface IConsoleDriver : ISystemConsole
     {
         bool NoColor { get; }
         bool NoInterative { get; }

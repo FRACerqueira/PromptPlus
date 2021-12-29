@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 
 using CommandDotNet;
@@ -40,11 +45,11 @@ namespace PPlus.CommandDotNet
             var description = _getPromptTextCallback?.Invoke(ctx, argument) ?? string.Empty;
             if (kindprompt == PromptPlusTypeKind.None)
             {
-                return Common.PromptForTypeArgumentValues(ctx, argument,description, _pageSize,null, out isCancellationRequested);
+                return Common.PromptForTypeArgumentValues(ctx, argument, description, _pageSize, null, out isCancellationRequested);
             }
             else
             {
-                return Common.PromptForPromptPlusTypeArgumentValues(ctx, argument, description,_pageSize, kindprompt,null, out isCancellationRequested);
+                return Common.PromptForPromptPlusTypeArgumentValues(ctx, argument, description, _pageSize, kindprompt, null, out isCancellationRequested);
             }
         }
     }

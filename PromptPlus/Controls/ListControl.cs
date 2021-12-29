@@ -36,7 +36,7 @@ namespace PPlus.Controls
             _startDesc = _options.Description;
         }
 
-        public override IEnumerable<T> InitControl()
+        public override string InitControl()
         {
             _inputBuffer = new(_options.SuggestionHandler);
 
@@ -47,7 +47,7 @@ namespace PPlus.Controls
                 {
                     localitem = TypeHelper<T>.ConvertTo(item.ToString().ToUpperInvariant());
                 }
-                if (TryValidate(localitem, _options.Validators,true))
+                if (TryValidate(localitem, _options.Validators, true))
                 {
                     if (!_options.AllowDuplicate)
                     {
@@ -84,8 +84,7 @@ namespace PPlus.Controls
                 AddLog("InitialItems", _options.InitialItems.Count.ToString(), LogKind.Property);
                 AddLog("LoadItems", _inputItems.Count.ToString(), LogKind.Property);
             }
-            return _inputItems;
-
+            return _inputBuffer.ToString();
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<T> result)
@@ -239,7 +238,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
 
@@ -329,8 +328,9 @@ namespace PPlus.Controls
 
             if (_options.ValidateOnDemand && _options.Validators.Count > 0 && _inputBuffer.Length > 0)
             {
-                TryValidate(_inputBuffer.ToString(), _options.Validators,true);
+                TryValidate(_inputBuffer.ToString(), _options.Validators, true);
             }
+            return _inputBuffer.ToString();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<T> result)

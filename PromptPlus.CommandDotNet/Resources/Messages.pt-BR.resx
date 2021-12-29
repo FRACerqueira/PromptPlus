@@ -117,11 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Repl_clear_history" xml:space="preserve">
+    <value>Os itens do histórico foram todos limpos.</value>
+  </data>
+  <data name="Repl_default_description" xml:space="preserve">
+    <value>Sessão interativa</value>
+  </data>
+  <data name="Repl_exit" xml:space="preserve">
+    <value>Terminar Sessão interativa</value>
+  </data>
+  <data name="Repl_history_description" xml:space="preserve">
+    <value>Atualizar histórico</value>
+  </data>
+  <data name="Repl_history_note" xml:space="preserve">
+    <value>Nota: valor default = {0} dias, valor 0 limpa histórico.</value>
+  </data>
+  <data name="Repl_history_update" xml:space="preserve">
+    <value>Digite 'replhistory &lt;dias&gt;,&lt;horas&gt;,&lt;minutos&gt;' para atualizar histórico.</value>
+  </data>
+  <data name="Repl_init_session" xml:space="preserve">
+    <value>{0} {1} Digite 'quit' para encerrar.</value>
+  </data>
+  <data name="Repl_invalid_values_history" xml:space="preserve">
+    <value>Valor invalido para atualização de histórico</value>
+  </data>
+  <data name="Repl_Ok_history" xml:space="preserve">
+    <value>Atualizado histórico para {0} dias, {1} horas e {2} minutos.</value>
+  </data>
   <data name="WizardCommandFor" xml:space="preserve">
     <value>Comando para {0}: {1}</value>
   </data>
   <data name="WizardHelpText" xml:space="preserve">
-    <value>Diretiva para assistente de prompt:%\n%[{0}] para o assistente procurar  comandos, opções e argumentos com prompt e executar!!! (Obs.: Não deve ter nenum argumento depois)%\n%%\n%Exemplo: %AppName% [{0}].</value>
+    <value>Diretiva para assistente de prompt:%\n%%\n%    [{0}] para o assistente procurar  comandos, opções e argumentos com prompt e executar!!! (Obs.: Não deve ter nenum argumento depois), eg.: %AppName% [{0}].</value>
   </data>
   <data name="WizardKeyNavigation" xml:space="preserve">
     <value>, Enter: Próximo, {0}: Executar, {1}: Voltar comando</value>

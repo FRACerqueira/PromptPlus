@@ -24,10 +24,10 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override bool InitControl()
+        public override string InitControl()
         {
             _initform = true;
-            return _options.DefaultValue ?? false;
+            return null;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out bool result)
@@ -96,7 +96,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
             if (_options.DefaultValue == null)
@@ -146,6 +146,7 @@ namespace PPlus.Controls
                 }
             }
             _initform = false;
+            return _inputBuffer.ToString();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, bool result)

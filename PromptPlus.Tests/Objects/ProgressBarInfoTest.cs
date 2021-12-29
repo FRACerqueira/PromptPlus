@@ -13,7 +13,7 @@ namespace PPlus.Tests.Objects
         public void Should_have_value(int percentValue, bool finished, string message, object interationId)
         {
             // Given
-            var pbi = new ProgressBarInfo(percentValue,finished,message,interationId);
+            var pbi = new ProgressBarInfo(percentValue, finished, message, interationId);
             // Then
             Assert.True(pbi.PercentValue == percentValue);
             Assert.True(pbi.Finished == finished);

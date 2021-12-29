@@ -1,4 +1,9 @@
-﻿using CommandDotNet.Builders;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using CommandDotNet.Builders;
 
 namespace PPlus.CommandDotNet.Controls
 {

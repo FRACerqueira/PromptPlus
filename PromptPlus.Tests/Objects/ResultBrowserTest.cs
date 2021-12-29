@@ -21,10 +21,10 @@ namespace PPlus.Tests.Objects
         [Theory]
         [InlineData(true, "folder", "file")]
         [InlineData(false, "folder", "file")]
-        public void Should_have_file_value(bool showfile,string folder,string file)
+        public void Should_have_file_value(bool showfile, string folder, string file)
         {
             // Given
-            var rb = new ResultBrowser(folder, file, false,false,showfile);
+            var rb = new ResultBrowser(folder, file, false, false, showfile);
             // Then
             Assert.True(rb.SelectedValue == "file");
             if (!showfile)

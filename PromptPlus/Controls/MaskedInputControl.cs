@@ -27,7 +27,7 @@ namespace PPlus.Controls
             _options = options;
         }
 
-        public override ResultMasked InitControl()
+        public override string InitControl()
         {
             _maskedBuffer = new MaskedBuffer(_options);
 
@@ -39,13 +39,13 @@ namespace PPlus.Controls
                 AddLog("AmmountInteger", _options.AmmountInteger.ToString(), LogKind.Property);
                 AddLog("OnlyDecimal", _options.OnlyDecimal.ToString(), LogKind.Property);
                 AddLog("CurrentCulture", _options.CurrentCulture.Name, LogKind.Property);
-                AddLog("DateFmt", _options.DateFmt??"", LogKind.Property);
+                AddLog("DateFmt", _options.DateFmt ?? "", LogKind.Property);
                 AddLog("FillNumber", _options.FillNumber?.ToString() ?? "", LogKind.Property);
                 AddLog("ShowDayWeek", _options.ShowDayWeek.ToString() ?? "", LogKind.Property);
                 AddLog("MaskValue", _options.MaskValue, LogKind.Property);
                 AddLog("MaskType", _options.Type.ToString(), LogKind.Property);
             }
-            return new ResultMasked(_maskedBuffer.ToString(), _maskedBuffer.ToMasked());
+            return _maskedBuffer.ToMasked();
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ResultMasked result)
@@ -176,7 +176,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             var prompt = _options.Message;
 
@@ -224,8 +224,9 @@ namespace PPlus.Controls
             if (_options.ValidateOnDemand && _options.Validators.Count > 0)
             {
                 var aux = new ResultMasked(_maskedBuffer.ToString(), _maskedBuffer.ToMasked());
-                TryValidate(aux, _options.Validators,true);
+                TryValidate(aux, _options.Validators, true);
             }
+            return _maskedBuffer.ToMasked();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultMasked result)

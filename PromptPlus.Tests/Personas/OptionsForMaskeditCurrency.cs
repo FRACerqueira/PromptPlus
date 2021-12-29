@@ -8,7 +8,7 @@ namespace PPlus.Tests.Personas
 {
     internal class OptionsForMaskeditCurrency : MaskedOptions
     {
-        public OptionsForMaskeditCurrency(CultureInfo culture,int ammountInteger, int ammountDecimal, MaskedSignal acceptSignal,  string defaultvalue) : base()
+        public OptionsForMaskeditCurrency(CultureInfo culture, int ammountInteger, int ammountDecimal, MaskedSignal acceptSignal, string defaultvalue) : base()
         {
             Type = MaskedType.Currency;
             DefaultValueWitdMask = defaultvalue;

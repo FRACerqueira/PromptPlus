@@ -1,7 +1,4 @@
-﻿using System;
-
-using PPlus.Drivers;
-using PPlus.Internal;
+﻿using PPlus.Internal;
 using PPlus.Tests.Personas;
 
 using Xunit;
@@ -11,7 +8,7 @@ namespace PPlus.Tests.Internal
     public class MaskedBufferGenericTest
     {
         private const string MaskTest = @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}";
-        private MaskedBuffer _maskedBuffer;
+        private readonly MaskedBuffer _maskedBuffer;
 
         public MaskedBufferGenericTest()
         {
@@ -24,7 +21,7 @@ namespace PPlus.Tests.Internal
             // Given
             _maskedBuffer.Load(_maskedBuffer.PreparationDefaultValue("XYZ 222-AAA-AX-QQQ", false));
             //then
-            Assert.Equal("XYZ 222-AAA-AX-QQQ",_maskedBuffer.ToMasked());
+            Assert.Equal("XYZ 222-AAA-AX-QQQ", _maskedBuffer.ToMasked());
             Assert.Equal(10, _maskedBuffer.Position);
             Assert.Equal(11, _maskedBuffer.Length);
             Assert.True(_maskedBuffer.IsMaxInput);

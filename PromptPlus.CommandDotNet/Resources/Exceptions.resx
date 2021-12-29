@@ -132,6 +132,9 @@
   <data name="Ex_RegisterConsole" xml:space="preserve">
     <value>Must register {0} to ensure an {1} is available.</value>
   </data>
+  <data name="Ex_ReplControlOptions" xml:space="preserve">
+    <value>Long name or short name must be filled</value>
+  </data>
   <data name="Ex_WizardControl" xml:space="preserve">
     <value>Propery WizardControl is empty</value>
   </data>

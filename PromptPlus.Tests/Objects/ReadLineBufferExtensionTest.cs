@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using PPlus.Objects;
 
@@ -13,7 +9,7 @@ namespace PPlus.Tests.Objects
     public class ReadLineBufferExtensionTest
     {
         [Theory]
-        [InlineData(ConsoleKey.F1,ConsoleKey.F)]
+        [InlineData(ConsoleKey.F1, ConsoleKey.F)]
         public void Should_IsPressSpecialKey(ConsoleKey consoleKey, ConsoleKey other)
         {
             // Given

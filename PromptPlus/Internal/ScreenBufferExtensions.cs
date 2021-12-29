@@ -92,7 +92,7 @@ namespace PPlus.Internal
         {
             var len = Symbols.Selector.ToString().Length;
             screenBuffer.WriteLine(new string(' ', len));
-            screenBuffer.Write($" {message}",ColorSchema.Disabled);
+            screenBuffer.Write($" {message}", ColorSchema.Disabled);
         }
 
         public static void WriteLineTaskRun(this ScreenBuffer screenBuffer, string message)
@@ -326,7 +326,7 @@ namespace PPlus.Internal
                 {
                     if (!hidedescription)
                     {
-                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysDesc, ToggleVisibleDescription, TooltipKeyPress, ""), ColorSchema.Hint);
+                        screenBuffer.Write(string.Format(Messages.ShowStandardHotKeysDesc, TooltipKeyPress, ToggleVisibleDescription, ""), ColorSchema.Hint);
                     }
                     else
                     {

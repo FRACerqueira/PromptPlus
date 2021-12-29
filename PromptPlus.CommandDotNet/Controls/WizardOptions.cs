@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 
 using CommandDotNet;
@@ -8,7 +13,7 @@ using PPlus.Objects;
 
 namespace PPlus.CommandDotNet.Controls
 {
-    internal class WizardOptions: BaseOptions
+    internal class WizardOptions : BaseOptions
     {
         public bool IsRootControl { get; set; }
         public HotKey Build { get; set; } = new HotKey(UserHotKey.F5);

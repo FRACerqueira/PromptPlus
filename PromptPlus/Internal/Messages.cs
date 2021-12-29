@@ -253,7 +253,7 @@ namespace PPlus.Internal
 
         public static string MultiSelectMaxSelection { get; private set; } = PromptPlusResources.MultiSelectMaxSelection;
 
-        public static string MultiSelectKeyNavigation { get; private set; } = string.Format(PromptPlusResources.MultiSelectKeyNavigation,MarkSelect, UnSelectFilter, SelectAll, InvertSelect);
+        public static string MultiSelectKeyNavigation { get; private set; } = string.Format(PromptPlusResources.MultiSelectKeyNavigation, MarkSelect, UnSelectFilter, SelectAll, InvertSelect);
 
         public static string ListMinSelection { get; private set; } = PromptPlusResources.ListMinSelection;
 

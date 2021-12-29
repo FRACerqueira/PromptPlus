@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -20,6 +25,8 @@ using PPlus.Drivers;
 using PPlus.Objects;
 
 using static PPlus.PromptPlus;
+
+using TypeInfo = CommandDotNet.TypeInfo;
 
 namespace PPlus.CommandDotNet
 {
@@ -142,7 +149,7 @@ namespace PPlus.CommandDotNet
         /// </param>
         /// <returns></returns>
         public static AppRunner UsePromptPlusWizard(
-            this AppRunner appRunner, string name = "wizard", int pageSize = 5, HotKey? runwizard = null, HotKey? backcommand = null, ConsoleColor? forecolorwizard=null, ConsoleColor? backcolorwizard = null, ConsoleColor? missingforecolorwizard = null)
+            this AppRunner appRunner, string name = "wizard", byte pageSize = 5, HotKey? runwizard = null, HotKey? backcommand = null, ConsoleColor? forecolorwizard = null, ConsoleColor? backcolorwizard = null, ConsoleColor? missingforecolorwizard = null)
         {
             if (pageSize < 1)
             {
@@ -175,28 +182,162 @@ namespace PPlus.CommandDotNet
                     throw new InvalidConfigurationException(
                         string.Format(Exceptions.Ex_RegisterConsole, nameof(UsePromptPlusAnsiConsole), nameof(IConsoleDriver)));
                 }
-                c.BuildEvents.OnCommandCreated += (args) =>
-                {
-                    if (args.CommandContext.Tokens.Directives.Count == 1)
-                    {
-                        if (args.CommandContext.Tokens.Directives.First().Value == name)
-                        {
-                            var aux = args.CommandBuilder.Command.ExtendedHelpText ?? string.Empty;
-                            if (!string.IsNullOrEmpty(aux))
-                            {
-                                aux += "\n\n";
-                            }
-                            aux += string.Format(Messages.WizardHelpText, name).Replace("%\\n%", "\n");
-                            args.CommandBuilder.Command.ExtendedHelpText = aux;
-                        }
-                    }
-                };
+
                 c.UseMiddleware((ctx, next) =>
                 {
-                    return CommandHooksBuildWizard(name, ctx, next, PromptPlusWizard, pageSize, runwizard.Value, backcommand.Value, forecolorwizard.Value,backcolorwizard.Value, missingforecolorwizard.Value);
+                    return CommandHooksBuildWizard(name, ctx, next, PromptPlusWizard, pageSize, runwizard.Value, backcommand.Value, forecolorwizard.Value, backcolorwizard.Value, missingforecolorwizard.Value);
                 }, MiddlewareStages.PostTokenizePreParseInput);
+
+                c.BuildEvents.OnCommandCreated += (args) =>
+                {
+                    var aux = args.CommandBuilder.Command.ExtendedHelpText ?? string.Empty;
+                    if (!string.IsNullOrEmpty(aux))
+                    {
+                        aux += "\n\n";
+                    }
+                    aux += string.Format(Messages.WizardHelpText, name)
+                    .Replace("%\\n%", "\n")
+                    .Replace("%\\t%", "\t");
+                    args.CommandBuilder.Command.ExtendedHelpText = aux;
+                };
             });
         }
+
+        /// <summary>
+        /// Start interative session with readline prompt, Sugestions and History
+        /// </summary>
+        /// <param name="appRunner">the <see cref="AppRunner"/> instance</param>
+        /// <param name="enabledsuggestion">
+        /// Flag to run suggestionHandler when keep track of interactive sessions.  Default value 'true'
+        /// </param>
+        /// /// <param name="suggestionHandler">
+        /// Function to load and send sugestion .if null and enabledsuggestion will be using the default suggestion routine.
+        /// </param>
+        /// <param name="sugestionEnterTryFininsh">
+        /// When select sugestion Try Fininsh input.Default 'false'.
+        /// </param>
+        /// <param name="usesugestionargumnetype">
+        /// If true use type of argument to sugestion, If false use name of argument to sugestion. default 'true'
+        /// </param>        
+        /// <param name="shortoptionname">
+        /// Short(Char) option alias to enter interative session. Default value 'i'. Short or long name must be filled in.
+        /// </param>
+        /// <param name="longoptionname">
+        /// Long(string) option alias to enter interative session. Default value 'interactive'.  Short or long name must be filled in.
+        /// </param>
+        /// <param name="description">
+        /// Description for interative session option.Default value 'enter an interactive session'
+        /// </param>
+        /// <param name="enabledhistory">
+        /// Flag to keep track of interactive sessions. Default value 'true'
+        /// </param>
+        /// <param name="pageSize">
+        /// The page size for history lists. If page less than 1 will be set to 1
+        /// </param>
+        /// <param name="timeouthistory">
+        /// Timeout for history items. Dafault value '30' days.
+        /// </param>
+        /// <param name="colorizeSessionInitMessage">
+        /// Function to user colorize initial title session interative. Default value null.
+        /// </param>
+        /// <returns></returns>
+        public static AppRunner UsePromptPlusRepl(
+                this AppRunner appRunner,
+                bool enabledSugestion = true,
+                Func<SugestionInput, SugestionOutput> suggestionHandler = null,
+                bool sugestionEnterTryFininsh = false,
+                bool usesugestionargumnetype = true,
+                char? shortoptionname = 'i',
+                string longoptionname = "interactive",
+                string description = "enter an interactive session",
+                bool enabledhistory = true,
+                byte pageSize = 5,
+                TimeSpan? timeouthistory = null,
+                Func<string, ColorToken> colorizeSessionInitMessage = null)
+        {
+            if (!timeouthistory.HasValue)
+            {
+                timeouthistory = new TimeSpan(30, 0, 0, 0, 0);
+            }
+            if (pageSize < 1)
+            {
+                pageSize = 1;
+            }
+            if (!shortoptionname.HasValue && string.IsNullOrEmpty(longoptionname))
+            {
+                throw new InvalidConfigurationException(
+                    string.Format(Exceptions.Ex_ReplControlOptions, $"{nameof(shortoptionname)} / {nameof(longoptionname)}"));
+            }
+
+            return appRunner.Configure(c =>
+            {
+                if (!c.Services.Contains<IConsoleDriver>())
+                {
+                    throw new InvalidConfigurationException(
+                        string.Format(Exceptions.Ex_RegisterConsole, nameof(UsePromptPlusAnsiConsole), nameof(IConsoleDriver)));
+                }
+
+                var option = new Option(longoptionname, shortoptionname, TypeInfo.Flag, ArgumentArity.Zero, definitionSource: nameof(UsePromptPlusRepl))
+                {
+                    Description = description
+                };
+
+                var config = new ReplConfig(appRunner, null, option, enabledSugestion, suggestionHandler, sugestionEnterTryFininsh, usesugestionargumnetype, enabledhistory, pageSize, timeouthistory.Value, colorizeSessionInitMessage);
+
+                c.Services.Add(config);
+
+                c.UseMiddleware(ReplSessionHooks, MiddlewareSteps.ParseInput);
+
+                c.BuildEvents.OnCommandCreated += (args) =>
+                {
+                    var builder = args.CommandBuilder;
+                    var command = builder.Command;
+                    if (!config.InSession && command.IsRootCommand())
+                    {
+                        if (command.IsExecutable)
+                        {
+                            throw new InvalidConfigurationException($"Root command {command.Name} has been defined as executable using [DefaultCommand] on method {command.DefinitionSource}. This is not suitable for hosting an interactive session.");
+                        }
+                        builder.AddArgument(option);
+                    }
+                };
+            });
+        }
+
+        private static Task<int> ReplSessionHooks(CommandContext ctx, ExecutionDelegate next)
+        {
+            var parseResult = ctx.ParseResult!;
+            var cmd = parseResult.TargetCommand;
+
+            var config = ctx.AppConfig.Services.GetOrThrow<ReplConfig>();
+            config.ReplContext = ctx;
+
+            if (config.InSession && config.InSessionParse)
+            {
+                if (parseResult.ParseError is not null)
+                {
+                    config.ReplContext = ctx;
+                    return Task.FromResult(-1);
+                }
+                return Task.FromResult(0);
+            }
+
+            if (config.InSession || (parseResult.ParseError is not null && parseResult.HelpWasRequested()))
+            {
+                return next(ctx);
+            }
+
+            if (cmd.GetRootCommand().HasInputValues(config.Option.Name))
+            {
+                config.InSession = true;
+                new ReplSession(config).Start();
+                config.InSession = false;
+                return ExitCodes.Success;
+            }
+
+            return next(ctx);
+        }
+
 
         private static void PromptPlusWizard(CommandContext context, int pageSize, HotKey runwizard, HotKey backcommand, ConsoleColor forecolorwizard, ConsoleColor backcolorwizard, ConsoleColor missingforecolorwizard)
         {
@@ -222,7 +363,7 @@ namespace PPlus.CommandDotNet
                 Message = AppDomain.CurrentDomain.FriendlyName,
                 WizardControl = Select<IArgumentNode>(Messages.WizardNext)
                 .AddItems(lstTokens)
-                .TextSelector(x => x.Name)
+                .TextSelector(x => x?.Name ?? string.Empty)
                 .PageSize(pageSize)
                 .Config(ctx => ctx.HideAfterFinish(true))
                 .DescriptionSelector(x =>
@@ -253,7 +394,7 @@ namespace PPlus.CommandDotNet
                     }
                     if (x.GetType().Name == nameof(Command))
                     {
-                        return string.Format(Messages.WizardCommandFor,context.RootCommand.Name,desc);
+                        return string.Format(Messages.WizardCommandFor, context.RootCommand.Name, desc);
                     }
                     else
                     {
@@ -296,14 +437,14 @@ namespace PPlus.CommandDotNet
             }
             while (!finishwizard)
             {
-                var args = PromptPlusWizardNext(out finishwizard,out localisroot, localisroot, out localcommand,localcommand, promptPlusargs, localcommandContext, pageSize, runwizard, backcommand, forecolorwizard, backcolorwizard, missingforecolorwizard);
+                var args = PromptPlusWizardNext(out finishwizard, out localisroot, localisroot, out localcommand, localcommand, promptPlusargs, localcommandContext, pageSize, runwizard, backcommand, forecolorwizard, backcolorwizard, missingforecolorwizard);
                 promptPlusargs.Clear();
                 promptPlusargs.AddRange(args);
             }
             context.Tokens = Tokenizer.Tokenize(promptPlusargs.Select(a => a.ArgValue));
         }
 
-        private static WizardArgs[] PromptPlusWizardNext(out bool finishwizard,out bool isroot,bool iniroot, out Command currentCommand,Command inicommand, List<WizardArgs> promptargs,CommandContext context, int pageSize, HotKey runwizard, HotKey backcommand, ConsoleColor forecolorwizard, ConsoleColor backcolorwizard, ConsoleColor missingforecolorwizard)
+        private static WizardArgs[] PromptPlusWizardNext(out bool finishwizard, out bool isroot, bool iniroot, out Command currentCommand, Command inicommand, List<WizardArgs> promptargs, CommandContext context, int pageSize, HotKey runwizard, HotKey backcommand, ConsoleColor forecolorwizard, ConsoleColor backcolorwizard, ConsoleColor missingforecolorwizard)
         {
             finishwizard = false;
             isroot = iniroot;
@@ -341,7 +482,7 @@ namespace PPlus.CommandDotNet
                 Message = AppDomain.CurrentDomain.FriendlyName,
                 WizardControl = Select<IArgumentNode>("Next")
                 .AddItems(lstTokens)
-                .TextSelector(x => x.Name)
+                .TextSelector(x => x?.Name ?? string.Empty)
                 .PageSize(pageSize)
                 .Config(ctx =>
                 {
@@ -375,7 +516,7 @@ namespace PPlus.CommandDotNet
                     }
                     if (x.GetType().Name == nameof(Command))
                     {
-                        return string.Format(Messages.WizardCommandFor,inicommand.Name,desc);
+                        return string.Format(Messages.WizardCommandFor, inicommand.Name, desc);
                     }
                     else if (x.GetType().Name == nameof(Option))
                     {
@@ -392,7 +533,7 @@ namespace PPlus.CommandDotNet
                 {
                     ctx.HideAfterFinish(true);
                 })
-                .UpdateTokenArgs(promptargs.Select(a => new WizardArgs(a.ArgValue,a.IsSecret, a.IsEnabled)))
+                .UpdateTokenArgs(promptargs.Select(a => new WizardArgs(a.ArgValue, a.IsSecret, a.IsEnabled)))
                 .Run(context.CancellationToken);
 
             if (sel.IsAborted)
@@ -415,7 +556,7 @@ namespace PPlus.CommandDotNet
             {
                 if (sel.Value.GetType().Name == nameof(Command))
                 {
-                    if ( ((Command)sel.Value).IsRootCommand())
+                    if (((Command)sel.Value).IsRootCommand())
                     {
                         currentCommand = (Command)sel.Value;
                         isroot = false;
@@ -574,11 +715,11 @@ namespace PPlus.CommandDotNet
                     ICollection<string> resultope;
                     if (kindprompt == PromptPlusTypeKind.None)
                     {
-                        resultope = Common.PromptForTypeArgumentValues(context, (IArgument)sel.Value, sel.Value.Description, pageSize,lastvalue, out iscancelrequest);
+                        resultope = Common.PromptForTypeArgumentValues(context, (IArgument)sel.Value, sel.Value.Description, pageSize, lastvalue, out iscancelrequest);
                     }
                     else
                     {
-                        resultope = Common.PromptForPromptPlusTypeArgumentValues(context, (IArgument)sel.Value, sel.Value.Description, pageSize, kindprompt,lastvalue, out iscancelrequest);
+                        resultope = Common.PromptForPromptPlusTypeArgumentValues(context, (IArgument)sel.Value, sel.Value.Description, pageSize, kindprompt, lastvalue, out iscancelrequest);
                     }
                     if (!iscancelrequest)
                     {
@@ -741,9 +882,9 @@ namespace PPlus.CommandDotNet
             return args;
         }
 
-        private static Task<int> CommandHooksBuildWizard(string  name,
+        private static Task<int> CommandHooksBuildWizard(string name,
             CommandContext context, ExecutionDelegate next,
-            Action<CommandContext, int,HotKey, HotKey, ConsoleColor,ConsoleColor, ConsoleColor>? beforeCommandRun,
+            Action<CommandContext, int, HotKey, HotKey, ConsoleColor, ConsoleColor, ConsoleColor>? beforeCommandRun,
             int pageSize,
             HotKey runwizard,
             HotKey backcommand,
@@ -755,7 +896,7 @@ namespace PPlus.CommandDotNet
             {
                 if (context.Tokens.Directives.First().Value == name)
                 {
-                    beforeCommandRun?.Invoke(context,pageSize, runwizard, backcommand,forecolorwizard, backcolorwizard, missingforecolorwizard);
+                    beforeCommandRun?.Invoke(context, pageSize, runwizard, backcommand, forecolorwizard, backcolorwizard, missingforecolorwizard);
                 }
             }
             return next(context);

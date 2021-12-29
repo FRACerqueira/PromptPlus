@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,14 +19,12 @@ namespace PPlus.Drivers
     {
         private readonly MemoryConsoleWriter _allOutput;
         private const int IdleReadKey = 10;
-        private readonly int _viewerRows;
-        private readonly int _viewerCols;
 
         public MemoryConsoleDriver(int viewrows = 80, int viewcols = 132)
         {
-            _viewerRows = viewrows;
-            _viewerCols = viewcols;
-            _allOutput = new MemoryConsoleWriter(_viewerRows,_viewerCols);
+            BufferHeight = viewrows;
+            BufferWidth = viewcols;
+            _allOutput = new MemoryConsoleWriter(BufferHeight, BufferWidth);
             Out = new MemoryConsoleWriter(0, 0, _allOutput);
             Error = new MemoryConsoleWriter(0, 0, _allOutput);
             In = new MemoryConsoleReader();
@@ -31,10 +34,19 @@ namespace PPlus.Drivers
 
         public void Dispose()
         {
-            _allOutput.Dispose();
-            Out.Dispose();
-            Error.Dispose();
-            In.Dispose();   
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _allOutput.Dispose();
+                Out.Dispose();
+                Error.Dispose();
+                In.Dispose();
+            }
         }
 
         public string GetText(int left, int top, int lenght = -1)
@@ -51,7 +63,7 @@ namespace PPlus.Drivers
             {
                 if (!string.IsNullOrEmpty(aux[i]))
                 {
-                    lastline = i+1;
+                    lastline = i + 1;
                 }
             }
             return aux.Take(lastline).ToArray();
@@ -97,7 +109,7 @@ namespace PPlus.Drivers
 
         public TextWriter Error { get; set; }
 
-        public  bool KeyAvailable
+        public bool KeyAvailable
         {
             get
             {
@@ -117,9 +129,9 @@ namespace PPlus.Drivers
 
         public int CursorTop => _allOutput.TopPos;
 
-        public int BufferWidth => _viewerCols;
+        public int BufferWidth { get; private set; }
 
-        public int BufferHeight => _viewerRows;
+        public int BufferHeight { get; private set; }
 
         public ConsoleColor ForegroundColor { get; set; }
 
@@ -172,7 +184,7 @@ namespace PPlus.Drivers
             ((MemoryConsoleWriter)Out).SetCursorPosition(left, top);
         }
 
-        public void SetError(TextWriter value) 
+        public void SetError(TextWriter value)
         {
             throw new NotImplementedException();
         }
@@ -191,7 +203,7 @@ namespace PPlus.Drivers
         {
             while (!KeyAvailable && !cancellationToken.IsCancellationRequested)
             {
-                cancellationToken.WaitHandle.WaitOne(IdleReadKey);
+                _ = cancellationToken.WaitHandle.WaitOne(IdleReadKey);
             }
             if (KeyAvailable && !cancellationToken.IsCancellationRequested)
             {

@@ -1,5 +1,4 @@
 ﻿using PPlus.Internal;
-using PPlus.Objects;
 
 using Xunit;
 
@@ -11,9 +10,9 @@ namespace PPlus.Tests.Internal
         [Theory]
         [InlineData("teste", false)]
         [InlineData("teste\n\t\b\r", false)]
-        [InlineData("",true)]
-        [InlineData(null,true)]
-        public void Should_have_value_normal(string value,bool empty)
+        [InlineData("", true)]
+        [InlineData(null, true)]
+        public void Should_have_value_normal(string value, bool empty)
         {
             // Given
             var csi = CSIAnsiConsole.SplitCommands(value);
@@ -29,7 +28,7 @@ namespace PPlus.Tests.Internal
             }
         }
         [Theory]
-        [InlineData("teste\x1b[1;3mOutrotexto",new string[] { "teste", "\x1b[1;3m", "Outrotexto" })]
+        [InlineData("teste\x1b[1;3mOutrotexto", new string[] { "teste", "\x1b[1;3m", "Outrotexto" })]
         [InlineData("teste\x1b[1;3mOutrotexto\x1b\x1b", new string[] { "teste", "\x1b[1;3m", "Outrotexto", "\x1b" })]
         [InlineData("teste\x1b[1;3mOutrotexto\x1bx", new string[] { "teste", "\x1b[1;3m", "Outrotexto", "\x1bx" })]
         public void Should_have_value_Ansivalue(string value, string[] resuts)

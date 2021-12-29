@@ -26,7 +26,11 @@ All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/G
 - Wizard to find all the commands/options and arguments with prompt and run.
     - Now you can discover and learn the existing commands, options and arguments.
 
-![](./images/PplusCmddotnet.gif)
+- Interative session with readline prompt, Sugestions and History.
+    - Now you can help to discover arguments (Sugestions) and history actions in interactive sessions.
+
+![](./images/PplusCmddotnetWizard.gif)
+![](./images/PplusCmddotnetRepl.gif)
 
 **[CommandDotNet is third party applications. Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
 

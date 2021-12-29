@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\ppluscmddotnet.md = docs\ppluscmddotnet.md
 		docs\progressbar.md = docs\progressbar.md
 		docs\progressbarinfo.md = docs\progressbarinfo.md
+		docs\readline.md = docs\readline.md
 		docs\resultbrowser.md = docs\resultbrowser.md
 		docs\resultmasked.md = docs\resultmasked.md
 		docs\resultpipe.md = docs\resultpipe.md
@@ -123,7 +124,7 @@ Global
 		{3746E78A-90E9-4074-8D00-0ADB93D7CC9D} = {1D88B60E-F8D4-494F-BF56-940EA9DDAB0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 		RESX_ShowErrorsInErrorList = False
+		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 	EndGlobalSection
 EndGlobal

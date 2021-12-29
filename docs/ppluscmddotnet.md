@@ -6,7 +6,8 @@
 Interactive command-line based application framework for **C# with powerful controls** integrate command line parse **CommandDotNet(4.3.0/6.0.0)**
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
-![](./images/PplusCmddotnet.gif)
+![](./images/PplusCmddotnetWizard.gif)
+![](./images/PplusCmddotnetRepl.gif)
 
 ### **Official pages** :
 
@@ -24,6 +25,7 @@ An open-source guide to help you write better command-line programs, taking trad
 - [Sample](#sample)
 - [Middlewares to CommandDotNet](#middlewares-to-commanddotnet)
 - [**PromptPlus Wizard**](#promptplus-wizard)
+- [**PromptPlus Repl-Session**](#promptplus-repl)
 - [**PromptPlus Attributes**](attributes.md)
 - [**Extensions**](#extensions)
 - [Supported Platforms](#supported-platforms)
@@ -74,7 +76,9 @@ namespace Example
                 //Adds support for prompting arguments using PromptPlus-Controls
                 .UsePromptPlusArgumentPrompter()
                 // inject diretive [wizard] to discover and learn the existing commands, options and arguments with prompt and then run.
-                .UsePromptPlusWizard() 
+                .UsePromptPlusWizard()
+                // inject option to interative session ('-i','--interactive')
+                .UsePromptPlusRepl(colorizeSessionInitMessage: (msg) => msg.Yellow().Underline())
                 .Run(args);
         }
     }

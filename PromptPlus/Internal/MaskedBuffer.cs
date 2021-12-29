@@ -290,7 +290,7 @@ namespace PPlus.Internal
             switch (_maskInputOptions.Type)
             {
                 case MaskedType.Generic:
-                    isvalid = InputTypeGeneric(value,(char)0,_logicalMaskGeneric);
+                    isvalid = InputTypeGeneric(value, (char)0, _logicalMaskGeneric);
                     break;
                 case MaskedType.DateOnly:
                     isvalid = InputTypeDateOnly(value);
@@ -328,12 +328,12 @@ namespace PPlus.Internal
                     var aux = new StringBuilder();
                     if (Position > 0)
                     {
-                        aux.Append(_inputBuffer.ToString().Substring(0, Position));
+                        _ = aux.Append(_inputBuffer.ToString().Substring(0, Position));
                     }
                     if (!IsEnd)
                     {
-                        aux.Append(_inputBuffer.ToString().Substring(Position + 1));
-                        aux.Append(_maskInputOptions.FillNumber.Value);
+                        _ = aux.Append(_inputBuffer.ToString().Substring(Position + 1))
+                               .Append(_maskInputOptions.FillNumber.Value);
                     }
                     _inputBuffer.Clear().Append(aux);
                     return this;
@@ -495,7 +495,7 @@ namespace PPlus.Internal
             if (_isTypeNumber)
             {
                 Position = 0;
-                for (var i = 0; i < (_decimalPosition<0?_inputBuffer.Length-1: _decimalPosition); i++)
+                for (var i = 0; i < (_decimalPosition < 0 ? _inputBuffer.Length - 1 : _decimalPosition); i++)
                 {
                     if (_inputBuffer[i] != _maskInputOptions.FillNumber.Value)
                     {
@@ -618,11 +618,11 @@ namespace PPlus.Internal
                         {
                             if (_inputBuffer.Length < _iniTime)
                             {
-                                _inputBuffer.Append("1");
+                                _inputBuffer.Append('1');
                             }
                             else
                             {
-                                _inputBuffer.Append("0");
+                                _inputBuffer.Append('0');
                             }
                         }
                         if (!DateTime.TryParseExact(ToMasked(), _maskInputOptions.CurrentCulture.DateTimeFormat.GetAllDateTimePatterns(), _maskInputOptions.CurrentCulture, DateTimeStyles.None, out _))
@@ -639,7 +639,7 @@ namespace PPlus.Internal
                             {
                                 while (_inputBuffer.Length < _validPosition.Length)
                                 {
-                                    _inputBuffer.Append("0");
+                                    _inputBuffer.Append('0');
                                     if (_maskInputOptions.FillNumber.HasValue)
                                     {
                                         diff++;
@@ -664,7 +664,7 @@ namespace PPlus.Internal
                     {
                         while (_inputBuffer.Length < _validPosition.Length)
                         {
-                            _inputBuffer.Append("1");
+                            _inputBuffer.Append('1');
                         }
                         if (!DateTime.TryParseExact(ToMasked(), _maskInputOptions.CurrentCulture.DateTimeFormat.GetAllDateTimePatterns(), _maskInputOptions.CurrentCulture, DateTimeStyles.None, out _))
                         {
@@ -680,7 +680,7 @@ namespace PPlus.Internal
                             {
                                 while (_inputBuffer.Length < _validPosition.Length)
                                 {
-                                    _inputBuffer.Append("0");
+                                    _inputBuffer.Append('0');
                                     if (_maskInputOptions.FillNumber.HasValue)
                                     {
                                         diff++;
@@ -706,7 +706,7 @@ namespace PPlus.Internal
                         var diff = 0;
                         while (_inputBuffer.Length < _validPosition.Length)
                         {
-                            _inputBuffer.Append("0");
+                            _inputBuffer.Append('0');
                             if (_maskInputOptions.FillNumber.HasValue)
                             {
                                 diff++;
@@ -726,7 +726,7 @@ namespace PPlus.Internal
                             }
                             if (IsMaxInput && IsEnd)
                             {
-                                Position = _inputBuffer.Length-1;
+                                Position = _inputBuffer.Length - 1;
                             }
                             else
                             {
@@ -752,7 +752,7 @@ namespace PPlus.Internal
                     }
 
                     SignalNumberInput = " "[0];
-                    if (double.TryParse(value,ns, _maskInputOptions.CurrentCulture, out var daux))
+                    if (double.TryParse(value, ns, _maskInputOptions.CurrentCulture, out var daux))
                     {
                         var aux = daux.ToString(_maskInputOptions.CurrentCulture)
                             .Replace(_maskInputOptions.CurrentCulture.NumberFormat.NumberGroupSeparator, "")
@@ -779,7 +779,7 @@ namespace PPlus.Internal
                         }
                         _inputBuffer.Append(intpart);
                         _inputBuffer.Append(decpart);
-                        Position = _decimalPosition<0?_inputBuffer.Length-1:_decimalPosition + ldec;
+                        Position = _decimalPosition < 0 ? _inputBuffer.Length - 1 : _decimalPosition + ldec;
                     }
                     else
                     {
@@ -805,7 +805,7 @@ namespace PPlus.Internal
 
         #region private methods
 
-        private bool InputTypeGeneric(char value,char sep, string logicalMask)
+        private bool InputTypeGeneric(char value, char sep, string logicalMask)
         {
             if (value == sep)
             {
@@ -1063,7 +1063,7 @@ namespace PPlus.Internal
                 {
                     if (ValidBackwardPosition() != 0)
                     {
-                        Position = _decimalPosition < 0 ? _inputBuffer.Length -1: _decimalPosition;
+                        Position = _decimalPosition < 0 ? _inputBuffer.Length - 1 : _decimalPosition;
                         RotateIntValues(value);
                         if (ValidBackwardPosition() == 0)
                         {
@@ -1327,7 +1327,7 @@ namespace PPlus.Internal
                         {
                             if (qtdmask.Length != 0)
                             {
-                                throw new ArgumentException(Exceptions.Ex_InvalidMask);
+                                throw new ArgumentException(Exceptions.Ex_InvalidMask, nameof(origmask));
                             }
                         }
                     }
@@ -1336,11 +1336,11 @@ namespace PPlus.Internal
                         flagskip = true;
                         if (qtdmask.Length == 0)
                         {
-                            throw new ArgumentException(Exceptions.Ex_InvalidMask);
+                            throw new ArgumentException(Exceptions.Ex_InvalidMask, nameof(origmask));
                         }
                         for (var q = 0; q < int.Parse(qtdmask.ToString()) - 1; q++)
                         {
-                            maskConv.Append(maskchar);
+                            _ = maskConv.Append(maskchar);
                             poslogical++;
                         }
                         maskchar = string.Empty;
@@ -1352,7 +1352,7 @@ namespace PPlus.Internal
                         flagskip = true;
                         if (!flagMarkFistCus)
                         {
-                            charcustom.Append(charavaliable);
+                            _ = charcustom.Append(charavaliable);
                         }
                         flagMarkFistCus = false;
                     }
@@ -1373,8 +1373,8 @@ namespace PPlus.Internal
                     }
                     if (!flagskip)
                     {
-                        maskConv.Append(CharEscape);
-                        maskConv.Append(charavaliable);
+                        _ = maskConv.Append(CharEscape)
+                                .Append(charavaliable);
                         flagesc = false;
                     }
                     flagskip = false;
@@ -1382,7 +1382,7 @@ namespace PPlus.Internal
             }
             if (!notflag.Invoke())
             {
-                throw new ArgumentException(Exceptions.Ex_InvalidMask);
+                throw new ArgumentException(Exceptions.Ex_InvalidMask, nameof(origmask));
             }
             return maskConv.ToString();
         }
@@ -1405,11 +1405,11 @@ namespace PPlus.Internal
                 }
                 else if (CharsEditMask.IndexOf(charavaliable) != -1)
                 {
-                    logicalConv.Append(charavaliable);
+                    _ = logicalConv.Append(charavaliable);
                 }
                 else
                 {
-                    logicalConv.Append(_promptmask);
+                    _ = logicalConv.Append(_promptmask);
                 }
             }
             return logicalConv.ToString();

@@ -16,7 +16,7 @@ namespace PPlus.Internal
     {
         private Cursor _pushedCursor;
         private int _cursorBottom = -1;
- 
+
         public ScreenRender()
         {
             FormBuffer = new();
@@ -55,9 +55,9 @@ namespace PPlus.Internal
             return lastFormBuffer;
         }
 
-        public void InputRender(Action<ScreenBuffer> template, bool onlyTemplate = false)
+        public string InputRender(Func<ScreenBuffer, string> template, bool onlyTemplate = false)
         {
-            template(FormBuffer);
+            var aux = template(FormBuffer);
             if (!onlyTemplate)
             {
                 if (ErrorMessage != null)
@@ -67,6 +67,7 @@ namespace PPlus.Internal
                 }
                 RenderToConsole();
             }
+            return aux;
         }
 
         public void FinishRender<TModel>(Action<ScreenBuffer, TModel> template, TModel result)

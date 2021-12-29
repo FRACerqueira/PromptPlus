@@ -14,7 +14,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_Load_validvalues_en_us()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditNumber(new CultureInfo("en-US"),10,2, MaskedSignal.Enabled, null));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditNumber(new CultureInfo("en-US"), 10, 2, MaskedSignal.Enabled, null));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("123.45", false));
             //then
             Assert.Equal("0,000,000,123.45", maskedBuffer.ToMasked());

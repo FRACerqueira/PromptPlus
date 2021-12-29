@@ -7,8 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using PPlus.Drivers;
-
 namespace PPlus.Internal
 {
     internal class Paginator<T>
@@ -24,7 +22,7 @@ namespace PPlus.Internal
         {
             _items = items.ToArray();
             _userpageSize = pageSize ?? _items.Length;
-            _textSelector = textSelector?? ((x) => x.ToString());
+            _textSelector = textSelector ?? ((x) => x.ToString());
             EnsureTerminalPagesize();
             _validatorAction = validatorAction;
             if (validatorAction == null)
@@ -40,7 +38,7 @@ namespace PPlus.Internal
             var BufferHeight = aux.Item2;
             var BufferWidth = aux.Item1;
 
-            if (BufferHeight == 0  || BufferWidth == 0)
+            if (BufferHeight == 0 || BufferWidth == 0)
             {
                 _maxpageSize = _userpageSize;
                 return;

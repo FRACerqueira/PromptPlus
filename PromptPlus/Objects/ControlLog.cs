@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,7 +16,7 @@ namespace PPlus.Objects
 {
     public struct ControlLog
     {
-        private string _source;
+        private readonly string _source;
 
         public ControlLog()
         {
@@ -30,7 +35,7 @@ namespace PPlus.Objects
             Logs = new List<ItemPromptLog>();
         }
 
-        internal void Add(LogLevel level,string key, string message, LogKind logKind)
+        internal void Add(LogLevel level, string key, string message, LogKind logKind)
         {
             if (string.IsNullOrEmpty(key))
             {
@@ -45,7 +50,7 @@ namespace PPlus.Objects
                 var aux = Logs.First(x => x.Key == key && x.Kind == logKind);
                 Logs.Remove(aux);
             }
-            Logs.Add(new ItemPromptLog(level,key, message, _source,logKind));
+            Logs.Add(new ItemPromptLog(level, key, message, _source, logKind));
         }
 
         public IList<ItemPromptLog> Logs { get; private set; }

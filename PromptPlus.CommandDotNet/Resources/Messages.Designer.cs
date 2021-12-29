@@ -61,6 +61,87 @@ namespace PPlus.CommandDotNet.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Has been cleared all history items..
+        /// </summary>
+        internal static string Repl_clear_history {
+            get {
+                return ResourceManager.GetString("Repl_clear_history", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interative session.
+        /// </summary>
+        internal static string Repl_default_description {
+            get {
+                return ResourceManager.GetString("Repl_default_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exit interative session.
+        /// </summary>
+        internal static string Repl_exit {
+            get {
+                return ResourceManager.GetString("Repl_exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update history.
+        /// </summary>
+        internal static string Repl_history_description {
+            get {
+                return ResourceManager.GetString("Repl_history_description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note: value default = {0} days, value 0 clear history..
+        /// </summary>
+        internal static string Repl_history_note {
+            get {
+                return ResourceManager.GetString("Repl_history_note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &apos;replhistory &lt;days&gt;,&lt;hours&gt;,&lt;minutes&gt;&apos; to update history..
+        /// </summary>
+        internal static string Repl_history_update {
+            get {
+                return ResourceManager.GetString("Repl_history_update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} {1} Type &apos;quit&apos; to exit..
+        /// </summary>
+        internal static string Repl_init_session {
+            get {
+                return ResourceManager.GetString("Repl_init_session", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid values for Updated History.
+        /// </summary>
+        internal static string Repl_invalid_values_history {
+            get {
+                return ResourceManager.GetString("Repl_invalid_values_history", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Updated History to {0} days, {1} hours and {2} minutes..
+        /// </summary>
+        internal static string Repl_Ok_history {
+            get {
+                return ResourceManager.GetString("Repl_Ok_history", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command for {0}: {1}.
         /// </summary>
         internal static string WizardCommandFor {
@@ -70,7 +151,7 @@ namespace PPlus.CommandDotNet.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Directive for wizard prompt:%\n%[{0}] to wizard find commands, options and arguments with prompt and execute!!! (Remark: Shouldn&apos;t have any more arguments)%\n%%\n%Example: %AppName% [{0}]..
+        ///   Looks up a localized string similar to Directive for wizard prompt:%\n%%\n%   [{0}] to wizard find commands, options and arguments with prompt and execute!!! (Remark: Shouldn&apos;t have any more arguments), eg.: %AppName% [{0}]..
         /// </summary>
         internal static string WizardHelpText {
             get {

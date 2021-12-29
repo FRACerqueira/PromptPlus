@@ -7,7 +7,7 @@ using Xunit;
 
 namespace PPlus.Tests.Objects
 {
-    public class ColorTokenTest: IDisposable
+    public class ColorTokenTest : IDisposable
     {
         public ColorTokenTest()
         {
@@ -40,7 +40,7 @@ namespace PPlus.Tests.Objects
 
             var ct = new ColorToken("", PromptPlus.ForegroundColor, PromptPlus.BackgroundColor);
             // When
-            var maskct = ct.Mask(ConsoleColor.Red,ConsoleColor.Red);
+            var maskct = ct.Mask(ConsoleColor.Red, ConsoleColor.Red);
             // Then
             Assert.True(maskct.Color == ConsoleColor.Red);
             Assert.True(maskct.BackgroundColor == ConsoleColor.Red);
@@ -66,7 +66,7 @@ namespace PPlus.Tests.Objects
 
             var ct = new ColorToken("", PromptPlus.ForegroundColor, PromptPlus.BackgroundColor);
             // When
-            var maskct = ct.Mask( ConsoleColor.Red,null);
+            var maskct = ct.Mask(ConsoleColor.Red, null);
             // Then
             Assert.True(maskct.Color == ConsoleColor.Red);
             Assert.True(maskct.BackgroundColor == PromptPlus.BackgroundColor);

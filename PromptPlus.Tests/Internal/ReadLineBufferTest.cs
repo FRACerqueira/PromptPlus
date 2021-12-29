@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 using PPlus.Drivers;
 using PPlus.Internal;
@@ -15,18 +10,26 @@ namespace PPlus.Tests.Internal
 {
     public class ReadLineBufferTest : IDisposable
     {
-        private ReadLineBuffer _readlinedefault;
+        private readonly ReadLineBuffer _readlinedefault;
         public ReadLineBufferTest()
         {
             PromptPlus.ExclusiveDriveConsole(new MemoryConsoleDriver());
-            _readlinedefault = new ReadLineBuffer(false,testsugestion);
+            _readlinedefault = new ReadLineBuffer(false, testsugestion);
         }
         public void Dispose()
         {
-            PromptPlus.ExclusiveMode = false;
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                PromptPlus.ExclusiveMode = false;
+            }
         }
 
-        private MemoryConsoleReader InReader => (MemoryConsoleReader)PromptPlus.PPlusConsole.In;
+        private static MemoryConsoleReader InReader => (MemoryConsoleReader)PromptPlus.PPlusConsole.In;
 
         [Fact]
         internal void Should_have_accept_TryAcceptedReadlineConsoleKey_validvalues()
@@ -38,7 +41,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out var ok);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out var ok);
                 if (!ok)
                 {
                     qtdnotaccept++;
@@ -96,7 +99,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(0, _readlinedefault.Length);
@@ -107,12 +110,12 @@ namespace PPlus.Tests.Internal
         {
             // Given
             InReader.LoadInput("abc");
-            InReader.LoadInput(new ConsoleKeyInfo((char)0,ConsoleKey.LeftArrow,false,false,false));
+            InReader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
             //when
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(2, _readlinedefault.Position);
@@ -132,7 +135,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(1, _readlinedefault.Position);
@@ -151,7 +154,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(3, _readlinedefault.Position);
@@ -170,7 +173,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(0, _readlinedefault.Position);
@@ -190,7 +193,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(4, _readlinedefault.Position);
@@ -211,7 +214,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(0, _readlinedefault.Position);
@@ -232,7 +235,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(4, _readlinedefault.Position);
@@ -254,7 +257,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(1, _readlinedefault.Position);
@@ -277,7 +280,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(4, _readlinedefault.Position);
@@ -299,7 +302,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(3, _readlinedefault.Position);
@@ -322,7 +325,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(1, _readlinedefault.Position);
@@ -343,7 +346,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(4, _readlinedefault.Position);
@@ -363,7 +366,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(4, _readlinedefault.Position);
@@ -384,7 +387,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(9, _readlinedefault.Position);
@@ -405,7 +408,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(0, _readlinedefault.Position);
@@ -417,7 +420,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(11, _readlinedefault.Position);
@@ -437,7 +440,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(0, _readlinedefault.Position);
@@ -449,7 +452,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(11, _readlinedefault.Position);
@@ -470,7 +473,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(9, _readlinedefault.Position);
@@ -493,7 +496,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(2, _readlinedefault.Position);
@@ -515,7 +518,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal(0, _readlinedefault.Position);
@@ -530,22 +533,22 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_ctrl_I_and_tab()
         {
             // Given
-            InReader.LoadInput("abc prompt");
+            InReader.LoadInput("abc teste");
             InReader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.I, false, false, true));
             InReader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.Tab, false, false, false));
             //when
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.NotNull(_readlinedefault.InputWithSugestion);
-            Assert.Equal(3, _readlinedefault.InputWithSugestion.Length);
-            Assert.Equal("abc prompt", _readlinedefault.InputWithSugestion[0]);
+            Assert.Equal(4, _readlinedefault.InputWithSugestion.Length);
+            Assert.Equal("abc teste", _readlinedefault.InputWithSugestion[0]);
             Assert.Equal(" choose", _readlinedefault.InputWithSugestion[1]);
             Assert.Equal("", _readlinedefault.InputWithSugestion[2]);
-            Assert.Equal("abc prompt choose", _readlinedefault.ToString());
+            Assert.Equal("abc teste choose", _readlinedefault.ToString());
             Assert.True(_readlinedefault.IsInAutoCompleteMode());
         }
 
@@ -562,11 +565,11 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.NotNull(_readlinedefault.InputWithSugestion);
-            Assert.Equal(3, _readlinedefault.InputWithSugestion.Length);
+            Assert.Equal(4, _readlinedefault.InputWithSugestion.Length);
             Assert.Equal("abc prompt", _readlinedefault.InputWithSugestion[0]);
             Assert.Equal(" help", _readlinedefault.InputWithSugestion[1]);
             Assert.Equal("", _readlinedefault.InputWithSugestion[2]);
@@ -587,11 +590,11 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.NotNull(_readlinedefault.InputWithSugestion);
-            Assert.Equal(3, _readlinedefault.InputWithSugestion.Length);
+            Assert.Equal(4, _readlinedefault.InputWithSugestion.Length);
             Assert.Equal("abc prompt", _readlinedefault.InputWithSugestion[0]);
             Assert.Equal(" help", _readlinedefault.InputWithSugestion[1]);
             Assert.Equal("", _readlinedefault.InputWithSugestion[2]);
@@ -602,7 +605,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal("abc prompt teste", _readlinedefault.ToString());
@@ -624,11 +627,11 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.NotNull(_readlinedefault.InputWithSugestion);
-            Assert.Equal(3, _readlinedefault.InputWithSugestion.Length);
+            Assert.Equal(4, _readlinedefault.InputWithSugestion.Length);
             Assert.Equal("abc prompt", _readlinedefault.InputWithSugestion[0]);
             Assert.Equal(" help", _readlinedefault.InputWithSugestion[1]);
             Assert.Equal("", _readlinedefault.InputWithSugestion[2]);
@@ -639,7 +642,7 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.Equal("abc prompt help ", _readlinedefault.ToString());
@@ -660,15 +663,15 @@ namespace PPlus.Tests.Internal
             while (PromptPlus.PPlusConsole.KeyAvailable)
             {
                 var keyinfo = PromptPlus.PPlusConsole.ReadKey(false);
-                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo,null, out _);
+                _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo, null, out _);
             }
             // Then
             Assert.NotNull(_readlinedefault.InputWithSugestion);
-            Assert.Equal(3, _readlinedefault.InputWithSugestion.Length);
+            Assert.Equal(4, _readlinedefault.InputWithSugestion.Length);
             Assert.Equal("abc prompt", _readlinedefault.InputWithSugestion[0]);
-            Assert.Equal(" secure", _readlinedefault.InputWithSugestion[1]);
-            Assert.Equal(" teste", _readlinedefault.InputWithSugestion[2]);
-            Assert.Equal("abc prompt secure teste", _readlinedefault.ToString());
+            Assert.Equal(" help", _readlinedefault.InputWithSugestion[1]);
+            Assert.Equal("", _readlinedefault.InputWithSugestion[2]);
+            Assert.Equal("abc prompt help", _readlinedefault.ToString());
             Assert.True(_readlinedefault.IsInAutoCompleteMode());
         }
 
@@ -676,7 +679,7 @@ namespace PPlus.Tests.Internal
         {
             var aux = new SugestionOutput();
             var word = arg.CurrentWord();
-            if (word.ToLowerInvariant() == "prompt")
+            if (word.ToLowerInvariant() == "teste")
             {
                 aux.Add("help", true);
                 aux.Add("choose");

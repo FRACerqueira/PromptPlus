@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Globalization;
 using System.Threading;
 
@@ -107,7 +112,7 @@ namespace PPlus.Attributes
             Culture = Thread.CurrentThread.CurrentCulture;
         }
 
-        public PromptPlusTypeDateAttribute(FormatYear formatYear = FormatYear.Y4,CultureInfo? cultureInfo = null)
+        public PromptPlusTypeDateAttribute(FormatYear formatYear = FormatYear.Y4, CultureInfo? cultureInfo = null)
         {
             DateTimeKind = PromptDateTimeKind.DateOnly;
             YearKind = formatYear;

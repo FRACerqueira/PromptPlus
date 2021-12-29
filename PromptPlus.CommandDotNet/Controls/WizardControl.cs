@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -34,7 +39,7 @@ namespace PPlus.CommandDotNet.Controls
             }
         }
 
-        public override IArgumentNode InitControl()
+        public override string InitControl()
         {
             if (_options.WizardControl is null)
             {
@@ -42,19 +47,19 @@ namespace PPlus.CommandDotNet.Controls
             }
             _options.WizardControl.GetType().UnderlyingSystemType.GetProperty("PipeId").SetValue(_options.WizardControl, null);
 
-            return _options.RootCommand;
+            return null;
         }
 
-        public void WizardTemplate(ScreenBuffer screenBuffer)
+        public string WizardTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.Write(_options.Message, _options.ForeColor , _options.BackColor );
+            screenBuffer.Write(_options.Message, _options.ForeColor, _options.BackColor);
             if (_options.TokenArgs is not null)
             {
                 foreach (var item in _options.TokenArgs)
                 {
                     if (!item.IsEnabled)
                     {
-                        screenBuffer.Write($" {item.ArgValue}", _options.MissingForeColor, _options.BackColor );
+                        screenBuffer.Write($" {item.ArgValue}", _options.MissingForeColor, _options.BackColor);
                     }
                     else
                     {
@@ -70,20 +75,21 @@ namespace PPlus.CommandDotNet.Controls
                 }
             }
             screenBuffer.Write(" ");
+            return null;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             if (!_options.IsRootControl)
             {
                 ShowInputTemplate(screenBuffer);
-                return;
+                return string.Empty;
             }
 
             var prop = _options.WizardControl.GetType().UnderlyingSystemType
                 .GetProperty("Wizardtemplate");
 
-            var action = new Action<ScreenBuffer>((s) => WizardTemplate(s));
+            var action = new Func<ScreenBuffer, string>((s) => WizardTemplate(s));
 
             var delegateIntance = Delegate.CreateDelegate(prop.PropertyType, action.Target, action.Method);
             prop.SetValue(_options.WizardControl, delegateIntance);
@@ -119,11 +125,12 @@ namespace PPlus.CommandDotNet.Controls
                 disp.Invoke(_options.WizardControl, null);
             }
             _options.IsRootControl = false;
+            return string.Empty;
         }
 
         private void ShowInputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.Write(_options.Message,_options.ForeColor, _options.BackColor);
+            screenBuffer.Write(_options.Message, _options.ForeColor, _options.BackColor);
             if (_options.TokenArgs is not null)
             {
                 foreach (var item in _options.TokenArgs)
@@ -244,5 +251,5 @@ namespace PPlus.CommandDotNet.Controls
             return this;
         }
 
-     }
+    }
 }

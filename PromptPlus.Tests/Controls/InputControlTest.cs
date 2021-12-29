@@ -43,19 +43,19 @@ namespace PPlus.Tests.Controls
                 .InitialValue("teste")
                 .Config((ctx) =>
                 {
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnStartControl, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnStartControl, (object ctx, string value) =>
                     {
-                        initialvalue = value.ToString();
+                        initialvalue = value;
                     });
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender,(object value) =>
-                    {
-                        if (first)
-                        {
-                            first = false;
-                            viewstart = _memoryconsole.GetScreen();
-                        }
-                    });
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object ctx, string value) =>
+                     {
+                         if (first)
+                         {
+                             first = false;
+                             viewstart = _memoryconsole.GetScreen();
+                         }
+                     });
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object ctx, string value) =>
                     {
                         viewend = _memoryconsole.GetScreen();
                         finalvalue = value.ToString();
@@ -87,11 +87,11 @@ namespace PPlus.Tests.Controls
                 .InitialValue("teste")
                 .Config((ctx) =>
                 {
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnStartControl, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnStartControl, (object ctx, string value) =>
                     {
-                        initialvalue = value.ToString();
+                        initialvalue = value;
                     });
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object ctx, string value) =>
                     {
                         if (first)
                         {
@@ -99,7 +99,7 @@ namespace PPlus.Tests.Controls
                             viewstart = _memoryconsole.GetScreen();
                         }
                     });
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object ctx, string value) =>
                     {
                         viewend = _memoryconsole.GetScreen();
                         finalvalue = value.ToString();
@@ -131,11 +131,11 @@ namespace PPlus.Tests.Controls
                 .InitialValue("teste")
                 .Config((ctx) =>
                 {
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnStartControl, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnStartControl, (object ctx, string value) =>
                     {
-                        initialvalue = value.ToString();
+                        initialvalue = value;
                     });
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object ctx, string value) =>
                     {
                         if (first)
                         {
@@ -143,7 +143,7 @@ namespace PPlus.Tests.Controls
                             viewstart = _memoryconsole.GetScreen();
                         }
                     });
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object ctx, string value) =>
                     {
                         viewend = _memoryconsole.GetScreen();
                         finalvalue = value.ToString();
@@ -175,7 +175,7 @@ namespace PPlus.Tests.Controls
                 .InitialValue("teste")
                 .Config((ctx) =>
                 {
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object ctx, string value) =>
                     {
                         if (first)
                         {
@@ -218,7 +218,7 @@ namespace PPlus.Tests.Controls
                 .InitialValue("teste")
                 .Config((ctx) =>
                 {
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object ctx, string value) =>
                     {
                         if (first)
                         {
@@ -261,7 +261,7 @@ namespace PPlus.Tests.Controls
                 .InitialValue("teste")
                 .Config((ctx) =>
                 {
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object ctx, string value) =>
                     {
                         if (first)
                         {
@@ -269,7 +269,7 @@ namespace PPlus.Tests.Controls
                             viewstart = _memoryconsole.GetScreen();
                         }
                     });
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object value) =>
+                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object ctx, string value) =>
                     {
                         viewend = _memoryconsole.GetScreen();
                     });

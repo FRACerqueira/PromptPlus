@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
-using PPlus.Drivers;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace PPlus.Internal
 {
@@ -34,7 +34,7 @@ namespace PPlus.Internal
             var _currentState = State.Default;
             foreach (var item in value)
             {
-                EvaluateChar(item,_buffer,_currentState,out _currentState);
+                EvaluateChar(item, _buffer, _currentState, out _currentState);
                 switch (_currentState)
                 {
                     case State.Csi:
@@ -65,7 +65,7 @@ namespace PPlus.Internal
             return result.ToArray();
         }
 
-        private static void EvaluateChar(char c, StringBuilder _buffer,State currentstate,  out State state)
+        private static void EvaluateChar(char c, StringBuilder _buffer, State currentstate, out State state)
         {
             state = currentstate;
             switch (currentstate)
@@ -119,10 +119,10 @@ namespace PPlus.Internal
                     break;
 
                 case State.EndCsiCommand:
-                    {
-                        state = State.Default;
-                        goto case State.Default;
-                    }
+                {
+                    state = State.Default;
+                    goto case State.Default;
+                }
                 case State.Default:
                     if (c == EscapeCharacter)
                     {

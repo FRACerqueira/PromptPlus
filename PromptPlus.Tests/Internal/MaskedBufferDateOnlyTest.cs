@@ -1,7 +1,5 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 
-using PPlus.Drivers;
 using PPlus.Internal;
 using PPlus.Tests.Personas;
 
@@ -91,7 +89,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_Load_partial_validvalues_en_us_withFill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("en-US"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("en-US"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("12/31", true));
             //then
             Assert.Equal("12/31/0000", maskedBuffer.ToMasked());
@@ -120,7 +118,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_Load_partial_validvalues_pt_br_withFill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("pt-BR"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("pt-BR"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("31/12", true));
             //then
             Assert.Equal("31/12/0000", maskedBuffer.ToMasked());
@@ -153,7 +151,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_Clear_withFill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("en-US"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("en-US"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("12/31", true));
             //when
             maskedBuffer.Clear();
@@ -196,7 +194,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_ToStart_ToEnd_withFill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("en-US"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("en-US"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("12/31", true));
             //when
             maskedBuffer.ToStart();
@@ -322,7 +320,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_Delete_with_fill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("en-US"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("en-US"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("12/31", true));
             //when
             maskedBuffer.ToStart();
@@ -363,7 +361,7 @@ namespace PPlus.Tests.Internal
         internal void Should_have_accept_insert_valid_reject_invalid_with_fill()
         {
             // Given
-            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("en-US"), null,true));
+            var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateOnly(new CultureInfo("en-US"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("01/31", true));
             //when
             maskedBuffer.ToStart();

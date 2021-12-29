@@ -31,7 +31,7 @@ namespace PPlus.Tests.Internal
             //when
             var ex = Record.Exception(() =>
             {
-                var pg = new Paginator<string>(new string[] {""}, null, Optional<string>.Create(null));
+                var pg = new Paginator<string>(new string[] { "" }, null, Optional<string>.Create(null));
             });
             //then
             Assert.NotNull(ex);
@@ -84,7 +84,7 @@ namespace PPlus.Tests.Internal
             Assert.Equal(2, pg.SelectedPage);
             Assert.Equal(0, pg.SelectedIndex);
             Assert.Equal(1, pg.Count);
-            Assert.True( pg.IsLastPageItem);
+            Assert.True(pg.IsLastPageItem);
         }
 
         [Fact]
@@ -238,7 +238,7 @@ namespace PPlus.Tests.Internal
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(items, 10, Optional<string>.Create("3"),null,(x) => x != "0");
+            var pg = new Paginator<string>(items, 10, Optional<string>.Create("3"), null, (x) => x != "0");
             // When
             pg.FirstItem();
             // Then
@@ -338,7 +338,7 @@ namespace PPlus.Tests.Internal
             Assert.Equal(1, pg.PageCount);
             Assert.Equal(1, pg.Count);
             Assert.True(ok);
-            Assert.Equal("10",result);
+            Assert.Equal("10", result);
         }
 
     }

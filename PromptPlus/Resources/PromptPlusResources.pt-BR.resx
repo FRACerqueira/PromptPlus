@@ -366,4 +366,7 @@
   <data name="ReadlineSugestionMode" xml:space="preserve">
     <value>Esc: Cancelar sugestão e retornar</value>
   </data>
+  <data name="NumberUpDownKeyNavigator" xml:space="preserve">
+    <value>Up/Down: valor curto, Crtl+Left/Right: valor grande, Enter: Terminar</value>
+  </data>
 </root>

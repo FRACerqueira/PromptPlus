@@ -122,7 +122,7 @@ namespace PPlus
 
         public static ColorToken DefautColor(this string text)
         {
-            return new ColorToken(text,  PPlusConsole.ForegroundColor, PPlusConsole.BackgroundColor);
+            return new ColorToken(text, PPlusConsole.ForegroundColor, PPlusConsole.BackgroundColor);
         }
 
         public static ColorToken Color(this string text, ConsoleColor forecolor, ConsoleColor? backcolor = null)

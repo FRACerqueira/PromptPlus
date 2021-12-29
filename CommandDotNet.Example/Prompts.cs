@@ -7,14 +7,12 @@ using System.Threading;
 using System.Threading.Tasks;
 
 using CommandDotNet.Prompts;
-using CommandDotNet.Rendering;
-
 
 using PPlus;
+using PPlus.Attributes;
+using PPlus.CommandDotNet;
 using PPlus.Drivers;
 using PPlus.Objects;
-using PPlus.CommandDotNet;
-using PPlus.Attributes;
 
 namespace CommandDotNet.Example
 {
@@ -29,7 +27,7 @@ namespace CommandDotNet.Example
 #else
         [Subcommand]
 #endif
-        [Description("Secure download")]
+        [Description("Secure download sample with password masked")]
         public class Secure
         {
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
@@ -64,6 +62,7 @@ namespace CommandDotNet.Example
             }
 
             [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "by design")]
+            [Description("Download fake demonstrating prompting with PromptPlus atttributes")]
             public void Download(
                 [Description("Url (http/https) to download")]
                 [PromptInitialValue("https://")]
@@ -153,7 +152,7 @@ namespace CommandDotNet.Example
         {
             var answer = PromptPlus.Select<string>(
                 "What is your favorite color ?",
-                this.CopyCallerDescription()?? string.Empty)
+                this.CopyCallerDescription() ?? string.Empty)
                     .PageSize(pageSize)
                     .AddItems(new string[] { "blue", "purple", "red", "orange", "yellow", "green" })
                     .Run(cancellationToken);
@@ -169,12 +168,15 @@ namespace CommandDotNet.Example
 
 
         [Command(Description = "demonstrating prompt with enum")]
-        public void ChooseColor(
+        public static void ChooseColor(
             IConsole console,
             [Description("My Colors Preference")]
             IEnumerable<ColorPreference> mycolor)
         {
-            console.Out.WriteLine(mycolor);
+            foreach (var item in mycolor)
+            {
+                console.Out.WriteLine(item);
+            }
         }
 
 

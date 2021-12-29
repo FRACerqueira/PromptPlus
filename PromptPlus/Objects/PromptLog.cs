@@ -1,5 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 
 using Microsoft.Extensions.Logging;
 
@@ -19,7 +23,7 @@ namespace PPlus.Objects
             Kind = LogKind.Property;
         }
 
-        internal ItemPromptLog(LogLevel level,string key, string message, string source, LogKind logKind)
+        internal ItemPromptLog(LogLevel level, string key, string message, string source, LogKind logKind)
         {
             LogDate = DateTime.Now;
             Level = level;

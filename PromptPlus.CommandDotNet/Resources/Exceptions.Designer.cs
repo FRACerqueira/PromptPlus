@@ -106,6 +106,15 @@ namespace PPlus.CommandDotNet.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Long name or short name must be filled.
+        /// </summary>
+        internal static string Ex_ReplControlOptions {
+            get {
+                return ResourceManager.GetString("Ex_ReplControlOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Propery WizardControl is empty.
         /// </summary>
         internal static string Ex_WizardControl {

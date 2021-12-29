@@ -23,7 +23,7 @@ namespace PPlus.Controls
         private string _inputDesc;
         private const string Namecontrol = "PromptPlus.Input";
 
-        public InputControl(InputOptions options) : base(Namecontrol,options, true)
+        public InputControl(InputOptions options) : base(Namecontrol, options, true)
         {
             _options = options;
         }
@@ -81,7 +81,7 @@ namespace PPlus.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
-                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo,_inputBuffer.ToString(), out var acceptedkey);
+                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _inputBuffer.ToString(), out var acceptedkey);
                 if (acceptedkey)
                 {
                     ///none
@@ -155,7 +155,7 @@ namespace PPlus.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             var prompt = _options.Message;
             if (!string.IsNullOrEmpty(_options.DefaultValue))
@@ -229,10 +229,11 @@ namespace PPlus.Controls
 
             if (_options.ValidateOnDemand && !_initform && _options.Validators.Count > 0)
             {
-                TryValidate(_inputBuffer.ToString(), _options.Validators,true);
+                TryValidate(_inputBuffer.ToString(), _options.Validators, true);
             }
 
             _initform = false;
+            return _inputBuffer.ToString();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, string result)
