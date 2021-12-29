@@ -16,7 +16,8 @@ namespace CommandDotNet.Example
             CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
 
             PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
-            PromptPlus.Clear();
+
+            Console.ReadKey();
 
             return new AppRunner<Examples>()
                 .UseDefaultMiddleware()
