@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Runtime.InteropServices;
 
 using PPlus.Internal;
 using PPlus.Tests.Personas;
@@ -29,6 +30,10 @@ namespace PPlus.Tests.Internal
         [Fact]
         internal void Should_have_accept_Load_validvalues_pt_br()
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return;
+            }
             var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateTime(new CultureInfo("pt-BR"), null));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("31/12/2021 21:34:56", false));
             //then
@@ -59,6 +64,10 @@ namespace PPlus.Tests.Internal
         [Fact]
         internal void Should_have_not_accept_Load_invalidvalues_pt_br()
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return;
+            }
             // Given
             var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateTime(new CultureInfo("en-US"), null));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("31/13/2021 11:34:56 PM", false));
@@ -106,6 +115,10 @@ namespace PPlus.Tests.Internal
         [Fact]
         internal void Should_have_accept_Load_partial_validvalues_pt_br_without_fill()
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return;
+            }
             // Given
             var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateTime(new CultureInfo("pt-BR"), null));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("31/12/2021 23", false));
@@ -121,6 +134,11 @@ namespace PPlus.Tests.Internal
         [Fact]
         internal void Should_have_accept_Load_partial_validvalues_pt_br_with_fill()
         {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return;
+            }
+
             // Given
             var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditDateTime(new CultureInfo("pt-BR"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("31/12/2021 23", false));
