@@ -35,11 +35,11 @@ jobs:
           tagRegex: "(?<package>.*):(?<versionpkg>.*):(?<versioncmd>.*)" 
 
       - name: Pack NuGet Package pplus
-	if: ${{ steps.tagName.outputs.package == 'PromptPlus'}}
+	      if: ${{ steps.tagName.outputs.package == 'PromptPlus'}}
         run: dotnet pack PromptPlus/PromptPlus.csproj -c Release -o ./dist -p:Version=${{ steps.tagName.outputs.versionpkg }}
 
       - name: Pack NuGet Package cmddotnet
-	if: ${{ steps.tagName.outputs.package == 'PromptPlus' } || steps.tagName.outputs.package == 'PPlusCmdDotNet'}}
+	      if: ${{ steps.tagName.outputs.package == 'PromptPlus' } || steps.tagName.outputs.package == 'PPlusCmdDotNet'}}
         run: dotnet pack PromptPlus.CommandDotNet/PromptPlus.CommandDotNet.csproj -c Release -o ./dist -p:Version=${{ steps.tagName.outputs.versioncmd }}
 
       - name: Publish pplus/cmddotnet
