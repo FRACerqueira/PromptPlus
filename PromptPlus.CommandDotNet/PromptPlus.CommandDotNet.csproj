@@ -22,7 +22,7 @@
     <PackageIcon>iconCmdNet.png</PackageIcon>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>© 2021 - Fernando Cerqueira </Copyright>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
 
