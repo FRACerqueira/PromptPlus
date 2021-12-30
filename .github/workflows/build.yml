@@ -16,9 +16,6 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Install cultures 
-      run: sudo apt-get -y install locales
-
     - name: Install .NET Core format tool
       run: dotnet tool update -g dotnet-format      
 
