@@ -164,12 +164,13 @@ namespace PPlus.CommandDotNet
                 if (resultrepl == 0)
                 {
                     _replConfig.InSessionParse = false;
-                    var lastvalue = string
-                        .Join(" ", _replConfig.ReplContext.Original.Args)
-                        .Trim();
 
                     if (_replConfig.EnabledHistory)
                     {
+                        var lastvalue = string
+                            .Join(" ",
+                            _replConfig.ArgumentsTreatment.Invoke(_replConfig.ReplContext.Original.Args.ToArray()))
+                            .Trim();
                         //save history
                         var hist = FileHistory.LoadHistory(_replConfig.DefaultFileHistory);
                         hist = FileHistory.AddHistory(lastvalue, _replConfig.TimeoutHistory, hist);
@@ -219,88 +220,23 @@ namespace PPlus.CommandDotNet
         {
             var result = new SugestionOutput();
             var pos = arg.CursorPrompt;
+            var cmdref = _replConfig.ReplContext.RootCommand;
+            var lstTokens = new List<IArgumentNode>();
+            var cleartext = false;
+
             if (string.IsNullOrEmpty(arg.PromptText))
             {
-                var lstTokens = new List<IArgumentNode>();
                 //add all commands
                 lstTokens.AddRange(_replConfig.ReplContext.RootCommand.Subcommands);
                 //add all options for Command and remove options repl
                 lstTokens.AddRange(_replConfig.ReplContext.RootCommand.Options.Where(x => x.Name != _replConfig.Option.Name));
                 //add all operands for Command 
-                lstTokens.AddRange(_replConfig.ReplContext.ParseResult.TargetCommand.Operands);
-
-                foreach (var item in lstTokens)
-                {
-                    if (item is Option option && option.Parent == _replConfig.ReplContext.RootCommand)
-                    {
-                        var desc = option.Description;
-                        if (string.IsNullOrEmpty(desc))
-                        {
-                            var aux = option.CustomAttributes.GetCustomAttributes(typeof(DescriptionAttribute), true);
-                            if (aux != null && aux.Length == 1)
-                            {
-                                desc = ((DescriptionAttribute)aux.First()).Description;
-                            }
-                        }
-                        if (option.ShortName.HasValue)
-                        {
-                            result.Add($"-{option.ShortName}", false, option, desc);
-                        }
-                        else
-                        {
-                            result.Add($"--{option.LongName}", false, option, desc);
-                        }
-                    }
-                    else if (item is Command command && command.Parent == _replConfig.ReplContext.RootCommand)
-                    {
-                        var desc = command.Description;
-                        if (string.IsNullOrEmpty(desc))
-                        {
-                            var aux = command.CustomAttributes.GetCustomAttributes(typeof(DescriptionAttribute), true);
-                            if (aux != null && aux.Length == 1)
-                            {
-                                desc = ((DescriptionAttribute)aux.First()).Description;
-                            }
-                        }
-                        result.Add(command.Aliases.First(), true, command, desc);
-                    }
-                    else if (item is Operand operand)
-                    {
-                        var desc = operand.Description;
-                        if (string.IsNullOrEmpty(desc))
-                        {
-                            var aux = operand.CustomAttributes.GetCustomAttributes(typeof(DescriptionAttribute), true);
-                            if (aux != null && aux.Length == 1)
-                            {
-                                desc = ((DescriptionAttribute)aux.First()).Description;
-                            }
-                        }
-                        if (operand.AllowedValues.Count > 0 && operand.Parent == _replConfig.ReplContext.RootCommand)
-                        {
-                            if (operand.Arity.Maximum > operand.InputValues.Count)
-                            {
-                                foreach (var itemope in operand.AllowedValues)
-                                {
-                                    result.Add(itemope, false, itemope, desc);
-                                }
-                            }
-                        }
-                        else if (operand.AllowedValues.Count == 0 && operand.Parent == _replConfig.ReplContext.RootCommand)
-                        {
-                            if (operand.Arity.Maximum > operand.InputValues.Count)
-                            {
-                                result.Add($"({operand.Name})", false, operand, desc);
-                            }
-                        }
-                    }
-                }
-                result.Add("replhistory 30,0,0", true, "replhistory 30,0,0", Resources.Messages.Repl_history_description);
-                result.Add("quit", true, "quit", Resources.Messages.Repl_exit);
+                lstTokens.AddRange(_replConfig.ReplContext.RootCommand.Operands);
             }
             else
             {
+                cmdref = null;
                 string newcontext;
-                var cleartext = false;
                 if (pos < arg.PromptText.Length - 1)
                 {
                     cleartext = true;
@@ -332,9 +268,9 @@ namespace PPlus.CommandDotNet
                 {
                     newcontext = arg.PromptText;
                 }
-                var args = new CommandLineStringSplitter().Split(newcontext).ToList();
+                var newargs = new CommandLineStringSplitter().Split(newcontext).ToList();
                 _replConfig.InSessionParse = true;
-                var parseresult = _replConfig.AppRunner.Run(args.ToArray());
+                var parseresult = _replConfig.AppRunner.Run(newargs.ToArray());
                 _replConfig.InSessionParse = false;
                 if (parseresult != 0)
                 {
@@ -346,11 +282,10 @@ namespace PPlus.CommandDotNet
                 }
 
                 result.SetCursorPrompt(newcontext.Length);
-
-                var lstTokens = new List<IArgumentNode>();
-                //add all commands
+                //add all subcommands
                 lstTokens.AddRange(_replConfig.ReplContext.ParseResult.TargetCommand.Subcommands);
                 var hassubcmd = lstTokens.Count != 0;
+                //add all options for Command and remove options repl
                 var opc = _replConfig.ReplContext.ParseResult.TargetCommand.Options.Where(x => x.Name != _replConfig.Option.Name);
                 foreach (var item in opc)
                 {
@@ -359,97 +294,111 @@ namespace PPlus.CommandDotNet
                         lstTokens.Add(item);
                     }
                 }
+                //add all operands for Command 
                 lstTokens.AddRange(_replConfig.ReplContext.ParseResult.TargetCommand.Operands);
+            }
 
-                var fistope = true;
-
-                foreach (var item in lstTokens)
+            var fistope = true;
+            foreach (var item in lstTokens)
+            {
+                if (item is Option option && (cmdref == null || option.Parent == cmdref))
                 {
-                    if (item is Option option)
+                    if (!_replConfig.UseOptionsIntercept && option.IsInterceptorOption)
                     {
-                        var desc = option.Description;
-                        if (string.IsNullOrEmpty(desc))
+                        continue;
+                    }
+                    var desc = option.Description;
+                    if (string.IsNullOrEmpty(desc))
+                    {
+                        var aux = option.CustomAttributes.GetCustomAttributes(typeof(DescriptionAttribute), true);
+                        if (aux != null && aux.Length == 1)
                         {
-                            var aux = option.CustomAttributes.GetCustomAttributes(typeof(DescriptionAttribute), true);
-                            if (aux != null && aux.Length == 1)
-                            {
-                                desc = ((DescriptionAttribute)aux.First()).Description;
-                            }
-                        }
-                        if (option.ShortName.HasValue)
-                        {
-                            result.Add($"-{option.ShortName}", cleartext, option, desc);
-                        }
-                        else
-                        {
-                            result.Add($"--{option.LongName}", cleartext, option, desc);
+                            desc = ((DescriptionAttribute)aux.First()).Description;
                         }
                     }
-                    else if (item is Command command)
+                    if (option.ShortName.HasValue)
                     {
-                        var desc = command.Description;
-                        if (string.IsNullOrEmpty(desc))
-                        {
-                            var aux = command.CustomAttributes.GetCustomAttributes(typeof(DescriptionAttribute), true);
-                            if (aux != null && aux.Length == 1)
-                            {
-                                desc = ((DescriptionAttribute)aux.First()).Description;
-                            }
-                        }
-                        result.Add(command.Name, true, command, desc);
+                        result.Add($"-{option.ShortName}", cleartext, desc);
                     }
-                    else if (item is Operand operand)
+                    else
                     {
-                        var desc = operand.Description;
-                        if (string.IsNullOrEmpty(desc))
+                        result.Add($"--{option.LongName}", cleartext, desc);
+                    }
+                }
+                else if (item is Command command && (cmdref == null || command.Parent == cmdref))
+                {
+                    var desc = command.Description;
+                    if (string.IsNullOrEmpty(desc))
+                    {
+                        var aux = command.CustomAttributes.GetCustomAttributes(typeof(DescriptionAttribute), true);
+                        if (aux != null && aux.Length == 1)
                         {
-                            var aux = operand.CustomAttributes.GetCustomAttributes(typeof(DescriptionAttribute), true);
-                            if (aux != null && aux.Length == 1)
-                            {
-                                desc = ((DescriptionAttribute)aux.First()).Description;
-                            }
+                            desc = ((DescriptionAttribute)aux.First()).Description;
                         }
-                        var typeinf = string.Format(Resources.Messages.WizardTypeInfo, operand.TypeInfo.DisplayName);
+                    }
+                    result.Add(command.Aliases.First(), true, desc);
+                }
+                else if (item is Operand operand)
+                {
+                    var typeinf = operand.TypeInfo.DisplayName ?? string.Empty;
 
-                        if (operand.AllowedValues.Count > 0)
+                    var desc = operand.Description;
+                    if (string.IsNullOrEmpty(desc))
+                    {
+                        var aux = operand.CustomAttributes.GetCustomAttributes(typeof(DescriptionAttribute), true);
+                        if (aux != null && aux.Length == 1)
                         {
-                            if (operand.Arity.Maximum > operand.InputValues.Count)
+                            desc = ((DescriptionAttribute)aux.First()).Description;
+                        }
+                    }
+                    if (operand.AllowedValues.Count > 0 && (cmdref == null || operand.Parent == cmdref))
+                    {
+                        if (operand.Arity.Maximum > operand.InputValues.Count)
+                        {
+                            if (_replConfig.UseSugestionArgumentType)
                             {
-                                if (_replConfig.UseSugestionArgumneType)
-                                {
-                                    desc = $"{desc}.{typeinf}";
-                                }
-                                foreach (var itemope in operand.AllowedValues)
-                                {
-                                    result.Add(itemope, false, itemope, desc);
-                                }
+                                desc = $"{desc}.{typeinf}";
+                            }
+                            foreach (var itemope in operand.AllowedValues)
+                            {
+                                result.Add(itemope, false, desc);
                             }
                         }
-                        else
+                    }
+                    else if (operand.AllowedValues.Count == 0 && (cmdref == null || operand.Parent == cmdref))
+                    {
+                        if (operand.Arity.Maximum > operand.InputValues.Count && fistope)
                         {
-                            if (operand.Arity.Maximum > operand.InputValues.Count && fistope)
+                            fistope = false;
+                            var sug = operand.Name;
+                            if (_replConfig.UseSugestionArgumentType)
                             {
-                                fistope = false;
-                                var sug = operand.Name;
-                                if (_replConfig.UseSugestionArgumneType)
-                                {
-                                    sug = typeinf;
-                                }
-                                else
-                                {
-                                    desc = $"{desc}.{typeinf}";
-                                }
-                                result.Add(sug, false, operand, desc);
+                                sug = typeinf;
                             }
+                            else
+                            {
+                                desc = $"{desc}.{typeinf}";
+                            }
+                            result.Add(sug, false, desc);
                         }
                     }
                 }
+            }
+
+            if (cmdref != null)
+            {
+                result.Add("replhistory 30,0,0", true, Resources.Messages.Repl_history_description);
+                result.Add("quit", true, Resources.Messages.Repl_exit);
+            }
+            else
+            {
                 //restore context
-                args = new CommandLineStringSplitter().Split(arg.PromptText).ToList();
+                var args = new CommandLineStringSplitter().Split(arg.PromptText).ToList();
                 _replConfig.InSessionParse = true;
                 _replConfig.AppRunner.Run(args.ToArray());
                 _replConfig.InSessionParse = false;
             }
+
             return result;
         }
     }

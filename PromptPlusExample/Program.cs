@@ -42,11 +42,6 @@ namespace PromptPlusExample
                           });
                         services.AddHostedService<MainProgram>();
                     }).Build();
-
-            //PromptPlus.EnabledLogControl = true;
-            //PromptPlus.LoggerFactory = host.Services.GetService<ILoggerFactory>();
-            //PromptPlus.ForwardingLogToLoggerProvider = true;
-            //PromptPlus.DriveConsole(new MemoryConsoleDriver());
             await host.RunAsync();
         }
     }
@@ -95,7 +90,6 @@ namespace PromptPlusExample
             PromptPlus.DefaultCulture = new CultureInfo("en-US");
             PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
             PromptPlus.Clear();
-            //PromptPlus.LoadInputConsole("\r");
             var quit = false;
             while (!_stopApp.IsCancellationRequested && !quit)
             {
@@ -286,6 +280,7 @@ namespace PromptPlusExample
                 .AddValidator(PromptPlusValidators.Required())
                 .PageSize(5)
                 .EnabledHistory(enabledhis.Value)
+                .FileNameHistory("RunReadlineSample")
                 .TimeoutHistory(new TimeSpan(0, 0, timeout))
                 .FinisWhenHistoryEnter(enterHist.Value)
                 .SuggestionHandler(mysugestion)
@@ -893,8 +888,6 @@ namespace PromptPlusExample
 
 
         private IList<ItemHistory> _itemsInputSampleHistory;
-        private const string Folderhistory = "PromptPlus.Controls";
-        private const string Filehistory = "{0}_{1}.txt";
 
         private SugestionOutput SugestionInputColorSample(SugestionInput arg)
         {
@@ -921,27 +914,8 @@ namespace PromptPlusExample
 
         private void LoadSampleHistInputSugestion(object ctx, string value)
         {
-            var file = string.Format(Filehistory, AppDomain.CurrentDomain.FriendlyName, "SampleHistInputSugestion");
-            var userProfile = GetFolderPath(SpecialFolder.UserProfile);
-            _itemsInputSampleHistory = new List<ItemHistory>();
-            if (File.Exists(Path.Combine(userProfile, Folderhistory, file)))
-            {
-                var aux = File.ReadAllLines(Path.Combine(userProfile, Folderhistory, file));
-                foreach (var item in aux)
-                {
-                    var itemhist = item.Split(ItemHistory.Separator, StringSplitOptions.RemoveEmptyEntries);
-                    if (itemhist.Length == 2)
-                    {
-                        if (long.TryParse(itemhist[1], out var dtTicks))
-                        {
-                            if (DateTime.Now < new DateTime(dtTicks))
-                            {
-                                _itemsInputSampleHistory.Add(new ItemHistory(itemhist[0], dtTicks));
-                            }
-                        }
-                    }
-                }
-            }
+            _itemsInputSampleHistory  = FileHistory
+                .LoadHistory($"{AppDomain.CurrentDomain.FriendlyName}_SampleHistInputSugestion");
         }
 
         private void SaveSampleHistSugestion(object ctx, string value)
@@ -968,16 +942,9 @@ namespace PromptPlusExample
             _itemsInputSampleHistory.Insert(0,
                 ItemHistory.CreateItemHistory(localnewhis, new TimeSpan(1, 0, 0, 0)));
 
-            var file = string.Format(Filehistory, AppDomain.CurrentDomain.FriendlyName, "SampleHistInputSugestion");
-            var userProfile = GetFolderPath(SpecialFolder.UserProfile);
-            if (!Directory.Exists(Path.Combine(userProfile, Folderhistory)))
-            {
-                Directory.CreateDirectory(Path.Combine(userProfile, Folderhistory));
-            }
-
-            File.WriteAllLines(Path.Combine(userProfile, Folderhistory, file),
-                _itemsInputSampleHistory.Where(x => DateTime.Now < new DateTime(x.TimeOutTicks))
-                    .Select(x => x.ToString()), Encoding.UTF8);
+            FileHistory.SaveHistory(
+                $"{AppDomain.CurrentDomain.FriendlyName}_SampleHistInputSugestion",
+                _itemsInputSampleHistory);
         }
 
         private void RunConfirmSample()

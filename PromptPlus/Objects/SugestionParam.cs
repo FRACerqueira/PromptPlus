@@ -27,7 +27,6 @@ namespace PPlus.Objects
         public string PromptText { get; }
         public int CursorPrompt { get; }
         public object Context { get; }
-
         public string CurrentWord()
         {
             var pos = CursorPrompt;
@@ -79,33 +78,25 @@ namespace PPlus.Objects
             Sugestions = new ReadOnlyCollection<ItemSugestion>(new List<ItemSugestion>());
             CursorPrompt = null;
         }
-
-        public SugestionOutput(IList<ItemSugestion> items, string msgerror = null)
+        public SugestionOutput(IList<ItemSugestion> items)
         {
             MsgError = null;
-            if (items.Count == 0)
-            {
-                MsgError = msgerror;
-            }
             _items.AddRange(items);
             Sugestions = new ReadOnlyCollection<ItemSugestion>(_items);
             CursorPrompt = null;
         }
-
-        public void Add(string value, bool clearrestofline = false, object objvalue = null, string description = null)
+        public void Add(string value, bool clearrestofline = false, string description = null)
         {
             MsgError = null;
-            _items.Add(new ItemSugestion(value, clearrestofline, objvalue ?? value, description));
+            _items.Add(new ItemSugestion(value, clearrestofline, description));
             Sugestions = new ReadOnlyCollection<ItemSugestion>(_items);
         }
-
         public void AddRange(IList<ItemSugestion> items)
         {
             MsgError = null;
             _items.AddRange(items);
             Sugestions = new ReadOnlyCollection<ItemSugestion>(_items);
         }
-
         public void SetMsgError(string value)
         {
             if (_items.Count == 0)
@@ -117,13 +108,9 @@ namespace PPlus.Objects
         {
             CursorPrompt = value;
         }
-
         public ReadOnlyCollection<ItemSugestion> Sugestions { get; private set; }
-
         public string MsgError { get; private set; }
-
         public int? CursorPrompt { get; private set; }
-
     }
 
     public struct ItemSugestion
@@ -132,21 +119,16 @@ namespace PPlus.Objects
         {
             Sugestion = null;
             ClearRestline = false;
-            ObjectValue = null;
             Description = null;
         }
-
-        internal ItemSugestion(string value, bool clearRest, object objvalue, string description)
+        internal ItemSugestion(string value, bool clearRest, string description)
         {
             Sugestion = value;
             ClearRestline = clearRest;
-            ObjectValue = objvalue;
             Description = description;
         }
-
         public string Sugestion { get; }
         public bool ClearRestline { get; }
-        public object ObjectValue { get; }
         public string Description { get; }
 
 

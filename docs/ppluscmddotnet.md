@@ -155,7 +155,7 @@ This middleware **injects a directive** that allows you to branch execution to a
 ```csharp
 UsePromptPlusWizard(this AppRunner appRunner,
         string name = "wizard",
-        int pageSize = 5,
+        byte pageSize = 5,
         HotKey? runwizard = null,
         HotKey? backcommand = null,
         ConsoleColor? forecolorwizard=null,
@@ -177,6 +177,65 @@ UsePromptPlusWizard(this AppRunner appRunner,
     - The backcolor text for args to wizard. Default value : PPlus.PromptPlus.BackgroundColor (default black)
 - **missingforecolorwizard**
     - The forecolor text for operand missing to wizard. Default value : PPlus.PromptPlus.ColorSchema.Error (default red)
+
+
+## PromptPlus Repl
+[**Top**](#help)
+
+Middleware option to start interative session with readline prompt, sugestions and history. 
+**Now you can help to discover arguments (Sugestions) and history actions in interactive sessions.**
+
+[**CommandDotNet**](https://commanddotnet.bilal-fazlani.com) uses commands, options, and operands to define the execution of arguments passed by the command line. (
+see the image below as an example)
+
+![](images/ArgTermsExample.png)
+
+### Syntax
+
+```csharp
+UsePromptPlusRepl(this AppRunner appRunner,
+    bool enabledSugestion = true,
+    Func<SugestionInput, SugestionOutput> suggestionHandler = null,
+    bool sugestionEnterTryFininsh = false,
+    bool usesugestionargumenttype = true,
+    bool useoptionsintercept = true,
+    char? shortoptionname = 'i',
+    string longoptionname = "interactive",
+    string description = "enter an interactive session",
+    bool enabledhistory = true,
+    byte pageSize = 5,
+    TimeSpan? timeouthistory = null,
+    Func<string[], string[]> argumentstreatment = null,
+    Func<string, ColorToken> colorizeSessionInitMessage = null)
+```
+
+- **enabledSugestion**
+    - Enabled sugestion with Tab/Shift+Tab.
+- **suggestionHandler**
+    - Function to user custom suggestion. If ommited PromptPlus will be embedding default function.
+- **sugestionEnterTryFininsh**
+    - When true, Prompt Plus tries to terminate when history is selected.Valid only to embedding suggestionHandler.
+- **usesugestionargumenttype**
+    - When true, Prompt Plus displays the argument's data type.When false, Prompt Plus displays the argument name.Valid only to embedding suggestionHandler.
+- **useoptionsintercept**
+    - When false, intercept options are not shown.Valid only to embedding suggestionHandler..Valid only to embedding suggestionHandler.
+- **shortoptionname**
+    - Shortname to option interation session. Short or long name must be filled in.
+- **longoptionname**
+    - Longname to option interation session. Short or long name must be filled in.
+- **description**
+    - Description option.
+- **enabledhistory**
+    - Enabled history with PgDown/DownArrow to interation session.
+- **pageSize**
+    - The page size for items history lists.
+- **timeouthistory**
+    - Timeout for history items. Default value '30' days when value is null.
+- **argumentstreatment**
+    - Function for handling arguments before save history. E.g.: masked password. Default value null.
+- **colorizeSessionInitMessage**
+    - Function to user colorize initial title session interative. Default value null.
+
 
 ## Extensions
 

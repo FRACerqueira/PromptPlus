@@ -268,7 +268,7 @@ namespace PPlus.Internal
         {
             if (IsInAutoCompleteMode())
             {
-                ApplyAutoComplete(new ItemSugestion("", false, null, null));
+                ApplyAutoComplete(new ItemSugestion("", false, null));
             }
         }
 

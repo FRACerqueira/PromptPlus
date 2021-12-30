@@ -22,7 +22,8 @@ namespace PPlus.CommandDotNet
         public CommandContext ReplContext { get; set; }
         public Func<SugestionInput, SugestionOutput> SuggestionHandler { get; internal set; }
         public bool SugestionEnterTryFininsh { get; }
-        public bool UseSugestionArgumneType { get; }
+        public bool UseSugestionArgumentType { get; }
+        public bool UseOptionsIntercept { get; }
         public bool EnabledSugestion { get; }
         public bool EnabledHistory { get; }
         public TimeSpan TimeoutHistory { get; }
@@ -32,6 +33,7 @@ namespace PPlus.CommandDotNet
 
         public Func<string, ColorToken> ColorizeSessionInitMessage { get; }
 
+        public Func<string[], string[]> ArgumentsTreatment { get; }
 
         public ReplConfig(AppRunner appRunner,
             CommandContext cmdContext,
@@ -39,10 +41,12 @@ namespace PPlus.CommandDotNet
             bool enabledsugestion,
             Func<SugestionInput, SugestionOutput> suggestionHandler,
             bool sugestionEnterTryFininsh,
-            bool usesugestionArgumnetype,
+            bool usesugestionargumenttype,
+            bool useoptionsintercept,
             bool enabledHistory,
             byte pagesizehistory,
             TimeSpan timeouthistory,
+            Func<string[], string[]> argumentstreatment,
             Func<string, ColorToken> colorizeSessionInitMessage)
         {
             AppRunner = appRunner ?? throw new ArgumentNullException(nameof(appRunner));
@@ -52,10 +56,12 @@ namespace PPlus.CommandDotNet
             EnabledSugestion = enabledsugestion;
             SuggestionHandler = suggestionHandler;
             SugestionEnterTryFininsh = sugestionEnterTryFininsh;
-            UseSugestionArgumneType = usesugestionArgumnetype;
+            UseSugestionArgumentType = usesugestionargumenttype;
+            UseOptionsIntercept = useoptionsintercept;
             EnabledHistory = enabledHistory;
             TimeoutHistory = timeouthistory;
             PagesizeHistory = pagesizehistory;
+            ArgumentsTreatment = argumentstreatment;
             ColorizeSessionInitMessage = colorizeSessionInitMessage;
         }
 
@@ -74,10 +80,12 @@ namespace PPlus.CommandDotNet
                 EnabledSugestion,
                 SuggestionHandler,
                 SugestionEnterTryFininsh,
-                UseSugestionArgumneType,
+                UseSugestionArgumentType,
+                UseOptionsIntercept,
                 EnabledHistory,
                 PagesizeHistory,
                 TimeoutHistory,
+                ArgumentsTreatment,
                 ColorizeSessionInitMessage)
             {
                 InSession = InSession,

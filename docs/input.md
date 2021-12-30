@@ -62,6 +62,11 @@ Input(string prompt, string description = null)
     - List of input validator
 
 - ```csharp
+  SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
+  ``` 
+    - Function to load and return sugestions when tab/shift+tab is pressed. Default value 'null', no sugestions.
+
+- ```csharp
   Config(Action<IPromptConfig> context)
   ``` 
   - For access [**base methods**](basemethods) common to all controls.

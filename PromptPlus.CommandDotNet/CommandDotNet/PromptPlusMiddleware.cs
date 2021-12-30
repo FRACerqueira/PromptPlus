@@ -216,9 +216,12 @@ namespace PPlus.CommandDotNet
         /// <param name="sugestionEnterTryFininsh">
         /// When select sugestion Try Fininsh input.Default 'false'.
         /// </param>
-        /// <param name="usesugestionargumnetype">
+        /// <param name="usesugestionargumenttype">
         /// If true use type of argument to sugestion, If false use name of argument to sugestion. default 'true'
-        /// </param>        
+        /// </param>
+        /// <param name="useoptionsintercept">
+        /// If true use intercept argument to sugestion. Default 'true'
+        /// </param>
         /// <param name="shortoptionname">
         /// Short(Char) option alias to enter interative session. Default value 'i'. Short or long name must be filled in.
         /// </param>
@@ -235,7 +238,10 @@ namespace PPlus.CommandDotNet
         /// The page size for history lists. If page less than 1 will be set to 1
         /// </param>
         /// <param name="timeouthistory">
-        /// Timeout for history items. Dafault value '30' days.
+        /// Timeout for history items. Default value '30' days.
+        /// </param>
+        /// <param name="argumentstreatment">
+        /// Function for handling arguments before save history. E.g.: masked password. Default value null.
         /// </param>
         /// <param name="colorizeSessionInitMessage">
         /// Function to user colorize initial title session interative. Default value null.
@@ -246,13 +252,15 @@ namespace PPlus.CommandDotNet
                 bool enabledSugestion = true,
                 Func<SugestionInput, SugestionOutput> suggestionHandler = null,
                 bool sugestionEnterTryFininsh = false,
-                bool usesugestionargumnetype = true,
+                bool usesugestionargumenttype = true,
+                bool useoptionsintercept = true,
                 char? shortoptionname = 'i',
                 string longoptionname = "interactive",
                 string description = "enter an interactive session",
                 bool enabledhistory = true,
                 byte pageSize = 5,
                 TimeSpan? timeouthistory = null,
+                Func<string[], string[]> argumentstreatment = null,
                 Func<string, ColorToken> colorizeSessionInitMessage = null)
         {
             if (!timeouthistory.HasValue)
@@ -262,6 +270,10 @@ namespace PPlus.CommandDotNet
             if (pageSize < 1)
             {
                 pageSize = 1;
+            }
+            if (argumentstreatment is null)
+            {
+                argumentstreatment = (args) => args;
             }
             if (!shortoptionname.HasValue && string.IsNullOrEmpty(longoptionname))
             {
@@ -282,7 +294,7 @@ namespace PPlus.CommandDotNet
                     Description = description
                 };
 
-                var config = new ReplConfig(appRunner, null, option, enabledSugestion, suggestionHandler, sugestionEnterTryFininsh, usesugestionargumnetype, enabledhistory, pageSize, timeouthistory.Value, colorizeSessionInitMessage);
+                var config = new ReplConfig(appRunner, null, option, enabledSugestion, suggestionHandler, sugestionEnterTryFininsh, usesugestionargumenttype,useoptionsintercept, enabledhistory, pageSize, timeouthistory.Value, argumentstreatment, colorizeSessionInitMessage);
 
                 c.Services.Add(config);
 

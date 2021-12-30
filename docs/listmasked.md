@@ -71,6 +71,11 @@ Control ListMasked. Create IEnumerable with masked-type input, auto-paginator, t
   ``` 
     - List of input validator
 
+ ```csharp
+  InitialValue(T value, bool ever = false)
+    ```
+    - Set initial input value. Optionally always start with the value when ever is true
+
 - ```csharp
   ValidateOnDemand()
   ``` 

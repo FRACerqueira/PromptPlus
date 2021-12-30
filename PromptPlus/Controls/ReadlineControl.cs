@@ -7,6 +7,7 @@ using System.Threading;
 
 using PPlus.Internal;
 using PPlus.Objects;
+using PPlus.Resources;
 
 namespace PPlus.Controls
 {
@@ -27,9 +28,9 @@ namespace PPlus.Controls
 
         public override string InitControl()
         {
-            if (string.IsNullOrEmpty(_options.FileNameHistory?.Trim() ?? ""))
+            if (string.IsNullOrEmpty(_options.FileNameHistory?.Trim()) && _options.EnabledHistory)
             {
-                _options.FileNameHistory = AppDomain.CurrentDomain.FriendlyName;
+                throw new NotImplementedException(string.Format(Exceptions.Ex_InvalidValue, nameof(_options.FileNameHistory)));
             }
 
             if (PromptPlus.EnabledLogControl)

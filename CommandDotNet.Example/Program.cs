@@ -17,8 +17,6 @@ namespace CommandDotNet.Example
 
             PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
 
-            Console.ReadKey();
-
             return new AppRunner<Examples>()
                 .UseDefaultMiddleware()
                 .UsePrompter()
@@ -26,7 +24,27 @@ namespace CommandDotNet.Example
                 .UsePromptPlusAnsiConsole()
                 .UsePromptPlusArgumentPrompter()
                 .UsePromptPlusWizard()
-                .UsePromptPlusRepl(colorizeSessionInitMessage: (msg) => msg.Yellow().Underline())
+                .UsePromptPlusRepl(
+                    colorizeSessionInitMessage: (msg) => msg.Yellow().Underline(),
+                    argumentstreatment: 
+                    (args) =>
+                    {
+                        //masked password when saved history
+                        var maskvalue = false;
+                        for (var i = 0; i < args.Length; i++)
+                        {
+                            if (maskvalue)
+                            {
+                                args[i] = "####";
+                                maskvalue = false;
+                            }
+                            else if (args[i].ToLowerInvariant() == "--password")
+                            {
+                                maskvalue = true;
+                            }
+                        }
+                        return args;
+                    })
                 .Run(args);
         }
     }

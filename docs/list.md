@@ -37,32 +37,37 @@ List<T>(string prompt, string description = null)
 
 - ```csharp
   Range(int minvalue, int maxvalue)
-    ```
+  ```
     - Minimum and maximum items added
 
 - ```csharp
   UpperCase(bool value)
-    ```
+  ```
     - UpperCase input
 
 - ```csharp
-  AddItem(T value)
-    ```
-    - Add item to list.
-
-- ```csharp
   InitialValue(T value, bool ever = false)
-    ```
+  ```
     - Set initial input value. Optionally always start with the value when ever is true
 
 - ```csharp
+  AddItem(T value)
+  ```
+    - Add item to list.
+
+- ```csharp
   AddItems(IEnumerable<T> value)
-    ```
+  ```
     - Add IEnumerable item to list.
 
 - ```csharp
+  SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
+  ``` 
+    - Function to load and return sugestions when tab/shift+tab is pressed. Default value 'null', no sugestions.
+
+- ```csharp
   AllowDuplicate(bool value)
-    ```
+  ```
     - Allow duplicate input
 
 - ```csharp

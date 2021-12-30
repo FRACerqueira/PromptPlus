@@ -9,13 +9,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-using PPlus.Objects;
-
 using static System.Environment;
 
-namespace PPlus.Internal
+namespace PPlus.Objects
 {
-    internal static class FileHistory
+    public static class FileHistory
     {
         private const string Folderhistory = "PromptPlus.History";
         private const string Filehistory = "{0}.txt";

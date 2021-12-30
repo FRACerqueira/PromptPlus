@@ -1,32 +1,46 @@
-# tag patterns example: v.2.2.0:pplus
-# tag patterns example: v.1.0.0.220:cmd.dotnet
+# tag patterns example: PromptPlus:3.0.0:1.0.0.300
+# tag patterns example: PPlusCmdDotNet::1.0.0.300
 
 name: Publish
 
 on:
   push:
-    tags: [ v* ]
-
-env:
-  DOTNET_VERSION: 6.0.x
+    branches: [ IntegrationCommandLine ]
+    tags:
+      - PromptPlus*"
+      - PPlusCmdDotNet*"
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet: [ '3.1.x', '5.0.x', '6.0.x' ]
+    name: Dotnet ${{ matrix.dotnet }} build
+
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name: Install .NET Core format tool	
+        run: dotnet tool update -g dotnet-format
 
-    - name: Use .NET Core ${{ env.DOTNET_VERSION }}
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+      - name: Run test cases	
+        run: dotnet test -c Release --no-build
 
-    - name: Setup Version
-      id: setup_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
+      - name: Build project	
+        run: dotnet build -c Release
 
-    - name: Pack NuGet Package
-      run: dotnet pack PromptPlus/PromptPlus.csproj -c Release -o ./dist -p:Version=${{ steps.setup_version.outputs.VERSION }}
+      - uses: olegtarasov/get-tag@v2.1
+        id: tagName
+        with:
+          tagRegex: "(?<package>.*):(?<versionpkg>.*):(?<versioncmd>.*)" 
 
-    - name: Publish
-      run: dotnet nuget push dist/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+      - name: Pack NuGet Package pplus
+	if: ${{ steps.tagName.outputs.package == 'PromptPlus'}}
+        run: dotnet pack PromptPlus/PromptPlus.csproj -c Release -o ./dist -p:Version=${{ steps.tagName.outputs.versionpkg }}
+
+      - name: Pack NuGet Package cmddotnet
+	if: ${{ steps.tagName.outputs.package == 'PromptPlus' } || steps.tagName.outputs.package == 'PPlusCmdDotNet'}}
+        run: dotnet pack PromptPlus.CommandDotNet/PromptPlus.CommandDotNet.csproj -c Release -o ./dist -p:Version=${{ steps.tagName.outputs.versioncmd }}
+
+      - name: Publish pplus/cmddotnet
+        run: dotnet nuget push dist/*.nupkg -k ${{ secrets.NUGET_API_KEYxxx }} -s https://api.nuget.org/v3/index.json

@@ -17,6 +17,5 @@ namespace PPlus.Controls
         public string FileNameHistory { get; set; }
         public bool EnabledHistory { get; set; } = false;
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
-        public Func<object, string> DescriptionSelector { get; set; }
     }
 }
