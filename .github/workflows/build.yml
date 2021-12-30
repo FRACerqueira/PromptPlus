@@ -11,15 +11,15 @@ jobs:
       matrix:
         dotnet: [ '3.1.x', '5.0.x', '6.0.x' ]
     name: Dotnet ${{ matrix.dotnet }} build
-
     steps:
-	- uses: actions/checkout@v2
-
-	- name: Install .NET Core format tool	
-	run: dotnet tool update -g dotnet-format
-
-	- name: Run test cases	
-	run: dotnet test -c Release --no-build
-
-	- name: Build project	
+      - uses: actions/checkout@v2
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+      - name: Install .NET Core format tool	
+	run: dotnet tool update -g dotnet-format      
+      - name: Run test cases	
+	run: dotnet test -c Release --no-build      
+      - name: Build project	
 	run: dotnet build -c Release
