@@ -2,10 +2,11 @@ name: Publish
 
 on:
   push:
-    branches: [ IntegrationCommandLine ]
+    branches:
+      - IntegrationCommandLine
     tags:
-      - PromptPlus*"
-      - PPlusCmdDotNet*"
+      - PromptPlus*
+      - PPlusCmdDotNet*
 
 env:
   DOTNET_VERSION: 6.0.x
