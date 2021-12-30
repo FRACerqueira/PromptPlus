@@ -22,7 +22,7 @@ jobs:
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Extract package , versionpkg and versioncmd
+    - name: Extract package versionpkg versioncmd
     - uses: olegtarasov/get-tag@v2.1
       id: tagName
       with:
@@ -33,7 +33,7 @@ jobs:
       run: dotnet pack PromptPlus/PromptPlus.csproj -c Release -o ./dist -p:Version=${{ steps.tagName.outputs.versionpkg }}
 
     - name: Pack NuGet Package cmddotnet
-      if: ${{ steps.tagName.outputs.package == 'PromptPlus' } || steps.tagName.outputs.package == 'PPlusCmdDotNet'}}
+      if: ${{ steps.tagName.outputs.package == 'PromptPlus' || steps.tagName.outputs.package == 'PPlusCmdDotNet'}}
       run: dotnet pack PromptPlus.CommandDotNet/PromptPlus.CommandDotNet.csproj -c Release -o ./dist -p:Version=${{ steps.tagName.outputs.versioncmd }}
 
     - name: Publish pplus/cmddotnet
