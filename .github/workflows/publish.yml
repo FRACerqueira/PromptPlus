@@ -12,7 +12,7 @@ env:
   DOTNET_VERSION: 6.0.x
 
 jobs:
-  Publish:
+  publish:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -21,15 +21,6 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
-
-    - name: Install .NET Core format tool
-      run: dotnet tool update -g dotnet-format      
-
-    - name: Build projects
-      run: dotnet build  PromptPlus.sln -c Release
-
-    - name: Run test cases
-      run: dotnet test -c Release --no-build      
 
     - name: Extract package , versionpkg and versioncmd
     - uses: olegtarasov/get-tag@v2.1
