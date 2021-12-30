@@ -23,7 +23,7 @@ jobs:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Extract package versionpkg versioncmd
-    - uses: olegtarasov/get-tag@v2.1
+      uses: olegtarasov/get-tag@v2.1
       id: tagName
       with:
         tagRegex: "(?<package>.*):(?<versionpkg>.*):(?<versioncmd>.*)" 
