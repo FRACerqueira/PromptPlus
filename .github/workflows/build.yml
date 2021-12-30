@@ -16,6 +16,9 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ matrix.dotnet }}
-	run: dotnet tool update -g dotnet-format      
-	run: dotnet test -c Release --no-build      
-	run: dotnet build -c Release
+      - name: Update format
+      - run: dotnet tool update -g dotnet-format      
+      - name: Run Tests
+      - run: dotnet test -c Release --no-build      
+      - name: Build solution
+      - run: : dotnet build -c Release
