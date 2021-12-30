@@ -21,4 +21,4 @@ jobs:
       - name: Run Tests
       - run: dotnet test -c Release --no-build      
       - name: Build solution
-      - run: : dotnet build -c Release
+      - run: dotnet build -c Release
