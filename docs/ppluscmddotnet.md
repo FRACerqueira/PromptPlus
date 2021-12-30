@@ -218,7 +218,7 @@ UsePromptPlusRepl(this AppRunner appRunner,
 - **usesugestionargumenttype**
     - When true, Prompt Plus displays the argument's data type.When false, Prompt Plus displays the argument name.Valid only to embedding suggestionHandler.
 - **useoptionsintercept**
-    - When false, intercept options are not shown.Valid only to embedding suggestionHandler..Valid only to embedding suggestionHandler.
+    - When false, intercept options are not shown.Valid only to embedding suggestionHandler.
 - **shortoptionname**
     - Shortname to option interation session. Short or long name must be filled in.
 - **longoptionname**
