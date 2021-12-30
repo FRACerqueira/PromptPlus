@@ -1,6 +1,6 @@
 name: Build
 
-on: push
+on: [push, pull_request]
 
 env:
   DOTNET_VERSION: 6.0.x
