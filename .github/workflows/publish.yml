@@ -2,8 +2,6 @@ name: Publish
 
 on:
   push:
-    branches:
-      - IntegrationCommandLine
     tags:
       - PromptPlus*
       - PPlusCmdDotNet*
@@ -37,4 +35,5 @@ jobs:
       run: dotnet pack PromptPlus.CommandDotNet/PromptPlus.CommandDotNet.csproj -c Release -o ./dist -p:Version=${{ steps.tagName.outputs.versioncmd }}
 
     - name: Publish pplus/cmddotnet
-      run: dotnet nuget push dist/*.nupkg -k ${{ secrets.NUGET_API_KEYxxx }} -s https://api.nuget.org/v3/index.json
+      if: ${{ steps.tagName.outputs.package == 'PromptPlus' || steps.tagName.outputs.package == 'PPlusCmdDotNet'}}
+      run: dotnet nuget push dist/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
