@@ -1,6 +1,3 @@
-# tag patterns example: PromptPlus:3.0.0:1.0.0.300
-# tag patterns example: PPlusCmdDotNet::1.0.0.300
-
 name: Publish
 
 on:
