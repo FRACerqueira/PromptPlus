@@ -11,13 +11,17 @@ jobs:
     strategy:
       matrix:
         dotnet: [ '3.1.x', '5.0.x', '6.0.x' ]
-    name: Dotnet ${{ matrix.dotnet }} build
     steps:
-      - name: Build and test solotion
+      - name: Dotnet ${{ matrix.dotnet }} build
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ matrix.dotnet }}
-      - run: dotnet tool update -g dotnet-format      
-      - run: dotnet build -c Release
-      - run: dotnet test -c Release --no-build      
-      - run: dotnet build -c Release
+
+      - name: Install .NET Core format tool
+        run: dotnet tool update -g dotnet-format      
+
+      - name: Build projects
+        run: dotnet build -c Release
+
+      - name: Run test cases
+        run: dotnet test -c Release --no-build      

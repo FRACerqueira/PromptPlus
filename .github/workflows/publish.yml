@@ -16,10 +16,9 @@ jobs:
     strategy:
       matrix:
         dotnet: [ '3.1.x', '5.0.x', '6.0.x' ]
-    name: Dotnet ${{ matrix.dotnet }} build
-
     steps:
       - uses: actions/checkout@v2
+
       - name: Install .NET Core format tool	
         run: dotnet tool update -g dotnet-format
 
