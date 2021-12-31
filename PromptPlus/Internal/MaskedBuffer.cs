@@ -106,13 +106,13 @@ namespace PPlus.Internal
             _isTypeGeneric = _maskInputOptions.Type == MaskedType.Generic;
             _acceptSignal = _maskInputOptions.AcceptSignal != MaskedSignal.None;
 
-            if (_cultureMasked.DateTimeFormat.AMDesignator.Length > 0)
+            if (GetAMDesignator().Length > 0)
             {
-                _notationAMDesignator = _cultureMasked.DateTimeFormat.AMDesignator.ToUpper()[0];
+                _notationAMDesignator = GetAMDesignator().ToUpper()[0];
             }
-            if (_cultureMasked.DateTimeFormat.PMDesignator.Length > 0)
+            if (GetPMDesignator().Length > 0)
             {
-                _notationPMDesignator = _cultureMasked.DateTimeFormat.PMDesignator.ToUpper()[0];
+                _notationPMDesignator = GetPMDesignator().ToUpper()[0];
             }
 
             switch (_maskInputOptions.Type)
@@ -278,15 +278,15 @@ namespace PPlus.Internal
                 isvalid = true;
                 return this;
             }
-            else if (_isTypeTime && char.ToUpper(value) == _notationAMDesignator)
+            else if (_isTypeTime && char.ToUpper(value) == _notationAMDesignator && HasAMPMDesignator())
             {
-                SignalTimeInput = _cultureMasked.DateTimeFormat.AMDesignator;
+                SignalTimeInput = GetAMDesignator();
                 isvalid = true;
                 return this;
             }
-            else if (_isTypeTime && char.ToUpper(value) == _notationPMDesignator)
+            else if (_isTypeTime && char.ToUpper(value) == _notationPMDesignator && HasAMPMDesignator())
             {
-                SignalTimeInput = _cultureMasked.DateTimeFormat.PMDesignator;
+                SignalTimeInput = GetPMDesignator();
                 isvalid = true;
                 return this;
             }
@@ -543,15 +543,15 @@ namespace PPlus.Internal
                     {
                         aux += ":00";
                     }
-                    if (_cultureMasked.DateTimeFormat.ShortTimePattern.Contains("tt"))
+                    if (HasAMPMDesignator())
                     {
-                        if (SignalTimeInput == _cultureMasked.DateTimeFormat.AMDesignator || string.IsNullOrEmpty(SignalTimeInput))
+                        if (SignalTimeInput == GetAMDesignator() || string.IsNullOrEmpty(SignalTimeInput))
                         {
-                            aux += " " + _cultureMasked.DateTimeFormat.AMDesignator;
+                            aux += " " + GetAMDesignator();
                         }
-                        else if (SignalTimeInput == _cultureMasked.DateTimeFormat.PMDesignator)
+                        else if (SignalTimeInput == GetPMDesignator())
                         {
-                            aux += " " + _cultureMasked.DateTimeFormat.PMDesignator;
+                            aux += " " + GetPMDesignator();
                         }
                     }
                     break;
@@ -600,17 +600,20 @@ namespace PPlus.Internal
                         .Replace(_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator, "")
                         .Replace(_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator, "")
                         .Replace(" ", "");
-                    if (aux.Contains(_maskInputOptions.CurrentCulture.DateTimeFormat.AMDesignator))
+                    if (HasAMPMDesignator())
                     {
-                        SignalTimeInput = _maskInputOptions.CurrentCulture.DateTimeFormat.AMDesignator;
-                    }
-                    else if (aux.Contains(_maskInputOptions.CurrentCulture.DateTimeFormat.PMDesignator))
-                    {
-                        SignalTimeInput = _maskInputOptions.CurrentCulture.DateTimeFormat.PMDesignator;
-                    }
-                    if (SignalTimeInput.Length > 0)
-                    {
-                        aux = aux.Replace(SignalTimeInput, "");
+                        if (aux.Contains(GetAMDesignator()))
+                        {
+                            SignalTimeInput = GetAMDesignator();
+                        }
+                        else if (aux.Contains(GetPMDesignator()))
+                        {
+                            SignalTimeInput = GetPMDesignator();
+                        }
+                        if (SignalTimeInput.Length > 0)
+                        {
+                            aux = aux.Replace(SignalTimeInput, "");
+                        }
                     }
                     _inputBuffer.Clear();
                     _inputBuffer.Append(aux.Trim());
@@ -1609,49 +1612,29 @@ namespace PPlus.Internal
 
             if (_isTypeNumber)
             {
-                //if (_decimalPosition >= 0)
-                //{
-                //    if (Position < _decimalPosition)
-                //    {
-                //        if (FreeSpaceIntNumber)
-                //        {
-                //            Position = _decimalPosition;
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    if (!_maskInputOptions.OnlyDecimal)
-                //    {
-                //        if (FreeSpaceIntNumber)
-                //        {
-                //            Position = _validPosition.Length - 1;
-                //        }
-                //    }
-                //}
                 if (SignalNumberInput != " "[0])
                 {
 
                     aux += " " + SignalNumberInput;
                 }
             }
-            else if (_isTypeTime && !string.IsNullOrEmpty(_cultureMasked.DateTimeFormat.AMDesignator))
+            else if (_isTypeTime  &&  HasAMPMDesignator())
             {
                 if (_maskInputOptions.FillNumber.HasValue)
                 {
                     aux = aux.Replace(_promptmask, _maskInputOptions.FillNumber.Value);
                 }
-                if (SignalTimeInput == _cultureMasked.DateTimeFormat.AMDesignator)
+                if (SignalTimeInput == GetAMDesignator())
                 {
-                    aux += " " + _cultureMasked.DateTimeFormat.AMDesignator;
+                    aux += " " + GetAMDesignator();
                 }
-                else if (SignalTimeInput == _cultureMasked.DateTimeFormat.PMDesignator)
+                else if (SignalTimeInput == GetPMDesignator())
                 {
-                    aux += " " + _cultureMasked.DateTimeFormat.PMDesignator;
+                    aux += " " + GetPMDesignator();
                 }
                 else
                 {
-                    aux += new string(' ', _cultureMasked.DateTimeFormat.PMDesignator.Length + 1);
+                    aux += new string(' ', GetPMDesignator().Length + 1);
                 }
             }
             return aux;
@@ -1771,9 +1754,9 @@ namespace PPlus.Internal
                             {
                                 result[logpos].Tooltip = Messages.MaskEditPosSecond;
                             }
-                            if (_maskInputOptions.Type == MaskedType.DateTime && _cultureMasked.DateTimeFormat.AMDesignator.Length > 0)
+                            if (_maskInputOptions.Type == MaskedType.DateTime && HasAMPMDesignator())
                             {
-                                result[logpos].Tooltip += $", {_notationAMDesignator}/{_notationPMDesignator}:{_cultureMasked.DateTimeFormat.AMDesignator}/{_cultureMasked.DateTimeFormat.PMDesignator}";
+                                result[logpos].Tooltip += $", {_notationAMDesignator}/{_notationPMDesignator}:{GetAMDesignator()}/{GetPMDesignator()}";
                             }
                             break;
                         case MaskedType.TimeOnly:
@@ -1789,9 +1772,9 @@ namespace PPlus.Internal
                             {
                                 result[logpos].Tooltip = Messages.MaskEditPosSecond;
                             }
-                            if (_cultureMasked.DateTimeFormat.AMDesignator.Length > 0)
+                            if (GetAMDesignator().Length > 0)
                             {
-                                result[logpos].Tooltip += $", {_notationAMDesignator}/{_notationPMDesignator}:{_cultureMasked.DateTimeFormat.AMDesignator}/{_cultureMasked.DateTimeFormat.PMDesignator}";
+                                result[logpos].Tooltip += $", {_notationAMDesignator}/{_notationPMDesignator}:{GetAMDesignator()}/{GetPMDesignator()}";
                             }
                             break;
                         case MaskedType.Number:
@@ -1808,6 +1791,40 @@ namespace PPlus.Internal
 
             return result.Select(x => x.Position).ToArray();
         }
+
+        private bool HasAMPMDesignator()
+        {
+            return _cultureMasked.DateTimeFormat.ShortTimePattern.Contains("tt") &&
+                _cultureMasked.DateTimeFormat.AMDesignator.Length >0 &&
+                _cultureMasked.DateTimeFormat.PMDesignator.Length > 0;
+        }
+
+        private string GetAMDesignator()
+        {
+            if (!_cultureMasked.DateTimeFormat.ShortTimePattern.Contains("tt"))
+            {
+                return string.Empty;
+            }
+            if (_cultureMasked.DateTimeFormat.AMDesignator.Length == 0)
+            {
+                return string.Empty;
+            }
+            return _cultureMasked.DateTimeFormat.AMDesignator;
+        }
+
+        private string GetPMDesignator()
+        {
+            if (!_cultureMasked.DateTimeFormat.ShortTimePattern.Contains("tt"))
+            {
+                return string.Empty;
+            }
+            if (_cultureMasked.DateTimeFormat.PMDesignator.Length == 0)
+            {
+                return string.Empty;
+            }
+            return _cultureMasked.DateTimeFormat.PMDesignator;
+        }
+
 
         private class MaskInfoPos
         {
@@ -1970,18 +1987,18 @@ namespace PPlus.Internal
             string tmsignal = string.Empty;
             if (hr > 12)
             {
-                if (!string.IsNullOrEmpty(_maskInputOptions.CurrentCulture.DateTimeFormat.PMDesignator))
+                if (HasAMPMDesignator())
                 {
-                    tmsignal = _maskInputOptions.CurrentCulture.DateTimeFormat.PMDesignator.ToUpper()[0].ToString();
+                    tmsignal = GetPMDesignator().ToUpper()[0].ToString();
                     hr -= 12;
                     tmelem[0] = hr.ToString().PadLeft(2,'0');
                 }
             }
             else
             {
-                if (!string.IsNullOrEmpty(_maskInputOptions.CurrentCulture.DateTimeFormat.AMDesignator))
+                if (HasAMPMDesignator())
                 {
-                    tmsignal = _maskInputOptions.CurrentCulture.DateTimeFormat.AMDesignator.ToUpper()[0].ToString();
+                    tmsignal = GetAMDesignator().ToUpper()[0].ToString();
                 }
             }
             tmstring = $"{tmelem[0]}{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}{tmelem[1]}{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}{tmelem[2]}";
