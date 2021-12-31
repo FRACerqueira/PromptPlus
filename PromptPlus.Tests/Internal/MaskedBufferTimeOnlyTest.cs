@@ -31,11 +31,6 @@ namespace PPlus.Tests.Internal
         [Fact]
         internal void Should_have_accept_Load_validvalues_pt_br()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return;
-            }
-
             // Given
             var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("pt-BR"), null));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("23:34:56", false));
@@ -67,10 +62,6 @@ namespace PPlus.Tests.Internal
         [Fact]
         internal void Should_have_not_accept_Load_invalidvalues_pt_br()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return;
-            }
             // Given
             var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("pt-BR"), null));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("23/34/68", false));
@@ -117,10 +108,6 @@ namespace PPlus.Tests.Internal
         [Fact]
         internal void Should_have_accept_Load_partial_validvalues_pt_br_withoutFill()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return;
-            }
             // Given
             var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("pt-BR"), null));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("23:34", true));
@@ -137,10 +124,6 @@ namespace PPlus.Tests.Internal
         [Fact]
         internal void Should_have_accept_Load_partial_validvalues_pt_br_withFill()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return;
-            }
             // Given
             var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditTimeOnly(new CultureInfo("pt-BR"), null, true));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("23:34", true));

@@ -8,7 +8,7 @@
     <RootNamespace>PPlus</RootNamespace>
     <Nullable>annotations</Nullable>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
       <_Parameter1>$(AssemblyName).CommandDotNet</_Parameter1> 

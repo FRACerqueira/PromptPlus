@@ -29,10 +29,6 @@ namespace PPlus.Tests.Internal
         [Fact]
         internal void Should_have_accept_Load_validvalues_pt_br()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return;
-            }
             // Given
             var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditCurrency(new CultureInfo("pt-BR"), 10, 2, MaskedSignal.Enabled, null));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("123,45", false));
@@ -64,10 +60,6 @@ namespace PPlus.Tests.Internal
         [Fact]
         internal void Should_have_not_accept_Load_invalidvalues_pt_br()
         {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-            {
-                return;
-            }
             // Given
             var maskedBuffer = new MaskedBuffer(new OptionsForMaskeditCurrency(new CultureInfo("pt-BR"), 10, 2, MaskedSignal.Enabled, null));
             maskedBuffer.Load(maskedBuffer.PreparationDefaultValue("12A.45", false));

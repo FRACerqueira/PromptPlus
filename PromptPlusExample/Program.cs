@@ -90,6 +90,9 @@ namespace PromptPlusExample
             PromptPlus.DefaultCulture = new CultureInfo("en-US");
             PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
             PromptPlus.Clear();
+
+            Console.ReadKey();
+
             var quit = false;
             while (!_stopApp.IsCancellationRequested && !quit)
             {
@@ -644,6 +647,7 @@ namespace PromptPlusExample
                 .FormatYear(opcyear.Value[0] == 'F' ? FormatYear.Y4 : FormatYear.Y2)
                 .FormatTime(opctime.Value[0] == '1' ? FormatTime.HMS : opctime.Value[0] == '2' ? FormatTime.OnlyHM : FormatTime.OnlyH)
                 .FillZeros(masfill.Value)
+                .Default(new DateTime(2021,12,31,21,34,56))
                 .Run(_stopApp);
 
             if (string.IsNullOrEmpty(mask.Value.Input))
