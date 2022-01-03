@@ -20,6 +20,10 @@ namespace PPlus.Objects
 
         public static IList<ItemHistory> LoadHistory(string filename)
         {
+            if (string.IsNullOrEmpty(filename))
+            {
+                throw new ArgumentException(Resources.Exceptions.Ex_InvalidValue, nameof(filename));
+            }
             var file = string.Format(Filehistory, filename);
             var userProfile = GetFolderPath(SpecialFolder.UserProfile);
             var result = new List<ItemHistory>();
@@ -48,6 +52,14 @@ namespace PPlus.Objects
 
         public static IList<ItemHistory> AddHistory(string value, TimeSpan timeout, IList<ItemHistory> items)
         {
+            if (items is null)
+            {
+                items = new List<ItemHistory>();
+            }
+            if (string.IsNullOrEmpty(value?.Trim()??string.Empty))
+            {
+                return items;
+            }
             var localnewhis = value.Trim();
             var found = items
                 .Where(x => x.History.ToLowerInvariant() == localnewhis.ToLowerInvariant())
@@ -70,13 +82,24 @@ namespace PPlus.Objects
 
         public static void SaveHistory(string filename, IList<ItemHistory> items)
         {
+            if (string.IsNullOrEmpty(filename))
+            {
+                throw new ArgumentException(Resources.Exceptions.Ex_InvalidValue, nameof(filename));
+            }
             var file = string.Format(Filehistory, filename);
             var userProfile = GetFolderPath(SpecialFolder.UserProfile);
             if (!Directory.Exists(Path.Combine(userProfile, Folderhistory)))
             {
                 Directory.CreateDirectory(Path.Combine(userProfile, Folderhistory));
             }
-
+            if (items is null || items.Count == 0)
+            {
+                if (File.Exists(Path.Combine(userProfile, Folderhistory, file)))
+                {
+                    File.Delete(Path.Combine(userProfile, Folderhistory, file));
+                }
+                return;
+            }
             File.WriteAllLines(Path.Combine(userProfile, Folderhistory, file),
                 items.Where(x => DateTime.Now < new DateTime(x.TimeOutTicks))
                     .Select(x => x.ToString()), Encoding.UTF8);
@@ -84,6 +107,10 @@ namespace PPlus.Objects
 
         public static void UpdateHistory(string filename, TimeSpan timeout)
         {
+            if (string.IsNullOrEmpty(filename))
+            {
+                throw new ArgumentException(Resources.Exceptions.Ex_InvalidValue, nameof(filename));
+            }
             var file = string.Format(Filehistory, filename);
             var userProfile = GetFolderPath(SpecialFolder.UserProfile);
             if (!Directory.Exists(Path.Combine(userProfile, Folderhistory)))
@@ -92,7 +119,10 @@ namespace PPlus.Objects
             }
             if (timeout.Ticks == 0)
             {
-                File.Delete(Path.Combine(userProfile, Folderhistory, file));
+                if (File.Exists(Path.Combine(userProfile, Folderhistory, file)))
+                {
+                    File.Delete(Path.Combine(userProfile, Folderhistory, file));
+                }
                 return;
             }
             var items = LoadHistory(filename);
@@ -112,9 +142,18 @@ namespace PPlus.Objects
                     }
                 }
             }
-            File.WriteAllLines(Path.Combine(userProfile, Folderhistory, file),
-                newitems.Select(x => x.ToString()), Encoding.UTF8);
-
+            if (newitems.Count > 0)
+            {
+                File.WriteAllLines(Path.Combine(userProfile, Folderhistory, file),
+                    newitems.Select(x => x.ToString()), Encoding.UTF8);
+            }
+            else
+            {
+                if (File.Exists(Path.Combine(userProfile, Folderhistory, file)))
+                {
+                    File.Delete(Path.Combine(userProfile, Folderhistory, file));
+                }
+            }
         }
     }
 }

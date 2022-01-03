@@ -24,6 +24,7 @@ namespace PPlus.CommandDotNet
 
         public ReplSession(ReplConfig replConfig)
         {
+            _replConfig = replConfig ?? throw new ArgumentNullException(nameof(replConfig));
             if (replConfig.EnabledSugestion)
             {
                 replConfig.SuggestionHandler ??= PPLusSugestion;
@@ -32,7 +33,6 @@ namespace PPlus.CommandDotNet
             {
                 replConfig.SuggestionHandler = null;
             }
-            _replConfig = replConfig ?? throw new ArgumentNullException(nameof(replConfig));
         }
 
         public void Start()
@@ -181,7 +181,7 @@ namespace PPlus.CommandDotNet
                     PromptPlus.WriteLine($".{Path.AltDirectorySeparatorChar}{_replConfig.AppName} {ctrlreadline.Value}", PromptPlus.ColorSchema.Answer);
                     PromptPlus.WriteLine();
                     //run readline full pipeline
-                    var resultreadline = _replConfig.AppRunner.Run(args.ToArray());
+                    _ = _replConfig.AppRunner.Run(args.ToArray());
 
                     //reset conext to root-command for new interation
                     initialvalue = string.Empty;

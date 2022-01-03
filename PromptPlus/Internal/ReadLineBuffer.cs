@@ -71,7 +71,7 @@ namespace PPlus.Internal
         {
             isvalid = false;
 
-            //skip key tab and enter. Must be externally inspected to determine action
+            //skip key tab and enter.
             if ((keyinfo.Modifiers == 0 || keyinfo.Modifiers == ConsoleModifiers.Shift) && keyinfo.Key != ConsoleKey.Tab && keyinfo.Key != ConsoleKey.Enter)
             {
                 isvalid = IsPrintable(keyinfo.KeyChar);
@@ -235,7 +235,7 @@ namespace PPlus.Internal
             }
             if (isvalid && !foundautocomplete)
             {
-                //if valid any key reset mode
+                //if valid any keypress : reset autocomplete mode
                 ResetAutoComplete();
             }
         }
