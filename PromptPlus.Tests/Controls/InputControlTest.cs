@@ -115,50 +115,6 @@ namespace PPlus.Tests.Controls
             Assert.Equal("teste", initialvalue);
         }
 
-
-        [Fact]
-        internal void Should_have_accept_ctrl_del_with_enter()
-        {
-            var first = true;
-            string[] viewstart = null;
-            string[] viewend = null;
-            var initialvalue = string.Empty;
-            var finalvalue = string.Empty;
-
-            _reader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.Delete, false, false, true));
-            _reader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.Enter, false, false, false));
-            var result = PromptPlus.Input("Prompt teste", "teste description")
-                .InitialValue("teste")
-                .Config((ctx) =>
-                {
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnStartControl, (object ctx, string value) =>
-                    {
-                        initialvalue = value;
-                    });
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object ctx, string value) =>
-                    {
-                        if (first)
-                        {
-                            first = false;
-                            viewstart = _memoryconsole.GetScreen();
-                        }
-                    });
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnFinishControl, (object ctx, string value) =>
-                    {
-                        viewend = _memoryconsole.GetScreen();
-                        finalvalue = value.ToString();
-                    });
-                })
-                .Run();
-            Assert.Equal("", result.Value);
-            Assert.Contains("Prompt teste", viewstart[0]);
-            Assert.Equal("teste description", viewstart[1]);
-            Assert.False(result.IsAborted);
-            Assert.False(result.IsAllAborted);
-            Assert.Equal("", finalvalue);
-            Assert.Equal("teste", initialvalue);
-        }
-
         [Fact]
         internal void Should_have_show_tooltips()
         {
@@ -196,7 +152,6 @@ namespace PPlus.Tests.Controls
             Assert.Contains("F3", viewstart[2]);
             Assert.Contains("Esc", viewstart[2]);
             Assert.Contains("Enter", viewstart[3]);
-            Assert.Contains("Ctrl+Del", viewstart[3]);
             Assert.Equal(2, viewAfterF1.Length);
             Assert.Contains("Prompt teste", viewAfterF1[0]);
             Assert.Equal("teste description", viewstart[1]);
@@ -239,14 +194,12 @@ namespace PPlus.Tests.Controls
             Assert.Contains("F3", viewstart[2]);
             Assert.Contains("Esc", viewstart[2]);
             Assert.Contains("Enter", viewstart[3]);
-            Assert.Contains("Ctrl+Del", viewstart[3]);
             Assert.Equal(3, viewAfterF3.Length);
             Assert.Contains("Prompt teste", viewAfterF3[0]);
             Assert.Contains("F1", viewAfterF3[1]);
             Assert.Contains("F3", viewAfterF3[1]);
             Assert.Contains("Esc", viewAfterF3[1]);
             Assert.Contains("Enter", viewAfterF3[2]);
-            Assert.Contains("Ctrl+Del", viewAfterF3[2]);
         }
 
         [Fact]
