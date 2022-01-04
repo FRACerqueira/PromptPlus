@@ -12,7 +12,7 @@ Input text with GNU Readline Emacs keyboard shortcuts, sugestions and historic.
 
 ![](./images/Readline.gif)
 
-### Input and List-Control with readline buffer
+### Input and List-Control with sugestions
 
 ![](./images/InputHistory.gif)
 ![](./images/InputSugestion.gif)
