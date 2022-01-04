@@ -128,13 +128,9 @@ namespace PPlus.Controls
                         SetError(ex);
                     }
                 }
-                else if (keyInfo.IsPressSpecialKey(ConsoleKey.V, ConsoleModifiers.Alt) && _options.IsPassword)
+                else if (PromptPlus.SwitchViewPassword.Equals(keyInfo) && _options.IsPassword)
                 {
                     _passwordvisible = !_passwordvisible;
-                }
-                else if (keyInfo.IsPressSpecialKey(ConsoleKey.Delete, ConsoleModifiers.Control) && _inputBuffer.Length > 0)
-                {
-                    _inputBuffer.Clear();
                 }
                 else
                 {
@@ -213,7 +209,7 @@ namespace PPlus.Controls
                     var aux = ", ";
                     if (_options.EnabledPromptTooltip)
                     {
-                        screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, string.Join("", Messages.EnterFininsh, Messages.MaskEditErase));
+                        screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, Messages.EnterFininsh);
                     }
                     else
                     {

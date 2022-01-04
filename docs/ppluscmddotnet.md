@@ -6,8 +6,8 @@
 Interactive command-line based application framework for **C# with powerful controls** integrate command line parse **CommandDotNet(4.3.0/6.0.0)**
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
-![](./images/PplusCmddotnetWizard.gif)
 ![](./images/PplusCmddotnetRepl.gif)
+![](./images/PplusCmddotnetWizard.gif)
 
 ### **Official pages** :
 
@@ -24,8 +24,8 @@ An open-source guide to help you write better command-line programs, taking trad
 - [Install](#install)
 - [Sample](#sample)
 - [Middlewares to CommandDotNet](#middlewares-to-commanddotnet)
-- [**PromptPlus Wizard**](#promptplus-wizard)
 - [**PromptPlus Repl-Session**](#promptplus-repl)
+- [**PromptPlus Wizard**](#promptplus-wizard)
 - [**PromptPlus Attributes**](attributes.md)
 - [**Extensions**](#extensions)
 - [Supported Platforms](#supported-platforms)
@@ -137,48 +137,6 @@ UsePromptPlusConfig(this AppRunner appRunner, string foldername)
 
 **_Note: This method is only necessary when the file is in a custom folder. Prompt Plus automatically loads the file if the file is placed in the same folder as the binaries._**
 
-## PromptPlus Wizard
-[**Top**](#help)
-
-Directive to wizard find all the commands/options and arguments with prompt and then run.
-**Now you can discover and learn the existing commands, options and arguments.**
-
-[**CommandDotNet**](https://commanddotnet.bilal-fazlani.com) uses commands, options, and operands to define the execution of arguments passed by the command line. (
-see the image below as an example)
-
-![](images/ArgTermsExample.png)
-
-This middleware **injects a directive** that allows you to branch execution to a discovery of each element of your command-line application, using a **step-by-step wizard using PromptPlus controls**.
-
-### Syntax
-
-```csharp
-UsePromptPlusWizard(this AppRunner appRunner,
-        string name = "wizard",
-        byte pageSize = 5,
-        HotKey? runwizard = null,
-        HotKey? backcommand = null,
-        ConsoleColor? forecolorwizard=null,
-        ConsoleColor? backcolorwizard = null,
-        ConsoleColor? missingforecolorwizard = null)
-```
-
-- **name**
-    - The name of diretive.
-- **pageSize**
-    - The page size for selection lists.
-- **runwizard**
-    - The hotkey to execute args from wizard. Default value : F5.
-- **backcommand**
-    - The hotkey to returns the wizard to the previous command. Default value : ConsoleKey.Backspace.
-- **forecolorwizard**
-    - The forecolor text for args to wizard. Default value : PPlus.PromptPlus.ColorSchema.Select (default Green)
-- **backcolorwizard**
-    - The backcolor text for args to wizard. Default value : PPlus.PromptPlus.BackgroundColor (default black)
-- **missingforecolorwizard**
-    - The forecolor text for operand missing to wizard. Default value : PPlus.PromptPlus.ColorSchema.Error (default red)
-
-
 ## PromptPlus Repl
 [**Top**](#help)
 
@@ -236,6 +194,46 @@ UsePromptPlusRepl(this AppRunner appRunner,
 - **colorizeSessionInitMessage**
     - Function to user colorize initial title session interative. Default value null.
 
+## PromptPlus Wizard
+[**Top**](#help)
+
+Directive to wizard find all the commands/options and arguments with prompt and then run.
+**Now you can discover and learn the existing commands, options and arguments.**
+
+[**CommandDotNet**](https://commanddotnet.bilal-fazlani.com) uses commands, options, and operands to define the execution of arguments passed by the command line. (
+see the image below as an example)
+
+![](images/ArgTermsExample.png)
+
+This middleware **injects a directive** that allows you to branch execution to a discovery of each element of your command-line application, using a **step-by-step wizard using PromptPlus controls**.
+
+### Syntax
+
+```csharp
+UsePromptPlusWizard(this AppRunner appRunner,
+        string name = "wizard",
+        byte pageSize = 5,
+        HotKey? runwizard = null,
+        HotKey? backcommand = null,
+        ConsoleColor? forecolorwizard=null,
+        ConsoleColor? backcolorwizard = null,
+        ConsoleColor? missingforecolorwizard = null)
+```
+
+- **name**
+    - The name of diretive.
+- **pageSize**
+    - The page size for selection lists.
+- **runwizard**
+    - The hotkey to execute args from wizard. Default value : F5.
+- **backcommand**
+    - The hotkey to returns the wizard to the previous command. Default value : ConsoleKey.Backspace.
+- **forecolorwizard**
+    - The forecolor text for args to wizard. Default value : PPlus.PromptPlus.ColorSchema.Select (default Green)
+- **backcolorwizard**
+    - The backcolor text for args to wizard. Default value : PPlus.PromptPlus.BackgroundColor (default black)
+- **missingforecolorwizard**
+    - The forecolor text for operand missing to wizard. Default value : PPlus.PromptPlus.ColorSchema.Error (default red)
 
 ## Extensions
 

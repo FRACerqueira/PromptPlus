@@ -616,6 +616,10 @@ namespace PPlus.Internal
                         }
                     }
                     _inputBuffer.Clear();
+                    if (aux.Trim().Length > _validPosition.Length)
+                    {
+                        aux = aux.Substring(0, _validPosition.Length);
+                    }
                     _inputBuffer.Append(aux.Trim());
                     if (_maskInputOptions.Type == MaskedType.DateTime)
                     {
@@ -1610,6 +1614,11 @@ namespace PPlus.Internal
                 SignalTimeInput = string.Empty;
             }
 
+            if (_maskInputOptions.FillNumber.HasValue)
+            {
+                aux = aux.Replace(_promptmask, _maskInputOptions.FillNumber.Value);
+            }
+
             if (_isTypeNumber)
             {
                 if (SignalNumberInput != " "[0])
@@ -1618,12 +1627,8 @@ namespace PPlus.Internal
                     aux += " " + SignalNumberInput;
                 }
             }
-            else if (_isTypeTime  &&  HasAMPMDesignator())
+            else if ( (_isTypeTime || _isTypeDateTime)  &&  HasAMPMDesignator())
             {
-                if (_maskInputOptions.FillNumber.HasValue)
-                {
-                    aux = aux.Replace(_promptmask, _maskInputOptions.FillNumber.Value);
-                }
                 if (SignalTimeInput == GetAMDesignator())
                 {
                     aux += " " + GetAMDesignator();
@@ -1984,12 +1989,12 @@ namespace PPlus.Internal
             tmstring = tmstring.Replace("Z", "");
             var tmelem = tmstring.Split(':');
             var hr = int.Parse(tmelem[0]);
-            string tmsignal = string.Empty;
+            var tmsignal = string.Empty;
             if (hr > 12)
             {
                 if (HasAMPMDesignator())
                 {
-                    tmsignal = GetPMDesignator().ToUpper()[0].ToString();
+                    tmsignal = GetPMDesignator();
                     hr -= 12;
                     tmelem[0] = hr.ToString().PadLeft(2,'0');
                 }
@@ -1998,7 +2003,7 @@ namespace PPlus.Internal
             {
                 if (HasAMPMDesignator())
                 {
-                    tmsignal = GetAMDesignator().ToUpper()[0].ToString();
+                    tmsignal = GetAMDesignator();
                 }
             }
             tmstring = $"{tmelem[0]}{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}{tmelem[1]}{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}{tmelem[2]}";

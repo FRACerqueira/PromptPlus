@@ -213,9 +213,13 @@ namespace PPlus.Internal
 
         public static void WriteLineProcessStandardHotKeys(this ScreenBuffer screenBuffer, bool overpipeline, bool enabledabortkey, bool hasdescription, int extraspace = 0)
         {
-            var msg = Messages.EscCancel.Replace(",", "").Trim();
-            msg = string.Format(msg, AbortKeyPress.ToString());
-            if (hasdescription)
+            var msg = string.Empty;
+            if (enabledabortkey)
+            {
+                msg = Messages.EscCancel.Replace(",", "").Trim();
+                msg = string.Format(msg, AbortKeyPress.ToString());
+            }
+            if (hasdescription && !overpipeline)
             {
                 msg = $"{msg}, {string.Format(Messages.HotKeyDescription, ToggleVisibleDescription)}";
             }
@@ -224,41 +228,13 @@ namespace PPlus.Internal
             {
                 screenBuffer.Write(new string(' ', extraspace));
             }
-            if (enabledabortkey)
+            if (overpipeline)
             {
-                if (overpipeline)
-                {
-                    if (hasdescription)
-                    {
-                        screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipelineDesc, ToggleVisibleDescription, ResumePipesKeyPress, Messages.EscCancel), ColorSchema.Hint);
-                    }
-                    else
-                    {
-                        screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipeline, ResumePipesKeyPress, Messages.EscCancel), ColorSchema.Hint);
-                    }
-                }
-                else
-                {
-                    screenBuffer.Write(msg, ColorSchema.Hint);
-                }
+                screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipeline, msg, ResumePipesKeyPress), ColorSchema.Hint);
             }
             else
             {
-                if (overpipeline)
-                {
-                    if (hasdescription)
-                    {
-                        screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipelineDesc, ToggleVisibleDescription, ResumePipesKeyPress, ""), ColorSchema.Hint);
-                    }
-                    else
-                    {
-                        screenBuffer.Write(string.Format(Messages.ShowProcessStandardHotKeysWithPipeline, ResumePipesKeyPress, ""), ColorSchema.Hint);
-                    }
-                }
-                else
-                {
-                    screenBuffer.Write(msg, ColorSchema.Hint);
-                }
+                screenBuffer.Write(msg, ColorSchema.Hint);
             }
         }
 

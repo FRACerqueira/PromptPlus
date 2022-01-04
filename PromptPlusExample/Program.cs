@@ -87,11 +87,11 @@ namespace PromptPlusExample
 
         public void ShowMenu()
         {
-            PromptPlus.DefaultCulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US"); ;
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US"); 
+
             PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
             PromptPlus.Clear();
-
-            Console.ReadKey();
 
             var quit = false;
             while (!_stopApp.IsCancellationRequested && !quit)
@@ -103,7 +103,6 @@ namespace PromptPlusExample
                 {
                     continue;
                 }
-
                 switch (type.Value)
                 {
                     case ExampleType.Readline:
@@ -231,7 +230,6 @@ namespace PromptPlusExample
                 }
                 if (!_stopApp.IsCancellationRequested && !quit)
                 {
-                    //Console.ReadKey(true);
                     if (type.Value != ExampleType.AnyKey)
                     {
                         PromptPlus.KeyPress()

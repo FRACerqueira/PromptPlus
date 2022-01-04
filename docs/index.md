@@ -23,14 +23,15 @@ All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/G
 
 **Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet**:
 
-- Wizard to find all the commands/options and arguments with prompt and run.
-    - Now you can discover and learn the existing commands, options and arguments.
-
 - Interative session with readline prompt, Sugestions and History.
     - Now you can help to discover arguments (Sugestions) and history actions in interactive sessions.
 
-![](./images/PplusCmddotnetWizard.gif)
 ![](./images/PplusCmddotnetRepl.gif)
+
+- Wizard to find all the commands/options and arguments with prompt and run.
+    - Now you can discover and learn the existing commands, options and arguments.
+
+![](./images/PplusCmddotnetWizard.gif)
 
 **[CommandDotNet is third party applications. Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
 
@@ -273,8 +274,6 @@ Hotkeys (global and control-specific) are configurable. Some hotkeys are interna
 PromptPlus.AbortAllPipesKeyPress = new HotKey(UserHotKey.F7, alt: true, ctrl: false, shift: false);
 ```
 
-**_Note: the key parameter is case-insentive;_**
-
 ## Load and Save Settings
 [**Top**](#help)
 
@@ -354,11 +353,18 @@ Console.WriteLine($"Your input: {name.Value}!");
 ## Snapshot
 
 ### Input
-[**Top**](#help) | [AutoComplete](autocomplete.md) | [Input](input.md) | [Password](input.md) 
+[**Top**](#help) | [AutoComplete](autocomplete.md) | [Input](input.md) | [Password](input.md)
 
 ![](./images/AutoComplete.gif)
 ![](./images/Input.gif)
 ![](./images/Password.gif)
+
+### Readline 
+[**Top**](#help) | [ReadLine](readline.md) | [Input & History /sugestion](basemethods.md#sample-use-of-extraaction)
+
+![](./images/Readline.gif)
+![](./images/InputHistory.gif)
+![](./images/InputSugestion.gif)
 
 ### MaskEdit
 [**Top**](#help) | [MaskEdit Generic](maskeditgeneric.md) | [MaskEdit Date/Time](maskeditdate.md) | [MaskEdit Number/Currency](maskeditnumber.md) 
@@ -403,9 +409,10 @@ Console.WriteLine($"Your input: {name.Value}!");
 ![](./images/NumberUpDown.gif)
 
 ### List
-[**Top**](#help) | [List](list.md) | [ListMasked](listmasked.md)
+[**Top**](#help) | [List / List & Sugestion](list.md) | [ListMasked](listmasked.md)
 
 ![](./images/List.gif)
+![](./images/ListSugestion.gif)
 ![](./images/MaskedList.gif)
 
 ### Browser

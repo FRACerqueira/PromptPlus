@@ -8,7 +8,15 @@
 ## Documentation
 Input text with GNU Readline Emacs keyboard shortcuts, sugestions and historic.
 
+### Readline-Control
+
 ![](./images/Readline.gif)
+
+### Input and List-Control with readline buffer
+
+![](./images/InputHistory.gif)
+![](./images/InputSugestion.gif)
+![](./images/ListSugestion.gif)
 
 
 ## Emacs keyboard shortcuts

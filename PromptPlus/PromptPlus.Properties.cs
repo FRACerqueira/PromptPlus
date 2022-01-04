@@ -87,7 +87,7 @@ namespace PPlus
 
         public static HotKey UnSelectFilter { get; set; } = new(UserHotKey.F4, false, false, false);
 
-        public static HotKey SwitchViewPassword { get; set; } = new(UserHotKey.F5, true, false, false);
+        public static HotKey SwitchViewPassword { get; set; } = new(UserHotKey.F5, false, false, false);
 
         public static HotKey SelectAll { get; set; } = new(UserHotKey.F5, false, false, false);
 

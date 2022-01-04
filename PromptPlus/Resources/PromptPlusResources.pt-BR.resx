@@ -330,9 +330,6 @@
   <data name="ShowStandardHotKeysDesc" xml:space="preserve">
     <value>{0} Alternar dicas, {1} Alternar descrição{2}</value>
   </data>
-  <data name="ShowStandardHotKeysWithPipelineDesc" xml:space="preserve">
-    <value>{0} Alternar dicas, {1} Alternar descrição , {2} Alternar resumo dos pipes{3}</value>
-  </data>
   <data name="HotKeyDescription" xml:space="preserve">
     <value>{0} Alternar descrição</value>
   </data>

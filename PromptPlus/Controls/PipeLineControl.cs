@@ -127,11 +127,11 @@ namespace PPlus.Controls
             screenBuffer.WriteAnswer($"{_currentIndex}/{_resultpipeline.Count}");
 
             screenBuffer.PushCursor();
-            if (PromptPlus.EnabledStandardTooltip)
+            if (EnabledStandardTooltip)
             {
                 if (_summaryPipePaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLineHint($"{Messages.KeyNavPaging}{PromptPlus.ResumePipesKeyPress}: {Messages.SummaryPipelineReturnText} {_steps[_currentPipe].PipeTitle}");
+                    screenBuffer.WriteLineHint($"{Messages.KeyNavPaging}{ResumePipesKeyPress}: {Messages.SummaryPipelineReturnText} {_steps[_currentPipe].PipeTitle}");
                 }
                 else
                 {

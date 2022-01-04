@@ -232,7 +232,7 @@
     <value>{0}, {1} Swith pipes summary{2}</value>
   </data>
   <data name="ShowProcessStandardHotKeysWithPipeline" xml:space="preserve">
-    <value>{0}, Swith pipes summary{1}</value>
+    <value>{0}, Toggle pipes summary{1}</value>
   </data>
   <data name="ShowStandardHotKeys" xml:space="preserve">
     <value>{0} Toggle tooltips{1}</value>
@@ -338,9 +338,6 @@
   </data>
   <data name="HotKeyDescription" xml:space="preserve">
     <value>{0} Show/Hide description</value>
-  </data>
-  <data name="ShowProcessStandardHotKeysWithPipelineDesc" xml:space="preserve">
-    <value>{0}, {1} Toggle description, {2} Toggle pipes summary</value>
   </data>
   <data name="EscCancelWizard" xml:space="preserve">
     <value>, {0}: To Wizard</value>

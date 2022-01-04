@@ -69,7 +69,6 @@ namespace PPlus.Internal
             ShowStandardHotKeysWithPipelineDesc = PromptPlusResources.ShowStandardHotKeysWithPipelineDesc;
             ShowKeyPressStandardHotKeysWithPipeline = PromptPlusResources.ShowKeyPressStandardHotKeysWithPipeline;
             ShowProcessStandardHotKeysWithPipeline = PromptPlusResources.ShowProcessStandardHotKeysWithPipeline;
-            ShowProcessStandardHotKeysWithPipelineDesc = PromptPlusResources.ShowProcessStandardHotKeysWithPipelineDesc;
             ShowStandardHotKeys = PromptPlusResources.ShowStandardHotKeys;
             ShowStandardHotKeysWithPipeline = PromptPlusResources.ShowStandardHotKeysWithPipeline;
             SkipedText = PromptPlusResources.SkipedText;
@@ -318,8 +317,6 @@ namespace PPlus.Internal
         public static string ShowStandardHotKeysWithPipelineDesc { get; private set; } = PromptPlusResources.ShowStandardHotKeysWithPipelineDesc;
 
         public static string ShowProcessStandardHotKeysWithPipeline { get; private set; } = PromptPlusResources.ShowProcessStandardHotKeysWithPipeline;
-
-        public static string ShowProcessStandardHotKeysWithPipelineDesc { get; private set; } = PromptPlusResources.ShowProcessStandardHotKeysWithPipelineDesc;
 
         public static string ShowKeyPressStandardHotKeys { get; private set; } = PromptPlusResources.ShowKeyPressStandardHotKeys;
 

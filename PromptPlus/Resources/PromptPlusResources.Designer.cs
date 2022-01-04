@@ -700,20 +700,11 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}, Swith pipes summary{1}.
+        ///   Looks up a localized string similar to {0}, Toggle pipes summary{1}.
         /// </summary>
         internal static string ShowProcessStandardHotKeysWithPipeline {
             get {
                 return ResourceManager.GetString("ShowProcessStandardHotKeysWithPipeline", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0}, {1} Toggle description, {2} Toggle pipes summary.
-        /// </summary>
-        internal static string ShowProcessStandardHotKeysWithPipelineDesc {
-            get {
-                return ResourceManager.GetString("ShowProcessStandardHotKeysWithPipelineDesc", resourceCulture);
             }
         }
         

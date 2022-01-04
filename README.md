@@ -27,14 +27,15 @@ All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/G
 
 #### Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet:
 
-- Wizard to find all the commands/options and arguments with prompt and then run.
-    - Now you can discover and learn the existing commands, options and arguments.
-
 - Interative session with readline prompt, Sugestions and History.
     - Now you can help to discover arguments (Sugestions) and history actions in interactive sessions.
 
-![](./docs/images/PplusCmddotnetWizard.gif)
 ![](./docs/images/PplusCmddotnetRepl.gif)
+
+- Wizard to find all the commands/options and arguments with prompt and then run.
+    - Now you can discover and learn the existing commands, options and arguments.
+
+![](./docs/images/PplusCmddotnetWizard.gif)
 
 ### **Official pages** :
 
@@ -118,6 +119,7 @@ dotnet run --project CommandDotNet.Example [wizard]
 [**Top**](#welcome-to-promptplus)
 
 ![](./docs/images/List.gif)
+![](./docs/images/ListSugestion.gif)
 ![](./docs/images/MaskedList.gif)
 
 ### Browser
@@ -156,8 +158,8 @@ public class Program
 {
     static int Main(string[] args)
     {
-        CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-US");
-        CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("en-US");
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US"); ;
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US"); 
 
         PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
         PromptPlus.Clear();
