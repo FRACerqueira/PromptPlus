@@ -24,8 +24,7 @@ jobs:
       uses: olegtarasov/get-tag@v2.1
       id: tagName
       with:
-        tagRegex: "(?<package>.*):(?<versionpkg>.*):(?<versioncmd>.*)" 
-
+        tagRegex: "(?<versionpkg>.*)-(?<package>.*):(?<versioncmd>.*)"
     - name: Pack NuGet Package pplus
       if: ${{ steps.tagName.outputs.package == 'PromptPlus'}}
       run: dotnet pack PromptPlus/PromptPlus.csproj -c Release -o ./dist -p:Version=${{ steps.tagName.outputs.versionpkg }}
