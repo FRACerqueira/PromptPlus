@@ -1,11 +1,13 @@
 # <img align="left" width="100" height="100" src="./images/icon.png"> Welcome to PromptPlus
-[![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
-[![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
-[![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 
 Interactive command-line based application framework for **C# with powerful controls**.
 
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
+
+[![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
+[![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
+[![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+
 
 ![](./images/PipeLine.gif)
 
@@ -16,10 +18,14 @@ All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/G
 ![](./images/InputSugestion.gif)
 
 **PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/6.0.0)**: 
+
 <p align="left">
     <img valign="middle" width="80" height="80" src="./images/iconCmdNet.png">
     <a href="https://fracerqueira.github.io/PromptPlus/ppluscmddotnet.html"><b>PromptPlus.CommandDotNet!!</b></a>
 </p>
+
+[![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlusCommandDotNet/)
+[![NuGet](https://img.shields.io/nuget/v/PromptPlusCommandDotNet)](https://www.nuget.org/packages/PromptPlusCommandDotNet/)
 
 **Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet**:
 
