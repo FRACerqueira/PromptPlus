@@ -14,6 +14,8 @@ namespace PromptPlusExample
         ImportValidators,
         [Display(Name = "Extension: Command set for PromptPlus console")]
         ConsoleCmd,
+        [Display(Name = "Control: GNU - ReadLine with sugestion and history")]
+        Readline,
         [Display(Name = "Control: Banner ASCII text")]
         Banner,
         [Display(Name = "Control: Any key")]
@@ -36,6 +38,10 @@ namespace PromptPlusExample
         MaskEditCurrrency,
         [Display(Name = "Control: Input - Text")]
         Input,
+        [Display(Name = "Control: Input - Text with suggestion history")]
+        InputWithHistoric,
+        [Display(Name = "Control: Input - Text with custom suggestions")]
+        InputWithsuggestions,
         [Display(Name = "Control: Input - Password")]
         Password,
         [Display(Name = "Control: Input - Auto Complete")]
@@ -54,6 +60,8 @@ namespace PromptPlusExample
         MultiSelectWithEnum,
         [Display(Name = "Control: List - Create IEnumerable with Free Input")]
         List,
+        [Display(Name = "Control: List - Create IEnumerable with Free Input and custom suggestions")]
+        ListWithsuggestions,
         [Display(Name = "Control: ListMasked - Create IEnumerable with MaskEdit")]
         ListMasked,
         [Display(Name = "Control: Browser - Filter Only Folder")]

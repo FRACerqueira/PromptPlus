@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PromptPlusControls.Resources {
+namespace PPlus.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace PromptPlusControls.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PromptPlusControls.Resources.PromptPlusResources", typeof(PromptPlusResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PPlus.Resources.PromptPlusResources", typeof(PromptPlusResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,7 +70,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter: Select, {0}: Unselect, Ctrl-Enter: Change to selected.
+        ///   Looks up a localized string similar to Enter: Select, {0}: Unselect, Ctrl-Enter: Update text input.
         /// </summary>
         internal static string AutoCompleteKeyNavigation {
             get {
@@ -102,6 +102,15 @@ namespace PromptPlusControls.Resources {
         internal static string EmptyTitle {
             get {
                 return ResourceManager.GetString("EmptyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter: Accept suggestion.
+        /// </summary>
+        internal static string EnterAcceptSugestion {
+            get {
+                return ResourceManager.GetString("EnterAcceptSugestion", resourceCulture);
             }
         }
         
@@ -138,6 +147,15 @@ namespace PromptPlusControls.Resources {
         internal static string EscCancelWithPipeNotAll {
             get {
                 return ResourceManager.GetString("EscCancelWithPipeNotAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to , {0}: To Wizard.
+        /// </summary>
+        internal static string EscCancelWizard {
+            get {
+                return ResourceManager.GetString("EscCancelWizard", resourceCulture);
             }
         }
         
@@ -183,6 +201,15 @@ namespace PromptPlusControls.Resources {
         internal static string FolderKeyNavigation {
             get {
                 return ResourceManager.GetString("FolderKeyNavigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Show/Hide description.
+        /// </summary>
+        internal static string HotKeyDescription {
+            get {
+                return ResourceManager.GetString("HotKeyDescription", resourceCulture);
             }
         }
         
@@ -273,6 +300,15 @@ namespace PromptPlusControls.Resources {
         internal static string ListKeyNavigation {
             get {
                 return ResourceManager.GetString("ListKeyNavigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ctrl+Del: Remove seleted , {0}: Remove all, Ctrl+Enter: Finish, Enter: Add.
+        /// </summary>
+        internal static string ListKeyNavigationFillZeros {
+            get {
+                return ResourceManager.GetString("ListKeyNavigationFillZeros", resourceCulture);
             }
         }
         
@@ -439,7 +475,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Space: Select, Enter: Finish, {0}: Filter, {1}: All, {2}:Invert.
+        ///   Looks up a localized string similar to {0} Select, Enter: Finish, {1}: Filter, {2}: All, {3}:Invert.
         /// </summary>
         internal static string MultiSelectKeyNavigation {
             get {
@@ -520,7 +556,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}, {1}:Show/Hide password.
+        ///   Looks up a localized string similar to {0}, {1}:Toggle password.
         /// </summary>
         internal static string PasswordStandardHotkeys {
             get {
@@ -543,6 +579,60 @@ namespace PromptPlusControls.Resources {
         internal static string PressedKey {
             get {
                 return ResourceManager.GetString("PressedKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter: Select&amp;Fisnish.
+        /// </summary>
+        internal static string ReadlineFisnishHistoryhit {
+            get {
+                return ResourceManager.GetString("ReadlineFisnishHistoryhit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esc: Cancel historic.
+        /// </summary>
+        internal static string ReadlineHistoryEsc {
+            get {
+                return ResourceManager.GetString("ReadlineHistoryEsc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Down/PgDown: Historic(Min. {0} chars).
+        /// </summary>
+        internal static string ReadlineHistoryhit {
+            get {
+                return ResourceManager.GetString("ReadlineHistoryhit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter: Select&amp;Close.
+        /// </summary>
+        internal static string ReadlineNotFisnishHistoryhit {
+            get {
+                return ResourceManager.GetString("ReadlineNotFisnishHistoryhit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab/Shift: Sugestions.
+        /// </summary>
+        internal static string ReadlineSugestionhit {
+            get {
+                return ResourceManager.GetString("ReadlineSugestionhit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esc: Cancel sugestion.
+        /// </summary>
+        internal static string ReadlineSugestionMode {
+            get {
+                return ResourceManager.GetString("ReadlineSugestionMode", resourceCulture);
             }
         }
         
@@ -610,7 +700,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Swith pipes summary{1}.
+        ///   Looks up a localized string similar to {0}, Toggle pipes summary{1}.
         /// </summary>
         internal static string ShowProcessStandardHotKeysWithPipeline {
             get {
@@ -619,7 +709,7 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Show/Hide tooltips{1}.
+        ///   Looks up a localized string similar to {0} Toggle tooltips{1}.
         /// </summary>
         internal static string ShowStandardHotKeys {
             get {
@@ -628,11 +718,29 @@ namespace PromptPlusControls.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Show/Hide keys, {1} Swith pipes summary{2}.
+        ///   Looks up a localized string similar to {0} Toggle tooltips, {1} Toggle description{2}.
+        /// </summary>
+        internal static string ShowStandardHotKeysDesc {
+            get {
+                return ResourceManager.GetString("ShowStandardHotKeysDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Toggle tooltips, {1} Toggle pipes summary{2}.
         /// </summary>
         internal static string ShowStandardHotKeysWithPipeline {
             get {
                 return ResourceManager.GetString("ShowStandardHotKeysWithPipeline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Toggle tooltips, {1} Toggle description, {2} Toggle pipes summary{3}.
+        /// </summary>
+        internal static string ShowStandardHotKeysWithPipelineDesc {
+            get {
+                return ResourceManager.GetString("ShowStandardHotKeysWithPipelineDesc", resourceCulture);
             }
         }
         

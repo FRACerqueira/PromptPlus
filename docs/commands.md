@@ -9,7 +9,7 @@ Command set for PromptPlus console
 ![](./images/Commands.gif)
 
 ### Syntax
-[**Top**](#-promptplus--commands)
+[**Top**](#promptplus--commands)
 
 Using simple command to change forecolor and backcolor.
 
@@ -43,7 +43,7 @@ Using simple command to clear a line.
 Using simple command to wait a ConsoleKeyInfo with CancellationToken.
 
 ```csharp
-ResultPromptPlus<ConsoleKeyInfo> keyinfo = PromptPlus.WaitKeypress(CancellationToken cancellationToken)
+ResultPromptPlus<ConsoleKeyInfo> keyinfo = PromptPlus.WaitKeypress(bool intercept, CancellationToken cancellationToken)
 ````
 
 ### Links

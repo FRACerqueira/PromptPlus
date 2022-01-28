@@ -6,49 +6,63 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 
-using PromptPlusControls.Internal;
-using PromptPlusControls.ValueObjects;
+using Microsoft.Extensions.Logging;
 
-namespace PromptPlusControls.Controls
+using PPlus.Internal;
+
+using PPlus.Objects;
+using PPlus.Resources;
+
+namespace PPlus.Controls
 {
     internal abstract class ControlBase<T> : IFormPlusBase
     {
         private const int IdleReadKey = 8;
         private string _finishResult;
-        private readonly CancellationTokenSource _esckeyCancelation;
+        private CancellationTokenSource _esckeyCancelation;
         private readonly ScreenRender _screenrender;
         private readonly bool _showcursor;
-        private readonly bool _enabledAbortEscKey;
-        private readonly bool _enabledAbortAllPipes;
-        private readonly bool _hideAfterFinish;
         private readonly bool _skiplastrender;
+        private readonly BaseOptions _options;
         private bool _toggleSummary = false;
 
-        protected ControlBase(bool hideafterFinish, bool showcursor, bool enabledAbortEscKey, bool enabledAbortAllPipes, bool skiplastrender = false)
-        {
-            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+        public readonly ControlLog Logs;
 
+
+        public readonly CultureInfo AppcurrentCulture;
+        public readonly CultureInfo AppcurrentUICulture;
+
+        protected ControlBase(string sourcelog, BaseOptions options, bool showcursor, bool skiplastrender = false)
+        {
+            AppcurrentCulture = Thread.CurrentThread.CurrentCulture;
+            AppcurrentUICulture = Thread.CurrentThread.CurrentUICulture;
+            Logs = new ControlLog(sourcelog);
+            _options = options;
             _skiplastrender = skiplastrender;
             _screenrender = new ScreenRender();
-            _hideAfterFinish = hideafterFinish;
             _showcursor = showcursor;
-            _enabledAbortEscKey = enabledAbortEscKey;
-            _enabledAbortAllPipes = enabledAbortAllPipes;
-            _esckeyCancelation = new CancellationTokenSource();
         }
 
         public string PipeId { get; internal set; }
 
         public string PipeTitle { get; internal set; }
 
-        public object ContextState { get; internal set; }
+        public object PipeContext { get; internal set; }
+
+        public object ContextControl => _options.Context;
+
+        public Func<ScreenBuffer, string> Wizardtemplate { get; set; }
 
         public Func<ResultPipe[], object, bool> Condition { get; internal set; }
 
         public bool OverPipeLine => !string.IsNullOrEmpty(PipeId);
+
+        public bool HideDescription { get; set; }
 
         public bool SummaryPipeLine { get; set; }
 
@@ -65,6 +79,11 @@ namespace PromptPlusControls.Controls
             set
             {
                 _finishResult = value;
+                if (PromptPlus.EnabledLogControl)
+                {
+                    AddLog("FinishResult", _finishResult, LogKind.Property);
+                }
+
             }
         }
 
@@ -74,166 +93,286 @@ namespace PromptPlusControls.Controls
             {
                 _esckeyCancelation.Dispose();
             }
-
-            Thread.CurrentThread.CurrentCulture = PromptPlus.AppCulture;
-            Thread.CurrentThread.CurrentUICulture = PromptPlus.AppCultureUI;
         }
 
-        public ResultPromptPlus<T> StartPipeline(Action<ScreenBuffer> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
+        public void AddLog(string key, string message, LogKind logKind, LogLevel level = LogLevel.Trace)
         {
-            _screenrender.StopToken = stoptoken;
-            if (!_showcursor)
-            {
-                _screenrender.HideCursor();
-            }
+            Logs.Add(level, key, message, logKind);
+        }
 
-            pipePaginator.EnsureVisibleIndex(currentStep);
-
-            using (var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_esckeyCancelation.Token, stoptoken))
+        public ResultPromptPlus<T> Run(CancellationToken? value)
+        {
+            try
             {
-                bool? hit = true;
-                var fistskip = true;
-                while (!_linkedCts.IsCancellationRequested)
+                PromptPlus.ExclusiveMode = true;
+                Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+                Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+                var initvalue = InitControl();
+                Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+                Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
+                if (FindAction(StageControl.OnStartControl, out var useractin))
                 {
-                    var skip = _skiplastrender;
-                    if (SummaryPipeLine && fistskip)
+                    useractin.Invoke(ContextControl, initvalue);
+                }
+                var aux = Start(value ?? CancellationToken.None);
+                if (FindAction(StageControl.OnFinishControl, out var useractout))
+                {
+                    useractout.Invoke(ContextControl, FinishResult);
+                }
+                if (PromptPlus.EnabledLogControl)
+                {
+                    aux.LogControl = Logs;
+                }
+                PromptPlus.WriteLog(aux.LogControl);
+                return aux;
+            }
+            finally
+            {
+                Dispose();
+                PromptPlus.ExclusiveMode = false;
+            }
+        }
+
+        public ResultPromptPlus<T> StartPipeline(Func<ScreenBuffer, string> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
+        {
+            if (PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = false;
+            }
+            try
+            {
+                PromptPlus.ExclusiveMode = true;
+                Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+                Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+                _screenrender.StopToken = stoptoken;
+                if (!_showcursor)
+                {
+                    ScreenRender.HideCursor();
+                }
+                _esckeyCancelation = new CancellationTokenSource();
+
+                pipePaginator.EnsureVisibleIndex(currentStep);
+
+                if (PromptPlus.EnabledLogControl)
+                {
+                    AddLog("StartPipeline.Culture", Thread.CurrentThread.CurrentCulture.Name, LogKind.Method);
+                }
+                using (var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_esckeyCancelation.Token, stoptoken))
+                {
+                    bool? hit = true;
+                    var fistskip = true;
+                    var oldwidth = PromptPlus.PPlusConsole.BufferWidth;
+                    while (!_linkedCts.IsCancellationRequested)
                     {
-                        skip = false;
-                        fistskip = false;
-                    }
-                    if (_toggleSummary)
-                    {
-                        skip = false;
-                        _toggleSummary = false;
-                    }
-                    if (hit.HasValue)
-                    {
-                        if (!_screenrender.HideLastRender(skip))
+                        var diff = _screenrender.CountLines(PromptPlus.PPlusConsole.BufferWidth) - _screenrender.CountLines(oldwidth);
+
+                        var skip = _skiplastrender;
+                        if (SummaryPipeLine && fistskip)
                         {
-                            _linkedCts.Cancel();
-                            continue;
+                            skip = false;
+                            fistskip = false;
                         }
-                        if (SummaryPipeLine)
+                        if (_toggleSummary)
                         {
-                            _screenrender.InputRender(summarypipeline);
+                            skip = false;
+                            _toggleSummary = false;
                         }
-                        else
+                        if (hit.HasValue)
                         {
-                            pipePaginator.EnsureVisibleIndex(currentStep);
-                            _screenrender.InputRender(InputTemplate);
-                        }
-                    }
-                    T result = default;
-                    if (!_linkedCts.IsCancellationRequested)
-                    {
-                        if (_showcursor && !SummaryPipeLine)
-                        {
-                            _screenrender.ShowCursor();
-                        }
-                        if (SummaryPipeLine)
-                        {
-                            SummaryPipeLineToPrompt(pipePaginator, _linkedCts.Token);
-                            _toggleSummary = true;
-                            hit = false;
-                        }
-                        else
-                        {
-                            hit = TryResult(false, _linkedCts.Token, out result);
-                            if (!hit.HasValue && PromptPlus.EnabledBeep && PipeId == null)
-                            {
-                                _screenrender.Beep();
-                            }
-                            if (!hit.HasValue && _skiplastrender)
-                            {
-                                hit = false;
-                                _toggleSummary = true;
-                            }
-                        }
-                        _screenrender.HideCursor();
-                        if (_linkedCts.IsCancellationRequested && !_esckeyCancelation.IsCancellationRequested)
-                        {
-                            if (!_screenrender.HideLastRender())
+                            if (!_screenrender.HideLastRender(diff, skip))
                             {
                                 _linkedCts.Cancel();
                                 continue;
                             }
-                            continue;
+                            if (SummaryPipeLine)
+                            {
+                                _screenrender.ClearBuffer();
+                                _screenrender.InputRender(summarypipeline);
+                            }
+                            else
+                            {
+                                pipePaginator.EnsureVisibleIndex(currentStep);
+                                _screenrender.ClearBuffer();
+                                var input = _screenrender.InputRender(InputTemplate);
+                                if (FindAction(StageControl.OnInputRender, out var useract))
+                                {
+                                    useract.Invoke(ContextControl, input);
+                                }
+                                oldwidth = PromptPlus.BufferWidth;
+                            }
                         }
-                    }
+                        T result = default;
+                        if (!_linkedCts.IsCancellationRequested)
+                        {
+                            if (_showcursor && !SummaryPipeLine)
+                            {
+                                ScreenRender.ShowCursor();
+                            }
+                            if (SummaryPipeLine)
+                            {
+                                SummaryPipeLineToPrompt(pipePaginator, _linkedCts.Token);
+                                _toggleSummary = true;
+                                hit = false;
+                            }
+                            else
+                            {
+                                hit = TryResult(false, _linkedCts.Token, out result);
+                                if (!hit.HasValue && PromptPlus.EnabledBeep && PipeId == null)
+                                {
+                                    ScreenRender.Beep();
+                                }
+                                if (!hit.HasValue && _skiplastrender)
+                                {
+                                    hit = false;
+                                    _toggleSummary = true;
+                                }
+                            }
+                            ScreenRender.HideCursor();
+                            if (_linkedCts.IsCancellationRequested && !_esckeyCancelation.IsCancellationRequested)
+                            {
+                                if (!_screenrender.HideLastRender(diff))
+                                {
+                                    _linkedCts.Cancel();
+                                    continue;
+                                }
+                                continue;
+                            }
+                        }
 
-                    if (_esckeyCancelation.IsCancellationRequested || (hit.HasValue && hit.Value))
-                    {
-                        if (!_screenrender.HideLastRender())
+                        if (_esckeyCancelation.IsCancellationRequested || (hit.HasValue && hit.Value))
                         {
-                            _linkedCts.Cancel();
-                            continue;
+                            if (!_screenrender.HideLastRender(diff))
+                            {
+                                _linkedCts.Cancel();
+                                continue;
+                            }
+                            _screenrender.FinishRender(FinishTemplate, result);
+                            if (_options.HideAfterFinish)
+                            {
+                                _ = _screenrender.HideLastRender(diff);
+                            }
+                            else
+                            {
+                                ScreenRender.NewLine();
+                            }
+                            if (PromptPlus.EnabledLogControl)
+                            {
+                                if (_esckeyCancelation.IsCancellationRequested)
+                                {
+                                    AddLog("EscCancelation", "true", LogKind.Abort);
+                                }
+                                else if (stoptoken.IsCancellationRequested)
+                                {
+                                    AddLog("MainCancelation", "true", LogKind.Abort);
+                                }
+                            }
+                            ScreenRender.ShowCursor();
+                            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+                            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+                            return new ResultPromptPlus<T>(result, false);
                         }
-                        _screenrender.FinishRender(FinishTemplate, result);
-                        if (_hideAfterFinish)
-                        {
-                            _ = _screenrender.HideLastRender();
-                        }
-                        else
-                        {
-                            _screenrender.NewLine();
-                        }
-                        _screenrender.ShowCursor();
-                        return new ResultPromptPlus<T>(result, false);
                     }
                 }
+
+                if (PromptPlus.EnabledLogControl)
+                {
+                    if (_esckeyCancelation.IsCancellationRequested)
+                    {
+                        AddLog("EscCancelation", "true", LogKind.Abort);
+                    }
+                    else if (stoptoken.IsCancellationRequested)
+                    {
+                        AddLog("MainCancelation", "true", LogKind.Abort);
+                    }
+                }
+                ScreenRender.ShowCursor();
+                Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+                Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+                return new ResultPromptPlus<T>(default, true);
             }
-            _screenrender.ShowCursor();
-            return new ResultPromptPlus<T>(default, true);
+            finally
+            {
+                PromptPlus.ExclusiveMode = false;
+            }
         }
 
         public ResultPromptPlus<T> Start(CancellationToken stoptoken)
         {
+            Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
+            Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
+            if (PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = false;
+            }
+
             _screenrender.StopToken = stoptoken;
             if (!_showcursor)
             {
-                _screenrender.HideCursor();
+                ScreenRender.HideCursor();
             }
+
             T result = default;
+            _esckeyCancelation = new CancellationTokenSource();
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("Start.Culture", Thread.CurrentThread.CurrentCulture.Name, LogKind.Method);
+            }
+
             using (var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_esckeyCancelation.Token, stoptoken))
             {
                 bool? hit = true;
                 var skip = _skiplastrender;
+                var oldwidth = PromptPlus.PPlusConsole.BufferWidth;
                 while (!_linkedCts.IsCancellationRequested)
                 {
+                    var diff = _screenrender.CountLines(PromptPlus.PPlusConsole.BufferWidth) - _screenrender.CountLines(oldwidth);
+
                     if (hit.HasValue)
                     {
-                        if (!_screenrender.HideLastRender(skip))
+                        if (!_screenrender.HideLastRender(diff, skip))
                         {
                             _linkedCts.Cancel();
                             continue;
                         }
-                        _screenrender.InputRender(InputTemplate);
+                        _screenrender.ClearBuffer();
+                        if (Wizardtemplate is not null)
+                        {
+                            _screenrender.InputRender(Wizardtemplate, true);
+                            PromptPlus.IsRunningWithCommandDotNet = true;
+                        }
+                        oldwidth = PromptPlus.BufferWidth;
+                        var input = _screenrender.InputRender(InputTemplate);
+                        if (FindAction(StageControl.OnInputRender, out var useractin))
+                        {
+                            useractin.Invoke(ContextControl, input);
+                        }
+                        PromptPlus.IsRunningWithCommandDotNet = false;
                     }
-
                     result = default;
                     if (!_linkedCts.IsCancellationRequested)
                     {
                         if (_showcursor)
                         {
-                            _screenrender.ShowCursor();
+                            ScreenRender.ShowCursor();
                         }
                         hit = TryResult(false, _linkedCts.Token, out result);
                         if (!hit.HasValue && PromptPlus.EnabledBeep)
                         {
-                            _screenrender.Beep();
+                            ScreenRender.Beep();
                         }
                         if (!hit.HasValue && _skiplastrender)
                         {
                             hit = false;
                             skip = false;
                         }
-                        _screenrender.HideCursor();
+                        ScreenRender.HideCursor();
                         if (_linkedCts.IsCancellationRequested)
                         {
-                            if (!_screenrender.HideLastRender(skip))
+                            if (!_screenrender.HideLastRender(diff, skip))
                             {
                                 _linkedCts.Cancel();
-                                continue;
                             }
                             continue;
                         }
@@ -241,44 +380,97 @@ namespace PromptPlusControls.Controls
 
                     if (!_linkedCts.IsCancellationRequested && hit.HasValue && hit.Value)
                     {
-                        if (!_screenrender.HideLastRender())
+                        if (!_screenrender.HideLastRender(diff))
                         {
                             _linkedCts.Cancel();
                             continue;
                         }
                         _screenrender.FinishRender(FinishTemplate, result);
-                        if (_hideAfterFinish)
+                        if (_options.HideAfterFinish)
                         {
-                            _ = _screenrender.HideLastRender();
+                            _ = _screenrender.HideLastRender(diff);
                         }
                         else
                         {
-                            _screenrender.NewLine();
+                            ScreenRender.NewLine();
                         }
-                        _screenrender.ShowCursor();
+                        if (PromptPlus.EnabledLogControl)
+                        {
+                            if (_esckeyCancelation.IsCancellationRequested)
+                            {
+                                AddLog("EscCancelation", "true", LogKind.Abort);
+                            }
+                            else if (stoptoken.IsCancellationRequested)
+                            {
+                                AddLog("MainCancelation", "true", LogKind.Abort);
+                            }
+                        }
+                        ScreenRender.ShowCursor();
+                        if (result == null)
+                        {
+                            return new ResultPromptPlus<T>(result, true, true);
+                        }
                         return new ResultPromptPlus<T>(result, false);
                     }
                 }
             }
-            _screenrender.ShowCursor();
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                if (_esckeyCancelation.IsCancellationRequested)
+                {
+                    AddLog("EscCancelation", "true", LogKind.Abort);
+                }
+                else if (stoptoken.IsCancellationRequested)
+                {
+                    AddLog("MainCancelation", "true", LogKind.Abort);
+                }
+            }
+
+            ScreenRender.ShowCursor();
+            Thread.CurrentThread.CurrentCulture = AppcurrentCulture;
+            Thread.CurrentThread.CurrentUICulture = AppcurrentUICulture;
+
             return new ResultPromptPlus<T>(result, true);
         }
 
         public abstract bool? TryResult(bool IsSummary, CancellationToken stoptoken, out T result);
 
-        public abstract void InitControl();
+        public abstract string InitControl();
 
-        public abstract void InputTemplate(ScreenBuffer screenBuffer);
+        public abstract string InputTemplate(ScreenBuffer screenBuffer);
 
         public abstract void FinishTemplate(ScreenBuffer screenBuffer, T result);
 
-        public void SetError(string errorMessage) => _screenrender.ErrorMessage = errorMessage;
+        public void ClearError()
+        {
+            _screenrender.ErrorMessage = null;
+        }
 
-        public void SetError(ValidationResult validationResult) => _screenrender.ErrorMessage = validationResult.ErrorMessage;
+        public void SetError(string errorMessage)
+        {
+            _screenrender.ErrorMessage = errorMessage;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("SetError", errorMessage, LogKind.MsgErro);
+            }
+        }
 
-        public void SetError(Exception exception) => _screenrender.ErrorMessage = exception.Message;
+        private void SetError(ValidationResult validationResult)
+        {
+            _screenrender.ErrorMessage = validationResult.ErrorMessage;
+        }
 
-        public bool TryValidate(object input, IList<Func<object, ValidationResult>> validators)
+        public void SetError(Exception exception)
+        {
+            _screenrender.ErrorMessage = exception.Message;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("SetError", exception.Message, LogKind.MsgErro);
+            }
+        }
+
+        public bool TryValidate(object input, IList<Func<object, ValidationResult>> validators, bool ondemand)
         {
             foreach (var validator in validators)
             {
@@ -287,25 +479,64 @@ namespace PromptPlusControls.Controls
                 if (result != ValidationResult.Success)
                 {
                     SetError(result);
+                    if (!ondemand && PromptPlus.EnabledLogControl)
+                    {
+                        AddLog("SetError", result.ErrorMessage, LogKind.MsgErro);
+                    }
                     return false;
+                }
+                if (PromptPlus.EnabledLogControl)
+                {
+                    foreach (var item in validator.GetInvocationList())
+                    {
+                        var match = s_nameblockRegEx.Value.Match(item.Method.Name);
+                        if (match.Captures.Count == 1)
+                        {
+                            AddLog("ValidationResult", match.Groups["name"].Value, LogKind.Validator);
+                        }
+
+                    }
                 }
             }
             return true;
         }
 
+        private static readonly Lazy<Regex> s_nameblockRegEx = new(
+            () => new Regex("\\<(?<name>.*?)\\>", RegexOptions.IgnoreCase),
+            isThreadSafe: true);
+
+        public static string CreateMessageHitSugestion(bool tryfinish, string entertext)
+        {
+            var msg = new StringBuilder();
+            msg.Append(Messages.ReadlineSugestionhit);
+            msg.Append(", ");
+            msg.Append(Messages.ReadlineSugestionMode);
+            if (!tryfinish)
+            {
+                msg.Append(", ");
+                msg.Append(Messages.EnterAcceptSugestion);
+            }
+            else
+            {
+                msg.Append(", ");
+                msg.Append(entertext);
+            }
+            return msg.ToString();
+        }
+
         public static bool IskeyPageNavagator<Tkey>(ConsoleKeyInfo consoleKeyInfo, Paginator<Tkey> paginator)
         {
-            if (consoleKeyInfo.Key == ConsoleKey.PageUp && consoleKeyInfo.Modifiers == 0 && paginator.PageCount > 1)
+            if (consoleKeyInfo.IsPressPageUpKey() && paginator.PageCount > 1)
             {
                 paginator.PreviousPage(IndexOption.LastItemWhenHasPages);
                 return true;
             }
-            else if (consoleKeyInfo.Key == ConsoleKey.PageDown && consoleKeyInfo.Modifiers == 0 && paginator.PageCount > 1)
+            else if (consoleKeyInfo.IsPressPageDownKey() && paginator.PageCount > 1)
             {
                 paginator.NextPage(IndexOption.FirstItemWhenHasPages);
                 return true;
             }
-            else if (consoleKeyInfo.Key == ConsoleKey.UpArrow && consoleKeyInfo.Modifiers == 0 && paginator.Count > 0)
+            else if (consoleKeyInfo.IsPressUpArrowKey() && paginator.Count > 0)
             {
                 if (paginator.IsFistPageItem)
                 {
@@ -317,7 +548,7 @@ namespace PromptPlusControls.Controls
                 }
                 return true;
             }
-            else if (consoleKeyInfo.Key == ConsoleKey.DownArrow && consoleKeyInfo.Modifiers == 0 && paginator.Count > 0)
+            else if (consoleKeyInfo.IsPressDownArrowKey() && paginator.Count > 0)
             {
                 if (paginator.IsLastPageItem)
                 {
@@ -332,23 +563,69 @@ namespace PromptPlusControls.Controls
             return false;
         }
 
-        public bool CheckDefaultKey(ConsoleKeyInfo keyInfo)
+        public bool CheckDefaultWizardKey(ConsoleKeyInfo keyInfo)
         {
-            if (PromptPlus.TooltipKeyPress.Equals(keyInfo))
+            if (PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = false;
+            }
+            if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
+            {
+                HideDescription = !HideDescription;
+                return true;
+            }
+            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
             {
                 EnabledStandardTooltip = !EnabledStandardTooltip;
                 return true;
             }
-            else if (PromptPlus.AbortKeyPress.Equals(keyInfo) && _enabledAbortEscKey)
+            return false;
+        }
+
+        public bool CheckAbortKey(ConsoleKeyInfo keyInfo)
+        {
+            if (PromptPlus.AbortKeyPress.Equals(keyInfo) && _options.EnabledAbortKey)
             {
                 _esckeyCancelation.Cancel();
                 AbortedAll = !OverPipeLine;
+                AddLog("AbortKeyPress", true.ToString(), LogKind.Abort);
+                AddLog("AbortedAll", AbortedAll.ToString(), LogKind.Abort);
                 return true;
             }
-            else if (OverPipeLine && PromptPlus.AbortAllPipesKeyPress.Equals(keyInfo) && _enabledAbortAllPipes)
+            return false;
+        }
+
+        public bool CheckDefaultKey(ConsoleKeyInfo keyInfo)
+        {
+            if (PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = false;
+            }
+            if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
+            {
+                HideDescription = !HideDescription;
+                return true;
+            }
+            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = !EnabledStandardTooltip;
+                return true;
+            }
+            else if (PromptPlus.AbortKeyPress.Equals(keyInfo) && _options.EnabledAbortKey)
+            {
+                _esckeyCancelation.Cancel();
+                AbortedAll = !OverPipeLine;
+                AddLog("AbortKeyPress", true.ToString(), LogKind.Abort);
+                AddLog("AbortedAll", AbortedAll.ToString(), LogKind.Abort);
+                return true;
+            }
+            else if (OverPipeLine && PromptPlus.AbortAllPipesKeyPress.Equals(keyInfo) && _options.EnabledAbortAllPipes)
             {
                 _esckeyCancelation.Cancel();
                 AbortedAll = true;
+                AddLog("AbortKeyPress", true.ToString(), LogKind.Abort);
+                AddLog("AbortedAll", AbortedAll.ToString(), LogKind.Abort);
+                return true;
             }
             else if (OverPipeLine && PromptPlus.ResumePipesKeyPress.Equals(keyInfo))
             {
@@ -358,36 +635,136 @@ namespace PromptPlusControls.Controls
             return false;
         }
 
-        public ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken)
+        public static ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken)
         {
-            while (!_screenrender.KeyAvailable && !cancellationToken.IsCancellationRequested)
+            while (!ScreenRender.KeyAvailable && !cancellationToken.IsCancellationRequested)
             {
                 cancellationToken.WaitHandle.WaitOne(IdleReadKey);
             }
             return GetKeyAvailable(cancellationToken);
         }
 
-        public ConsoleKeyInfo GetKeyAvailable(CancellationToken cancellationToken)
+        public static ConsoleKeyInfo GetKeyAvailable(CancellationToken cancellationToken)
         {
-            if (_screenrender.KeyAvailable && !cancellationToken.IsCancellationRequested)
+            if (ScreenRender.KeyAvailable && !cancellationToken.IsCancellationRequested)
             {
-                return _screenrender.KeyPressed;
+                return ScreenRender.KeyPressed;
             }
             return new ConsoleKeyInfo();
         }
 
-        public bool KeyAvailable => _screenrender.KeyAvailable;
+        public static bool KeyAvailable => ScreenRender.KeyAvailable;
+
+        public bool HasDescription => _options.HasDescription;
+
+        public IPromptConfig EnabledAbortKey(bool value)
+        {
+            _options.EnabledAbortKey = value;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("EnabledAbortKey", value.ToString(), LogKind.Property);
+            }
+            return this;
+        }
+
+        public IPromptConfig EnabledAbortAllPipes(bool value)
+        {
+            _options.EnabledAbortAllPipes = value;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("EnabledAbortAllPipes", value.ToString(), LogKind.Property);
+            }
+            return this;
+        }
+
+        public IPromptConfig EnabledPromptTooltip(bool value)
+        {
+            _options.EnabledPromptTooltip = value;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("EnabledPromptTooltip", value.ToString(), LogKind.Property);
+            }
+            return this;
+        }
+
+        public IPromptConfig HideAfterFinish(bool value)
+        {
+            _options.HideAfterFinish = value;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("HideAfterFinish", value.ToString(), LogKind.Property);
+            }
+            return this;
+        }
+
+        public IPromptConfig AcceptInputTab(bool value)
+        {
+            if (_options.SuggestionHandler != null)
+            {
+                _options.AcceptInputTab = false;
+            }
+            else
+            {
+                _options.AcceptInputTab = value;
+            }
+            AddLog("AcceptInputTab", value.ToString(), LogKind.Property);
+            return this;
+        }
+
+        public IPromptConfig SetContext(object value)
+        {
+            _options.Context = value;
+            return this;
+        }
+
+        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
+        {
+            Condition = condition;
+            return this;
+        }
+
+        public IFormPlusBase ToPipe(string id, string title, object state = null)
+        {
+            PipeId = id ?? Guid.NewGuid().ToString();
+            PipeTitle = title ?? string.Empty;
+            PipeContext = state;
+            return this;
+        }
+
+        public IFormPlusBase AddExtraAction(StageControl stage, Action<object, string> useraction)
+        {
+            if (useraction is null)
+            {
+                throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, "null"), nameof(useraction));
+            }
+            if (_options.UserActions.ContainsKey(stage))
+            {
+                _options.UserActions.Remove(stage);
+            }
+            _options.UserActions.Add(stage, useraction);
+            return this;
+        }
+
+        public bool FindAction(StageControl value, out Action<object, string> action)
+        {
+            action = null;
+            if (_options.UserActions.ContainsKey(value))
+            {
+                action = _options.UserActions[value];
+            }
+            return action != null;
+        }
 
         private void SummaryPipeLineToPrompt(Paginator<ResultPromptPlus<ResultPipe>> paginator, CancellationToken stoptoken)
         {
             do
             {
-                if (!_screenrender.KeyAvailable && !stoptoken.IsCancellationRequested)
+                if (!ScreenRender.KeyAvailable && !stoptoken.IsCancellationRequested)
                 {
                     stoptoken.WaitHandle.WaitOne(IdleReadKey);
                 }
                 var keyInfo = new ConsoleKeyInfo();
-                if (_screenrender.KeyAvailable && !stoptoken.IsCancellationRequested)
+                if (ScreenRender.KeyAvailable && !stoptoken.IsCancellationRequested)
                 {
                     keyInfo = GetKeyAvailable(stoptoken);
                 }

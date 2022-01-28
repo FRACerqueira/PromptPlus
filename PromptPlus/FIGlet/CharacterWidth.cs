@@ -3,7 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-namespace PromptPlusControls.FIGlet
+namespace PPlus.FIGlet
 {
 
     public enum CharacterWidth

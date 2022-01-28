@@ -6,25 +6,28 @@
 using System;
 using System.Threading;
 
-using PromptPlusControls.Internal;
-using PromptPlusControls.ValueObjects;
+using PPlus.Internal;
+using PPlus.Objects;
 
-namespace PromptPlusControls.Controls
+namespace PPlus.Controls
 {
     internal class ConfirmControl : ControlBase<bool>, IControlConfirm
     {
+        private const string Namecontrol = "PromptPlus.Confirm";
+
         private bool _initform;
         private readonly ConfirmOptions _options;
-        private readonly InputBuffer _inputBuffer = new();
+        private readonly ReadLineBuffer _inputBuffer = new();
 
-        public ConfirmControl(ConfirmOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public ConfirmControl(ConfirmOptions options) : base(Namecontrol, options, true)
         {
             _options = options;
         }
 
-        public override void InitControl()
+        public override string InitControl()
         {
             _initform = true;
+            return null;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out bool result)
@@ -38,83 +41,54 @@ namespace PromptPlusControls.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
-
+                _inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _inputBuffer.ToString(), out var acceptedkey);
+                if (acceptedkey)
+                {
+                    continue;
+                }
                 if (CheckDefaultKey(keyInfo))
                 {
                     continue;
                 }
-
-                switch (keyInfo.Key)
+                else if (keyInfo.IsPressEnterKey())
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0:
+                    var input = _inputBuffer.ToString();
+
+                    if (string.IsNullOrEmpty(input))
                     {
+                        if (_options.DefaultValue != null)
                         {
-                            var input = _inputBuffer.ToString();
+                            result = _options.DefaultValue.Value;
 
-                            if (string.IsNullOrEmpty(input))
-                            {
-                                if (_options.DefaultValue != null)
-                                {
-                                    result = _options.DefaultValue.Value;
-
-                                    return true;
-                                }
-
-                                SetError(Messages.Required);
-                            }
-                            else
-                            {
-                                var lowerInput = input.ToLower();
-
-                                if (lowerInput == Messages.YesKey.ToString().ToLower()
-                                    || lowerInput == Messages.LongYesKey.ToLower())
-                                {
-                                    result = true;
-                                    return true;
-                                }
-
-                                if (lowerInput == Messages.NoKey.ToString().ToLower()
-                                    || lowerInput == Messages.LongNoKey.ToLower())
-                                {
-                                    result = false;
-                                    return true;
-                                }
-
-                                SetError(Messages.Invalid);
-                            }
-
-                            break;
+                            return true;
                         }
+                        SetError(Messages.Required);
                     }
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _inputBuffer.Backward();
-                        break;
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && _inputBuffer.IsEnd:
-                        _inputBuffer.Forward();
-                        break;
-                    case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_inputBuffer.IsStart:
-                        _inputBuffer.Backspace();
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_inputBuffer.IsEnd:
-                        _inputBuffer.Delete();
-                        break;
-                    default:
+                    else
                     {
-                        if (!cancellationToken.IsCancellationRequested)
+                        var lowerInput = input.ToLower();
+
+                        if (lowerInput == Messages.YesKey.ToString().ToLower()
+                            || lowerInput == Messages.LongYesKey.ToLower())
                         {
-                            if (!char.IsControl(keyInfo.KeyChar))
-                            {
-                                _inputBuffer.Insert(keyInfo.KeyChar);
-                            }
-                            else
-                            {
-                                isvalidhit = null;
-                            }
+                            result = true;
+                            return true;
                         }
-                        break;
+
+                        if (lowerInput == Messages.NoKey.ToString().ToLower()
+                            || lowerInput == Messages.LongNoKey.ToLower())
+                        {
+                            result = false;
+                            return true;
+                        }
+
+                        SetError(Messages.Invalid);
                     }
                 }
-
+                else
+                {
+                    isvalidhit = null;
+                }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
 
             result = default;
@@ -122,7 +96,7 @@ namespace PromptPlusControls.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
             if (_options.DefaultValue == null)
@@ -144,26 +118,35 @@ namespace PromptPlusControls.Controls
                 {
                     if (_options.DefaultValue.Value)
                     {
-                        _inputBuffer.Insert(Messages.YesKey);
+                        _inputBuffer.LoadPrintable(Messages.YesKey.ToString());
                     }
                     else
                     {
-                        _inputBuffer.Insert(Messages.NoKey);
+                        _inputBuffer.LoadPrintable(Messages.NoKey.ToString());
                     }
                 }
             }
 
             screenBuffer.PushCursor(_inputBuffer);
 
+            if (HasDescription)
+            {
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
+            }
+
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLineHint(Messages.EnterFininsh);
                 }
             }
             _initform = false;
+            return _inputBuffer.ToString();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, bool result)
@@ -175,9 +158,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlConfirm
 
-        public IControlConfirm Prompt(string value)
+        public IControlConfirm Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 
@@ -187,54 +174,9 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IPromptControls<bool> EnabledAbortKey(bool value)
+        public IControlConfirm Config(Action<IPromptConfig> context)
         {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptControls<bool> EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptControls<bool> EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptControls<bool> HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<bool> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
+            context.Invoke(this);
             return this;
         }
 

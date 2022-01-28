@@ -5,12 +5,13 @@
 
 using System;
 
-namespace PromptPlusControls
+namespace PPlus
 {
     public static partial class PromptPlus
     {
         public static class ColorSchema
         {
+            public static ConsoleColor Description { get; set; } = ConsoleColor.Cyan;
             public static ConsoleColor Pagination { get; set; } = ConsoleColor.DarkGray;
             public static ConsoleColor Hint { get; set; } = ConsoleColor.DarkGray;
             public static ConsoleColor Answer { get; set; } = ConsoleColor.Cyan;
@@ -22,7 +23,6 @@ namespace PromptPlusControls
             public static ConsoleColor PromptSymbol { get; set; } = ConsoleColor.Green;
             public static ConsoleColor SliderBackcolor { get; set; } = ConsoleColor.DarkGray;
             public static ConsoleColor SliderForecolor { get; set; } = ConsoleColor.Cyan;
-
         }
     }
 }

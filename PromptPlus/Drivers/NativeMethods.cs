@@ -6,7 +6,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace PromptPlusControls.Drivers
+namespace PPlus.Drivers
 {
     internal static class NativeMethods
     {

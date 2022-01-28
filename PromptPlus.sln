@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 	ProjectSection(SolutionItems) = preProject
 		docs\_config.yml = docs\_config.yml
 		docs\anykey.md = docs\anykey.md
+		docs\attributes.md = docs\attributes.md
 		docs\autocomplete.md = docs\autocomplete.md
 		docs\banner.md = docs\banner.md
 		docs\basemethods.md = docs\basemethods.md
@@ -29,8 +30,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{640ED284-A
 		docs\multiselect.md = docs\multiselect.md
 		docs\pipeline.md = docs\pipeline.md
 		docs\pipemethods.md = docs\pipemethods.md
+		docs\ppluscmddotnet.md = docs\ppluscmddotnet.md
 		docs\progressbar.md = docs\progressbar.md
 		docs\progressbarinfo.md = docs\progressbarinfo.md
+		docs\readline.md = docs\readline.md
 		docs\resultbrowser.md = docs\resultbrowser.md
 		docs\resultmasked.md = docs\resultmasked.md
 		docs\resultpipe.md = docs\resultpipe.md
@@ -46,11 +49,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{0EBFCDFA-D7BC-448D-B396-7179B9B32577}"
 	ProjectSection(SolutionItems) = preProject
 		docs\images\Anykey.gif = docs\images\Anykey.gif
+		docs\images\ArgTermsExample.png = docs\images\ArgTermsExample.png
 		docs\images\Browser.gif = docs\images\Browser.gif
 		docs\images\Colors.gif = docs\images\Colors.gif
 		docs\images\Commands.gif = docs\images\Commands.gif
 		docs\images\Confirm.gif = docs\images\Confirm.gif
 		docs\images\icon.png = docs\images\icon.png
+		docs\images\iconCmdNet.png = docs\images\iconCmdNet.png
 		docs\images\Input.gif = docs\images\Input.gif
 		docs\images\KeyPress.gif = docs\images\KeyPress.gif
 		docs\images\List.gif = docs\images\List.gif
@@ -65,6 +70,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{0EBFCD
 		docs\images\NumberUpDown.gif = docs\images\NumberUpDown.gif
 		docs\images\Password.gif = docs\images\Password.gif
 		docs\images\PipeLine.gif = docs\images\PipeLine.gif
+		docs\images\PplusCmddotnet.gif = docs\images\PplusCmddotnet.gif
 		docs\images\ProgressBar.gif = docs\images\ProgressBar.gif
 		docs\images\ScreenStatusBar.gif = docs\images\ScreenStatusBar.gif
 		docs\images\Select.gif = docs\images\Select.gif
@@ -74,6 +80,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{0EBFCD
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlusExample", "PromptPlusExample\PromptPlusExample.csproj", "{E6909664-814A-4663-845D-19D236CBC749}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlus.CommandDotNet", "PromptPlus.CommandDotNet\PromptPlus.CommandDotNet.csproj", "{BAA6FC9A-9334-41D1-9EBC-3964786E1E67}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandDotNet.Example", "CommandDotNet.Example\CommandDotNet.Example.csproj", "{9BDEC6D9-4C73-4C35-9078-76DB88B674F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlus.Tests", "PromptPlus.Tests\PromptPlus.Tests.csproj", "{3746E78A-90E9-4074-8D00-0ADB93D7CC9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,6 +101,18 @@ Global
 		{E6909664-814A-4663-845D-19D236CBC749}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6909664-814A-4663-845D-19D236CBC749}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6909664-814A-4663-845D-19D236CBC749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA6FC9A-9334-41D1-9EBC-3964786E1E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA6FC9A-9334-41D1-9EBC-3964786E1E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA6FC9A-9334-41D1-9EBC-3964786E1E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA6FC9A-9334-41D1-9EBC-3964786E1E67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BDEC6D9-4C73-4C35-9078-76DB88B674F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BDEC6D9-4C73-4C35-9078-76DB88B674F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BDEC6D9-4C73-4C35-9078-76DB88B674F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BDEC6D9-4C73-4C35-9078-76DB88B674F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3746E78A-90E9-4074-8D00-0ADB93D7CC9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3746E78A-90E9-4074-8D00-0ADB93D7CC9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3746E78A-90E9-4074-8D00-0ADB93D7CC9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3746E78A-90E9-4074-8D00-0ADB93D7CC9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,9 +120,11 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B4F50CA1-7DBB-411D-8D09-0E26B83337FE} = {1D88B60E-F8D4-494F-BF56-940EA9DDAB0D}
 		{0EBFCDFA-D7BC-448D-B396-7179B9B32577} = {640ED284-A90B-43B8-ABA5-66F769752DDD}
+		{BAA6FC9A-9334-41D1-9EBC-3964786E1E67} = {1D88B60E-F8D4-494F-BF56-940EA9DDAB0D}
+		{3746E78A-90E9-4074-8D00-0ADB93D7CC9D} = {1D88B60E-F8D4-494F-BF56-940EA9DDAB0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 		RESX_ShowErrorsInErrorList = False
+		SolutionGuid = {76E7FD3B-AB85-4725-8FCB-6113272E0BCD}
 	EndGlobalSection
 EndGlobal

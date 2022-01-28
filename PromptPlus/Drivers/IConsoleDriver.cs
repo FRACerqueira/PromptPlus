@@ -6,32 +6,21 @@
 using System;
 using System.Threading;
 
-using PromptPlusControls.ValueObjects;
+using PPlus.Objects;
 
-namespace PromptPlusControls.Drivers
+namespace PPlus.Drivers
 {
-    internal interface IConsoleDriver
+    public interface IConsoleDriver : ISystemConsole
     {
-        void Clear();
+        bool NoColor { get; }
+        bool NoInterative { get; }
         void ClearLine(int top);
         void ClearRestOfLine(ConsoleColor? color);
-        ConsoleKeyInfo ReadKey();
-        ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken);
-        void Beep();
+        ConsoleKeyInfo WaitKeypress(bool intercept, CancellationToken cancellationToken);
         void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null);
         void Write(params ColorToken[] tokens);
         void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null);
         void WriteLine(params ColorToken[] tokens);
-        void SetCursorPosition(int left, int top);
-        bool KeyAvailable { get; }
-        bool CursorVisible { get; set; }
-        int CursorLeft { get; }
-        int CursorTop { get; }
-        int BufferWidth { get; }
-        int BufferHeight { get; }
         bool IsRunningTerminal { get; }
-        ConsoleColor ForegroundColor { get; set; }
-        ConsoleColor BackgroundColor { get; set; }
-
     }
 }

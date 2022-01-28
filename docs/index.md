@@ -5,9 +5,39 @@
 
 Interactive command-line based application framework for **C# with powerful controls**.
 
-[**Snapshot of All Controls**](#snapshot)
+**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
 
 ![](./images/PipeLine.gif)
+
+All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
+
+![](./images/Readline.gif)
+![](./images/InputHistory.gif)
+![](./images/InputSugestion.gif)
+
+**PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/6.0.0)**: 
+<p align="left">
+    <img valign="middle" width="80" height="80" src="./images/iconCmdNet.png">
+    <a href="https://fracerqueira.github.io/PromptPlus/ppluscmddotnet.html"><b>PromptPlus.CommandDotNet!!</b></a>
+</p>
+
+**Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet**:
+
+- Interative session with readline prompt, Sugestions and History.
+    - Now you can help to discover arguments (Sugestions) and history actions in interactive sessions.
+
+![](./images/PplusCmddotnetRepl.gif)
+
+- Wizard to find all the commands/options and arguments with prompt and run.
+    - Now you can discover and learn the existing commands, options and arguments.
+
+![](./images/PplusCmddotnetWizard.gif)
+
+**[CommandDotNet is third party applications. Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
+
+An open-source guide to help you write better command-line programs, taking traditional UNIX principles and updating them for the modern day.
+
+**[Command Line Interface Guidelines](https://clig.dev/)**
 
 ## Help
 - [Install](#install)
@@ -20,6 +50,7 @@ Interactive command-line based application framework for **C# with powerful cont
     - [Hotkeys](#hotkeys)
 - [Load and Save Settings](#load-and-save-settings)
 - [**Api Controls**](#apis)
+- [**PromptPlus.CommandDotNet**](ppluscmddotnet.md)
 - [**Extensions**](#extensions)
 - [Snapshot of All Controls](#snapshot)
 - [Supported Platforms](#supported-platforms)
@@ -29,11 +60,7 @@ Interactive command-line based application framework for **C# with powerful cont
 ## Install
 [**Top**](#help)
 
-PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks, with compatibility for:
-
-- .NET Core 3.1
-- .NET Core 5.0
-- .NET Core 6.X
+PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks.
 
 ```
 Install-Package PromptPlus [-pre]
@@ -51,6 +78,7 @@ dotnet add package PromptPlus [--prerelease]
 All controls have the same lines organization:
 - Message and data entry (ever)
 - Filter (depends on the control)
+- Description (configurable/optional)
 - Tooltips (configurable)
 - Collection subset items (depends on the control, page size and size of console/terminal)
 - Page information (depends on size colletion, page size and size of console/terminal)
@@ -65,7 +93,8 @@ When a control has a collection it can be paged with a limit of items per page. 
 
 ## Global Settings
 [**Top**](#help)
-
+- DisabledAllTooltips 
+    - Override options to EnabledStandardTooltip and EnabledPromptTooltip . Default = false
 - EnabledBeep 
     - Enabled/disabled beep. Default = false
 - EnabledStandardTooltip 
@@ -103,7 +132,7 @@ PromptPlus.DefaultCulture = new CultureInfo("en-US");
 
 To use a non-embedded language/culture:
 
-- Use the **PromptPlusResources.resx** file that already has the package in the resources folder
+- Use the **PromptPlusResources.resx** file in folder PromptPlus/Resources
 - Translate messages with same format to your language/culture
 - Convert .resx files to binary .resources files ([**reference link here**](https://docs.microsoft.com/en-us/dotnet/core/extensions/work-with-resx-files-programmatically))
 - Publish the compiled file (**PromptPlus.{Language}.resources**) in the same folder as the binaries.
@@ -111,6 +140,7 @@ To use a non-embedded language/culture:
 ### Colors
 [**Top**](#help)
 
+PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-color.org/). when there is the environment variable "no_color" the colors are disabled.
 PromptPlus has a configurable color(16 color) schema.
 
 - ForeColorSchema 
@@ -145,11 +175,11 @@ PromptPlus has a configurable color(16 color) schema.
 PromptPlus.ColorSchema.Answer = ConsoleColor.Cyan;
 ```
 
-Prompt Plus also has commands for parts of text and underlining.
+PromptPlus also has commands **for coloring parts of text and underlining**.
 
 ```csharp
 //sample
-PromptPlus.WriteLine("[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].");
+PromptPlus.WriteLine("This [cyan]is [red]a [white:blue]simples[/] line with [yellow!u]color[/]. End [/]line.");
 ````
 
 ```csharp
@@ -218,48 +248,31 @@ PromptPlus.Symbols.Done = new Symbol("√", "V ");
 
 Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
 
-**internal and reserved hotkeys:**
-
-- Enter (all Modifiers)
-- Delete (all Modifiers)
-- LeftArrow (all Modifiers)
-- RightArrow (all Modifiers)
-- UpArrow (all Modifiers)
-- DownArrow (all Modifiers)
-- PageUp (all Modifiers)
-- PageDown (all Modifiers)
-- Backspace (all Modifiers)
-
-**_Note: If you use one of these keys, an ArgumentException will be generated._**
-
-
 **Hotkeys Configurables:**
 
 - AbortAllPipesKeyPress
-    - Key for abort all pipes. Default = Alt+X
-- AbortKeyPress
-    - Key for abort current control. Default = Escape
+    - Key for abort all pipes. Default = F7
 - TooltipKeyPress
     - Key for Show/Hide tooltips. Default = F1
 - ResumePipesKeyPress
     - Key for Show/Hide summary pipes. Default = F2
 - UnSelectFilter
-    - Key for Show input filter. Default = Alt+F
+    - Key for Show input filter. Default = F4
 - SwitchViewPassword
-    - Key for Show/hide input password. Default = Alt+V
+    - Key for Show/hide input password. Default = F5
 - SelectAll
-    - Key for toggle all items to selected. Default = Alt+A
+    - Key for toggle all items to selected. Default = F5
 - InvertSelect
-    - Key for invet selection to all items. Default = Alt+I
+    - Key for invet selection to all items. Default = F6
 - RemoveAll
-    - Key for remove all items. Default = Alt+R
- 
- ```csharp
-//sample
-PromptPlus.AbortAllPipesKeyPress = new HotKey(key: "X", alt: true, ctrl: false, shift: false);
-```
+    - Key for remove all items. Default = F4
+- MarkSelect
+    - Key for mark item in multi-select. Default = F8
 
-**_Note: the key parameter is case-insentive;_**
+```csharp
+//sample
+PromptPlus.AbortAllPipesKeyPress = new HotKey(UserHotKey.F7, alt: true, ctrl: false, shift: false);
+```
 
 ## Load and Save Settings
 [**Top**](#help)
@@ -286,8 +299,10 @@ Controls/Commands | Details
 [Any-key](anykey.md) |  Simple any key press
 [Key-Press](keypress.md) | Simple specific key
 [Confirm](confirm.md) | Simple confirm with  with tool tips and language detection 
-[AutoComplete](autocomplete.md) | Input text with sugestions, validator, and tooltips 
+[AutoComplete](autocomplete.md) | Input text with sugestions, validator, and tooltips
+[Readline](readline.md) | Input text with GNU Readline Emacs keyboard shortcuts, sugestions and historic
 [Input](input.md) | Input text with input validator with tooltips
+[Extensions points](basemethods.md#sample-use-of-extraaction) | Input text with history/suguestions using extensions points
 [Password](input.md) | Input password with input validator and show/hide(optional) input value
 [MaskEdit-Generic](maskeditgeneric.md) | Input with masked input , tooltips and input validator
 [MaskEdit-Date](maskeditdate.md) | Date input with language parameter, tooltips and input validator
@@ -338,11 +353,18 @@ Console.WriteLine($"Your input: {name.Value}!");
 ## Snapshot
 
 ### Input
-[**Top**](#help) | [AutoComplete](autocomplete.md) | [Input](input.md) | [Password](input.md) 
+[**Top**](#help) | [AutoComplete](autocomplete.md) | [Input](input.md) | [Password](input.md)
 
 ![](./images/AutoComplete.gif)
 ![](./images/Input.gif)
 ![](./images/Password.gif)
+
+### Readline 
+[**Top**](#help) | [ReadLine](readline.md) | [Input & History /sugestion](basemethods.md#sample-use-of-extraaction)
+
+![](./images/Readline.gif)
+![](./images/InputHistory.gif)
+![](./images/InputSugestion.gif)
 
 ### MaskEdit
 [**Top**](#help) | [MaskEdit Generic](maskeditgeneric.md) | [MaskEdit Date/Time](maskeditdate.md) | [MaskEdit Number/Currency](maskeditnumber.md) 
@@ -387,9 +409,10 @@ Console.WriteLine($"Your input: {name.Value}!");
 ![](./images/NumberUpDown.gif)
 
 ### List
-[**Top**](#help) | [List](list.md) | [ListMasked](listmasked.md)
+[**Top**](#help) | [List / List & Sugestion](list.md) | [ListMasked](listmasked.md)
 
 ![](./images/List.gif)
+![](./images/ListSugestion.gif)
 ![](./images/MaskedList.gif)
 
 ### Browser

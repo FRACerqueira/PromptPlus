@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,11 +13,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-using PromptPlusControls;
-using PromptPlusControls.FIGlet;
-using PromptPlusControls.ValueObjects;
+using PPlus;
+using PPlus.FIGlet;
+using PPlus.Objects;
 
 using PromptPlusExample.Models;
+
+using static System.Environment;
 
 namespace PromptPlusExample
 {
@@ -33,12 +36,12 @@ namespace PromptPlusExample
                         services.AddLogging(
                           builder =>
                           {
+                              builder.SetMinimumLevel(LogLevel.Information);
                               builder.AddFilter("Microsoft", LogLevel.Warning)
                                      .AddFilter("System", LogLevel.Warning);
                           });
                         services.AddHostedService<MainProgram>();
                     }).Build();
-
             await host.RunAsync();
         }
     }
@@ -84,17 +87,15 @@ namespace PromptPlusExample
 
         public void ShowMenu()
         {
-            Console.OutputEncoding = Encoding.UTF8;
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US"); ;
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US"); 
 
-            PromptPlus.DefaultCulture = new CultureInfo("en-US");
             PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
-            PromptPlus.DefaultCulture = new CultureInfo("en-US");
             PromptPlus.Clear();
 
             var quit = false;
             while (!_stopApp.IsCancellationRequested && !quit)
             {
-
                 var type = PromptPlus.Select<ExampleType>("Select Example")
                     .Run(_stopApp);
 
@@ -102,9 +103,11 @@ namespace PromptPlusExample
                 {
                     continue;
                 }
-
                 switch (type.Value)
                 {
+                    case ExampleType.Readline:
+                        RunReadlineSample();
+                        break;
                     case ExampleType.AutoComplete:
                         RunAutoCompleteSample();
                         break;
@@ -131,6 +134,12 @@ namespace PromptPlusExample
                         break;
                     case ExampleType.Input:
                         RunInputSample();
+                        break;
+                    case ExampleType.InputWithHistoric:
+                        RunInputWithHistoricSample();
+                        break;
+                    case ExampleType.InputWithsuggestions:
+                        RunInputWithsuggestionsSample();
                         break;
                     case ExampleType.Confirm:
                         RunConfirmSample();
@@ -177,6 +186,9 @@ namespace PromptPlusExample
                     case ExampleType.List:
                         RunListSample();
                         break;
+                    case ExampleType.ListWithsuggestions:
+                        ListWithsuggestionsSample();
+                        break;
                     case ExampleType.ListMasked:
                         RunListMaskedSample();
                         break;
@@ -218,7 +230,6 @@ namespace PromptPlusExample
                 }
                 if (!_stopApp.IsCancellationRequested && !quit)
                 {
-                    //Console.ReadKey(true);
                     if (type.Value != ExampleType.AnyKey)
                     {
                         PromptPlus.KeyPress()
@@ -229,10 +240,82 @@ namespace PromptPlusExample
 
             if (!quit)
             {
-                Environment.ExitCode = -1;
+                ExitCode = -1;
             }
             _appLifetime.StopApplication();
         }
+
+        private void RunReadlineSample()
+        {
+            var enterHist = PromptPlus.SliderSwitch("Finish When History Enter")
+                .Default(true)
+                .Run(_stopApp);
+            if (enterHist.IsAborted)
+            {
+                return;
+            }
+
+            var enabledhis = PromptPlus.SliderSwitch("Enabled History")
+                .Default(true)
+                .Run(_stopApp);
+            if (enabledhis.IsAborted)
+            {
+                return;
+            }
+            var timeout = 0;
+            if (enabledhis.Value)
+            {
+                var timeouthis = PromptPlus.Select<int>("Timeout(seconds) History")
+                        .AddItem(5)
+                        .AddItem(10)
+                        .AddItem(600)
+                        .Run(_stopApp);
+                if (enabledhis.IsAborted)
+                {
+                    return;
+                }
+                timeout = timeouthis.Value;
+            }
+
+            var ctrlreadline = PromptPlus.Readline("Readline>", "Sample Readline control")
+                .AddValidator(PromptPlusValidators.Required())
+                .PageSize(5)
+                .EnabledHistory(enabledhis.Value)
+                .FileNameHistory("RunReadlineSample")
+                .TimeoutHistory(new TimeSpan(0, 0, timeout))
+                .FinisWhenHistoryEnter(enterHist.Value)
+                .SuggestionHandler(mysugestion)
+                .Run(_stopApp);
+
+            if (ctrlreadline.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"Result : [cyan]{ctrlreadline.Value}[/]!");
+        }
+        private SugestionOutput mysugestion(SugestionInput arg)
+        {
+            var aux = new SugestionOutput();
+            var word = arg.CurrentWord();
+            if (word.ToLowerInvariant() == "prompt")
+            {
+                aux.Add("choose");
+                aux.Add("secure");
+                aux.Add("help", true);
+                return aux;
+            }
+            var random = new Random();
+            for (var i = 0; i < 3; i++)
+            {
+                var c1 = (char)random.Next(65, 90);
+                var c2 = (char)random.Next(97, 122);
+                var c3 = (char)random.Next(97, 122);
+                aux.Add($"Opc {c1}{c2}{c3}");
+            }
+            aux.Add("opc Clearline -test a b c", true);
+            return aux;
+        }
+
 
         private void RunAutoCompleteSample()
         {
@@ -242,14 +325,14 @@ namespace PromptPlusExample
             {
                 return;
             }
-            var ctrlinput = PromptPlus.AutoComplete("Input value")
-                .AddValidator(PromptValidators.Required())
-                .AddValidator(PromptValidators.MinLength(3))
+            var ctrlinput = PromptPlus.AutoComplete("Input value", "Sample autocomplete control")
+                .AddValidator(PromptPlusValidators.Required())
+                .AddValidator(PromptPlusValidators.MinLength(3))
                 .CompletionInterval(1000)
                 .CompletionMaxCount(10)
                 .ValidateOnDemand()
                 .PageSize(5)
-                .CompletionAsyncService(MYServiceCompleteAsync);
+                .CompletionWithDescriptionAsyncService(MYServiceCompleteAsync);
             if (macth.Value)
             {
                 ctrlinput.AcceptWithoutMatch();
@@ -259,24 +342,24 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"Result : [cyan]{input.Value}[/cyan]!");
+            PromptPlus.WriteLine($"Result : [cyan]{input.Value}[/]!");
         }
 
-        private async Task<string[]> MYServiceCompleteAsync(string prefixText, int count, CancellationToken cancellationToken)
+        private async Task<ValueDescription<string>[]> MYServiceCompleteAsync(string prefixText, int count, CancellationToken cancellationToken)
         {
             if (count == 0)
             {
                 count = 10;
             }
             var random = new Random();
-            var items = new List<string>(count);
+            var items = new List<ValueDescription<string>>();
             for (var i = 0; i < count; i++)
             {
                 var c1 = (char)random.Next(65, 90);
                 var c2 = (char)random.Next(97, 122);
                 var c3 = (char)random.Next(97, 122);
 
-                items.Add(prefixText + c1 + c2 + c3);
+                items.Add(new ValueDescription<string>(prefixText + c1 + c2 + c3, $"Description {i}"));
             }
             return await Task.FromResult(items.ToArray());
         }
@@ -375,14 +458,14 @@ namespace PromptPlusExample
         {
             PromptPlus.WriteLine();
             PromptPlus.WriteLine("PromptPlus.WriteLine(\"Output1:\",ConsoleColor.White, ConsoleColor.Blue, true)");
-            PromptPlus.WriteLineSkipColors("PromptPlus.WriteLine(\"[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].\")");
+            PromptPlus.WriteLineSkipColors("PromptPlus.WriteLine(\"This [cyan]is [red]a [white:blue]simples[/] line with [yellow!u]color[/]. End [/]line.\")");
             PromptPlus.WriteLine("PromptPlus.WriteLine(\"Output2:\".White().OnBlue().Underline())");
-            PromptPlus.WriteLineSkipColors("PromptPlus.WriteLine(\"[cyan]This[/cyan] is another [white:blue]simples[/white:blue] line using [red!u]Mask[/red!u].\".Mask(ConsoleColor.DarkRed))");
+            PromptPlus.WriteLineSkipColors("PromptPlus.WriteLine(\"[cyan]This[/] is another [white:blue]simples[/] line using [red!u]Mask[/].\".Mask(ConsoleColor.yellow))");
             PromptPlus.WriteLine();
             PromptPlus.WriteLine("Output1:", ConsoleColor.White, ConsoleColor.Blue, true);
-            PromptPlus.WriteLine("[cyan]This[/cyan] is a [white:blue]simples[/white:blue] line with [red!u]color[/red!u].");
+            PromptPlus.WriteLine("This [cyan]is [red]a [white:blue]simples[/] line with [yellow!u]color[/]. End [/]line.");
             PromptPlus.WriteLine("Output2:".White().OnBlue().Underline());
-            PromptPlus.WriteLine("[cyan]This[/cyan] is another [white:blue]simples[/white:blue] line using [red!u]Mask[/red!u].".Mask(ConsoleColor.DarkRed));
+            PromptPlus.WriteLine("[cyan]This[/] is another [white:blue]simples[/] line using [red!u]Mask[/].".Mask(ConsoleColor.Yellow));
             PromptPlus.WriteLine();
         }
 
@@ -430,14 +513,12 @@ namespace PromptPlusExample
 
         private void RunSaveLoadSample()
         {
-            PromptPlus.AbortAllPipesKeyPress = new HotKey(ConsoleKey.X, false, true, false);
-            PromptPlus.AbortKeyPress = new HotKey(ConsoleKey.Escape, false, false, false);
-            PromptPlus.TooltipKeyPress = new HotKey(ConsoleKey.F1, false, false, false);
-            PromptPlus.ResumePipesKeyPress = new HotKey(ConsoleKey.F2, false, false, false);
+            PromptPlus.TooltipKeyPress = new HotKey(UserHotKey.F1, false, false, false);
+            PromptPlus.ResumePipesKeyPress = new HotKey(UserHotKey.F2, false, false, false);
 
             var filecfg = PromptPlus.SaveConfigToFile();
             PromptPlus.LoadConfigFromFile();
-            PromptPlus.WriteLine($"PromptPlus file [cyan]saved and readed[/cyan]. Location: {filecfg}");
+            PromptPlus.WriteLine($"PromptPlus file [cyan]saved and readed[/]. Location: {filecfg}");
         }
 
         private void RunChooseLanguageSample()
@@ -450,7 +531,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"You selected [cyan]{envalue.Value}[/cyan]");
+            PromptPlus.WriteLine($"You selected [cyan]{envalue.Value}[/]");
             switch (envalue.Value)
             {
                 case LanguageOptions.English:
@@ -520,7 +601,7 @@ namespace PromptPlusExample
             }
             else
             {
-                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/]!");
             }
 
         }
@@ -564,6 +645,7 @@ namespace PromptPlusExample
                 .FormatYear(opcyear.Value[0] == 'F' ? FormatYear.Y4 : FormatYear.Y2)
                 .FormatTime(opctime.Value[0] == '1' ? FormatTime.HMS : opctime.Value[0] == '2' ? FormatTime.OnlyHM : FormatTime.OnlyH)
                 .FillZeros(masfill.Value)
+                .Default(new DateTime(2021,12,31,21,34,56))
                 .Run(_stopApp);
 
             if (string.IsNullOrEmpty(mask.Value.Input))
@@ -572,7 +654,7 @@ namespace PromptPlusExample
             }
             else
             {
-                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/]!");
             }
         }
 
@@ -615,7 +697,7 @@ namespace PromptPlusExample
             }
             else
             {
-                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/]!");
             }
         }
 
@@ -670,7 +752,7 @@ namespace PromptPlusExample
             }
             else
             {
-                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/]!");
             }
         }
 
@@ -678,6 +760,7 @@ namespace PromptPlusExample
         {
             var mask = PromptPlus.MaskEdit(MaskedType.Generic, "Inventory Number")
                 .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
+                .DescriptionSelector(MyDescMaskedirGeneric)
                 .Run(_stopApp);
 
             if (mask.IsAborted)
@@ -690,8 +773,25 @@ namespace PromptPlusExample
             }
             else
             {
-                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/cyan]!");
+                PromptPlus.WriteLine($"your input was [cyan]{mask.Value.ObjectValue}[/]!");
             }
+        }
+
+        private string MyDescMaskedirGeneric(ResultMasked arg)
+        {
+            if (string.IsNullOrEmpty(arg.Input))
+                return null;
+            if (arg.Input.Length < 3)
+            {
+                return "Code of Region";
+            }
+            if (arg.Input.Length < 6)
+                return "Code of Coutry";
+            if (arg.Input.Length == 6)
+                return "Code of type";
+            if (arg.Input.Length == 7)
+                return "Code of type-level";
+            return "item Id";
         }
 
         private void RunAnyKeySample()
@@ -702,7 +802,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"Hello, key [cyan]pressed[/cyan]");
+            PromptPlus.WriteLine($"Hello, key [cyan]pressed[/]");
         }
 
         private void RunKeyPressSample()
@@ -714,7 +814,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"Hello, key [cyan]Ctrl-B pressed[/cyan]");
+            PromptPlus.WriteLine($"Hello, key [cyan]Ctrl-B pressed[/]");
         }
 
         private void RunImportValidatorsSample()
@@ -731,7 +831,7 @@ namespace PromptPlusExample
             {
                 return;
             }
-            PromptPlus.WriteLine($"Your input: [cyan]{name.Value}[/cyan]!");
+            PromptPlus.WriteLine($"Your input: [cyan]{name.Value}[/]!");
         }
 
         private class MylCass
@@ -747,14 +847,106 @@ namespace PromptPlusExample
         {
             var name = PromptPlus.Input("What's your name?")
                 .Default("Peter Parker")
-                .AddValidators(PromptValidators.Required())
-                .AddValidators(PromptValidators.MinLength(3))
+                .AddValidator(PromptPlusValidators.Required())
+                .AddValidator(PromptPlusValidators.MinLength(3))
                 .Run(_stopApp);
             if (name.IsAborted)
             {
                 return;
             }
-            PromptPlus.WriteLine($"Hello, [cyan]{name.Value}[/cyan]!");
+            PromptPlus.WriteLine($"Hello, [cyan]{name.Value}[/]!");
+        }
+
+        private void RunInputWithHistoricSample()
+        {
+            var name = PromptPlus.Input("What's your name?")
+                .Default("Peter Parker")
+                .AddValidator(PromptPlusValidators.Required())
+                .AddValidator(PromptPlusValidators.MinLength(3))
+                .SuggestionHandler(SugestionInputSample, true)
+                .Config((ctx) =>
+                {
+                    ctx.AddExtraAction(StageControl.OnStartControl, LoadSampleHistInputSugestion)
+                       .AddExtraAction(StageControl.OnFinishControl, SaveSampleHistSugestion);
+                })
+                .Run(_stopApp);
+            if (name.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"Hello, [cyan]{name.Value}[/]!");
+        }
+        private void RunInputWithsuggestionsSample()
+        {
+            var name = PromptPlus.Input("what is your favorite color?")
+                .SuggestionHandler(SugestionInputColorSample, true)
+                .Run(_stopApp);
+            if (name.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"[cyan]{name.Value}[/]!");
+        }
+
+
+        private IList<ItemHistory> _itemsInputSampleHistory;
+
+        private SugestionOutput SugestionInputColorSample(SugestionInput arg)
+        {
+            var result = new SugestionOutput();
+            result.Add("Red");
+            result.Add("Blue");
+            result.Add("Green");
+            return result;
+        }
+
+        private SugestionOutput SugestionInputSample(SugestionInput arg)
+        {
+            var result = new SugestionOutput();
+            if (_itemsInputSampleHistory.Count > 0)
+            {
+                foreach (var item in _itemsInputSampleHistory
+                    .OrderByDescending(x => x.TimeOutTicks))
+                {
+                    result.Add(item.History, true);
+                }
+            }
+            return result;
+        }
+
+        private void LoadSampleHistInputSugestion(object ctx, string value)
+        {
+            _itemsInputSampleHistory  = FileHistory
+                .LoadHistory($"{AppDomain.CurrentDomain.FriendlyName}_SampleHistInputSugestion");
+        }
+
+        private void SaveSampleHistSugestion(object ctx, string value)
+        {
+            if (value is null)
+            {
+                return;
+            }
+            var localnewhis = value.Trim();
+            var found = _itemsInputSampleHistory
+                .Where(x => x.History.ToLowerInvariant() == localnewhis.ToLowerInvariant())
+                .ToArray();
+            if (found.Length > 0)
+            {
+                foreach (var item in found)
+                {
+                    _itemsInputSampleHistory.Remove(item);
+                }
+            }
+            if (_itemsInputSampleHistory.Count >= byte.MaxValue)
+            {
+                _itemsInputSampleHistory.RemoveAt(_itemsInputSampleHistory.Count - 1);
+            }
+            _itemsInputSampleHistory.Insert(0,
+                ItemHistory.CreateItemHistory(localnewhis, new TimeSpan(1, 0, 0, 0)));
+
+            FileHistory.SaveHistory(
+                $"{AppDomain.CurrentDomain.FriendlyName}_SampleHistInputSugestion",
+                _itemsInputSampleHistory);
         }
 
         private void RunConfirmSample()
@@ -779,11 +971,11 @@ namespace PromptPlusExample
                 }
                 if (answer.Value)
                 {
-                    PromptPlus.WriteLine($"Sua resposta é [cyan]Yes[/cyan]");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]Yes[/]");
                 }
                 else
                 {
-                    PromptPlus.WriteLine($"Sua resposta é [cyan]No[/cyan]");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]No[/]");
                 }
             }
             else
@@ -799,11 +991,11 @@ namespace PromptPlusExample
                 }
                 if (answer.Value)
                 {
-                    PromptPlus.WriteLine($"Sua resposta é [cyan]Sim[/cyan]");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]Sim[/]");
                 }
                 else
                 {
-                    PromptPlus.WriteLine($"Sua resposta é [cyan]Não[/cyan]");
+                    PromptPlus.WriteLine($"Sua resposta é [cyan]Não[/]");
                 }
             }
         }
@@ -867,7 +1059,7 @@ namespace PromptPlusExample
 
         private void RunProgressbarSample()
         {
-            var progress = PromptPlus.Progressbar("Processing Tasks")
+            var progress = PromptPlus.Progressbar("Processing Tasks", "My Process")
                 .UpdateHandler(UpdateSampleHandlerAsync)
                 .Run(_stopApp);
 
@@ -945,14 +1137,49 @@ namespace PromptPlusExample
             }
             PromptPlus.WriteLine($"Your answer is: {slider1.Value}");
         }
+        public enum PasswordScore
+        {
+            Blank = 0,
+            VeryWeak = 1,
+            Weak = 2,
+            Medium = 3,
+            Strong = 4,
+            VeryStrong = 5
+        }
+
+
+        public static PasswordScore CheckStrength(string password)
+        {
+            var score = 1;
+            if (password.Length < 1)
+                return PasswordScore.Blank;
+            if (password.Length < 4)
+                return PasswordScore.VeryWeak;
+            if (password.Length >= 5)
+                score++;
+            if (password.Length >= 7)
+                score++;
+            if (Regex.IsMatch(password, @"[0-9]+(\.[0-9][0-9]?)?", RegexOptions.ECMAScript))   //number only //"^\d+$" if you need to match more than one digit.
+                score++;
+            if (Regex.IsMatch(password, @"^(?=.*[a-z])(?=.*[A-Z]).+$", RegexOptions.ECMAScript)) //both, lower and upper case
+                score++;
+            if (Regex.IsMatch(password, @"[!,@,#,$,%,^,&,*,?,_,~,-,£,(,)]", RegexOptions.ECMAScript)) //^[A-Z]+$
+                score++;
+            return (PasswordScore)score;
+        }
+
 
         private void RunPasswordSample()
         {
             var pwd = PromptPlus.Input("Type new password")
                 .IsPassword(true)
-                .AddValidators(PromptValidators.Required())
-                .AddValidators(PromptValidators.MinLength(8))
+                .AddValidator(PromptPlusValidators.Required())
+                .AddValidator(PromptPlusValidators.MinLength(5))
                 .ValidateOnDemand()
+                .DescriptionSelector(x =>
+                {
+                    return $"password has {CheckStrength(x)}";
+                })
                 .Run(_stopApp);
 
             if (pwd.IsAborted)
@@ -964,10 +1191,28 @@ namespace PromptPlusExample
 
         private void RunListSample()
         {
-            var lst = PromptPlus.List<string>("Please add item(s)")
+            var lst = PromptPlus.List<string>("Please add item(s)", "Sample List")
                 .PageSize(3)
                 .UpperCase(true)
-                .AddValidator(PromptValidators.MinLength(3))
+                .AddItem("aaa")
+                .AddItem("bbb")
+                .AddItem("ccc")
+                .InitialValue("teste")
+                .AddValidator(PromptPlusValidators.MinLength(3))
+
+                .DescriptionSelector(x =>
+                {
+                    var result = x;
+                    var random = new Random();
+                    for (var i = 0; i < 5; i++)
+                    {
+                        var c1 = (char)random.Next(65, 90);
+                        var c2 = (char)random.Next(97, 122);
+                        var c3 = (char)random.Next(97, 122);
+                        result = result + c1 + c2 + c3;
+                    }
+                    return result;
+                })
                 .ValidateOnDemand()
                 .Run(_stopApp);
 
@@ -978,12 +1223,74 @@ namespace PromptPlusExample
             PromptPlus.WriteLine($"You picked {string.Join(", ", lst.Value)}");
         }
 
+        private void ListWithsuggestionsSample()
+        {
+            var lst = PromptPlus.List<string>("Please add item(s)", "Sample List")
+                .PageSize(3)
+                .UpperCase(true)
+                .AddItem("aaa")
+                .AddItem("bbb")
+                .AddItem("ccc")
+                .InitialValue("teste")
+                .AddValidator(PromptPlusValidators.MinLength(3))
+                .AllowDuplicate(false)
+                .SuggestionHandler(SugestionListSample, true)
+
+                .DescriptionSelector(x =>
+                {
+                    var result = x;
+                    var random = new Random();
+                    for (var i = 0; i < 5; i++)
+                    {
+                        var c1 = (char)random.Next(65, 90);
+                        var c2 = (char)random.Next(97, 122);
+                        var c3 = (char)random.Next(97, 122);
+                        result = result + c1 + c2 + c3;
+                    }
+                    return result;
+                })
+                .ValidateOnDemand()
+                .Run(_stopApp);
+
+            if (lst.IsAborted)
+            {
+                return;
+            }
+            PromptPlus.WriteLine($"You picked {string.Join(", ", lst.Value)}");
+        }
+
+        private SugestionOutput SugestionListSample(SugestionInput arg)
+        {
+            var result = new SugestionOutput();
+            var random = new Random();
+            for (var i = 0; i < 10; i++)
+            {
+                var c1 = new string((char)random.Next(65, 90), 5);
+                if (arg.Context != null)
+                {
+                    var ctx = (IEnumerable<string>)arg.Context;
+                    if (!ctx.Contains(c1))
+                    {
+                        result.Add(c1);
+                    }
+                }
+                else
+                {
+                    result.Add(c1);
+                }
+            }
+            return result;
+        }
+
         private void RunListMaskedSample()
         {
             var lst = PromptPlus.ListMasked("Please add item(s)")
                 .MaskType(MaskedType.Generic, @"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
                 .UpperCase(true)
-                .AddValidator(PromptValidators.MinLength(6))
+                .AddItem("XYZ 123-EUA-A1-AAA")
+                .AddItem("XYZ 123-EUA-A2-AAA")
+                .InitialValue("XYZ 123", true)
+                .DescriptionSelector(MyDescMaskedirGeneric)
                 .ValidateOnDemand()
                 .Run(_stopApp);
 
@@ -1050,6 +1357,8 @@ namespace PromptPlusExample
                 .AddItem("Europe (Any)")
                 .DisableItem("Boston")
                 .AddDefault("New York")
+                .DescriptionSelector(x => x)
+                .ShowGroupOnDescription("No group")
                 .Range(1, 3)
                 .Run(_stopApp);
 
@@ -1121,6 +1430,16 @@ namespace PromptPlusExample
         {
             _ = PromptPlus.Pipeline()
                     .AddPipe(PromptPlus.Input("Your first name (empty = skip lastname)")
+                            .Config(ctx =>
+                            {
+                                ctx
+                                .AddExtraAction(StageControl.OnStartControl, (ctx, value) =>
+                                {
+                                })
+                                .AddExtraAction(StageControl.OnFinishControl, (ctx, value) =>
+                               {
+                               });
+                            })
                             .ToPipe(null, "First Name"))
                     .AddPipe(PromptPlus.Input("Your last name")
                         .PipeCondition((res, context) =>

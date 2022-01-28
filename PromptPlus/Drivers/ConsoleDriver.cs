@@ -4,27 +4,26 @@
 // ***************************************************************************************
 
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 
-using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
+using PPlus.Internal;
+using PPlus.Objects;
 
-namespace PromptPlusControls.Drivers
+namespace PPlus.Drivers
 {
     internal sealed class ConsoleDriver : IConsoleDriver
     {
         private const int IdleReadKey = 10;
+        private static readonly bool s_nocolor;
 
-        public static int MinBufferHeight = 6;
-
+        public bool NoInterative => (IsInputRedirected || IsOutputRedirected || IsErrorRedirected);
 
         static ConsoleDriver()
         {
-            if (Console.IsInputRedirected || Console.IsOutputRedirected)
-            {
-                throw new InvalidOperationException(Exceptions.Ex_InputOutPutRedirected);
-            }
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 var hConsole = NativeMethods.GetStdHandle(NativeMethods.STD_OUTPUT_HANDLE);
@@ -35,9 +34,18 @@ namespace PromptPlusControls.Drivers
                 }
                 NativeMethods.SetConsoleMode(hConsole, mode | NativeMethods.ENABLE_VIRTUAL_TERMINAL_PROCESSING);
             }
+            s_nocolor = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("NO_COLOR"));
         }
 
         #region IConsoleDriver
+
+        public bool NoColor => s_nocolor;
+
+        public bool IsErrorRedirected => Console.IsErrorRedirected;
+
+        public bool IsInputRedirected => Console.IsInputRedirected;
+
+        public bool IsOutputRedirected => Console.IsOutputRedirected;
 
         // Indicates if the current process is running:
         //  * on Windows: in a console window visible to the user.
@@ -55,145 +63,215 @@ namespace PromptPlusControls.Drivers
             }
         }
 
-        public ConsoleKeyInfo WaitKeypress(CancellationToken cancellationToken)
+        public ConsoleKeyInfo WaitKeypress(bool intercept, CancellationToken cancellationToken)
         {
-            lock (PromptPlus._lockobj)
+            while (!KeyAvailable && !cancellationToken.IsCancellationRequested)
             {
-                while (!KeyAvailable && !cancellationToken.IsCancellationRequested)
-                {
-                    cancellationToken.WaitHandle.WaitOne(IdleReadKey);
-                }
-                if (KeyAvailable && !cancellationToken.IsCancellationRequested)
-                {
-                    return ReadKey();
-                }
-                return new ConsoleKeyInfo();
+                cancellationToken.WaitHandle.WaitOne(IdleReadKey);
             }
+            if (KeyAvailable && !cancellationToken.IsCancellationRequested)
+            {
+                return ReadKey(intercept);
+            }
+            return new ConsoleKeyInfo();
         }
 
-        public void Beep() => Console.Write("\a");
+        public Encoding OutputEncoding
+        {
+            get { return Console.OutputEncoding; }
+            set { Console.OutputEncoding = value; }
+        }
+
+        public void ResetColor()
+        {
+            if (NoColor)
+            {
+                ForegroundColor = ConsoleColor.White;
+                BackgroundColor = ConsoleColor.Black;
+                return;
+            }
+            ForegroundColor = PromptPlus.DefaultForeColor;
+            BackgroundColor = PromptPlus.DefaultBackColor;
+        }
+
+        public Encoding InputEncoding
+        {
+            get { return Console.InputEncoding; }
+            set { Console.InputEncoding = value; }
+        }
+
+        public TextWriter Out
+        {
+            get { return Console.Out; }
+        }
+
+        public TextReader In
+        {
+            get { return Console.In; }
+        }
+
+        public TextWriter Error
+        {
+            get { return Console.Error; }
+        }
+
+        public void SetIn(TextReader value)
+        {
+            Console.SetIn(value);
+        }
+
+        public void SetOut(TextWriter value)
+        {
+            Console.SetOut(value);
+        }
+
+        public void SetError(TextWriter value)
+        {
+            Console.SetError(value);
+        }
+
+        public void Beep() => Console.Out.Write("\a");
 
         public void Clear()
         {
             SetCursorPosition(0, 0);
-            Console.Write("\x1b[2J");
+            Out.Write("\x1b[2J");
         }
 
         public void ClearLine(int top)
         {
-            lock (PromptPlus._lockobj)
-            {
-                SetCursorPosition(0, top);
-                Console.Write("\x1b[2K");
-            }
+            SetCursorPosition(0, top);
+            Out.Write("\x1b[2K");
         }
 
         public void ClearRestOfLine(ConsoleColor? color)
         {
-            lock (PromptPlus._lockobj)
+            if (NoColor)
             {
-                Write("\x1b[0K".Color(PromptPlus._consoleDriver.ForegroundColor, color ?? PromptPlus._consoleDriver.BackgroundColor));
+                Write("\x1b[0K");
+                return;
             }
+            Write("\x1b[0K".Color(PromptPlus.PPlusConsole.ForegroundColor, color ?? PromptPlus.PPlusConsole.BackgroundColor));
         }
 
-        public ConsoleKeyInfo ReadKey()
+        public ConsoleKeyInfo ReadKey(bool intercept)
         {
-            lock (PromptPlus._lockobj)
-            {
-                return Console.ReadKey(true);
-            }
+            return Console.ReadKey(intercept);
         }
 
-        public void Write(params ColorToken[] tokens)
-        {
-            lock (PromptPlus._lockobj)
-            {
-                if (tokens == null || tokens.Length == 0)
-                {
-                    return;
-                }
-                foreach (var token in tokens)
-                {
-                    var originalColor = Console.ForegroundColor;
-                    var originalBackgroundColor = Console.BackgroundColor;
-                    try
-                    {
-                        if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
-                        {
-                            Console.Write(token.AnsiColor);
-                        }
-                        if (token.Underline)
-                        {
-                            Console.Write("\x1b[4m");
-                        }
-                        Console.Write(token.Text ?? string.Empty);
-                    }
-                    finally
-                    {
-                        if (token.Underline)
-                        {
-                            Console.Write("\x1b[24m");
-                        }
-                        Console.Write(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor);
-                    }
-                }
-            }
-        }
 
         public ConsoleColor ForegroundColor
         {
-            get { return Console.ForegroundColor; }
+            get
+            {
+                if (NoColor)
+                {
+                    return ConsoleColor.White;
+                }
+                return Console.ForegroundColor;
+            }
             set
             {
-                Console.Write(new ColorToken("", value, Console.BackgroundColor).AnsiColor);
+                if (NoColor)
+                {
+                    return;
+                }
+                Out.Write(new ColorToken("", value, Console.BackgroundColor).AnsiColor);
                 Console.ForegroundColor = value;
             }
         }
 
         public ConsoleColor BackgroundColor
         {
-            get { return Console.BackgroundColor; }
+            get
+            {
+                if (NoColor)
+                {
+                    return ConsoleColor.Black;
+                }
+                return Console.BackgroundColor;
+            }
             set
             {
-                Console.Write(new ColorToken("", Console.ForegroundColor, value).AnsiColor);
+                if (NoColor)
+                {
+                    return;
+                }
+                Out.Write(new ColorToken("", Console.ForegroundColor, value).AnsiColor);
                 Console.BackgroundColor = value;
             }
         }
 
-        public void WriteLine(params ColorToken[] tokens)
+        public void Write(string value)
         {
-            lock (PromptPlus._lockobj)
+            Write(new ColorToken(value));
+        }
+
+        public void Write(params ColorToken[] tokens)
+        {
+            if (tokens == null || tokens.Length == 0)
             {
-                Write(tokens);
-                Console.WriteLine();
+                return;
+            }
+            var lstcmd = new List<string>();
+            foreach (var token in tokens)
+            {
+                var originalColor = Console.ForegroundColor;
+                var originalBackgroundColor = Console.BackgroundColor;
+                var restorecolor = false;
+                if (!NoColor)
+                {
+                    if (token.BackgroundColor != originalBackgroundColor || token.Color != originalColor)
+                    {
+                        lstcmd.AddRange(CSIAnsiConsole.SplitCommands(token.AnsiColor));
+                        restorecolor = true;
+                    }
+                }
+                if (token.Underline)
+                {
+                    lstcmd.AddRange(CSIAnsiConsole.SplitCommands("\x1b[4m"));
+                }
+                lstcmd.AddRange(CSIAnsiConsole.SplitCommands(token.Text));
+                if (token.Underline)
+                {
+                    lstcmd.AddRange(CSIAnsiConsole.SplitCommands("\x1b[24m"));
+                }
+                if (!NoColor && restorecolor)
+                {
+                    lstcmd.AddRange(CSIAnsiConsole.SplitCommands(new ColorToken("", originalColor, originalBackgroundColor).AnsiColor));
+                }
+            }
+            foreach (var item in lstcmd)
+            {
+                Out.Write(item);
             }
         }
 
+        public void WriteLine(string value)
+        {
+            WriteLine(new ColorToken(value));
+        }
+
+        public void WriteLine(params ColorToken[] tokens)
+        {
+            Write(tokens);
+            Out.WriteLine();
+        }
 
         public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
         {
-            lock (PromptPlus._lockobj)
-            {
-                Write(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
-            }
+            Write(value.Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
         }
 
         public void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null)
         {
-            lock (PromptPlus._lockobj)
-            {
-                Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
-                Console.WriteLine();
-            }
+            Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
+            Out.WriteLine();
         }
-
 
         public void SetCursorPosition(int left, int top)
         {
-            lock (PromptPlus._lockobj)
-            {
-                Console.SetCursorPosition(left, top);
-            }
+            Console.SetCursorPosition(left, top);
         }
 
         public bool KeyAvailable
@@ -214,17 +292,14 @@ namespace PromptPlusControls.Drivers
             }
             set
             {
-                lock (PromptPlus._lockobj)
+                _cursorVisible = value;
+                if (value)
                 {
-                    _cursorVisible = value;
-                    if (value)
-                    {
-                        Console.Write("\x1b[?25h");
-                    }
-                    else
-                    {
-                        Console.Write("\x1b[?25l");
-                    }
+                    Out.Write("\x1b[?25h");
+                }
+                else
+                {
+                    Out.Write("\x1b[?25l");
                 }
             }
         }
@@ -245,11 +320,14 @@ namespace PromptPlusControls.Drivers
             }
         }
 
-
         public int BufferWidth
         {
             get
             {
+                if (NoInterative)
+                {
+                    return 5000;
+                }
                 return Console.WindowWidth;
             }
         }
@@ -258,6 +336,10 @@ namespace PromptPlusControls.Drivers
         {
             get
             {
+                if (NoInterative)
+                {
+                    return 5000;
+                }
                 return Console.WindowHeight;
             }
         }

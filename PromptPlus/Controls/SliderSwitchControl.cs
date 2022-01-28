@@ -6,24 +6,40 @@
 using System;
 using System.Threading;
 
-using PromptPlusControls.Internal;
-using PromptPlusControls.ValueObjects;
+using PPlus.Internal;
 
-namespace PromptPlusControls.Controls
+using PPlus.Objects;
+
+namespace PPlus.Controls
 {
     internal class SliderSwitchControl : ControlBase<bool>, IControlSliderSwitch
     {
         private bool _currentValue;
         private readonly SliderSwitchOptions _options;
+        private const string Namecontrol = "PromptPlus.SliderSwitch";
 
-        public SliderSwitchControl(SliderSwitchOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public SliderSwitchControl(SliderSwitchOptions options) : base(Namecontrol, options, false)
         {
             _options = options;
         }
 
-        public override void InitControl()
+        public override string InitControl()
         {
             _currentValue = _options.Value;
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("OffValue", _options.OffValue, LogKind.Property);
+                AddLog("OnValue", _options.OnValue, LogKind.Property);
+            }
+            if (_currentValue)
+            {
+                return _options.OnValue;
+            }
+            else
+            {
+                return _options.OffValue;
+            }
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out bool result)
@@ -40,33 +56,25 @@ namespace PromptPlusControls.Controls
 
                 if (CheckDefaultKey(keyInfo))
                 {
-                    continue;
+                    ///none
                 }
-
-                switch (keyInfo.Key)
+                else if (keyInfo.IsPressEnterKey())
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0:
-                    {
-                        result = _currentValue;
-                        return true;
-                    }
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && _currentValue:
-                    {
-                        _currentValue = false;
-                        break;
-                    }
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_currentValue:
-                    {
-                        _currentValue = true;
-                        break;
-                    }
-                    default:
-                    {
-                        isvalidhit = null;
-                        break;
-                    }
+                    result = _currentValue;
+                    return true;
                 }
-
+                else if (keyInfo.IsPressLeftArrowKey() && _currentValue)
+                {
+                    _currentValue = false;
+                }
+                else if (keyInfo.IsPressRightArrowKey() && !_currentValue)
+                {
+                    _currentValue = true;
+                }
+                else
+                {
+                    isvalidhit = null;
+                }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
 
             result = default;
@@ -74,7 +82,7 @@ namespace PromptPlusControls.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
 
@@ -114,13 +122,29 @@ namespace PromptPlusControls.Controls
 
             screenBuffer.PushCursor();
 
+            if (HasDescription)
+            {
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
+            }
+
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteHint(Messages.SliderSwitcheKeyNavigator);
                 }
+            }
+            if (_currentValue)
+            {
+                return _options.OnValue;
+            }
+            else
+            {
+                return _options.OffValue;
             }
         }
 
@@ -133,9 +157,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlSliderSwitche
 
-        public IControlSliderSwitch Prompt(string value)
+        public IControlSliderSwitch Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 
@@ -158,54 +186,9 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IPromptControls<bool> EnabledAbortKey(bool value)
+        public IControlSliderSwitch Config(Action<IPromptConfig> context)
         {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptControls<bool> EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptControls<bool> EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptControls<bool> HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<bool> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
+            context.Invoke(this);
             return this;
         }
 

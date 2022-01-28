@@ -10,9 +10,10 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-using PromptPlusControls.ValueObjects;
+using PPlus.Internal;
+using PPlus.Objects;
 
-namespace PromptPlusControls
+namespace PPlus
 {
     public static partial class PromptPlus
     {
@@ -26,16 +27,17 @@ namespace PromptPlusControls
                 EnabledStandardTooltip = EnabledStandardTooltip,
                 EnabledPromptTooltip = EnabledPromptTooltip,
                 PasswordChar = PasswordChar,
-                Culture = DefaultCulture.Name
+                Culture = DefaultCulture.Name,
+                Version = Theme.CurrentVersion
             };
 
             theme.Colors.Answer = ColorSchema.Answer;
-            theme.Colors.BackColorSchema = _consoleDriver.BackgroundColor;
+            theme.Colors.BackColorSchema = PPlusConsole.BackgroundColor;
             theme.Colors.Disabled = ColorSchema.Disabled;
             theme.Colors.DoneSymbol = ColorSchema.DoneSymbol;
             theme.Colors.Error = ColorSchema.Error;
             theme.Colors.Filter = ColorSchema.Filter;
-            theme.Colors.ForeColorSchema = _consoleDriver.ForegroundColor;
+            theme.Colors.ForeColorSchema = PPlusConsole.ForegroundColor;
             theme.Colors.Hint = ColorSchema.Hint;
             theme.Colors.Pagination = ColorSchema.Pagination;
             theme.Colors.PromptSymbol = ColorSchema.PromptSymbol;
@@ -43,8 +45,11 @@ namespace PromptPlusControls
             theme.Colors.SliderBackcolor = ColorSchema.SliderBackcolor;
             theme.Colors.SliderForecolor = ColorSchema.SliderForecolor;
 
+            theme.Colors.Description = ColorSchema.Description;
+
+            theme.HotKeys.MarkSelect = MarkSelect.ToString();
+            theme.HotKeys.ToggleVisibleDescription = ToggleVisibleDescription.ToString();
             theme.HotKeys.AbortAllPipesKeyPress = AbortAllPipesKeyPress.ToString();
-            theme.HotKeys.AbortKeyPress = AbortKeyPress.ToString();
             theme.HotKeys.TooltipKeyPress = TooltipKeyPress.ToString();
             theme.HotKeys.ResumePipesKeyPress = ResumePipesKeyPress.ToString();
             theme.HotKeys.UnSelectFilter = UnSelectFilter.ToString();
@@ -82,15 +87,20 @@ namespace PromptPlusControls
                 Converters = { new JsonStringEnumConverter() },
                 IgnoreReadOnlyProperties = false,
                 PropertyNameCaseInsensitive = true,
-#pragma warning disable SYSLIB0020 // Type or member is obsolete
+                #pragma warning disable SYSLIB0020 // Type or member is obsolete
                 IgnoreNullValues = true,
-#pragma warning restore SYSLIB0020 // Type or member is obsolete
+                #pragma warning restore SYSLIB0020 // Type or member is obsolete
             };
 
             var pathfile = Path.Combine(folderfile, "PromptPlus.config.json");
             if (File.Exists(pathfile))
             {
                 var theme = JsonSerializer.Deserialize<Theme>(File.ReadAllText(pathfile), options);
+
+                if (theme.Version < 1)
+                {
+                    theme.Version = 1;
+                }
 
                 if (string.IsNullOrEmpty(theme.Culture))
                 {
@@ -131,8 +141,19 @@ namespace PromptPlusControls
                 ColorSchema.SliderBackcolor = theme.Colors.SliderBackcolor;
                 ColorSchema.SliderForecolor = theme.Colors.SliderForecolor;
 
+                if (theme.Version >= 2)
+                {
+                    MarkSelect = ConverteThemeHotkey(theme.HotKeys.MarkSelect);
+                    ToggleVisibleDescription = ConverteThemeHotkey(theme.HotKeys.ToggleVisibleDescription);
+                    ColorSchema.Description = theme.Colors.Description;
+                }
+                else
+                {
+                    MarkSelect = ConverteThemeHotkey(UserHotKey.F8.ToString());
+                    ToggleVisibleDescription = ToggleVisibleDescription;
+                    ColorSchema.Description = ColorSchema.Answer;
+                }
                 AbortAllPipesKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortAllPipesKeyPress);
-                AbortKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortKeyPress);
                 TooltipKeyPress = ConverteThemeHotkey(theme.HotKeys.TooltipKeyPress);
                 ResumePipesKeyPress = ConverteThemeHotkey(theme.HotKeys.ResumePipesKeyPress);
                 UnSelectFilter = ConverteThemeHotkey(theme.HotKeys.UnSelectFilter);
@@ -140,7 +161,6 @@ namespace PromptPlusControls
                 SelectAll = ConverteThemeHotkey(theme.HotKeys.SelectAll);
                 InvertSelect = ConverteThemeHotkey(theme.HotKeys.InvertSelect);
                 RemoveAll = ConverteThemeHotkey(theme.HotKeys.RemoveAll);
-
                 ConsoleDefaultColor(theme.Colors.ForeColorSchema, theme.Colors.BackColorSchema);
 
             }
@@ -153,21 +173,17 @@ namespace PromptPlusControls
             var shiftkey = elem.Any(x => x.ToLower() == "shift");
             var ctrlkey = elem.Any(x => x.ToLower() == "crtl");
             var key = elem.Last().ToLower();
-            if (key == "esc" || key == "escape")
-            {
-                return new HotKey(ConsoleKey.Escape, altkey, ctrlkey, shiftkey);
-            }
             return new HotKey(FindByText(key), altkey, ctrlkey, shiftkey);
         }
 
-        private static ConsoleKey FindByText(string key)
+        private static UserHotKey FindByText(string key)
         {
-            var itens = Enum.GetValues(typeof(ConsoleKey));
+            var itens = Enum.GetValues(typeof(UserHotKey));
             foreach (var item in itens)
             {
                 if (item.ToString().ToLower() == key.ToLower())
                 {
-                    return (ConsoleKey)item;
+                    return (UserHotKey)item;
                 }
             }
             throw new ArgumentException(key);

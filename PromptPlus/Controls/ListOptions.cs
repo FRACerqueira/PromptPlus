@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace PromptPlusControls.Controls
+namespace PPlus.Controls
 {
     internal class ListOptions<T> : BaseOptions
     {
@@ -20,6 +20,10 @@ namespace PromptPlusControls.Controls
         public Func<T, string> TextSelector { get; set; } = x => x.ToString();
         public MaskedOptions MaskedOption { get; set; } = new MaskedOptions();
         public bool ValidateOnDemand { get; set; }
+        public Func<string, string> DescriptionSelector { get; set; }
+        public IList<T> InitialItems { get; set; } = new List<T>();
+        public T InitialValue { get; set; }
+        public bool EverInitialValue { get; set; }
 
     }
 }

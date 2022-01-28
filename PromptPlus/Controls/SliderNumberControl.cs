@@ -6,11 +6,12 @@
 using System;
 using System.Threading;
 
-using PromptPlusControls.Internal;
-using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
+using PPlus.Internal;
 
-namespace PromptPlusControls.Controls
+using PPlus.Objects;
+using PPlus.Resources;
+
+namespace PPlus.Controls
 {
     internal class SliderNumberControl : ControlBase<double>, IControlSliderNumber
     {
@@ -19,13 +20,14 @@ namespace PromptPlusControls.Controls
         private double _stepSlider;
         private double _largestep;
         private double _shortstep;
+        private const string Namecontrol = "PromptPlus.SliderNumber";
 
-        public SliderNumberControl(SliderNumberOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public SliderNumberControl(SliderNumberOptions options) : base(Namecontrol, options, false)
         {
             _options = options;
         }
 
-        public override void InitControl()
+        public override string InitControl()
         {
             if (_options.Min.CompareTo(_options.Max) >= 0)
             {
@@ -62,6 +64,19 @@ namespace PromptPlusControls.Controls
             }
             _currentValue = _options.Value;
             _stepSlider = TicketStep;
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("FracionalDig", _options.FracionalDig.ToString(), LogKind.Property);
+                AddLog("LargeStep", _options.LargeStep.ToString(), LogKind.Property);
+                AddLog("Max", _options.Max.ToString(), LogKind.Property);
+                AddLog("Min", _options.Min.ToString(), LogKind.Property);
+                AddLog("ShortStep", _options.ShortStep.ToString(), LogKind.Property);
+                AddLog("Type", _options.Type.ToString(), LogKind.Property);
+                AddLog("Value", _options.Value.ToString(), LogKind.Property);
+                AddLog("Witdth", _options.Witdth.ToString(), LogKind.Property);
+            }
+            return _currentValue.ToString();
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out double result)
@@ -78,85 +93,75 @@ namespace PromptPlusControls.Controls
 
                 if (CheckDefaultKey(keyInfo))
                 {
-                    continue;
+                    ///none;
                 }
-
-                switch (keyInfo.Key)
+                else if (keyInfo.IsPressEnterKey())
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0:
-                    {
-                        result = double.Parse(ValueToString(_currentValue));
-                        return true;
-                    }
-                    case ConsoleKey.DownArrow when keyInfo.Modifiers == 0 && _options.Type == SliderNumberType.UpDown:
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && _options.Type == SliderNumberType.LeftRight:
-                    {
-                        if (_currentValue.CompareTo(_options.Min) == 0)
-                        {
-                            isvalidhit = null;
-                            break;
-                        }
-                        var aux = _currentValue - _shortstep;
-                        if (aux.CompareTo(_options.Min) < 0)
-                        {
-                            aux = _options.Min;
-                        }
-                        _currentValue = aux;
-                        break;
-                    }
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == ConsoleModifiers.Control:
-                    {
-                        if (_currentValue.CompareTo(_options.Min) == 0)
-                        {
-                            isvalidhit = null;
-                            break;
-                        }
-                        var aux = _currentValue - _largestep;
-                        if (aux.CompareTo(_options.Min) < 0)
-                        {
-                            aux = _options.Min;
-                        }
-                        _currentValue = aux;
-                        break;
-                    }
-                    case ConsoleKey.UpArrow when keyInfo.Modifiers == 0 && _options.Type == SliderNumberType.UpDown:
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && _options.Type == SliderNumberType.LeftRight:
-                    {
-                        if (_currentValue.CompareTo(_options.Max) == 0)
-                        {
-                            isvalidhit = null;
-                            break;
-                        }
-                        var aux = _currentValue + _shortstep;
-                        if (aux.CompareTo(_options.Max) > 0)
-                        {
-                            aux = _options.Max;
-                        }
-                        _currentValue = aux;
-                        break;
-                    }
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == ConsoleModifiers.Control:
-                    {
-                        if (_currentValue.CompareTo(_options.Max) == 0)
-                        {
-                            isvalidhit = null;
-                            break;
-                        }
-                        var aux = _currentValue + _largestep;
-                        if (aux.CompareTo(_options.Max) > 0)
-                        {
-                            aux = _options.Max;
-                        }
-                        _currentValue = aux;
-                        break;
-                    }
-                    default:
+                    result = double.Parse(ValueToString(_currentValue));
+                    return true;
+                }
+                else if ((keyInfo.IsPressDownArrowKey() && _options.Type == SliderNumberType.UpDown) ||
+                    (keyInfo.IsPressLeftArrowKey() && _options.Type == SliderNumberType.LeftRight))
+                {
+                    if (_currentValue.CompareTo(_options.Min) == 0)
                     {
                         isvalidhit = null;
                         break;
                     }
+                    var aux = _currentValue - _shortstep;
+                    if (aux.CompareTo(_options.Min) < 0)
+                    {
+                        aux = _options.Min;
+                    }
+                    _currentValue = aux;
                 }
-
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.LeftArrow, ConsoleModifiers.Control))
+                {
+                    if (_currentValue.CompareTo(_options.Min) == 0)
+                    {
+                        isvalidhit = null;
+                        break;
+                    }
+                    var aux = _currentValue - _largestep;
+                    if (aux.CompareTo(_options.Min) < 0)
+                    {
+                        aux = _options.Min;
+                    }
+                    _currentValue = aux;
+                }
+                else if ((keyInfo.IsPressUpArrowKey() && _options.Type == SliderNumberType.UpDown) ||
+                    (keyInfo.IsPressRightArrowKey() && _options.Type == SliderNumberType.LeftRight))
+                {
+                    if (_currentValue.CompareTo(_options.Max) == 0)
+                    {
+                        isvalidhit = null;
+                        break;
+                    }
+                    var aux = _currentValue + _shortstep;
+                    if (aux.CompareTo(_options.Max) > 0)
+                    {
+                        aux = _options.Max;
+                    }
+                    _currentValue = aux;
+                }
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.RightArrow, ConsoleModifiers.Control))
+                {
+                    if (_currentValue.CompareTo(_options.Max) == 0)
+                    {
+                        isvalidhit = null;
+                        break;
+                    }
+                    var aux = _currentValue + _largestep;
+                    if (aux.CompareTo(_options.Max) > 0)
+                    {
+                        aux = _options.Max;
+                    }
+                    _currentValue = aux;
+                }
+                else
+                {
+                    isvalidhit = null;
+                }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
 
             result = default;
@@ -164,7 +169,7 @@ namespace PromptPlusControls.Controls
             return isvalidhit;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             if (_options.Type == SliderNumberType.UpDown)
             {
@@ -202,9 +207,17 @@ namespace PromptPlusControls.Controls
 
             screenBuffer.PushCursor();
 
+            if (HasDescription)
+            {
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
+            }
+
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     if (_options.Type == SliderNumberType.LeftRight)
@@ -217,6 +230,7 @@ namespace PromptPlusControls.Controls
                     }
                 }
             }
+            return ValueToString(_currentValue);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, double result)
@@ -266,9 +280,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlSliderNumber
 
-        public IControlSliderNumber Prompt(string value)
+        public IControlSliderNumber Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 
@@ -308,54 +326,9 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IPromptControls<double> EnabledAbortKey(bool value)
+        public IControlSliderNumber Config(Action<IPromptConfig> context)
         {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptControls<double> EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptControls<double> EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptControls<double> HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<double> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
+            context.Invoke(this);
             return this;
         }
 

@@ -10,30 +10,31 @@ using System.Linq;
 using System.Security;
 using System.Threading;
 
-using PromptPlusControls.Internal;
-using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
+using PPlus.Internal;
 
-namespace PromptPlusControls.Controls
+using PPlus.Objects;
+using PPlus.Resources;
+
+namespace PPlus.Controls
 {
-
     internal class BrowserControl : ControlBase<ResultBrowser>, IControlBrowser
     {
         private ResultBrowser _defaultopt;
         private string _currentPath;
         private readonly BrowserOptions _options;
-        private readonly InputBuffer _filterBuffer = new();
+        private readonly ReadLineBuffer _filterBuffer = new();
         private Paginator<ResultBrowser> _paginator;
         private readonly Func<ResultBrowser, string> _aliasSelector = x => x.AliasSelected;
         private readonly Func<ResultBrowser, string> _textSelector = x => x.SelectedValue;
         private readonly Func<ResultBrowser, string> _fullPathSelector = x => Path.Combine(x.PathValue, x.SelectedValue);
+        private const string Namecontrol = "PromptPlus.Browser";
 
-        public BrowserControl(BrowserOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public BrowserControl(BrowserOptions options) : base(Namecontrol, options, true)
         {
             _options = options;
         }
 
-        public override void InitControl()
+        public override string InitControl()
         {
             switch (_options.Filter)
             {
@@ -46,6 +47,17 @@ namespace PromptPlusControls.Controls
                 default:
                     throw new NotImplementedException(string.Format(Exceptions.Ex_FileBrowserNotImplemented, _options.Filter));
             }
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("PageSize", _options.PageSize.ToString(), LogKind.Property);
+                AddLog("AllowNotSelected", _options.AllowNotSelected.ToString(), LogKind.Property);
+                AddLog("Filter", _options.Filter.ToString(), LogKind.Property);
+                AddLog("PrefixExtension", _options.PrefixExtension, LogKind.Property);
+                AddLog("RootFolder", _options.RootFolder, LogKind.Property);
+                AddLog("SearchPattern", _options.SearchPattern, LogKind.Property);
+            }
+            return _filterBuffer.ToString();
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultBrowser result)
@@ -55,7 +67,7 @@ namespace PromptPlusControls.Controls
             screenBuffer.WriteAnswer(FinishResult);
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             var prompt = $"{ _options.Message}";
             if (_options.SearchPattern != "*" && _options.ShowSearchPattern)
@@ -83,9 +95,21 @@ namespace PromptPlusControls.Controls
                 screenBuffer.WriteAnswer(_filterBuffer.ToForward());
             }
 
+            if (HasDescription)
+            {
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
+            }
+            if (_options.ShowNavigationCurrentPath)
+            {
+                screenBuffer.WriteLineDescription($"{Messages.FolderCurrentPath} {_currentPath}");
+            }
+
             if (EnabledStandardTooltip)
             {
-                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes);
+                screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
                 if (_options.EnabledPromptTooltip)
                 {
                     screenBuffer.WriteLine();
@@ -94,10 +118,6 @@ namespace PromptPlusControls.Controls
                         screenBuffer.WriteHint(Messages.KeyNavPaging);
                     }
                     screenBuffer.WriteHint(Messages.FolderKeyNavigation);
-                    if (_options.ShowNavigationCurrentPath)
-                    {
-                        screenBuffer.WriteLineHint($"{Messages.FolderCurrentPath} {_currentPath}");
-                    }
                 }
             }
 
@@ -125,6 +145,7 @@ namespace PromptPlusControls.Controls
             {
                 screenBuffer.WriteLinePagination(_paginator.PaginationMessage());
             }
+            return _filterBuffer.ToString();
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ResultBrowser result)
@@ -138,6 +159,12 @@ namespace PromptPlusControls.Controls
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
+                _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo, _filterBuffer.ToString(), out var acceptedkey);
+                if (acceptedkey)
+                {
+                    _paginator.UpdateFilter(_filterBuffer.ToString());
+                    continue;
+                }
 
                 if (CheckDefaultKey(keyInfo))
                 {
@@ -147,17 +174,15 @@ namespace PromptPlusControls.Controls
                 {
                     continue;
                 }
-
-                if (PromptPlus.UnSelectFilter.Equals(keyInfo))
+                else if (PromptPlus.UnSelectFilter.Equals(keyInfo))
                 {
                     _paginator.UnSelected();
                     result = default;
                     return isvalidhit;
                 }
-
-                switch (keyInfo.Key)
+                else if (keyInfo.IsPressEnterKey())
                 {
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0 && _options.Filter == BrowserFilter.None:
+                    if (_options.Filter == BrowserFilter.None)
                     {
                         if (_paginator.TryGetSelectedItem(out var resultpreview))
                         {
@@ -170,7 +195,6 @@ namespace PromptPlusControls.Controls
                             {
                                 SetError(Messages.FileNotSelected);
                             }
-                            break;
                         }
                         var newfile = _filterBuffer.ToString();
                         if (string.IsNullOrEmpty(newfile) && !_options.AllowNotSelected)
@@ -188,7 +212,7 @@ namespace PromptPlusControls.Controls
                         result = new ResultBrowser(_currentPath, newfile, true, true, !_options.ShowNavigationCurrentPath);
                         return true;
                     }
-                    case ConsoleKey.Enter when keyInfo.Modifiers == 0 && _options.Filter == BrowserFilter.OnlyFolder:
+                    else if (_options.Filter == BrowserFilter.OnlyFolder)
                     {
                         if (_paginator.TryGetSelectedItem(out var resultpreview))
                         {
@@ -211,7 +235,11 @@ namespace PromptPlusControls.Controls
                         result = new ResultBrowser(_currentPath, newfolder, true, false, !_options.ShowNavigationCurrentPath);
                         return true;
                     }
-                    case ConsoleKey.UpArrow when keyInfo.Modifiers == 0 && ((_paginator.Count == 1 && _paginator.IsUnSelected) || _paginator.Count > 1):
+                }
+                else if (keyInfo.IsPressUpArrowKey())
+                {
+                    if ((_paginator.Count == 1 && _paginator.IsUnSelected) || _paginator.Count > 1)
+                    {
                         if (_paginator.IsFistPageItem)
                         {
                             _paginator.PreviousPage(IndexOption.LastItem);
@@ -220,8 +248,12 @@ namespace PromptPlusControls.Controls
                         {
                             _paginator.PreviousItem();
                         }
-                        break;
-                    case ConsoleKey.DownArrow when keyInfo.Modifiers == 0 && ((_paginator.Count == 1 && _paginator.IsUnSelected) || _paginator.Count > 1):
+                    }
+                }
+                else if (keyInfo.IsPressDownArrowKey())
+                {
+                    if ((_paginator.Count == 1 && _paginator.IsUnSelected) || _paginator.Count > 1)
+                    {
                         if (_paginator.IsLastPageItem)
                         {
                             _paginator.NextPage(IndexOption.FirstItem);
@@ -230,80 +262,54 @@ namespace PromptPlusControls.Controls
                         {
                             _paginator.NextItem();
                         }
-                        break;
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == 0 && !_filterBuffer.IsStart:
-                        _paginator.UpdateFilter(_filterBuffer.Backward().ToString());
-                        break;
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == 0 && !_filterBuffer.IsEnd:
-                        _paginator.UpdateFilter(_filterBuffer.Forward().ToString());
-                        break;
-                    case ConsoleKey.Backspace when keyInfo.Modifiers == 0 && !_filterBuffer.IsStart:
-                        _paginator.UpdateFilter(_filterBuffer.Backspace().ToString());
-                        break;
-                    case ConsoleKey.Delete when keyInfo.Modifiers == 0 && !_filterBuffer.IsEnd:
-                        _paginator.UpdateFilter(_filterBuffer.Delete().ToString());
-                        break;
-                    case ConsoleKey.LeftArrow when keyInfo.Modifiers == ConsoleModifiers.Control:
-                    {
-                        if (_currentPath == _options.RootFolder)
-                        {
-                            isvalidhit = null;
-                            break;
-                        }
-                        var di = new DirectoryInfo(_currentPath);
-                        if (di.Parent == null)
-                        {
-                            isvalidhit = null;
-                            break;
-                        }
-                        _currentPath = di.Parent.FullName;
-                        _paginator = new Paginator<ResultBrowser>(ItensFolders(di.Parent.FullName), _options.PageSize, Optional<ResultBrowser>.Create(_defaultopt), _aliasSelector);
-                        _paginator.FirstItem();
-                        break;
-                    }
-                    case ConsoleKey.RightArrow when keyInfo.Modifiers == ConsoleModifiers.Control:
-                    {
-                        if (_paginator.TryGetSelectedItem(out var resultpreview))
-                        {
-                            var dryfolder = false;
-                            if (!resultpreview.IsFile)
-                            {
-                                dryfolder = IsDirectoryHasChilds(Path.Combine(_currentPath, resultpreview.SelectedValue));
-                            }
-                            if (_options.Filter == BrowserFilter.None && !resultpreview.IsFile && !dryfolder)
-                            {
-                                dryfolder = IsDirectoryHasFiles(Path.Combine(_currentPath, resultpreview.SelectedValue));
-                            }
-                            if (dryfolder)
-                            {
-                                _currentPath = Path.Combine(_currentPath, resultpreview.SelectedValue);
-                                _paginator = new Paginator<ResultBrowser>(ItensFolders(_currentPath), _options.PageSize, Optional<ResultBrowser>.Create(_defaultopt), _aliasSelector);
-                                _paginator.FirstItem();
-                            }
-                            else
-                            {
-                                isvalidhit = null;
-                            }
-                        }
-                        break;
-                    }
-                    default:
-                    {
-                        if (!cancellationToken.IsCancellationRequested)
-                        {
-                            if (!char.IsControl(keyInfo.KeyChar))
-                            {
-                                _paginator.UpdateFilter(_filterBuffer.Insert(keyInfo.KeyChar).ToString());
-                            }
-                            else
-                            {
-                                isvalidhit = null;
-                            }
-                        }
-                        break;
                     }
                 }
-
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.LeftArrow, ConsoleModifiers.Control))
+                {
+                    if (_currentPath == _options.RootFolder)
+                    {
+                        isvalidhit = null;
+                        break;
+                    }
+                    var di = new DirectoryInfo(_currentPath);
+                    if (di.Parent == null)
+                    {
+                        isvalidhit = null;
+                        break;
+                    }
+                    _currentPath = di.Parent.FullName;
+                    _paginator = new Paginator<ResultBrowser>(ItensFolders(di.Parent.FullName), _options.PageSize, Optional<ResultBrowser>.Create(_defaultopt), _aliasSelector);
+                    _paginator.FirstItem();
+                }
+                else if (keyInfo.IsPressSpecialKey(ConsoleKey.RightArrow, ConsoleModifiers.Control))
+                {
+                    if (_paginator.TryGetSelectedItem(out var resultpreview))
+                    {
+                        var dryfolder = false;
+                        if (!resultpreview.IsFile)
+                        {
+                            dryfolder = IsDirectoryHasChilds(Path.Combine(_currentPath, resultpreview.SelectedValue));
+                        }
+                        if (_options.Filter == BrowserFilter.None && !resultpreview.IsFile && !dryfolder)
+                        {
+                            dryfolder = IsDirectoryHasFiles(Path.Combine(_currentPath, resultpreview.SelectedValue));
+                        }
+                        if (dryfolder)
+                        {
+                            _currentPath = Path.Combine(_currentPath, resultpreview.SelectedValue);
+                            _paginator = new Paginator<ResultBrowser>(ItensFolders(_currentPath), _options.PageSize, Optional<ResultBrowser>.Create(_defaultopt), _aliasSelector);
+                            _paginator.FirstItem();
+                        }
+                        else
+                        {
+                            isvalidhit = null;
+                        }
+                    }
+                }
+                else
+                {
+                    isvalidhit = null;
+                }
             } while (KeyAvailable && !cancellationToken.IsCancellationRequested);
 
             result = default;
@@ -348,9 +354,12 @@ namespace PromptPlusControls.Controls
             {
                 defvalue = Directory.GetCurrentDirectory();
             }
-            if (!IsValidDirectory(defvalue))
+            if (!Directory.GetDirectoryRoot(defvalue).Equals(defvalue, StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new ArgumentException(Exceptions.Ex_FileBrowserDefaultValueArgument);
+                if (!IsValidDirectory(defvalue))
+                {
+                    throw new ArgumentException(Exceptions.Ex_FileBrowserDefaultValueArgument);
+                }
             }
             if (!string.IsNullOrEmpty(_options.RootFolder) && !IsValidDirectory(_options.RootFolder))
             {
@@ -358,8 +367,8 @@ namespace PromptPlusControls.Controls
             }
             var di = new DirectoryInfo(defvalue);
             _defaultopt = new ResultBrowser(di.Parent?.FullName ?? "", di.Name, false, false, !_options.ShowNavigationCurrentPath);
-            _currentPath = defvalue;
-            _paginator = new Paginator<ResultBrowser>(ItensFolders(defvalue), _options.PageSize, Optional<ResultBrowser>.Create(_defaultopt), _aliasSelector);
+            _currentPath = _defaultopt.PathValue;
+            _paginator = new Paginator<ResultBrowser>(ItensFolders(_defaultopt.PathValue), _options.PageSize, Optional<ResultBrowser>.Create(_defaultopt), _aliasSelector);
             if (_paginator.IsUnSelected)
             {
                 _paginator.FirstItem();
@@ -500,13 +509,16 @@ namespace PromptPlusControls.Controls
                 {
                     return false;
                 }
-                if (di.Attributes.HasFlag(FileAttributes.System))
+                if (di.Attributes >= 0)
                 {
-                    return false;
-                }
-                if (_options.SupressHidden && di.Attributes.HasFlag(FileAttributes.Hidden))
-                {
-                    return false;
+                    if (di.Attributes.HasFlag(FileAttributes.System))
+                    {
+                        return false;
+                    }
+                    if (_options.SupressHidden && di.Attributes.HasFlag(FileAttributes.Hidden))
+                    {
+                        return false;
+                    }
                 }
                 return true;
             }
@@ -523,9 +535,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlBrowser
 
-        public IControlBrowser Prompt(string value)
+        public IControlBrowser Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 
@@ -596,54 +612,9 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IPromptControls<ResultBrowser> EnabledAbortKey(bool value)
+        public IControlBrowser Config(Action<IPromptConfig> context)
         {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptControls<ResultBrowser> EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptControls<ResultBrowser> EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptControls<ResultBrowser> HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<ResultBrowser> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
+            context.Invoke(this);
             return this;
         }
 

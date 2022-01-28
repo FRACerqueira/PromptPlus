@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
-using PromptPlusControls.ValueObjects;
+using PPlus.Objects;
 
-namespace PromptPlusControls.Internal
+namespace PPlus.Internal
 {
     internal static class MegerExtensions
     {

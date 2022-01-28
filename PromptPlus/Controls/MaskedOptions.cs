@@ -8,10 +8,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-using PromptPlusControls.Internal;
-using PromptPlusControls.ValueObjects;
+using PPlus.Internal;
 
-namespace PromptPlusControls.Controls
+using PPlus.Objects;
+
+namespace PPlus.Controls
 {
     internal class MaskedOptions : BaseOptions
     {
@@ -27,6 +28,7 @@ namespace PromptPlusControls.Controls
         public int AmmountInteger { get; set; }
         public object DefaultObject { get; set; }
         public bool UpperCase { get; set; } = true;
+
         private string _maskValue;
         public string MaskValue
         {
@@ -40,7 +42,9 @@ namespace PromptPlusControls.Controls
         public bool ValidateOnDemand { get; set; }
         public bool ShowInputType { get; set; } = true;
         public FormatWeek ShowDayWeek { get; set; } = FormatWeek.None;
-        public string DefaultValueWitdhoutMask { get; set; }
+        public string DefaultValueWitdMask { get; set; }
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
+        public Func<ResultMasked, string> DescriptionSelector { get; set; }
+        public Func<string, string> TransformItems { get; set; }
     }
 }

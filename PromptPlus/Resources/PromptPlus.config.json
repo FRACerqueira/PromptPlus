@@ -1,4 +1,5 @@
 {
+  "Version": 2,
   "Culture": null,
   "EnabledBeep": false,
   "EnabledStandardTooltip": true,
@@ -7,19 +8,20 @@
   "EnabledAbortAllPipes": true,
   "PasswordChar": "#",
   "HotKeys": {
-    "AbortAllPipesKeyPress": "Crtl\u002BX",
-    "AbortKeyPress": "Esc",
+    "AbortAllPipesKeyPress": "F7",
     "TooltipKeyPress": "F1",
     "ResumePipesKeyPress": "F2",
-    "UnSelectFilter": "Alt\u002BF",
-    "SwitchViewPassword": "Alt\u002BV",
-    "SelectAll": "Alt\u002BA",
-    "InvertSelect": "Alt\u002BI",
-    "RemoveAll": "Alt\u002BR"
+    "ToggleVisibleDescription": "F3",
+    "UnSelectFilter": "F4",
+    "SwitchViewPassword": "F5",
+    "SelectAll": "F5",
+    "InvertSelect": "F6",
+    "RemoveAll": "F4"
   },
   "Colors": {
     "ForeColorSchema": "White",
     "BackColorSchema": "Black",
+    "Description": "Cyan",
     "Pagination": "DarkGray",
     "Hint": "DarkGray",
     "Answer": "Cyan",

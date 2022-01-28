@@ -9,11 +9,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PromptPlusControls.Internal;
-using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
+using PPlus.Internal;
 
-namespace PromptPlusControls.Controls
+using PPlus.Objects;
+using PPlus.Resources;
+
+namespace PPlus.Controls
 {
     internal class WaitProcessControl : ControlBase<IEnumerable<ResultProcess>>, IControlWaitProcess
     {
@@ -26,13 +27,14 @@ namespace PromptPlusControls.Controls
         private readonly Dictionary<string, ResultProcess> _lastresult = new();
         private readonly List<int> _index = new();
         private readonly List<Task> _localTask = new();
+        private const string Namecontrol = "PromptPlus.WaitProcess";
 
-        public WaitProcessControl(WaitProcessOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
+        public WaitProcessControl(WaitProcessOptions options) : base(Namecontrol, options, false, true)
         {
             _options = options;
         }
 
-        public override void InitControl()
+        public override string InitControl()
         {
             if (_options.Process == null)
             {
@@ -54,6 +56,13 @@ namespace PromptPlusControls.Controls
             {
                 _options.SpeedAnimation = 1000;
             }
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("SpeedAnimation", _options.SpeedAnimation.ToString(), LogKind.Property);
+                AddLog("Process", _options.Process.Count.ToString(), LogKind.Property);
+            }
+            return null;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<ResultProcess> result)
@@ -108,13 +117,13 @@ namespace PromptPlusControls.Controls
             return false;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
-            if (_options.Process.Count() == 1)
+            if (_options.Process.Count == 1)
             {
                 screenBuffer.WriteAnswer(Messages.WaittingText);
-                if (_localTask.Count() > 0)
+                if (_localTask.Count > 0)
                 {
                     _index[0]++;
                     if (_index[0] > 3)
@@ -128,34 +137,61 @@ namespace PromptPlusControls.Controls
                     screenBuffer.Write("...");
                 }
                 screenBuffer.PushCursor();
+                if (HasDescription)
+                {
+                    if (!HideDescription)
+                    {
+                        screenBuffer.WriteLineDescription(_options.Description);
+                    }
+                    else
+                    {
+                        screenBuffer.WriteLineDescription(" ");
+                    }
+                    screenBuffer.ClearRestOfLine();
+                }
                 if (_options.EnabledPromptTooltip)
                 {
-                    screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey);
+                    screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, !HasDescription);
+                    screenBuffer.ClearRestOfLine();
                 }
-                return;
+                return null;
             }
 
-            var runningtasks = _localTask.Count();
+            var runningtasks = _localTask.Count;
             var waittasks = runningtasks - CountEndStaus(_localTask.Select(x => x.Status));
             screenBuffer.WriteAnswer(string.Format(Messages.WaittingProcess, waittasks, runningtasks));
             screenBuffer.PushCursor();
             screenBuffer.ClearRestOfLine();
+
+            if (HasDescription)
+            {
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
+                else
+                {
+                    screenBuffer.WriteLineDescription(" ");
+                }
+                screenBuffer.ClearRestOfLine();
+            }
             if (_options.EnabledPromptTooltip)
             {
-                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey);
+                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, !HasDescription);
+                screenBuffer.ClearRestOfLine();
             }
 
             for (var i = 0; i < PromptPlus.MaxShowTasks; i++)
             {
                 var pos = _pagevisible * PromptPlus.MaxShowTasks + _indexvisible + i;
-                if (pos > _localTask.Count() - 1)
+                if (pos > _localTask.Count - 1)
                 {
                     _indexvisible = 0;
                     _pagevisible = 0;
                     pos = i;
                 }
                 var item = _options.Process.Skip(pos).First();
-                if (_localTask.Count() > 0)
+                if (_localTask.Count > 0)
                 {
                     if (!IsEndStaus(_localTask[pos].Status))
                     {
@@ -197,14 +233,15 @@ namespace PromptPlusControls.Controls
                     }
                 }
             }
+            return null;
         }
 
-        private bool IsListEndStaus(IEnumerable<TaskStatus> status)
+        private static bool IsListEndStaus(IEnumerable<TaskStatus> status)
         {
             return CountEndStaus(status) == status.Count();
         }
 
-        private int CountEndStaus(IEnumerable<TaskStatus> status)
+        private static int CountEndStaus(IEnumerable<TaskStatus> status)
         {
             var qtd = 0;
             foreach (var item in status)
@@ -217,7 +254,7 @@ namespace PromptPlusControls.Controls
             return qtd;
         }
 
-        private bool IsEndStaus(TaskStatus status)
+        private static bool IsEndStaus(TaskStatus status)
         {
             return status switch
             {
@@ -242,9 +279,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlWaitProcess
 
-        public IControlWaitProcess Prompt(string value)
+        public IControlWaitProcess Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 
@@ -268,54 +309,9 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IPromptControls<IEnumerable<ResultProcess>> EnabledAbortKey(bool value)
+        public IControlWaitProcess Config(Action<IPromptConfig> context)
         {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptControls<IEnumerable<ResultProcess>> EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptControls<IEnumerable<ResultProcess>> EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptControls<IEnumerable<ResultProcess>> HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<IEnumerable<ResultProcess>> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
+            context.Invoke(this);
             return this;
         }
 

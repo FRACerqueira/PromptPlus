@@ -7,11 +7,13 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PromptPlusControls.Internal;
-using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
 
-namespace PromptPlusControls.Controls
+using PPlus.Internal;
+
+using PPlus.Objects;
+using PPlus.Resources;
+
+namespace PPlus.Controls
 {
     internal class ProgressBarControl : ControlBase<ProgressBarInfo>, IControlProgressbar
     {
@@ -20,13 +22,14 @@ namespace PromptPlusControls.Controls
         private bool _newInteration = true;
         private readonly ProgressBarOptions _options;
         private double _step;
+        private const string Namecontrol = "PromptPlus.ProgressBar";
 
-        public ProgressBarControl(ProgressBarOptions options) : base(options.HideAfterFinish, false, options.EnabledAbortKey, options.EnabledAbortAllPipes, true)
+        public ProgressBarControl(ProgressBarOptions options) : base(Namecontrol, options, false, true)
         {
             _options = options;
         }
 
-        public override void InitControl()
+        public override string InitControl()
         {
             if (_options.UpdateHandler == null)
             {
@@ -35,6 +38,14 @@ namespace PromptPlusControls.Controls
             _options.InterationId ??= 0;
             _step = double.Parse(_options.Witdth.ToString()) / 100;
             _laststatus = new ProgressBarInfo(0, false, "", _options.InterationId);
+
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("DoneDelay", _options.DoneDelay.ToString(), LogKind.Property);
+                AddLog("ProcessCheckInterval", _options.ProcessCheckInterval.ToString(), LogKind.Property);
+                AddLog("Witdth", _options.Witdth.ToString(), LogKind.Property);
+            }
+            return null;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out ProgressBarInfo result)
@@ -89,7 +100,7 @@ namespace PromptPlusControls.Controls
             return false;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
             screenBuffer.WriteAnswer($" {_laststatus.PercentValue}% ");
@@ -101,6 +112,19 @@ namespace PromptPlusControls.Controls
             screenBuffer.PushCursor();
             screenBuffer.ClearRestOfLine();
 
+            if (HasDescription)
+            {
+                if (!HideDescription)
+                {
+                    screenBuffer.WriteLineDescription(_options.Description);
+                }
+                else
+                {
+                    screenBuffer.WriteLineDescription("");
+                }
+                screenBuffer.ClearRestOfLine();
+            }
+
             var bar = Barlength(_laststatus.PercentValue);
             screenBuffer.WriteLineHint("0% ");
             screenBuffer.WriteSliderOn(bar);
@@ -108,9 +132,10 @@ namespace PromptPlusControls.Controls
             screenBuffer.WriteHint(" 100%");
             if (_options.EnabledPromptTooltip)
             {
-                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, 3);
+                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, !HasDescription, 3);
             }
             screenBuffer.ClearRestOfLine();
+            return null;
         }
 
         private int Barlength(int value) => (int)(value * _step);
@@ -128,7 +153,7 @@ namespace PromptPlusControls.Controls
             }
         }
 
-        private bool IsEndStatus(TaskStatus status)
+        private static bool IsEndStatus(TaskStatus status)
         {
             return status switch
             {
@@ -140,9 +165,13 @@ namespace PromptPlusControls.Controls
 
         #region IControlProgressbar
 
-        public IControlProgressbar Prompt(string value)
+        public IControlProgressbar Prompt(string value, string description = null)
         {
             _options.Message = value;
+            if (description != null)
+            {
+                _options.Description = description;
+            }
             return this;
         }
 
@@ -164,54 +193,9 @@ namespace PromptPlusControls.Controls
             return this;
         }
 
-        public IPromptControls<ProgressBarInfo> EnabledAbortKey(bool value)
+        public IControlProgressbar Config(Action<IPromptConfig> context)
         {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptControls<ProgressBarInfo> EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptControls<ProgressBarInfo> EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptControls<ProgressBarInfo> HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<ProgressBarInfo> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
+            context.Invoke(this);
             return this;
         }
 

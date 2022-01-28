@@ -5,18 +5,24 @@
 
 using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 
-using PromptPlusControls.Internal;
+using Microsoft.Extensions.Logging;
 
-namespace PromptPlusControls.FIGlet
+using PPlus.FIGlet;
+using PPlus.Internal;
+using PPlus.Objects;
+
+namespace PPlus.Controls
 {
 
     internal class BannerControl : IFIGlet
     {
+        private const string SourceLog = "PromptPlus.Banner";
+
         private readonly ScreenRender _screenrender;
         private ConsoleColor _color = PromptPlus.ForegroundColor;
+        private readonly ControlLog _logs = new(SourceLog);
 
         public BannerControl(string value)
         {
@@ -27,9 +33,9 @@ namespace PromptPlusControls.FIGlet
         public string Text { get; private set; }
         public FIGletFont Font { get; private set; } = FIGletFont.Default;
         public CharacterWidth CharacterWidth { get; private set; } = CharacterWidth.Fitted;
-        public string[] Result { get; private set; }
-        public int Height => Font?.Height ?? 0;
-        public int Width => Result.Max(line => line?.Length ?? 0);
+
+        private string[] _result;
+        private int _height => Font?.Height ?? 0;
 
         public void InitAsciiArt()
         {
@@ -39,13 +45,13 @@ namespace PromptPlusControls.FIGlet
             }
             Text = Text.Replace(Environment.NewLine, "");
 
-            Result = new string[Font.Height];
+            _result = new string[Font.Height];
 
             switch (CharacterWidth)
             {
                 case CharacterWidth.Full:
                 {
-                    for (var currentLine = 0; currentLine < Height; currentLine++)
+                    for (var currentLine = 0; currentLine < _height; currentLine++)
                     {
                         var lineBuilder = new StringBuilder();
                         foreach (var currentChar in Text)
@@ -53,26 +59,26 @@ namespace PromptPlusControls.FIGlet
                             lineBuilder.Append(Font.GetCharacter(currentChar, currentLine));
                             lineBuilder.Append(' ');
                         }
-                        Result[currentLine] = lineBuilder.ToString();
+                        _result[currentLine] = lineBuilder.ToString();
                     }
                     break;
                 }
                 case CharacterWidth.Fitted:
                 {
-                    for (var currentLine = 0; currentLine < Height; currentLine++)
+                    for (var currentLine = 0; currentLine < _height; currentLine++)
                     {
                         var lineBuilder = new StringBuilder();
                         foreach (var currentChar in Text)
                         {
                             lineBuilder.Append(Font.GetCharacter(currentChar, currentLine));
                         }
-                        Result[currentLine] = lineBuilder.ToString();
+                        _result[currentLine] = lineBuilder.ToString();
                     }
                     break;
                 }
                 case CharacterWidth.Smush:
                 {
-                    for (var currentLine = 0; currentLine < Height; currentLine++)
+                    for (var currentLine = 0; currentLine < _height; currentLine++)
                     {
                         var lineBuilder = new StringBuilder();
                         lineBuilder.Append(Font.GetCharacter(Text[0], currentLine));
@@ -95,10 +101,19 @@ namespace PromptPlusControls.FIGlet
                             }
                             lastChar = currentChar;
                         }
-                        Result[currentLine] = lineBuilder.ToString();
+                        _result[currentLine] = lineBuilder.ToString();
                     }
                     break;
                 }
+            }
+        }
+
+        private void LoadFont(Stream value, bool withlog)
+        {
+            LoadFont(value);
+            if (withlog)
+            {
+                _logs.Add(LogLevel.Debug, "LoadFont", "stream", LogKind.Property);
             }
         }
 
@@ -116,7 +131,9 @@ namespace PromptPlusControls.FIGlet
         {
             using (var fso = File.Open(value, FileMode.Open))
             {
-                LoadFont(fso);
+                LoadFont(fso, false);
+                _logs.Add(LogLevel.Debug, "LoadFont", value, LogKind.Property);
+
             }
             return this;
         }
@@ -128,21 +145,30 @@ namespace PromptPlusControls.FIGlet
         }
 
 
-        public void Run(ConsoleColor? color = null)
+        public ResultPromptPlus<string> Run(ConsoleColor? color = null)
         {
             _color = color ?? PromptPlus.ForegroundColor;
             InitAsciiArt();
+            _logs.Add(LogLevel.Debug, "CharacterWidth", CharacterWidth.ToString(), LogKind.Property);
+            _logs.Add(LogLevel.Debug, "Color", _color.ToString(), LogKind.Property);
+
+            _screenrender.ClearBuffer();
             _screenrender.InputRender(InputTemplate);
+
+            PromptPlus.WriteLog(_logs);
+
+            return new ResultPromptPlus<string>(Text, false, false, _logs);
         }
 
-        private void InputTemplate(ScreenBuffer screenBuffer)
+        private string InputTemplate(ScreenBuffer screenBuffer)
         {
-            foreach (var item in Result)
+            foreach (var item in _result)
             {
                 screenBuffer.WriteLine(item, _color);
             }
             screenBuffer.WriteLine();
             screenBuffer.PushCursor();
+            return null;
         }
     }
 }

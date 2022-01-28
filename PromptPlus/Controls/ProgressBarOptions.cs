@@ -7,9 +7,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using PromptPlusControls.ValueObjects;
+using PPlus.Objects;
 
-namespace PromptPlusControls.Controls
+namespace PPlus.Controls
 {
     internal class ProgressBarOptions : BaseOptions
     {

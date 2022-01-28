@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;.net5;.net6</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>annotations</Nullable>
+    <RootNamespace>PPlus.CommandDotNet</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>Fernando Cerqueira</Authors>
+    <Description>Integration with the Command DotNet package with interactive command-line for  toolkit for C# with powerful controls and commands.</Description>
+    <PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>cli;command-line;console;interactive;prompt;terminal;c#;toolkit</PackageTags>
+    <RepositoryUrl>https://fracerqueira.github.io/PromptPlus</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageId>PromptPlusCommandDotNet</PackageId>
+    <PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
+    <PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
+    <Version>1.0.0.300</Version>
+    <PackageIcon>iconCmdNet.png</PackageIcon>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Copyright>© 2021 - Fernando Cerqueira </Copyright>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
+    <PackageReference Include="CommandDotNet" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='.net5'">
+    <PackageReference Include="CommandDotNet" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='.net6'">
+    <PackageReference Include="CommandDotNet" Version="6.0.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\PromptPlus\PromptPlus.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\iconCmdNet.png" Pack="true" PackagePath="\" />
+    <None Include="..\NugetREADME.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Exceptions.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Messages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Exceptions.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

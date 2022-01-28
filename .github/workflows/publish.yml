@@ -2,7 +2,9 @@ name: Publish
 
 on:
   push:
-    tags: [ v* ]
+    tags:
+      - PromptPlus*
+      - PPlusCmdDotNet*
 
 env:
   DOTNET_VERSION: 6.0.x
@@ -13,17 +15,25 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Use .NET Core ${{ env.DOTNET_VERSION }}
+    - name: Use .NET ${{ env.DOTNET_VERSION }}
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Setup Version
-      id: setup_version
-      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
+    - name: Extract package versionpkg versioncmd
+      uses: olegtarasov/get-tag@v2.1
+      id: tagName
+      with:
+        tagRegex: "(?<package>.*):(?<versionpkg>.*):(?<versioncmd>.*)" 
 
-    - name: Pack NuGet Package
-      run: dotnet pack PromptPlus/PromptPlus.csproj -c Release -o ./dist -p:Version=${{ steps.setup_version.outputs.VERSION }}
+    - name: Pack NuGet Package pplus
+      if: ${{ steps.tagName.outputs.package == 'PromptPlus'}}
+      run: dotnet pack PromptPlus/PromptPlus.csproj -c Release -o ./dist -p:Version=${{ steps.tagName.outputs.versionpkg }}
 
-    - name: Publish
+    - name: Pack NuGet Package cmddotnet
+      if: ${{ steps.tagName.outputs.package == 'PromptPlus' || steps.tagName.outputs.package == 'PPlusCmdDotNet'}}
+      run: dotnet pack PromptPlus.CommandDotNet/PromptPlus.CommandDotNet.csproj -c Release -o ./dist -p:Version=${{ steps.tagName.outputs.versioncmd }}
+
+    - name: Publish pplus/cmddotnet
+      if: ${{ steps.tagName.outputs.package == 'PromptPlus' || steps.tagName.outputs.package == 'PPlusCmdDotNet'}}
       run: dotnet nuget push dist/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json

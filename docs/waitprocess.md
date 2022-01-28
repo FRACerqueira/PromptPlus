@@ -12,41 +12,63 @@ Control WaitProcess. Wait process with animation.
 ![](./images/WaitProcess.gif)
 
 ### Syntax
-[**Top**](#-promptplus--waitprocess)
+[**Top**](#promptplus--waitprocess)
 
 ```csharp
-WaitProcess(string prompt = null)
+WaitProcess(string prompt, string description = null)
 ```
 
 ### Methods
-[**Top**](#-promptplus--sliderswitche)
+[**Top**](#promptplus--waitprocess)
 
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message
+  - set prompt message and optional description
+
 - ```csharp
   AddProcess(SingleProcess process)
 ``` 
   - Add struct-process will perform the Task. See [**SingleProcess**](singleprocess)
+
 - ```csharp
   SpeedAnimation(int value)
 ``` 
   - Animation speed.If value < 10, value = 10. If value > 1000, value = 1000.
 
+- ```csharp
+  Config(Action<IPromptConfig> context)
+  ``` 
+  - For access [**base methods**](basemethods) common to all controls.
+
+- ```csharp
+   PipeCondition(Func<ResultPipe[], object, bool> condition)
+  ``` 
+  - Set condition to run pipe.
+
+- ```csharp
+   ToPipe(string id, string title, object state = null)
+  ``` 
+  - Transform control to IFormPlusBase.
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+
+- ```csharp
+  ResultPromptPlus<IEnumerable<ResultProcess>> Run(CancellationToken? value = null)
+  ``` 
+	- Control execution
+
 ### Return
-[**Top**](#-promptplus--sliderswitche)
+[**Top**](#promptplus--waitprocess)
 
 ```csharp
-IControlSliderSwitche      //for Control Methods
-IPromptControls<bool>      //for others Base Methods
-ResultPromptPlus<bool>     //for Base Method Run, when execution is direct 
-IPromptPipe                //for Pipe condition and transform to IFormPlusBase 
-IFormPlusBase              //for only definition of pipe to Pipeline Control
+IControlWaitProcess                           //for Control Methods
+ResultPromptPlus<IEnumerable<ResultProcess>>  //After execute Run method
+IPromptPipe                                   //for Pipe condition and transform to IFormPlusBase 
+IFormPlusBase                                 //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#-promptplus--waitprocess)
+[**Top**](#promptplus--waitprocess)
 
 ```csharp
 var Process = PromptPlus.WaitProcess("My Tasks(3) Async")

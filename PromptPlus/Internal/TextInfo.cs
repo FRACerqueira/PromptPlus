@@ -5,7 +5,7 @@
 
 using System;
 
-namespace PromptPlusControls.Internal
+namespace PPlus.Internal
 {
     internal class TextInfo : IEquatable<TextInfo>
     {
@@ -43,6 +43,11 @@ namespace PromptPlusControls.Internal
             {
                 return (Text.GetHashCode() * 397) ^ ((int)Color + (int)ColorBg);
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as TextInfo);
         }
     }
 }

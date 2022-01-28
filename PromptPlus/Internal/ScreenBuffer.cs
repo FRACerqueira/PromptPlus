@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace PromptPlusControls.Internal
+namespace PPlus.Internal
 {
     internal class ScreenBuffer : List<IList<TextInfo>>
     {

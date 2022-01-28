@@ -5,7 +5,7 @@
 
 using System;
 
-namespace PromptPlusControls.Controls
+namespace PPlus.Controls
 {
     internal class KeyPressOptions : BaseOptions
     {

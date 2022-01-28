@@ -1,0 +1,28 @@
+{
+  "profiles": {
+    "Choose": {
+      "commandName": "Project",
+      "commandLineArgs": "prompts choose"
+    },
+    "Secure": {
+      "commandName": "Project",
+      "commandLineArgs": "prompts secure download"
+    },
+    "Wizard": {
+      "commandName": "Project",
+      "commandLineArgs": "[wizard]"
+    },
+    "Texts split": {
+      "commandName": "Project",
+      "commandLineArgs": "prompts echo --texts a,b,c"
+    },
+    "Help": {
+      "commandName": "Project",
+      "commandLineArgs": "prompts  -h"
+    },
+    "Interative": {
+      "commandName": "Project",
+      "commandLineArgs": "-i prompts echo --texts a,b,c"
+    }
+  }
+}

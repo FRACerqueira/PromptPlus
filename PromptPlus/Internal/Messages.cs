@@ -5,30 +5,42 @@
 
 using System.Threading;
 
-using PromptPlusControls.Resources;
+using PPlus.Resources;
 
-namespace PromptPlusControls.Internal
+using static PPlus.PromptPlus;
+
+namespace PPlus.Internal
 {
     internal static class Messages
     {
         public static void UpdateCulture()
         {
+            EnterAcceptSugestion = PromptPlusResources.EnterAcceptSugestion;
+            ReadlineNotFisnishHistoryhit = PromptPlusResources.ReadlineNotFisnishHistoryhit;
+            ReadlineFisnishHistoryhit = PromptPlusResources.ReadlineFisnishHistoryhit;
+            ReadlineSugestionMode = PromptPlusResources.ReadlineSugestionMode;
+            ReadlineHistoryEsc = PromptPlusResources.ReadlineHistoryEsc;
+            ReadlineHistoryhit = PromptPlusResources.ReadlineHistoryhit;
+            ReadlineSugestionhit = PromptPlusResources.ReadlineSugestionhit;
+            ReadlineSugestionMode = PromptPlusResources.ReadlineSugestionMode;
             PasswordStandardHotkeys = PromptPlusResources.PasswordStandardHotkeys;
             AnyKey = PromptPlusResources.AnyKey;
             CanceledText = PromptPlusResources.CanceledText;
             EmptyTitle = PromptPlusResources.EmptyTitle;
             EnterFininsh = PromptPlusResources.EnterFininsh;
             EscCancel = PromptPlusResources.EscCancel;
+            EscCancelWizard = PromptPlusResources.EscCancelWizard;
             EscCancelWithPipeline = PromptPlusResources.EscCancelWithPipeline;
             EscCancelWithPipeNotAll = PromptPlusResources.EscCancelWithPipeNotAll;
             FileNotSelected = PromptPlusResources.FileNotSelected;
             FolderCurrentPath = PromptPlusResources.FolderCurrentPath;
-            FolderKeyNavigation = string.Format(PromptPlusResources.FolderKeyNavigation, PromptPlus.UnSelectFilter);
+            FolderKeyNavigation = string.Format(PromptPlusResources.FolderKeyNavigation, UnSelectFilter);
             Invalid = PromptPlusResources.Invalid;
             ItemsFiltered = PromptPlusResources.ItemsFiltered;
             KeyNavPaging = PromptPlusResources.KeyNavPaging;
             ListItemAlreadyexists = PromptPlusResources.ListItemAlreadyexists;
-            ListKeyNavigation = string.Format(PromptPlusResources.ListKeyNavigation, PromptPlus.RemoveAll);
+            ListKeyNavigation = string.Format(PromptPlusResources.ListKeyNavigation, RemoveAll);
+            ListKeyNavigationFillZeros = string.Format(PromptPlusResources.ListKeyNavigationFillZeros, RemoveAll);
             ListMaxSelection = PromptPlusResources.ListMaxSelection;
             ListMinSelection = PromptPlusResources.ListMinSelection;
             LongNoKey = PromptPlusResources.LongNoKey;
@@ -37,7 +49,7 @@ namespace PromptPlusControls.Internal
             MinLength = PromptPlusResources.MinLength;
             MultiSelectMinSelection = PromptPlusResources.MultiSelectMinSelection;
             MultiSelectMaxSelection = PromptPlusResources.MultiSelectMaxSelection;
-            MultiSelectKeyNavigation = string.Format(PromptPlusResources.MultiSelectKeyNavigation, PromptPlus.UnSelectFilter, PromptPlus.SelectAll, PromptPlus.InvertSelect);
+            MultiSelectKeyNavigation = string.Format(PromptPlusResources.MultiSelectKeyNavigation, MarkSelect, UnSelectFilter, SelectAll, InvertSelect);
             NoKey = PromptPlusResources.NoKey.ToCharArray()[0];
             NoMatchRegex = PromptPlusResources.NoMatchRegex;
             OffValue = PromptPlusResources.OffValue;
@@ -50,9 +62,11 @@ namespace PromptPlusControls.Internal
             ResizeTerminal = PromptPlusResources.ResizeTerminal;
             RunningText = PromptPlusResources.RunningText;
             SelectKeyNavigation = PromptPlusResources.SelectKeyNavigation;
-            AutoCompleteKeyNavigation = string.Format(PromptPlusResources.AutoCompleteKeyNavigation, PromptPlus.UnSelectFilter);
+            AutoCompleteKeyNavigation = string.Format(PromptPlusResources.AutoCompleteKeyNavigation, UnSelectFilter);
             AutoCompleteKeyNotfound = PromptPlusResources.AutoCompleteKeyNotfound;
+            ShowStandardHotKeysDesc = PromptPlusResources.ShowStandardHotKeysDesc;
             ShowKeyPressStandardHotKeys = PromptPlusResources.ShowKeyPressStandardHotKeys;
+            ShowStandardHotKeysWithPipelineDesc = PromptPlusResources.ShowStandardHotKeysWithPipelineDesc;
             ShowKeyPressStandardHotKeysWithPipeline = PromptPlusResources.ShowKeyPressStandardHotKeysWithPipeline;
             ShowProcessStandardHotKeysWithPipeline = PromptPlusResources.ShowProcessStandardHotKeysWithPipeline;
             ShowStandardHotKeys = PromptPlusResources.ShowStandardHotKeys;
@@ -82,9 +96,10 @@ namespace PromptPlusControls.Internal
             InvalidTypeChar = PromptPlusResources.InvalidTypeChar;
             InvalidTypeNumber = PromptPlusResources.InvalidTypeNumber;
             InvalidTypeDateTime = string.Format(PromptPlusResources.InvalidTypeDateTime, FormatDate(), FormatTime());
-            SelectKeyNavigation = string.Format(PromptPlusResources.SelectKeyNavigation, PromptPlus.UnSelectFilter);
+            SelectKeyNavigation = string.Format(PromptPlusResources.SelectKeyNavigation, UnSelectFilter);
             FinishResultList = PromptPlusResources.FinishResultList;
             FinishResultTasks = PromptPlusResources.FinishResultTasks;
+            HotKeyDescription = PromptPlusResources.HotKeyDescription;
         }
 
         public static string FinishResultTasks { get; private set; } = PromptPlusResources.FinishResultTasks;
@@ -97,6 +112,35 @@ namespace PromptPlusControls.Internal
 
         public static string EmptyTitle { get; private set; } = PromptPlusResources.EmptyTitle;
 
+
+        private static string s_escCancelCmdDotNet;
+        public static string EscCancelWizard
+        {
+            get
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(s_escCancelCmdDotNet))
+                    {
+                        return string.Format(PromptPlusResources.EscCancelWizard, AbortKeyPress);
+                    }
+                    else
+                    {
+                        return string.Format(s_escCancelCmdDotNet, AbortKeyPress);
+                    }
+                }
+                catch (System.Exception)
+                {
+                    return string.Format(PromptPlusResources.EscCancelWizard, AbortKeyPress);
+                }
+            }
+            private set
+            {
+                s_escCancelCmdDotNet = value;
+            }
+        }
+
+
         private static string s_escCancel;
         public static string EscCancel
         {
@@ -106,16 +150,16 @@ namespace PromptPlusControls.Internal
                 {
                     if (string.IsNullOrEmpty(s_escCancel))
                     {
-                        return string.Format(PromptPlusResources.EscCancel, PromptPlus.AbortKeyPress);
+                        return string.Format(PromptPlusResources.EscCancel, AbortKeyPress);
                     }
                     else
                     {
-                        return string.Format(s_escCancel, PromptPlus.AbortKeyPress);
+                        return string.Format(s_escCancel, AbortKeyPress);
                     }
                 }
                 catch (System.Exception)
                 {
-                    return string.Format(PromptPlusResources.EscCancel, PromptPlus.AbortKeyPress);
+                    return string.Format(PromptPlusResources.EscCancel, AbortKeyPress);
                 }
             }
             private set
@@ -133,16 +177,16 @@ namespace PromptPlusControls.Internal
                 {
                     if (string.IsNullOrEmpty(s_escCancelWithPipeline))
                     {
-                        return string.Format(PromptPlusResources.EscCancelWithPipeline, PromptPlus.AbortKeyPress, PromptPlus.AbortAllPipesKeyPress);
+                        return string.Format(PromptPlusResources.EscCancelWithPipeline, AbortKeyPress, AbortAllPipesKeyPress);
                     }
                     else
                     {
-                        return string.Format(s_escCancelWithPipeline, PromptPlus.AbortKeyPress, PromptPlus.AbortAllPipesKeyPress);
+                        return string.Format(s_escCancelWithPipeline, AbortKeyPress, AbortAllPipesKeyPress);
                     }
                 }
                 catch (System.Exception)
                 {
-                    return string.Format(PromptPlusResources.EscCancelWithPipeline, PromptPlus.AbortKeyPress, PromptPlus.AbortAllPipesKeyPress);
+                    return string.Format(PromptPlusResources.EscCancelWithPipeline, AbortKeyPress, AbortAllPipesKeyPress);
                 }
 
             }
@@ -161,16 +205,16 @@ namespace PromptPlusControls.Internal
                 {
                     if (string.IsNullOrEmpty(s_escCancelWithPipeNotAll))
                     {
-                        return string.Format(PromptPlusResources.EscCancelWithPipeNotAll, PromptPlus.AbortKeyPress);
+                        return string.Format(PromptPlusResources.EscCancelWithPipeNotAll, AbortKeyPress);
                     }
                     else
                     {
-                        return string.Format(s_escCancelWithPipeNotAll, PromptPlus.AbortKeyPress);
+                        return string.Format(s_escCancelWithPipeNotAll, AbortKeyPress);
                     }
                 }
                 catch (System.Exception)
                 {
-                    return string.Format(PromptPlusResources.EscCancelWithPipeNotAll, PromptPlus.AbortKeyPress);
+                    return string.Format(PromptPlusResources.EscCancelWithPipeNotAll, AbortKeyPress);
                 }
             }
             private set
@@ -208,21 +252,23 @@ namespace PromptPlusControls.Internal
 
         public static string MultiSelectMaxSelection { get; private set; } = PromptPlusResources.MultiSelectMaxSelection;
 
-        public static string MultiSelectKeyNavigation { get; private set; } = string.Format(PromptPlusResources.MultiSelectKeyNavigation, PromptPlus.UnSelectFilter, PromptPlus.SelectAll, PromptPlus.InvertSelect);
+        public static string MultiSelectKeyNavigation { get; private set; } = string.Format(PromptPlusResources.MultiSelectKeyNavigation, MarkSelect, UnSelectFilter, SelectAll, InvertSelect);
 
         public static string ListMinSelection { get; private set; } = PromptPlusResources.ListMinSelection;
 
         public static string ListMaxSelection { get; private set; } = PromptPlusResources.ListMaxSelection;
 
-        public static string ListKeyNavigation { get; private set; } = string.Format(PromptPlusResources.ListKeyNavigation, PromptPlus.RemoveAll);
+        public static string ListKeyNavigation { get; private set; } = string.Format(PromptPlusResources.ListKeyNavigation, RemoveAll);
+
+        public static string ListKeyNavigationFillZeros { get; private set; } = string.Format(PromptPlusResources.ListKeyNavigationFillZeros, RemoveAll);
 
         public static string ListItemAlreadyexists { get; private set; } = PromptPlusResources.ListItemAlreadyexists;
 
-        public static string SelectKeyNavigation { get; private set; } = string.Format(PromptPlusResources.SelectKeyNavigation, PromptPlus.UnSelectFilter);
+        public static string SelectKeyNavigation { get; private set; } = string.Format(PromptPlusResources.SelectKeyNavigation, UnSelectFilter);
 
         public static string AutoCompleteKeyNotfound { get; private set; } = PromptPlusResources.AutoCompleteKeyNavigation;
 
-        public static string AutoCompleteKeyNavigation { get; private set; } = string.Format(PromptPlusResources.AutoCompleteKeyNavigation, PromptPlus.UnSelectFilter);
+        public static string AutoCompleteKeyNavigation { get; private set; } = string.Format(PromptPlusResources.AutoCompleteKeyNavigation, UnSelectFilter);
 
         public static string KeyNavPaging { get; private set; } = PromptPlusResources.KeyNavPaging;
 
@@ -230,7 +276,9 @@ namespace PromptPlusControls.Internal
 
         public static string PaginationTemplate { get; private set; } = PromptPlusResources.PaginationTemplate;
 
-        public static string FolderKeyNavigation { get; private set; } = string.Format(PromptPlusResources.FolderKeyNavigation, PromptPlus.UnSelectFilter);
+        public static string HotKeyDescription { get; private set; } = PromptPlusResources.HotKeyDescription;
+
+        public static string FolderKeyNavigation { get; private set; } = string.Format(PromptPlusResources.FolderKeyNavigation, UnSelectFilter);
 
         public static string FolderCurrentPath { get; private set; } = PromptPlusResources.FolderCurrentPath;
 
@@ -262,7 +310,11 @@ namespace PromptPlusControls.Internal
 
         public static string ShowStandardHotKeys { get; private set; } = PromptPlusResources.ShowStandardHotKeys;
 
+        public static string ShowStandardHotKeysDesc { get; private set; } = PromptPlusResources.ShowStandardHotKeysDesc;
+
         public static string ShowStandardHotKeysWithPipeline { get; private set; } = PromptPlusResources.ShowStandardHotKeysWithPipeline;
+
+        public static string ShowStandardHotKeysWithPipelineDesc { get; private set; } = PromptPlusResources.ShowStandardHotKeysWithPipelineDesc;
 
         public static string ShowProcessStandardHotKeysWithPipeline { get; private set; } = PromptPlusResources.ShowProcessStandardHotKeysWithPipeline;
 
@@ -302,6 +354,20 @@ namespace PromptPlusControls.Internal
 
         public static string InvalidTypeDateTime { get; private set; } = string.Format(PromptPlusResources.InvalidTypeDateTime, FormatDate(), FormatTime());
 
+        public static string EnterAcceptSugestion { get; private set; } = PromptPlusResources.EnterAcceptSugestion;
+
+        public static string ReadlineFisnishHistoryhit { get; private set; } = PromptPlusResources.ReadlineFisnishHistoryhit;
+
+        public static string ReadlineSugestionMode { get; private set; } = PromptPlusResources.ReadlineSugestionMode;
+
+        public static string ReadlineHistoryEsc { get; private set; } = PromptPlusResources.ReadlineHistoryEsc;
+
+        public static string ReadlineHistoryhit { get; private set; } = PromptPlusResources.ReadlineHistoryhit;
+
+        public static string ReadlineSugestionhit { get; private set; } = PromptPlusResources.ReadlineSugestionhit;
+
+        public static string ReadlineNotFisnishHistoryhit { get; private set; } = PromptPlusResources.ReadlineNotFisnishHistoryhit;
+
         private static string FormatDate()
         {
             var dtsep = Thread.CurrentThread.CurrentCulture.DateTimeFormat.DateSeparator;
@@ -315,7 +381,6 @@ namespace PromptPlusControls.Internal
             var stdtmfmt = Thread.CurrentThread.CurrentCulture.DateTimeFormat.LongTimePattern.ToUpper().Split(Thread.CurrentThread.CurrentCulture.DateTimeFormat.TimeSeparator[0]);
             return $"{stdtmfmt[0][0]}{tmsep}{stdtmfmt[1][0]}{tmsep}{stdtmfmt[2][0]}";
         }
-
 
         public static string InvalidTypeNumber { get; private set; } = PromptPlusResources.InvalidTypeNumber;
     }

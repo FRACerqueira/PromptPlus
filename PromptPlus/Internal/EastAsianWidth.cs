@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PromptPlusControls.Internal
+namespace PPlus.Internal
 {
     internal static class EastAsianWidth
     {

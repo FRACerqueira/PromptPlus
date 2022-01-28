@@ -9,11 +9,14 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-using PromptPlusControls.Controls;
-using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
+using PPlus.Controls;
 
-namespace PromptPlusControls.Internal
+using PPlus.Objects;
+using PPlus.Resources;
+
+using static PPlus.PromptPlus;
+
+namespace PPlus.Internal
 {
     internal class MaskedBuffer
     {
@@ -38,58 +41,133 @@ namespace PromptPlusControls.Internal
         private const string CharNumbers = "0123456789";
         private const string CharLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
+        //storage char custom from mask . key = valid position
         private readonly Dictionary<int, string> _charCustoms = new();
         private readonly StringBuilder _inputBuffer = new();
+
+        //only char input
         private readonly string _localMask;
+        //logical mask for generic
         private readonly string _logicalMaskGeneric;
+        //logical mask for kind datetime
         private readonly string _logicalMaskDateTime;
+        //logical mask for kind numeric
         private readonly string _logicalMaskNumeric;
+        //logical mask for kind currency
         private readonly string _logicalMaskCurrency;
 
-        private readonly string _localDefaultValue;
         private readonly CultureInfo _cultureMasked;
 
         private readonly string[] _tooltips;
+        // list of valid positions to using un logical masks
         private readonly int[] _validPosition;
+        //position of separator decimal
         private readonly int _decimalPosition;
+
+        //suggar to kind types
         private readonly bool _isTypeTime;
         private readonly bool _isTypeDateTime;
         private readonly bool _isTypeNumber;
         private readonly bool _isTypeGeneric;
+
         private readonly bool _acceptSignal;
+
         private readonly char _notationAMDesignator;
         private readonly char _notationPMDesignator;
+
         private readonly int _maskIniTime;
         private readonly int _diffIniTime;
         private readonly int _iniTime;
 
-        private readonly char _promptmask = PromptPlus.Symbols.MaskEmpty.ToString()[0];
+        private readonly char _promptmask = Symbols.MaskEmpty.ToString()[0];
         private readonly MaskedOptions _maskInputOptions;
-        private char _signalNumberInput;
-        private string _signalTimeInput;
+
+        public char SignalNumberInput { get; private set; }
+
+        public string SignalTimeInput { get; private set; }
+
         private string _validSignalNumber;
 
         public MaskedBuffer(MaskedOptions maskInputOptions)
         {
-
             _maskInputOptions = maskInputOptions;
-            _cultureMasked = maskInputOptions.CurrentCulture;
 
-            if (_cultureMasked.DateTimeFormat.AMDesignator.Length > 0)
+            if (_maskInputOptions.CurrentCulture == null)
             {
-                _notationAMDesignator = _cultureMasked.DateTimeFormat.AMDesignator.ToUpper()[0];
+                _maskInputOptions.CurrentCulture = DefaultCulture;
             }
-            if (_cultureMasked.DateTimeFormat.PMDesignator.Length > 0)
-            {
-                _notationPMDesignator = _cultureMasked.DateTimeFormat.PMDesignator.ToUpper()[0];
-            }
+            _cultureMasked = _maskInputOptions.CurrentCulture;
 
+            _maskInputOptions.DefaultValueWitdMask = _maskInputOptions.DefaultObject?.ToString() ?? string.Empty;
 
             _isTypeTime = _maskInputOptions.Type == MaskedType.TimeOnly || _maskInputOptions.Type == MaskedType.DateTime;
             _isTypeDateTime = _maskInputOptions.Type == MaskedType.TimeOnly || _maskInputOptions.Type == MaskedType.DateTime || _maskInputOptions.Type == MaskedType.DateOnly;
             _isTypeNumber = _maskInputOptions.Type == MaskedType.Currency || _maskInputOptions.Type == MaskedType.Number;
             _isTypeGeneric = _maskInputOptions.Type == MaskedType.Generic;
             _acceptSignal = _maskInputOptions.AcceptSignal != MaskedSignal.None;
+
+            if (GetAMDesignator().Length > 0)
+            {
+                _notationAMDesignator = GetAMDesignator().ToUpper()[0];
+            }
+            if (GetPMDesignator().Length > 0)
+            {
+                _notationPMDesignator = GetPMDesignator().ToUpper()[0];
+            }
+
+            switch (_maskInputOptions.Type)
+            {
+                case MaskedType.Generic:
+                    if (string.IsNullOrEmpty(_maskInputOptions.MaskValue))
+                    {
+                        throw new ArgumentException(Exceptions.Ex_InvalidMask);
+                    }
+                    break;
+                case MaskedType.DateOnly:
+                    _maskInputOptions.MaskValue = CreateMaskedOnlyDate();
+                    ConvertDefaultDateValue();
+                    _maskInputOptions.Validators.Add(PromptPlusValidators.IsDateTime(_maskInputOptions.CurrentCulture, Messages.Invalid));
+                    break;
+                case MaskedType.TimeOnly:
+                    _maskInputOptions.MaskValue = CreateMaskedOnlyTime();
+                    ConvertDefaultDateValue();
+                    _maskInputOptions.Validators.Add(PromptPlusValidators.IsDateTime(_maskInputOptions.CurrentCulture, Messages.Invalid));
+                    break;
+                case MaskedType.DateTime:
+                    _maskInputOptions.MaskValue = CreateMaskedOnlyDateTime();
+                    ConvertDefaultDateValue();
+                    _maskInputOptions.Validators.Add(PromptPlusValidators.IsDateTime(_maskInputOptions.CurrentCulture, Messages.Invalid));
+                    break;
+                case MaskedType.Number:
+                case MaskedType.Currency:
+                    _maskInputOptions.FillNumber = Defaultfill;
+                    if (_maskInputOptions.AmmountInteger < 0)
+                    {
+                        throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, _maskInputOptions.AmmountInteger));
+                    }
+                    if (_maskInputOptions.AmmountDecimal < 0)
+                    {
+                        throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, _maskInputOptions.AmmountDecimal));
+                    }
+                    if (_maskInputOptions.AmmountInteger + _maskInputOptions.AmmountDecimal == 0)
+                    {
+                        throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, $"{_maskInputOptions.AmmountInteger},{ _maskInputOptions.AmmountDecimal}"));
+                    }
+                    if (_maskInputOptions.Type == MaskedType.Number)
+                    {
+                        _maskInputOptions.MaskValue = CreateMaskedNumber();
+                        _maskInputOptions.Validators.Add(PromptPlusValidators.IsNumber(_maskInputOptions.CurrentCulture, Messages.Invalid));
+                    }
+                    else
+                    {
+                        _maskInputOptions.MaskValue = CreateMaskedCurrency();
+                        _maskInputOptions.Validators.Add(PromptPlusValidators.IsCurrency(_maskInputOptions.CurrentCulture, Messages.Invalid));
+                    }
+                    ConvertDefaultNumberValue();
+                    break;
+                default:
+                    throw new ArgumentException(string.Format(Exceptions.Ex_InvalidType, maskInputOptions.Type));
+            }
 
             _localMask = ConvertAndValidateMaskNotation(_maskInputOptions.MaskValue, _charCustoms);
             _logicalMaskGeneric = CreateLogicalMaskGenericNotation();
@@ -141,16 +219,20 @@ namespace PromptPlusControls.Internal
                 }
             }
 
-            _signalNumberInput = " "[0];
-            _signalTimeInput = string.Empty;
+            SignalNumberInput = " "[0];
+            SignalTimeInput = string.Empty;
             _validSignalNumber = $"{_cultureMasked.NumberFormat.PositiveSign[0]}{_cultureMasked.NumberFormat.NegativeSign[0]}";
 
-            _localDefaultValue = PreparationDefaultValue();
-
-            Load(_localDefaultValue);
-
+            Clear();
             Position = 0;
+            //load initial values(PreparationDefaultValue = transform mask to widthoutmask)
+            if (!string.IsNullOrEmpty(_maskInputOptions.DefaultValueWitdMask))
+            {
+                Load(PreparationDefaultValue(_maskInputOptions.DefaultValueWitdMask, false));
+            }
         }
+
+        public static char? Defaultfill => '0';
 
         public int Position { get; private set; }
 
@@ -158,54 +240,60 @@ namespace PromptPlusControls.Internal
 
         public bool IsStart => Position == 0;
 
-        public bool IsEnd => Position == _inputBuffer.Length;
+        public bool IsEnd
+        {
+            get
+            {
+                if (IsMaxInput)
+                {
+                    return Position == _inputBuffer.Length - 1;
+                }
+                else
+                {
+                    if (_inputBuffer.Length == 0)
+                    {
+                        return true;
+                    }
+                    return Position == _inputBuffer.Length;
+                }
+            }
+        }
 
         public bool IsMaxInput => Length == _validPosition.Length;
 
-        public string Tooltip => _tooltips[Position];
+        public string Tooltip
+        {
+            get
+            {
+                return _tooltips[Position];
+            }
+        }
 
         public MaskedBuffer Insert(char value, out bool isvalid)
         {
             isvalid = false;
             if (_isTypeNumber && _acceptSignal && _validSignalNumber.IndexOf(value) != -1)
             {
-                _signalNumberInput = value;
+                SignalNumberInput = value;
                 isvalid = true;
                 return this;
             }
-            else if (_isTypeTime && char.ToUpper(value) == _notationAMDesignator)
+            else if (_isTypeTime && char.ToUpper(value) == _notationAMDesignator && HasAMPMDesignator())
             {
-                _signalTimeInput = _cultureMasked.DateTimeFormat.AMDesignator;
+                SignalTimeInput = GetAMDesignator();
                 isvalid = true;
                 return this;
             }
-            else if (_isTypeTime && char.ToUpper(value) == _notationPMDesignator)
+            else if (_isTypeTime && char.ToUpper(value) == _notationPMDesignator && HasAMPMDesignator())
             {
-                _signalTimeInput = _cultureMasked.DateTimeFormat.PMDesignator;
+                SignalTimeInput = GetPMDesignator();
                 isvalid = true;
                 return this;
-            }
-            if (_isTypeGeneric)
-            {
-                if (IsMaxInput && IsEnd)
-                {
-                    return this;
-                }
-            }
-            else if (_isTypeDateTime)
-            {
-                if (value != _cultureMasked.DateTimeFormat.DateSeparator[0] && value != _cultureMasked.DateTimeFormat.TimeSeparator[0])
-                {
-                    if (IsMaxInput && IsEnd)
-                    {
-                        return this;
-                    }
-                }
             }
             switch (_maskInputOptions.Type)
             {
                 case MaskedType.Generic:
-                    isvalid = InputTypeGeneric(value);
+                    isvalid = InputTypeGeneric(value, (char)0, _logicalMaskGeneric);
                     break;
                 case MaskedType.DateOnly:
                     isvalid = InputTypeDateOnly(value);
@@ -240,21 +328,77 @@ namespace PromptPlusControls.Internal
                 }
                 else
                 {
-                    return Backspace();
+                    var aux = new StringBuilder();
+                    if (Position > 0)
+                    {
+                        _ = aux.Append(_inputBuffer.ToString().Substring(0, Position));
+                    }
+                    if (!IsEnd)
+                    {
+                        _ = aux.Append(_inputBuffer.ToString().Substring(Position + 1))
+                               .Append(_maskInputOptions.FillNumber.Value);
+                    }
+                    _inputBuffer.Clear().Append(aux);
+                    return this;
                 }
             }
-            if (_inputBuffer.Length > 0 && Position < _inputBuffer.Length)
+            else if (_isTypeDateTime && _maskInputOptions.FillNumber.HasValue)
             {
-                _inputBuffer.Remove(Position, 1);
+                if (IsMaxInput && IsEnd)
+                {
+                    _inputBuffer[Position] = _maskInputOptions.FillNumber.Value;
+                }
+                else
+                {
+                    var aux = _inputBuffer.ToString().Substring(0, Position) + _inputBuffer.ToString().Substring(Position + 1);
+                    _inputBuffer.Clear();
+                    _inputBuffer.Append(aux);
+                    _inputBuffer.Append(_maskInputOptions.FillNumber.Value);
+                }
+            }
+            else
+            {
+                if (_inputBuffer.Length > 0 && Position < _inputBuffer.Length)
+                {
+                    _inputBuffer.Remove(Position, 1);
+                }
             }
             return this;
+        }
+
+        public int ValidBackwardPosition()
+        {
+            var result = -1;
+            for (var i = 0; i < (_decimalPosition < 0 ? _inputBuffer.Length : _decimalPosition); i++)
+            {
+                if (_inputBuffer[i] != _maskInputOptions.FillNumber)
+                {
+                    result = i;
+                    break;
+                }
+            }
+            if (result < 0)
+            {
+                result = (_decimalPosition < 0 ? _inputBuffer.Length : _decimalPosition);
+            }
+            return result;
         }
 
         public MaskedBuffer Backward()
         {
             if (Position > 0)
             {
-                Position--;
+                if (_isTypeNumber)
+                {
+                    if (ValidBackwardPosition() <= Position - 1)
+                    {
+                        Position--;
+                    }
+                }
+                else
+                {
+                    Position--;
+                }
             }
             return this;
         }
@@ -308,40 +452,81 @@ namespace PromptPlusControls.Internal
 
         public MaskedBuffer Clear()
         {
-            _signalNumberInput = " "[0];
-            _signalTimeInput = string.Empty;
-            if (!_isTypeGeneric && _maskInputOptions.FillNumber.HasValue)
+            SignalNumberInput = " "[0];
+            SignalTimeInput = string.Empty;
+            _inputBuffer.Clear();
+            if (_maskInputOptions.FillNumber.HasValue)
             {
-                for (var i = 0; i < _inputBuffer.Length; i++)
+                foreach (var item in _localMask)
                 {
-                    _inputBuffer[i] = _maskInputOptions.FillNumber.Value;
+                    if (item == '9')
+                    {
+                        _inputBuffer.Append(_maskInputOptions.FillNumber.Value);
+                    }
+                }
+            }
+            if (_isTypeNumber)
+            {
+                Position = _decimalPosition < 0 ? _inputBuffer.Length - 1 : _decimalPosition;
+            }
+            else
+            {
+                Position = 0;
+            }
+            return this;
+        }
+
+        public MaskedBuffer ToEnd()
+        {
+            if (IsMaxInput)
+            {
+                Position = _inputBuffer.Length - 1;
+            }
+            else
+            {
+                if (_inputBuffer.Length == 0)
+                {
+                    Position = 0;
+                }
+                Position = _inputBuffer.Length;
+            }
+            return this;
+        }
+
+        public MaskedBuffer ToStart()
+        {
+            if (_isTypeNumber)
+            {
+                Position = 0;
+                for (var i = 0; i < (_decimalPosition < 0 ? _inputBuffer.Length - 1 : _decimalPosition); i++)
+                {
+                    if (_inputBuffer[i] != _maskInputOptions.FillNumber.Value)
+                    {
+                        break;
+                    }
+                    Position++;
                 }
             }
             else
             {
-                _inputBuffer.Clear();
+                Position = 0;
             }
-            Position = 0;
             return this;
         }
 
-        public string ToBackwardString() => OutputMask.Substring(0, LogicalPosition);
+        public string ToBackwardString() => OutputMask.Substring(0, LogicalPosition(Position));
 
-        public string ToForwardString() => OutputMask.Substring(LogicalPosition);
+        public string ToForwardString() => OutputMask.Substring(LogicalPosition(Position));
 
         public override string ToString() => _inputBuffer.ToString();
 
         public string ToMasked()
         {
-            var poslast = _validPosition.Select((poschar, index) => new { poschar, index }).Last().index;
-            if (poslast == Length)
-            {
-                return OutputMask.Replace(_promptmask.ToString(), string.Empty);
-            }
             if (Length == 0)
             {
                 return string.Empty;
             }
+
             var aux = OutputMask.Substring(0, _validPosition[Length - 1] + 1).Replace(_promptmask.ToString(), string.Empty);
             switch (_maskInputOptions.Type)
             {
@@ -358,21 +543,21 @@ namespace PromptPlusControls.Internal
                     {
                         aux += ":00";
                     }
-                    if (!string.IsNullOrEmpty(_cultureMasked.DateTimeFormat.AMDesignator))
+                    if (HasAMPMDesignator())
                     {
-                        if (_signalTimeInput == _cultureMasked.DateTimeFormat.AMDesignator || string.IsNullOrEmpty(_signalTimeInput))
+                        if (SignalTimeInput == GetAMDesignator() || string.IsNullOrEmpty(SignalTimeInput))
                         {
-                            aux += " " + _cultureMasked.DateTimeFormat.AMDesignator;
+                            aux += " " + GetAMDesignator();
                         }
-                        else if (_signalTimeInput == _cultureMasked.DateTimeFormat.PMDesignator)
+                        else if (SignalTimeInput == GetPMDesignator())
                         {
-                            aux += " " + _cultureMasked.DateTimeFormat.PMDesignator;
+                            aux += " " + GetPMDesignator();
                         }
                     }
                     break;
                 case MaskedType.Number:
                 case MaskedType.Currency:
-                    if (_signalNumberInput == _cultureMasked.NumberFormat.NegativeSign[0])
+                    if (SignalNumberInput == _cultureMasked.NumberFormat.NegativeSign[0])
                     {
                         aux = $"{_cultureMasked.NumberFormat.NegativeSign}{aux}";
                     }
@@ -383,48 +568,318 @@ namespace PromptPlusControls.Internal
             return aux;
         }
 
-        private bool InputTypeGeneric(char value)
+        #region internal methods
+
+        internal MaskedBuffer Load(string value)
         {
-            var mask = _logicalMaskGeneric[LogicalPosition];
+            Clear();
+            if (string.IsNullOrEmpty(value))
+            {
+                return this;
+            }
+            switch (_maskInputOptions.Type)
+            {
+                case MaskedType.Generic:
+                    _inputBuffer.Clear();
+                    _inputBuffer.Append(value);
+                    if (IsMaxInput)
+                    {
+                        Position = _inputBuffer.Length - 1;
+                    }
+                    else
+                    {
+                        Position = _inputBuffer.Length;
+                    }
+                    break;
+                case MaskedType.DateOnly:
+                case MaskedType.TimeOnly:
+                case MaskedType.DateTime:
+                {
+                    SignalTimeInput = string.Empty;
+                    var aux = value
+                        .Replace(_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator, "")
+                        .Replace(_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator, "")
+                        .Replace(" ", "");
+                    if (HasAMPMDesignator())
+                    {
+                        if (aux.Contains(GetAMDesignator()))
+                        {
+                            SignalTimeInput = GetAMDesignator();
+                        }
+                        else if (aux.Contains(GetPMDesignator()))
+                        {
+                            SignalTimeInput = GetPMDesignator();
+                        }
+                        if (SignalTimeInput.Length > 0)
+                        {
+                            aux = aux.Replace(SignalTimeInput, "");
+                        }
+                    }
+                    _inputBuffer.Clear();
+                    if (aux.Trim().Length > _validPosition.Length)
+                    {
+                        aux = aux.Substring(0, _validPosition.Length);
+                    }
+                    _inputBuffer.Append(aux.Trim());
+                    if (_maskInputOptions.Type == MaskedType.DateTime)
+                    {
+                        while (_inputBuffer.Length < _validPosition.Length)
+                        {
+                            if (_inputBuffer.Length < _iniTime)
+                            {
+                                _inputBuffer.Append('1');
+                            }
+                            else
+                            {
+                                _inputBuffer.Append('0');
+                            }
+                        }
+                        if (!DateTime.TryParseExact(ToMasked(), _maskInputOptions.CurrentCulture.DateTimeFormat.GetAllDateTimePatterns(), _maskInputOptions.CurrentCulture, DateTimeStyles.None, out _))
+                        {
+                            _inputBuffer.Clear();
+                            Position = 0;
+                        }
+                        else
+                        {
+                            _inputBuffer.Clear();
+                            _inputBuffer.Append(aux.Trim());
+                            var diff = 0;
+                            if (_maskInputOptions.FillNumber.HasValue)
+                            {
+                                while (_inputBuffer.Length < _validPosition.Length)
+                                {
+                                    _inputBuffer.Append('0');
+                                    if (_maskInputOptions.FillNumber.HasValue)
+                                    {
+                                        diff++;
+                                    }
+                                }
+                            }
+                            if (IsMaxInput && IsEnd)
+                            {
+                                Position = _inputBuffer.Length - 1;
+                            }
+                            else
+                            {
+                                Position = _inputBuffer.Length - diff;
+                                if (Position == _validPosition.Length)
+                                {
+                                    Position--;
+                                }
+                            }
+                        }
+                    }
+                    else if (_maskInputOptions.Type == MaskedType.DateOnly)
+                    {
+                        while (_inputBuffer.Length < _validPosition.Length)
+                        {
+                            _inputBuffer.Append('1');
+                        }
+                        if (!DateTime.TryParseExact(ToMasked(), _maskInputOptions.CurrentCulture.DateTimeFormat.GetAllDateTimePatterns(), _maskInputOptions.CurrentCulture, DateTimeStyles.None, out _))
+                        {
+                            _inputBuffer.Clear();
+                            Position = 0;
+                        }
+                        else
+                        {
+                            _inputBuffer.Clear();
+                            _inputBuffer.Append(aux.Trim());
+                            var diff = 0;
+                            if (_maskInputOptions.FillNumber.HasValue)
+                            {
+                                while (_inputBuffer.Length < _validPosition.Length)
+                                {
+                                    _inputBuffer.Append('0');
+                                    if (_maskInputOptions.FillNumber.HasValue)
+                                    {
+                                        diff++;
+                                    }
+                                }
+                            }
+                            if (IsMaxInput && IsEnd)
+                            {
+                                Position = _inputBuffer.Length - 1;
+                            }
+                            else
+                            {
+                                Position = _inputBuffer.Length - diff;
+                                if (Position == _validPosition.Length)
+                                {
+                                    Position--;
+                                }
+                            }
+                        }
+                    }
+                    else if (_maskInputOptions.Type == MaskedType.TimeOnly)
+                    {
+                        var diff = 0;
+                        while (_inputBuffer.Length < _validPosition.Length)
+                        {
+                            _inputBuffer.Append('0');
+                            if (_maskInputOptions.FillNumber.HasValue)
+                            {
+                                diff++;
+                            }
+                        }
+                        if (!DateTime.TryParseExact(ToMasked(), _maskInputOptions.CurrentCulture.DateTimeFormat.GetAllDateTimePatterns(), _maskInputOptions.CurrentCulture, DateTimeStyles.None, out _))
+                        {
+                            _inputBuffer.Clear();
+                            Position = 0;
+                        }
+                        else
+                        {
+                            if (!_maskInputOptions.FillNumber.HasValue)
+                            {
+                                _inputBuffer.Clear();
+                                _inputBuffer.Append(aux.Trim());
+                            }
+                            if (IsMaxInput && IsEnd)
+                            {
+                                Position = _inputBuffer.Length - 1;
+                            }
+                            else
+                            {
+                                Position = _inputBuffer.Length - diff;
+                                if (Position == _validPosition.Length)
+                                {
+                                    Position--;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                }
+                case MaskedType.Number:
+                case MaskedType.Currency:
+                {
+                    var ns = NumberStyles.Number;
+                    var ds = _maskInputOptions.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+                    if (_maskInputOptions.Type == MaskedType.Currency)
+                    {
+                        ns = NumberStyles.Currency;
+                        ds = _maskInputOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator;
+                    }
+
+                    SignalNumberInput = " "[0];
+                    if (double.TryParse(value, ns, _maskInputOptions.CurrentCulture, out var daux))
+                    {
+                        var aux = daux.ToString(_maskInputOptions.CurrentCulture)
+                            .Replace(_maskInputOptions.CurrentCulture.NumberFormat.NumberGroupSeparator, "")
+                            .Replace(_maskInputOptions.CurrentCulture.NumberFormat.CurrencyGroupSeparator, "");
+                        if (aux.Contains(_maskInputOptions.CurrentCulture.NumberFormat.PositiveSign))
+                        {
+                            SignalNumberInput = _maskInputOptions.CurrentCulture.NumberFormat.PositiveSign[0];
+                        }
+                        else if (aux.Contains(_maskInputOptions.CurrentCulture.NumberFormat.NegativeSign))
+                        {
+                            SignalNumberInput = _maskInputOptions.CurrentCulture.NumberFormat.NegativeSign[0];
+                        }
+                        _inputBuffer.Clear();
+                        var intpart = Math.Round(daux, 0).ToString();
+                        var lint = intpart.Length;
+                        intpart = intpart.PadLeft(_maskInputOptions.AmmountInteger, _maskInputOptions.FillNumber.Value);
+                        var ldec = 0;
+                        var decpart = string.Empty;
+                        if (_decimalPosition >= 0)
+                        {
+                            decpart = aux.Replace(ds, "").Substring(lint);
+                            ldec = decpart.Length;
+                            decpart = decpart.PadRight(_maskInputOptions.AmmountDecimal, _maskInputOptions.FillNumber.Value);
+                        }
+                        _inputBuffer.Append(intpart);
+                        _inputBuffer.Append(decpart);
+                        Position = _decimalPosition < 0 ? _inputBuffer.Length - 1 : _decimalPosition + ldec;
+                    }
+                    else
+                    {
+                        Clear();
+                        Position = _decimalPosition < 0 ? _inputBuffer.Length - 1 : _decimalPosition;
+                    }
+                    break;
+                }
+            }
+            return this;
+        }
+
+        internal string PreparationDefaultValue(string value, bool skiplenght)
+        {
+            SignalNumberInput = " "[0];
+            SignalTimeInput = string.Empty;
+            _validSignalNumber = $"{_cultureMasked.NumberFormat.PositiveSign[0]}{_cultureMasked.NumberFormat.NegativeSign[0]}";
+            var aux =  UnMaskDefaultGeneric(value, skiplenght);
+            return aux;
+        }
+
+
+        #endregion
+
+        #region private methods
+
+        private bool InputTypeGeneric(char value, char sep, string logicalMask)
+        {
+            if (value == sep)
+            {
+                var index = logicalMask.IndexOf(sep, Position + 1);
+                if (index >= 0)
+                {
+                    index = logicalMask.Substring(0, index).ToCharArray().Count(x => x == '9');
+                    if (index == Position)
+                    {
+                        index = 0;
+                    }
+                }
+                else
+                {
+                    index = 0;
+                }
+                if (index > Length)
+                {
+                    return false;
+                }
+                Position = index;
+                return true;
+            }
+            var pos = Position;
+            var mask = logicalMask[LogicalPosition(pos)];
             switch (mask)
             {
                 case '9':
-                    if (CharNumbers.IndexOf(value) == -1)
+                    if (!CharNumbers.Contains(value))
                     {
                         return false;
                     }
                     break;
                 case 'L':
-                    if (CharLetters.IndexOf(value) == -1)
+                    if (!CharLetters.Contains(value))
                     {
                         return false;
                     }
                     break;
                 case 'C':
-                    if (_charCustoms.ContainsKey(Position))
+                    if (_charCustoms.ContainsKey(pos))
                     {
                         var aux = value;
                         if (_maskInputOptions.UpperCase)
                         {
                             aux = value.ToString().ToUpper()[0];
                         }
-                        if (_charCustoms[Position].IndexOf(aux) == -1)
+                        if (!_charCustoms[pos].Contains(aux))
                         {
                             return false;
                         }
                     }
                     break;
                 case 'N':
-                    if (_charCustoms.ContainsKey(Position) || CharNumbers.IndexOf(value) != -1)
+                    if (_charCustoms.ContainsKey(pos) || CharNumbers.IndexOf(value) != -1)
                     {
                         var aux = value;
                         if (_maskInputOptions.UpperCase)
                         {
                             aux = value.ToString().ToUpper()[0];
                         }
-                        if (CharNumbers.IndexOf(value) == -1)
+                        if (!CharNumbers.Contains(value))
                         {
-                            if (_charCustoms[Position].IndexOf(aux) == -1)
+                            if (!_charCustoms[pos].Contains(aux))
                             {
                                 return false;
                             }
@@ -432,7 +887,7 @@ namespace PromptPlusControls.Internal
                     }
                     break;
                 case 'X':
-                    if (_charCustoms.ContainsKey(Position) || CharLetters.IndexOf(value) != -1)
+                    if (_charCustoms.ContainsKey(pos) || CharLetters.IndexOf(value) != -1)
                     {
                         var aux = value;
                         if (_maskInputOptions.UpperCase)
@@ -441,7 +896,7 @@ namespace PromptPlusControls.Internal
                         }
                         if (CharLetters.IndexOf(value) != -1)
                         {
-                            if (_charCustoms[Position].IndexOf(aux) == -1)
+                            if (!_charCustoms[pos].Contains(aux))
                             {
                                 return false;
                             }
@@ -453,34 +908,37 @@ namespace PromptPlusControls.Internal
                 default:
                     return false;
             }
-            if (IsEnd)
+            if (!IsMaxInput)
             {
-                if (_maskInputOptions.UpperCase)
+                if (IsEnd)
                 {
-                    _inputBuffer.Append(value.ToString().ToUpper()[0]);
+                    if (_maskInputOptions.UpperCase)
+                    {
+                        _inputBuffer.Append(value.ToString().ToUpper()[0]);
+                    }
+                    else
+                    {
+                        _inputBuffer.Append(value);
+                    }
                 }
                 else
                 {
-                    _inputBuffer.Append(value);
+                    _inputBuffer[pos] = value;
                 }
-                if (Position + 1 <= _validPosition.Length - 1)
+                if (!IsMaxInput)
                 {
                     Position++;
                 }
             }
             else
             {
-                if (Position == _validPosition.Length)
-                {
-                    return false;
-                }
                 var aux = value;
                 if (_maskInputOptions.UpperCase)
                 {
                     aux = value.ToString().ToUpper()[0];
                 }
                 _inputBuffer[Position] = aux;
-                if (Position < _validPosition.Length - 1)
+                if (!IsEnd)
                 {
                     Position++;
                 }
@@ -488,57 +946,14 @@ namespace PromptPlusControls.Internal
             return true;
         }
 
-        private string PreparationDefaultValue()
-        {
-            _signalNumberInput = " "[0];
-            _signalTimeInput = string.Empty;
-            _validSignalNumber = $"{_cultureMasked.NumberFormat.PositiveSign[0]}{_cultureMasked.NumberFormat.NegativeSign[0]}";
-
-            var origdefaultvalue = _maskInputOptions.DefaultValueWitdhoutMask ?? string.Empty;
-            if (_isTypeTime)
-            {
-                var aux = (origdefaultvalue).ToCharArray();
-                if (aux.Length > 0)
-                {
-                    var last = aux.Last();
-                    if (char.IsLetter(last))
-                    {
-                        if (_cultureMasked.DateTimeFormat.AMDesignator[0] == last)
-                        {
-                            _signalTimeInput = _cultureMasked.DateTimeFormat.AMDesignator;
-                        }
-                        else if (_cultureMasked.DateTimeFormat.PMDesignator[0] == last)
-                        {
-                            _signalTimeInput = _cultureMasked.DateTimeFormat.PMDesignator;
-                        }
-                        origdefaultvalue = origdefaultvalue.Substring(0, origdefaultvalue.Length - 1);
-                    }
-                }
-            }
-            else if (_isTypeNumber)
-            {
-                var aux = (origdefaultvalue).ToCharArray();
-                if (aux.Length > 0)
-                {
-                    var last = aux.Last();
-                    if ("+-".IndexOf(last) != -1)
-                    {
-                        _signalNumberInput = last;
-                        origdefaultvalue = origdefaultvalue.Substring(0, origdefaultvalue.Length - 1);
-                    }
-                }
-            }
-            return FillDefaultChar(origdefaultvalue, _maskInputOptions.FillNumber);
-        }
-
         private bool InputTypeCurrrency(char value)
         {
-            return InputCommon(value, _cultureMasked.NumberFormat.CurrencyDecimalSeparator[0], _logicalMaskCurrency);
+            return InputNumber(value, _cultureMasked.NumberFormat.CurrencyDecimalSeparator[0], _logicalMaskCurrency);
         }
 
         private bool InputTypeNumber(char value)
         {
-            return InputCommon(value, _cultureMasked.NumberFormat.NumberDecimalSeparator[0], _logicalMaskNumeric);
+            return InputNumber(value, _cultureMasked.NumberFormat.NumberDecimalSeparator[0], _logicalMaskNumeric);
         }
 
         private bool InputTypeDateTime(char value)
@@ -547,11 +962,11 @@ namespace PromptPlusControls.Internal
             {
                 return InputTypeDateOnly(value);
             }
-            if (value == _cultureMasked.DateTimeFormat.TimeSeparator[0])
+            else if (value == _cultureMasked.DateTimeFormat.TimeSeparator[0])
             {
                 return InputTypeTimeSeparatorWithDate(value);
             }
-            return InputTypeGeneric(value);
+            return InputTypeGeneric(value, _cultureMasked.DateTimeFormat.DateSeparator[0], _logicalMaskDateTime);
         }
 
         private bool InputTypeTimeSeparatorWithDate(char value)
@@ -588,18 +1003,22 @@ namespace PromptPlusControls.Internal
 
         private bool InputTypeTimeOnly(char value)
         {
-            return InputCommon(value, _cultureMasked.DateTimeFormat.TimeSeparator[0], _logicalMaskDateTime);
+            return InputTypeGeneric(value, _cultureMasked.DateTimeFormat.TimeSeparator[0], _logicalMaskDateTime);
         }
 
         private bool InputTypeDateOnly(char value)
         {
-            return InputCommon(value, _cultureMasked.DateTimeFormat.DateSeparator[0], _logicalMaskDateTime);
+            return InputTypeGeneric(value, _cultureMasked.DateTimeFormat.DateSeparator[0], _logicalMaskDateTime);
         }
 
-        private bool InputCommon(char value, char sep, string logicalMask)
+        private bool InputNumber(char value, char sep, string logicalMask)
         {
             if (value == sep)
             {
+                if (_decimalPosition < 0)
+                {
+                    return false;
+                }
                 var index = logicalMask.IndexOf(sep, Position + 1);
                 if (index >= 0)
                 {
@@ -620,87 +1039,57 @@ namespace PromptPlusControls.Internal
                 Position = index;
                 return true;
             }
-            if (CharNumbers.IndexOf(value) == -1)
+            if (!CharNumbers.Contains(value))
             {
                 return false;
             }
-            if (IsEnd)
+            if (Position > _decimalPosition && _decimalPosition > 0)
             {
-                if (_isTypeNumber)
-                {
-                    if (FreeSpaceIntNumber)
-                    {
-                        RotateIntValues(value);
-                        return true;
-                    }
-                    else
-                    {
-                        if (_decimalPosition == _validPosition.Length - 1)
-                        {
-                            _inputBuffer[_decimalPosition] = value;
-                            return true;
-                        }
-                        if (Position > _decimalPosition)
-                        {
-                            _inputBuffer[Position] = value;
-                            return true;
-                        }
-                        return false;
-                    }
-                }
-                _inputBuffer.Append(value);
-                if (Position + 1 <= _validPosition.Length - 1)
+                _inputBuffer[Position] = value;
+                if (!IsEnd)
                 {
                     Position++;
                 }
             }
             else
             {
-                if (_isTypeNumber && !_maskInputOptions.OnlyDecimal)
+                if (Position < _decimalPosition && _decimalPosition > 0)
                 {
-                    if (FreeSpaceIntNumber && (Position <= _decimalPosition || _decimalPosition == -1))
+                    if (ValidBackwardPosition() != 0)
                     {
+                        Position = _decimalPosition < 0 ? _inputBuffer.Length - 1 : _decimalPosition;
                         RotateIntValues(value);
-                        return true;
                     }
                     else
                     {
-                        if (_decimalPosition == -1)
+                        _inputBuffer[Position] = value;
+                        if (!IsEnd)
                         {
-                            _inputBuffer[Position] = value;
-                            if (Position < _validPosition.Length - 1)
-                            {
-                                Position++;
-                            }
+                            Position++;
                         }
-                        else
-                        {
-                            if (Position >= _decimalPosition)
-                            {
-                                _inputBuffer[Position] = value;
-                                if (Position < _validPosition.Length - 1)
-                                {
-                                    Position++;
-                                }
-                            }
-                            else
-                            {
-                                if (!FreeSpaceIntNumber)
-                                {
-                                    _inputBuffer[Position] = value;
-                                    Position++;
-                                }
-                            }
-                        }
-                        return true;
                     }
                 }
                 else
                 {
-                    _inputBuffer[Position] = value;
-                    if (Position < _validPosition.Length - 1)
+                    if (ValidBackwardPosition() != 0)
                     {
-                        Position++;
+                        Position = _decimalPosition < 0 ? _inputBuffer.Length - 1 : _decimalPosition;
+                        RotateIntValues(value);
+                        if (ValidBackwardPosition() == 0)
+                        {
+                            if (!IsEnd)
+                            {
+                                Position++;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        _inputBuffer[Position] = value;
+                        if (!IsEnd)
+                        {
+                            Position++;
+                        }
                     }
                 }
             }
@@ -719,10 +1108,6 @@ namespace PromptPlusControls.Internal
             if (_decimalPosition > 0)
             {
                 _inputBuffer[_decimalPosition] = value;
-                if (!FreeSpaceIntNumber)
-                {
-                    Position++;
-                }
             }
             else
             {
@@ -730,45 +1115,106 @@ namespace PromptPlusControls.Internal
             }
         }
 
-        private bool FreeSpaceIntNumber => _inputBuffer.Length != 0 && _inputBuffer[0] == '0';
-
-        private MaskedBuffer Load(string value)
+        private string UnMaskDefaultGeneric(string origdefaultvalue, bool skipLength)
         {
-            if (string.IsNullOrEmpty(value))
+            if (!_isTypeGeneric || string.IsNullOrEmpty(origdefaultvalue))
             {
-                return this;
+                return origdefaultvalue;
             }
-            _inputBuffer.Append(value);
-            Position += value.Length;
-            return this;
-        }
-
-        private string FillDefaultChar(string origdefaultvalue, char? defaultchar)
-        {
-
+            if (!skipLength)
+            {
+                if (origdefaultvalue.Length != _logicalMaskGeneric.Length)
+                {
+                    return string.Empty;
+                }
+            }
             var result = new StringBuilder();
             for (var pos = 0; pos < _validPosition.Length; pos++)
             {
-                if (_logicalMaskGeneric[_validPosition[pos]] == '9')
+                var indexori = _validPosition[pos];
+                if (indexori > origdefaultvalue.Length - 1)
                 {
-                    if (pos > origdefaultvalue.Length - 1)
+                    continue;
+                }
+                if (_logicalMaskGeneric[indexori] == 'L')
+                {
+                    if (CharLetters.IndexOf(origdefaultvalue[indexori]) != -1)
                     {
-                        if (defaultchar.HasValue)
-                        {
-                            result.Append(defaultchar.Value);
-                        }
-                    }
-                    else if (CharNumbers.IndexOf(origdefaultvalue[pos]) != -1)
-                    {
-                        result.Append(origdefaultvalue[pos]);
+                        result.Append(origdefaultvalue[indexori]);
                     }
                     else
                     {
-                        if (defaultchar.HasValue)
+                        return string.Empty;
+                    }
+                }
+                else if (_logicalMaskGeneric[indexori] == 'C')
+                {
+                    if (_charCustoms[pos].IndexOf(origdefaultvalue[indexori]) != -1)
+                    {
+                        result.Append(origdefaultvalue[indexori]);
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
+                else if (_logicalMaskGeneric[indexori] == 'N')
+                {
+                    if (CharNumbers.IndexOf(origdefaultvalue[indexori]) != -1)
+                    {
+                        result.Append(origdefaultvalue[indexori]);
+                    }
+                    else
+                    {
+                        if (_charCustoms[pos].IndexOf(origdefaultvalue[indexori]) != -1)
                         {
-                            result.Append(defaultchar.Value);
+                            result.Append(origdefaultvalue[indexori]);
+                        }
+                        else
+                        {
+                            return string.Empty;
                         }
                     }
+                }
+                else if (_logicalMaskGeneric[indexori] == 'X')
+                {
+                    if (CharLetters.IndexOf(origdefaultvalue[indexori]) != -1)
+                    {
+                        result.Append(origdefaultvalue[indexori]);
+                    }
+                    else
+                    {
+                        if (_charCustoms[pos].IndexOf(origdefaultvalue[indexori]) != -1)
+                        {
+                            result.Append(origdefaultvalue[indexori]);
+                        }
+                        else
+                        {
+                            return string.Empty;
+                        }
+                    }
+                }
+                else if (_logicalMaskGeneric[indexori] == 'A')
+                {
+                    result.Append(origdefaultvalue[indexori]);
+                }
+                else if (_logicalMaskGeneric[indexori] == '9')
+                {
+                    if (CharNumbers.IndexOf(origdefaultvalue[indexori]) != -1)
+                    {
+                        result.Append(origdefaultvalue[indexori]);
+                    }
+                    else
+                    {
+                        return string.Empty;
+                    }
+                }
+            }
+            if (!skipLength)
+            {
+                if (result.ToString().Length != _validPosition.Length)
+                {
+                    return string.Empty;
                 }
             }
             return result.ToString();
@@ -776,25 +1222,22 @@ namespace PromptPlusControls.Internal
 
         private string OutputMask => CreateOutputMask(_inputBuffer.ToString());
 
-        private int LogicalPosition
+        private int LogicalPosition(int pos)
         {
-            get
+            var index = _validPosition
+                .Select((indexchar, index) => new { indexchar, index })
+                .Where(x => x.index == pos)
+                .Select(x => new { x.indexchar })
+                .FirstOrDefault();
+            if (index == null)
             {
-                var index = _validPosition
-                    .Select((indexchar, index) => new { indexchar, index })
-                    .Where(x => x.index == Position)
-                    .Select(x => new { x.indexchar })
-                    .FirstOrDefault();
-                if (index == null)
-                {
-                    return _validPosition.Last();
-                }
-                if (string.Join("", _validPosition).IndexOf(index.ToString()) == -1)
-                {
-                    return _validPosition.FirstOrDefault(x => index.indexchar <= x);
-                }
-                return index.indexchar;
+                return _validPosition.Last();
             }
+            if (!string.Join("", _validPosition).Contains(index.ToString(), StringComparison.CurrentCulture))
+            {
+                return _validPosition.FirstOrDefault(x => index.indexchar <= x);
+            }
+            return index.indexchar;
         }
 
         private string ConvertAndValidateMaskNotation(string origmask, Dictionary<int, string> customchars)
@@ -807,7 +1250,7 @@ namespace PromptPlusControls.Internal
 
             var maskConv = new StringBuilder();
             var qtdmask = new StringBuilder();
-            var charcustom = new StringBuilder(); ;
+            var charcustom = new StringBuilder();
             var maskchar = "";
             var flagdup = false;
             var flagcus = false;
@@ -836,12 +1279,12 @@ namespace PromptPlusControls.Internal
                     {
                         throw new ArgumentException(Exceptions.Ex_InvalidMask);
                     }
-                    if (CharsEditMask.IndexOf(maskConv[maskConv.Length - 1]) == -1)
+                    if (!CharsEditMask.Contains(maskConv[maskConv.Length - 1]))
                     {
                         throw new ArgumentException(Exceptions.Ex_InvalidMask);
                     }
                     maskchar = maskConv[maskConv.Length - 1].ToString();
-                    if ("CNX".IndexOf(maskchar.ToUpper()[0]) == -1)
+                    if (!"CNX".Contains(maskchar.ToUpper()[0]))
                     {
                         throw new ArgumentException(Exceptions.Ex_InvalidMask);
                     }
@@ -855,7 +1298,7 @@ namespace PromptPlusControls.Internal
                     {
                         throw new ArgumentException(Exceptions.Ex_InvalidMask);
                     }
-                    if (CharsEditMask.IndexOf(maskConv[maskConv.Length - 1]) == -1)
+                    if (!CharsEditMask.Contains(maskConv[maskConv.Length - 1]))
                     {
                         throw new ArgumentException(Exceptions.Ex_InvalidMask);
                     }
@@ -894,7 +1337,7 @@ namespace PromptPlusControls.Internal
                         {
                             if (qtdmask.Length != 0)
                             {
-                                throw new ArgumentException(Exceptions.Ex_InvalidMask);
+                                throw new ArgumentException(Exceptions.Ex_InvalidMask, nameof(origmask));
                             }
                         }
                     }
@@ -903,11 +1346,11 @@ namespace PromptPlusControls.Internal
                         flagskip = true;
                         if (qtdmask.Length == 0)
                         {
-                            throw new ArgumentException(Exceptions.Ex_InvalidMask);
+                            throw new ArgumentException(Exceptions.Ex_InvalidMask, nameof(origmask));
                         }
                         for (var q = 0; q < int.Parse(qtdmask.ToString()) - 1; q++)
                         {
-                            maskConv.Append(maskchar);
+                            _ = maskConv.Append(maskchar);
                             poslogical++;
                         }
                         maskchar = string.Empty;
@@ -919,7 +1362,7 @@ namespace PromptPlusControls.Internal
                         flagskip = true;
                         if (!flagMarkFistCus)
                         {
-                            charcustom.Append(charavaliable);
+                            _ = charcustom.Append(charavaliable);
                         }
                         flagMarkFistCus = false;
                     }
@@ -940,8 +1383,8 @@ namespace PromptPlusControls.Internal
                     }
                     if (!flagskip)
                     {
-                        maskConv.Append(CharEscape);
-                        maskConv.Append(charavaliable);
+                        _ = maskConv.Append(CharEscape)
+                                .Append(charavaliable);
                         flagesc = false;
                     }
                     flagskip = false;
@@ -949,7 +1392,7 @@ namespace PromptPlusControls.Internal
             }
             if (!notflag.Invoke())
             {
-                throw new ArgumentException(Exceptions.Ex_InvalidMask);
+                throw new ArgumentException(Exceptions.Ex_InvalidMask, nameof(origmask));
             }
             return maskConv.ToString();
         }
@@ -972,11 +1415,11 @@ namespace PromptPlusControls.Internal
                 }
                 else if (CharsEditMask.IndexOf(charavaliable) != -1)
                 {
-                    logicalConv.Append(charavaliable);
+                    _ = logicalConv.Append(charavaliable);
                 }
                 else
                 {
-                    logicalConv.Append(_promptmask);
+                    _ = logicalConv.Append(_promptmask);
                 }
             }
             return logicalConv.ToString();
@@ -1167,51 +1610,36 @@ namespace PromptPlusControls.Internal
             var aux = result.ToString();
             if (Length == 0)
             {
-                _signalNumberInput = " "[0];
-                _signalTimeInput = string.Empty;
+                SignalNumberInput = " "[0];
+                SignalTimeInput = string.Empty;
+            }
+
+            if (_maskInputOptions.FillNumber.HasValue)
+            {
+                aux = aux.Replace(_promptmask, _maskInputOptions.FillNumber.Value);
             }
 
             if (_isTypeNumber)
             {
-                if (_decimalPosition >= 0)
-                {
-                    if (Position < _decimalPosition)
-                    {
-                        if (FreeSpaceIntNumber)
-                        {
-                            Position = _decimalPosition;
-                        }
-                    }
-                }
-                else
-                {
-                    if (!_maskInputOptions.OnlyDecimal)
-                    {
-                        if (FreeSpaceIntNumber)
-                        {
-                            Position = _validPosition.Length - 1;
-                        }
-                    }
-                }
-                if (_signalNumberInput != " "[0])
+                if (SignalNumberInput != " "[0])
                 {
 
-                    aux += " " + _signalNumberInput;
+                    aux += " " + SignalNumberInput;
                 }
             }
-            else if (_isTypeTime && !string.IsNullOrEmpty(_cultureMasked.DateTimeFormat.AMDesignator))
+            else if ( (_isTypeTime || _isTypeDateTime)  &&  HasAMPMDesignator())
             {
-                if (_signalTimeInput == _cultureMasked.DateTimeFormat.AMDesignator)
+                if (SignalTimeInput == GetAMDesignator())
                 {
-                    aux += " " + _cultureMasked.DateTimeFormat.AMDesignator;
+                    aux += " " + GetAMDesignator();
                 }
-                else if (_signalTimeInput == _cultureMasked.DateTimeFormat.PMDesignator)
+                else if (SignalTimeInput == GetPMDesignator())
                 {
-                    aux += " " + _cultureMasked.DateTimeFormat.PMDesignator;
+                    aux += " " + GetPMDesignator();
                 }
                 else
                 {
-                    aux += new string(' ', _cultureMasked.DateTimeFormat.PMDesignator.Length + 1);
+                    aux += new string(' ', GetPMDesignator().Length + 1);
                 }
             }
             return aux;
@@ -1228,7 +1656,8 @@ namespace PromptPlusControls.Internal
                 {
                     result.Add(new MaskInfoPos
                     {
-                        Position = i
+                        Position = i,
+                        Tooltip = string.Empty
                     });
                     switch (_maskInputOptions.Type)
                     {
@@ -1330,9 +1759,9 @@ namespace PromptPlusControls.Internal
                             {
                                 result[logpos].Tooltip = Messages.MaskEditPosSecond;
                             }
-                            if (_maskInputOptions.Type == MaskedType.DateTime && _cultureMasked.DateTimeFormat.AMDesignator.Length > 0)
+                            if (_maskInputOptions.Type == MaskedType.DateTime && HasAMPMDesignator())
                             {
-                                result[logpos].Tooltip += $", {_notationAMDesignator}/{_notationPMDesignator}:{_cultureMasked.DateTimeFormat.AMDesignator}/{_cultureMasked.DateTimeFormat.PMDesignator}";
+                                result[logpos].Tooltip += $", {_notationAMDesignator}/{_notationPMDesignator}:{GetAMDesignator()}/{GetPMDesignator()}";
                             }
                             break;
                         case MaskedType.TimeOnly:
@@ -1348,9 +1777,9 @@ namespace PromptPlusControls.Internal
                             {
                                 result[logpos].Tooltip = Messages.MaskEditPosSecond;
                             }
-                            if (_cultureMasked.DateTimeFormat.AMDesignator.Length > 0)
+                            if (GetAMDesignator().Length > 0)
                             {
-                                result[logpos].Tooltip += $", {_notationAMDesignator}/{_notationPMDesignator}:{_cultureMasked.DateTimeFormat.AMDesignator}/{_cultureMasked.DateTimeFormat.PMDesignator}";
+                                result[logpos].Tooltip += $", {_notationAMDesignator}/{_notationPMDesignator}:{GetAMDesignator()}/{GetPMDesignator()}";
                             }
                             break;
                         case MaskedType.Number:
@@ -1368,10 +1797,260 @@ namespace PromptPlusControls.Internal
             return result.Select(x => x.Position).ToArray();
         }
 
+        private bool HasAMPMDesignator()
+        {
+            return _cultureMasked.DateTimeFormat.ShortTimePattern.Contains("tt") &&
+                _cultureMasked.DateTimeFormat.AMDesignator.Length >0 &&
+                _cultureMasked.DateTimeFormat.PMDesignator.Length > 0;
+        }
+
+        private string GetAMDesignator()
+        {
+            if (!_cultureMasked.DateTimeFormat.ShortTimePattern.Contains("tt"))
+            {
+                return string.Empty;
+            }
+            if (_cultureMasked.DateTimeFormat.AMDesignator.Length == 0)
+            {
+                return string.Empty;
+            }
+            return _cultureMasked.DateTimeFormat.AMDesignator;
+        }
+
+        private string GetPMDesignator()
+        {
+            if (!_cultureMasked.DateTimeFormat.ShortTimePattern.Contains("tt"))
+            {
+                return string.Empty;
+            }
+            if (_cultureMasked.DateTimeFormat.PMDesignator.Length == 0)
+            {
+                return string.Empty;
+            }
+            return _cultureMasked.DateTimeFormat.PMDesignator;
+        }
+
+
         private class MaskInfoPos
         {
             public int Position { get; set; }
             public string Tooltip { get; set; }
         }
+
+        private string CreateMaskedOnlyDate()
+        {
+            return _maskInputOptions.FmtYear switch
+            {
+                FormatYear.Y4 => $"99\\{_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator}99\\{_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator}9999",
+                FormatYear.Y2 => $"99\\{_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator}99\\{_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator}99",
+                _ => throw new ArgumentException(_maskInputOptions.FmtYear.ToString()),
+            };
+        }
+
+        private string CreateMaskedOnlyTime()
+        {
+            return _maskInputOptions.FmtTime switch
+            {
+                FormatTime.HMS => $"99\\{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}99\\{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}99",
+                FormatTime.OnlyHM => $"99\\{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}99\\{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}00",
+                FormatTime.OnlyH => $"99\\{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}00\\{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}00",
+                _ => throw new ArgumentException(_maskInputOptions.FmtTime.ToString()),
+            };
+        }
+
+        private string CreateMaskedOnlyDateTime()
+        {
+            return CreateMaskedOnlyDate() + " " + CreateMaskedOnlyTime();
+        }
+
+        private string CreateMaskedNumber()
+        {
+            var topmask = string.Empty;
+            if (_maskInputOptions.AmmountInteger % _maskInputOptions.CurrentCulture.NumberFormat.NumberGroupSizes[0] > 0)
+            {
+                topmask = new string('9', _maskInputOptions.AmmountInteger % _maskInputOptions.CurrentCulture.NumberFormat.NumberGroupSizes[0]);
+            }
+            else
+            {
+                if (_maskInputOptions.AmmountInteger == 0)
+                {
+                    topmask = "0";
+                }
+            }
+            var result = topmask;
+            for (var i = 0; i < _maskInputOptions.AmmountInteger / _maskInputOptions.CurrentCulture.NumberFormat.NumberGroupSizes[0]; i++)
+            {
+                result += _maskInputOptions.CurrentCulture.NumberFormat.NumberGroupSeparator + new string('9', _maskInputOptions.CurrentCulture.NumberFormat.NumberGroupSizes[0]);
+            }
+            if (result.StartsWith(_maskInputOptions.CurrentCulture.NumberFormat.NumberGroupSeparator))
+            {
+                result = result.Substring(1);
+            }
+            if (_maskInputOptions.AmmountDecimal > 0)
+            {
+                result += _maskInputOptions.CurrentCulture.NumberFormat.NumberDecimalSeparator + new string('9', _maskInputOptions.AmmountDecimal);
+            }
+            return result;
+        }
+
+        private string CreateMaskedCurrency()
+        {
+            var csymb = _maskInputOptions.CurrentCulture.NumberFormat.CurrencySymbol.ToCharArray();
+            var topmask = string.Empty;
+            foreach (var item in csymb)
+            {
+                topmask += "\\" + item;
+            }
+            topmask += " ";
+
+            if (_maskInputOptions.AmmountInteger % _maskInputOptions.CurrentCulture.NumberFormat.CurrencyGroupSizes[0] > 0)
+            {
+                topmask += new string('9', _maskInputOptions.AmmountInteger % _maskInputOptions.CurrentCulture.NumberFormat.CurrencyGroupSizes[0]);
+            }
+            else
+            {
+                if (_maskInputOptions.AmmountInteger == 0)
+                {
+                    topmask += "0";
+                }
+            }
+            var result = topmask;
+            for (var i = 0; i < _maskInputOptions.AmmountInteger / _maskInputOptions.CurrentCulture.NumberFormat.CurrencyGroupSizes[0]; i++)
+            {
+                result += _maskInputOptions.CurrentCulture.NumberFormat.CurrencyGroupSeparator + new string('9', _maskInputOptions.CurrentCulture.NumberFormat.CurrencyGroupSizes[0]);
+            }
+            if (result.StartsWith(_maskInputOptions.CurrentCulture.NumberFormat.CurrencyGroupSeparator))
+            {
+                result = result.Substring(1);
+            }
+            if (_maskInputOptions.AmmountDecimal > 0)
+            {
+                result += _maskInputOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator + new string('9', _maskInputOptions.AmmountDecimal);
+            }
+            else
+            {
+                result += _maskInputOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator + new string('0', _maskInputOptions.CurrentCulture.NumberFormat.CurrencyDecimalDigits);
+            }
+            return result;
+        }
+
+        private void ConvertDefaultDateValue()
+        {
+            var stddtfmt = _maskInputOptions.CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpper().Split(_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator[0]);
+            var yearlen = "4";
+            if (_maskInputOptions.FmtYear == FormatYear.Y2)
+            {
+                yearlen = "2";
+            }
+            var fmtdate = $"{yearlen}:{stddtfmt[0][0]}{stddtfmt[1][0]}{stddtfmt[2][0]}";
+
+            if (_maskInputOptions.DefaultObject == null)
+            {
+                _maskInputOptions.DefaultValueWitdMask = string.Empty;
+                _maskInputOptions.DateFmt = fmtdate;
+                return;
+            }
+            if (_maskInputOptions.DefaultObject is not DateTime)
+            {
+                throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, _maskInputOptions.DefaultObject));
+            }
+
+            var auxdt = (DateTime)_maskInputOptions.DefaultObject;
+            var defaultdateValue = auxdt.ToString(_maskInputOptions.CurrentCulture.DateTimeFormat.UniversalSortableDateTimePattern);
+            var dtstring = defaultdateValue.Substring(0, defaultdateValue.IndexOf(' '));
+            switch (_maskInputOptions.FmtYear)
+            {
+                case FormatYear.Y4:
+                    break;
+                case FormatYear.Y2:
+                    dtstring = dtstring.Substring(2);
+                    break;
+                default:
+                    break;
+            }
+            var dtelem = dtstring.Split('-');
+            for (var i = 0; i < stddtfmt.Length; i++)
+            {
+                if (stddtfmt[i][0] == 'D')
+                {
+                    stddtfmt[i] = dtelem[2];
+                }
+                else if (stddtfmt[i][0] == 'M')
+                {
+                    stddtfmt[i] = dtelem[1];
+                }
+                else if (stddtfmt[i][0] == 'Y')
+                {
+                    stddtfmt[i] = dtelem[0];
+                }
+            }
+            dtstring = $"{stddtfmt[0]}{_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator}{stddtfmt[1]}{_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator}{stddtfmt[2]}";
+            var tmstring = defaultdateValue.Substring(defaultdateValue.IndexOf(' ') + 1);
+            tmstring = tmstring.Replace("Z", "");
+            var tmelem = tmstring.Split(':');
+            var hr = int.Parse(tmelem[0]);
+            var tmsignal = string.Empty;
+            if (hr > 12)
+            {
+                if (HasAMPMDesignator())
+                {
+                    tmsignal = GetPMDesignator();
+                    hr -= 12;
+                    tmelem[0] = hr.ToString().PadLeft(2,'0');
+                }
+            }
+            else
+            {
+                if (HasAMPMDesignator())
+                {
+                    tmsignal = GetAMDesignator();
+                }
+            }
+            tmstring = $"{tmelem[0]}{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}{tmelem[1]}{_maskInputOptions.CurrentCulture.DateTimeFormat.TimeSeparator}{tmelem[2]}";
+            switch (_maskInputOptions.Type)
+            {
+                case MaskedType.DateOnly:
+                    defaultdateValue = dtstring;
+                    break;
+                case MaskedType.TimeOnly:
+                    if (string.IsNullOrEmpty(tmsignal))
+                    {
+                        defaultdateValue = $"{tmstring}";
+                    }
+                    else
+                    {
+                        defaultdateValue = $"{tmstring} {tmsignal}";
+                    }
+                    break;
+                case MaskedType.DateTime:
+                    if (string.IsNullOrEmpty(tmsignal))
+                    {
+                        defaultdateValue = $"{dtstring} {tmstring}";
+                    }
+                    else
+                    {
+                        defaultdateValue = $"{dtstring} {tmstring} {tmsignal}";
+                    }
+                    break;
+            }
+            _maskInputOptions.DefaultValueWitdMask = defaultdateValue;
+            _maskInputOptions.DateFmt = fmtdate;
+        }
+
+        private void ConvertDefaultNumberValue()
+        {
+            if (_maskInputOptions.DefaultObject == null)
+            {
+                _maskInputOptions.DefaultValueWitdMask = null;
+                return;
+            }
+            if (_maskInputOptions.DefaultObject is not double)
+            {
+                throw new ArgumentException(string.Format(Exceptions.Ex_InvalidValue, _maskInputOptions.DefaultObject));
+            }
+            _maskInputOptions.DefaultValueWitdMask = ((double)_maskInputOptions.DefaultObject).ToString($"N{_maskInputOptions.AmmountDecimal}", _maskInputOptions.CurrentCulture);
+        }
+
+        #endregion
     }
 }

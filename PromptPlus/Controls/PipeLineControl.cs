@@ -8,11 +8,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
-using PromptPlusControls.Internal;
-using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
+using PPlus.Internal;
 
-namespace PromptPlusControls.Controls
+using PPlus.Objects;
+using PPlus.Resources;
+
+using static PPlus.PromptPlus;
+
+namespace PPlus.Controls
 {
     internal class PipeLineControl : IDisposable, IControlPipeLine
     {
@@ -54,7 +57,7 @@ namespace PromptPlusControls.Controls
                 }
                 else
                 {
-                    if (!_resultpipeline[_currentPipe].Value.Condition?.Invoke(_resultpipeline.Values.Select(x => x.Value).ToArray(), item.Value.ContextState) ?? false)
+                    if (!_resultpipeline[_currentPipe].Value.Condition?.Invoke(_resultpipeline.Values.Select(x => x.Value).ToArray(), item.Value.PipeContext) ?? false)
                     {
                         _resultpipeline[item.Key] = new ResultPromptPlus<ResultPipe>(_resultpipeline[item.Key].Value.UpdateStatus(StatusPipe.Skiped), false);
                         _summaryPipePaginator = new Paginator<ResultPromptPlus<ResultPipe>>(_resultpipeline.Values, null, Optional<ResultPromptPlus<ResultPipe>>.Create(null), (_) => string.Empty);
@@ -66,16 +69,35 @@ namespace PromptPlusControls.Controls
                     _summaryPipePaginator = new Paginator<ResultPromptPlus<ResultPipe>>(_resultpipeline.Values, null, Optional<ResultPromptPlus<ResultPipe>>.Create(null), (_) => string.Empty);
                     using (item.Value)
                     {
-                        item.Value.GetType().UnderlyingSystemType.GetMethod("InitControl").Invoke(item.Value, null);
-
+                        var initvalue = (string)item.Value.GetType().UnderlyingSystemType.GetMethod("InitControl").Invoke(item.Value, null);
+                        var parameters = new object[] { StageControl.OnStartControl, null };
+                        var findok = (bool)item.Value.GetType().UnderlyingSystemType.GetMethod("FindAction").Invoke(item.Value, parameters);
+                        if (findok)
+                        {
+                            var useractin = (Action<object, string>)parameters[1];
+                            var ctx = item.Value.GetType().UnderlyingSystemType.GetProperty("ContextControl").GetValue(item.Value);
+                            useractin.Invoke(ctx, initvalue);
+                        }
                         var start = item.Value.GetType().UnderlyingSystemType.GetMethod("StartPipeline");
                         var result = start.Invoke(item.Value, new object[]
                         {
-                                new Action<ScreenBuffer>( (screen) => { SummaryPipelineTemplate(screen); }),
+                                new Func<ScreenBuffer,string>( (screen) =>
+                                {
+                                    return SummaryPipelineTemplate(screen);
+                                }),
                                 _summaryPipePaginator,
                                 _currentIndex,
                                 stoptoken
                         });
+                        parameters = new object[] { StageControl.OnFinishControl, null };
+                        findok = (bool)item.Value.GetType().UnderlyingSystemType.GetMethod("FindAction").Invoke(item.Value, parameters);
+                        if (findok)
+                        {
+                            var useractout = (Action<object, string>)parameters[1];
+                            var ctx = item.Value.GetType().UnderlyingSystemType.GetProperty("ContextControl").GetValue(item.Value);
+                            var finishresult = (string)item.Value.GetType().UnderlyingSystemType.GetProperty("FinishResult").GetValue(item.Value);
+                            useractout.Invoke(ctx, finishresult);
+                        }
                         abortedall = (bool)item.Value.GetType().UnderlyingSystemType.GetProperty("AbortedAll").GetValue(item.Value);
                         if (abortedall)
                         {
@@ -98,22 +120,22 @@ namespace PromptPlusControls.Controls
             return new ResultPromptPlus<IEnumerable<ResultPipe>>(_resultpipeline.Values.Select(x => x.Value).ToArray(), abortedall);
         }
 
-        private void SummaryPipelineTemplate(ScreenBuffer screenBuffer)
+        private string SummaryPipelineTemplate(ScreenBuffer screenBuffer)
         {
 
             screenBuffer.WritePrompt(Messages.PipelineText);
             screenBuffer.WriteAnswer($"{_currentIndex}/{_resultpipeline.Count}");
 
             screenBuffer.PushCursor();
-            if (PromptPlus.EnabledStandardTooltip)
+            if (EnabledStandardTooltip)
             {
                 if (_summaryPipePaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLineHint($"{Messages.KeyNavPaging}{PromptPlus.ResumePipesKeyPress}: {Messages.SummaryPipelineReturnText} {_steps[_currentPipe].PipeTitle}");
+                    screenBuffer.WriteLineHint($"{Messages.KeyNavPaging}{ResumePipesKeyPress}: {Messages.SummaryPipelineReturnText} {_steps[_currentPipe].PipeTitle}");
                 }
                 else
                 {
-                    screenBuffer.WriteLineHint($"{PromptPlus.ResumePipesKeyPress}: {Messages.SummaryPipelineReturnText} {_steps[_currentPipe].PipeTitle}");
+                    screenBuffer.WriteLineHint($"{ResumePipesKeyPress}: {Messages.SummaryPipelineReturnText} {_steps[_currentPipe].PipeTitle}");
                 }
             }
 
@@ -123,32 +145,32 @@ namespace PromptPlusControls.Controls
                 if (item.Value.Status == StatusPipe.Skiped)
                 {
                     screenBuffer.WriteLinePipeSkiped();
-                    screenBuffer.Write($" {item.Value.Title} : ", PromptPlus.ColorSchema.Disabled);
-                    screenBuffer.Write(Messages.SkipedText, PromptPlus.ColorSchema.Disabled);
+                    screenBuffer.Write($" {item.Value.Title} : ", ColorSchema.Disabled);
+                    screenBuffer.Write(Messages.SkipedText, ColorSchema.Disabled);
                 }
                 else if (item.Value.Status == StatusPipe.Aborted)
                 {
                     screenBuffer.WriteLinePipeSkiped();
-                    screenBuffer.Write($" {item.Value.Title} : ", PromptPlus.ColorSchema.Disabled);
-                    screenBuffer.Write(Messages.CanceledText, PromptPlus.ColorSchema.Disabled);
+                    screenBuffer.Write($" {item.Value.Title} : ", ColorSchema.Disabled);
+                    screenBuffer.Write(Messages.CanceledText, ColorSchema.Disabled);
                 }
                 else if (item.Value.Status == StatusPipe.Running)
                 {
                     screenBuffer.WriteLinePipeSelect();
-                    screenBuffer.Write($" {item.Value.Title} : ", PromptPlus.ColorSchema.Select);
-                    screenBuffer.Write(Messages.RunningText, PromptPlus.ColorSchema.Select);
+                    screenBuffer.Write($" {item.Value.Title} : ", ColorSchema.Select);
+                    screenBuffer.Write(Messages.RunningText, ColorSchema.Select);
                 }
                 else if (item.Value.Status == StatusPipe.Waitting)
                 {
                     screenBuffer.WriteLinePipeDisabled();
-                    screenBuffer.Write($" {item.Value.Title} : ", PromptPlus.ColorSchema.Disabled);
-                    screenBuffer.Write(Messages.WaittingText, PromptPlus.ColorSchema.Disabled);
+                    screenBuffer.Write($" {item.Value.Title} : ", ColorSchema.Disabled);
+                    screenBuffer.Write(Messages.WaittingText, ColorSchema.Disabled);
                 }
                 else if (item.Value.Status == StatusPipe.Done)
                 {
                     screenBuffer.WriteLineSymbolsDone();
                     screenBuffer.Write($" {item.Value.Title} : ");
-                    screenBuffer.Write(_steps[item.Value.PipeId].GetType().GetProperty("FinishResult").GetValue(_steps[item.Value.PipeId]).ToString(), PromptPlus.ColorSchema.Answer);
+                    screenBuffer.Write(_steps[item.Value.PipeId].GetType().GetProperty("FinishResult").GetValue(_steps[item.Value.PipeId]).ToString(), ColorSchema.Answer);
                 }
                 else
                 {
@@ -158,6 +180,7 @@ namespace PromptPlusControls.Controls
             {
                 screenBuffer.WriteLinePagination(_summaryPipePaginator.PaginationMessage());
             }
+            return string.Empty;
         }
 
         #region IControlPipeLine

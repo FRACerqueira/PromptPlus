@@ -5,16 +5,22 @@
 
 using System;
 
-namespace PromptPlusControls.ValueObjects
+using PPlus.Objects;
+
+namespace PPlus.Internal
 {
     internal class Theme
     {
+        public const int CurrentVersion = 2;
+
         public Theme()
         {
             HotKeys = new();
             Colors = new();
             Symbols = new();
         }
+
+        public int Version { get; set; }
 
         public string Culture { get; set; }
 
@@ -34,8 +40,9 @@ namespace PromptPlusControls.ValueObjects
 
         public class ThemeHotKeys
         {
+            public string MarkSelect { get; set; }
+            public string ToggleVisibleDescription { get; set; }
             public string AbortAllPipesKeyPress { get; set; }
-            public string AbortKeyPress { get; set; }
             public string TooltipKeyPress { get; set; }
             public string ResumePipesKeyPress { get; set; }
             public string UnSelectFilter { get; set; }
@@ -52,6 +59,7 @@ namespace PromptPlusControls.ValueObjects
             public ConsoleColor ForeColorSchema { get; set; }
             public ConsoleColor BackColorSchema { get; set; }
             public ConsoleColor Pagination { get; set; }
+            public ConsoleColor Description { get; set; }
             public ConsoleColor Hint { get; set; }
             public ConsoleColor Answer { get; set; }
             public ConsoleColor Select { get; set; }

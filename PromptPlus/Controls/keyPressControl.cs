@@ -6,22 +6,24 @@
 using System;
 using System.Threading;
 
-using PromptPlusControls.Internal;
-using PromptPlusControls.ValueObjects;
+using PPlus.Internal;
 
-namespace PromptPlusControls.Controls
+namespace PPlus.Controls
 {
     internal class keyPressControl : ControlBase<bool>, IControlKeyPress
     {
         private readonly KeyPressOptions _options;
+        private const string Namecontrol = "PromptPlus.keyPress";
 
-        public keyPressControl(KeyPressOptions options) : base(options.HideAfterFinish, true, options.EnabledAbortKey, options.EnabledAbortAllPipes)
+        public keyPressControl(KeyPressOptions options) : base(Namecontrol, options, true)
         {
             _options = options;
         }
 
-        public override void InitControl()
+        public override string InitControl()
         {
+            ///do init
+            return null;
         }
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out bool result)
@@ -65,7 +67,7 @@ namespace PromptPlusControls.Controls
             return null;
         }
 
-        public override void InputTemplate(ScreenBuffer screenBuffer)
+        public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             string aux;
             if (!_options.KeyPress.HasValue && string.IsNullOrEmpty(_options.Message))
@@ -104,6 +106,7 @@ namespace PromptPlusControls.Controls
             screenBuffer.WriteSymbolPrompt();
             screenBuffer.WriteHint($" {aux}");
             screenBuffer.PushCursor();
+            return null;
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, bool result)
@@ -140,62 +143,17 @@ namespace PromptPlusControls.Controls
         }
 
 
-        #region IControlKeyPress     
+        #region IControlKeyPress
+
+        public IControlKeyPress Config(Action<IPromptConfig> context)
+        {
+            context.Invoke(this);
+            return this;
+        }
 
         public IControlKeyPress Prompt(string value)
         {
             _options.Message = value ?? string.Empty;
-            return this;
-        }
-
-        public IPromptControls<bool> EnabledAbortKey(bool value)
-        {
-            _options.EnabledAbortKey = value;
-            return this;
-        }
-
-        public IPromptControls<bool> EnabledAbortAllPipes(bool value)
-        {
-            _options.EnabledAbortAllPipes = value;
-            return this;
-        }
-
-        public IPromptControls<bool> EnabledPromptTooltip(bool value)
-        {
-            _options.EnabledPromptTooltip = value;
-            return this;
-        }
-
-        public IPromptControls<bool> HideAfterFinish(bool value)
-        {
-            _options.HideAfterFinish = value;
-            return this;
-        }
-
-        public ResultPromptPlus<bool> Run(CancellationToken? value = null)
-        {
-            InitControl();
-            try
-            {
-                return Start(value ?? CancellationToken.None);
-            }
-            finally
-            {
-                Dispose();
-            }
-        }
-
-        public IPromptPipe PipeCondition(Func<ResultPipe[], object, bool> condition)
-        {
-            Condition = condition;
-            return this;
-        }
-
-        public IFormPlusBase ToPipe(string id, string title, object state = null)
-        {
-            PipeId = id ?? Guid.NewGuid().ToString();
-            PipeTitle = title ?? string.Empty;
-            ContextState = state;
             return this;
         }
 

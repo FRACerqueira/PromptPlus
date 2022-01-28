@@ -6,9 +6,9 @@
 using System;
 using System.Collections.Generic;
 
-using PromptPlusControls.Internal;
+using PPlus.Internal;
 
-namespace PromptPlusControls.Controls
+namespace PPlus.Controls
 {
     internal class MultiSelectOptions<T> : BaseOptions
     {
@@ -32,5 +32,11 @@ namespace PromptPlusControls.Controls
                 _textSelector = value;
             }
         }
+        public Func<T, string> DescriptionSelector { get; set; } = null;
+        public bool ShowGroupOnDescription { get; set; }
+        public string NoGroupDescription { get; set; }
+
+
+
     }
 }

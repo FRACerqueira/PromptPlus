@@ -12,26 +12,26 @@ Control PipeLine. Pipeline sequence to **all prompts** with **condition by pipe*
 ![](./images/PipeLine.gif)
 
 ### Syntax
-[**Top**](#-promptplus--pipeline)
+[**Top**](#promptplus--pipeline)
 
 ```csharp
 Pipeline()
 ```
 ### Methods
-[**Top**](#-promptplus--pipeline)
+[**Top**](#promptplus--pipeline)
 
 - ```csharp
   AddPipe(IFormPlusBase value)
   ``` 
   - Add PromptPlus-Control to pipeline. All controls inherit from IFormPlusBase.
+
 - ```csharp
   AddPipes(IEnumerable<IFormPlusBase> value)
   ``` 
   - Add IEnumerable PromptPlus-Control to pipeline. All controls inherit from IFormPlusBase.  
 
-
 ### Return
-[**Top**](#-promptplus--pipeline)
+[**Top**](#promptplus--pipeline)
 
 ```csharp
 IControlPipeLine                            //for Control Methods
@@ -40,9 +40,8 @@ IPromptPipe                                 //for Pipe condition and transform t
 IFormPlusBase                               //for only definition of pipe to Pipeline Control
 ```
 
-
 ### Sample
-[**Top**](#-promptplus--pipeline)
+[**Top**](#promptplus--pipeline)
 
 ```csharp
 var pipeline = PromptPlus.Pipeline()

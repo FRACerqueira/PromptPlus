@@ -1,10 +1,6 @@
 name: Build
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 env:
   DOTNET_VERSION: 6.0.x
@@ -15,13 +11,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Use .NET Core ${{ env.DOTNET_VERSION }}
+    - name: Use .NET ${{ env.DOTNET_VERSION }}
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ env.DOTNET_VERSION }}
 
     - name: Install .NET Core format tool
-      run: dotnet tool update -g dotnet-format
+      run: dotnet tool update -g dotnet-format      
 
-    - name: Build project
-      run: dotnet build -c Release
+    - name: Build projects
+      run: dotnet build  PromptPlus.sln -c Release
+
+    - name: Run test cases
+      run: dotnet test -c Release --no-build      

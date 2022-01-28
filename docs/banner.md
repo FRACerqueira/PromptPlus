@@ -8,42 +8,44 @@ Control Banner. Simple ASCII text banner.
 ![](./images/Banner.gif)
 
 ### Syntax
-[**Top**](#-promptplus--banner)
+[**Top**](#promptplus--banner)
 
 ```csharp
 Banner(string value)
 ````
 
 ### Methods
-[**Top**](#-promptplus--banner)
+[**Top**](#promptplus--banner)
 
 - ```csharp
 LoadFont(string value)
 ``` 
   -  path file of type "flf". see [figlet](http://www.figlet.org/)
+
 - ```csharp
 LoadFont(Stream value)
 ``` 
   - stream file of type "flf". see [figlet](http://www.figlet.org/)
+
 - ```csharp
 FIGletWidth(CharacterWidth value)
 ``` 
   - Width FIGlet-type (Smush,Fitted,Full)
+
 - ```csharp
 Run(ConsoleColor? color = null)
 ``` 
   - Show Banner with forecolor paramater.
- 
 
 ### Return
-[**Top**](#-promptplus--banner)
+[**Top**](#promptplus--banner)
 
 ```csharp
 IFIGlet            //for Control Methods
 ```
 
 ### Sample
-[**Top**](#-promptplus--banner)
+[**Top**](#promptplus--banner)
 
 ```csharp
 var colorsel = PromptPlus.Select<ConsoleColor>("Select a color")

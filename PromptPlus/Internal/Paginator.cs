@@ -7,9 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using PromptPlusControls.Drivers;
-
-namespace PromptPlusControls.Internal
+namespace PPlus.Internal
 {
     internal class Paginator<T>
     {
@@ -20,11 +18,11 @@ namespace PromptPlusControls.Internal
         private readonly Func<T, string> _textSelector;
         private readonly Func<T, bool> _validatorAction;
 
-        public Paginator(IEnumerable<T> items, int? pageSize, Optional<T> defaultValue, Func<T, string> textSelector, Func<T, bool> validatorAction = null)
+        public Paginator(IEnumerable<T> items, int? pageSize, Optional<T> defaultValue, Func<T, string> textSelector = null, Func<T, bool> validatorAction = null)
         {
             _items = items.ToArray();
             _userpageSize = pageSize ?? _items.Length;
-            _textSelector = textSelector;
+            _textSelector = textSelector ?? ((x) => x.ToString());
             EnsureTerminalPagesize();
             _validatorAction = validatorAction;
             if (validatorAction == null)
@@ -36,14 +34,27 @@ namespace PromptPlusControls.Internal
 
         private void EnsureTerminalPagesize()
         {
+            var aux = PromptPlus.GetConsoleBound();
+            var BufferHeight = aux.Item2;
+            var BufferWidth = aux.Item1;
+
+            if (BufferHeight == 0 || BufferWidth == 0)
+            {
+                _maxpageSize = _userpageSize;
+                return;
+            }
+            if ((PromptPlus.MinBufferHeight - 1) >= BufferHeight)
+            {
+                throw new InvalidOperationException($"BufferHeight < {PromptPlus.MinBufferHeight - 1}");
+            }
             T selectedItem = default;
             if (SelectedIndex >= 0 && (_maxpageSize * SelectedPage) + SelectedIndex <= _items.Length - 1)
             {
                 selectedItem = _items[(_maxpageSize * SelectedPage) + SelectedIndex];
             }
-            if (PromptPlus._consoleDriver.BufferHeight - 1 < _userpageSize + ConsoleDriver.MinBufferHeight)
+            if (BufferHeight - 1 < _userpageSize + PromptPlus.MinBufferHeight)
             {
-                _maxpageSize = PromptPlus._consoleDriver.BufferHeight - (ConsoleDriver.MinBufferHeight);
+                _maxpageSize = BufferHeight - PromptPlus.MinBufferHeight;
             }
             else
             {
@@ -80,7 +91,17 @@ namespace PromptPlusControls.Internal
 
         public int SelectedIndex { get; private set; } = 0;
 
-        public T SelectedItem => _filteredItems[(_maxpageSize * SelectedPage) + SelectedIndex];
+        public T SelectedItem
+        {
+            get
+            {
+                if (SelectedIndex < 0)
+                {
+                    return default;
+                }
+                return _filteredItems[(_maxpageSize * SelectedPage) + SelectedIndex];
+            }
+        }
 
         public int TotalCount => _filteredItems.Length;
 
@@ -104,8 +125,6 @@ namespace PromptPlusControls.Internal
             return true;
         }
 
-        public int MaxPageSize => _maxpageSize;
-
         public bool IsFistPageItem => SelectedIndex == 0 && Count > 0;
 
         public bool IsLastPageItem => SelectedIndex == Count - 1 && Count > 0;
@@ -122,7 +141,7 @@ namespace PromptPlusControls.Internal
             if (Count >= 0)
             {
                 SelectedIndex = 0;
-                if (_filteredItems.Count() > 0)
+                if (_filteredItems.Length > 0)
                 {
                     var aux = FirstItemValid(SelectedIndex);
                     if (aux.Item1 < 0)
@@ -220,7 +239,7 @@ namespace PromptPlusControls.Internal
             if (Count >= 0)
             {
                 SelectedIndex = Count - 1;
-                if (_filteredItems.Count() > 0)
+                if (_filteredItems.Length > 0)
                 {
                     var aux = LastItemValid(SelectedIndex);
                     if (aux.Item1 < 0)

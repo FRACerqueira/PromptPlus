@@ -11,37 +11,58 @@ Control Confirm. Simple confirm with with tool tips and language detection.
 ![](./images/Confirm.gif)
 
 ### Syntax
-[**Top**](#-promptplus--confirm)
+[**Top**](#promptplus--confirm)
 
 ```csharp
-Confirm(string prompt = null)
+Confirm(string prompt, string description = null)
 ````
 
 ### Methods
-[**Top**](#-promptplus--confirm)
+[**Top**](#promptplus--confirm)
 
 - ```csharp
-  Prompt(string value)
+  Prompt(string value, string description = null)
   ``` 
-  - set prompt message 
+  - set prompt message and optional description
+
 - ```csharp
   Default(bool value)
   ``` 
     - Default value. True for positive confirm or False for negative confirm.
 
+- ```csharp
+  Config(Action<IPromptConfig> context)
+  ``` 
+  - For access [**base methods**](basemethods) common to all controls.
+
+- ```csharp
+   PipeCondition(Func<ResultPipe[], object, bool> condition)
+  ``` 
+  - Set condition to run pipe.
+
+- ```csharp
+   ToPipe(string id, string title, object state = null)
+  ``` 
+  - Transform control to IFormPlusBase.
+  - It is mandatory to use with the Pipeline control. See examples in [**PipeLine Control**](pipeline)
+
+- ```csharp
+  ResultPromptPlus<bool> Run(CancellationToken? value = null)
+  ``` 
+	- Control execution
+
 ### Return
-[**Top**](#-promptplus--confirm)
+[**Top**](#promptplus--confirm)
 
 ```csharp
 IControlConfirm            //for Control Methods
-IPromptControls<bool>      //for others Base Methods
-ResultPromptPlus<bool>     //for Base Method Run, when execution is direct 
+ResultPromptPlus<bool>     //After execute Run method
 IPromptPipe                //for Pipe condition and transform to IFormPlusBase 
 IFormPlusBase              //for only definition of pipe to Pipeline Control
 ```
 
 ### Sample
-[**Top**](#-promptplus--confirm)
+[**Top**](#promptplus--confirm)
 
 ```csharp
 PromptPlus.DefaultCulture = new CultureInfo("en-US");

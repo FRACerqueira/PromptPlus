@@ -10,7 +10,7 @@ using System.Reflection;
 using System.Text;
 
 
-namespace PromptPlusControls.FIGlet
+namespace PPlus.FIGlet
 {
 
     internal class FIGletFont

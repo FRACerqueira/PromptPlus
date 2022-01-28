@@ -181,7 +181,7 @@
     <value>Valor é muito pequeno. Min({0})</value>
   </data>
   <data name="MultiSelectKeyNavigation" xml:space="preserve">
-    <value>Space: Marcar, Enter: Terminar,  {0}: Filtro {1}: Todos, {2}:Inverter</value>
+    <value>{0}: Marcar, Enter: Terminar,  {1}: Filtro {2}: Todos, {3}:Inverter</value>
   </data>
   <data name="MultiSelectMaxSelection" xml:space="preserve">
     <value>O máximo de seleção({0}) foi atingido</value>
@@ -235,10 +235,10 @@
     <value>{0} Mostrar resumo pipes{1}</value>
   </data>
   <data name="ShowStandardHotKeys" xml:space="preserve">
-    <value>{0} Mostrar/Esconder teclas{1}</value>
+    <value>{0} Alternar dicas{1}</value>
   </data>
   <data name="ShowStandardHotKeysWithPipeline" xml:space="preserve">
-    <value>{0} Mostrar/Esconder teclas, {1} Mostrar resumo dos pipes{2}</value>
+    <value>{0} Alternar dicas, {1} Alternar resumo dos pipes{2}</value>
   </data>
   <data name="SkipedText" xml:space="preserve">
     <value>Ignorado</value>
@@ -322,9 +322,48 @@
     <value>Terminado todas as tarefas({0})</value>
   </data>
   <data name="AutoCompleteKeyNavigation" xml:space="preserve">
-    <value>Enter: Selecionar, {0}: Sem seleção, Ctrl-Enter: Mudar para selecionado</value>
+    <value>Enter: Selecionar, {0}: Sem seleção, Ctrl-Enter: Atualiza o Texto</value>
   </data>
   <data name="AutoCompleteKeyNotfound" xml:space="preserve">
     <value>{0} não encontrado nas sugestões</value>
+  </data>
+  <data name="ShowStandardHotKeysDesc" xml:space="preserve">
+    <value>{0} Alternar dicas, {1} Alternar descrição{2}</value>
+  </data>
+  <data name="HotKeyDescription" xml:space="preserve">
+    <value>{0} Alternar descrição</value>
+  </data>
+  <data name="ShowProcessStandardHotKeysWithPipelineDesc" xml:space="preserve">
+    <value>{0}, {1} Alternar descrição, {2} Alternar resumo dos pipes</value>
+  </data>
+  <data name="EscCancelWizard" xml:space="preserve">
+    <value>, {0}: Voltar para Wizard</value>
+  </data>
+  <data name="ListKeyNavigationFillZeros" xml:space="preserve">
+    <value>Ctrl+Del: Remove selecionado, {0}: Remove tudo, Ctrl+Enter: Terminar, Enter : Incluir</value>
+  </data>
+  <data name="EnterAcceptSugestion" xml:space="preserve">
+    <value>Enter: Aceitar sugestão</value>
+  </data>
+  <data name="ReadlineFisnishHistoryhit" xml:space="preserve">
+    <value>Enter: Selecionar&amp;Terminar</value>
+  </data>
+  <data name="ReadlineHistoryEsc" xml:space="preserve">
+    <value>Esc: Cancela histórico</value>
+  </data>
+  <data name="ReadlineHistoryhit" xml:space="preserve">
+    <value>Down/PgDown: Histórico(Min. {0} chars)</value>
+  </data>
+  <data name="ReadlineNotFisnishHistoryhit" xml:space="preserve">
+    <value>Enter: Seleciona&amp;Fechar</value>
+  </data>
+  <data name="ReadlineSugestionhit" xml:space="preserve">
+    <value>Tab/Shift: Sugestões</value>
+  </data>
+  <data name="ReadlineSugestionMode" xml:space="preserve">
+    <value>Esc: Cancelar sugestão e retornar</value>
+  </data>
+  <data name="NumberUpDownKeyNavigator" xml:space="preserve">
+    <value>Up/Down: valor curto, Crtl+Left/Right: valor grande, Enter: Terminar</value>
   </data>
 </root>

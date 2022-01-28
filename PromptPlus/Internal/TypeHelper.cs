@@ -6,7 +6,7 @@
 using System;
 using System.ComponentModel;
 
-namespace PromptPlusControls.Internal
+namespace PPlus.Internal
 {
     internal static class TypeHelper<T>
     {

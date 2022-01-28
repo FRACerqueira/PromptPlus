@@ -3,9 +3,9 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using PromptPlusControls.ValueObjects;
+using PPlus.Objects;
 
-namespace PromptPlusControls.Controls
+namespace PPlus.Controls
 {
     internal class SliderNumberOptions : BaseOptions
     {

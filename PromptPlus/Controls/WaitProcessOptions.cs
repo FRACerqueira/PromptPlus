@@ -5,9 +5,9 @@
 
 using System.Collections.Generic;
 
-using PromptPlusControls.ValueObjects;
+using PPlus.Objects;
 
-namespace PromptPlusControls.Controls
+namespace PPlus.Controls
 {
     internal class WaitProcessOptions : BaseOptions
     {

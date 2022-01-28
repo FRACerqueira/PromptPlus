@@ -3,7 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-namespace PromptPlusControls.Controls
+namespace PPlus.Controls
 {
     internal class ConfirmOptions : BaseOptions
     {

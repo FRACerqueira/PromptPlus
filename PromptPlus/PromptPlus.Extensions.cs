@@ -9,10 +9,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Linq.Expressions;
 
-using PromptPlusControls.Resources;
-using PromptPlusControls.ValueObjects;
+using PPlus.Objects;
+using PPlus.Resources;
 
-namespace PromptPlusControls
+namespace PPlus
 {
     public static partial class PromptPlus
     {
@@ -122,7 +122,7 @@ namespace PromptPlusControls
 
         public static ColorToken DefautColor(this string text)
         {
-            return new ColorToken(text, _consoleDriver.ForegroundColor, _consoleDriver.BackgroundColor);
+            return new ColorToken(text, PPlusConsole.ForegroundColor, PPlusConsole.BackgroundColor);
         }
 
         public static ColorToken Color(this string text, ConsoleColor forecolor, ConsoleColor? backcolor = null)
