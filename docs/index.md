@@ -24,7 +24,7 @@ All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/G
     <a href="https://fracerqueira.github.io/PromptPlus/ppluscmddotnet.html"><b>PromptPlus.CommandDotNet!!</b></a>
 </p>
 
-[![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlusCommandDotNet/)
+[![Downloads](https://img.shields.io/nuget/dt/PromptPlusCommandDotNet)](https://www.nuget.org/packages/PromptPlusCommandDotNet/)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlusCommandDotNet)](https://www.nuget.org/packages/PromptPlusCommandDotNet/)
 
 **Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet**:
