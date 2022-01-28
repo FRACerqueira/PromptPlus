@@ -2,9 +2,7 @@ name: Publish
 
 on:
   push:
-    tags:
-      - PromptPlus*
-      - PPlusCmdDotNet*
+    tags: [ v* ]
 
 env:
   DOTNET_VERSION: 6.0.x
