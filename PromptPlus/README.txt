@@ -18,7 +18,7 @@ All controls input/filter using **GNU Readline ** https://en.wikipedia.org/wiki/
 
 PromptPlus has **separate pakage** integrate command line parse CommandDotNet(4.3.0/6.0.0):
 
-- PromptPlus.CommandDotNet (V1.0.0.300)!!!
+- PromptPlus.CommandDotNet (V1.0.0.310)!!!
 
 **visit the official pages for complete documentation** :
 
@@ -27,6 +27,10 @@ For PromptPlus controls
 
 https://commanddotnet.bilal-fazlani.com/
 CommandDotNet is third party applications
+
+**Relase Notes PromptPlus.CommandDotNet (V1.0.0.310)**
+-----------------------------------------------------------
+- Updated PromptPlus to 3.1.0
 
 **Relase Notes PromptPlus.CommandDotNet (V1.0.0.300)**
 -----------------------------------------------------------
@@ -88,6 +92,14 @@ public class Program
 }
 
 //for usage AppRunner see https://commanddotnet.bilal-fazlani.com/
+**Relase Notes PromptPlus (V.3.1.0)**
+-------------------------------------
+- Added target framework : .Net7
+- Removed target framework : .Net5
+- Fixed bug - Select Control - Exception when using TextSelector
+- Improvement - WaitProcessControl
+    - Added RefreshDescription(Func<string> value) - Dynamic Description  
+- Improvement - many Commands (write/clear) to return print Position area
 
 **Relase Notes PromptPlus (V.3.0.0)**
 -------------------------------------

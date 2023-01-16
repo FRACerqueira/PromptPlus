@@ -8,8 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-using PPlus.Objects;
-
 namespace PPlus.Drivers
 {
     internal class MemoryConsoleWriter : TextWriter

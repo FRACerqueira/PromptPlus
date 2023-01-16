@@ -72,7 +72,7 @@ namespace PPlus.Internal
             isvalid = false;
 
             //skip key tab and enter.
-            if ((keyinfo.Modifiers == 0 || keyinfo.Modifiers == ConsoleModifiers.Shift) && keyinfo.Key != ConsoleKey.Tab && keyinfo.Key != ConsoleKey.Enter)
+            if ((keyinfo.Modifiers == 0 || keyinfo.Modifiers == ConsoleModifiers.Shift || keyinfo.Modifiers == (ConsoleModifiers.Alt | ConsoleModifiers.Control)) && keyinfo.Key != ConsoleKey.Tab && keyinfo.Key != ConsoleKey.Enter)
             {
                 isvalid = IsPrintable(keyinfo.KeyChar);
             }

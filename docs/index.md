@@ -2,7 +2,7 @@
 
 Interactive command-line based application framework for **C# with powerful controls**.
 
-**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net5** and **.Net6** target frameworks.
+**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net6** and **.Net7** target frameworks.
 
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
@@ -66,7 +66,7 @@ An open-source guide to help you write better command-line programs, taking trad
 ## Install
 [**Top**](#help)
 
-PromptPlus was developed in c# with the **netstandard2.1, .NET 5 AND .NET6 ** target frameworks.
+PromptPlus was developed in c# with the **netstandard2.1, .NET 6 AND .NET7 ** target frameworks.
 
 ```
 Install-Package PromptPlus [-pre]

@@ -28,6 +28,5 @@ namespace PPlus.Objects
         public string ProcessId { get; }
         public Func<CancellationToken, Task<object>> ProcessToRun { get; }
         public Func<object, string> ProcessTextResult { get; }
-
     }
 }

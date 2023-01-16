@@ -24,6 +24,14 @@ namespace PPlus
 
         #region internal functions
 
+        internal static PositionResult GetPosition(PositionResult? position = null)
+        {
+            if (position == null)
+            {
+                return new PositionResult(PPlusConsole.CursorTop, PPlusConsole.CursorLeft, PPlusConsole.CursorTop, PPlusConsole.CursorLeft);
+            }
+            return new PositionResult(position.Value.RowStart, position.Value.ColStart, PPlusConsole.CursorTop, PPlusConsole.CursorLeft);
+        }
         internal static void WriteLog(ControlLog? controllog)
         {
             if (!ForwardingLogToLoggerProvider || PPlusLog is null || controllog is null)
@@ -146,7 +154,23 @@ namespace PPlus
             PPlusConsole = value ?? throw new ArgumentException(Messages.Invalid, nameof(value));
         }
 
-        public static void ClearRestOfLine(ConsoleColor? color = null) => PPlusConsole.ClearRestOfLine(color ?? BackgroundColor);
+        public static PositionResult ClearRestOfLine(ConsoleColor? color = null)
+        {
+            var ini = GetPosition();
+            PPlusConsole.ClearRestOfLine(color ?? BackgroundColor);
+            return GetPosition(ini);
+        }
+
+        public static PositionResult ClearLineRangePosition(PositionResult range, ConsoleColor? backcolor = null)
+        {
+            for (var i = range.RowStart; i < range.RowEnd; i++)
+            {
+                CursorPosition(0, i);
+                ClearRestOfLine(backcolor);
+            }
+            CursorPosition(0, range.RowStart);
+            return GetPosition();
+        }
 
         public static void ConsoleDefaultColor(ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
         {
@@ -163,27 +187,33 @@ namespace PPlus
             }
         }
 
-        public static void Clear(ConsoleColor? backcolor = null)
+        public static PositionResult Clear(ConsoleColor? backcolor = null)
         {
             if (backcolor.HasValue)
             {
                 PPlusConsole.BackgroundColor = backcolor.Value;
             }
             PPlusConsole.Clear();
+            return GetPosition();
         }
 
-        public static void WriteLineSkipColors(string value)
+        public static PositionResult WriteLineSkipColors(string value)
         {
+            var start = GetPosition();
             PPlusConsole.WriteLine(value);
+            var stop = PPlusConsole.CursorTop;
+            return GetPosition(start);
         }
 
-        public static void WriteLine(Exception value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
+        public static PositionResult WriteLine(Exception value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null)
         {
-            WriteLine(value.ToString().Color(forecolor ?? PPlusConsole.ForegroundColor, backcolor));
+            return WriteLine(value.ToString().Color(forecolor ?? PPlusConsole.ForegroundColor, backcolor));
         }
 
-        public static void WriteLine(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
+        public static PositionResult WriteLine(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
         {
+            var start = GetPosition();
+
             if (underline)
             {
                 var aux = ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor);
@@ -196,10 +226,14 @@ namespace PPlus
             {
                 WriteLine(ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor));
             }
+
+            return GetPosition(start);
+
         }
 
-        public static void Write(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
+        public static PositionResult Write(string value, ConsoleColor? forecolor = null, ConsoleColor? backcolor = null, bool underline = false)
         {
+            var start = GetPosition();
             if (underline)
             {
                 var aux = ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor);
@@ -212,21 +246,28 @@ namespace PPlus
             {
                 Write(ConvertEmbeddedColorLine(value).Mask(forecolor, backcolor));
             }
+            return GetPosition(start);
         }
 
-        public static void WriteSkipColors(string value)
+        public static PositionResult WriteSkipColors(string value)
         {
+            var start = GetPosition();
             PPlusConsole.Write(value);
+            return GetPosition(start);
         }
 
-        public static void Write(params ColorToken[] tokens)
+        public static PositionResult Write(params ColorToken[] tokens)
         {
+            var start = GetPosition();
             PPlusConsole.Write(tokens);
+            return GetPosition(start);
         }
 
-        public static void WriteLine(params ColorToken[] tokens)
+        public static PositionResult WriteLine(params ColorToken[] tokens)
         {
+            var start = GetPosition();
             PPlusConsole.WriteLine(tokens);
+            return GetPosition(start);
         }
 
         public static ConsoleKeyInfo WaitKeypress(bool intercept, CancellationToken cancellationToken)
@@ -234,8 +275,9 @@ namespace PPlus
             return PPlusConsole.WaitKeypress(intercept, cancellationToken);
         }
 
-        public static void ClearLine(int top)
+        public static PositionResult ClearLine(int top)
         {
+            var start = GetPosition();
             if (top < 0)
             {
                 top = 0;
@@ -245,6 +287,8 @@ namespace PPlus
                 top = PPlusConsole.BufferHeight - 1;
             }
             PPlusConsole.ClearLine(top);
+            return GetPosition(start);
+
         }
 
         public static void Beep() => PPlusConsole.Beep();
@@ -276,16 +320,20 @@ namespace PPlus
             PPlusConsole.SetCursorPosition(left, top);
         }
 
-        public static void WriteLines(int value = 1)
+        public static PositionResult WriteLines(int value = 1)
         {
+            var start = GetPosition();
+
             if (value < 1)
             {
-                return;
+                return start;
             }
             for (var i = 0; i < value; i++)
             {
                 PPlusConsole.WriteLine(string.Empty);
             }
+            return GetPosition(start);
+
         }
 
         #endregion

@@ -71,6 +71,10 @@ namespace PPlus.Controls
                 AddLog("AutoSelectIfOne", _options.AutoSelectIfOne.ToString(), LogKind.Property);
                 AddLog("PageSize", _options.PageSize.ToString(), LogKind.Property);
             }
+            if (result == null)
+            {
+                return string.Empty;
+            }
             return _options.TextSelector(result);
         }
 
