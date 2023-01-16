@@ -120,6 +120,10 @@ namespace PPlus.Controls
         public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options.Message);
+            if (_options.UpdateDescription != null)
+            {
+                _options.Description = _options.UpdateDescription.Invoke();
+            }
             if (_options.Process.Count == 1)
             {
                 screenBuffer.WriteAnswer(Messages.WaittingText);
@@ -277,7 +281,7 @@ namespace PPlus.Controls
             screenBuffer.WriteAnswer(FinishResult);
         }
 
-        #region IControlWaitProcess
+        #region 
 
         public IControlWaitProcess Prompt(string value, string description = null)
         {
@@ -288,6 +292,13 @@ namespace PPlus.Controls
             }
             return this;
         }
+
+        public IControlWaitProcess RefreshDescription(Func<string> value)
+        {
+            _options.UpdateDescription = value;
+            return this;
+        }
+
 
         public IControlWaitProcess AddProcess(SingleProcess process)
         {

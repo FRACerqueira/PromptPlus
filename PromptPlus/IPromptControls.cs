@@ -162,6 +162,7 @@ namespace PPlus
         IControlWaitProcess AddProcess(SingleProcess process);
         IControlWaitProcess SpeedAnimation(int value);
         IControlWaitProcess Config(Action<IPromptConfig> context);
+        IControlWaitProcess RefreshDescription(Func<string> value);
     }
 
     public interface IControlConfirm : IPromptControls<bool>, IPromptPipe

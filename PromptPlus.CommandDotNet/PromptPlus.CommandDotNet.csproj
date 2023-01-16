@@ -18,7 +18,7 @@
     <PackageId>PromptPlusCommandDotNet</PackageId>
     <PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
     <PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
-    <Version>1.0.0.300</Version>
+    <Version>1.0.0.310</Version>
     <PackageIcon>iconCmdNet.png</PackageIcon>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>© 2021 - Fernando Cerqueira </Copyright>
