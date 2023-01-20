@@ -32,6 +32,20 @@ namespace PPlus.Controls
                 _textSelector = value;
             }
         }
+        Func<T, T, bool> _founddefault = (x1, x2) => x1.ToString().ToLower() == x2.ToString().ToLower();
+        public Func<T, T, bool> DefaultSelector
+        {
+            get { return _founddefault; }
+            set
+            {
+                if (value == null)
+                {
+                    value = (x1, x2) => x1.ToString().ToLower() == x2.ToString().ToLower();
+                }
+                _founddefault = value;
+            }
+        }
+
         public Func<T, string> DescriptionSelector { get; set; } = null;
         public bool ShowGroupOnDescription { get; set; }
         public string NoGroupDescription { get; set; }

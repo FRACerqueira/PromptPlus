@@ -102,7 +102,7 @@ namespace PPlus.Controls
 
         public override string InputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.WritePrompt(_options.Message);
+            screenBuffer.WritePrompt(_options.Message, _options.HideSymbolPromptAndResult);
             screenBuffer.WriteAnswer($" {_laststatus.PercentValue}% ");
             if (!string.IsNullOrEmpty(_laststatus.Message))
             {
@@ -142,7 +142,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ProgressBarInfo result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             if (result.Finished)
             {
                 screenBuffer.WriteAnswer("100%");

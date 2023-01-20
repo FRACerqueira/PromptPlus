@@ -667,6 +667,16 @@ namespace PPlus.Controls
             return this;
         }
 
+        public IPromptConfig HideSymbolPromptAndResult()
+        {
+            _options.HideSymbolPromptAndResult = true;
+            if (PromptPlus.EnabledLogControl)
+            {
+                AddLog("HideSymbolPromptAndResult", _options.HideSymbolPromptAndResult.ToString(), LogKind.Property);
+            }
+            return this;
+        }
+
         public IPromptConfig EnabledAbortAllPipes(bool value)
         {
             _options.EnabledAbortAllPipes = value;

@@ -14,6 +14,20 @@ namespace PPlus.Controls
         public IList<T> HideItems { get; set; } = new List<T>();
         public IList<T> DisableItems { get; set; } = new List<T>();
         public T DefaultValue { get; set; }
+
+        Func<T, T, bool> _founddefault = (x1,x2) => x1.ToString().ToLower() == x2.ToString().ToLower();
+        public Func<T, T, bool> DefaultSelector
+        {
+            get { return _founddefault; }
+            set
+            {
+                if (value == null)
+                {
+                    value =  (x1, x2) => x1.ToString().ToLower() == x2.ToString().ToLower(); 
+                }
+                _founddefault = value;
+            }
+        }
         public int? PageSize { get; set; }
 
         Func<T, string> _textSelector = x => x?.ToString();

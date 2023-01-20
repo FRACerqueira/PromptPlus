@@ -62,7 +62,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultBrowser result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             FinishResult = _fullPathSelector(result);
             screenBuffer.WriteAnswer(FinishResult);
         }
@@ -74,7 +74,7 @@ namespace PPlus.Controls
             {
                 prompt += $" ({_options.SearchPattern})";
             }
-            screenBuffer.WritePrompt(prompt);
+            screenBuffer.WritePrompt(prompt,_options.HideSymbolPromptAndResult);
 
             if (_filterBuffer.Length > 0 && _paginator.IsUnSelected)
             {

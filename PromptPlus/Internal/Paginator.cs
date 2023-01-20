@@ -29,7 +29,21 @@ namespace PPlus.Internal
             {
                 _validatorAction = (item) => true;
             }
-            InitializeDefaults(defaultValue);
+            InitializeDefaults(defaultValue,null);
+        }
+
+        public Paginator(IEnumerable<T> items, int? pageSize, Optional<T> defaultValue, Func<T, T, bool>? founddefault, Func<T, string> textSelector = null, Func<T, bool> validatorAction = null)
+        {
+            _items = items.ToArray();
+            _userpageSize = pageSize ?? _items.Length;
+            _textSelector = textSelector ?? ((x) => x.ToString());
+            EnsureTerminalPagesize();
+            _validatorAction = validatorAction;
+            if (validatorAction == null)
+            {
+                _validatorAction = (item) => true;
+            }
+            InitializeDefaults(defaultValue, founddefault);
         }
 
         private void EnsureTerminalPagesize()
@@ -403,7 +417,7 @@ namespace PPlus.Internal
             }
         }
 
-        private void InitializeDefaults(Optional<T> defaultValue)
+        private void InitializeDefaults(Optional<T> defaultValue, Func<T, T, bool>? founddefault)
         {
             InitializeCollection();
 
@@ -414,11 +428,23 @@ namespace PPlus.Internal
 
             for (var i = 0; i < _filteredItems.Length; i++)
             {
-                if (EqualityComparer<T>.Default.Equals(_filteredItems[i], defaultValue))
+                if (founddefault != null)
                 {
-                    SelectedIndex = i % _maxpageSize;
-                    SelectedPage = i / _maxpageSize;
-                    break;
+                    if (founddefault(_filteredItems[i], defaultValue))
+                    {
+                        SelectedIndex = i % _maxpageSize;
+                        SelectedPage = i / _maxpageSize;
+                        break;
+                    }
+                }
+                else
+                {
+                    if (EqualityComparer<string>.Default.Equals(_textSelector(_filteredItems[i]), _textSelector(defaultValue)))
+                    {
+                        SelectedIndex = i % _maxpageSize;
+                        SelectedPage = i / _maxpageSize;
+                        break;
+                    }
                 }
             }
         }

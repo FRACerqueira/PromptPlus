@@ -159,7 +159,7 @@ namespace PPlus.Controls
                 prompt = $"{_options.Message} ({_options.DefaultValue})";
             }
 
-            screenBuffer.WritePrompt(prompt);
+            screenBuffer.WritePrompt(prompt, _options.HideSymbolPromptAndResult);
 
             if (_options.IsPassword && !_passwordvisible)
             {
@@ -234,7 +234,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, string result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             if (result != null)
             {
                 if (_options.IsPassword)

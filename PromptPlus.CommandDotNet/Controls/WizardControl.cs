@@ -31,7 +31,7 @@ namespace PPlus.CommandDotNet.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IArgumentNode result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message,false);
             if (result != null)
             {
                 FinishResult = result.Name;
