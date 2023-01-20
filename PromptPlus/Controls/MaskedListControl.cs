@@ -358,7 +358,7 @@ namespace PPlus.Controls
 
         public override string InputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.WritePrompt(_options.Message);
+            screenBuffer.WritePrompt(_options.Message, _options.HideSymbolPromptAndResult);
 
             screenBuffer.PushCursor(_inputBuffer);
 
@@ -456,7 +456,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<ResultMasked> result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             FinishResult = string.Format(Messages.FinishResultList, result.Count());
             screenBuffer.WriteAnswer(FinishResult);
         }

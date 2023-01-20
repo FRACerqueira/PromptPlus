@@ -119,7 +119,7 @@ namespace PPlus.Controls
 
         public override string InputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.WritePrompt(_options.Message);
+            screenBuffer.WritePrompt(_options.Message, _options.HideSymbolPromptAndResult);
             if (_options.UpdateDescription != null)
             {
                 _options.Description = _options.UpdateDescription.Invoke();
@@ -209,8 +209,15 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        screenBuffer.WriteLineSymbolsDone();
-                        screenBuffer.Write($" {item.ProcessId} : ");
+                        if (_options.HideSymbolPromptAndResult)
+                        {
+                            screenBuffer.Write($"{item.ProcessId} : ");
+                        }
+                        else
+                        {
+                            screenBuffer.WriteLineSymbolsDone();
+                            screenBuffer.Write($" {item.ProcessId} : ");
+                        }
                         screenBuffer.WriteAnswer(_lastresult[item.ProcessId].TextResult);
                     }
                 }
@@ -269,7 +276,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<ResultProcess> result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             if (result.Count() == 1)
             {
                 FinishResult = result.First().TextResult;

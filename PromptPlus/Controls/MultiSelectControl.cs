@@ -63,13 +63,31 @@ namespace PPlus.Controls
             {
                 foreach (var item in _options.DefaultValues)
                 {
-                    var aux = _options.Items.FirstOrDefault(x => !x.IsGroup && x.Value.Equals(item));
-                    var grp = string.Empty;
-                    if (!string.IsNullOrEmpty(aux.Group))
+                    ItemMultSelect<T>? aux = null;
+                    if (_options.DefaultSelector != null)
                     {
-                        grp = aux.Group;
+                        foreach (var itemdef in _options.Items.Where(x => !x.IsGroup))
+                        {
+                            if (_options.DefaultSelector(item, itemdef.Value))
+                            {
+                                aux = itemdef;
+                                break;
+                            }
+                        }
                     }
-                    _selectedItems.Add(new ItemMultSelect<T> { Value = item, Text = _options.TextSelector.Invoke(item), Group = grp, Disabled = aux.Disabled });
+                    else
+                    {
+                        aux = _options.Items.FirstOrDefault(x => !x.IsGroup && x.Value.Equals(item));
+                    }
+                    if (aux != null)
+                    {
+                        var grp = string.Empty;
+                        if (!string.IsNullOrEmpty(aux.Group))
+                        {
+                            grp = aux.Group;
+                        }
+                        _selectedItems.Add(new ItemMultSelect<T> { Value = item, Text = _options.TextSelector.Invoke(item), Group = grp, Disabled = aux.Disabled });
+                    }
                 }
             }
             if (_options.DescriptionSelector != null)
@@ -298,7 +316,7 @@ namespace PPlus.Controls
 
         public override string InputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.WritePrompt(_options.Message);
+            screenBuffer.WritePrompt(_options.Message, _options.HideSymbolPromptAndResult);
             var showSelected = (_selectedItems.Count > 0 && _filterBuffer.Length == 0) || !_localpaginator.IsUnSelected;
             if (_localpaginator.IsUnSelected)
             {
@@ -423,7 +441,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<T> result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             FinishResult = string.Join(", ", result.Select(_options.TextSelector));
             screenBuffer.WriteAnswer(FinishResult);
         }
@@ -448,26 +466,30 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelect<T> AddDefault(T value)
+        public IControlMultiSelect<T> AddDefault(T value, Func<T, T, bool> funcfound = null)
         {
             if (value == null)
             {
+                _options.DefaultSelector = null;
                 return this;
             }
             _options.DefaultValues.Add(value);
+            _options.DefaultSelector = funcfound;
             return this;
         }
 
-        public IControlMultiSelect<T> AddDefaults(IEnumerable<T> value)
+        public IControlMultiSelect<T> AddDefaults(IEnumerable<T> value, Func<T, T, bool> funcfound = null)
         {
             if (value == null)
             {
+                _options.DefaultSelector = null;
                 return this;
             }
             foreach (var item in value)
             {
                 _options.DefaultValues.Add(item);
             }
+            _options.DefaultSelector = funcfound;
             return this;
         }
 

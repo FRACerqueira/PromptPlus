@@ -98,7 +98,7 @@ namespace PPlus.Controls
 
         public override string InputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.WritePrompt(_options.Message);
+            screenBuffer.WritePrompt(_options.Message, _options.HideSymbolPromptAndResult);
             if (_options.DefaultValue == null)
             {
                 screenBuffer.Write($"({char.ToLower(Messages.YesKey)}/{ char.ToLower(Messages.NoKey)}) ");
@@ -151,7 +151,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, bool result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             FinishResult = result ? Messages.YesKey.ToString() : Messages.NoKey.ToString();
             screenBuffer.WriteAnswer(FinishResult);
         }

@@ -244,7 +244,7 @@ namespace PPlus.Controls
 
         public override string InputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.WritePrompt(_options.Message);
+            screenBuffer.WritePrompt(_options.Message, _options.HideSymbolPromptAndResult);
             screenBuffer.Write(_inputBuffer.ToBackward());
             screenBuffer.PushCursor();
             screenBuffer.Write(_inputBuffer.ToForward());
@@ -307,7 +307,7 @@ namespace PPlus.Controls
         {
             _cts.Cancel();
             _autoCompleteRunning = false;
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             if (result != null)
             {
                 FinishResult = result;

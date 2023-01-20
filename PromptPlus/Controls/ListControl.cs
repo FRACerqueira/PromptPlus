@@ -240,7 +240,7 @@ namespace PPlus.Controls
 
         public override string InputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.WritePrompt(_options.Message);
+            screenBuffer.WritePrompt(_options.Message, _options.HideSymbolPromptAndResult);
 
             if (_inputBuffer.IsInAutoCompleteMode())
             {
@@ -335,7 +335,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<T> result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             FinishResult = string.Format(Messages.FinishResultList, result.Count());
             screenBuffer.WriteAnswer(FinishResult);
         }

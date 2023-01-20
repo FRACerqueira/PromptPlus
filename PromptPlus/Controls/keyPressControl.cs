@@ -103,15 +103,25 @@ namespace PPlus.Controls
                     }
                 }
             }
-            screenBuffer.WriteSymbolPrompt();
-            screenBuffer.WriteHint($" {aux}");
+            if (_options.HideSymbolPromptAndResult)
+            {
+                screenBuffer.WriteHint($"{aux}");
+            }
+            else
+            {
+                screenBuffer.WriteSymbolPrompt();
+                screenBuffer.WriteHint($" {aux}");
+            }
             screenBuffer.PushCursor();
             return null;
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, bool result)
         {
-            screenBuffer.WriteSymbolsDone();
+            if (!_options.HideSymbolPromptAndResult)
+            {
+                screenBuffer.WriteSymbolsDone();
+            }
             var modifiers = string.Empty;
             if (_options.KeyModifiers.HasValue)
             {
@@ -139,7 +149,14 @@ namespace PPlus.Controls
                 aux += _options.KeyPress.Value.ToString();
                 FinishResult = aux;
             }
-            screenBuffer.WriteAnswer($" {FinishResult} ");
+            if (_options.HideSymbolPromptAndResult)
+            {
+                screenBuffer.WriteAnswer($"{FinishResult}");
+            }
+            else
+            {
+                screenBuffer.WriteAnswer($" {FinishResult} ");
+            }
         }
 
 

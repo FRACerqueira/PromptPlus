@@ -180,7 +180,7 @@ namespace PPlus.Controls
         {
             var prompt = _options.Message;
 
-            screenBuffer.WritePrompt(prompt);
+            screenBuffer.WritePrompt(prompt, _options.HideSymbolPromptAndResult);
 
             screenBuffer.PushCursor(_maskedBuffer);
 
@@ -231,7 +231,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultMasked result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             FinishResult = result.Masked;
             screenBuffer.WriteAnswer(FinishResult);
             if (_options.ShowDayWeek != FormatWeek.None && (_options.Type == MaskedType.DateOnly || _options.Type == MaskedType.DateTime))

@@ -43,16 +43,30 @@ namespace PPlus.Internal
             screenBuffer.WriteLine(Symbols.Skiped, ColorSchema.Error);
         }
 
-        public static void WriteDone(this ScreenBuffer screenBuffer, string message)
+        public static void WriteDone(this ScreenBuffer screenBuffer, string message,bool hidesymbol)
         {
-            screenBuffer.Write(Symbols.Done, ColorSchema.DoneSymbol);
-            screenBuffer.Write($" {message}: ");
+            if (hidesymbol)
+            {
+                screenBuffer.Write($"{message}: ");
+            }
+            else
+            {
+                screenBuffer.Write(Symbols.Done, ColorSchema.DoneSymbol);
+                screenBuffer.Write($" {message}: ");
+            }
         }
 
-        public static void WritePrompt(this ScreenBuffer screenBuffer, string message)
+        public static void WritePrompt(this ScreenBuffer screenBuffer, string message, bool hidesymbol)
         {
-            screenBuffer.Write(Symbols.Prompt, ColorSchema.PromptSymbol);
-            screenBuffer.Write($" {message}: ");
+            if (hidesymbol)
+            {
+                screenBuffer.Write($"{message}: ");
+            }
+            else
+            {
+                screenBuffer.Write(Symbols.Prompt, ColorSchema.PromptSymbol);
+                screenBuffer.Write($" {message}: ");
+            }
         }
 
         public static void WriteLineError(this ScreenBuffer screenBuffer, string message)
@@ -234,6 +248,10 @@ namespace PPlus.Internal
             }
             else
             {
+                if (msg.StartsWith(","))
+                {
+                    msg = msg.Substring(1, msg.Length - 1).Trim();
+                }
                 screenBuffer.Write(msg, ColorSchema.Hint);
             }
         }

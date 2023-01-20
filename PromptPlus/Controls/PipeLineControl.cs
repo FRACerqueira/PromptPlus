@@ -26,7 +26,7 @@ namespace PPlus.Controls
         private readonly Dictionary<string, ResultPromptPlus<ResultPipe>> _resultpipeline = new();
         private Paginator<ResultPromptPlus<ResultPipe>> _summaryPipePaginator;
         private CancellationTokenSource _esckeyCts;
-
+        private bool _hidesymbolprompt = PromptPlus.HideSymbolPromptAndDone;
         public void Dispose()
         {
             if (_esckeyCts != null)
@@ -123,7 +123,7 @@ namespace PPlus.Controls
         private string SummaryPipelineTemplate(ScreenBuffer screenBuffer)
         {
 
-            screenBuffer.WritePrompt(Messages.PipelineText);
+            screenBuffer.WritePrompt(Messages.PipelineText,_hidesymbolprompt);
             screenBuffer.WriteAnswer($"{_currentIndex}/{_resultpipeline.Count}");
 
             screenBuffer.PushCursor();
@@ -172,9 +172,6 @@ namespace PPlus.Controls
                     screenBuffer.Write($" {item.Value.Title} : ");
                     screenBuffer.Write(_steps[item.Value.PipeId].GetType().GetProperty("FinishResult").GetValue(_steps[item.Value.PipeId]).ToString(), ColorSchema.Answer);
                 }
-                else
-                {
-                }
             }
             if (_summaryPipePaginator.PageCount > 1)
             {
@@ -184,6 +181,12 @@ namespace PPlus.Controls
         }
 
         #region IControlPipeLine
+
+        public IControlPipeLine HideSymbolPromptAndDone()
+        {
+            _hidesymbolprompt = true;
+            return this;
+        }
 
         public IControlPipeLine AddPipe(IFormPlusBase value)
         {

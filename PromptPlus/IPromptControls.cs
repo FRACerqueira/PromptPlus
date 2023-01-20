@@ -19,6 +19,7 @@ namespace PPlus
 {
     public interface IPromptConfig
     {
+        IPromptConfig HideSymbolPromptAndResult();
         IPromptConfig EnabledAbortKey(bool value);
         IPromptConfig EnabledAbortAllPipes(bool value);
         IPromptConfig EnabledPromptTooltip(bool value);
@@ -61,6 +62,7 @@ namespace PPlus
 
     public interface IControlPipeLine
     {
+        IControlPipeLine HideSymbolPromptAndDone();
         IControlPipeLine AddPipe(IFormPlusBase value);
         IControlPipeLine AddPipes(IEnumerable<IFormPlusBase> value);
         ResultPromptPlus<IEnumerable<ResultPipe>> Run(CancellationToken? value = null);
@@ -194,7 +196,7 @@ namespace PPlus
     public interface IControlSelect<T> : IPromptControls<T>, IPromptPipe
     {
         IControlSelect<T> Prompt(string value, string description = null);
-        IControlSelect<T> Default(T value);
+        IControlSelect<T> Default(T value, Func<T,T,bool> funcfound=null);
         IControlSelect<T> PageSize(int value);
         IControlSelect<T> TextSelector(Func<T, string> value);
         IControlSelect<T> DescriptionSelector(Func<T, string> value);
@@ -211,8 +213,8 @@ namespace PPlus
     public interface IControlMultiSelect<T> : IPromptControls<IEnumerable<T>>, IPromptPipe
     {
         IControlMultiSelect<T> Prompt(string value, string description = null);
-        IControlMultiSelect<T> AddDefault(T value);
-        IControlMultiSelect<T> AddDefaults(IEnumerable<T> value);
+        IControlMultiSelect<T> AddDefault(T value, Func<T, T, bool> funcfound = null);
+        IControlMultiSelect<T> AddDefaults(IEnumerable<T> value, Func<T, T, bool> funcfound = null);
         IControlMultiSelect<T> PageSize(int value);
         IControlMultiSelect<T> TextSelector(Func<T, string> value);
         IControlMultiSelect<T> DescriptionSelector(Func<T, string> value);

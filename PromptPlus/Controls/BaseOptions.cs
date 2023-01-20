@@ -12,9 +12,13 @@ namespace PPlus.Controls
 {
     internal abstract class BaseOptions
     {
-        public BaseOptions(bool hideAfterFinish = false)
+        public BaseOptions(bool? hideAfterFinish = null)
         {
-            HideAfterFinish = hideAfterFinish;
+            if (!hideAfterFinish.HasValue)
+            {
+                hideAfterFinish = PromptPlus.HideAfterFinish;
+            }
+            HideAfterFinish = hideAfterFinish.Value;
         }
 
         private string _description;
@@ -38,11 +42,12 @@ namespace PPlus.Controls
         public bool EnabledAbortKey { get; set; } = PromptPlus.EnabledAbortKey;
         public bool EnabledAbortAllPipes { get; set; } = PromptPlus.EnabledAbortAllPipes;
         public bool EnabledPromptTooltip { get; set; } = PromptPlus.EnabledPromptTooltip;
-        public bool HideAfterFinish { get; set; }
+        public bool HideSymbolPromptAndResult { get; set; } = PromptPlus.HideSymbolPromptAndDone;
+        public bool HideAfterFinish { get; set; } = PromptPlus.HideAfterFinish;
         public Dictionary<StageControl, Action<object, string>> UserActions { get; set; } = new();
         public Func<SugestionInput, SugestionOutput> SuggestionHandler { get; set; }
-        public bool EnterSuggestionTryFininsh { get; set; }
-        public bool AcceptInputTab { get; set; }
+        public bool EnterSuggestionTryFininsh { get; set; } = PromptPlus.EnterSuggestionTryFininsh;
+        public bool AcceptInputTab { get; set; } = PromptPlus.AcceptInputTab;
         public object Context { get; set; }
 
     }

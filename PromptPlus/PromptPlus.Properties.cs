@@ -137,6 +137,14 @@ namespace PPlus
 
         public static bool EnabledAbortAllPipes { get; set; } = true;
 
+        public static bool HideSymbolPromptAndDone { get; set; } = false;
+
+        public static bool HideAfterFinish { get; set; } = false;
+
+        public static bool AcceptInputTab { get; set; } = false;
+
+        public static bool EnterSuggestionTryFininsh { get; set; } = false;
+
         public static char PasswordChar { get; set; } = '#';
 
         public static bool EnabledLogControl { get; set; } = false;

@@ -55,9 +55,12 @@ namespace PPlus.Controls
             else
             {
                 result = _options.DefaultValue;
-                _localpaginator = new Paginator<T>(_options.Items, _options.PageSize, Optional<T>.Create(_options.DefaultValue), _options.TextSelector, IsNotDisabled);
+                _localpaginator = new Paginator<T>(_options.Items, _options.PageSize, Optional<T>.Create(_options.DefaultValue),_options.DefaultSelector, _options.TextSelector, IsNotDisabled);
             }
-            _localpaginator.FirstItem();
+            if (_localpaginator.IsUnSelected)
+            {
+                _localpaginator.FirstItem();
+            }
             if (_options.DescriptionSelector != null)
             {
                 _options.Description = _options.DescriptionSelector.Invoke(_localpaginator.SelectedItem);
@@ -159,7 +162,7 @@ namespace PPlus.Controls
         public override string InputTemplate(ScreenBuffer screenBuffer)
         {
             string resulttrempl = null;
-            screenBuffer.WritePrompt(_options.Message);
+            screenBuffer.WritePrompt(_options.Message,_options.HideSymbolPromptAndResult);
             if (_localpaginator.IsUnSelected)
             {
                 screenBuffer.Write(_filterBuffer.ToBackward());
@@ -247,7 +250,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, T result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             FinishResult = _options.TextSelector(result);
             screenBuffer.WriteAnswer(FinishResult);
         }
@@ -270,13 +273,15 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlSelect<T> Default(T value)
+        public IControlSelect<T> Default(T value, Func<T, T, bool> funcfound = null)
         {
             if (value == null)
             {
+                _options.DefaultSelector = null;
                 return this;
             }
             _options.DefaultValue = value;
+            _options.DefaultSelector = funcfound;
             return this;
         }
 

@@ -173,11 +173,11 @@ namespace PPlus.Controls
         {
             if (_options.Type == SliderNumberType.UpDown)
             {
-                screenBuffer.WritePrompt($"{_options.Message} [{_options.Min},{_options.Max}]");
+                screenBuffer.WritePrompt($"{_options.Message} [{_options.Min},{_options.Max}]", _options.HideSymbolPromptAndResult);
             }
             else
             {
-                screenBuffer.WritePrompt(_options.Message);
+                screenBuffer.WritePrompt(_options.Message, _options.HideSymbolPromptAndResult);
             }
 
             var valuestep = CurrentValueStep(_currentValue);
@@ -235,7 +235,7 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, double result)
         {
-            screenBuffer.WriteDone(_options.Message);
+            screenBuffer.WriteDone(_options.Message, _options.HideSymbolPromptAndResult);
             screenBuffer.WriteAnswer(ValueToString(result));
         }
 
