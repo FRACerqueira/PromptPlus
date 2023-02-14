@@ -475,7 +475,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Select, Enter: Finish, {1}: Filter, {2}: All, {3}:Invert.
+        ///   Looks up a localized string similar to {0} Select/Unselect, Enter: Finish, {1}: Filter, {2}: All, {3}:Invert.
         /// </summary>
         internal static string MultiSelectKeyNavigation {
             get {

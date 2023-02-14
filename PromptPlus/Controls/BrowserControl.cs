@@ -331,13 +331,13 @@ namespace PPlus.Controls
             if (!string.IsNullOrEmpty(defvalue))
             {
                 var fi = new FileInfo(defvalue);
-                _defaultopt = new ResultBrowser(fi.Directory?.FullName ?? "", fi.Name, false, true, !_options.ShowNavigationCurrentPath);
+                _defaultopt = new ResultBrowser(fi.Directory?.FullName ?? Path.DirectorySeparatorChar.ToString(), fi.Name, false, true, !_options.ShowNavigationCurrentPath);
                 _currentPath = fi.Directory.FullName;
             }
             else
             {
                 var di = new DirectoryInfo(Directory.GetCurrentDirectory());
-                _defaultopt = new ResultBrowser(di.FullName ?? "", "", true, true, !_options.ShowNavigationCurrentPath);
+                _defaultopt = new ResultBrowser(di.FullName ?? Path.DirectorySeparatorChar.ToString(), "", true, true, !_options.ShowNavigationCurrentPath);
                 _currentPath = di.FullName;
             }
             _paginator = new Paginator<ResultBrowser>(ItensFolders(_defaultopt.PathValue), _options.PageSize, Optional<ResultBrowser>.Create(_defaultopt), _aliasSelector);
@@ -354,19 +354,12 @@ namespace PPlus.Controls
             {
                 defvalue = Directory.GetCurrentDirectory();
             }
-            if (!Directory.GetDirectoryRoot(defvalue).Equals(defvalue, StringComparison.InvariantCultureIgnoreCase))
-            {
-                if (!IsValidDirectory(defvalue))
-                {
-                    throw new ArgumentException(Exceptions.Ex_FileBrowserDefaultValueArgument);
-                }
-            }
             if (!string.IsNullOrEmpty(_options.RootFolder) && !IsValidDirectory(_options.RootFolder))
             {
                 throw new ArgumentException(Exceptions.Ex_FileBrowserRootValueArgument);
             }
             var di = new DirectoryInfo(defvalue);
-            _defaultopt = new ResultBrowser(di.Parent?.FullName ?? "", di.Name, false, false, !_options.ShowNavigationCurrentPath);
+            _defaultopt = new ResultBrowser(di.Parent?.FullName ?? Path.DirectorySeparatorChar.ToString(), di.Name, false, false, !_options.ShowNavigationCurrentPath);
             _currentPath = _defaultopt.PathValue;
             _paginator = new Paginator<ResultBrowser>(ItensFolders(_defaultopt.PathValue), _options.PageSize, Optional<ResultBrowser>.Create(_defaultopt), _aliasSelector);
             if (_paginator.IsUnSelected)
@@ -471,10 +464,6 @@ namespace PPlus.Controls
             try
             {
                 var fi = new FileInfo(file);
-                if (fi.Attributes.HasFlag(FileAttributes.System))
-                {
-                    return false;
-                }
                 if (!IsValidDirectory(fi.Directory.FullName))
                 {
                     return false;
@@ -511,11 +500,11 @@ namespace PPlus.Controls
                 }
                 if (di.Attributes >= 0)
                 {
-                    if (di.Attributes.HasFlag(FileAttributes.System))
+                    if (di.Attributes.HasFlag(FileAttributes.System) && di.Parent != null)
                     {
                         return false;
                     }
-                    if (_options.SupressHidden && di.Attributes.HasFlag(FileAttributes.Hidden))
+                    if (_options.SupressHidden && di.Attributes.HasFlag(FileAttributes.Hidden) && di.Parent != null)
                     {
                         return false;
                     }
