@@ -191,7 +191,7 @@ namespace PPlus.Controls
                     }
                     var aux = _selectedItems.ToArray();
                     _selectedItems.Clear();
-                    _selectedItems.AddRange(_options.Items.Where(x => !x.IsGroup && !x.Disabled && !aux.Contains(x)));
+                    _selectedItems.AddRange(_options.Items.Where(x => !x.IsGroup && !x.Disabled && !aux.Select(x => x.Value).Contains(x.Value)));
                 }
                 else if (MarkSelect.Equals(keyInfo))
                 {
@@ -230,7 +230,7 @@ namespace PPlus.Controls
                                             _selectedItems.Add(item);
                                         }
                                     }
-                                    var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
+                                    var auxsel = _options.Items.Where(x => _selectedItems.Select(x => x.Value).Contains(x.Value)).ToArray();
                                     _selectedItems.Clear();
                                     _selectedItems.AddRange(auxsel);
                                     currentItem.IsSelected = true;
@@ -253,7 +253,7 @@ namespace PPlus.Controls
                                 else
                                 {
                                     _selectedItems.Add(currentItem);
-                                    var auxsel = _options.Items.Where(x => _selectedItems.Contains(x)).ToArray();
+                                    var auxsel = _options.Items.Where(x => _selectedItems.Select(x => x.Value).Contains(x.Value)).ToArray();
                                     _selectedItems.Clear();
                                     _selectedItems.AddRange(auxsel);
                                 }

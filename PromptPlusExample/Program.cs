@@ -93,6 +93,8 @@ namespace PromptPlusExample
             PromptPlus.ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
             PromptPlus.Clear();
 
+            PromptPlus.Banner("PromptPlus").FIGletWidth(CharacterWidth.Fitted).Run();
+ 
             var quit = false;
             while (!_stopApp.IsCancellationRequested && !quit)
             {
@@ -1472,6 +1474,7 @@ namespace PromptPlusExample
             var folder = PromptPlus.Browser("Select/New folder")
                 .Filter(BrowserFilter.OnlyFolder)
                 .PageSize(5)
+                .Default(Directory.GetDirectoryRoot(AppDomain.CurrentDomain.BaseDirectory))
                 .PromptCurrentPath(false)
                 .Run(_stopApp);
 
