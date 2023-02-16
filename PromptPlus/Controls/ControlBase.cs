@@ -325,6 +325,7 @@ namespace PPlus.Controls
                 bool? hit = true;
                 var skip = _skiplastrender;
                 var oldwidth = PromptPlus.PPlusConsole.BufferWidth;
+                var isFinish = false;
                 while (!_linkedCts.IsCancellationRequested)
                 {
                     var diff = _screenrender.CountLines(PromptPlus.PPlusConsole.BufferWidth) - _screenrender.CountLines(oldwidth);
@@ -386,6 +387,7 @@ namespace PPlus.Controls
                             continue;
                         }
                         _screenrender.FinishRender(FinishTemplate, result);
+                        isFinish = true;
                         if (_options.HideAfterFinish)
                         {
                             _ = _screenrender.HideLastRender(diff);
@@ -413,7 +415,17 @@ namespace PPlus.Controls
                         return new ResultPromptPlus<T>(result, false);
                     }
                 }
+                if (!isFinish && _linkedCts.IsCancellationRequested)
+                {
+                    var diff = _screenrender.CountLines(PromptPlus.PPlusConsole.BufferWidth) - _screenrender.CountLines(oldwidth);
+                    if (_options.HideAfterFinish)
+                    {
+                        _ = _screenrender.HideLastRender(diff,skip);
+                    }
+                }
             }
+
+
 
             if (PromptPlus.EnabledLogControl)
             {
