@@ -167,7 +167,6 @@ namespace PPlus.Controls
                 screenBuffer.WriteLine(item, _color);
             }
             screenBuffer.WriteLine();
-            screenBuffer.PushCursor();
             return null;
         }
     }
