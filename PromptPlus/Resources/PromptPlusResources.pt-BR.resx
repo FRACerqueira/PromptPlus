@@ -352,7 +352,7 @@
     <value>Esc: Cancela histórico</value>
   </data>
   <data name="ReadlineHistoryhit" xml:space="preserve">
-    <value>Down/PgDown: Histórico(Min. {0} chars)</value>
+    <value>Down/PgDown: Histórico(Min. {0} chars), Ctrl+Del:Limpar histórico</value>
   </data>
   <data name="ReadlineNotFisnishHistoryhit" xml:space="preserve">
     <value>Enter: Seleciona&amp;Fechar</value>

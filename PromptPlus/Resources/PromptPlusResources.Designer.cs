@@ -601,7 +601,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Down/PgDown: Historic(Min. {0} chars).
+        ///   Looks up a localized string similar to Down/PgDown: Historic(Min. {0} chars), Ctrl+Del:Clear historic.
         /// </summary>
         internal static string ReadlineHistoryhit {
             get {

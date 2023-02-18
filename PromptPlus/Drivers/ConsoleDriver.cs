@@ -255,7 +255,9 @@ namespace PPlus.Drivers
         public void WriteLine(params ColorToken[] tokens)
         {
             Write(tokens);
+            ClearRestOfLine(null);
             Out.WriteLine();
+
         }
 
         public void Write(string value, ConsoleColor? color = null, ConsoleColor? colorbg = null)
@@ -266,6 +268,7 @@ namespace PPlus.Drivers
         public void WriteLine(string value = null, ConsoleColor? color = null, ConsoleColor? colorbg = null)
         {
             Write((value ?? string.Empty).Color(color ?? Console.ForegroundColor, colorbg ?? Console.BackgroundColor));
+            ClearRestOfLine(colorbg ?? Console.BackgroundColor);
             Out.WriteLine();
         }
 

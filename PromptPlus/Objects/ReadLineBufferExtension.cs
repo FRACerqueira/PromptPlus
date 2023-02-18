@@ -51,6 +51,11 @@ namespace PPlus.Objects
             return (keyinfo.Key == ConsoleKey.Delete && keyinfo.Modifiers == 0) || (keyinfo.Key == ConsoleKey.D && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
+        public static bool IsPressCtrlDeleteKey(this ConsoleKeyInfo keyinfo)
+        {
+            return (keyinfo.Key == ConsoleKey.Delete && keyinfo.Modifiers == ConsoleModifiers.Control);
+        }
+
         public static bool IsPressLeftArrowKey(this ConsoleKeyInfo keyinfo)
         {
             return (keyinfo.Key == ConsoleKey.LeftArrow && keyinfo.Modifiers == 0) || (keyinfo.Key == ConsoleKey.B && keyinfo.Modifiers == ConsoleModifiers.Control);
