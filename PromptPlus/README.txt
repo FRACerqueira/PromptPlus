@@ -4,7 +4,7 @@
 |  __/| |  | (_) | | | | | | |_) | |_|  __/| | |_| |__ \
 |_|   |_|   \___/|_| |_| |_| .__/ \__|_|   |_|\__,_|___/
                            |_|
-**Welcome to PromptPlus v3.2.2 ** 
+**Welcome to PromptPlus v3.3.0 ** 
 
 Interactive command-line toolkit for **C#** with powerful controls.
 
