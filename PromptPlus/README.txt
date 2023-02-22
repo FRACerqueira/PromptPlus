@@ -28,13 +28,13 @@ For PromptPlus controls
 https://commanddotnet.bilal-fazlani.com/
 CommandDotNet is third party applications
 
+**Relase Notes PromptPlus.CommandDotNet (V1.0.0.330)**
+-----------------------------------------------------------
+- Updated PromptPlus to 3.3.0
+
 **Relase Notes PromptPlus.CommandDotNet (V1.0.0.322)**
 -----------------------------------------------------------
 - Updated PromptPlus to 3.2.2
-
-**Relase Notes PromptPlus.CommandDotNet (V1.0.0.321)**
------------------------------------------------------------
-- Updated PromptPlus to 3.2.1
 
 **PromptPlus.CommandDotNet - Sample Usage**
 -------------------------------------------
@@ -62,15 +62,21 @@ public class Program
 
 //for usage AppRunner see https://commanddotnet.bilal-fazlani.com/
 
+**Relase Notes  PromptPlus (V.3.3.0)**
+-----------------------------------------------------------
+- Fixed bug - write line not clear rest of line
+- Fixed bug - show Tooltips WaitControl and Progressbar
+- Improvement - Readline clear historic (Ctrl+Del)
+- BreakChange - Removed return value position-cursor for all write commands
+- BreakChange - Removed version from theme
+- BreakChange - changed property name EnabledPromptTooltip to EnabledTooltip
+- BreakChange - changed property name EnabledStandardTooltip to EnabledTooltip
+
 **Relase Notes  PromptPlus (V.3.2.2)**
 -----------------------------------------------------------
 Fixed bug - Banner Control - removed push cursor 
 Fixed bug - Base Control - When abort control not execute clear render when HideAfterFinish = true
 
-**Relase Notes  PromptPlus (V.3.2.1)**
------------------------------------------------------------
-Fixed bug - Browser Control - Default value
-Fixed bug - MultiSelect Control - Invert select/Select when exist default value
 
 **PromptPlus Controls - Sample Usage**
 --------------------------------------
