@@ -131,8 +131,6 @@ namespace PPlus
 
         public static bool EnabledTooltip { get; set; } = true;
 
-        public static bool EnabledPromptTooltip { get; set; } = true;
-
         public static bool EnabledAbortKey { get; set; } = true;
 
         public static bool EnabledAbortAllPipes { get; set; } = true;

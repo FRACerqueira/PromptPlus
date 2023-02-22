@@ -331,10 +331,10 @@
     <value>{0} not found in sugestions</value>
   </data>
   <data name="ShowStandardHotKeysDesc" xml:space="preserve">
-    <value>{0} Toggle tooltips, {1} Toggle description{2}</value>
+    <value>{0} Toggle tooltips, {1} Toggle description {2}</value>
   </data>
   <data name="ShowStandardHotKeysWithPipelineDesc" xml:space="preserve">
-    <value>{0} Toggle tooltips, {1} Toggle description, {2} Toggle pipes summary{3}</value>
+    <value>{0} Toggle tooltips, {1} Toggle description, {2} Toggle pipes summary {3}</value>
   </data>
   <data name="HotKeyDescription" xml:space="preserve">
     <value>{0} Show/Hide description</value>

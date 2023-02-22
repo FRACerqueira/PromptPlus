@@ -127,7 +127,7 @@ namespace PPlus.Controls
             screenBuffer.WriteAnswer($"{_currentIndex}/{_resultpipeline.Count}");
 
             screenBuffer.PushCursor();
-            if (EnabledStandardTooltip)
+            if (EnabledTooltip)
             {
                 if (_summaryPipePaginator.PageCount > 1)
                 {

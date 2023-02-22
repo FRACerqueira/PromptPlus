@@ -68,7 +68,7 @@ namespace PPlus.Controls
 
         public bool AbortedAll { get; set; }
 
-        public bool EnabledStandardTooltip { get; set; } = PromptPlus.EnabledStandardTooltip;
+        public bool EnabledStandardTooltip { get; set; } = PromptPlus.EnabledTooltip;
 
         public string FinishResult
         {
@@ -420,7 +420,7 @@ namespace PPlus.Controls
                     var diff = _screenrender.CountLines(PromptPlus.PPlusConsole.BufferWidth) - _screenrender.CountLines(oldwidth);
                     if (_options.HideAfterFinish)
                     {
-                        _ = _screenrender.HideLastRender(diff,skip);
+                        _ = _screenrender.HideLastRender(diff,ignorecancel:true);
                     }
                 }
             }
@@ -603,6 +603,45 @@ namespace PPlus.Controls
                 AddLog("AbortKeyPress", true.ToString(), LogKind.Abort);
                 AddLog("AbortedAll", AbortedAll.ToString(), LogKind.Abort);
                 return true;
+            }
+            return false;
+        }
+        public bool CheckDefaultKeyStopWaitProcess(ConsoleKeyInfo keyInfo)
+        {
+            if (PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = false;
+            }
+            if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
+            {
+                HideDescription = !HideDescription;
+                return false;
+            }
+            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
+            {
+                EnabledStandardTooltip = !EnabledStandardTooltip;
+                return false;
+            }
+            else if (PromptPlus.AbortKeyPress.Equals(keyInfo) && _options.EnabledAbortKey)
+            {
+                _esckeyCancelation.Cancel();
+                AbortedAll = !OverPipeLine;
+                AddLog("AbortKeyPress", true.ToString(), LogKind.Abort);
+                AddLog("AbortedAll", AbortedAll.ToString(), LogKind.Abort);
+                return true;
+            }
+            else if (OverPipeLine && PromptPlus.AbortAllPipesKeyPress.Equals(keyInfo) && _options.EnabledAbortAllPipes)
+            {
+                _esckeyCancelation.Cancel();
+                AbortedAll = true;
+                AddLog("AbortKeyPress", true.ToString(), LogKind.Abort);
+                AddLog("AbortedAll", AbortedAll.ToString(), LogKind.Abort);
+                return true;
+            }
+            else if (OverPipeLine && PromptPlus.ResumePipesKeyPress.Equals(keyInfo))
+            {
+                SummaryPipeLine = !SummaryPipeLine;
+                return false;
             }
             return false;
         }

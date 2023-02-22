@@ -24,11 +24,9 @@ namespace PPlus
                 EnabledBeep = EnabledBeep,
                 EnabledAbortAllPipes = EnabledAbortAllPipes,
                 EnabledAbortKey = EnabledAbortKey,
-                EnabledStandardTooltip = EnabledStandardTooltip,
-                EnabledPromptTooltip = EnabledPromptTooltip,
+                EnabledTooltip = EnabledTooltip,
                 PasswordChar = PasswordChar,
                 Culture = DefaultCulture.Name,
-                Version = Theme.CurrentVersion
             };
 
             theme.Colors.Answer = ColorSchema.Answer;
@@ -97,11 +95,6 @@ namespace PPlus
             {
                 var theme = JsonSerializer.Deserialize<Theme>(File.ReadAllText(pathfile), options);
 
-                if (theme.Version < 1)
-                {
-                    theme.Version = 1;
-                }
-
                 if (string.IsNullOrEmpty(theme.Culture))
                 {
                     DefaultCulture = new CultureInfo(AppCulture.Name);
@@ -113,8 +106,7 @@ namespace PPlus
                 EnabledBeep = theme.EnabledBeep;
                 EnabledAbortAllPipes = theme.EnabledAbortAllPipes;
                 EnabledAbortKey = theme.EnabledAbortKey;
-                EnabledStandardTooltip = theme.EnabledStandardTooltip;
-                EnabledPromptTooltip = theme.EnabledPromptTooltip;
+                EnabledTooltip = theme.EnabledTooltip;
                 PasswordChar = theme.PasswordChar ?? '#';
 
                 Symbols.MaskEmpty = theme.Symbols.MaskEmpty;
@@ -141,18 +133,9 @@ namespace PPlus
                 ColorSchema.SliderBackcolor = theme.Colors.SliderBackcolor;
                 ColorSchema.SliderForecolor = theme.Colors.SliderForecolor;
 
-                if (theme.Version >= 2)
-                {
-                    MarkSelect = ConverteThemeHotkey(theme.HotKeys.MarkSelect);
-                    ToggleVisibleDescription = ConverteThemeHotkey(theme.HotKeys.ToggleVisibleDescription);
-                    ColorSchema.Description = theme.Colors.Description;
-                }
-                else
-                {
-                    MarkSelect = ConverteThemeHotkey(UserHotKey.F8.ToString());
-                    ToggleVisibleDescription = ToggleVisibleDescription;
-                    ColorSchema.Description = ColorSchema.Answer;
-                }
+                MarkSelect = ConverteThemeHotkey(theme.HotKeys.MarkSelect);
+                ToggleVisibleDescription = ConverteThemeHotkey(theme.HotKeys.ToggleVisibleDescription);
+                ColorSchema.Description = theme.Colors.Description;
                 AbortAllPipesKeyPress = ConverteThemeHotkey(theme.HotKeys.AbortAllPipesKeyPress);
                 TooltipKeyPress = ConverteThemeHotkey(theme.HotKeys.TooltipKeyPress);
                 ResumePipesKeyPress = ConverteThemeHotkey(theme.HotKeys.ResumePipesKeyPress);

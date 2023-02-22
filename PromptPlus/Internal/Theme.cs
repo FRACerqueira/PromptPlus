@@ -11,8 +11,6 @@ namespace PPlus.Internal
 {
     internal class Theme
     {
-        public const int CurrentVersion = 2;
-
         public Theme()
         {
             HotKeys = new();
@@ -20,15 +18,11 @@ namespace PPlus.Internal
             Symbols = new();
         }
 
-        public int Version { get; set; }
-
         public string Culture { get; set; }
 
         public bool EnabledBeep { get; set; }
 
-        public bool EnabledStandardTooltip { get; set; }
-
-        public bool EnabledPromptTooltip { get; set; }
+        public bool EnabledTooltip { get; set; }
 
         public bool EnabledAbortKey { get; set; }
 

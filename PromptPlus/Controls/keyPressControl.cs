@@ -125,15 +125,15 @@ namespace PPlus.Controls
             var modifiers = string.Empty;
             if (_options.KeyModifiers.HasValue)
             {
-                if (_options.KeyModifiers.Value.HasFlag(System.ConsoleModifiers.Control))
+                if (_options.KeyModifiers.Value.HasFlag(ConsoleModifiers.Control))
                 {
                     modifiers += "Crtl+";
                 }
-                if (_options.KeyModifiers.Value.HasFlag(System.ConsoleModifiers.Shift))
+                if (_options.KeyModifiers.Value.HasFlag(ConsoleModifiers.Shift))
                 {
                     modifiers += "Shift+";
                 }
-                if (_options.KeyModifiers.Value.HasFlag(System.ConsoleModifiers.Alt))
+                if (_options.KeyModifiers.Value.HasFlag(ConsoleModifiers.Alt))
                 {
                     modifiers += "Alt+";
                 }
