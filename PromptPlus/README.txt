@@ -4,7 +4,7 @@
 |  __/| |  | (_) | | | | | | |_) | |_|  __/| | |_| |__ \
 |_|   |_|   \___/|_| |_| |_| .__/ \__|_|   |_|\__,_|___/
                            |_|
-**Welcome to PromptPlus v3.2.2 ** 
+**Welcome to PromptPlus v3.3.0 ** 
 
 Interactive command-line toolkit for **C#** with powerful controls.
 
@@ -18,7 +18,7 @@ All controls input/filter using **GNU Readline ** https://en.wikipedia.org/wiki/
 
 PromptPlus has **separate pakage** integrate command line parse CommandDotNet(4.3.0/6.0.0):
 
-- PromptPlus.CommandDotNet (V1.0.0.322)!!!
+- PromptPlus.CommandDotNet (V1.0.0.330)!!!
 
 **visit the official pages for complete documentation** :
 
