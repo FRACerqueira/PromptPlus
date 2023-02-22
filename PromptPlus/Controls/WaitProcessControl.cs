@@ -47,7 +47,6 @@ namespace PPlus.Controls
                     throw new ArgumentException(nameof(SingleProcess), Exceptions.Ex_WaitTaskToRun);
                 }
             }
-
             if (_options.SpeedAnimation < 10)
             {
                 _options.SpeedAnimation = 10;
@@ -153,7 +152,7 @@ namespace PPlus.Controls
                         screenBuffer.WriteLine();
                     }
                 }
-                screenBuffer.WriteLineProcessStandardHotKeys(EnabledStandardTooltip || _options.EnabledPromptTooltip, OverPipeLine,  _options.EnabledAbortKey, HasDescription && !HideDescription);
+                screenBuffer.WriteLineProcessStandardHotKeys(EnabledTooltip, OverPipeLine,  _options.EnabledAbortKey, HasDescription && !HideDescription);
                 screenBuffer.ClearRestOfLine();
                 return null;
             }
@@ -176,7 +175,7 @@ namespace PPlus.Controls
                 }
                 screenBuffer.ClearRestOfLine();
             }
-            screenBuffer.WriteLineProcessStandardHotKeys(EnabledStandardTooltip || _options.EnabledPromptTooltip, OverPipeLine, _options.EnabledAbortKey, HasDescription && !HideDescription);
+            screenBuffer.WriteLineProcessStandardHotKeys(EnabledTooltip, OverPipeLine, _options.EnabledAbortKey, HasDescription && !HideDescription);
             screenBuffer.ClearRestOfLine();
 
             for (var i = 0; i < PromptPlus.MaxShowTasks; i++)

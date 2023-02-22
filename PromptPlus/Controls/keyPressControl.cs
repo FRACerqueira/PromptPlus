@@ -78,7 +78,7 @@ namespace PPlus.Controls
             {
                 aux = _options.Message;
             }
-            if (_options.EnabledPromptTooltip)
+            if (_options.EnabledTooltip)
             {
                 if (_options.EnabledAbortKey)
                 {

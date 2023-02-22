@@ -46,6 +46,7 @@ namespace PPlus.Controls
             _skiplastrender = skiplastrender;
             _screenrender = new ScreenRender();
             _showcursor = showcursor;
+            EnabledTooltip = options.EnabledTooltip;
         }
 
         public string PipeId { get; internal set; }
@@ -68,7 +69,7 @@ namespace PPlus.Controls
 
         public bool AbortedAll { get; set; }
 
-        public bool EnabledStandardTooltip { get; set; } = PromptPlus.EnabledTooltip;
+        public bool EnabledTooltip { get; set; }
 
         public string FinishResult
         {
@@ -138,7 +139,7 @@ namespace PPlus.Controls
         {
             if (PromptPlus.DisabledAllTooltips)
             {
-                EnabledStandardTooltip = false;
+                EnabledTooltip = false;
             }
             try
             {
@@ -303,7 +304,7 @@ namespace PPlus.Controls
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
             if (PromptPlus.DisabledAllTooltips)
             {
-                EnabledStandardTooltip = false;
+                EnabledTooltip = false;
             }
 
             _screenrender.StopToken = stoptoken;
@@ -579,7 +580,7 @@ namespace PPlus.Controls
         {
             if (PromptPlus.DisabledAllTooltips)
             {
-                EnabledStandardTooltip = false;
+                EnabledTooltip = false;
             }
             if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
             {
@@ -588,7 +589,7 @@ namespace PPlus.Controls
             }
             else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
             {
-                EnabledStandardTooltip = !EnabledStandardTooltip;
+                EnabledTooltip = !EnabledTooltip;
                 return true;
             }
             return false;
@@ -610,7 +611,7 @@ namespace PPlus.Controls
         {
             if (PromptPlus.DisabledAllTooltips)
             {
-                EnabledStandardTooltip = false;
+                EnabledTooltip = false;
             }
             if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
             {
@@ -619,7 +620,7 @@ namespace PPlus.Controls
             }
             else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
             {
-                EnabledStandardTooltip = !EnabledStandardTooltip;
+                EnabledTooltip = !EnabledTooltip;
                 return false;
             }
             else if (PromptPlus.AbortKeyPress.Equals(keyInfo) && _options.EnabledAbortKey)
@@ -650,7 +651,7 @@ namespace PPlus.Controls
         {
             if (PromptPlus.DisabledAllTooltips)
             {
-                EnabledStandardTooltip = false;
+                EnabledTooltip = false;
             }
             if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
             {
@@ -659,7 +660,7 @@ namespace PPlus.Controls
             }
             else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
             {
-                EnabledStandardTooltip = !EnabledStandardTooltip;
+                EnabledTooltip = !EnabledTooltip;
                 return true;
             }
             else if (PromptPlus.AbortKeyPress.Equals(keyInfo) && _options.EnabledAbortKey)
@@ -740,7 +741,7 @@ namespace PPlus.Controls
 
         public IPromptConfig EnabledPromptTooltip(bool value)
         {
-            _options.EnabledPromptTooltip = value;
+            _options.EnabledTooltip = value;
             if (PromptPlus.EnabledLogControl)
             {
                 AddLog("EnabledPromptTooltip", value.ToString(), LogKind.Property);

@@ -195,7 +195,7 @@ namespace PPlus.Controls
                     screenBuffer.WriteLineDescription(_options.Description);
                 }
             }
-            if (EnabledStandardTooltip)
+            if (EnabledTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
                 if (_inputBuffer.IsInAutoCompleteMode())
@@ -207,7 +207,7 @@ namespace PPlus.Controls
                 else
                 {
                     var aux = ", ";
-                    if (_options.EnabledPromptTooltip)
+                    if (_options.EnabledTooltip)
                     {
                         screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, Messages.EnterFininsh);
                     }

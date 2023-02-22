@@ -241,7 +241,7 @@ namespace PPlus.Controls
                 }
             }
 
-            if (EnabledStandardTooltip)
+            if (EnabledTooltip)
             {
                 ShowStandardHotKeys(screenBuffer);
                 CreateMessageHit(screenBuffer);

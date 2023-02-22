@@ -212,10 +212,10 @@ namespace PPlus.Controls
                 screenBuffer.WriteAnswer(string.Format(Messages.MaskEditInputType, _maskedBuffer.Tooltip));
             }
 
-            if (EnabledStandardTooltip)
+            if (EnabledTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledPromptTooltip)
+                if (_options.EnabledTooltip)
                 {
                     screenBuffer.WriteLineHint($"{Messages.EnterFininsh}{Messages.MaskEditErase}");
                 }

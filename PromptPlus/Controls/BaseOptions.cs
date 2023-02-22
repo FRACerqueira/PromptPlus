@@ -41,7 +41,7 @@ namespace PPlus.Controls
         public string Message { get; set; }
         public bool EnabledAbortKey { get; set; } = PromptPlus.EnabledAbortKey;
         public bool EnabledAbortAllPipes { get; set; } = PromptPlus.EnabledAbortAllPipes;
-        public bool EnabledPromptTooltip { get; set; } = PromptPlus.EnabledTooltip;
+        public bool EnabledTooltip { get; set; } = PromptPlus.EnabledTooltip;
         public bool HideSymbolPromptAndResult { get; set; } = PromptPlus.HideSymbolPromptAndDone;
         public bool HideAfterFinish { get; set; } = PromptPlus.HideAfterFinish;
         public Dictionary<StageControl, Action<object, string>> UserActions { get; set; } = new();

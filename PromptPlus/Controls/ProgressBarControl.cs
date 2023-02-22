@@ -130,7 +130,7 @@ namespace PPlus.Controls
             screenBuffer.WriteSliderOn(bar);
             screenBuffer.WriteSliderOff(_options.Witdth - bar);
             screenBuffer.WriteHint(" 100%");
-            screenBuffer.WriteLineProcessStandardHotKeys(EnabledStandardTooltip || _options.EnabledPromptTooltip, OverPipeLine, _options.EnabledAbortKey, HasDescription, 3);
+            screenBuffer.WriteLineProcessStandardHotKeys(EnabledTooltip, OverPipeLine, _options.EnabledAbortKey, HasDescription, 3);
             screenBuffer.ClearRestOfLine();
             return null;
         }
