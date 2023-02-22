@@ -161,6 +161,11 @@ namespace PPlus
             }
         }
 
+        public static void ClearRestOfLine(ConsoleColor? color = null)
+        {
+            PPlusConsole.ClearRestOfLine(color ?? BackgroundColor);
+        }
+
         public static void Clear(ConsoleColor? backcolor = null)
         {
             if (backcolor.HasValue)
