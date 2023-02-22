@@ -18,7 +18,7 @@ All controls input/filter using **GNU Readline ** https://en.wikipedia.org/wiki/
 
 PromptPlus has **separate pakage** integrate command line parse CommandDotNet(4.3.0/6.0.0):
 
-- PromptPlus.CommandDotNet (V1.0.0.322)!!!
+- PromptPlus.CommandDotNet (V1.0.0.330)!!!
 
 **visit the official pages for complete documentation** :
 
