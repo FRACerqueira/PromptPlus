@@ -601,7 +601,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Down/PgDown: Historic(Min. {0} chars).
+        ///   Looks up a localized string similar to Down/PgDown: Historic(Min. {0} chars), Ctrl+Del:Clear historic.
         /// </summary>
         internal static string ReadlineHistoryhit {
             get {
@@ -718,7 +718,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Toggle tooltips, {1} Toggle description{2}.
+        ///   Looks up a localized string similar to {0} Toggle tooltips, {1} Toggle description {2}.
         /// </summary>
         internal static string ShowStandardHotKeysDesc {
             get {
@@ -736,7 +736,7 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Toggle tooltips, {1} Toggle description, {2} Toggle pipes summary{3}.
+        ///   Looks up a localized string similar to {0} Toggle tooltips, {1} Toggle description, {2} Toggle pipes summary {3}.
         /// </summary>
         internal static string ShowStandardHotKeysWithPipelineDesc {
             get {

@@ -83,7 +83,7 @@ namespace PPlus.Internal
             PPlusConsole.WriteLine();
         }
 
-        public bool HideLastRender(int diff, bool skip = false)
+        public bool HideLastRender(int diff, bool skip = false, bool ignorecancel = false)
         {
             var _cursorBottomdiff = _cursorBottom + diff;
             if (_cursorBottomdiff < 0)
@@ -98,7 +98,7 @@ namespace PPlus.Internal
             }
 
             EnsureScreensizeAndPosition();
-            if (StopToken.IsCancellationRequested)
+            if (StopToken.IsCancellationRequested && !ignorecancel)
             {
                 return false;
             }

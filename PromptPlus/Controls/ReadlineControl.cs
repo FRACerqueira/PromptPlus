@@ -69,6 +69,12 @@ namespace PPlus.Controls
             return _inputBuffer.ToString();
         }
 
+        private void ClearHistory()
+        {
+            FileHistory.ClearHistory(_options.FileNameHistory);
+            _itemsHistory.Clear();
+        }
+
         private void AddAndSaveHistory(string value)
         {
             FileHistory.AddHistory(value, _options.TimeoutHistory, _itemsHistory);
@@ -101,6 +107,12 @@ namespace PPlus.Controls
                         SetError(_inputBuffer.SugestionError);
                         _inputBuffer.ClearError();
                     }
+                }
+                else if (_showingHistory && keyInfo.IsPressCtrlDeleteKey() && _itemsHistory.Count > 0)
+                {
+                    ClearHistory();
+                    _showingHistory = false;
+                    _localpaginator = null;
                 }
                 else if (!_showingHistory && (keyInfo.IsPressDownArrowKey() || keyInfo.IsPressPageDownKey())
                     && _itemsHistory.Count > 0 && _inputBuffer.Length >= _options.MinimumPrefixLength)
@@ -229,7 +241,7 @@ namespace PPlus.Controls
                 }
             }
 
-            if (EnabledStandardTooltip)
+            if (EnabledTooltip)
             {
                 ShowStandardHotKeys(screenBuffer);
                 CreateMessageHit(screenBuffer);

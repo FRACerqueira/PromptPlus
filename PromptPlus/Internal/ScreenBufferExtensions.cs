@@ -225,20 +225,26 @@ namespace PPlus.Internal
             screenBuffer.WriteLine(message, ColorSchema.Pagination);
         }
 
-        public static void WriteLineProcessStandardHotKeys(this ScreenBuffer screenBuffer, bool overpipeline, bool enabledabortkey, bool hasdescription, int extraspace = 0)
+        public static void WriteLineProcessStandardHotKeys(this ScreenBuffer screenBuffer,bool showtooltip, bool overpipeline, bool enabledabortkey, bool hasdescription, int extraspace = 0)
         {
+            if (showtooltip && !overpipeline)
+            {
+                if (hasdescription)
+                {
+                    screenBuffer.WriteLine(string.Format(Messages.ShowStandardHotKeysDesc, TooltipKeyPress, ToggleVisibleDescription, enabledabortkey?Messages.EscCancel:""), ColorSchema.Hint);
+                }
+                else
+                {
+                    screenBuffer.WriteLine(string.Format(Messages.ShowStandardHotKeys, TooltipKeyPress, enabledabortkey ? Messages.EscCancel : ""), ColorSchema.Hint);
+                }
+            }
+            else
+            {
+                screenBuffer.WriteLine();
+            }
+
             var msg = string.Empty;
-            if (enabledabortkey)
-            {
-                msg = Messages.EscCancel.Replace(",", "").Trim();
-                msg = string.Format(msg, AbortKeyPress.ToString());
-            }
-            if (hasdescription && !overpipeline)
-            {
-                msg = $"{msg}, {string.Format(Messages.HotKeyDescription, ToggleVisibleDescription)}";
-            }
-            screenBuffer.WriteLine();
-            if (extraspace != 0)
+            if (extraspace != 0 && !overpipeline)
             {
                 screenBuffer.Write(new string(' ', extraspace));
             }

@@ -107,10 +107,10 @@ namespace PPlus.Controls
                 screenBuffer.WriteLineDescription($"{Messages.FolderCurrentPath} {_currentPath}");
             }
 
-            if (EnabledStandardTooltip)
+            if (EnabledTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledPromptTooltip)
+                if (_options.EnabledTooltip)
                 {
                     screenBuffer.WriteLine();
                     if (_paginator.PageCount > 1)

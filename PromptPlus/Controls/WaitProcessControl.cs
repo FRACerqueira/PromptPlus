@@ -47,7 +47,6 @@ namespace PPlus.Controls
                     throw new ArgumentException(nameof(SingleProcess), Exceptions.Ex_WaitTaskToRun);
                 }
             }
-
             if (_options.SpeedAnimation < 10)
             {
                 _options.SpeedAnimation = 10;
@@ -67,7 +66,7 @@ namespace PPlus.Controls
 
         public override bool? TryResult(bool summary, CancellationToken cancellationToken, out IEnumerable<ResultProcess> result)
         {
-            if (!summary && CheckDefaultKey(GetKeyAvailable(cancellationToken)))
+            if (!summary && CheckDefaultKeyStopWaitProcess(GetKeyAvailable(cancellationToken)))
             {
                 result = _lastresult.Values;
                 if (!SummaryPipeLine)
@@ -146,18 +145,15 @@ namespace PPlus.Controls
                     if (!HideDescription)
                     {
                         screenBuffer.WriteLineDescription(_options.Description);
+                        screenBuffer.ClearRestOfLine();
                     }
                     else
                     {
-                        screenBuffer.WriteLineDescription(" ");
+                        screenBuffer.WriteLine();
                     }
-                    screenBuffer.ClearRestOfLine();
                 }
-                if (_options.EnabledPromptTooltip)
-                {
-                    screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, !HasDescription);
-                    screenBuffer.ClearRestOfLine();
-                }
+                screenBuffer.WriteLineProcessStandardHotKeys(EnabledTooltip, OverPipeLine,  _options.EnabledAbortKey, HasDescription && !HideDescription);
+                screenBuffer.ClearRestOfLine();
                 return null;
             }
 
@@ -179,11 +175,8 @@ namespace PPlus.Controls
                 }
                 screenBuffer.ClearRestOfLine();
             }
-            if (_options.EnabledPromptTooltip)
-            {
-                screenBuffer.WriteLineProcessStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, !HasDescription);
-                screenBuffer.ClearRestOfLine();
-            }
+            screenBuffer.WriteLineProcessStandardHotKeys(EnabledTooltip, OverPipeLine, _options.EnabledAbortKey, HasDescription && !HideDescription);
+            screenBuffer.ClearRestOfLine();
 
             for (var i = 0; i < PromptPlus.MaxShowTasks; i++)
             {

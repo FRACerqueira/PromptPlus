@@ -385,10 +385,10 @@ namespace PPlus.Controls
                 screenBuffer.WriteAnswer(string.Format(Messages.MaskEditInputType, _inputBuffer.Tooltip));
             }
 
-            if (EnabledStandardTooltip)
+            if (EnabledTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledPromptTooltip)
+                if (_options.EnabledTooltip)
                 {
                     screenBuffer.WriteLine();
                     if (_localpaginator.PageCount > 1)

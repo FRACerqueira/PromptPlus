@@ -129,9 +129,7 @@ namespace PPlus
 
         public static bool EnabledBeep { get; set; } = false;
 
-        public static bool EnabledStandardTooltip { get; set; } = true;
-
-        public static bool EnabledPromptTooltip { get; set; } = true;
+        public static bool EnabledTooltip { get; set; } = true;
 
         public static bool EnabledAbortKey { get; set; } = true;
 

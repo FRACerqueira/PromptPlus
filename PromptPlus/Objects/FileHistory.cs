@@ -105,6 +105,20 @@ namespace PPlus.Objects
                     .Select(x => x.ToString()), Encoding.UTF8);
         }
 
+        public static void ClearHistory(string filename)
+        {
+            if (string.IsNullOrEmpty(filename))
+            {
+                throw new ArgumentException(Resources.Exceptions.Ex_InvalidValue, nameof(filename));
+            }
+            var file = string.Format(Filehistory, filename);
+            var userProfile = GetFolderPath(SpecialFolder.UserProfile);
+            var result = new List<ItemHistory>();
+            if (File.Exists(Path.Combine(userProfile, Folderhistory, file)))
+            {
+                File.Delete(Path.Combine(userProfile, Folderhistory, file));
+            }
+        }
         public static void UpdateHistory(string filename, TimeSpan timeout)
         {
             if (string.IsNullOrEmpty(filename))

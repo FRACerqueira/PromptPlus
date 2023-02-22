@@ -238,7 +238,7 @@
     <value>{0} Alternar dicas{1}</value>
   </data>
   <data name="ShowStandardHotKeysWithPipeline" xml:space="preserve">
-    <value>{0} Alternar dicas, {1} Alternar resumo dos pipes{2}</value>
+    <value>{0} Alternar dicas, {1} Alternar resumo dos pipes {2}</value>
   </data>
   <data name="SkipedText" xml:space="preserve">
     <value>Ignorado</value>
@@ -328,7 +328,7 @@
     <value>{0} não encontrado nas sugestões</value>
   </data>
   <data name="ShowStandardHotKeysDesc" xml:space="preserve">
-    <value>{0} Alternar dicas, {1} Alternar descrição{2}</value>
+    <value>{0} Alternar dicas, {1} Alternar descrição {2}</value>
   </data>
   <data name="HotKeyDescription" xml:space="preserve">
     <value>{0} Alternar descrição</value>
@@ -352,7 +352,7 @@
     <value>Esc: Cancela histórico</value>
   </data>
   <data name="ReadlineHistoryhit" xml:space="preserve">
-    <value>Down/PgDown: Histórico(Min. {0} chars)</value>
+    <value>Down/PgDown: Histórico(Min. {0} chars), Ctrl+Del:Limpar histórico</value>
   </data>
   <data name="ReadlineNotFisnishHistoryhit" xml:space="preserve">
     <value>Enter: Seleciona&amp;Fechar</value>
