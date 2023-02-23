@@ -131,6 +131,8 @@ namespace PPlus
             DefaultForeColor = Console.ForegroundColor;
             DefaultBackColor = Console.BackgroundColor;
 
+            ConsoleDefaultColor(ConsoleColor.White, ConsoleColor.Black);
+
             LoadConfigFromFile();
         }
 
