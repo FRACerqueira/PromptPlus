@@ -272,20 +272,12 @@ namespace PPlus.Controls
                 else
                 {
                     var aux = ", ";
-                    if (_options.EnabledTooltip)
+                    screenBuffer.WriteLine();
+                    if (_localpaginator.PageCount > 1)
                     {
-                        screenBuffer.WriteLine();
-                        if (_localpaginator.PageCount > 1)
-                        {
-                            screenBuffer.WriteHint(Messages.KeyNavPaging);
-                        }
-                        screenBuffer.WriteHint(Messages.ListKeyNavigation);
+                        screenBuffer.WriteHint(Messages.KeyNavPaging);
                     }
-                    else
-                    {
-                        screenBuffer.WriteLine();
-                        aux = string.Empty;
-                    }
+                    screenBuffer.WriteHint(Messages.ListKeyNavigation);
                     if (_options.SuggestionHandler != null)
                     {
                         screenBuffer.WriteHint($"{aux}{Messages.ReadlineSugestionhit}");

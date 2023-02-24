@@ -207,15 +207,7 @@ namespace PPlus.Controls
                 else
                 {
                     var aux = ", ";
-                    if (_options.EnabledTooltip)
-                    {
-                        screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, Messages.EnterFininsh);
-                    }
-                    else
-                    {
-                        screenBuffer.WriteLine();
-                        aux = string.Empty;
-                    }
+                    screenBuffer.WriteLineInputHit(_options.SwithVisiblePassword && _options.IsPassword, Messages.EnterFininsh);
                     if (_options.SuggestionHandler != null)
                     {
                         screenBuffer.WriteHint($"{aux}{Messages.ReadlineSugestionhit}");

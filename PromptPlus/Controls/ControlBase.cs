@@ -137,10 +137,6 @@ namespace PPlus.Controls
 
         public ResultPromptPlus<T> StartPipeline(Func<ScreenBuffer, string> summarypipeline, Paginator<ResultPromptPlus<ResultPipe>> pipePaginator, int currentStep, CancellationToken stoptoken)
         {
-            if (PromptPlus.DisabledAllTooltips)
-            {
-                EnabledTooltip = false;
-            }
             try
             {
                 PromptPlus.ExclusiveMode = true;
@@ -302,10 +298,6 @@ namespace PPlus.Controls
         {
             Thread.CurrentThread.CurrentCulture = PromptPlus.DefaultCulture;
             Thread.CurrentThread.CurrentUICulture = PromptPlus.DefaultCulture;
-            if (PromptPlus.DisabledAllTooltips)
-            {
-                EnabledTooltip = false;
-            }
 
             _screenrender.StopToken = stoptoken;
             if (!_showcursor)
@@ -578,16 +570,12 @@ namespace PPlus.Controls
 
         public bool CheckDefaultWizardKey(ConsoleKeyInfo keyInfo)
         {
-            if (PromptPlus.DisabledAllTooltips)
-            {
-                EnabledTooltip = false;
-            }
             if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
             {
                 HideDescription = !HideDescription;
                 return true;
             }
-            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
+            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.EnabledTooltip)
             {
                 EnabledTooltip = !EnabledTooltip;
                 return true;
@@ -609,16 +597,12 @@ namespace PPlus.Controls
         }
         public bool CheckDefaultKeyStopWaitProcess(ConsoleKeyInfo keyInfo)
         {
-            if (PromptPlus.DisabledAllTooltips)
-            {
-                EnabledTooltip = false;
-            }
             if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
             {
                 HideDescription = !HideDescription;
                 return false;
             }
-            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
+            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.EnabledTooltip)
             {
                 EnabledTooltip = !EnabledTooltip;
                 return false;
@@ -649,16 +633,12 @@ namespace PPlus.Controls
 
         public bool CheckDefaultKey(ConsoleKeyInfo keyInfo)
         {
-            if (PromptPlus.DisabledAllTooltips)
-            {
-                EnabledTooltip = false;
-            }
             if (PromptPlus.ToggleVisibleDescription.Equals(keyInfo) && _options.HasDescription)
             {
                 HideDescription = !HideDescription;
                 return true;
             }
-            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.DisabledAllTooltips)
+            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.EnabledTooltip)
             {
                 EnabledTooltip = !EnabledTooltip;
                 return true;

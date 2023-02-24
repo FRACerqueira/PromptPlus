@@ -218,16 +218,13 @@ namespace PPlus.Controls
             if (EnabledTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledTooltip)
+                if (_options.Type == SliderNumberType.LeftRight)
                 {
-                    if (_options.Type == SliderNumberType.LeftRight)
-                    {
-                        screenBuffer.WriteLineHint(Messages.SliderNumberKeyNavigator);
-                    }
-                    else if (_options.Type == SliderNumberType.UpDown)
-                    {
-                        screenBuffer.WriteLineHint(Messages.NumberUpDownKeyNavigator);
-                    }
+                    screenBuffer.WriteLineHint(Messages.SliderNumberKeyNavigator);
+                }
+                else if (_options.Type == SliderNumberType.UpDown)
+                {
+                    screenBuffer.WriteLineHint(Messages.NumberUpDownKeyNavigator);
                 }
             }
             return ValueToString(_currentValue);
