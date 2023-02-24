@@ -388,28 +388,25 @@ namespace PPlus.Controls
             if (EnabledTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledTooltip)
+                screenBuffer.WriteLine();
+                if (_localpaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLine();
-                    if (_localpaginator.PageCount > 1)
+                    screenBuffer.WriteHint(Messages.KeyNavPaging);
+                }
+                if (_options.MaskedOption.FillNumber == s_defaultfill)
+                {
+                    if (_inputBuffer.Length > 0)
                     {
-                        screenBuffer.WriteHint(Messages.KeyNavPaging);
-                    }
-                    if (_options.MaskedOption.FillNumber == s_defaultfill)
-                    {
-                        if (_inputBuffer.Length > 0)
-                        {
-                            screenBuffer.WriteHint(Messages.ListKeyNavigationFillZeros);
-                        }
-                        else
-                        {
-                            screenBuffer.WriteHint(Messages.ListKeyNavigation);
-                        }
+                        screenBuffer.WriteHint(Messages.ListKeyNavigationFillZeros);
                     }
                     else
                     {
                         screenBuffer.WriteHint(Messages.ListKeyNavigation);
                     }
+                }
+                else
+                {
+                    screenBuffer.WriteHint(Messages.ListKeyNavigation);
                 }
             }
             var subset = _localpaginator.ToSubset();

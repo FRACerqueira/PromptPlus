@@ -133,10 +133,7 @@ namespace PPlus.Controls
             if (EnabledTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledTooltip)
-                {
-                    screenBuffer.WriteHint(Messages.SliderSwitcheKeyNavigator);
-                }
+                screenBuffer.WriteHint(Messages.SliderSwitcheKeyNavigator);
             }
             if (_currentValue)
             {

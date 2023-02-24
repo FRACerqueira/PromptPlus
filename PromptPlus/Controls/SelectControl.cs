@@ -196,17 +196,12 @@ namespace PPlus.Controls
             if (EnabledTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledTooltip)
+                screenBuffer.WriteLine();
+                if (_localpaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLine();
-                    if (_localpaginator.PageCount > 1)
-                    {
-                        screenBuffer.WriteHint(Messages.KeyNavPaging);
-                    }
-                    screenBuffer.WriteHint(Messages.SelectKeyNavigation);
-
+                    screenBuffer.WriteHint(Messages.KeyNavPaging);
                 }
-
+                screenBuffer.WriteHint(Messages.SelectKeyNavigation);
             }
 
             if (_filterBuffer.Length > 0)

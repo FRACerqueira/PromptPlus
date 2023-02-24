@@ -215,10 +215,7 @@ namespace PPlus.Controls
             if (EnabledTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledTooltip)
-                {
-                    screenBuffer.WriteLineHint($"{Messages.EnterFininsh}{Messages.MaskEditErase}");
-                }
+                screenBuffer.WriteLineHint($"{Messages.EnterFininsh}{Messages.MaskEditErase}");
             }
 
             if (_options.ValidateOnDemand && _options.Validators.Count > 0)

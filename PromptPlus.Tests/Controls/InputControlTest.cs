@@ -116,48 +116,6 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        internal void Should_have_show_tooltips()
-        {
-            var first = true;
-            string[] viewstart = null;
-            string[] viewAfterF1 = null;
-
-            _reader.WaitRender(); //PPLUS custom code for KeyAvailable = false => ConsoleKeyInfo((char)0, 0, true, true, true)
-            _reader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.F1, false, false, false));
-            _reader.WaitRender(); //PPLUS custom code for KeyAvailable = false => ConsoleKeyInfo((char)0, 0, true, true, true)
-            _reader.LoadInput(new ConsoleKeyInfo((char)0, ConsoleKey.Enter, false, false, false));
-            var result = PromptPlus.Input("Prompt teste", "teste description")
-                .Default("default")
-                .InitialValue("teste")
-                .Config((ctx) =>
-                {
-                    ctx.AddExtraAction(PPlus.Objects.StageControl.OnInputRender, (object ctx, string value) =>
-                    {
-                        if (first)
-                        {
-                            first = false;
-                            viewstart = _memoryconsole.GetScreen();
-                        }
-                        else
-                        {
-                            viewAfterF1 = _memoryconsole.GetScreen();
-                        }
-
-                    });
-                })
-                .Run();
-            Assert.Equal("teste description", viewstart[1]);
-            Assert.Equal(4, viewstart.Length);
-            Assert.Contains("F1", viewstart[2]);
-            Assert.Contains("F3", viewstart[2]);
-            Assert.Contains("Esc", viewstart[2]);
-            Assert.Contains("Enter", viewstart[3]);
-            Assert.Equal(2, viewAfterF1.Length);
-            Assert.Contains("Prompt teste", viewAfterF1[0]);
-            Assert.Equal("teste description", viewstart[1]);
-        }
-
-        [Fact]
         internal void Should_have_hide_description()
         {
             var first = true;

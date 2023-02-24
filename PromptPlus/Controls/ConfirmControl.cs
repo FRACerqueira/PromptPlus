@@ -140,10 +140,7 @@ namespace PPlus.Controls
             if (EnabledTooltip)
             {
                 screenBuffer.WriteLineStandardHotKeys(OverPipeLine, _options.EnabledAbortKey, _options.EnabledAbortAllPipes, !HasDescription);
-                if (_options.EnabledTooltip)
-                {
-                    screenBuffer.WriteLineHint(Messages.EnterFininsh);
-                }
+                screenBuffer.WriteLineHint(Messages.EnterFininsh);
             }
             _initform = false;
             return _inputBuffer.ToString();
