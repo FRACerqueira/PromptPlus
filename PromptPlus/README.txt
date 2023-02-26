@@ -4,7 +4,7 @@
 |  __/| |  | (_) | | | | | | |_) | |_|  __/| | |_| |__ \
 |_|   |_|   \___/|_| |_| |_| .__/ \__|_|   |_|\__,_|___/
                            |_|
-**Welcome to PromptPlus v3.3.2 ** 
+**Welcome to PromptPlus v3.3.3 ** 
 
 Interactive command-line toolkit for **C#** with powerful controls.
 
@@ -18,7 +18,7 @@ All controls input/filter using **GNU Readline ** https://en.wikipedia.org/wiki/
 
 PromptPlus has **separate pakage** integrate command line parse CommandDotNet(4.3.0/6.0.0):
 
-- PromptPlus.CommandDotNet (V1.0.0.332)!!!
+- PromptPlus.CommandDotNet (V1.0.0.333)!!!
 
 **visit the official pages for complete documentation** :
 
@@ -28,21 +28,9 @@ For PromptPlus controls
 https://commanddotnet.bilal-fazlani.com/
 CommandDotNet is third party applications
 
-**Relase Notes PromptPlus.Com**Relase Notes PromptPlus.CommandDotNet (V1.0.0.332)**
+**Relase Notes PromptPlus.Com**Relase Notes PromptPlus.CommandDotNet (V1.0.0.333)**
 -----------------------------------------------------------
-- Updated PromptPlus to 3.3.2
-
-**Relase Notes PromptPlus.Com**Relase Notes PromptPlus.CommandDotNet (V1.0.0.331)**
------------------------------------------------------------
-- Updated PromptPlus to 3.3.1
-
-mandDotNet (V1.0.0.330)**
------------------------------------------------------------
-- Updated PromptPlus to 3.3.0
-
-**Relase Notes PromptPlus.CommandDotNet (V1.0.0.322)**
------------------------------------------------------------
-- Updated PromptPlus to 3.2.2
+- Updated PromptPlus to 3.3.3
 
 **PromptPlus.CommandDotNet - Sample Usage**
 -------------------------------------------
@@ -69,6 +57,10 @@ public class Program
 }
 
 //for usage AppRunner see https://commanddotnet.bilal-fazlani.com/
+
+**Relase Notes  PromptPlus (V.3.3.3)**
+-----------------------------------------------------------
+- Fixed bug - F1 not toglle tips
 
 **Relase Notes  PromptPlus (V.3.3.2)**
 -----------------------------------------------------------
