@@ -32,7 +32,7 @@
     <PackageId>PromptPlus</PackageId>
     <PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
     <PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
-    <Version>3.3.2</Version>
+    <Version>3.3.3</Version>
     <PackageIcon>icon.png</PackageIcon>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <Copyright>© 2021 - Fernando Cerqueira </Copyright>

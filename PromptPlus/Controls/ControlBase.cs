@@ -638,7 +638,7 @@ namespace PPlus.Controls
                 HideDescription = !HideDescription;
                 return true;
             }
-            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo) && !PromptPlus.EnabledTooltip)
+            else if (PromptPlus.TooltipKeyPress.Equals(keyInfo))
             {
                 EnabledTooltip = !EnabledTooltip;
                 return true;
