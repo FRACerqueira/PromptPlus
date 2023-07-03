@@ -1,0 +1,232 @@
+Title: Fluxo DEVICES
+
+_:  **INIT  New Device Autenticação User-Password **
+
+App -> AKAMAI: Init (Post - MTLS)
+note:  CERT-APP + CRIPT(DEVICE-ID + USER + PWD BY  CERT-APP)
+
+if:**IF NOT CERT-APP-VALID**
+	AKAMAI  -> App: Invalid Cert by AKAMAI! 
+end
+AKAMAI -> GATEWAY: Init (Post  - MTLS)
+GATEWAY -> FLUXO-AUTH: Init (Post - KEYAUTH)
+  
+FLUXO-AUTH -> SERVICE FLUXO: VALID-USER (GET)
+
+
+If: **IF NOT VALID USER**
+     SERVICE FLUXO -> FLUXO-AUTH : VALID-USER (Response GET - 401 + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)    
+  	FLUXO-AUTH -> GATEWAY : Init (Response Post 409 + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+    GATEWAY -> AKAMAI : Init (Response Post 409  - MTLS + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+  	AKAMAI -> App : Init (Response Post  409 - MTLS + code:01-bloqueado temp code:02-bloqueado perm. Code:03 - invalido)
+
+END
+
+FLUXO-AUTH -> SERVICE FLUXO: CANCEL-SESSION (Post)
+note: DELETE ALL SESSION WITH DEVICE-ID (SESSION E CERTIFICADOS)
+
+SERVICE FLUXO -> FLUXO-AUTH: CANCEL-SESSION (Path)
+note: CLEAR ALL SESSION OK
+
+	FLUXO-AUTH -> SERVICE FLUXO: NEW-CERT-DEVICE (Post)
+	note: CERT-DEVICE OK
+  
+  SERVICE FLUXO -> FLUXO-AUTH: NEW-CERT-DEVICE (Post)
+	
+  FLUXO-AUTH -> SERVICE FLUXO: CREATE-SESSION (Post)
+  note: CERT-DEVICE + -IM-ID + DEVICE-ID
+
+	SERVICE FLUXO -> FLUXO-AUTH: CREATE-SESSION (Post)
+  note: SESSION-ID = CRIPT(IM-ID + DEVICE-ID) + TIMEOUT-SESSION
+  
+	FLUXO-AUTH -> GATEWAY : Init (Response Post + code:00-Habilitado)
+
+	GATEWAY -> AKAMAI : Init (Response Post  - MTLS + code:00-Habilitado)
+
+	AKAMAI -> App : Init (Response Post  - MTLS + code:00-Habilitado)
+	note: CERT-DEVICE + SESSION-ID + TIMEOUT-SESSION (200)
+  
+_: ** LOGIN User-Password **
+
+App -> AKAMAI: Login (Post - MTLS)
+note:  CERT-APP + CRIPT(DEVICE-ID + USER + PWD BY CERT-DEVICE)
+
+if:**IF NOT CERT-VALID**
+	AKAMAI  -> App: Invalid Cert AKAMAI! 
+  end
+
+AKAMAI -> GATEWAY: Login (Post - MTLS)
+
+GATEWAY -> FLUXO-AUTH: Login (Post - KEYAUTH)
+
+FLUXO-AUTH -> SERVICE FLUXO: VALIDATE-SESSION (GET)
+note: DECRIPT BY SERVER CERT-DEVICE 
+
+if: **IF NOT VALID SESSION (DEVICE-ID-APP # DEVICE-ID-SERVER OU INVALID CERT)**
+
+	FLUXO-AUTH -> SERVICE FLUXO: TRY-INVALIDATE-SESSION (Delete)
+		note: DELETE ALL SESSION WITH DEVICE-ID
+
+	SERVICE FLUXO -> FLUXO-AUTH: TRY-INVALIDATE-SESSION (Response - Delete)
+	note: CLEAR ALL SESSION OK
+  
+  FLUXO-AUTH -> GATEWAY : Login (Response Post 409 code:04 - session invalido)
+    GATEWAY -> AKAMAI : Login (Response Post 409  - MTLS code:04 - session invalido)
+  	AKAMAI -> App : Login (Response Post  409 - MTLS code:04 - session invalido)
+
+end
+  
+FLUXO-AUTH -> SERVICE FLUXO: VALID-USER (GET)
+if: **IF NOT VALID USER**
+  
+  FLUXO-AUTH -> SERVICE FLUXO: TRY-INVALIDATE-SESSION (Delete)
+		note: DELETE ALL SESSION WITH DEVICE-ID
+
+	SERVICE FLUXO -> FLUXO-AUTH: TRY-INVALIDATE-SESSION (Response - Delete)
+	note: CLEAR ALL SESSION OK
+  
+  
+     SERVICE FLUXO -> FLUXO-AUTH : VALID-USER (Response GET - 401 + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+  	FLUXO-AUTH -> GATEWAY : Login (Response Post 409  + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+    GATEWAY -> AKAMAI : Login (Response Post 409  - MTLS  + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+  	AKAMAI -> App : Login (Response Post  409 - MTLS + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+end 
+   
+ 	FLUXO-AUTH -> SERVICE FLUXO: CREATE-SESSION (Post)
+  note: CERT-DEVICE + -IM-ID + DEVICE-ID + TIMEOUT SESSION)
+
+	SERVICE FLUXO -> FLUXO-AUTH: CREATE-SESSION (Post)
+  note: SESSION-ID = CRIPT(IM-ID + DEVICE-ID) + TIMEOUT-SESSION
+    
+	FLUXO-AUTH -> GATEWAY : Login (Response Post  + code:00-Habilitado)
+
+	GATEWAY -> AKAMAI : Login (Response Post  - MTLS + code:00-Habilitado)
+
+	AKAMAI -> App : Login (Response Post  - MTLS + code:00-Habilitado)
+	note: SESSION-ID + TIMEOUT-SESSION (200) 
+
+_: ** RENEW SESSION **
+  
+  App -> AKAMAI: RENEW (Path - MTLS)
+note:  CERT-APP + CRIPT(DEVICE-ID + SESSION-ID BY CERT-DEVICE)
+
+if:**IF NOT CERT-VALID**
+	AKAMAI  -> App: Invalid Cert AKAMAI! 
+end
+  
+AKAMAI -> GATEWAY:RENEW (Path - MTLS)
+
+GATEWAY -> FLUXO-AUTH: RENEW (Path -  KEYAUTH)
+
+  
+FLUXO-AUTH -> SERVICE FLUXO: VALIDATE-SESSION (GET)
+note: DECRIPT BY SERVER CERT-DEVICE 
+
+if: **IF NOT VALID SESSION (DEVICE-ID-APP # DEVICE-ID-SERVER OU SESSIN-ID-APP # SESSION-ID-SERVER OU INVALID CERT)**
+
+ FLUXO-AUTH -> SERVICE FLUXO: TRY-INVALIDATE-SESSION (Delete)
+		note: DELETE ALL SESSION WITH DEVICE-ID
+
+	SERVICE FLUXO -> FLUXO-AUTH: TRY-INVALIDATE-SESSION (Response - Delete)
+	note: CLEAR ALL SESSION OK
+  	FLUXO-AUTH -> GATEWAY : RENEW (Response Post 409 code:04 - session invalido)
+    GATEWAY -> AKAMAI : RENEW (Response Post 409  - MTLS code:04 - session invalido)
+  	AKAMAI -> App : RENEW (Response Post  409 - MTLS code:04 - session invalido)
+
+end
+  
+FLUXO-AUTH -> SERVICE FLUXO: VALID-USER (GET)
+if: **IF NOT VALID USER**
+  
+   FLUXO-AUTH -> SERVICE FLUXO: TRY-INVALIDATE-SESSION (Delete)
+		note: DELETE ALL SESSION WITH DEVICE-ID
+
+	SERVICE FLUXO -> FLUXO-AUTH: TRY-INVALIDATE-SESSION (Response - Delete)
+	note: CLEAR ALL SESSION OK
+  
+     SERVICE FLUXO -> FLUXO-AUTH : VALID-USER (Response GET - 401 + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+  	FLUXO-AUTH -> GATEWAY : RENEW (Response Post 409  + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+    GATEWAY -> AKAMAI : RENEW (Response Post 409  - MTLS  + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+  	AKAMAI -> App : RENEW (Response Post  409 - MTLS + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+end
+ 
+   
+ 	FLUXO-AUTH -> SERVICE FLUXO: RENEW-SESSION (Post)
+  note: CERT-DEVICE + -IM-ID + DEVICE-ID + TIMEOUT SESSION)
+
+	SERVICE FLUXO -> FLUXO-AUTH: RENEW-SESSION (Post)
+  note: SESSION-ID = CRIPT(IM-ID + DEVICE-ID) + TIMEOUT-SESSION
+    
+	FLUXO-AUTH -> GATEWAY : RENEW (Response Post  + code:00-Habilitado)
+
+	GATEWAY -> AKAMAI : RENEW (Response Post  - MTLS + code:00-Habilitado)
+
+	AKAMAI -> App : RENEW (Response Post  - MTLS + code:00-Habilitado)
+	note: SESSION-ID + TIMEOUT-SESSION (200) 
+  
+_: ** AUTH.USER SESSION - NEG **
+  
+   App -> AKAMAI: NEG (??? - MTLS)
+note:  CERT-APP + CRIPT(DEVICE-ID + SESSION-ID BY CERT-DEVICE)
+
+if:**IF NOT CERT-VALID**
+	AKAMAI  -> App: Invalid Cert AKAMAI! 
+end
+  
+AKAMAI -> GATEWAY:NEG (???? - MTLS)
+
+GATEWAY -> FLUXO-VALIDAUTH: NEG (??? -  KEYAUTH)
+
+  
+FLUXO-VALIDAUTH -> SERVICE FLUXO: VALIDATE-SESSION (GET)
+note: DECRIPT BY SERVER CERT-DEVICE 
+
+if: **IF NOT VALID SESSION (DEVICE-ID-APP # DEVICE-ID-SERVER OU SESSIN-ID-APP # SESSION-ID-SERVEROU INVALID CERT)**
+
+ FLUXO-VALIDAUTH  -> SERVICE FLUXO: TRY-INVALIDATE-SESSION (Delete)
+		note: DELETE ALL SESSION WITH DEVICE-ID
+
+	SERVICE FLUXO -> FLUXO-VALIDAUTH: TRY-INVALIDATE-SESSION (Response - Delete)
+	note: CLEAR ALL SESSION OK
+  	FLUXO-VALIDAUTH  -> GATEWAY : NEG (Response ??? 409 code:04 - session invalido)
+    GATEWAY -> AKAMAI : NEG (Response ??? 409  - MTLS code:04 - session invalido)
+  	AKAMAI -> App : NEG (Response ???  409 - MTLS code:04 - session invalido)
+
+end
+
+FLUXO-VALIDAUTH -> SERVICE FLUXO: VALID-USER (GET)
+if: **IF NOT VALID USER**
+  
+   FLUXO-VALIDAUTH -> SERVICE FLUXO: TRY-INVALIDATE-SESSION (Delete)
+		note: DELETE ALL SESSION WITH DEVICE-ID
+
+	SERVICE FLUXO -> FLUXO-VALIDAUTH: TRY-INVALIDATE-SESSION (Response - Delete)
+	note: CLEAR ALL SESSION OK
+  
+     SERVICE FLUXO -> FLUXO-VALIDAUTH : VALID-USER (Response GET - 401 + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+  	FLUXO-VALIDAUTH -> GATEWAY : RENEW (Response Post 409  + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+    GATEWAY -> AKAMAI : RENEW (Response Post 409  - MTLS  + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+  	AKAMAI -> App : RENEW (Response Post  409 - MTLS + code:01-bloqueado temp code:02-bloqueado perm. code:03 - invalido)
+end
+
+
+if: **IF EXPIRED SESSION **
+  	FLUXO-VALIDAUTH  -> GATEWAY : NEG (Response ??? 409 code:05 - session expired)
+    GATEWAY -> AKAMAI : NEG (Response ??? 409  - MTLS code:05 - session expired)
+  	AKAMAI -> App : NEG (Response ???  409 - MTLS code:05 - session expired)
+end
+  
+ 
+   
+ 	FLUXO-VALIDAUTH -> GATEWAY INTERNO: NEG (???)
+
+	GATEWAY INTERNO -> FLUXO-VALIDAUTH: Response NEG (???)
+    
+	FLUXO-VALIDAUTH -> GATEWAY : NEG (Response ???  + code:00-Habilitado)
+
+	GATEWAY -> AKAMAI : NEG (Response ???  - MTLS + code:00-Habilitado)
+
+	AKAMAI -> App : NEG (Response ???  - MTLS + code:00-Habilitado)
+	
+  
+  order: APP, AKAMAI, GATEWAY, FLUXO-AUTH, FLUXO-VALIDAUTH, SERVICE FLUXO, GATEWAY INTERNO

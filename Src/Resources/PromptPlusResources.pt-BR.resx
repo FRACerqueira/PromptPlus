@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddedItems" xml:space="preserve">
+    <value>Itens adicionados</value>
+  </data>
+  <data name="Answers" xml:space="preserve">
+    <value>Respostas</value>
+  </data>
+  <data name="AnyKey" xml:space="preserve">
+    <value>Pressione qualquer tecla </value>
+  </data>
+  <data name="CanceledKey" xml:space="preserve">
+    <value>Cancelado</value>
+  </data>
+  <data name="Checked" xml:space="preserve">
+    <value>Marcado</value>
+  </data>
+  <data name="CurrentFolder" xml:space="preserve">
+    <value>Pasta corrente</value>
+  </data>
+  <data name="CurrentSeleted" xml:space="preserve">
+    <value>Selecionado</value>
+  </data>
+  <data name="Done" xml:space="preserve">
+    <value>Feito</value>
+  </data>
+  <data name="EditMode" xml:space="preserve">
+    <value>Modo de edição</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtro</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Grupo</value>
+  </data>
+  <data name="InputFisnishEnter" xml:space="preserve">
+    <value>Enter:Concluir</value>
+  </data>
+  <data name="InvalidMask" xml:space="preserve">
+    <value>Máscara inválida</value>
+  </data>
+  <data name="ListItemAlreadyexists" xml:space="preserve">
+    <value>Item já existe</value>
+  </data>
+  <data name="ListMaxSelection" xml:space="preserve">
+    <value>O máxima de {0} itens já foi alcançado</value>
+  </data>
+  <data name="ListMinSelection" xml:space="preserve">
+    <value>Mínimo de {0} itens é necessário</value>
+  </data>
+  <data name="Loading" xml:space="preserve">
+    <value>Carregando</value>
+  </data>
+  <data name="MaskEditErase" xml:space="preserve">
+    <value>Ctrl+Del/Ctrl+L:Apagar tudo, Home/End:Saltar</value>
+  </data>
+  <data name="MaskEditJump" xml:space="preserve">
+    <value>{0}:Próxima parte</value>
+  </data>
+  <data name="MaskEditPosAnyChar" xml:space="preserve">
+    <value>Qualquer texto</value>
+  </data>
+  <data name="MaskEditPosCustom" xml:space="preserve">
+    <value>Somente({0})</value>
+  </data>
+  <data name="MaskEditPosDay" xml:space="preserve">
+    <value>Dia</value>
+  </data>
+  <data name="MaskEditPosHour" xml:space="preserve">
+    <value>Hora</value>
+  </data>
+  <data name="MaskEditPosLetter" xml:space="preserve">
+    <value>Letra</value>
+  </data>
+  <data name="MaskEditPosMinute" xml:space="preserve">
+    <value>Minuto</value>
+  </data>
+  <data name="MaskEditPosMonth" xml:space="preserve">
+    <value>Mês</value>
+  </data>
+  <data name="MaskEditPosNumeric" xml:space="preserve">
+    <value>Número</value>
+  </data>
+  <data name="MaskEditPosSecond" xml:space="preserve">
+    <value>Segundo</value>
+  </data>
+  <data name="MaskEditPosYear" xml:space="preserve">
+    <value>Ano</value>
+  </data>
+  <data name="MultiSelectFisnishEnter" xml:space="preserve">
+    <value>Enter:Concluir, Space:Marcar/Desmarcar</value>
+  </data>
+  <data name="MultiSelectMaxSelection" xml:space="preserve">
+    <value>O máxima de {0} itens já foi ultrapassado</value>
+  </data>
+  <data name="MultiSelectMinSelection" xml:space="preserve">
+    <value>Mínimo de {0} itens é necessário</value>
+  </data>
+  <data name="NoChar" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="OffValue" xml:space="preserve">
+    <value>Desligado</value>
+  </data>
+  <data name="OnValue" xml:space="preserve">
+    <value>Ligado</value>
+  </data>
+  <data name="PaginationTemplate" xml:space="preserve">
+    <value>{0} itens, {1}/{2} paginas</value>
+  </data>
+  <data name="PaginatorHome" xml:space="preserve">
+    <value>Home:Primeira página</value>
+  </data>
+  <data name="PressedKey" xml:space="preserve">
+    <value>Tecla pressionada</value>
+  </data>
+  <data name="SelectFisnishEnter" xml:space="preserve">
+    <value>Enter:Concluir</value>
+  </data>
+  <data name="SelectionDisabled" xml:space="preserve">
+    <value>Item desativado</value>
+  </data>
+  <data name="SelectionInvalid" xml:space="preserve">
+    <value>Seleção inválida</value>
+  </data>
+  <data name="SliderNumberLeftRightKeyNavigator" xml:space="preserve">
+    <value>Left/Right:Valor curto, Tab/Shift+Tab:Valor grande, Enter:Concluir</value>
+  </data>
+  <data name="SliderNumberUpDownKeyNavigator" xml:space="preserve">
+    <value>Up/Down:Valor curto, Tab/Shift+Tab:Valor grande, Enter:Concluir</value>
+  </data>
+  <data name="SliderSwitchKeyNavigator" xml:space="preserve">
+    <value>Left/Right:Mudar, Enter:Concluir</value>
+  </data>
+  <data name="Task" xml:space="preserve">
+    <value>Tarefa</value>
+  </data>
+  <data name="TooltipAbortEdit" xml:space="preserve">
+    <value>Esc:Cancelar Edição</value>
+  </data>
+  <data name="TooltipCancelEsc" xml:space="preserve">
+    <value>{0}:Cancelar</value>
+  </data>
+  <data name="TooltipEditItem" xml:space="preserve">
+    <value>{0}:Editar</value>
+  </data>
+  <data name="TooltipEnterPressList" xml:space="preserve">
+    <value>Enter:Adicionar, Ctrl+Enter:Concluir</value>
+  </data>
+  <data name="TooltipFullPath" xml:space="preserve">
+    <value>{0}:Alternar caminho</value>
+  </data>
+  <data name="TooltipHistoryClear" xml:space="preserve">
+    <value>Ctrl+Del:Limpar histórico</value>
+  </data>
+  <data name="TooltipHistoryEsc" xml:space="preserve">
+    <value>Esc:Cancelar histórico</value>
+  </data>
+  <data name="TooltipHistoryToggle" xml:space="preserve">
+    <value>Down/PgDown:Histórico(Min. {0} chars)</value>
+  </data>
+  <data name="TooltipInvertSelectAll" xml:space="preserve">
+    <value>{0}:Inverter Seleção</value>
+  </data>
+  <data name="TooltipPages" xml:space="preserve">
+    <value>Up/Down/PgUp/PgDown:Mover</value>
+  </data>
+  <data name="TooltipPressSpace" xml:space="preserve">
+    <value>Shift Space:Espaço</value>
+  </data>
+  <data name="TooltipRemoveItem" xml:space="preserve">
+    <value>{0}:Remover item</value>
+  </data>
+  <data name="TooltipSelectAll" xml:space="preserve">
+    <value>{0}:Selecionar tudo</value>
+  </data>
+  <data name="TooltipSelectFilter" xml:space="preserve">
+    <value>Filtro:Dgite um texto para filtrar</value>
+  </data>
+  <data name="TooltipSugestionEsc" xml:space="preserve">
+    <value>Esc:Cancelar sugestões</value>
+  </data>
+  <data name="TooltipSugestionToggle" xml:space="preserve">
+    <value>Tab/Shift Tab:Sugestões</value>
+  </data>
+  <data name="TooltipToggle" xml:space="preserve">
+    <value>{0}:Ver/Esconder dicas</value>
+  </data>
+  <data name="TooltipToggleExpandAllPress" xml:space="preserve">
+    <value>{0}:Expandir/Recolher Tudo</value>
+  </data>
+  <data name="TooltipToggleExpandPress" xml:space="preserve">
+    <value>{0}:Expandir/Recolher</value>
+  </data>
+  <data name="TooltipViewPassword" xml:space="preserve">
+    <value>{0}:Ver/Esconder senha</value>
+  </data>
+  <data name="ValidAnyKey" xml:space="preserve">
+    <value>Pressione uma tecla válida</value>
+  </data>
+  <data name="ValidateInvalid" xml:space="preserve">
+    <value>Valor inválido!</value>
+  </data>
+  <data name="ValidateMaxLength" xml:space="preserve">
+    <value>Valor é grande. Max({0})</value>
+  </data>
+  <data name="ValidateMinLength" xml:space="preserve">
+    <value>Valor é pequeno. Min({0})</value>
+  </data>
+  <data name="ValidateNoMatchRegex" xml:space="preserve">
+    <value>O valor não corresponde ao padrão</value>
+  </data>
+  <data name="ValidateRequired" xml:space="preserve">
+    <value>Valor é necessário</value>
+  </data>
+  <data name="Validkeys" xml:space="preserve">
+    <value>Teclas válidas</value>
+  </data>
+  <data name="Wait" xml:space="preserve">
+    <value>Esperando</value>
+  </data>
+  <data name="YesChar" xml:space="preserve">
+    <value>S</value>
+  </data>
+</root>

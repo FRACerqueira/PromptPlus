@@ -1,0 +1,97 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>.net7;.net6; netstandard2.1</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<NeutralLanguage>en</NeutralLanguage>
+		<AssemblyName>PromptPlus</AssemblyName>
+		<RootNamespace>PPlus</RootNamespace>
+		<Nullable>annotations</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Controls\Banner\FIGlet\Fonts\standard.flf" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<Authors>Fernando Cerqueira</Authors>
+		<Description>Interactive command-line  toolkit for C# with powerful controls and commands.</Description>
+		<PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
+		<PackageTags>cli;command-line;console;interactive;prompt;terminal;c#;toolkit</PackageTags>
+		<RepositoryUrl>https://fracerqueira.github.io/PromptPlus</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageId>PromptPlus</PackageId>
+		<PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
+		<PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
+		<Version>4.0.0</Version>
+		<PackageIcon>icon.png</PackageIcon>
+		<Copyright>© 2021 - Fernando Cerqueira </Copyright>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<Title>PromptPlus</Title>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>$(AssemblyName).Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|.net6|AnyCPU'">
+		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|.net6|AnyCPU'">
+		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
+		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.1|AnyCPU'">
+		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|.net5|AnyCPU'">
+		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|.net5|AnyCPU'">
+		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'=='.net7'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+		<PackageReference Include="System.IO" Version="4.3.0" />
+		<PackageReference Include="System.Text.Json" Version="7.0.1" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'=='.net6'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+		<PackageReference Include="System.IO" Version="4.3.0" />
+		<PackageReference Include="System.Text.Json" Version="6.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+		<PackageReference Include="System.IO" Version="4.3.0" />
+		<PackageReference Include="System.Text.Json" Version="4.7.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Controls\Banner\FIGlet\Fonts\standard.flf" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Resources\PromptPlusResources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>PromptPlusResources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\PromptPlusResources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+</Project>
