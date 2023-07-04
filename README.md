@@ -120,169 +120,181 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 ### Input
 [**Top**](#welcome-to-promptplus)
 
-InputBasicSamples
+[InputBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputBasicSamples)
 
 ![](./docs/images/inputsample1.gif)
 
-InputSecretSamples
+[InputSecretSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputSecretSamples)
 
 ![](./docs/images/inputsample2.gif)
 
-InputWithHistorySamples
+[InputWithHistorySamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputWithHistorySamples)
 
 ![](./docs/images/inputsample3.gif)
 
-InputWithSugestionSamples
+[InputWithSugestionSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputWithSugestionSamples)
 
 ![](./docs/images/inputsample4.gif)
 
-InputWithValidatorSamples
+[InputWithValidatorSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputWithValidatorSamples)
 
 ![](./docs/images/inputsample5.gif)
+
+**Other samples input**
+
+[InputOverwriteDefaultFromSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputOverwriteDefaultFromSamples)
 
 ### AutoComplete
 [**Top**](#welcome-to-promptplus)
 
-AutoCompleteSamples
+[AutoCompleteSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/AutoCompleteSamples)
 
 ![](./docs/images/autocompletesample1.gif)
 
 ### MaskEdit
 [**Top**](#welcome-to-promptplus)
 
-MaskEditGenericSamples
+[MaskEditGenericSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditGenericSamples)
 
 ![](./docs/images/maskedit1.gif)
 
-MaskEditDateTypeSamples
+[MaskEditDateTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditDateTypeSamples)
 
 ![](./docs/images/maskedit2.gif)
 
-MaskEditTimeTypeSamples
+[MaskEditTimeTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditTimeTypeSamples)
 
 ![](./docs/images/maskedit3.gif)
 
-MaskEditDateTimeTypeSamples
+[MaskEditDateTimeTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditDateTimeTypeSamples)
 
 ![](./docs/images/maskedit4.gif)
 
-MaskEditNumberTypeSamples
+[MaskEditNumberTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditNumberTypeSamples)
 
 ![](./docs/images/maskedit5.gif)
 
-MaskEditCurrencyTypeSamples
+[MaskEditCurrencyTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditCurrencyTypeSamples)
 
 ![](./docs/images/maskedit6.gif)
 
 ### KeyPress
 [**Top**](#welcome-to-promptplus)
 
-KeyPressSamples
+[KeyPressSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/KeyPressSamples)
 
 ![](./docs/images/keypress1.gif)
 
-ConfirmSamples
+[ConfirmSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ConfirmSamples)
 
 ![](./docs/images/confirm1.gif)
 
 ### Select
 [**Top**](#welcome-to-promptplus)
 
-SelectBasicSamples
+[SelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SelectBasicSamples)
 
 ![](./docs/images/select1.gif)
+
+**Other samples Select**
+
+[SelectUserScopeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SelectUserScopeSamples) ,
+[SelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SelectUserTypeSamples)
 
 ### Multi Select
 [**Top**](#welcome-to-promptplus)
 
-MultiSelectBasicSamples
+[MultiSelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectBasicSamples)
 
 ![](./docs/images/multiselect1.gif)
+
+**Other samples Multi-Select**
+[MultiSelectUserScopeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectUserScopeSamples) ,
+[MultiSelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectUserTypeSamples)
+
 
 ### Wait Process
 [**Top**](#welcome-to-promptplus)
 
-WaitTasksSamples
+[WaitTasksSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/WaitTasksSamples)
 
 ![](./docs/images/waittask1.gif)
 
 ### Wait Time
 [**Top**](#welcome-to-promptplus)
 
-WaitTimerSamples
+[WaitTimerSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/WaitTimerSamples)
 
 ![](./docs/images/waittime1.gif)
 
 ### Progress Bar
 [**Top**](#welcome-to-promptplus)
 
-ProgressBarSamples
+[ProgressBarSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ProgressBarSamples)
 
 ![](./docs/images/progressbar1.gif)
-
 
 ### Slider Swith
 [**Top**](#welcome-to-promptplus)
 
-SliderSwithSamples
+[SliderSwithSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderSwithSamples)
 
 ![](./docs/images/sliderswith1.gif)
 
 ### Slider Number
 [**Top**](#welcome-to-promptplus)
 
-SliderNumberUpDownModeSamples
+[SliderNumberUpDownModeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderNumberUpDownModeSamples)
 
 ![](./docs/images/slidernumber2.gif)
 
-SliderNumberLeftRightModeSamples
+[SliderNumberLeftRightModeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderNumberLeftRightModeSamples)
 
 ![](./docs/images/slidernumber1.gif)
-
 
 ### Add to List
 [**Top**](#welcome-to-promptplus)
 
-AddToListSamples
+[AddToListSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/AddToListSamples)
 
 ![](./docs/images/addtolist1.gif)
 
-AddtoMaskEditListSamples
+[AddtoMaskEditListSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/AddtoMaskEditListSamples)
 
 ![](./docs/images/addtolist2.gif)
 
 ### Browser Select
 [**Top**](#welcome-to-promptplus)
 
-BrowserSamples
+[BrowserSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BrowserSamples)
 
 ![](./docs/images/browser1.gif)
 
 ### Browser Multi Select
 [**Top**](#welcome-to-promptplus)
 
-BrowserMultSelectSamples
+[BrowserMultSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BrowserMultSelectSamples)
 
 ![](./docs/images/multiselectbrowser1.gif)
 
 ### TreeView Select
 [**Top**](#welcome-to-promptplus)
 
-TreeViewSamples
+[TreeViewSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/TreeViewSamples)
 
 ![](./docs/images/treeview1.gif)
 
 ### TreeView Multi Select
 [**Top**](#welcome-to-promptplus)
 
-TreeViewMultiSelectSamples
+[TreeViewMultiSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/TreeViewMultiSelectSamples)
 
 ![](./docs/images/treeview2.gif)
 
 ### Banner
 [**Top**](#welcome-to-promptplus)
 
-BannerSamples
+[BannerSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BannerSamples)
 
 ![](./docs/images/banner1.gif)
 
@@ -295,6 +307,7 @@ All controls use **fluent interface**. A is an object-oriented API whose design 
 //MaskEdit Generic
 var mask = PromptPlus.MaskEdit("input", "MaskEdit Generic input")
     .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
+    .DescriptionWithInputType(FormatWeek.Short)
     .Run();
 
 if (!mask.IsAborted)
