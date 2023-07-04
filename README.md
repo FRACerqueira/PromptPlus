@@ -66,7 +66,7 @@ Until version 3 the console engine was based on a model from another project tha
 **The Controls have been revised to be more responsive, allow color styles in many of their elements**, and adapt to the terminal size even with resizing.
 All these improvements were only possible by generating some **break-changes**, but maintaining a high sixtax compatibility.
 
-For migrate V3 to V4 [**see this link**](./docs/migrateversion.md).
+For migrate V3 to V4 [**see this link**](https://fracerqueira.github.io/PromptPlus/docs/migrateversion.md).
 
 ## Console Engine
 [**Top**](#welcome-to-promptplus)

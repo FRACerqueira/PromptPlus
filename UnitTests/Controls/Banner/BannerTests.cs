@@ -92,7 +92,7 @@ namespace PPlus.Tests.Controls.Banner
                 ctrl.InitAsciiArt();
                 ctrl.Run();
             });
-            Assert.Equal(Expectations.GetVerifyAnsi("Banner.Txt"), output);
+            Assert.Equal(Expectations.GetVerifyAnsi("Banner.txt"), output);
         }
 
 
@@ -109,7 +109,7 @@ namespace PPlus.Tests.Controls.Banner
                 ctrl.InitAsciiArt();
                 ctrl.Run();
             });
-            Assert.Equal(Expectations.GetVerifyStd("Banner.Txt"), output);
+            Assert.Equal(Expectations.GetVerifyStd("Banner.txt"), output);
         }
     }
 }
