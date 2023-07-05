@@ -4,8 +4,7 @@ using System.Globalization;
 using PPlus;
 using PPlus.Controls;
 
-//Ensure default Culture for all controls
-PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
+Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
 PromptPlus.Clear();
 
@@ -17,6 +16,7 @@ PromptPlus.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
 PromptPlus.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
 PromptPlus.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
 PromptPlus.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
+PromptPlus.WriteLine("Test", new Style(Color.FromHtml("#ffffff"), Color.Red, Overflow.None));
 
 PromptPlus.DoubleDash($"PromptPlus Style.OverflowEllipsis");
 PromptPlus.WriteLine("[RED ON WHITE]TESTE[YELLOW] COLOR [/] BACK COLOR [/]" + "asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", style: Style.OverflowEllipsis);
@@ -41,7 +41,7 @@ PromptPlus.Setup((cfg) =>
     cfg.Culture = new CultureInfo("en-us");
 });
 
-PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1);
+PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
 PromptPlus.WriteLine($"IsTerminal: {PromptPlus.IsTerminal}");
 PromptPlus.WriteLine($"IsUnicodeSupported: {PromptPlus.IsUnicodeSupported}");
 PromptPlus.WriteLine($"OutputEncoding: {PromptPlus.OutputEncoding.EncodingName}");
@@ -56,9 +56,9 @@ PromptPlus
     .KeyPress()
     .Config(cfg =>
     {
-        cfg.HideAfterFinish(true);
-        cfg.ShowTooltip(false); 
-        cfg.ApplyStyle(StyleControls.Tooltips,Style.Plain.Foreground(Color.Grey100));
+        cfg.HideAfterFinish(true)
+          .ShowTooltip(false) 
+          .ApplyStyle(StyleControls.Tooltips,Style.Plain.Foreground(Color.Grey100));
     }) 
     .Spinner(SpinnersType.Balloon)
     .Run();

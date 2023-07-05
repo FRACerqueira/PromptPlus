@@ -1,14 +1,13 @@
 # <img align="left" width="100" height="100" src="./images/icon.png">Welcome to PromptPlus
 
-**Interactive command-line toolkit for .Net core with powerful controls and commands to create professional console applications.**
-
-**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
-
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
 [![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
+
+**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
+
 
 ## Table of Contents
 
@@ -26,7 +25,7 @@
 - [Supported Platforms](#supported-platforms)
 
 ## Features
-[**Top**](#table-of-contents)
+[**Top**](#welcome-to-promptplus)
  
 **_All features have IntelliSense_. The PromptPlus have more 20 controls with many features like: filters, validators, history, sugestions, spinner(19 embeding type and plus custom yours!), colors and styles for control-elements** :
 - Banner Ascii
@@ -38,7 +37,7 @@
 - Slider numeric ranger with gradient colors
 - Up-Down numeric ranger 
 - Switch (style on/off)
-- Wait Tasks (Parallel/Sequential) with elapsedtime and spinner 
+- Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
 - Wait Time with countdown and spinner
 - Progress bar with 8 types , gradient colors and spinner
 - Browser File and Folder with multi-select, colors and spinner
@@ -68,7 +67,7 @@ var mask = PromptPlus.MaskEdit("input", "MaskEdit Generic input")
 PromptPlus driver console  **Supports 4/8/24-bit colors** in the terminal with **auto-detection** of the current terminal's capabilities.
 
 ## Migrate Version
-[**Top**](#table-of-contents)
+[**Top**](#welcome-to-promptplus)
 
 Until version 3 the console engine was based on a model from another project that has several serious problems that cause exceptions during execution in addition to increasing the complexity of the code for correct rendering...
 **PromptPlus v4** has been **completely rebuilt** for a better experience, with significant improvements with new controls and more developer power. The console driver now supports better rendering, with the ability to detect terminal capabilities and allow for 24-bit color, text overflow strategies based on terminal size, and left and right margins for a nicer layout.
@@ -79,7 +78,7 @@ For migrate V3 to V4 [**see this link**](migrateversion.md).
 
 
 ## Installing
-[**Top**](#table-of-contents)
+[**Top**](#welcome-to-promptplus)
 
 PromptPlus was developed in c# with the **netstandard2.1, .NET 6 AND .NET7** target frameworks.
 
@@ -94,7 +93,7 @@ dotnet add package PromptPlus [--prerelease]
 **_Note:  [-pre]/[--prerelease] usage for pre-release versions_**
 
 ## Examples
-[**Top**](#table-of-contents)
+[**Top**](#welcome-to-promptplus)
 
 The folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/Samples) contains more **30** samples!.
 
@@ -103,10 +102,49 @@ dotnet run --project [name of sample]
 ```
 
 ## Console Engine
-[**Top**](#table-of-contents)
+[**Top**](#welcome-to-promptplus)
 
 The console driver have the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout.
 The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
+
+### Wrap to Console - Code sample 
+
+The PromptPlus have wrap from console for key features **cross-plataform**.
+
+```csharp
+//Console.CursorLeft = 1;
+PromptPlus.CursorLeft = 1;
+//Console.ReadKey();
+PromptPlus.ReadKey();
+```
+
+### Extra commands to Console
+- Clear(Color? backcolor = null)
+  - Clear console with color and set BackgroundColor with color.
+- ClearLine(int? row = null, Style? style = null) 
+  - Clear row line with style 
+- ClearRestOfLine(Style? style = null)
+  - Clear rest of line
+- WriteLines(int steps = 1)
+  - write many new lines
+- SingleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
+  - Writes Write single dash after.
+- DoubleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
+  - Writes a pair of lines of dashes.
+- MoveCursor(CursorDirection direction, int steps)
+  - Move cursor by direction
+- WaitKeypress(bool intercept, CancellationToken? cancellationToken)
+  - Wait a keypress with cancelation token
+
+### Extend Write / Writeline
+- Write(string value, Style? style = null, bool clearrestofline = false)
+    -  Write a text to output console with options for style and clear rest of line  
+- Write(Exception value, Style? style = null, bool clearrestofline = false)
+    -  Write a Exception to output console with options for style and clear rest of line  
+- WriteLine(string? value = null, Style? style = null, bool clearrestofline = true)
+    -  Write a text to output console with line terminator, option for style and clear rest of line (default)
+- WriteLine(Exception value, Style? style = null, bool clearrestofline = true)
+    -  Write a exception to output console with line terminator, option for style and clear rest of line (default)
 
 ### Setup and auto detect - Code sample 
 
@@ -118,8 +156,7 @@ PromptPlus.Setup((cfg) =>
     cfg.Culture = new CultureInfo("en-us");
     cfg.BackgroundColor = ConsoleColor.Blue;
 });
-
-PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1);
+PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
 PromptPlus.WriteLine($"IsTerminal: {PromptPlus.IsTerminal}");
 PromptPlus.WriteLine($"IsUnicodeSupported: {PromptPlus.IsUnicodeSupported}");
 PromptPlus.WriteLine($"OutputEncoding: {PromptPlus.OutputEncoding.EncodingName}");
@@ -134,8 +171,9 @@ PromptPlus
     .KeyPress()
     .Config(cfg =>
     {
-        cfg.HideAfterFinish(true);
-        cfg.ShowTooltip(false); 
+        cfg.HideAfterFinish(true)
+          .ShowTooltip(false) 
+          .ApplyStyle(StyleControls.Tooltips,Style.Plain.Foreground(Color.Grey100));
     }) 
     .Spinner(SpinnersType.Balloon)
     .Run();
@@ -183,7 +221,7 @@ PromptPlus
 
 
 ## Culture
-[**Top**](#table-of-contents)
+[**Top**](#welcome-to-promptplus)
 
 PromptPlus applies the language/culture **only when running controls**. The language/culture of the application is **not affected**. If language/culture is not informed, the application's language/culture will be used with fallback to en-US.
 
@@ -221,7 +259,7 @@ To use a non-embedded language/culture:
 - Publish the compiled file (**PromptPlus.[Language].resources**) in the same folder as the binaries.
 
 ## Colors
-[**Top**](#table-of-contents)
+[**Top**](#welcome-to-promptplus)
 
 PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-color.org/). when there is the environment variable "no_color" the colors are disabled.
 
@@ -261,7 +299,7 @@ Promptplus uses the **same default colors and engine(softly modified)** as the t
 [**Default color for controls and console**](colors.md)
 
 ## Hotkeys
-[**Top**](#table-of-contents)
+[**Top**](#welcome-to-promptplus)
 
 Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
 
@@ -273,7 +311,7 @@ PromptPlus.Config.SelectAllPress = new HotKey(UserHotKey.F7);
 [**Default Hotkeys for controls**](hotkeys.md)
 
 ## Validators
-[**Top**](#table-of-contents)
+[**Top**](#welcome-to-promptplus)
 
 PromptPlus have a lot extensions to **commons validator** and **validator import**(No duplicate code!) 
 
@@ -311,7 +349,7 @@ PromptPlus.EnabledAbortKey = false;
 ```
 
 ## Supported platforms
-[**Top**](#table-of-contents)
+[**Top**](#welcome-to-promptplus)
 
 - Windows
     - Command Prompt, PowerShell, Windows Terminal

@@ -153,7 +153,7 @@ namespace PPlus
         public static StyleSchema StyleSchema => _styleschema;
 
         /// <summary>
-        /// Write a text to output console.
+        /// Write a Exception to output console.
         /// </summary>
         /// <param name="value">Exception to write</param>
         /// <param name="style">Style of text</param>
@@ -177,7 +177,7 @@ namespace PPlus
         }
 
         /// <summary>
-        /// Write a text to output console with line terminator.
+        /// Write a exception to output console with line terminator.
         /// </summary>
         /// <param name="value">Exception to write</param>
         /// <param name="style">Style of text</param>
@@ -363,14 +363,37 @@ namespace PPlus
         }
 
         /// <summary>
-        /// Gets the column position of the cursor within the buffer area.
+        /// Gets or sets a value column position of the cursor within the buffer area.
         /// </summary>
-        public static int CursorLeft => Console.CursorLeft;
+        public static int CursorLeft
+        {
+            get { return Console.CursorLeft; }
+            set 
+            { 
+                var top = Console.CursorTop;
+                Console.SetCursorPosition(value,top); 
+            }
+        }
 
         /// <summary>
-        /// Gets the row position of the cursor within the buffer area.
+        /// Gets or set the row position of the cursor within the buffer area.
         /// </summary>
-        public static int CursorTop => Console.CursorTop;
+        public static int CursorTop
+        {
+            get { return Console.CursorTop; }
+            set
+            {
+                var left = Console.CursorLeft;
+                Console.SetCursorPosition(left, value);
+            }
+        }
+
+        /// <summary>Gets the position of the cursor.</summary>
+        /// <returns>The column and row position of the cursor.</returns>
+        public static (int Left, int Top) GetCursorPosition()
+        {
+            return (Console.CursorLeft, Console.CursorTop);
+        }
 
         /// <summary>
         /// Gets a value indicating whether a key press is available in the input stream.
@@ -466,6 +489,16 @@ namespace PPlus
         { 
             Console.Clear();
         }
+
+        public static void Clear(Color? backcolor = null)
+        {
+            if (backcolor.HasValue)
+            {
+                BackgroundColor = Color.ToConsoleColor(backcolor.Value);
+            }
+            Console.Clear();
+        }
+
 
         /// <summary>
         /// Plays the sound of a beep through the console speaker.

@@ -1,8 +1,4 @@
-# <img align="left" width="100" height="100" src="./images/icon.png"> PromptPlus #Snapshot
-
-**Interactive command-line toolkit for .Net core with powerful controls and commands to create professional console applications.**
-
-**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
+# <img align="left" width="100" height="100" src="./images/icon.png">PromptPlus - Snapshot
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -36,7 +32,7 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 - [Banner - ASCII-ART](#banner)
 
 ### Input
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [InputBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputBasicSamples)
 
@@ -63,14 +59,14 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 [InputOverwriteDefaultFromSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputOverwriteDefaultFromSamples)
 
 ### AutoComplete
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot)  | [**Main**](index.md#table-of-contents)  
 
 [AutoCompleteSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/AutoCompleteSamples)
 
 ![](./images/autocompletesample1.gif)
 
 ### MaskEdit
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [MaskEditGenericSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditGenericSamples)
 
@@ -97,7 +93,7 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 ![](./images/maskedit6.gif)
 
 ### KeyPress
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [KeyPressSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/KeyPressSamples)
 
@@ -108,7 +104,7 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 ![](./images/confirm1.gif)
 
 ### Select
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [SelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SelectBasicSamples)
 
@@ -120,7 +116,7 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 [SelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SelectUserTypeSamples)
 
 ### Multi Select
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [MultiSelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectBasicSamples)
 
@@ -132,35 +128,35 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 
 
 ### Wait Process
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [WaitTasksSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/WaitTasksSamples)
 
 ![](./images/waittask1.gif)
 
 ### Wait Time
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [WaitTimerSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/WaitTimerSamples)
 
 ![](./images/waittime1.gif)
 
 ### Progress Bar
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [ProgressBarSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ProgressBarSamples)
 
 ![](./images/progressbar1.gif)
 
 ### Slider Swith
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [SliderSwithSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderSwithSamples)
 
 ![](./images/sliderswith1.gif)
 
 ### Slider Number
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [SliderNumberUpDownModeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderNumberUpDownModeSamples)
 
@@ -171,7 +167,7 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 ![](./images/slidernumber1.gif)
 
 ### Add to List
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [AddToListSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/AddToListSamples)
 
@@ -182,35 +178,35 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 ![](./images/addtolist2.gif)
 
 ### Browser Select
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [BrowserSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BrowserSamples)
 
 ![](./images/browser1.gif)
 
 ### Browser Multi Select
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [BrowserMultSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BrowserMultSelectSamples)
 
 ![](./images/multiselectbrowser1.gif)
 
 ### TreeView Select
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [TreeViewSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/TreeViewSamples)
 
 ![](./images/treeview1.gif)
 
 ### TreeView Multi Select
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [TreeViewMultiSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/TreeViewMultiSelectSamples)
 
 ![](./images/treeview2.gif)
 
 ### Banner
-[**Top**](#table-of-contents) | [**Main**](index.md#table-of-contents)  
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
 [BannerSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BannerSamples)
 

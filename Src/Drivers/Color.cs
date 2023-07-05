@@ -86,7 +86,7 @@ namespace PPlus
         /// </summary>
         /// <returns>The hexadecimal representation of the color.</returns>
 
-        public string ToHex()
+        public string FromHex(string value)
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
@@ -169,11 +169,28 @@ namespace PPlus
         }
 
         /// <summary>
+        /// Converts string color Html format (#RRGGBB) into <see cref="Color"/>.
+        /// </summary>
+        /// <param name="value">The html color to convert.</param>
+        /// <returns>A <see cref="Color"/>.</returns>
+        public static Color FromHtml(string value)
+        {
+            if (value == null || value.Length != 7 || !value.StartsWith("#"))
+            {
+                throw new PromptPlusException("Invalid Html Color. Lenght must be equal 7 and start with #");
+            }
+            int RGBint = Convert.ToInt32(value.Substring(1,6), 16);
+            byte Red = (byte)((RGBint >> 16) & 255);
+            byte Green = (byte)((RGBint >> 8) & 255);
+            byte Blue = (byte)(RGBint & 255);
+            return new Color(Red,Green, Blue);
+        }
+
+        /// <summary>
         /// Converts a <see cref="Color"/> to a <see cref="ConsoleColor"/>.
         /// </summary>
         /// <param name="color">The color to convert.</param>
         /// <returns>A <see cref="ConsoleColor"/> representing the <see cref="Color"/>.</returns>
-
         public static ConsoleColor ToConsoleColor(Color color)
         {
             if (color.Number == null || color.Number.Value >= 16)

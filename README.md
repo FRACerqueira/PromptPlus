@@ -41,7 +41,7 @@
 - Slider numeric ranger with gradient colors
 - Up-Down numeric ranger 
 - Switch (style on/off)
-- Wait Tasks (Parallel/Sequential) with elapsedtime and spinner 
+- Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
 - Wait Time with countdown and spinner
 - Progress bar with 8 types , gradient colors and spinner
 - Browser File and Folder with multi-select, colors and spinner
@@ -66,7 +66,7 @@ Until version 3 the console engine was based on a model from another project tha
 **The Controls have been revised to be more responsive, allow color styles in many of their elements**, and adapt to the terminal size even with resizing.
 All these improvements were only possible by generating some **break-changes**, but maintaining a high sixtax compatibility.
 
-For migrate V3 to V4 [**see this link**](https://fracerqueira.github.io/PromptPlus/docs/migrateversion.md).
+For migrate V3 to V4 [**see this link**](https://fracerqueira.github.io/PromptPlus/migrateversion.html).
 
 ## Console Engine
 [**Top**](#welcome-to-promptplus)
@@ -74,16 +74,12 @@ For migrate V3 to V4 [**see this link**](https://fracerqueira.github.io/PromptPl
 The console driver have the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout.
 The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
 
-
-
 ### Sample Output detect (ConsoleFeaturesSamples)
 ![](./docs/images/consoleinfo.gif)
-
 
 ### Sample Output Overflow Capacity (ConsoleFeaturesSamples)
 
 ![](./docs/images/consoleoverflowcapacity.gif)
-
 
 ### Sample color capacity (ConsoleFeaturesSamples)
 
@@ -211,7 +207,6 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 **Other samples Multi-Select**
 [MultiSelectUserScopeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectUserScopeSamples) ,
 [MultiSelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectUserTypeSamples)
-
 
 ### Wait Process
 [**Top**](#welcome-to-promptplus)
@@ -345,7 +340,6 @@ PromptPlus applies the language/culture **only when running controls**. The lang
 All messages are affected when changed language/culture. PromptPlus has languages embeded:
 - en-US (Default)
 - pt-BR
- 
 
 To use a non-embedded language/culture:
 
@@ -370,7 +364,6 @@ For more details [visit the **official page**](https://fracerqueira.github.io/Pr
 
 Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
 For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus)
-
 
 ## Validators
 

@@ -22,7 +22,6 @@ namespace PPlus
         /// <br>Culture is global set fro threads</br>  
         public CultureInfo Culture { get; set; } = CultureInfo.CurrentCulture;
 
-
         /// <summary>
         /// Get/Set Terminal mode. if Running over Terminal mode or not.
         /// </summary>
