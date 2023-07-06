@@ -18,12 +18,13 @@ namespace PPlus.Controls
             throw new PromptPlusException("StateProcess CTOR NotImplemented");
         }
 
-        internal StateProcess(string? id, string? description, TaskStatus status,TimeSpan elapsedtime, StepMode stepMode)
+        internal StateProcess(string? id, string? description, TaskStatus status,Exception exceptionProcess, TimeSpan elapsedtime, StepMode stepMode)
         {
             Id = id;
             Description = description;
             Status = status;
             StepMode = stepMode;
+            ExceptionProcess = exceptionProcess;
             ElapsedTime = elapsedtime;
         }
 
@@ -41,6 +42,12 @@ namespace PPlus.Controls
         /// Status of Task <see cref="TaskStatus"/>
         /// </summary>
         public TaskStatus Status { get; }
+
+        /// <summary>
+        /// Exception of Task
+        /// </summary>
+        public Exception ExceptionProcess { get; }
+
 
         /// <summary>
         /// Step Mode of Task <see cref="StepMode"/>

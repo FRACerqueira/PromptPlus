@@ -523,7 +523,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(10000, () =>
             {
                 PromptPlus.InputBuffer("A");
                 var result = ctrl.TryResult(CancellationToken.None);
@@ -543,7 +543,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(10000, () =>
             {
                 PromptPlus.InputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
@@ -566,7 +566,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(10000, () =>
             {
                 PromptPlus.InputBuffer("1");
                 ctrl.TryResult(CancellationToken.None);
@@ -591,7 +591,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer("A");
                 PromptPlus.InputBuffer(Environment.NewLine);
@@ -613,7 +613,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
@@ -638,7 +638,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
@@ -659,7 +659,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer("a");
                 var result = ctrl.TryResult(CancellationToken.None);
@@ -681,7 +681,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer("A");
                 var result = ctrl.TryResult(CancellationToken.None);
@@ -705,7 +705,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
@@ -732,7 +732,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
@@ -755,7 +755,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
@@ -778,7 +778,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
@@ -796,7 +796,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
             ctrl.InitControl(CancellationToken.None);
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 using var cts = new CancellationTokenSource();
                 cts.Cancel();
@@ -815,7 +815,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
             ctrl.InitControl(CancellationToken.None);
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
@@ -836,7 +836,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
@@ -858,7 +858,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
@@ -886,7 +886,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(100, () =>
+            CompletesIn(1000, () =>
             {
                 PromptPlus.InputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);

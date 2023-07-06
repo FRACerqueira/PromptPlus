@@ -12,7 +12,7 @@ Welcome to PromptPlus v4.0.0
 Interactive command-line toolkit for .Net core with powerful controls and commands
 to create professional console applications.
 
-All controls input/filter using **GNU Readline**
+All controls input/filter  (except Masked input) using **GNU Readline**
 (https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts.  
 
 PromptPlus Supports 4/8/24-bit colors in the terminal with auto-detection 

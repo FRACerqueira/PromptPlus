@@ -34,6 +34,12 @@ namespace PPlus.Controls.Objects
         private const string CharsEditMask = "9LCANX";
         private const string CharNumbers = "0123456789";
         private const string CharLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        private readonly UnicodeCategory[] _nonRenderingCategories = new[]
+{
+            UnicodeCategory.Control,
+            UnicodeCategory.OtherNotAssigned,
+            UnicodeCategory.Surrogate
+        };
 
         //storage char custom from mask . key = valid position
         private readonly Dictionary<int, string> _charCustoms = new();
@@ -539,6 +545,25 @@ namespace PPlus.Controls.Objects
         }
 
         #region internal methods
+
+        internal bool IsPrintable(ConsoleKeyInfo keyinfo)
+        {
+            var c = keyinfo.KeyChar;
+
+            if (char.IsControl(c))
+            {
+                return false;
+            }
+
+            var isprintabled = char.IsWhiteSpace(c) ||
+                !_nonRenderingCategories.Contains(char.GetUnicodeCategory(c));
+
+            if (isprintabled && (keyinfo.Modifiers.HasFlag(ConsoleModifiers.Control) || keyinfo.Modifiers.HasFlag(ConsoleModifiers.Alt)))
+            {
+                return false;
+            }
+            return isprintabled;
+        }
 
         internal MaskedBuffer Load(string value)
         {

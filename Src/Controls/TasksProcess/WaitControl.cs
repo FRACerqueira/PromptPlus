@@ -158,6 +158,7 @@ namespace PPlus.Controls
                     (id,
                     description,
                     TaskStatus.WaitingForActivation,
+                    null,
                     TimeSpan.Zero,
                     stepMode));
             }
@@ -290,23 +291,41 @@ namespace PPlus.Controls
                     if (!cancelationtoken.IsCancellationRequested)
                     {
                         var act = _options.Steps[i];
-                        var localpos = i;
                         using var waitHandle = new AutoResetEvent(false);
                         tasks.Add((i, Task.Run(() =>
                         {
+                            var localpos = i;
+                            TaskStatus actsta = TaskStatus.Running;
+                            Exception actex = null;
                             var tm = new Stopwatch();
                             detailsElapsedTime.Add((-1, -1, tm));
                             waitHandle.Set();
-
                             tm.Start();
-                            act.Invoke(cancelationtoken);
+                            try
+                            {
+                                act.Invoke(cancelationtoken);
+                                if (cancelationtoken.IsCancellationRequested)
+                                {
+                                    actsta = TaskStatus.Canceled;
+                                }
+                                else
+                                {
+                                    actsta = TaskStatus.RanToCompletion;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                actex = ex;
+                                actsta = TaskStatus.Faulted;
+                            }
                             tm.Stop();
 
                             var aux = _options.States[localpos];
                             _options.States[localpos] = new StateProcess(
                                 aux.Id,
                                 aux.Description,
-                                aux.Status,
+                                actsta,
+                                actex,
                                 tm.Elapsed,
                                 aux.StepMode);
                         }, CancellationToken.None)));
@@ -314,11 +333,25 @@ namespace PPlus.Controls
                     }
                     else
                     {
+                        using var waitHandlecanc = new AutoResetEvent(false);
                         tasks.Add((i, Task.Run(() =>
                         {
-                            cancelationtoken.WaitHandle.WaitOne();
+                            var localpos = i;
+                            var tm = new Stopwatch();
+                            tm.Start();
+                            detailsElapsedTime.Add((-1, -1, new Stopwatch()));
+                            waitHandlecanc.Set();
+                            var aux = _options.States[localpos];
+                            tm.Stop();
+                            _options.States[localpos] = new StateProcess(
+                                  aux.Id,
+                                  aux.Description,
+                                  TaskStatus.Canceled,
+                                  null,
+                                  tm.Elapsed,
+                                  aux.StepMode);
                         }, CancellationToken.None)));
-                        detailsElapsedTime.Add((-1, -1, new Stopwatch()));
+                        waitHandlecanc.WaitOne();
                     }
                     i++;
                     degreecount++;
@@ -524,7 +557,6 @@ namespace PPlus.Controls
                 tkspinner.Dispose();
 
                 ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
-                UpdateStatusProcess(executelist, tasks);
 
                 timerSpinner.Reset();
                 foreach (var task in tasks)
@@ -602,21 +634,6 @@ namespace PPlus.Controls
                 {
                     _promptlines += qtdlines;
                 }
-            }
-        }
-
-        private void UpdateStatusProcess(List<int> executelist, List<(int, Task)> tasks)
-        {
-            foreach (var item in executelist)
-            {
-                var aux = _options.States[item];
-                var tk = tasks.First(x => x.Item1 == item);
-                _options.States[item] = new StateProcess(
-                    aux.Id,
-                    aux.Description,
-                    tk.Item2.Status,
-                    aux.ElapsedTime,
-                    aux.StepMode);
             }
         }
     }

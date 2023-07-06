@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Globalization;
 using PPlus;
+using PPlus.Controls;
 
 PromptPlus.WriteLine("Hello, World!");
 //Ensure default Culture for all controls
@@ -19,6 +20,8 @@ if (!in1.IsAborted)
 }
 
 PromptPlus.DoubleDash("Control:Input - secret change mask to '*'");
+
+PromptPlus.Config.PasswordViewPress = new PPlus.Controls.HotKey(UserHotKey.F7);
 
 var in2 = PromptPlus
     .Input("Input secret sample2")

@@ -19,6 +19,7 @@
 - [Console Engine](#console-engine)
 - [Culture](#culture)
 - [Colors](#colors)
+- [KeyPress Extensions with Emacs keyboard shortcuts](keypressemacs.md)
 - [Hotkeys](#hotkeys)
 - [Validators](#validators)
 - [Global Settings](globalsettings.md)
@@ -43,8 +44,8 @@
 - Browser File and Folder with multi-select, colors and spinner
 - Treeview hierarchical structures with multi-select and colors
 
-**All controls** have the same organization (see in action: [**Controls Snapshot**](#controls-snapshot)):
-- input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
+**All controls** have the same organization (see in action: [**Controls Snapshot**](snapshot.md)):
+- input/filter (except Masked input) using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
 - Prompt, description and data entry (ever)
 - Extra actions per stage : OnStartControl/OnInputRender/OnTryAcceptInput/OnFinishControl (ever)
 - Tooltips (ever and configurable) 
@@ -135,6 +136,8 @@ PromptPlus.ReadKey();
   - Move cursor by direction
 - WaitKeypress(bool intercept, CancellationToken? cancellationToken)
   - Wait a keypress with cancelation token
+- ReadLineWithEmacs(uint? maxlenght = uint.MaxValue,Action<string,int> afteraccept = null, CaseOptions caseOptions = CaseOptions.Any)
+  - Read line from stream using Emacs keyboard shortcuts with maxlenght, case options and user action after each accepted keystroke
 
 ### Extend Write / Writeline
 - Write(string value, Style? style = null, bool clearrestofline = false)
@@ -301,7 +304,7 @@ Promptplus uses the **same default colors and engine(softly modified)** as the t
 ## Hotkeys
 [**Top**](#welcome-to-promptplus)
 
-Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
+Hotkeys (global and control-specific) are configurable.
 
  ```csharp
 //sample global

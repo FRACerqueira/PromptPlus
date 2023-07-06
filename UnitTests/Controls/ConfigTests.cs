@@ -166,17 +166,10 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        public void Should_DefaulPropertiesEnabledBeep()
-        {
-            Assert.False(PromptPlus.Config.EnabledBeep);
-        }
-
-        [Fact]
         public void Should_DefaulPropertiesHideAfterFinish()
         {
             Assert.False(PromptPlus.Config.HideAfterFinish);
         }
-
 
         [Fact]
         public void Should_DefaulPropertiesHideOnAbort()

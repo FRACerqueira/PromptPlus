@@ -37,7 +37,7 @@ PromptPlus.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow
 ## Standard Colors
 [**Top**](#promptplus-colors)
 
-Color | Number | Name | RGB | HEX | System.ConsoleColor
+Color | # | Name | RGB | HEX | ConsoleColor
 | :---: | :---: | :--- | :--- | :---: | :--- |
 ![](https://placehold.co/15x15/000000/000000.png) | 0  | black | RGB(0,0,0) |#00000  |Black
 ![](https://placehold.co/15x15/800000/800000.png) | 1  | maroon | RGB(128,0,0) |#80000  |DarkRed
@@ -295,6 +295,4 @@ Color | Number | Name | RGB | HEX | System.ConsoleColor
 ![](https://placehold.co/15x15/dadada/dadada.png) | 253 | grey85 | RGB(218,218,218) | #dadada  | - - - |
 ![](https://placehold.co/15x15/e4e4e4/e4e4e4.png) | 254 | grey89 | RGB(228,228,228) | #e4e4e4  | - - - |
 ![](https://placehold.co/15x15/eeeeee/eeeeee.png) | 255 | grey93 | RGB(238,238,238) | #eeeeee  | - - - |
-
-
 

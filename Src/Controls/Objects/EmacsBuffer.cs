@@ -54,7 +54,7 @@ namespace PPlus.Controls.Objects
 
             isvalid = true;
 
-            if (IsPrintable(keyinfo.KeyChar))
+            if (IsPrintable(keyinfo))
             {
                 Insert(keyinfo.KeyChar);
                 return isvalid;
@@ -105,7 +105,7 @@ namespace PPlus.Controls.Objects
                     }
                     break;
                 //Emacs keyboard shortcut when when have any text
-                //Clears the word before the cursor
+                //Clear the word before the cursor
                 case ConsoleKey.W when keyinfo.Modifiers == ConsoleModifiers.Control && Length > 0:
                     RemoveWordBeforeCursor();
                     break;
@@ -115,17 +115,17 @@ namespace PPlus.Controls.Objects
                     UpperCharMoveEndWord();
                     break;
                 //Emacs keyboard shortcut when when have any text
-                // Cuts the word after the cursor
+                // Clear the word after the cursor
                 case ConsoleKey.D when keyinfo.Modifiers == ConsoleModifiers.Alt && Length > 0:
                     RemoveWordAfterCursor();
                     break;
                 //Emacs keyboard shortcut when when have any text
-                // (forward) moves the cursor forward one word.
+                // Moves the cursor forward one word.
                 case ConsoleKey.F when keyinfo.Modifiers == ConsoleModifiers.Alt && Length > 0:
                     ForwardWord();
                     break;
                 //Emacs keyboard shortcut when when have any text
-                //(backward) moves the cursor backward one word.
+                //Moves the cursor backward one word.
                 case ConsoleKey.B when keyinfo.Modifiers == ConsoleModifiers.Alt && Length > 0:
                     BackwardWord();
                     break;
@@ -428,6 +428,28 @@ namespace PPlus.Controls.Objects
                 !_nonRenderingCategories.Contains(char.GetUnicodeCategory(c));
 
             if (isprintabled)
+            {
+                if (Length + 1 > _maxlength || !_acceptInput.Invoke(c))
+                {
+                    return false;
+                }
+            }
+            return isprintabled;
+        }
+
+        private bool IsPrintable(ConsoleKeyInfo keyinfo)
+        {
+            var c = keyinfo.KeyChar;
+           
+            if (char.IsControl(c))
+            {
+                return false;
+            }
+
+            var isprintabled = char.IsWhiteSpace(c) ||
+                !_nonRenderingCategories.Contains(char.GetUnicodeCategory(c));
+
+            if (isprintabled && !keyinfo.Modifiers.HasFlag(ConsoleModifiers.Control) && !keyinfo.Modifiers.HasFlag(ConsoleModifiers.Alt))
             {
                 if (Length + 1 > _maxlength || !_acceptInput.Invoke(c))
                 {

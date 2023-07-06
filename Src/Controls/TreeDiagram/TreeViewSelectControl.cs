@@ -168,7 +168,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewSelect<T> HotKeyFullPathNode(HotKey value)
+        public IControlTreeViewSelect<T> HotKeyFullPath(HotKey value)
         {
             _options.HotKeyFullPathNodePress = value;
             return this;

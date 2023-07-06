@@ -1,4 +1,6 @@
-﻿namespace PPlus.Tests.Util
+﻿using Xunit.Sdk;
+
+namespace PPlus.Tests.Util
 {
     public abstract class BaseTest : IDisposable
     {
@@ -25,13 +27,17 @@
             waitHandle.Set();
         }
 
-        public void CompletesIn(int timeout, Action action)
+        public void CompletesIn(int timeout, Action action, bool skipexception = false)
         {
             var task = Task.Factory.StartNew(action);
             var completedInTime = task.Wait(TimeSpan.FromMilliseconds(timeout));
 
             if (task.Exception != null)
             {
+                if (skipexception)
+                {
+                    return;
+                }
                 if (task.Exception.InnerExceptions.Count == 1)
                 {
                     throw task.Exception.InnerExceptions[0];

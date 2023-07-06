@@ -4,6 +4,7 @@
 // ***************************************************************************************
 
 using PPlus.Controls;
+using PPlus.Controls.Objects;
 using PPlus.Drivers;
 using PPlus.Drivers.Ansi;
 using PPlus.Drivers.Colors;
@@ -321,15 +322,13 @@ namespace PPlus
         }
 
         /// <summary>
-        ///  Obtains the next character or function key pressed by the user.
+        /// <br>Read the line from stream. A line is defined as a sequence of characters followed by</br>
+        /// <br>a car return ('\r'), a line feed ('\n'), or a carriage return</br>
+        /// <br>immedy followed by a line feed. The resulting string does not</br>
+        /// <br>contain the terminating carriage return and/or line feed.</br>
         /// </summary>
-        /// <param name="intercept">Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.</param>
         /// <returns>
-        ///     <br>An oject that describes the System.ConsoleKey constant and Unicode character,</br>
-        ///     <br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo</br>
-        ///     <br>t also describes, in a bitwise combination of System.ConsoleModifiers values,</br>
-        ///     <br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously</br>
-        ///     <br>with the console key.</br>
+        /// The returned value is null if the end of the input stream has been reached.
         /// </returns>
         public static string? ReadLine()
         {

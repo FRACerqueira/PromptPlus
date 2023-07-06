@@ -563,7 +563,7 @@ namespace PPlus.Controls
                     endinput = true;
                     break;
                 }
-                else if (!char.IsControl(keyInfo.Value.KeyChar))
+                else if (_inputBuffer.IsPrintable(keyInfo.Value))
                 {
                     _inputBuffer.Insert(keyInfo.Value.KeyChar, out var isvalid);
                     if (isvalid && (_options.ShowingHistory || _isInAutoCompleteMode))

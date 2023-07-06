@@ -28,6 +28,7 @@
 		<Copyright>© 2021 - Fernando Cerqueira </Copyright>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<Title>PromptPlus</Title>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<ItemGroup>

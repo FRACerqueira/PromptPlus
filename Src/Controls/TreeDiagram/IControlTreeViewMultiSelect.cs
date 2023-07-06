@@ -139,7 +139,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to toggle current name node to FullPath</param>
         /// <returns><see cref="IControlTreeViewMultiSelect{T}"/></returns>
-        IControlTreeViewMultiSelect<T> HotKeyFullPathNode(HotKey value);
+        IControlTreeViewMultiSelect<T> HotKeyFullPath(HotKey value);
 
         /// <summary>
         /// Overwrite a HotKey expand/Collap current node selected. ValueResult value is 'F3' 

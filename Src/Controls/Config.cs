@@ -164,12 +164,6 @@ namespace PPlus.Controls
         public TimeSpan HistoryTimeout { get; set; } = FileHistory.DefaultHistoryTimeout;
 
         /// <summary>
-        /// <para>Get/Set enabled command Beep console.</para>
-        /// <br>Default value : false</br>
-        /// </summary>
-        public bool EnabledBeep { get; set; } = false;
-
-        /// <summary>
         /// <para>Get/Set enabled show Tooltip for all controls.</para>
         /// <br>Default value : true</br>
         /// </summary>
@@ -265,7 +259,7 @@ namespace PPlus.Controls
         /// <para>Get/Set <see cref="HotKey"/> to show/hide Tooltip.</para>
         /// <br>Default value : '[F1]'</br>
         /// </summary>
-        public HotKey TooltipKeyPress { get; set; } = HotKey.TooltipDefault;
+        public HotKey TooltipKeyPress => HotKey.TooltipDefault;
 
         /// <summary>
         /// <para>Get/Set <see cref="HotKey"/> to toggle password view.</para>
@@ -301,19 +295,19 @@ namespace PPlus.Controls
         /// <para>Get/Set <see cref="HotKey"/> toggle current path to full path.</para>
         /// <br>Default value : '[F2]'</br>
         /// </summary>
-        public HotKey FullPathPress { get; set; } = HotKey.TooltipFullPath;
+        public HotKey FullPathPress { get; set; } = HotKey.TooltipFullPathDefault;
 
         /// <summary>
         /// <para>Get/Set <see cref="HotKey"/> Toggle Expand/Collapse node.</para>
         /// <br>Default value : '[F3]'</br>
         /// </summary>
-        public HotKey ToggleExpandPress { get; set; } = HotKey.ToggleExpandNode;
+        public HotKey ToggleExpandPress { get; set; } = HotKey.ToggleExpandNodeDefault;
 
         /// <summary>
         /// <para>Get/Set <see cref="HotKey"/> Toggle Expand /Collapse All node.</para>
         /// <br>Default value : '[F4]'</br>
         /// </summary>
-        public HotKey ToggleExpandAllPress { get; set; } = HotKey.ToggleExpandAllNode;
+        public HotKey ToggleExpandAllPress { get; set; } = HotKey.ToggleExpandAllNodeDefault;
 
 
         /// <summary>

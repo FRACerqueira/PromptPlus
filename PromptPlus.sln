@@ -92,6 +92,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{191C90E6-4
 		docs\globalsettings.md = docs\globalsettings.md
 		docs\hotkeys.md = docs\hotkeys.md
 		docs\index.md = docs\index.md
+		docs\keypressemacs.md = docs\keypressemacs.md
 		docs\migrateversion.md = docs\migrateversion.md
 		docs\snapshot.md = docs\snapshot.md
 		docs\validators.md = docs\validators.md

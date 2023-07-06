@@ -135,6 +135,7 @@ namespace PPlus.Tests.Controls.TaskWaitControl
                 .WaitProcess("P", "D")
                 .AddStep(StepMode.Sequential, "task1", "desc task1", (cts) =>
                 {
+                    cts.WaitHandle.WaitOne(400);
                     throw new Exception();
                 });
 
@@ -145,13 +146,14 @@ namespace PPlus.Tests.Controls.TaskWaitControl
             var output = PromptPlus.RecordOutput(() =>
             {
                 ctrl.InputTemplate(new ScreenBuffer());
-                CompletesIn(8000, () =>
+                ResultPrompt<IEnumerable<StateProcess>>? result = null;
+                CompletesIn(3000, () =>
                 {
-                    var result = ctrl.TryResult(CancellationToken.None);
-                    Assert.False(result.IsRunning);
-                    Assert.True(result.Value.Count() == 1);
-                    Assert.True(result.Value.First().Status == TaskStatus.Faulted);
-                });
+                    result = ctrl.TryResult(CancellationToken.None);
+                },true);
+                Assert.False(result!.Value.IsRunning);
+                Assert.True(result!.Value.Value.Count() == 1);
+                Assert.True(result!.Value.Value.First().Status == TaskStatus.Faulted);
             });
             Assert.Contains("desc task1", output);
         }

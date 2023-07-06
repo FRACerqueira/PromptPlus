@@ -23,6 +23,7 @@
 - [Culture](#culture)
 - [Colors](#colors)
 - [Hotkeys](#hotkeys)
+- [Keypress Extensions Emacs](#keypress-extensions-emacs)
 - [Validators](#validators)
 - [Supported Platforms](#supported-platforms)
 - [Inspiration Notes](#inspiration-notes)
@@ -48,7 +49,7 @@
 - Treeview hierarchical structures with multi-select and colors
 
 **All controls** have the same organization (see in action: [**Controls Snapshot**](#controls-snapshot)):
-- input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
+- input/filter (except Masked input) using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
 - Prompt, description and data entry (ever)
 - Extra actions per stage : OnStartControl/OnInputRender/OnTryAcceptInput/OnFinishControl (ever)
 - Tooltips (ever and configurable) 
@@ -363,6 +364,10 @@ For more details [visit the **official page**](https://fracerqueira.github.io/Pr
 [**Top**](#welcome-to-promptplus)
 
 Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
+For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus)
+
+## Keypress Extensions Emacs
+PromptPlus have a lot extensions to check Key-press with GNU Readline Emacs keyboard shortcuts.
 For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus)
 
 ## Validators

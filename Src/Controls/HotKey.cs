@@ -21,7 +21,7 @@ namespace PPlus.Controls
         /// <param name="alt">With Alt key</param>
         /// <param name="ctrl">With Ctrl key</param>
         /// <param name="shift">With Shift key</param>
-        public HotKey(UserHotKey key, bool alt = false, bool ctrl = false, bool shift = false)
+        public HotKey(UserHotKey key, bool shift = false, bool alt = false, bool ctrl = false)
         {
             Key = Enum.Parse<ConsoleKey>(key.ToString(), true);
             Alt = alt;
@@ -42,19 +42,19 @@ namespace PPlus.Controls
         /// <summary>
         /// Get HotKey default for Tooltip FullPath 'F2'
         /// </summary>
-        public static HotKey TooltipFullPath => new(ConsoleKey.F2);
+        public static HotKey TooltipFullPathDefault => new(ConsoleKey.F2);
 
 
         /// <summary>
         /// Get HotKey default for expand node 'F3'
         /// </summary>
-        public static HotKey ToggleExpandNode => new (ConsoleKey.F3);
+        public static HotKey ToggleExpandNodeDefault => new (ConsoleKey.F3);
 
 
         /// <summary>
         /// Get HotKey default for expand node 'F4'
         /// </summary>
-        public static HotKey ToggleExpandAllNode => new(ConsoleKey.F4);
+        public static HotKey ToggleExpandAllNodeDefault => new(ConsoleKey.F4);
 
         /// <summary>
         /// Get HotKey default for Select All 'F2'
