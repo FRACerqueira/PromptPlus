@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlKeyPress 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlKeyPress 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -57,12 +57,12 @@ Modifiers
 #### Returns
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
-IControlKeyPress
+[IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **TextKeyValid(Func&lt;ConsoleKeyInfo, String&gt;)**
 
 Overwrite default ConsoleKey string to custom string.
- <br>
+ <br>When return null value the control use defaut string
 
 ```csharp
 IControlKeyPress TextKeyValid(Func<ConsoleKeyInfo, string> value)
@@ -76,13 +76,12 @@ Transform function. When return null value the control use defaut string
 #### Returns
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
-IControlKeyPress
+[IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). ValueResult value is SpinnersType.Ascii
-
-<br>
+ <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
 IControlKeyPress Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)

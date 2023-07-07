@@ -17,7 +17,7 @@ namespace PPlus.Controls
         IControlAutoComplete PageSize(int value);
 
         /// <summary>
-        /// <para>Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii</para>
+        /// Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>
@@ -28,7 +28,7 @@ namespace PPlus.Controls
         IControlAutoComplete Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
         /// <summary>
-        /// <para>Number minimum of chars to accept autocomplete</para>
+        /// Number minimum of chars to accept autocomplete
         /// <br>Default value : 3. If value less than 0 internal sette to 0.</br>
         /// </summary>
         /// <param name="value">Number of chars</param>
@@ -36,7 +36,7 @@ namespace PPlus.Controls
         IControlAutoComplete MinimumPrefixLength(int value);
 
         /// <summary>
-        /// <para>Number of mileseconds to wait before to start function autocomplete</para>
+        /// Number of mileseconds to wait before to start function autocomplete
         /// <br>Default value : 1000. If value less than 10 internal sette to 10.</br>
         /// </summary>
         /// <param name="value">Number of mileseconds</param>
@@ -51,7 +51,7 @@ namespace PPlus.Controls
         IControlAutoComplete CompletionMaxCount(int value);
 
         /// <summary>
-        /// <para>The function to execute autocomplete. This function is requeried to run!</para>
+        /// The function to execute autocomplete. This function is requeried to run!
         /// <br>First param is a current text input</br>
         /// <br>Second param is current cursor postion at text input</br>
         /// <br>third parameter is the control cancellation token</br>
@@ -61,14 +61,14 @@ namespace PPlus.Controls
         IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<string[]>> value);
 
         /// <summary>
-        /// <para>Default value when finished value is empty.</para>
+        /// Default value when finished value is empty.
         /// </summary>
         /// <param name="value">Finished value default</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
         IControlAutoComplete DefaultIfEmpty(string value);
 
         /// <summary>
-        /// <para>Default value when stated.</para>
+        /// Default value when stated.
         /// </summary>
         /// <param name="value">Value default</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
@@ -90,7 +90,7 @@ namespace PPlus.Controls
         IControlAutoComplete InputToCase(CaseOptions value);
 
         /// <summary>
-        /// <para>Execute a function to accept char input.</para>
+        /// Execute a function to accept char input.
         /// <br>If result true accept char input; otherwise, ignore char input.</br>
         /// </summary>
         /// <param name="value">function to accept</param>

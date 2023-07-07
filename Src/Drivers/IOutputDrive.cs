@@ -56,7 +56,7 @@ namespace PPlus
         void SetError(TextWriter value);
 
         /// <summary>
-        /// <para>Clears the console buffer and corresponding console window of display information.</para>
+        /// Clears the console buffer and corresponding console window of display information.
         /// <br>Move cursor fom top console.</br>
         /// </summary>
         void Clear();

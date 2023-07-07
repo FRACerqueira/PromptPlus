@@ -45,11 +45,11 @@ namespace PPlus.Controls
         /// Disabled ExpandAll Feature. Only item in Top-level are expanded
         /// <br>Overwrite Root option ExpandAll to false</br>
         /// </summary>
-        /// <returns><see cref="IControlSelectBrowser"/></returns>
+        /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
         IControlMultiSelectBrowser DisabledRecursiveExpand();
 
         /// <summary>
-        /// <para>Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii</para>
+        /// Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>
@@ -131,7 +131,7 @@ namespace PPlus.Controls
         IControlMultiSelectBrowser PageSize(int value);
 
         /// <summary>
-        /// <para>Filter strategy for filter items in colletion</para>
+        /// Filter strategy for filter items in colletion
         /// <br>Default value is FilterMode.Contains</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>

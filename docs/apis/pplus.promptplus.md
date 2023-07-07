@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus PromptPlus 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:PromptPlus 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -660,8 +660,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 ### **Confirm(String, Action&lt;IPromptConfig&gt;)**
 
 Create Confirm control in yes/no mode.
-
-<br>
+ <br>Yes/No texts come from resources
 
 ```csharp
 public static IControlKeyPress Confirm(string prompt, Action<IPromptConfig> config)
@@ -683,8 +682,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 ### **Confirm(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Confirm control in yes/no mode.
-
-<br>
+ <br>Yes/No texts come from resources
 
 ```csharp
 public static IControlKeyPress Confirm(string prompt, string description, Action<IPromptConfig> config)
@@ -1494,26 +1492,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 IControlTreeViewSelect&lt;T&gt;<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **IskeyPageNavagator&lt;Tkey&gt;(ConsoleKeyInfo, Paginator&lt;Tkey&gt;)**
-
-```csharp
-internal static bool IskeyPageNavagator<Tkey>(ConsoleKeyInfo consoleKeyInfo, Paginator<Tkey> paginator)
-```
-
-#### Type Parameters
-
-`Tkey`<br>
-
-#### Parameters
-
-`consoleKeyInfo` ConsoleKeyInfo<br>
-
-`paginator` Paginator&lt;Tkey&gt;<br>
-
-#### Returns
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
 ### **IsPressSpecialKey(ConsoleKeyInfo, ConsoleKey, ConsoleModifiers)**
 
 Check ConsoleKeyInfo is Special Key
@@ -1536,7 +1514,7 @@ to compare
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressEnterKey(ConsoleKeyInfo, Boolean)**
 
@@ -1552,17 +1530,17 @@ public static bool IsPressEnterKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-If `true` accept 'CTRL+J'
+If `true`true accept 'CTRL+J'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsLowersCurrentWord(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
- <br>
+ <br>Alt+L = Lowers the case of every character from the cursor's position to the end of the current words
 
 ```csharp
 public static bool IsLowersCurrentWord(ConsoleKeyInfo keyinfo)
@@ -1576,12 +1554,12 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsClearBeforeCursor(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Clear Before Cursor Emacs Key 
- <br>
+ <br>Ctrl+U = Clears the line content before the cursor
 
 ```csharp
 public static bool IsClearBeforeCursor(ConsoleKeyInfo keyinfo)
@@ -1595,12 +1573,12 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsClearAfterCursor(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Clear After Cursor Emacs Key 
- <br>
+ <br>Ctrl+K = Clears the line content after the cursor
 
 ```csharp
 public static bool IsClearAfterCursor(ConsoleKeyInfo keyinfo)
@@ -1614,12 +1592,12 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsClearWordBeforeCursor(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Clear Word Before Cursor Emacs Key 
- <br>
+ <br>Ctrl+W = Clears the word before the cursor
 
 ```csharp
 public static bool IsClearWordBeforeCursor(ConsoleKeyInfo keyinfo)
@@ -1633,12 +1611,12 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsClearWordAfterCursor(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Clear Word After Cursor Emacs Key 
- <br>
+ <br>Ctrl+D = Clears the word after the cursor
 
 ```csharp
 public static bool IsClearWordAfterCursor(ConsoleKeyInfo keyinfo)
@@ -1652,12 +1630,12 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsCapitalizeOverCursor(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Capitalize Over Cursor Emacs Key 
- <br>
+ <br>Alt+C = Capitalizes the character under the cursor and moves to the end of the word
 
 ```csharp
 public static bool IsCapitalizeOverCursor(ConsoleKeyInfo keyinfo)
@@ -1671,12 +1649,12 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsForwardWord(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Forward Word Emacs Key 
- <br>
+ <br>Alt+F = Moves the cursor forward one word.
 
 ```csharp
 public static bool IsForwardWord(ConsoleKeyInfo keyinfo)
@@ -1690,12 +1668,12 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsBackwardWord(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Backward Word Emacs Key 
- <br>
+ <br>Alt+B = Moves the cursor backward one word.
 
 ```csharp
 public static bool IsBackwardWord(ConsoleKeyInfo keyinfo)
@@ -1709,12 +1687,12 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsUppersCurrentWord(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
- <br>
+ <br>Alt+U = Upper the case of every character from the cursor's position to the end of the current word
 
 ```csharp
 public static bool IsUppersCurrentWord(ConsoleKeyInfo keyinfo)
@@ -1728,12 +1706,12 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsTransposePrevious(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Transpose Previous Emacs Key 
- <br>
+ <br>Ctrl+T = Transpose the previous two characters
 
 ```csharp
 public static bool IsTransposePrevious(ConsoleKeyInfo keyinfo)
@@ -1747,12 +1725,12 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsClearContent(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Clear Emacs Key 
- <br>
+ <br>Ctrl+L = Clears the content
 
 ```csharp
 public static bool IsClearContent(ConsoleKeyInfo keyinfo)
@@ -1766,7 +1744,7 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressTabKey(ConsoleKeyInfo)**
 
@@ -1784,7 +1762,7 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressShiftTabKey(ConsoleKeyInfo)**
 
@@ -1802,7 +1780,7 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressEndKey(ConsoleKeyInfo, Boolean)**
 
@@ -1818,12 +1796,12 @@ public static bool IsPressEndKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+E'
+if `true`true accept 'CTRL+E'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressHomeKey(ConsoleKeyInfo, Boolean)**
 
@@ -1839,12 +1817,12 @@ public static bool IsPressHomeKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+A'
+if `true`true accept 'CTRL+A'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressBackspaceKey(ConsoleKeyInfo, Boolean)**
 
@@ -1860,12 +1838,12 @@ public static bool IsPressBackspaceKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+H'
+if `true`true accept 'CTRL+H'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressDeleteKey(ConsoleKeyInfo, Boolean)**
 
@@ -1881,26 +1859,12 @@ public static bool IsPressDeleteKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+D'
+if `true`true accept 'CTRL+D'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
-
-### **IsPressCtrlDeleteKey(ConsoleKeyInfo)**
-
-```csharp
-internal static bool IsPressCtrlDeleteKey(ConsoleKeyInfo keyinfo)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-
-#### Returns
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+`true`true if equal otherwise `false`false.
 
 ### **IsPressLeftArrowKey(ConsoleKeyInfo, Boolean)**
 
@@ -1916,12 +1880,12 @@ public static bool IsPressLeftArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+B'
+if `true`true accept 'CTRL+B'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressSpaceKey(ConsoleKeyInfo)**
 
@@ -1939,7 +1903,7 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressRightArrowKey(ConsoleKeyInfo, Boolean)**
 
@@ -1955,12 +1919,12 @@ public static bool IsPressRightArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+F'
+if `true`true accept 'CTRL+F'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressUpArrowKey(ConsoleKeyInfo, Boolean)**
 
@@ -1976,12 +1940,12 @@ public static bool IsPressUpArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+P'
+if `true`true accept 'CTRL+P'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressDownArrowKey(ConsoleKeyInfo, Boolean)**
 
@@ -1997,12 +1961,12 @@ public static bool IsPressDownArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+N'
+if `true`true accept 'CTRL+N'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressPageUpKey(ConsoleKeyInfo, Boolean)**
 
@@ -2018,12 +1982,12 @@ public static bool IsPressPageUpKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'Alt+P'
+if `true`true accept 'Alt+P'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressPageDownKey(ConsoleKeyInfo, Boolean)**
 
@@ -2039,12 +2003,12 @@ public static bool IsPressPageDownKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'Alt+N'
+if `true`true accept 'Alt+N'
 
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
+`true`true if equal otherwise `false`false.
 
 ### **IsPressEscKey(ConsoleKeyInfo)**
 
@@ -2062,21 +2026,7 @@ to check
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if equal otherwise `false`.
-
-### **IsPressCtrlCKey(ConsoleKeyInfo)**
-
-```csharp
-internal static bool IsPressCtrlCKey(ConsoleKeyInfo keyinfo)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-
-#### Returns
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+`true`true if equal otherwise `false`false.
 
 ### **ToCase(ConsoleKeyInfo, CaseOptions)**
 
@@ -2107,59 +2057,16 @@ Reset all config and properties to default values
 public static void Reset()
 ```
 
-### **InputBuffer(String)**
-
-InputBuffer to test console
-
-```csharp
-internal static void InputBuffer(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-### **InputBuffer(ConsoleKeyInfo)**
-
-InputBuffer to test console
-
-```csharp
-internal static void InputBuffer(ConsoleKeyInfo value)
-```
-
-#### Parameters
-
-`value` ConsoleKeyInfo<br>
-
 ### **Setup(Action&lt;ProfileSetup&gt;)**
 
 Overwrite current console with new console profile.
-
-<br><br>
+ <br>After overwrite the new console the screeen is clear<br>and all Style-Schema are updated with backgoundcolor console
 
 ```csharp
 public static void Setup(Action<ProfileSetup> config)
 ```
 
 #### Parameters
-
-`config` [Action&lt;ProfileSetup&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-Action with [ProfileSetup](./pplus.profilesetup.md) to configuration
-
-### **Setup(IConsoleBase, Action&lt;ProfileSetup&gt;)**
-
-Overwrite current console with new console profile.
-
-<br><br>
-
-```csharp
-internal static void Setup(IConsoleBase consolebase, Action<ProfileSetup> config)
-```
-
-#### Parameters
-
-`consolebase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The [IConsoleBase](./pplus.iconsolebase.md)
 
 `config` [Action&lt;ProfileSetup&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 Action with [ProfileSetup](./pplus.profilesetup.md) to configuration
@@ -2316,11 +2223,11 @@ Determines whether to display the pressed key in the console window. true to not
 #### Returns
 
 ConsoleKeyInfo<br>
-<br><br><br><br><br>
+<br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
 ### **ReadLine()**
 
-<br><br><br><br>
+<br>Read the line from stream. A line is defined as a sequence of characters followed by<br>a car return ('\r'), a line feed ('\n'), or a carriage return<br>immedy followed by a line feed. The resulting string does not<br>contain the terminating carriage return and/or line feed.
 
 ```csharp
 public static string ReadLine()
@@ -2350,7 +2257,7 @@ The token to monitor for cancellation requests.
 #### Returns
 
 [Nullable&lt;ConsoleKeyInfo&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-<br><br><br><br><br>
+<br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
 ### **GetCursorPosition()**
 
@@ -2407,8 +2314,7 @@ A stream that is the new standard error.
 ### **Clear()**
 
 Clears the console buffer and corresponding console window of display information.
-
-<br>
+ <br>Move cursor fom top console.
 
 ```csharp
 public static void Clear()
@@ -2499,37 +2405,9 @@ The [IConsoleBase](./pplus.iconsolebase.md)
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The style color to clear.
 
-### **RecordOutput(Action)**
-
-```csharp
-internal static string RecordOutput(Action action)
-```
-
-#### Parameters
-
-`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
-
-#### Returns
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-### **CaptureRecord(Boolean)**
-
-```csharp
-internal static string CaptureRecord(bool clearrecord)
-```
-
-#### Parameters
-
-`clearrecord` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-#### Returns
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
 ### **ReadLineWithEmacs(Nullable&lt;UInt32&gt;, CaseOptions, Action&lt;String, Int32&gt;)**
 
-<br><br><br><br>
+<br>Read the line from stream using Emacs keyboard shortcuts. A line is defined as a sequence of characters followed by<br>a car return ('\r'), a line feed ('\n'), or a carriage return<br>immedy followed by a line feed. The resulting string does not<br>contain the terminating carriage return and/or line feed.
 
 ```csharp
 public static string ReadLineWithEmacs(Nullable<uint> maxlenght, CaseOptions caseOptions, Action<string, int> afteraccept)

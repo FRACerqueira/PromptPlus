@@ -12,7 +12,7 @@ namespace PPlus
     public static partial class PromptPlus
     {
         /// <summary>
-        /// <para>Create Confirm control in yes/no mode.</para>
+        /// Create Confirm control in yes/no mode.
         /// <br>Yes/No texts come from resources</br>
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
@@ -25,7 +25,7 @@ namespace PPlus
 
 
         /// <summary>
-        /// <para>Create Confirm control in yes/no mode.</para>
+        /// Create Confirm control in yes/no mode.
         /// <br>Yes/No texts come from resources</br>
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
@@ -50,7 +50,7 @@ namespace PPlus
 
 
         /// <summary>
-        /// <para>Create Confirm control in yes/no mode.</para>
+        /// Create Confirm control in yes/no mode.
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="opcyes"><see cref="ConsoleKey"/> yes key.</param>

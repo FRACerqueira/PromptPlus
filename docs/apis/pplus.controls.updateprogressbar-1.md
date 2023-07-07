@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus UpdateProgressBar 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:UpdateProgressBar 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -100,16 +100,6 @@ public string Description { get; private set; }
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Methods
-
-### **HasChange()**
-
-```csharp
-internal bool HasChange()
-```
-
-#### Returns
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **Update(Double)**
 

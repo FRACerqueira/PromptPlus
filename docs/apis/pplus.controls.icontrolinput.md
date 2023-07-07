@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlInput 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlInput 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -98,8 +98,7 @@ Transform option
 ### **AcceptInput(Func&lt;Char, Boolean&gt;)**
 
 Execute a function to accept char input.
-
-<br>
+ <br>If result true accept char input; otherwise, ignore char input.
 
 ```csharp
 IControlInput AcceptInput(Func<char, bool> value)
@@ -172,7 +171,7 @@ Overwrite a [HotKey](./pplus.controls.hotkey.md) to toggle view. Default value i
 ### **AddValidators(Func`2[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>
+ <br>Tip: see [PromptValidators](./pplus.controls.promptvalidators.md) to validators embeding
 
 ```csharp
 IControlInput AddValidators(Func`2[] validators)
@@ -263,7 +262,7 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 ### **HistoryMinimumPrefixLength(Int32)**
 
 Minimum chars to enabled history feature. Default value is 0.
- <br>
+ <br>History items are filtered by the starts with entry.
 
 ```csharp
 IControlInput HistoryMinimumPrefixLength(int value)
@@ -282,7 +281,7 @@ Minimum chars number
 ### **HistoryEnabled(String)**
 
 Enabled saved history inputs.
- <br>
+ <br>The history file is saved in  in the 'PromptPlus.History' folder.
 
 ```csharp
 IControlInput HistoryEnabled(string value)
@@ -355,8 +354,7 @@ Number of Max.items
 ### **FilterType(FilterMode)**
 
 Filter strategy for filter items in History colletion
-
-<br>
+ <br>Default value is FilterMode.StartsWith
 
 ```csharp
 IControlInput FilterType(FilterMode value)

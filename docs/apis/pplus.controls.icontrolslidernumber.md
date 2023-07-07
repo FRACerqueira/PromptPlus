@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlSliderNumber 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlSliderNumber 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -41,8 +41,7 @@ CultureInfo to use on validate
 ### **Culture(String)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
-
-<br>
+ <br>Default value is global Promptplus Cultureinfo
 
 ```csharp
 IControlSliderNumber Culture(string value)
@@ -56,7 +55,7 @@ Name of CultureInfo to use on validate
 #### Returns
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
-IControlSliderNumber
+[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **Default(Double)**
 
@@ -79,7 +78,7 @@ value
 ### **MoveKeyPress(SliderNumberType)**
 
 Define the KeyPress to change value. Default value is Left or Right.
- <br>
+ <br>When MoveKeyPress equal Up or Down , slider control not show Widgets
 
 ```csharp
 IControlSliderNumber MoveKeyPress(SliderNumberType value)
@@ -248,7 +247,7 @@ function to apply change
 ### **ChangeColor(Func&lt;Double, Color&gt;)**
 
 Dynamically change color Widgets
- <br>
+ <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored
 
 ```csharp
 IControlSliderNumber ChangeColor(Func<double, Color> value)
@@ -267,7 +266,7 @@ function to change color
 ### **ChangeGradient(Color[])**
 
 Dynamically Change Gradient color Widgets
- <br>
+ <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored
 
 ```csharp
 IControlSliderNumber ChangeGradient(Color[] colors)

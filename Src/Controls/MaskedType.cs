@@ -21,23 +21,23 @@ namespace PPlus.Controls
     public enum MaskedType
     {
         /// <summary>
-        /// <para>Date only.</para> 
+        /// Date only. 
         /// </summary>
         DateOnly,
         /// <summary>
-        /// <para>Time only.</para> 
+        /// Time only. 
         /// </summary>
         TimeOnly,
         /// <summary>
-        /// <para>Date and Time.</para> 
+        /// Date and Time. 
         /// </summary>
         DateTime,
         /// <summary>
-        /// <para>Only Number.</para> 
+        /// Only Number. 
         /// </summary>
         Number,
         /// <summary>
-        /// <para>Only Currency.</para> 
+        /// Only Currency. 
         /// </summary>
         Currency
     }

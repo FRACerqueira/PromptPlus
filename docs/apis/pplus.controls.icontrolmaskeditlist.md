@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlMaskEditList 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlMaskEditList 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -67,8 +67,7 @@ initial value
 ### **TypeTipStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region tip type input.
-
-<br><br>
+ <br>Default Foreground : 'ConsoleColor.Yellow'<br>Default Background : same Console Background when setted
 
 ```csharp
 IControlMaskEditList TypeTipStyle(Style value)
@@ -82,13 +81,12 @@ Style
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEditList
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **NegativeStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region neggative input.
-
-<br><br>
+ <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : same Console Background when setted
 
 ```csharp
 IControlMaskEditList NegativeStyle(Style value)
@@ -102,13 +100,12 @@ Style
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEditList
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **PositiveStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region positive input.
-
-<br><br>
+ <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
 
 ```csharp
 IControlMaskEditList PositiveStyle(Style value)
@@ -122,12 +119,12 @@ Style
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEdit
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Mask(String, Nullable&lt;Char&gt;)**
 
 Defines mask input. Rules for Generic type:
- <br><br><br><br><br><br><br><br><br><br><br>
+ <br>9 - Only a numeric character<br>L - Only a letter<br>C - OnlyCustom character<br>A - Any character<br>N - OnlyCustom character + Only a numeric character<br>X - OnlyCustom character + Only a letter<br>\ - Escape character<br>{ - Initial delimiter for repetition of masks<br>} - Final delimiter for repetition of masks<br>[-Initial delimiter for list of Custom character<br>] - Final delimiter for list of Custom character
 
 ```csharp
 IControlMaskEditList Mask(string value, Nullable<char> promptmask)
@@ -144,7 +141,7 @@ Prompt mask overwriter. Default value is '■'/'_'
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEdit
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Mask(MaskedType, Nullable&lt;Char&gt;)**
 
@@ -165,13 +162,12 @@ Prompt mask overwriter. Default value is '■'/'_'
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEdit
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Culture(CultureInfo)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
-
-<br>
+ <br>Default value is global Promptplus Cultureinfo
 
 ```csharp
 IControlMaskEditList Culture(CultureInfo value)
@@ -185,13 +181,12 @@ CultureInfo to use on validate
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEditList
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Culture(String)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
-
-<br>
+ <br>Default value is global Promptplus Cultureinfo
 
 ```csharp
 IControlMaskEditList Culture(string value)
@@ -205,12 +200,12 @@ Name of CultureInfo to use on validate
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEditList
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **FillZeros()**
 
 Fill zeros mask.
- <br><br><br>
+ <br>Not valid for type MaskedType.Generic (this set will be ignored).<br>When used this feature the AcceptEmptyValue feature will be ignored.<br>When MaskedType.Number or MaskedType.Currency this feature is always on.
 
 ```csharp
 IControlMaskEditList FillZeros()
@@ -219,12 +214,12 @@ IControlMaskEditList FillZeros()
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEditList
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **FormatYear(FormatYear)**
 
 Defines if year is long or short.
- <br>
+ <br>Valid only for type MaskedType.DateOnly or DateTime, otherwise this set will be ignored.
 
 ```csharp
 IControlMaskEditList FormatYear(FormatYear value)
@@ -238,12 +233,12 @@ IControlMaskEditList FormatYear(FormatYear value)
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEditList
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **FormatTime(FormatTime)**
 
 Defines time parts input.
- <br>
+ <br>Valid only for type MaskedType.TimeOnly or DateTime, otherwise this set will be ignored.
 
 ```csharp
 IControlMaskEditList FormatTime(FormatTime value)
@@ -257,13 +252,12 @@ IControlMaskEditList FormatTime(FormatTime value)
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEditList
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **AmmoutPositions(Int32, Int32, Boolean)**
 
 Defines integer lenght, decimal lenght and accept signl.
-
-<br><br>
+ <br>Valid only for type MaskedType.Number or Currency, otherwise this set will be ignored.<br>This set is Requeried for these types.
 
 ```csharp
 IControlMaskEditList AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal)
@@ -283,7 +277,7 @@ True accept signal; otherwise, no.
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEditList
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **DescriptionWithInputType(FormatWeek)**
 
@@ -301,7 +295,7 @@ show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEditList
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **InputToCase(CaseOptions)**
 
@@ -324,7 +318,7 @@ Transform option
 ### **AddValidators(Func`2[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>
+ <br>Tip: see [PromptValidators](./pplus.controls.promptvalidators.md) to validators embeding
 
 ```csharp
 IControlMaskEditList AddValidators(Func`2[] validators)
@@ -397,7 +391,7 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 ### **AcceptEmptyValue()**
 
 Accept empty value
- <br>
+ <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.
 
 ```csharp
 IControlMaskEditList AcceptEmptyValue()
@@ -406,7 +400,7 @@ IControlMaskEditList AcceptEmptyValue()
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-IControlMaskEdit
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **AddItem(String, Boolean)**
 
@@ -479,7 +473,7 @@ IControlMaskEditList AllowDuplicate()
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
-[IControlList](./pplus.controls.icontrollist.md)
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Range(Int32, Nullable&lt;Int32&gt;)**
 

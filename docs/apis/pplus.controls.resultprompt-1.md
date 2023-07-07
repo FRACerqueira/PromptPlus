@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus ResultPrompt 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:ResultPrompt 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -63,18 +63,6 @@ ResultPrompt()
 **Remarks:**
 
 Do not use this constructor!
-
-## Methods
-
-### **NullResult()**
-
-```csharp
-ResultPrompt<T> NullResult()
-```
-
-#### Returns
-
-[ResultPrompt&lt;T&gt;](./pplus.controls.resultprompt-1.md)<br>
 
 
 - - -

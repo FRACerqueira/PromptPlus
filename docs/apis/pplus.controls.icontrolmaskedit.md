@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlMaskEdit 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlMaskEdit 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -23,8 +23,7 @@ Implements [IPromptControls&lt;ResultMasked&gt;](./pplus.controls.ipromptcontrol
 ### **TypeTipStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region tip type input.
-
-<br><br>
+ <br>Default Foreground : 'ConsoleColor.Yellow'<br>Default Background : same Console Background when setted
 
 ```csharp
 IControlMaskEdit TypeTipStyle(Style value)
@@ -38,13 +37,12 @@ Style
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **NegativeStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region neggative input.
-
-<br><br>
+ <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
 
 ```csharp
 IControlMaskEdit NegativeStyle(Style value)
@@ -58,13 +56,12 @@ Style
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **PositiveStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region positive input.
-
-<br><br>
+ <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
 
 ```csharp
 IControlMaskEdit PositiveStyle(Style value)
@@ -78,12 +75,12 @@ Style
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Mask(String, Nullable&lt;Char&gt;)**
 
 Defines mask input. Rules for Generic type:
- <br><br><br><br><br><br><br><br><br><br><br>
+ <br>9 - Only a numeric character<br>L - Only a letter<br>C - OnlyCustom character<br>A - Any character<br>N - OnlyCustom character + Only a numeric character<br>X - OnlyCustom character + Only a letter<br>\ - Escape character<br>{ - Initial delimiter for repetition of masks<br>} - Final delimiter for repetition of masks<br>[-Initial delimiter for list of Custom character<br>] - Final delimiter for list of Custom character
 
 ```csharp
 IControlMaskEdit Mask(string value, Nullable<char> promptmask)
@@ -100,7 +97,7 @@ Prompt mask overwriter. Default value is '■'/'_'
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Mask(MaskedType, Nullable&lt;Char&gt;)**
 
@@ -121,12 +118,12 @@ Prompt mask overwriter. Default value is '■'/'_'
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **AcceptEmptyValue()**
 
 Accept empty value
- <br>
+ <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.
 
 ```csharp
 IControlMaskEdit AcceptEmptyValue()
@@ -135,7 +132,7 @@ IControlMaskEdit AcceptEmptyValue()
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **DefaultIfEmpty(String, Boolean)**
 
@@ -161,7 +158,7 @@ Valid only for type MaskedType.Number or MaskedType.Currency, otherwise this set
 ### **FillZeros()**
 
 Fill zeros mask.
- <br><br><br>
+ <br>Not valid for type MaskedType.Generic (this set will be ignored).<br>When used this feature the AcceptEmptyValue feature will be ignored.<br>When MaskedType.Number or MaskedType.Currency this feature is always on.
 
 ```csharp
 IControlMaskEdit FillZeros()
@@ -170,13 +167,12 @@ IControlMaskEdit FillZeros()
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Culture(CultureInfo)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
-
-<br>
+ <br>Default value is global Promptplus Cultureinfo
 
 ```csharp
 IControlMaskEdit Culture(CultureInfo value)
@@ -190,13 +186,12 @@ CultureInfo to use on validate
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Culture(String)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
-
-<br>
+ <br>Default value is global Promptplus Cultureinfo
 
 ```csharp
 IControlMaskEdit Culture(string value)
@@ -210,12 +205,12 @@ Name of CultureInfo to use on validate
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **FormatYear(FormatYear)**
 
 Defines if year is long or short.
- <br>
+ <br>Valid only for type MaskedType.DateOnly or DateTime, otherwise this set will be ignored.
 
 ```csharp
 IControlMaskEdit FormatYear(FormatYear value)
@@ -229,12 +224,12 @@ IControlMaskEdit FormatYear(FormatYear value)
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **FormatTime(FormatTime)**
 
 Defines time parts input.
- <br>
+ <br>Valid only for type MaskedType.TimeOnly or DateTime, otherwise this set will be ignored.
 
 ```csharp
 IControlMaskEdit FormatTime(FormatTime value)
@@ -248,13 +243,12 @@ IControlMaskEdit FormatTime(FormatTime value)
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **AmmoutPositions(Int32, Int32, Boolean)**
 
 Defines integer lenght, decimal lenght and accept signl.
-
-<br><br>
+ <br>Valid only for type MaskedType.Number or Currency, otherwise this set will be ignored.<br>This set is Requeried for these types.
 
 ```csharp
 IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal)
@@ -274,7 +268,7 @@ True accept signal; otherwise, no.
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **DescriptionWithInputType(FormatWeek)**
 
@@ -292,7 +286,7 @@ show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Default(String)**
 
@@ -331,7 +325,7 @@ The timeout for valid items saved. Default value is 365 days
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-IControlMaskEdit
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **InputToCase(CaseOptions)**
 
@@ -354,7 +348,7 @@ Transform option
 ### **AddValidators(Func`2[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>
+ <br>Tip: see [PromptValidators](./pplus.controls.promptvalidators.md) to validators embeding
 
 ```csharp
 IControlMaskEdit AddValidators(Func`2[] validators)
@@ -445,7 +439,7 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 ### **HistoryMinimumPrefixLength(Int32)**
 
 Minimum chars (without mask!) to enabled history feature.
- <br>
+ <br>History items are filtered by the starts with entry.
 
 ```csharp
 IControlMaskEdit HistoryMinimumPrefixLength(int value)
@@ -464,7 +458,7 @@ Minimum chars number
 ### **HistoryEnabled(String)**
 
 Enabled saved history inputs.
- <br>
+ <br>The history file is saved in  in the 'PromptPlus.History' folder.
 
 ```csharp
 IControlMaskEdit HistoryEnabled(string value)
@@ -537,8 +531,7 @@ Number of Max.items
 ### **FilterType(FilterMode)**
 
 Filter strategy for filter items in History colletion
-
-<br>
+ <br>Default value is FilterMode.StartsWith
 
 ```csharp
 IControlMaskEdit FilterType(FilterMode value)

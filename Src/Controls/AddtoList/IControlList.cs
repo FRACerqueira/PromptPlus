@@ -23,7 +23,7 @@ namespace PPlus.Controls
         IControlList Interaction<T>(IEnumerable<T> values, Action<IControlList, T> action);
 
         /// <summary>
-        /// <para>Default initial value when when stated.</para>
+        /// Default initial value when when stated.
         /// </summary>
         /// <param name="value">initial value</param>
         /// <returns><see cref="IControlList"/></returns>
@@ -37,7 +37,7 @@ namespace PPlus.Controls
         IControlList InputToCase(CaseOptions value);
 
         /// <summary>
-        /// <para>Execute a function to accept input.</para>
+        /// Execute a function to accept input.
         /// <br>If result true accept input; otherwise, ignore input.</br>
         /// </summary>
         /// <param name="value">function to accept input</param>

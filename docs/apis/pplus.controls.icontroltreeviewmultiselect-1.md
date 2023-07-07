@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlTreeViewMultiSelect 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlTreeViewMultiSelect 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -162,8 +162,7 @@ Number of Max.items
 ### **FilterType(FilterMode)**
 
 Filter strategy for filter items in colletion
-
-<br>
+ <br>Default value is FilterMode.Contains
 
 ```csharp
 IControlTreeViewMultiSelect<T> FilterType(FilterMode value)

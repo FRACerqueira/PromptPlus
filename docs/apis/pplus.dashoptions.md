@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus DashOptions 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:DashOptions 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -27,9 +27,9 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | --- | --: | --- |
 | AsciiSingleBorder | 0 | Ascii Single Border '-' |
 | AsciiDoubleBorder | 1 | Ascii Single Border '=' |
-| SingleBorder | 2 | Single Border unicode '─' <br> |
-| DoubleBorder | 3 | Double Border unicode '═' <br> |
-| HeavyBorder | 4 | Heavy Border unicode '━' <br> |
+| SingleBorder | 2 | Single Border unicode '─' <br>When not supported unicode : '-' |
+| DoubleBorder | 3 | Double Border unicode '═' <br>When not supported unicode : '=' |
+| HeavyBorder | 4 | Heavy Border unicode '━' <br>When not supported unicode : '*' |
 
 
 - - -

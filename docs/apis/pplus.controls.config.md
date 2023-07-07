@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus Config 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:Config 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -57,8 +57,7 @@ public int CompletionMinimumPrefixLength { get; set; }
 ### **CompletionWaitToStart**
 
 Get/Set Interval in mileseconds to wait start Completion funcion.
-
-<br>
+ <br>Default value : 1000. If value less than 10 internal sette to 10.
 
 ```csharp
 public int CompletionWaitToStart { get; set; }
@@ -71,8 +70,7 @@ public int CompletionWaitToStart { get; set; }
 ### **CompletionMaxCount**
 
 Get/Set Completion Max Items to return.
-
-<br>
+ <br>Default value : 1000. If value less than 1 internal sette to 1.
 
 ```csharp
 public int CompletionMaxCount { get; set; }
@@ -85,8 +83,7 @@ public int CompletionMaxCount { get; set; }
 ### **HistoryTimeout**
 
 Get/Set History Timeout.
-
-<br>
+ <br>Default value : 365 days
 
 ```csharp
 public TimeSpan HistoryTimeout { get; set; }
@@ -99,8 +96,7 @@ public TimeSpan HistoryTimeout { get; set; }
 ### **ShowTooltip**
 
 Get/Set enabled show Tooltip for all controls.
-
-<br>
+ <br>Default value : true
 
 ```csharp
 public bool ShowTooltip { get; set; }
@@ -113,8 +109,7 @@ public bool ShowTooltip { get; set; }
 ### **EnabledAbortKey**
 
 Get/Set enabled abortKey(ESC) for all controls.
-
-<br>
+ <br>Default value : true
 
 ```csharp
 public bool EnabledAbortKey { get; set; }
@@ -127,8 +122,7 @@ public bool EnabledAbortKey { get; set; }
 ### **HideAfterFinish**
 
 Get/Set hide controls after finish for all controls.
-
-<br>
+ <br>Default value : false
 
 ```csharp
 public bool HideAfterFinish { get; set; }
@@ -141,8 +135,7 @@ public bool HideAfterFinish { get; set; }
 ### **HideOnAbort**
 
 Get/Set hide controls On Abort for all controls.
-
-<br>
+ <br>Default value : false
 
 ```csharp
 public bool HideOnAbort { get; set; }
@@ -155,8 +148,7 @@ public bool HideOnAbort { get; set; }
 ### **SecretChar**
 
 Get/Set value char for secret input
-
-<br>
+ <br>Default value : '#'. Fall-back when null : '#'
 
 ```csharp
 public Nullable<char> SecretChar { get; set; }
@@ -169,8 +161,7 @@ public Nullable<char> SecretChar { get; set; }
 ### **YesChar**
 
 Get/Set value for YES answer
-
-<br>
+ <br>Default value : YesChar in built-in resources. Fall-back when null : Y
 
 ```csharp
 public Nullable<char> YesChar { get; set; }
@@ -183,8 +174,7 @@ public Nullable<char> YesChar { get; set; }
 ### **NoChar**
 
 Get/Set value for NO answer
-
-<br>
+ <br>Default value : NoChar in built-in resources. Fall-back when null : N
 
 ```csharp
 public Nullable<char> NoChar { get; set; }
@@ -197,8 +187,7 @@ public Nullable<char> NoChar { get; set; }
 ### **TooltipKeyPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to show/hide Tooltip.
-
-<br>
+ <br>Default value : '[F1]'
 
 ```csharp
 public HotKey TooltipKeyPress { get; }
@@ -211,8 +200,7 @@ public HotKey TooltipKeyPress { get; }
 ### **PasswordViewPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle password view.
-
-<br>
+ <br>Default value : '[F2]'
 
 ```csharp
 public HotKey PasswordViewPress { get; set; }
@@ -225,8 +213,7 @@ public HotKey PasswordViewPress { get; set; }
 ### **SelectAllPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to Select all item.
-
-<br>
+ <br>Default value : '[F2]'
 
 ```csharp
 public HotKey SelectAllPress { get; set; }
@@ -239,8 +226,7 @@ public HotKey SelectAllPress { get; set; }
 ### **InvertSelectedPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to Invert Selected item.
-
-<br>
+ <br>Default value : '[F3]'
 
 ```csharp
 public HotKey InvertSelectedPress { get; set; }
@@ -253,8 +239,7 @@ public HotKey InvertSelectedPress { get; set; }
 ### **EditItemPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to Edit item.
-
-<br>
+ <br>Default value : '[F2]'
 
 ```csharp
 public HotKey EditItemPress { get; set; }
@@ -267,8 +252,7 @@ public HotKey EditItemPress { get; set; }
 ### **RemoveItemPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to Remove item.
-
-<br>
+ <br>Default value : '[F3]'
 
 ```csharp
 public HotKey RemoveItemPress { get; set; }
@@ -281,8 +265,7 @@ public HotKey RemoveItemPress { get; set; }
 ### **FullPathPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) toggle current path to full path.
-
-<br>
+ <br>Default value : '[F2]'
 
 ```csharp
 public HotKey FullPathPress { get; set; }
@@ -295,8 +278,7 @@ public HotKey FullPathPress { get; set; }
 ### **ToggleExpandPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) Toggle Expand/Collapse node.
-
-<br>
+ <br>Default value : '[F3]'
 
 ```csharp
 public HotKey ToggleExpandPress { get; set; }
@@ -309,8 +291,7 @@ public HotKey ToggleExpandPress { get; set; }
 ### **ToggleExpandAllPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) Toggle Expand /Collapse All node.
-
-<br>
+ <br>Default value : '[F4]'
 
 ```csharp
 public HotKey ToggleExpandAllPress { get; set; }

@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlSliderSwitch 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlSliderSwitch 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -152,7 +152,7 @@ function to apply change
 ### **ChangeColorOn(Style)**
 
 Change Color when state 'On'. 
- <br><br><br>
+ <br>state-On(Foreground)/Background<br>Default Foreground : 'ConsoleColor.Cyan'<br>Default Background : 'ConsoleColor.DarkGray'
 
 ```csharp
 IControlSliderSwitch ChangeColorOn(Style value)
@@ -171,7 +171,7 @@ IControlSliderSwitch ChangeColorOn(Style value)
 ### **ChangeColorOff(Style)**
 
 Change Color when state 'Off'. 
- <br><br><br>
+ <br>state-Off(Foreground)/Background<br>Default Foreground : 'ConsoleColor.Cyan'<br>Default Background : 'ConsoleColor.DarkGray'
 
 ```csharp
 IControlSliderSwitch ChangeColorOff(Style value)

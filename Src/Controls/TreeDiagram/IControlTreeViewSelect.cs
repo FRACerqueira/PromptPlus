@@ -124,24 +124,29 @@ namespace PPlus.Controls
         /// Action to execute after Expanded 
         /// </summary>
         /// <param name="value">The action</param>
+        /// <returns><see cref="IControlTreeViewSelect{T}"/></returns>
+
         IControlTreeViewSelect<T> AfterExpanded(Action<T> value);
 
         /// <summary>
         /// Action to execute after Collapsed 
         /// </summary>
         /// <param name="value">The action</param>
+        /// <returns><see cref="IControlTreeViewSelect{T}"/></returns>
         IControlTreeViewSelect<T> AfterCollapsed(Action<T> value);
 
         /// <summary>
         /// Action to execute before Expanded 
         /// </summary>
         /// <param name="value">The action</param>
+        /// <returns><see cref="IControlTreeViewSelect{T}"/></returns>
         IControlTreeViewSelect<T> BeforeExpanded(Action<T> value);
 
         /// <summary>
         /// Action to execute before Collapsed 
         /// </summary>
         /// <param name="value">The action</param>
+        /// <returns><see cref="IControlTreeViewSelect{T}"/></returns>
         IControlTreeViewSelect<T> BeforeCollapsed(Action<T> value);
 
     }

@@ -23,7 +23,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="key">Key <see cref="ConsoleKey"/></param>
         /// <param name="modifiers">Modifiers <see cref="ConsoleModifiers"/></param>
-        /// <returns>IControlKeyPress</returns>
+        /// <returns><see cref="IControlKeyPress"/></returns>
         IControlKeyPress AddKeyValid(ConsoleKey key,ConsoleModifiers? modifiers = null);
 
         /// <summary>
@@ -31,11 +31,11 @@ namespace PPlus.Controls
         /// <br>When return null value the control use defaut string</br>
         /// </summary>
         /// <param name="value">Transform function. When return null value the control use defaut string</param>
-        /// <returns>IControlKeyPress</returns>
+        /// <returns><see cref="IControlKeyPress"/></returns>
         IControlKeyPress TextKeyValid(Func<ConsoleKeyInfo, string?> value);
 
         /// <summary>
-        /// <para>Overwrite <see cref="SpinnersType"/>. ValueResult value is SpinnersType.Ascii</para>
+        /// Overwrite <see cref="SpinnersType"/>. ValueResult value is SpinnersType.Ascii
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>

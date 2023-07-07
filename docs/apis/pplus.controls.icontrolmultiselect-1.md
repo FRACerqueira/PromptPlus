@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlMultiSelect 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlMultiSelect 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -48,7 +48,7 @@ Action to execute
 #### Returns
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
-[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
 
@@ -71,8 +71,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 ### **OverflowAnswer(Overflow)**
 
 Overwrite Overflow strategy answer
-
-<br>
+ <br>Default value is Overflow.Ellipsis
 
 ```csharp
 IControlMultiSelect<T> OverflowAnswer(Overflow value)
@@ -197,8 +196,7 @@ Number of Max.items
 ### **FilterType(FilterMode)**
 
 Filter strategy for filter items in colletion
-
-<br>
+ <br>Default value is FilterMode.Contains
 
 ```csharp
 IControlMultiSelect<T> FilterType(FilterMode value)
@@ -284,7 +282,7 @@ function to apply change
 #### Returns
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
-[IControlInput](./pplus.controls.icontrolinput.md)
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **AddItem(T, Boolean, Boolean)**
 
@@ -390,9 +388,7 @@ true item selected, otherwise no
 
 ### **AddItemTo(AdderScope, T)**
 
-Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)
-
-<br><br>
+Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled [AdderScope](./pplus.controls.adderscope.md)<br>Tip: Use [IControlMultiSelect&lt;T&gt;.EqualItems(Func&lt;T, T, Boolean&gt;)](./pplus.controls.icontrolmultiselect-1.md#equalitemsfunct-t-boolean) for custom comparer
 
 ```csharp
 IControlMultiSelect<T> AddItemTo(AdderScope scope, T value)
@@ -413,9 +409,7 @@ item
 
 ### **AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
 
-Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)
-
-<br><br>
+Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled [AdderScope](./pplus.controls.adderscope.md)<br>Tip: Use [IControlMultiSelect&lt;T&gt;.EqualItems(Func&lt;T, T, Boolean&gt;)](./pplus.controls.icontrolmultiselect-1.md#equalitemsfunct-t-boolean) for custom comparer
 
 ```csharp
 IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)

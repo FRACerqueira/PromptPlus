@@ -66,7 +66,7 @@ namespace PPlus.Controls
         IControlTreeViewMultiSelect<T> PageSize(int value);
 
         /// <summary>
-        /// <para>Filter strategy for filter items in colletion</para>
+        /// Filter strategy for filter items in colletion
         /// <br>Default value is FilterMode.Contains</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>

@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlWait 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlWait 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -134,8 +134,7 @@ Text Finish answer
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
-
-<br>
+ <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
 IControlWait Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)

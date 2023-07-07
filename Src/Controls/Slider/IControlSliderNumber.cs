@@ -12,18 +12,18 @@ namespace PPlus.Controls
     public interface IControlSliderNumber : IPromptControls<double>
     {
         /// <summary>
-        /// <para><see cref="CultureInfo"/> to validate input value format.</para>
+        /// <see cref="CultureInfo"/> to validate input value format.
         /// </summary>
         /// <param name="value">CultureInfo to use on validate</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
         IControlSliderNumber Culture(CultureInfo value);
 
         /// <summary>
-        /// <para><see cref="CultureInfo"/> to validate input when the type is not generic.</para>
+        /// <see cref="CultureInfo"/> to validate input when the type is not generic.
         /// <br>Default value is global Promptplus Cultureinfo</br>  
         /// </summary>
         /// <param name="value">Name of CultureInfo to use on validate</param>
-        /// <returns>IControlSliderNumber</returns>
+        /// <returns><see cref="IControlSliderNumber"/></returns>
         IControlSliderNumber Culture(string value);
 
         /// <summary>

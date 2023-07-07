@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus StringStyle 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:StringStyle 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -104,7 +104,7 @@ The StringStyle to compare.
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if the two StringStyle are equal, otherwise `false`.
+`true`true if the two StringStyle are equal, otherwise `false`false.
 
 ### **Equals(Object)**
 

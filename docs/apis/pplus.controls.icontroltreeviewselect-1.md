@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlTreeViewSelect 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlTreeViewSelect 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -319,6 +319,7 @@ The action
 #### Returns
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **AfterCollapsed(Action&lt;T&gt;)**
 
@@ -336,6 +337,7 @@ The action
 #### Returns
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **BeforeExpanded(Action&lt;T&gt;)**
 
@@ -353,6 +355,7 @@ The action
 #### Returns
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **BeforeCollapsed(Action&lt;T&gt;)**
 
@@ -370,6 +373,7 @@ The action
 #### Returns
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 
 - - -

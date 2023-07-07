@@ -13,7 +13,7 @@ namespace PPlus.Controls
     public interface IControlInput : IPromptControls<string>
     {
         /// <summary>
-        /// <para>Default value when finished value is empty.</para>
+        /// Default value when finished value is empty.
         /// </summary>
         /// <param name="value">Finished value default</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -21,7 +21,7 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// <para>Default value when stated.</para>
+        /// Default value when stated.
         /// </summary>
         /// <param name="value">Value default</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -43,7 +43,7 @@ namespace PPlus.Controls
         IControlInput InputToCase(CaseOptions value);
 
         /// <summary>
-        /// <para>Execute a function to accept char input.</para>
+        /// Execute a function to accept char input.
         /// <br>If result true accept char input; otherwise, ignore char input.</br>
         /// </summary>
         /// <param name="value">function to accept</param>
@@ -146,7 +146,7 @@ namespace PPlus.Controls
         IControlInput HistoryPageSize(int value);
 
         /// <summary>
-        /// <para>Filter strategy for filter items in History colletion</para>
+        /// Filter strategy for filter items in History colletion
         /// <br>Default value is FilterMode.StartsWith</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>

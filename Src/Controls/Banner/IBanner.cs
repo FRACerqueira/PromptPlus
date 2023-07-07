@@ -16,21 +16,21 @@ namespace PPlus.Controls
         /// Load external font from file
         /// </summary>
         /// <param name="value">fullpath of file</param>
-        /// <returns>IBannerControl</returns>
+        /// <returns><see cref="IBannerControl"/></returns>
         IBannerControl LoadFont(string value);
 
         /// <summary>
         /// Load external font from <see cref="Stream"/>
         /// </summary>
         /// <param name="value">stream instance</param>
-        /// <returns>IBannerControl</returns>
+        /// <returns><see cref="IBannerControl"/></returns>
         IBannerControl LoadFont(Stream value);
 
         /// <summary>
         /// Set <see cref="CharacterWidth"/> for the banner
         /// </summary>
         /// <param name="value">CharacterWidth <see cref="CharacterWidth"/> </param>
-        /// <returns>IBannerControl</returns>
+        /// <returns><see cref="IBannerControl"/></returns>
         IBannerControl FIGletWidth(CharacterWidth value);
 
         /// <summary>

@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlList 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlList 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -85,8 +85,7 @@ Transform option
 ### **AcceptInput(Func&lt;Char, Boolean&gt;)**
 
 Execute a function to accept input.
-
-<br>
+ <br>If result true accept input; otherwise, ignore input.
 
 ```csharp
 IControlList AcceptInput(Func<char, bool> value)
@@ -123,7 +122,7 @@ Lenght
 ### **AddValidators(Func`2[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>
+ <br>Tip: see [PromptValidators](./pplus.controls.promptvalidators.md) to validators embeding
 
 ```csharp
 IControlList AddValidators(Func`2[] validators)

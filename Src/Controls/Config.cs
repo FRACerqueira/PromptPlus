@@ -83,7 +83,7 @@ namespace PPlus.Controls
         private int _pageSize = 10;
 
         /// <summary>
-        /// <para>Get/Set Page Size from colletions.</para>
+        /// Get/Set Page Size from colletions.
         /// <br>Default value : 10. If value < 1 internal sette to 1.</br>
         /// </summary>
         public int PageSize 
@@ -103,7 +103,7 @@ namespace PPlus.Controls
         private int _completionMinimumPrefixLength = 3;
 
         /// <summary>
-        /// <para>Get/Set Minimum Prefix Length.</para>
+        /// Get/Set Minimum Prefix Length.
         /// <br>Default value : 3.If value < 0 internal sette to 0.</br>
         /// </summary>
         public int CompletionMinimumPrefixLength 
@@ -122,7 +122,7 @@ namespace PPlus.Controls
         private int _completionWaitToStart = 1000;
 
         /// <summary>
-        /// <para>Get/Set Interval in mileseconds to wait start Completion funcion.</para>
+        /// Get/Set Interval in mileseconds to wait start Completion funcion.
         /// <br>Default value : 1000. If value less than 10 internal sette to 10.</br>
         /// </summary>
         public int CompletionWaitToStart
@@ -141,7 +141,7 @@ namespace PPlus.Controls
         private int _completionMaxCount = 1000;
 
         /// <summary>
-        /// <para>Get/Set Completion Max Items to return.</para>
+        /// Get/Set Completion Max Items to return.
         /// <br>Default value : 1000. If value  less than 1 internal sette to 1.</br>
         /// </summary>  
         public int CompletionMaxCount 
@@ -158,32 +158,32 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// <para>Get/Set History Timeout.</para>
+        /// Get/Set History Timeout.
         /// <br>Default value : 365 days</br>
         /// </summary>
         public TimeSpan HistoryTimeout { get; set; } = FileHistory.DefaultHistoryTimeout;
 
         /// <summary>
-        /// <para>Get/Set enabled show Tooltip for all controls.</para>
+        /// Get/Set enabled show Tooltip for all controls.
         /// <br>Default value : true</br>
         /// </summary>
         public bool ShowTooltip { get; set; } = true;
 
         /// <summary>
-        /// <para>Get/Set enabled abortKey(ESC) for all controls.</para>
+        /// Get/Set enabled abortKey(ESC) for all controls.
         /// <br>Default value : true</br>
         /// </summary>
         public bool EnabledAbortKey { get; set; } = true;
 
 
         /// <summary>
-        /// <para>Get/Set hide controls after finish for all controls.</para>
+        /// Get/Set hide controls after finish for all controls.
         /// <br>Default value : false</br>
         /// </summary>
         public bool HideAfterFinish { get; set; } = false;
 
         /// <summary>
-        /// <para>Get/Set hide controls On Abort for all controls.</para>
+        /// Get/Set hide controls On Abort for all controls.
         /// <br>Default value : false</br>
         /// </summary>
         public bool HideOnAbort { get; set; } = false;
@@ -191,7 +191,7 @@ namespace PPlus.Controls
         private char? _secretChar = '#';
 
         /// <summary>
-        /// <para>Get/Set value char for secret input</para>
+        /// Get/Set value char for secret input
         /// <br>Default value : '#'.  Fall-back when null : '#'</br>
         /// </summary>
         public char? SecretChar
@@ -213,7 +213,7 @@ namespace PPlus.Controls
         private char? _yesChar;
 
         /// <summary>
-        /// <para>Get/Set value for YES answer</para>
+        /// Get/Set value for YES answer
         /// <br>Default value : YesChar in built-in resources.  Fall-back when null : Y</br>
         /// </summary>
         public char? YesChar 
@@ -235,7 +235,7 @@ namespace PPlus.Controls
         private char? _noChar;
 
         /// <summary>
-        /// <para>Get/Set value for NO answer</para>
+        /// Get/Set value for NO answer
         /// <br>Default value : NoChar in built-in resources.  Fall-back when null : N</br>
         /// </summary>
         public char? NoChar
@@ -256,55 +256,55 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// <para>Get/Set <see cref="HotKey"/> to show/hide Tooltip.</para>
+        /// Get/Set <see cref="HotKey"/> to show/hide Tooltip.
         /// <br>Default value : '[F1]'</br>
         /// </summary>
         public HotKey TooltipKeyPress => HotKey.TooltipDefault;
 
         /// <summary>
-        /// <para>Get/Set <see cref="HotKey"/> to toggle password view.</para>
+        /// Get/Set <see cref="HotKey"/> to toggle password view.
         /// <br>Default value : '[F2]'</br>
         /// </summary>
         public HotKey PasswordViewPress { get; set; } = HotKey.PasswordViewDefault;
 
         /// <summary>
-        /// <para>Get/Set <see cref="HotKey"/> to Select all item.</para>
+        /// Get/Set <see cref="HotKey"/> to Select all item.
         /// <br>Default value : '[F2]'</br>
         /// </summary>
         public HotKey SelectAllPress { get; set; } = HotKey.SelectAllDefault;
 
         /// <summary>
-        /// <para>Get/Set <see cref="HotKey"/> to Invert Selected item.</para>
+        /// Get/Set <see cref="HotKey"/> to Invert Selected item.
         /// <br>Default value : '[F3]'</br>
         /// </summary>
         public HotKey InvertSelectedPress { get; set; } = HotKey.InvertSelectedDefault;
 
         /// <summary>
-        /// <para>Get/Set <see cref="HotKey"/> to Edit item.</para>
+        /// Get/Set <see cref="HotKey"/> to Edit item.
         /// <br>Default value : '[F2]'</br>
         /// </summary>
         public HotKey EditItemPress { get; set; } = HotKey.EditItemDefault;
 
         /// <summary>
-        /// <para>Get/Set <see cref="HotKey"/> to Remove item.</para>
+        /// Get/Set <see cref="HotKey"/> to Remove item.
         /// <br>Default value : '[F3]'</br>
         /// </summary>
         public HotKey RemoveItemPress { get; set; } = HotKey.RemoveItemDefault;
 
         /// <summary>
-        /// <para>Get/Set <see cref="HotKey"/> toggle current path to full path.</para>
+        /// Get/Set <see cref="HotKey"/> toggle current path to full path.
         /// <br>Default value : '[F2]'</br>
         /// </summary>
         public HotKey FullPathPress { get; set; } = HotKey.TooltipFullPathDefault;
 
         /// <summary>
-        /// <para>Get/Set <see cref="HotKey"/> Toggle Expand/Collapse node.</para>
+        /// Get/Set <see cref="HotKey"/> Toggle Expand/Collapse node.
         /// <br>Default value : '[F3]'</br>
         /// </summary>
         public HotKey ToggleExpandPress { get; set; } = HotKey.ToggleExpandNodeDefault;
 
         /// <summary>
-        /// <para>Get/Set <see cref="HotKey"/> Toggle Expand /Collapse All node.</para>
+        /// Get/Set <see cref="HotKey"/> Toggle Expand /Collapse All node.
         /// <br>Default value : '[F4]'</br>
         /// </summary>
         public HotKey ToggleExpandAllPress { get; set; } = HotKey.ToggleExpandAllNodeDefault;

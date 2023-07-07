@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlAutoComplete 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlAutoComplete 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -41,8 +41,7 @@ Number of Max.items
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
-
-<br>
+ <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
 IControlAutoComplete Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)
@@ -70,8 +69,7 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 ### **MinimumPrefixLength(Int32)**
 
 Number minimum of chars to accept autocomplete
-
-<br>
+ <br>Default value : 3. If value less than 0 internal sette to 0.
 
 ```csharp
 IControlAutoComplete MinimumPrefixLength(int value)
@@ -90,8 +88,7 @@ Number of chars
 ### **CompletionWaitToStart(Int32)**
 
 Number of mileseconds to wait before to start function autocomplete
-
-<br>
+ <br>Default value : 1000. If value less than 10 internal sette to 10.
 
 ```csharp
 IControlAutoComplete CompletionWaitToStart(int value)
@@ -128,8 +125,7 @@ Number of max.items
 ### **CompletionAsyncService(Func&lt;String, Int32, CancellationToken, Task&lt;String[]&gt;&gt;)**
 
 The function to execute autocomplete. This function is requeried to run!
-
-<br><br><br>
+ <br>First param is a current text input<br>Second param is current cursor postion at text input<br>third parameter is the control cancellation token
 
 ```csharp
 IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<String[]>> value)
@@ -223,8 +219,7 @@ Transform option
 ### **AcceptInput(Func&lt;Char, Boolean&gt;)**
 
 Execute a function to accept char input.
-
-<br>
+ <br>If result true accept char input; otherwise, ignore char input.
 
 ```csharp
 IControlAutoComplete AcceptInput(Func<char, bool> value)
@@ -261,7 +256,7 @@ Lenght
 ### **AddValidators(Func`2[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>
+ <br>Tip: see [PromptValidators](./pplus.controls.promptvalidators.md) to validators embeding
 
 ```csharp
 IControlAutoComplete AddValidators(Func`2[] validators)

@@ -58,7 +58,7 @@ namespace PPlus.Controls
         IControlWait Finish(string text);
 
         /// <summary>
-        /// <para>Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii</para>
+        /// Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>

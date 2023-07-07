@@ -18,7 +18,7 @@ namespace PPlus.Controls
         /// <typeparam name="T1">Type external colletion</typeparam>
         /// <param name="values">Colletion for interaction</param>
         /// <param name="action">Action to execute</param>
-        /// <returns><see cref="IControlSelect{T}"/></returns>
+        /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> Interaction<T1>(IEnumerable<T1> values, Action<IControlMultiSelect<T>, T1> action);
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace PPlus.Controls
         IControlMultiSelect<T> Config(Action<IPromptConfig> context);
 
         /// <summary>
-        /// <para>Overwrite Overflow strategy answer</para>
+        /// Overwrite Overflow strategy answer
         /// <br>Default value is Overflow.Ellipsis</br>
         /// </summary>
         /// <param name="value">Overflow strategy</param>
@@ -43,7 +43,7 @@ namespace PPlus.Controls
         IControlMultiSelect<T> AppendGroupOnDescription();
 
         /// <summary>
-        /// <para>Add default value seleted to initial list.</para>
+        /// Add default value seleted to initial list.
         /// </summary>
         /// <param name="values">Value default</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -80,7 +80,7 @@ namespace PPlus.Controls
         IControlMultiSelect<T> PageSize(int value);
 
         /// <summary>
-        /// <para>Filter strategy for filter items in colletion</para>
+        /// Filter strategy for filter items in colletion
         /// <br>Default value is FilterMode.Contains</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>
@@ -112,7 +112,7 @@ namespace PPlus.Controls
         /// Dynamically change the description using a user role
         /// </summary>
         /// <param name="value">function to apply change</param>
-        /// <returns><see cref="IControlInput"/></returns>
+        /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> ChangeDescription(Func<T, string> value);
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace PPlus.Controls
         IControlMultiSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable = false, bool selected = false);
 
         /// <summary>
-        /// <para>Add item to scope Disable/Remove <seealso cref="AdderScope"/></para>
+        /// Add item to scope Disable/Remove <seealso cref="AdderScope"/>
         /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
         /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
         /// </summary>
@@ -164,7 +164,7 @@ namespace PPlus.Controls
         IControlMultiSelect<T> AddItemTo(AdderScope scope, T value);
 
         /// <summary>
-        /// <para>Add Items colletion to scope Disable/Remove <seealso cref="AdderScope"/></para>
+        /// Add Items colletion to scope Disable/Remove <seealso cref="AdderScope"/>
         /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
         /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
         /// </summary>

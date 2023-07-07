@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus BaseOptions 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:BaseOptions 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -224,20 +224,6 @@ public IPromptConfig Symbols(SymbolType schema, string value, string unicode)
 #### Returns
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
-
-### **Symbol(SymbolType)**
-
-```csharp
-internal string Symbol(SymbolType schema)
-```
-
-#### Parameters
-
-`schema` [SymbolType](./pplus.controls.symboltype.md)<br>
-
-#### Returns
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 
 - - -

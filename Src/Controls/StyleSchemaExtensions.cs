@@ -37,7 +37,7 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Prompt.</para>
+        /// Get <see cref="Style"/> text Prompt.
         /// <br>ValueResult Foreground : 'ConsoleColor.White'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>
@@ -47,7 +47,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Slider-On(Foreground)/Slider-Off(Background).</para>
+        /// Get <see cref="Style"/> text Slider-On(Foreground)/Slider-Off(Background).
         /// <br>ValueResult Foreground : 'ConsoleColor.Cyan'</br>
         /// <br>ValueResult Background : 'ConsoleColor.DarkGray'</br>
         /// </summary>
@@ -57,7 +57,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Answer.</para>
+        /// Get <see cref="Style"/> text Answer.
         /// <br>ValueResult Foreground : 'ConsoleColor.Cyan'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>
@@ -67,7 +67,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Description.</para>
+        /// Get <see cref="Style"/> text Description.
         /// <br>ValueResult Foreground : 'ConsoleColor.DarkYellow'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>
@@ -78,7 +78,7 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Sugestion.</para>
+        /// Get <see cref="Style"/> text Sugestion.
         /// <br>ValueResult Foreground : 'ConsoleColor.Yellow'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>
@@ -89,7 +89,7 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Selected.</para>
+        /// Get <see cref="Style"/> text Selected.
         /// <br>ValueResult Foreground : 'ConsoleColor.Green'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>
@@ -100,7 +100,7 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text UnSelected.</para>
+        /// Get <see cref="Style"/> text UnSelected.
         /// <br>ValueResult Foreground : 'ConsoleColor.Gray'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>
@@ -110,7 +110,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Disabled.</para>
+        /// Get <see cref="Style"/> text Disabled.
         /// <br>ValueResult Foreground : 'ConsoleColor.DarkGray'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>
@@ -120,7 +120,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Error.</para>
+        /// Get <see cref="Style"/> text Error.
         /// <br>ValueResult Foreground : 'ConsoleColor.Red'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>
@@ -130,7 +130,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Pagination.</para>
+        /// Get <see cref="Style"/> text Pagination.
         /// <br>ValueResult Foreground : 'ConsoleColor.DarkGray'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>
@@ -140,7 +140,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Tagged info.</para>
+        /// Get <see cref="Style"/> text Tagged info.
         /// <br>ValueResult Foreground : 'ConsoleColor.DarkYellow'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>
@@ -150,7 +150,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// <para>Get <see cref="Style"/> text Tooltips.</para>
+        /// Get <see cref="Style"/> text Tooltips.
         /// <br>ValueResult Foreground : 'ConsoleColor.DarkGray'</br>
         /// <br>ValueResult Background : same Console Background when setted</br>
         /// </summary>

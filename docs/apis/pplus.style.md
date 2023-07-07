@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus Style 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:Style 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -140,28 +140,6 @@ Style Combine(Style other)
 
 [Style](./pplus.style.md)<br>
 
-### **ApplyOverflowStrategy(Int32, Int32, Overflow, String, Boolean)**
-
-```csharp
-string ApplyOverflowStrategy(int offset, int bufferWidth, Overflow overflow, string value, bool unicodesupoorted)
-```
-
-#### Parameters
-
-`offset` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`bufferWidth` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`overflow` [Overflow](./pplus.overflow.md)<br>
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-`unicodesupoorted` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-#### Returns
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
 ### **GetHashCode()**
 
 ```csharp
@@ -188,7 +166,7 @@ The Style instance to compare.
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true` if the two Style are not equal, otherwise `false`.
+`true`true if the two Style are not equal, otherwise `false`false.
 
 ### **Equals(Object)**
 

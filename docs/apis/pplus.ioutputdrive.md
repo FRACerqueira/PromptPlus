@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IOutputDrive 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IOutputDrive 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -125,8 +125,7 @@ A stream that is the new standard error.
 ### **Clear()**
 
 Clears the console buffer and corresponding console window of display information.
-
-<br>
+ <br>Move cursor fom top console.
 
 ```csharp
 void Clear()

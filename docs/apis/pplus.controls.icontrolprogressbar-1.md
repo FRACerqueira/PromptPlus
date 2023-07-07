@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlProgressBar 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlProgressBar 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -27,7 +27,7 @@ Implements IPromptControls&lt;ResultProgessBar&lt;T&gt;&gt;
 ### **HideElements(HideProgressBar)**
 
 Hide elements progress bar Widgets. Default is Show all elements
- <br>
+ <br>For more one element use | separate (Enum Flag)
 
 ```csharp
 IControlProgressBar<T> HideElements(HideProgressBar value)
@@ -82,8 +82,7 @@ CultureInfo to use
 ### **CharBar(Char)**
 
 Set [Char](https://docs.microsoft.com/en-us/dotnet/api/system.char) to show progress.Default value '#'
-
-<br>
+ <br>Valid on ProgressBarType.Char, otherwise is ignored
 
 ```csharp
 IControlProgressBar<T> CharBar(char value)
@@ -102,8 +101,7 @@ Char to show
 ### **Culture(String)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to show value format.
-
-<br>
+ <br>Default value is global Promptplus Cultureinfo
 
 ```csharp
 IControlProgressBar<T> Culture(string value)
@@ -140,8 +138,7 @@ text Finish answer
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
-
-<br>
+ <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
 IControlProgressBar<T> Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)

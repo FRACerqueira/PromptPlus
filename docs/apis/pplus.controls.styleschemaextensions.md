@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus StyleSchemaExtensions 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:StyleSchemaExtensions 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -73,8 +73,7 @@ Background [Color](./pplus.color.md)
 ### **Prompt(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Prompt.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.White'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style Prompt(StyleSchema schema)
@@ -91,8 +90,7 @@ public static Style Prompt(StyleSchema schema)
 ### **Slider(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Slider-On(Foreground)/Slider-Off(Background).
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.Cyan'<br>ValueResult Background : 'ConsoleColor.DarkGray'
 
 ```csharp
 public static Style Slider(StyleSchema schema)
@@ -109,8 +107,7 @@ public static Style Slider(StyleSchema schema)
 ### **Answer(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Answer.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.Cyan'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style Answer(StyleSchema schema)
@@ -127,8 +124,7 @@ public static Style Answer(StyleSchema schema)
 ### **Description(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Description.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.DarkYellow'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style Description(StyleSchema schema)
@@ -145,8 +141,7 @@ public static Style Description(StyleSchema schema)
 ### **Sugestion(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Sugestion.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.Yellow'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style Sugestion(StyleSchema schema)
@@ -163,8 +158,7 @@ public static Style Sugestion(StyleSchema schema)
 ### **Selected(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Selected.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.Green'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style Selected(StyleSchema schema)
@@ -181,8 +175,7 @@ public static Style Selected(StyleSchema schema)
 ### **UnSelected(StyleSchema)**
 
 Get [Style](./pplus.style.md) text UnSelected.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.Gray'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style UnSelected(StyleSchema schema)
@@ -199,8 +192,7 @@ public static Style UnSelected(StyleSchema schema)
 ### **Disabled(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Disabled.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.DarkGray'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style Disabled(StyleSchema schema)
@@ -217,8 +209,7 @@ public static Style Disabled(StyleSchema schema)
 ### **Error(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Error.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.Red'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style Error(StyleSchema schema)
@@ -235,8 +226,7 @@ public static Style Error(StyleSchema schema)
 ### **Pagination(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Pagination.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.DarkGray'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style Pagination(StyleSchema schema)
@@ -253,8 +243,7 @@ public static Style Pagination(StyleSchema schema)
 ### **TaggedInfo(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Tagged info.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.DarkYellow'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style TaggedInfo(StyleSchema schema)
@@ -271,8 +260,7 @@ public static Style TaggedInfo(StyleSchema schema)
 ### **Tooltips(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Tooltips.
-
-<br><br>
+ <br>ValueResult Foreground : 'ConsoleColor.DarkGray'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
 public static Style Tooltips(StyleSchema schema)

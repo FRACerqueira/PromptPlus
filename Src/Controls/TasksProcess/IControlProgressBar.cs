@@ -29,14 +29,14 @@ namespace PPlus.Controls
         IControlProgressBar<T> Config(Action<IPromptConfig> context);
 
         /// <summary>
-        /// <para><see cref="CultureInfo"/> to on show value format.</para>
+        /// <see cref="CultureInfo"/> to on show value format.
         /// </summary>
         /// <param name="value">CultureInfo to use</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
         IControlProgressBar<T> Culture(CultureInfo value);
 
         /// <summary>
-        /// <para>Set <see cref="char"/> to show progress.Default value '#'</para>
+        /// Set <see cref="char"/> to show progress.Default value '#'
         /// <br>Valid on ProgressBarType.Char, otherwise is ignored </br>
         /// </summary>
         /// <param name="value">Char to show</param>
@@ -44,7 +44,7 @@ namespace PPlus.Controls
         IControlProgressBar<T> CharBar(char value);
 
         /// <summary>
-        /// <para><see cref="CultureInfo"/> to show value format.</para>
+        /// <see cref="CultureInfo"/> to show value format.
         /// <br>Default value is global Promptplus Cultureinfo</br>  
         /// </summary>
         /// <param name="value">Name of CultureInfo to use</param>
@@ -59,7 +59,7 @@ namespace PPlus.Controls
         IControlProgressBar<T> Finish(string text);
 
         /// <summary>
-        /// <para>Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii</para>
+        /// Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>

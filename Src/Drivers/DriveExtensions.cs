@@ -118,7 +118,7 @@ namespace PPlus
 
 
         /// <summary>
-        /// <para>Overwrite current console with new console profile.</para>
+        /// Overwrite current console with new console profile.
         /// <br>After overwrite the new console the screeen is clear</br>
         /// <br>and all Style-Schema are updated with backgoundcolor console</br>
         /// </summary>
@@ -131,7 +131,7 @@ namespace PPlus
 
 
         /// <summary>
-        /// <para>Overwrite current console with new console profile.</para>
+        /// Overwrite current console with new console profile.
         /// <br>After overwrite the new console the screeen is clear</br>
         /// <br>and all Style-Schema are updated with backgoundcolor console</br>
         /// </summary>
@@ -481,7 +481,7 @@ namespace PPlus
 
 
         /// <summary>
-        /// <para>Clears the console buffer and corresponding console window of display information.</para>
+        /// Clears the console buffer and corresponding console window of display information.
         /// <br>Move cursor fom top console.</br>
         /// </summary>
         public static void Clear()

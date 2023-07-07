@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IBannerControl 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IBannerControl 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -36,7 +36,7 @@ fullpath of file
 #### Returns
 
 [IBannerControl](./pplus.controls.ibannercontrol.md)<br>
-IBannerControl
+[IBannerControl](./pplus.controls.ibannercontrol.md)
 
 ### **LoadFont(Stream)**
 
@@ -54,7 +54,7 @@ stream instance
 #### Returns
 
 [IBannerControl](./pplus.controls.ibannercontrol.md)<br>
-IBannerControl
+[IBannerControl](./pplus.controls.ibannercontrol.md)
 
 ### **FIGletWidth(CharacterWidth)**
 
@@ -72,7 +72,7 @@ CharacterWidth [CharacterWidth](./pplus.controls.characterwidth.md)
 #### Returns
 
 [IBannerControl](./pplus.controls.ibannercontrol.md)<br>
-IBannerControl
+[IBannerControl](./pplus.controls.ibannercontrol.md)
 
 ### **Run(Nullable&lt;Color&gt;, BannerDashOptions)**
 

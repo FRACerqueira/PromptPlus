@@ -32,11 +32,11 @@ namespace PPlus.Controls
         IControlSelectBrowser DisabledRecursiveExpand();
 
         /// <summary>
-        /// <para>Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii</para>
+        /// Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>
-        /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
+        /// <param name="spinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
@@ -114,7 +114,7 @@ namespace PPlus.Controls
         IControlSelectBrowser PageSize(int value);
 
         /// <summary>
-        /// <para>Filter strategy for filter items in colletion</para>
+        /// Filter strategy for filter items in colletion
         /// <br>Default value is FilterMode.Contains</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>

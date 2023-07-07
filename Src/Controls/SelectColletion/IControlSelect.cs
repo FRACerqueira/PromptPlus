@@ -29,7 +29,7 @@ namespace PPlus.Controls
         IControlSelect<T> Config(Action<IPromptConfig> context);
 
         /// <summary>
-        /// <para>Default value seleted.</para>
+        /// Default value seleted.
         /// </summary>
         /// <param name="value">Value default</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
@@ -51,7 +51,7 @@ namespace PPlus.Controls
         IControlSelect<T> PageSize(int value);
 
         /// <summary>
-        /// <para>Filter strategy for filter items in colletion</para>
+        /// Filter strategy for filter items in colletion
         /// <br>Default value is FilterMode.Contains</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>
@@ -62,14 +62,14 @@ namespace PPlus.Controls
         /// Sort list by expression
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
-        /// <returns><see cref="IControlMultiSelect{T}"/></returns>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
         IControlSelect<T> OrderBy(Expression<Func<T, object>> value);
 
         /// <summary>
         /// Sort Descending list by expression
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
-        /// <returns><see cref="IControlMultiSelect{T}"/></returns>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
         IControlSelect<T> OrderByDescending(Expression<Func<T, object>> value);
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace PPlus.Controls
         IControlSelect<T> AddItems(IEnumerable<T> values, bool disable = false);
 
         /// <summary>
-        /// <para>Add item to scope Disable/Remove <seealso cref="AdderScope"/></para>
+        /// Add item to scope Disable/Remove <seealso cref="AdderScope"/>
         /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
         /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
         /// </summary>
@@ -113,7 +113,7 @@ namespace PPlus.Controls
         IControlSelect<T> AddItemTo(AdderScope scope, T value);
 
         /// <summary>
-        /// <para>Add Items colletion to scope Disable/Remove <seealso cref="AdderScope"/></para>
+        /// Add Items colletion to scope Disable/Remove <seealso cref="AdderScope"/>
         /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
         /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
         /// </summary>

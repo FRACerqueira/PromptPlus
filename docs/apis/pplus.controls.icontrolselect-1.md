@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlSelect 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlSelect 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -128,8 +128,7 @@ Number of Max.items
 ### **FilterType(FilterMode)**
 
 Filter strategy for filter items in colletion
-
-<br>
+ <br>Default value is FilterMode.Contains
 
 ```csharp
 IControlSelect<T> FilterType(FilterMode value)
@@ -161,7 +160,7 @@ expresion to sort the colletion
 #### Returns
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)<br>
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
 ### **OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
@@ -179,7 +178,7 @@ expresion to sort the colletion
 #### Returns
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)<br>
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
 ### **TextSelector(Func&lt;T, String&gt;)**
 
@@ -261,9 +260,7 @@ true item disabled, otherwise no
 
 ### **AddItemTo(AdderScope, T)**
 
-Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)
-
-<br><br>
+Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled [AdderScope](./pplus.controls.adderscope.md)<br>Tip: Use [IControlSelect&lt;T&gt;.EqualItems(Func&lt;T, T, Boolean&gt;)](./pplus.controls.icontrolselect-1.md#equalitemsfunct-t-boolean) for custom comparer
 
 ```csharp
 IControlSelect<T> AddItemTo(AdderScope scope, T value)
@@ -284,9 +281,7 @@ item
 
 ### **AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
 
-Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)
-
-<br><br>
+Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled [AdderScope](./pplus.controls.adderscope.md)<br>Tip: Use [IControlSelect&lt;T&gt;.EqualItems(Func&lt;T, T, Boolean&gt;)](./pplus.controls.icontrolselect-1.md#equalitemsfunct-t-boolean) for custom comparer
 
 ```csharp
 IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)

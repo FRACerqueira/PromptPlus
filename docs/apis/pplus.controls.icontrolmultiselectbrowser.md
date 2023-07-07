@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus IControlMultiSelectBrowser 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlMultiSelectBrowser 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -93,7 +93,7 @@ IControlMultiSelectBrowser NoSpinner()
 ### **DisabledRecursiveExpand()**
 
 Disabled ExpandAll Feature. Only item in Top-level are expanded
- <br>
+ <br>Overwrite Root option ExpandAll to false
 
 ```csharp
 IControlMultiSelectBrowser DisabledRecursiveExpand()
@@ -102,13 +102,12 @@ IControlMultiSelectBrowser DisabledRecursiveExpand()
 #### Returns
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
-
-<br>
+ <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
 IControlMultiSelectBrowser Spinner(SpinnersType spinnersType, Nullable<Style> spinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)
@@ -319,8 +318,7 @@ Number of Max.items
 ### **FilterType(FilterMode)**
 
 Filter strategy for filter items in colletion
-
-<br>
+ <br>Default value is FilterMode.Contains
 
 ```csharp
 IControlMultiSelectBrowser FilterType(FilterMode value)

@@ -14,31 +14,31 @@ namespace PPlus.Controls
     public interface IControlMaskEdit : IPromptControls<ResultMasked>
     {
         /// <summary>
-        /// <para>Overwrite <see cref="Style"/> to region tip type input.</para>
+        /// Overwrite <see cref="Style"/> to region tip type input.
         /// <br>Default Foreground : 'ConsoleColor.Yellow'</br>
         /// <br>Default Background : same Console Background when setted</br>
         /// </summary>
         /// <param name="value">Style</param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit TypeTipStyle(Style value);
 
 
         /// <summary>
-        /// <para>Overwrite <see cref="Style"/> to region neggative input.</para>
+        /// Overwrite <see cref="Style"/> to region neggative input.
         /// <br>Default Foreground : 'StyleControls.Answer'</br>
         /// <br>Default Background : Same Console Background when setted</br>
         /// </summary>
         /// <param name="value">Style</param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit NegativeStyle(Style value);
 
         /// <summary>
-        /// <para>Overwrite <see cref="Style"/> to region positive input.</para>
+        /// Overwrite <see cref="Style"/> to region positive input.
         /// <br>Default Foreground : 'StyleControls.Answer'</br>
         /// <br>Default Background : Same Console Background when setted</br>
         /// </summary>
         /// <param name="value">Style</param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit PositiveStyle(Style value);
 
         /// <summary>
@@ -57,26 +57,26 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">text of masked.</param>
         /// <param name="promptmask">Prompt mask overwriter. Default value is '■'/'_'</param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit Mask(string value = null, char? promptmask = null);
 
         /// <summary>
-        /// <para>Defines type of mask control.</para>
+        /// Defines type of mask control.
         /// </summary>
         /// <param name="maskedType">Type masked</param>
         /// <param name="promptmask">Prompt mask overwriter. Default value is '■'/'_'</param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit Mask(MaskedType maskedType,char? promptmask = null);
 
         /// <summary>
         /// Accept empty value
         /// <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.</br>
         /// </summary>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit AcceptEmptyValue();
 
         /// <summary>
-        /// <para>Default value (with mask!) when finished value is empty.</para>
+        /// Default value (with mask!) when finished value is empty.
         /// </summary>
         /// <param name="value">Finished value default</param>
         /// <param name="zeroIsEmpty">Valid only for type MaskedType.Number or MaskedType.Currency, otherwise this set will be ignored.</param>
@@ -89,23 +89,23 @@ namespace PPlus.Controls
         /// <br>When used this feature the AcceptEmptyValue feature will be ignored.</br>
         /// <br>When MaskedType.Number or MaskedType.Currency this feature is always on.</br>
         /// </summary>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit FillZeros();
 
         /// <summary>
-        /// <para><see cref="CultureInfo"/> to validate input when the type is not generic.</para>
+        /// <see cref="CultureInfo"/> to validate input when the type is not generic.
         /// <br>Default value is global Promptplus Cultureinfo</br>  
         /// </summary>
         /// <param name="value">CultureInfo to use on validate</param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit Culture(CultureInfo value);
 
         /// <summary>
-        /// <para><see cref="CultureInfo"/> to validate input when the type is not generic.</para>
+        /// <see cref="CultureInfo"/> to validate input when the type is not generic.
         /// <br>Default value is global Promptplus Cultureinfo</br>  
         /// </summary>
         /// <param name="value">Name of CultureInfo to use on validate</param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit Culture(string value);
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace PPlus.Controls
         /// <br>Valid only for type MaskedType.DateOnly or DateTime, otherwise this set will be ignored.</br>
         /// </summary>
         /// <param name="value"><see cref="Controls.FormatYear"/></param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit FormatYear(FormatYear value);
 
         /// <summary>
@@ -121,29 +121,29 @@ namespace PPlus.Controls
         /// <br>Valid only for type MaskedType.TimeOnly or DateTime, otherwise this set will be ignored.</br>
         /// </summary>
         /// <param name="value"><see cref="Controls.FormatTime"/></param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit FormatTime(FormatTime value);
 
         /// <summary>
-        /// <para>Defines integer lenght, decimal lenght and accept signl.</para>
+        /// Defines integer lenght, decimal lenght and accept signl.
         /// <br>Valid only for type MaskedType.Number or Currency, otherwise this set will be ignored.</br>
         /// <br>This set is Requeried for these types.</br>
         /// </summary>
         /// <param name="intvalue">integer lenght</param>
         /// <param name="decimalvalue">decimal lenght</param>
         /// <param name="acceptSignal">True accept signal; otherwise, no.</param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal);
 
         /// <summary>
         /// Append to description the tip of type input. 
         /// </summary>
         /// <param name="week">show name of week for type date. <see cref="FormatWeek"/></param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit DescriptionWithInputType(FormatWeek week = FormatWeek.None);
 
         /// <summary>
-        /// <para>Default value (with mask!) when stated.</para>
+        /// Default value (with mask!) when stated.
         /// </summary>
         /// <param name="value">Value default</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
@@ -154,7 +154,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">name of file to save history</param>
         /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
-        /// <returns>IControlMaskEdit</returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace PPlus.Controls
         IControlMaskEdit HistoryPageSize(int value);
 
         /// <summary>
-        /// <para>Filter strategy for filter items in History colletion</para>
+        /// Filter strategy for filter items in History colletion
         /// <br>Default value is FilterMode.StartsWith</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>
