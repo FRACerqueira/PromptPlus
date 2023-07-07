@@ -31,6 +31,7 @@ namespace PPlus.Controls
         public string History { get; }
         public long TimeOutTicks { get; }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             return $"{History}{Separator}{TimeOutTicks}";

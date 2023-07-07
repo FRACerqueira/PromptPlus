@@ -6,21 +6,57 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Style regions/state of controls
+    /// Represents The Style regions/state of controls
     /// </summary>
     public enum StyleControls
     {
+        /// <summary>
+        /// Prompt Region
+        /// </summary>
         Prompt,
+        /// <summary>
+        /// Answer Region
+        /// </summary>
         Answer,
+        /// <summary>
+        /// Description Region
+        /// </summary>
         Description,
+        /// <summary>
+        /// Sugestion Region
+        /// </summary>
         Sugestion,
+        /// <summary>
+        /// Selected state
+        /// </summary>
         Selected,
+        /// <summary>
+        /// UnSelected state
+        /// </summary>
         UnSelected,
+        /// <summary>
+        /// Disabled state
+        /// </summary>
         Disabled,
+        /// <summary>
+        /// Error Region
+        /// </summary>
         Error,
+        /// <summary>
+        /// Pagination Region
+        /// </summary>
         Pagination,
+        /// <summary>
+        /// TaggedInfo Region
+        /// </summary>
         TaggedInfo,
+        /// <summary>
+        /// Tooltips Region
+        /// </summary>
         Tooltips,
+        /// <summary>
+        /// Slider Region
+        /// </summary>
         Slider
     }
 }

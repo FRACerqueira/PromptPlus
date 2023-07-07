@@ -9,10 +9,16 @@ using System.Threading.Tasks;
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Process state
+    /// Represents The Process state
     /// </summary>
     public readonly struct StateProcess
     {
+        /// <summary>
+        /// Create a StateProcess
+        /// </summary>
+        /// <remarks>
+        /// Do not use this constructor!
+        /// </remarks>
         public StateProcess()
         {
             throw new PromptPlusException("StateProcess CTOR NotImplemented");

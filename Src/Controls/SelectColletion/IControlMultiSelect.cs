@@ -30,7 +30,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// <para>Overwrite Overflow strategy answer</para>
-        /// <br>ValueResult value is Overflow.Ellipsis</br>
+        /// <br>Default value is Overflow.Ellipsis</br>
         /// </summary>
         /// <param name="value">Overflow strategy</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -68,12 +68,12 @@ namespace PPlus.Controls
         /// Overwrite defaults start seleted value with last result saved on history.
         /// </summary>
         /// <param name="value">name of file to save history</param>
-        /// <param name="timeout">The timeout for valid items saved. ValueResult value is 365 days</param>
+        /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 
         /// <summary>
-        /// Set max.item view per page.ValueResult value for this control is 10.
+        /// Set max.item view per page.Default value for this control is 10.
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -81,28 +81,28 @@ namespace PPlus.Controls
 
         /// <summary>
         /// <para>Filter strategy for filter items in colletion</para>
-        /// <br>ValueResult value is FilterMode.Contains</br>
+        /// <br>Default value is FilterMode.Contains</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> FilterType(FilterMode value);
 
         /// <summary>
-        /// Overwrite a HotKey to Select All item. ValueResult value is 'F2' 
+        /// Overwrite a HotKey to Select All item. Default value is 'F2' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to Select All item</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> HotKeySelectAll(HotKey value);
 
         /// <summary>
-        /// Overwrite a HotKey to Invert Selected item. ValueResult value is 'F3' 
+        /// Overwrite a HotKey to Invert Selected item. Default value is 'F3' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to Invert Selected item</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> HotKeyInvertSelected(HotKey value);
 
         /// <summary>
-        /// Function to show text Item in list.ValueResult value is Item.ToString()
+        /// Function to show text Item in list.Default value is Item.ToString()
         /// </summary>
         /// <param name="value">Function to show text Item in list</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -169,7 +169,7 @@ namespace PPlus.Controls
         /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
         /// </summary>
         /// <param name="scope">scope Disable/Remove</param>
-        /// <param name="value">items colletion</param>
+        /// <param name="values">items colletion</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values);
 

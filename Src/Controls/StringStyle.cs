@@ -5,6 +5,7 @@
 
 using PPlus.Controls.Objects;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PPlus.Controls
 {
@@ -13,9 +14,21 @@ namespace PPlus.Controls
     /// </summary>
     public struct StringStyle :IEquatable<StringStyle>
     {
+        /// <summary>
+        /// Create empty StringStyle 
+        /// </summary>
         public StringStyle()
         {
+            Text = string.Empty;
+            Style = Style.Plain;
+            Width = 0;
+
         }
+
+        /// <summary>
+        /// Create StringStyle with text
+        /// </summary>
+        ///<param name="text">The text</param>
         public StringStyle(string text)
         {
             Text = text.NormalizeNewLines();
@@ -26,7 +39,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Converts a <see cref="string"/> to a <see cref="StringStyle"/> with style default.
         /// </summary>
-        /// <param name="number">The string to convert.</param>
+        /// <param name="value">The string to convert.</param>
 
         public static implicit operator StringStyle(string value)
         {
@@ -77,7 +90,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="other">The StringStyle to compare.</param>
         /// <returns><c>true</c> if the two StringStyle are equal, otherwise <c>false</c>.</returns>
-        public bool Equals(StringStyle other)
+        public readonly bool Equals(StringStyle other)
         {
             return Text == other.Text && Style == other.Style;
         }
@@ -105,13 +118,13 @@ namespace PPlus.Controls
         }
 
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override readonly bool Equals(object obj)
         {
             return obj is StringStyle prompt && Equals(prompt);
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(Text, Style);
         }

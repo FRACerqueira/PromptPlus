@@ -9,11 +9,15 @@ using System.Collections.ObjectModel;
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents a Sugestion output struct.
+    /// Represents The Sugestion output struct.
     /// </summary>
     public struct SugestionOutput
     {
         private readonly List<string> _items;
+
+        /// <summary>
+        /// Create a empty SugestionOutput
+        /// </summary>
         public SugestionOutput()
         {
             _items = new();

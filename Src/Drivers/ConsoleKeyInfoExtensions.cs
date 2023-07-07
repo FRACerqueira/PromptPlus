@@ -65,7 +65,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is Enter Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'CTRL+J' </param>
+        /// <param name="emacskeys">If <c>true</c> accept 'CTRL+J' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressEnterKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
@@ -224,7 +224,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is End Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'CTRL+E' </param>
+        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+E' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressEndKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
@@ -235,7 +235,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is End Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'CTRL+A' </param>
+        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+A' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressHomeKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
@@ -246,7 +246,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is End Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'CTRL+H' </param>
+        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+H' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressBackspaceKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
@@ -257,7 +257,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is Delete Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'CTRL+D' </param>
+        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+D' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressDeleteKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
@@ -273,7 +273,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is Left Arrow Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'CTRL+B' </param>
+        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+B' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressLeftArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
@@ -294,7 +294,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is Right Arrow Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'CTRL+F' </param>
+        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+F' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressRightArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
@@ -305,7 +305,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is Up Arrow Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'CTRL+P' </param>
+        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+P' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressUpArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
@@ -316,7 +316,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is Down Arrow Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'CTRL+N' </param>
+        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+N' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressDownArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
@@ -327,7 +327,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is PageUp Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'Alt+P' </param>
+        /// <param name="emacskeys">if <c>true</c> accept 'Alt+P' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressPageUpKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
@@ -338,7 +338,7 @@ namespace PPlus
         /// Check ConsoleKeyInfo is PageDown Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">true</c> accept 'Alt+N' </param>
+        /// <param name="emacskeys">if <c>true</c> accept 'Alt+N' </param>
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsPressPageDownKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {

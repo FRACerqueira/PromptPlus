@@ -32,13 +32,13 @@ namespace PPlus.Controls
         IControlSelectBrowser DisabledRecursiveExpand();
 
         /// <summary>
-        /// <para>Overwrite <see cref="SpinnersType"/>. ValueResult value is SpinnersType.Ascii</para>
+        /// <para>Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii</para>
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>
         /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
-        /// <param name="customspinner">IEnumerable<string> for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
+        /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
@@ -51,63 +51,63 @@ namespace PPlus.Controls
         IControlSelectBrowser Styles(StyleBrowser styletype, Style value);
 
         /// <summary>
-        /// Show lines of level. ValueResult is true
+        /// Show lines of level. Default is true
         /// </summary>
         /// <param name="value">true Show lines, otherwise 'no'</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser ShowLines(bool value);
 
         /// <summary>
-        /// Show expand SymbolType.Expanded. ValueResult is true
+        /// Show expand SymbolType.Expanded. Default is true
         /// </summary>
         /// <param name="value">true Show Expanded SymbolType, otherwise 'no'</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser ShowExpand(bool value);
 
         /// <summary>
-        /// Load only Folders on browser. ValueResult is false
+        /// Load only Folders on browser. Default is false
         /// </summary>
         /// <param name="value">true only Folders, otherwise Folders and files</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser OnlyFolders(bool value);
 
         /// <summary>
-        /// Show folder and file size in browser. ValueResult is true
+        /// Show folder and file size in browser. Default is true
         /// </summary>
         /// <param name="value">true Show size, otherwise 'no'</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser ShowSize(bool value);
 
         /// <summary>
-        /// Accept hidden folder and files in browser. ValueResult is false
+        /// Accept hidden folder and files in browser. Default is false
         /// </summary>
         /// <param name="value">true accept hidden folder and files, otherwise 'no'</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser AcceptHiddenAttributes(bool value);
 
         /// <summary>
-        /// Accept system folder and files in browser. ValueResult is false
+        /// Accept system folder and files in browser. Default is false
         /// </summary>
         /// <param name="value">true accept system folder and files, otherwise 'no'</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser AcceptSystemAttributes(bool value);
 
         /// <summary>
-        /// Search folder pattern. ValueResult is '*'
+        /// Search folder pattern. Default is '*'
         /// </summary>
         /// <param name="value">Search pattern</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser SearchFolderPattern(string value);
 
         /// <summary>
-        /// Search file pattern. ValueResult is '*'
+        /// Search file pattern. Default is '*'
         /// </summary>
         /// <param name="value">Search pattern</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser SearchFilePattern(string value);
 
         /// <summary>
-        /// Set max.item view per page.ValueResult value for this control is 10.
+        /// Set max.item view per page.Default value for this control is 10.
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
@@ -115,7 +115,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// <para>Filter strategy for filter items in colletion</para>
-        /// <br>ValueResult value is FilterMode.Contains</br>
+        /// <br>Default value is FilterMode.Contains</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
@@ -132,7 +132,7 @@ namespace PPlus.Controls
         IControlSelectBrowser Root(string value, bool expandall = true, Func<ItemBrowser, bool>? validselect = null, Func<ItemBrowser, bool>? setdisabled = null);
 
         /// <summary>
-        /// ValueResult item (fullpath) seleted when started
+        /// Default item (fullpath) seleted when started
         /// </summary>
         /// <param name="value">fullpath</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
@@ -146,21 +146,21 @@ namespace PPlus.Controls
         IControlSelectBrowser ShowCurrentFolder(bool value);
 
         /// <summary>
-        /// Overwrite a HotKey toggle current name folder to FullPath. ValueResult value is 'F2' 
+        /// Overwrite a HotKey toggle current name folder to FullPath. Default value is 'F2' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to oggle current name folder to FullPath</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser HotKeyFullPath(HotKey value);
 
         /// <summary>
-        /// Overwrite a HotKey expand/Collap current folder selected. ValueResult value is 'F3' 
+        /// Overwrite a HotKey expand/Collap current folder selected. Default value is 'F3' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to expand/Collapse current folder selected</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser HotKeyToggleExpand(HotKey value);
 
         /// <summary>
-        /// Overwrite a HotKey expand/Collap all folders. ValueResult value is 'F4' 
+        /// Overwrite a HotKey expand/Collap all folders. Default value is 'F4' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to expand/Collap all folders</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>

@@ -6,11 +6,17 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Mode to execute Tasks
+    /// Represents The Mode to execute Tasks
     /// </summary>
     public enum StepMode
     {
+        /// <summary>
+        /// Sequential Mode
+        /// </summary>
         Sequential,
+        /// <summary>
+        /// Parallel Mode
+        /// </summary>
         Parallel,
     }
 }

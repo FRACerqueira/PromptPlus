@@ -160,8 +160,7 @@ namespace PPlus
         /// <summary>
         /// Checks if two <see cref="Style"/> instances are not equal.
         /// </summary>
-        /// <param name="left">The first Style instance to compare.</param>
-        /// <param name="right">The second Style instance to compare.</param>
+        /// <param name="other">The Style instance to compare.</param>
         /// <returns><c>true</c> if the two Style are not equal, otherwise <c>false</c>.</returns>
         public bool Equals(Style other)
         {

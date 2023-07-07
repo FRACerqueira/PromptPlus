@@ -16,10 +16,13 @@ using System.Threading;
 
 namespace PPlus.Controls
 {
+    /// <summary>
+    /// Represents validation functions for controls
+    /// </summary>
     public static class PromptValidators
     {
         /// <summary>
-        /// Import Validators from object to control
+        /// Import validation from object to control
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// Typeof object
@@ -27,19 +30,19 @@ namespace PPlus.Controls
         /// Instance of object
         /// <param name="expression"></param>
         /// The expression to object property 
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult>[] ImportValidators<T>(T instance, Expression<Func<T, object>> expression)
         {
             return ImportValidators(instance, expression.Body).ToArray();
         }
 
-         /// <summary>
-        /// Function to validate Uri Scheme
+        /// <summary>
+        /// Validation function for Uri Scheme
         /// </summary>
         /// <param name="uriKind">Kind of uri</param>
         /// <param name="allowedUriSchemes">list of allowed uri scheme. Schemes must be separated by a semicolon.</param>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsUriScheme(UriKind uriKind = UriKind.Absolute, string allowedUriSchemes = null, string errorMessage = null)
         {
             return input =>
@@ -80,11 +83,11 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Number
+        /// Validation function for Number
         /// </summary>
         /// <param name="cultureinfo">Culture to validate</param>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsNumber(CultureInfo? cultureinfo = null, string errorMessage = null)
         {
             return input =>
@@ -116,11 +119,11 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Currency
+        /// Validation function for Currency
         /// </summary>
         /// <param name="cultureinfo">Culture to validate</param>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsCurrency(CultureInfo? cultureinfo = null, string errorMessage = null)
         {
             return input =>
@@ -153,11 +156,11 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// Function to validate DateTime
+        /// Validation function for DateTime
         /// </summary>
         /// <param name="cultureinfo">Culture to validate</param>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsDateTime(CultureInfo? cultureinfo = null, string errorMessage = null)
         {
             return input =>
@@ -190,10 +193,10 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Required
+        /// Validation function for Required
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> Required(string errorMessage = null)
         {
             return input =>
@@ -215,11 +218,11 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate MinLength
+        /// Validation function for MinLength
         /// </summary>
         /// <param name="length">MinLength value</param>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> MinLength(int length, string errorMessage = null)
         {
             return input =>
@@ -239,11 +242,11 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate MaxLength
+        /// Validation function for MaxLength
         /// </summary>
         /// <param name="length">MaxLength value</param>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> MaxLength(int length, string errorMessage = null)
         {
             return input =>
@@ -263,11 +266,11 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate RegularExpression
+        /// Validation function for RegularExpression
         /// </summary>
         /// <param name="pattern">RegularExpression value</param>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> RegularExpression(string pattern, string errorMessage = null)
         {
             return input =>
@@ -287,10 +290,10 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type Boolean
+        /// Validation function for Is Type Boolean
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeBoolean(string errorMessage = null)
         {
             return input =>
@@ -339,11 +342,10 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type Byte
+        /// Validation function for Is Type Byte
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
-
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeByte(string errorMessage = null)
         {
             return input =>
@@ -376,10 +378,10 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type Char
+        /// Validation function for Is Type Char
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeChar(string errorMessage = null)
         {
             return input =>
@@ -412,10 +414,10 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type Decimal
+        /// Validation function for Is Type Decimal
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeDecimal(string errorMessage = null)
         {
             return input =>
@@ -449,10 +451,10 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type Double
+        /// Validation function for Is Type Double
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeDouble(string errorMessage = null)
         {
             return input =>
@@ -486,20 +488,20 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type Short
+        /// Validation function for Is Type Short
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeShort(string errorMessage = null)
         {
             return IsTypeInt16(errorMessage);
         }
 
         /// <summary>
-        /// Function to validate Is Type Int16
+        /// Validation function for Is Type Int16
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeInt16(string errorMessage = null)
         {
             return input =>
@@ -533,20 +535,20 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type Int
+        /// Validation function for Is Type Int
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeInt(string errorMessage = null)
         {
             return IsTypeInt32(errorMessage);
         }
 
         /// <summary>
-        /// Function to validate Is Type Int32
+        /// Validation function for Is Type Int32
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeInt32(string errorMessage = null)
         {
             return input =>
@@ -580,20 +582,20 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type Long
+        /// Validation function for Is Type Long
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeLong(string errorMessage = null)
         {
             return IsTypeInt64(errorMessage);
         }
 
         /// <summary>
-        /// Function to validate Is Type Int64
+        /// Validation function for Is Type Int64
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeInt64(string errorMessage = null)
         {
             return input =>
@@ -627,10 +629,10 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type SByte
+        /// Validation function for Is Type SByte
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeSByte(string errorMessage = null)
         {
             return input =>
@@ -664,20 +666,20 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type Float
+        /// Validation function for Is Type Float
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeFloat(string errorMessage = null)
         {
             return IsTypeSingle(errorMessage);
         }
 
         /// <summary>
-        /// Function to validate Is Type Single
+        /// Validation function for Is Type Single
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeSingle(string errorMessage = null)
         {
             return input =>
@@ -711,20 +713,20 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type Ushort
+        /// Validation function for Is Type Ushort
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeUshort(string errorMessage = null)
         {
             return IsTypeUInt16(errorMessage);
         }
 
         /// <summary>
-        /// Function to validate Is Type UInt16
+        /// Validation function for Is Type UInt16
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeUInt16(string errorMessage = null)
         {
             return input =>
@@ -758,20 +760,20 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type UInt
+        /// Validation function for Is Type UInt
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeUInt(string errorMessage = null)
         {
             return IsTypeUInt32(errorMessage);
         }
 
         /// <summary>
-        /// Function to validate Is Type UInt32
+        /// Validation function for Is Type UInt32
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeUInt32(string errorMessage = null)
         {
             return input =>
@@ -805,20 +807,20 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type ULong
+        /// Validation function for Is Type ULong
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeULong(string errorMessage = null)
         {
             return IsTypeUInt64(errorMessage);
         }
 
         /// <summary>
-        /// Function to validate Is Type UInt64
+        /// Validation function for Is Type UInt64
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeUInt64(string errorMessage = null)
         {
             return input =>
@@ -851,10 +853,10 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Function to validate Is Type DateTime
+        /// Validation function for Is Type DateTime
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
-        /// <returns>the function to validation</returns>
+        /// <returns>the Validation function</returns>
         public static Func<object, ValidationResult> IsTypeDateTime(string errorMessage = null)
         {
             return input =>

@@ -6,10 +6,16 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents a Sugestion Input struct.
+    /// Represents The Sugestion Input struct.
     /// </summary>
     public readonly struct SugestionInput
     {
+        /// <summary>
+        /// Create a SugestionInput
+        /// </summary>
+        /// <remarks>
+        /// Do not use this constructor!
+        /// </remarks>
         public SugestionInput()
         {
             throw new PromptPlusException("SugestionInput CTOR NotImplemented");

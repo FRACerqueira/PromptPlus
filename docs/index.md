@@ -23,6 +23,8 @@
 - [Hotkeys](#hotkeys)
 - [Validators](#validators)
 - [Global Settings](globalsettings.md)
+- [API Reference](./apis/apis.md)
+
 - [Supported Platforms](#supported-platforms)
 
 ## Features

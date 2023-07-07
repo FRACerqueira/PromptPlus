@@ -27,7 +27,7 @@ namespace PPlus.Drivers
         /// Initializes a new instance of the <see cref="Segment"/> class.
         /// </summary>
         /// <param name="text">The segment text.</param>
-        /// <param name="text">The segment text.</param>
+        /// <param name="style">The <see cref="Style"/> text.</param>
         public Segment(string text, Style style)
         {
             Text = text.NormalizeNewLines();

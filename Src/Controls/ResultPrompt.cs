@@ -6,10 +6,16 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Result value <typeparamref name="T"/> to Controls
+    /// Represents The Result <typeparamref name="T"/> to Controls
     /// </summary>
     public struct ResultPrompt<T>
     {
+        /// <summary>
+        /// Create a ResultPrompt
+        /// </summary>
+        /// <remarks>
+        /// Do not use this constructor!
+        /// </remarks>
         public ResultPrompt()
         {
             throw new PromptPlusException("ResultPrompt CTOR NotImplemented");

@@ -12,31 +12,31 @@ namespace PPlus.Controls
     public interface IControlSliderSwitch : IPromptControls<bool>
     {
         /// <summary>
-        /// ValueResult value for swith
+        /// Default value for swith
         /// </summary>
         /// <param name="value">true is 'on', otherwise 'off'</param>
-        /// <returns><see cref="IControlSliderSwitch/></returns>
+        /// <returns><see cref="IControlSliderSwitch"/></returns>
         IControlSliderSwitch Default(bool value);
 
         /// <summary>
-        /// Text to 'off' value. ValueResult value comes from resource.
+        /// Text to 'off' value. Default value comes from resource.
         /// </summary>
         /// <param name="value">text off</param>
-        /// <returns><see cref="IControlSliderSwitch/></returns>
+        /// <returns><see cref="IControlSliderSwitch"/></returns>
         IControlSliderSwitch OffValue(string value);
 
         /// <summary>
-        /// Text to 'on' value. ValueResult value comes from resource.
+        /// Text to 'on' value. Default value comes from resource.
         /// </summary>
         /// <param name="value">text on</param>
-        /// <returns><see cref="IControlSliderSwitch/></returns>
+        /// <returns><see cref="IControlSliderSwitch"/></returns>
         IControlSliderSwitch OnValue(string value);
 
         /// <summary>
-        /// Define Width to Widgets. ValueResult value is 6.
+        /// Define Width to Widgets. Default value is 6.
         /// </summary>
         /// <param name="value">Width</param>
-        /// <returns><see cref="IControlSliderNumber"/></returns>
+        /// <returns><see cref="IControlSliderSwitch"/></returns>
         IControlSliderSwitch Width(int value);
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace PPlus.Controls
         /// Overwrite default start value with last result saved on history.
         /// </summary>
         /// <param name="value">name of file to save history</param>
-        /// <param name="timeout">The timeout for valid items saved. ValueResult value is 365 days</param>
+        /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
         /// <returns><see cref="IControlSliderSwitch"/></returns>
         IControlSliderSwitch OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 
@@ -64,8 +64,8 @@ namespace PPlus.Controls
         /// <summary>
         /// Change Color when state 'On'. 
         /// <br>state-On(Foreground)/Background</br>
-        /// <br>ValueResult Foreground : 'ConsoleColor.Cyan'</br>
-        /// <br>ValueResult Background : 'ConsoleColor.DarkGray'</br>
+        /// <br>Default Foreground : 'ConsoleColor.Cyan'</br>
+        /// <br>Default Background : 'ConsoleColor.DarkGray'</br>
         /// </summary>
         /// <param name="value"><see cref="Style"/></param>
         /// <returns><see cref="IControlSliderSwitch"/></returns>
@@ -74,8 +74,8 @@ namespace PPlus.Controls
         /// <summary>
         /// Change Color when state 'Off'. 
         /// <br>state-Off(Foreground)/Background</br>
-        /// <br>ValueResult Foreground : 'ConsoleColor.Cyan'</br>
-        /// <br>ValueResult Background : 'ConsoleColor.DarkGray'</br>
+        /// <br>Default Foreground : 'ConsoleColor.Cyan'</br>
+        /// <br>Default Background : 'ConsoleColor.DarkGray'</br>
         /// </summary>
         /// <param name="value"><see cref="Style"/></param>
         /// <returns><see cref="IControlSliderSwitch"/></returns>

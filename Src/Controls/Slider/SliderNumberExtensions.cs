@@ -14,7 +14,7 @@ namespace PPlus
         /// Create Slider Number Control. 
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
-        /// <param name="description">The description text to write</param>
+        /// <param name="config">The description text to write</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
         public static IControlSliderNumber SliderNumber(string prompt, Action<IPromptConfig> config = null)
         {

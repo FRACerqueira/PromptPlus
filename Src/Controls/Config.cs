@@ -17,7 +17,7 @@ using System.Linq;
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents common config properties for all controls.
+    /// Represents the common config properties for all controls.
     /// </summary>
     public class Config
     {

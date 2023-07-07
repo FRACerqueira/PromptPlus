@@ -6,7 +6,7 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents a valid key Function
+    /// Represents The valids hotkeys
     /// </summary>
     public enum UserHotKey
     {

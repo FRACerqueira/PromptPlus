@@ -15,7 +15,7 @@ namespace PPlus
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
-        /// <returns><see cref="IControlTreeViewMultiSelect<T>"/></returns>
+        /// <returns><see cref="IControlTreeViewMultiSelect{T}"/></returns>
         public static IControlTreeViewMultiSelect<T> TreeViewMultiSelect<T>(string prompt, string? description = null)
         {
             return TreeViewMultiSelect<T>(prompt, description, null);
@@ -27,7 +27,7 @@ namespace PPlus
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns><see cref="IControlTreeViewMultiSelect<T>"/></returns>
+        /// <returns><see cref="IControlTreeViewMultiSelect{T}"/></returns>
         public static IControlTreeViewMultiSelect<T> TreeViewMultiSelect<T>(string prompt, string description, Action<IPromptConfig> config = null)
         {
             var opt = new TreeViewOptions<T>(true)
@@ -45,7 +45,7 @@ namespace PPlus
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns><see cref="IControlTreeViewMultiSelect<T>"/></returns>
+        /// <returns><see cref="IControlTreeViewMultiSelect{T}"/></returns>
         public static IControlTreeViewMultiSelect<T> TreeViewMultiSelect<T>(string prompt, Action<IPromptConfig> config)
         {
             var opt = new TreeViewOptions<T>(true)

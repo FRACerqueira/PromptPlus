@@ -83,7 +83,7 @@ namespace PPlus.Controls
         /// Dynamically change the description using a user role
         /// </summary>
         /// <param name="value">function to apply change</param>
-        /// <returns><see cref="IControlSelect"/></returns>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
         IControlSelect<T> ChangeDescription(Func<T, string> value);
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace PPlus.Controls
         /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
         /// </summary>
         /// <param name="scope">scope Disable/Remove</param>
-        /// <param name="value">items colletion</param>
+        /// <param name="values">items colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
         IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values);
 

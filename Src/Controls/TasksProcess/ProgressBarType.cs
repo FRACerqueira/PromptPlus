@@ -6,17 +6,41 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Kinds Progress Bar
+    /// Represents the Kinds Progress Bar
     /// </summary>
     public enum ProgressBarType
     {
+        /// <summary>
+        /// Fill
+        /// </summary>
         Fill,
+        /// <summary>
+        /// Light
+        /// </summary>
         Light,
+        /// <summary>
+        /// Heavy
+        /// </summary>
         Heavy,
+        /// <summary>
+        /// Bar
+        /// </summary>
         Bar,
+        /// <summary>
+        /// Dot
+        /// </summary>
         Dot,
+        /// <summary>
+        /// AsciiSingle
+        /// </summary>
         AsciiSingle,
+        /// <summary>
+        /// AsciiDouble
+        /// </summary>
         AsciiDouble,
+        /// <summary>
+        /// Char
+        /// </summary>
         Char,
     }
 }

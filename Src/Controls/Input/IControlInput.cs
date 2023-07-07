@@ -13,7 +13,7 @@ namespace PPlus.Controls
     public interface IControlInput : IPromptControls<string>
     {
         /// <summary>
-        /// <para>ValueResult value when finished value is empty.</para>
+        /// <para>Default value when finished value is empty.</para>
         /// </summary>
         /// <param name="value">Finished value default</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -21,7 +21,7 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// <para>ValueResult value when stated.</para>
+        /// <para>Default value when stated.</para>
         /// </summary>
         /// <param name="value">Value default</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -31,7 +31,7 @@ namespace PPlus.Controls
         /// Overwrite default start value with last result saved on history.
         /// </summary>
         /// <param name="value">name of file to save history</param>
-        /// <param name="timeout">The timeout for valid items saved. ValueResult value is 365 days</param>
+        /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
         /// <returns><see cref="IControlInput"/></returns>
         IControlInput OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 
@@ -59,7 +59,6 @@ namespace PPlus.Controls
 
         /// <summary>
         /// The input is a secret. the input text is masked to '#' (default value)
-        /// <see cref="SecretChar"/>
         /// </summary>
         /// <param name="value">char secret</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -68,7 +67,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Enable user to view the input without mask.
         /// </summary>
-        /// <param name="hotkeypress">Overwrite a <see cref="HotKey"/> to toggle view. ValueResult value is 'F2'</param>
+        /// <param name="hotkeypress">Overwrite a <see cref="HotKey"/> to toggle view. Default value is 'F2'</param>
         /// <returns><see cref="IControlInput"/></returns>
         IControlInput EnabledViewSecret(HotKey? hotkeypress = null);
 
@@ -109,7 +108,7 @@ namespace PPlus.Controls
         IControlInput SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
 
         /// <summary>
-        /// Minimum chars to enabled history feature. ValueResult value is 0.
+        /// Minimum chars to enabled history feature. Default value is 0.
         /// <br>History items are filtered by the starts with entry.</br>
         /// </summary>
         /// <param name="value">Minimum chars number</param>
@@ -125,7 +124,7 @@ namespace PPlus.Controls
         IControlInput HistoryEnabled(string value);
 
         /// <summary>
-        /// Set timeout to valid items saved on history. ValueResult value is 365 days.
+        /// Set timeout to valid items saved on history. Default value is 365 days.
         /// </summary>
         /// <param name="value">timeout value</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -140,7 +139,7 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// Set max.item view per page on history.ValueResult value for this control is 10.
+        /// Set max.item view per page on history.Default value for this control is 10.
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlInput"/></returns>

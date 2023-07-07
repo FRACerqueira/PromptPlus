@@ -7,8 +7,17 @@ using System;
 
 namespace PPlus.Controls
 {
+    /// <summary>
+    /// Represents the HotKey to control
+    /// </summary>
     public struct HotKey : IEquatable<ConsoleKeyInfo>
     {
+        /// <summary>
+        /// Create a HotKey
+        /// </summary>
+        /// <remarks>
+        /// Do not use this constructor!
+        /// </remarks>
         public HotKey() 
         {
             throw new PromptPlusException("HotKey CTOR NotImplemented");
@@ -76,6 +85,13 @@ namespace PPlus.Controls
         /// </summary>
         public static HotKey RemoveItemDefault => new(ConsoleKey.F3);
 
+        /// <summary>
+        /// Create a HotKey
+        /// </summary>
+        /// <param name="key"><see cref="ConsoleKey"/> to create </param>
+        /// <param name="alt">With Alt key</param>
+        /// <param name="ctrl">With Ctrl key</param>
+        /// <param name="shift">With Shift key</param>
         internal HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false)
         {
             Key = key;
@@ -87,7 +103,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="ConsoleKeyInfo"/> to HotKey
         /// </summary>
-        public ConsoleKeyInfo KeyInfo => new((char)Key, Key, Shift, Alt, Ctrl);
+        public readonly ConsoleKeyInfo KeyInfo => new((char)Key, Key, Shift, Alt, Ctrl);
 
         internal ConsoleKey Key { get; private set; }
         internal bool Alt { get; private set; }
@@ -95,7 +111,7 @@ namespace PPlus.Controls
         internal bool Shift { get; private set; }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override readonly string ToString()
         {
             var modifiers = string.Empty;
             if (KeyInfo.Modifiers.HasFlag(ConsoleModifiers.Control))
@@ -122,7 +138,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="other">The ConsoleKeyInfo to compare.</param>
         /// <returns><c>true</c> if the Hotkey are equal, otherwise <c>false</c>.</returns>
-        public bool Equals(ConsoleKeyInfo other) => Key == other.Key && KeyInfo.Modifiers == other.Modifiers;
+        public readonly bool Equals(ConsoleKeyInfo other) => Key == other.Key && KeyInfo.Modifiers == other.Modifiers;
 
     }
 }

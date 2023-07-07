@@ -10,26 +10,26 @@ namespace PPlus.Controls
     public interface IControlAutoComplete: IPromptControls<string>
     {
         /// <summary>
-        /// Set max.item view per page.ValueResult value for this control is 10.
+        /// Set max.item view per page.Default value for this control is 10.
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
         IControlAutoComplete PageSize(int value);
 
         /// <summary>
-        /// <para>Overwrite <see cref="SpinnersType"/>. ValueResult value is SpinnersType.Ascii</para>
+        /// <para>Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii</para>
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>
         /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
-        /// <param name="customspinner">IEnumerable<string> for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
+        /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
         IControlAutoComplete Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
         /// <summary>
         /// <para>Number minimum of chars to accept autocomplete</para>
-        /// <br>ValueResult value : 3. If value less than 0 internal sette to 0.</br>
+        /// <br>Default value : 3. If value less than 0 internal sette to 0.</br>
         /// </summary>
         /// <param name="value">Number of chars</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
@@ -37,7 +37,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// <para>Number of mileseconds to wait before to start function autocomplete</para>
-        /// <br>ValueResult value : 1000. If value less than 10 internal sette to 10.</br>
+        /// <br>Default value : 1000. If value less than 10 internal sette to 10.</br>
         /// </summary>
         /// <param name="value">Number of mileseconds</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
@@ -61,14 +61,14 @@ namespace PPlus.Controls
         IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<string[]>> value);
 
         /// <summary>
-        /// <para>ValueResult value when finished value is empty.</para>
+        /// <para>Default value when finished value is empty.</para>
         /// </summary>
         /// <param name="value">Finished value default</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
         IControlAutoComplete DefaultIfEmpty(string value);
 
         /// <summary>
-        /// <para>ValueResult value when stated.</para>
+        /// <para>Default value when stated.</para>
         /// </summary>
         /// <param name="value">Value default</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
@@ -78,7 +78,7 @@ namespace PPlus.Controls
         /// Overwrite default start value with last result saved on history.
         /// </summary>
         /// <param name="value">name of file to save history</param>
-        /// <param name="timeout">The timeout for valid items saved. ValueResult value is 365 days</param>
+        /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
         /// <returns>IControlAutoComplete</returns>
         IControlAutoComplete OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 

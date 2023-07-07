@@ -24,7 +24,7 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// <para>ValueResult initial value when when stated.</para>
+        /// <para>Default initial value when when stated.</para>
         /// </summary>
         /// <param name="value">initial value</param>
         /// <returns><see cref="IControlMaskEditList"/></returns>
@@ -32,8 +32,8 @@ namespace PPlus.Controls
 
         /// <summary>
         /// <para>Overwrite <see cref="Style"/> to region tip type input.</para>
-        /// <br>ValueResult Foreground : 'ConsoleColor.Yellow'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>Default Foreground : 'ConsoleColor.Yellow'</br>
+        /// <br>Default Background : same Console Background when setted</br>
         /// </summary>
         /// <param name="value">Style</param>
         /// <returns>IControlMaskEditList</returns>
@@ -41,8 +41,8 @@ namespace PPlus.Controls
 
         /// <summary>
         /// <para>Overwrite <see cref="Style"/> to region neggative input.</para>
-        /// <br>ValueResult Foreground : 'StyleControls.Answer'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>Default Foreground : 'StyleControls.Answer'</br>
+        /// <br>Default Background : same Console Background when setted</br>
         /// </summary>
         /// <param name="value">Style</param>
         /// <returns>IControlMaskEditList</returns>
@@ -50,8 +50,8 @@ namespace PPlus.Controls
 
         /// <summary>
         /// <para>Overwrite <see cref="Style"/> to region positive input.</para>
-        /// <br>ValueResult Foreground : 'StyleControls.Answer'</br>
-        /// <br>ValueResult Background : Same Console Background when setted</br>
+        /// <br>Default Foreground : 'StyleControls.Answer'</br>
+        /// <br>Default Background : Same Console Background when setted</br>
         /// </summary>
         /// <param name="value">Style</param>
         /// <returns>IControlMaskEdit</returns>
@@ -72,7 +72,7 @@ namespace PPlus.Controls
         /// <br>] - Final delimiter for list of Custom character</br> 
         /// </summary>
         /// <param name="value">text of masked when type is Generic. otherwise must be null.</param>
-        /// <param name="promptmask">Prompt mask overwriter. ValueResult value is '■'/'_'</param>
+        /// <param name="promptmask">Prompt mask overwriter. Default value is '■'/'_'</param>
         /// <returns>IControlMaskEdit</returns>
         IControlMaskEditList Mask(string value = null, char? promptmask = null);
 
@@ -80,14 +80,14 @@ namespace PPlus.Controls
         /// <para>Defines type of mask control.</para>
         /// </summary>
         /// <param name="maskedType">Type masked</param>
-        /// <param name="promptmask">Prompt mask overwriter. ValueResult value is '■'/'_'</param>
+        /// <param name="promptmask">Prompt mask overwriter. Default value is '■'/'_'</param>
         /// <returns>IControlMaskEdit</returns>
         IControlMaskEditList Mask(MaskedType maskedType, char? promptmask = null);
 
 
         /// <summary>
         /// <para><see cref="CultureInfo"/> to validate input when the type is not generic.</para>
-        /// <br>ValueResult value is global Promptplus Cultureinfo</br>  
+        /// <br>Default value is global Promptplus Cultureinfo</br>  
         /// </summary>
         /// <param name="value">CultureInfo to use on validate</param>
         /// <returns>IControlMaskEditList</returns>
@@ -95,7 +95,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// <para><see cref="CultureInfo"/> to validate input when the type is not generic.</para>
-        /// <br>ValueResult value is global Promptplus Cultureinfo</br>  
+        /// <br>Default value is global Promptplus Cultureinfo</br>  
         /// </summary>
         /// <param name="value">Name of CultureInfo to use on validate</param>
         /// <returns>IControlMaskEditList</returns>
@@ -132,7 +132,7 @@ namespace PPlus.Controls
         /// <br>This set is Requeried for these types.</br>
         /// </summary>
         /// <param name="intvalue">integer lenght</param>
-        /// <param name="intvalue">decimal lenght</param>
+        /// <param name="decimalvalue">decimal lenght</param>
         /// <param name="acceptSignal">True accept signal; otherwise, no.</param>
         /// <returns>IControlMaskEditList</returns>
         IControlMaskEditList AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal);
@@ -183,6 +183,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Accept empty value
         /// <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.</br>
+        /// </summary>
         /// <returns>IControlMaskEdit</returns>
         IControlMaskEditList AcceptEmptyValue();
 
@@ -203,14 +204,14 @@ namespace PPlus.Controls
         IControlMaskEditList AddItems(IEnumerable<string> values, bool immutable = false);
 
         /// <summary>
-        /// Set max.item view per page.ValueResult value for this control is 10.
+        /// Set max.item view per page.Default value for this control is 10.
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlMaskEditList"/></returns>
         IControlMaskEditList PageSize(int value);
 
         /// <summary>
-        /// Allow duplicate items.ValueResult value for this control is false.
+        /// Allow duplicate items.Default value for this control is false.
         /// </summary>
         /// <returns><see cref="IControlList"/></returns>
         IControlMaskEditList AllowDuplicate();
@@ -224,14 +225,14 @@ namespace PPlus.Controls
         IControlMaskEditList Range(int minvalue, int? maxvalue = null);
 
         /// <summary>
-        /// Overwrite a HotKey to edit item. ValueResult value is 'F2' 
+        /// Overwrite a HotKey to edit item. Default value is 'F2' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to edit item</param>
         /// <returns><see cref="IControlMaskEditList"/></returns>
         IControlMaskEditList HotKeyEditItem(HotKey value);
 
         /// <summary>
-        /// Overwrite a HotKey to remove item. ValueResult value is 'F3' 
+        /// Overwrite a HotKey to remove item. Default value is 'F3' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to remove item</param>
         /// <returns><see cref="IControlMaskEditList"/></returns>

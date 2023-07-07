@@ -10,11 +10,12 @@ using System.Linq;
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Styles Schema of current instance of control
+    /// Represents The Styles Schema of current instance of control
     /// </summary>
     public class StyleSchema
     {
-        public readonly Dictionary<StyleControls, Style> _Styles;
+        private readonly Dictionary<StyleControls, Style> _Styles;
+
         internal StyleSchema()
         {
             _Styles = new Dictionary<StyleControls, Style>();

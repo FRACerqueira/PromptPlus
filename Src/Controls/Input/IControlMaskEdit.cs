@@ -71,6 +71,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Accept empty value
         /// <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.</br>
+        /// </summary>
         /// <returns>IControlMaskEdit</returns>
         IControlMaskEdit AcceptEmptyValue();
 
@@ -78,7 +79,7 @@ namespace PPlus.Controls
         /// <para>Default value (with mask!) when finished value is empty.</para>
         /// </summary>
         /// <param name="value">Finished value default</param>
-        /// <param name="ZeroIsEmpty">Valid only for type MaskedType.Number or MaskedType.Currency, otherwise this set will be ignored.</param>
+        /// <param name="zeroIsEmpty">Valid only for type MaskedType.Number or MaskedType.Currency, otherwise this set will be ignored.</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit DefaultIfEmpty(string value,bool zeroIsEmpty = true);
 
@@ -129,7 +130,7 @@ namespace PPlus.Controls
         /// <br>This set is Requeried for these types.</br>
         /// </summary>
         /// <param name="intvalue">integer lenght</param>
-        /// <param name="intvalue">decimal lenght</param>
+        /// <param name="decimalvalue">decimal lenght</param>
         /// <param name="acceptSignal">True accept signal; otherwise, no.</param>
         /// <returns>IControlMaskEdit</returns>
         IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal);

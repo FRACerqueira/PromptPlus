@@ -18,7 +18,7 @@ using System.Threading;
 namespace PPlus
 {
     /// <summary>
-    /// Contains controls, methods, properties and extensions for <see cref="PromptPlus"/>.
+    /// Contains all controls, methods, properties and extensions for <see cref="PromptPlus"/>.
     /// </summary>
     public static partial class PromptPlus
     {
@@ -38,7 +38,6 @@ namespace PPlus
         /// <summary>
         /// Reset all config and properties to default values
         /// </summary>
-        /// <param name="culture">Default culture for console and threads</param>
         public static void Reset()
         {
             var (SupportsAnsi, _) = AnsiDetector.Detect();
@@ -136,8 +135,9 @@ namespace PPlus
         /// <br>After overwrite the new console the screeen is clear</br>
         /// <br>and all Style-Schema are updated with backgoundcolor console</br>
         /// </summary>
+        /// <param name="consolebase">The <see cref="IConsoleBase"/></param>
         /// <param name="config">Action with <seealso cref="ProfileSetup"/> to configuration</param>
-        internal static void Setup(this IConsoleBase _, Action<ProfileSetup> config)
+        internal static void Setup(this IConsoleBase consolebase, Action<ProfileSetup> config)
         {
             Reset();
             Profile(config);
@@ -489,6 +489,10 @@ namespace PPlus
             Console.Clear();
         }
 
+        /// <summary>
+        /// Clears the console buffer with <see cref="Color"/> and set BackgroundColor with <see cref="Color"/>
+        /// </summary>
+        /// <param name="backcolor">The <see cref="Color"/> Background</param>
         public static void Clear(Color? backcolor = null)
         {
             if (backcolor.HasValue)
@@ -520,22 +524,23 @@ namespace PPlus
         /// <summary>
         ///  Clear line
         /// </summary>
+        /// <param name="consolebase">The <see cref="IConsoleBase"/></param>
         /// <param name="row">The row to clear</param>
         /// <param name="style">The style color to clear.</param>
-        public static void ClearLine(this IConsoleBase consoleBase, int? row = null, Style? style = null)
+        public static void ClearLine(this IConsoleBase consolebase, int? row = null, Style? style = null)
         {
-            style ??= consoleBase.DefaultStyle;
-            row ??= consoleBase.CursorTop;
-            consoleBase.SetCursorPosition(0, row.Value);
-            if (consoleBase.SupportsAnsi)
+            style ??= consolebase.DefaultStyle;
+            row ??= consolebase.CursorTop;
+            consolebase.SetCursorPosition(0, row.Value);
+            if (consolebase.SupportsAnsi)
             {
-                consoleBase.Write("", style.Value, true);
+                consolebase.Write("", style.Value, true);
             }
             else
             {
-                var aux = new string(' ', consoleBase.BufferWidth);
-                consoleBase.Write(aux, style.Value.Overflow(Overflow.Crop),true);
-                consoleBase.SetCursorPosition(0, row.Value);
+                var aux = new string(' ', consolebase.BufferWidth);
+                consolebase.Write(aux, style.Value.Overflow(Overflow.Crop),true);
+                consolebase.SetCursorPosition(0, row.Value);
             }
         }
 
@@ -551,21 +556,22 @@ namespace PPlus
         /// <summary>
         ///  Clear rest of current line 
         /// </summary>
+        /// <param name="consolebase">The <see cref="IConsoleBase"/></param>
         /// <param name="style">The style color to clear.</param>
-        public static void ClearRestOfLine(this IConsoleBase consoleBase, Style? style = null)
+        public static void ClearRestOfLine(this IConsoleBase consolebase, Style? style = null)
         {
-            style ??= consoleBase.DefaultStyle;
-            if (consoleBase.SupportsAnsi)
+            style ??= consolebase.DefaultStyle;
+            if (consolebase.SupportsAnsi)
             {
-                consoleBase.Write("", style.Value, true);
+                consolebase.Write("", style.Value, true);
             }
             else
             {
-                var row = consoleBase.CursorTop;
-                var col = consoleBase.CursorLeft;
-                var aux = new string(' ', consoleBase.BufferWidth - consoleBase.CursorLeft);
-                consoleBase.Write(aux, style.Value.Overflow(Overflow.Crop), true);
-                consoleBase.SetCursorPosition(col, row);
+                var row = consolebase.CursorTop;
+                var col = consolebase.CursorLeft;
+                var aux = new string(' ', consolebase.BufferWidth - consolebase.CursorLeft);
+                consolebase.Write(aux, style.Value.Overflow(Overflow.Crop), true);
+                consolebase.SetCursorPosition(col, row);
             }
         }
 

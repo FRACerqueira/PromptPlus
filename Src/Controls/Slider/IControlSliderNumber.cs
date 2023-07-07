@@ -20,7 +20,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// <para><see cref="CultureInfo"/> to validate input when the type is not generic.</para>
-        /// <br>ValueResult value is global Promptplus Cultureinfo</br>  
+        /// <br>Default value is global Promptplus Cultureinfo</br>  
         /// </summary>
         /// <param name="value">Name of CultureInfo to use on validate</param>
         /// <returns>IControlSliderNumber</returns>
@@ -34,7 +34,7 @@ namespace PPlus.Controls
         IControlSliderNumber Default(double value);
 
         /// <summary>
-        /// Define the KeyPress to change value. ValueResult value is Left or Right.
+        /// Define the KeyPress to change value. Default value is Left or Right.
         /// <br>When MoveKeyPress equal Up or Down , slider control not show Widgets</br>
         /// </summary>
         /// <param name="value">Left/Right or Up/Down. <see cref="SliderNumberType"/></param>
@@ -42,7 +42,7 @@ namespace PPlus.Controls
         IControlSliderNumber MoveKeyPress(SliderNumberType value);
 
         /// <summary>
-        /// Define Width to Widgets. ValueResult value is 40.
+        /// Define Width to Widgets. Default value is 40.
         /// </summary>
         /// <param name="value">Width</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
@@ -57,21 +57,21 @@ namespace PPlus.Controls
         IControlSliderNumber Range(double minvalue, double maxvalue);
 
         /// <summary>
-        /// Define the short step to change. ValueResult value is 1/100 of range
+        /// Define the short step to change. Default value is 1/100 of range
         /// </summary>
         /// <param name="value">short step to change</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
         IControlSliderNumber Step(double value);
 
         /// <summary>
-        /// Define the large step to change. ValueResult value is 1/10 of range
+        /// Define the large step to change. Default value is 1/10 of range
         /// </summary>
         /// <param name="value">short step to change</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
         IControlSliderNumber LargeStep(double value);
 
         /// <summary>
-        /// Define the Fracional Digits of value. ValueResult is 0.
+        /// Define the Fracional Digits of value. Default is 0.
         /// </summary>
         /// <param name="value">Fracional Digits</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
@@ -88,7 +88,7 @@ namespace PPlus.Controls
         /// Overwrite default start value with last result saved on history.
         /// </summary>
         /// <param name="value">name of file to save history</param>
-        /// <param name="timeout">The timeout for valid items saved. ValueResult value is 365 days</param>
+        /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
         IControlSliderNumber OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 
@@ -111,7 +111,7 @@ namespace PPlus.Controls
         /// Dynamically Change Gradient color Widgets
         /// <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored</br>
         /// </summary>
-        /// <param name="value">list of colors Gradient</param>
+        /// <param name="colors">list of colors Gradient</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
         IControlSliderNumber ChangeGradient(params Color[] colors);
 

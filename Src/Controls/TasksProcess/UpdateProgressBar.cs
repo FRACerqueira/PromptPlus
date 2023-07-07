@@ -14,7 +14,8 @@ namespace PPlus.Controls
         private string _lastdescription;
         private double? _lastvalue;
         private readonly object _root;
-        public UpdateProgressBar()
+
+        private UpdateProgressBar()
         {
             throw new PromptPlusException("UpdateProgressBar CTOR NotImplemented");
         }

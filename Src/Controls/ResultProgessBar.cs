@@ -6,10 +6,16 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Result value to ProgessBar Controls
+    /// Represents The Result to ProgessBar Controls
     /// </summary>
     public readonly struct ResultProgessBar<T>
     {
+        /// <summary>
+        /// Create a ResultProgessBar
+        /// </summary>
+        /// <remarks>
+        /// Do not use this constructor!
+        /// </remarks>
         public ResultProgessBar()
         {
             throw new PromptPlusException("ResultProgessBar CTOR NotImplemented");

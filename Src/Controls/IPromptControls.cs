@@ -8,7 +8,7 @@ using System.Threading;
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Interface for result controls
+    /// Represents the interface with all Methods/Properties of the control
     /// </summary>
     public interface IPromptControls<T>
     {

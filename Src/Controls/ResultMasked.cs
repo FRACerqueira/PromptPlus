@@ -6,10 +6,16 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Result value to masked Controls
+    /// Represents The Result to masked Controls
     /// </summary>
     public readonly struct ResultMasked
     {
+        /// <summary>
+        /// Create a ResultMasked
+        /// </summary>
+        /// <remarks>
+        /// Do not use this constructor!
+        /// </remarks>
         public ResultMasked()
         {
             throw new PromptPlusException("ResultMasked CTOR NotImplemented");

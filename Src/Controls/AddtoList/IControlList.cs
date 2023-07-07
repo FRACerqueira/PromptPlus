@@ -23,7 +23,7 @@ namespace PPlus.Controls
         IControlList Interaction<T>(IEnumerable<T> values, Action<IControlList, T> action);
 
         /// <summary>
-        /// <para>ValueResult initial value when when stated.</para>
+        /// <para>Default initial value when when stated.</para>
         /// </summary>
         /// <param name="value">initial value</param>
         /// <returns><see cref="IControlList"/></returns>
@@ -90,14 +90,14 @@ namespace PPlus.Controls
         IControlList AddItems(IEnumerable<string> values, bool immutable = false);
 
         /// <summary>
-        /// Set max.item view per page.ValueResult value for this control is 10.
+        /// Set max.item view per page.Default value for this control is 10.
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlList"/></returns>
         IControlList PageSize(int value);
 
         /// <summary>
-        /// Allow duplicate items.ValueResult value for this control is false.
+        /// Allow duplicate items.Default value for this control is false.
         /// </summary>
         /// <returns><see cref="IControlList"/></returns>
         IControlList AllowDuplicate();
@@ -111,14 +111,14 @@ namespace PPlus.Controls
         IControlList Range(int minvalue, int? maxvalue = null);
 
         /// <summary>
-        /// Overwrite a HotKey to edit item. ValueResult value is 'F2' 
+        /// Overwrite a HotKey to edit item. Default value is 'F2' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to edit item</param>
         /// <returns><see cref="IControlList"/></returns>
         IControlList HotKeyEditItem(HotKey value);
 
         /// <summary>
-        /// Overwrite a HotKey to remove item. ValueResult value is 'F3' 
+        /// Overwrite a HotKey to remove item. Default value is 'F3' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to remove item</param>
         /// <returns><see cref="IControlList"/></returns>

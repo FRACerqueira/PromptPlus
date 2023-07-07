@@ -14,7 +14,7 @@ namespace PPlus.Controls
     public interface IControlProgressBar<T> :IPromptControls<ResultProgessBar<T>>
     {
         /// <summary>
-        /// Hide elements progress bar Widgets. ValueResult is Show all elements
+        /// Hide elements progress bar Widgets. Default is Show all elements
         /// <br>For more one element use | separate (Enum Flag)</br>
         /// </summary>
         /// <param name="value">element to hide. <see cref="HideProgressBar"/></param>
@@ -36,7 +36,7 @@ namespace PPlus.Controls
         IControlProgressBar<T> Culture(CultureInfo value);
 
         /// <summary>
-        /// <para>Set <see cref="char"/> to show progress.ValueResult value '#'</para>
+        /// <para>Set <see cref="char"/> to show progress.Default value '#'</para>
         /// <br>Valid on ProgressBarType.Char, otherwise is ignored </br>
         /// </summary>
         /// <param name="value">Char to show</param>
@@ -45,7 +45,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// <para><see cref="CultureInfo"/> to show value format.</para>
-        /// <br>ValueResult value is global Promptplus Cultureinfo</br>  
+        /// <br>Default value is global Promptplus Cultureinfo</br>  
         /// </summary>
         /// <param name="value">Name of CultureInfo to use</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
@@ -59,18 +59,18 @@ namespace PPlus.Controls
         IControlProgressBar<T> Finish(string text);
 
         /// <summary>
-        /// <para>Overwrite <see cref="SpinnersType"/>. ValueResult value is SpinnersType.Ascii</para>
+        /// <para>Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii</para>
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>
         /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
-        /// <param name="customspinner">IEnumerable<string> for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
+        /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
         IControlProgressBar<T> Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
         /// <summary>
-        /// Define Width to Widgets. ValueResult value is 80.
+        /// Define Width to Widgets. Default value is 80.
         /// </summary>
         /// <param name="value">Width</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
@@ -84,7 +84,7 @@ namespace PPlus.Controls
         IControlProgressBar<T> Default(double value);
 
         /// <summary>
-        /// Define the Fracional Digits of value. ValueResult is 0.
+        /// Define the Fracional Digits of value. Default is 0.
         /// </summary>
         /// <param name="value">Fracional Digits</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
@@ -100,7 +100,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Dynamically Change Gradient color Widgets
         /// </summary>
-        /// <param name="value">list of colors Gradient</param>
+        /// <param name="colors">list of colors Gradient</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
         IControlProgressBar<T> ChangeGradient(params Color[] colors);
 

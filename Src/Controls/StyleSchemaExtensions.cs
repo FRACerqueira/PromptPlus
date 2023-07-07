@@ -5,12 +5,16 @@
 
 namespace PPlus.Controls
 {
+    /// <summary>
+    /// Represents The Style funtions Extensions
+    /// </summary>
     public static class StyleSchemaExtensions
     {
 
         /// <summary>
         /// Apply Foreground to <see cref="StyleControls"/>
         /// </summary>
+        ///<param name="schema">The <see cref="StyleSchema"/></param>
         /// <param name="styleControl"><see cref="StyleControls"/> to apply</param>
         /// <param name="foreground">Foreground <see cref="Color"/></param>
         /// <returns><see cref="Style"/></returns>
@@ -22,6 +26,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Apply global Background to <see cref="StyleControls"/>
         /// </summary>
+        ///<param name="schema">The <see cref="StyleSchema"/></param>
         /// <param name="styleControl"><see cref="StyleControls"/> to apply</param>
         /// <param name="background">Background <see cref="Color"/></param>
         /// <returns><see cref="Style"/></returns>

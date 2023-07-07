@@ -22,7 +22,7 @@ namespace PPlus.Controls
         IControlWait Interaction<T>(IEnumerable<T> values, Action<IControlWait,T> action);
 
         /// <summary>
-        /// Maximum number of concurrent tasks enable. ValueResult vaue is number of processors.
+        /// Maximum number of concurrent tasks enable. Default vaue is number of processors.
         /// </summary>
         /// <param name="value">Number of concurrent tasks</param>
         /// <returns><see cref="IControlWait"/></returns>
@@ -30,7 +30,7 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// Overwrite Task Title . ValueResult task title comes from the embedded resource.
+        /// Overwrite Task Title . Default task title comes from the embedded resource.
         /// </summary>
         /// <param name="value">TaskTitle Task</param>
         /// <returns><see cref="IControlWait"/></returns>
@@ -58,13 +58,13 @@ namespace PPlus.Controls
         IControlWait Finish(string text);
 
         /// <summary>
-        /// <para>Overwrite <see cref="SpinnersType"/>. ValueResult value is SpinnersType.Ascii</para>
+        /// <para>Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii</para>
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>
         /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
-        /// <param name="customspinner">IEnumerable<string> for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
+        /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlWait"/></returns>
         IControlWait Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
