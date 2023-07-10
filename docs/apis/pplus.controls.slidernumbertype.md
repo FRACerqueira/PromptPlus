@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents The slider mode
+
 ```csharp
 public enum SliderNumberType
 ```
@@ -23,6 +25,8 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 
 | Name | Value | Description |
 | --- | --: | --- |
+| LeftRight | 0 | Use Left/Right arrows to change value and show bar |
+| UpDown | 1 | Use Up/Down arrows to change value and not show bar |
 
 
 - - -

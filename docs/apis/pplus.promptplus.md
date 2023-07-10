@@ -1981,6 +1981,22 @@ Reset all config and properties to default values
 public static void Reset()
 ```
 
+### **ConsoleDefaultColor(Color, Color)**
+
+Set ForegroundColor/BackgroundColor Console
+
+```csharp
+public static void ConsoleDefaultColor(Color forecorlor, Color background)
+```
+
+#### Parameters
+
+`forecorlor` [Color](./pplus.color.md)<br>
+The [Color](./pplus.color.md) ForegroundColor
+
+`background` [Color](./pplus.color.md)<br>
+The [Color](./pplus.color.md) BackgroundColor
+
 ### **Setup(Action&lt;ProfileSetup&gt;)**
 
 Overwrite current console with new console profile.
