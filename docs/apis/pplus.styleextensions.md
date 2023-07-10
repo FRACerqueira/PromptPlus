@@ -40,7 +40,6 @@ The foreground color.
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
 The new [Style](./pplus.style.md)
 
 ### **Overflow(Style, Overflow)**
@@ -61,7 +60,6 @@ The [Overflow](./pplus.overflow.md) overflow strategy
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
 The new [Style](./pplus.style.md)
 
 ### **Background(Style, Color)**
@@ -83,7 +81,6 @@ The background color.
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
 The new [Style](./pplus.style.md)
 
 

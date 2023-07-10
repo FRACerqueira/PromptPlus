@@ -40,7 +40,6 @@ public Style ApplyStyle(StyleControls styleControl, Style value)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
 [Style](./pplus.style.md)
 
 

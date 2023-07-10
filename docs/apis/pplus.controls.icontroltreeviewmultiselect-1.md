@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlTreeViewMultiSelect 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlTreeViewMultiSelect<T> 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlTreeViewMultiSelect<T> : IPromptControls`1
+public interface IControlTreeViewMultiSelect<T> : IPromptControls<T[]>
 ```
 
 #### Type Parameters
@@ -42,7 +42,6 @@ Action to execute
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **Range(Int32, Nullable&lt;Int32&gt;)**
@@ -63,7 +62,6 @@ Maximum number of items
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -81,7 +79,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **Styles(StyleTreeView, Style)**
@@ -102,7 +99,6 @@ Styles treeview
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **ShowLines(Boolean)**
@@ -120,7 +116,6 @@ true Show lines, otherwise 'no'
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **ShowExpand(Boolean)**
@@ -138,7 +133,6 @@ true Show Expanded SymbolType, otherwise 'no'
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **PageSize(Int32)**
@@ -156,7 +150,6 @@ Number of Max.items
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **FilterType(FilterMode)**
@@ -175,7 +168,6 @@ Filter Mode
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **ExpandAll()**
@@ -188,7 +180,6 @@ IControlTreeViewMultiSelect<T> ExpandAll()
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **AddFixedSelect(T[])**
@@ -206,7 +197,6 @@ list with items selected
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **SelectAll(Func&lt;T, Boolean&gt;)**
@@ -224,7 +214,6 @@ the function
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **RootNode(T, Func&lt;T, String&gt;, Func&lt;T, Boolean&gt;, Func&lt;T, Boolean&gt;, Nullable&lt;Char&gt;, Func&lt;T, String&gt;)**
@@ -257,7 +246,6 @@ function to return unique identify node
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **AddNode(T)**
@@ -275,7 +263,6 @@ value node
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **AddNode(T, T)**
@@ -296,7 +283,6 @@ value node
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **Default(T)**
@@ -314,7 +300,6 @@ value node
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **ShowCurrentNode(Boolean)**
@@ -332,7 +317,6 @@ true Append current name node parent on description, not append
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **HotKeyFullPath(HotKey)**
@@ -350,7 +334,6 @@ The [HotKey](./pplus.controls.hotkey.md) to toggle current name node to FullPath
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **HotKeyToggleExpand(HotKey)**
@@ -368,7 +351,6 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collapse current node selecte
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **HotKeyToggleExpandAll(HotKey)**
@@ -386,7 +368,6 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all nodes
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **AfterExpanded(Action&lt;T&gt;)**
@@ -404,7 +385,6 @@ The action
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **AfterCollapsed(Action&lt;T&gt;)**
@@ -422,7 +402,6 @@ The action
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **BeforeExpanded(Action&lt;T&gt;)**
@@ -440,7 +419,6 @@ The action
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **BeforeCollapsed(Action&lt;T&gt;)**
@@ -458,7 +436,6 @@ The action
 
 #### Returns
 
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 

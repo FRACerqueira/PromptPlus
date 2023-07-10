@@ -71,8 +71,7 @@ namespace PPlus
         /// <param name="other">The other color.</param>
         /// <param name="factor">The blend factor.</param>
         /// <returns>The resulting color.</returns>
-
-        public Color Blend(Color other, float factor)
+        public readonly Color Blend(Color other, float factor)
         {
             // https://github.com/willmcgugan/rich/blob/f092b1d04252e6f6812021c0f415dd1d7be6a16a/rich/color.py#L494
             return new Color(
@@ -84,35 +83,41 @@ namespace PPlus
         /// <summary>
         /// Gets the hexadecimal representation of the color.
         /// </summary>
+        /// <param name="value">The <see cref="Color"/></param>
         /// <returns>The hexadecimal representation of the color.</returns>
-
-        public string FromHex(string value)
+        public static string FromHex(Color value)
         {
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}{1}{2}",
-                R.ToString("X2", CultureInfo.InvariantCulture),
-                G.ToString("X2", CultureInfo.InvariantCulture),
-                B.ToString("X2", CultureInfo.InvariantCulture));
+                value.R.ToString("X2", CultureInfo.InvariantCulture),
+                value.G.ToString("X2", CultureInfo.InvariantCulture),
+                value.B.ToString("X2", CultureInfo.InvariantCulture));
         }
 
         /// <inheritdoc/>
-
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             return HashCode.Combine(R, G, B);
         }
 
-        /// <inheritdoc/>
-
-        public override bool Equals(object? obj)
+        /// <summary>
+        /// Checks if <see cref="Color"/> are equal the instance.
+        /// </summary>
+        /// <param name="obj">The object to compare</param>
+        /// <returns><c>true</c> if the two colors are equal, otherwise <c>false</c>.</returns>
+        public override readonly bool Equals(object? obj)
         {
             return obj is Color color && Equals(color);
         }
 
-        /// <inheritdoc/>
 
-        public bool Equals(Color other)
+        /// <summary>
+        /// Checks if <see cref="Color"/> are equal the instance.
+        /// </summary>
+        /// <param name="other">The <see cref="Color"/></param>
+        /// <returns><c>true</c> if the two colors are equal, otherwise <c>false</c>.</returns>
+        public readonly bool Equals(Color other)
         {
             return R == other.R && G == other.G && B == other.B;
         }
@@ -259,8 +264,11 @@ namespace PPlus
             };
         }
 
-        /// <inheritdoc/>
-        public override string ToString()
+        /// <summary>
+        /// Convert to string 
+        /// </summary>
+        /// <returns>The <see cref="string"/></returns>
+        public override readonly string ToString()
         {
 
             if (Number != null)

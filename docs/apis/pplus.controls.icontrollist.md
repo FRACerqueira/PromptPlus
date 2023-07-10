@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlList : IPromptControls`1
+public interface IControlList : IPromptControls<IEnumerable<String>>
 ```
 
 Implements [IPromptControls&lt;IEnumerable&lt;String&gt;&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -43,7 +43,6 @@ Action to execute
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **Default(String)**
@@ -61,7 +60,6 @@ initial value
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **InputToCase(CaseOptions)**
@@ -79,7 +77,6 @@ Transform option
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **AcceptInput(Func&lt;Char, Boolean&gt;)**
@@ -98,7 +95,6 @@ function to accept input
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **MaxLenght(UInt16)**
@@ -116,13 +112,12 @@ Lenght
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **AddValidators(Func`2[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>Tip: see [PromptValidators](./pplus.controls.promptvalidators.md) to validators embeding
+ <br>Tip: see  to validators embeding
 
 ```csharp
 IControlList AddValidators(Func`2[] validators)
@@ -135,7 +130,6 @@ the function validator.
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -153,7 +147,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
@@ -171,7 +164,6 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **AddItem(String, Boolean)**
@@ -192,7 +184,6 @@ true the item cannot be removed; otherwise yes.
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **AddItems(IEnumerable&lt;String&gt;, Boolean)**
@@ -213,7 +204,6 @@ true the item cannot be removed; otherwise yes.
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **PageSize(Int32)**
@@ -231,7 +221,6 @@ Number of Max.items
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **AllowDuplicate()**
@@ -244,7 +233,6 @@ IControlList AllowDuplicate()
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **Range(Int32, Nullable&lt;Int32&gt;)**
@@ -265,7 +253,6 @@ Maximum number of items
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **HotKeyEditItem(HotKey)**
@@ -283,7 +270,6 @@ The [HotKey](./pplus.controls.hotkey.md) to edit item
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **HotKeyRemoveItem(HotKey)**
@@ -301,7 +287,6 @@ The [HotKey](./pplus.controls.hotkey.md) to remove item
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 

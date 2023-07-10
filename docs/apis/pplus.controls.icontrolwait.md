@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlWait : IPromptControls`1
+public interface IControlWait : IPromptControls<IEnumerable<StateProcess>>
 ```
 
 Implements [IPromptControls&lt;IEnumerable&lt;StateProcess&gt;&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -43,7 +43,6 @@ Action to execute
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 [IControlWait](./pplus.controls.icontrolwait.md)
 
 ### **MaxDegreeProcess(Int32)**
@@ -61,7 +60,6 @@ Number of concurrent tasks
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 [IControlWait](./pplus.controls.icontrolwait.md)
 
 ### **TaskTitle(String)**
@@ -79,7 +77,6 @@ TaskTitle Task
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 [IControlWait](./pplus.controls.icontrolwait.md)
 
 ### **ShowElapsedTime()**
@@ -92,7 +89,6 @@ IControlWait ShowElapsedTime()
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 [IControlWait](./pplus.controls.icontrolwait.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -110,7 +106,6 @@ Action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 [IControlWait](./pplus.controls.icontrolwait.md)
 
 ### **Finish(String)**
@@ -128,7 +123,6 @@ Text Finish answer
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 [IControlWait](./pplus.controls.icontrolwait.md)
 
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
@@ -156,7 +150,6 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 [IControlWait](./pplus.controls.icontrolwait.md)
 
 ### **AddStep(StepMode, Action`1[])**
@@ -177,7 +170,6 @@ list of tasks
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 [IControlWait](./pplus.controls.icontrolwait.md)
 
 ### **AddStep(StepMode, String, String, Action`1[])**
@@ -204,7 +196,6 @@ list of tasks
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 [IControlWait](./pplus.controls.icontrolwait.md)
 
 

@@ -15,8 +15,8 @@ namespace PPlus
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
-        /// <returns><see cref="IControlProgressBar{object}"/></returns>
-        public static IControlProgressBar<object> ProgressBar(string prompt, string ?description = null)
+        /// <returns><see cref="IControlProgressBar{Object}"/></returns>
+        public static IControlProgressBar<object> ProgressBar(string prompt, string? description = null)
         {
             return ProgressBar<object>(ProgressBarType.Fill, prompt, null, description, null);
         }

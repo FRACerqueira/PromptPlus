@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlSliderNumber : IPromptControls`1
+public interface IControlSliderNumber : IPromptControls<Double>
 ```
 
 Implements [IPromptControls&lt;Double&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -35,7 +35,6 @@ CultureInfo to use on validate
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **Culture(String)**
@@ -54,7 +53,6 @@ Name of CultureInfo to use on validate
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **Default(Double)**
@@ -72,7 +70,6 @@ value
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **MoveKeyPress(SliderNumberType)**
@@ -91,7 +88,6 @@ Left/Right or Up/Down. [SliderNumberType](./pplus.controls.slidernumbertype.md)
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **Width(Int32)**
@@ -109,7 +105,6 @@ Width
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **Range(Double, Double)**
@@ -130,7 +125,6 @@ Maximum number
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **Step(Double)**
@@ -148,7 +142,6 @@ short step to change
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **LargeStep(Double)**
@@ -166,7 +159,6 @@ short step to change
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **FracionalDig(Int32)**
@@ -184,7 +176,6 @@ Fracional Digits
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -202,7 +193,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
@@ -223,7 +213,6 @@ The timeout for valid items saved. Default value is 365 days
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **ChangeDescription(Func&lt;Double, String&gt;)**
@@ -241,7 +230,6 @@ function to apply change
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **ChangeColor(Func&lt;Double, Color&gt;)**
@@ -260,7 +248,6 @@ function to change color
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **ChangeGradient(Color[])**
@@ -279,7 +266,6 @@ list of colors Gradient
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 

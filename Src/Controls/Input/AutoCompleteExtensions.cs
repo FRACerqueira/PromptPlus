@@ -15,7 +15,7 @@ namespace PPlus
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns><see cref="IControlInput"/></returns>
+        /// <returns><see cref="IControlAutoComplete"/></returns>
         public static IControlAutoComplete AutoComplete(string prompt, Action<IPromptConfig> config = null)
         {
             return AutoComplete(prompt,"",config);
@@ -27,7 +27,7 @@ namespace PPlus
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns><see cref="IControlInput"/></returns>
+        /// <returns><see cref="IControlAutoComplete"/></returns>
         public static IControlAutoComplete AutoComplete(string prompt, string? description, Action<IPromptConfig> config = null)
         {
             var opt = new AutoCompleteOptions(true)

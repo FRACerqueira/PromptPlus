@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlMaskEdit : IPromptControls`1
+public interface IControlMaskEdit : IPromptControls<ResultMasked>
 ```
 
 Implements [IPromptControls&lt;ResultMasked&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -36,7 +36,6 @@ Style
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **NegativeStyle(Style)**
@@ -55,7 +54,6 @@ Style
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **PositiveStyle(Style)**
@@ -74,13 +72,12 @@ Style
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Mask(String, Nullable&lt;Char&gt;)**
 
 Defines mask input. Rules for Generic type:
- <br>9 - Only a numeric character<br>L - Only a letter<br>C - OnlyCustom character<br>A - Any character<br>N - OnlyCustom character + Only a numeric character<br>X - OnlyCustom character + Only a letter<br>\ - Escape character<br>{ - Initial delimiter for repetition of masks<br>} - Final delimiter for repetition of masks<br>[-Initial delimiter for list of Custom character<br>] - Final delimiter for list of Custom character
+ <br>9 - Only a numeric character<br>L - Only a letter<br>C - OnlyCustom character<br>A - Any character<br>N - OnlyCustom character +  Only a numeric character<br>X - OnlyCustom character +  Only a letter<br>\ - Escape character<br>{ - Initial delimiter for repetition of masks<br>} - Final delimiter for repetition of masks<br>[-Initial delimiter for list of Custom character<br>] - Final delimiter for list of Custom character
 
 ```csharp
 IControlMaskEdit Mask(string value, Nullable<char> promptmask)
@@ -96,7 +93,6 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Mask(MaskedType, Nullable&lt;Char&gt;)**
@@ -117,7 +113,6 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **AcceptEmptyValue()**
@@ -131,7 +126,6 @@ IControlMaskEdit AcceptEmptyValue()
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **DefaultIfEmpty(String, Boolean)**
@@ -152,7 +146,6 @@ Valid only for type MaskedType.Number or MaskedType.Currency, otherwise this set
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **FillZeros()**
@@ -166,7 +159,6 @@ IControlMaskEdit FillZeros()
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Culture(CultureInfo)**
@@ -185,7 +177,6 @@ CultureInfo to use on validate
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Culture(String)**
@@ -204,7 +195,6 @@ Name of CultureInfo to use on validate
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **FormatYear(FormatYear)**
@@ -223,7 +213,6 @@ IControlMaskEdit FormatYear(FormatYear value)
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **FormatTime(FormatTime)**
@@ -242,7 +231,6 @@ IControlMaskEdit FormatTime(FormatTime value)
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **AmmoutPositions(Int32, Int32, Boolean)**
@@ -267,7 +255,6 @@ True accept signal; otherwise, no.
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **DescriptionWithInputType(FormatWeek)**
@@ -285,7 +272,6 @@ show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Default(String)**
@@ -303,7 +289,6 @@ Value default
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
@@ -324,7 +309,6 @@ The timeout for valid items saved. Default value is 365 days
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **InputToCase(CaseOptions)**
@@ -342,13 +326,12 @@ Transform option
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **AddValidators(Func`2[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>Tip: see [PromptValidators](./pplus.controls.promptvalidators.md) to validators embeding
+ <br>Tip: see  to validators embeding
 
 ```csharp
 IControlMaskEdit AddValidators(Func`2[] validators)
@@ -361,7 +344,6 @@ the function validator.
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **ValidateOnDemand(Boolean)**
@@ -379,7 +361,6 @@ true execute validators foreach input; otherwise, only at finish.
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **ChangeDescription(Func&lt;String, String&gt;)**
@@ -397,7 +378,6 @@ function to apply change
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -415,7 +395,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
@@ -433,7 +412,6 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **HistoryMinimumPrefixLength(Int32)**
@@ -452,7 +430,6 @@ Minimum chars number
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **HistoryEnabled(String)**
@@ -471,7 +448,6 @@ name of file to saved history
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **HistoryTimeout(TimeSpan)**
@@ -489,7 +465,6 @@ timeout value
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **HistoryMaxItems(Byte)**
@@ -507,7 +482,6 @@ maximum items saved
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **HistoryPageSize(Int32)**
@@ -525,7 +499,6 @@ Number of Max.items
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **FilterType(FilterMode)**
@@ -544,7 +517,6 @@ Filter Mode
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 

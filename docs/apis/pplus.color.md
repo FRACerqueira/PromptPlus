@@ -3196,24 +3196,23 @@ The blend factor.
 
 #### Returns
 
-[Color](./pplus.color.md)<br>
 The resulting color.
 
-### **FromHex(String)**
+### **FromHex(Color)**
 
 Gets the hexadecimal representation of the color.
 
 ```csharp
-string FromHex(string value)
+string FromHex(Color value)
 ```
 
 #### Parameters
 
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`value` [Color](./pplus.color.md)<br>
+The [Color](./pplus.color.md)
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The hexadecimal representation of the color.
 
 ### **GetHashCode()**
@@ -3224,9 +3223,11 @@ int GetHashCode()
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)
 
 ### **Equals(Object)**
+
+Checks if [Color](./pplus.color.md) are equal the instance.
 
 ```csharp
 bool Equals(object obj)
@@ -3235,12 +3236,15 @@ bool Equals(object obj)
 #### Parameters
 
 `obj` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+The object to compare
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+`true` if the two colors are equal, otherwise `false`.
 
 ### **Equals(Color)**
+
+Checks if [Color](./pplus.color.md) are equal the instance.
 
 ```csharp
 bool Equals(Color other)
@@ -3249,10 +3253,11 @@ bool Equals(Color other)
 #### Parameters
 
 `other` [Color](./pplus.color.md)<br>
+The [Color](./pplus.color.md)
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+`true` if the two colors are equal, otherwise `false`.
 
 ### **FromHtml(String)**
 
@@ -3269,7 +3274,6 @@ The html color to convert.
 
 #### Returns
 
-[Color](./pplus.color.md)<br>
 A [Color](./pplus.color.md).
 
 ### **ToConsoleColor(Color)**
@@ -3287,7 +3291,6 @@ The color to convert.
 
 #### Returns
 
-ConsoleColor<br>
 A  representing the [Color](./pplus.color.md).
 
 ### **FromInt32(Int32)**
@@ -3305,7 +3308,6 @@ The color number.
 
 #### Returns
 
-[Color](./pplus.color.md)<br>
 The color representing the specified color number.
 
 ### **FromConsoleColor(ConsoleColor)**
@@ -3323,10 +3325,11 @@ The color to convert.
 
 #### Returns
 
-[Color](./pplus.color.md)<br>
 A [Color](./pplus.color.md) representing the .
 
 ### **ToString()**
+
+Convert to string
 
 ```csharp
 string ToString()
@@ -3334,7 +3337,7 @@ string ToString()
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)
 
 
 - - -

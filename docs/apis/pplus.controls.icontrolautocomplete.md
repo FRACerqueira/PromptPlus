@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlAutoComplete : IPromptControls`1
+public interface IControlAutoComplete : IPromptControls<String>
 ```
 
 Implements [IPromptControls&lt;String&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -35,7 +35,6 @@ Number of Max.items
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
@@ -63,7 +62,6 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **MinimumPrefixLength(Int32)**
@@ -82,7 +80,6 @@ Number of chars
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **CompletionWaitToStart(Int32)**
@@ -101,7 +98,6 @@ Number of mileseconds
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **CompletionMaxCount(Int32)**
@@ -119,7 +115,6 @@ Number of max.items
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **CompletionAsyncService(Func&lt;String, Int32, CancellationToken, Task&lt;String[]&gt;&gt;)**
@@ -138,7 +133,6 @@ function to autocomplete
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **DefaultIfEmpty(String)**
@@ -156,7 +150,6 @@ Finished value default
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **Default(String)**
@@ -174,7 +167,6 @@ Value default
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
@@ -195,7 +187,6 @@ The timeout for valid items saved. Default value is 365 days
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 IControlAutoComplete
 
 ### **InputToCase(CaseOptions)**
@@ -213,7 +204,6 @@ Transform option
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **AcceptInput(Func&lt;Char, Boolean&gt;)**
@@ -232,7 +222,6 @@ function to accept
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **MaxLenght(UInt16)**
@@ -250,13 +239,12 @@ Lenght
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **AddValidators(Func`2[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>Tip: see [PromptValidators](./pplus.controls.promptvalidators.md) to validators embeding
+ <br>Tip: see  to validators embeding
 
 ```csharp
 IControlAutoComplete AddValidators(Func`2[] validators)
@@ -269,7 +257,6 @@ the function validator.
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **ValidateOnDemand(Boolean)**
@@ -287,7 +274,6 @@ true execute validators foreach input; otherwise, only at finish.
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **ChangeDescription(Func&lt;String, String&gt;)**
@@ -305,7 +291,6 @@ function to apply change
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -323,7 +308,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 

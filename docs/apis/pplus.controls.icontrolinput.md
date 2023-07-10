@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlInput : IPromptControls`1
+public interface IControlInput : IPromptControls<String>
 ```
 
 Implements [IPromptControls&lt;String&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -35,7 +35,6 @@ Finished value default
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **Default(String)**
@@ -53,7 +52,6 @@ Value default
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
@@ -74,7 +72,6 @@ The timeout for valid items saved. Default value is 365 days
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **InputToCase(CaseOptions)**
@@ -92,7 +89,6 @@ Transform option
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **AcceptInput(Func&lt;Char, Boolean&gt;)**
@@ -111,7 +107,6 @@ function to accept
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **MaxLenght(UInt16)**
@@ -129,7 +124,6 @@ Lenght
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **IsSecret(Nullable&lt;Char&gt;)**
@@ -147,7 +141,6 @@ char secret
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **EnabledViewSecret(Nullable&lt;HotKey&gt;)**
@@ -165,13 +158,12 @@ Overwrite a [HotKey](./pplus.controls.hotkey.md) to toggle view. Default value i
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **AddValidators(Func`2[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>Tip: see [PromptValidators](./pplus.controls.promptvalidators.md) to validators embeding
+ <br>Tip: see  to validators embeding
 
 ```csharp
 IControlInput AddValidators(Func`2[] validators)
@@ -184,7 +176,6 @@ the function validator.
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **ValidateOnDemand(Boolean)**
@@ -202,7 +193,6 @@ true execute validators foreach input; otherwise, only at finish.
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **ChangeDescription(Func&lt;String, String&gt;)**
@@ -220,7 +210,6 @@ function to apply change
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -238,7 +227,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
@@ -256,7 +244,6 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **HistoryMinimumPrefixLength(Int32)**
@@ -275,7 +262,6 @@ Minimum chars number
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **HistoryEnabled(String)**
@@ -294,7 +280,6 @@ name of file to saved history
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **HistoryTimeout(TimeSpan)**
@@ -312,7 +297,6 @@ timeout value
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **HistoryMaxItems(Byte)**
@@ -330,7 +314,6 @@ maximum items saved
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **HistoryPageSize(Int32)**
@@ -348,7 +331,6 @@ Number of Max.items
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **FilterType(FilterMode)**
@@ -367,7 +349,6 @@ Filter Mode
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 

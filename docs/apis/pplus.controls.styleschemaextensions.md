@@ -43,7 +43,6 @@ Foreground [Color](./pplus.color.md)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
 [Style](./pplus.style.md)
 
 ### **ApplyBackground(StyleSchema, StyleControls, Color)**
@@ -67,7 +66,6 @@ Background [Color](./pplus.color.md)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
 [Style](./pplus.style.md)
 
 ### **Prompt(StyleSchema)**
@@ -85,7 +83,7 @@ public static Style Prompt(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **Slider(StyleSchema)**
 
@@ -102,7 +100,7 @@ public static Style Slider(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **Answer(StyleSchema)**
 
@@ -119,7 +117,7 @@ public static Style Answer(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **Description(StyleSchema)**
 
@@ -136,7 +134,7 @@ public static Style Description(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **Sugestion(StyleSchema)**
 
@@ -153,7 +151,7 @@ public static Style Sugestion(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **Selected(StyleSchema)**
 
@@ -170,7 +168,7 @@ public static Style Selected(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **UnSelected(StyleSchema)**
 
@@ -187,7 +185,7 @@ public static Style UnSelected(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **Disabled(StyleSchema)**
 
@@ -204,7 +202,7 @@ public static Style Disabled(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **Error(StyleSchema)**
 
@@ -221,7 +219,7 @@ public static Style Error(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **Pagination(StyleSchema)**
 
@@ -238,7 +236,7 @@ public static Style Pagination(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **TaggedInfo(StyleSchema)**
 
@@ -255,7 +253,7 @@ public static Style TaggedInfo(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **Tooltips(StyleSchema)**
 
@@ -272,7 +270,7 @@ public static Style Tooltips(StyleSchema schema)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 
 - - -

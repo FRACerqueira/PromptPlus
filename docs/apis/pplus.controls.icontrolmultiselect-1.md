@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlMultiSelect 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlMultiSelect<T> 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlMultiSelect<T> : IPromptControls`1
+public interface IControlMultiSelect<T> : IPromptControls<IEnumerable<T>>
 ```
 
 #### Type Parameters
@@ -47,7 +47,6 @@ Action to execute
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -65,7 +64,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **OverflowAnswer(Overflow)**
@@ -84,7 +82,6 @@ Overflow strategy
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **AppendGroupOnDescription()**
@@ -97,7 +94,6 @@ IControlMultiSelect<T> AppendGroupOnDescription()
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **AddDefault(T[])**
@@ -115,7 +111,6 @@ Value default
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
@@ -133,7 +128,6 @@ expresion to sort the colletion
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
@@ -151,7 +145,6 @@ expresion to sort the colletion
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
@@ -172,7 +165,6 @@ The timeout for valid items saved. Default value is 365 days
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **PageSize(Int32)**
@@ -190,7 +182,6 @@ Number of Max.items
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **FilterType(FilterMode)**
@@ -209,7 +200,6 @@ Filter Mode
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **HotKeySelectAll(HotKey)**
@@ -227,7 +217,6 @@ The [HotKey](./pplus.controls.hotkey.md) to Select All item
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **HotKeyInvertSelected(HotKey)**
@@ -245,7 +234,6 @@ The [HotKey](./pplus.controls.hotkey.md) to Invert Selected item
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **TextSelector(Func&lt;T, String&gt;)**
@@ -263,7 +251,6 @@ Function to show text Item in list
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **ChangeDescription(Func&lt;T, String&gt;)**
@@ -281,7 +268,6 @@ function to apply change
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **AddItem(T, Boolean, Boolean)**
@@ -305,7 +291,6 @@ true item selected, otherwise no
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **AddItems(IEnumerable&lt;T&gt;, Boolean, Boolean)**
@@ -329,7 +314,6 @@ true item selected, otherwise no
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **AddItemGrouped(String, T, Boolean, Boolean)**
@@ -356,7 +340,6 @@ true item selected, otherwise no
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **AddItemsGrouped(String, IEnumerable&lt;T&gt;, Boolean, Boolean)**
@@ -383,12 +366,11 @@ true item selected, otherwise no
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **AddItemTo(AdderScope, T)**
 
-Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled [AdderScope](./pplus.controls.adderscope.md)<br>Tip: Use [IControlMultiSelect&lt;T&gt;.EqualItems(Func&lt;T, T, Boolean&gt;)](./pplus.controls.icontrolmultiselect-1.md#equalitemsfunct-t-boolean) for custom comparer
+Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
 ```csharp
 IControlMultiSelect<T> AddItemTo(AdderScope scope, T value)
@@ -404,12 +386,11 @@ item
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
 
-Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled [AdderScope](./pplus.controls.adderscope.md)<br>Tip: Use [IControlMultiSelect&lt;T&gt;.EqualItems(Func&lt;T, T, Boolean&gt;)](./pplus.controls.icontrolmultiselect-1.md#equalitemsfunct-t-boolean) for custom comparer
+Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
 ```csharp
 IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
@@ -425,7 +406,6 @@ items colletion
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **EqualItems(Func&lt;T, T, Boolean&gt;)**
@@ -443,7 +423,6 @@ function comparator
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **Range(Int32, Nullable&lt;Int32&gt;)**
@@ -464,7 +443,6 @@ Maximum number of items
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 

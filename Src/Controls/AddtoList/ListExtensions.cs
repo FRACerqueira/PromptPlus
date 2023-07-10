@@ -27,7 +27,7 @@ namespace PPlus
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns><see cref="IControlInput"/></returns>
+        /// <returns><see cref="IControlList"/></returns>
         public static IControlList AddtoList(string prompt, string description, Action<IPromptConfig> config = null)
         {
             var opt = new ListOptions(true)
@@ -45,7 +45,7 @@ namespace PPlus
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns><see cref="IControlInput"/></returns>
+        /// <returns><see cref="IControlList"/></returns>
         public static IControlList AddtoList(string prompt, Action<IPromptConfig> config)
         {
             var opt = new ListOptions(true)

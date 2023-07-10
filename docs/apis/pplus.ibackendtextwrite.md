@@ -41,7 +41,6 @@ Clear rest of line after write
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Number of lines write on console
 
 ### **WriteLine(String, Nullable&lt;Style&gt;, Boolean)**
@@ -65,7 +64,6 @@ Clear rest of line after write
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Number of lines write on console
 
 

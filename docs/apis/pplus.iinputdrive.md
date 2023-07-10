@@ -85,7 +85,6 @@ Determines whether to display the pressed key in the console window. true to not
 
 #### Returns
 
-ConsoleKeyInfo<br>
 <br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
 ### **WaitKeypress(Boolean, Nullable&lt;CancellationToken&gt;)**
@@ -106,7 +105,6 @@ The token to monitor for cancellation requests.
 
 #### Returns
 
-[Nullable&lt;ConsoleKeyInfo&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 <br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
 ### **ReadLine()**
@@ -119,7 +117,6 @@ string ReadLine()
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The returned value is null if the end of the input stream has been reached.
 
 ### **SetIn(TextReader)**

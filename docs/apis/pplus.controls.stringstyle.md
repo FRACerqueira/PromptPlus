@@ -103,8 +103,7 @@ The StringStyle to compare.
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if the two StringStyle are equal, otherwise `false`false.
+`true` if the two StringStyle are equal, otherwise `false`.
 
 ### **Equals(Object)**
 
@@ -118,7 +117,7 @@ bool Equals(object obj)
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
 
 ### **GetHashCode()**
 
@@ -128,7 +127,7 @@ int GetHashCode()
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)
 
 
 - - -

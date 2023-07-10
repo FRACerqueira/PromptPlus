@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlSelectBrowser : IPromptControls`1
+public interface IControlSelectBrowser : IPromptControls<ItemBrowser>
 ```
 
 Implements [IPromptControls&lt;ItemBrowser&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -35,7 +35,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **NoSpinner()**
@@ -48,7 +47,6 @@ IControlSelectBrowser NoSpinner()
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **DisabledRecursiveExpand()**
@@ -62,7 +60,6 @@ IControlSelectBrowser DisabledRecursiveExpand()
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
@@ -90,7 +87,6 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **Styles(StyleBrowser, Style)**
@@ -111,7 +107,6 @@ Styles Browser
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **ShowLines(Boolean)**
@@ -129,7 +124,6 @@ true Show lines, otherwise 'no'
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **ShowExpand(Boolean)**
@@ -147,7 +141,6 @@ true Show Expanded SymbolType, otherwise 'no'
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **OnlyFolders(Boolean)**
@@ -165,7 +158,6 @@ true only Folders, otherwise Folders and files
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **ShowSize(Boolean)**
@@ -183,7 +175,6 @@ true Show size, otherwise 'no'
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **AcceptHiddenAttributes(Boolean)**
@@ -201,7 +192,6 @@ true accept hidden folder and files, otherwise 'no'
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **AcceptSystemAttributes(Boolean)**
@@ -219,7 +209,6 @@ true accept system folder and files, otherwise 'no'
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **SearchFolderPattern(String)**
@@ -237,7 +226,6 @@ Search pattern
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **SearchFilePattern(String)**
@@ -255,7 +243,6 @@ Search pattern
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **PageSize(Int32)**
@@ -273,7 +260,6 @@ Number of Max.items
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **FilterType(FilterMode)**
@@ -292,7 +278,6 @@ Filter Mode
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **Root(String, Boolean, Func&lt;ItemBrowser, Boolean&gt;, Func&lt;ItemBrowser, Boolean&gt;)**
@@ -319,7 +304,6 @@ Disabled all items that satisfy the disabled function
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **Default(String)**
@@ -337,7 +321,6 @@ fullpath
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **ShowCurrentFolder(Boolean)**
@@ -355,7 +338,6 @@ true Append current name folder on description, not append
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **HotKeyFullPath(HotKey)**
@@ -373,7 +355,6 @@ The [HotKey](./pplus.controls.hotkey.md) to oggle current name folder to FullPat
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **HotKeyToggleExpand(HotKey)**
@@ -391,7 +372,6 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collapse current folder selec
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **HotKeyToggleExpandAll(HotKey)**
@@ -409,7 +389,6 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all folders
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **AfterExpanded(Action&lt;ItemBrowser&gt;)**
@@ -427,7 +406,6 @@ The action
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **AfterCollapsed(Action&lt;ItemBrowser&gt;)**
@@ -445,7 +423,6 @@ The action
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **BeforeExpanded(Action&lt;ItemBrowser&gt;)**
@@ -463,7 +440,6 @@ The action
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **BeforeCollapsed(Action&lt;ItemBrowser&gt;)**
@@ -481,7 +457,6 @@ The action
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 

@@ -48,7 +48,7 @@ namespace PPlus
         /// <param name="delay">The delay process</param>
         /// <param name="spinnersType">spinners Type <see cref="SpinnersType"/></param>
         /// <param name="showCountdown">True show Countdown, otherwise 'no'</param>
-        ///<param name="config">The config action <see cref="IPromptConfig"/></param>
+        /// <param name="config">The config action <see cref="IPromptConfig"/></param>
         /// <param name="cancellationToken"><see cref="CancellationToken"/> for control</param>
 
         public static void WaitTimer(string prompt, TimeSpan delay, SpinnersType spinnersType = SpinnersType.Ascii, bool showCountdown = false, Action<IPromptConfig> config = null, CancellationToken? cancellationToken = null)

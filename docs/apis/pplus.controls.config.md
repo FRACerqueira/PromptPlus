@@ -70,7 +70,7 @@ public int CompletionWaitToStart { get; set; }
 ### **CompletionMaxCount**
 
 Get/Set Completion Max Items to return.
- <br>Default value : 1000. If value less than 1 internal sette to 1.
+ <br>Default value : 1000. If value  less than 1 internal sette to 1.
 
 ```csharp
 public int CompletionMaxCount { get; set; }
@@ -148,7 +148,7 @@ public bool HideOnAbort { get; set; }
 ### **SecretChar**
 
 Get/Set value char for secret input
- <br>Default value : '#'. Fall-back when null : '#'
+ <br>Default value : '#'.  Fall-back when null : '#'
 
 ```csharp
 public Nullable<char> SecretChar { get; set; }
@@ -161,7 +161,7 @@ public Nullable<char> SecretChar { get; set; }
 ### **YesChar**
 
 Get/Set value for YES answer
- <br>Default value : YesChar in built-in resources. Fall-back when null : Y
+ <br>Default value : YesChar in built-in resources.  Fall-back when null : Y
 
 ```csharp
 public Nullable<char> YesChar { get; set; }
@@ -174,7 +174,7 @@ public Nullable<char> YesChar { get; set; }
 ### **NoChar**
 
 Get/Set value for NO answer
- <br>Default value : NoChar in built-in resources. Fall-back when null : N
+ <br>Default value : NoChar in built-in resources.  Fall-back when null : N
 
 ```csharp
 public Nullable<char> NoChar { get; set; }
@@ -324,7 +324,6 @@ Text symbol when has unicode support
 
 #### Returns
 
-[ValueTuple&lt;String, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.valuetuple-2)<br>
 (string value, string unicode) value
 
 

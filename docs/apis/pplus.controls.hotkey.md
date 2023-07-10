@@ -189,7 +189,7 @@ string ToString()
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)
 
 ### **Equals(ConsoleKeyInfo)**
 
@@ -206,8 +206,7 @@ The ConsoleKeyInfo to compare.
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if the Hotkey are equal, otherwise `false`false.
+`true` if the Hotkey are equal, otherwise `false`.
 
 
 - - -

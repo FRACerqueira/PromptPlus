@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlTreeViewSelect 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlTreeViewSelect<T> 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlTreeViewSelect<T> : IPromptControls`1
+public interface IControlTreeViewSelect<T> : IPromptControls<T>
 ```
 
 #### Type Parameters
@@ -42,7 +42,6 @@ Action to execute
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -60,7 +59,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **Styles(StyleTreeView, Style)**
@@ -81,7 +79,6 @@ Styles treeview
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **ShowLines(Boolean)**
@@ -99,7 +96,6 @@ true Show lines, otherwise 'no'
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **ShowExpand(Boolean)**
@@ -117,7 +113,6 @@ true Show Expanded SymbolType, otherwise 'no'
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **PageSize(Int32)**
@@ -135,7 +130,6 @@ Number of Max.items
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **RootNode(T, Func&lt;T, String&gt;, Boolean, Func&lt;T, Boolean&gt;, Func&lt;T, Boolean&gt;, Nullable&lt;Char&gt;, Func&lt;T, String&gt;)**
@@ -171,7 +165,6 @@ function to return unique identify node
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **AddNode(T)**
@@ -189,7 +182,6 @@ value node
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **AddNode(T, T)**
@@ -210,7 +202,6 @@ value node
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **Default(T)**
@@ -228,7 +219,6 @@ value node
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **ShowCurrentNode(Boolean)**
@@ -246,7 +236,6 @@ true Append current name node parent on description, not append
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **HotKeyFullPath(HotKey)**
@@ -264,7 +253,6 @@ The [HotKey](./pplus.controls.hotkey.md) to toggle current name node to FullPath
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **HotKeyToggleExpand(HotKey)**
@@ -282,7 +270,6 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collapse current node selecte
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **HotKeyToggleExpandAll(HotKey)**
@@ -300,7 +287,6 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all nodes
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **AfterExpanded(Action&lt;T&gt;)**
@@ -318,7 +304,6 @@ The action
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **AfterCollapsed(Action&lt;T&gt;)**
@@ -336,7 +321,6 @@ The action
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **BeforeExpanded(Action&lt;T&gt;)**
@@ -354,7 +338,6 @@ The action
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **BeforeCollapsed(Action&lt;T&gt;)**
@@ -372,7 +355,6 @@ The action
 
 #### Returns
 
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 

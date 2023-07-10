@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlKeyPress : IPromptControls`1
+public interface IControlKeyPress : IPromptControls<ConsoleKeyInfo>
 ```
 
 Implements [IPromptControls&lt;ConsoleKeyInfo&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -35,7 +35,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **AddKeyValid(ConsoleKey, Nullable&lt;ConsoleModifiers&gt;)**
@@ -56,7 +55,6 @@ Modifiers
 
 #### Returns
 
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **TextKeyValid(Func&lt;ConsoleKeyInfo, String&gt;)**
@@ -75,7 +73,6 @@ Transform function. When return null value the control use defaut string
 
 #### Returns
 
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
@@ -103,7 +100,6 @@ IEnumerable value for custom spinner. Valid only to SpinnersType.custom, otherwi
 
 #### Returns
 
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 

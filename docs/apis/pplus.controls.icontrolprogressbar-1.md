@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlProgressBar 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlProgressBar<T> 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlProgressBar<T> : IPromptControls`1
+public interface IControlProgressBar<T> : IPromptControls<ResultProgessBar<T>>
 ```
 
 #### Type Parameters
@@ -40,7 +40,6 @@ element to hide. [HideProgressBar](./pplus.controls.hideprogressbar.md)
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -58,7 +57,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **Culture(CultureInfo)**
@@ -76,7 +74,6 @@ CultureInfo to use
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **CharBar(Char)**
@@ -95,7 +92,6 @@ Char to show
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **Culture(String)**
@@ -114,7 +110,6 @@ Name of CultureInfo to use
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **Finish(String)**
@@ -132,7 +127,6 @@ text Finish answer
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
@@ -160,7 +154,6 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **Width(Int32)**
@@ -178,7 +171,6 @@ Width
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **Default(Double)**
@@ -196,7 +188,6 @@ value
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **FracionalDig(Int32)**
@@ -214,7 +205,6 @@ Fracional Digits
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **ChangeColor(Func&lt;Double, Style&gt;)**
@@ -232,7 +222,6 @@ function to change color
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **ChangeGradient(Color[])**
@@ -250,7 +239,6 @@ list of colors Gradient
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **UpdateHandler(Action&lt;UpdateProgressBar&lt;T&gt;, CancellationToken&gt;)**
@@ -268,7 +256,6 @@ Handler.See [UpdateProgressBar&lt;T&gt;](./pplus.controls.updateprogressbar-1.md
 
 #### Returns
 
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 

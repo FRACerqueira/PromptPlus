@@ -37,7 +37,6 @@ The value to write.
 
 #### Returns
 
-[Color](./pplus.color.md)<br>
 [Color](./pplus.color.md) White or Black
 
 

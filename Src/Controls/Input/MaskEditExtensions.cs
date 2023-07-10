@@ -15,7 +15,7 @@ namespace PPlus
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns><see cref="IControlKeyPress"/></returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         public static IControlMaskEdit MaskEdit(string prompt, Action<IPromptConfig> config = null)
         {
             return MaskEdit(prompt,"",config);
@@ -27,7 +27,7 @@ namespace PPlus
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns><see cref="IControlKeyPress"/></returns>
+        /// <returns><see cref="IControlMaskEdit"/></returns>
         public static IControlMaskEdit MaskEdit(string prompt, string? description , Action<IPromptConfig> config = null)
         {
             var opt = new MaskEditOptions(true)

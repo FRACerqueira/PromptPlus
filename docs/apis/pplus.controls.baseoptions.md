@@ -33,7 +33,7 @@ public IPromptConfig EnabledAbortKey(bool value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **ShowTooltip(Boolean)**
 
@@ -47,7 +47,7 @@ public IPromptConfig ShowTooltip(bool value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **HideAfterFinish(Boolean)**
 
@@ -61,7 +61,7 @@ public IPromptConfig HideAfterFinish(bool value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **HideOnAbort(Boolean)**
 
@@ -75,7 +75,7 @@ public IPromptConfig HideOnAbort(bool value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **SetContext(Object)**
 
@@ -89,7 +89,7 @@ public IPromptConfig SetContext(object value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **AddExtraAction(StageControl, Action&lt;Object, Object&gt;)**
 
@@ -105,7 +105,7 @@ public IPromptConfig AddExtraAction(StageControl stage, Action<object, object> u
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Description(StringStyle)**
 
@@ -119,7 +119,7 @@ public IPromptConfig Description(StringStyle value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Prompt(StringStyle)**
 
@@ -133,7 +133,7 @@ public IPromptConfig Prompt(StringStyle value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Tooltips(StringStyle)**
 
@@ -147,7 +147,7 @@ public IPromptConfig Tooltips(StringStyle value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Description(String)**
 
@@ -161,7 +161,7 @@ public IPromptConfig Description(string value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Prompt(String)**
 
@@ -175,7 +175,7 @@ public IPromptConfig Prompt(string value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Tooltips(String)**
 
@@ -189,7 +189,7 @@ public IPromptConfig Tooltips(string value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **ApplyStyle(StyleControls, Style)**
 
@@ -205,7 +205,7 @@ public IPromptConfig ApplyStyle(StyleControls styleControl, Style value)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Symbols(SymbolType, String, String)**
 
@@ -223,7 +223,7 @@ public IPromptConfig Symbols(SymbolType schema, string value, string unicode)
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 
 - - -

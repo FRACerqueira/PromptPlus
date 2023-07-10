@@ -14,7 +14,6 @@ namespace PPlus
         /// <summary>
         /// Create MultiSelect Control. 
         /// </summary>
-        /// <typeparam name="T">Typeof T</typeparam>
         /// <param name="prompt">The prompt text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -26,7 +25,6 @@ namespace PPlus
         /// <summary>
         /// Create MultiSelect Control. 
         /// </summary>
-        /// <typeparam name="T">Typeof T</typeparam>
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -38,7 +36,6 @@ namespace PPlus
         /// <summary>
         /// Create MultiSelect Control. 
         /// </summary>
-        /// <typeparam name="T">Typeof T</typeparam>
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>

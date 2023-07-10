@@ -138,7 +138,7 @@ Style Combine(Style other)
 
 #### Returns
 
-[Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 ### **GetHashCode()**
 
@@ -148,7 +148,7 @@ int GetHashCode()
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)
 
 ### **Equals(Style)**
 
@@ -165,8 +165,7 @@ The Style instance to compare.
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if the two Style are not equal, otherwise `false`false.
+`true` if the two Style are not equal, otherwise `false`.
 
 ### **Equals(Object)**
 
@@ -180,7 +179,7 @@ bool Equals(object obj)
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
 
 
 - - -

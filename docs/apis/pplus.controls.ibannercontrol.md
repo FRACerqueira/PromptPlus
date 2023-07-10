@@ -35,7 +35,6 @@ fullpath of file
 
 #### Returns
 
-[IBannerControl](./pplus.controls.ibannercontrol.md)<br>
 [IBannerControl](./pplus.controls.ibannercontrol.md)
 
 ### **LoadFont(Stream)**
@@ -53,7 +52,6 @@ stream instance
 
 #### Returns
 
-[IBannerControl](./pplus.controls.ibannercontrol.md)<br>
 [IBannerControl](./pplus.controls.ibannercontrol.md)
 
 ### **FIGletWidth(CharacterWidth)**
@@ -71,7 +69,6 @@ CharacterWidth [CharacterWidth](./pplus.controls.characterwidth.md)
 
 #### Returns
 
-[IBannerControl](./pplus.controls.ibannercontrol.md)<br>
 [IBannerControl](./pplus.controls.ibannercontrol.md)
 
 ### **Run(Nullable&lt;Color&gt;, BannerDashOptions)**

@@ -390,7 +390,6 @@ The description text to write
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
 [IControlList](./pplus.controls.icontrollist.md)
 
 ### **AddtoList(String, String, Action&lt;IPromptConfig&gt;)**
@@ -414,8 +413,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
-[IControlInput](./pplus.controls.icontrolinput.md)
+[IControlList](./pplus.controls.icontrollist.md)
 
 ### **AddtoList(String, Action&lt;IPromptConfig&gt;)**
 
@@ -435,8 +433,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlList](./pplus.controls.icontrollist.md)<br>
-[IControlInput](./pplus.controls.icontrolinput.md)
+[IControlList](./pplus.controls.icontrollist.md)
 
 ### **AddtoMaskEditList(String, String)**
 
@@ -456,7 +453,6 @@ The description text to write
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **AddtoMaskEditList(String, String, Action&lt;IPromptConfig&gt;)**
@@ -480,7 +476,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **AddtoMaskEditList(String, Action&lt;IPromptConfig&gt;)**
@@ -501,7 +496,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Banner(String)**
@@ -519,7 +513,6 @@ The text to write
 
 #### Returns
 
-[IBannerControl](./pplus.controls.ibannercontrol.md)<br>
 [IBannerControl](./pplus.controls.ibannercontrol.md)
 
 ### **AutoComplete(String, Action&lt;IPromptConfig&gt;)**
@@ -540,8 +533,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
-[IControlInput](./pplus.controls.icontrolinput.md)
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **AutoComplete(String, String, Action&lt;IPromptConfig&gt;)**
 
@@ -564,8 +556,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)<br>
-[IControlInput](./pplus.controls.icontrolinput.md)
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 ### **Input(String, Action&lt;IPromptConfig&gt;)**
 
@@ -585,7 +576,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **Input(String, String, Action&lt;IPromptConfig&gt;)**
@@ -609,7 +599,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlInput](./pplus.controls.icontrolinput.md)<br>
 [IControlInput](./pplus.controls.icontrolinput.md)
 
 ### **MaskEdit(String, Action&lt;IPromptConfig&gt;)**
@@ -630,8 +619,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **MaskEdit(String, String, Action&lt;IPromptConfig&gt;)**
 
@@ -654,8 +642,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)<br>
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
 ### **Confirm(String, Action&lt;IPromptConfig&gt;)**
 
@@ -676,7 +663,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **Confirm(String, String, Action&lt;IPromptConfig&gt;)**
@@ -701,7 +687,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **Confirm(String, ConsoleKey, ConsoleKey, String, Action&lt;IPromptConfig&gt;)**
@@ -731,7 +716,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **KeyPress()**
@@ -744,7 +728,6 @@ public static IControlKeyPress KeyPress()
 
 #### Returns
 
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **KeyPress(String, Action&lt;IPromptConfig&gt;)**
@@ -765,7 +748,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **KeyPress(String, String, Action&lt;IPromptConfig&gt;)**
@@ -789,7 +771,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)<br>
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
 ### **MultiSelect&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
@@ -803,7 +784,6 @@ public static IControlMultiSelect<T> MultiSelect<T>(string prompt, Action<IPromp
 #### Type Parameters
 
 `T`<br>
-Typeof T
 
 #### Parameters
 
@@ -815,7 +795,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlMultiSelect&lt;T&gt;<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **MultiSelect&lt;T&gt;(String, String)**
@@ -829,7 +808,6 @@ public static IControlMultiSelect<T> MultiSelect<T>(string prompt, string descri
 #### Type Parameters
 
 `T`<br>
-Typeof T
 
 #### Parameters
 
@@ -841,7 +819,6 @@ The description text to write
 
 #### Returns
 
-IControlMultiSelect&lt;T&gt;<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **MultiSelect&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
@@ -855,7 +832,6 @@ public static IControlMultiSelect<T> MultiSelect<T>(string prompt, string descri
 #### Type Parameters
 
 `T`<br>
-Typeof T
 
 #### Parameters
 
@@ -870,7 +846,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlMultiSelect&lt;T&gt;<br>
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 ### **Select&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
@@ -896,7 +871,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlSelect&lt;T&gt;<br>
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
 ### **Select&lt;T&gt;(String, String)**
@@ -922,7 +896,6 @@ The description text to write
 
 #### Returns
 
-IControlSelect&lt;T&gt;<br>
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
 ### **Select&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
@@ -951,7 +924,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlSelect&lt;T&gt;<br>
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
 ### **SliderNumber(String, Action&lt;IPromptConfig&gt;)**
@@ -972,7 +944,6 @@ The description text to write
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **SliderNumber(String, String, Action&lt;IPromptConfig&gt;)**
@@ -996,7 +967,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)<br>
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 ### **SliderSwitch(String, Action&lt;IPromptConfig&gt;)**
@@ -1017,7 +987,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 ### **SliderSwitch(String, String, Action&lt;IPromptConfig&gt;)**
@@ -1041,7 +1010,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 ### **ProgressBar(String, String)**
@@ -1062,7 +1030,7 @@ The description text to write
 
 #### Returns
 
-[IControlProgressBar&lt;Object&gt;](./pplus.controls.icontrolprogressbar-1.md)<br>
+[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **ProgressBar&lt;T&gt;(ProgressBarType, String, T, String)**
 
@@ -1093,7 +1061,6 @@ The description text to write
 
 #### Returns
 
-IControlProgressBar&lt;T&gt;<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **ProgressBar&lt;T&gt;(ProgressBarType, String, T, String, Action&lt;IPromptConfig&gt;)**
@@ -1128,7 +1095,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlProgressBar&lt;T&gt;<br>
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 ### **WaitProcess(String, String)**
@@ -1149,7 +1115,6 @@ The description text to write
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 IEnumerable [StateProcess](./pplus.controls.stateprocess.md) after Run method. [IControlWait](./pplus.controls.icontrolwait.md)
 
 ### **WaitProcess(String, String, Action&lt;IPromptConfig&gt;)**
@@ -1173,7 +1138,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlWait](./pplus.controls.icontrolwait.md)<br>
 IEnumerable [StateProcess](./pplus.controls.stateprocess.md) after Run method. [IControlWait](./pplus.controls.icontrolwait.md)
 
 ### **WaitTimer(String, TimeSpan, SpinnersType, Boolean, Action&lt;IPromptConfig&gt;, Nullable&lt;CancellationToken&gt;)**
@@ -1222,7 +1186,6 @@ The description text to write
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **BrowserMultiSelect(String, String, Action&lt;IPromptConfig&gt;)**
@@ -1246,7 +1209,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **BrowserMultiSelect(String, Action&lt;IPromptConfig&gt;)**
@@ -1267,8 +1229,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **Browser(String, String)**
 
@@ -1288,7 +1249,6 @@ The description text to write
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **Browser(String, String, Action&lt;IPromptConfig&gt;)**
@@ -1312,7 +1272,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **Browser(String, Action&lt;IPromptConfig&gt;)**
@@ -1333,7 +1292,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)<br>
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 ### **TreeViewMultiSelect&lt;T&gt;(String, String)**
@@ -1358,7 +1316,6 @@ The description text to write
 
 #### Returns
 
-IControlTreeViewMultiSelect&lt;T&gt;<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **TreeViewMultiSelect&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
@@ -1386,7 +1343,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlTreeViewMultiSelect&lt;T&gt;<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **TreeViewMultiSelect&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
@@ -1411,7 +1367,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlTreeViewMultiSelect&lt;T&gt;<br>
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 ### **TreeView&lt;T&gt;(String, String)**
@@ -1436,7 +1391,6 @@ The description text to write
 
 #### Returns
 
-IControlTreeViewSelect&lt;T&gt;<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **TreeView&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
@@ -1464,7 +1418,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlTreeViewSelect&lt;T&gt;<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **TreeView&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
@@ -1489,7 +1442,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlTreeViewSelect&lt;T&gt;<br>
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
 ### **IsPressSpecialKey(ConsoleKeyInfo, ConsoleKey, ConsoleModifiers)**
@@ -1513,8 +1465,7 @@ to compare
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressEnterKey(ConsoleKeyInfo, Boolean)**
 
@@ -1530,12 +1481,11 @@ public static bool IsPressEnterKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-If `true`true accept 'CTRL+J'
+If `true` accept 'CTRL+J'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsLowersCurrentWord(ConsoleKeyInfo)**
 
@@ -1553,8 +1503,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsClearBeforeCursor(ConsoleKeyInfo)**
 
@@ -1572,8 +1521,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsClearAfterCursor(ConsoleKeyInfo)**
 
@@ -1591,8 +1539,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsClearWordBeforeCursor(ConsoleKeyInfo)**
 
@@ -1610,8 +1557,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsClearWordAfterCursor(ConsoleKeyInfo)**
 
@@ -1629,8 +1575,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsCapitalizeOverCursor(ConsoleKeyInfo)**
 
@@ -1648,8 +1593,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsForwardWord(ConsoleKeyInfo)**
 
@@ -1667,8 +1611,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsBackwardWord(ConsoleKeyInfo)**
 
@@ -1686,8 +1629,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsUppersCurrentWord(ConsoleKeyInfo)**
 
@@ -1705,8 +1647,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsTransposePrevious(ConsoleKeyInfo)**
 
@@ -1724,8 +1665,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsClearContent(ConsoleKeyInfo)**
 
@@ -1743,8 +1683,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressTabKey(ConsoleKeyInfo)**
 
@@ -1761,8 +1700,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressShiftTabKey(ConsoleKeyInfo)**
 
@@ -1779,8 +1717,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressEndKey(ConsoleKeyInfo, Boolean)**
 
@@ -1796,12 +1733,11 @@ public static bool IsPressEndKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true`true accept 'CTRL+E'
+if `true` accept 'CTRL+E'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressHomeKey(ConsoleKeyInfo, Boolean)**
 
@@ -1817,12 +1753,11 @@ public static bool IsPressHomeKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true`true accept 'CTRL+A'
+if `true` accept 'CTRL+A'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressBackspaceKey(ConsoleKeyInfo, Boolean)**
 
@@ -1838,12 +1773,11 @@ public static bool IsPressBackspaceKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true`true accept 'CTRL+H'
+if `true` accept 'CTRL+H'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressDeleteKey(ConsoleKeyInfo, Boolean)**
 
@@ -1859,12 +1793,11 @@ public static bool IsPressDeleteKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true`true accept 'CTRL+D'
+if `true` accept 'CTRL+D'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressLeftArrowKey(ConsoleKeyInfo, Boolean)**
 
@@ -1880,12 +1813,11 @@ public static bool IsPressLeftArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true`true accept 'CTRL+B'
+if `true` accept 'CTRL+B'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressSpaceKey(ConsoleKeyInfo)**
 
@@ -1902,8 +1834,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressRightArrowKey(ConsoleKeyInfo, Boolean)**
 
@@ -1919,12 +1850,11 @@ public static bool IsPressRightArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true`true accept 'CTRL+F'
+if `true` accept 'CTRL+F'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressUpArrowKey(ConsoleKeyInfo, Boolean)**
 
@@ -1940,12 +1870,11 @@ public static bool IsPressUpArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true`true accept 'CTRL+P'
+if `true` accept 'CTRL+P'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressDownArrowKey(ConsoleKeyInfo, Boolean)**
 
@@ -1961,12 +1890,11 @@ public static bool IsPressDownArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true`true accept 'CTRL+N'
+if `true` accept 'CTRL+N'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressPageUpKey(ConsoleKeyInfo, Boolean)**
 
@@ -1982,12 +1910,11 @@ public static bool IsPressPageUpKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true`true accept 'Alt+P'
+if `true` accept 'Alt+P'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressPageDownKey(ConsoleKeyInfo, Boolean)**
 
@@ -2003,12 +1930,11 @@ public static bool IsPressPageDownKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true`true accept 'Alt+N'
+if `true` accept 'Alt+N'
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **IsPressEscKey(ConsoleKeyInfo)**
 
@@ -2025,8 +1951,7 @@ to check
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-`true`true if equal otherwise `false`false.
+`true` if equal otherwise `false`.
 
 ### **ToCase(ConsoleKeyInfo, CaseOptions)**
 
@@ -2046,7 +1971,6 @@ The [CaseOptions](./pplus.controls.caseoptions.md)
 
 #### Returns
 
-ConsoleKeyInfo<br>
 converted
 
 ### **Reset()**
@@ -2092,7 +2016,6 @@ Clear rest of line after write
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Number of lines write on console
 
 ### **Write(String, Nullable&lt;Style&gt;, Boolean)**
@@ -2116,7 +2039,6 @@ Clear rest of line after write
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Number of lines write on console
 
 ### **WriteLine(Exception, Nullable&lt;Style&gt;, Boolean)**
@@ -2140,7 +2062,6 @@ Clear rest of line after write
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Number of lines write on console
 
 ### **WriteLine(String, Nullable&lt;Style&gt;, Boolean)**
@@ -2164,7 +2085,6 @@ Clear rest of line after write
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Number of lines write on console
 
 ### **ResetColor()**
@@ -2222,7 +2142,6 @@ Determines whether to display the pressed key in the console window. true to not
 
 #### Returns
 
-ConsoleKeyInfo<br>
 <br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
 ### **ReadLine()**
@@ -2235,7 +2154,6 @@ public static string ReadLine()
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The returned value is null if the end of the input stream has been reached.
 
 ### **WaitKeypress(Boolean, Nullable&lt;CancellationToken&gt;)**
@@ -2256,7 +2174,6 @@ The token to monitor for cancellation requests.
 
 #### Returns
 
-[Nullable&lt;ConsoleKeyInfo&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 <br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
 ### **GetCursorPosition()**
@@ -2269,7 +2186,6 @@ public static ValueTuple<int, int> GetCursorPosition()
 
 #### Returns
 
-[ValueTuple&lt;Int32, Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.valuetuple-2)<br>
 The column and row position of the cursor.
 
 ### **SetIn(TextReader)**
@@ -2426,7 +2342,6 @@ The user action after each accepted keystroke. Firt param is input text, Second 
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The string input value.
 
 ### **SingleDash(String, DashOptions, Int32, Nullable&lt;Style&gt;)**

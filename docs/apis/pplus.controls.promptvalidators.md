@@ -42,7 +42,6 @@ public static Func`2[] ImportValidators<T>(T instance, Expression<Func<T, object
 
 #### Returns
 
-[Func`2[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsUriScheme(UriKind, String, String)**
@@ -66,7 +65,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsNumber(CultureInfo, String)**
@@ -87,7 +85,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsCurrency(CultureInfo, String)**
@@ -108,7 +105,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsDateTime(CultureInfo, String)**
@@ -129,7 +125,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **Required(String)**
@@ -147,7 +142,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **MinLength(Int32, String)**
@@ -168,7 +162,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **MaxLength(Int32, String)**
@@ -189,7 +182,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **RegularExpression(String, String)**
@@ -210,7 +202,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeBoolean(String)**
@@ -228,7 +219,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeByte(String)**
@@ -246,7 +236,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeChar(String)**
@@ -264,7 +253,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeDecimal(String)**
@@ -282,7 +270,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeDouble(String)**
@@ -300,7 +287,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeShort(String)**
@@ -318,7 +304,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeInt16(String)**
@@ -336,7 +321,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeInt(String)**
@@ -354,7 +338,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeInt32(String)**
@@ -372,7 +355,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeLong(String)**
@@ -390,7 +372,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeInt64(String)**
@@ -408,7 +389,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeSByte(String)**
@@ -426,7 +406,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeFloat(String)**
@@ -444,7 +423,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeSingle(String)**
@@ -462,7 +440,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeUshort(String)**
@@ -480,7 +457,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeUInt16(String)**
@@ -498,7 +474,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeUInt(String)**
@@ -516,7 +491,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeUInt32(String)**
@@ -534,7 +508,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeULong(String)**
@@ -552,7 +525,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeUInt64(String)**
@@ -570,7 +542,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 ### **IsTypeDateTime(String)**
@@ -588,7 +559,6 @@ Custom error message to show
 
 #### Returns
 
-[Func&lt;Object, ValidationResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the Validation function
 
 

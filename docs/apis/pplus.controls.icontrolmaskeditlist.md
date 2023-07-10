@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlMaskEditList : IPromptControls`1
+public interface IControlMaskEditList : IPromptControls<IEnumerable<ResultMasked>>
 ```
 
 Implements [IPromptControls&lt;IEnumerable&lt;ResultMasked&gt;&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -43,7 +43,6 @@ Action to execute
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Default(String)**
@@ -61,7 +60,6 @@ initial value
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **TypeTipStyle(Style)**
@@ -80,7 +78,6 @@ Style
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **NegativeStyle(Style)**
@@ -99,7 +96,6 @@ Style
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **PositiveStyle(Style)**
@@ -118,13 +114,12 @@ Style
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Mask(String, Nullable&lt;Char&gt;)**
 
 Defines mask input. Rules for Generic type:
- <br>9 - Only a numeric character<br>L - Only a letter<br>C - OnlyCustom character<br>A - Any character<br>N - OnlyCustom character + Only a numeric character<br>X - OnlyCustom character + Only a letter<br>\ - Escape character<br>{ - Initial delimiter for repetition of masks<br>} - Final delimiter for repetition of masks<br>[-Initial delimiter for list of Custom character<br>] - Final delimiter for list of Custom character
+ <br>9 - Only a numeric character<br>L - Only a letter<br>C - OnlyCustom character<br>A - Any character<br>N - OnlyCustom character +  Only a numeric character<br>X - OnlyCustom character +  Only a letter<br>\ - Escape character<br>{ - Initial delimiter for repetition of masks<br>} - Final delimiter for repetition of masks<br>[-Initial delimiter for list of Custom character<br>] - Final delimiter for list of Custom character
 
 ```csharp
 IControlMaskEditList Mask(string value, Nullable<char> promptmask)
@@ -140,7 +135,6 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Mask(MaskedType, Nullable&lt;Char&gt;)**
@@ -161,7 +155,6 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Culture(CultureInfo)**
@@ -180,7 +173,6 @@ CultureInfo to use on validate
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Culture(String)**
@@ -199,7 +191,6 @@ Name of CultureInfo to use on validate
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **FillZeros()**
@@ -213,7 +204,6 @@ IControlMaskEditList FillZeros()
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **FormatYear(FormatYear)**
@@ -232,7 +222,6 @@ IControlMaskEditList FormatYear(FormatYear value)
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **FormatTime(FormatTime)**
@@ -251,7 +240,6 @@ IControlMaskEditList FormatTime(FormatTime value)
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **AmmoutPositions(Int32, Int32, Boolean)**
@@ -276,7 +264,6 @@ True accept signal; otherwise, no.
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **DescriptionWithInputType(FormatWeek)**
@@ -294,7 +281,6 @@ show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **InputToCase(CaseOptions)**
@@ -312,13 +298,12 @@ Transform option
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **AddValidators(Func`2[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>Tip: see [PromptValidators](./pplus.controls.promptvalidators.md) to validators embeding
+ <br>Tip: see  to validators embeding
 
 ```csharp
 IControlMaskEditList AddValidators(Func`2[] validators)
@@ -331,7 +316,6 @@ the function validator.
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **ChangeDescription(Func&lt;String, String&gt;)**
@@ -349,7 +333,6 @@ function to apply change
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -367,7 +350,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
@@ -385,7 +367,6 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **AcceptEmptyValue()**
@@ -399,7 +380,6 @@ IControlMaskEditList AcceptEmptyValue()
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **AddItem(String, Boolean)**
@@ -420,7 +400,6 @@ true the item cannot be removed; otherwise yes.
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **AddItems(IEnumerable&lt;String&gt;, Boolean)**
@@ -441,7 +420,6 @@ true the item cannot be removed; otherwise yes.
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **PageSize(Int32)**
@@ -459,7 +437,6 @@ Number of Max.items
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **AllowDuplicate()**
@@ -472,7 +449,6 @@ IControlMaskEditList AllowDuplicate()
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **Range(Int32, Nullable&lt;Int32&gt;)**
@@ -493,7 +469,6 @@ Maximum number of items
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **HotKeyEditItem(HotKey)**
@@ -511,7 +486,6 @@ The [HotKey](./pplus.controls.hotkey.md) to edit item
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 ### **HotKeyRemoveItem(HotKey)**
@@ -529,7 +503,6 @@ The [HotKey](./pplus.controls.hotkey.md) to remove item
 
 #### Returns
 
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)<br>
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 

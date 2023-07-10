@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlSliderSwitch : IPromptControls`1
+public interface IControlSliderSwitch : IPromptControls<Boolean>
 ```
 
 Implements [IPromptControls&lt;Boolean&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -35,7 +35,6 @@ true is 'on', otherwise 'off'
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 ### **OffValue(String)**
@@ -53,7 +52,6 @@ text off
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 ### **OnValue(String)**
@@ -71,7 +69,6 @@ text on
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 ### **Width(Int32)**
@@ -89,7 +86,6 @@ Width
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -107,7 +103,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 ### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
@@ -128,7 +123,6 @@ The timeout for valid items saved. Default value is 365 days
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 ### **ChangeDescription(Func&lt;Boolean, String&gt;)**
@@ -146,7 +140,6 @@ function to apply change
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 ### **ChangeColorOn(Style)**
@@ -165,7 +158,6 @@ IControlSliderSwitch ChangeColorOn(Style value)
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 ### **ChangeColorOff(Style)**
@@ -184,7 +176,6 @@ IControlSliderSwitch ChangeColorOff(Style value)
 
 #### Returns
 
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)<br>
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
 

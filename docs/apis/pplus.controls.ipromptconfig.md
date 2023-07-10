@@ -35,7 +35,6 @@ value
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **ShowTooltip(Boolean)**
@@ -53,7 +52,6 @@ value
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **HideAfterFinish(Boolean)**
@@ -71,7 +69,6 @@ value
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **HideOnAbort(Boolean)**
@@ -89,7 +86,6 @@ value
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **AddExtraAction(StageControl, Action&lt;Object, Object&gt;)**
@@ -112,7 +108,6 @@ Action to execute.
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **SetContext(Object)**
@@ -130,7 +125,6 @@ value
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **ApplyStyle(StyleControls, Style)**
@@ -151,7 +145,6 @@ value
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Description(String)**
@@ -169,7 +162,6 @@ Text description. Accept markup color
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Description(StringStyle)**
@@ -187,7 +179,6 @@ Value description with style
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Prompt(String)**
@@ -205,7 +196,6 @@ Text prompt. Accept markup color
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Prompt(StringStyle)**
@@ -223,7 +213,6 @@ Value prompt with style
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Tooltips(String)**
@@ -242,7 +231,6 @@ Text Tooltips. Accept markup color.
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Tooltips(StringStyle)**
@@ -260,7 +248,6 @@ Value tooltip with style
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### **Symbols(SymbolType, String, String)**
@@ -284,7 +271,6 @@ Text when has is-unicode supported
 
 #### Returns
 
-[IPromptConfig](./pplus.controls.ipromptconfig.md)<br>
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 

@@ -13,7 +13,7 @@
 Namespace: PPlus.Controls
 
 ```csharp
-public interface IControlMultiSelectBrowser : IPromptControls`1
+public interface IControlMultiSelectBrowser : IPromptControls<ItemBrowser[]>
 ```
 
 Implements [IPromptControls&lt;ItemBrowser[]&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -38,7 +38,6 @@ Maximum number of items
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **Default(String)**
@@ -56,7 +55,6 @@ fullpath
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **Config(Action&lt;IPromptConfig&gt;)**
@@ -74,7 +72,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **NoSpinner()**
@@ -87,7 +84,6 @@ IControlMultiSelectBrowser NoSpinner()
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **DisabledRecursiveExpand()**
@@ -101,7 +97,6 @@ IControlMultiSelectBrowser DisabledRecursiveExpand()
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
@@ -129,7 +124,6 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **Styles(StyleBrowser, Style)**
@@ -150,7 +144,6 @@ Styles Browser
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **ShowLines(Boolean)**
@@ -168,7 +161,6 @@ true Show lines, otherwise 'no'
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **ShowExpand(Boolean)**
@@ -186,7 +178,6 @@ true Show Expanded SymbolType, otherwise 'no'
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **OnlyFolders(Boolean)**
@@ -204,7 +195,6 @@ true only Folders, otherwise Folders and files
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **ShowSize(Boolean)**
@@ -222,7 +212,6 @@ true Show size, otherwise 'no'
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **AcceptHiddenAttributes(Boolean)**
@@ -240,7 +229,6 @@ true accept hidden folder and files, otherwise 'no'
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **AcceptSystemAttributes(Boolean)**
@@ -258,7 +246,6 @@ true accept system folder and files, otherwise 'no'
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **SearchFolderPattern(String)**
@@ -276,7 +263,6 @@ Search pattern
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **SearchFilePattern(String)**
@@ -294,7 +280,6 @@ Search pattern
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **PageSize(Int32)**
@@ -312,7 +297,6 @@ Number of Max.items
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **FilterType(FilterMode)**
@@ -331,7 +315,6 @@ Filter Mode
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **SelectAll(Func&lt;ItemBrowser, Boolean&gt;)**
@@ -349,7 +332,6 @@ the function
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **Root(String, Boolean, Func&lt;ItemBrowser, Boolean&gt;, Func&lt;ItemBrowser, Boolean&gt;)**
@@ -376,7 +358,6 @@ Disabled all items that satisfy the disabled function
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **AddFixedSelect(String[])**
@@ -394,7 +375,6 @@ list with fullpath immutable items selected
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **ShowCurrentFolder(Boolean)**
@@ -412,7 +392,6 @@ true Append current name folder on description, not append
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **HotKeyFullPath(HotKey)**
@@ -430,7 +409,6 @@ The [HotKey](./pplus.controls.hotkey.md) to toggle current name folder to FullPa
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **HotKeyToggleExpand(HotKey)**
@@ -448,7 +426,6 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collapse current folder selec
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **HotKeyToggleExpandAll(HotKey)**
@@ -466,7 +443,6 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all folders
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **AfterExpanded(Action&lt;ItemBrowser&gt;)**
@@ -484,7 +460,6 @@ The action
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **AfterCollapsed(Action&lt;ItemBrowser&gt;)**
@@ -502,7 +477,6 @@ The action
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **BeforeExpanded(Action&lt;ItemBrowser&gt;)**
@@ -520,7 +494,6 @@ The action
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 ### **BeforeCollapsed(Action&lt;ItemBrowser&gt;)**
@@ -538,7 +511,6 @@ The action
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)<br>
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
 
