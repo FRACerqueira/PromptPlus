@@ -20,6 +20,7 @@
 - [Culture](#culture)
 - [Colors](#colors)
 - [Hotkeys](#hotkeys)
+- [Keypress Extensions Emacs](#keypress-extensions-emacs)
 - [Validators](#validators)
 - [Global Settings](globalsettings.md)
 - [API Reference](./apis/apis.md)
@@ -73,10 +74,8 @@ PromptPlus driver console  **Supports 4/8/24-bit colors** in the terminal with *
 Until version 3 the console engine was based on a model from another project that has several serious problems that cause exceptions during execution in addition to increasing the complexity of the code for correct rendering...
 **PromptPlus v4** has been **completely rebuilt** for a better experience, with significant improvements with new controls and more developer power. The console driver now supports better rendering, with the ability to detect terminal capabilities and allow for 24-bit color, text overflow strategies based on terminal size, and left and right margins for a nicer layout.
 **The Controls have been revised to be more responsive, allow color styles in many of their elements**, and adapt to the terminal size even with resizing.
-All these improvements were only possible by generating some **break-changes**, but maintaining a high sixtax compatibility.
 
 For migrate V3 to V4 [**see this link**](migrateversion.md).
-
 
 ## Installing
 [**Top**](#welcome-to-promptplus)
@@ -313,12 +312,18 @@ PromptPlus.Config.SelectAllPress = new HotKey(UserHotKey.F7);
 
 [**Default Hotkeys for controls**](hotkeys.md)
 
+## Keypress Extensions Emacs
+[**Top**](#welcome-to-promptplus)
+
+PromptPlus have a lot extensions to check Key-press with GNU Readline Emacs keyboard shortcuts.
+For more details [visit the **official API page**](https://fracerqueira.github.io/PromptPlus/apis/pplus.promptplus.html)
+
 ## Validators
 [**Top**](#welcome-to-promptplus)
 
 PromptPlus have a lot extensions to **commons validator** and **validator import**(No duplicate code!) 
 
-For more details see [**List validators embeding**](./apis/pplus.controls.promptvalidators.md)
+For more details see [**List validators embeding**](https://fracerqueira.github.io/PromptPlus/apis/pplus.controls.promptvalidators.html)
 
 ```csharp
 private class MylCass

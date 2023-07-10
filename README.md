@@ -65,7 +65,6 @@ PromptPlus driver console  **Supports 4/8/24-bit colors** in the terminal with *
 Until version 3 the console engine was based on a model from another project that has several serious problems that cause exceptions during execution in addition to increasing the complexity of the code for correct rendering...
 **PromptPlus v4** has been **completely rebuilt** for a better experience, with significant improvements with new controls and more developer power. The console driver now supports better rendering, with the ability to detect terminal capabilities and allow for 24-bit color, text overflow strategies based on terminal size, and left and right margins for a nicer layout.
 **The Controls have been revised to be more responsive, allow color styles in many of their elements**, and adapt to the terminal size even with resizing.
-All these improvements were only possible by generating some **break-changes**, but maintaining a high sixtax compatibility.
 
 For migrate V3 to V4 [**see this link**](https://fracerqueira.github.io/PromptPlus/migrateversion.html).
 
@@ -367,13 +366,15 @@ Hotkeys (global and control-specific) are configurable. Some hotkeys are interna
 For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus)
 
 ## Keypress Extensions Emacs
+[**Top**](#welcome-to-promptplus)
+
 PromptPlus have a lot extensions to check Key-press with GNU Readline Emacs keyboard shortcuts.
-For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus)
+For more details [visit the **official API page**](https://fracerqueira.github.io/PromptPlus/apis/pplus.promptplus.html)
 
 ## Validators
 
 PromptPlus have a lot extensions to **commons validator** and **validator import**(No duplicate code!) 
-For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus) or see the samples in folder **Samples**
+For more details [visit the **official API page**](https://fracerqueira.github.io/PromptPlus/apis/pplus.controls.promptvalidators.html) or see the samples in folder **Samples**
 
 ```csharp
 private class MylCass
