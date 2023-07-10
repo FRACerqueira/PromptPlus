@@ -50,7 +50,7 @@ text sugestion
 Add Enumerable sugestions
 
 ```csharp
-void AddRange(IEnumerable<string> items)
+void AddRange(IEnumerable<String> items)
 ```
 
 #### Parameters

@@ -130,7 +130,7 @@ The timeout for valid items saved. Default value is 365 days
 Dynamically change the description using a user role
 
 ```csharp
-IControlSliderSwitch ChangeDescription(Func<bool, string> value)
+IControlSliderSwitch ChangeDescription(Func<Boolean, String> value)
 ```
 
 #### Parameters

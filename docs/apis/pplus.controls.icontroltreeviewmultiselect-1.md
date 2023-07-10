@@ -49,7 +49,7 @@ Action to execute
 Defines a minimum and maximum (optional) range of items selected in the tree
 
 ```csharp
-IControlTreeViewMultiSelect<T> Range(int minvalue, Nullable<int> maxvalue)
+IControlTreeViewMultiSelect<T> Range(int minvalue, Nullable<Int32> maxvalue)
 ```
 
 #### Parameters
@@ -204,7 +204,7 @@ list with items selected
 Select all items that satisfy the selection function
 
 ```csharp
-IControlTreeViewMultiSelect<T> SelectAll(Func<T, bool> validselect)
+IControlTreeViewMultiSelect<T> SelectAll(Func<T, Boolean> validselect)
 ```
 
 #### Parameters
@@ -221,7 +221,7 @@ the function
 Set root node
 
 ```csharp
-IControlTreeViewMultiSelect<T> RootNode(T value, Func<T, string> textnode, Func<T, bool> validselect, Func<T, bool> setdisabled, Nullable<char> separatePath, Func<T, string> uniquenode)
+IControlTreeViewMultiSelect<T> RootNode(T value, Func<T, String> textnode, Func<T, Boolean> validselect, Func<T, Boolean> setdisabled, Nullable<Char> separatePath, Func<T, String> uniquenode)
 ```
 
 #### Parameters

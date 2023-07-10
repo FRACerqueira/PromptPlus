@@ -220,7 +220,7 @@ The timeout for valid items saved. Default value is 365 days
 Dynamically change the description using a user role
 
 ```csharp
-IControlSliderNumber ChangeDescription(Func<double, string> value)
+IControlSliderNumber ChangeDescription(Func<Double, String> value)
 ```
 
 #### Parameters
@@ -238,7 +238,7 @@ Dynamically change color Widgets
  <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored
 
 ```csharp
-IControlSliderNumber ChangeColor(Func<double, Color> value)
+IControlSliderNumber ChangeColor(Func<Double, Color> value)
 ```
 
 #### Parameters

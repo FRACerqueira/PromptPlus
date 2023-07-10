@@ -19,7 +19,6 @@
 - [Console Engine](#console-engine)
 - [Culture](#culture)
 - [Colors](#colors)
-- [KeyPress Extensions with Emacs keyboard shortcuts](keypressemacs.md)
 - [Hotkeys](#hotkeys)
 - [Validators](#validators)
 - [Global Settings](globalsettings.md)
@@ -319,7 +318,7 @@ PromptPlus.Config.SelectAllPress = new HotKey(UserHotKey.F7);
 
 PromptPlus have a lot extensions to **commons validator** and **validator import**(No duplicate code!) 
 
-For more details see [**List validators embeding**](validators.md)
+For more details see [**List validators embeding**](./apis/pplus.controls.promptvalidators.md)
 
 ```csharp
 private class MylCass

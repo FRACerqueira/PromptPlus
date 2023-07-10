@@ -25,7 +25,7 @@ Implements [IPromptControls&lt;ItemBrowser[]&gt;](./pplus.controls.ipromptcontro
 Defines a minimum and maximum (optional) range of items selected in the list
 
 ```csharp
-IControlMultiSelectBrowser Range(int minvalue, Nullable<int> maxvalue)
+IControlMultiSelectBrowser Range(int minvalue, Nullable<Int32> maxvalue)
 ```
 
 #### Parameters
@@ -105,7 +105,7 @@ Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is Spi
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlMultiSelectBrowser Spinner(SpinnersType spinnersType, Nullable<Style> spinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)
+IControlMultiSelectBrowser Spinner(SpinnersType spinnersType, Nullable<Style> spinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters
@@ -322,7 +322,7 @@ Filter Mode
 Select all items that satisfy the selection function
 
 ```csharp
-IControlMultiSelectBrowser SelectAll(Func<ItemBrowser, bool> validselect)
+IControlMultiSelectBrowser SelectAll(Func<ItemBrowser, Boolean> validselect)
 ```
 
 #### Parameters
@@ -339,7 +339,7 @@ the function
 Set folder root to browser
 
 ```csharp
-IControlMultiSelectBrowser Root(string value, bool expandall, Func<ItemBrowser, bool> validselect, Func<ItemBrowser, bool> setdisabled)
+IControlMultiSelectBrowser Root(string value, bool expandall, Func<ItemBrowser, Boolean> validselect, Func<ItemBrowser, Boolean> setdisabled)
 ```
 
 #### Parameters

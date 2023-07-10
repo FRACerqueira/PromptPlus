@@ -221,7 +221,7 @@ namespace PPlus.Controls
             screenBuffer.SaveCursor();
             screenBuffer.WriteLineDescriptionSliderNumber(_options, _currentValue);
             screenBuffer.WriteLineTooltipsSliderNumber(_options);
-            if (_options.MoveKeyPress == SliderNumberType.LeftRightMode)
+            if (_options.MoveKeyPress == SliderNumberType.LeftRight)
             {
                 screenBuffer.WriteLineWidgetsSliderNumber(_options, CurrentValueStep(_currentValue), _currentValue);
             }
@@ -277,8 +277,8 @@ namespace PPlus.Controls
                     endinput = true;
                     break;
                 }
-                else if ((keyInfo.Value.IsPressDownArrowKey() && _options.MoveKeyPress == SliderNumberType.UpDownMode) ||
-                    (keyInfo.Value.IsPressLeftArrowKey() && _options.MoveKeyPress == SliderNumberType.LeftRightMode))
+                else if ((keyInfo.Value.IsPressDownArrowKey() && _options.MoveKeyPress == SliderNumberType.UpDown) ||
+                    (keyInfo.Value.IsPressLeftArrowKey() && _options.MoveKeyPress == SliderNumberType.LeftRight))
                 {
                     if (_currentValue.CompareTo(_options.Minvalue) == 0)
                     {
@@ -310,8 +310,8 @@ namespace PPlus.Controls
                         _currentValue = Math.Round(aux, _options.FracionalDig);
                     }
                 }
-                else if ((keyInfo.Value.IsPressUpArrowKey() && _options.MoveKeyPress == SliderNumberType.UpDownMode) ||
-                    (keyInfo.Value.IsPressRightArrowKey() && _options.MoveKeyPress == SliderNumberType.LeftRightMode))
+                else if ((keyInfo.Value.IsPressUpArrowKey() && _options.MoveKeyPress == SliderNumberType.UpDown) ||
+                    (keyInfo.Value.IsPressRightArrowKey() && _options.MoveKeyPress == SliderNumberType.LeftRight))
                 {
                     if (_currentValue.CompareTo(_options.Maxvalue) == 0)
                     {

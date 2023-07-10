@@ -122,7 +122,7 @@ Defines mask input. Rules for Generic type:
  <br>9 - Only a numeric character<br>L - Only a letter<br>C - OnlyCustom character<br>A - Any character<br>N - OnlyCustom character +  Only a numeric character<br>X - OnlyCustom character +  Only a letter<br>\ - Escape character<br>{ - Initial delimiter for repetition of masks<br>} - Final delimiter for repetition of masks<br>[-Initial delimiter for list of Custom character<br>] - Final delimiter for list of Custom character
 
 ```csharp
-IControlMaskEditList Mask(string value, Nullable<char> promptmask)
+IControlMaskEditList Mask(string value, Nullable<Char> promptmask)
 ```
 
 #### Parameters
@@ -142,7 +142,7 @@ Prompt mask overwriter. Default value is '■'/'_'
 Defines type of mask control.
 
 ```csharp
-IControlMaskEditList Mask(MaskedType maskedType, Nullable<char> promptmask)
+IControlMaskEditList Mask(MaskedType maskedType, Nullable<Char> promptmask)
 ```
 
 #### Parameters
@@ -300,18 +300,18 @@ Transform option
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **AddValidators(Func`2[])**
+### **AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
 
 ```csharp
-IControlMaskEditList AddValidators(Func`2[] validators)
+IControlMaskEditList AddValidators(Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters
 
-`validators` [Func`2[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the function validator.
 
 #### Returns
@@ -323,7 +323,7 @@ the function validator.
 Dynamically change the description using a user role
 
 ```csharp
-IControlMaskEditList ChangeDescription(Func<string, string> value)
+IControlMaskEditList ChangeDescription(Func<String, String> value)
 ```
 
 #### Parameters
@@ -407,7 +407,7 @@ true the item cannot be removed; otherwise yes.
 Add items colletion to initial list
 
 ```csharp
-IControlMaskEditList AddItems(IEnumerable<string> values, bool immutable)
+IControlMaskEditList AddItems(IEnumerable<String> values, bool immutable)
 ```
 
 #### Parameters
@@ -456,7 +456,7 @@ IControlMaskEditList AllowDuplicate()
 Defines a minimum and maximum (optional) range of items in the list
 
 ```csharp
-IControlMaskEditList Range(int minvalue, Nullable<int> maxvalue)
+IControlMaskEditList Range(int minvalue, Nullable<Int32> maxvalue)
 ```
 
 #### Parameters

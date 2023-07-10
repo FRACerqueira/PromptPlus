@@ -118,7 +118,7 @@ Value default
 Sort list by expression
 
 ```csharp
-IControlMultiSelect<T> OrderBy(Expression<Func<T, object>> value)
+IControlMultiSelect<T> OrderBy(Expression<Func<T, Object>> value)
 ```
 
 #### Parameters
@@ -135,7 +135,7 @@ expresion to sort the colletion
 Sort Descending list by expression
 
 ```csharp
-IControlMultiSelect<T> OrderByDescending(Expression<Func<T, object>> value)
+IControlMultiSelect<T> OrderByDescending(Expression<Func<T, Object>> value)
 ```
 
 #### Parameters
@@ -241,7 +241,7 @@ The [HotKey](./pplus.controls.hotkey.md) to Invert Selected item
 Function to show text Item in list.Default value is Item.ToString()
 
 ```csharp
-IControlMultiSelect<T> TextSelector(Func<T, string> value)
+IControlMultiSelect<T> TextSelector(Func<T, String> value)
 ```
 
 #### Parameters
@@ -258,7 +258,7 @@ Function to show text Item in list
 Dynamically change the description using a user role
 
 ```csharp
-IControlMultiSelect<T> ChangeDescription(Func<T, string> value)
+IControlMultiSelect<T> ChangeDescription(Func<T, String> value)
 ```
 
 #### Parameters
@@ -413,7 +413,7 @@ items colletion
 Custom item comparator
 
 ```csharp
-IControlMultiSelect<T> EqualItems(Func<T, T, bool> comparer)
+IControlMultiSelect<T> EqualItems(Func<T, T, Boolean> comparer)
 ```
 
 #### Parameters
@@ -430,7 +430,7 @@ function comparator
 Defines a minimum and maximum (optional) range of items seleted in the list
 
 ```csharp
-IControlMultiSelect<T> Range(int minvalue, Nullable<int> maxvalue)
+IControlMultiSelect<T> Range(int minvalue, Nullable<Int32> maxvalue)
 ```
 
 #### Parameters

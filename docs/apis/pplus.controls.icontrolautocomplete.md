@@ -43,7 +43,7 @@ Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is Spi
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlAutoComplete Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)
+IControlAutoComplete Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters
@@ -123,7 +123,7 @@ The function to execute autocomplete. This function is requeried to run!
  <br>First param is a current text input<br>Second param is current cursor postion at text input<br>third parameter is the control cancellation token
 
 ```csharp
-IControlAutoComplete CompletionAsyncService(Func<string, int, CancellationToken, Task<String[]>> value)
+IControlAutoComplete CompletionAsyncService(Func<String, Int32, CancellationToken, Task<String[]>> value)
 ```
 
 #### Parameters
@@ -212,7 +212,7 @@ Execute a function to accept char input.
  <br>If result true accept char input; otherwise, ignore char input.
 
 ```csharp
-IControlAutoComplete AcceptInput(Func<char, bool> value)
+IControlAutoComplete AcceptInput(Func<Char, Boolean> value)
 ```
 
 #### Parameters
@@ -241,18 +241,18 @@ Lenght
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **AddValidators(Func`2[])**
+### **AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
 
 ```csharp
-IControlAutoComplete AddValidators(Func`2[] validators)
+IControlAutoComplete AddValidators(Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters
 
-`validators` [Func`2[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the function validator.
 
 #### Returns
@@ -281,7 +281,7 @@ true execute validators foreach input; otherwise, only at finish.
 Dynamically change the description using a user role
 
 ```csharp
-IControlAutoComplete ChangeDescription(Func<string, string> value)
+IControlAutoComplete ChangeDescription(Func<String, String> value)
 ```
 
 #### Parameters

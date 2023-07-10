@@ -63,7 +63,7 @@ Overwrite default ConsoleKey string to custom string.
  <br>When return null value the control use defaut string
 
 ```csharp
-IControlKeyPress TextKeyValid(Func<ConsoleKeyInfo, string> value)
+IControlKeyPress TextKeyValid(Func<ConsoleKeyInfo, String> value)
 ```
 
 #### Parameters
@@ -81,7 +81,7 @@ Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). ValueResult value is
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlKeyPress Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)
+IControlKeyPress Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters

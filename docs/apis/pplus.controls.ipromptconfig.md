@@ -93,7 +93,7 @@ value
 Add generic action for the control when change [StageControl](./pplus.controls.stagecontrol.md) of control
 
 ```csharp
-IPromptConfig AddExtraAction(StageControl stage, Action<object, object> useraction)
+IPromptConfig AddExtraAction(StageControl stage, Action<Object, Object> useraction)
 ```
 
 #### Parameters

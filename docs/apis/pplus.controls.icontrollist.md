@@ -85,7 +85,7 @@ Execute a function to accept input.
  <br>If result true accept input; otherwise, ignore input.
 
 ```csharp
-IControlList AcceptInput(Func<char, bool> value)
+IControlList AcceptInput(Func<Char, Boolean> value)
 ```
 
 #### Parameters
@@ -114,18 +114,18 @@ Lenght
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **AddValidators(Func`2[])**
+### **AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
 
 ```csharp
-IControlList AddValidators(Func`2[] validators)
+IControlList AddValidators(Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters
 
-`validators` [Func`2[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the function validator.
 
 #### Returns
@@ -191,7 +191,7 @@ true the item cannot be removed; otherwise yes.
 Add items colletion to list
 
 ```csharp
-IControlList AddItems(IEnumerable<string> values, bool immutable)
+IControlList AddItems(IEnumerable<String> values, bool immutable)
 ```
 
 #### Parameters
@@ -240,7 +240,7 @@ IControlList AllowDuplicate()
 Defines a minimum and maximum (optional) range of items in the list
 
 ```csharp
-IControlList Range(int minvalue, Nullable<int> maxvalue)
+IControlList Range(int minvalue, Nullable<Int32> maxvalue)
 ```
 
 #### Parameters

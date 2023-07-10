@@ -94,7 +94,7 @@ public IPromptConfig SetContext(object value)
 ### **AddExtraAction(StageControl, Action&lt;Object, Object&gt;)**
 
 ```csharp
-public IPromptConfig AddExtraAction(StageControl stage, Action<object, object> useraction)
+public IPromptConfig AddExtraAction(StageControl stage, Action<Object, Object> useraction)
 ```
 
 #### Parameters

@@ -524,7 +524,7 @@ namespace PPlus.Tests.Controls.SliderNumber
             var ctrl = (SliderNumberControl)PromptPlus
                 .SliderNumber("P", "D")
                 .Range(0, 100)
-                .MoveKeyPress(SliderNumberType.UpDownMode)
+                .MoveKeyPress(SliderNumberType.UpDown)
                 .Step(5);
 
             ctrl.InitControl(CancellationToken.None);
@@ -547,7 +547,7 @@ namespace PPlus.Tests.Controls.SliderNumber
             var ctrl = (SliderNumberControl)PromptPlus
                 .SliderNumber("P", "D")
                 .Range(0, 100)
-                .MoveKeyPress(SliderNumberType.UpDownMode)
+                .MoveKeyPress(SliderNumberType.UpDown)
                 .Step(5);
 
             ctrl.InitControl(CancellationToken.None);
@@ -567,7 +567,7 @@ namespace PPlus.Tests.Controls.SliderNumber
                 .SliderNumber("P", "D")
                 .Range(0, 100)
                 .Default(10)
-                .MoveKeyPress(SliderNumberType.UpDownMode)
+                .MoveKeyPress(SliderNumberType.UpDown)
                 .Step(5);
 
             ctrl.InitControl(CancellationToken.None);

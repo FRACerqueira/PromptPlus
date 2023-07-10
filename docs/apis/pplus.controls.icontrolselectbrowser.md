@@ -68,7 +68,7 @@ Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is Spi
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlSelectBrowser Spinner(SpinnersType spinnersType, Nullable<Style> spinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)
+IControlSelectBrowser Spinner(SpinnersType spinnersType, Nullable<Style> spinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters
@@ -285,7 +285,7 @@ Filter Mode
 Set folder root to browser
 
 ```csharp
-IControlSelectBrowser Root(string value, bool expandall, Func<ItemBrowser, bool> validselect, Func<ItemBrowser, bool> setdisabled)
+IControlSelectBrowser Root(string value, bool expandall, Func<ItemBrowser, Boolean> validselect, Func<ItemBrowser, Boolean> setdisabled)
 ```
 
 #### Parameters

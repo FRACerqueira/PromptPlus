@@ -131,7 +131,7 @@ Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is Spi
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlWait Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)
+IControlWait Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters
@@ -152,12 +152,12 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **AddStep(StepMode, Action`1[])**
+### **AddStep(StepMode, Action&lt;CancellationToken&gt;[])**
 
 Add list of tasks to execute.
 
 ```csharp
-IControlWait AddStep(StepMode stepMode, Action`1[] process)
+IControlWait AddStep(StepMode stepMode, Action<CancellationToken>[] process)
 ```
 
 #### Parameters
@@ -165,19 +165,19 @@ IControlWait AddStep(StepMode stepMode, Action`1[] process)
 `stepMode` [StepMode](./pplus.controls.stepmode.md)<br>
 Sequential or parallel execution
 
-`process` [Action`1[]](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+`process` [Action&lt;CancellationToken&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 list of tasks
 
 #### Returns
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **AddStep(StepMode, String, String, Action`1[])**
+### **AddStep(StepMode, String, String, Action&lt;CancellationToken&gt;[])**
 
 Add list of tasks to execute with title and description
 
 ```csharp
-IControlWait AddStep(StepMode stepMode, string id, string description, Action`1[] process)
+IControlWait AddStep(StepMode stepMode, string id, string description, Action<CancellationToken>[] process)
 ```
 
 #### Parameters
@@ -191,7 +191,7 @@ TaskTitle of tasks
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 Description of tasks
 
-`process` [Action`1[]](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+`process` [Action&lt;CancellationToken&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 list of tasks
 
 #### Returns

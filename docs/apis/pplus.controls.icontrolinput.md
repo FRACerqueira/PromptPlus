@@ -97,7 +97,7 @@ Execute a function to accept char input.
  <br>If result true accept char input; otherwise, ignore char input.
 
 ```csharp
-IControlInput AcceptInput(Func<char, bool> value)
+IControlInput AcceptInput(Func<Char, Boolean> value)
 ```
 
 #### Parameters
@@ -131,7 +131,7 @@ Lenght
 The input is a secret. the input text is masked to '#' (default value)
 
 ```csharp
-IControlInput IsSecret(Nullable<char> value)
+IControlInput IsSecret(Nullable<Char> value)
 ```
 
 #### Parameters
@@ -160,18 +160,18 @@ Overwrite a [HotKey](./pplus.controls.hotkey.md) to toggle view. Default value i
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **AddValidators(Func`2[])**
+### **AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
 
 ```csharp
-IControlInput AddValidators(Func`2[] validators)
+IControlInput AddValidators(Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters
 
-`validators` [Func`2[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the function validator.
 
 #### Returns
@@ -200,7 +200,7 @@ true execute validators foreach input; otherwise, only at finish.
 Dynamically change the description using a user role
 
 ```csharp
-IControlInput ChangeDescription(Func<string, string> value)
+IControlInput ChangeDescription(Func<String, String> value)
 ```
 
 #### Parameters

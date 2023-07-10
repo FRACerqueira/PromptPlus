@@ -137,7 +137,7 @@ Number of Max.items
 Set root node
 
 ```csharp
-IControlTreeViewSelect<T> RootNode(T value, Func<T, string> textnode, bool expandall, Func<T, bool> validselect, Func<T, bool> setdisabled, Nullable<char> separatePath, Func<T, string> uniquenode)
+IControlTreeViewSelect<T> RootNode(T value, Func<T, String> textnode, bool expandall, Func<T, Boolean> validselect, Func<T, Boolean> setdisabled, Nullable<Char> separatePath, Func<T, String> uniquenode)
 ```
 
 #### Parameters

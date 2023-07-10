@@ -14,8 +14,6 @@ The global setting modified  properties for all controls.  To set use : PromptPl
 PromptPlus.Config.PageSize = 10;
 ```
 
-
-
 ## Table of Contents
 
 - [HotKeys](hotkeys.md)

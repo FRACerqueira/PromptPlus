@@ -26,7 +26,7 @@ namespace PPlus.Controls
         public CultureInfo CurrentCulture { get; set; } = null;
         public double DefaultValue { get; set; }
         public int Witdth { get; set; } = _defaultSliderWitdth;
-        public SliderNumberType MoveKeyPress { get; set; } = SliderNumberType.LeftRightMode;
+        public SliderNumberType MoveKeyPress { get; set; } = SliderNumberType.LeftRight;
         public int FracionalDig { get; set; } = 0;
         public double Value { get; set; }
         public double Maxvalue { get; set; }

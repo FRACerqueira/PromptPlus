@@ -118,6 +118,17 @@ namespace PPlus
 
 
         /// <summary>
+        /// Set ForegroundColor/BackgroundColor Console
+        /// </summary>
+        /// <param name="forecorlor">The <see cref="Color"/> ForegroundColor</param>
+        /// <param name="background">The <see cref="Color"/> BackgroundColor</param>
+        public static void ConsoleDefaultColor(Color forecorlor, Color background)
+        {
+            _consoledrive.ForegroundColor = forecorlor;
+            _consoledrive.BackgroundColor = background;
+        }
+
+        /// <summary>
         /// Overwrite current console with new console profile.
         /// <br>After overwrite the new console the screeen is clear</br>
         /// <br>and all Style-Schema are updated with backgoundcolor console</br>

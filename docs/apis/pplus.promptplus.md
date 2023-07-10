@@ -1017,7 +1017,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 Create Progress Bar Control
 
 ```csharp
-public static IControlProgressBar<object> ProgressBar(string prompt, string description)
+public static IControlProgressBar<Object> ProgressBar(string prompt, string description)
 ```
 
 #### Parameters
@@ -2181,7 +2181,7 @@ The token to monitor for cancellation requests.
 Gets the position of the cursor.
 
 ```csharp
-public static ValueTuple<int, int> GetCursorPosition()
+public static ValueTuple<Int32, Int32> GetCursorPosition()
 ```
 
 #### Returns
@@ -2262,7 +2262,7 @@ public static void Beep()
 Clear line
 
 ```csharp
-public static void ClearLine(Nullable<int> row, Nullable<Style> style)
+public static void ClearLine(Nullable<Int32> row, Nullable<Style> style)
 ```
 
 #### Parameters
@@ -2278,7 +2278,7 @@ The style color to clear.
 Clear line
 
 ```csharp
-public static void ClearLine(IConsoleBase consolebase, Nullable<int> row, Nullable<Style> style)
+public static void ClearLine(IConsoleBase consolebase, Nullable<Int32> row, Nullable<Style> style)
 ```
 
 #### Parameters
@@ -2326,7 +2326,7 @@ The style color to clear.
 <br>Read the line from stream using Emacs keyboard shortcuts. A line is defined as a sequence of characters followed by<br>a car return ('\r'), a line feed ('\n'), or a carriage return<br>immedy followed by a line feed. The resulting string does not<br>contain the terminating carriage return and/or line feed.
 
 ```csharp
-public static string ReadLineWithEmacs(Nullable<uint> maxlenght, CaseOptions caseOptions, Action<string, int> afteraccept)
+public static string ReadLineWithEmacs(Nullable<UInt32> maxlenght, CaseOptions caseOptions, Action<String, Int32> afteraccept)
 ```
 
 #### Parameters

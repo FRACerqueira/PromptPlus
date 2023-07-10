@@ -151,7 +151,7 @@ Get/Set value char for secret input
  <br>Default value : '#'.  Fall-back when null : '#'
 
 ```csharp
-public Nullable<char> SecretChar { get; set; }
+public Nullable<Char> SecretChar { get; set; }
 ```
 
 #### Property Value
@@ -164,7 +164,7 @@ Get/Set value for YES answer
  <br>Default value : YesChar in built-in resources.  Fall-back when null : Y
 
 ```csharp
-public Nullable<char> YesChar { get; set; }
+public Nullable<Char> YesChar { get; set; }
 ```
 
 #### Property Value
@@ -177,7 +177,7 @@ Get/Set value for NO answer
  <br>Default value : NoChar in built-in resources.  Fall-back when null : N
 
 ```csharp
-public Nullable<char> NoChar { get; set; }
+public Nullable<Char> NoChar { get; set; }
 ```
 
 #### Property Value
@@ -308,7 +308,7 @@ public HotKey ToggleExpandAllPress { get; set; }
 Get/Set the Symbols for all controls.If empty params return current set.
 
 ```csharp
-public ValueTuple<string, string> Symbols(SymbolType schema, string value, string unicode)
+public ValueTuple<String, String> Symbols(SymbolType schema, string value, string unicode)
 ```
 
 #### Parameters

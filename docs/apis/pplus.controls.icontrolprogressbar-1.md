@@ -135,7 +135,7 @@ Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is Spi
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlProgressBar<T> Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<int> speedAnimation, IEnumerable<string> customspinner)
+IControlProgressBar<T> Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters
@@ -212,7 +212,7 @@ Fracional Digits
 Dynamically change Style Widgets
 
 ```csharp
-IControlProgressBar<T> ChangeColor(Func<double, Style> value)
+IControlProgressBar<T> ChangeColor(Func<Double, Style> value)
 ```
 
 #### Parameters

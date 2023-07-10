@@ -5,9 +5,18 @@
 
 namespace PPlus.Controls
 {
+    /// <summary>
+    /// Represents The slider mode
+    /// </summary>
     public enum SliderNumberType
     {
-        LeftRightMode,
-        UpDownMode
+        /// <summary>
+        /// Use Left/Right arrows to change value and show bar
+        /// </summary>
+        LeftRight,
+        /// <summary>
+        /// Use Up/Down arrows to change value and not show bar
+        /// </summary>
+        UpDown
     }
 }

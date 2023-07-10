@@ -27,7 +27,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 Import validation from object to control
 
 ```csharp
-public static Func`2[] ImportValidators<T>(T instance, Expression<Func<T, object>> expression)
+public static Func<Object, ValidationResult>[] ImportValidators<T>(T instance, Expression<Func<T, Object>> expression)
 ```
 
 #### Type Parameters
@@ -49,7 +49,7 @@ the Validation function
 Validation function for Uri Scheme
 
 ```csharp
-public static Func<object, ValidationResult> IsUriScheme(UriKind uriKind, string allowedUriSchemes, string errorMessage)
+public static Func<Object, ValidationResult> IsUriScheme(UriKind uriKind, string allowedUriSchemes, string errorMessage)
 ```
 
 #### Parameters
@@ -72,7 +72,7 @@ the Validation function
 Validation function for Number
 
 ```csharp
-public static Func<object, ValidationResult> IsNumber(CultureInfo cultureinfo, string errorMessage)
+public static Func<Object, ValidationResult> IsNumber(CultureInfo cultureinfo, string errorMessage)
 ```
 
 #### Parameters
@@ -92,7 +92,7 @@ the Validation function
 Validation function for Currency
 
 ```csharp
-public static Func<object, ValidationResult> IsCurrency(CultureInfo cultureinfo, string errorMessage)
+public static Func<Object, ValidationResult> IsCurrency(CultureInfo cultureinfo, string errorMessage)
 ```
 
 #### Parameters
@@ -112,7 +112,7 @@ the Validation function
 Validation function for DateTime
 
 ```csharp
-public static Func<object, ValidationResult> IsDateTime(CultureInfo cultureinfo, string errorMessage)
+public static Func<Object, ValidationResult> IsDateTime(CultureInfo cultureinfo, string errorMessage)
 ```
 
 #### Parameters
@@ -132,7 +132,7 @@ the Validation function
 Validation function for Required
 
 ```csharp
-public static Func<object, ValidationResult> Required(string errorMessage)
+public static Func<Object, ValidationResult> Required(string errorMessage)
 ```
 
 #### Parameters
@@ -149,7 +149,7 @@ the Validation function
 Validation function for MinLength
 
 ```csharp
-public static Func<object, ValidationResult> MinLength(int length, string errorMessage)
+public static Func<Object, ValidationResult> MinLength(int length, string errorMessage)
 ```
 
 #### Parameters
@@ -169,7 +169,7 @@ the Validation function
 Validation function for MaxLength
 
 ```csharp
-public static Func<object, ValidationResult> MaxLength(int length, string errorMessage)
+public static Func<Object, ValidationResult> MaxLength(int length, string errorMessage)
 ```
 
 #### Parameters
@@ -189,7 +189,7 @@ the Validation function
 Validation function for RegularExpression
 
 ```csharp
-public static Func<object, ValidationResult> RegularExpression(string pattern, string errorMessage)
+public static Func<Object, ValidationResult> RegularExpression(string pattern, string errorMessage)
 ```
 
 #### Parameters
@@ -209,7 +209,7 @@ the Validation function
 Validation function for Is Type Boolean
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeBoolean(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeBoolean(string errorMessage)
 ```
 
 #### Parameters
@@ -226,7 +226,7 @@ the Validation function
 Validation function for Is Type Byte
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeByte(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeByte(string errorMessage)
 ```
 
 #### Parameters
@@ -243,7 +243,7 @@ the Validation function
 Validation function for Is Type Char
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeChar(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeChar(string errorMessage)
 ```
 
 #### Parameters
@@ -260,7 +260,7 @@ the Validation function
 Validation function for Is Type Decimal
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeDecimal(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeDecimal(string errorMessage)
 ```
 
 #### Parameters
@@ -277,7 +277,7 @@ the Validation function
 Validation function for Is Type Double
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeDouble(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeDouble(string errorMessage)
 ```
 
 #### Parameters
@@ -294,7 +294,7 @@ the Validation function
 Validation function for Is Type Short
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeShort(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeShort(string errorMessage)
 ```
 
 #### Parameters
@@ -311,7 +311,7 @@ the Validation function
 Validation function for Is Type Int16
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeInt16(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeInt16(string errorMessage)
 ```
 
 #### Parameters
@@ -328,7 +328,7 @@ the Validation function
 Validation function for Is Type Int
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeInt(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeInt(string errorMessage)
 ```
 
 #### Parameters
@@ -345,7 +345,7 @@ the Validation function
 Validation function for Is Type Int32
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeInt32(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeInt32(string errorMessage)
 ```
 
 #### Parameters
@@ -362,7 +362,7 @@ the Validation function
 Validation function for Is Type Long
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeLong(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeLong(string errorMessage)
 ```
 
 #### Parameters
@@ -379,7 +379,7 @@ the Validation function
 Validation function for Is Type Int64
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeInt64(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeInt64(string errorMessage)
 ```
 
 #### Parameters
@@ -396,7 +396,7 @@ the Validation function
 Validation function for Is Type SByte
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeSByte(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeSByte(string errorMessage)
 ```
 
 #### Parameters
@@ -413,7 +413,7 @@ the Validation function
 Validation function for Is Type Float
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeFloat(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeFloat(string errorMessage)
 ```
 
 #### Parameters
@@ -430,7 +430,7 @@ the Validation function
 Validation function for Is Type Single
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeSingle(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeSingle(string errorMessage)
 ```
 
 #### Parameters
@@ -447,7 +447,7 @@ the Validation function
 Validation function for Is Type Ushort
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeUshort(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeUshort(string errorMessage)
 ```
 
 #### Parameters
@@ -464,7 +464,7 @@ the Validation function
 Validation function for Is Type UInt16
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeUInt16(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeUInt16(string errorMessage)
 ```
 
 #### Parameters
@@ -481,7 +481,7 @@ the Validation function
 Validation function for Is Type UInt
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeUInt(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeUInt(string errorMessage)
 ```
 
 #### Parameters
@@ -498,7 +498,7 @@ the Validation function
 Validation function for Is Type UInt32
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeUInt32(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeUInt32(string errorMessage)
 ```
 
 #### Parameters
@@ -515,7 +515,7 @@ the Validation function
 Validation function for Is Type ULong
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeULong(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeULong(string errorMessage)
 ```
 
 #### Parameters
@@ -532,7 +532,7 @@ the Validation function
 Validation function for Is Type UInt64
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeUInt64(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeUInt64(string errorMessage)
 ```
 
 #### Parameters
@@ -549,7 +549,7 @@ the Validation function
 Validation function for Is Type DateTime
 
 ```csharp
-public static Func<object, ValidationResult> IsTypeDateTime(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeDateTime(string errorMessage)
 ```
 
 #### Parameters

@@ -80,7 +80,7 @@ Defines mask input. Rules for Generic type:
  <br>9 - Only a numeric character<br>L - Only a letter<br>C - OnlyCustom character<br>A - Any character<br>N - OnlyCustom character +  Only a numeric character<br>X - OnlyCustom character +  Only a letter<br>\ - Escape character<br>{ - Initial delimiter for repetition of masks<br>} - Final delimiter for repetition of masks<br>[-Initial delimiter for list of Custom character<br>] - Final delimiter for list of Custom character
 
 ```csharp
-IControlMaskEdit Mask(string value, Nullable<char> promptmask)
+IControlMaskEdit Mask(string value, Nullable<Char> promptmask)
 ```
 
 #### Parameters
@@ -100,7 +100,7 @@ Prompt mask overwriter. Default value is '■'/'_'
 Defines type of mask control.
 
 ```csharp
-IControlMaskEdit Mask(MaskedType maskedType, Nullable<char> promptmask)
+IControlMaskEdit Mask(MaskedType maskedType, Nullable<Char> promptmask)
 ```
 
 #### Parameters
@@ -328,18 +328,18 @@ Transform option
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **AddValidators(Func`2[])**
+### **AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
 
 ```csharp
-IControlMaskEdit AddValidators(Func`2[] validators)
+IControlMaskEdit AddValidators(Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters
 
-`validators` [Func`2[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the function validator.
 
 #### Returns
@@ -368,7 +368,7 @@ true execute validators foreach input; otherwise, only at finish.
 Dynamically change the description using a user role
 
 ```csharp
-IControlMaskEdit ChangeDescription(Func<string, string> value)
+IControlMaskEdit ChangeDescription(Func<String, String> value)
 ```
 
 #### Parameters

@@ -143,7 +143,7 @@ Filter Mode
 Sort list by expression
 
 ```csharp
-IControlSelect<T> OrderBy(Expression<Func<T, object>> value)
+IControlSelect<T> OrderBy(Expression<Func<T, Object>> value)
 ```
 
 #### Parameters
@@ -160,7 +160,7 @@ expresion to sort the colletion
 Sort Descending list by expression
 
 ```csharp
-IControlSelect<T> OrderByDescending(Expression<Func<T, object>> value)
+IControlSelect<T> OrderByDescending(Expression<Func<T, Object>> value)
 ```
 
 #### Parameters
@@ -177,7 +177,7 @@ expresion to sort the colletion
 Function to show text Item in list.Default value is Item.ToString()
 
 ```csharp
-IControlSelect<T> TextSelector(Func<T, string> value)
+IControlSelect<T> TextSelector(Func<T, String> value)
 ```
 
 #### Parameters
@@ -194,7 +194,7 @@ Function to show text Item in list
 Dynamically change the description using a user role
 
 ```csharp
-IControlSelect<T> ChangeDescription(Func<T, string> value)
+IControlSelect<T> ChangeDescription(Func<T, String> value)
 ```
 
 #### Parameters
@@ -291,7 +291,7 @@ items colletion
 Custom item comparator
 
 ```csharp
-IControlSelect<T> EqualItems(Func<T, T, bool> comparer)
+IControlSelect<T> EqualItems(Func<T, T, Boolean> comparer)
 ```
 
 #### Parameters
