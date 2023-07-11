@@ -1,7 +1,7 @@
 name: "CodeQL"
 
 on: [push, pull_request]
-
+ 
 env:
   DOTNET_VERSION: 7.0.x
 
@@ -31,12 +31,8 @@ jobs:
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v2
       with:
-        languages: 
-		${{ matrix.language }}
-        queries: 
-		+security-and-quality
- 	paths:
-  	     	- Src 
+        languages: ${{ matrix.language }}
+        queries: +security-and-quality
 
     - name: Autobuild
       uses: github/codeql-action/autobuild@v2
