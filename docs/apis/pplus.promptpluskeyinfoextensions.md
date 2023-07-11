@@ -22,128 +22,13 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Methods
 
-### <a id="methods-ispressspecialkey"/>**IsPressSpecialKey(ConsoleKeyInfo, ConsoleKey, ConsoleModifiers)**
+### <a id="methods-isbackwardword"/>**IsBackwardWord(ConsoleKeyInfo)**
 
-Check ConsoleKeyInfo is Special Key
-
-```csharp
-public static bool IsPressSpecialKey(ConsoleKeyInfo keyinfo, ConsoleKey key, ConsoleModifiers modifier)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-`key` ConsoleKey<br>
-to compare
-
-`modifier` ConsoleModifiers<br>
-to compare
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-ispressenterkey"/>**IsPressEnterKey(ConsoleKeyInfo, Boolean)**
-
-Check ConsoleKeyInfo is Enter Key
+Check ConsoleKeyInfo is Backward Word Emacs Key 
+ <br>Alt+B = Moves the cursor backward one word.
 
 ```csharp
-public static bool IsPressEnterKey(ConsoleKeyInfo keyinfo, bool emacskeys)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-If `true` accept 'CTRL+J'
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-islowerscurrentword"/>**IsLowersCurrentWord(ConsoleKeyInfo)**
-
-Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
- <br>Alt+L = Lowers the case of every character from the cursor's position to the end of the current words
-
-```csharp
-public static bool IsLowersCurrentWord(ConsoleKeyInfo keyinfo)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-isclearbeforecursor"/>**IsClearBeforeCursor(ConsoleKeyInfo)**
-
-Check ConsoleKeyInfo is Clear Before Cursor Emacs Key 
- <br>Ctrl+U = Clears the line content before the cursor
-
-```csharp
-public static bool IsClearBeforeCursor(ConsoleKeyInfo keyinfo)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-isclearaftercursor"/>**IsClearAfterCursor(ConsoleKeyInfo)**
-
-Check ConsoleKeyInfo is Clear After Cursor Emacs Key 
- <br>Ctrl+K = Clears the line content after the cursor
-
-```csharp
-public static bool IsClearAfterCursor(ConsoleKeyInfo keyinfo)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-isclearwordbeforecursor"/>**IsClearWordBeforeCursor(ConsoleKeyInfo)**
-
-Check ConsoleKeyInfo is Clear Word Before Cursor Emacs Key 
- <br>Ctrl+W = Clears the word before the cursor
-
-```csharp
-public static bool IsClearWordBeforeCursor(ConsoleKeyInfo keyinfo)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-isclearwordaftercursor"/>**IsClearWordAfterCursor(ConsoleKeyInfo)**
-
-Check ConsoleKeyInfo is Clear Word After Cursor Emacs Key 
- <br>Ctrl+D = Clears the word after the cursor
-
-```csharp
-public static bool IsClearWordAfterCursor(ConsoleKeyInfo keyinfo)
+public static bool IsBackwardWord(ConsoleKeyInfo keyinfo)
 ```
 
 #### Parameters
@@ -173,13 +58,13 @@ to check
 
 `true` if equal otherwise `false`.
 
-### <a id="methods-isforwardword"/>**IsForwardWord(ConsoleKeyInfo)**
+### <a id="methods-isclearaftercursor"/>**IsClearAfterCursor(ConsoleKeyInfo)**
 
-Check ConsoleKeyInfo is Forward Word Emacs Key 
- <br>Alt+F = Moves the cursor forward one word.
+Check ConsoleKeyInfo is Clear After Cursor Emacs Key 
+ <br>Ctrl+K = Clears the line content after the cursor
 
 ```csharp
-public static bool IsForwardWord(ConsoleKeyInfo keyinfo)
+public static bool IsClearAfterCursor(ConsoleKeyInfo keyinfo)
 ```
 
 #### Parameters
@@ -191,49 +76,13 @@ to check
 
 `true` if equal otherwise `false`.
 
-### <a id="methods-isbackwardword"/>**IsBackwardWord(ConsoleKeyInfo)**
+### <a id="methods-isclearbeforecursor"/>**IsClearBeforeCursor(ConsoleKeyInfo)**
 
-Check ConsoleKeyInfo is Backward Word Emacs Key 
- <br>Alt+B = Moves the cursor backward one word.
-
-```csharp
-public static bool IsBackwardWord(ConsoleKeyInfo keyinfo)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-isupperscurrentword"/>**IsUppersCurrentWord(ConsoleKeyInfo)**
-
-Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
- <br>Alt+U = Upper the case of every character from the cursor's position to the end of the current word
+Check ConsoleKeyInfo is Clear Before Cursor Emacs Key 
+ <br>Ctrl+U = Clears the line content before the cursor
 
 ```csharp
-public static bool IsUppersCurrentWord(ConsoleKeyInfo keyinfo)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-istransposeprevious"/>**IsTransposePrevious(ConsoleKeyInfo)**
-
-Check ConsoleKeyInfo is Transpose Previous Emacs Key 
- <br>Ctrl+T = Transpose the previous two characters
-
-```csharp
-public static bool IsTransposePrevious(ConsoleKeyInfo keyinfo)
+public static bool IsClearBeforeCursor(ConsoleKeyInfo keyinfo)
 ```
 
 #### Parameters
@@ -263,12 +112,13 @@ to check
 
 `true` if equal otherwise `false`.
 
-### <a id="methods-ispresstabkey"/>**IsPressTabKey(ConsoleKeyInfo)**
+### <a id="methods-isclearwordaftercursor"/>**IsClearWordAfterCursor(ConsoleKeyInfo)**
 
-Check ConsoleKeyInfo is Tab Key
+Check ConsoleKeyInfo is Clear Word After Cursor Emacs Key 
+ <br>Ctrl+D = Clears the word after the cursor
 
 ```csharp
-public static bool IsPressTabKey(ConsoleKeyInfo keyinfo)
+public static bool IsClearWordAfterCursor(ConsoleKeyInfo keyinfo)
 ```
 
 #### Parameters
@@ -280,12 +130,13 @@ to check
 
 `true` if equal otherwise `false`.
 
-### <a id="methods-ispressshifttabkey"/>**IsPressShiftTabKey(ConsoleKeyInfo)**
+### <a id="methods-isclearwordbeforecursor"/>**IsClearWordBeforeCursor(ConsoleKeyInfo)**
 
-Check ConsoleKeyInfo is Shift + Tab Key
+Check ConsoleKeyInfo is Clear Word Before Cursor Emacs Key 
+ <br>Ctrl+W = Clears the word before the cursor
 
 ```csharp
-public static bool IsPressShiftTabKey(ConsoleKeyInfo keyinfo)
+public static bool IsClearWordBeforeCursor(ConsoleKeyInfo keyinfo)
 ```
 
 #### Parameters
@@ -297,41 +148,37 @@ to check
 
 `true` if equal otherwise `false`.
 
-### <a id="methods-ispressendkey"/>**IsPressEndKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-isforwardword"/>**IsForwardWord(ConsoleKeyInfo)**
 
-Check ConsoleKeyInfo is End Key
+Check ConsoleKeyInfo is Forward Word Emacs Key 
+ <br>Alt+F = Moves the cursor forward one word.
 
 ```csharp
-public static bool IsPressEndKey(ConsoleKeyInfo keyinfo, bool emacskeys)
+public static bool IsForwardWord(ConsoleKeyInfo keyinfo)
 ```
 
 #### Parameters
 
 `keyinfo` ConsoleKeyInfo<br>
 to check
-
-`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+E'
 
 #### Returns
 
 `true` if equal otherwise `false`.
 
-### <a id="methods-ispresshomekey"/>**IsPressHomeKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-islowerscurrentword"/>**IsLowersCurrentWord(ConsoleKeyInfo)**
 
-Check ConsoleKeyInfo is End Key
+Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
+ <br>Alt+L = Lowers the case of every character from the cursor's position to the end of the current words
 
 ```csharp
-public static bool IsPressHomeKey(ConsoleKeyInfo keyinfo, bool emacskeys)
+public static bool IsLowersCurrentWord(ConsoleKeyInfo keyinfo)
 ```
 
 #### Parameters
 
 `keyinfo` ConsoleKeyInfo<br>
 to check
-
-`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+A'
 
 #### Returns
 
@@ -377,83 +224,6 @@ if `true` accept 'CTRL+D'
 
 `true` if equal otherwise `false`.
 
-### <a id="methods-ispressleftarrowkey"/>**IsPressLeftArrowKey(ConsoleKeyInfo, Boolean)**
-
-Check ConsoleKeyInfo is Left Arrow Key
-
-```csharp
-public static bool IsPressLeftArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+B'
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-ispressspacekey"/>**IsPressSpaceKey(ConsoleKeyInfo)**
-
-Check ConsoleKeyInfo is Space Key
-
-```csharp
-public static bool IsPressSpaceKey(ConsoleKeyInfo keyinfo)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-ispressrightarrowkey"/>**IsPressRightArrowKey(ConsoleKeyInfo, Boolean)**
-
-Check ConsoleKeyInfo is Right Arrow Key
-
-```csharp
-public static bool IsPressRightArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+F'
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
-### <a id="methods-ispressuparrowkey"/>**IsPressUpArrowKey(ConsoleKeyInfo, Boolean)**
-
-Check ConsoleKeyInfo is Up Arrow Key
-
-```csharp
-public static bool IsPressUpArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
-```
-
-#### Parameters
-
-`keyinfo` ConsoleKeyInfo<br>
-to check
-
-`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'CTRL+P'
-
-#### Returns
-
-`true` if equal otherwise `false`.
-
 ### <a id="methods-ispressdownarrowkey"/>**IsPressDownArrowKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is Down Arrow Key
@@ -474,12 +244,12 @@ if `true` accept 'CTRL+N'
 
 `true` if equal otherwise `false`.
 
-### <a id="methods-ispresspageupkey"/>**IsPressPageUpKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispressendkey"/>**IsPressEndKey(ConsoleKeyInfo, Boolean)**
 
-Check ConsoleKeyInfo is PageUp Key
+Check ConsoleKeyInfo is End Key
 
 ```csharp
-public static bool IsPressPageUpKey(ConsoleKeyInfo keyinfo, bool emacskeys)
+public static bool IsPressEndKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 ```
 
 #### Parameters
@@ -488,7 +258,84 @@ public static bool IsPressPageUpKey(ConsoleKeyInfo keyinfo, bool emacskeys)
 to check
 
 `emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-if `true` accept 'Alt+P'
+if `true` accept 'CTRL+E'
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-ispressenterkey"/>**IsPressEnterKey(ConsoleKeyInfo, Boolean)**
+
+Check ConsoleKeyInfo is Enter Key
+
+```csharp
+public static bool IsPressEnterKey(ConsoleKeyInfo keyinfo, bool emacskeys)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+If `true` accept 'CTRL+J'
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-ispressesckey"/>**IsPressEscKey(ConsoleKeyInfo)**
+
+Check ConsoleKeyInfo is Esc Key
+
+```csharp
+public static bool IsPressEscKey(ConsoleKeyInfo keyinfo)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-ispresshomekey"/>**IsPressHomeKey(ConsoleKeyInfo, Boolean)**
+
+Check ConsoleKeyInfo is End Key
+
+```csharp
+public static bool IsPressHomeKey(ConsoleKeyInfo keyinfo, bool emacskeys)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+if `true` accept 'CTRL+A'
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-ispressleftarrowkey"/>**IsPressLeftArrowKey(ConsoleKeyInfo, Boolean)**
+
+Check ConsoleKeyInfo is Left Arrow Key
+
+```csharp
+public static bool IsPressLeftArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+if `true` accept 'CTRL+B'
 
 #### Returns
 
@@ -514,12 +361,165 @@ if `true` accept 'Alt+N'
 
 `true` if equal otherwise `false`.
 
-### <a id="methods-ispressesckey"/>**IsPressEscKey(ConsoleKeyInfo)**
+### <a id="methods-ispresspageupkey"/>**IsPressPageUpKey(ConsoleKeyInfo, Boolean)**
 
-Check ConsoleKeyInfo is Esc Key
+Check ConsoleKeyInfo is PageUp Key
 
 ```csharp
-public static bool IsPressEscKey(ConsoleKeyInfo keyinfo)
+public static bool IsPressPageUpKey(ConsoleKeyInfo keyinfo, bool emacskeys)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+if `true` accept 'Alt+P'
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-ispressrightarrowkey"/>**IsPressRightArrowKey(ConsoleKeyInfo, Boolean)**
+
+Check ConsoleKeyInfo is Right Arrow Key
+
+```csharp
+public static bool IsPressRightArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+if `true` accept 'CTRL+F'
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-ispressshifttabkey"/>**IsPressShiftTabKey(ConsoleKeyInfo)**
+
+Check ConsoleKeyInfo is Shift + Tab Key
+
+```csharp
+public static bool IsPressShiftTabKey(ConsoleKeyInfo keyinfo)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-ispressspacekey"/>**IsPressSpaceKey(ConsoleKeyInfo)**
+
+Check ConsoleKeyInfo is Space Key
+
+```csharp
+public static bool IsPressSpaceKey(ConsoleKeyInfo keyinfo)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-ispressspecialkey"/>**IsPressSpecialKey(ConsoleKeyInfo, ConsoleKey, ConsoleModifiers)**
+
+Check ConsoleKeyInfo is Special Key
+
+```csharp
+public static bool IsPressSpecialKey(ConsoleKeyInfo keyinfo, ConsoleKey key, ConsoleModifiers modifier)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+`key` ConsoleKey<br>
+to compare
+
+`modifier` ConsoleModifiers<br>
+to compare
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-ispresstabkey"/>**IsPressTabKey(ConsoleKeyInfo)**
+
+Check ConsoleKeyInfo is Tab Key
+
+```csharp
+public static bool IsPressTabKey(ConsoleKeyInfo keyinfo)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-ispressuparrowkey"/>**IsPressUpArrowKey(ConsoleKeyInfo, Boolean)**
+
+Check ConsoleKeyInfo is Up Arrow Key
+
+```csharp
+public static bool IsPressUpArrowKey(ConsoleKeyInfo keyinfo, bool emacskeys)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+`emacskeys` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+if `true` accept 'CTRL+P'
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-istransposeprevious"/>**IsTransposePrevious(ConsoleKeyInfo)**
+
+Check ConsoleKeyInfo is Transpose Previous Emacs Key 
+ <br>Ctrl+T = Transpose the previous two characters
+
+```csharp
+public static bool IsTransposePrevious(ConsoleKeyInfo keyinfo)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-isupperscurrentword"/>**IsUppersCurrentWord(ConsoleKeyInfo)**
+
+Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
+ <br>Alt+U = Upper the case of every character from the cursor's position to the end of the current word
+
+```csharp
+public static bool IsUppersCurrentWord(ConsoleKeyInfo keyinfo)
 ```
 
 #### Parameters

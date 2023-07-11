@@ -20,18 +20,6 @@ public interface ICursorDrive
 
 ## Properties
 
-### <a id="properties-cursorvisible"/>**CursorVisible**
-
-Gets or sets a value indicating whether the cursor is visible.
-
-```csharp
-public abstract bool CursorVisible { get; set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
 ### <a id="properties-cursorleft"/>**CursorLeft**
 
 Gets the column position of the cursor within the buffer area.
@@ -55,6 +43,18 @@ public abstract int CursorTop { get; }
 #### Property Value
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### <a id="properties-cursorvisible"/>**CursorVisible**
+
+Gets or sets a value indicating whether the cursor is visible.
+
+```csharp
+public abstract bool CursorVisible { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ## Methods
 

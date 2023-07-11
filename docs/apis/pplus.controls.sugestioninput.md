@@ -22,18 +22,6 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### <a id="properties-text"/>**Text**
-
-Get Sugestion Text input
-
-```csharp
-public string Text { get; }
-```
-
-#### Property Value
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
 ### <a id="properties-context"/>**Context**
 
 Get generic context parameter
@@ -45,6 +33,18 @@ public object Context { get; }
 #### Property Value
 
 [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+
+### <a id="properties-text"/>**Text**
+
+Get Sugestion Text input
+
+```csharp
+public string Text { get; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 

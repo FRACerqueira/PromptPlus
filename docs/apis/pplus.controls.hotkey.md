@@ -23,78 +23,6 @@ Implements [IEquatable&lt;ConsoleKeyInfo&gt;](https://docs.microsoft.com/en-us/d
 
 ## Properties
 
-### <a id="properties-tooltipdefault"/>**TooltipDefault**
-
-Get HotKey default for Tooltip 'F1'
-
-```csharp
-public static HotKey TooltipDefault { get; }
-```
-
-#### Property Value
-
-[HotKey](./pplus.controls.hotkey.md)<br>
-
-### <a id="properties-passwordviewdefault"/>**PasswordViewDefault**
-
-Get HotKey default for PasswordView 'F2'
-
-```csharp
-public static HotKey PasswordViewDefault { get; }
-```
-
-#### Property Value
-
-[HotKey](./pplus.controls.hotkey.md)<br>
-
-### <a id="properties-tooltipfullpathdefault"/>**TooltipFullPathDefault**
-
-Get HotKey default for Tooltip FullPath 'F2'
-
-```csharp
-public static HotKey TooltipFullPathDefault { get; }
-```
-
-#### Property Value
-
-[HotKey](./pplus.controls.hotkey.md)<br>
-
-### <a id="properties-toggleexpandnodedefault"/>**ToggleExpandNodeDefault**
-
-Get HotKey default for expand node 'F3'
-
-```csharp
-public static HotKey ToggleExpandNodeDefault { get; }
-```
-
-#### Property Value
-
-[HotKey](./pplus.controls.hotkey.md)<br>
-
-### <a id="properties-toggleexpandallnodedefault"/>**ToggleExpandAllNodeDefault**
-
-Get HotKey default for expand node 'F4'
-
-```csharp
-public static HotKey ToggleExpandAllNodeDefault { get; }
-```
-
-#### Property Value
-
-[HotKey](./pplus.controls.hotkey.md)<br>
-
-### <a id="properties-selectalldefault"/>**SelectAllDefault**
-
-Get HotKey default for Select All 'F2'
-
-```csharp
-public static HotKey SelectAllDefault { get; }
-```
-
-#### Property Value
-
-[HotKey](./pplus.controls.hotkey.md)<br>
-
 ### <a id="properties-edititemdefault"/>**EditItemDefault**
 
 Get HotKey default for Edit Item 'F2'
@@ -119,6 +47,30 @@ public static HotKey InvertSelectedDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
+### <a id="properties-keyinfo"/>**KeyInfo**
+
+Get  to HotKey
+
+```csharp
+public ConsoleKeyInfo KeyInfo { get; }
+```
+
+#### Property Value
+
+ConsoleKeyInfo<br>
+
+### <a id="properties-passwordviewdefault"/>**PasswordViewDefault**
+
+Get HotKey default for PasswordView 'F2'
+
+```csharp
+public static HotKey PasswordViewDefault { get; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
 ### <a id="properties-removeitemdefault"/>**RemoveItemDefault**
 
 Get HotKey default for Remove item 'F3'
@@ -131,17 +83,65 @@ public static HotKey RemoveItemDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### <a id="properties-keyinfo"/>**KeyInfo**
+### <a id="properties-selectalldefault"/>**SelectAllDefault**
 
-Get  to HotKey
+Get HotKey default for Select All 'F2'
 
 ```csharp
-public ConsoleKeyInfo KeyInfo { get; }
+public static HotKey SelectAllDefault { get; }
 ```
 
 #### Property Value
 
-ConsoleKeyInfo<br>
+[HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-toggleexpandallnodedefault"/>**ToggleExpandAllNodeDefault**
+
+Get HotKey default for expand node 'F4'
+
+```csharp
+public static HotKey ToggleExpandAllNodeDefault { get; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-toggleexpandnodedefault"/>**ToggleExpandNodeDefault**
+
+Get HotKey default for expand node 'F3'
+
+```csharp
+public static HotKey ToggleExpandNodeDefault { get; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-tooltipdefault"/>**TooltipDefault**
+
+Get HotKey default for Tooltip 'F1'
+
+```csharp
+public static HotKey TooltipDefault { get; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-tooltipfullpathdefault"/>**TooltipFullPathDefault**
+
+Get HotKey default for Tooltip FullPath 'F2'
+
+```csharp
+public static HotKey TooltipFullPathDefault { get; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
 
 ## Constructors
 
@@ -181,16 +181,6 @@ With Ctrl key
 
 ## Methods
 
-### <a id="methods-tostring"/>**ToString()**
-
-```csharp
-string ToString()
-```
-
-#### Returns
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)
-
 ### <a id="methods-equals"/>**Equals(ConsoleKeyInfo)**
 
 Checks Hotkey instances are equal the .
@@ -207,6 +197,16 @@ The ConsoleKeyInfo to compare.
 #### Returns
 
 `true` if the Hotkey are equal, otherwise `false`.
+
+### <a id="methods-tostring"/>**ToString()**
+
+```csharp
+string ToString()
+```
+
+#### Returns
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)
 
 
 - - -

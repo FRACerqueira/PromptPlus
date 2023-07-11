@@ -20,55 +20,351 @@ Implements [IPromptControls&lt;ResultMasked&gt;](./pplus.controls.ipromptcontrol
 
 ## Methods
 
-### <a id="methods-typetipstyle"/>**TypeTipStyle(Style)**
+### <a id="methods-acceptemptyvalue"/>**AcceptEmptyValue()**
 
-Overwrite [Style](./pplus.style.md) to region tip type input.
- <br>Default Foreground : 'ConsoleColor.Yellow'<br>Default Background : same Console Background when setted
+Accept empty value
+ <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.
 
 ```csharp
-IControlMaskEdit TypeTipStyle(Style value)
+IControlMaskEdit AcceptEmptyValue()
 ```
-
-#### Parameters
-
-`value` [Style](./pplus.style.md)<br>
-Style
 
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-negativestyle"/>**NegativeStyle(Style)**
+### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
-Overwrite [Style](./pplus.style.md) to region neggative input.
- <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
+Add a validator to accept sucessfull finish of control.
+ <br>Tip: see  to validators embeding
 
 ```csharp
-IControlMaskEdit NegativeStyle(Style value)
+IControlMaskEdit AddValidators(Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters
 
-`value` [Style](./pplus.style.md)<br>
-Style
+`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+the function validator.
 
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-positivestyle"/>**PositiveStyle(Style)**
+### <a id="methods-ammoutpositions"/>**AmmoutPositions(Int32, Int32, Boolean)**
 
-Overwrite [Style](./pplus.style.md) to region positive input.
- <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
+Defines integer lenght, decimal lenght and accept signl.
+ <br>Valid only for type MaskedType.Number or Currency, otherwise this set will be ignored.<br>This set is Requeried for these types.
 
 ```csharp
-IControlMaskEdit PositiveStyle(Style value)
+IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal)
 ```
 
 #### Parameters
 
-`value` [Style](./pplus.style.md)<br>
-Style
+`intvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+integer lenght
+
+`decimalvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+decimal lenght
+
+`acceptSignal` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+True accept signal; otherwise, no.
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;String, String&gt;)**
+
+Dynamically change the description using a user role
+
+```csharp
+IControlMaskEdit ChangeDescription(Func<String, String> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;String, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply change
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
+
+Custom config the control.
+
+```csharp
+IControlMaskEdit Config(Action<IPromptConfig> context)
+```
+
+#### Parameters
+
+`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-culture"/>**Culture(CultureInfo)**
+
+[CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
+ <br>Default value is global Promptplus Cultureinfo
+
+```csharp
+IControlMaskEdit Culture(CultureInfo value)
+```
+
+#### Parameters
+
+`value` [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
+CultureInfo to use on validate
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-culture"/>**Culture(String)**
+
+[CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
+ <br>Default value is global Promptplus Cultureinfo
+
+```csharp
+IControlMaskEdit Culture(string value)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Name of CultureInfo to use on validate
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-default"/>**Default(String)**
+
+Default value (with mask!) when stated.
+
+```csharp
+IControlMaskEdit Default(string value)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Value default
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-defaultifempty"/>**DefaultIfEmpty(String, Boolean)**
+
+Default value (with mask!) when finished value is empty.
+
+```csharp
+IControlMaskEdit DefaultIfEmpty(string value, bool zeroIsEmpty)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Finished value default
+
+`zeroIsEmpty` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Valid only for type MaskedType.Number or MaskedType.Currency, otherwise this set will be ignored.
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-descriptionwithinputtype"/>**DescriptionWithInputType(FormatWeek)**
+
+Append to description the tip of type input.
+
+```csharp
+IControlMaskEdit DescriptionWithInputType(FormatWeek week)
+```
+
+#### Parameters
+
+`week` [FormatWeek](./pplus.controls.formatweek.md)<br>
+show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-fillzeros"/>**FillZeros()**
+
+Fill zeros mask.
+ <br>Not valid for type MaskedType.Generic (this set will be ignored).<br>When used this feature the AcceptEmptyValue feature will be ignored.<br>When MaskedType.Number or MaskedType.Currency this feature is always on.
+
+```csharp
+IControlMaskEdit FillZeros()
+```
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
+
+Filter strategy for filter items in History colletion
+ <br>Default value is FilterMode.StartsWith
+
+```csharp
+IControlMaskEdit FilterType(FilterMode value)
+```
+
+#### Parameters
+
+`value` [FilterMode](./pplus.controls.filtermode.md)<br>
+Filter Mode
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-formattime"/>**FormatTime(FormatTime)**
+
+Defines time parts input.
+ <br>Valid only for type MaskedType.TimeOnly or DateTime, otherwise this set will be ignored.
+
+```csharp
+IControlMaskEdit FormatTime(FormatTime value)
+```
+
+#### Parameters
+
+`value` [FormatTime](./pplus.controls.formattime.md)<br>
+[FormatTime](./pplus.controls.formattime.md)
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-formatyear"/>**FormatYear(FormatYear)**
+
+Defines if year is long or short.
+ <br>Valid only for type MaskedType.DateOnly or DateTime, otherwise this set will be ignored.
+
+```csharp
+IControlMaskEdit FormatYear(FormatYear value)
+```
+
+#### Parameters
+
+`value` [FormatYear](./pplus.controls.formatyear.md)<br>
+[FormatYear](./pplus.controls.formatyear.md)
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-historyenabled"/>**HistoryEnabled(String)**
+
+Enabled saved history inputs.
+ <br>The history file is saved in  in the 'PromptPlus.History' folder.
+
+```csharp
+IControlMaskEdit HistoryEnabled(string value)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+name of file to saved history
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-historymaxitems"/>**HistoryMaxItems(Byte)**
+
+Set maximum items saved on history.After maximum the items are rotates.
+
+```csharp
+IControlMaskEdit HistoryMaxItems(byte value)
+```
+
+#### Parameters
+
+`value` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
+maximum items saved
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-historyminimumprefixlength"/>**HistoryMinimumPrefixLength(Int32)**
+
+Minimum chars (without mask!) to enabled history feature.
+ <br>History items are filtered by the starts with entry.
+
+```csharp
+IControlMaskEdit HistoryMinimumPrefixLength(int value)
+```
+
+#### Parameters
+
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Minimum chars number
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-historypagesize"/>**HistoryPageSize(Int32)**
+
+Set max.item view per page on history.Default value for this control is 10.
+
+```csharp
+IControlMaskEdit HistoryPageSize(int value)
+```
+
+#### Parameters
+
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Number of Max.items
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-historytimeout"/>**HistoryTimeout(TimeSpan)**
+
+Set timeout to valid items saved on history. Default value is 365 days.
+
+```csharp
+IControlMaskEdit HistoryTimeout(TimeSpan value)
+```
+
+#### Parameters
+
+`value` [TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
+timeout value
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
+
+Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
+
+```csharp
+IControlMaskEdit InputToCase(CaseOptions value)
+```
+
+#### Parameters
+
+`value` [CaseOptions](./pplus.controls.caseoptions.md)<br>
+Transform option
 
 #### Returns
 
@@ -115,177 +411,19 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-acceptemptyvalue"/>**AcceptEmptyValue()**
+### <a id="methods-negativestyle"/>**NegativeStyle(Style)**
 
-Accept empty value
- <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.
-
-```csharp
-IControlMaskEdit AcceptEmptyValue()
-```
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-defaultifempty"/>**DefaultIfEmpty(String, Boolean)**
-
-Default value (with mask!) when finished value is empty.
+Overwrite [Style](./pplus.style.md) to region neggative input.
+ <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
 
 ```csharp
-IControlMaskEdit DefaultIfEmpty(string value, bool zeroIsEmpty)
+IControlMaskEdit NegativeStyle(Style value)
 ```
 
 #### Parameters
 
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Finished value default
-
-`zeroIsEmpty` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Valid only for type MaskedType.Number or MaskedType.Currency, otherwise this set will be ignored.
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-fillzeros"/>**FillZeros()**
-
-Fill zeros mask.
- <br>Not valid for type MaskedType.Generic (this set will be ignored).<br>When used this feature the AcceptEmptyValue feature will be ignored.<br>When MaskedType.Number or MaskedType.Currency this feature is always on.
-
-```csharp
-IControlMaskEdit FillZeros()
-```
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-culture"/>**Culture(CultureInfo)**
-
-[CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
- <br>Default value is global Promptplus Cultureinfo
-
-```csharp
-IControlMaskEdit Culture(CultureInfo value)
-```
-
-#### Parameters
-
-`value` [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
-CultureInfo to use on validate
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-culture"/>**Culture(String)**
-
-[CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
- <br>Default value is global Promptplus Cultureinfo
-
-```csharp
-IControlMaskEdit Culture(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Name of CultureInfo to use on validate
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-formatyear"/>**FormatYear(FormatYear)**
-
-Defines if year is long or short.
- <br>Valid only for type MaskedType.DateOnly or DateTime, otherwise this set will be ignored.
-
-```csharp
-IControlMaskEdit FormatYear(FormatYear value)
-```
-
-#### Parameters
-
-`value` [FormatYear](./pplus.controls.formatyear.md)<br>
-[FormatYear](./pplus.controls.formatyear.md)
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-formattime"/>**FormatTime(FormatTime)**
-
-Defines time parts input.
- <br>Valid only for type MaskedType.TimeOnly or DateTime, otherwise this set will be ignored.
-
-```csharp
-IControlMaskEdit FormatTime(FormatTime value)
-```
-
-#### Parameters
-
-`value` [FormatTime](./pplus.controls.formattime.md)<br>
-[FormatTime](./pplus.controls.formattime.md)
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-ammoutpositions"/>**AmmoutPositions(Int32, Int32, Boolean)**
-
-Defines integer lenght, decimal lenght and accept signl.
- <br>Valid only for type MaskedType.Number or Currency, otherwise this set will be ignored.<br>This set is Requeried for these types.
-
-```csharp
-IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal)
-```
-
-#### Parameters
-
-`intvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-integer lenght
-
-`decimalvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-decimal lenght
-
-`acceptSignal` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-True accept signal; otherwise, no.
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-descriptionwithinputtype"/>**DescriptionWithInputType(FormatWeek)**
-
-Append to description the tip of type input.
-
-```csharp
-IControlMaskEdit DescriptionWithInputType(FormatWeek week)
-```
-
-#### Parameters
-
-`week` [FormatWeek](./pplus.controls.formatweek.md)<br>
-show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-default"/>**Default(String)**
-
-Default value (with mask!) when stated.
-
-```csharp
-IControlMaskEdit Default(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Value default
+`value` [Style](./pplus.style.md)<br>
+Style
 
 #### Returns
 
@@ -311,87 +449,19 @@ The timeout for valid items saved. Default value is 365 days
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
+### <a id="methods-positivestyle"/>**PositiveStyle(Style)**
 
-Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
+Overwrite [Style](./pplus.style.md) to region positive input.
+ <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
 
 ```csharp
-IControlMaskEdit InputToCase(CaseOptions value)
+IControlMaskEdit PositiveStyle(Style value)
 ```
 
 #### Parameters
 
-`value` [CaseOptions](./pplus.controls.caseoptions.md)<br>
-Transform option
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
-
-Add a validator to accept sucessfull finish of control.
- <br>Tip: see  to validators embeding
-
-```csharp
-IControlMaskEdit AddValidators(Func<Object, ValidationResult>[] validators)
-```
-
-#### Parameters
-
-`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-the function validator.
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-validateondemand"/>**ValidateOnDemand(Boolean)**
-
-Execute validators foreach input
-
-```csharp
-IControlMaskEdit ValidateOnDemand(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true execute validators foreach input; otherwise, only at finish.
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;String, String&gt;)**
-
-Dynamically change the description using a user role
-
-```csharp
-IControlMaskEdit ChangeDescription(Func<String, String> value)
-```
-
-#### Parameters
-
-`value` [Func&lt;String, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-function to apply change
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
-
-Custom config the control.
-
-```csharp
-IControlMaskEdit Config(Action<IPromptConfig> context)
-```
-
-#### Parameters
-
-`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
+`value` [Style](./pplus.style.md)<br>
+Style
 
 #### Returns
 
@@ -414,106 +484,36 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-historyminimumprefixlength"/>**HistoryMinimumPrefixLength(Int32)**
+### <a id="methods-typetipstyle"/>**TypeTipStyle(Style)**
 
-Minimum chars (without mask!) to enabled history feature.
- <br>History items are filtered by the starts with entry.
+Overwrite [Style](./pplus.style.md) to region tip type input.
+ <br>Default Foreground : 'ConsoleColor.Yellow'<br>Default Background : same Console Background when setted
 
 ```csharp
-IControlMaskEdit HistoryMinimumPrefixLength(int value)
+IControlMaskEdit TypeTipStyle(Style value)
 ```
 
 #### Parameters
 
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Minimum chars number
+`value` [Style](./pplus.style.md)<br>
+Style
 
 #### Returns
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-historyenabled"/>**HistoryEnabled(String)**
+### <a id="methods-validateondemand"/>**ValidateOnDemand(Boolean)**
 
-Enabled saved history inputs.
- <br>The history file is saved in  in the 'PromptPlus.History' folder.
+Execute validators foreach input
 
 ```csharp
-IControlMaskEdit HistoryEnabled(string value)
+IControlMaskEdit ValidateOnDemand(bool value)
 ```
 
 #### Parameters
 
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-name of file to saved history
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-historytimeout"/>**HistoryTimeout(TimeSpan)**
-
-Set timeout to valid items saved on history. Default value is 365 days.
-
-```csharp
-IControlMaskEdit HistoryTimeout(TimeSpan value)
-```
-
-#### Parameters
-
-`value` [TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
-timeout value
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-historymaxitems"/>**HistoryMaxItems(Byte)**
-
-Set maximum items saved on history.After maximum the items are rotates.
-
-```csharp
-IControlMaskEdit HistoryMaxItems(byte value)
-```
-
-#### Parameters
-
-`value` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
-maximum items saved
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-historypagesize"/>**HistoryPageSize(Int32)**
-
-Set max.item view per page on history.Default value for this control is 10.
-
-```csharp
-IControlMaskEdit HistoryPageSize(int value)
-```
-
-#### Parameters
-
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number of Max.items
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-filtertype"/>**FilterType(FilterMode)**
-
-Filter strategy for filter items in History colletion
- <br>Default value is FilterMode.StartsWith
-
-```csharp
-IControlMaskEdit FilterType(FilterMode value)
-```
-
-#### Parameters
-
-`value` [FilterMode](./pplus.controls.filtermode.md)<br>
-Filter Mode
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true execute validators foreach input; otherwise, only at finish.
 
 #### Returns
 

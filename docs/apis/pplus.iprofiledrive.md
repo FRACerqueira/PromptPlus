@@ -20,53 +20,41 @@ public interface IProfileDrive
 
 ## Properties
 
-### <a id="properties-provider"/>**Provider**
+### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
-Get provider mode.
+Get/set BackgroundColor console with color.
 
 ```csharp
-public abstract string Provider { get; }
+public abstract ConsoleColor BackgroundColor { get; set; }
 ```
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+ConsoleColor<br>
 
-### <a id="properties-isterminal"/>**IsTerminal**
+### <a id="properties-bufferheight"/>**BufferHeight**
 
-Get Terminal mode.
+Gets the height of the buffer area.
 
 ```csharp
-public abstract bool IsTerminal { get; }
+public abstract int BufferHeight { get; }
 ```
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### <a id="properties-isunicodesupported"/>**IsUnicodeSupported**
+### <a id="properties-bufferwidth"/>**BufferWidth**
 
-Get Unicode Supported.
+Gets the width of the buffer area.
 
 ```csharp
-public abstract bool IsUnicodeSupported { get; }
+public abstract int BufferWidth { get; }
 ```
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-supportsansi"/>**SupportsAnsi**
-
-Get SupportsAnsi mode.
-
-```csharp
-public abstract bool SupportsAnsi { get; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### <a id="properties-colordepth"/>**ColorDepth**
 
@@ -92,6 +80,54 @@ public abstract Style DefaultStyle { get; }
 
 [Style](./pplus.style.md)<br>
 
+### <a id="properties-foregroundcolor"/>**ForegroundColor**
+
+Get/Set Foreground console with color.
+
+```csharp
+public abstract ConsoleColor ForegroundColor { get; set; }
+```
+
+#### Property Value
+
+ConsoleColor<br>
+
+### <a id="properties-isterminal"/>**IsTerminal**
+
+Get Terminal mode.
+
+```csharp
+public abstract bool IsTerminal { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-isunicodesupported"/>**IsUnicodeSupported**
+
+Get Unicode Supported.
+
+```csharp
+public abstract bool IsUnicodeSupported { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-overflowstrategy"/>**OverflowStrategy**
+
+Get write Overflow Strategy.
+
+```csharp
+public abstract Overflow OverflowStrategy { get; }
+```
+
+#### Property Value
+
+[Overflow](./pplus.overflow.md)<br>
+
 ### <a id="properties-padleft"/>**PadLeft**
 
 Get screen margin left
@@ -116,65 +152,29 @@ public abstract byte PadRight { get; }
 
 [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
 
-### <a id="properties-bufferwidth"/>**BufferWidth**
+### <a id="properties-provider"/>**Provider**
 
-Gets the width of the buffer area.
+Get provider mode.
 
 ```csharp
-public abstract int BufferWidth { get; }
+public abstract string Provider { get; }
 ```
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### <a id="properties-bufferheight"/>**BufferHeight**
+### <a id="properties-supportsansi"/>**SupportsAnsi**
 
-Gets the height of the buffer area.
+Get SupportsAnsi mode.
 
 ```csharp
-public abstract int BufferHeight { get; }
+public abstract bool SupportsAnsi { get; }
 ```
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-### <a id="properties-foregroundcolor"/>**ForegroundColor**
-
-Get/Set Foreground console with color.
-
-```csharp
-public abstract ConsoleColor ForegroundColor { get; set; }
-```
-
-#### Property Value
-
-ConsoleColor<br>
-
-### <a id="properties-backgroundcolor"/>**BackgroundColor**
-
-Get/set BackgroundColor console with color.
-
-```csharp
-public abstract ConsoleColor BackgroundColor { get; set; }
-```
-
-#### Property Value
-
-ConsoleColor<br>
-
-### <a id="properties-overflowstrategy"/>**OverflowStrategy**
-
-Get write Overflow Strategy.
-
-```csharp
-public abstract Overflow OverflowStrategy { get; }
-```
-
-#### Property Value
-
-[Overflow](./pplus.overflow.md)<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ## Methods
 

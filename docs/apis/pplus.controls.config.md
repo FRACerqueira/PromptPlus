@@ -22,22 +22,13 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### <a id="properties-defaultculture"/>**DefaultCulture**
+### <a id="properties-completionmaxcount"/>**CompletionMaxCount**
 
-Get/Set default Culture([CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)) for all controls.
-
-```csharp
-public CultureInfo DefaultCulture { get; set; }
-```
-
-#### Property Value
-
-[CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
-
-### <a id="properties-pagesize"/>**PageSize**
+Get/Set Completion Max Items to return.
+ <br>Default value : 1000. If value  less than 1 internal sette to 1.
 
 ```csharp
-public int PageSize { get; set; }
+public int CompletionMaxCount { get; set; }
 ```
 
 #### Property Value
@@ -67,44 +58,30 @@ public int CompletionWaitToStart { get; set; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### <a id="properties-completionmaxcount"/>**CompletionMaxCount**
+### <a id="properties-defaultculture"/>**DefaultCulture**
 
-Get/Set Completion Max Items to return.
- <br>Default value : 1000. If value  less than 1 internal sette to 1.
+Get/Set default Culture([CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)) for all controls.
 
 ```csharp
-public int CompletionMaxCount { get; set; }
+public CultureInfo DefaultCulture { get; set; }
 ```
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
 
-### <a id="properties-historytimeout"/>**HistoryTimeout**
+### <a id="properties-edititempress"/>**EditItemPress**
 
-Get/Set History Timeout.
- <br>Default value : 365 days
+Get/Set [HotKey](./pplus.controls.hotkey.md) to Edit item.
+ <br>Default value : '[F2]'
 
 ```csharp
-public TimeSpan HistoryTimeout { get; set; }
+public HotKey EditItemPress { get; set; }
 ```
 
 #### Property Value
 
-[TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
-
-### <a id="properties-showtooltip"/>**ShowTooltip**
-
-Get/Set enabled show Tooltip for all controls.
- <br>Default value : true
-
-```csharp
-public bool ShowTooltip { get; set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[HotKey](./pplus.controls.hotkey.md)<br>
 
 ### <a id="properties-enabledabortkey"/>**EnabledAbortKey**
 
@@ -118,6 +95,19 @@ public bool EnabledAbortKey { get; set; }
 #### Property Value
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-fullpathpress"/>**FullPathPress**
+
+Get/Set [HotKey](./pplus.controls.hotkey.md) toggle current path to full path.
+ <br>Default value : '[F2]'
+
+```csharp
+public HotKey FullPathPress { get; set; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
 
 ### <a id="properties-hideafterfinish"/>**HideAfterFinish**
 
@@ -145,83 +135,18 @@ public bool HideOnAbort { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### <a id="properties-secretchar"/>**SecretChar**
+### <a id="properties-historytimeout"/>**HistoryTimeout**
 
-Get/Set value char for secret input
- <br>Default value : '#'.  Fall-back when null : '#'
+Get/Set History Timeout.
+ <br>Default value : 365 days
 
 ```csharp
-public Nullable<Char> SecretChar { get; set; }
+public TimeSpan HistoryTimeout { get; set; }
 ```
 
 #### Property Value
 
-[Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-### <a id="properties-yeschar"/>**YesChar**
-
-Get/Set value for YES answer
- <br>Default value : YesChar in built-in resources.  Fall-back when null : Y
-
-```csharp
-public Nullable<Char> YesChar { get; set; }
-```
-
-#### Property Value
-
-[Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-### <a id="properties-nochar"/>**NoChar**
-
-Get/Set value for NO answer
- <br>Default value : NoChar in built-in resources.  Fall-back when null : N
-
-```csharp
-public Nullable<Char> NoChar { get; set; }
-```
-
-#### Property Value
-
-[Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-
-### <a id="properties-tooltipkeypress"/>**TooltipKeyPress**
-
-Get/Set [HotKey](./pplus.controls.hotkey.md) to show/hide Tooltip.
- <br>Default value : '[F1]'
-
-```csharp
-public HotKey TooltipKeyPress { get; }
-```
-
-#### Property Value
-
-[HotKey](./pplus.controls.hotkey.md)<br>
-
-### <a id="properties-passwordviewpress"/>**PasswordViewPress**
-
-Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle password view.
- <br>Default value : '[F2]'
-
-```csharp
-public HotKey PasswordViewPress { get; set; }
-```
-
-#### Property Value
-
-[HotKey](./pplus.controls.hotkey.md)<br>
-
-### <a id="properties-selectallpress"/>**SelectAllPress**
-
-Get/Set [HotKey](./pplus.controls.hotkey.md) to Select all item.
- <br>Default value : '[F2]'
-
-```csharp
-public HotKey SelectAllPress { get; set; }
-```
-
-#### Property Value
-
-[HotKey](./pplus.controls.hotkey.md)<br>
+[TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
 
 ### <a id="properties-invertselectedpress"/>**InvertSelectedPress**
 
@@ -236,13 +161,36 @@ public HotKey InvertSelectedPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### <a id="properties-edititempress"/>**EditItemPress**
+### <a id="properties-nochar"/>**NoChar**
 
-Get/Set [HotKey](./pplus.controls.hotkey.md) to Edit item.
+Get/Set value for NO answer
+ <br>Default value : NoChar in built-in resources.  Fall-back when null : N
+
+```csharp
+public Nullable<Char> NoChar { get; set; }
+```
+
+#### Property Value
+
+[Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+### <a id="properties-pagesize"/>**PageSize**
+
+```csharp
+public int PageSize { get; set; }
+```
+
+#### Property Value
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### <a id="properties-passwordviewpress"/>**PasswordViewPress**
+
+Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle password view.
  <br>Default value : '[F2]'
 
 ```csharp
-public HotKey EditItemPress { get; set; }
+public HotKey PasswordViewPress { get; set; }
 ```
 
 #### Property Value
@@ -262,13 +210,52 @@ public HotKey RemoveItemPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### <a id="properties-fullpathpress"/>**FullPathPress**
+### <a id="properties-secretchar"/>**SecretChar**
 
-Get/Set [HotKey](./pplus.controls.hotkey.md) toggle current path to full path.
+Get/Set value char for secret input
+ <br>Default value : '#'.  Fall-back when null : '#'
+
+```csharp
+public Nullable<Char> SecretChar { get; set; }
+```
+
+#### Property Value
+
+[Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+### <a id="properties-selectallpress"/>**SelectAllPress**
+
+Get/Set [HotKey](./pplus.controls.hotkey.md) to Select all item.
  <br>Default value : '[F2]'
 
 ```csharp
-public HotKey FullPathPress { get; set; }
+public HotKey SelectAllPress { get; set; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-showtooltip"/>**ShowTooltip**
+
+Get/Set enabled show Tooltip for all controls.
+ <br>Default value : true
+
+```csharp
+public bool ShowTooltip { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-toggleexpandallpress"/>**ToggleExpandAllPress**
+
+Get/Set [HotKey](./pplus.controls.hotkey.md) Toggle Expand /Collapse All node.
+ <br>Default value : '[F4]'
+
+```csharp
+public HotKey ToggleExpandAllPress { get; set; }
 ```
 
 #### Property Value
@@ -288,18 +275,31 @@ public HotKey ToggleExpandPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### <a id="properties-toggleexpandallpress"/>**ToggleExpandAllPress**
+### <a id="properties-tooltipkeypress"/>**TooltipKeyPress**
 
-Get/Set [HotKey](./pplus.controls.hotkey.md) Toggle Expand /Collapse All node.
- <br>Default value : '[F4]'
+Get/Set [HotKey](./pplus.controls.hotkey.md) to show/hide Tooltip.
+ <br>Default value : '[F1]'
 
 ```csharp
-public HotKey ToggleExpandAllPress { get; set; }
+public HotKey TooltipKeyPress { get; }
 ```
 
 #### Property Value
 
 [HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-yeschar"/>**YesChar**
+
+Get/Set value for YES answer
+ <br>Default value : YesChar in built-in resources.  Fall-back when null : Y
+
+```csharp
+public Nullable<Char> YesChar { get; set; }
+```
+
+#### Property Value
+
+[Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ## Methods
 

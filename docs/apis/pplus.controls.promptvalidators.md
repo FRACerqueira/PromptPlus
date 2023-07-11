@@ -44,49 +44,6 @@ public static Func<Object, ValidationResult>[] ImportValidators<T>(T instance, E
 
 the Validation function
 
-### <a id="methods-isurischeme"/>**IsUriScheme(UriKind, String, String)**
-
-Validation function for Uri Scheme
-
-```csharp
-public static Func<Object, ValidationResult> IsUriScheme(UriKind uriKind, string allowedUriSchemes, string errorMessage)
-```
-
-#### Parameters
-
-`uriKind` UriKind<br>
-Kind of uri
-
-`allowedUriSchemes` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-list of allowed uri scheme. Schemes must be separated by a semicolon.
-
-`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Custom error message to show
-
-#### Returns
-
-the Validation function
-
-### <a id="methods-isnumber"/>**IsNumber(CultureInfo, String)**
-
-Validation function for Number
-
-```csharp
-public static Func<Object, ValidationResult> IsNumber(CultureInfo cultureinfo, string errorMessage)
-```
-
-#### Parameters
-
-`cultureinfo` [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
-Culture to validate
-
-`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Custom error message to show
-
-#### Returns
-
-the Validation function
-
 ### <a id="methods-iscurrency"/>**IsCurrency(CultureInfo, String)**
 
 Validation function for Currency
@@ -127,75 +84,18 @@ Custom error message to show
 
 the Validation function
 
-### <a id="methods-required"/>**Required(String)**
+### <a id="methods-isnumber"/>**IsNumber(CultureInfo, String)**
 
-Validation function for Required
+Validation function for Number
 
 ```csharp
-public static Func<Object, ValidationResult> Required(string errorMessage)
+public static Func<Object, ValidationResult> IsNumber(CultureInfo cultureinfo, string errorMessage)
 ```
 
 #### Parameters
 
-`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Custom error message to show
-
-#### Returns
-
-the Validation function
-
-### <a id="methods-minlength"/>**MinLength(Int32, String)**
-
-Validation function for MinLength
-
-```csharp
-public static Func<Object, ValidationResult> MinLength(int length, string errorMessage)
-```
-
-#### Parameters
-
-`length` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-MinLength value
-
-`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Custom error message to show
-
-#### Returns
-
-the Validation function
-
-### <a id="methods-maxlength"/>**MaxLength(Int32, String)**
-
-Validation function for MaxLength
-
-```csharp
-public static Func<Object, ValidationResult> MaxLength(int length, string errorMessage)
-```
-
-#### Parameters
-
-`length` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-MaxLength value
-
-`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Custom error message to show
-
-#### Returns
-
-the Validation function
-
-### <a id="methods-regularexpression"/>**RegularExpression(String, String)**
-
-Validation function for RegularExpression
-
-```csharp
-public static Func<Object, ValidationResult> RegularExpression(string pattern, string errorMessage)
-```
-
-#### Parameters
-
-`pattern` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-RegularExpression value
+`cultureinfo` [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
+Culture to validate
 
 `errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 Custom error message to show
@@ -255,6 +155,23 @@ Custom error message to show
 
 the Validation function
 
+### <a id="methods-istypedatetime"/>**IsTypeDateTime(String)**
+
+Validation function for Is Type DateTime
+
+```csharp
+public static Func<Object, ValidationResult> IsTypeDateTime(string errorMessage)
+```
+
+#### Parameters
+
+`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Custom error message to show
+
+#### Returns
+
+the Validation function
+
 ### <a id="methods-istypedecimal"/>**IsTypeDecimal(String)**
 
 Validation function for Is Type Decimal
@@ -289,29 +206,12 @@ Custom error message to show
 
 the Validation function
 
-### <a id="methods-istypeshort"/>**IsTypeShort(String)**
+### <a id="methods-istypefloat"/>**IsTypeFloat(String)**
 
-Validation function for Is Type Short
-
-```csharp
-public static Func<Object, ValidationResult> IsTypeShort(string errorMessage)
-```
-
-#### Parameters
-
-`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Custom error message to show
-
-#### Returns
-
-the Validation function
-
-### <a id="methods-istypeint16"/>**IsTypeInt16(String)**
-
-Validation function for Is Type Int16
+Validation function for Is Type Float
 
 ```csharp
-public static Func<Object, ValidationResult> IsTypeInt16(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeFloat(string errorMessage)
 ```
 
 #### Parameters
@@ -340,12 +240,12 @@ Custom error message to show
 
 the Validation function
 
-### <a id="methods-istypeint32"/>**IsTypeInt32(String)**
+### <a id="methods-istypeint16"/>**IsTypeInt16(String)**
 
-Validation function for Is Type Int32
+Validation function for Is Type Int16
 
 ```csharp
-public static Func<Object, ValidationResult> IsTypeInt32(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeInt16(string errorMessage)
 ```
 
 #### Parameters
@@ -357,12 +257,12 @@ Custom error message to show
 
 the Validation function
 
-### <a id="methods-istypelong"/>**IsTypeLong(String)**
+### <a id="methods-istypeint32"/>**IsTypeInt32(String)**
 
-Validation function for Is Type Long
+Validation function for Is Type Int32
 
 ```csharp
-public static Func<Object, ValidationResult> IsTypeLong(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeInt32(string errorMessage)
 ```
 
 #### Parameters
@@ -391,6 +291,23 @@ Custom error message to show
 
 the Validation function
 
+### <a id="methods-istypelong"/>**IsTypeLong(String)**
+
+Validation function for Is Type Long
+
+```csharp
+public static Func<Object, ValidationResult> IsTypeLong(string errorMessage)
+```
+
+#### Parameters
+
+`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Custom error message to show
+
+#### Returns
+
+the Validation function
+
 ### <a id="methods-istypesbyte"/>**IsTypeSByte(String)**
 
 Validation function for Is Type SByte
@@ -408,12 +325,12 @@ Custom error message to show
 
 the Validation function
 
-### <a id="methods-istypefloat"/>**IsTypeFloat(String)**
+### <a id="methods-istypeshort"/>**IsTypeShort(String)**
 
-Validation function for Is Type Float
+Validation function for Is Type Short
 
 ```csharp
-public static Func<Object, ValidationResult> IsTypeFloat(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeShort(string errorMessage)
 ```
 
 #### Parameters
@@ -442,12 +359,12 @@ Custom error message to show
 
 the Validation function
 
-### <a id="methods-istypeushort"/>**IsTypeUshort(String)**
+### <a id="methods-istypeuint"/>**IsTypeUInt(String)**
 
-Validation function for Is Type Ushort
+Validation function for Is Type UInt
 
 ```csharp
-public static Func<Object, ValidationResult> IsTypeUshort(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeUInt(string errorMessage)
 ```
 
 #### Parameters
@@ -476,46 +393,12 @@ Custom error message to show
 
 the Validation function
 
-### <a id="methods-istypeuint"/>**IsTypeUInt(String)**
-
-Validation function for Is Type UInt
-
-```csharp
-public static Func<Object, ValidationResult> IsTypeUInt(string errorMessage)
-```
-
-#### Parameters
-
-`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Custom error message to show
-
-#### Returns
-
-the Validation function
-
 ### <a id="methods-istypeuint32"/>**IsTypeUInt32(String)**
 
 Validation function for Is Type UInt32
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeUInt32(string errorMessage)
-```
-
-#### Parameters
-
-`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Custom error message to show
-
-#### Returns
-
-the Validation function
-
-### <a id="methods-istypeulong"/>**IsTypeULong(String)**
-
-Validation function for Is Type ULong
-
-```csharp
-public static Func<Object, ValidationResult> IsTypeULong(string errorMessage)
 ```
 
 #### Parameters
@@ -544,12 +427,129 @@ Custom error message to show
 
 the Validation function
 
-### <a id="methods-istypedatetime"/>**IsTypeDateTime(String)**
+### <a id="methods-istypeulong"/>**IsTypeULong(String)**
 
-Validation function for Is Type DateTime
+Validation function for Is Type ULong
 
 ```csharp
-public static Func<Object, ValidationResult> IsTypeDateTime(string errorMessage)
+public static Func<Object, ValidationResult> IsTypeULong(string errorMessage)
+```
+
+#### Parameters
+
+`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Custom error message to show
+
+#### Returns
+
+the Validation function
+
+### <a id="methods-istypeushort"/>**IsTypeUshort(String)**
+
+Validation function for Is Type Ushort
+
+```csharp
+public static Func<Object, ValidationResult> IsTypeUshort(string errorMessage)
+```
+
+#### Parameters
+
+`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Custom error message to show
+
+#### Returns
+
+the Validation function
+
+### <a id="methods-isurischeme"/>**IsUriScheme(UriKind, String, String)**
+
+Validation function for Uri Scheme
+
+```csharp
+public static Func<Object, ValidationResult> IsUriScheme(UriKind uriKind, string allowedUriSchemes, string errorMessage)
+```
+
+#### Parameters
+
+`uriKind` UriKind<br>
+Kind of uri
+
+`allowedUriSchemes` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+list of allowed uri scheme. Schemes must be separated by a semicolon.
+
+`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Custom error message to show
+
+#### Returns
+
+the Validation function
+
+### <a id="methods-maxlength"/>**MaxLength(Int32, String)**
+
+Validation function for MaxLength
+
+```csharp
+public static Func<Object, ValidationResult> MaxLength(int length, string errorMessage)
+```
+
+#### Parameters
+
+`length` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+MaxLength value
+
+`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Custom error message to show
+
+#### Returns
+
+the Validation function
+
+### <a id="methods-minlength"/>**MinLength(Int32, String)**
+
+Validation function for MinLength
+
+```csharp
+public static Func<Object, ValidationResult> MinLength(int length, string errorMessage)
+```
+
+#### Parameters
+
+`length` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+MinLength value
+
+`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Custom error message to show
+
+#### Returns
+
+the Validation function
+
+### <a id="methods-regularexpression"/>**RegularExpression(String, String)**
+
+Validation function for RegularExpression
+
+```csharp
+public static Func<Object, ValidationResult> RegularExpression(string pattern, string errorMessage)
+```
+
+#### Parameters
+
+`pattern` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+RegularExpression value
+
+`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Custom error message to show
+
+#### Returns
+
+the Validation function
+
+### <a id="methods-required"/>**Required(String)**
+
+Validation function for Required
+
+```csharp
+public static Func<Object, ValidationResult> Required(string errorMessage)
 ```
 
 #### Parameters

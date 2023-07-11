@@ -20,6 +20,76 @@ Implements [IPromptControls&lt;Boolean&gt;](./pplus.controls.ipromptcontrols-1.m
 
 ## Methods
 
+### <a id="methods-changecoloroff"/>**ChangeColorOff(Style)**
+
+Change Color when state 'Off'. 
+ <br>state-Off(Foreground)/Background<br>Default Foreground : 'ConsoleColor.Cyan'<br>Default Background : 'ConsoleColor.DarkGray'
+
+```csharp
+IControlSliderSwitch ChangeColorOff(Style value)
+```
+
+#### Parameters
+
+`value` [Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
+
+#### Returns
+
+[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
+
+### <a id="methods-changecoloron"/>**ChangeColorOn(Style)**
+
+Change Color when state 'On'. 
+ <br>state-On(Foreground)/Background<br>Default Foreground : 'ConsoleColor.Cyan'<br>Default Background : 'ConsoleColor.DarkGray'
+
+```csharp
+IControlSliderSwitch ChangeColorOn(Style value)
+```
+
+#### Parameters
+
+`value` [Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
+
+#### Returns
+
+[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
+
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;Boolean, String&gt;)**
+
+Dynamically change the description using a user role
+
+```csharp
+IControlSliderSwitch ChangeDescription(Func<Boolean, String> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;Boolean, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply change
+
+#### Returns
+
+[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
+
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
+
+Custom config the control.
+
+```csharp
+IControlSliderSwitch Config(Action<IPromptConfig> context)
+```
+
+#### Parameters
+
+`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
+
 ### <a id="methods-default"/>**Default(Boolean)**
 
 Default value for swith
@@ -71,40 +141,6 @@ text on
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### <a id="methods-width"/>**Width(Int32)**
-
-Define Width to Widgets. Default value is 6.
-
-```csharp
-IControlSliderSwitch Width(int value)
-```
-
-#### Parameters
-
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Width
-
-#### Returns
-
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
-
-### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
-
-Custom config the control.
-
-```csharp
-IControlSliderSwitch Config(Action<IPromptConfig> context)
-```
-
-#### Parameters
-
-`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-#### Returns
-
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
-
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
@@ -125,54 +161,18 @@ The timeout for valid items saved. Default value is 365 days
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;Boolean, String&gt;)**
+### <a id="methods-width"/>**Width(Int32)**
 
-Dynamically change the description using a user role
+Define Width to Widgets. Default value is 6.
 
 ```csharp
-IControlSliderSwitch ChangeDescription(Func<Boolean, String> value)
+IControlSliderSwitch Width(int value)
 ```
 
 #### Parameters
 
-`value` [Func&lt;Boolean, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-function to apply change
-
-#### Returns
-
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
-
-### <a id="methods-changecoloron"/>**ChangeColorOn(Style)**
-
-Change Color when state 'On'. 
- <br>state-On(Foreground)/Background<br>Default Foreground : 'ConsoleColor.Cyan'<br>Default Background : 'ConsoleColor.DarkGray'
-
-```csharp
-IControlSliderSwitch ChangeColorOn(Style value)
-```
-
-#### Parameters
-
-`value` [Style](./pplus.style.md)<br>
-[Style](./pplus.style.md)
-
-#### Returns
-
-[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
-
-### <a id="methods-changecoloroff"/>**ChangeColorOff(Style)**
-
-Change Color when state 'Off'. 
- <br>state-Off(Foreground)/Background<br>Default Foreground : 'ConsoleColor.Cyan'<br>Default Background : 'ConsoleColor.DarkGray'
-
-```csharp
-IControlSliderSwitch ChangeColorOff(Style value)
-```
-
-#### Parameters
-
-`value` [Style](./pplus.style.md)<br>
-[Style](./pplus.style.md)
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Width
 
 #### Returns
 

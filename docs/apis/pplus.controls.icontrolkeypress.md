@@ -20,23 +20,6 @@ Implements [IPromptControls&lt;ConsoleKeyInfo&gt;](./pplus.controls.ipromptcontr
 
 ## Methods
 
-### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
-
-Custom config the control.
-
-```csharp
-IControlKeyPress Config(Action<IPromptConfig> context)
-```
-
-#### Parameters
-
-`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-#### Returns
-
-[IControlKeyPress](./pplus.controls.icontrolkeypress.md)
-
 ### <a id="methods-addkeyvalid"/>**AddKeyValid(ConsoleKey, Nullable&lt;ConsoleModifiers&gt;)**
 
 Add Key and Modifiers valids for keypress
@@ -57,19 +40,18 @@ Modifiers
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### <a id="methods-textkeyvalid"/>**TextKeyValid(Func&lt;ConsoleKeyInfo, String&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
-Overwrite default ConsoleKey string to custom string.
- <br>When return null value the control use defaut string
+Custom config the control.
 
 ```csharp
-IControlKeyPress TextKeyValid(Func<ConsoleKeyInfo, String> value)
+IControlKeyPress Config(Action<IPromptConfig> context)
 ```
 
 #### Parameters
 
-`value` [Func&lt;ConsoleKeyInfo, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-Transform function. When return null value the control use defaut string
+`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
@@ -97,6 +79,24 @@ Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.
 
 `customspinner` [IEnumerable&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 IEnumerable value for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored
+
+#### Returns
+
+[IControlKeyPress](./pplus.controls.icontrolkeypress.md)
+
+### <a id="methods-textkeyvalid"/>**TextKeyValid(Func&lt;ConsoleKeyInfo, String&gt;)**
+
+Overwrite default ConsoleKey string to custom string.
+ <br>When return null value the control use defaut string
+
+```csharp
+IControlKeyPress TextKeyValid(Func<ConsoleKeyInfo, String> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;ConsoleKeyInfo, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+Transform function. When return null value the control use defaut string
 
 #### Returns
 

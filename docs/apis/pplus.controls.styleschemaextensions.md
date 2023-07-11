@@ -22,24 +22,18 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Methods
 
-### <a id="methods-applyforeground"/>**ApplyForeground(StyleSchema, StyleControls, Color)**
+### <a id="methods-answer"/>**Answer(StyleSchema)**
 
-Apply Foreground to [StyleControls](./pplus.controls.stylecontrols.md)
+Get [Style](./pplus.style.md) text Answer.
+ <br>ValueResult Foreground : 'ConsoleColor.Cyan'<br>ValueResult Background : same Console Background when setted
 
 ```csharp
-public static Style ApplyForeground(StyleSchema schema, StyleControls styleControl, Color foreground)
+public static Style Answer(StyleSchema schema)
 ```
 
 #### Parameters
 
 `schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
-The [StyleSchema](./pplus.controls.styleschema.md)
-
-`styleControl` [StyleControls](./pplus.controls.stylecontrols.md)<br>
-[StyleControls](./pplus.controls.stylecontrols.md) to apply
-
-`foreground` [Color](./pplus.color.md)<br>
-Foreground [Color](./pplus.color.md)
 
 #### Returns
 
@@ -68,52 +62,24 @@ Background [Color](./pplus.color.md)
 
 [Style](./pplus.style.md)
 
-### <a id="methods-prompt"/>**Prompt(StyleSchema)**
+### <a id="methods-applyforeground"/>**ApplyForeground(StyleSchema, StyleControls, Color)**
 
-Get [Style](./pplus.style.md) text Prompt.
- <br>ValueResult Foreground : 'ConsoleColor.White'<br>ValueResult Background : same Console Background when setted
+Apply Foreground to [StyleControls](./pplus.controls.stylecontrols.md)
 
 ```csharp
-public static Style Prompt(StyleSchema schema)
+public static Style ApplyForeground(StyleSchema schema, StyleControls styleControl, Color foreground)
 ```
 
 #### Parameters
 
 `schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+The [StyleSchema](./pplus.controls.styleschema.md)
 
-#### Returns
+`styleControl` [StyleControls](./pplus.controls.stylecontrols.md)<br>
+[StyleControls](./pplus.controls.stylecontrols.md) to apply
 
-[Style](./pplus.style.md)
-
-### <a id="methods-slider"/>**Slider(StyleSchema)**
-
-Get [Style](./pplus.style.md) text Slider-On(Foreground)/Slider-Off(Background).
- <br>ValueResult Foreground : 'ConsoleColor.Cyan'<br>ValueResult Background : 'ConsoleColor.DarkGray'
-
-```csharp
-public static Style Slider(StyleSchema schema)
-```
-
-#### Parameters
-
-`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
-
-#### Returns
-
-[Style](./pplus.style.md)
-
-### <a id="methods-answer"/>**Answer(StyleSchema)**
-
-Get [Style](./pplus.style.md) text Answer.
- <br>ValueResult Foreground : 'ConsoleColor.Cyan'<br>ValueResult Background : same Console Background when setted
-
-```csharp
-public static Style Answer(StyleSchema schema)
-```
-
-#### Parameters
-
-`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+`foreground` [Color](./pplus.color.md)<br>
+Foreground [Color](./pplus.color.md)
 
 #### Returns
 
@@ -126,57 +92,6 @@ Get [Style](./pplus.style.md) text Description.
 
 ```csharp
 public static Style Description(StyleSchema schema)
-```
-
-#### Parameters
-
-`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
-
-#### Returns
-
-[Style](./pplus.style.md)
-
-### <a id="methods-sugestion"/>**Sugestion(StyleSchema)**
-
-Get [Style](./pplus.style.md) text Sugestion.
- <br>ValueResult Foreground : 'ConsoleColor.Yellow'<br>ValueResult Background : same Console Background when setted
-
-```csharp
-public static Style Sugestion(StyleSchema schema)
-```
-
-#### Parameters
-
-`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
-
-#### Returns
-
-[Style](./pplus.style.md)
-
-### <a id="methods-selected"/>**Selected(StyleSchema)**
-
-Get [Style](./pplus.style.md) text Selected.
- <br>ValueResult Foreground : 'ConsoleColor.Green'<br>ValueResult Background : same Console Background when setted
-
-```csharp
-public static Style Selected(StyleSchema schema)
-```
-
-#### Parameters
-
-`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
-
-#### Returns
-
-[Style](./pplus.style.md)
-
-### <a id="methods-unselected"/>**UnSelected(StyleSchema)**
-
-Get [Style](./pplus.style.md) text UnSelected.
- <br>ValueResult Foreground : 'ConsoleColor.Gray'<br>ValueResult Background : same Console Background when setted
-
-```csharp
-public static Style UnSelected(StyleSchema schema)
 ```
 
 #### Parameters
@@ -238,6 +153,74 @@ public static Style Pagination(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
+### <a id="methods-prompt"/>**Prompt(StyleSchema)**
+
+Get [Style](./pplus.style.md) text Prompt.
+ <br>ValueResult Foreground : 'ConsoleColor.White'<br>ValueResult Background : same Console Background when setted
+
+```csharp
+public static Style Prompt(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-selected"/>**Selected(StyleSchema)**
+
+Get [Style](./pplus.style.md) text Selected.
+ <br>ValueResult Foreground : 'ConsoleColor.Green'<br>ValueResult Background : same Console Background when setted
+
+```csharp
+public static Style Selected(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-slider"/>**Slider(StyleSchema)**
+
+Get [Style](./pplus.style.md) text Slider-On(Foreground)/Slider-Off(Background).
+ <br>ValueResult Foreground : 'ConsoleColor.Cyan'<br>ValueResult Background : 'ConsoleColor.DarkGray'
+
+```csharp
+public static Style Slider(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-sugestion"/>**Sugestion(StyleSchema)**
+
+Get [Style](./pplus.style.md) text Sugestion.
+ <br>ValueResult Foreground : 'ConsoleColor.Yellow'<br>ValueResult Background : same Console Background when setted
+
+```csharp
+public static Style Sugestion(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
 ### <a id="methods-taggedinfo"/>**TaggedInfo(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Tagged info.
@@ -262,6 +245,23 @@ Get [Style](./pplus.style.md) text Tooltips.
 
 ```csharp
 public static Style Tooltips(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-unselected"/>**UnSelected(StyleSchema)**
+
+Get [Style](./pplus.style.md) text UnSelected.
+ <br>ValueResult Foreground : 'ConsoleColor.Gray'<br>ValueResult Background : same Console Background when setted
+
+```csharp
+public static Style UnSelected(StyleSchema schema)
 ```
 
 #### Parameters

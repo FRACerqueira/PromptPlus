@@ -24,26 +24,185 @@ Implements IPromptControls&lt;IEnumerable&lt;T&gt;&gt;
 
 ## Methods
 
-### <a id="methods-interaction"/>**Interaction&lt;T1&gt;(IEnumerable&lt;T1&gt;, Action&lt;IControlMultiSelect&lt;T&gt;, T1&gt;)**
+### <a id="methods-adddefault"/>**AddDefault(T[])**
 
-Execute a action foreach item of colletion passed as a parameter
+Add default value seleted to initial list.
 
 ```csharp
-IControlMultiSelect<T> Interaction<T1>(IEnumerable<T1> values, Action<IControlMultiSelect<T>, T1> action)
+IControlMultiSelect<T> AddDefault(T[] values)
 ```
-
-#### Type Parameters
-
-`T1`<br>
-Type external colletion
 
 #### Parameters
 
-`values` IEnumerable&lt;T1&gt;<br>
-Colletion for interaction
+`values` T[]<br>
+Value default
 
-`action` Action&lt;IControlMultiSelect&lt;T&gt;, T1&gt;<br>
-Action to execute
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-additem"/>**AddItem(T, Boolean, Boolean)**
+
+Add item to list
+
+```csharp
+IControlMultiSelect<T> AddItem(T value, bool disable, bool selected)
+```
+
+#### Parameters
+
+`value` T<br>
+Item to add
+
+`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item disabled, otherwise no
+
+`selected` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item selected, otherwise no
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-additemgrouped"/>**AddItemGrouped(String, T, Boolean, Boolean)**
+
+Add Item in a group to list
+
+```csharp
+IControlMultiSelect<T> AddItemGrouped(string group, T value, bool disable, bool selected)
+```
+
+#### Parameters
+
+`group` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Group name
+
+`value` T<br>
+Item to add
+
+`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item disabled, otherwise no
+
+`selected` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item selected, otherwise no
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-additems"/>**AddItems(IEnumerable&lt;T&gt;, Boolean, Boolean)**
+
+Add items colletion to list
+
+```csharp
+IControlMultiSelect<T> AddItems(IEnumerable<T> values, bool disable, bool selected)
+```
+
+#### Parameters
+
+`values` IEnumerable&lt;T&gt;<br>
+items colletion to add
+
+`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item disabled, otherwise no
+
+`selected` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item selected, otherwise no
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-additemsgrouped"/>**AddItemsGrouped(String, IEnumerable&lt;T&gt;, Boolean, Boolean)**
+
+Add Items colletion in a group to List
+
+```csharp
+IControlMultiSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable, bool selected)
+```
+
+#### Parameters
+
+`group` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Group name
+
+`value` IEnumerable&lt;T&gt;<br>
+items colletion to add
+
+`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item disabled, otherwise no
+
+`selected` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item selected, otherwise no
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
+
+Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
+
+```csharp
+IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
+```
+
+#### Parameters
+
+`scope` [AdderScope](./pplus.controls.adderscope.md)<br>
+scope Disable/Remove
+
+`values` IEnumerable&lt;T&gt;<br>
+items colletion
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-additemto"/>**AddItemTo(AdderScope, T)**
+
+Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
+
+```csharp
+IControlMultiSelect<T> AddItemTo(AdderScope scope, T value)
+```
+
+#### Parameters
+
+`scope` [AdderScope](./pplus.controls.adderscope.md)<br>
+scope Disable/Remove
+
+`value` T<br>
+item
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription()**
+
+Append group text on description
+
+```csharp
+IControlMultiSelect<T> AppendGroupOnDescription()
+```
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;T, String&gt;)**
+
+Dynamically change the description using a user role
+
+```csharp
+IControlMultiSelect<T> ChangeDescription(Func<T, String> value)
+```
+
+#### Parameters
+
+`value` Func&lt;T, String&gt;<br>
+function to apply change
 
 #### Returns
 
@@ -66,48 +225,95 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### <a id="methods-overflowanswer"/>**OverflowAnswer(Overflow)**
+### <a id="methods-equalitems"/>**EqualItems(Func&lt;T, T, Boolean&gt;)**
 
-Overwrite Overflow strategy answer
- <br>Default value is Overflow.Ellipsis
+Custom item comparator
 
 ```csharp
-IControlMultiSelect<T> OverflowAnswer(Overflow value)
+IControlMultiSelect<T> EqualItems(Func<T, T, Boolean> comparer)
 ```
 
 #### Parameters
 
-`value` [Overflow](./pplus.overflow.md)<br>
-Overflow strategy
+`comparer` Func&lt;T, T, Boolean&gt;<br>
+function comparator
 
 #### Returns
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription()**
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
-Append group text on description
+Filter strategy for filter items in colletion
+ <br>Default value is FilterMode.Contains
 
 ```csharp
-IControlMultiSelect<T> AppendGroupOnDescription()
+IControlMultiSelect<T> FilterType(FilterMode value)
 ```
+
+#### Parameters
+
+`value` [FilterMode](./pplus.controls.filtermode.md)<br>
+Filter Mode
 
 #### Returns
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### <a id="methods-adddefault"/>**AddDefault(T[])**
+### <a id="methods-hotkeyinvertselected"/>**HotKeyInvertSelected(HotKey)**
 
-Add default value seleted to initial list.
+Overwrite a HotKey to Invert Selected item. Default value is 'F3'
 
 ```csharp
-IControlMultiSelect<T> AddDefault(T[] values)
+IControlMultiSelect<T> HotKeyInvertSelected(HotKey value)
 ```
 
 #### Parameters
 
-`values` T[]<br>
-Value default
+`value` [HotKey](./pplus.controls.hotkey.md)<br>
+The [HotKey](./pplus.controls.hotkey.md) to Invert Selected item
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-hotkeyselectall"/>**HotKeySelectAll(HotKey)**
+
+Overwrite a HotKey to Select All item. Default value is 'F2'
+
+```csharp
+IControlMultiSelect<T> HotKeySelectAll(HotKey value)
+```
+
+#### Parameters
+
+`value` [HotKey](./pplus.controls.hotkey.md)<br>
+The [HotKey](./pplus.controls.hotkey.md) to Select All item
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-interaction"/>**Interaction&lt;T1&gt;(IEnumerable&lt;T1&gt;, Action&lt;IControlMultiSelect&lt;T&gt;, T1&gt;)**
+
+Execute a action foreach item of colletion passed as a parameter
+
+```csharp
+IControlMultiSelect<T> Interaction<T1>(IEnumerable<T1> values, Action<IControlMultiSelect<T>, T1> action)
+```
+
+#### Type Parameters
+
+`T1`<br>
+Type external colletion
+
+#### Parameters
+
+`values` IEnumerable&lt;T1&gt;<br>
+Colletion for interaction
+
+`action` Action&lt;IControlMultiSelect&lt;T&gt;, T1&gt;<br>
+Action to execute
 
 #### Returns
 
@@ -142,6 +348,24 @@ IControlMultiSelect<T> OrderByDescending(Expression<Func<T, Object>> value)
 
 `value` Expression&lt;Func&lt;T, Object&gt;&gt;<br>
 expresion to sort the colletion
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-overflowanswer"/>**OverflowAnswer(Overflow)**
+
+Overwrite Overflow strategy answer
+ <br>Default value is Overflow.Ellipsis
+
+```csharp
+IControlMultiSelect<T> OverflowAnswer(Overflow value)
+```
+
+#### Parameters
+
+`value` [Overflow](./pplus.overflow.md)<br>
+Overflow strategy
 
 #### Returns
 
@@ -184,53 +408,21 @@ Number of Max.items
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### <a id="methods-filtertype"/>**FilterType(FilterMode)**
+### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
 
-Filter strategy for filter items in colletion
- <br>Default value is FilterMode.Contains
+Defines a minimum and maximum (optional) range of items seleted in the list
 
 ```csharp
-IControlMultiSelect<T> FilterType(FilterMode value)
+IControlMultiSelect<T> Range(int minvalue, Nullable<Int32> maxvalue)
 ```
 
 #### Parameters
 
-`value` [FilterMode](./pplus.controls.filtermode.md)<br>
-Filter Mode
+`minvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Minimum number of items
 
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-hotkeyselectall"/>**HotKeySelectAll(HotKey)**
-
-Overwrite a HotKey to Select All item. Default value is 'F2'
-
-```csharp
-IControlMultiSelect<T> HotKeySelectAll(HotKey value)
-```
-
-#### Parameters
-
-`value` [HotKey](./pplus.controls.hotkey.md)<br>
-The [HotKey](./pplus.controls.hotkey.md) to Select All item
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-hotkeyinvertselected"/>**HotKeyInvertSelected(HotKey)**
-
-Overwrite a HotKey to Invert Selected item. Default value is 'F3'
-
-```csharp
-IControlMultiSelect<T> HotKeyInvertSelected(HotKey value)
-```
-
-#### Parameters
-
-`value` [HotKey](./pplus.controls.hotkey.md)<br>
-The [HotKey](./pplus.controls.hotkey.md) to Invert Selected item
+`maxvalue` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Maximum number of items
 
 #### Returns
 
@@ -248,198 +440,6 @@ IControlMultiSelect<T> TextSelector(Func<T, String> value)
 
 `value` Func&lt;T, String&gt;<br>
 Function to show text Item in list
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;T, String&gt;)**
-
-Dynamically change the description using a user role
-
-```csharp
-IControlMultiSelect<T> ChangeDescription(Func<T, String> value)
-```
-
-#### Parameters
-
-`value` Func&lt;T, String&gt;<br>
-function to apply change
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-additem"/>**AddItem(T, Boolean, Boolean)**
-
-Add item to list
-
-```csharp
-IControlMultiSelect<T> AddItem(T value, bool disable, bool selected)
-```
-
-#### Parameters
-
-`value` T<br>
-Item to add
-
-`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true item disabled, otherwise no
-
-`selected` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true item selected, otherwise no
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-additems"/>**AddItems(IEnumerable&lt;T&gt;, Boolean, Boolean)**
-
-Add items colletion to list
-
-```csharp
-IControlMultiSelect<T> AddItems(IEnumerable<T> values, bool disable, bool selected)
-```
-
-#### Parameters
-
-`values` IEnumerable&lt;T&gt;<br>
-items colletion to add
-
-`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true item disabled, otherwise no
-
-`selected` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true item selected, otherwise no
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-additemgrouped"/>**AddItemGrouped(String, T, Boolean, Boolean)**
-
-Add Item in a group to list
-
-```csharp
-IControlMultiSelect<T> AddItemGrouped(string group, T value, bool disable, bool selected)
-```
-
-#### Parameters
-
-`group` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Group name
-
-`value` T<br>
-Item to add
-
-`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true item disabled, otherwise no
-
-`selected` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true item selected, otherwise no
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-additemsgrouped"/>**AddItemsGrouped(String, IEnumerable&lt;T&gt;, Boolean, Boolean)**
-
-Add Items colletion in a group to List
-
-```csharp
-IControlMultiSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable, bool selected)
-```
-
-#### Parameters
-
-`group` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Group name
-
-`value` IEnumerable&lt;T&gt;<br>
-items colletion to add
-
-`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true item disabled, otherwise no
-
-`selected` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true item selected, otherwise no
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-additemto"/>**AddItemTo(AdderScope, T)**
-
-Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
-
-```csharp
-IControlMultiSelect<T> AddItemTo(AdderScope scope, T value)
-```
-
-#### Parameters
-
-`scope` [AdderScope](./pplus.controls.adderscope.md)<br>
-scope Disable/Remove
-
-`value` T<br>
-item
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
-
-Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
-
-```csharp
-IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
-```
-
-#### Parameters
-
-`scope` [AdderScope](./pplus.controls.adderscope.md)<br>
-scope Disable/Remove
-
-`values` IEnumerable&lt;T&gt;<br>
-items colletion
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-equalitems"/>**EqualItems(Func&lt;T, T, Boolean&gt;)**
-
-Custom item comparator
-
-```csharp
-IControlMultiSelect<T> EqualItems(Func<T, T, Boolean> comparer)
-```
-
-#### Parameters
-
-`comparer` Func&lt;T, T, Boolean&gt;<br>
-function comparator
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
-
-Defines a minimum and maximum (optional) range of items seleted in the list
-
-```csharp
-IControlMultiSelect<T> Range(int minvalue, Nullable<Int32> maxvalue)
-```
-
-#### Parameters
-
-`minvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Minimum number of items
-
-`maxvalue` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Maximum number of items
 
 #### Returns
 

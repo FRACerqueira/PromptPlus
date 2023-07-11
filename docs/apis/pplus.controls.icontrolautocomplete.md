@@ -20,6 +20,235 @@ Implements [IPromptControls&lt;String&gt;](./pplus.controls.ipromptcontrols-1.md
 
 ## Methods
 
+### <a id="methods-acceptinput"/>**AcceptInput(Func&lt;Char, Boolean&gt;)**
+
+Execute a function to accept char input.
+ <br>If result true accept char input; otherwise, ignore char input.
+
+```csharp
+IControlAutoComplete AcceptInput(Func<Char, Boolean> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;Char, Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to accept
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+
+Add a validator to accept sucessfull finish of control.
+ <br>Tip: see  to validators embeding
+
+```csharp
+IControlAutoComplete AddValidators(Func<Object, ValidationResult>[] validators)
+```
+
+#### Parameters
+
+`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+the function validator.
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;String, String&gt;)**
+
+Dynamically change the description using a user role
+
+```csharp
+IControlAutoComplete ChangeDescription(Func<String, String> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;String, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply change
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-completionasyncservice"/>**CompletionAsyncService(Func&lt;String, Int32, CancellationToken, Task&lt;String[]&gt;&gt;)**
+
+The function to execute autocomplete. This function is requeried to run!
+ <br>First param is a current text input<br>Second param is current cursor postion at text input<br>third parameter is the control cancellation token
+
+```csharp
+IControlAutoComplete CompletionAsyncService(Func<String, Int32, CancellationToken, Task<String[]>> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;String, Int32, CancellationToken, Task&lt;String[]&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-4)<br>
+function to autocomplete
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-completionmaxcount"/>**CompletionMaxCount(Int32)**
+
+The max.items to return from function autocomplete.
+
+```csharp
+IControlAutoComplete CompletionMaxCount(int value)
+```
+
+#### Parameters
+
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Number of max.items
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-completionwaittostart"/>**CompletionWaitToStart(Int32)**
+
+Number of mileseconds to wait before to start function autocomplete
+ <br>Default value : 1000. If value less than 10 internal sette to 10.
+
+```csharp
+IControlAutoComplete CompletionWaitToStart(int value)
+```
+
+#### Parameters
+
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Number of mileseconds
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
+
+Custom config the control.
+
+```csharp
+IControlAutoComplete Config(Action<IPromptConfig> context)
+```
+
+#### Parameters
+
+`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-default"/>**Default(String)**
+
+Default value when stated.
+
+```csharp
+IControlAutoComplete Default(string value)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Value default
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-defaultifempty"/>**DefaultIfEmpty(String)**
+
+Default value when finished value is empty.
+
+```csharp
+IControlAutoComplete DefaultIfEmpty(string value)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Finished value default
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
+
+Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
+
+```csharp
+IControlAutoComplete InputToCase(CaseOptions value)
+```
+
+#### Parameters
+
+`value` [CaseOptions](./pplus.controls.caseoptions.md)<br>
+Transform option
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
+
+MaxLenght of input text.
+
+```csharp
+IControlAutoComplete MaxLenght(ushort value)
+```
+
+#### Parameters
+
+`value` [UInt16](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
+Lenght
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-minimumprefixlength"/>**MinimumPrefixLength(Int32)**
+
+Number minimum of chars to accept autocomplete
+ <br>Default value : 3. If value less than 0 internal sette to 0.
+
+```csharp
+IControlAutoComplete MinimumPrefixLength(int value)
+```
+
+#### Parameters
+
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Number of chars
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
+
+Overwrite default start value with last result saved on history.
+
+```csharp
+IControlAutoComplete OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+name of file to save history
+
+`timeout` [Nullable&lt;TimeSpan&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The timeout for valid items saved. Default value is 365 days
+
+#### Returns
+
+IControlAutoComplete
+
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page.Default value for this control is 10.
@@ -64,201 +293,6 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### <a id="methods-minimumprefixlength"/>**MinimumPrefixLength(Int32)**
-
-Number minimum of chars to accept autocomplete
- <br>Default value : 3. If value less than 0 internal sette to 0.
-
-```csharp
-IControlAutoComplete MinimumPrefixLength(int value)
-```
-
-#### Parameters
-
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number of chars
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-completionwaittostart"/>**CompletionWaitToStart(Int32)**
-
-Number of mileseconds to wait before to start function autocomplete
- <br>Default value : 1000. If value less than 10 internal sette to 10.
-
-```csharp
-IControlAutoComplete CompletionWaitToStart(int value)
-```
-
-#### Parameters
-
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number of mileseconds
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-completionmaxcount"/>**CompletionMaxCount(Int32)**
-
-The max.items to return from function autocomplete.
-
-```csharp
-IControlAutoComplete CompletionMaxCount(int value)
-```
-
-#### Parameters
-
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number of max.items
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-completionasyncservice"/>**CompletionAsyncService(Func&lt;String, Int32, CancellationToken, Task&lt;String[]&gt;&gt;)**
-
-The function to execute autocomplete. This function is requeried to run!
- <br>First param is a current text input<br>Second param is current cursor postion at text input<br>third parameter is the control cancellation token
-
-```csharp
-IControlAutoComplete CompletionAsyncService(Func<String, Int32, CancellationToken, Task<String[]>> value)
-```
-
-#### Parameters
-
-`value` [Func&lt;String, Int32, CancellationToken, Task&lt;String[]&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-4)<br>
-function to autocomplete
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-defaultifempty"/>**DefaultIfEmpty(String)**
-
-Default value when finished value is empty.
-
-```csharp
-IControlAutoComplete DefaultIfEmpty(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Finished value default
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-default"/>**Default(String)**
-
-Default value when stated.
-
-```csharp
-IControlAutoComplete Default(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Value default
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
-
-Overwrite default start value with last result saved on history.
-
-```csharp
-IControlAutoComplete OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-name of file to save history
-
-`timeout` [Nullable&lt;TimeSpan&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The timeout for valid items saved. Default value is 365 days
-
-#### Returns
-
-IControlAutoComplete
-
-### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
-
-Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
-
-```csharp
-IControlAutoComplete InputToCase(CaseOptions value)
-```
-
-#### Parameters
-
-`value` [CaseOptions](./pplus.controls.caseoptions.md)<br>
-Transform option
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-acceptinput"/>**AcceptInput(Func&lt;Char, Boolean&gt;)**
-
-Execute a function to accept char input.
- <br>If result true accept char input; otherwise, ignore char input.
-
-```csharp
-IControlAutoComplete AcceptInput(Func<Char, Boolean> value)
-```
-
-#### Parameters
-
-`value` [Func&lt;Char, Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-function to accept
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
-
-MaxLenght of input text.
-
-```csharp
-IControlAutoComplete MaxLenght(ushort value)
-```
-
-#### Parameters
-
-`value` [UInt16](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
-Lenght
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
-
-Add a validator to accept sucessfull finish of control.
- <br>Tip: see  to validators embeding
-
-```csharp
-IControlAutoComplete AddValidators(Func<Object, ValidationResult>[] validators)
-```
-
-#### Parameters
-
-`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-the function validator.
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
 ### <a id="methods-validateondemand"/>**ValidateOnDemand(Boolean)**
 
 Execute validators foreach input
@@ -271,40 +305,6 @@ IControlAutoComplete ValidateOnDemand(bool value)
 
 `value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 true execute validators foreach input; otherwise, only at finish.
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;String, String&gt;)**
-
-Dynamically change the description using a user role
-
-```csharp
-IControlAutoComplete ChangeDescription(Func<String, String> value)
-```
-
-#### Parameters
-
-`value` [Func&lt;String, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-function to apply change
-
-#### Returns
-
-[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
-
-### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
-
-Custom config the control.
-
-```csharp
-IControlAutoComplete Config(Action<IPromptConfig> context)
-```
-
-#### Parameters
-
-`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 

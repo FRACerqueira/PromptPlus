@@ -22,24 +22,48 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### <a id="properties-id"/>**Id**
-
-TaskTitle of Task
-
-```csharp
-public string Id { get; }
-```
-
-#### Property Value
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
 ### <a id="properties-description"/>**Description**
 
 Description of Task
 
 ```csharp
 public string Description { get; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### <a id="properties-elapsedtime"/>**ElapsedTime**
+
+Elapsed Time of Task
+
+```csharp
+public TimeSpan ElapsedTime { get; }
+```
+
+#### Property Value
+
+[TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
+
+### <a id="properties-exceptionprocess"/>**ExceptionProcess**
+
+Exception of Task
+
+```csharp
+public Exception ExceptionProcess { get; }
+```
+
+#### Property Value
+
+[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+
+### <a id="properties-id"/>**Id**
+
+TaskTitle of Task
+
+```csharp
+public string Id { get; }
 ```
 
 #### Property Value
@@ -58,18 +82,6 @@ public TaskStatus Status { get; }
 
 [TaskStatus](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.taskstatus)<br>
 
-### <a id="properties-exceptionprocess"/>**ExceptionProcess**
-
-Exception of Task
-
-```csharp
-public Exception ExceptionProcess { get; }
-```
-
-#### Property Value
-
-[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
-
 ### <a id="properties-stepmode"/>**StepMode**
 
 Step Mode of Task [StateProcess.StepMode](./pplus.controls.stateprocess.md#stepmode)
@@ -81,18 +93,6 @@ public StepMode StepMode { get; }
 #### Property Value
 
 [StepMode](./pplus.controls.stepmode.md)<br>
-
-### <a id="properties-elapsedtime"/>**ElapsedTime**
-
-Elapsed Time of Task
-
-```csharp
-public TimeSpan ElapsedTime { get; }
-```
-
-#### Property Value
-
-[TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
 
 ## Constructors
 

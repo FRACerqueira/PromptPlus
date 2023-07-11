@@ -20,77 +20,6 @@ Implements [IPromptControls&lt;String&gt;](./pplus.controls.ipromptcontrols-1.md
 
 ## Methods
 
-### <a id="methods-defaultifempty"/>**DefaultIfEmpty(String)**
-
-Default value when finished value is empty.
-
-```csharp
-IControlInput DefaultIfEmpty(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Finished value default
-
-#### Returns
-
-[IControlInput](./pplus.controls.icontrolinput.md)
-
-### <a id="methods-default"/>**Default(String)**
-
-Default value when stated.
-
-```csharp
-IControlInput Default(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Value default
-
-#### Returns
-
-[IControlInput](./pplus.controls.icontrolinput.md)
-
-### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
-
-Overwrite default start value with last result saved on history.
-
-```csharp
-IControlInput OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-name of file to save history
-
-`timeout` [Nullable&lt;TimeSpan&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The timeout for valid items saved. Default value is 365 days
-
-#### Returns
-
-[IControlInput](./pplus.controls.icontrolinput.md)
-
-### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
-
-Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
-
-```csharp
-IControlInput InputToCase(CaseOptions value)
-```
-
-#### Parameters
-
-`value` [CaseOptions](./pplus.controls.caseoptions.md)<br>
-Transform option
-
-#### Returns
-
-[IControlInput](./pplus.controls.icontrolinput.md)
-
 ### <a id="methods-acceptinput"/>**AcceptInput(Func&lt;Char, Boolean&gt;)**
 
 Execute a function to accept char input.
@@ -109,57 +38,6 @@ function to accept
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
-
-MaxLenght of input text.
-
-```csharp
-IControlInput MaxLenght(ushort value)
-```
-
-#### Parameters
-
-`value` [UInt16](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
-Lenght
-
-#### Returns
-
-[IControlInput](./pplus.controls.icontrolinput.md)
-
-### <a id="methods-issecret"/>**IsSecret(Nullable&lt;Char&gt;)**
-
-The input is a secret. the input text is masked to '#' (default value)
-
-```csharp
-IControlInput IsSecret(Nullable<Char> value)
-```
-
-#### Parameters
-
-`value` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-char secret
-
-#### Returns
-
-[IControlInput](./pplus.controls.icontrolinput.md)
-
-### <a id="methods-enabledviewsecret"/>**EnabledViewSecret(Nullable&lt;HotKey&gt;)**
-
-Enable user to view the input without mask.
-
-```csharp
-IControlInput EnabledViewSecret(Nullable<HotKey> hotkeypress)
-```
-
-#### Parameters
-
-`hotkeypress` [Nullable&lt;HotKey&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Overwrite a [HotKey](./pplus.controls.hotkey.md) to toggle view. Default value is 'F2'
-
-#### Returns
-
-[IControlInput](./pplus.controls.icontrolinput.md)
-
 ### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
@@ -173,23 +51,6 @@ IControlInput AddValidators(Func<Object, ValidationResult>[] validators)
 
 `validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 the function validator.
-
-#### Returns
-
-[IControlInput](./pplus.controls.icontrolinput.md)
-
-### <a id="methods-validateondemand"/>**ValidateOnDemand(Boolean)**
-
-Execute validators foreach input
-
-```csharp
-IControlInput ValidateOnDemand(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true execute validators foreach input; otherwise, only at finish.
 
 #### Returns
 
@@ -229,36 +90,70 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
+### <a id="methods-default"/>**Default(String)**
 
-Add Suggestion Handler feature
+Default value when stated.
 
 ```csharp
-IControlInput SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
+IControlInput Default(string value)
 ```
 
 #### Parameters
 
-`value` [Func&lt;SugestionInput, SugestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.md) and [SugestionOutput](./pplus.controls.sugestionoutput.md)
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Value default
 
 #### Returns
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### <a id="methods-historyminimumprefixlength"/>**HistoryMinimumPrefixLength(Int32)**
+### <a id="methods-defaultifempty"/>**DefaultIfEmpty(String)**
 
-Minimum chars to enabled history feature. Default value is 0.
- <br>History items are filtered by the starts with entry.
+Default value when finished value is empty.
 
 ```csharp
-IControlInput HistoryMinimumPrefixLength(int value)
+IControlInput DefaultIfEmpty(string value)
 ```
 
 #### Parameters
 
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Minimum chars number
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Finished value default
+
+#### Returns
+
+[IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-enabledviewsecret"/>**EnabledViewSecret(Nullable&lt;HotKey&gt;)**
+
+Enable user to view the input without mask.
+
+```csharp
+IControlInput EnabledViewSecret(Nullable<HotKey> hotkeypress)
+```
+
+#### Parameters
+
+`hotkeypress` [Nullable&lt;HotKey&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Overwrite a [HotKey](./pplus.controls.hotkey.md) to toggle view. Default value is 'F2'
+
+#### Returns
+
+[IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
+
+Filter strategy for filter items in History colletion
+ <br>Default value is FilterMode.StartsWith
+
+```csharp
+IControlInput FilterType(FilterMode value)
+```
+
+#### Parameters
+
+`value` [FilterMode](./pplus.controls.filtermode.md)<br>
+Filter Mode
 
 #### Returns
 
@@ -282,23 +177,6 @@ name of file to saved history
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### <a id="methods-historytimeout"/>**HistoryTimeout(TimeSpan)**
-
-Set timeout to valid items saved on history. Default value is 365 days.
-
-```csharp
-IControlInput HistoryTimeout(TimeSpan value)
-```
-
-#### Parameters
-
-`value` [TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
-timeout value
-
-#### Returns
-
-[IControlInput](./pplus.controls.icontrolinput.md)
-
 ### <a id="methods-historymaxitems"/>**HistoryMaxItems(Byte)**
 
 Set maximum items saved on history.After maximum the items are rotates.
@@ -311,6 +189,24 @@ IControlInput HistoryMaxItems(byte value)
 
 `value` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
 maximum items saved
+
+#### Returns
+
+[IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-historyminimumprefixlength"/>**HistoryMinimumPrefixLength(Int32)**
+
+Minimum chars to enabled history feature. Default value is 0.
+ <br>History items are filtered by the starts with entry.
+
+```csharp
+IControlInput HistoryMinimumPrefixLength(int value)
+```
+
+#### Parameters
+
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Minimum chars number
 
 #### Returns
 
@@ -333,19 +229,123 @@ Number of Max.items
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### <a id="methods-filtertype"/>**FilterType(FilterMode)**
+### <a id="methods-historytimeout"/>**HistoryTimeout(TimeSpan)**
 
-Filter strategy for filter items in History colletion
- <br>Default value is FilterMode.StartsWith
+Set timeout to valid items saved on history. Default value is 365 days.
 
 ```csharp
-IControlInput FilterType(FilterMode value)
+IControlInput HistoryTimeout(TimeSpan value)
 ```
 
 #### Parameters
 
-`value` [FilterMode](./pplus.controls.filtermode.md)<br>
-Filter Mode
+`value` [TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
+timeout value
+
+#### Returns
+
+[IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
+
+Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
+
+```csharp
+IControlInput InputToCase(CaseOptions value)
+```
+
+#### Parameters
+
+`value` [CaseOptions](./pplus.controls.caseoptions.md)<br>
+Transform option
+
+#### Returns
+
+[IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-issecret"/>**IsSecret(Nullable&lt;Char&gt;)**
+
+The input is a secret. the input text is masked to '#' (default value)
+
+```csharp
+IControlInput IsSecret(Nullable<Char> value)
+```
+
+#### Parameters
+
+`value` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+char secret
+
+#### Returns
+
+[IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
+
+MaxLenght of input text.
+
+```csharp
+IControlInput MaxLenght(ushort value)
+```
+
+#### Parameters
+
+`value` [UInt16](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
+Lenght
+
+#### Returns
+
+[IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
+
+Overwrite default start value with last result saved on history.
+
+```csharp
+IControlInput OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+name of file to save history
+
+`timeout` [Nullable&lt;TimeSpan&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The timeout for valid items saved. Default value is 365 days
+
+#### Returns
+
+[IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
+
+Add Suggestion Handler feature
+
+```csharp
+IControlInput SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;SugestionInput, SugestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.md) and [SugestionOutput](./pplus.controls.sugestionoutput.md)
+
+#### Returns
+
+[IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-validateondemand"/>**ValidateOnDemand(Boolean)**
+
+Execute validators foreach input
+
+```csharp
+IControlInput ValidateOnDemand(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true execute validators foreach input; otherwise, only at finish.
 
 #### Returns
 

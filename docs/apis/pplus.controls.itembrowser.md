@@ -22,30 +22,6 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### <a id="properties-name"/>**Name**
-
-Get Name
-
-```csharp
-public string Name { get; internal set; }
-```
-
-#### Property Value
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-### <a id="properties-isfolder"/>**IsFolder**
-
-Get if item is folder
-
-```csharp
-public bool IsFolder { get; internal set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
 ### <a id="properties-currentfolder"/>**CurrentFolder**
 
 Get name of parent folder
@@ -70,6 +46,18 @@ public string FullPath { get; internal set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
+### <a id="properties-isfolder"/>**IsFolder**
+
+Get if item is folder
+
+```csharp
+public bool IsFolder { get; internal set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-length"/>**Length**
 
 Get Length of item. If a folder lenght represents number of item. If file lenght represents the size in bytes
@@ -81,6 +69,18 @@ public long Length { get; internal set; }
 #### Property Value
 
 [Int64](https://docs.microsoft.com/en-us/dotnet/api/system.int64)<br>
+
+### <a id="properties-name"/>**Name**
+
+Get Name
+
+```csharp
+public string Name { get; internal set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 

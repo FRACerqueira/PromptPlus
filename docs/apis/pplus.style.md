@@ -23,17 +23,29 @@ Implements [IEquatable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api
 
 ## Properties
 
-### <a id="properties-plain"/>**Plain**
+### <a id="properties-background"/>**Background**
 
-Gets a [Style](./pplus.style.md) with the default colors and and overflow None.
+Gets the background color.
 
 ```csharp
-public static Style Plain { get; internal set; }
+public Color Background { get; }
 ```
 
 #### Property Value
 
-[Style](./pplus.style.md)<br>
+[Color](./pplus.color.md)<br>
+
+### <a id="properties-foreground"/>**Foreground**
+
+Gets the foreground color.
+
+```csharp
+public Color Foreground { get; }
+```
+
+#### Property Value
+
+[Color](./pplus.color.md)<br>
 
 ### <a id="properties-overflowcrop"/>**OverflowCrop**
 
@@ -59,30 +71,6 @@ public static Style OverflowEllipsis { get; }
 
 [Style](./pplus.style.md)<br>
 
-### <a id="properties-foreground"/>**Foreground**
-
-Gets the foreground color.
-
-```csharp
-public Color Foreground { get; }
-```
-
-#### Property Value
-
-[Color](./pplus.color.md)<br>
-
-### <a id="properties-background"/>**Background**
-
-Gets the background color.
-
-```csharp
-public Color Background { get; }
-```
-
-#### Property Value
-
-[Color](./pplus.color.md)<br>
-
 ### <a id="properties-overflowstrategy"/>**OverflowStrategy**
 
 Gets the Overflow strategy.
@@ -94,6 +82,18 @@ public Overflow OverflowStrategy { get; }
 #### Property Value
 
 [Overflow](./pplus.overflow.md)<br>
+
+### <a id="properties-plain"/>**Plain**
+
+Gets a [Style](./pplus.style.md) with the default colors and and overflow None.
+
+```csharp
+public static Style Plain { get; internal set; }
+```
+
+#### Property Value
+
+[Style](./pplus.style.md)<br>
 
 ## Constructors
 
@@ -140,16 +140,6 @@ Style Combine(Style other)
 
 [Style](./pplus.style.md)
 
-### <a id="methods-gethashcode"/>**GetHashCode()**
-
-```csharp
-int GetHashCode()
-```
-
-#### Returns
-
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)
-
 ### <a id="methods-equals"/>**Equals(Style)**
 
 Checks if two [Style](./pplus.style.md) instances are not equal.
@@ -180,6 +170,16 @@ bool Equals(object obj)
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
+
+### <a id="methods-gethashcode"/>**GetHashCode()**
+
+```csharp
+int GetHashCode()
+```
+
+#### Returns
+
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)
 
 
 - - -

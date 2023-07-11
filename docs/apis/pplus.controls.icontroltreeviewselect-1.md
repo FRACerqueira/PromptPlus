@@ -24,21 +24,106 @@ Implements IPromptControls&lt;T&gt;
 
 ## Methods
 
-### <a id="methods-interaction"/>**Interaction(IEnumerable&lt;T&gt;, Action&lt;IControlTreeViewSelect&lt;T&gt;, T&gt;)**
+### <a id="methods-addnode"/>**AddNode(T)**
 
-Execute a action foreach item of colletion passed as a parameter
+Add a node
 
 ```csharp
-IControlTreeViewSelect<T> Interaction(IEnumerable<T> values, Action<IControlTreeViewSelect<T>, T> action)
+IControlTreeViewSelect<T> AddNode(T value)
 ```
 
 #### Parameters
 
-`values` IEnumerable&lt;T&gt;<br>
-Colletion for interaction
+`value` T<br>
+value node
 
-`action` Action&lt;IControlTreeViewSelect&lt;T&gt;, T&gt;<br>
-Action to execute
+#### Returns
+
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
+
+### <a id="methods-addnode"/>**AddNode(T, T)**
+
+Add a node in parent node
+
+```csharp
+IControlTreeViewSelect<T> AddNode(T Parent, T value)
+```
+
+#### Parameters
+
+`Parent` T<br>
+value parent
+
+`value` T<br>
+value node
+
+#### Returns
+
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
+
+### <a id="methods-aftercollapsed"/>**AfterCollapsed(Action&lt;T&gt;)**
+
+Action to execute after Collapsed
+
+```csharp
+IControlTreeViewSelect<T> AfterCollapsed(Action<T> value)
+```
+
+#### Parameters
+
+`value` Action&lt;T&gt;<br>
+The action
+
+#### Returns
+
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
+
+### <a id="methods-afterexpanded"/>**AfterExpanded(Action&lt;T&gt;)**
+
+Action to execute after Expanded
+
+```csharp
+IControlTreeViewSelect<T> AfterExpanded(Action<T> value)
+```
+
+#### Parameters
+
+`value` Action&lt;T&gt;<br>
+The action
+
+#### Returns
+
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
+
+### <a id="methods-beforecollapsed"/>**BeforeCollapsed(Action&lt;T&gt;)**
+
+Action to execute before Collapsed
+
+```csharp
+IControlTreeViewSelect<T> BeforeCollapsed(Action<T> value)
+```
+
+#### Parameters
+
+`value` Action&lt;T&gt;<br>
+The action
+
+#### Returns
+
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
+
+### <a id="methods-beforeexpanded"/>**BeforeExpanded(Action&lt;T&gt;)**
+
+Action to execute before Expanded
+
+```csharp
+IControlTreeViewSelect<T> BeforeExpanded(Action<T> value)
+```
+
+#### Parameters
+
+`value` Action&lt;T&gt;<br>
+The action
 
 #### Returns
 
@@ -61,55 +146,89 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### <a id="methods-styles"/>**Styles(StyleTreeView, Style)**
+### <a id="methods-default"/>**Default(T)**
 
-Overwrite Styles treeview. [StyleTreeView](./pplus.controls.styletreeview.md)
+Default item node seleted when started
 
 ```csharp
-IControlTreeViewSelect<T> Styles(StyleTreeView styletype, Style value)
+IControlTreeViewSelect<T> Default(T value)
 ```
 
 #### Parameters
 
-`styletype` [StyleTreeView](./pplus.controls.styletreeview.md)<br>
-Styles treeview
-
-`value` [Style](./pplus.style.md)<br>
-[Style](./pplus.style.md)
+`value` T<br>
+value node
 
 #### Returns
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### <a id="methods-showlines"/>**ShowLines(Boolean)**
+### <a id="methods-hotkeyfullpath"/>**HotKeyFullPath(HotKey)**
 
-Show lines of level. Default is true
+Overwrite a HotKey toggle current name node parent to FullPath. Default value is 'F2'
 
 ```csharp
-IControlTreeViewSelect<T> ShowLines(bool value)
+IControlTreeViewSelect<T> HotKeyFullPath(HotKey value)
 ```
 
 #### Parameters
 
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true Show lines, otherwise 'no'
+`value` [HotKey](./pplus.controls.hotkey.md)<br>
+The [HotKey](./pplus.controls.hotkey.md) to toggle current name node to FullPath
 
 #### Returns
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### <a id="methods-showexpand"/>**ShowExpand(Boolean)**
+### <a id="methods-hotkeytoggleexpand"/>**HotKeyToggleExpand(HotKey)**
 
-Show expand SymbolType.Expanded. Default is true
+Overwrite a HotKey expand/Collap current node selected. Default value is 'F3'
 
 ```csharp
-IControlTreeViewSelect<T> ShowExpand(bool value)
+IControlTreeViewSelect<T> HotKeyToggleExpand(HotKey value)
 ```
 
 #### Parameters
 
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true Show Expanded SymbolType, otherwise 'no'
+`value` [HotKey](./pplus.controls.hotkey.md)<br>
+The [HotKey](./pplus.controls.hotkey.md) to expand/Collapse current node selected
+
+#### Returns
+
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
+
+### <a id="methods-hotkeytoggleexpandall"/>**HotKeyToggleExpandAll(HotKey)**
+
+Overwrite a HotKey expand/Collap all nodes. Default value is 'F4'
+
+```csharp
+IControlTreeViewSelect<T> HotKeyToggleExpandAll(HotKey value)
+```
+
+#### Parameters
+
+`value` [HotKey](./pplus.controls.hotkey.md)<br>
+The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all nodes
+
+#### Returns
+
+[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
+
+### <a id="methods-interaction"/>**Interaction(IEnumerable&lt;T&gt;, Action&lt;IControlTreeViewSelect&lt;T&gt;, T&gt;)**
+
+Execute a action foreach item of colletion passed as a parameter
+
+```csharp
+IControlTreeViewSelect<T> Interaction(IEnumerable<T> values, Action<IControlTreeViewSelect<T>, T> action)
+```
+
+#### Parameters
+
+`values` IEnumerable&lt;T&gt;<br>
+Colletion for interaction
+
+`action` Action&lt;IControlTreeViewSelect&lt;T&gt;, T&gt;<br>
+Action to execute
 
 #### Returns
 
@@ -167,60 +286,6 @@ function to return unique identify node
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### <a id="methods-addnode"/>**AddNode(T)**
-
-Add a node
-
-```csharp
-IControlTreeViewSelect<T> AddNode(T value)
-```
-
-#### Parameters
-
-`value` T<br>
-value node
-
-#### Returns
-
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
-
-### <a id="methods-addnode"/>**AddNode(T, T)**
-
-Add a node in parent node
-
-```csharp
-IControlTreeViewSelect<T> AddNode(T Parent, T value)
-```
-
-#### Parameters
-
-`Parent` T<br>
-value parent
-
-`value` T<br>
-value node
-
-#### Returns
-
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
-
-### <a id="methods-default"/>**Default(T)**
-
-Default item node seleted when started
-
-```csharp
-IControlTreeViewSelect<T> Default(T value)
-```
-
-#### Parameters
-
-`value` T<br>
-value node
-
-#### Returns
-
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
-
 ### <a id="methods-showcurrentnode"/>**ShowCurrentNode(Boolean)**
 
 Append name node parent on description
@@ -238,120 +303,55 @@ true Append current name node parent on description, not append
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### <a id="methods-hotkeyfullpath"/>**HotKeyFullPath(HotKey)**
+### <a id="methods-showexpand"/>**ShowExpand(Boolean)**
 
-Overwrite a HotKey toggle current name node parent to FullPath. Default value is 'F2'
+Show expand SymbolType.Expanded. Default is true
 
 ```csharp
-IControlTreeViewSelect<T> HotKeyFullPath(HotKey value)
+IControlTreeViewSelect<T> ShowExpand(bool value)
 ```
 
 #### Parameters
 
-`value` [HotKey](./pplus.controls.hotkey.md)<br>
-The [HotKey](./pplus.controls.hotkey.md) to toggle current name node to FullPath
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true Show Expanded SymbolType, otherwise 'no'
 
 #### Returns
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### <a id="methods-hotkeytoggleexpand"/>**HotKeyToggleExpand(HotKey)**
+### <a id="methods-showlines"/>**ShowLines(Boolean)**
 
-Overwrite a HotKey expand/Collap current node selected. Default value is 'F3'
+Show lines of level. Default is true
 
 ```csharp
-IControlTreeViewSelect<T> HotKeyToggleExpand(HotKey value)
+IControlTreeViewSelect<T> ShowLines(bool value)
 ```
 
 #### Parameters
 
-`value` [HotKey](./pplus.controls.hotkey.md)<br>
-The [HotKey](./pplus.controls.hotkey.md) to expand/Collapse current node selected
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true Show lines, otherwise 'no'
 
 #### Returns
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### <a id="methods-hotkeytoggleexpandall"/>**HotKeyToggleExpandAll(HotKey)**
+### <a id="methods-styles"/>**Styles(StyleTreeView, Style)**
 
-Overwrite a HotKey expand/Collap all nodes. Default value is 'F4'
+Overwrite Styles treeview. [StyleTreeView](./pplus.controls.styletreeview.md)
 
 ```csharp
-IControlTreeViewSelect<T> HotKeyToggleExpandAll(HotKey value)
+IControlTreeViewSelect<T> Styles(StyleTreeView styletype, Style value)
 ```
 
 #### Parameters
 
-`value` [HotKey](./pplus.controls.hotkey.md)<br>
-The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all nodes
+`styletype` [StyleTreeView](./pplus.controls.styletreeview.md)<br>
+Styles treeview
 
-#### Returns
-
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
-
-### <a id="methods-afterexpanded"/>**AfterExpanded(Action&lt;T&gt;)**
-
-Action to execute after Expanded
-
-```csharp
-IControlTreeViewSelect<T> AfterExpanded(Action<T> value)
-```
-
-#### Parameters
-
-`value` Action&lt;T&gt;<br>
-The action
-
-#### Returns
-
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
-
-### <a id="methods-aftercollapsed"/>**AfterCollapsed(Action&lt;T&gt;)**
-
-Action to execute after Collapsed
-
-```csharp
-IControlTreeViewSelect<T> AfterCollapsed(Action<T> value)
-```
-
-#### Parameters
-
-`value` Action&lt;T&gt;<br>
-The action
-
-#### Returns
-
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
-
-### <a id="methods-beforeexpanded"/>**BeforeExpanded(Action&lt;T&gt;)**
-
-Action to execute before Expanded
-
-```csharp
-IControlTreeViewSelect<T> BeforeExpanded(Action<T> value)
-```
-
-#### Parameters
-
-`value` Action&lt;T&gt;<br>
-The action
-
-#### Returns
-
-[IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
-
-### <a id="methods-beforecollapsed"/>**BeforeCollapsed(Action&lt;T&gt;)**
-
-Action to execute before Collapsed
-
-```csharp
-IControlTreeViewSelect<T> BeforeCollapsed(Action<T> value)
-```
-
-#### Parameters
-
-`value` Action&lt;T&gt;<br>
-The action
+`value` [Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 #### Returns
 

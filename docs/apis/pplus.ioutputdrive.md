@@ -34,17 +34,17 @@ public abstract int CodePage { get; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### <a id="properties-isoutputredirected"/>**IsOutputRedirected**
+### <a id="properties-error"/>**Error**
 
-Gets a value that indicates whether output has been redirected from the standard output stream.
+Get standard error stream.
 
 ```csharp
-public abstract bool IsOutputRedirected { get; }
+public abstract TextWriter Error { get; }
 ```
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 
 ### <a id="properties-iserrorredirected"/>**IsErrorRedirected**
 
@@ -58,17 +58,17 @@ public abstract bool IsErrorRedirected { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### <a id="properties-outputencoding"/>**OutputEncoding**
+### <a id="properties-isoutputredirected"/>**IsOutputRedirected**
 
-Get/set an encoding for standard output stream.
+Gets a value that indicates whether output has been redirected from the standard output stream.
 
 ```csharp
-public abstract Encoding OutputEncoding { get; set; }
+public abstract bool IsOutputRedirected { get; }
 ```
 
 #### Property Value
 
-[Encoding](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding)<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-out"/>**Out**
 
@@ -82,32 +82,36 @@ public abstract TextWriter Out { get; }
 
 [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 
-### <a id="properties-error"/>**Error**
+### <a id="properties-outputencoding"/>**OutputEncoding**
 
-Get standard error stream.
+Get/set an encoding for standard output stream.
 
 ```csharp
-public abstract TextWriter Error { get; }
+public abstract Encoding OutputEncoding { get; set; }
 ```
 
 #### Property Value
 
-[TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
+[Encoding](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding)<br>
 
 ## Methods
 
-### <a id="methods-setout"/>**SetOut(TextWriter)**
+### <a id="methods-beep"/>**Beep()**
 
-set standard output stream.
+Plays the sound of a beep through the console speaker.
 
 ```csharp
-void SetOut(TextWriter value)
+void Beep()
 ```
 
-#### Parameters
+### <a id="methods-clear"/>**Clear()**
 
-`value` [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
-A stream that is the new standard output.
+Clears the console buffer and corresponding console window of display information.
+ <br>Move cursor fom top console.
+
+```csharp
+void Clear()
+```
 
 ### <a id="methods-seterror"/>**SetError(TextWriter)**
 
@@ -122,22 +126,18 @@ void SetError(TextWriter value)
 `value` [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 A stream that is the new standard error.
 
-### <a id="methods-clear"/>**Clear()**
+### <a id="methods-setout"/>**SetOut(TextWriter)**
 
-Clears the console buffer and corresponding console window of display information.
- <br>Move cursor fom top console.
-
-```csharp
-void Clear()
-```
-
-### <a id="methods-beep"/>**Beep()**
-
-Plays the sound of a beep through the console speaker.
+set standard output stream.
 
 ```csharp
-void Beep()
+void SetOut(TextWriter value)
 ```
+
+#### Parameters
+
+`value` [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
+A stream that is the new standard output.
 
 
 - - -

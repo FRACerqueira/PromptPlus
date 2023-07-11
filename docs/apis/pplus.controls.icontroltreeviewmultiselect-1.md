@@ -24,164 +24,6 @@ Implements IPromptControls&lt;T[]&gt;
 
 ## Methods
 
-### <a id="methods-interaction"/>**Interaction(IEnumerable&lt;T&gt;, Action&lt;IControlTreeViewMultiSelect&lt;T&gt;, T&gt;)**
-
-Execute a action foreach item of colletion passed as a parameter
-
-```csharp
-IControlTreeViewMultiSelect<T> Interaction(IEnumerable<T> values, Action<IControlTreeViewMultiSelect<T>, T> action)
-```
-
-#### Parameters
-
-`values` IEnumerable&lt;T&gt;<br>
-Colletion for interaction
-
-`action` Action&lt;IControlTreeViewMultiSelect&lt;T&gt;, T&gt;<br>
-Action to execute
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
-### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
-
-Defines a minimum and maximum (optional) range of items selected in the tree
-
-```csharp
-IControlTreeViewMultiSelect<T> Range(int minvalue, Nullable<Int32> maxvalue)
-```
-
-#### Parameters
-
-`minvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Minimum number of items
-
-`maxvalue` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Maximum number of items
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
-### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
-
-Custom config the control.
-
-```csharp
-IControlTreeViewMultiSelect<T> Config(Action<IPromptConfig> context)
-```
-
-#### Parameters
-
-`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
-### <a id="methods-styles"/>**Styles(StyleTreeView, Style)**
-
-Overwrite Styles treeview. [StyleTreeView](./pplus.controls.styletreeview.md)
-
-```csharp
-IControlTreeViewMultiSelect<T> Styles(StyleTreeView styletype, Style value)
-```
-
-#### Parameters
-
-`styletype` [StyleTreeView](./pplus.controls.styletreeview.md)<br>
-Styles treeview
-
-`value` [Style](./pplus.style.md)<br>
-[Style](./pplus.style.md)
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
-### <a id="methods-showlines"/>**ShowLines(Boolean)**
-
-Show lines of level. Default is true
-
-```csharp
-IControlTreeViewMultiSelect<T> ShowLines(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true Show lines, otherwise 'no'
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
-### <a id="methods-showexpand"/>**ShowExpand(Boolean)**
-
-Show expand SymbolType.Expanded. Default is true
-
-```csharp
-IControlTreeViewMultiSelect<T> ShowExpand(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true Show Expanded SymbolType, otherwise 'no'
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
-### <a id="methods-pagesize"/>**PageSize(Int32)**
-
-Set max.item view per page.Default value for this control is 10.
-
-```csharp
-IControlTreeViewMultiSelect<T> PageSize(int value)
-```
-
-#### Parameters
-
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number of Max.items
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
-### <a id="methods-filtertype"/>**FilterType(FilterMode)**
-
-Filter strategy for filter items in colletion
- <br>Default value is FilterMode.Contains
-
-```csharp
-IControlTreeViewMultiSelect<T> FilterType(FilterMode value)
-```
-
-#### Parameters
-
-`value` [FilterMode](./pplus.controls.filtermode.md)<br>
-Filter Mode
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
-### <a id="methods-expandall"/>**ExpandAll()**
-
-Start treeview with all childs Expanded
-
-```csharp
-IControlTreeViewMultiSelect<T> ExpandAll()
-```
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
 ### <a id="methods-addfixedselect"/>**AddFixedSelect(T[])**
 
 Fixed select (immutable) items in list
@@ -194,55 +36,6 @@ IControlTreeViewMultiSelect<T> AddFixedSelect(T[] values)
 
 `values` T[]<br>
 list with items selected
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
-### <a id="methods-selectall"/>**SelectAll(Func&lt;T, Boolean&gt;)**
-
-Select all items that satisfy the selection function
-
-```csharp
-IControlTreeViewMultiSelect<T> SelectAll(Func<T, Boolean> validselect)
-```
-
-#### Parameters
-
-`validselect` Func&lt;T, Boolean&gt;<br>
-the function
-
-#### Returns
-
-[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
-
-### <a id="methods-rootnode"/>**RootNode(T, Func&lt;T, String&gt;, Func&lt;T, Boolean&gt;, Func&lt;T, Boolean&gt;, Nullable&lt;Char&gt;, Func&lt;T, String&gt;)**
-
-Set root node
-
-```csharp
-IControlTreeViewMultiSelect<T> RootNode(T value, Func<T, String> textnode, Func<T, Boolean> validselect, Func<T, Boolean> setdisabled, Nullable<Char> separatePath, Func<T, String> uniquenode)
-```
-
-#### Parameters
-
-`value` T<br>
-value node
-
-`textnode` Func&lt;T, String&gt;<br>
-function to show text in node
-
-`validselect` Func&lt;T, Boolean&gt;<br>
-Select all items that satisfy the selection function
-
-`setdisabled` Func&lt;T, Boolean&gt;<br>
-Disabled all items that satisfy the disabled function
-
-`separatePath` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Separate path nodes. Default value is '/'
-
-`uniquenode` Func&lt;T, String&gt;<br>
-function to return unique identify node
 
 #### Returns
 
@@ -285,6 +78,91 @@ value node
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
+### <a id="methods-aftercollapsed"/>**AfterCollapsed(Action&lt;T&gt;)**
+
+Action to execute after Collapsed
+
+```csharp
+IControlTreeViewMultiSelect<T> AfterCollapsed(Action<T> value)
+```
+
+#### Parameters
+
+`value` Action&lt;T&gt;<br>
+The action
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
+### <a id="methods-afterexpanded"/>**AfterExpanded(Action&lt;T&gt;)**
+
+Action to execute after Expanded
+
+```csharp
+IControlTreeViewMultiSelect<T> AfterExpanded(Action<T> value)
+```
+
+#### Parameters
+
+`value` Action&lt;T&gt;<br>
+The action
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
+### <a id="methods-beforecollapsed"/>**BeforeCollapsed(Action&lt;T&gt;)**
+
+Action to execute before Collapsed
+
+```csharp
+IControlTreeViewMultiSelect<T> BeforeCollapsed(Action<T> value)
+```
+
+#### Parameters
+
+`value` Action&lt;T&gt;<br>
+The action
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
+### <a id="methods-beforeexpanded"/>**BeforeExpanded(Action&lt;T&gt;)**
+
+Action to execute before Expanded
+
+```csharp
+IControlTreeViewMultiSelect<T> BeforeExpanded(Action<T> value)
+```
+
+#### Parameters
+
+`value` Action&lt;T&gt;<br>
+The action
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
+
+Custom config the control.
+
+```csharp
+IControlTreeViewMultiSelect<T> Config(Action<IPromptConfig> context)
+```
+
+#### Parameters
+
+`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
 ### <a id="methods-default"/>**Default(T)**
 
 Default item node seleted when started
@@ -302,18 +180,31 @@ value node
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
-### <a id="methods-showcurrentnode"/>**ShowCurrentNode(Boolean)**
+### <a id="methods-expandall"/>**ExpandAll()**
 
-Append name node parent on description
+Start treeview with all childs Expanded
 
 ```csharp
-IControlTreeViewMultiSelect<T> ShowCurrentNode(bool value)
+IControlTreeViewMultiSelect<T> ExpandAll()
+```
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
+
+Filter strategy for filter items in colletion
+ <br>Default value is FilterMode.Contains
+
+```csharp
+IControlTreeViewMultiSelect<T> FilterType(FilterMode value)
 ```
 
 #### Parameters
 
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true Append current name node parent on description, not append
+`value` [FilterMode](./pplus.controls.filtermode.md)<br>
+Filter Mode
 
 #### Returns
 
@@ -370,69 +261,178 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all nodes
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
-### <a id="methods-afterexpanded"/>**AfterExpanded(Action&lt;T&gt;)**
+### <a id="methods-interaction"/>**Interaction(IEnumerable&lt;T&gt;, Action&lt;IControlTreeViewMultiSelect&lt;T&gt;, T&gt;)**
 
-Action to execute after Expanded
+Execute a action foreach item of colletion passed as a parameter
 
 ```csharp
-IControlTreeViewMultiSelect<T> AfterExpanded(Action<T> value)
+IControlTreeViewMultiSelect<T> Interaction(IEnumerable<T> values, Action<IControlTreeViewMultiSelect<T>, T> action)
 ```
 
 #### Parameters
 
-`value` Action&lt;T&gt;<br>
-The action
+`values` IEnumerable&lt;T&gt;<br>
+Colletion for interaction
+
+`action` Action&lt;IControlTreeViewMultiSelect&lt;T&gt;, T&gt;<br>
+Action to execute
 
 #### Returns
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
-### <a id="methods-aftercollapsed"/>**AfterCollapsed(Action&lt;T&gt;)**
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Action to execute after Collapsed
+Set max.item view per page.Default value for this control is 10.
 
 ```csharp
-IControlTreeViewMultiSelect<T> AfterCollapsed(Action<T> value)
+IControlTreeViewMultiSelect<T> PageSize(int value)
 ```
 
 #### Parameters
 
-`value` Action&lt;T&gt;<br>
-The action
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Number of Max.items
 
 #### Returns
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
-### <a id="methods-beforeexpanded"/>**BeforeExpanded(Action&lt;T&gt;)**
+### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
 
-Action to execute before Expanded
+Defines a minimum and maximum (optional) range of items selected in the tree
 
 ```csharp
-IControlTreeViewMultiSelect<T> BeforeExpanded(Action<T> value)
+IControlTreeViewMultiSelect<T> Range(int minvalue, Nullable<Int32> maxvalue)
 ```
 
 #### Parameters
 
-`value` Action&lt;T&gt;<br>
-The action
+`minvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Minimum number of items
+
+`maxvalue` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Maximum number of items
 
 #### Returns
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
-### <a id="methods-beforecollapsed"/>**BeforeCollapsed(Action&lt;T&gt;)**
+### <a id="methods-rootnode"/>**RootNode(T, Func&lt;T, String&gt;, Func&lt;T, Boolean&gt;, Func&lt;T, Boolean&gt;, Nullable&lt;Char&gt;, Func&lt;T, String&gt;)**
 
-Action to execute before Collapsed
+Set root node
 
 ```csharp
-IControlTreeViewMultiSelect<T> BeforeCollapsed(Action<T> value)
+IControlTreeViewMultiSelect<T> RootNode(T value, Func<T, String> textnode, Func<T, Boolean> validselect, Func<T, Boolean> setdisabled, Nullable<Char> separatePath, Func<T, String> uniquenode)
 ```
 
 #### Parameters
 
-`value` Action&lt;T&gt;<br>
-The action
+`value` T<br>
+value node
+
+`textnode` Func&lt;T, String&gt;<br>
+function to show text in node
+
+`validselect` Func&lt;T, Boolean&gt;<br>
+Select all items that satisfy the selection function
+
+`setdisabled` Func&lt;T, Boolean&gt;<br>
+Disabled all items that satisfy the disabled function
+
+`separatePath` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Separate path nodes. Default value is '/'
+
+`uniquenode` Func&lt;T, String&gt;<br>
+function to return unique identify node
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
+### <a id="methods-selectall"/>**SelectAll(Func&lt;T, Boolean&gt;)**
+
+Select all items that satisfy the selection function
+
+```csharp
+IControlTreeViewMultiSelect<T> SelectAll(Func<T, Boolean> validselect)
+```
+
+#### Parameters
+
+`validselect` Func&lt;T, Boolean&gt;<br>
+the function
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
+### <a id="methods-showcurrentnode"/>**ShowCurrentNode(Boolean)**
+
+Append name node parent on description
+
+```csharp
+IControlTreeViewMultiSelect<T> ShowCurrentNode(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true Append current name node parent on description, not append
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
+### <a id="methods-showexpand"/>**ShowExpand(Boolean)**
+
+Show expand SymbolType.Expanded. Default is true
+
+```csharp
+IControlTreeViewMultiSelect<T> ShowExpand(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true Show Expanded SymbolType, otherwise 'no'
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
+### <a id="methods-showlines"/>**ShowLines(Boolean)**
+
+Show lines of level. Default is true
+
+```csharp
+IControlTreeViewMultiSelect<T> ShowLines(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true Show lines, otherwise 'no'
+
+#### Returns
+
+[IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
+
+### <a id="methods-styles"/>**Styles(StyleTreeView, Style)**
+
+Overwrite Styles treeview. [StyleTreeView](./pplus.controls.styletreeview.md)
+
+```csharp
+IControlTreeViewMultiSelect<T> Styles(StyleTreeView styletype, Style value)
+```
+
+#### Parameters
+
+`styletype` [StyleTreeView](./pplus.controls.styletreeview.md)<br>
+Styles treeview
+
+`value` [Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 #### Returns
 

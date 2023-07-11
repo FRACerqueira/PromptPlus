@@ -20,74 +20,6 @@ public interface IPromptConfig
 
 ## Methods
 
-### <a id="methods-enabledabortkey"/>**EnabledAbortKey(Boolean)**
-
-Overwrite default Enabled/Disabled AbortKey press of control
-
-```csharp
-IPromptConfig EnabledAbortKey(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-value
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-showtooltip"/>**ShowTooltip(Boolean)**
-
-Overwrite default Show/Hide Tooltip of control
-
-```csharp
-IPromptConfig ShowTooltip(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-value
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-hideafterfinish"/>**HideAfterFinish(Boolean)**
-
-Overwrite default Clear render area of control after finished
-
-```csharp
-IPromptConfig HideAfterFinish(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-value
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-hideonabort"/>**HideOnAbort(Boolean)**
-
-Overwrite default Clear render area of control after AbortKey press
-
-```csharp
-IPromptConfig HideOnAbort(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-value
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
 ### <a id="methods-addextraaction"/>**AddExtraAction(StageControl, Action&lt;Object, Object&gt;)**
 
 Add generic action for the control when change [StageControl](./pplus.controls.stagecontrol.md) of control
@@ -105,23 +37,6 @@ Stage control
 Action to execute.
  First param is generic conext([IPromptConfig.SetContext(Object)](./pplus.controls.ipromptconfig.md#setcontextobject)).
  Second param is curent input value of control.
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-setcontext"/>**SetContext(Object)**
-
-Set generic context for then control to pass in stage ExtraAction parameter
-
-```csharp
-IPromptConfig SetContext(object value)
-```
-
-#### Parameters
-
-`value` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
-value
 
 #### Returns
 
@@ -181,6 +96,57 @@ Value description with style
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
+### <a id="methods-enabledabortkey"/>**EnabledAbortKey(Boolean)**
+
+Overwrite default Enabled/Disabled AbortKey press of control
+
+```csharp
+IPromptConfig EnabledAbortKey(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-hideafterfinish"/>**HideAfterFinish(Boolean)**
+
+Overwrite default Clear render area of control after finished
+
+```csharp
+IPromptConfig HideAfterFinish(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-hideonabort"/>**HideOnAbort(Boolean)**
+
+Overwrite default Clear render area of control after AbortKey press
+
+```csharp
+IPromptConfig HideOnAbort(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
 ### <a id="methods-prompt"/>**Prompt(String)**
 
 Set prompt for the control
@@ -210,6 +176,63 @@ IPromptConfig Prompt(StringStyle value)
 
 `value` [StringStyle](./pplus.controls.stringstyle.md)<br>
 Value prompt with style
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-setcontext"/>**SetContext(Object)**
+
+Set generic context for then control to pass in stage ExtraAction parameter
+
+```csharp
+IPromptConfig SetContext(object value)
+```
+
+#### Parameters
+
+`value` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-showtooltip"/>**ShowTooltip(Boolean)**
+
+Overwrite default Show/Hide Tooltip of control
+
+```csharp
+IPromptConfig ShowTooltip(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-symbols"/>**Symbols(SymbolType, String, String)**
+
+Overwrite default Symbols for [SymbolType](./pplus.controls.symboltype.md) of control
+
+```csharp
+IPromptConfig Symbols(SymbolType schema, string value, string unicode)
+```
+
+#### Parameters
+
+`schema` [SymbolType](./pplus.controls.symboltype.md)<br>
+Symbol overwriter
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Text when **not** is-unicode supported
+
+`unicode` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Text when has is-unicode supported
 
 #### Returns
 
@@ -245,29 +268,6 @@ IPromptConfig Tooltips(StringStyle value)
 
 `value` [StringStyle](./pplus.controls.stringstyle.md)<br>
 Value tooltip with style
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-symbols"/>**Symbols(SymbolType, String, String)**
-
-Overwrite default Symbols for [SymbolType](./pplus.controls.symboltype.md) of control
-
-```csharp
-IPromptConfig Symbols(SymbolType schema, string value, string unicode)
-```
-
-#### Parameters
-
-`schema` [SymbolType](./pplus.controls.symboltype.md)<br>
-Symbol overwriter
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Text when **not** is-unicode supported
-
-`unicode` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Text when has is-unicode supported
 
 #### Returns
 

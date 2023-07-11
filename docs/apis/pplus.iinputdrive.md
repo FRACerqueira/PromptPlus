@@ -20,29 +20,17 @@ public interface IInputDrive
 
 ## Properties
 
-### <a id="properties-keyavailable"/>**KeyAvailable**
+### <a id="properties-in"/>**In**
 
-Gets a value indicating whether a key press is available in the input stream.
+Get standard input stream.
 
 ```csharp
-public abstract bool KeyAvailable { get; }
+public abstract TextReader In { get; }
 ```
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-isinputredirected"/>**IsInputRedirected**
-
-Gets a value that indicates whether input has been redirected from the standard input stream.
-
-```csharp
-public abstract bool IsInputRedirected { get; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[TextReader](https://docs.microsoft.com/en-us/dotnet/api/system.io.textreader)<br>
 
 ### <a id="properties-inputencoding"/>**InputEncoding**
 
@@ -56,17 +44,29 @@ public abstract Encoding InputEncoding { get; set; }
 
 [Encoding](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding)<br>
 
-### <a id="properties-in"/>**In**
+### <a id="properties-isinputredirected"/>**IsInputRedirected**
 
-Get standard input stream.
+Gets a value that indicates whether input has been redirected from the standard input stream.
 
 ```csharp
-public abstract TextReader In { get; }
+public abstract bool IsInputRedirected { get; }
 ```
 
 #### Property Value
 
-[TextReader](https://docs.microsoft.com/en-us/dotnet/api/system.io.textreader)<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-keyavailable"/>**KeyAvailable**
+
+Gets a value indicating whether a key press is available in the input stream.
+
+```csharp
+public abstract bool KeyAvailable { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ## Methods
 
@@ -82,26 +82,6 @@ ConsoleKeyInfo ReadKey(bool intercept)
 
 `intercept` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.
-
-#### Returns
-
-<br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
-
-### <a id="methods-waitkeypress"/>**WaitKeypress(Boolean, Nullable&lt;CancellationToken&gt;)**
-
-Wait Keypress from standard input stream
-
-```csharp
-Nullable<ConsoleKeyInfo> WaitKeypress(bool intercept, Nullable<CancellationToken> cancellationToken)
-```
-
-#### Parameters
-
-`intercept` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.
-
-`cancellationToken` [Nullable&lt;CancellationToken&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The token to monitor for cancellation requests.
 
 #### Returns
 
@@ -131,6 +111,26 @@ void SetIn(TextReader value)
 
 `value` [TextReader](https://docs.microsoft.com/en-us/dotnet/api/system.io.textreader)<br>
 A stream that is the new standard input.
+
+### <a id="methods-waitkeypress"/>**WaitKeypress(Boolean, Nullable&lt;CancellationToken&gt;)**
+
+Wait Keypress from standard input stream
+
+```csharp
+Nullable<ConsoleKeyInfo> WaitKeypress(bool intercept, Nullable<CancellationToken> cancellationToken)
+```
+
+#### Parameters
+
+`intercept` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.
+
+`cancellationToken` [Nullable&lt;CancellationToken&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The token to monitor for cancellation requests.
+
+#### Returns
+
+<br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
 
 - - -

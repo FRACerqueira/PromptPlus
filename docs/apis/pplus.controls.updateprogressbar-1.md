@@ -27,6 +27,42 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
+### <a id="properties-context"/>**Context**
+
+Get/Set instance result value for general purpose
+
+```csharp
+public T Context { get; set; }
+```
+
+#### Property Value
+
+T<br>
+
+### <a id="properties-description"/>**Description**
+
+Current Description
+
+```csharp
+public string Description { get; private set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+### <a id="properties-finish"/>**Finish**
+
+Get/Set Finish Progress Bar
+
+```csharp
+public bool Finish { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-maxvalue"/>**Maxvalue**
 
 Maximum value of Progress Bar
@@ -63,56 +99,7 @@ public double Value { get; private set; }
 
 [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-### <a id="properties-finish"/>**Finish**
-
-Get/Set Finish Progress Bar
-
-```csharp
-public bool Finish { get; set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-context"/>**Context**
-
-Get/Set instance result value for general purpose
-
-```csharp
-public T Context { get; set; }
-```
-
-#### Property Value
-
-T<br>
-
-### <a id="properties-description"/>**Description**
-
-Current Description
-
-```csharp
-public string Description { get; private set; }
-```
-
-#### Property Value
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
 ## Methods
-
-### <a id="methods-update"/>**Update(Double)**
-
-Update current value
-
-```csharp
-public void Update(double value)
-```
-
-#### Parameters
-
-`value` [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
-new current value
 
 ### <a id="methods-changedescription"/>**ChangeDescription(String)**
 
@@ -126,6 +113,19 @@ public void ChangeDescription(string value)
 
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 new description
+
+### <a id="methods-update"/>**Update(Double)**
+
+Update current value
+
+```csharp
+public void Update(double value)
+```
+
+#### Parameters
+
+`value` [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+new current value
 
 
 - - -

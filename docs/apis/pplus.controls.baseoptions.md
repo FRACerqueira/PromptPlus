@@ -21,24 +21,70 @@ Implements [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ## Methods
 
-### <a id="methods-enabledabortkey"/>**EnabledAbortKey(Boolean)**
+### <a id="methods-addextraaction"/>**AddExtraAction(StageControl, Action&lt;Object, Object&gt;)**
 
 ```csharp
-public IPromptConfig EnabledAbortKey(bool value)
+public IPromptConfig AddExtraAction(StageControl stage, Action<Object, Object> useraction)
 ```
 
 #### Parameters
 
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+`stage` [StageControl](./pplus.controls.stagecontrol.md)<br>
+
+`useraction` [Action&lt;Object, Object&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-2)<br>
 
 #### Returns
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-showtooltip"/>**ShowTooltip(Boolean)**
+### <a id="methods-applystyle"/>**ApplyStyle(StyleControls, Style)**
 
 ```csharp
-public IPromptConfig ShowTooltip(bool value)
+public IPromptConfig ApplyStyle(StyleControls styleControl, Style value)
+```
+
+#### Parameters
+
+`styleControl` [StyleControls](./pplus.controls.stylecontrols.md)<br>
+
+`value` [Style](./pplus.style.md)<br>
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-description"/>**Description(StringStyle)**
+
+```csharp
+public IPromptConfig Description(StringStyle value)
+```
+
+#### Parameters
+
+`value` [StringStyle](./pplus.controls.stringstyle.md)<br>
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-description"/>**Description(String)**
+
+```csharp
+public IPromptConfig Description(string value)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-enabledabortkey"/>**EnabledAbortKey(Boolean)**
+
+```csharp
+public IPromptConfig EnabledAbortKey(bool value)
 ```
 
 #### Parameters
@@ -77,50 +123,6 @@ public IPromptConfig HideOnAbort(bool value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-setcontext"/>**SetContext(Object)**
-
-```csharp
-public IPromptConfig SetContext(object value)
-```
-
-#### Parameters
-
-`value` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-addextraaction"/>**AddExtraAction(StageControl, Action&lt;Object, Object&gt;)**
-
-```csharp
-public IPromptConfig AddExtraAction(StageControl stage, Action<Object, Object> useraction)
-```
-
-#### Parameters
-
-`stage` [StageControl](./pplus.controls.stagecontrol.md)<br>
-
-`useraction` [Action&lt;Object, Object&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-2)<br>
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-description"/>**Description(StringStyle)**
-
-```csharp
-public IPromptConfig Description(StringStyle value)
-```
-
-#### Parameters
-
-`value` [StringStyle](./pplus.controls.stringstyle.md)<br>
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
 ### <a id="methods-prompt"/>**Prompt(StringStyle)**
 
 ```csharp
@@ -130,34 +132,6 @@ public IPromptConfig Prompt(StringStyle value)
 #### Parameters
 
 `value` [StringStyle](./pplus.controls.stringstyle.md)<br>
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-tooltips"/>**Tooltips(StringStyle)**
-
-```csharp
-public IPromptConfig Tooltips(StringStyle value)
-```
-
-#### Parameters
-
-`value` [StringStyle](./pplus.controls.stringstyle.md)<br>
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-description"/>**Description(String)**
-
-```csharp
-public IPromptConfig Description(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 #### Returns
 
@@ -177,31 +151,29 @@ public IPromptConfig Prompt(string value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-tooltips"/>**Tooltips(String)**
+### <a id="methods-setcontext"/>**SetContext(Object)**
 
 ```csharp
-public IPromptConfig Tooltips(string value)
+public IPromptConfig SetContext(object value)
 ```
 
 #### Parameters
 
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`value` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 #### Returns
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-applystyle"/>**ApplyStyle(StyleControls, Style)**
+### <a id="methods-showtooltip"/>**ShowTooltip(Boolean)**
 
 ```csharp
-public IPromptConfig ApplyStyle(StyleControls styleControl, Style value)
+public IPromptConfig ShowTooltip(bool value)
 ```
 
 #### Parameters
 
-`styleControl` [StyleControls](./pplus.controls.stylecontrols.md)<br>
-
-`value` [Style](./pplus.style.md)<br>
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 #### Returns
 
@@ -220,6 +192,34 @@ public IPromptConfig Symbols(SymbolType schema, string value, string unicode)
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 `unicode` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-tooltips"/>**Tooltips(StringStyle)**
+
+```csharp
+public IPromptConfig Tooltips(StringStyle value)
+```
+
+#### Parameters
+
+`value` [StringStyle](./pplus.controls.stringstyle.md)<br>
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-tooltips"/>**Tooltips(String)**
+
+```csharp
+public IPromptConfig Tooltips(string value)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 #### Returns
 

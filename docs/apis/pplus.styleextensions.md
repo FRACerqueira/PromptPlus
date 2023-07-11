@@ -22,6 +22,27 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Methods
 
+### <a id="methods-background"/>**Background(Style, Color)**
+
+Create a new style from the specified one with
+ the specified background color.
+
+```csharp
+public static Style Background(Style style, Color color)
+```
+
+#### Parameters
+
+`style` [Style](./pplus.style.md)<br>
+The style.
+
+`color` [Color](./pplus.color.md)<br>
+The background color.
+
+#### Returns
+
+The new [Style](./pplus.style.md)
+
 ### <a id="methods-foreground"/>**Foreground(Style, Color)**
 
 Create a new style from the specified one with the specified foreground color.
@@ -57,27 +78,6 @@ The style.
 
 `overflow` [Overflow](./pplus.overflow.md)<br>
 The [Overflow](./pplus.overflow.md) overflow strategy
-
-#### Returns
-
-The new [Style](./pplus.style.md)
-
-### <a id="methods-background"/>**Background(Style, Color)**
-
-Create a new style from the specified one with
- the specified background color.
-
-```csharp
-public static Style Background(Style style, Color color)
-```
-
-#### Parameters
-
-`style` [Style](./pplus.style.md)<br>
-The style.
-
-`color` [Color](./pplus.color.md)<br>
-The background color.
 
 #### Returns
 

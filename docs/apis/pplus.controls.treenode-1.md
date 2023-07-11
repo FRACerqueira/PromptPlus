@@ -27,6 +27,90 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
+### <a id="properties-childrens"/>**Childrens**
+
+List of Children's nodes of node
+
+```csharp
+public List<TreeNode<T>> Childrens { get; internal set; }
+```
+
+#### Property Value
+
+List&lt;TreeNode&lt;T&gt;&gt;<br>
+
+### <a id="properties-isdisabled"/>**IsDisabled**
+
+Node disabled
+
+```csharp
+public bool IsDisabled { get; internal set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-isexpanded"/>**IsExpanded**
+
+Node expandend
+
+```csharp
+public bool IsExpanded { get; internal set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-ishaschild"/>**IsHasChild**
+
+Node has Child
+
+```csharp
+public bool IsHasChild { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-ismarked"/>**IsMarked**
+
+Node Marked
+
+```csharp
+public bool IsMarked { get; internal set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-isroot"/>**IsRoot**
+
+Node Is root. Top Level
+
+```csharp
+public bool IsRoot { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-isselected"/>**IsSelected**
+
+Node Current.
+
+```csharp
+public bool IsSelected { get; internal set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-level"/>**Level**
 
 Node Level
@@ -38,6 +122,42 @@ public int Level { get; internal set; }
 #### Property Value
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### <a id="properties-nextnode"/>**NextNode**
+
+Next node
+
+```csharp
+public TreeNode<T> NextNode { get; internal set; }
+```
+
+#### Property Value
+
+[TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)<br>
+
+### <a id="properties-parent"/>**Parent**
+
+Parent node
+
+```csharp
+public TreeNode<T> Parent { get; internal set; }
+```
+
+#### Property Value
+
+[TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)<br>
+
+### <a id="properties-prevnode"/>**PrevNode**
+
+Previus node
+
+```csharp
+public TreeNode<T> PrevNode { get; internal set; }
+```
+
+#### Property Value
+
+[TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)<br>
 
 ### <a id="properties-text"/>**Text**
 
@@ -62,126 +182,6 @@ public T Value { get; internal set; }
 #### Property Value
 
 T<br>
-
-### <a id="properties-isroot"/>**IsRoot**
-
-Node Is root. Top Level
-
-```csharp
-public bool IsRoot { get; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-ishaschild"/>**IsHasChild**
-
-Node has Child
-
-```csharp
-public bool IsHasChild { get; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-isexpanded"/>**IsExpanded**
-
-Node expandend
-
-```csharp
-public bool IsExpanded { get; internal set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-isselected"/>**IsSelected**
-
-Node Current.
-
-```csharp
-public bool IsSelected { get; internal set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-isdisabled"/>**IsDisabled**
-
-Node disabled
-
-```csharp
-public bool IsDisabled { get; internal set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-ismarked"/>**IsMarked**
-
-Node Marked
-
-```csharp
-public bool IsMarked { get; internal set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-childrens"/>**Childrens**
-
-List of Children's nodes of node
-
-```csharp
-public List<TreeNode<T>> Childrens { get; internal set; }
-```
-
-#### Property Value
-
-List&lt;TreeNode&lt;T&gt;&gt;<br>
-
-### <a id="properties-parent"/>**Parent**
-
-Parent node
-
-```csharp
-public TreeNode<T> Parent { get; internal set; }
-```
-
-#### Property Value
-
-[TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)<br>
-
-### <a id="properties-nextnode"/>**NextNode**
-
-Next node
-
-```csharp
-public TreeNode<T> NextNode { get; internal set; }
-```
-
-#### Property Value
-
-[TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)<br>
-
-### <a id="properties-prevnode"/>**PrevNode**
-
-Previus node
-
-```csharp
-public TreeNode<T> PrevNode { get; internal set; }
-```
-
-#### Property Value
-
-[TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)<br>
 
 ## Constructors
 

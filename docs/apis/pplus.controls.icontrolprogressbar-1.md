@@ -24,19 +24,53 @@ Implements IPromptControls&lt;ResultProgessBar&lt;T&gt;&gt;
 
 ## Methods
 
-### <a id="methods-hideelements"/>**HideElements(HideProgressBar)**
+### <a id="methods-changecolor"/>**ChangeColor(Func&lt;Double, Style&gt;)**
 
-Hide elements progress bar Widgets. Default is Show all elements
- <br>For more one element use | separate (Enum Flag)
+Dynamically change Style Widgets
 
 ```csharp
-IControlProgressBar<T> HideElements(HideProgressBar value)
+IControlProgressBar<T> ChangeColor(Func<Double, Style> value)
 ```
 
 #### Parameters
 
-`value` [HideProgressBar](./pplus.controls.hideprogressbar.md)<br>
-element to hide. [HideProgressBar](./pplus.controls.hideprogressbar.md)
+`value` [Func&lt;Double, Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to change color
+
+#### Returns
+
+[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
+
+### <a id="methods-changegradient"/>**ChangeGradient(Color[])**
+
+Dynamically Change Gradient color Widgets
+
+```csharp
+IControlProgressBar<T> ChangeGradient(Color[] colors)
+```
+
+#### Parameters
+
+`colors` [Color[]](./pplus.color.md)<br>
+list of colors Gradient
+
+#### Returns
+
+[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
+
+### <a id="methods-charbar"/>**CharBar(Char)**
+
+Set [Char](https://docs.microsoft.com/en-us/dotnet/api/system.char) to show progress.Default value '#'
+ <br>Valid on ProgressBarType.Char, otherwise is ignored
+
+```csharp
+IControlProgressBar<T> CharBar(char value)
+```
+
+#### Parameters
+
+`value` [Char](https://docs.microsoft.com/en-us/dotnet/api/system.char)<br>
+Char to show
 
 #### Returns
 
@@ -76,24 +110,6 @@ CultureInfo to use
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### <a id="methods-charbar"/>**CharBar(Char)**
-
-Set [Char](https://docs.microsoft.com/en-us/dotnet/api/system.char) to show progress.Default value '#'
- <br>Valid on ProgressBarType.Char, otherwise is ignored
-
-```csharp
-IControlProgressBar<T> CharBar(char value)
-```
-
-#### Parameters
-
-`value` [Char](https://docs.microsoft.com/en-us/dotnet/api/system.char)<br>
-Char to show
-
-#### Returns
-
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
-
 ### <a id="methods-culture"/>**Culture(String)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to show value format.
@@ -112,6 +128,23 @@ Name of CultureInfo to use
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
+### <a id="methods-default"/>**Default(Double)**
+
+Initial value
+
+```csharp
+IControlProgressBar<T> Default(double value)
+```
+
+#### Parameters
+
+`value` [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+value
+
+#### Returns
+
+[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
+
 ### <a id="methods-finish"/>**Finish(String)**
 
 Finish answer to show when progressbar is completed.
@@ -124,6 +157,41 @@ IControlProgressBar<T> Finish(string text)
 
 `text` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 text Finish answer
+
+#### Returns
+
+[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
+
+### <a id="methods-fracionaldig"/>**FracionalDig(Int32)**
+
+Define the Fracional Digits of value. Default is 0.
+
+```csharp
+IControlProgressBar<T> FracionalDig(int value)
+```
+
+#### Parameters
+
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Fracional Digits
+
+#### Returns
+
+[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
+
+### <a id="methods-hideelements"/>**HideElements(HideProgressBar)**
+
+Hide elements progress bar Widgets. Default is Show all elements
+ <br>For more one element use | separate (Enum Flag)
+
+```csharp
+IControlProgressBar<T> HideElements(HideProgressBar value)
+```
+
+#### Parameters
+
+`value` [HideProgressBar](./pplus.controls.hideprogressbar.md)<br>
+element to hide. [HideProgressBar](./pplus.controls.hideprogressbar.md)
 
 #### Returns
 
@@ -156,91 +224,6 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### <a id="methods-width"/>**Width(Int32)**
-
-Define Width to Widgets. Default value is 80.
-
-```csharp
-IControlProgressBar<T> Width(int value)
-```
-
-#### Parameters
-
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Width
-
-#### Returns
-
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
-
-### <a id="methods-default"/>**Default(Double)**
-
-Initial value
-
-```csharp
-IControlProgressBar<T> Default(double value)
-```
-
-#### Parameters
-
-`value` [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
-value
-
-#### Returns
-
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
-
-### <a id="methods-fracionaldig"/>**FracionalDig(Int32)**
-
-Define the Fracional Digits of value. Default is 0.
-
-```csharp
-IControlProgressBar<T> FracionalDig(int value)
-```
-
-#### Parameters
-
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Fracional Digits
-
-#### Returns
-
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
-
-### <a id="methods-changecolor"/>**ChangeColor(Func&lt;Double, Style&gt;)**
-
-Dynamically change Style Widgets
-
-```csharp
-IControlProgressBar<T> ChangeColor(Func<Double, Style> value)
-```
-
-#### Parameters
-
-`value` [Func&lt;Double, Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-function to change color
-
-#### Returns
-
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
-
-### <a id="methods-changegradient"/>**ChangeGradient(Color[])**
-
-Dynamically Change Gradient color Widgets
-
-```csharp
-IControlProgressBar<T> ChangeGradient(Color[] colors)
-```
-
-#### Parameters
-
-`colors` [Color[]](./pplus.color.md)<br>
-list of colors Gradient
-
-#### Returns
-
-[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
-
 ### <a id="methods-updatehandler"/>**UpdateHandler(Action&lt;UpdateProgressBar&lt;T&gt;, CancellationToken&gt;)**
 
 Handler to execute Update ProgressBar values.
@@ -253,6 +236,23 @@ IControlProgressBar<T> UpdateHandler(Action<UpdateProgressBar<T>, CancellationTo
 
 `value` Action&lt;UpdateProgressBar&lt;T&gt;, CancellationToken&gt;<br>
 Handler.See [UpdateProgressBar&lt;T&gt;](./pplus.controls.updateprogressbar-1.md) to change value
+
+#### Returns
+
+[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
+
+### <a id="methods-width"/>**Width(Int32)**
+
+Define Width to Widgets. Default value is 80.
+
+```csharp
+IControlProgressBar<T> Width(int value)
+```
+
+#### Parameters
+
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Width
 
 #### Returns
 

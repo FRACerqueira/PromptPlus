@@ -20,6 +20,86 @@ Implements [IPromptControls&lt;IEnumerable&lt;StateProcess&gt;&gt;](./pplus.cont
 
 ## Methods
 
+### <a id="methods-addstep"/>**AddStep(StepMode, Action&lt;CancellationToken&gt;[])**
+
+Add list of tasks to execute.
+
+```csharp
+IControlWait AddStep(StepMode stepMode, Action<CancellationToken>[] process)
+```
+
+#### Parameters
+
+`stepMode` [StepMode](./pplus.controls.stepmode.md)<br>
+Sequential or parallel execution
+
+`process` [Action&lt;CancellationToken&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+list of tasks
+
+#### Returns
+
+[IControlWait](./pplus.controls.icontrolwait.md)
+
+### <a id="methods-addstep"/>**AddStep(StepMode, String, String, Action&lt;CancellationToken&gt;[])**
+
+Add list of tasks to execute with title and description
+
+```csharp
+IControlWait AddStep(StepMode stepMode, string id, string description, Action<CancellationToken>[] process)
+```
+
+#### Parameters
+
+`stepMode` [StepMode](./pplus.controls.stepmode.md)<br>
+Sequential or parallel execution
+
+`id` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+TaskTitle of tasks
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Description of tasks
+
+`process` [Action&lt;CancellationToken&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+list of tasks
+
+#### Returns
+
+[IControlWait](./pplus.controls.icontrolwait.md)
+
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
+
+Custom config the control.
+
+```csharp
+IControlWait Config(Action<IPromptConfig> context)
+```
+
+#### Parameters
+
+`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+Action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlWait](./pplus.controls.icontrolwait.md)
+
+### <a id="methods-finish"/>**Finish(String)**
+
+Finish answer to show when Wait process is completed.
+
+```csharp
+IControlWait Finish(string text)
+```
+
+#### Parameters
+
+`text` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Text Finish answer
+
+#### Returns
+
+[IControlWait](./pplus.controls.icontrolwait.md)
+
 ### <a id="methods-interaction"/>**Interaction&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;IControlWait, T&gt;)**
 
 Execute a action foreach item of colletion passed as a parameter
@@ -62,23 +142,6 @@ Number of concurrent tasks
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### <a id="methods-tasktitle"/>**TaskTitle(String)**
-
-Overwrite Task Title . Default task title comes from the embedded resource.
-
-```csharp
-IControlWait TaskTitle(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-TaskTitle Task
-
-#### Returns
-
-[IControlWait](./pplus.controls.icontrolwait.md)
-
 ### <a id="methods-showelapsedtime"/>**ShowElapsedTime()**
 
 Define if show Elapsed Time for each task and the format of Elapsed Time.
@@ -86,40 +149,6 @@ Define if show Elapsed Time for each task and the format of Elapsed Time.
 ```csharp
 IControlWait ShowElapsedTime()
 ```
-
-#### Returns
-
-[IControlWait](./pplus.controls.icontrolwait.md)
-
-### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
-
-Custom config the control.
-
-```csharp
-IControlWait Config(Action<IPromptConfig> context)
-```
-
-#### Parameters
-
-`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-Action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-#### Returns
-
-[IControlWait](./pplus.controls.icontrolwait.md)
-
-### <a id="methods-finish"/>**Finish(String)**
-
-Finish answer to show when Wait process is completed.
-
-```csharp
-IControlWait Finish(string text)
-```
-
-#### Parameters
-
-`text` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Text Finish answer
 
 #### Returns
 
@@ -152,47 +181,18 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### <a id="methods-addstep"/>**AddStep(StepMode, Action&lt;CancellationToken&gt;[])**
+### <a id="methods-tasktitle"/>**TaskTitle(String)**
 
-Add list of tasks to execute.
+Overwrite Task Title . Default task title comes from the embedded resource.
 
 ```csharp
-IControlWait AddStep(StepMode stepMode, Action<CancellationToken>[] process)
+IControlWait TaskTitle(string value)
 ```
 
 #### Parameters
 
-`stepMode` [StepMode](./pplus.controls.stepmode.md)<br>
-Sequential or parallel execution
-
-`process` [Action&lt;CancellationToken&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-list of tasks
-
-#### Returns
-
-[IControlWait](./pplus.controls.icontrolwait.md)
-
-### <a id="methods-addstep"/>**AddStep(StepMode, String, String, Action&lt;CancellationToken&gt;[])**
-
-Add list of tasks to execute with title and description
-
-```csharp
-IControlWait AddStep(StepMode stepMode, string id, string description, Action<CancellationToken>[] process)
-```
-
-#### Parameters
-
-`stepMode` [StepMode](./pplus.controls.stepmode.md)<br>
-Sequential or parallel execution
-
-`id` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-TaskTitle of tasks
-
-`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Description of tasks
-
-`process` [Action&lt;CancellationToken&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-list of tasks
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+TaskTitle Task
 
 #### Returns
 

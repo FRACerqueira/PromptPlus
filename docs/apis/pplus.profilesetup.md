@@ -22,6 +22,30 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
+### <a id="properties-backgroundcolor"/>**BackgroundColor**
+
+Get/Set BackgroundColor console with color.
+
+```csharp
+public ConsoleColor BackgroundColor { get; set; }
+```
+
+#### Property Value
+
+ConsoleColor<br>
+
+### <a id="properties-colordepth"/>**ColorDepth**
+
+Get/Set Color capacity.[ColorSystem](./pplus.colorsystem.md)
+
+```csharp
+public ColorSystem ColorDepth { get; set; }
+```
+
+#### Property Value
+
+[ColorSystem](./pplus.colorsystem.md)<br>
+
 ### <a id="properties-culture"/>**Culture**
 
 ```csharp
@@ -31,6 +55,18 @@ public CultureInfo Culture { get; set; }
 #### Property Value
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
+
+### <a id="properties-foregroundcolor"/>**ForegroundColor**
+
+Get/Set Foreground console with color.
+
+```csharp
+public ConsoleColor ForegroundColor { get; set; }
+```
+
+#### Property Value
+
+ConsoleColor<br>
 
 ### <a id="properties-isterminal"/>**IsTerminal**
 
@@ -56,29 +92,17 @@ public bool IsUnicodeSupported { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### <a id="properties-supportsansi"/>**SupportsAnsi**
+### <a id="properties-overflowstrategy"/>**OverflowStrategy**
 
-Get/Set SupportsAnsi mode commands.
+Get/Set write Overflow Strategy.
 
 ```csharp
-public bool SupportsAnsi { get; set; }
+public Overflow OverflowStrategy { get; set; }
 ```
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-colordepth"/>**ColorDepth**
-
-Get/Set Color capacity.[ColorSystem](./pplus.colorsystem.md)
-
-```csharp
-public ColorSystem ColorDepth { get; set; }
-```
-
-#### Property Value
-
-[ColorSystem](./pplus.colorsystem.md)<br>
+[Overflow](./pplus.overflow.md)<br>
 
 ### <a id="properties-padleft"/>**PadLeft**
 
@@ -104,41 +128,17 @@ public byte PadRight { get; set; }
 
 [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
 
-### <a id="properties-overflowstrategy"/>**OverflowStrategy**
+### <a id="properties-supportsansi"/>**SupportsAnsi**
 
-Get/Set write Overflow Strategy.
+Get/Set SupportsAnsi mode commands.
 
 ```csharp
-public Overflow OverflowStrategy { get; set; }
+public bool SupportsAnsi { get; set; }
 ```
 
 #### Property Value
 
-[Overflow](./pplus.overflow.md)<br>
-
-### <a id="properties-foregroundcolor"/>**ForegroundColor**
-
-Get/Set Foreground console with color.
-
-```csharp
-public ConsoleColor ForegroundColor { get; set; }
-```
-
-#### Property Value
-
-ConsoleColor<br>
-
-### <a id="properties-backgroundcolor"/>**BackgroundColor**
-
-Get/Set BackgroundColor console with color.
-
-```csharp
-public ConsoleColor BackgroundColor { get; set; }
-```
-
-#### Property Value
-
-ConsoleColor<br>
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 
 - - -

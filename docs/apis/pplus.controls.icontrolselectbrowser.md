@@ -20,163 +20,6 @@ Implements [IPromptControls&lt;ItemBrowser&gt;](./pplus.controls.ipromptcontrols
 
 ## Methods
 
-### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
-
-Custom config the control.
-
-```csharp
-IControlSelectBrowser Config(Action<IPromptConfig> context)
-```
-
-#### Parameters
-
-`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-#### Returns
-
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
-
-### <a id="methods-nospinner"/>**NoSpinner()**
-
-Not show Spinner
-
-```csharp
-IControlSelectBrowser NoSpinner()
-```
-
-#### Returns
-
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
-
-### <a id="methods-disabledrecursiveexpand"/>**DisabledRecursiveExpand()**
-
-Disabled ExpandAll Feature. Only item in Top-level are expanded
- <br>Overwrite Root option ExpandAll to false
-
-```csharp
-IControlSelectBrowser DisabledRecursiveExpand()
-```
-
-#### Returns
-
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
-
-### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
-
-Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
- <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
-
-```csharp
-IControlSelectBrowser Spinner(SpinnersType spinnersType, Nullable<Style> spinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
-```
-
-#### Parameters
-
-`spinnersType` [SpinnersType](./pplus.controls.spinnerstype.md)<br>
-Spinners Type
-
-`spinnerStyle` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Style of spinner. [Style](./pplus.style.md)
-
-`speedAnimation` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored
-
-`customspinner` [IEnumerable&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
-IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored
-
-#### Returns
-
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
-
-### <a id="methods-styles"/>**Styles(StyleBrowser, Style)**
-
-Overwrite Styles Browser. [StyleBrowser](./pplus.controls.stylebrowser.md)
-
-```csharp
-IControlSelectBrowser Styles(StyleBrowser styletype, Style value)
-```
-
-#### Parameters
-
-`styletype` [StyleBrowser](./pplus.controls.stylebrowser.md)<br>
-Styles Browser
-
-`value` [Style](./pplus.style.md)<br>
-[Style](./pplus.style.md)
-
-#### Returns
-
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
-
-### <a id="methods-showlines"/>**ShowLines(Boolean)**
-
-Show lines of level. Default is true
-
-```csharp
-IControlSelectBrowser ShowLines(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true Show lines, otherwise 'no'
-
-#### Returns
-
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
-
-### <a id="methods-showexpand"/>**ShowExpand(Boolean)**
-
-Show expand SymbolType.Expanded. Default is true
-
-```csharp
-IControlSelectBrowser ShowExpand(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true Show Expanded SymbolType, otherwise 'no'
-
-#### Returns
-
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
-
-### <a id="methods-onlyfolders"/>**OnlyFolders(Boolean)**
-
-Load only Folders on browser. Default is false
-
-```csharp
-IControlSelectBrowser OnlyFolders(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true only Folders, otherwise Folders and files
-
-#### Returns
-
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
-
-### <a id="methods-showsize"/>**ShowSize(Boolean)**
-
-Show folder and file size in browser. Default is true
-
-```csharp
-IControlSelectBrowser ShowSize(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true Show size, otherwise 'no'
-
-#### Returns
-
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
-
 ### <a id="methods-accepthiddenattributes"/>**AcceptHiddenAttributes(Boolean)**
 
 Accept hidden folder and files in browser. Default is false
@@ -211,96 +54,86 @@ true accept system folder and files, otherwise 'no'
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-searchfolderpattern"/>**SearchFolderPattern(String)**
+### <a id="methods-aftercollapsed"/>**AfterCollapsed(Action&lt;ItemBrowser&gt;)**
 
-Search folder pattern. Default is '*'
+Action to execute after Collapsed
 
 ```csharp
-IControlSelectBrowser SearchFolderPattern(string value)
+IControlSelectBrowser AfterCollapsed(Action<ItemBrowser> value)
 ```
 
 #### Parameters
 
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Search pattern
+`value` [Action&lt;ItemBrowser&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The action
 
 #### Returns
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-searchfilepattern"/>**SearchFilePattern(String)**
+### <a id="methods-afterexpanded"/>**AfterExpanded(Action&lt;ItemBrowser&gt;)**
 
-Search file pattern. Default is '*'
+Action to execute after Expanded
 
 ```csharp
-IControlSelectBrowser SearchFilePattern(string value)
+IControlSelectBrowser AfterExpanded(Action<ItemBrowser> value)
 ```
 
 #### Parameters
 
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Search pattern
+`value` [Action&lt;ItemBrowser&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The action
 
 #### Returns
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-pagesize"/>**PageSize(Int32)**
+### <a id="methods-beforecollapsed"/>**BeforeCollapsed(Action&lt;ItemBrowser&gt;)**
 
-Set max.item view per page.Default value for this control is 10.
+Action to execute before Collapsed
 
 ```csharp
-IControlSelectBrowser PageSize(int value)
+IControlSelectBrowser BeforeCollapsed(Action<ItemBrowser> value)
 ```
 
 #### Parameters
 
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number of Max.items
+`value` [Action&lt;ItemBrowser&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The action
 
 #### Returns
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-filtertype"/>**FilterType(FilterMode)**
+### <a id="methods-beforeexpanded"/>**BeforeExpanded(Action&lt;ItemBrowser&gt;)**
 
-Filter strategy for filter items in colletion
- <br>Default value is FilterMode.Contains
+Action to execute before Expanded
 
 ```csharp
-IControlSelectBrowser FilterType(FilterMode value)
+IControlSelectBrowser BeforeExpanded(Action<ItemBrowser> value)
 ```
 
 #### Parameters
 
-`value` [FilterMode](./pplus.controls.filtermode.md)<br>
-Filter Mode
+`value` [Action&lt;ItemBrowser&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The action
 
 #### Returns
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-root"/>**Root(String, Boolean, Func&lt;ItemBrowser, Boolean&gt;, Func&lt;ItemBrowser, Boolean&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
-Set folder root to browser
+Custom config the control.
 
 ```csharp
-IControlSelectBrowser Root(string value, bool expandall, Func<ItemBrowser, Boolean> validselect, Func<ItemBrowser, Boolean> setdisabled)
+IControlSelectBrowser Config(Action<IPromptConfig> context)
 ```
 
 #### Parameters
 
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-full path folder root
-
-`expandall` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true expand all folder, otherwise 'no'
-
-`validselect` [Func&lt;ItemBrowser, Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-Accept select item that satisfy the function
-
-`setdisabled` [Func&lt;ItemBrowser, Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-Disabled all items that satisfy the disabled function
+`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
@@ -323,18 +156,32 @@ fullpath
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-showcurrentfolder"/>**ShowCurrentFolder(Boolean)**
+### <a id="methods-disabledrecursiveexpand"/>**DisabledRecursiveExpand()**
 
-Append name current folder on description
+Disabled ExpandAll Feature. Only item in Top-level are expanded
+ <br>Overwrite Root option ExpandAll to false
 
 ```csharp
-IControlSelectBrowser ShowCurrentFolder(bool value)
+IControlSelectBrowser DisabledRecursiveExpand()
+```
+
+#### Returns
+
+[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
+
+Filter strategy for filter items in colletion
+ <br>Default value is FilterMode.Contains
+
+```csharp
+IControlSelectBrowser FilterType(FilterMode value)
 ```
 
 #### Parameters
 
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true Append current name folder on description, not append
+`value` [FilterMode](./pplus.controls.filtermode.md)<br>
+Filter Mode
 
 #### Returns
 
@@ -391,69 +238,222 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all folders
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-afterexpanded"/>**AfterExpanded(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-nospinner"/>**NoSpinner()**
 
-Action to execute after Expanded
+Not show Spinner
 
 ```csharp
-IControlSelectBrowser AfterExpanded(Action<ItemBrowser> value)
+IControlSelectBrowser NoSpinner()
 ```
-
-#### Parameters
-
-`value` [Action&lt;ItemBrowser&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-The action
 
 #### Returns
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-aftercollapsed"/>**AfterCollapsed(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-onlyfolders"/>**OnlyFolders(Boolean)**
 
-Action to execute after Collapsed
+Load only Folders on browser. Default is false
 
 ```csharp
-IControlSelectBrowser AfterCollapsed(Action<ItemBrowser> value)
+IControlSelectBrowser OnlyFolders(bool value)
 ```
 
 #### Parameters
 
-`value` [Action&lt;ItemBrowser&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-The action
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true only Folders, otherwise Folders and files
 
 #### Returns
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-beforeexpanded"/>**BeforeExpanded(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Action to execute before Expanded
+Set max.item view per page.Default value for this control is 10.
 
 ```csharp
-IControlSelectBrowser BeforeExpanded(Action<ItemBrowser> value)
+IControlSelectBrowser PageSize(int value)
 ```
 
 #### Parameters
 
-`value` [Action&lt;ItemBrowser&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-The action
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Number of Max.items
 
 #### Returns
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-beforecollapsed"/>**BeforeCollapsed(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-root"/>**Root(String, Boolean, Func&lt;ItemBrowser, Boolean&gt;, Func&lt;ItemBrowser, Boolean&gt;)**
 
-Action to execute before Collapsed
+Set folder root to browser
 
 ```csharp
-IControlSelectBrowser BeforeCollapsed(Action<ItemBrowser> value)
+IControlSelectBrowser Root(string value, bool expandall, Func<ItemBrowser, Boolean> validselect, Func<ItemBrowser, Boolean> setdisabled)
 ```
 
 #### Parameters
 
-`value` [Action&lt;ItemBrowser&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-The action
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+full path folder root
+
+`expandall` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true expand all folder, otherwise 'no'
+
+`validselect` [Func&lt;ItemBrowser, Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+Accept select item that satisfy the function
+
+`setdisabled` [Func&lt;ItemBrowser, Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+Disabled all items that satisfy the disabled function
+
+#### Returns
+
+[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+
+### <a id="methods-searchfilepattern"/>**SearchFilePattern(String)**
+
+Search file pattern. Default is '*'
+
+```csharp
+IControlSelectBrowser SearchFilePattern(string value)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Search pattern
+
+#### Returns
+
+[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+
+### <a id="methods-searchfolderpattern"/>**SearchFolderPattern(String)**
+
+Search folder pattern. Default is '*'
+
+```csharp
+IControlSelectBrowser SearchFolderPattern(string value)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Search pattern
+
+#### Returns
+
+[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+
+### <a id="methods-showcurrentfolder"/>**ShowCurrentFolder(Boolean)**
+
+Append name current folder on description
+
+```csharp
+IControlSelectBrowser ShowCurrentFolder(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true Append current name folder on description, not append
+
+#### Returns
+
+[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+
+### <a id="methods-showexpand"/>**ShowExpand(Boolean)**
+
+Show expand SymbolType.Expanded. Default is true
+
+```csharp
+IControlSelectBrowser ShowExpand(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true Show Expanded SymbolType, otherwise 'no'
+
+#### Returns
+
+[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+
+### <a id="methods-showlines"/>**ShowLines(Boolean)**
+
+Show lines of level. Default is true
+
+```csharp
+IControlSelectBrowser ShowLines(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true Show lines, otherwise 'no'
+
+#### Returns
+
+[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+
+### <a id="methods-showsize"/>**ShowSize(Boolean)**
+
+Show folder and file size in browser. Default is true
+
+```csharp
+IControlSelectBrowser ShowSize(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true Show size, otherwise 'no'
+
+#### Returns
+
+[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+
+Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
+ <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
+
+```csharp
+IControlSelectBrowser Spinner(SpinnersType spinnersType, Nullable<Style> spinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
+```
+
+#### Parameters
+
+`spinnersType` [SpinnersType](./pplus.controls.spinnerstype.md)<br>
+Spinners Type
+
+`spinnerStyle` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Style of spinner. [Style](./pplus.style.md)
+
+`speedAnimation` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored
+
+`customspinner` [IEnumerable&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
+IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored
+
+#### Returns
+
+[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+
+### <a id="methods-styles"/>**Styles(StyleBrowser, Style)**
+
+Overwrite Styles Browser. [StyleBrowser](./pplus.controls.stylebrowser.md)
+
+```csharp
+IControlSelectBrowser Styles(StyleBrowser styletype, Style value)
+```
+
+#### Parameters
+
+`styletype` [StyleBrowser](./pplus.controls.stylebrowser.md)<br>
+Styles Browser
+
+`value` [Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
 
 #### Returns
 

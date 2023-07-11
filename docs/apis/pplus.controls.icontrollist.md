@@ -20,65 +20,6 @@ Implements [IPromptControls&lt;IEnumerable&lt;String&gt;&gt;](./pplus.controls.i
 
 ## Methods
 
-### <a id="methods-interaction"/>**Interaction&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;IControlList, T&gt;)**
-
-Execute a action foreach item of colletion passed as a parameter
-
-```csharp
-IControlList Interaction<T>(IEnumerable<T> values, Action<IControlList, T> action)
-```
-
-#### Type Parameters
-
-`T`<br>
-Type external colletion
-
-#### Parameters
-
-`values` IEnumerable&lt;T&gt;<br>
-Colletion for interaction
-
-`action` Action&lt;IControlList, T&gt;<br>
-Action to execute
-
-#### Returns
-
-[IControlList](./pplus.controls.icontrollist.md)
-
-### <a id="methods-default"/>**Default(String)**
-
-Default initial value when when stated.
-
-```csharp
-IControlList Default(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-initial value
-
-#### Returns
-
-[IControlList](./pplus.controls.icontrollist.md)
-
-### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
-
-Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
-
-```csharp
-IControlList InputToCase(CaseOptions value)
-```
-
-#### Parameters
-
-`value` [CaseOptions](./pplus.controls.caseoptions.md)<br>
-Transform option
-
-#### Returns
-
-[IControlList](./pplus.controls.icontrollist.md)
-
 ### <a id="methods-acceptinput"/>**AcceptInput(Func&lt;Char, Boolean&gt;)**
 
 Execute a function to accept input.
@@ -92,75 +33,6 @@ IControlList AcceptInput(Func<Char, Boolean> value)
 
 `value` [Func&lt;Char, Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 function to accept input
-
-#### Returns
-
-[IControlList](./pplus.controls.icontrollist.md)
-
-### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
-
-MaxLenght of input text.
-
-```csharp
-IControlList MaxLenght(ushort value)
-```
-
-#### Parameters
-
-`value` [UInt16](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
-Lenght
-
-#### Returns
-
-[IControlList](./pplus.controls.icontrollist.md)
-
-### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
-
-Add a validator to accept sucessfull finish of control.
- <br>Tip: see  to validators embeding
-
-```csharp
-IControlList AddValidators(Func<Object, ValidationResult>[] validators)
-```
-
-#### Parameters
-
-`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-the function validator.
-
-#### Returns
-
-[IControlList](./pplus.controls.icontrollist.md)
-
-### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
-
-Custom config the control.
-
-```csharp
-IControlList Config(Action<IPromptConfig> context)
-```
-
-#### Parameters
-
-`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-#### Returns
-
-[IControlList](./pplus.controls.icontrollist.md)
-
-### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
-
-Add Suggestion Handler feature
-
-```csharp
-IControlList SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
-```
-
-#### Parameters
-
-`value` [Func&lt;SugestionInput, SugestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.md) and [SugestionOutput](./pplus.controls.sugestionoutput.md)
 
 #### Returns
 
@@ -206,18 +78,19 @@ true the item cannot be removed; otherwise yes.
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### <a id="methods-pagesize"/>**PageSize(Int32)**
+### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
-Set max.item view per page.Default value for this control is 10.
+Add a validator to accept sucessfull finish of control.
+ <br>Tip: see  to validators embeding
 
 ```csharp
-IControlList PageSize(int value)
+IControlList AddValidators(Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters
 
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number of Max.items
+`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+the function validator.
 
 #### Returns
 
@@ -235,21 +108,35 @@ IControlList AllowDuplicate()
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
-Defines a minimum and maximum (optional) range of items in the list
+Custom config the control.
 
 ```csharp
-IControlList Range(int minvalue, Nullable<Int32> maxvalue)
+IControlList Config(Action<IPromptConfig> context)
 ```
 
 #### Parameters
 
-`minvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Minimum number of items
+`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-`maxvalue` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Maximum number of items
+#### Returns
+
+[IControlList](./pplus.controls.icontrollist.md)
+
+### <a id="methods-default"/>**Default(String)**
+
+Default initial value when when stated.
+
+```csharp
+IControlList Default(string value)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+initial value
 
 #### Returns
 
@@ -284,6 +171,119 @@ IControlList HotKeyRemoveItem(HotKey value)
 
 `value` [HotKey](./pplus.controls.hotkey.md)<br>
 The [HotKey](./pplus.controls.hotkey.md) to remove item
+
+#### Returns
+
+[IControlList](./pplus.controls.icontrollist.md)
+
+### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
+
+Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
+
+```csharp
+IControlList InputToCase(CaseOptions value)
+```
+
+#### Parameters
+
+`value` [CaseOptions](./pplus.controls.caseoptions.md)<br>
+Transform option
+
+#### Returns
+
+[IControlList](./pplus.controls.icontrollist.md)
+
+### <a id="methods-interaction"/>**Interaction&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;IControlList, T&gt;)**
+
+Execute a action foreach item of colletion passed as a parameter
+
+```csharp
+IControlList Interaction<T>(IEnumerable<T> values, Action<IControlList, T> action)
+```
+
+#### Type Parameters
+
+`T`<br>
+Type external colletion
+
+#### Parameters
+
+`values` IEnumerable&lt;T&gt;<br>
+Colletion for interaction
+
+`action` Action&lt;IControlList, T&gt;<br>
+Action to execute
+
+#### Returns
+
+[IControlList](./pplus.controls.icontrollist.md)
+
+### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
+
+MaxLenght of input text.
+
+```csharp
+IControlList MaxLenght(ushort value)
+```
+
+#### Parameters
+
+`value` [UInt16](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
+Lenght
+
+#### Returns
+
+[IControlList](./pplus.controls.icontrollist.md)
+
+### <a id="methods-pagesize"/>**PageSize(Int32)**
+
+Set max.item view per page.Default value for this control is 10.
+
+```csharp
+IControlList PageSize(int value)
+```
+
+#### Parameters
+
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Number of Max.items
+
+#### Returns
+
+[IControlList](./pplus.controls.icontrollist.md)
+
+### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
+
+Defines a minimum and maximum (optional) range of items in the list
+
+```csharp
+IControlList Range(int minvalue, Nullable<Int32> maxvalue)
+```
+
+#### Parameters
+
+`minvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Minimum number of items
+
+`maxvalue` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Maximum number of items
+
+#### Returns
+
+[IControlList](./pplus.controls.icontrollist.md)
+
+### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
+
+Add Suggestion Handler feature
+
+```csharp
+IControlList SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;SugestionInput, SugestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.md) and [SugestionOutput](./pplus.controls.sugestionoutput.md)
 
 #### Returns
 

@@ -23,18 +23,6 @@ Implements [IEquatable&lt;StringStyle&gt;](https://docs.microsoft.com/en-us/dotn
 
 ## Properties
 
-### <a id="properties-text"/>**Text**
-
-Get/Set Text
-
-```csharp
-public string Text { get; set; }
-```
-
-#### Property Value
-
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
 ### <a id="properties-style"/>**Style**
 
 Get/Set Style/&gt;
@@ -46,6 +34,18 @@ public Style Style { get; set; }
 #### Property Value
 
 [Style](./pplus.style.md)<br>
+
+### <a id="properties-text"/>**Text**
+
+Get/Set Text
+
+```csharp
+public string Text { get; set; }
+```
+
+#### Property Value
+
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 

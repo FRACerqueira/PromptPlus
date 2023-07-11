@@ -26,18 +26,6 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### <a id="properties-value"/>**Value**
-
-Value result
-
-```csharp
-public T Value { get; }
-```
-
-#### Property Value
-
-T<br>
-
 ### <a id="properties-isaborted"/>**IsAborted**
 
 Control is Aborted. True to aborted; otherwise, false.
@@ -49,6 +37,18 @@ public bool IsAborted { get; }
 #### Property Value
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-value"/>**Value**
+
+Value result
+
+```csharp
+public T Value { get; }
+```
+
+#### Property Value
+
+T<br>
 
 ## Constructors
 
