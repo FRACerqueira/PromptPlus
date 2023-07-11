@@ -25,6 +25,7 @@ namespace PPlus
         /// <summary>
         /// Writes text line representation whie colors and Write single dash after.
         /// </summary>
+        /// <param name="consoleBase">The Console, see <see cref="IConsoleBase"/></param>
         /// <param name="value">The value to write.</param>
         /// <param name="dashOptions"><see cref="DashOptions"/> character</param>
         /// <param name="extralines">Number lines to write after write value</param>
@@ -76,10 +77,11 @@ namespace PPlus
         {
             WriteLines(Console, steps);
         }
-        
+
         /// <summary>
         /// Write lines with line terminator
         /// </summary>
+        /// <param name="consoleBase">The Console, see <see cref="IConsoleBase"/></param>
         /// <param name="steps">Numbers de lines.</param>
         public static void WriteLines(this IConsoleBase consoleBase, int steps = 1)
         {
@@ -104,6 +106,7 @@ namespace PPlus
         /// <summary>
         /// Writes text line representation whie colors in a pair of lines of dashes.
         /// </summary>
+        /// <param name="consoleBase">The Console, see <see cref="IConsoleBase"/></param>
         /// <param name="value">The value to write.</param>
         /// <param name="dashOptions"><see cref="DashOptions"/> character</param>
         /// <param name="extralines">Number lines to write after write value</param>

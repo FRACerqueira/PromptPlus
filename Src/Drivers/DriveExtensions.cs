@@ -18,7 +18,7 @@ using System.Threading;
 namespace PPlus
 {
     /// <summary>
-    /// Contains all controls, methods, properties and extensions for <see cref="PromptPlus"/>.
+    /// Represents main class with all controls, methods, properties and extensions for <see cref="PromptPlus"/>.
     /// </summary>
     public static partial class PromptPlus
     {

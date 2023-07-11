@@ -316,14 +316,14 @@ PromptPlus.Config.SelectAllPress = new HotKey(UserHotKey.F7);
 [**Top**](#welcome-to-promptplus)
 
 PromptPlus have a lot extensions to check Key-press with GNU Readline Emacs keyboard shortcuts.
-For more details [visit the **official API page**](https://fracerqueira.github.io/PromptPlus/apis/pplus.promptplus.html)
+For more details [visit the **official API page**](./apis/pplus.promptpluskeyinfoextensions.md)
 
 ## Validators
 [**Top**](#welcome-to-promptplus)
 
 PromptPlus have a lot extensions to **commons validator** and **validator import**(No duplicate code!) 
 
-For more details see [**List validators embeding**](https://fracerqueira.github.io/PromptPlus/apis/pplus.controls.promptvalidators.html)
+For more details see [**List validators embeding**](./apis/pplus.controls.promptvalidators.md)
 
 ```csharp
 private class MylCass

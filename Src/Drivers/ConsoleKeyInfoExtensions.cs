@@ -10,7 +10,10 @@ using PPlus.Controls.Objects;
 
 namespace PPlus
 {
-    public static partial class PromptPlus
+    /// <summary>
+    /// Represents KeyInfo Extensions
+    /// </summary>
+    public static partial class PromptPlusKeyInfoExtensions
     {
 
         internal static bool IskeyPageNavagator<Tkey>(this ConsoleKeyInfo consoleKeyInfo, Paginator<Tkey> paginator)

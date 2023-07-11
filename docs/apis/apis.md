@@ -44,6 +44,8 @@
 
 - [PromptPlusException](./pplus.promptplusexception.md)
 
+- [PromptPlusKeyInfoExtensions](./pplus.promptpluskeyinfoextensions.md)
+
 - [Style](./pplus.style.md)
 
 - [StyleExtensions](./pplus.styleextensions.md)
