@@ -23,7 +23,7 @@ Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.ru
 
 ## Properties
 
-### **Version**
+### <a id="properties-version"/>**Version**
 
 The version of PromptPlus running
 
@@ -35,7 +35,7 @@ public string Version { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Framework**
+### <a id="properties-framework"/>**Framework**
 
 The version of .net Framework running
 
@@ -47,7 +47,7 @@ public string Framework { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Plataform**
+### <a id="properties-plataform"/>**Plataform**
 
 The Plataform running
 
@@ -59,7 +59,7 @@ public string Plataform { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **TargetSite**
+### <a id="properties-targetsite"/>**TargetSite**
 
 ```csharp
 public MethodBase TargetSite { get; }
@@ -69,7 +69,7 @@ public MethodBase TargetSite { get; }
 
 [MethodBase](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodbase)<br>
 
-### **Message**
+### <a id="properties-message"/>**Message**
 
 ```csharp
 public string Message { get; }
@@ -79,7 +79,7 @@ public string Message { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Data**
+### <a id="properties-data"/>**Data**
 
 ```csharp
 public IDictionary Data { get; }
@@ -89,7 +89,7 @@ public IDictionary Data { get; }
 
 [IDictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.idictionary)<br>
 
-### **InnerException**
+### <a id="properties-innerexception"/>**InnerException**
 
 ```csharp
 public Exception InnerException { get; }
@@ -99,7 +99,7 @@ public Exception InnerException { get; }
 
 [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
 
-### **HelpLink**
+### <a id="properties-helplink"/>**HelpLink**
 
 ```csharp
 public string HelpLink { get; set; }
@@ -109,7 +109,7 @@ public string HelpLink { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Source**
+### <a id="properties-source"/>**Source**
 
 ```csharp
 public string Source { get; set; }
@@ -119,7 +119,7 @@ public string Source { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **HResult**
+### <a id="properties-hresult"/>**HResult**
 
 ```csharp
 public int HResult { get; set; }
@@ -129,7 +129,7 @@ public int HResult { get; set; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **StackTrace**
+### <a id="properties-stacktrace"/>**StackTrace**
 
 ```csharp
 public string StackTrace { get; }
@@ -141,7 +141,7 @@ public string StackTrace { get; }
 
 ## Constructors
 
-### **PromptPlusException(String)**
+### <a id="constructors-.ctor"/>**PromptPlusException(String)**
 
 Represents an exception thrown by PromptPlus
 

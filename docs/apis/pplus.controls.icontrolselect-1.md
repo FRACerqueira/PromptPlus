@@ -24,7 +24,7 @@ Implements IPromptControls&lt;T&gt;
 
 ## Methods
 
-### **Interaction&lt;T1&gt;(IEnumerable&lt;T1&gt;, Action&lt;IControlSelect&lt;T&gt;, T1&gt;)**
+### <a id="methods-interaction"/>**Interaction&lt;T1&gt;(IEnumerable&lt;T1&gt;, Action&lt;IControlSelect&lt;T&gt;, T1&gt;)**
 
 Execute a action foreach item of colletion passed as a parameter
 
@@ -49,7 +49,7 @@ Action to execute
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -66,7 +66,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **Default(T)**
+### <a id="methods-default"/>**Default(T)**
 
 Default value seleted.
 
@@ -83,7 +83,7 @@ Value default
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
+### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite defaults start seleted value with last result saved on history.
 
@@ -103,7 +103,7 @@ The timeout for valid items saved. Default value is 365 days
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **PageSize(Int32)**
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page.Default value for this control is 10.
 
@@ -120,7 +120,7 @@ Number of Max.items
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **FilterType(FilterMode)**
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
 Filter strategy for filter items in colletion
  <br>Default value is FilterMode.Contains
@@ -138,7 +138,7 @@ Filter Mode
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
+### <a id="methods-orderby"/>**OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort list by expression
 
@@ -155,7 +155,7 @@ expresion to sort the colletion
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
+### <a id="methods-orderbydescending"/>**OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort Descending list by expression
 
@@ -172,7 +172,7 @@ expresion to sort the colletion
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **TextSelector(Func&lt;T, String&gt;)**
+### <a id="methods-textselector"/>**TextSelector(Func&lt;T, String&gt;)**
 
 Function to show text Item in list.Default value is Item.ToString()
 
@@ -189,7 +189,7 @@ Function to show text Item in list
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **ChangeDescription(Func&lt;T, String&gt;)**
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;T, String&gt;)**
 
 Dynamically change the description using a user role
 
@@ -206,7 +206,7 @@ function to apply change
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **AddItem(T, Boolean)**
+### <a id="methods-additem"/>**AddItem(T, Boolean)**
 
 Add item to list
 
@@ -226,7 +226,7 @@ true item disabled, otherwise no
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **AddItems(IEnumerable&lt;T&gt;, Boolean)**
+### <a id="methods-additems"/>**AddItems(IEnumerable&lt;T&gt;, Boolean)**
 
 Add items colletion to list
 
@@ -246,7 +246,7 @@ true item disabled, otherwise no
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **AddItemTo(AdderScope, T)**
+### <a id="methods-additemto"/>**AddItemTo(AdderScope, T)**
 
 Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
@@ -266,7 +266,7 @@ item
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
+### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
 
 Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
@@ -286,7 +286,7 @@ items colletion
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **EqualItems(Func&lt;T, T, Boolean&gt;)**
+### <a id="methods-equalitems"/>**EqualItems(Func&lt;T, T, Boolean&gt;)**
 
 Custom item comparator
 
@@ -303,7 +303,7 @@ function comparator
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **AutoSelect()**
+### <a id="methods-autoselect"/>**AutoSelect()**
 
 Automatically select item when only one item is in the list
 

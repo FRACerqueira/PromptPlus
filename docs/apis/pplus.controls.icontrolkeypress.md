@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;ConsoleKeyInfo&gt;](./pplus.controls.ipromptcontr
 
 ## Methods
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -37,7 +37,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### **AddKeyValid(ConsoleKey, Nullable&lt;ConsoleModifiers&gt;)**
+### <a id="methods-addkeyvalid"/>**AddKeyValid(ConsoleKey, Nullable&lt;ConsoleModifiers&gt;)**
 
 Add Key and Modifiers valids for keypress
 
@@ -57,7 +57,7 @@ Modifiers
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### **TextKeyValid(Func&lt;ConsoleKeyInfo, String&gt;)**
+### <a id="methods-textkeyvalid"/>**TextKeyValid(Func&lt;ConsoleKeyInfo, String&gt;)**
 
 Overwrite default ConsoleKey string to custom string.
  <br>When return null value the control use defaut string
@@ -75,7 +75,7 @@ Transform function. When return null value the control use defaut string
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). ValueResult value is SpinnersType.Ascii
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected

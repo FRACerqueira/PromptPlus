@@ -27,7 +27,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **Maxvalue**
+### <a id="properties-maxvalue"/>**Maxvalue**
 
 Maximum value of Progress Bar
 
@@ -39,7 +39,7 @@ public double Maxvalue { get; private set; }
 
 [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-### **Minvalue**
+### <a id="properties-minvalue"/>**Minvalue**
 
 Minimal value of Progress Bar
 
@@ -51,7 +51,7 @@ public double Minvalue { get; private set; }
 
 [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-### **Value**
+### <a id="properties-value"/>**Value**
 
 Current value of Progress Bar
 
@@ -63,7 +63,7 @@ public double Value { get; private set; }
 
 [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 
-### **Finish**
+### <a id="properties-finish"/>**Finish**
 
 Get/Set Finish Progress Bar
 
@@ -75,7 +75,7 @@ public bool Finish { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **Context**
+### <a id="properties-context"/>**Context**
 
 Get/Set instance result value for general purpose
 
@@ -87,7 +87,7 @@ public T Context { get; set; }
 
 T<br>
 
-### **Description**
+### <a id="properties-description"/>**Description**
 
 Current Description
 
@@ -101,7 +101,7 @@ public string Description { get; private set; }
 
 ## Methods
 
-### **Update(Double)**
+### <a id="methods-update"/>**Update(Double)**
 
 Update current value
 
@@ -114,7 +114,7 @@ public void Update(double value)
 `value` [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
 new current value
 
-### **ChangeDescription(String)**
+### <a id="methods-changedescription"/>**ChangeDescription(String)**
 
 Change curent Description
 

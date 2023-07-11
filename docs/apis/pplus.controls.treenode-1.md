@@ -27,7 +27,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **Level**
+### <a id="properties-level"/>**Level**
 
 Node Level
 
@@ -39,7 +39,7 @@ public int Level { get; internal set; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **Text**
+### <a id="properties-text"/>**Text**
 
 Text Node
 
@@ -51,7 +51,7 @@ public string Text { get; internal set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Value**
+### <a id="properties-value"/>**Value**
 
 Value of node
 
@@ -63,7 +63,7 @@ public T Value { get; internal set; }
 
 T<br>
 
-### **IsRoot**
+### <a id="properties-isroot"/>**IsRoot**
 
 Node Is root. Top Level
 
@@ -75,7 +75,7 @@ public bool IsRoot { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsHasChild**
+### <a id="properties-ishaschild"/>**IsHasChild**
 
 Node has Child
 
@@ -87,7 +87,7 @@ public bool IsHasChild { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsExpanded**
+### <a id="properties-isexpanded"/>**IsExpanded**
 
 Node expandend
 
@@ -99,7 +99,7 @@ public bool IsExpanded { get; internal set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsSelected**
+### <a id="properties-isselected"/>**IsSelected**
 
 Node Current.
 
@@ -111,7 +111,7 @@ public bool IsSelected { get; internal set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsDisabled**
+### <a id="properties-isdisabled"/>**IsDisabled**
 
 Node disabled
 
@@ -123,7 +123,7 @@ public bool IsDisabled { get; internal set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsMarked**
+### <a id="properties-ismarked"/>**IsMarked**
 
 Node Marked
 
@@ -135,7 +135,7 @@ public bool IsMarked { get; internal set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **Childrens**
+### <a id="properties-childrens"/>**Childrens**
 
 List of Children's nodes of node
 
@@ -147,7 +147,7 @@ public List<TreeNode<T>> Childrens { get; internal set; }
 
 List&lt;TreeNode&lt;T&gt;&gt;<br>
 
-### **Parent**
+### <a id="properties-parent"/>**Parent**
 
 Parent node
 
@@ -159,7 +159,7 @@ public TreeNode<T> Parent { get; internal set; }
 
 [TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)<br>
 
-### **NextNode**
+### <a id="properties-nextnode"/>**NextNode**
 
 Next node
 
@@ -171,7 +171,7 @@ public TreeNode<T> NextNode { get; internal set; }
 
 [TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)<br>
 
-### **PrevNode**
+### <a id="properties-prevnode"/>**PrevNode**
 
 Previus node
 
@@ -185,7 +185,7 @@ public TreeNode<T> PrevNode { get; internal set; }
 
 ## Constructors
 
-### **TreeNode()**
+### <a id="constructors-.ctor"/>**TreeNode()**
 
 Create a tree node
 

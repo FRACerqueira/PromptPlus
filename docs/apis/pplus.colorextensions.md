@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Methods
 
-### **GetInvertedColor(Color)**
+### <a id="methods-getinvertedcolor"/>**GetInvertedColor(Color)**
 
 Get Inverted color by Luminance for best contrast
 

@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;IEnumerable&lt;ResultMasked&gt;&gt;](./pplus.cont
 
 ## Methods
 
-### **Interaction&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;IControlMaskEditList, T&gt;)**
+### <a id="methods-interaction"/>**Interaction&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;IControlMaskEditList, T&gt;)**
 
 Execute a action foreach item of colletion passed as a parameter
 
@@ -45,7 +45,7 @@ Action to execute
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **Default(String)**
+### <a id="methods-default"/>**Default(String)**
 
 Default initial value when when stated.
 
@@ -62,7 +62,7 @@ initial value
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **TypeTipStyle(Style)**
+### <a id="methods-typetipstyle"/>**TypeTipStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region tip type input.
  <br>Default Foreground : 'ConsoleColor.Yellow'<br>Default Background : same Console Background when setted
@@ -80,7 +80,7 @@ Style
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **NegativeStyle(Style)**
+### <a id="methods-negativestyle"/>**NegativeStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region neggative input.
  <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : same Console Background when setted
@@ -98,7 +98,7 @@ Style
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **PositiveStyle(Style)**
+### <a id="methods-positivestyle"/>**PositiveStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region positive input.
  <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
@@ -116,7 +116,7 @@ Style
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **Mask(String, Nullable&lt;Char&gt;)**
+### <a id="methods-mask"/>**Mask(String, Nullable&lt;Char&gt;)**
 
 Defines mask input. Rules for Generic type:
  <br>9 - Only a numeric character<br>L - Only a letter<br>C - OnlyCustom character<br>A - Any character<br>N - OnlyCustom character +  Only a numeric character<br>X - OnlyCustom character +  Only a letter<br>\ - Escape character<br>{ - Initial delimiter for repetition of masks<br>} - Final delimiter for repetition of masks<br>[-Initial delimiter for list of Custom character<br>] - Final delimiter for list of Custom character
@@ -137,7 +137,7 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **Mask(MaskedType, Nullable&lt;Char&gt;)**
+### <a id="methods-mask"/>**Mask(MaskedType, Nullable&lt;Char&gt;)**
 
 Defines type of mask control.
 
@@ -157,7 +157,7 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **Culture(CultureInfo)**
+### <a id="methods-culture"/>**Culture(CultureInfo)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
  <br>Default value is global Promptplus Cultureinfo
@@ -175,7 +175,7 @@ CultureInfo to use on validate
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **Culture(String)**
+### <a id="methods-culture"/>**Culture(String)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
  <br>Default value is global Promptplus Cultureinfo
@@ -193,7 +193,7 @@ Name of CultureInfo to use on validate
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **FillZeros()**
+### <a id="methods-fillzeros"/>**FillZeros()**
 
 Fill zeros mask.
  <br>Not valid for type MaskedType.Generic (this set will be ignored).<br>When used this feature the AcceptEmptyValue feature will be ignored.<br>When MaskedType.Number or MaskedType.Currency this feature is always on.
@@ -206,7 +206,7 @@ IControlMaskEditList FillZeros()
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **FormatYear(FormatYear)**
+### <a id="methods-formatyear"/>**FormatYear(FormatYear)**
 
 Defines if year is long or short.
  <br>Valid only for type MaskedType.DateOnly or DateTime, otherwise this set will be ignored.
@@ -224,7 +224,7 @@ IControlMaskEditList FormatYear(FormatYear value)
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **FormatTime(FormatTime)**
+### <a id="methods-formattime"/>**FormatTime(FormatTime)**
 
 Defines time parts input.
  <br>Valid only for type MaskedType.TimeOnly or DateTime, otherwise this set will be ignored.
@@ -242,7 +242,7 @@ IControlMaskEditList FormatTime(FormatTime value)
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **AmmoutPositions(Int32, Int32, Boolean)**
+### <a id="methods-ammoutpositions"/>**AmmoutPositions(Int32, Int32, Boolean)**
 
 Defines integer lenght, decimal lenght and accept signl.
  <br>Valid only for type MaskedType.Number or Currency, otherwise this set will be ignored.<br>This set is Requeried for these types.
@@ -266,7 +266,7 @@ True accept signal; otherwise, no.
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **DescriptionWithInputType(FormatWeek)**
+### <a id="methods-descriptionwithinputtype"/>**DescriptionWithInputType(FormatWeek)**
 
 Append to desription the tip of type input.
 
@@ -283,7 +283,7 @@ show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **InputToCase(CaseOptions)**
+### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
 
 Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
 
@@ -300,7 +300,7 @@ Transform option
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
@@ -318,7 +318,7 @@ the function validator.
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **ChangeDescription(Func&lt;String, String&gt;)**
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;String, String&gt;)**
 
 Dynamically change the description using a user role
 
@@ -335,7 +335,7 @@ function to apply change
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -352,7 +352,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
+### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
 
 Add Suggestion Handler feature
 
@@ -369,7 +369,7 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **AcceptEmptyValue()**
+### <a id="methods-acceptemptyvalue"/>**AcceptEmptyValue()**
 
 Accept empty value
  <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.
@@ -382,7 +382,7 @@ IControlMaskEditList AcceptEmptyValue()
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **AddItem(String, Boolean)**
+### <a id="methods-additem"/>**AddItem(String, Boolean)**
 
 Add item to initial list
 
@@ -402,7 +402,7 @@ true the item cannot be removed; otherwise yes.
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **AddItems(IEnumerable&lt;String&gt;, Boolean)**
+### <a id="methods-additems"/>**AddItems(IEnumerable&lt;String&gt;, Boolean)**
 
 Add items colletion to initial list
 
@@ -422,7 +422,7 @@ true the item cannot be removed; otherwise yes.
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **PageSize(Int32)**
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page.Default value for this control is 10.
 
@@ -439,7 +439,7 @@ Number of Max.items
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **AllowDuplicate()**
+### <a id="methods-allowduplicate"/>**AllowDuplicate()**
 
 Allow duplicate items.Default value for this control is false.
 
@@ -451,7 +451,7 @@ IControlMaskEditList AllowDuplicate()
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **Range(Int32, Nullable&lt;Int32&gt;)**
+### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
 
 Defines a minimum and maximum (optional) range of items in the list
 
@@ -471,7 +471,7 @@ Maximum number of items
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **HotKeyEditItem(HotKey)**
+### <a id="methods-hotkeyedititem"/>**HotKeyEditItem(HotKey)**
 
 Overwrite a HotKey to edit item. Default value is 'F2'
 
@@ -488,7 +488,7 @@ The [HotKey](./pplus.controls.hotkey.md) to edit item
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **HotKeyRemoveItem(HotKey)**
+### <a id="methods-hotkeyremoveitem"/>**HotKeyRemoveItem(HotKey)**
 
 Overwrite a HotKey to remove item. Default value is 'F3'
 

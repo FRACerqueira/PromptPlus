@@ -7,12 +7,6 @@
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
 [**Main**](index.md#table-of-contents)  
-
-## Table of Contents
-- [Color Class](#color-class)
-- [Standard colors](#standard-colors)
-
-## Color Class
 The color class has implicit conversion to ConsoleColor. There are conversion methods to facilitate compatibility with other common color representations:
 
 - Html
@@ -33,6 +27,11 @@ PromptPlus.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Over
 PromptPlus.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
 PromptPlus.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
 ```
+
+## Table of Contents
+
+- [Standard colors](#standard-colors)
+- [Color API Reference](./apis/pplus.color.md)
 
 ## Standard Colors
 [**Top**](#promptplus-colors)

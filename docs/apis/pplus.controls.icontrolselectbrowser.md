@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;ItemBrowser&gt;](./pplus.controls.ipromptcontrols
 
 ## Methods
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -37,7 +37,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **NoSpinner()**
+### <a id="methods-nospinner"/>**NoSpinner()**
 
 Not show Spinner
 
@@ -49,7 +49,7 @@ IControlSelectBrowser NoSpinner()
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **DisabledRecursiveExpand()**
+### <a id="methods-disabledrecursiveexpand"/>**DisabledRecursiveExpand()**
 
 Disabled ExpandAll Feature. Only item in Top-level are expanded
  <br>Overwrite Root option ExpandAll to false
@@ -62,7 +62,7 @@ IControlSelectBrowser DisabledRecursiveExpand()
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
@@ -89,7 +89,7 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **Styles(StyleBrowser, Style)**
+### <a id="methods-styles"/>**Styles(StyleBrowser, Style)**
 
 Overwrite Styles Browser. [StyleBrowser](./pplus.controls.stylebrowser.md)
 
@@ -109,7 +109,7 @@ Styles Browser
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **ShowLines(Boolean)**
+### <a id="methods-showlines"/>**ShowLines(Boolean)**
 
 Show lines of level. Default is true
 
@@ -126,7 +126,7 @@ true Show lines, otherwise 'no'
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **ShowExpand(Boolean)**
+### <a id="methods-showexpand"/>**ShowExpand(Boolean)**
 
 Show expand SymbolType.Expanded. Default is true
 
@@ -143,7 +143,7 @@ true Show Expanded SymbolType, otherwise 'no'
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **OnlyFolders(Boolean)**
+### <a id="methods-onlyfolders"/>**OnlyFolders(Boolean)**
 
 Load only Folders on browser. Default is false
 
@@ -160,7 +160,7 @@ true only Folders, otherwise Folders and files
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **ShowSize(Boolean)**
+### <a id="methods-showsize"/>**ShowSize(Boolean)**
 
 Show folder and file size in browser. Default is true
 
@@ -177,7 +177,7 @@ true Show size, otherwise 'no'
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **AcceptHiddenAttributes(Boolean)**
+### <a id="methods-accepthiddenattributes"/>**AcceptHiddenAttributes(Boolean)**
 
 Accept hidden folder and files in browser. Default is false
 
@@ -194,7 +194,7 @@ true accept hidden folder and files, otherwise 'no'
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **AcceptSystemAttributes(Boolean)**
+### <a id="methods-acceptsystemattributes"/>**AcceptSystemAttributes(Boolean)**
 
 Accept system folder and files in browser. Default is false
 
@@ -211,7 +211,7 @@ true accept system folder and files, otherwise 'no'
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **SearchFolderPattern(String)**
+### <a id="methods-searchfolderpattern"/>**SearchFolderPattern(String)**
 
 Search folder pattern. Default is '*'
 
@@ -228,7 +228,7 @@ Search pattern
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **SearchFilePattern(String)**
+### <a id="methods-searchfilepattern"/>**SearchFilePattern(String)**
 
 Search file pattern. Default is '*'
 
@@ -245,7 +245,7 @@ Search pattern
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **PageSize(Int32)**
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page.Default value for this control is 10.
 
@@ -262,7 +262,7 @@ Number of Max.items
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **FilterType(FilterMode)**
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
 Filter strategy for filter items in colletion
  <br>Default value is FilterMode.Contains
@@ -280,7 +280,7 @@ Filter Mode
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **Root(String, Boolean, Func&lt;ItemBrowser, Boolean&gt;, Func&lt;ItemBrowser, Boolean&gt;)**
+### <a id="methods-root"/>**Root(String, Boolean, Func&lt;ItemBrowser, Boolean&gt;, Func&lt;ItemBrowser, Boolean&gt;)**
 
 Set folder root to browser
 
@@ -306,7 +306,7 @@ Disabled all items that satisfy the disabled function
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **Default(String)**
+### <a id="methods-default"/>**Default(String)**
 
 Default item (fullpath) seleted when started
 
@@ -323,7 +323,7 @@ fullpath
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **ShowCurrentFolder(Boolean)**
+### <a id="methods-showcurrentfolder"/>**ShowCurrentFolder(Boolean)**
 
 Append name current folder on description
 
@@ -340,7 +340,7 @@ true Append current name folder on description, not append
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **HotKeyFullPath(HotKey)**
+### <a id="methods-hotkeyfullpath"/>**HotKeyFullPath(HotKey)**
 
 Overwrite a HotKey toggle current name folder to FullPath. Default value is 'F2'
 
@@ -357,7 +357,7 @@ The [HotKey](./pplus.controls.hotkey.md) to oggle current name folder to FullPat
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **HotKeyToggleExpand(HotKey)**
+### <a id="methods-hotkeytoggleexpand"/>**HotKeyToggleExpand(HotKey)**
 
 Overwrite a HotKey expand/Collap current folder selected. Default value is 'F3'
 
@@ -374,7 +374,7 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collapse current folder selec
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **HotKeyToggleExpandAll(HotKey)**
+### <a id="methods-hotkeytoggleexpandall"/>**HotKeyToggleExpandAll(HotKey)**
 
 Overwrite a HotKey expand/Collap all folders. Default value is 'F4'
 
@@ -391,7 +391,7 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all folders
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **AfterExpanded(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-afterexpanded"/>**AfterExpanded(Action&lt;ItemBrowser&gt;)**
 
 Action to execute after Expanded
 
@@ -408,7 +408,7 @@ The action
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **AfterCollapsed(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-aftercollapsed"/>**AfterCollapsed(Action&lt;ItemBrowser&gt;)**
 
 Action to execute after Collapsed
 
@@ -425,7 +425,7 @@ The action
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **BeforeExpanded(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-beforeexpanded"/>**BeforeExpanded(Action&lt;ItemBrowser&gt;)**
 
 Action to execute before Expanded
 
@@ -442,7 +442,7 @@ The action
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **BeforeCollapsed(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-beforecollapsed"/>**BeforeCollapsed(Action&lt;ItemBrowser&gt;)**
 
 Action to execute before Collapsed
 

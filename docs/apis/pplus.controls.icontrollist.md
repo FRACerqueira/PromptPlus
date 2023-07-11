@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;IEnumerable&lt;String&gt;&gt;](./pplus.controls.i
 
 ## Methods
 
-### **Interaction&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;IControlList, T&gt;)**
+### <a id="methods-interaction"/>**Interaction&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;IControlList, T&gt;)**
 
 Execute a action foreach item of colletion passed as a parameter
 
@@ -45,7 +45,7 @@ Action to execute
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **Default(String)**
+### <a id="methods-default"/>**Default(String)**
 
 Default initial value when when stated.
 
@@ -62,7 +62,7 @@ initial value
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **InputToCase(CaseOptions)**
+### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
 
 Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
 
@@ -79,7 +79,7 @@ Transform option
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **AcceptInput(Func&lt;Char, Boolean&gt;)**
+### <a id="methods-acceptinput"/>**AcceptInput(Func&lt;Char, Boolean&gt;)**
 
 Execute a function to accept input.
  <br>If result true accept input; otherwise, ignore input.
@@ -97,7 +97,7 @@ function to accept input
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **MaxLenght(UInt16)**
+### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
 
 MaxLenght of input text.
 
@@ -114,7 +114,7 @@ Lenght
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
@@ -132,7 +132,7 @@ the function validator.
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -149,7 +149,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
+### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
 
 Add Suggestion Handler feature
 
@@ -166,7 +166,7 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **AddItem(String, Boolean)**
+### <a id="methods-additem"/>**AddItem(String, Boolean)**
 
 Add item to list
 
@@ -186,7 +186,7 @@ true the item cannot be removed; otherwise yes.
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **AddItems(IEnumerable&lt;String&gt;, Boolean)**
+### <a id="methods-additems"/>**AddItems(IEnumerable&lt;String&gt;, Boolean)**
 
 Add items colletion to list
 
@@ -206,7 +206,7 @@ true the item cannot be removed; otherwise yes.
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **PageSize(Int32)**
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page.Default value for this control is 10.
 
@@ -223,7 +223,7 @@ Number of Max.items
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **AllowDuplicate()**
+### <a id="methods-allowduplicate"/>**AllowDuplicate()**
 
 Allow duplicate items.Default value for this control is false.
 
@@ -235,7 +235,7 @@ IControlList AllowDuplicate()
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **Range(Int32, Nullable&lt;Int32&gt;)**
+### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
 
 Defines a minimum and maximum (optional) range of items in the list
 
@@ -255,7 +255,7 @@ Maximum number of items
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **HotKeyEditItem(HotKey)**
+### <a id="methods-hotkeyedititem"/>**HotKeyEditItem(HotKey)**
 
 Overwrite a HotKey to edit item. Default value is 'F2'
 
@@ -272,7 +272,7 @@ The [HotKey](./pplus.controls.hotkey.md) to edit item
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **HotKeyRemoveItem(HotKey)**
+### <a id="methods-hotkeyremoveitem"/>**HotKeyRemoveItem(HotKey)**
 
 Overwrite a HotKey to remove item. Default value is 'F3'
 

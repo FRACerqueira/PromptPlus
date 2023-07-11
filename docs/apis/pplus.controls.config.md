@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **DefaultCulture**
+### <a id="properties-defaultculture"/>**DefaultCulture**
 
 Get/Set default Culture([CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)) for all controls.
 
@@ -34,7 +34,7 @@ public CultureInfo DefaultCulture { get; set; }
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
 
-### **PageSize**
+### <a id="properties-pagesize"/>**PageSize**
 
 ```csharp
 public int PageSize { get; set; }
@@ -44,7 +44,7 @@ public int PageSize { get; set; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **CompletionMinimumPrefixLength**
+### <a id="properties-completionminimumprefixlength"/>**CompletionMinimumPrefixLength**
 
 ```csharp
 public int CompletionMinimumPrefixLength { get; set; }
@@ -54,7 +54,7 @@ public int CompletionMinimumPrefixLength { get; set; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **CompletionWaitToStart**
+### <a id="properties-completionwaittostart"/>**CompletionWaitToStart**
 
 Get/Set Interval in mileseconds to wait start Completion funcion.
  <br>Default value : 1000. If value less than 10 internal sette to 10.
@@ -67,7 +67,7 @@ public int CompletionWaitToStart { get; set; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **CompletionMaxCount**
+### <a id="properties-completionmaxcount"/>**CompletionMaxCount**
 
 Get/Set Completion Max Items to return.
  <br>Default value : 1000. If value  less than 1 internal sette to 1.
@@ -80,7 +80,7 @@ public int CompletionMaxCount { get; set; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **HistoryTimeout**
+### <a id="properties-historytimeout"/>**HistoryTimeout**
 
 Get/Set History Timeout.
  <br>Default value : 365 days
@@ -93,7 +93,7 @@ public TimeSpan HistoryTimeout { get; set; }
 
 [TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
 
-### **ShowTooltip**
+### <a id="properties-showtooltip"/>**ShowTooltip**
 
 Get/Set enabled show Tooltip for all controls.
  <br>Default value : true
@@ -106,7 +106,7 @@ public bool ShowTooltip { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **EnabledAbortKey**
+### <a id="properties-enabledabortkey"/>**EnabledAbortKey**
 
 Get/Set enabled abortKey(ESC) for all controls.
  <br>Default value : true
@@ -119,7 +119,7 @@ public bool EnabledAbortKey { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **HideAfterFinish**
+### <a id="properties-hideafterfinish"/>**HideAfterFinish**
 
 Get/Set hide controls after finish for all controls.
  <br>Default value : false
@@ -132,7 +132,7 @@ public bool HideAfterFinish { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **HideOnAbort**
+### <a id="properties-hideonabort"/>**HideOnAbort**
 
 Get/Set hide controls On Abort for all controls.
  <br>Default value : false
@@ -145,7 +145,7 @@ public bool HideOnAbort { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **SecretChar**
+### <a id="properties-secretchar"/>**SecretChar**
 
 Get/Set value char for secret input
  <br>Default value : '#'.  Fall-back when null : '#'
@@ -158,7 +158,7 @@ public Nullable<Char> SecretChar { get; set; }
 
 [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
-### **YesChar**
+### <a id="properties-yeschar"/>**YesChar**
 
 Get/Set value for YES answer
  <br>Default value : YesChar in built-in resources.  Fall-back when null : Y
@@ -171,7 +171,7 @@ public Nullable<Char> YesChar { get; set; }
 
 [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
-### **NoChar**
+### <a id="properties-nochar"/>**NoChar**
 
 Get/Set value for NO answer
  <br>Default value : NoChar in built-in resources.  Fall-back when null : N
@@ -184,7 +184,7 @@ public Nullable<Char> NoChar { get; set; }
 
 [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
-### **TooltipKeyPress**
+### <a id="properties-tooltipkeypress"/>**TooltipKeyPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to show/hide Tooltip.
  <br>Default value : '[F1]'
@@ -197,7 +197,7 @@ public HotKey TooltipKeyPress { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **PasswordViewPress**
+### <a id="properties-passwordviewpress"/>**PasswordViewPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle password view.
  <br>Default value : '[F2]'
@@ -210,7 +210,7 @@ public HotKey PasswordViewPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **SelectAllPress**
+### <a id="properties-selectallpress"/>**SelectAllPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to Select all item.
  <br>Default value : '[F2]'
@@ -223,7 +223,7 @@ public HotKey SelectAllPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **InvertSelectedPress**
+### <a id="properties-invertselectedpress"/>**InvertSelectedPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to Invert Selected item.
  <br>Default value : '[F3]'
@@ -236,7 +236,7 @@ public HotKey InvertSelectedPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **EditItemPress**
+### <a id="properties-edititempress"/>**EditItemPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to Edit item.
  <br>Default value : '[F2]'
@@ -249,7 +249,7 @@ public HotKey EditItemPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **RemoveItemPress**
+### <a id="properties-removeitempress"/>**RemoveItemPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to Remove item.
  <br>Default value : '[F3]'
@@ -262,7 +262,7 @@ public HotKey RemoveItemPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **FullPathPress**
+### <a id="properties-fullpathpress"/>**FullPathPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) toggle current path to full path.
  <br>Default value : '[F2]'
@@ -275,7 +275,7 @@ public HotKey FullPathPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **ToggleExpandPress**
+### <a id="properties-toggleexpandpress"/>**ToggleExpandPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) Toggle Expand/Collapse node.
  <br>Default value : '[F3]'
@@ -288,7 +288,7 @@ public HotKey ToggleExpandPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **ToggleExpandAllPress**
+### <a id="properties-toggleexpandallpress"/>**ToggleExpandAllPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) Toggle Expand /Collapse All node.
  <br>Default value : '[F4]'
@@ -303,7 +303,7 @@ public HotKey ToggleExpandAllPress { get; set; }
 
 ## Methods
 
-### **Symbols(SymbolType, String, String)**
+### <a id="methods-symbols"/>**Symbols(SymbolType, String, String)**
 
 Get/Set the Symbols for all controls.If empty params return current set.
 

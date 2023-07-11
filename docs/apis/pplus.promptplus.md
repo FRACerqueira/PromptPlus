@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **Console**
+### <a id="properties-console"/>**Console**
 
 Gets the current Console drive.
 
@@ -34,7 +34,7 @@ public static IConsoleBase Console { get; }
 
 [IConsoleBase](./pplus.iconsolebase.md)<br>
 
-### **Config**
+### <a id="properties-config"/>**Config**
 
 Get global properties for all controls.
 
@@ -46,7 +46,7 @@ public static Config Config { get; }
 
 [Config](./pplus.controls.config.md)<br>
 
-### **StyleSchema**
+### <a id="properties-styleschema"/>**StyleSchema**
 
 Get global Style-Schema for all controls.
 
@@ -58,7 +58,7 @@ public static StyleSchema StyleSchema { get; }
 
 [StyleSchema](./pplus.controls.styleschema.md)<br>
 
-### **Provider**
+### <a id="properties-provider"/>**Provider**
 
 Get provider mode.
 
@@ -70,7 +70,7 @@ public static string Provider { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **IsTerminal**
+### <a id="properties-isterminal"/>**IsTerminal**
 
 Get Terminal mode.
 
@@ -82,7 +82,7 @@ public static bool IsTerminal { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsUnicodeSupported**
+### <a id="properties-isunicodesupported"/>**IsUnicodeSupported**
 
 Get Unicode Supported.
 
@@ -94,7 +94,7 @@ public static bool IsUnicodeSupported { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **SupportsAnsi**
+### <a id="properties-supportsansi"/>**SupportsAnsi**
 
 Get SupportsAnsi mode.
 
@@ -106,7 +106,7 @@ public static bool SupportsAnsi { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **ColorDepth**
+### <a id="properties-colordepth"/>**ColorDepth**
 
 Get Color capacity.[ColorSystem](./pplus.colorsystem.md)
 
@@ -118,7 +118,7 @@ public static ColorSystem ColorDepth { get; }
 
 [ColorSystem](./pplus.colorsystem.md)<br>
 
-### **DefaultStyle**
+### <a id="properties-defaultstyle"/>**DefaultStyle**
 
 Get default [Style](./pplus.style.md) console.
 
@@ -130,7 +130,7 @@ public static Style DefaultStyle { get; }
 
 [Style](./pplus.style.md)<br>
 
-### **PadLeft**
+### <a id="properties-padleft"/>**PadLeft**
 
 Get screen margin left
 
@@ -142,7 +142,7 @@ public static byte PadLeft { get; }
 
 [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
 
-### **PadRight**
+### <a id="properties-padright"/>**PadRight**
 
 Get screen margin right
 
@@ -154,7 +154,7 @@ public static byte PadRight { get; }
 
 [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
 
-### **BufferWidth**
+### <a id="properties-bufferwidth"/>**BufferWidth**
 
 Gets the width of the buffer area.
 
@@ -166,7 +166,7 @@ public static int BufferWidth { get; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **BufferHeight**
+### <a id="properties-bufferheight"/>**BufferHeight**
 
 Gets the height of the buffer area.
 
@@ -178,7 +178,7 @@ public static int BufferHeight { get; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **ForegroundColor**
+### <a id="properties-foregroundcolor"/>**ForegroundColor**
 
 Get/Set Foreground console with color.
 
@@ -190,7 +190,7 @@ public static ConsoleColor ForegroundColor { get; set; }
 
 ConsoleColor<br>
 
-### **BackgroundColor**
+### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Get/set BackgroundColor console with color.
 
@@ -202,7 +202,7 @@ public static ConsoleColor BackgroundColor { get; set; }
 
 ConsoleColor<br>
 
-### **OverflowStrategy**
+### <a id="properties-overflowstrategy"/>**OverflowStrategy**
 
 Get write Overflow Strategy.
 
@@ -214,7 +214,7 @@ public static Overflow OverflowStrategy { get; }
 
 [Overflow](./pplus.overflow.md)<br>
 
-### **CursorVisible**
+### <a id="properties-cursorvisible"/>**CursorVisible**
 
 Gets or sets a value indicating whether the cursor is visible.
 
@@ -226,7 +226,7 @@ public static bool CursorVisible { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **CursorLeft**
+### <a id="properties-cursorleft"/>**CursorLeft**
 
 Gets or sets a value column position of the cursor within the buffer area.
 
@@ -238,7 +238,7 @@ public static int CursorLeft { get; set; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **CursorTop**
+### <a id="properties-cursortop"/>**CursorTop**
 
 Gets or set the row position of the cursor within the buffer area.
 
@@ -250,7 +250,7 @@ public static int CursorTop { get; set; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **KeyAvailable**
+### <a id="properties-keyavailable"/>**KeyAvailable**
 
 Gets a value indicating whether a key press is available in the input stream.
 
@@ -262,7 +262,7 @@ public static bool KeyAvailable { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsInputRedirected**
+### <a id="properties-isinputredirected"/>**IsInputRedirected**
 
 Gets a value that indicates whether input has been redirected from the standard input stream.
 
@@ -274,7 +274,7 @@ public static bool IsInputRedirected { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **InputEncoding**
+### <a id="properties-inputencoding"/>**InputEncoding**
 
 Get/set an encoding for standard input stream.
 
@@ -286,7 +286,7 @@ public static Encoding InputEncoding { get; }
 
 [Encoding](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding)<br>
 
-### **In**
+### <a id="properties-in"/>**In**
 
 Get standard input stream.
 
@@ -298,7 +298,7 @@ public static TextReader In { get; }
 
 [TextReader](https://docs.microsoft.com/en-us/dotnet/api/system.io.textreader)<br>
 
-### **CodePage**
+### <a id="properties-codepage"/>**CodePage**
 
 Get output CodePage.
 
@@ -310,7 +310,7 @@ public static int CodePage { get; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **IsOutputRedirected**
+### <a id="properties-isoutputredirected"/>**IsOutputRedirected**
 
 Gets a value that indicates whether output has been redirected from the standard output stream.
 
@@ -322,7 +322,7 @@ public static bool IsOutputRedirected { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsErrorRedirected**
+### <a id="properties-iserrorredirected"/>**IsErrorRedirected**
 
 Gets a value that indicates whether error has been redirected from the standard error stream.
 
@@ -334,7 +334,7 @@ public static bool IsErrorRedirected { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **OutputEncoding**
+### <a id="properties-outputencoding"/>**OutputEncoding**
 
 Get/set an encoding for standard output stream.
 
@@ -346,7 +346,7 @@ public static Encoding OutputEncoding { get; set; }
 
 [Encoding](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding)<br>
 
-### **Out**
+### <a id="properties-out"/>**Out**
 
 Get standard output stream.
 
@@ -358,7 +358,7 @@ public static TextWriter Out { get; }
 
 [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 
-### **Error**
+### <a id="properties-error"/>**Error**
 
 Get standard error stream.
 
@@ -372,7 +372,7 @@ public static TextWriter Error { get; }
 
 ## Methods
 
-### **AddtoList(String, String)**
+### <a id="methods-addtolist"/>**AddtoList(String, String)**
 
 Create Add to List Control.
 
@@ -392,7 +392,7 @@ The description text to write
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **AddtoList(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-addtolist"/>**AddtoList(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Add to List Control.
 
@@ -415,7 +415,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **AddtoList(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-addtolist"/>**AddtoList(String, Action&lt;IPromptConfig&gt;)**
 
 Create Add to List Control.
 
@@ -435,7 +435,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### **AddtoMaskEditList(String, String)**
+### <a id="methods-addtomaskeditlist"/>**AddtoMaskEditList(String, String)**
 
 Create Add to MaskEdit List Control.
 
@@ -455,7 +455,7 @@ The description text to write
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **AddtoMaskEditList(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-addtomaskeditlist"/>**AddtoMaskEditList(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Add to MaskEdit List Control.
 
@@ -478,7 +478,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **AddtoMaskEditList(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-addtomaskeditlist"/>**AddtoMaskEditList(String, Action&lt;IPromptConfig&gt;)**
 
 Create Add to MaskEdit List Control.
 
@@ -498,7 +498,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### **Banner(String)**
+### <a id="methods-banner"/>**Banner(String)**
 
 Create Banner Control to Write to console AsciiArt(FIGlet).
 
@@ -515,7 +515,7 @@ The text to write
 
 [IBannerControl](./pplus.controls.ibannercontrol.md)
 
-### **AutoComplete(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-autocomplete"/>**AutoComplete(String, Action&lt;IPromptConfig&gt;)**
 
 Create Auto Complete Control.
 
@@ -535,7 +535,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **AutoComplete(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-autocomplete"/>**AutoComplete(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Auto Complete Control.
 
@@ -558,7 +558,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **Input(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-input"/>**Input(String, Action&lt;IPromptConfig&gt;)**
 
 Create Input Control.
 
@@ -578,7 +578,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **Input(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-input"/>**Input(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Input Control.
 
@@ -601,7 +601,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **MaskEdit(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-maskedit"/>**MaskEdit(String, Action&lt;IPromptConfig&gt;)**
 
 Create MaskEdit Control.
 
@@ -621,7 +621,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **MaskEdit(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-maskedit"/>**MaskEdit(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create MaskEdit Control.
 
@@ -644,7 +644,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **Confirm(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-confirm"/>**Confirm(String, Action&lt;IPromptConfig&gt;)**
 
 Create Confirm control in yes/no mode.
  <br>Yes/No texts come from resources
@@ -665,7 +665,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### **Confirm(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-confirm"/>**Confirm(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Confirm control in yes/no mode.
  <br>Yes/No texts come from resources
@@ -689,7 +689,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### **Confirm(String, ConsoleKey, ConsoleKey, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-confirm"/>**Confirm(String, ConsoleKey, ConsoleKey, String, Action&lt;IPromptConfig&gt;)**
 
 Create Confirm control in yes/no mode.
 
@@ -718,7 +718,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### **KeyPress()**
+### <a id="methods-keypress"/>**KeyPress()**
 
 Create Keypress Control to wait a any key input.
 
@@ -730,7 +730,7 @@ public static IControlKeyPress KeyPress()
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### **KeyPress(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-keypress"/>**KeyPress(String, Action&lt;IPromptConfig&gt;)**
 
 Create Keypress Control to wait a any key input.
 
@@ -750,7 +750,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### **KeyPress(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-keypress"/>**KeyPress(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Keypress Control to wait a any key input.
 
@@ -773,7 +773,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### **MultiSelect&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-multiselect"/>**MultiSelect&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
 
 Create MultiSelect Control.
 
@@ -797,7 +797,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **MultiSelect&lt;T&gt;(String, String)**
+### <a id="methods-multiselect"/>**MultiSelect&lt;T&gt;(String, String)**
 
 Create MultiSelect Control.
 
@@ -821,7 +821,7 @@ The description text to write
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **MultiSelect&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-multiselect"/>**MultiSelect&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create MultiSelect Control.
 
@@ -848,7 +848,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **Select&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-select"/>**Select&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
 
 Create Select Control.
 
@@ -873,7 +873,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **Select&lt;T&gt;(String, String)**
+### <a id="methods-select"/>**Select&lt;T&gt;(String, String)**
 
 Create Select Control.
 
@@ -898,7 +898,7 @@ The description text to write
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **Select&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-select"/>**Select&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Select Control.
 
@@ -926,7 +926,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### **SliderNumber(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-slidernumber"/>**SliderNumber(String, Action&lt;IPromptConfig&gt;)**
 
 Create Slider Number Control.
 
@@ -946,7 +946,7 @@ The description text to write
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **SliderNumber(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-slidernumber"/>**SliderNumber(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Slider Number Control.
 
@@ -969,7 +969,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **SliderSwitch(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-sliderswitch"/>**SliderSwitch(String, Action&lt;IPromptConfig&gt;)**
 
 Create Slider Switch on/off Control.
 
@@ -989,7 +989,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### **SliderSwitch(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-sliderswitch"/>**SliderSwitch(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Slider Switch on/off Control.
 
@@ -1012,7 +1012,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### **ProgressBar(String, String)**
+### <a id="methods-progressbar"/>**ProgressBar(String, String)**
 
 Create Progress Bar Control
 
@@ -1032,7 +1032,7 @@ The description text to write
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **ProgressBar&lt;T&gt;(ProgressBarType, String, T, String)**
+### <a id="methods-progressbar"/>**ProgressBar&lt;T&gt;(ProgressBarType, String, T, String)**
 
 Create Progress Bar Control
 
@@ -1063,7 +1063,7 @@ The description text to write
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **ProgressBar&lt;T&gt;(ProgressBarType, String, T, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-progressbar"/>**ProgressBar&lt;T&gt;(ProgressBarType, String, T, String, Action&lt;IPromptConfig&gt;)**
 
 Create instance Progress Bar Control
 
@@ -1097,7 +1097,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **WaitProcess(String, String)**
+### <a id="methods-waitprocess"/>**WaitProcess(String, String)**
 
 Create Wait Control
 
@@ -1117,7 +1117,7 @@ The description text to write
 
 IEnumerable [StateProcess](./pplus.controls.stateprocess.md) after Run method. [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **WaitProcess(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-waitprocess"/>**WaitProcess(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Wait Control
 
@@ -1140,7 +1140,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 IEnumerable [StateProcess](./pplus.controls.stateprocess.md) after Run method. [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **WaitTimer(String, TimeSpan, SpinnersType, Boolean, Action&lt;IPromptConfig&gt;, Nullable&lt;CancellationToken&gt;)**
+### <a id="methods-waittimer"/>**WaitTimer(String, TimeSpan, SpinnersType, Boolean, Action&lt;IPromptConfig&gt;, Nullable&lt;CancellationToken&gt;)**
 
 Create Wait Control with step [TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan) delay and run
 
@@ -1168,7 +1168,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 `cancellationToken` [Nullable&lt;CancellationToken&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 [CancellationToken](https://docs.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken) for control
 
-### **BrowserMultiSelect(String, String)**
+### <a id="methods-browsermultiselect"/>**BrowserMultiSelect(String, String)**
 
 Create MultiSelect Browser Control.
 
@@ -1188,7 +1188,7 @@ The description text to write
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **BrowserMultiSelect(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-browsermultiselect"/>**BrowserMultiSelect(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create MultiSelect Browser Control.
 
@@ -1211,7 +1211,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **BrowserMultiSelect(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-browsermultiselect"/>**BrowserMultiSelect(String, Action&lt;IPromptConfig&gt;)**
 
 Create MultiSelect Browser Control.
 
@@ -1231,7 +1231,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **Browser(String, String)**
+### <a id="methods-browser"/>**Browser(String, String)**
 
 Create Browser Control.
 
@@ -1251,7 +1251,7 @@ The description text to write
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **Browser(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-browser"/>**Browser(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Browser Control.
 
@@ -1274,7 +1274,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **Browser(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-browser"/>**Browser(String, Action&lt;IPromptConfig&gt;)**
 
 Create Browser Control.
 
@@ -1294,7 +1294,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### **TreeViewMultiSelect&lt;T&gt;(String, String)**
+### <a id="methods-treeviewmultiselect"/>**TreeViewMultiSelect&lt;T&gt;(String, String)**
 
 Create TreeView MultiSelect Control.
 
@@ -1318,7 +1318,7 @@ The description text to write
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
-### **TreeViewMultiSelect&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-treeviewmultiselect"/>**TreeViewMultiSelect&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create TreeView MultiSelect Control.
 
@@ -1345,7 +1345,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
-### **TreeViewMultiSelect&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-treeviewmultiselect"/>**TreeViewMultiSelect&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
 
 Create TreeView MultiSelect Control.
 
@@ -1369,7 +1369,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
-### **TreeView&lt;T&gt;(String, String)**
+### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, String)**
 
 Create TreeView Control.
 
@@ -1393,7 +1393,7 @@ The description text to write
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **TreeView&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create TreeView Control.
 
@@ -1420,7 +1420,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **TreeView&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
+### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
 
 Create TreeView Control.
 
@@ -1444,7 +1444,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **IsPressSpecialKey(ConsoleKeyInfo, ConsoleKey, ConsoleModifiers)**
+### <a id="methods-ispressspecialkey"/>**IsPressSpecialKey(ConsoleKeyInfo, ConsoleKey, ConsoleModifiers)**
 
 Check ConsoleKeyInfo is Special Key
 
@@ -1467,7 +1467,7 @@ to compare
 
 `true` if equal otherwise `false`.
 
-### **IsPressEnterKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispressenterkey"/>**IsPressEnterKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is Enter Key
 
@@ -1487,7 +1487,7 @@ If `true` accept 'CTRL+J'
 
 `true` if equal otherwise `false`.
 
-### **IsLowersCurrentWord(ConsoleKeyInfo)**
+### <a id="methods-islowerscurrentword"/>**IsLowersCurrentWord(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
  <br>Alt+L = Lowers the case of every character from the cursor's position to the end of the current words
@@ -1505,7 +1505,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsClearBeforeCursor(ConsoleKeyInfo)**
+### <a id="methods-isclearbeforecursor"/>**IsClearBeforeCursor(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Clear Before Cursor Emacs Key 
  <br>Ctrl+U = Clears the line content before the cursor
@@ -1523,7 +1523,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsClearAfterCursor(ConsoleKeyInfo)**
+### <a id="methods-isclearaftercursor"/>**IsClearAfterCursor(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Clear After Cursor Emacs Key 
  <br>Ctrl+K = Clears the line content after the cursor
@@ -1541,7 +1541,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsClearWordBeforeCursor(ConsoleKeyInfo)**
+### <a id="methods-isclearwordbeforecursor"/>**IsClearWordBeforeCursor(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Clear Word Before Cursor Emacs Key 
  <br>Ctrl+W = Clears the word before the cursor
@@ -1559,7 +1559,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsClearWordAfterCursor(ConsoleKeyInfo)**
+### <a id="methods-isclearwordaftercursor"/>**IsClearWordAfterCursor(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Clear Word After Cursor Emacs Key 
  <br>Ctrl+D = Clears the word after the cursor
@@ -1577,7 +1577,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsCapitalizeOverCursor(ConsoleKeyInfo)**
+### <a id="methods-iscapitalizeovercursor"/>**IsCapitalizeOverCursor(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Capitalize Over Cursor Emacs Key 
  <br>Alt+C = Capitalizes the character under the cursor and moves to the end of the word
@@ -1595,7 +1595,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsForwardWord(ConsoleKeyInfo)**
+### <a id="methods-isforwardword"/>**IsForwardWord(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Forward Word Emacs Key 
  <br>Alt+F = Moves the cursor forward one word.
@@ -1613,7 +1613,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsBackwardWord(ConsoleKeyInfo)**
+### <a id="methods-isbackwardword"/>**IsBackwardWord(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Backward Word Emacs Key 
  <br>Alt+B = Moves the cursor backward one word.
@@ -1631,7 +1631,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsUppersCurrentWord(ConsoleKeyInfo)**
+### <a id="methods-isupperscurrentword"/>**IsUppersCurrentWord(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
  <br>Alt+U = Upper the case of every character from the cursor's position to the end of the current word
@@ -1649,7 +1649,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsTransposePrevious(ConsoleKeyInfo)**
+### <a id="methods-istransposeprevious"/>**IsTransposePrevious(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Transpose Previous Emacs Key 
  <br>Ctrl+T = Transpose the previous two characters
@@ -1667,7 +1667,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsClearContent(ConsoleKeyInfo)**
+### <a id="methods-isclearcontent"/>**IsClearContent(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Clear Emacs Key 
  <br>Ctrl+L = Clears the content
@@ -1685,7 +1685,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsPressTabKey(ConsoleKeyInfo)**
+### <a id="methods-ispresstabkey"/>**IsPressTabKey(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Tab Key
 
@@ -1702,7 +1702,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsPressShiftTabKey(ConsoleKeyInfo)**
+### <a id="methods-ispressshifttabkey"/>**IsPressShiftTabKey(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Shift + Tab Key
 
@@ -1719,7 +1719,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsPressEndKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispressendkey"/>**IsPressEndKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is End Key
 
@@ -1739,7 +1739,7 @@ if `true` accept 'CTRL+E'
 
 `true` if equal otherwise `false`.
 
-### **IsPressHomeKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispresshomekey"/>**IsPressHomeKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is End Key
 
@@ -1759,7 +1759,7 @@ if `true` accept 'CTRL+A'
 
 `true` if equal otherwise `false`.
 
-### **IsPressBackspaceKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispressbackspacekey"/>**IsPressBackspaceKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is End Key
 
@@ -1779,7 +1779,7 @@ if `true` accept 'CTRL+H'
 
 `true` if equal otherwise `false`.
 
-### **IsPressDeleteKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispressdeletekey"/>**IsPressDeleteKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is Delete Key
 
@@ -1799,7 +1799,7 @@ if `true` accept 'CTRL+D'
 
 `true` if equal otherwise `false`.
 
-### **IsPressLeftArrowKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispressleftarrowkey"/>**IsPressLeftArrowKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is Left Arrow Key
 
@@ -1819,7 +1819,7 @@ if `true` accept 'CTRL+B'
 
 `true` if equal otherwise `false`.
 
-### **IsPressSpaceKey(ConsoleKeyInfo)**
+### <a id="methods-ispressspacekey"/>**IsPressSpaceKey(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Space Key
 
@@ -1836,7 +1836,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **IsPressRightArrowKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispressrightarrowkey"/>**IsPressRightArrowKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is Right Arrow Key
 
@@ -1856,7 +1856,7 @@ if `true` accept 'CTRL+F'
 
 `true` if equal otherwise `false`.
 
-### **IsPressUpArrowKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispressuparrowkey"/>**IsPressUpArrowKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is Up Arrow Key
 
@@ -1876,7 +1876,7 @@ if `true` accept 'CTRL+P'
 
 `true` if equal otherwise `false`.
 
-### **IsPressDownArrowKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispressdownarrowkey"/>**IsPressDownArrowKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is Down Arrow Key
 
@@ -1896,7 +1896,7 @@ if `true` accept 'CTRL+N'
 
 `true` if equal otherwise `false`.
 
-### **IsPressPageUpKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispresspageupkey"/>**IsPressPageUpKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is PageUp Key
 
@@ -1916,7 +1916,7 @@ if `true` accept 'Alt+P'
 
 `true` if equal otherwise `false`.
 
-### **IsPressPageDownKey(ConsoleKeyInfo, Boolean)**
+### <a id="methods-ispresspagedownkey"/>**IsPressPageDownKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is PageDown Key
 
@@ -1936,7 +1936,7 @@ if `true` accept 'Alt+N'
 
 `true` if equal otherwise `false`.
 
-### **IsPressEscKey(ConsoleKeyInfo)**
+### <a id="methods-ispressesckey"/>**IsPressEscKey(ConsoleKeyInfo)**
 
 Check ConsoleKeyInfo is Esc Key
 
@@ -1953,7 +1953,7 @@ to check
 
 `true` if equal otherwise `false`.
 
-### **ToCase(ConsoleKeyInfo, CaseOptions)**
+### <a id="methods-tocase"/>**ToCase(ConsoleKeyInfo, CaseOptions)**
 
 Convert  KeyChar to Uppercase / Lowercase
 
@@ -1973,7 +1973,7 @@ The [CaseOptions](./pplus.controls.caseoptions.md)
 
 converted
 
-### **Reset()**
+### <a id="methods-reset"/>**Reset()**
 
 Reset all config and properties to default values
 
@@ -1981,7 +1981,7 @@ Reset all config and properties to default values
 public static void Reset()
 ```
 
-### **ConsoleDefaultColor(Color, Color)**
+### <a id="methods-consoledefaultcolor"/>**ConsoleDefaultColor(Color, Color)**
 
 Set ForegroundColor/BackgroundColor Console
 
@@ -1997,7 +1997,7 @@ The [Color](./pplus.color.md) ForegroundColor
 `background` [Color](./pplus.color.md)<br>
 The [Color](./pplus.color.md) BackgroundColor
 
-### **Setup(Action&lt;ProfileSetup&gt;)**
+### <a id="methods-setup"/>**Setup(Action&lt;ProfileSetup&gt;)**
 
 Overwrite current console with new console profile.
  <br>After overwrite the new console the screeen is clear<br>and all Style-Schema are updated with backgoundcolor console
@@ -2011,7 +2011,7 @@ public static void Setup(Action<ProfileSetup> config)
 `config` [Action&lt;ProfileSetup&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 Action with [ProfileSetup](./pplus.profilesetup.md) to configuration
 
-### **Write(Exception, Nullable&lt;Style&gt;, Boolean)**
+### <a id="methods-write"/>**Write(Exception, Nullable&lt;Style&gt;, Boolean)**
 
 Write a Exception to output console.
 
@@ -2034,7 +2034,7 @@ Clear rest of line after write
 
 Number of lines write on console
 
-### **Write(String, Nullable&lt;Style&gt;, Boolean)**
+### <a id="methods-write"/>**Write(String, Nullable&lt;Style&gt;, Boolean)**
 
 Write a text to output console.
 
@@ -2057,7 +2057,7 @@ Clear rest of line after write
 
 Number of lines write on console
 
-### **WriteLine(Exception, Nullable&lt;Style&gt;, Boolean)**
+### <a id="methods-writeline"/>**WriteLine(Exception, Nullable&lt;Style&gt;, Boolean)**
 
 Write a exception to output console with line terminator.
 
@@ -2080,7 +2080,7 @@ Clear rest of line after write
 
 Number of lines write on console
 
-### **WriteLine(String, Nullable&lt;Style&gt;, Boolean)**
+### <a id="methods-writeline"/>**WriteLine(String, Nullable&lt;Style&gt;, Boolean)**
 
 Write a text to output console with line terminator.
 
@@ -2103,7 +2103,7 @@ Clear rest of line after write
 
 Number of lines write on console
 
-### **ResetColor()**
+### <a id="methods-resetcolor"/>**ResetColor()**
 
 Reset colors to default values.
 
@@ -2111,7 +2111,7 @@ Reset colors to default values.
 public static void ResetColor()
 ```
 
-### **MoveCursor(CursorDirection, Int32)**
+### <a id="methods-movecursor"/>**MoveCursor(CursorDirection, Int32)**
 
 Moves the cursor relative to the current position.
 
@@ -2127,7 +2127,7 @@ The direction to move the cursor.
 `steps` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 The number of steps to move the cursor.
 
-### **SetCursorPosition(Int32, Int32)**
+### <a id="methods-setcursorposition"/>**SetCursorPosition(Int32, Int32)**
 
 Sets the position of the cursor.
 
@@ -2143,7 +2143,7 @@ The column position of the cursor. Columns are numbered from left to right start
 `top` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 The row position of the cursor. Rows are numbered from top to bottom starting at 0.
 
-### **ReadKey(Boolean)**
+### <a id="methods-readkey"/>**ReadKey(Boolean)**
 
 Obtains the next character or function key pressed by the user.
 
@@ -2160,7 +2160,7 @@ Determines whether to display the pressed key in the console window. true to not
 
 <br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
-### **ReadLine()**
+### <a id="methods-readline"/>**ReadLine()**
 
 <br>Read the line from stream. A line is defined as a sequence of characters followed by<br>a car return ('\r'), a line feed ('\n'), or a carriage return<br>immedy followed by a line feed. The resulting string does not<br>contain the terminating carriage return and/or line feed.
 
@@ -2172,7 +2172,7 @@ public static string ReadLine()
 
 The returned value is null if the end of the input stream has been reached.
 
-### **WaitKeypress(Boolean, Nullable&lt;CancellationToken&gt;)**
+### <a id="methods-waitkeypress"/>**WaitKeypress(Boolean, Nullable&lt;CancellationToken&gt;)**
 
 Wait Keypress from standard input stream
 
@@ -2192,7 +2192,7 @@ The token to monitor for cancellation requests.
 
 <br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
-### **GetCursorPosition()**
+### <a id="methods-getcursorposition"/>**GetCursorPosition()**
 
 Gets the position of the cursor.
 
@@ -2204,7 +2204,7 @@ public static ValueTuple<Int32, Int32> GetCursorPosition()
 
 The column and row position of the cursor.
 
-### **SetIn(TextReader)**
+### <a id="methods-setin"/>**SetIn(TextReader)**
 
 set standard input stream.
 
@@ -2217,7 +2217,7 @@ public static void SetIn(TextReader value)
 `value` [TextReader](https://docs.microsoft.com/en-us/dotnet/api/system.io.textreader)<br>
 A stream that is the new standard input.
 
-### **SetOut(TextWriter)**
+### <a id="methods-setout"/>**SetOut(TextWriter)**
 
 set standard output stream.
 
@@ -2230,7 +2230,7 @@ public static void SetOut(TextWriter value)
 `value` [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 A stream that is the new standard output.
 
-### **SetError(TextWriter)**
+### <a id="methods-seterror"/>**SetError(TextWriter)**
 
 set standard error stream.
 
@@ -2243,7 +2243,7 @@ public static void SetError(TextWriter value)
 `value` [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 A stream that is the new standard error.
 
-### **Clear()**
+### <a id="methods-clear"/>**Clear()**
 
 Clears the console buffer and corresponding console window of display information.
  <br>Move cursor fom top console.
@@ -2252,7 +2252,7 @@ Clears the console buffer and corresponding console window of display informatio
 public static void Clear()
 ```
 
-### **Clear(Nullable&lt;Color&gt;)**
+### <a id="methods-clear"/>**Clear(Nullable&lt;Color&gt;)**
 
 Clears the console buffer with [Color](./pplus.color.md) and set BackgroundColor with [Color](./pplus.color.md)
 
@@ -2265,7 +2265,7 @@ public static void Clear(Nullable<Color> backcolor)
 `backcolor` [Nullable&lt;Color&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Color](./pplus.color.md) Background
 
-### **Beep()**
+### <a id="methods-beep"/>**Beep()**
 
 Plays the sound of a beep through the console speaker.
 
@@ -2273,7 +2273,7 @@ Plays the sound of a beep through the console speaker.
 public static void Beep()
 ```
 
-### **ClearLine(Nullable&lt;Int32&gt;, Nullable&lt;Style&gt;)**
+### <a id="methods-clearline"/>**ClearLine(Nullable&lt;Int32&gt;, Nullable&lt;Style&gt;)**
 
 Clear line
 
@@ -2289,7 +2289,7 @@ The row to clear
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The style color to clear.
 
-### **ClearLine(IConsoleBase, Nullable&lt;Int32&gt;, Nullable&lt;Style&gt;)**
+### <a id="methods-clearline"/>**ClearLine(IConsoleBase, Nullable&lt;Int32&gt;, Nullable&lt;Style&gt;)**
 
 Clear line
 
@@ -2308,7 +2308,7 @@ The row to clear
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The style color to clear.
 
-### **ClearRestOfLine(Nullable&lt;Style&gt;)**
+### <a id="methods-clearrestofline"/>**ClearRestOfLine(Nullable&lt;Style&gt;)**
 
 Clear rest of current line
 
@@ -2321,7 +2321,7 @@ public static void ClearRestOfLine(Nullable<Style> style)
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The style color to clear.
 
-### **ClearRestOfLine(IConsoleBase, Nullable&lt;Style&gt;)**
+### <a id="methods-clearrestofline"/>**ClearRestOfLine(IConsoleBase, Nullable&lt;Style&gt;)**
 
 Clear rest of current line
 
@@ -2337,7 +2337,7 @@ The [IConsoleBase](./pplus.iconsolebase.md)
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The style color to clear.
 
-### **ReadLineWithEmacs(Nullable&lt;UInt32&gt;, CaseOptions, Action&lt;String, Int32&gt;)**
+### <a id="methods-readlinewithemacs"/>**ReadLineWithEmacs(Nullable&lt;UInt32&gt;, CaseOptions, Action&lt;String, Int32&gt;)**
 
 <br>Read the line from stream using Emacs keyboard shortcuts. A line is defined as a sequence of characters followed by<br>a car return ('\r'), a line feed ('\n'), or a carriage return<br>immedy followed by a line feed. The resulting string does not<br>contain the terminating carriage return and/or line feed.
 
@@ -2360,7 +2360,7 @@ The user action after each accepted keystroke. Firt param is input text, Second 
 
 The string input value.
 
-### **SingleDash(String, DashOptions, Int32, Nullable&lt;Style&gt;)**
+### <a id="methods-singledash"/>**SingleDash(String, DashOptions, Int32, Nullable&lt;Style&gt;)**
 
 Writes text line representation whie colors and Write single dash after.
 
@@ -2382,7 +2382,7 @@ Number lines to write after write value
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Style](./pplus.style.md) to write.
 
-### **SingleDash(IConsoleBase, String, DashOptions, Int32, Nullable&lt;Style&gt;)**
+### <a id="methods-singledash"/>**SingleDash(IConsoleBase, String, DashOptions, Int32, Nullable&lt;Style&gt;)**
 
 Writes text line representation whie colors and Write single dash after.
 
@@ -2406,7 +2406,7 @@ Number lines to write after write value
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Style](./pplus.style.md) to write.
 
-### **WriteLines(Int32)**
+### <a id="methods-writelines"/>**WriteLines(Int32)**
 
 Write lines with line terminator
 
@@ -2419,7 +2419,7 @@ public static void WriteLines(int steps)
 `steps` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Numbers de lines.
 
-### **WriteLines(IConsoleBase, Int32)**
+### <a id="methods-writelines"/>**WriteLines(IConsoleBase, Int32)**
 
 Write lines with line terminator
 
@@ -2434,7 +2434,7 @@ public static void WriteLines(IConsoleBase consoleBase, int steps)
 `steps` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Numbers de lines.
 
-### **DoubleDash(String, DashOptions, Int32, Nullable&lt;Style&gt;)**
+### <a id="methods-doubledash"/>**DoubleDash(String, DashOptions, Int32, Nullable&lt;Style&gt;)**
 
 Writes text line representation whie colors in a pair of lines of dashes.
 
@@ -2456,7 +2456,7 @@ Number lines to write after write value
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Style](./pplus.style.md) to write.
 
-### **DoubleDash(IConsoleBase, String, DashOptions, Int32, Nullable&lt;Style&gt;)**
+### <a id="methods-doubledash"/>**DoubleDash(IConsoleBase, String, DashOptions, Int32, Nullable&lt;Style&gt;)**
 
 Writes text line representation whie colors in a pair of lines of dashes.
 

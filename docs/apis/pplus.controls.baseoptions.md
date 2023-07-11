@@ -21,7 +21,7 @@ Implements [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ## Methods
 
-### **EnabledAbortKey(Boolean)**
+### <a id="methods-enabledabortkey"/>**EnabledAbortKey(Boolean)**
 
 ```csharp
 public IPromptConfig EnabledAbortKey(bool value)
@@ -35,7 +35,7 @@ public IPromptConfig EnabledAbortKey(bool value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **ShowTooltip(Boolean)**
+### <a id="methods-showtooltip"/>**ShowTooltip(Boolean)**
 
 ```csharp
 public IPromptConfig ShowTooltip(bool value)
@@ -49,7 +49,7 @@ public IPromptConfig ShowTooltip(bool value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **HideAfterFinish(Boolean)**
+### <a id="methods-hideafterfinish"/>**HideAfterFinish(Boolean)**
 
 ```csharp
 public IPromptConfig HideAfterFinish(bool value)
@@ -63,7 +63,7 @@ public IPromptConfig HideAfterFinish(bool value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **HideOnAbort(Boolean)**
+### <a id="methods-hideonabort"/>**HideOnAbort(Boolean)**
 
 ```csharp
 public IPromptConfig HideOnAbort(bool value)
@@ -77,7 +77,7 @@ public IPromptConfig HideOnAbort(bool value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **SetContext(Object)**
+### <a id="methods-setcontext"/>**SetContext(Object)**
 
 ```csharp
 public IPromptConfig SetContext(object value)
@@ -91,7 +91,7 @@ public IPromptConfig SetContext(object value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **AddExtraAction(StageControl, Action&lt;Object, Object&gt;)**
+### <a id="methods-addextraaction"/>**AddExtraAction(StageControl, Action&lt;Object, Object&gt;)**
 
 ```csharp
 public IPromptConfig AddExtraAction(StageControl stage, Action<Object, Object> useraction)
@@ -107,7 +107,7 @@ public IPromptConfig AddExtraAction(StageControl stage, Action<Object, Object> u
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Description(StringStyle)**
+### <a id="methods-description"/>**Description(StringStyle)**
 
 ```csharp
 public IPromptConfig Description(StringStyle value)
@@ -121,7 +121,7 @@ public IPromptConfig Description(StringStyle value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Prompt(StringStyle)**
+### <a id="methods-prompt"/>**Prompt(StringStyle)**
 
 ```csharp
 public IPromptConfig Prompt(StringStyle value)
@@ -135,7 +135,7 @@ public IPromptConfig Prompt(StringStyle value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Tooltips(StringStyle)**
+### <a id="methods-tooltips"/>**Tooltips(StringStyle)**
 
 ```csharp
 public IPromptConfig Tooltips(StringStyle value)
@@ -149,7 +149,7 @@ public IPromptConfig Tooltips(StringStyle value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Description(String)**
+### <a id="methods-description"/>**Description(String)**
 
 ```csharp
 public IPromptConfig Description(string value)
@@ -163,7 +163,7 @@ public IPromptConfig Description(string value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Prompt(String)**
+### <a id="methods-prompt"/>**Prompt(String)**
 
 ```csharp
 public IPromptConfig Prompt(string value)
@@ -177,7 +177,7 @@ public IPromptConfig Prompt(string value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Tooltips(String)**
+### <a id="methods-tooltips"/>**Tooltips(String)**
 
 ```csharp
 public IPromptConfig Tooltips(string value)
@@ -191,7 +191,7 @@ public IPromptConfig Tooltips(string value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **ApplyStyle(StyleControls, Style)**
+### <a id="methods-applystyle"/>**ApplyStyle(StyleControls, Style)**
 
 ```csharp
 public IPromptConfig ApplyStyle(StyleControls styleControl, Style value)
@@ -207,7 +207,7 @@ public IPromptConfig ApplyStyle(StyleControls styleControl, Style value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Symbols(SymbolType, String, String)**
+### <a id="methods-symbols"/>**Symbols(SymbolType, String, String)**
 
 ```csharp
 public IPromptConfig Symbols(SymbolType schema, string value, string unicode)

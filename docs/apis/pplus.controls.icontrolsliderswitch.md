@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;Boolean&gt;](./pplus.controls.ipromptcontrols-1.m
 
 ## Methods
 
-### **Default(Boolean)**
+### <a id="methods-default"/>**Default(Boolean)**
 
 Default value for swith
 
@@ -37,7 +37,7 @@ true is 'on', otherwise 'off'
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### **OffValue(String)**
+### <a id="methods-offvalue"/>**OffValue(String)**
 
 Text to 'off' value. Default value comes from resource.
 
@@ -54,7 +54,7 @@ text off
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### **OnValue(String)**
+### <a id="methods-onvalue"/>**OnValue(String)**
 
 Text to 'on' value. Default value comes from resource.
 
@@ -71,7 +71,7 @@ text on
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### **Width(Int32)**
+### <a id="methods-width"/>**Width(Int32)**
 
 Define Width to Widgets. Default value is 6.
 
@@ -88,7 +88,7 @@ Width
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -105,7 +105,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
+### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
 
@@ -125,7 +125,7 @@ The timeout for valid items saved. Default value is 365 days
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### **ChangeDescription(Func&lt;Boolean, String&gt;)**
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;Boolean, String&gt;)**
 
 Dynamically change the description using a user role
 
@@ -142,7 +142,7 @@ function to apply change
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### **ChangeColorOn(Style)**
+### <a id="methods-changecoloron"/>**ChangeColorOn(Style)**
 
 Change Color when state 'On'. 
  <br>state-On(Foreground)/Background<br>Default Foreground : 'ConsoleColor.Cyan'<br>Default Background : 'ConsoleColor.DarkGray'
@@ -160,7 +160,7 @@ IControlSliderSwitch ChangeColorOn(Style value)
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### **ChangeColorOff(Style)**
+### <a id="methods-changecoloroff"/>**ChangeColorOff(Style)**
 
 Change Color when state 'Off'. 
  <br>state-Off(Foreground)/Background<br>Default Foreground : 'ConsoleColor.Cyan'<br>Default Background : 'ConsoleColor.DarkGray'

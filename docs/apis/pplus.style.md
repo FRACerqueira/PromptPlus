@@ -23,7 +23,7 @@ Implements [IEquatable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api
 
 ## Properties
 
-### **Plain**
+### <a id="properties-plain"/>**Plain**
 
 Gets a [Style](./pplus.style.md) with the default colors and and overflow None.
 
@@ -35,7 +35,7 @@ public static Style Plain { get; internal set; }
 
 [Style](./pplus.style.md)<br>
 
-### **OverflowCrop**
+### <a id="properties-overflowcrop"/>**OverflowCrop**
 
 Gets a [Style](./pplus.style.md) with the default colors and overflow Crop.
 
@@ -47,7 +47,7 @@ public static Style OverflowCrop { get; }
 
 [Style](./pplus.style.md)<br>
 
-### **OverflowEllipsis**
+### <a id="properties-overflowellipsis"/>**OverflowEllipsis**
 
 Gets a [Style](./pplus.style.md) with the default colors and overflow Ellipsis.
 
@@ -59,7 +59,7 @@ public static Style OverflowEllipsis { get; }
 
 [Style](./pplus.style.md)<br>
 
-### **Foreground**
+### <a id="properties-foreground"/>**Foreground**
 
 Gets the foreground color.
 
@@ -71,7 +71,7 @@ public Color Foreground { get; }
 
 [Color](./pplus.color.md)<br>
 
-### **Background**
+### <a id="properties-background"/>**Background**
 
 Gets the background color.
 
@@ -83,7 +83,7 @@ public Color Background { get; }
 
 [Color](./pplus.color.md)<br>
 
-### **OverflowStrategy**
+### <a id="properties-overflowstrategy"/>**OverflowStrategy**
 
 Gets the Overflow strategy.
 
@@ -97,7 +97,7 @@ public Overflow OverflowStrategy { get; }
 
 ## Constructors
 
-### **Style()**
+### <a id="constructors-.ctor"/>**Style()**
 
 create a new [Style](./pplus.style.md) with default foreground/background colors and none overflow strategy.
 
@@ -105,7 +105,7 @@ create a new [Style](./pplus.style.md) with default foreground/background colors
 Style()
 ```
 
-### **Style(Color, Color, Overflow)**
+### <a id="constructors-.ctor"/>**Style(Color, Color, Overflow)**
 
 Create a new instance of [Style](./pplus.style.md) with foreground/background colors and overflow strategy.
 
@@ -126,7 +126,7 @@ Style(Color foreground, Color background, Overflow overflowStrategy)
 
 ## Methods
 
-### **Combine(Style)**
+### <a id="methods-combine"/>**Combine(Style)**
 
 ```csharp
 Style Combine(Style other)
@@ -140,7 +140,7 @@ Style Combine(Style other)
 
 [Style](./pplus.style.md)
 
-### **GetHashCode()**
+### <a id="methods-gethashcode"/>**GetHashCode()**
 
 ```csharp
 int GetHashCode()
@@ -150,7 +150,7 @@ int GetHashCode()
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)
 
-### **Equals(Style)**
+### <a id="methods-equals"/>**Equals(Style)**
 
 Checks if two [Style](./pplus.style.md) instances are not equal.
 
@@ -167,7 +167,7 @@ The Style instance to compare.
 
 `true` if the two Style are not equal, otherwise `false`.
 
-### **Equals(Object)**
+### <a id="methods-equals"/>**Equals(Object)**
 
 ```csharp
 bool Equals(object obj)

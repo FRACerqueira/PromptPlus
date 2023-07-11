@@ -20,7 +20,7 @@ public interface IInputDrive
 
 ## Properties
 
-### **KeyAvailable**
+### <a id="properties-keyavailable"/>**KeyAvailable**
 
 Gets a value indicating whether a key press is available in the input stream.
 
@@ -32,7 +32,7 @@ public abstract bool KeyAvailable { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsInputRedirected**
+### <a id="properties-isinputredirected"/>**IsInputRedirected**
 
 Gets a value that indicates whether input has been redirected from the standard input stream.
 
@@ -44,7 +44,7 @@ public abstract bool IsInputRedirected { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **InputEncoding**
+### <a id="properties-inputencoding"/>**InputEncoding**
 
 Get/set an encoding for standard input stream.
 
@@ -56,7 +56,7 @@ public abstract Encoding InputEncoding { get; set; }
 
 [Encoding](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding)<br>
 
-### **In**
+### <a id="properties-in"/>**In**
 
 Get standard input stream.
 
@@ -70,7 +70,7 @@ public abstract TextReader In { get; }
 
 ## Methods
 
-### **ReadKey(Boolean)**
+### <a id="methods-readkey"/>**ReadKey(Boolean)**
 
 Obtains the next character or function key pressed by the user.
 
@@ -87,7 +87,7 @@ Determines whether to display the pressed key in the console window. true to not
 
 <br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
-### **WaitKeypress(Boolean, Nullable&lt;CancellationToken&gt;)**
+### <a id="methods-waitkeypress"/>**WaitKeypress(Boolean, Nullable&lt;CancellationToken&gt;)**
 
 Wait Keypress from standard input stream
 
@@ -107,7 +107,7 @@ The token to monitor for cancellation requests.
 
 <br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
-### **ReadLine()**
+### <a id="methods-readline"/>**ReadLine()**
 
 <br>Read the line from stream. A line is defined as a sequence of characters followed by<br>a car return ('\r'), a line feed ('\n'), or a carriage return<br>immedy followed by a line feed. The resulting string does not<br>contain the terminating carriage return and/or line feed.
 
@@ -119,7 +119,7 @@ string ReadLine()
 
 The returned value is null if the end of the input stream has been reached.
 
-### **SetIn(TextReader)**
+### <a id="methods-setin"/>**SetIn(TextReader)**
 
 set standard input stream.
 

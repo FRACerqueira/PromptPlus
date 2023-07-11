@@ -20,7 +20,7 @@ public interface ICursorDrive
 
 ## Properties
 
-### **CursorVisible**
+### <a id="properties-cursorvisible"/>**CursorVisible**
 
 Gets or sets a value indicating whether the cursor is visible.
 
@@ -32,7 +32,7 @@ public abstract bool CursorVisible { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **CursorLeft**
+### <a id="properties-cursorleft"/>**CursorLeft**
 
 Gets the column position of the cursor within the buffer area.
 
@@ -44,7 +44,7 @@ public abstract int CursorLeft { get; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **CursorTop**
+### <a id="properties-cursortop"/>**CursorTop**
 
 Gets the row position of the cursor within the buffer area.
 
@@ -58,7 +58,7 @@ public abstract int CursorTop { get; }
 
 ## Methods
 
-### **SetCursorPosition(Int32, Int32)**
+### <a id="methods-setcursorposition"/>**SetCursorPosition(Int32, Int32)**
 
 Sets the position of the cursor.
 

@@ -20,7 +20,7 @@ public interface IBannerControl
 
 ## Methods
 
-### **LoadFont(String)**
+### <a id="methods-loadfont"/>**LoadFont(String)**
 
 Load external font from file
 
@@ -37,7 +37,7 @@ fullpath of file
 
 [IBannerControl](./pplus.controls.ibannercontrol.md)
 
-### **LoadFont(Stream)**
+### <a id="methods-loadfont"/>**LoadFont(Stream)**
 
 Load external font from [Stream](https://docs.microsoft.com/en-us/dotnet/api/system.io.stream)
 
@@ -54,7 +54,7 @@ stream instance
 
 [IBannerControl](./pplus.controls.ibannercontrol.md)
 
-### **FIGletWidth(CharacterWidth)**
+### <a id="methods-figletwidth"/>**FIGletWidth(CharacterWidth)**
 
 Set [CharacterWidth](./pplus.controls.characterwidth.md) for the banner
 
@@ -71,7 +71,7 @@ CharacterWidth [CharacterWidth](./pplus.controls.characterwidth.md)
 
 [IBannerControl](./pplus.controls.ibannercontrol.md)
 
-### **Run(Nullable&lt;Color&gt;, BannerDashOptions)**
+### <a id="methods-run"/>**Run(Nullable&lt;Color&gt;, BannerDashOptions)**
 
 Execute this control and show banner.
 

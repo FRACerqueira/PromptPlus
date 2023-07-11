@@ -15,109 +15,170 @@
 
 - Removed: string.Underline()
 - Removed: string.Strikeout()
-- Removed: string.\[color\](), see new Color Syntax
-- PromptPlus.DefaultCulture 
+- Removed: string.\[color\]() 
+	- See new Color Syntax
+- Changed:
+  - PromptPlus.DefaultCulture 
   - TO: PromptPlus.Config.DefaultCulture
-- PromptPlus.CursorPosition 
+- Changed:
+  - PromptPlus.CursorPosition 
   - TO: PromptPlus.Config.SetCursorPosition
-- ClearRestOfLine(Consolecolor)
+- Changed:
+  - ClearRestOfLine(Consolecolor)
   - TO: ClearRestOfLine(Style)
-- WriteLine(string, forecolor,backcolor)
+- Changed:
+  - WriteLine(string, forecolor,backcolor)
   - TO: WriteLine(string, style)
 
 ### Validators
-
-- Renamed: Namespace : PromptPlusValidators
+- Changed:
+  - Namespace : PromptPlusValidators
   - TO: PromptValidators  
-- inst.ImportValidators(x => x.MyInput)
-  - TO : PromptValidators.ImportValidators(inst, x => x.MyInput)
+- Changed:
+  - inst.ImportValidators(x => x.MyInput)
+  - TO : ImportValidators(inst, x => x.MyInput)
 
 ### Controls
 
+- Removed: HideSymbolPromptAndResult
+- Removed: EnabledAbortAllPipes
+- Removed: EnabledPromptTooltip
 - Removed: SaveConfigToFile
 - Removed: LoadConfigFromFile
 - Removed: Pipeline Contol
-- Removed: Readline Contol, Now, see PromptPlus.ReadLineWithEmacs
-- AddValidator(...)
-    - TO: AddValidators(...)
-- DescriptionSelector(string) 
-  - TO: ChangeDescription(string)
-- UpperCase(bool)
-  - TO: InputToCase(CaseOptions)
-- LowerCase(bool)
-  - TO: InputToCase(CaseOptions)
+- Removed: Readline Contol. 
+  - Now, see new console command PromptPlus.ReadLineWithEmacs
+- Changed: 
+  - AddValidator(Func<object, ValidationResult> validator)
+  -  AddValidators(IEnumerable<Func<object, ValidationResult>> validators)
+  - TO: AddValidators(params Func<object, ValidationResult>[] validators)
+- Changed: 
+  - DescriptionSelector(Func<T, string> value);
+  - TO: ChangeDescription(Func<string, string> value);
+- Changed: 
+  - SuggestionHandler(Func<SugestionInput, SugestionOutput> value, bool EnterTryFininsh = false)
+  - TO: SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
   
 ### Autocomplete
 
-- Removed: CompletionInterval(value) - AutoComplete Control
-- Removed: AcceptWithoutMatch() - AutoComplete Control
-- Task<ValueDescription<string>[] ServiceCompleteAsync(string prefixText, int count, CancellationToken cancellationToken)
-  - TO: Task<string[]> ServiceCompleteAsync(string prefixText, int count, CancellationToken cancellationToken)
+- Removed: CompletionInterval(value) 
+- Removed: AcceptWithoutMatch()
+- Changegd:
+  - SpeedAnimation(int value)
+  - TO: Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
+- Changed: 
+  - CaseInsensitive(value)
+  - TO: InputToCase(CaseOptions)
+- Changed: 
+  - CompletionAsyncService(Func<string, int, CancellationToken, Task<string[]>> value);
+  - CompletionWithDescriptionAsyncService(Func<string, int, CancellationToken, Task<ValueDescription<string>[]>> value);
+  - TO: CompletionAsyncService(Func<string, int, CancellationToken, Task<string[]>> value);
 
 ### Select
  
-- HideItem(PromptPlus.BackgroundColor) 
-  - TO: AddItemTo(AdderScope.Remove, PromptPlus.BackgroundColor)
+- Changed:
+  - HideItem(T value)
+  - TO: AddItemTo(AdderScopee, T value)
+- Changed:
+  - HideItems(IEnumerable<T> value)
+  - TO:AddItemsTo(AdderScope scope, IEnumerable<T> values)
+- Changed:
+  - DisableItem(T value)
+  - TO: AddItemTo(AdderScopee, T value)
+- Changed:
+  - DisableItems(IEnumerable<T> value)
+  - TO:AddItemsTo(AdderScope scope, IEnumerable<T> values)
+- Changed:
+  - Default(T value, Func<T,T,bool> funcfound=null);
+  - TO: Default(T value)
 - AutoSelectIfOne() 
   - TO: AutoSelect()
 
+### Multiselect
+
+- Changed:
+  - AddGroup(IEnumerable<T> value, string group)
+  - TO :AddItemGrouped(string group, T value, bool disable = false, bool selected = false)
+- Changed:
+  - ShowGroupOnDescription(string)
+  - TO: AppendGroupOnDescription()
+- Changed:
+  - HideItem(T value)
+  - TO: AddItemTo(AdderScopee, T value)
+- Changed:
+  - HideItems(IEnumerable<T> value)
+  - TO:AddItemsTo(AdderScope scope, IEnumerable<T> values)
+- Changed:
+  - DisableItem(T value)
+  - TO: AddItemTo(AdderScopee, T value)
+- Changed:
+  - DisableItems(IEnumerable<T> value)
+  - TO:AddItemsTo(AdderScope scope, IEnumerable<T> values)
+- Changed:
+  - AddDefault(T value, Func<T, T, bool> funcfound = null)
+  - AddItem(T value, bool disable = false, bool selected = false)
+- Changed:
+  - AddDefaults(IEnumerable<T> value, Func<T, T, bool> funcfound = null)
+  - AddItems(IEnumerable<T> values, bool disable = false, bool selected = false);
+
 ### MaskEdit    
 
-- PromptPlus.MaskEdit(MaskedType, string)
+- Changed:
+  - PromptPlus.MaskEdit(MaskedType, string)
   - TO: PromptPlus.MaskEdit(string) when Generic Type
-- PromptPlus.MaskEdit(MaskedType, string)
+- Changed:
+  - PromptPlus.MaskEdit(MaskedType, string)
   - TO: PromptPlus.MaskEdit(string).Mask(MaskedType) when NOT Generic Type
-- ResultMasked.Value.ObjectValue
+- Changed:
+  - ResultMasked.Value.ObjectValue
   - TO: ResultMasked.Value.Masked
-- Default(object)
-  - TO: Default(string)
-- DescriptionSelector(ResultMasked) 
-  - TO: ChangeDescription(string)
-- AmmoutPositions(int, int)   
-  - TO: AmmoutPositions(int, int, bool - AcceptSignal)
-- FormatYear.Y4 : FormatYear.Y2 
-    - TO: FormatYear.Long, FormatYear.Short
-- ShowDayWeek(FormatWeek) 
+- Changed:
+  - Default(object value)
+  - TO: Default(string value)
+- Changed:
+  - Removed AcceptSignal(bool)
+  - AmmoutPositions(int, int)   
+  - TO: AmmoutPositions(int, int, bool) with AcceptSignal
+- Changed:
+  - FormatYear.Y4 : FormatYear.Y2 
+  - TO: FormatYear.Long, FormatYear.Short
+- Changed:
+  - ShowDayWeek(FormatWeek) 
   - TO: DescriptionWithInputType(FormatWeek)
-- FillZeros(bool) 
+- Changed:
+  - FillZeros(bool) 
   - TO: FillZeros()
-- Removed: AcceptSignal(bool)
- 
-### Keypress  
-
-- PromptPlus.KeyPress(string, ConsoleModifiers)
-  - TO: AddKeyValid(ConsoleKey, ConsoleModifiers)
-
-### Slider
-
-- SliderNumber(SliderNumberType, string)
-  - TO: MoveKeyPress(SliderNumberType)
+- Changed:
+  - UpperCase(bool)
+  - TO: InputToCase(CaseOptions)
 
 ### Input
 
-- IsPassword(true)
+- Changed:
+  - IsPassword(bool value)
   - TO: IsSecret()
+- Changed:
+  - InitialValue(string value)
+  - TO: Default(string value)
+- Changed:
+  - Default(string value)
+  - TO: DefaultIfEmpty(string value)
+	
+### Keypress  
+
+- Many Changes, see new Keypress  Control
+
+### Slider (Number/Swith)
+
+- Many Changes, see new Sliders Control
 
 ### List 
 
-- Renamed to AddToList
-- Removed: List<T>,now T is string
-- Removed: InitialValue(value)
-- Removed: ValidateOnDemand()
-- AllowDuplicate(bool) 
-  - TO: AllowDuplicate()
+- Many Changes, see new AddtoList Control
  
 ### ListMasked 
 
-- Renamed to AddtoMaskEditList
-- See changes to MasKedit
-
-### Multiselect
-
-- AddGroup(IEnumerable<T>,string)
-  - TO :AddItemsGrouped(string,IEnumerable<T>)
-- ShowGroupOnDescription(string)
-  - TO: AppendGroupOnDescription()
+- Many Changes, see new AddtoMaskEditList Control
 
 ### Confirm
 

@@ -24,7 +24,7 @@ Implements IPromptControls&lt;ResultProgessBar&lt;T&gt;&gt;
 
 ## Methods
 
-### **HideElements(HideProgressBar)**
+### <a id="methods-hideelements"/>**HideElements(HideProgressBar)**
 
 Hide elements progress bar Widgets. Default is Show all elements
  <br>For more one element use | separate (Enum Flag)
@@ -42,7 +42,7 @@ element to hide. [HideProgressBar](./pplus.controls.hideprogressbar.md)
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -59,7 +59,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **Culture(CultureInfo)**
+### <a id="methods-culture"/>**Culture(CultureInfo)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to on show value format.
 
@@ -76,7 +76,7 @@ CultureInfo to use
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **CharBar(Char)**
+### <a id="methods-charbar"/>**CharBar(Char)**
 
 Set [Char](https://docs.microsoft.com/en-us/dotnet/api/system.char) to show progress.Default value '#'
  <br>Valid on ProgressBarType.Char, otherwise is ignored
@@ -94,7 +94,7 @@ Char to show
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **Culture(String)**
+### <a id="methods-culture"/>**Culture(String)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to show value format.
  <br>Default value is global Promptplus Cultureinfo
@@ -112,7 +112,7 @@ Name of CultureInfo to use
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **Finish(String)**
+### <a id="methods-finish"/>**Finish(String)**
 
 Finish answer to show when progressbar is completed.
 
@@ -129,7 +129,7 @@ text Finish answer
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
@@ -156,7 +156,7 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **Width(Int32)**
+### <a id="methods-width"/>**Width(Int32)**
 
 Define Width to Widgets. Default value is 80.
 
@@ -173,7 +173,7 @@ Width
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **Default(Double)**
+### <a id="methods-default"/>**Default(Double)**
 
 Initial value
 
@@ -190,7 +190,7 @@ value
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **FracionalDig(Int32)**
+### <a id="methods-fracionaldig"/>**FracionalDig(Int32)**
 
 Define the Fracional Digits of value. Default is 0.
 
@@ -207,7 +207,7 @@ Fracional Digits
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **ChangeColor(Func&lt;Double, Style&gt;)**
+### <a id="methods-changecolor"/>**ChangeColor(Func&lt;Double, Style&gt;)**
 
 Dynamically change Style Widgets
 
@@ -224,7 +224,7 @@ function to change color
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **ChangeGradient(Color[])**
+### <a id="methods-changegradient"/>**ChangeGradient(Color[])**
 
 Dynamically Change Gradient color Widgets
 
@@ -241,7 +241,7 @@ list of colors Gradient
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### **UpdateHandler(Action&lt;UpdateProgressBar&lt;T&gt;, CancellationToken&gt;)**
+### <a id="methods-updatehandler"/>**UpdateHandler(Action&lt;UpdateProgressBar&lt;T&gt;, CancellationToken&gt;)**
 
 Handler to execute Update ProgressBar values.
 

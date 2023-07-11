@@ -20,7 +20,7 @@ public interface IProfileDrive
 
 ## Properties
 
-### **Provider**
+### <a id="properties-provider"/>**Provider**
 
 Get provider mode.
 
@@ -32,7 +32,7 @@ public abstract string Provider { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **IsTerminal**
+### <a id="properties-isterminal"/>**IsTerminal**
 
 Get Terminal mode.
 
@@ -44,7 +44,7 @@ public abstract bool IsTerminal { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsUnicodeSupported**
+### <a id="properties-isunicodesupported"/>**IsUnicodeSupported**
 
 Get Unicode Supported.
 
@@ -56,7 +56,7 @@ public abstract bool IsUnicodeSupported { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **SupportsAnsi**
+### <a id="properties-supportsansi"/>**SupportsAnsi**
 
 Get SupportsAnsi mode.
 
@@ -68,7 +68,7 @@ public abstract bool SupportsAnsi { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **ColorDepth**
+### <a id="properties-colordepth"/>**ColorDepth**
 
 Get Color capacity.[ColorSystem](./pplus.colorsystem.md)
 
@@ -80,7 +80,7 @@ public abstract ColorSystem ColorDepth { get; }
 
 [ColorSystem](./pplus.colorsystem.md)<br>
 
-### **DefaultStyle**
+### <a id="properties-defaultstyle"/>**DefaultStyle**
 
 Get default [Style](./pplus.style.md) console.
 
@@ -92,7 +92,7 @@ public abstract Style DefaultStyle { get; }
 
 [Style](./pplus.style.md)<br>
 
-### **PadLeft**
+### <a id="properties-padleft"/>**PadLeft**
 
 Get screen margin left
 
@@ -104,7 +104,7 @@ public abstract byte PadLeft { get; }
 
 [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
 
-### **PadRight**
+### <a id="properties-padright"/>**PadRight**
 
 Get screen margin right
 
@@ -116,7 +116,7 @@ public abstract byte PadRight { get; }
 
 [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
 
-### **BufferWidth**
+### <a id="properties-bufferwidth"/>**BufferWidth**
 
 Gets the width of the buffer area.
 
@@ -128,7 +128,7 @@ public abstract int BufferWidth { get; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **BufferHeight**
+### <a id="properties-bufferheight"/>**BufferHeight**
 
 Gets the height of the buffer area.
 
@@ -140,7 +140,7 @@ public abstract int BufferHeight { get; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **ForegroundColor**
+### <a id="properties-foregroundcolor"/>**ForegroundColor**
 
 Get/Set Foreground console with color.
 
@@ -152,7 +152,7 @@ public abstract ConsoleColor ForegroundColor { get; set; }
 
 ConsoleColor<br>
 
-### **BackgroundColor**
+### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Get/set BackgroundColor console with color.
 
@@ -164,7 +164,7 @@ public abstract ConsoleColor BackgroundColor { get; set; }
 
 ConsoleColor<br>
 
-### **OverflowStrategy**
+### <a id="properties-overflowstrategy"/>**OverflowStrategy**
 
 Get write Overflow Strategy.
 
@@ -178,7 +178,7 @@ public abstract Overflow OverflowStrategy { get; }
 
 ## Methods
 
-### **ResetColor()**
+### <a id="methods-resetcolor"/>**ResetColor()**
 
 Reset colors to default values.
 

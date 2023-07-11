@@ -26,7 +26,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **Value**
+### <a id="properties-value"/>**Value**
 
 Value result
 
@@ -38,7 +38,7 @@ public T Value { get; }
 
 T<br>
 
-### **IsAborted**
+### <a id="properties-isaborted"/>**IsAborted**
 
 Control is Aborted. True to aborted; otherwise, false.
 
@@ -52,7 +52,7 @@ public bool IsAborted { get; }
 
 ## Constructors
 
-### **ResultPrompt()**
+### <a id="constructors-.ctor"/>**ResultPrompt()**
 
 Create a ResultPrompt
 

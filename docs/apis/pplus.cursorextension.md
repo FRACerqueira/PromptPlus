@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Methods
 
-### **MoveCursor(IConsoleBase, CursorDirection, Int32)**
+### <a id="methods-movecursor"/>**MoveCursor(IConsoleBase, CursorDirection, Int32)**
 
 Moves the cursor relative to the current position.
 

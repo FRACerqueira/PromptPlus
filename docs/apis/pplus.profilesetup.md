@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **Culture**
+### <a id="properties-culture"/>**Culture**
 
 ```csharp
 public CultureInfo Culture { get; set; }
@@ -32,7 +32,7 @@ public CultureInfo Culture { get; set; }
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
 
-### **IsTerminal**
+### <a id="properties-isterminal"/>**IsTerminal**
 
 Get/Set Terminal mode. if Running over Terminal mode or not.
 
@@ -44,7 +44,7 @@ public bool IsTerminal { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsUnicodeSupported**
+### <a id="properties-isunicodesupported"/>**IsUnicodeSupported**
 
 Get/Set Unicode Supported.
 
@@ -56,7 +56,7 @@ public bool IsUnicodeSupported { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **SupportsAnsi**
+### <a id="properties-supportsansi"/>**SupportsAnsi**
 
 Get/Set SupportsAnsi mode commands.
 
@@ -68,7 +68,7 @@ public bool SupportsAnsi { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **ColorDepth**
+### <a id="properties-colordepth"/>**ColorDepth**
 
 Get/Set Color capacity.[ColorSystem](./pplus.colorsystem.md)
 
@@ -80,7 +80,7 @@ public ColorSystem ColorDepth { get; set; }
 
 [ColorSystem](./pplus.colorsystem.md)<br>
 
-### **PadLeft**
+### <a id="properties-padleft"/>**PadLeft**
 
 Get/Set screen margin left
 
@@ -92,7 +92,7 @@ public byte PadLeft { get; set; }
 
 [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
 
-### **PadRight**
+### <a id="properties-padright"/>**PadRight**
 
 Get/Set screen margin right
 
@@ -104,7 +104,7 @@ public byte PadRight { get; set; }
 
 [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
 
-### **OverflowStrategy**
+### <a id="properties-overflowstrategy"/>**OverflowStrategy**
 
 Get/Set write Overflow Strategy.
 
@@ -116,7 +116,7 @@ public Overflow OverflowStrategy { get; set; }
 
 [Overflow](./pplus.overflow.md)<br>
 
-### **ForegroundColor**
+### <a id="properties-foregroundcolor"/>**ForegroundColor**
 
 Get/Set Foreground console with color.
 
@@ -128,7 +128,7 @@ public ConsoleColor ForegroundColor { get; set; }
 
 ConsoleColor<br>
 
-### **BackgroundColor**
+### <a id="properties-backgroundcolor"/>**BackgroundColor**
 
 Get/Set BackgroundColor console with color.
 

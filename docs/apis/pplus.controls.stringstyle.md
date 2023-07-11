@@ -23,7 +23,7 @@ Implements [IEquatable&lt;StringStyle&gt;](https://docs.microsoft.com/en-us/dotn
 
 ## Properties
 
-### **Text**
+### <a id="properties-text"/>**Text**
 
 Get/Set Text
 
@@ -35,7 +35,7 @@ public string Text { get; set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Style**
+### <a id="properties-style"/>**Style**
 
 Get/Set Style/&gt;
 
@@ -49,7 +49,7 @@ public Style Style { get; set; }
 
 ## Constructors
 
-### **StringStyle()**
+### <a id="constructors-.ctor"/>**StringStyle()**
 
 Create empty StringStyle
 
@@ -57,7 +57,7 @@ Create empty StringStyle
 StringStyle()
 ```
 
-### **StringStyle(String)**
+### <a id="constructors-.ctor"/>**StringStyle(String)**
 
 Create StringStyle with text
 
@@ -70,7 +70,7 @@ StringStyle(string text)
 `text` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The text
 
-### **StringStyle(String, Style)**
+### <a id="constructors-.ctor"/>**StringStyle(String, Style)**
 
 Create a new instance of String-Style
 
@@ -88,7 +88,7 @@ Text
 
 ## Methods
 
-### **Equals(StringStyle)**
+### <a id="methods-equals"/>**Equals(StringStyle)**
 
 Checks if two [StringStyle](./pplus.controls.stringstyle.md) instances are equal.
 
@@ -105,7 +105,7 @@ The StringStyle to compare.
 
 `true` if the two StringStyle are equal, otherwise `false`.
 
-### **Equals(Object)**
+### <a id="methods-equals"/>**Equals(Object)**
 
 ```csharp
 bool Equals(object obj)
@@ -119,7 +119,7 @@ bool Equals(object obj)
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
 
-### **GetHashCode()**
+### <a id="methods-gethashcode"/>**GetHashCode()**
 
 ```csharp
 int GetHashCode()

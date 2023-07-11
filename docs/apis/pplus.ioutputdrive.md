@@ -22,7 +22,7 @@ Implements [IBackendTextWrite](./pplus.ibackendtextwrite.md)
 
 ## Properties
 
-### **CodePage**
+### <a id="properties-codepage"/>**CodePage**
 
 Get output CodePage.
 
@@ -34,7 +34,7 @@ public abstract int CodePage { get; }
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
-### **IsOutputRedirected**
+### <a id="properties-isoutputredirected"/>**IsOutputRedirected**
 
 Gets a value that indicates whether output has been redirected from the standard output stream.
 
@@ -46,7 +46,7 @@ public abstract bool IsOutputRedirected { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **IsErrorRedirected**
+### <a id="properties-iserrorredirected"/>**IsErrorRedirected**
 
 Gets a value that indicates whether error has been redirected from the standard error stream.
 
@@ -58,7 +58,7 @@ public abstract bool IsErrorRedirected { get; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **OutputEncoding**
+### <a id="properties-outputencoding"/>**OutputEncoding**
 
 Get/set an encoding for standard output stream.
 
@@ -70,7 +70,7 @@ public abstract Encoding OutputEncoding { get; set; }
 
 [Encoding](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding)<br>
 
-### **Out**
+### <a id="properties-out"/>**Out**
 
 Get standard output stream.
 
@@ -82,7 +82,7 @@ public abstract TextWriter Out { get; }
 
 [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 
-### **Error**
+### <a id="properties-error"/>**Error**
 
 Get standard error stream.
 
@@ -96,7 +96,7 @@ public abstract TextWriter Error { get; }
 
 ## Methods
 
-### **SetOut(TextWriter)**
+### <a id="methods-setout"/>**SetOut(TextWriter)**
 
 set standard output stream.
 
@@ -109,7 +109,7 @@ void SetOut(TextWriter value)
 `value` [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 A stream that is the new standard output.
 
-### **SetError(TextWriter)**
+### <a id="methods-seterror"/>**SetError(TextWriter)**
 
 set standard error stream.
 
@@ -122,7 +122,7 @@ void SetError(TextWriter value)
 `value` [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 A stream that is the new standard error.
 
-### **Clear()**
+### <a id="methods-clear"/>**Clear()**
 
 Clears the console buffer and corresponding console window of display information.
  <br>Move cursor fom top console.
@@ -131,7 +131,7 @@ Clears the console buffer and corresponding console window of display informatio
 void Clear()
 ```
 
-### **Beep()**
+### <a id="methods-beep"/>**Beep()**
 
 Plays the sound of a beep through the console speaker.
 

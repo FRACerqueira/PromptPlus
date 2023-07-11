@@ -17,6 +17,7 @@ The hotkeys for each control can be  globally or for each instance. Valid values
 - [Default HotKeys](#default-hotKeys)
 - [Global HotKeys](#global-hotKeys)
 - [Instance HotKeys](#instance-hotKeys)
+- [HotKey API Reference](./APIS/pplus.controls.hotkey.md)
 
 ## Default HotKeys
 

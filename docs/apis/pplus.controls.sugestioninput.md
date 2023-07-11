@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **Text**
+### <a id="properties-text"/>**Text**
 
 Get Sugestion Text input
 
@@ -34,7 +34,7 @@ public string Text { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Context**
+### <a id="properties-context"/>**Context**
 
 Get generic context parameter
 
@@ -48,7 +48,7 @@ public object Context { get; }
 
 ## Constructors
 
-### **SugestionInput()**
+### <a id="constructors-.ctor"/>**SugestionInput()**
 
 Create a SugestionInput
 

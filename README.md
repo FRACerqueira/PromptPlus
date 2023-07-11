@@ -356,25 +356,25 @@ PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-col
 PromptPlus also has commands for coloring parts of the text using **direct console, styles and Over elememnts of controls**.
 
 Promptplus uses the **same default colors and engine(softly modified)** as the third party project: spectreconsole.
-For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus) or see the samples in folder **Samples**
+For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#colors) or see the samples in folder **Samples**
 
 
 ## Hotkeys
 [**Top**](#welcome-to-promptplus)
 
 Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
-For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus)
+For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#hotkeys)
 
 ## Keypress Extensions Emacs
 [**Top**](#welcome-to-promptplus)
 
 PromptPlus have a lot extensions to check Key-press with GNU Readline Emacs keyboard shortcuts.
-For more details [visit the **official API page**](https://fracerqueira.github.io/PromptPlus/apis/pplus.promptplus.html)
+For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#keypress-extensions-emacs)
 
 ## Validators
 
 PromptPlus have a lot extensions to **commons validator** and **validator import**(No duplicate code!) 
-For more details [visit the **official API page**](https://fracerqueira.github.io/PromptPlus/apis/pplus.controls.promptvalidators.html) or see the samples in folder **Samples**
+For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#validators) or see the samples in folder **Samples**
 
 ```csharp
 private class MylCass

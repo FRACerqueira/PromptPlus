@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;String&gt;](./pplus.controls.ipromptcontrols-1.md
 
 ## Methods
 
-### **PageSize(Int32)**
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page.Default value for this control is 10.
 
@@ -37,7 +37,7 @@ Number of Max.items
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
@@ -64,7 +64,7 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **MinimumPrefixLength(Int32)**
+### <a id="methods-minimumprefixlength"/>**MinimumPrefixLength(Int32)**
 
 Number minimum of chars to accept autocomplete
  <br>Default value : 3. If value less than 0 internal sette to 0.
@@ -82,7 +82,7 @@ Number of chars
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **CompletionWaitToStart(Int32)**
+### <a id="methods-completionwaittostart"/>**CompletionWaitToStart(Int32)**
 
 Number of mileseconds to wait before to start function autocomplete
  <br>Default value : 1000. If value less than 10 internal sette to 10.
@@ -100,7 +100,7 @@ Number of mileseconds
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **CompletionMaxCount(Int32)**
+### <a id="methods-completionmaxcount"/>**CompletionMaxCount(Int32)**
 
 The max.items to return from function autocomplete.
 
@@ -117,7 +117,7 @@ Number of max.items
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **CompletionAsyncService(Func&lt;String, Int32, CancellationToken, Task&lt;String[]&gt;&gt;)**
+### <a id="methods-completionasyncservice"/>**CompletionAsyncService(Func&lt;String, Int32, CancellationToken, Task&lt;String[]&gt;&gt;)**
 
 The function to execute autocomplete. This function is requeried to run!
  <br>First param is a current text input<br>Second param is current cursor postion at text input<br>third parameter is the control cancellation token
@@ -135,7 +135,7 @@ function to autocomplete
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **DefaultIfEmpty(String)**
+### <a id="methods-defaultifempty"/>**DefaultIfEmpty(String)**
 
 Default value when finished value is empty.
 
@@ -152,7 +152,7 @@ Finished value default
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **Default(String)**
+### <a id="methods-default"/>**Default(String)**
 
 Default value when stated.
 
@@ -169,7 +169,7 @@ Value default
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
+### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
 
@@ -189,7 +189,7 @@ The timeout for valid items saved. Default value is 365 days
 
 IControlAutoComplete
 
-### **InputToCase(CaseOptions)**
+### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
 
 Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
 
@@ -206,7 +206,7 @@ Transform option
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **AcceptInput(Func&lt;Char, Boolean&gt;)**
+### <a id="methods-acceptinput"/>**AcceptInput(Func&lt;Char, Boolean&gt;)**
 
 Execute a function to accept char input.
  <br>If result true accept char input; otherwise, ignore char input.
@@ -224,7 +224,7 @@ function to accept
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **MaxLenght(UInt16)**
+### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
 
 MaxLenght of input text.
 
@@ -241,7 +241,7 @@ Lenght
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
@@ -259,7 +259,7 @@ the function validator.
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **ValidateOnDemand(Boolean)**
+### <a id="methods-validateondemand"/>**ValidateOnDemand(Boolean)**
 
 Execute validators foreach input
 
@@ -276,7 +276,7 @@ true execute validators foreach input; otherwise, only at finish.
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **ChangeDescription(Func&lt;String, String&gt;)**
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;String, String&gt;)**
 
 Dynamically change the description using a user role
 
@@ -293,7 +293,7 @@ function to apply change
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 

@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;ItemBrowser[]&gt;](./pplus.controls.ipromptcontro
 
 ## Methods
 
-### **Range(Int32, Nullable&lt;Int32&gt;)**
+### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
 
 Defines a minimum and maximum (optional) range of items selected in the list
 
@@ -40,7 +40,7 @@ Maximum number of items
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **Default(String)**
+### <a id="methods-default"/>**Default(String)**
 
 Default item (fullpath) seleted when started
 
@@ -57,7 +57,7 @@ fullpath
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -74,7 +74,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **NoSpinner()**
+### <a id="methods-nospinner"/>**NoSpinner()**
 
 Not show Spinner
 
@@ -86,7 +86,7 @@ IControlMultiSelectBrowser NoSpinner()
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **DisabledRecursiveExpand()**
+### <a id="methods-disabledrecursiveexpand"/>**DisabledRecursiveExpand()**
 
 Disabled ExpandAll Feature. Only item in Top-level are expanded
  <br>Overwrite Root option ExpandAll to false
@@ -99,7 +99,7 @@ IControlMultiSelectBrowser DisabledRecursiveExpand()
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
@@ -126,7 +126,7 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **Styles(StyleBrowser, Style)**
+### <a id="methods-styles"/>**Styles(StyleBrowser, Style)**
 
 Overwrite Styles Browser. [StyleBrowser](./pplus.controls.stylebrowser.md)
 
@@ -146,7 +146,7 @@ Styles Browser
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **ShowLines(Boolean)**
+### <a id="methods-showlines"/>**ShowLines(Boolean)**
 
 Show lines of level. Default is true
 
@@ -163,7 +163,7 @@ true Show lines, otherwise 'no'
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **ShowExpand(Boolean)**
+### <a id="methods-showexpand"/>**ShowExpand(Boolean)**
 
 Show expand SymbolType.Expanded. Default is true
 
@@ -180,7 +180,7 @@ true Show Expanded SymbolType, otherwise 'no'
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **OnlyFolders(Boolean)**
+### <a id="methods-onlyfolders"/>**OnlyFolders(Boolean)**
 
 Load only Folders on browser. Default is false
 
@@ -197,7 +197,7 @@ true only Folders, otherwise Folders and files
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **ShowSize(Boolean)**
+### <a id="methods-showsize"/>**ShowSize(Boolean)**
 
 Show folder and file size in browser. Default is true
 
@@ -214,7 +214,7 @@ true Show size, otherwise 'no'
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **AcceptHiddenAttributes(Boolean)**
+### <a id="methods-accepthiddenattributes"/>**AcceptHiddenAttributes(Boolean)**
 
 Accept hidden folder and files in browser. Default is false
 
@@ -231,7 +231,7 @@ true accept hidden folder and files, otherwise 'no'
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **AcceptSystemAttributes(Boolean)**
+### <a id="methods-acceptsystemattributes"/>**AcceptSystemAttributes(Boolean)**
 
 Accept system folder and files in browser. Default is false
 
@@ -248,7 +248,7 @@ true accept system folder and files, otherwise 'no'
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **SearchFolderPattern(String)**
+### <a id="methods-searchfolderpattern"/>**SearchFolderPattern(String)**
 
 Search folder pattern. Default is '*'
 
@@ -265,7 +265,7 @@ Search pattern
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **SearchFilePattern(String)**
+### <a id="methods-searchfilepattern"/>**SearchFilePattern(String)**
 
 Search file pattern. Default is '*'
 
@@ -282,7 +282,7 @@ Search pattern
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **PageSize(Int32)**
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page.Default value for this control is 10.
 
@@ -299,7 +299,7 @@ Number of Max.items
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **FilterType(FilterMode)**
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
 Filter strategy for filter items in colletion
  <br>Default value is FilterMode.Contains
@@ -317,7 +317,7 @@ Filter Mode
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **SelectAll(Func&lt;ItemBrowser, Boolean&gt;)**
+### <a id="methods-selectall"/>**SelectAll(Func&lt;ItemBrowser, Boolean&gt;)**
 
 Select all items that satisfy the selection function
 
@@ -334,7 +334,7 @@ the function
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **Root(String, Boolean, Func&lt;ItemBrowser, Boolean&gt;, Func&lt;ItemBrowser, Boolean&gt;)**
+### <a id="methods-root"/>**Root(String, Boolean, Func&lt;ItemBrowser, Boolean&gt;, Func&lt;ItemBrowser, Boolean&gt;)**
 
 Set folder root to browser
 
@@ -360,7 +360,7 @@ Disabled all items that satisfy the disabled function
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **AddFixedSelect(String[])**
+### <a id="methods-addfixedselect"/>**AddFixedSelect(String[])**
 
 Fixed select (immutable) items in list
 
@@ -377,7 +377,7 @@ list with fullpath immutable items selected
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **ShowCurrentFolder(Boolean)**
+### <a id="methods-showcurrentfolder"/>**ShowCurrentFolder(Boolean)**
 
 Append name current folder on description
 
@@ -394,7 +394,7 @@ true Append current name folder on description, not append
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **HotKeyFullPath(HotKey)**
+### <a id="methods-hotkeyfullpath"/>**HotKeyFullPath(HotKey)**
 
 Overwrite a HotKey toggle current name folder to FullPath. Default value is 'F2'
 
@@ -411,7 +411,7 @@ The [HotKey](./pplus.controls.hotkey.md) to toggle current name folder to FullPa
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **HotKeyToggleExpand(HotKey)**
+### <a id="methods-hotkeytoggleexpand"/>**HotKeyToggleExpand(HotKey)**
 
 Overwrite a HotKey expand/Collap current folder selected. Default value is 'F3'
 
@@ -428,7 +428,7 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collapse current folder selec
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **HotKeyToggleExpandAll(HotKey)**
+### <a id="methods-hotkeytoggleexpandall"/>**HotKeyToggleExpandAll(HotKey)**
 
 Overwrite a HotKey expand/Collap all folders. Default value is 'F4'
 
@@ -445,7 +445,7 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all folders
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **AfterExpanded(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-afterexpanded"/>**AfterExpanded(Action&lt;ItemBrowser&gt;)**
 
 Action to execute after Expanded
 
@@ -462,7 +462,7 @@ The action
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **AfterCollapsed(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-aftercollapsed"/>**AfterCollapsed(Action&lt;ItemBrowser&gt;)**
 
 Action to execute after Collapsed
 
@@ -479,7 +479,7 @@ The action
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **BeforeExpanded(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-beforeexpanded"/>**BeforeExpanded(Action&lt;ItemBrowser&gt;)**
 
 Action to execute before Expanded
 
@@ -496,7 +496,7 @@ The action
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### **BeforeCollapsed(Action&lt;ItemBrowser&gt;)**
+### <a id="methods-beforecollapsed"/>**BeforeCollapsed(Action&lt;ItemBrowser&gt;)**
 
 Action to execute before Collapsed
 

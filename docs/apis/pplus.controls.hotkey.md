@@ -23,7 +23,7 @@ Implements [IEquatable&lt;ConsoleKeyInfo&gt;](https://docs.microsoft.com/en-us/d
 
 ## Properties
 
-### **TooltipDefault**
+### <a id="properties-tooltipdefault"/>**TooltipDefault**
 
 Get HotKey default for Tooltip 'F1'
 
@@ -35,7 +35,7 @@ public static HotKey TooltipDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **PasswordViewDefault**
+### <a id="properties-passwordviewdefault"/>**PasswordViewDefault**
 
 Get HotKey default for PasswordView 'F2'
 
@@ -47,7 +47,7 @@ public static HotKey PasswordViewDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **TooltipFullPathDefault**
+### <a id="properties-tooltipfullpathdefault"/>**TooltipFullPathDefault**
 
 Get HotKey default for Tooltip FullPath 'F2'
 
@@ -59,7 +59,7 @@ public static HotKey TooltipFullPathDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **ToggleExpandNodeDefault**
+### <a id="properties-toggleexpandnodedefault"/>**ToggleExpandNodeDefault**
 
 Get HotKey default for expand node 'F3'
 
@@ -71,7 +71,7 @@ public static HotKey ToggleExpandNodeDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **ToggleExpandAllNodeDefault**
+### <a id="properties-toggleexpandallnodedefault"/>**ToggleExpandAllNodeDefault**
 
 Get HotKey default for expand node 'F4'
 
@@ -83,7 +83,7 @@ public static HotKey ToggleExpandAllNodeDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **SelectAllDefault**
+### <a id="properties-selectalldefault"/>**SelectAllDefault**
 
 Get HotKey default for Select All 'F2'
 
@@ -95,7 +95,7 @@ public static HotKey SelectAllDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **EditItemDefault**
+### <a id="properties-edititemdefault"/>**EditItemDefault**
 
 Get HotKey default for Edit Item 'F2'
 
@@ -107,7 +107,7 @@ public static HotKey EditItemDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **InvertSelectedDefault**
+### <a id="properties-invertselecteddefault"/>**InvertSelectedDefault**
 
 Get HotKey default for Invert Selected 'F3'
 
@@ -119,7 +119,7 @@ public static HotKey InvertSelectedDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **RemoveItemDefault**
+### <a id="properties-removeitemdefault"/>**RemoveItemDefault**
 
 Get HotKey default for Remove item 'F3'
 
@@ -131,7 +131,7 @@ public static HotKey RemoveItemDefault { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### **KeyInfo**
+### <a id="properties-keyinfo"/>**KeyInfo**
 
 Get  to HotKey
 
@@ -145,7 +145,7 @@ ConsoleKeyInfo<br>
 
 ## Constructors
 
-### **HotKey()**
+### <a id="constructors-.ctor"/>**HotKey()**
 
 Create a HotKey
 
@@ -157,7 +157,7 @@ HotKey()
 
 Do not use this constructor!
 
-### **HotKey(UserHotKey, Boolean, Boolean, Boolean)**
+### <a id="constructors-.ctor"/>**HotKey(UserHotKey, Boolean, Boolean, Boolean)**
 
 Create a HotKey
 
@@ -181,7 +181,7 @@ With Ctrl key
 
 ## Methods
 
-### **ToString()**
+### <a id="methods-tostring"/>**ToString()**
 
 ```csharp
 string ToString()
@@ -191,7 +191,7 @@ string ToString()
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)
 
-### **Equals(ConsoleKeyInfo)**
+### <a id="methods-equals"/>**Equals(ConsoleKeyInfo)**
 
 Checks Hotkey instances are equal the .
 

@@ -24,7 +24,7 @@ Implements IPromptControls&lt;T&gt;
 
 ## Methods
 
-### **Interaction(IEnumerable&lt;T&gt;, Action&lt;IControlTreeViewSelect&lt;T&gt;, T&gt;)**
+### <a id="methods-interaction"/>**Interaction(IEnumerable&lt;T&gt;, Action&lt;IControlTreeViewSelect&lt;T&gt;, T&gt;)**
 
 Execute a action foreach item of colletion passed as a parameter
 
@@ -44,7 +44,7 @@ Action to execute
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -61,7 +61,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **Styles(StyleTreeView, Style)**
+### <a id="methods-styles"/>**Styles(StyleTreeView, Style)**
 
 Overwrite Styles treeview. [StyleTreeView](./pplus.controls.styletreeview.md)
 
@@ -81,7 +81,7 @@ Styles treeview
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **ShowLines(Boolean)**
+### <a id="methods-showlines"/>**ShowLines(Boolean)**
 
 Show lines of level. Default is true
 
@@ -98,7 +98,7 @@ true Show lines, otherwise 'no'
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **ShowExpand(Boolean)**
+### <a id="methods-showexpand"/>**ShowExpand(Boolean)**
 
 Show expand SymbolType.Expanded. Default is true
 
@@ -115,7 +115,7 @@ true Show Expanded SymbolType, otherwise 'no'
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **PageSize(Int32)**
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page.Default value for this control is 10.
 
@@ -132,7 +132,7 @@ Number of Max.items
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **RootNode(T, Func&lt;T, String&gt;, Boolean, Func&lt;T, Boolean&gt;, Func&lt;T, Boolean&gt;, Nullable&lt;Char&gt;, Func&lt;T, String&gt;)**
+### <a id="methods-rootnode"/>**RootNode(T, Func&lt;T, String&gt;, Boolean, Func&lt;T, Boolean&gt;, Func&lt;T, Boolean&gt;, Nullable&lt;Char&gt;, Func&lt;T, String&gt;)**
 
 Set root node
 
@@ -167,7 +167,7 @@ function to return unique identify node
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **AddNode(T)**
+### <a id="methods-addnode"/>**AddNode(T)**
 
 Add a node
 
@@ -184,7 +184,7 @@ value node
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **AddNode(T, T)**
+### <a id="methods-addnode"/>**AddNode(T, T)**
 
 Add a node in parent node
 
@@ -204,7 +204,7 @@ value node
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **Default(T)**
+### <a id="methods-default"/>**Default(T)**
 
 Default item node seleted when started
 
@@ -221,7 +221,7 @@ value node
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **ShowCurrentNode(Boolean)**
+### <a id="methods-showcurrentnode"/>**ShowCurrentNode(Boolean)**
 
 Append name node parent on description
 
@@ -238,7 +238,7 @@ true Append current name node parent on description, not append
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **HotKeyFullPath(HotKey)**
+### <a id="methods-hotkeyfullpath"/>**HotKeyFullPath(HotKey)**
 
 Overwrite a HotKey toggle current name node parent to FullPath. Default value is 'F2'
 
@@ -255,7 +255,7 @@ The [HotKey](./pplus.controls.hotkey.md) to toggle current name node to FullPath
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **HotKeyToggleExpand(HotKey)**
+### <a id="methods-hotkeytoggleexpand"/>**HotKeyToggleExpand(HotKey)**
 
 Overwrite a HotKey expand/Collap current node selected. Default value is 'F3'
 
@@ -272,7 +272,7 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collapse current node selecte
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **HotKeyToggleExpandAll(HotKey)**
+### <a id="methods-hotkeytoggleexpandall"/>**HotKeyToggleExpandAll(HotKey)**
 
 Overwrite a HotKey expand/Collap all nodes. Default value is 'F4'
 
@@ -289,7 +289,7 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all nodes
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **AfterExpanded(Action&lt;T&gt;)**
+### <a id="methods-afterexpanded"/>**AfterExpanded(Action&lt;T&gt;)**
 
 Action to execute after Expanded
 
@@ -306,7 +306,7 @@ The action
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **AfterCollapsed(Action&lt;T&gt;)**
+### <a id="methods-aftercollapsed"/>**AfterCollapsed(Action&lt;T&gt;)**
 
 Action to execute after Collapsed
 
@@ -323,7 +323,7 @@ The action
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **BeforeExpanded(Action&lt;T&gt;)**
+### <a id="methods-beforeexpanded"/>**BeforeExpanded(Action&lt;T&gt;)**
 
 Action to execute before Expanded
 
@@ -340,7 +340,7 @@ The action
 
 [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-### **BeforeCollapsed(Action&lt;T&gt;)**
+### <a id="methods-beforecollapsed"/>**BeforeCollapsed(Action&lt;T&gt;)**
 
 Action to execute before Collapsed
 

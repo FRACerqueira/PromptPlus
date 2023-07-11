@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Methods
 
-### **ApplyForeground(StyleSchema, StyleControls, Color)**
+### <a id="methods-applyforeground"/>**ApplyForeground(StyleSchema, StyleControls, Color)**
 
 Apply Foreground to [StyleControls](./pplus.controls.stylecontrols.md)
 
@@ -45,7 +45,7 @@ Foreground [Color](./pplus.color.md)
 
 [Style](./pplus.style.md)
 
-### **ApplyBackground(StyleSchema, StyleControls, Color)**
+### <a id="methods-applybackground"/>**ApplyBackground(StyleSchema, StyleControls, Color)**
 
 Apply global Background to [StyleControls](./pplus.controls.stylecontrols.md)
 
@@ -68,7 +68,7 @@ Background [Color](./pplus.color.md)
 
 [Style](./pplus.style.md)
 
-### **Prompt(StyleSchema)**
+### <a id="methods-prompt"/>**Prompt(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Prompt.
  <br>ValueResult Foreground : 'ConsoleColor.White'<br>ValueResult Background : same Console Background when setted
@@ -85,7 +85,7 @@ public static Style Prompt(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **Slider(StyleSchema)**
+### <a id="methods-slider"/>**Slider(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Slider-On(Foreground)/Slider-Off(Background).
  <br>ValueResult Foreground : 'ConsoleColor.Cyan'<br>ValueResult Background : 'ConsoleColor.DarkGray'
@@ -102,7 +102,7 @@ public static Style Slider(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **Answer(StyleSchema)**
+### <a id="methods-answer"/>**Answer(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Answer.
  <br>ValueResult Foreground : 'ConsoleColor.Cyan'<br>ValueResult Background : same Console Background when setted
@@ -119,7 +119,7 @@ public static Style Answer(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **Description(StyleSchema)**
+### <a id="methods-description"/>**Description(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Description.
  <br>ValueResult Foreground : 'ConsoleColor.DarkYellow'<br>ValueResult Background : same Console Background when setted
@@ -136,7 +136,7 @@ public static Style Description(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **Sugestion(StyleSchema)**
+### <a id="methods-sugestion"/>**Sugestion(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Sugestion.
  <br>ValueResult Foreground : 'ConsoleColor.Yellow'<br>ValueResult Background : same Console Background when setted
@@ -153,7 +153,7 @@ public static Style Sugestion(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **Selected(StyleSchema)**
+### <a id="methods-selected"/>**Selected(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Selected.
  <br>ValueResult Foreground : 'ConsoleColor.Green'<br>ValueResult Background : same Console Background when setted
@@ -170,7 +170,7 @@ public static Style Selected(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **UnSelected(StyleSchema)**
+### <a id="methods-unselected"/>**UnSelected(StyleSchema)**
 
 Get [Style](./pplus.style.md) text UnSelected.
  <br>ValueResult Foreground : 'ConsoleColor.Gray'<br>ValueResult Background : same Console Background when setted
@@ -187,7 +187,7 @@ public static Style UnSelected(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **Disabled(StyleSchema)**
+### <a id="methods-disabled"/>**Disabled(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Disabled.
  <br>ValueResult Foreground : 'ConsoleColor.DarkGray'<br>ValueResult Background : same Console Background when setted
@@ -204,7 +204,7 @@ public static Style Disabled(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **Error(StyleSchema)**
+### <a id="methods-error"/>**Error(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Error.
  <br>ValueResult Foreground : 'ConsoleColor.Red'<br>ValueResult Background : same Console Background when setted
@@ -221,7 +221,7 @@ public static Style Error(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **Pagination(StyleSchema)**
+### <a id="methods-pagination"/>**Pagination(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Pagination.
  <br>ValueResult Foreground : 'ConsoleColor.DarkGray'<br>ValueResult Background : same Console Background when setted
@@ -238,7 +238,7 @@ public static Style Pagination(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **TaggedInfo(StyleSchema)**
+### <a id="methods-taggedinfo"/>**TaggedInfo(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Tagged info.
  <br>ValueResult Foreground : 'ConsoleColor.DarkYellow'<br>ValueResult Background : same Console Background when setted
@@ -255,7 +255,7 @@ public static Style TaggedInfo(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
-### **Tooltips(StyleSchema)**
+### <a id="methods-tooltips"/>**Tooltips(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Tooltips.
  <br>ValueResult Foreground : 'ConsoleColor.DarkGray'<br>ValueResult Background : same Console Background when setted

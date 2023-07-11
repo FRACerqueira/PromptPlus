@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **Name**
+### <a id="properties-name"/>**Name**
 
 Get Name
 
@@ -34,7 +34,7 @@ public string Name { get; internal set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **IsFolder**
+### <a id="properties-isfolder"/>**IsFolder**
 
 Get if item is folder
 
@@ -46,7 +46,7 @@ public bool IsFolder { get; internal set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### **CurrentFolder**
+### <a id="properties-currentfolder"/>**CurrentFolder**
 
 Get name of parent folder
 
@@ -58,7 +58,7 @@ public string CurrentFolder { get; internal set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **FullPath**
+### <a id="properties-fullpath"/>**FullPath**
 
 Get fullpath of item
 
@@ -70,7 +70,7 @@ public string FullPath { get; internal set; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Length**
+### <a id="properties-length"/>**Length**
 
 Get Length of item. If a folder lenght represents number of item. If file lenght represents the size in bytes
 
@@ -84,7 +84,7 @@ public long Length { get; internal set; }
 
 ## Constructors
 
-### **ItemBrowser()**
+### <a id="constructors-.ctor"/>**ItemBrowser()**
 
 ```csharp
 public ItemBrowser()

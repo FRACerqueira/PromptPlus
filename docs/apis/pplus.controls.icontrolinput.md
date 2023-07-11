@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;String&gt;](./pplus.controls.ipromptcontrols-1.md
 
 ## Methods
 
-### **DefaultIfEmpty(String)**
+### <a id="methods-defaultifempty"/>**DefaultIfEmpty(String)**
 
 Default value when finished value is empty.
 
@@ -37,7 +37,7 @@ Finished value default
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **Default(String)**
+### <a id="methods-default"/>**Default(String)**
 
 Default value when stated.
 
@@ -54,7 +54,7 @@ Value default
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
+### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
 
@@ -74,7 +74,7 @@ The timeout for valid items saved. Default value is 365 days
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **InputToCase(CaseOptions)**
+### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
 
 Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
 
@@ -91,7 +91,7 @@ Transform option
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **AcceptInput(Func&lt;Char, Boolean&gt;)**
+### <a id="methods-acceptinput"/>**AcceptInput(Func&lt;Char, Boolean&gt;)**
 
 Execute a function to accept char input.
  <br>If result true accept char input; otherwise, ignore char input.
@@ -109,7 +109,7 @@ function to accept
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **MaxLenght(UInt16)**
+### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
 
 MaxLenght of input text.
 
@@ -126,7 +126,7 @@ Lenght
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **IsSecret(Nullable&lt;Char&gt;)**
+### <a id="methods-issecret"/>**IsSecret(Nullable&lt;Char&gt;)**
 
 The input is a secret. the input text is masked to '#' (default value)
 
@@ -143,7 +143,7 @@ char secret
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **EnabledViewSecret(Nullable&lt;HotKey&gt;)**
+### <a id="methods-enabledviewsecret"/>**EnabledViewSecret(Nullable&lt;HotKey&gt;)**
 
 Enable user to view the input without mask.
 
@@ -160,7 +160,7 @@ Overwrite a [HotKey](./pplus.controls.hotkey.md) to toggle view. Default value i
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
@@ -178,7 +178,7 @@ the function validator.
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **ValidateOnDemand(Boolean)**
+### <a id="methods-validateondemand"/>**ValidateOnDemand(Boolean)**
 
 Execute validators foreach input
 
@@ -195,7 +195,7 @@ true execute validators foreach input; otherwise, only at finish.
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **ChangeDescription(Func&lt;String, String&gt;)**
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;String, String&gt;)**
 
 Dynamically change the description using a user role
 
@@ -212,7 +212,7 @@ function to apply change
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -229,7 +229,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
+### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
 
 Add Suggestion Handler feature
 
@@ -246,7 +246,7 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **HistoryMinimumPrefixLength(Int32)**
+### <a id="methods-historyminimumprefixlength"/>**HistoryMinimumPrefixLength(Int32)**
 
 Minimum chars to enabled history feature. Default value is 0.
  <br>History items are filtered by the starts with entry.
@@ -264,7 +264,7 @@ Minimum chars number
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **HistoryEnabled(String)**
+### <a id="methods-historyenabled"/>**HistoryEnabled(String)**
 
 Enabled saved history inputs.
  <br>The history file is saved in  in the 'PromptPlus.History' folder.
@@ -282,7 +282,7 @@ name of file to saved history
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **HistoryTimeout(TimeSpan)**
+### <a id="methods-historytimeout"/>**HistoryTimeout(TimeSpan)**
 
 Set timeout to valid items saved on history. Default value is 365 days.
 
@@ -299,7 +299,7 @@ timeout value
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **HistoryMaxItems(Byte)**
+### <a id="methods-historymaxitems"/>**HistoryMaxItems(Byte)**
 
 Set maximum items saved on history.After maximum the items are rotates.
 
@@ -316,7 +316,7 @@ maximum items saved
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **HistoryPageSize(Int32)**
+### <a id="methods-historypagesize"/>**HistoryPageSize(Int32)**
 
 Set max.item view per page on history.Default value for this control is 10.
 
@@ -333,7 +333,7 @@ Number of Max.items
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### **FilterType(FilterMode)**
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
 Filter strategy for filter items in History colletion
  <br>Default value is FilterMode.StartsWith

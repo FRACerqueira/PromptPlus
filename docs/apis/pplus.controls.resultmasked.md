@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **Input**
+### <a id="properties-input"/>**Input**
 
 Get Text without mask
 
@@ -34,7 +34,7 @@ public string Input { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Masked**
+### <a id="properties-masked"/>**Masked**
 
 Get Text with mask
 
@@ -48,7 +48,7 @@ public string Masked { get; }
 
 ## Constructors
 
-### **ResultMasked()**
+### <a id="constructors-.ctor"/>**ResultMasked()**
 
 Create a ResultMasked
 

@@ -24,7 +24,7 @@ Implements IPromptControls&lt;IEnumerable&lt;T&gt;&gt;
 
 ## Methods
 
-### **Interaction&lt;T1&gt;(IEnumerable&lt;T1&gt;, Action&lt;IControlMultiSelect&lt;T&gt;, T1&gt;)**
+### <a id="methods-interaction"/>**Interaction&lt;T1&gt;(IEnumerable&lt;T1&gt;, Action&lt;IControlMultiSelect&lt;T&gt;, T1&gt;)**
 
 Execute a action foreach item of colletion passed as a parameter
 
@@ -49,7 +49,7 @@ Action to execute
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -66,7 +66,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **OverflowAnswer(Overflow)**
+### <a id="methods-overflowanswer"/>**OverflowAnswer(Overflow)**
 
 Overwrite Overflow strategy answer
  <br>Default value is Overflow.Ellipsis
@@ -84,7 +84,7 @@ Overflow strategy
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **AppendGroupOnDescription()**
+### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription()**
 
 Append group text on description
 
@@ -96,7 +96,7 @@ IControlMultiSelect<T> AppendGroupOnDescription()
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **AddDefault(T[])**
+### <a id="methods-adddefault"/>**AddDefault(T[])**
 
 Add default value seleted to initial list.
 
@@ -113,7 +113,7 @@ Value default
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
+### <a id="methods-orderby"/>**OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort list by expression
 
@@ -130,7 +130,7 @@ expresion to sort the colletion
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
+### <a id="methods-orderbydescending"/>**OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort Descending list by expression
 
@@ -147,7 +147,7 @@ expresion to sort the colletion
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
+### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite defaults start seleted value with last result saved on history.
 
@@ -167,7 +167,7 @@ The timeout for valid items saved. Default value is 365 days
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **PageSize(Int32)**
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page.Default value for this control is 10.
 
@@ -184,7 +184,7 @@ Number of Max.items
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **FilterType(FilterMode)**
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
 Filter strategy for filter items in colletion
  <br>Default value is FilterMode.Contains
@@ -202,7 +202,7 @@ Filter Mode
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **HotKeySelectAll(HotKey)**
+### <a id="methods-hotkeyselectall"/>**HotKeySelectAll(HotKey)**
 
 Overwrite a HotKey to Select All item. Default value is 'F2'
 
@@ -219,7 +219,7 @@ The [HotKey](./pplus.controls.hotkey.md) to Select All item
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **HotKeyInvertSelected(HotKey)**
+### <a id="methods-hotkeyinvertselected"/>**HotKeyInvertSelected(HotKey)**
 
 Overwrite a HotKey to Invert Selected item. Default value is 'F3'
 
@@ -236,7 +236,7 @@ The [HotKey](./pplus.controls.hotkey.md) to Invert Selected item
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **TextSelector(Func&lt;T, String&gt;)**
+### <a id="methods-textselector"/>**TextSelector(Func&lt;T, String&gt;)**
 
 Function to show text Item in list.Default value is Item.ToString()
 
@@ -253,7 +253,7 @@ Function to show text Item in list
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **ChangeDescription(Func&lt;T, String&gt;)**
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;T, String&gt;)**
 
 Dynamically change the description using a user role
 
@@ -270,7 +270,7 @@ function to apply change
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **AddItem(T, Boolean, Boolean)**
+### <a id="methods-additem"/>**AddItem(T, Boolean, Boolean)**
 
 Add item to list
 
@@ -293,7 +293,7 @@ true item selected, otherwise no
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **AddItems(IEnumerable&lt;T&gt;, Boolean, Boolean)**
+### <a id="methods-additems"/>**AddItems(IEnumerable&lt;T&gt;, Boolean, Boolean)**
 
 Add items colletion to list
 
@@ -316,7 +316,7 @@ true item selected, otherwise no
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **AddItemGrouped(String, T, Boolean, Boolean)**
+### <a id="methods-additemgrouped"/>**AddItemGrouped(String, T, Boolean, Boolean)**
 
 Add Item in a group to list
 
@@ -342,7 +342,7 @@ true item selected, otherwise no
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **AddItemsGrouped(String, IEnumerable&lt;T&gt;, Boolean, Boolean)**
+### <a id="methods-additemsgrouped"/>**AddItemsGrouped(String, IEnumerable&lt;T&gt;, Boolean, Boolean)**
 
 Add Items colletion in a group to List
 
@@ -368,7 +368,7 @@ true item selected, otherwise no
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **AddItemTo(AdderScope, T)**
+### <a id="methods-additemto"/>**AddItemTo(AdderScope, T)**
 
 Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
@@ -388,7 +388,7 @@ item
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
+### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
 
 Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
@@ -408,7 +408,7 @@ items colletion
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **EqualItems(Func&lt;T, T, Boolean&gt;)**
+### <a id="methods-equalitems"/>**EqualItems(Func&lt;T, T, Boolean&gt;)**
 
 Custom item comparator
 
@@ -425,7 +425,7 @@ function comparator
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### **Range(Int32, Nullable&lt;Int32&gt;)**
+### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
 
 Defines a minimum and maximum (optional) range of items seleted in the list
 

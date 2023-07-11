@@ -20,7 +20,7 @@ public interface IPromptConfig
 
 ## Methods
 
-### **EnabledAbortKey(Boolean)**
+### <a id="methods-enabledabortkey"/>**EnabledAbortKey(Boolean)**
 
 Overwrite default Enabled/Disabled AbortKey press of control
 
@@ -37,7 +37,7 @@ value
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **ShowTooltip(Boolean)**
+### <a id="methods-showtooltip"/>**ShowTooltip(Boolean)**
 
 Overwrite default Show/Hide Tooltip of control
 
@@ -54,7 +54,7 @@ value
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **HideAfterFinish(Boolean)**
+### <a id="methods-hideafterfinish"/>**HideAfterFinish(Boolean)**
 
 Overwrite default Clear render area of control after finished
 
@@ -71,7 +71,7 @@ value
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **HideOnAbort(Boolean)**
+### <a id="methods-hideonabort"/>**HideOnAbort(Boolean)**
 
 Overwrite default Clear render area of control after AbortKey press
 
@@ -88,7 +88,7 @@ value
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **AddExtraAction(StageControl, Action&lt;Object, Object&gt;)**
+### <a id="methods-addextraaction"/>**AddExtraAction(StageControl, Action&lt;Object, Object&gt;)**
 
 Add generic action for the control when change [StageControl](./pplus.controls.stagecontrol.md) of control
 
@@ -110,7 +110,7 @@ Action to execute.
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **SetContext(Object)**
+### <a id="methods-setcontext"/>**SetContext(Object)**
 
 Set generic context for then control to pass in stage ExtraAction parameter
 
@@ -127,7 +127,7 @@ value
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **ApplyStyle(StyleControls, Style)**
+### <a id="methods-applystyle"/>**ApplyStyle(StyleControls, Style)**
 
 Overwrite default style for [StyleControls](./pplus.controls.stylecontrols.md) of control
 
@@ -147,7 +147,7 @@ value
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Description(String)**
+### <a id="methods-description"/>**Description(String)**
 
 Set description for the control
 
@@ -164,7 +164,7 @@ Text description. Accept markup color
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Description(StringStyle)**
+### <a id="methods-description"/>**Description(StringStyle)**
 
 Set description for the control
 
@@ -181,7 +181,7 @@ Value description with style
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Prompt(String)**
+### <a id="methods-prompt"/>**Prompt(String)**
 
 Set prompt for the control
 
@@ -198,7 +198,7 @@ Text prompt. Accept markup color
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Prompt(StringStyle)**
+### <a id="methods-prompt"/>**Prompt(StringStyle)**
 
 Set prompt for the control
 
@@ -215,7 +215,7 @@ Value prompt with style
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Tooltips(String)**
+### <a id="methods-tooltips"/>**Tooltips(String)**
 
 Set prompt for the control
 
@@ -233,7 +233,7 @@ Text Tooltips. Accept markup color.
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Tooltips(StringStyle)**
+### <a id="methods-tooltips"/>**Tooltips(StringStyle)**
 
 Set Tooltips for the control. This value overwrite default tooltips control.
 
@@ -250,7 +250,7 @@ Value tooltip with style
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### **Symbols(SymbolType, String, String)**
+### <a id="methods-symbols"/>**Symbols(SymbolType, String, String)**
 
 Overwrite default Symbols for [SymbolType](./pplus.controls.symboltype.md) of control
 

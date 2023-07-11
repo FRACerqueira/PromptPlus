@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;ResultMasked&gt;](./pplus.controls.ipromptcontrol
 
 ## Methods
 
-### **TypeTipStyle(Style)**
+### <a id="methods-typetipstyle"/>**TypeTipStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region tip type input.
  <br>Default Foreground : 'ConsoleColor.Yellow'<br>Default Background : same Console Background when setted
@@ -38,7 +38,7 @@ Style
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **NegativeStyle(Style)**
+### <a id="methods-negativestyle"/>**NegativeStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region neggative input.
  <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
@@ -56,7 +56,7 @@ Style
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **PositiveStyle(Style)**
+### <a id="methods-positivestyle"/>**PositiveStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region positive input.
  <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
@@ -74,7 +74,7 @@ Style
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **Mask(String, Nullable&lt;Char&gt;)**
+### <a id="methods-mask"/>**Mask(String, Nullable&lt;Char&gt;)**
 
 Defines mask input. Rules for Generic type:
  <br>9 - Only a numeric character<br>L - Only a letter<br>C - OnlyCustom character<br>A - Any character<br>N - OnlyCustom character +  Only a numeric character<br>X - OnlyCustom character +  Only a letter<br>\ - Escape character<br>{ - Initial delimiter for repetition of masks<br>} - Final delimiter for repetition of masks<br>[-Initial delimiter for list of Custom character<br>] - Final delimiter for list of Custom character
@@ -95,7 +95,7 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **Mask(MaskedType, Nullable&lt;Char&gt;)**
+### <a id="methods-mask"/>**Mask(MaskedType, Nullable&lt;Char&gt;)**
 
 Defines type of mask control.
 
@@ -115,7 +115,7 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **AcceptEmptyValue()**
+### <a id="methods-acceptemptyvalue"/>**AcceptEmptyValue()**
 
 Accept empty value
  <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.
@@ -128,7 +128,7 @@ IControlMaskEdit AcceptEmptyValue()
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **DefaultIfEmpty(String, Boolean)**
+### <a id="methods-defaultifempty"/>**DefaultIfEmpty(String, Boolean)**
 
 Default value (with mask!) when finished value is empty.
 
@@ -148,7 +148,7 @@ Valid only for type MaskedType.Number or MaskedType.Currency, otherwise this set
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **FillZeros()**
+### <a id="methods-fillzeros"/>**FillZeros()**
 
 Fill zeros mask.
  <br>Not valid for type MaskedType.Generic (this set will be ignored).<br>When used this feature the AcceptEmptyValue feature will be ignored.<br>When MaskedType.Number or MaskedType.Currency this feature is always on.
@@ -161,7 +161,7 @@ IControlMaskEdit FillZeros()
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **Culture(CultureInfo)**
+### <a id="methods-culture"/>**Culture(CultureInfo)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
  <br>Default value is global Promptplus Cultureinfo
@@ -179,7 +179,7 @@ CultureInfo to use on validate
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **Culture(String)**
+### <a id="methods-culture"/>**Culture(String)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
  <br>Default value is global Promptplus Cultureinfo
@@ -197,7 +197,7 @@ Name of CultureInfo to use on validate
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **FormatYear(FormatYear)**
+### <a id="methods-formatyear"/>**FormatYear(FormatYear)**
 
 Defines if year is long or short.
  <br>Valid only for type MaskedType.DateOnly or DateTime, otherwise this set will be ignored.
@@ -215,7 +215,7 @@ IControlMaskEdit FormatYear(FormatYear value)
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **FormatTime(FormatTime)**
+### <a id="methods-formattime"/>**FormatTime(FormatTime)**
 
 Defines time parts input.
  <br>Valid only for type MaskedType.TimeOnly or DateTime, otherwise this set will be ignored.
@@ -233,7 +233,7 @@ IControlMaskEdit FormatTime(FormatTime value)
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **AmmoutPositions(Int32, Int32, Boolean)**
+### <a id="methods-ammoutpositions"/>**AmmoutPositions(Int32, Int32, Boolean)**
 
 Defines integer lenght, decimal lenght and accept signl.
  <br>Valid only for type MaskedType.Number or Currency, otherwise this set will be ignored.<br>This set is Requeried for these types.
@@ -257,7 +257,7 @@ True accept signal; otherwise, no.
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **DescriptionWithInputType(FormatWeek)**
+### <a id="methods-descriptionwithinputtype"/>**DescriptionWithInputType(FormatWeek)**
 
 Append to description the tip of type input.
 
@@ -274,7 +274,7 @@ show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **Default(String)**
+### <a id="methods-default"/>**Default(String)**
 
 Default value (with mask!) when stated.
 
@@ -291,7 +291,7 @@ Value default
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
+### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
 
@@ -311,7 +311,7 @@ The timeout for valid items saved. Default value is 365 days
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **InputToCase(CaseOptions)**
+### <a id="methods-inputtocase"/>**InputToCase(CaseOptions)**
 
 Transform char input using [CaseOptions](./pplus.controls.caseoptions.md).
 
@@ -328,7 +328,7 @@ Transform option
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
@@ -346,7 +346,7 @@ the function validator.
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **ValidateOnDemand(Boolean)**
+### <a id="methods-validateondemand"/>**ValidateOnDemand(Boolean)**
 
 Execute validators foreach input
 
@@ -363,7 +363,7 @@ true execute validators foreach input; otherwise, only at finish.
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **ChangeDescription(Func&lt;String, String&gt;)**
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;String, String&gt;)**
 
 Dynamically change the description using a user role
 
@@ -380,7 +380,7 @@ function to apply change
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -397,7 +397,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
+### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
 
 Add Suggestion (with mask!) Handler feature
 
@@ -414,7 +414,7 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **HistoryMinimumPrefixLength(Int32)**
+### <a id="methods-historyminimumprefixlength"/>**HistoryMinimumPrefixLength(Int32)**
 
 Minimum chars (without mask!) to enabled history feature.
  <br>History items are filtered by the starts with entry.
@@ -432,7 +432,7 @@ Minimum chars number
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **HistoryEnabled(String)**
+### <a id="methods-historyenabled"/>**HistoryEnabled(String)**
 
 Enabled saved history inputs.
  <br>The history file is saved in  in the 'PromptPlus.History' folder.
@@ -450,7 +450,7 @@ name of file to saved history
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **HistoryTimeout(TimeSpan)**
+### <a id="methods-historytimeout"/>**HistoryTimeout(TimeSpan)**
 
 Set timeout to valid items saved on history. Default value is 365 days.
 
@@ -467,7 +467,7 @@ timeout value
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **HistoryMaxItems(Byte)**
+### <a id="methods-historymaxitems"/>**HistoryMaxItems(Byte)**
 
 Set maximum items saved on history.After maximum the items are rotates.
 
@@ -484,7 +484,7 @@ maximum items saved
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **HistoryPageSize(Int32)**
+### <a id="methods-historypagesize"/>**HistoryPageSize(Int32)**
 
 Set max.item view per page on history.Default value for this control is 10.
 
@@ -501,7 +501,7 @@ Number of Max.items
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### **FilterType(FilterMode)**
+### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
 Filter strategy for filter items in History colletion
  <br>Default value is FilterMode.StartsWith

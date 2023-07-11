@@ -16,9 +16,9 @@ PromptPlus.Config.PageSize = 10;
 
 ## Table of Contents
 
-- [HotKeys](hotkeys.md)
 - [Settings](#settings)
 - [Symbols](#symbols)
+- [Settings API Reference](./apis/pplus.promptplus.md)
 
 ## Settings
 [**Top**](#promptplus-settings)

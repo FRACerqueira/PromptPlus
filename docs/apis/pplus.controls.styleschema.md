@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Methods
 
-### **ApplyStyle(StyleControls, Style)**
+### <a id="methods-applystyle"/>**ApplyStyle(StyleControls, Style)**
 
 Apply style current instance of control
 

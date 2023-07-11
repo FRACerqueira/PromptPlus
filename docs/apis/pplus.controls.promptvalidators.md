@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Methods
 
-### **ImportValidators&lt;T&gt;(T, Expression&lt;Func&lt;T, Object&gt;&gt;)**
+### <a id="methods-importvalidators"/>**ImportValidators&lt;T&gt;(T, Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Import validation from object to control
 
@@ -44,7 +44,7 @@ public static Func<Object, ValidationResult>[] ImportValidators<T>(T instance, E
 
 the Validation function
 
-### **IsUriScheme(UriKind, String, String)**
+### <a id="methods-isurischeme"/>**IsUriScheme(UriKind, String, String)**
 
 Validation function for Uri Scheme
 
@@ -67,7 +67,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsNumber(CultureInfo, String)**
+### <a id="methods-isnumber"/>**IsNumber(CultureInfo, String)**
 
 Validation function for Number
 
@@ -87,7 +87,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsCurrency(CultureInfo, String)**
+### <a id="methods-iscurrency"/>**IsCurrency(CultureInfo, String)**
 
 Validation function for Currency
 
@@ -107,7 +107,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsDateTime(CultureInfo, String)**
+### <a id="methods-isdatetime"/>**IsDateTime(CultureInfo, String)**
 
 Validation function for DateTime
 
@@ -127,7 +127,7 @@ Custom error message to show
 
 the Validation function
 
-### **Required(String)**
+### <a id="methods-required"/>**Required(String)**
 
 Validation function for Required
 
@@ -144,7 +144,7 @@ Custom error message to show
 
 the Validation function
 
-### **MinLength(Int32, String)**
+### <a id="methods-minlength"/>**MinLength(Int32, String)**
 
 Validation function for MinLength
 
@@ -164,7 +164,7 @@ Custom error message to show
 
 the Validation function
 
-### **MaxLength(Int32, String)**
+### <a id="methods-maxlength"/>**MaxLength(Int32, String)**
 
 Validation function for MaxLength
 
@@ -184,7 +184,7 @@ Custom error message to show
 
 the Validation function
 
-### **RegularExpression(String, String)**
+### <a id="methods-regularexpression"/>**RegularExpression(String, String)**
 
 Validation function for RegularExpression
 
@@ -204,7 +204,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeBoolean(String)**
+### <a id="methods-istypeboolean"/>**IsTypeBoolean(String)**
 
 Validation function for Is Type Boolean
 
@@ -221,7 +221,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeByte(String)**
+### <a id="methods-istypebyte"/>**IsTypeByte(String)**
 
 Validation function for Is Type Byte
 
@@ -238,7 +238,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeChar(String)**
+### <a id="methods-istypechar"/>**IsTypeChar(String)**
 
 Validation function for Is Type Char
 
@@ -255,7 +255,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeDecimal(String)**
+### <a id="methods-istypedecimal"/>**IsTypeDecimal(String)**
 
 Validation function for Is Type Decimal
 
@@ -272,7 +272,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeDouble(String)**
+### <a id="methods-istypedouble"/>**IsTypeDouble(String)**
 
 Validation function for Is Type Double
 
@@ -289,7 +289,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeShort(String)**
+### <a id="methods-istypeshort"/>**IsTypeShort(String)**
 
 Validation function for Is Type Short
 
@@ -306,7 +306,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeInt16(String)**
+### <a id="methods-istypeint16"/>**IsTypeInt16(String)**
 
 Validation function for Is Type Int16
 
@@ -323,7 +323,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeInt(String)**
+### <a id="methods-istypeint"/>**IsTypeInt(String)**
 
 Validation function for Is Type Int
 
@@ -340,7 +340,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeInt32(String)**
+### <a id="methods-istypeint32"/>**IsTypeInt32(String)**
 
 Validation function for Is Type Int32
 
@@ -357,7 +357,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeLong(String)**
+### <a id="methods-istypelong"/>**IsTypeLong(String)**
 
 Validation function for Is Type Long
 
@@ -374,7 +374,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeInt64(String)**
+### <a id="methods-istypeint64"/>**IsTypeInt64(String)**
 
 Validation function for Is Type Int64
 
@@ -391,7 +391,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeSByte(String)**
+### <a id="methods-istypesbyte"/>**IsTypeSByte(String)**
 
 Validation function for Is Type SByte
 
@@ -408,7 +408,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeFloat(String)**
+### <a id="methods-istypefloat"/>**IsTypeFloat(String)**
 
 Validation function for Is Type Float
 
@@ -425,7 +425,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeSingle(String)**
+### <a id="methods-istypesingle"/>**IsTypeSingle(String)**
 
 Validation function for Is Type Single
 
@@ -442,7 +442,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeUshort(String)**
+### <a id="methods-istypeushort"/>**IsTypeUshort(String)**
 
 Validation function for Is Type Ushort
 
@@ -459,7 +459,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeUInt16(String)**
+### <a id="methods-istypeuint16"/>**IsTypeUInt16(String)**
 
 Validation function for Is Type UInt16
 
@@ -476,7 +476,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeUInt(String)**
+### <a id="methods-istypeuint"/>**IsTypeUInt(String)**
 
 Validation function for Is Type UInt
 
@@ -493,7 +493,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeUInt32(String)**
+### <a id="methods-istypeuint32"/>**IsTypeUInt32(String)**
 
 Validation function for Is Type UInt32
 
@@ -510,7 +510,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeULong(String)**
+### <a id="methods-istypeulong"/>**IsTypeULong(String)**
 
 Validation function for Is Type ULong
 
@@ -527,7 +527,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeUInt64(String)**
+### <a id="methods-istypeuint64"/>**IsTypeUInt64(String)**
 
 Validation function for Is Type UInt64
 
@@ -544,7 +544,7 @@ Custom error message to show
 
 the Validation function
 
-### **IsTypeDateTime(String)**
+### <a id="methods-istypedatetime"/>**IsTypeDateTime(String)**
 
 Validation function for Is Type DateTime
 

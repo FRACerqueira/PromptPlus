@@ -26,7 +26,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **Context**
+### <a id="properties-context"/>**Context**
 
 Get conext Result
 
@@ -38,7 +38,7 @@ public T Context { get; }
 
 T<br>
 
-### **Lastvalue**
+### <a id="properties-lastvalue"/>**Lastvalue**
 
 Get last value progress
 
@@ -52,7 +52,7 @@ public double Lastvalue { get; }
 
 ## Constructors
 
-### **ResultProgessBar()**
+### <a id="constructors-.ctor"/>**ResultProgessBar()**
 
 Create a ResultProgessBar
 

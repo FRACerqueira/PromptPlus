@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### **Id**
+### <a id="properties-id"/>**Id**
 
 TaskTitle of Task
 
@@ -34,7 +34,7 @@ public string Id { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Description**
+### <a id="properties-description"/>**Description**
 
 Description of Task
 
@@ -46,7 +46,7 @@ public string Description { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### **Status**
+### <a id="properties-status"/>**Status**
 
 Status of Task [TaskStatus](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.taskstatus)
 
@@ -58,7 +58,7 @@ public TaskStatus Status { get; }
 
 [TaskStatus](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.taskstatus)<br>
 
-### **ExceptionProcess**
+### <a id="properties-exceptionprocess"/>**ExceptionProcess**
 
 Exception of Task
 
@@ -70,7 +70,7 @@ public Exception ExceptionProcess { get; }
 
 [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
 
-### **StepMode**
+### <a id="properties-stepmode"/>**StepMode**
 
 Step Mode of Task [StateProcess.StepMode](./pplus.controls.stateprocess.md#stepmode)
 
@@ -82,7 +82,7 @@ public StepMode StepMode { get; }
 
 [StepMode](./pplus.controls.stepmode.md)<br>
 
-### **ElapsedTime**
+### <a id="properties-elapsedtime"/>**ElapsedTime**
 
 Elapsed Time of Task
 
@@ -96,7 +96,7 @@ public TimeSpan ElapsedTime { get; }
 
 ## Constructors
 
-### **StateProcess()**
+### <a id="constructors-.ctor"/>**StateProcess()**
 
 Create a StateProcess
 

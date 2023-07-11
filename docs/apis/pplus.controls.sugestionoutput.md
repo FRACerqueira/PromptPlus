@@ -22,7 +22,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Constructors
 
-### **SugestionOutput()**
+### <a id="constructors-.ctor"/>**SugestionOutput()**
 
 Create a empty SugestionOutput
 
@@ -32,7 +32,7 @@ SugestionOutput()
 
 ## Methods
 
-### **Add(String)**
+### <a id="methods-add"/>**Add(String)**
 
 Add sugestion
 
@@ -45,7 +45,7 @@ void Add(string value)
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 text sugestion
 
-### **AddRange(IEnumerable&lt;String&gt;)**
+### <a id="methods-addrange"/>**AddRange(IEnumerable&lt;String&gt;)**
 
 Add Enumerable sugestions
 

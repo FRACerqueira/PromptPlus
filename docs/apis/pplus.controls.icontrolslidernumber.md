@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;Double&gt;](./pplus.controls.ipromptcontrols-1.md
 
 ## Methods
 
-### **Culture(CultureInfo)**
+### <a id="methods-culture"/>**Culture(CultureInfo)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input value format.
 
@@ -37,7 +37,7 @@ CultureInfo to use on validate
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **Culture(String)**
+### <a id="methods-culture"/>**Culture(String)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to validate input when the type is not generic.
  <br>Default value is global Promptplus Cultureinfo
@@ -55,7 +55,7 @@ Name of CultureInfo to use on validate
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **Default(Double)**
+### <a id="methods-default"/>**Default(Double)**
 
 Initial value
 
@@ -72,7 +72,7 @@ value
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **MoveKeyPress(SliderNumberType)**
+### <a id="methods-movekeypress"/>**MoveKeyPress(SliderNumberType)**
 
 Define the KeyPress to change value. Default value is Left or Right.
  <br>When MoveKeyPress equal Up or Down , slider control not show Widgets
@@ -90,7 +90,7 @@ Left/Right or Up/Down. [SliderNumberType](./pplus.controls.slidernumbertype.md)
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **Width(Int32)**
+### <a id="methods-width"/>**Width(Int32)**
 
 Define Width to Widgets. Default value is 40.
 
@@ -107,7 +107,7 @@ Width
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **Range(Double, Double)**
+### <a id="methods-range"/>**Range(Double, Double)**
 
 Defines a minimum and maximum range values
 
@@ -127,7 +127,7 @@ Maximum number
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **Step(Double)**
+### <a id="methods-step"/>**Step(Double)**
 
 Define the short step to change. Default value is 1/100 of range
 
@@ -144,7 +144,7 @@ short step to change
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **LargeStep(Double)**
+### <a id="methods-largestep"/>**LargeStep(Double)**
 
 Define the large step to change. Default value is 1/10 of range
 
@@ -161,7 +161,7 @@ short step to change
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **FracionalDig(Int32)**
+### <a id="methods-fracionaldig"/>**FracionalDig(Int32)**
 
 Define the Fracional Digits of value. Default is 0.
 
@@ -178,7 +178,7 @@ Fracional Digits
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -195,7 +195,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
+### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
 
@@ -215,7 +215,7 @@ The timeout for valid items saved. Default value is 365 days
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **ChangeDescription(Func&lt;Double, String&gt;)**
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;Double, String&gt;)**
 
 Dynamically change the description using a user role
 
@@ -232,7 +232,7 @@ function to apply change
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **ChangeColor(Func&lt;Double, Color&gt;)**
+### <a id="methods-changecolor"/>**ChangeColor(Func&lt;Double, Color&gt;)**
 
 Dynamically change color Widgets
  <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored
@@ -250,7 +250,7 @@ function to change color
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### **ChangeGradient(Color[])**
+### <a id="methods-changegradient"/>**ChangeGradient(Color[])**
 
 Dynamically Change Gradient color Widgets
  <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored

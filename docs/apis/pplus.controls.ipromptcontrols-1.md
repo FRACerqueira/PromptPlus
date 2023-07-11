@@ -24,7 +24,7 @@ public interface IPromptControls<T>
 
 ## Methods
 
-### **Run(Nullable&lt;CancellationToken&gt;)**
+### <a id="methods-run"/>**Run(Nullable&lt;CancellationToken&gt;)**
 
 Execute this control and return ResultPrompt with type .
 

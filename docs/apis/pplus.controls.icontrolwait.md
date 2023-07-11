@@ -20,7 +20,7 @@ Implements [IPromptControls&lt;IEnumerable&lt;StateProcess&gt;&gt;](./pplus.cont
 
 ## Methods
 
-### **Interaction&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;IControlWait, T&gt;)**
+### <a id="methods-interaction"/>**Interaction&lt;T&gt;(IEnumerable&lt;T&gt;, Action&lt;IControlWait, T&gt;)**
 
 Execute a action foreach item of colletion passed as a parameter
 
@@ -45,7 +45,7 @@ Action to execute
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **MaxDegreeProcess(Int32)**
+### <a id="methods-maxdegreeprocess"/>**MaxDegreeProcess(Int32)**
 
 Maximum number of concurrent tasks enable. Default vaue is number of processors.
 
@@ -62,7 +62,7 @@ Number of concurrent tasks
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **TaskTitle(String)**
+### <a id="methods-tasktitle"/>**TaskTitle(String)**
 
 Overwrite Task Title . Default task title comes from the embedded resource.
 
@@ -79,7 +79,7 @@ TaskTitle Task
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **ShowElapsedTime()**
+### <a id="methods-showelapsedtime"/>**ShowElapsedTime()**
 
 Define if show Elapsed Time for each task and the format of Elapsed Time.
 
@@ -91,7 +91,7 @@ IControlWait ShowElapsedTime()
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **Config(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
@@ -108,7 +108,7 @@ Action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **Finish(String)**
+### <a id="methods-finish"/>**Finish(String)**
 
 Finish answer to show when Wait process is completed.
 
@@ -125,7 +125,7 @@ Text Finish answer
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
@@ -152,7 +152,7 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **AddStep(StepMode, Action&lt;CancellationToken&gt;[])**
+### <a id="methods-addstep"/>**AddStep(StepMode, Action&lt;CancellationToken&gt;[])**
 
 Add list of tasks to execute.
 
@@ -172,7 +172,7 @@ list of tasks
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### **AddStep(StepMode, String, String, Action&lt;CancellationToken&gt;[])**
+### <a id="methods-addstep"/>**AddStep(StepMode, String, String, Action&lt;CancellationToken&gt;[])**
 
 Add list of tasks to execute with title and description
 

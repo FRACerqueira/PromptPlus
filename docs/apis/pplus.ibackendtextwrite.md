@@ -20,7 +20,7 @@ public interface IBackendTextWrite
 
 ## Methods
 
-### **Write(String, Nullable&lt;Style&gt;, Boolean)**
+### <a id="methods-write"/>**Write(String, Nullable&lt;Style&gt;, Boolean)**
 
 Write a text to output console.
 
@@ -43,7 +43,7 @@ Clear rest of line after write
 
 Number of lines write on console
 
-### **WriteLine(String, Nullable&lt;Style&gt;, Boolean)**
+### <a id="methods-writeline"/>**WriteLine(String, Nullable&lt;Style&gt;, Boolean)**
 
 Write a text to output console with line terminator.
 
