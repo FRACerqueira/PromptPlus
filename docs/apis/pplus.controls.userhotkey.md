@@ -25,18 +25,18 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 
 | Name | Value | Description |
 | --- | --: | --- |
-| F1 | 0 | [F1] KEY |
-| F2 | 1 | [F2] KEY |
-| F3 | 2 | [F3] KEY |
-| F4 | 3 | [F4] KEY |
-| F5 | 4 | [F5] KEY |
-| F6 | 5 | [F6] KEY |
-| F7 | 6 | [F7] KEY |
-| F8 | 7 | [F8] KEY |
-| F9 | 8 | [F9] KEY |
-| F10 | 9 | [F10] KEY |
-| F11 | 10 | [F111] KEY |
-| F12 | 11 | [F12] KEY |
+| F1 | 0 | F1 KEY |
+| F2 | 1 | F2 KEY |
+| F3 | 2 | F3 KEY |
+| F4 | 3 | F4 KEY |
+| F5 | 4 | F5 KEY |
+| F6 | 5 | F6 KEY |
+| F7 | 6 | F7 KEY |
+| F8 | 7 | F8 KEY |
+| F9 | 8 | F9 KEY |
+| F10 | 9 | F10 KEY |
+| F11 | 10 | F11 KEY |
+| F12 | 11 | F12 KEY |
 
 
 - - -

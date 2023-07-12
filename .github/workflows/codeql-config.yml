@@ -1,0 +1,4 @@
+paths:
+  - Src
+paths-ignore:
+  - Samples/**
