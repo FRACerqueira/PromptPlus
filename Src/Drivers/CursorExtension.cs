@@ -13,6 +13,7 @@ namespace PPlus
         /// <summary>
         /// Moves the cursor relative to the current position.
         /// </summary>
+        /// <param name="consoleBase">The <see cref="IConsoleBase"/></param>
         /// <param name="direction">The direction to move the cursor.</param>
         /// <param name="steps">The number of steps to move the cursor.</param>
         public static void MoveCursor(this IConsoleBase consoleBase, CursorDirection direction, int steps)

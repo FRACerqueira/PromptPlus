@@ -445,6 +445,6 @@ See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 ## License
 [**Top**](#welcome-to-promptplus)
 
-Copyright 2021 © Fernando Cerqueira
+Copyright 2021 @ Fernando Cerqueira
 
 PromptPlus project is licensed under the  the MIT license. For more information see [License](LICENSE.md).

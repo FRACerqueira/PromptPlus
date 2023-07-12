@@ -84,7 +84,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Get/Set Page Size from colletions.
-        /// <br>Default value : 10. If value < 1 internal sette to 1.</br>
+        /// <br>Default value : 10. If value less than 1 internal sette to 1.</br>
         /// </summary>
         public int PageSize 
         {
@@ -104,7 +104,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Get/Set Minimum Prefix Length.
-        /// <br>Default value : 3.If value < 0 internal sette to 0.</br>
+        /// <br>Default value : 3.If value less than 0 internal sette to 0.</br>
         /// </summary>
         public int CompletionMinimumPrefixLength 
         {

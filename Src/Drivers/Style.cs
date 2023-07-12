@@ -72,8 +72,6 @@ namespace PPlus
         public Overflow OverflowStrategy { get; }
 
         /// <summary>
-
-        /// <summary>
         /// Combines this style with another one.
         /// </summary>
         /// <param name="other">The item to combine with this.</param>

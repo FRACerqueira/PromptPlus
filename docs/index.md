@@ -11,7 +11,6 @@
 ## What's News in V.4.0
 
 ### Newest controls and color improvement and layout
- 
 
 ![](../images/multiselectbrowser1.gif)
 ![](../images/treeview1.gif)
@@ -19,7 +18,6 @@
 ![](../images/waittask1.gif)
 ![](../images/waittime1.gif)
 ![](../images/progressbar1.gif)
-
 
 ## Table of Contents
 
@@ -382,6 +380,6 @@ PromptPlus.EnabledAbortKey = false;
 ## License
 [**Top**](#welcome-to-promptplus)
 
-Copyright 2021 © Fernando Cerqueira
+Copyright 2021 @ Fernando Cerqueira
 
 PromptPlus project is licensed under the  the MIT license. For more information see [License](./LICENSE.md).

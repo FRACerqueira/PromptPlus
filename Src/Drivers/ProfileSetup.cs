@@ -20,6 +20,7 @@ namespace PPlus
         /// <summary>
         /// Get/Set Default Culture for console
         /// <br>Culture is global set fro threads</br>  
+        /// </summary>
         public CultureInfo Culture { get; set; } = CultureInfo.CurrentCulture;
 
         /// <summary>
