@@ -12,12 +12,12 @@
 
 ### Newest controls and color improvement and layout
 
-![](../images/multiselectbrowser1.gif)
-![](../images/treeview1.gif)
-![](../images/treeview2.gif)
-![](../images/waittask1.gif)
-![](../images/waittime1.gif)
-![](../images/progressbar1.gif)
+![](./images/multiselectbrowser1.gif)
+![](./images/treeview1.gif)
+![](./images/treeview2.gif)
+![](./images/waittask1.gif)
+![](./images/waittime1.gif)
+![](./images/progressbar1.gif)
 
 ## Table of Contents
 
