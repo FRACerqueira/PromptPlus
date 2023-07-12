@@ -232,15 +232,10 @@ namespace PPlus.Controls
 
             if (defvalue.HasValue)
             {
-                foreach (var item in _options.Items)
+                var found = _options.Items.FirstOrDefault(x => _options.EqualItems(x.Value, defvalue.Value));
+                if (found != null && !found.Disabled)
                 {
-                    ItemSelect<T>? found;
-                    found = _options.Items.FirstOrDefault(x => _options.EqualItems(x.Value, defvalue.Value));
-                    if (found != null && !found.Disabled)
-                    {
-                        defvaluepage = Optional<ItemSelect<T>>.Create(found);
-                        break;
-                    }
+                    defvaluepage = Optional<ItemSelect<T>>.Create(found);
                 }
             }
 
