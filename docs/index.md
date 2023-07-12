@@ -8,6 +8,18 @@
 
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
 
+## What's News in V.4.0
+
+### Newest controls and color improvement and layout
+ 
+
+![](../images/multiselectbrowser1.gif)
+![](../images/treeview1.gif)
+![](../images/treeview2.gif)
+![](../images/waittask1.gif)
+![](../images/waittime1.gif)
+![](../images/progressbar1.gif)
+
 
 ## Table of Contents
 
@@ -25,6 +37,7 @@
 - [Global Settings](globalsettings.md)
 - [API Reference](./apis/apis.md)
 - [Supported Platforms](#supported-platforms)
+- [License](#license)
 
 ## Features
 [**Top**](#welcome-to-promptplus)
@@ -365,3 +378,10 @@ PromptPlus.EnabledAbortKey = false;
     - Windows Terminal (WSL 2)
 - macOS
     - Terminal.app
+
+## License
+[**Top**](#welcome-to-promptplus)
+
+Copyright 2021 © Fernando Cerqueira
+
+PromptPlus project is licensed under the  the MIT license. For more information see [License](./LICENSE.md).

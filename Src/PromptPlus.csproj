@@ -10,12 +10,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="FIGlet\**" />
+	  <EmbeddedResource Remove="FIGlet\**" />
+	  <None Remove="FIGlet\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Remove="Controls\Banner\FIGlet\Fonts\standard.flf" />
 	</ItemGroup>
 
 	<PropertyGroup>
 		<Authors>Fernando Cerqueira</Authors>
-		<Description>Interactive command-line  toolkit for C# with powerful controls and commands.</Description>
+		<Description>Interactive command-line toolkit for .Net core with powerful controls and commands to create professional console applications.</Description>
 		<PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
 		<PackageTags>cli;command-line;console;interactive;prompt;terminal;c#;toolkit</PackageTags>
 		<RepositoryUrl>https://fracerqueira.github.io/PromptPlus</RepositoryUrl>
@@ -29,6 +35,8 @@
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<Title>PromptPlus</Title>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -79,6 +87,18 @@
 		<PackageReference Include="System.Text.Json" Version="4.7.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Content Include="README.txt">
+			<Pack>true</Pack>
+			<PackagePath>README.txt</PackagePath>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="NugetREADME.md" Pack="true" PackagePath="\" />
+		<None Include="..\icon.png" Pack="true" PackagePath="\" />
+		<None Include="..\README.md" Pack="false" />
+	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Controls\Banner\FIGlet\Fonts\standard.flf" />
 	</ItemGroup>

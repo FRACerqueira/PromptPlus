@@ -89,3 +89,9 @@ var kp = PromptPlus
     - Windows Terminal (WSL 2)
 - macOS
     - Terminal.app
+
+**License**
+-----------
+
+Copyright 2021 © Fernando Cerqueira
+PromptPlus project is licensed under the  the MIT license.

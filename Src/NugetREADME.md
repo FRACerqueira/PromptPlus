@@ -72,5 +72,7 @@ var kp = PromptPlus
 
 ## **License**
 
+Copyright 2021 © Fernando Cerqueira
+
 This project is licensed under the [MIT License](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 

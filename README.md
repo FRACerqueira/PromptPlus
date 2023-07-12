@@ -11,6 +11,17 @@
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
 **[Visit the official page for more documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
 
+## What's News in V.4.0
+
+### Newest controls and color improvement and layout
+
+![](./docs/images/multiselectbrowser1.gif)
+![](./docs/images/treeview1.gif)
+![](./docs/images/treeview2.gif)
+![](./docs/images/waittask1.gif)
+![](./docs/images/waittime1.gif)
+![](./docs/images/progressbar1.gif)
+
 ## Table of Contents
 
 - [Features](#features)
@@ -20,6 +31,7 @@
 - [Examples](#examples)
 - [Controls Snapshot](#controls-snapshot)
 - [Usage](#usage)
+- [API Reference](./apis/apis.md)
 - [Culture](#culture)
 - [Colors](#colors)
 - [Hotkeys](#hotkeys)
@@ -28,6 +40,7 @@
 - [Supported Platforms](#supported-platforms)
 - [Inspiration Notes](#inspiration-notes)
 - [Code of Conduct](#code-of-conduct)
+- [Contributing](#contributing)
 - [License](#license)
 
 ## Features
@@ -417,16 +430,21 @@ PromptPlus.WriteLine($"Your input: {name.Value}!");
 
 - FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
 - The colors and some of its dependencies were inspired by the work of [spectreconsole](https://spectreconsole.net/).
+- The API Reference was inspired by the work of [xmldoc2md - Fork with improvements](https://github.com/FRACerqueira/xmldoc2mdPlus).
 
 ## Code of Conduct
 [**Top**](#welcome-to-promptplus)
 
 This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community.
-For more information see the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/code-of-conduct).
+For more information see the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Contributing
+
+See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 
 ## License
 [**Top**](#welcome-to-promptplus)
 
-Copyright © Fernando Cerqueira
+Copyright 2021 © Fernando Cerqueira
 
-PromptPlus project is licensed under the [MIT License](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+PromptPlus project is licensed under the  the MIT license. For more information see [License](LICENSE.md).
