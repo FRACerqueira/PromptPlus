@@ -36,7 +36,7 @@ jobs:
         config-file: ./.github/codeql-config.yml
 
     - name: Build NuGet Package
-      run: dotnet build .src/PromptPlus.csproj -c Release
+      run: dotnet build ./Src/PromptPlus.csproj -c Release
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v2

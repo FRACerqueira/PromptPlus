@@ -33,6 +33,7 @@ public static void MoveCursor(IConsoleBase consoleBase, CursorDirection directio
 #### Parameters
 
 `consoleBase` [IConsoleBase](./pplus.iconsolebase.md)<br>
+The [IConsoleBase](./pplus.iconsolebase.md)
 
 `direction` [CursorDirection](./pplus.cursordirection.md)<br>
 The direction to move the cursor.

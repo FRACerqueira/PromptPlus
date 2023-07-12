@@ -128,6 +128,8 @@ Style(Color foreground, Color background, Overflow overflowStrategy)
 
 ### <a id="methods-combine"/>**Combine(Style)**
 
+Combines this style with another one.
+
 ```csharp
 Style Combine(Style other)
 ```
@@ -135,10 +137,11 @@ Style Combine(Style other)
 #### Parameters
 
 `other` [Style](./pplus.style.md)<br>
+The item to combine with this.
 
 #### Returns
 
-[Style](./pplus.style.md)
+A new style representing a combination of this and the other one.
 
 ### <a id="methods-equals"/>**Equals(Style)**
 

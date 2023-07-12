@@ -48,6 +48,9 @@ public ColorSystem ColorDepth { get; set; }
 
 ### <a id="properties-culture"/>**Culture**
 
+Get/Set Default Culture for console
+ <br>Culture is global set fro threads
+
 ```csharp
 public CultureInfo Culture { get; set; }
 ```

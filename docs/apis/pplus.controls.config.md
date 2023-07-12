@@ -37,6 +37,9 @@ public int CompletionMaxCount { get; set; }
 
 ### <a id="properties-completionminimumprefixlength"/>**CompletionMinimumPrefixLength**
 
+Get/Set Minimum Prefix Length.
+ <br>Default value : 3.If value less than 0 internal sette to 0.
+
 ```csharp
 public int CompletionMinimumPrefixLength { get; set; }
 ```
@@ -175,6 +178,9 @@ public Nullable<Char> NoChar { get; set; }
 [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
 ### <a id="properties-pagesize"/>**PageSize**
+
+Get/Set Page Size from colletions.
+ <br>Default value : 10. If value less than 1 internal sette to 1.
 
 ```csharp
 public int PageSize { get; set; }
