@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Intrinsics.X86;
-using System.Text;
-using System.Threading.Tasks;
-using PPlus.Controls;
+﻿using PPlus.Controls;
 using PPlus.Controls.Objects;
-using PPlus.Tests.AnsiDriverTest;
 using PPlus.Tests.Util;
 
 namespace PPlus.Tests.Controls.TaskWaitControl

@@ -258,6 +258,9 @@
   <data name="TooltipCancelEsc" xml:space="preserve">
     <value>{0}:Cancelar</value>
   </data>
+  <data name="TooltipChart" xml:space="preserve">
+    <value>Up/Down/PgUp/PgDown:Mover, Esc: Termina navegação do Chart</value>
+  </data>
   <data name="TooltipEditItem" xml:space="preserve">
     <value>{0}:Editar</value>
   </data>

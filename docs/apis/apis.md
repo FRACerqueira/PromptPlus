@@ -62,6 +62,12 @@
 
 - [CharacterWidth](./pplus.controls.characterwidth.md)
 
+- [ChartBarType](./pplus.controls.chartbartype.md)
+
+- [ChartOrder](./pplus.controls.chartorder.md)
+
+- [ChartType](./pplus.controls.charttype.md)
+
 - [Config](./pplus.controls.config.md)
 
 - [FilterMode](./pplus.controls.filtermode.md)
@@ -79,6 +85,8 @@
 - [IBannerControl](./pplus.controls.ibannercontrol.md)
 
 - [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+- [IControlChart](./pplus.controls.icontrolchart.md)
 
 - [IControlInput](./pplus.controls.icontrolinput.md)
 
@@ -142,6 +150,8 @@
 
 - [StyleBrowser](./pplus.controls.stylebrowser.md)
 
+- [StyleChart](./pplus.controls.stylechart.md)
+
 - [StyleControls](./pplus.controls.stylecontrols.md)
 
 - [StyleSchema](./pplus.controls.styleschema.md)
@@ -155,6 +165,8 @@
 - [SugestionOutput](./pplus.controls.sugestionoutput.md)
 
 - [SymbolType](./pplus.controls.symboltype.md)
+
+- [TitleAligment](./pplus.controls.titlealigment.md)
 
 - [TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)
 

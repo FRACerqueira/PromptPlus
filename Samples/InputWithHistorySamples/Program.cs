@@ -1,7 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Globalization;
 using PPlus;
-using PPlus.Controls;
 
 PromptPlus.WriteLine("Hello, World!");
 //Ensure ValueResult Culture for all controls

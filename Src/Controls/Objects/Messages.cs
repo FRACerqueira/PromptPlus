@@ -11,6 +11,7 @@ namespace PPlus.Controls.Objects
     {
         public static void UpdateCulture()
         {
+            TooltipChart = PromptPlusResources.TooltipChart;
             ValidAnyKey = PromptPlusResources.ValidAnyKey;
             PaginatorHome = PromptPlusResources.PaginatorHome;
             AddedItems = PromptPlusResources.AddedItems;
@@ -87,6 +88,7 @@ namespace PPlus.Controls.Objects
             AnyKey = PromptPlusResources.AnyKey;
         }
 
+        public static string TooltipChart { get; private set; } = PromptPlusResources.TooltipChart;
         public static string ValidAnyKey { get; private set; } = PromptPlusResources.ValidAnyKey;
         public static string PaginatorHome { get; private set; } = PromptPlusResources.PaginatorHome;
         public static string AddedItems { get; private set; } = PromptPlusResources.AddedItems;

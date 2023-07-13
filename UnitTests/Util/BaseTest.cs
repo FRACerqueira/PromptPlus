@@ -1,6 +1,4 @@
-﻿using Xunit.Sdk;
-
-namespace PPlus.Tests.Util
+﻿namespace PPlus.Tests.Util
 {
     public abstract class BaseTest : IDisposable
     {

@@ -6,7 +6,6 @@
 using PPlus.Controls.Objects;
 using PPlus.Drivers;
 using System;
-using System.Globalization;
 using System.Linq;
 using System.Threading;
 

@@ -3,9 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using PPlus.Controls.Objects;
 using System;
-using System.Globalization;
 
 namespace PPlus.Controls
 {

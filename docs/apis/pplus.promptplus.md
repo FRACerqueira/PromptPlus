@@ -692,6 +692,30 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
+### <a id="methods-chartbar"/>**ChartBar()**
+
+Create ChartBar Control to Write to console.
+
+```csharp
+public static IControlChart ChartBar()
+```
+
+#### Returns
+
+[IControlChart](./pplus.controls.icontrolchart.md)
+
+### <a id="methods-chartstackbar"/>**ChartStackBar()**
+
+Create Chart Statk Control to Write to console.
+
+```csharp
+public static IControlChart ChartStackBar()
+```
+
+#### Returns
+
+[IControlChart](./pplus.controls.icontrolchart.md)
+
 ### <a id="methods-clear"/>**Clear()**
 
 Clears the console buffer and corresponding console window of display information.

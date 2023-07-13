@@ -1,5 +1,4 @@
 ﻿using PPlus;
-using PPlus.Controls;
 
 namespace MaskEditGenericSamples
 {

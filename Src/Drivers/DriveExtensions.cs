@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using PPlus.Controls;
-using PPlus.Controls.Objects;
 using PPlus.Drivers;
 using PPlus.Drivers.Ansi;
 using PPlus.Drivers.Colors;

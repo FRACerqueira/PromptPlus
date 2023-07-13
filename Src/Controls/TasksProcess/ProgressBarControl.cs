@@ -201,6 +201,10 @@ namespace PPlus.Controls
 
         public IControlProgressBar<T> Width(int value)
         {
+            if (value <= 0)
+            {
+                value = 1;
+            }
             _options.Witdth = value;
             return this;
         }

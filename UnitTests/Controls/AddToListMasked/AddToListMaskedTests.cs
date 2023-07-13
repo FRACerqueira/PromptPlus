@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 using PPlus.Controls;
 using PPlus.Controls.Objects;
 using PPlus.Tests.Util;

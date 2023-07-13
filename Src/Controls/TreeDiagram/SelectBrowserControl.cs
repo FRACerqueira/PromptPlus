@@ -162,6 +162,10 @@ namespace PPlus.Controls
 
         public IControlSelectBrowser PageSize(int value)
         {
+            if (value < 1)
+            {
+                value = 1;
+            }
             _options.PageSize = value;
             return this;
         }

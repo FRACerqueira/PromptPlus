@@ -5,7 +5,6 @@
 
 using PPlus.Controls.Objects;
 using System;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace PPlus.Controls
 {

@@ -484,6 +484,15 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move, Esc:End chart navigation.
+        /// </summary>
+        internal static string TooltipChart {
+            get {
+                return ResourceManager.GetString("TooltipChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}:Edit item.
         /// </summary>
         internal static string TooltipEditItem {

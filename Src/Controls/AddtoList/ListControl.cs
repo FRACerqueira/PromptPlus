@@ -163,6 +163,10 @@ namespace PPlus.Controls
 
         public IControlList PageSize(int value)
         {
+            if (value < 1)
+            {
+                value = 1;
+            }
             _options.PageSize = value;
             return this;
         }

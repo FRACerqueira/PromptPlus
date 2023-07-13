@@ -168,6 +168,10 @@ namespace PPlus.Controls
 
         public IControlMaskEdit HistoryPageSize(int value)
         {
+            if (value < 1)
+            {
+                value = 1;
+            }
             _options.HistoryPageSize = value;
             return this;
         }

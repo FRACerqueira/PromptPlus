@@ -144,6 +144,10 @@ namespace PPlus.Controls
 
         public IControlSelect<T> PageSize(int value)
         {
+            if (value < 1)
+            {
+                value = 1;
+            }
             _options.PageSize = value;
             return this;
         }
