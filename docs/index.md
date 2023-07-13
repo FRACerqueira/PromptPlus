@@ -38,7 +38,7 @@
 - [License](#license)
 
 ## Features
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
  
 **_All features have IntelliSense_. The PromptPlus have more 20 controls with many features like: filters, validators, history, sugestions, spinner(19 embeding type and plus custom yours!), colors and styles for control-elements** :
 - Banner Ascii
@@ -67,7 +67,7 @@
 - Spinner animmation (depends on the control)
 - Error message (depends on the control and validators)
 
-All controls use **fluent interface**. A is an object-oriented API whose design relies extensively on method chaining. Its goal is to increase code legibility. The term was coined in 2005 by Eric Evans and Martin Fowler.
+All controls use **fluent interface**; an object-oriented API whose design relies extensively on method chaining. Its goal is to increase code legibility. The term was coined in 2005 by Eric Evans and Martin Fowler.
 
 ```csharp
 //MaskEdit Generic
@@ -80,7 +80,7 @@ var mask = PromptPlus.MaskEdit("input", "MaskEdit Generic input")
 PromptPlus driver console  **Supports 4/8/24-bit colors** in the terminal with **auto-detection** of the current terminal's capabilities.
 
 ## Migrate Version
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 Until version 3 the console engine was based on a model from another project that has several serious problems that cause exceptions during execution in addition to increasing the complexity of the code for correct rendering...
 **PromptPlus v4** has been **completely rebuilt** for a better experience, with significant improvements with new controls and more developer power. The console driver now supports better rendering, with the ability to detect terminal capabilities and allow for 24-bit color, text overflow strategies based on terminal size, and left and right margins for a nicer layout.
@@ -89,7 +89,7 @@ Until version 3 the console engine was based on a model from another project tha
 For migrate V3 to V4 [**see this link**](migrateversion.md).
 
 ## Installing
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 PromptPlus was developed in c# with the **netstandard2.1, .NET 6 AND .NET7** target frameworks.
 
@@ -104,7 +104,7 @@ dotnet add package PromptPlus [--prerelease]
 **_Note:  [-pre]/[--prerelease] usage for pre-release versions_**
 
 ## Examples
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 The folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/Samples) contains more **30** samples!.
 
@@ -113,7 +113,7 @@ dotnet run --project [name of sample]
 ```
 
 ## Console Engine
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 The console driver have the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout.
 The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
@@ -234,7 +234,7 @@ PromptPlus
 
 
 ## Culture
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 PromptPlus applies the language/culture **only when running controls**. The language/culture of the application is **not affected**. If language/culture is not informed, the application's language/culture will be used with fallback to en-US.
 
@@ -272,7 +272,7 @@ To use a non-embedded language/culture:
 - Publish the compiled file (**PromptPlus.[Language].resources**) in the same folder as the binaries.
 
 ## Colors
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-color.org/). when there is the environment variable "no_color" the colors are disabled.
 
@@ -312,7 +312,7 @@ Promptplus uses the **same default colors and engine(softly modified)** as the t
 [**Default color for controls and console**](colors.md)
 
 ## Hotkeys
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 Hotkeys (global and control-specific) are configurable.
 
@@ -324,13 +324,13 @@ PromptPlus.Config.SelectAllPress = new HotKey(UserHotKey.F7);
 [**Default Hotkeys for controls**](hotkeys.md)
 
 ## Keypress Extensions Emacs
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 PromptPlus have a lot extensions to check Key-press with GNU Readline Emacs keyboard shortcuts.
 For more details [visit the **official API page**](./apis/pplus.promptpluskeyinfoextensions.md)
 
 ## Validators
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 PromptPlus have a lot extensions to **commons validator** and **validator import**(No duplicate code!) 
 
@@ -368,7 +368,7 @@ PromptPlus.EnabledAbortKey = false;
 ```
 
 ## Supported platforms
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 - Windows
     - Command Prompt, PowerShell, Windows Terminal
@@ -378,7 +378,7 @@ PromptPlus.EnabledAbortKey = false;
     - Terminal.app
 
 ## License
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 Copyright 2021 @ Fernando Cerqueira
 

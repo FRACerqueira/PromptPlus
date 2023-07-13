@@ -75,6 +75,8 @@
 PromptPlus driver console  **Supports 4/8/24-bit colors** in the terminal with **auto-detection** of the current terminal's capabilities.
 
 ## Migrate Version
+[**Top**](#table-of-contents)
+
 Until version 3 the console engine was based on a model from another project that has several serious problems that cause exceptions during execution in addition to increasing the complexity of the code for correct rendering...
 **PromptPlus v4** has been **completely rebuilt** for a better experience, with significant improvements with new controls and more developer power. The console driver now supports better rendering, with the ability to detect terminal capabilities and allow for 24-bit color, text overflow strategies based on terminal size, and left and right margins for a nicer layout.
 **The Controls have been revised to be more responsive, allow color styles in many of their elements**, and adapt to the terminal size even with resizing.
@@ -82,7 +84,7 @@ Until version 3 the console engine was based on a model from another project tha
 For migrate V3 to V4 [**see this link**](https://fracerqueira.github.io/PromptPlus/migrateversion.html).
 
 ## Console Engine
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 The console driver have the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout.
 The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
@@ -101,7 +103,7 @@ The new engine detects support ansi commands and adjust output for this function
 ![](./docs/images/consolecolorcapacity.gif)
 
 ## Installing
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 ```
 Install-Package PromptPlus [-pre]
@@ -114,7 +116,7 @@ dotnet add package PromptPlus [--prerelease]
 **_Note:  [-pre]/[--prerelease] usage for pre-release versions_**
 
 ## Examples
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 The folder [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/Samples) contains more **30** samples!.
 
@@ -127,7 +129,7 @@ dotnet run --project [name of sample]
 For each snapshot, the title is **name of projet** sample in folder **samples**
 
 ### Input
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [InputBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputBasicSamples)
 
@@ -154,14 +156,14 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 [InputOverwriteDefaultFromSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputOverwriteDefaultFromSamples)
 
 ### AutoComplete
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [AutoCompleteSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/AutoCompleteSamples)
 
 ![](./docs/images/autocompletesample1.gif)
 
 ### MaskEdit
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [MaskEditGenericSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditGenericSamples)
 
@@ -188,7 +190,7 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 ![](./docs/images/maskedit6.gif)
 
 ### KeyPress
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [KeyPressSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/KeyPressSamples)
 
@@ -199,7 +201,7 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 ![](./docs/images/confirm1.gif)
 
 ### Select
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [SelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SelectBasicSamples)
 
@@ -211,7 +213,7 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 [SelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SelectUserTypeSamples)
 
 ### Multi Select
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [MultiSelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectBasicSamples)
 
@@ -222,35 +224,35 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 [MultiSelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectUserTypeSamples)
 
 ### Wait Process
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [WaitTasksSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/WaitTasksSamples)
 
 ![](./docs/images/waittask1.gif)
 
 ### Wait Time
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [WaitTimerSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/WaitTimerSamples)
 
 ![](./docs/images/waittime1.gif)
 
 ### Progress Bar
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [ProgressBarSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ProgressBarSamples)
 
 ![](./docs/images/progressbar1.gif)
 
 ### Slider Swith
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [SliderSwithSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderSwithSamples)
 
 ![](./docs/images/sliderswith1.gif)
 
 ### Slider Number
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [SliderNumberUpDownModeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderNumberUpDownModeSamples)
 
@@ -261,7 +263,7 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 ![](./docs/images/slidernumber1.gif)
 
 ### Add to List
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [AddToListSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/AddToListSamples)
 
@@ -272,45 +274,44 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 ![](./docs/images/addtolist2.gif)
 
 ### Browser Select
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [BrowserSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BrowserSamples)
 
 ![](./docs/images/browser1.gif)
 
 ### Browser Multi Select
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [BrowserMultSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BrowserMultSelectSamples)
 
 ![](./docs/images/multiselectbrowser1.gif)
 
 ### TreeView Select
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [TreeViewSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/TreeViewSamples)
 
 ![](./docs/images/treeview1.gif)
 
 ### TreeView Multi Select
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [TreeViewMultiSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/TreeViewMultiSelectSamples)
 
 ![](./docs/images/treeview2.gif)
 
 ### Banner
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 [BannerSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BannerSamples)
 
 ![](./docs/images/banner1.gif)
 
 ## Usage
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
-All controls use **fluent interface**. A is an object-oriented API whose design relies extensively on method chaining. Its goal is to increase code legibility. The term was coined in 2005 by Eric Evans and Martin Fowler.
-
+All controls use **fluent interface**; an object-oriented API whose design relies extensively on method chaining. Its goal is to increase code legibility. The term was coined in 2005 by Eric Evans and Martin Fowler.
 ```csharp
 //MaskEdit Generic
 var mask = PromptPlus.MaskEdit("input", "MaskEdit Generic input")
@@ -346,7 +347,7 @@ if (!in1.IsAborted)
 ```
 
 ## Culture
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 PromptPlus applies the language/culture **only when running controls**. The language/culture of the application is **not affected**. If language/culture is not informed, the application's language/culture will be used with fallback to en-US.
 
@@ -362,7 +363,7 @@ To use a non-embedded language/culture:
 - Publish the compiled file (**PromptPlus.[Language].resources**) in the same folder as the binaries.
 
 ## Colors
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-color.org/). when there is the environment variable "no_color" the colors are disabled.
 
@@ -373,13 +374,13 @@ For more details [visit the **official page**](https://fracerqueira.github.io/Pr
 
 
 ## Hotkeys
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
 For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#hotkeys)
 
 ## Keypress Extensions Emacs
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 PromptPlus have a lot extensions to check Key-press with GNU Readline Emacs keyboard shortcuts.
 For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#keypress-extensions-emacs)
@@ -416,7 +417,7 @@ PromptPlus.WriteLine($"Your input: {name.Value}!");
 ```
 
 ## Supported platforms
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 - Windows
     - Command Prompt, PowerShell, Windows Terminal
@@ -426,14 +427,14 @@ PromptPlus.WriteLine($"Your input: {name.Value}!");
     - Terminal.app
 
 ## Inspiration notes
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 - FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
 - The colors and some of its dependencies were inspired by the work of [spectreconsole](https://spectreconsole.net/).
 - The API Reference was inspired by the work of [xmldoc2md - Fork with improvements](https://github.com/FRACerqueira/xmldoc2mdPlus).
 
 ## Code of Conduct
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community.
 For more information see the [Code of Conduct](CODE_OF_CONDUCT.md).
@@ -443,7 +444,7 @@ For more information see the [Code of Conduct](CODE_OF_CONDUCT.md).
 See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 
 ## License
-[**Top**](#welcome-to-promptplus)
+[**Top**](#table-of-contents)
 
 Copyright 2021 @ Fernando Cerqueira
 
