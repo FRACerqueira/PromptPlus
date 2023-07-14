@@ -28,6 +28,8 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | None | 0 | Order added |
 | Highest | 1 | Highest value |
 | Smallest | 2 | Smallest value |
+| LabelAsc | 3 | Text Label (Ascending order) |
+| LabelDec | 4 | Text Label (Descending order) |
 
 
 - - -

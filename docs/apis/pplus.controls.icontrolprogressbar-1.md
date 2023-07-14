@@ -26,7 +26,7 @@ Implements IPromptControls&lt;ResultProgessBar&lt;T&gt;&gt;
 
 ### <a id="methods-changecolor"/>**ChangeColor(Func&lt;Double, Style&gt;)**
 
-Dynamically change Style Widgets
+Dynamically change Style in ProgressBar
 
 ```csharp
 IControlProgressBar<T> ChangeColor(Func<Double, Style> value)
@@ -43,7 +43,7 @@ function to change color
 
 ### <a id="methods-changegradient"/>**ChangeGradient(Color[])**
 
-Dynamically Change Gradient color Widgets
+Dynamically Change Gradient color in ProgressBar
 
 ```csharp
 IControlProgressBar<T> ChangeGradient(Color[] colors)
@@ -60,7 +60,7 @@ list of colors Gradient
 
 ### <a id="methods-charbar"/>**CharBar(Char)**
 
-Set [Char](https://docs.microsoft.com/en-us/dotnet/api/system.char) to show progress.Default value '#'
+Set [Char](https://docs.microsoft.com/en-us/dotnet/api/system.char) to show ProgressBar.Default value '#'
  <br>Valid on ProgressBarType.Char, otherwise is ignored
 
 ```csharp
@@ -147,7 +147,7 @@ value
 
 ### <a id="methods-finish"/>**Finish(String)**
 
-Finish answer to show when progressbar is completed.
+Finish answer to show when ProgressBar is completed.
 
 ```csharp
 IControlProgressBar<T> Finish(string text)
@@ -181,7 +181,7 @@ Fracional Digits
 
 ### <a id="methods-hideelements"/>**HideElements(HideProgressBar)**
 
-Hide elements progress bar Widgets. Default is Show all elements
+Hide elements in ProgressBar. Default is Show all elements
  <br>For more one element use | separate (Enum Flag)
 
 ```csharp
@@ -226,7 +226,7 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 ### <a id="methods-updatehandler"/>**UpdateHandler(Action&lt;UpdateProgressBar&lt;T&gt;, CancellationToken&gt;)**
 
-Handler to execute Update ProgressBar values.
+Handler to execute Update values in ProgressBar.
 
 ```csharp
 IControlProgressBar<T> UpdateHandler(Action<UpdateProgressBar<T>, CancellationToken> value)
@@ -243,7 +243,7 @@ Handler.See [UpdateProgressBar&lt;T&gt;](./pplus.controls.updateprogressbar-1.md
 
 ### <a id="methods-width"/>**Width(Int32)**
 
-Define Width to Widgets. Default value is 80.
+Define Width to ProgressBar. Default value is 80.
 
 ```csharp
 IControlProgressBar<T> Width(int value)

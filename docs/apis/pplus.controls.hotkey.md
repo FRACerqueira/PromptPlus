@@ -23,6 +23,42 @@ Implements [IEquatable&lt;ConsoleKeyInfo&gt;](https://docs.microsoft.com/en-us/d
 
 ## Properties
 
+### <a id="properties-chartbarswitchlegend"/>**ChartBarSwitchLegend**
+
+Get HotKey default for ChartBar Switch Legend 'F3'
+
+```csharp
+public static HotKey ChartBarSwitchLegend { get; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-chartbarswitchorder"/>**ChartBarSwitchOrder**
+
+Get HotKey default for ChartBar Switch Order 'F4'
+
+```csharp
+public static HotKey ChartBarSwitchOrder { get; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-chartbarswitchtype"/>**ChartBarSwitchType**
+
+Get HotKey default for ChartBar Switch Type 'F2'
+
+```csharp
+public static HotKey ChartBarSwitchType { get; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
 ### <a id="properties-edititemdefault"/>**EditItemDefault**
 
 Get HotKey default for Edit Item 'F2'

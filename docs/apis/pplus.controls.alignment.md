@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:TitleAligment 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:Alignment 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,26 +8,26 @@
 
 [**Back to List Api**](./apis.md)
 
-# TitleAligment
+# Alignment
 
 Namespace: PPlus.Controls
 
-Represents Title Aligment for ChartBar Control
+Represents Aligment text
 
 ```csharp
-public enum TitleAligment
+public enum Alignment
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [TitleAligment](./pplus.controls.titlealigment.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [Alignment](./pplus.controls.alignment.md)<br>
 Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icomparable), [IFormattable](https://docs.microsoft.com/en-us/dotnet/api/system.iformattable), [IConvertible](https://docs.microsoft.com/en-us/dotnet/api/system.iconvertible)
 
 ## Fields
 
 | Name | Value | Description |
 | --- | --: | --- |
-| Left | 0 | Left Aligment by width |
-| Right | 1 | Right Aligment by width |
-| Center | 2 | Center Aligment by width |
+| Left | 0 | Left Aligment |
+| Right | 1 | Right Aligment |
+| Center | 2 | Center Aligment |
 
 
 - - -

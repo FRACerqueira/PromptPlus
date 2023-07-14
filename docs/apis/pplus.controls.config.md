@@ -22,6 +22,45 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
+### <a id="properties-chartbarswitchlegend"/>**ChartBarSwitchLegend**
+
+Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle ChartBar Legend view.
+ <br>Default value : '[F3]'
+
+```csharp
+public HotKey ChartBarSwitchLegend { get; set; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-chartbarswitchorder"/>**ChartBarSwitchOrder**
+
+Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle ChartBar Order view.
+ <br>Default value : '[F4]'
+
+```csharp
+public HotKey ChartBarSwitchOrder { get; set; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-chartbarswitchtype"/>**ChartBarSwitchType**
+
+Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle ChartBar Type view.
+ <br>Default value : '[F2]'
+
+```csharp
+public HotKey ChartBarSwitchType { get; set; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
 ### <a id="properties-completionmaxcount"/>**CompletionMaxCount**
 
 Get/Set Completion Max Items to return.

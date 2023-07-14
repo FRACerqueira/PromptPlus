@@ -25,9 +25,11 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 
 | Name | Value | Description |
 | --- | --: | --- |
-| Label | 0 | Label content |
-| Value | 1 | Label content |
-| Percent | 2 | Perent content |
+| Title | 0 | Title content |
+| Label | 1 | Label content |
+| Value | 2 | Label content |
+| Percent | 3 | Perent content |
+| Order | 4 | Order content |
 
 
 - - -

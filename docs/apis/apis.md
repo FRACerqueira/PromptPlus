@@ -54,6 +54,8 @@
 
 - [AdderScope](./pplus.controls.adderscope.md)
 
+- [Alignment](./pplus.controls.alignment.md)
+
 - [BannerDashOptions](./pplus.controls.bannerdashoptions.md)
 
 - [BaseOptions](./pplus.controls.baseoptions.md)
@@ -86,7 +88,7 @@
 
 - [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-- [IControlChart](./pplus.controls.icontrolchart.md)
+- [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
 - [IControlInput](./pplus.controls.icontrolinput.md)
 
@@ -165,8 +167,6 @@
 - [SugestionOutput](./pplus.controls.sugestionoutput.md)
 
 - [SymbolType](./pplus.controls.symboltype.md)
-
-- [TitleAligment](./pplus.controls.titlealigment.md)
 
 - [TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)
 

@@ -85,6 +85,23 @@ Foreground [Color](./pplus.color.md)
 
 [Style](./pplus.style.md)
 
+### <a id="methods-chart"/>**Chart(StyleSchema)**
+
+Get [Style](./pplus.style.md) text Chart.
+ <br>ValueResult Foreground : 'ConsoleColor.White'<br>ValueResult Background : same Console Background when setted
+
+```csharp
+public static Style Chart(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
 ### <a id="methods-description"/>**Description(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Description.

@@ -692,29 +692,68 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### <a id="methods-chartbar"/>**ChartBar()**
+### <a id="methods-chartbar"/>**ChartBar(String, Action&lt;IPromptConfig&gt;)**
 
 Create ChartBar Control to Write to console.
 
 ```csharp
-public static IControlChart ChartBar()
+public static IControlChartBar ChartBar(string title, Action<IPromptConfig> config)
 ```
+
+#### Parameters
+
+`title` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The title text to chart
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlChart](./pplus.controls.icontrolchart.md)
+[IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
-### <a id="methods-chartstackbar"/>**ChartStackBar()**
+### <a id="methods-chartbar"/>**ChartBar(String, String)**
 
-Create Chart Statk Control to Write to console.
+Create ChartBar Control to Write to console.
 
 ```csharp
-public static IControlChart ChartStackBar()
+public static IControlChartBar ChartBar(string title, string description)
 ```
+
+#### Parameters
+
+`title` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The title text to chart
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to chart
 
 #### Returns
 
-[IControlChart](./pplus.controls.icontrolchart.md)
+[IControlChartBar](./pplus.controls.icontrolchartbar.md)
+
+### <a id="methods-chartbar"/>**ChartBar(String, String, Action&lt;IPromptConfig&gt;)**
+
+Create ChartBar Control to Write to console.
+
+```csharp
+public static IControlChartBar ChartBar(string title, string description, Action<IPromptConfig> config)
+```
+
+#### Parameters
+
+`title` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to chart
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to chart
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
 ### <a id="methods-clear"/>**Clear()**
 

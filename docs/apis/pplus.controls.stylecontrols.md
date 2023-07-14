@@ -37,6 +37,7 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | TaggedInfo | 9 | TaggedInfo Region |
 | Tooltips | 10 | Tooltips Region |
 | Slider | 11 | Slider Region |
+| Chart | 12 | Chart Region |
 
 
 - - -
