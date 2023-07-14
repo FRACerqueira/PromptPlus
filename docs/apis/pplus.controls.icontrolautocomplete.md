@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the AutoComplete control
+
 ```csharp
 public interface IControlAutoComplete : IPromptControls<String>
 ```

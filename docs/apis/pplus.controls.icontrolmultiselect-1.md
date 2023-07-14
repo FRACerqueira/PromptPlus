@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the MultiSelect control
+
 ```csharp
 public interface IControlMultiSelect<T> : IPromptControls<IEnumerable<T>>
 ```

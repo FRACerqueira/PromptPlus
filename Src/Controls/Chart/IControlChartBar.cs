@@ -10,6 +10,9 @@ using System.Globalization;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the ChartBar control
+    /// </summary>
     public interface IControlChartBar: IPromptControls<bool>
     {
 
@@ -22,7 +25,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Define type Bar to ChartBar.
-        /// /// </summary>
+        /// </summary>
         /// <param name="value">The <see cref="ChartBarType"/>. Default value 'ChartType.Fill'</param>
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar BarType(ChartBarType value);
@@ -80,8 +83,11 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="label">Label Item to add</param>
         /// <param name="value">Value to Item</param>
-        /// <param name="colorbar">The <see cref="Color"/> bar. If not informed, the colorbar will be chosen in sequence starting at zero.</param>
-        /// <returns><see cref="IControlMultiSelect{T}"/></returns>
+        /// <param name="colorbar">
+        /// The <see cref="Color"/> bar. 
+        /// <br>If not informed, the color bar will be chosen in descending sequence from 15 to 0 and then back to 15.</br>
+        /// </param>
+        /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar AddItem(string label, double value, Color? colorbar = null);
 
         /// <summary>
@@ -92,26 +98,26 @@ namespace PPlus.Controls
         IControlChartBar FracionalDig(int value);
 
         /// <summary>
-        /// Sort by Items
+        /// Sort bars and labels
         /// </summary>
         /// <param name="chartOrder">The sort type</param>
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar OrderBy(ChartOrder chartOrder);
 
         /// <summary>
-        /// Hide Percent in ChartBar bar
+        /// Hide Percent in bar
         /// </summary>
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar HidePercent();
 
         /// <summary>
-        /// Hide value in ChartBar bar
+        /// Hide value in bar
         /// </summary>
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar HideValue();
 
         /// <summary>
-        /// PadLeft to write ChartBar
+        /// Pad-Left to write ChartBar
         /// </summary>
         /// <param name="value">Number of spaces. Default value is 0.</param>
         /// <returns><see cref="IControlChartBar"/></returns>
@@ -126,13 +132,13 @@ namespace PPlus.Controls
         IControlChartBar ShowLegends(bool withvalue = true, bool withPercent = true);
 
         /// <summary>
-        /// Hide info of ordination labels after ChartBar
+        /// Hide info of ordination labels
         /// </summary>
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar HideOrdination();
 
         /// <summary>
-        /// Enabled Interaction User to switch Type and Legend and browse the charts / Legends.
+        /// Enabled Interaction  to switch Type , Legend and order when browse the charts / Legends.
         /// </summary>
         /// <param name="switchType">Enabled switch Type </param>
         /// <param name="switchLegend">Enabled switch legend</param>
@@ -154,6 +160,13 @@ namespace PPlus.Controls
         /// <param name="value">The <see cref="HotKey"/> to Switch Legend Chart</param>
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar HotKeySwitchLegend(HotKey value);
+
+        /// <summary>
+        /// Overwrite a HotKey to Switch ordination bar and label. Default value is 'F4' 
+        /// </summary>
+        /// <param name="value">The <see cref="HotKey"/> to Switch ordination bar and label</param>
+        /// <returns><see cref="IControlChartBar"/></returns>
+        IControlChartBar HotKeySwitchOrder(HotKey value);
 
     }
 }

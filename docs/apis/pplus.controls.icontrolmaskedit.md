@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the MaskEdit control
+
 ```csharp
 public interface IControlMaskEdit : IPromptControls<ResultMasked>
 ```

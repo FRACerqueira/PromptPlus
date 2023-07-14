@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the KeyPress control
+
 ```csharp
 public interface IControlKeyPress : IPromptControls<ConsoleKeyInfo>
 ```

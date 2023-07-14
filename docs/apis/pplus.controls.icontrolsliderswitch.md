@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the SliderSwitch control
+
 ```csharp
 public interface IControlSliderSwitch : IPromptControls<Boolean>
 ```

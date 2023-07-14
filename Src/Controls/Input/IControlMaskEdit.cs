@@ -10,6 +10,9 @@ using System.Globalization;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the MaskEdit control
+    /// </summary>
     public interface IControlMaskEdit : IPromptControls<ResultMasked>
     {
         /// <summary>

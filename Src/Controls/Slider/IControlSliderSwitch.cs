@@ -8,6 +8,9 @@ using System;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the SliderSwitch control
+    /// </summary>
     public interface IControlSliderSwitch : IPromptControls<bool>
     {
         /// <summary>

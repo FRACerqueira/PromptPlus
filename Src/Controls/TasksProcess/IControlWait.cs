@@ -10,6 +10,9 @@ using System.Threading;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the WaitTimer/WaitProcess control
+    /// </summary>
     public interface IControlWait : IPromptControls<IEnumerable<StateProcess>>
     {
         /// <summary>

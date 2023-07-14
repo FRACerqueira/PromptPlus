@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the Select control
+
 ```csharp
 public interface IControlSelect<T> : IPromptControls<T>
 ```

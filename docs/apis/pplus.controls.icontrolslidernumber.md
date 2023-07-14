@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the SliderNumber control
+
 ```csharp
 public interface IControlSliderNumber : IPromptControls<Double>
 ```

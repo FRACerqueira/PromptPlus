@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the Browser control
+
 ```csharp
 public interface IControlSelectBrowser : IPromptControls<ItemBrowser>
 ```

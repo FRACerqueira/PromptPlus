@@ -224,6 +224,12 @@ namespace PPlus.Controls
             return this;
         }
 
+        public IControlChartBar HotKeySwitchOrder(HotKey value)
+        {
+            _options.SwitchOrder = value;
+            return this;
+        }
+
         #endregion
 
         public override void FinalizeControl(CancellationToken cancellationToken)

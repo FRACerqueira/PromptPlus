@@ -9,6 +9,9 @@ using System.Globalization;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the SliderNumber control
+    /// </summary>
     public interface IControlSliderNumber : IPromptControls<double>
     {
         /// <summary>

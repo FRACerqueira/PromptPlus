@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the AutoComplete control
+    /// </summary>
     public interface IControlAutoComplete: IPromptControls<string>
     {
         /// <summary>

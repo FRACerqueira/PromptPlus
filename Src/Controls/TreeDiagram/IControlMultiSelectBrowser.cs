@@ -9,6 +9,9 @@ using System.Collections.Generic;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the BrowserMultiSelect control
+    /// </summary>
     public interface IControlMultiSelectBrowser : IPromptControls<ItemBrowser[]>
     {
         /// <summary>

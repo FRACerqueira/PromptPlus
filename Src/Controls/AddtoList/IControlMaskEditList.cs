@@ -11,6 +11,9 @@ using System.Globalization;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the AddtoMaskEditList control
+    /// </summary>
     public interface IControlMaskEditList : IPromptControls<IEnumerable<ResultMasked>>
     {
         /// <summary>

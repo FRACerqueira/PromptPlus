@@ -9,6 +9,9 @@ using System.ComponentModel.DataAnnotations;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the Input control
+    /// </summary>
     public interface IControlInput : IPromptControls<string>
     {
         /// <summary>

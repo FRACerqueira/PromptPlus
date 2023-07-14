@@ -9,6 +9,9 @@ using System.Collections.Generic;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the KeyPress control
+    /// </summary>
     public interface IControlKeyPress : IPromptControls<ConsoleKeyInfo>
     {
         /// <summary>

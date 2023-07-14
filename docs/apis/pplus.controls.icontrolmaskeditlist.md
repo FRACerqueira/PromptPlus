@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the AddtoMaskEditList control
+
 ```csharp
 public interface IControlMaskEditList : IPromptControls<IEnumerable<ResultMasked>>
 ```

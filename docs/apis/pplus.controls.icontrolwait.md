@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the WaitTimer/WaitProcess control
+
 ```csharp
 public interface IControlWait : IPromptControls<IEnumerable<StateProcess>>
 ```

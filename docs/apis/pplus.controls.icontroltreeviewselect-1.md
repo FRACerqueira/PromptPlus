@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the TreeView control
+
 ```csharp
 public interface IControlTreeViewSelect<T> : IPromptControls<T>
 ```

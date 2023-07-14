@@ -12,7 +12,7 @@
 
 Namespace: PPlus.Controls
 
-Represents the Banner Control interface
+Represents the interface with all Methods of the Banner control
 
 ```csharp
 public interface IBannerControl

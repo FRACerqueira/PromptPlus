@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the Input control
+
 ```csharp
 public interface IControlInput : IPromptControls<String>
 ```

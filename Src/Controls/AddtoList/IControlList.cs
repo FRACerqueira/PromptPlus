@@ -11,6 +11,9 @@ namespace PPlus.Controls
 {
 
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the AddtoList control
+    /// </summary>
     public interface IControlList : IPromptControls<IEnumerable<string>>
     {
         /// <summary>

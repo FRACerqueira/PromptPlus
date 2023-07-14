@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the ChartBar control
+
 ```csharp
 public interface IControlChartBar : IPromptControls<Boolean>
 ```
@@ -37,16 +39,16 @@ Label Item to add
 Value to Item
 
 `colorbar` [Nullable&lt;Color&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The [Color](./pplus.color.md) bar. If not informed, the colorbar will be chosen in sequence starting at zero.
+The [Color](./pplus.color.md) bar. 
+ <br>If not informed, the color bar will be chosen in descending sequence from 15 to 0 and then back to 15.
 
 #### Returns
 
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+[IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
 ### <a id="methods-bartype"/>**BarType(ChartBarType)**
 
 Define type Bar to ChartBar.
- ///
 
 ```csharp
 IControlChartBar BarType(ChartBarType value)
@@ -63,7 +65,7 @@ The [ChartBarType](./pplus.controls.chartbartype.md). Default value 'ChartType.F
 
 ### <a id="methods-chartpadleft"/>**ChartPadLeft(Byte)**
 
-PadLeft to write ChartBar
+Pad-Left to write ChartBar
 
 ```csharp
 IControlChartBar ChartPadLeft(byte value)
@@ -115,7 +117,7 @@ Name of CultureInfo to use
 
 ### <a id="methods-enabledinteractionuser"/>**EnabledInteractionUser(Boolean, Boolean, Boolean, Nullable&lt;Int32&gt;)**
 
-Enabled Interaction User to switch Type and Legend and browse the charts / Legends.
+Enabled Interaction to switch Type , Legend and order when browse the charts / Legends.
 
 ```csharp
 IControlChartBar EnabledInteractionUser(bool switchType, bool switchLegend, bool switchorder, Nullable<Int32> pagesize)
@@ -158,7 +160,7 @@ Fracional Digits
 
 ### <a id="methods-hideordination"/>**HideOrdination()**
 
-Hide info of ordination labels after ChartBar
+Hide info of ordination labels
 
 ```csharp
 IControlChartBar HideOrdination()
@@ -170,7 +172,7 @@ IControlChartBar HideOrdination()
 
 ### <a id="methods-hidepercent"/>**HidePercent()**
 
-Hide Percent in ChartBar bar
+Hide Percent in bar
 
 ```csharp
 IControlChartBar HidePercent()
@@ -182,7 +184,7 @@ IControlChartBar HidePercent()
 
 ### <a id="methods-hidevalue"/>**HideValue()**
 
-Hide value in ChartBar bar
+Hide value in bar
 
 ```csharp
 IControlChartBar HideValue()
@@ -204,6 +206,23 @@ IControlChartBar HotKeySwitchLegend(HotKey value)
 
 `value` [HotKey](./pplus.controls.hotkey.md)<br>
 The [HotKey](./pplus.controls.hotkey.md) to Switch Legend Chart
+
+#### Returns
+
+[IControlChartBar](./pplus.controls.icontrolchartbar.md)
+
+### <a id="methods-hotkeyswitchorder"/>**HotKeySwitchOrder(HotKey)**
+
+Overwrite a HotKey to Switch ordination bar and label. Default value is 'F4'
+
+```csharp
+IControlChartBar HotKeySwitchOrder(HotKey value)
+```
+
+#### Parameters
+
+`value` [HotKey](./pplus.controls.hotkey.md)<br>
+The [HotKey](./pplus.controls.hotkey.md) to Switch ordination bar and label
 
 #### Returns
 
@@ -253,7 +272,7 @@ Action to execute
 
 ### <a id="methods-orderby"/>**OrderBy(ChartOrder)**
 
-Sort by Items
+Sort bars and labels
 
 ```csharp
 IControlChartBar OrderBy(ChartOrder chartOrder)

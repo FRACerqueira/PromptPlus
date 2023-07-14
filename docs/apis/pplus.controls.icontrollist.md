@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the AddtoList control
+
 ```csharp
 public interface IControlList : IPromptControls<IEnumerable<String>>
 ```

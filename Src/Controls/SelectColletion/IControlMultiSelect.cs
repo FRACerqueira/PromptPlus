@@ -10,6 +10,9 @@ using System.Linq.Expressions;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the MultiSelect control
+    /// </summary>
     public interface IControlMultiSelect<T> : IPromptControls<IEnumerable<T>>
     {
         /// <summary>

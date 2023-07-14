@@ -11,6 +11,9 @@ using System.Threading;
 namespace PPlus.Controls
 {
     ///<inheritdoc cref="IPromptControls{T}"/>
+    /// <summary>
+    /// Represents the interface with all Methods of the ProgressBar control
+    /// </summary>
     public interface IControlProgressBar<T> :IPromptControls<ResultProgessBar<T>>
     {
         /// <summary>

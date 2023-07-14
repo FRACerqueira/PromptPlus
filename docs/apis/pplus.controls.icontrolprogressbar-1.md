@@ -12,6 +12,8 @@
 
 Namespace: PPlus.Controls
 
+Represents the interface with all Methods of the ProgressBar control
+
 ```csharp
 public interface IControlProgressBar<T> : IPromptControls<ResultProgessBar<T>>
 ```

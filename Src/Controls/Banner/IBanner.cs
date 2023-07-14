@@ -8,7 +8,7 @@ using System.IO;
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents the Banner Control interface
+    /// Represents the interface with all Methods of the Banner control
     /// </summary>
     public interface IBannerControl
     {
