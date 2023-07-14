@@ -11,6 +11,27 @@
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
 **[Visit the official page for more documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
 
+## Table of Contents
+
+- [Features](#features)
+- [Migrate Version](#migrate-version)
+- [Console Engine](#console-engine)
+- [Installing](#installing)
+- [Examples](#examples)
+- [Controls Snapshot](#controls-snapshot)
+- [Usage](#usage)
+- [Culture](#culture)
+- [Colors](#colors)
+- [Hotkeys](#hotkeys)
+- [Keypress Extensions Emacs](#keypress-extensions-emacs)
+- [Validators](#validators)
+- [Supported Platforms](#supported-platforms)
+- [Inspiration Notes](#inspiration-notes)
+- [Code of Conduct](#code-of-conduct)
+- [Contributing](#contributing)
+- [License](#license)
+- [API Reference](https://fracerqueira.github.io/PromptPlus/apis/apis.html)
+
 ## What's News in V.4.0
 
 ### Newest controls and color improvement and layout
@@ -22,28 +43,8 @@
 ![](./docs/images/waittask1.gif)
 ![](./docs/images/progressbar1.gif)
 
-## Table of Contents
-
-- [Features](#features)
-- [Migrate Version](#migrate-version)
-- [Console Engine](#console-engine)
-- [Installing](#installing)
-- [Examples](#examples)
-- [Controls Snapshot](#controls-snapshot)
-- [Usage](#usage)
-- [API Reference](./docs/apis/apis.md)
-- [Culture](#culture)
-- [Colors](#colors)
-- [Hotkeys](#hotkeys)
-- [Keypress Extensions Emacs](#keypress-extensions-emacs)
-- [Validators](#validators)
-- [Supported Platforms](#supported-platforms)
-- [Inspiration Notes](#inspiration-notes)
-- [Code of Conduct](#code-of-conduct)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Features
+[**Top**](#table-of-contents)
 
 **All features have IntelliSense. The PromptPlus have more 20 controls with many features like: filters, validators, history, sugestions, spinner(19 embeding type and plus custom yours!), colors and styles for control-elements** :
 - Banner Ascii

@@ -8,21 +8,6 @@
 
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
 
-## What's News in V.4.0
-
-### Newest controls and color improvement and layout
-
-### Chart
-[**Top**](#table-of-contents)
-
-[ChartSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ChartSamples)
-
-![](./images/chartbar1.gif)
-![](./images/multiselectbrowser1.gif)
-![](./images/treeview1.gif)
-![](./images/treeview2.gif)
-![](./images/waittask1.gif)
-![](./images/progressbar1.gif)
 
 ## Table of Contents
 
@@ -38,9 +23,20 @@
 - [Keypress Extensions Emacs](#keypress-extensions-emacs)
 - [Validators](#validators)
 - [Global Settings](globalsettings.md)
-- [API Reference](./apis/apis.md)
 - [Supported Platforms](#supported-platforms)
 - [License](#license)
+- [API Reference](./apis/apis.md)
+
+## What's News in V.4.0
+
+### Newest controls and color improvement and layout
+
+![](./images/chartbar1.gif)
+![](./images/multiselectbrowser1.gif)
+![](./images/treeview1.gif)
+![](./images/treeview2.gif)
+![](./images/waittask1.gif)
+![](./images/progressbar1.gif)
 
 ## Features
 [**Top**](#table-of-contents)
