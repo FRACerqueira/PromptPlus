@@ -57,6 +57,10 @@ namespace PPlus.Controls
         /// <summary>
         /// Slider Region
         /// </summary>
-        Slider
+        Slider,
+        /// <summary>
+        /// Chart Region
+        /// </summary>
+        Chart
     }
 }

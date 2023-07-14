@@ -11,6 +11,10 @@ namespace PPlus.Controls
     public enum StyleChart
     {
         /// <summary>
+        /// Title content
+        /// </summary>
+        Title,
+        /// <summary>
         /// Label content
         /// </summary>
         Label,
@@ -21,6 +25,11 @@ namespace PPlus.Controls
         /// <summary>
         /// Perent content
         /// </summary>
-        Percent
+        Percent,
+        /// <summary>
+        /// Order content
+        /// </summary>
+        Order
+
     }
 }

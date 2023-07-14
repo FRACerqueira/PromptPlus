@@ -8,6 +8,26 @@ Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
 PromptPlus.Clear();
 
+PromptPlus
+    .ChartBar("Control: ChartBar - basic usage","My Description")
+    .Type(ChartType.StandBar)
+    .AddItem("Label1", 10)
+    .AddItem("Label2", 20)
+    .AddItem("Label3", 30)
+    .AddItem("Label4", 40)
+    .AddItem("Label5", 50)
+    .AddItem("Label6", 60)
+    .AddItem("Label7", 70)
+    .AddItem("Label8", 80)
+    .EnabledInteractionUser(pagesize:3)
+    .Run();
+
+PromptPlus
+    .KeyPress()
+    .Config(cfg => cfg.HideAfterFinish(true))
+    .Spinner(SpinnersType.DotsScrolling)
+    .Run();
+
 PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
 PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
 PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");

@@ -12,11 +12,16 @@
 
 ### Newest controls and color improvement and layout
 
+### Chart
+[**Top**](#table-of-contents)
+
+[ChartSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ChartSamples)
+
+![](./images/chartbar1.gif)
 ![](./images/multiselectbrowser1.gif)
 ![](./images/treeview1.gif)
 ![](./images/treeview2.gif)
 ![](./images/waittask1.gif)
-![](./images/waittime1.gif)
 ![](./images/progressbar1.gif)
 
 ## Table of Contents

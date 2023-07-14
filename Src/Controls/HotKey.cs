@@ -43,6 +43,7 @@ namespace PPlus.Controls
         /// </summary>
         public static HotKey TooltipDefault => new(ConsoleKey.F1);
 
+
         /// <summary>
         /// Get HotKey default for PasswordView 'F2'
         /// </summary>
@@ -69,6 +70,22 @@ namespace PPlus.Controls
         /// Get HotKey default for Select All 'F2'
         /// </summary>
         public static HotKey SelectAllDefault => new(ConsoleKey.F2);
+
+        /// <summary>
+        /// Get HotKey default for ChartBar Switch Type 'F2'
+        /// </summary>
+        public static HotKey ChartBarSwitchType => new(ConsoleKey.F2);
+
+
+        /// <summary>
+        /// Get HotKey default for ChartBar Switch Legend 'F3'
+        /// </summary>
+        public static HotKey ChartBarSwitchLegend => new(ConsoleKey.F3);
+
+        /// <summary>
+        /// Get HotKey default for ChartBar Switch Order 'F4'
+        /// </summary>
+        public static HotKey ChartBarSwitchOrder => new(ConsoleKey.F4);
 
         /// <summary>
         /// Get HotKey default for Edit Item 'F2'

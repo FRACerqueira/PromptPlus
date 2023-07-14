@@ -82,7 +82,10 @@ namespace PPlus.Controls
                     case StyleControls.Slider:
                         _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.Cyan).Background(ConsoleColor.DarkGray));
                         break;
-                   default:
+                    case StyleControls.Chart:
+                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.White));
+                        break;
+                    default:
                         throw new PromptPlusException($"{item} Not Implemented");
                 }
             }

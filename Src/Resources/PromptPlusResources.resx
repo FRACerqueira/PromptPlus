@@ -222,6 +222,21 @@
   <data name="OnValue" xml:space="preserve">
     <value>On</value>
   </data>
+  <data name="OrderHighest" xml:space="preserve">
+    <value>Highest value</value>
+  </data>
+  <data name="OrderLabelAsc" xml:space="preserve">
+    <value>Label ascending</value>
+  </data>
+  <data name="OrderLabelDec" xml:space="preserve">
+    <value>Label descending</value>
+  </data>
+  <data name="OrderSmallest" xml:space="preserve">
+    <value>Smallest value</value>
+  </data>
+  <data name="OrderStandard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
   <data name="PaginationTemplate" xml:space="preserve">
     <value>{0} items, {1}/{2} pages</value>
   </data>
@@ -259,7 +274,16 @@
     <value>{0}:To cancel</value>
   </data>
   <data name="TooltipChart" xml:space="preserve">
-    <value>Up/Down/PgUp/PgDown:Move, Esc:End chart navigation</value>
+    <value>Up/Down/PgUp/PgDown:Move</value>
+  </data>
+  <data name="TooltipChartSwitchLegend" xml:space="preserve">
+    <value>{0}:Swith view Legdend</value>
+  </data>
+  <data name="TooltipChartSwitchOrder" xml:space="preserve">
+    <value>{0}:Swith order view</value>
+  </data>
+  <data name="TooltipChartSwitchType" xml:space="preserve">
+    <value>{0}:Toggle Chart type</value>
   </data>
   <data name="TooltipEditItem" xml:space="preserve">
     <value>{0}:Edit item</value>
@@ -281,6 +305,9 @@
   </data>
   <data name="TooltipInvertSelectAll" xml:space="preserve">
     <value>{0}:Invert Seleted</value>
+  </data>
+  <data name="TooltipOrder" xml:space="preserve">
+    <value>Ordination: {0}</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
     <value>Up/Down/PgUp/PgDown:Move Selector</value>

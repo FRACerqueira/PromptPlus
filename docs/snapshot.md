@@ -12,7 +12,6 @@
 
 For each snapshot, the title is **name of projet** in folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/Samples).
 
-
 - [Input - Basic](#input)
 - [Input - AutoComplete](#autocomplete)
 - [Input - MaskEdit](#maskedit)
@@ -21,6 +20,7 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 - [Multi-Select](#multi-select)
 - [Wait Process (Run background tasks Sequential/Parallel)](#wait-process)
 - [Wait Time](#wait-time)
+- [Chart Bar](#chart-bar)
 - [Progress Bar](#progress-bar)
 - [Slider Swith (on/off style)](#slider-swith)
 - [Slider Number (vertical/Horizontal with bar)](#slider-number)
@@ -141,6 +141,13 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 
 ![](./images/waittime1.gif)
 
+### Chart Bar
+[**Top**](#table-of-contents)
+
+[ChartSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ChartSamples)
+
+![](./images/chartbar1.gif)
+
 ### Progress Bar
 [**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  
 
@@ -153,7 +160,7 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 
 [SliderSwithSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderSwithSamples)
 
-![](./images/sliderswith1.gif)
+![](./images/sliderswitch1.gif)
 
 ### Slider Number
 [**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents)  

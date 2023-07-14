@@ -21,6 +21,14 @@ namespace PPlus.Controls
         /// <summary>
         /// Smallest value
         /// </summary>
-        Smallest
+        Smallest,
+        /// <summary>
+        /// Text Label (Ascending order)
+        /// </summary>
+        LabelAsc,
+        /// <summary>
+        /// Text Label (Descending order)
+        /// </summary>
+        LabelDec,
     }
 }

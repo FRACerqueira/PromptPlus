@@ -14,7 +14,7 @@ namespace PPlus.Controls
     public interface IControlProgressBar<T> :IPromptControls<ResultProgessBar<T>>
     {
         /// <summary>
-        /// Hide elements progress bar Widgets. Default is Show all elements
+        /// Hide elements in ProgressBar. Default is Show all elements
         /// <br>For more one element use | separate (Enum Flag)</br>
         /// </summary>
         /// <param name="value">element to hide. <see cref="HideProgressBar"/></param>
@@ -36,7 +36,7 @@ namespace PPlus.Controls
         IControlProgressBar<T> Culture(CultureInfo value);
 
         /// <summary>
-        /// Set <see cref="char"/> to show progress.Default value '#'
+        /// Set <see cref="char"/> to show ProgressBar.Default value '#'
         /// <br>Valid on ProgressBarType.Char, otherwise is ignored </br>
         /// </summary>
         /// <param name="value">Char to show</param>
@@ -52,7 +52,7 @@ namespace PPlus.Controls
         IControlProgressBar<T> Culture(string value);
 
         /// <summary>
-        /// Finish answer to show when progressbar is completed.
+        /// Finish answer to show when ProgressBar is completed.
         /// </summary>
         /// <param name="text">text Finish answer</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
@@ -70,7 +70,7 @@ namespace PPlus.Controls
         IControlProgressBar<T> Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
         /// <summary>
-        /// Define Width to Widgets. Default value is 80.
+        /// Define Width to ProgressBar. Default value is 80.
         /// </summary>
         /// <param name="value">Width</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
@@ -91,21 +91,21 @@ namespace PPlus.Controls
         IControlProgressBar<T> FracionalDig(int value);
 
         /// <summary>
-        /// Dynamically change Style Widgets
+        /// Dynamically change Style in ProgressBar
         /// </summary>
         /// <param name="value">function to change color</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
         IControlProgressBar<T> ChangeColor(Func<double, Style> value);
 
         /// <summary>
-        /// Dynamically Change Gradient color Widgets
+        /// Dynamically Change Gradient color in ProgressBar
         /// </summary>
         /// <param name="colors">list of colors Gradient</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
         IControlProgressBar<T> ChangeGradient(params Color[] colors);
 
         /// <summary>
-        /// Handler to execute Update ProgressBar values.
+        /// Handler to execute Update values in ProgressBar.
         /// </summary>
         /// <param name="value">Handler.See <see cref="UpdateProgressBar{t}"/> to change value</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>

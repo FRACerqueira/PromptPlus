@@ -15,11 +15,11 @@
 
 ### Newest controls and color improvement and layout
 
+![](./docs/images/chartbar1.gif)
 ![](./docs/images/multiselectbrowser1.gif)
 ![](./docs/images/treeview1.gif)
 ![](./docs/images/treeview2.gif)
 ![](./docs/images/waittask1.gif)
-![](./docs/images/waittime1.gif)
 ![](./docs/images/progressbar1.gif)
 
 ## Table of Contents
@@ -31,7 +31,7 @@
 - [Examples](#examples)
 - [Controls Snapshot](#controls-snapshot)
 - [Usage](#usage)
-- [API Reference](./apis/apis.md)
+- [API Reference](./docs/apis/apis.md)
 - [Culture](#culture)
 - [Colors](#colors)
 - [Hotkeys](#hotkeys)
@@ -237,6 +237,13 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 
 ![](./docs/images/waittime1.gif)
 
+### Chart Bar
+[**Top**](#table-of-contents)
+
+[ChartSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ChartSamples)
+
+![](./docs/images/chartbar1.gif)
+
 ### Progress Bar
 [**Top**](#table-of-contents)
 
@@ -244,12 +251,12 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 
 ![](./docs/images/progressbar1.gif)
 
-### Slider Swith
+### Slider Switch
 [**Top**](#table-of-contents)
 
-[SliderSwithSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderSwithSamples)
+[SliderSwitchSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderSwitchSamples)
 
-![](./docs/images/sliderswith1.gif)
+![](./docs/images/sliderswitch1.gif)
 
 ### Slider Number
 [**Top**](#table-of-contents)

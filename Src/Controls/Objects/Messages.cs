@@ -11,6 +11,15 @@ namespace PPlus.Controls.Objects
     {
         public static void UpdateCulture()
         {
+            TooltipOrder = PromptPlusResources.TooltipOrder;
+            OrderHighest = PromptPlusResources.OrderHighest;
+            OrderLabelAsc = PromptPlusResources.OrderLabelAsc;
+            OrderLabelDec = PromptPlusResources.OrderLabelDec;
+            OrderSmallest = PromptPlusResources.OrderSmallest;
+            OrderStandard = PromptPlusResources.OrderStandard;
+            TooltipChartSwitchOrder = PromptPlusResources.TooltipChartSwitchOrder;
+            TooltipChartSwitchType = PromptPlusResources.TooltipChartSwitchType;
+            TooltipChartSwitchLegend = PromptPlusResources.TooltipChartSwitchLegend;
             TooltipChart = PromptPlusResources.TooltipChart;
             ValidAnyKey = PromptPlusResources.ValidAnyKey;
             PaginatorHome = PromptPlusResources.PaginatorHome;
@@ -88,6 +97,15 @@ namespace PPlus.Controls.Objects
             AnyKey = PromptPlusResources.AnyKey;
         }
 
+        public static string OrderHighest { get; private set; } = PromptPlusResources.OrderHighest;
+        public static string OrderLabelAsc { get; private set; } = PromptPlusResources.OrderLabelAsc;
+        public static string OrderLabelDec { get; private set; } = PromptPlusResources.OrderLabelDec;
+        public static string OrderSmallest { get; private set; } = PromptPlusResources.OrderSmallest;
+        public static string OrderStandard { get; private set; }= PromptPlusResources.OrderStandard;
+        public static string TooltipOrder { get; private set; } = PromptPlusResources.TooltipOrder;
+        public static string TooltipChartSwitchOrder { get; private set; } = PromptPlusResources.TooltipChartSwitchOrder;
+        public static string TooltipChartSwitchType { get; private set; } = PromptPlusResources.TooltipChartSwitchType;
+        public static string TooltipChartSwitchLegend { get; private set; } = PromptPlusResources.TooltipChartSwitchLegend;
         public static string TooltipChart { get; private set; } = PromptPlusResources.TooltipChart;
         public static string ValidAnyKey { get; private set; } = PromptPlusResources.ValidAnyKey;
         public static string PaginatorHome { get; private set; } = PromptPlusResources.PaginatorHome;

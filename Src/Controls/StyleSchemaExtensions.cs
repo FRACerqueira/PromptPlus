@@ -46,6 +46,17 @@ namespace PPlus.Controls
             return schema.GetStyle(StyleControls.Prompt);
         }
 
+
+        /// <summary>
+        /// Get <see cref="Style"/> text Chart.
+        /// <br>ValueResult Foreground : 'ConsoleColor.White'</br>
+        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// </summary>
+        public static Style Chart(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.Chart);
+        }
+
         /// <summary>
         /// Get <see cref="Style"/> text Slider-On(Foreground)/Slider-Off(Background).
         /// <br>ValueResult Foreground : 'ConsoleColor.Cyan'</br>

@@ -36,10 +36,7 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
-            if (_options.CurrentCulture == null)
-            {
-                _options.CurrentCulture = PromptPlus.Config.AppCulture;
-            }
+            _options.CurrentCulture ??= PromptPlus.Config.AppCulture;
 
             if (_options.UpdateHandler == null)
             {

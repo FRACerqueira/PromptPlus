@@ -376,6 +376,51 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Highest value.
+        /// </summary>
+        internal static string OrderHighest {
+            get {
+                return ResourceManager.GetString("OrderHighest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label ascending.
+        /// </summary>
+        internal static string OrderLabelAsc {
+            get {
+                return ResourceManager.GetString("OrderLabelAsc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Label descending.
+        /// </summary>
+        internal static string OrderLabelDec {
+            get {
+                return ResourceManager.GetString("OrderLabelDec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smallest value.
+        /// </summary>
+        internal static string OrderSmallest {
+            get {
+                return ResourceManager.GetString("OrderSmallest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Standard.
+        /// </summary>
+        internal static string OrderStandard {
+            get {
+                return ResourceManager.GetString("OrderStandard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} items, {1}/{2} pages.
         /// </summary>
         internal static string PaginationTemplate {
@@ -484,11 +529,38 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move, Esc:End chart navigation.
+        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move.
         /// </summary>
         internal static string TooltipChart {
             get {
                 return ResourceManager.GetString("TooltipChart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}:Swith view Legdend.
+        /// </summary>
+        internal static string TooltipChartSwitchLegend {
+            get {
+                return ResourceManager.GetString("TooltipChartSwitchLegend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}:Swith order view.
+        /// </summary>
+        internal static string TooltipChartSwitchOrder {
+            get {
+                return ResourceManager.GetString("TooltipChartSwitchOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}:Toggle Chart type.
+        /// </summary>
+        internal static string TooltipChartSwitchType {
+            get {
+                return ResourceManager.GetString("TooltipChartSwitchType", resourceCulture);
             }
         }
         
@@ -552,6 +624,15 @@ namespace PPlus.Resources {
         internal static string TooltipInvertSelectAll {
             get {
                 return ResourceManager.GetString("TooltipInvertSelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ordination: {0}.
+        /// </summary>
+        internal static string TooltipOrder {
+            get {
+                return ResourceManager.GetString("TooltipOrder", resourceCulture);
             }
         }
         
