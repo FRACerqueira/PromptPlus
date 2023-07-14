@@ -12,6 +12,7 @@ namespace PPlus.Controls
         private readonly ChartBarOptions _options;
         private int _startpos;
         private int _indexLabel;
+        private (int id,int page)[] _paginginfo;
 
         private double _totalvalue;
 
@@ -801,6 +802,20 @@ namespace PPlus.Controls
                 default:
                     throw new PromptPlusException($"ChartOrder {_options.Order} Not implemented");
             }
+            var auxpaginginfo = new List<(int id, int page)>();
+            var page = 0;
+            var index = 0;
+            foreach (var item in _options.Labels)
+            {
+                index++;
+                if (index > _options.Pagesize)
+                {
+                    index = 1;
+                    page++;
+                }
+                auxpaginginfo.Add(new (item.Id, page));
+            }
+            _paginginfo = auxpaginginfo.ToArray();
         }
 
         private void WritePageInfo(ScreenBuffer screenBuffer)
@@ -1147,7 +1162,7 @@ namespace PPlus.Controls
             {
                 return;
             }
-            var selectedPage = _startpos / _options.Pagesize;
+            var selectedPage = _paginginfo.First(x => x.id == _options.Labels[_startpos].Id).page;
             var pagecount = (_options.Labels.Count / _options.Pagesize) + 1;
             if (_options.OptShowTooltip)
             {
