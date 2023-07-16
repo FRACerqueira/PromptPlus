@@ -7,6 +7,7 @@
 		<AssemblyName>PromptPlus</AssemblyName>
 		<RootNamespace>PPlus</RootNamespace>
 		<Nullable>annotations</Nullable>
+		<IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
 		<Configurations>Debug;Release;local</Configurations>
 	</PropertyGroup>
 
@@ -130,7 +131,7 @@
 			<LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 	</ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="if $(ConfigurationName) == local if $(TargetFramework) == .net7 xmldoc2md $(SolutionDir)Src\bin\Debug\.net7\PromptPlus.dll $(SolutionDir)docs\apis --templatefile $(SolutionDir)Src\docapitemplate.md  --excludeinternal --index-page-name apis --back-button &quot;Back to List Api&quot; --link-back-button &quot;./apis.md&quot; --back-index-button &quot;Main&quot; --link-backindex-button &quot;../index.md#table-of-contents&quot;" />
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(IsWindows)'=='true'">
+		<Exec Command="if $(ConfigurationName) == local if $(TargetFramework) == .net7 xmldoc2md $(SolutionDir)Src\bin\Debug\.net7\PromptPlus.dll $(SolutionDir)docs\apis --templatefile $(SolutionDir)Src\docapitemplate.md  --excludeinternal --index-page-name apis --back-button &quot;Back to List Api&quot; --link-back-button &quot;./apis.md&quot; --back-index-button &quot;Main&quot; --link-backindex-button &quot;../index.md#table-of-contents&quot;" />
 	</Target>
 </Project>
