@@ -383,7 +383,6 @@ namespace PPlus.Controls
 
         public override ResultPrompt<ResultMasked> TryResult(CancellationToken cancellationToken)
         {
-            var result = ResultPrompt<ResultMasked>.NullResult();
             var endinput = false;
             var abort = false;
             bool tryagain;
@@ -486,13 +485,13 @@ namespace PPlus.Controls
                 }
                 else if (keyInfo.Value.IsPressHomeKey())
                 {
-                    var cls = ClearMode();
+                    ClearMode();
                     _inputBuffer.ToHome();
                     tryagain = false;
                 }
                 else if (keyInfo.Value.IsPressEndKey())
                 {
-                    var cls = ClearMode();
+                    ClearMode();
                     _inputBuffer.ToEnd();
                     tryagain = false;
                 }
@@ -635,9 +634,7 @@ namespace PPlus.Controls
                     }
                 }
             }
-            result = new ResultPrompt<ResultMasked>(new ResultMasked(_inputBuffer.RemoveMask(_inputBuffer.ToMasked(),true), _inputBuffer.ToMasked()), abort, !endinput);
-            //result = new ResultPrompt<ResultMasked>(new ResultMasked(_inputBuffer.ToString(), _inputBuffer.ToMasked()), abort, !endinput);
-            return result;
+            return new ResultPrompt<ResultMasked>(new ResultMasked(_inputBuffer.RemoveMask(_inputBuffer.ToMasked(),true), _inputBuffer.ToMasked()), abort, !endinput);
         }
 
         private bool IsMaskTypeNotGeneric()

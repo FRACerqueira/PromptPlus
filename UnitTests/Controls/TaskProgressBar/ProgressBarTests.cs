@@ -298,6 +298,7 @@ namespace PPlus.Tests.Controls.TaskProgressBar
         [InlineData(ProgressBarType.Bar)]
         [InlineData(ProgressBarType.Char)]
         [InlineData(ProgressBarType.Fill)]
+        [InlineData(ProgressBarType.Square)]
         public void Should_ProgressBarType(ProgressBarType progressBarType)
         {
             var ctrl = (ProgressBarControl<object>)PromptPlus

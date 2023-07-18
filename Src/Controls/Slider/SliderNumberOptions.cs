@@ -20,7 +20,7 @@ namespace PPlus.Controls
         internal SliderNumberOptions(bool showcursor) : base(showcursor)
         {
         }
-
+        public SliderBarType BarType { get; set; } = SliderBarType.Fill;
         public Color[] Gradient { get; set; } = null;
         public Func<double, Color> ChangeColor { get; set; } = null;
         public CultureInfo CurrentCulture { get; set; } = null;

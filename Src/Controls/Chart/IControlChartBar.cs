@@ -121,7 +121,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">Number of spaces. Default value is 0.</param>
         /// <returns><see cref="IControlChartBar"/></returns>
-        IControlChartBar ChartPadLeft(byte value);
+        IControlChartBar PadLeft(byte value);
 
         /// <summary>
         /// Show Legends after ChartBar
@@ -168,5 +168,11 @@ namespace PPlus.Controls
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar HotKeySwitchOrder(HotKey value);
 
+        /// <summary>
+        /// Custom config the control.
+        /// </summary>
+        /// <param name="context">Action to apply changes. <see cref="IPromptConfig"/></param>
+        /// <returns><see cref="IControlChartBar"/></returns>
+        IControlChartBar Config(Action<IPromptConfig> context);
     }
 }

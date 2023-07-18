@@ -25,6 +25,12 @@ namespace PPlus.Controls
 
         #region IControlSliderNumber
 
+        public IControlSliderNumber BarType(SliderBarType value)
+        {
+            _options.BarType = value;
+            return this;
+        }
+
         public IControlSliderNumber Culture(CultureInfo value)
         {
             _options.CurrentCulture = value;
@@ -223,7 +229,7 @@ namespace PPlus.Controls
             screenBuffer.WriteLineTooltipsSliderNumber(_options);
             if (_options.MoveKeyPress == SliderNumberType.LeftRight)
             {
-                screenBuffer.WriteLineWidgetsSliderNumber(_options, CurrentValueStep(_currentValue), _currentValue);
+                screenBuffer.WriteLineWidgetsSliderNumber(_options, CurrentValueStep(_currentValue), _currentValue,ConsolePlus.IsUnicodeSupported);
             }
         }
 

@@ -45,6 +45,11 @@ namespace PPlus.Controls
 
 
         /// <summary>
+        /// Get HotKey default for Calendar SwitchNotes 'F2'
+        /// </summary>
+        public static HotKey CalendarSwitchNotes => new(ConsoleKey.F2);
+
+        /// <summary>
         /// Get HotKey default for PasswordView 'F2'
         /// </summary>
         public static HotKey PasswordViewDefault => new(ConsoleKey.F2);

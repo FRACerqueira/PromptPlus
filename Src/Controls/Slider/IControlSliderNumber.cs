@@ -52,6 +52,14 @@ namespace PPlus.Controls
         IControlSliderNumber Width(int value);
 
         /// <summary>
+        /// Define type Bar to Slider.
+        /// <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored</br>
+        /// </summary>
+        /// <param name="value">The <see cref="SliderBarType"/>. Default value 'SliderBarType.Fill'</param>
+        /// <returns><see cref="IControlSliderNumber"/></returns>
+        IControlSliderNumber BarType(SliderBarType value);
+
+        /// <summary>
         /// Defines a minimum and maximum range values
         /// </summary>
         /// <param name="minvalue">Minimum number</param>

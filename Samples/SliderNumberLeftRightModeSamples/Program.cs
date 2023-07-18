@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using PPlus;
+using PPlus.Controls;
 
 namespace SliderNumberLeftRightModeSamples
 {
@@ -55,6 +56,7 @@ namespace SliderNumberLeftRightModeSamples
                .Range(-100, 100)
                .Default(0)
                .Step(1)
+               .BarType(SliderBarType.Square)
                .LargeStep(10)
                .ChangeColor((value) => 
                { 
@@ -84,6 +86,40 @@ namespace SliderNumberLeftRightModeSamples
                .LargeStep(10)
                .ChangeGradient(Color.Red,Color.Yellow,Color.Green)
                .Run();
+
+            var auxb = Enum.GetValues(typeof(SliderBarType));
+            foreach (var item in auxb)
+            {
+                var bt = (SliderBarType)Enum.Parse(typeof(SliderBarType), item.ToString()!);
+                PromptPlus.DoubleDash($"Control:SliderNumber - ProgressBarType {bt}");
+                PromptPlus
+                   .SliderNumber("SliderNumber")
+                   .Culture(new CultureInfo("en-us"))
+                   .Range(-100, 100)
+                   .Default(100)
+                   .Step(1)
+                   .LargeStep(10)
+                   .BarType(bt)
+                   .Run();
+            }
+
+            foreach (var item in auxb)
+            {
+                var bt = (SliderBarType)Enum.Parse(typeof(SliderBarType), item.ToString()!);
+                PromptPlus.DoubleDash($"Control:SliderNumber - ProgressBarType {bt} with gradient color");
+                PromptPlus
+                   .SliderNumber("SliderNumber")
+                   .Culture(new CultureInfo("en-us"))
+                   .Range(-100, 100)
+                   .Default(100)
+                   .Step(1)
+                   .LargeStep(10)
+                   .BarType(bt)
+                   .ChangeGradient(Color.Red, Color.Yellow, Color.Green)
+                   .Run();
+            }
+
+
 
             PromptPlus.DoubleDash("For other basic features below see - input samples (same behaviour)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");

@@ -63,23 +63,6 @@ The [ChartBarType](./pplus.controls.chartbartype.md). Default value 'ChartType.F
 
 [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
-### <a id="methods-chartpadleft"/>**ChartPadLeft(Byte)**
-
-Pad-Left to write ChartBar
-
-```csharp
-IControlChartBar ChartPadLeft(byte value)
-```
-
-#### Parameters
-
-`value` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
-Number of spaces. Default value is 0.
-
-#### Returns
-
-[IControlChartBar](./pplus.controls.icontrolchartbar.md)
-
 ### <a id="methods-culture"/>**Culture(CultureInfo)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to on show value format.
@@ -282,6 +265,23 @@ IControlChartBar OrderBy(ChartOrder chartOrder)
 
 `chartOrder` [ChartOrder](./pplus.controls.chartorder.md)<br>
 The sort type
+
+#### Returns
+
+[IControlChartBar](./pplus.controls.icontrolchartbar.md)
+
+### <a id="methods-padleft"/>**PadLeft(Byte)**
+
+Pad-Left to write ChartBar
+
+```csharp
+IControlChartBar PadLeft(byte value)
+```
+
+#### Parameters
+
+`value` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
+Number of spaces. Default value is 0.
 
 #### Returns
 

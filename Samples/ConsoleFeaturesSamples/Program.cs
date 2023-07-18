@@ -9,6 +9,49 @@ Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 PromptPlus.Clear();
 
 PromptPlus
+    .Calendar("Title", "Description")
+    .OverwriteDefaultFrom("testeCalendar")
+    .ChangeDescription((dt) => 
+    {
+        if (dt.Day == 10)
+        {
+            return "new description";
+        }
+        return string.Empty;
+    })
+    .AddDisabled((year, month) =>
+    {
+        return new int[] { 3, 5 };
+    })
+    .AddNotes((year, month) =>
+    {
+        if (month != 7)
+        {
+            return Array.Empty<ItemCalendar>();
+        }
+        return new List<ItemCalendar>
+        {
+            new ItemCalendar(15, month, year, "Note1", "note2","note3","note4","note5","note6","note7","note8"),
+            new ItemCalendar(25, month, year)
+        }.ToArray();
+    })
+    .AddNotesHighlight((year,month) =>
+    {
+        return new List<ItemCalendar>
+        {
+            new ItemCalendar(12, month, year, "Note1", "note2"),
+            new ItemCalendar(22, month, year)
+        }.ToArray();
+    })
+    .Run();
+
+PromptPlus
+    .KeyPress()
+    .Config(cfg => cfg.HideAfterFinish(true))
+    .Spinner(SpinnersType.DotsScrolling)
+    .Run();
+
+PromptPlus
     .ChartBar("Control: ChartBar - basic usage","My Description")
     .Type(ChartType.StandBar)
     .AddItem("Label1", 10)

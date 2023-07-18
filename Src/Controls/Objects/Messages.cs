@@ -11,6 +11,14 @@ namespace PPlus.Controls.Objects
     {
         public static void UpdateCulture()
         {
+            MoveToday = PromptPlusResources.MoveToday;
+            MoveDays = PromptPlusResources.MoveDays;
+            MoveDayWeek = PromptPlusResources.MoveDayWeek;
+            MoveMonth  = PromptPlusResources.MoveMonth;
+            MoveYear  = PromptPlusResources.MoveYear;
+            TooltipToggleNotes = PromptPlusResources.TooltipToggleNotes;
+            TooltipPagesNotes = PromptPlusResources.TooltipPagesNotes;
+            ShowingNotes = PromptPlusResources.ShowingNotes;
             TooltipOrder = PromptPlusResources.TooltipOrder;
             OrderHighest = PromptPlusResources.OrderHighest;
             OrderLabelAsc = PromptPlusResources.OrderLabelAsc;
@@ -96,7 +104,14 @@ namespace PPlus.Controls.Objects
             Pressedkey = PromptPlusResources.PressedKey;
             AnyKey = PromptPlusResources.AnyKey;
         }
-
+        public static string MoveToday { get; private set; } = PromptPlusResources.MoveToday;
+        public static string MoveDays { get; private set; } = PromptPlusResources.MoveDays;
+        public static string MoveDayWeek { get; private set; } = PromptPlusResources.MoveDayWeek;
+        public static string MoveMonth { get; private set; } = PromptPlusResources.MoveMonth;
+        public static string MoveYear { get; private set; } = PromptPlusResources.MoveYear;
+        public static string TooltipToggleNotes { get; private set; } = PromptPlusResources.TooltipToggleNotes;
+        public static string TooltipPagesNotes { get; private set; } = PromptPlusResources.TooltipPagesNotes;
+        public static string ShowingNotes { get; private set; } = PromptPlusResources.ShowingNotes;
         public static string OrderHighest { get; private set; } = PromptPlusResources.OrderHighest;
         public static string OrderLabelAsc { get; private set; } = PromptPlusResources.OrderLabelAsc;
         public static string OrderLabelDec { get; private set; } = PromptPlusResources.OrderLabelDec;

@@ -291,7 +291,6 @@ namespace PPlus.Controls
 
         public override ResultPrompt<string> TryResult(CancellationToken cancellationToken)
         {
-            var result = ResultPrompt<string>.NullResult();
             var endinput = false;
             var abort = false;
             bool tryagain;
@@ -454,8 +453,7 @@ namespace PPlus.Controls
                     }
                 }
             }
-            result = new ResultPrompt<string>(FinishResult, abort,!endinput);
-            return result;
+            return new ResultPrompt<string>(FinishResult, abort,!endinput);
         }
 
 

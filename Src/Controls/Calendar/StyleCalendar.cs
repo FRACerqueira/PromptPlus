@@ -6,45 +6,41 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents the Kinds Progress Bar
+    /// Represents the Style of content Calendar
     /// </summary>
-    public enum ProgressBarType
+    public enum StyleCalendar
     {
         /// <summary>
-        /// Fill
+        /// Grid lines
         /// </summary>
-        Fill,
+        Grid,
         /// <summary>
-        /// square
+        /// Disabled content
         /// </summary>
-        Square,
+        Disabled,
         /// <summary>
-        /// Light
+        /// Selected content
         /// </summary>
-        Light,
+        Selected,
         /// <summary>
-        /// Heavy
+        /// Highlight content
         /// </summary>
-        Heavy,
+        Highlight,
         /// <summary>
-        /// Bar
+        /// Day content
         /// </summary>
-        Bar,
+        Day,
         /// <summary>
-        /// Dot
+        /// Month content
         /// </summary>
-        Dot,
+        Month,
         /// <summary>
-        /// AsciiSingle
+        /// Year content
         /// </summary>
-        AsciiSingle,
+        Year,
         /// <summary>
-        /// AsciiDouble
+        /// Week Day content
         /// </summary>
-        AsciiDouble,
-        /// <summary>
-        /// Char
-        /// </summary>
-        Char,
+        WeekDay
     }
 }

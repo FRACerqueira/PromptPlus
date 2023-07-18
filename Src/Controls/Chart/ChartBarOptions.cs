@@ -30,6 +30,7 @@ namespace PPlus.Controls
         public int FracionalDig { get; set; } = 0;
         public CultureInfo CurrentCulture { get; set; } = null;
         public Alignment TitleAligment { get; set; } = Alignment.Left;
+        public Style DescriptionStyle { get; set; } = PromptPlus.StyleSchema.Description();
         public Style TitleStyle { get; set; } = PromptPlus.StyleSchema.Chart();
         public Style LabelStyle { get; set; } = PromptPlus.StyleSchema.Chart();
         public Style PercentStyle { get; set; } = PromptPlus.StyleSchema.Chart();
@@ -41,7 +42,7 @@ namespace PPlus.Controls
         public bool HideInfoOrder { get; set; }
         public bool HidePercentBar { get; set; }
         public bool HideValueBar { get; set; }
-        public byte ChartPadLeft { get; set; } = 0;
+        public byte PadLeft { get; set; } = 0;
         public bool CurrentShowLegend { get; set; } = false;
         public bool ShowLegend { get; set; } = false;
         public bool ShowLegendPercent { get; set; } = true;
@@ -51,9 +52,9 @@ namespace PPlus.Controls
         public bool EnabledSwitchLegend { get; set; } = true;
         public bool EnabledSwitchOrder { get; set; } = true;
         public int Pagesize { get; set; } = 10;
-        public HotKey SwitchType { get; set; } = PromptPlus.Config.ChartBarSwitchType;
-        public HotKey SwitchLegend { get; set; } = PromptPlus.Config.ChartBarSwitchLegend;
-        public HotKey SwitchOrder { get; set; } = PromptPlus.Config.ChartBarSwitchOrder;
+        public HotKey SwitchType { get; set; } = PromptPlus.Config.ChartBarSwitchTypePress;
+        public HotKey SwitchLegend { get; set; } = PromptPlus.Config.ChartBarSwitchLegendPress;
+        public HotKey SwitchOrder { get; set; } = PromptPlus.Config.ChartBarSwitchOrderPress;
     }
 
 }

@@ -692,6 +692,69 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
+### <a id="methods-calendar"/>**Calendar(String, Action&lt;IPromptConfig&gt;)**
+
+Create Calendar Control to Write to console.
+
+```csharp
+public static IControlCalendar Calendar(string prompt, Action<IPromptConfig> config)
+```
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to chart
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlCalendar](./pplus.controls.icontrolcalendar.md)
+
+### <a id="methods-calendar"/>**Calendar(String, String)**
+
+Create Calendar Control to Write to console.
+
+```csharp
+public static IControlCalendar Calendar(string prompt, string description)
+```
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to chart
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to chart
+
+#### Returns
+
+[IControlCalendar](./pplus.controls.icontrolcalendar.md)
+
+### <a id="methods-calendar"/>**Calendar(String, String, Action&lt;IPromptConfig&gt;)**
+
+Create Calendar Control to Write to console.
+
+```csharp
+public static IControlCalendar Calendar(string prompt, string description, Action<IPromptConfig> config)
+```
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to chart
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to chart
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlCalendar](./pplus.controls.icontrolcalendar.md)
+
 ### <a id="methods-chartbar"/>**ChartBar(String, Action&lt;IPromptConfig&gt;)**
 
 Create ChartBar Control to Write to console.

@@ -415,7 +415,6 @@ namespace PPlus.Controls
             {
                 if (_localpaginator.TryGetSelectedItem(out var showItem))
                 {
-                    var item = showItem.Value.Name;
                     screenBuffer.WriteFilterBrowserSelect(_options, FinishResult, _filterBuffer);
                     screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
                 }
@@ -1070,7 +1069,7 @@ namespace PPlus.Controls
                 if (item != null)
                 {
                     index++;
-                    var newnode = _browserTreeView.AddNode(node, item, _options.ExpressionDisabled?.Invoke(item) ?? false);
+                    _browserTreeView.AddNode(node, item, _options.ExpressionDisabled?.Invoke(item) ?? false);
                 }
             }
             if (index >= 0)

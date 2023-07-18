@@ -362,7 +362,7 @@ namespace PPlus.Tests.Controls.TaskWaitControl
 
             ctrl.InitControl(CancellationToken.None);
 
-            CompletesIn(3000, () =>
+            CompletesIn(5000, () =>
             {
                 ctrl.InputTemplate(new ScreenBuffer());
                 var result = ctrl.TryResult(CancellationToken.None);

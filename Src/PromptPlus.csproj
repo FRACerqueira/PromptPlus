@@ -18,6 +18,8 @@
 
 	<ItemGroup>
 		<None Remove="Controls\Banner\FIGlet\Fonts\standard.flf" />
+		<None Remove="Controls\Calendar\CalendarTemplate.txt" />
+		<None Remove="Controls\Calendar\CalendarTemplateAscii.txt" />
 	</ItemGroup>
 
 	<PropertyGroup>
@@ -116,6 +118,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Controls\Banner\FIGlet\Fonts\standard.flf" />
+		<EmbeddedResource Include="Controls\Calendar\CalendarTemplate.txt" />
+		<EmbeddedResource Include="Controls\Calendar\CalendarTemplateAscii.txt" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Resources\PromptPlusResources.Designer.cs">
@@ -130,7 +134,8 @@
 			<LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 	</ItemGroup>
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='local|.net7|AnyCPU'">
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)|$(TargetFramework)'=='local|.net7'">
 		<Exec Command="xmldoc2md $(SolutionDir)Src\bin\Debug\.net7\PromptPlus.dll $(SolutionDir)docs\apis --templatefile $(SolutionDir)Src\docapitemplate.md  --excludeinternal --index-page-name apis --back-button &quot;Back to List Api&quot; --link-back-button &quot;./apis.md&quot; --back-index-button &quot;Main&quot; --link-backindex-button &quot;../index.md#table-of-contents&quot;" />
 	</Target>
 </Project>

@@ -254,6 +254,11 @@ namespace PPlus.Controls
             }
         }
 
+        /// <summary>
+        /// Get/Set <see cref="HotKey"/> to toggle view notes in calendar.
+        /// <br>Default value : '[F2]'</br>
+        /// </summary>
+        public HotKey CalendarSwitchNotesPress { get; set; } = HotKey.CalendarSwitchNotes;
 
         /// <summary>
         /// Get/Set <see cref="HotKey"/> to show/hide Tooltip.
@@ -272,20 +277,20 @@ namespace PPlus.Controls
         /// Get/Set <see cref="HotKey"/> to toggle ChartBar Type view.
         /// <br>Default value : '[F2]'</br>
         /// </summary>
-        public HotKey ChartBarSwitchType { get; set; } = HotKey.ChartBarSwitchType;
+        public HotKey ChartBarSwitchTypePress { get; set; } = HotKey.ChartBarSwitchType;
 
         /// <summary>
         /// Get/Set <see cref="HotKey"/> to toggle ChartBar Legend view.
         /// <br>Default value : '[F3]'</br>
         /// </summary>
-        public HotKey ChartBarSwitchLegend { get; set; } = HotKey.ChartBarSwitchLegend;
+        public HotKey ChartBarSwitchLegendPress { get; set; } = HotKey.ChartBarSwitchLegend;
 
 
         /// <summary>
         /// Get/Set <see cref="HotKey"/> to toggle ChartBar Order view.
         /// <br>Default value : '[F4]'</br>
         /// </summary>
-        public HotKey ChartBarSwitchOrder { get; set; } = HotKey.ChartBarSwitchOrder;
+        public HotKey ChartBarSwitchOrderPress { get; set; } = HotKey.ChartBarSwitchOrder;
 
 
         /// <summary>

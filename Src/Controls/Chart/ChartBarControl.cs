@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -65,6 +70,13 @@ namespace PPlus.Controls
         }
 
         #region IControlChartBar
+
+
+        public IControlChartBar Config(Action<IPromptConfig> context)
+        {
+            context?.Invoke(_options);
+            return this;
+        }
 
         public IControlChartBar Type(ChartType value)
         {
@@ -178,9 +190,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlChartBar ChartPadLeft(byte value)
+        public IControlChartBar PadLeft(byte value)
         {
-            _options.ChartPadLeft = value;
+            _options.PadLeft = value;
             return this;
         }
 
@@ -395,6 +407,16 @@ namespace PPlus.Controls
                     endinput = true;
                     isvalidkey = true;
                 }
+                else
+                {
+                    if (ConsolePlus.Provider == "Memory")
+                    {
+                        if (!KeyAvailable)
+                        {
+                            break;
+                        }
+                    }
+                }
                 if (isvalidkey)
                 {
                     break;
@@ -448,9 +470,9 @@ namespace PPlus.Controls
             }
             if (!_options.HideInfoOrder)
             {
-                if (_options.ChartPadLeft > 0)
+                if (_options.PadLeft > 0)
                 {
-                    screenBuffer.AddBuffer(new string(' ', _options.ChartPadLeft), Style.Plain, true);
+                    screenBuffer.AddBuffer(new string(' ', _options.PadLeft), Style.Plain, true);
                 }
                 screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, TextOrder(_options.CurrentOrder)), _options.OrderStyle);
                 screenBuffer.NewLine();
@@ -463,61 +485,64 @@ namespace PPlus.Controls
             {
                 return;
             }
-            switch (_options.TitleAligment)
+            if (!string.IsNullOrEmpty(_options.OptPrompt))
             {
-                case Alignment.Left:
-                    screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length+_options.ChartPadLeft), _options.TitleStyle);
-                    break;
-                case Alignment.Right:
-                    {
-                        var aux = _options.OptPrompt;
-                        if (aux.Length < _options.Witdth)
+                switch (_options.TitleAligment)
+                {
+                    case Alignment.Left:
+                        screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length + _options.PadLeft), _options.TitleStyle);
+                        break;
+                    case Alignment.Right:
                         {
-                            aux = new string(' ', _options.Witdth - _options.OptPrompt.Length - _options.ChartPadLeft) + _options.OptPrompt;
-                            screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.ChartPadLeft), _options.TitleStyle);
+                            var aux = _options.OptPrompt;
+                            if (aux.Length < _options.Witdth)
+                            {
+                                aux = new string(' ', _options.Witdth - _options.OptPrompt.Length - _options.PadLeft) + _options.OptPrompt;
+                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.PadLeft), _options.TitleStyle);
+                            }
+                            else
+                            {
+                                screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length + _options.PadLeft), _options.TitleStyle);
+                            }
                         }
-                        else
+                        break;
+                    case Alignment.Center:
                         {
-                            screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length + _options.ChartPadLeft), _options.TitleStyle);
+                            var aux = _options.OptPrompt;
+                            if (aux.Length < _options.Witdth)
+                            {
+                                aux = new string(' ', (_options.Witdth - _options.OptPrompt.Length - _options.PadLeft) / 2) + _options.OptPrompt;
+                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.PadLeft), _options.TitleStyle);
+                            }
+                            else
+                            {
+                                screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length + _options.PadLeft), _options.TitleStyle);
+                            }
                         }
-                    }
-                    break;
-                case Alignment.Center:
-                    {
-                        var aux = _options.OptPrompt;
-                        if (aux.Length < _options.Witdth)
-                        {
-                            aux = new string(' ', (_options.Witdth - _options.OptPrompt.Length - _options.ChartPadLeft) / 2) + _options.OptPrompt;
-                            screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.ChartPadLeft), _options.TitleStyle);
-                        }
-                        else
-                        {
-                            screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length + _options.ChartPadLeft), _options.TitleStyle);
-                        }
-                    }
-                    break;
-                default:
-                    throw new PromptPlusException($"Alignment {_options.TitleAligment} Not implemented");
+                        break;
+                    default:
+                        throw new PromptPlusException($"Alignment {_options.TitleAligment} Not implemented");
+                }
+                screenBuffer.NewLine();
             }
-            screenBuffer.NewLine();
             if (!string.IsNullOrEmpty(_options.OptDescription))
             {
                 switch (_options.TitleAligment)
                 {
                     case Alignment.Left:
-                        screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length + _options.ChartPadLeft), _options.OptStyleSchema.Description());
+                        screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length + _options.PadLeft), _options.OptStyleSchema.Description());
                         break;
                     case Alignment.Right:
                         {
                             var aux = _options.OptDescription;
                             if (aux.Length < _options.Witdth)
                             {
-                                aux = new string(' ', _options.Witdth - _options.OptDescription.Length - _options.ChartPadLeft) + _options.OptDescription;
-                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.ChartPadLeft), _options.OptStyleSchema.Description());
+                                aux = new string(' ', _options.Witdth - _options.OptDescription.Length - _options.PadLeft) + _options.OptDescription;
+                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.PadLeft), _options.OptStyleSchema.Description());
                             }
                             else
                             {
-                                screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length + _options.ChartPadLeft), _options.OptStyleSchema.Description());
+                                screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length + _options.PadLeft), _options.OptStyleSchema.Description());
                             }
                         }
                         break;
@@ -526,12 +551,12 @@ namespace PPlus.Controls
                             var aux = _options.OptDescription;
                             if (aux.Length < _options.Witdth)
                             {
-                                aux = new string(' ', (_options.Witdth - _options.OptDescription.Length - _options.ChartPadLeft) / 2) + _options.OptDescription;
-                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.ChartPadLeft), _options.OptStyleSchema.Description());
+                                aux = new string(' ', (_options.Witdth - _options.OptDescription.Length - _options.PadLeft) / 2) + _options.OptDescription;
+                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.PadLeft), _options.OptStyleSchema.Description());
                             }
                             else
                             {
-                                screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length + _options.ChartPadLeft), _options.OptStyleSchema.Description());
+                                screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length + _options.PadLeft), _options.OptStyleSchema.Description());
                             }
                         }
                         break;
@@ -558,55 +583,58 @@ namespace PPlus.Controls
                 }
             }
             var maxlenghtlabel = _options.Labels.Max(x => x.Label.Length);
-            char charbarOn = '▓';
+            char charbarOn = ' ';
+            switch (barType)
+            {
+                case ChartBarType.Fill:
+                    {
+                        if (!ConsolePlus.IsUnicodeSupported)
+                        {
+                            charbarOn = _options.CharBar;
+                        }
+                    }
+                    break;
+                case ChartBarType.Light:
+                    {
+                        charbarOn = '─';
+                        if (!ConsolePlus.IsUnicodeSupported)
+                        {
+                            charbarOn = '-';
+                        }
+                    }
+                    break;
+                case ChartBarType.Heavy:
+                    {
+                        charbarOn = '━';
+                        if (!ConsolePlus.IsUnicodeSupported)
+                        {
+                            charbarOn = '=';
+                        }
+                    }
+                    break;
+                case ChartBarType.Square:
+                    {
+                        charbarOn = '■';
+                        if (!ConsolePlus.IsUnicodeSupported)
+                        {
+                            charbarOn = _options.CharBar;
+                        }
+                    }
+                    break;
+                default:
+                    throw new PromptPlusException($"Not implemented {barType}");
+            }
             foreach (var item in _options.Labels.Skip(inipos).Take(pagesize))
             {
-                Style OnStyle = Style.Plain.Foreground(item.ColorBar.Value);
-                switch (barType)
+                var OnStyle = Style.Plain.Foreground(item.ColorBar.Value);
+                if (barType == ChartBarType.Fill)
                 {
-                    case ChartBarType.Fill:
-                        {
-                            OnStyle.Background(OnStyle.Foreground);
-                            if (!ConsolePlus.IsUnicodeSupported)
-                            {
-                                charbarOn = _options.CharBar;
-                            }
-                        }
-                        break;
-                    case ChartBarType.Light:
-                        {
-                            charbarOn = '─';
-                            if (!ConsolePlus.IsUnicodeSupported)
-                            {
-                                charbarOn = '-';
-                            }
-                        }
-                        break;
-                    case ChartBarType.Heavy:
-                        {
-                            charbarOn = '━';
-                            if (!ConsolePlus.IsUnicodeSupported)
-                            {
-                                charbarOn = '=';
-                            }
-                        }
-                        break;
-                    case ChartBarType.Square:
-                        {
-                            charbarOn = '■';
-                            if (!ConsolePlus.IsUnicodeSupported)
-                            {
-                                charbarOn = _options.CharBar;
-                            }
-                        }
-                        break;
-                    default:
-                        throw new PromptPlusException($"Not implemented {barType}");
+                    OnStyle = Style.Plain.Background(item.ColorBar.Value);
                 }
                 screenBuffer.NewLine();
-                if (_options.ChartPadLeft > 0)
+                if (_options.PadLeft > 0)
                 {
-                    screenBuffer.AddBuffer(new string(' ',_options.ChartPadLeft), Style.Plain, true);
+                    screenBuffer.AddBuffer(new string(' ',_options.PadLeft), Style.Plain,false,false);
                 }
                 var tkt = (int)(ticketStep * item.Value);
                 if (tkt == 0)
@@ -615,29 +643,29 @@ namespace PPlus.Controls
                 }
                 if (_options.CurrentShowLegend)
                 {
-                    screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle, true);
+                    screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle, false, true);
                 }
                 else
                 {
                     screenBuffer.AddBuffer(item.Label.PadRight(maxlenghtlabel) , _options.LabelStyle);
-                    screenBuffer.AddBuffer(": ",Style.Plain,true);
-                    screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle, true);
+                    screenBuffer.AddBuffer(": ",Style.Plain, false, false);
+                    screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle, false, true);
                 }
                 if (!_options.HideValueBar)
                 {
-                    screenBuffer.AddBuffer(' ', Style.Plain, true);
-                    screenBuffer.AddBuffer(ValueToString(item.Value), _options.ValueStyle, true);
+                    screenBuffer.AddBuffer(' ', Style.Plain, false, false);
+                    screenBuffer.AddBuffer(ValueToString(item.Value), _options.ValueStyle, false, false);
                 }
                 if (!_options.HidePercentBar)
                 {
-                    screenBuffer.AddBuffer(' ', Style.Plain, true);
+                    screenBuffer.AddBuffer(' ', Style.Plain, false, false);
                     if (!_options.HideValueBar)
                     {
-                        screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / totalvalue)}%)", _options.PercentStyle, true);
+                        screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / totalvalue)}%)", _options.PercentStyle, false, false);
                     }
                     else
                     {
-                        screenBuffer.AddBuffer($"{ValueToString((100 * item.Value) / totalvalue)}%", _options.PercentStyle, true);
+                        screenBuffer.AddBuffer($"{ValueToString((100 * item.Value) / totalvalue)}%", _options.PercentStyle, false, false);
                     }
                 }
             }
@@ -646,19 +674,16 @@ namespace PPlus.Controls
 
         private void WriteStackBar(ScreenBuffer screenBuffer, ChartBarType barType, double ticketStep)
         {
-            char charbarOn = '▓';
+            char charbarOn = ' ';
             screenBuffer.NewLine();
-            if (_options.ChartPadLeft > 0)
+            if (_options.PadLeft > 0)
             {
-                screenBuffer.AddBuffer(new string(' ', _options.ChartPadLeft), Style.Plain, true);
+                screenBuffer.AddBuffer(new string(' ', _options.PadLeft), Style.Plain, false, false);
             }
-            Style OnStyle = Style.Plain;
-
             switch (barType)
             {
                 case ChartBarType.Fill:
                     {
-                        OnStyle.Background(OnStyle.Foreground);
                         if (!ConsolePlus.IsUnicodeSupported)
                         {
                             charbarOn = _options.CharBar;
@@ -698,7 +723,11 @@ namespace PPlus.Controls
 
             foreach (var item in _options.Labels)
             {
-                OnStyle = Style.Plain.Foreground(item.ColorBar.Value);
+                var OnStyle = Style.Plain.Foreground(item.ColorBar.Value);
+                if (barType == ChartBarType.Fill)
+                {
+                    OnStyle = Style.Plain.Background(item.ColorBar.Value);
+                }
                 int tkt;
                 if (double.IsInfinity(ticketStep))
                 {
@@ -712,7 +741,7 @@ namespace PPlus.Controls
                         tkt = 1;
                     }
                 }
-                screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle);
+                screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle, false, true);
             }
             screenBuffer.NewLine();
         }
@@ -738,15 +767,15 @@ namespace PPlus.Controls
             foreach (var item in _options.Labels.Skip(inipos).Take(pagesize))
             {
                 screenBuffer.NewLine();
-                if (_options.ChartPadLeft > 0)
+                if (_options.PadLeft > 0)
                 {
-                    screenBuffer.AddBuffer(new string(' ', _options.ChartPadLeft),Style.Plain,true);
+                    screenBuffer.AddBuffer(new string(' ', _options.PadLeft),Style.Plain, false, false);
                 }
-                screenBuffer.AddBuffer("■ ", Style.Plain.Foreground(item.ColorBar.Value),true);
+                screenBuffer.AddBuffer("■ ", Style.Plain.Foreground(item.ColorBar.Value), false, false);
                 screenBuffer.AddBuffer($"{item.Label.PadRight(maxlenghtlabel)}", _options.LabelStyle);
                 if (_options.ShowLegendValue || _options.ShowLegendPercent)
                 {
-                    screenBuffer.AddBuffer(": ", Style.Plain, true);
+                    screenBuffer.AddBuffer(": ", Style.Plain, false, false);
                 }
                 if (_options.ShowLegendValue)
                 {
@@ -754,25 +783,25 @@ namespace PPlus.Controls
                 }
                 if (_options.ShowLegendPercent)
                 {
-                    screenBuffer.AddBuffer(' ', Style.Plain, true);
+                    screenBuffer.AddBuffer(' ', Style.Plain, false, false);
                     if (_options.ShowLegendValue)
                     {
                         if (totalvalue == 0)
                         {
-                            screenBuffer.AddBuffer("(0%)", _options.PercentStyle);
+                            screenBuffer.AddBuffer("(0%)", _options.PercentStyle, false, false);
                         }
                         else
                         {
-                            screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / totalvalue)}%)", _options.PercentStyle);
+                            screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / totalvalue)}%)", _options.PercentStyle, false, false);
                         }
                     }
                     else
                     {
                         if (totalvalue == 0)
                         {
-                            screenBuffer.AddBuffer("0%", _options.PercentStyle);
+                            screenBuffer.AddBuffer("0%", _options.PercentStyle, false, false);
                         }
-                        screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / totalvalue)}%)", _options.PercentStyle);
+                        screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / totalvalue)}%)", _options.PercentStyle, false, false);
                     }
                 }
             }

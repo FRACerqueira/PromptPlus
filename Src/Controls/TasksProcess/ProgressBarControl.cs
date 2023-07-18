@@ -473,7 +473,7 @@ namespace PPlus.Controls
                     }
 
                 }
-                char charbarOn = '▓';
+                char charbarOn = ' ';
                 char charbarOff = ' ';
                 string delimitbar = "│";
                 Style OnStyle = Style.Plain.Foreground(_options.OptStyleSchema.Slider().Foreground);
@@ -490,7 +490,7 @@ namespace PPlus.Controls
                     case ProgressBarType.Fill:
                         {
                             charbarOff = charbarOn;
-                            OnStyle.Background(OnStyle.Foreground);
+                            OnStyle = OnStyle.Background(OnStyle.Foreground);
                             if (!ConsolePlus.IsUnicodeSupported)
                             {
                                 charbarOn = _options.CharBar;
@@ -513,6 +513,15 @@ namespace PPlus.Controls
                             if (!ConsolePlus.IsUnicodeSupported)
                             {
                                 charbarOn = '=';
+                            }
+                        }
+                        break;
+                    case ProgressBarType.Square:
+                        {
+                            charbarOn = '■';
+                            if (!ConsolePlus.IsUnicodeSupported)
+                            {
+                                charbarOn = '#';
                             }
                         }
                         break;

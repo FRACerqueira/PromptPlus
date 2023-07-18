@@ -22,6 +22,7 @@ The hotkeys for each control can be  globally or for each instance. Valid values
 ## Default HotKeys
 
 - HotKey.TooltipDefault : F1
+- HotKey.CalendarSwitchNotes : F2
 - HotKey.PasswordViewDefault : F2
 - HotKey.SelectAllDefault : F2
 - HotKey.EditItemDefault : F2
@@ -54,8 +55,9 @@ PromptPlus.Config.PasswordViewPress = new HotKey(UserHotKey.F7)
 - FullPathPress
 - ToggleExpandPress
 - ToggleExpandAllPress
-- ChartBarSwitchType
-- ChartBarSwitchLegend
+- ChartBarSwitchTypePress
+- ChartBarSwitchLegendPress
+- CalendarSwitchNotesPress
 
 
 ### Instance Hotkeys
@@ -118,3 +120,8 @@ PromptPlus
 
 - HotKeySwitchType
 - HotKeySwitchLegend
+
+### Calendar Controls
+
+- HotKeySwitchNotes
+

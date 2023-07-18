@@ -84,15 +84,15 @@ namespace ProgressBarSamples
                 .UpdateHandler(MyPrgBarHandler)
                 .ChangeColor((value) => 
                 {
-                    if (value < 20)
+                    if (value <= 20)
                     {
-                        return Style.Plain.Foreground(Color.Red);
+                        return Style.Plain.Foreground(Color.Violet);
                     }
-                    if (value < 60)
+                    else if (value <= 60)
                     {
                         return Style.Plain.Foreground(PromptPlus.StyleSchema.Slider().Foreground);
                     }
-                    if (value < 80)
+                    else if (value <= 80)
                     {
                         return Style.Plain.Foreground(Color.Yellow);
                     }

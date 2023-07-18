@@ -204,6 +204,21 @@
   <data name="MaskEditPosYear" xml:space="preserve">
     <value>Ano</value>
   </data>
+  <data name="MoveDays" xml:space="preserve">
+    <value>Left/Right:Mudar dia</value>
+  </data>
+  <data name="MoveDayWeek" xml:space="preserve">
+    <value>Up/Down:Mudar dia com o mesmo dia da semana</value>
+  </data>
+  <data name="MoveMonth" xml:space="preserve">
+    <value>Tab/Shift Tab:Mudar Mes</value>
+  </data>
+  <data name="MoveToday" xml:space="preserve">
+    <value>Home:Hoje</value>
+  </data>
+  <data name="MoveYear" xml:space="preserve">
+    <value>PgUp/PgDown:Mudar Ano</value>
+  </data>
   <data name="MultiSelectFisnishEnter" xml:space="preserve">
     <value>Enter:Concluir, Space:Marcar/Desmarcar</value>
   </data>
@@ -254,6 +269,9 @@
   </data>
   <data name="SelectionInvalid" xml:space="preserve">
     <value>Seleção inválida</value>
+  </data>
+  <data name="ShowingNotes" xml:space="preserve">
+    <value>Mostrando notas</value>
   </data>
   <data name="SliderNumberLeftRightKeyNavigator" xml:space="preserve">
     <value>Left/Right:Valor curto, Tab/Shift+Tab:Valor grande, Enter:Concluir</value>
@@ -309,6 +327,9 @@
   <data name="TooltipPages" xml:space="preserve">
     <value>Up/Down/PgUp/PgDown:Mover</value>
   </data>
+  <data name="TooltipPagesNotes" xml:space="preserve">
+    <value>Up/Down/PgUp/PgDown:Mover Notas</value>
+  </data>
   <data name="TooltipPressSpace" xml:space="preserve">
     <value>Shift Space:Espaço</value>
   </data>
@@ -335,6 +356,9 @@
   </data>
   <data name="TooltipToggleExpandPress" xml:space="preserve">
     <value>{0}:Expandir/Recolher</value>
+  </data>
+  <data name="TooltipToggleNotes" xml:space="preserve">
+    <value>{0}:Ver/Esconder Notas</value>
   </data>
   <data name="TooltipViewPassword" xml:space="preserve">
     <value>{0}:Ver/Esconder senha</value>

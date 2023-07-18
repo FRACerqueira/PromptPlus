@@ -52,8 +52,8 @@ namespace PPlus.Controls
             {
                 _observerAutoComplete = Task.Run(() =>
                 {
-                    var tk = ObserverAutoComplete(_ctsObserver.Token);
-                 }, CancellationToken.None);
+                    ObserverAutoComplete(_ctsObserver.Token);
+                }, CancellationToken.None);
             }
             else
             {

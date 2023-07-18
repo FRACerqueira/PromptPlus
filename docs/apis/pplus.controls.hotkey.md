@@ -23,6 +23,18 @@ Implements [IEquatable&lt;ConsoleKeyInfo&gt;](https://docs.microsoft.com/en-us/d
 
 ## Properties
 
+### <a id="properties-calendarswitchnotes"/>**CalendarSwitchNotes**
+
+Get HotKey default for Calendar SwitchNotes 'F2'
+
+```csharp
+public static HotKey CalendarSwitchNotes { get; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
 ### <a id="properties-chartbarswitchlegend"/>**ChartBarSwitchLegend**
 
 Get HotKey default for ChartBar Switch Legend 'F3'

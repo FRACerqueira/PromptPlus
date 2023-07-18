@@ -16,7 +16,7 @@ namespace PPlus
         internal const string UnicodeEllipsis = "…";
         internal const string AsciiEllipsis = "...";
 
-        private static readonly Style _initstyle = new(PromptPlus.Console.ForegroundColor, PromptPlus.Console.BackgroundColor,Overflow.None);
+        private static Style _initstyle => new(PromptPlus.Console.ForegroundColor, PromptPlus.Console.BackgroundColor,Overflow.None);
 
         /// <summary>
         /// create a new <see cref="Style"/> with default foreground/background colors and none overflow strategy.

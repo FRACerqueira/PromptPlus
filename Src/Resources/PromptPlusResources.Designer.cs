@@ -322,6 +322,51 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Left/Right:Change Day.
+        /// </summary>
+        internal static string MoveDays {
+            get {
+                return ResourceManager.GetString("MoveDays", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up/Down:Change Day with same Day of Week.
+        /// </summary>
+        internal static string MoveDayWeek {
+            get {
+                return ResourceManager.GetString("MoveDayWeek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab/Shift Tab:Change Month.
+        /// </summary>
+        internal static string MoveMonth {
+            get {
+                return ResourceManager.GetString("MoveMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home:Today.
+        /// </summary>
+        internal static string MoveToday {
+            get {
+                return ResourceManager.GetString("MoveToday", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PgUp/PgDown:Change Year.
+        /// </summary>
+        internal static string MoveYear {
+            get {
+                return ResourceManager.GetString("MoveYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter:Fisnish, Space:Check/Uncheck.
         /// </summary>
         internal static string MultiSelectFisnishEnter {
@@ -471,6 +516,15 @@ namespace PPlus.Resources {
         internal static string SelectionInvalid {
             get {
                 return ResourceManager.GetString("SelectionInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Showing notes.
+        /// </summary>
+        internal static string ShowingNotes {
+            get {
+                return ResourceManager.GetString("ShowingNotes", resourceCulture);
             }
         }
         
@@ -646,6 +700,15 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move Notes.
+        /// </summary>
+        internal static string TooltipPagesNotes {
+            get {
+                return ResourceManager.GetString("TooltipPagesNotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shift Space:Space.
         /// </summary>
         internal static string TooltipPressSpace {
@@ -723,6 +786,15 @@ namespace PPlus.Resources {
         internal static string TooltipToggleExpandPress {
             get {
                 return ResourceManager.GetString("TooltipToggleExpandPress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}:Toggle Notes.
+        /// </summary>
+        internal static string TooltipToggleNotes {
+            get {
+                return ResourceManager.GetString("TooltipToggleNotes", resourceCulture);
             }
         }
         

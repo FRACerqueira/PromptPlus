@@ -175,8 +175,6 @@ namespace PPlus.Controls.Objects
 
             if (!string.IsNullOrEmpty(_logicalMaskDateTime))
             {
-                var sepD = _cultureMasked.DateTimeFormat.DateSeparator;
-                var sep = _cultureMasked.DateTimeFormat.TimeSeparator;
                 _maskIniTime = _logicalMaskDateTime.IndexOf(_promptmask) + 1;
                 _iniTime = _logicalMaskDateTime.Substring(0, _maskIniTime).ToCharArray().Count(x => x == '9');
                 _diffIniTime = _logicalMaskDateTime.Substring(0, _maskIniTime).ToCharArray().Count(x => x != '9');

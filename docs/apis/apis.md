@@ -88,6 +88,8 @@
 
 - [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
+- [IControlCalendar](./pplus.controls.icontrolcalendar.md)
+
 - [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
 - [IControlInput](./pplus.controls.icontrolinput.md)
@@ -126,6 +128,8 @@
 
 - [ItemBrowser](./pplus.controls.itembrowser.md)
 
+- [ItemCalendar](./pplus.controls.itemcalendar.md)
+
 - [MaskedType](./pplus.controls.maskedtype.md)
 
 - [ProgressBarType](./pplus.controls.progressbartype.md)
@@ -137,6 +141,8 @@
 - [ResultProgessBar&lt;T&gt;](./pplus.controls.resultprogessbar-1.md)
 
 - [ResultPrompt&lt;T&gt;](./pplus.controls.resultprompt-1.md)
+
+- [SliderBarType](./pplus.controls.sliderbartype.md)
 
 - [SliderNumberType](./pplus.controls.slidernumbertype.md)
 
@@ -151,6 +157,8 @@
 - [StringStyle](./pplus.controls.stringstyle.md)
 
 - [StyleBrowser](./pplus.controls.stylebrowser.md)
+
+- [StyleCalendar](./pplus.controls.stylecalendar.md)
 
 - [StyleChart](./pplus.controls.stylechart.md)
 

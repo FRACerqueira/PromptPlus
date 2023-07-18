@@ -59,8 +59,6 @@ namespace PPlus.Controls.Objects
                         .ToArray();
                 }
 
-                var size = Math.Min(_userpageSize, _filteredItems.Length);
-
                 for (var i = (_userpageSize * SelectedPage) + SelectedIndex; i < _filteredItems.Length; i++)
                 {
                     if (EqualityComparer<T>.Default.Equals(_filteredItems[i], selectedItem))

@@ -12,32 +12,101 @@ namespace PPlus.Controls
     internal static class ScreenBufferSliderNumber
     {
 
-        public static void WriteLineWidgetsSliderNumber(this ScreenBuffer screenBuffer, SliderNumberOptions options,int valuestep, double input)
+        public static void WriteLineWidgetsSliderNumber(this ScreenBuffer screenBuffer, SliderNumberOptions options,int valuestep, double input, bool isunicode)
         {
+            var bar = ' ';
+            switch (options.BarType)
+            {
+                case SliderBarType.Fill:
+                    {
+                        if (!isunicode)
+                        {
+                            bar ='#';
+                        }
+                    }
+                    break;
+                case SliderBarType.Light:
+                    {
+                        bar = '─';
+                        if (!isunicode)
+                        {
+                            bar = '-';
+                        }
+                    }
+                    break;
+                case SliderBarType.Heavy:
+                    {
+                        bar = '━';
+                        if (!isunicode)
+                        {
+                            bar = '=';
+                        }
+                    }
+                    break;
+                case SliderBarType.Square:
+                    {
+                        bar = '■';
+                        if (!isunicode)
+                        {
+                            bar = '#';
+                        }
+                    }
+                    break;
+                default:
+                    throw new PromptPlusException($"Not implemented {options.BarType}");
+            }
             screenBuffer.NewLine();
             screenBuffer.AddBuffer($"{options.ValueToString(options.Minvalue)} ", options.OptStyleSchema.UnSelected(),true);
             if (options.ChangeColor != null)
             {
                 var color = options.ChangeColor(input);
-                screenBuffer.AddBuffer(new string(' ', valuestep), Style.Plain.Foreground(color).Background(color),true,false);
+                if (options.BarType == SliderBarType.Fill)
+                {
+                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Plain.Foreground(color).Background(color), true, false);
+                }
+                else
+                {
+                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Plain.Foreground(color), true, false);
+                }
             }
             else if (options.Gradient != null)
             {
-                var txt = new string(' ', options.Witdth);
+                var txt = new string(bar, options.Witdth);
                 var aux = Gradient(txt,options.Gradient);
                 for (int i = 0; i < aux.Length; i++)
                 {
                     if (i <= valuestep && valuestep > 0)
                     {
-                        screenBuffer.AddBuffer(aux[i].Text, aux[i].Style, true, false);
+                        if (options.BarType == SliderBarType.Fill)
+                        {
+                            screenBuffer.AddBuffer(aux[i].Text, aux[i].Style, true, false);
+                        }
+                        else
+                        {
+                            screenBuffer.AddBuffer(aux[i].Text, Style.Plain.Foreground(aux[i].Style.Foreground), true, false);
+                        }
                     }
                 }            
             }
             else
             {
-                screenBuffer.AddBuffer(new string(' ', valuestep), options.OptStyleSchema.Slider().Background(options.OptStyleSchema.Slider().Foreground), true, false);
+                if (options.BarType == SliderBarType.Fill)
+                {
+                    screenBuffer.AddBuffer(new string(bar, valuestep), options.OptStyleSchema.Slider().Background(options.OptStyleSchema.Slider().Foreground), true, false);
+                }
+                else
+                {
+                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Plain.Foreground(options.OptStyleSchema.Slider().Foreground), true, false);
+                }
             }
-            screenBuffer.AddBuffer(new string(' ', options.Witdth - valuestep), options.OptStyleSchema.Slider(), true, false);
+            if (options.BarType == SliderBarType.Fill)
+            {
+                screenBuffer.AddBuffer(new string(' ', options.Witdth - valuestep), options.OptStyleSchema.Slider(), true, false);
+            }
+            else
+            {
+                screenBuffer.AddBuffer(new string(bar, options.Witdth - valuestep), Style.Plain.Foreground(options.OptStyleSchema.Slider().Background), true, false);
+            }
             screenBuffer.AddBuffer($" {options.ValueToString(options.Maxvalue)}", options.OptStyleSchema.UnSelected(),true,false);
         }
 

@@ -22,39 +22,52 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### <a id="properties-chartbarswitchlegend"/>**ChartBarSwitchLegend**
+### <a id="properties-calendarswitchnotespress"/>**CalendarSwitchNotesPress**
+
+Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle view notes in calendar.
+ <br>Default value : '[F2]'
+
+```csharp
+public HotKey CalendarSwitchNotesPress { get; set; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
+### <a id="properties-chartbarswitchlegendpress"/>**ChartBarSwitchLegendPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle ChartBar Legend view.
  <br>Default value : '[F3]'
 
 ```csharp
-public HotKey ChartBarSwitchLegend { get; set; }
+public HotKey ChartBarSwitchLegendPress { get; set; }
 ```
 
 #### Property Value
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### <a id="properties-chartbarswitchorder"/>**ChartBarSwitchOrder**
+### <a id="properties-chartbarswitchorderpress"/>**ChartBarSwitchOrderPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle ChartBar Order view.
  <br>Default value : '[F4]'
 
 ```csharp
-public HotKey ChartBarSwitchOrder { get; set; }
+public HotKey ChartBarSwitchOrderPress { get; set; }
 ```
 
 #### Property Value
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
-### <a id="properties-chartbarswitchtype"/>**ChartBarSwitchType**
+### <a id="properties-chartbarswitchtypepress"/>**ChartBarSwitchTypePress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle ChartBar Type view.
  <br>Default value : '[F2]'
 
 ```csharp
-public HotKey ChartBarSwitchType { get; set; }
+public HotKey ChartBarSwitchTypePress { get; set; }
 ```
 
 #### Property Value

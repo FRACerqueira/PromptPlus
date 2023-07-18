@@ -73,13 +73,15 @@ namespace PPlus.Controls.Objects
             }
         }
 
-        public static void WriteLineValidate(this ScreenBuffer screenBuffer, string error, BaseOptions options)
+        public static bool WriteLineValidate(this ScreenBuffer screenBuffer, string error, BaseOptions options)
         {
             if (!string.IsNullOrEmpty(error))
             {
                screenBuffer.NewLine();
                screenBuffer.AddBuffer(error, options.OptStyleSchema.Error(),true);
+               return true;
             }
+            return false;
         }
 
     }

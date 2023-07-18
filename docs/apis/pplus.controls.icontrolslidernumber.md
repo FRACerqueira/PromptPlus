@@ -22,6 +22,24 @@ Implements [IPromptControls&lt;Double&gt;](./pplus.controls.ipromptcontrols-1.md
 
 ## Methods
 
+### <a id="methods-bartype"/>**BarType(SliderBarType)**
+
+Define type Bar to Slider.
+ <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored
+
+```csharp
+IControlSliderNumber BarType(SliderBarType value)
+```
+
+#### Parameters
+
+`value` [SliderBarType](./pplus.controls.sliderbartype.md)<br>
+The [SliderBarType](./pplus.controls.sliderbartype.md). Default value 'SliderBarType.Fill'
+
+#### Returns
+
+[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
+
 ### <a id="methods-changecolor"/>**ChangeColor(Func&lt;Double, Color&gt;)**
 
 Dynamically change color Widgets

@@ -61,12 +61,9 @@ namespace PPlus.Controls
                 if (disposing)
                 {
                     _ctsesc?.Cancel();
-                    if (_process != null)
+                    if (_process != null && !_process.IsCompleted)
                     {
-                        if (!_process.IsCompleted)
-                        {
-                            _process.Wait(CancellationToken.None);
-                        }
+                        _process.Wait(CancellationToken.None);
                     }
                     _process?.Dispose();
                     _lnkcts?.Dispose();
@@ -118,13 +115,10 @@ namespace PPlus.Controls
             {
                 throw new PromptPlusException("Custom spinner not have data");
             }
+            _options.Spinner = new Spinners(spinnersType, ConsolePlus.IsUnicodeSupported);
             if (spinnersType == SpinnersType.Custom)
             {
                 _options.Spinner = new Spinners(SpinnersType.Custom, ConsolePlus.IsUnicodeSupported, speedAnimation ?? 80, customspinner);
-            }
-            else
-            {
-                _options.Spinner = new Spinners(spinnersType, ConsolePlus.IsUnicodeSupported);
             }
             if (spinnerStyle.HasValue)
             {
@@ -295,7 +289,7 @@ namespace PPlus.Controls
                         tasks.Add((i, Task.Run(() =>
                         {
                             var localpos = i;
-                            TaskStatus actsta = TaskStatus.Running;
+                            TaskStatus actsta;
                             Exception actex = null;
                             var tm = new Stopwatch();
                             detailsElapsedTime.Add((-1, -1, tm));
@@ -304,14 +298,7 @@ namespace PPlus.Controls
                             try
                             {
                                 act.Invoke(cancelationtoken);
-                                if (cancelationtoken.IsCancellationRequested)
-                                {
-                                    actsta = TaskStatus.Canceled;
-                                }
-                                else
-                                {
-                                    actsta = TaskStatus.RanToCompletion;
-                                }
+                                actsta = cancelationtoken.IsCancellationRequested? TaskStatus.Canceled: TaskStatus.RanToCompletion;
                             }
                             catch (Exception ex)
                             {
@@ -372,11 +359,11 @@ namespace PPlus.Controls
                         }
                         aux.Item2.Dispose();
                     }
-                    tasks = new List<(int, Task)>();
+                    tasks.Clear();
                     break;
                 }
 
-                string desc = null;
+                string desc;
                 if (samedesc)
                 {
                     desc = firstdesc;
@@ -387,12 +374,9 @@ namespace PPlus.Controls
                     foreach (var item in executelist)
                     {
                         var dj = _options.States[item].Description;
-                        if (!string.IsNullOrEmpty(dj))
+                        if (!string.IsNullOrEmpty(dj) && !auxdesc.Contains(dj))
                         {
-                            if (!auxdesc.Contains(dj))
-                            {
-                                auxdesc.Add(dj);
-                            }
+                            auxdesc.Add(dj);
                         }
                     }
                     if (auxdesc.Any())
@@ -547,12 +531,9 @@ namespace PPlus.Controls
                 var tkspinner = Task.Run(() => ShowSpinner(detailsElapsedTime, timerSpinner, cancelationtoken), CancellationToken.None);
                 Task.WaitAll(tasks.Select(x => x.Item2).Where(x => !x.IsCompleted).ToArray(), CancellationToken.None);
                 timerSpinner.Stop();
-                if (!tkspinner.IsCanceled)
+                if (!tkspinner.IsCanceled && !tkspinner.IsCompleted)
                 {
-                    if (!tkspinner.IsCompleted)
-                    {
-                        tkspinner.Wait(CancellationToken.None);
-                    }
+                    tkspinner.Wait(CancellationToken.None);
                 }
                 tkspinner.Dispose();
 
@@ -563,7 +544,7 @@ namespace PPlus.Controls
                 {
                     task.Item2.Dispose();
                 }
-                tasks = new List<(int, Task)>();
+                tasks.Clear();
                 ClearLast();
             }
             while (i < _options.Steps.Count);

@@ -282,7 +282,6 @@ namespace PPlus.Controls
 
         public override ResultPrompt<IEnumerable<string>> TryResult(CancellationToken cancellationToken)
         {
-            var result = ResultPrompt<IEnumerable<string>>.NullResult();
             var endinput = false;
             var abort = false;
             bool tryagain;
@@ -525,8 +524,7 @@ namespace PPlus.Controls
                     }
                 }
             }
-            result = new ResultPrompt<IEnumerable<string>>(_options.Items.Select(x => x.Text), abort, !endinput);
-            return result;
+            return new ResultPrompt<IEnumerable<string>>(_options.Items.Select(x => x.Text), abort, !endinput);
         }
 
         private void ResetAutoComplete()
