@@ -108,7 +108,7 @@ dotnet add package PromptPlus [--prerelease]
 ## Examples
 [**Top**](#table-of-contents)
 
-The folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/Samples) contains more **30** samples!.
+The folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples) contains more **30** samples!.
 
 ```
 dotnet run --project [name of sample]
@@ -227,7 +227,7 @@ PromptPlus
 ![](./images/consoleoverflowcapacity.gif)
 
 
-#### Sample color capacity ([Projet sample](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ConsoleFeaturesSamples))
+#### Sample color capacity ([Projet sample](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples))
 
 
 **_Note: This layout and code was inspired by the excellent project:spectreconsole, having the same color palette_**

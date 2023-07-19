@@ -10,7 +10,7 @@
 
 ## Table of Contents
 
-For each snapshot, the title is **name of projet** in folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/Samples).
+For each snapshot, the title is **name of projet** in folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples).
 
 - [Input - Basic](#input)
 - [Input - AutoComplete](#autocomplete)
@@ -34,177 +34,177 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 
 ### Input
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputBasicSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputBasicSamples)
 
 ![](./images/inputsample1.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputSecretSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputSecretSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputSecretSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputSecretSamples)
 
 ![](./images/inputsample2.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputWithHistorySamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputWithHistorySamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputWithHistorySamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithHistorySamples)
 
 ![](./images/inputsample3.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputWithSugestionSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputWithSugestionSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputWithSugestionSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithSugestionSamples)
 
 ![](./images/inputsample4.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputWithValidatorSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputWithValidatorSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputWithValidatorSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithValidatorSamples)
 
 ![](./images/inputsample5.gif)
 
 **Other samples input**
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputOverwriteDefaultFromSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputOverwriteDefaultFromSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputOverwriteDefaultFromSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputOverwriteDefaultFromSamples)
 
 ### Calendar
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [CalendarSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/CalendarSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [CalendarSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/CalendarSamples)
 
 ![](./images/calendar1.gif)
 
 ### AutoComplete
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [AutoCompleteSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/AutoCompleteSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [AutoCompleteSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AutoCompleteSamples)
 
 ![](./images/autocompletesample1.gif)
 
 ### MaskEdit
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditGenericSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditGenericSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditGenericSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditGenericSamples)
 
 ![](./images/maskedit1.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditDateTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditDateTypeSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditDateTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditDateTypeSamples)
 
 ![](./images/maskedit2.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditTimeTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditTimeTypeSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditTimeTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditTimeTypeSamples)
 
 ![](./images/maskedit3.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditDateTimeTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditDateTimeTypeSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditDateTimeTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditDateTimeTypeSamples)
 
 ![](./images/maskedit4.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditNumberTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditNumberTypeSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditNumberTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditNumberTypeSamples)
 
 ![](./images/maskedit5.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditCurrencyTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MaskEditCurrencyTypeSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MaskEditCurrencyTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditCurrencyTypeSamples)
 
 ![](./images/maskedit6.gif)
 
 ### KeyPress
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [KeyPressSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/KeyPressSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [KeyPressSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/KeyPressSamples)
 
 ![](./images/keypress1.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [ConfirmSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ConfirmSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [ConfirmSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConfirmSamples)
 
 ![](./images/confirm1.gif)
 
 ### Select
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SelectBasicSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
 
 ![](./images/select1.gif)
 
 **Other samples Select**
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SelectUserScopeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SelectUserScopeSamples) ,
-[SelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SelectUserTypeSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SelectUserScopeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectUserScopeSamples) ,
+[SelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectUserTypeSamples)
 
 ### Multi Select
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MultiSelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectBasicSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MultiSelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MultiSelectBasicSamples)
 
 ![](./images/multiselect1.gif)
 
 **Other samples Multi-Select**
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MultiSelectUserScopeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectUserScopeSamples) ,
-[MultiSelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/MultiSelectUserTypeSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MultiSelectUserScopeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MultiSelectUserScopeSamples) ,
+[MultiSelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MultiSelectUserTypeSamples)
 
 
 ### Wait Process
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [WaitTasksSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/WaitTasksSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [WaitTasksSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/WaitTasksSamples)
 
 ![](./images/waittask1.gif)
 
 ### Wait Time
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [WaitTimerSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/WaitTimerSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [WaitTimerSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/WaitTimerSamples)
 
 ![](./images/waittime1.gif)
 
 ### Chart Bar
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [ChartSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ChartSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [ChartSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ChartSamples)
 
 ![](./images/chartbar1.gif)
 
 ### Progress Bar
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [ProgressBarSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ProgressBarSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [ProgressBarSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ProgressBarSamples)
 
 ![](./images/progressbar1.gif)
 
 ### Slider Swith
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SliderSwithSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderSwithSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SliderSwithSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderSwithSamples)
 
 ![](./images/sliderswitch1.gif)
 
 ### Slider Number
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SliderNumberUpDownModeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderNumberUpDownModeSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SliderNumberUpDownModeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderNumberUpDownModeSamples)
 
 ![](./images/slidernumber2.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SliderNumberLeftRightModeSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/SliderNumberLeftRightModeSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SliderNumberLeftRightModeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderNumberLeftRightModeSamples)
 
 ![](./images/slidernumber1.gif)
 
 ### Add to List
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [AddToListSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/AddToListSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [AddToListSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddToListSamples)
 
 ![](./images/addtolist1.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [AddtoMaskEditListSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/AddtoMaskEditListSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [AddtoMaskEditListSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddtoMaskEditListSamples)
 
 ![](./images/addtolist2.gif)
 
 ### Browser Select
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [BrowserSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BrowserSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [BrowserSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BrowserSamples)
 
 ![](./images/browser1.gif)
 
 ### Browser Multi Select
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [BrowserMultSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BrowserMultSelectSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [BrowserMultSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BrowserMultSelectSamples)
 
 ![](./images/multiselectbrowser1.gif)
 
 ### TreeView Select
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [TreeViewSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/TreeViewSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [TreeViewSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TreeViewSamples)
 
 ![](./images/treeview1.gif)
 
 ### TreeView Multi Select
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [TreeViewMultiSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/TreeViewMultiSelectSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [TreeViewMultiSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TreeViewMultiSelectSamples)
 
 ![](./images/treeview2.gif)
 
 ### Banner
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [BannerSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/BannerSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [BannerSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BannerSamples)
 
 ![](./images/banner1.gif)
 
