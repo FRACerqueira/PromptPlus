@@ -12,9 +12,6 @@ namespace PPlus.Controls
     {
         private readonly CalendarOptions _options;
         private DateTime _currentdate;
-        private IEnumerable<ItemCalendar>? _itemsNoteshighlight;
-        private IEnumerable<ItemCalendar>? _itemsNotes;
-        private IEnumerable<int>? _daysDisabled;
         private int? _oldday = null;
         private Paginator<string> _localpaginator;
         private DayOfWeek[] _Weekdays;
@@ -28,6 +25,37 @@ namespace PPlus.Controls
         }
 
         #region IControlCalendar
+
+        public IControlCalendar Ranger(DateTime minvalue, DateTime maxvalue)
+        {
+            if (minvalue > maxvalue)
+            {
+                throw new PromptPlusException($"Range invalid. Minvalue({minvalue.Date.ToString("d")}) > Maxvalue({maxvalue.Date.ToString("d")})");
+            }
+            _options.Maxvalue = maxvalue.Date;
+            _options.Minvalue = minvalue.Date;
+            return this; 
+        }
+
+        public IControlCalendar AddItem(CalendarScope scope, params ItemCalendar[] values)
+        {
+            switch (scope)
+            {
+                case CalendarScope.Note:
+                    _options.ItemsNotes.AddRange(values.Where(x =>  (x.Note??string.Empty).Length > 0));
+                    break;
+                case CalendarScope.Highlight:
+                    _options.Itemshighlight.AddRange(values.Select(x => x.Date));
+                    _options.ItemsNotes.AddRange(values.Where(x => (x.Note ?? string.Empty).Length > 0));
+                    break;
+                case CalendarScope.Disabled:
+                    _options.ItemsDisabled.AddRange(values.Select(x => x.Date));
+                    break;
+                default:
+                    break;
+            }
+            return this;
+        }
 
 
         public IControlCalendar OverwriteDefaultFrom(string value, TimeSpan? timeout)
@@ -69,7 +97,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlCalendar NotesPageSize(int value)
+        public IControlCalendar PageSize(int value)
         {
             if (value < 1)
             { 
@@ -96,46 +124,10 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlCalendar Default(DateTime value, bool nextdateifdisabled = true)
+        public IControlCalendar Default(DateTime value, bool isPolicyNext = true)
         {
             _options.StartDate = value.Date;
-            _options.DefaultNextdateifdisabled = nextdateifdisabled;
-            return this;
-        }
-
-        public IControlCalendar DisabledChangeDay()
-        {
-            _options.DisabledChangeDay = true;
-            return this;
-        }
-
-        public IControlCalendar DisabledChangeMonth()
-        {
-            _options.DisabledChangeMonth = true;
-            return this;
-        }
-
-        public IControlCalendar DisabledChangeYear()
-        {
-            _options.DisabledChangeYear = true;
-            return this;
-        }
-
-        public IControlCalendar AddNotes(Func<int, int, ItemCalendar[]> value)
-        {
-            _options.FuncNotesDays = value;
-            return this;
-        }
-
-        public IControlCalendar AddNotesHighlight(Func<int, int, ItemCalendar[]>? value)
-        {
-            _options.FuncHighlightDays = value;
-            return this;
-        }
-
-        public IControlCalendar AddDisabled(Func<int, int, int[]>? value)
-        {
-            _options.FuncDisabledDays = value;
+            _options.IsPolicyNext = isPolicyNext;
             return this;
         }
 
@@ -145,44 +137,6 @@ namespace PPlus.Controls
             {
                 action.Invoke(this, item);
             }
-            return this;
-        }
-
-        public IControlCalendar RangeMonth(int min, int max)
-        {
-            if (min > max)
-            {
-                throw new PromptPlusException("minimum greater than maximum");
-            }
-            if (min < 1)
-            {
-                throw new PromptPlusException("minimum greater than 1");
-            }
-            if (max > 12)
-            {
-                throw new PromptPlusException("maximum greater than 12");
-            }
-            _options.MinMonth = min;
-            _options.MaxMonth = max;
-            return this;
-        }
-
-        public IControlCalendar RangeYear(int min, int max)
-        {
-            if (min > max)
-            {
-                throw new PromptPlusException("minimum greater than maximum");
-            }
-            if (min < DateTime.MinValue.Year)
-            {
-                throw new PromptPlusException($"minimum greater than {DateTime.MinValue.Year}");
-            }
-            if (max > DateTime.MaxValue.Year)
-            {
-                throw new PromptPlusException($"maximum greater than {DateTime.MaxValue.Year}");
-            }
-            _options.MinYear = min;
-            _options.MaxYear = max;
             return this;
         }
 
@@ -224,6 +178,17 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
+            _options.ItemsDisabled = _options.ItemsDisabled
+                .Distinct().ToList();
+
+            _options.ItemsNotes = _options.ItemsNotes
+                  .GroupBy(p => p.Id)
+                  .Select(g => g.First())
+                  .ToList();
+
+            _options.Itemshighlight = _options.Itemshighlight
+                .Distinct().ToList();
+
             _lasdescription = _options.OptDescription;
             if (_options.CurrentCulture == null)
             {
@@ -243,223 +208,25 @@ namespace PPlus.Controls
 
             _Weekdays = GetWeekdays();
             _options.FirstWeekDay = _options.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
-            if (_options.StartDate.Month < _options.MinMonth)
+            var aux = _options.StartDate;
+            if (_options.IsPolicyNext)
             {
-                _options.StartDate = new DateTime(_options.StartDate.Day, _options.MinMonth, _options.StartDate.Year);
+                aux = NextDate(aux);
+                if (!IsValidSelect(aux))
+                {
+                    aux = PreviousDate(_options.StartDate);
+                }
             }
-            if (_options.StartDate.Month > _options.MaxMonth)
+            else
             {
-                _options.StartDate = new DateTime(_options.StartDate.Day, _options.MaxMonth, _options.StartDate.Year);
+                aux = PreviousDate(aux);
+                if (!IsValidSelect(aux))
+                {
+                    aux = NextDate(_options.StartDate);
+                }
             }
-            if (_options.StartDate.Year < _options.MinYear)
-            {
-                _options.StartDate = new DateTime(_options.StartDate.Day, _options.StartDate.Month, _options.MinYear);
-            }
-            if (_options.StartDate.Year > _options.MaxYear)
-            {
-                _options.StartDate = new DateTime(_options.StartDate.Day, _options.StartDate.Month, _options.MaxYear);
-            }
-            _currentdate = LoadData(_options.StartDate, _options.DefaultNextdateifdisabled);
+            _currentdate = aux;
             return _currentdate.ToString("d");
-        }
-
-        private DateTime NextDayOfWeek(DateTime date, DayOfWeek dayOfWeek)
-        {
-            var curmonth = _currentdate.Month;
-            var curyear = _currentdate.Month;
-            if (date.Month != curmonth || date.Year != curyear)
-            {
-                curmonth = date.Month;
-                curyear = date.Month;
-                LoadFilters(date);
-            }
-            while (IsDateDisable(date) || date.DayOfWeek != dayOfWeek)
-            {
-                date = date.AddDays(1);
-                if (date.Month != curmonth || date.Year != curyear)
-                {
-                    curmonth = date.Month;
-                    curyear = date.Month;
-                    LoadFilters(date);
-                }
-            }
-            return date;
-        }
-
-        private DateTime PreviousDayOfWeek(DateTime date, DayOfWeek dayOfWeek)
-        {
-            var curmonth = _currentdate.Month;
-            var curyear = _currentdate.Month;
-            if (date.Month != curmonth || date.Year != curyear)
-            {
-                curmonth = date.Month;
-                curyear = date.Month;
-                LoadFilters(date);
-            }
-            while (IsDateDisable(date) || date.DayOfWeek != dayOfWeek)
-            {
-                date = date.AddDays(-1);
-                if (date.Month != curmonth || date.Year != curyear)
-                {
-                    curmonth = date.Month;
-                    curyear = date.Month;
-                    LoadFilters(date);
-                }
-            }
-            return date;
-        }
-
-        private void LoadDefaultHistory()
-        {
-            _defaultHistoric = null;
-            if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
-            {
-                var aux = FileHistory.LoadHistory(_options.OverwriteDefaultFrom, 1);
-                if (aux.Count == 1)
-                {
-                    try
-                    {
-                        _defaultHistoric = aux[0].History;
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-        }
-
-        private void SaveDefaultHistory(string value)
-        {
-            if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
-            {
-                FileHistory.ClearHistory(_options.OverwriteDefaultFrom);
-                var hist = FileHistory.AddHistory(value, _options.TimeoutOverwriteDefault, null);
-                FileHistory.SaveHistory(_options.OverwriteDefaultFrom, hist);
-            }
-        }
-
-        private DateTime NextDate(DateTime date)
-        {
-            var curmonth = _currentdate.Month;
-            var curyear = _currentdate.Month;
-            if (date.Month != curmonth || date.Year != curyear)
-            {
-                curmonth = date.Month;
-                curyear = date.Month;
-                LoadFilters(date);
-
-            }
-            while (IsDateDisable(date))
-            {
-                if (date.Year == 9999 && date.Month == 12 && date.Day == 31)
-                {
-                    return date;
-                }
-                date = date.AddDays(1);
-                if (date.Month != curmonth || date.Year != curyear)
-                {
-                    curmonth = date.Month;
-                    curyear = date.Month;
-                    LoadFilters(date);
-                }
-            }
-            return date;
-        }
-
-        private IEnumerable<int> Weekends(int year, int month)
-        {
-            var result = new List<int>();
-            var aux = new DateTime(year, month, 1);
-            var dt = new DateTime(year, month, 1);
-            while (aux.Month == dt.Month)
-            {
-                if (dt.DayOfWeek == DayOfWeek.Sunday || dt.DayOfWeek == DayOfWeek.Saturday)
-                { 
-                    result.Add(dt.Day);
-                }
-                dt = dt.AddDays(1);
-            }
-            return result;
-        }
-
-        private DateTime PreviousDate(DateTime date)
-        {
-            var curmonth = _currentdate.Month;
-            var curyear = _currentdate.Month;
-            if (date.Month != curmonth || date.Year != curyear)
-            {
-                curmonth = date.Month;
-                curyear = date.Month;
-                LoadFilters(date);
-            }
-            while (IsDateDisable(date))
-            {
-                if (date.Year == 0 && date.Month == 1 && date.Day == 1)
-                {
-                    return date;
-                }
-
-                date = date.AddDays(-1);
-                if (date.Month != curmonth || date.Year != curyear)
-                {
-                    curmonth = date.Month;
-                    curyear = date.Month;
-                    LoadFilters(date);
-                }
-            }
-            return date;
-        }
-
-        private void LoadFilters(DateTime date)
-        {
-            if (_options.FuncDisabledDays != null)
-            {
-                _daysDisabled = _options.FuncDisabledDays.Invoke(date.Year, date.Month);
-            }
-            if (_options.DisabledWeekend)
-            {
-                if (_daysDisabled == null)
-                {
-                    _daysDisabled = Weekends(date.Year, date.Month);
-                }
-                else
-                {
-                    var aux = _daysDisabled.ToList();
-                    foreach (var item in Weekends(date.Year, date.Month))
-                    {
-                        if (!aux.Contains(item))
-                        {
-                            aux.Add(item);
-                        }
-                    }
-                    _daysDisabled = aux;
-                }
-            }
-            if (_options.FuncHighlightDays != null)
-            {
-                _itemsNoteshighlight = _options.FuncHighlightDays.Invoke(date.Year, date.Month);
-            }
-            if (_options.FuncNotesDays != null)
-            {
-                _itemsNotes = _options.FuncNotesDays.Invoke(date.Year, date.Month);
-            }
-        }
-
-        private DateTime LoadData(DateTime date, bool nextDate)
-        {
-            LoadFilters(date);
-            if (IsDateDisable(date))
-            {
-                if (nextDate)
-                {
-                    date = NextDate(date);
-                }
-                else
-                {
-                    date = PreviousDate(date);
-                }
-            }
-            return date;
         }
 
         public override void FinalizeControl(CancellationToken cancellationToken)
@@ -552,33 +319,42 @@ namespace PPlus.Controls
                 //Today
                 if (keyInfo.Value.IsPressHomeKey(true))
                 {
-                    if (!IsValidToday() || _currentdate.Date == DateTime.Now.Date)
+                    var aux = DateTime.Now.Date;
+                    if (_options.IsPolicyNext)
                     {
-                        tryagain = true;
-                        continue;
-                    }
-                    _currentdate = DateTime.Now.Date;
-                    if (_options.DefaultNextdateifdisabled)
-                    {
-                        _currentdate = NextDate(_currentdate);
+                        aux = NextDate(aux);
+                        if (!IsValidSelect(aux))
+                        {
+                            aux = PreviousDate(DateTime.Now.Date);
+                        }
                     }
                     else
                     {
-                        _currentdate = PreviousDate(_currentdate);
+                        aux = PreviousDate(aux);
+                        if (!IsValidSelect(aux))
+                        {
+                            aux = NextDate(DateTime.Now.Date);
+                        }
                     }
+                    if (!IsValidSelect(aux))
+                    {
+                        SetError(Messages.SelectionInvalid);
+                        break;
+                    }
+                    _currentdate = aux;
                     break;
                 }
                 //next year
-                else if (keyInfo.Value.IsPressPageUpKey() && _currentdate.Year < 9999 && !_options.DisabledChangeYear)
+                else if (keyInfo.Value.IsPressPageUpKey())
                 {
                     if (!DateTime.IsLeapYear(_currentdate.Year + 1) && _currentdate.Month == 2 && _currentdate.Day > 28)
                     {
                         var locallastday = _currentdate.Day;
-                        var aux = LoadData(new DateTime(_currentdate.Year + 1, _currentdate.Month, 28).Date, true);
-                        if (!IsValidRange(aux))
+                        var aux = NextDate(new DateTime(_currentdate.Year + 1, _currentdate.Month, 28).Date);
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _oldday = locallastday;
                         _currentdate = aux;
@@ -586,52 +362,52 @@ namespace PPlus.Controls
                     else
                     {
                         var aux = NextDate(new DateTime(_currentdate.Year + 1, _currentdate.Month, _currentdate.Day).Date);
-                        if (!IsValidRange(aux))
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _currentdate = aux;
                     }
                     break;
                 }
                 //previous year
-                else if (keyInfo.Value.IsPressPageDownKey() && _currentdate.Year > 0 && !_options.DisabledChangeYear)
+                else if (keyInfo.Value.IsPressPageDownKey())
                 {
                     if (!DateTime.IsLeapYear(_currentdate.Year - 1) && _currentdate.Month == 2 && _currentdate.Day > 28)
                     {
                         var locallastday = _currentdate.Day;
-                        var aux = LoadData(new DateTime(_currentdate.Year - 1, _currentdate.Month, 28).Date, true);
-                        if (!IsValidRange(aux))
+                        var aux = PreviousDate(new DateTime(_currentdate.Year - 1, _currentdate.Month, 28).Date);
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _oldday = locallastday;
                         _currentdate = aux;
                     }
                     else
                     {
-                        var aux = NextDate(new DateTime(_currentdate.Year - 1, _currentdate.Month, _currentdate.Day).Date);
-                        if (!IsValidRange(aux))
+                        var aux = PreviousDate(new DateTime(_currentdate.Year - 1, _currentdate.Month, _currentdate.Day).Date);
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _currentdate = aux;
                     }
                     break;
                 }
                 //next month
-                else if (keyInfo.Value.IsPressTabKey() && !_options.DisabledChangeMonth)
+                else if (keyInfo.Value.IsPressTabKey())
                 {
                     if (_currentdate.Month == 12)
                     {
-                        var aux = LoadData(new DateTime(_currentdate.Year + 1, 1, _currentdate.Day).Date, true);
-                        if (!IsValidRange(aux))
+                        var aux = NextDate(new DateTime(_currentdate.Year + 1, 1, _currentdate.Day).Date);
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _currentdate = aux;
                     }
@@ -642,12 +418,12 @@ namespace PPlus.Controls
                         if (!DateTime.IsLeapYear(_currentdate.Year) && _currentdate.Month + 1 == 2 && _currentdate.Day > 28)
                         {
                             locallastday = _currentdate.Day;
-                            aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month + 1, 28).Date, true);
+                            aux = NextDate(new DateTime(_currentdate.Year, _currentdate.Month + 1, 28).Date);
                         }
                         else if (DateTime.IsLeapYear(_currentdate.Year) && _currentdate.Month + 1 == 2 && _currentdate.Day > 29)
                         {
                             locallastday = _currentdate.Day;
-                            aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month + 1, 29).Date, true);
+                            aux = NextDate(new DateTime(_currentdate.Year, _currentdate.Month + 1, 29).Date);
                         }
                         else
                         {
@@ -666,7 +442,7 @@ namespace PPlus.Controls
                                 {
                                     locallastday = _currentdate.Day;
                                 }
-                                aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month + 1, maxday).Date, true);
+                                aux = NextDate(new DateTime(_currentdate.Year, _currentdate.Month + 1, maxday).Date);
                             }
                             else
                             {
@@ -674,24 +450,24 @@ namespace PPlus.Controls
                                 {
                                     if (_oldday > maxday)
                                     {
-                                        aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month + 1, maxday).Date, true);
+                                        aux = NextDate(new DateTime(_currentdate.Year, _currentdate.Month + 1, maxday).Date);
                                     }
                                     else
                                     {
-                                        aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month + 1, _oldday.Value).Date, true);
+                                        aux = NextDate(new DateTime(_currentdate.Year, _currentdate.Month + 1, _oldday.Value).Date);
                                         locallastday = null;
                                     }
                                 }
                                 else
                                 {
-                                    aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month + 1, _currentdate.Day).Date, true);
+                                    aux = NextDate(new DateTime(_currentdate.Year, _currentdate.Month + 1, _currentdate.Day).Date);
                                 }
                             }
                         }
-                        if (!IsValidRange(aux))
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _oldday = locallastday;
                         _currentdate = aux;
@@ -699,15 +475,15 @@ namespace PPlus.Controls
                     break;
                 }
                 //previous month
-                else if (keyInfo.Value.IsPressShiftTabKey() && !_options.DisabledChangeMonth)
+                else if (keyInfo.Value.IsPressShiftTabKey())
                 {
                     if (_currentdate.Month == 1)
                     {
-                        var aux = LoadData(new DateTime(_currentdate.Year - 1, 12, _currentdate.Day).Date, false);
-                        if (!IsValidRange(aux))
+                        var aux = PreviousDate(new DateTime(_currentdate.Year - 1, 12, _currentdate.Day).Date);
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _currentdate = aux;
                     }
@@ -718,12 +494,12 @@ namespace PPlus.Controls
                         if (!DateTime.IsLeapYear(_currentdate.Year) && _currentdate.Month - 1 == 2 && _currentdate.Day > 28)
                         {
                             locallastday = _currentdate.Day;
-                            aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month - 1, 28).Date, false);
+                            aux = PreviousDate(new DateTime(_currentdate.Year, _currentdate.Month - 1, 28).Date);
                         }
                         else if (DateTime.IsLeapYear(_currentdate.Year) && _currentdate.Month - 1 == 2 && _currentdate.Day > 29)
                         {
                             locallastday = _currentdate.Day;
-                            aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month - 1, 29).Date, false);
+                            aux = PreviousDate(new DateTime(_currentdate.Year, _currentdate.Month - 1, 29).Date);
                         }
                         else
                         {
@@ -734,7 +510,7 @@ namespace PPlus.Controls
                                 {
                                     locallastday = _currentdate.Day;
                                 }
-                                aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month - 1, maxday).Date, false);
+                                aux = PreviousDate(new DateTime(_currentdate.Year, _currentdate.Month - 1, maxday).Date);
                             }
                             else
                             {
@@ -742,24 +518,24 @@ namespace PPlus.Controls
                                 {
                                     if (_oldday > maxday)
                                     {
-                                        aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month - 1, maxday).Date, false);
+                                        aux = PreviousDate(new DateTime(_currentdate.Year, _currentdate.Month - 1, maxday).Date);
                                     }
                                     else
                                     {
-                                        aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month - 1, _oldday.Value).Date, false);
+                                        aux = PreviousDate(new DateTime(_currentdate.Year, _currentdate.Month - 1, _oldday.Value).Date);
                                         locallastday = null;
                                     }
                                 }
                                 else
                                 {
-                                    aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month - 1, _currentdate.Day).Date, false);
+                                    aux = PreviousDate(new DateTime(_currentdate.Year, _currentdate.Month - 1, _currentdate.Day).Date);
                                 }
                             }
                         }
-                        if (!IsValidRange(aux))
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _oldday = locallastday;
                         _currentdate = aux;
@@ -767,97 +543,56 @@ namespace PPlus.Controls
                     break;
                 }
                 //next dayofweek
-                else if (keyInfo.Value.IsPressDownArrowKey(true) && !_options.DisabledChangeDay)
+                else if (keyInfo.Value.IsPressDownArrowKey(true))
                 {
-                    if (_options.DisabledChangeMonth)
+                    var aux = NextDayOfWeek(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(7).Date, _currentdate.DayOfWeek);
+                    if (!IsValidSelect(aux))
                     {
-                        var aux = NextDayOfWeek(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(7).Date, _currentdate.DayOfWeek);
-                        if (aux.Month != _currentdate.Month)
-                        {
-                            tryagain = true;
-                            continue;
-                        }
-                        if (!IsValidRange(aux))
-                        {
-                            tryagain = true;
-                            continue;
-                        }
-                        _currentdate = aux;
+                        SetError(Messages.SelectionInvalid);
+                        break;
                     }
-                    else
-                    {
-                        var aux = NextDayOfWeek(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(7).Date, _currentdate.DayOfWeek);
-                        if (!IsValidRange(aux))
-                        {
-                            tryagain = true;
-                            continue;
-                        }
-                        _currentdate = aux;
-                    }
+                    _currentdate = aux;
                     break;
                 }
                 //previous dayofweek
-                else if (keyInfo.Value.IsPressUpArrowKey(true) && !_options.DisabledChangeDay)
+                else if (keyInfo.Value.IsPressUpArrowKey(true))
                 {
-                    if (_options.DisabledChangeMonth)
+                    var aux = PreviousDayOfWeek(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(-7).Date, _currentdate.DayOfWeek);
+                    if (!IsValidSelect(aux))
                     {
-                        var aux = PreviousDayOfWeek(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(-7).Date, _currentdate.DayOfWeek);
-                        if (aux.Month != _currentdate.Month)
-                        {
-                            tryagain = true;
-                            continue;
-                        }
-                        if (!IsValidRange(aux))
-                        {
-                            tryagain = true;
-                            continue;
-                        }
-                        _currentdate = aux;
+                        SetError(Messages.SelectionInvalid);
+                        break;
                     }
-                    else
-                    {
-                        var aux = PreviousDayOfWeek(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(-7).Date, _currentdate.DayOfWeek);
-                        if (!IsValidRange(aux))
-                        {
-                            tryagain = true;
-                            continue;
-                        }
-                        _currentdate = aux;
-                    }
+                    _currentdate = aux;
                     break;
                 }
                 //previous day
-                else if (keyInfo.Value.IsPressLeftArrowKey(true) && !_options.DisabledChangeDay)
+                else if (keyInfo.Value.IsPressLeftArrowKey(true))
                 {
                     if (_currentdate.Day == 1)
                     {
-                        if (_options.DisabledChangeMonth)
+                        var aux = PreviousDate(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(-1).Date);
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
-                        }
-                        var aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(-1).Date, false);
-                        if (!IsValidRange(aux))
-                        {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _currentdate = aux;
                     }
                     else
                     {
                         var aux = PreviousDate(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(-1).Date);
-                        if (!IsValidRange(aux))
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _currentdate = aux;
                     }
                     break;
                 }
                 //next day
-                else if (keyInfo.Value.IsPressRightArrowKey(true) && !_options.DisabledChangeDay)
+                else if (keyInfo.Value.IsPressRightArrowKey(true))
                 {
                     int maxday;
                     if (_currentdate.Month + 2 > 12)
@@ -870,34 +605,28 @@ namespace PPlus.Controls
                     }
                     if (_currentdate.Day == maxday)
                     {
-                        if (_options.DisabledChangeMonth)
+                        var aux = NextDate(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(1).Date);
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
-                        }
-                        var aux = LoadData(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(1).Date, true);
-                        if (!IsValidRange(aux))
-                        {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _currentdate = aux;
                     }
                     else
                     {
                         var aux = NextDate(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(1).Date);
-                        if (!IsValidRange(aux))
+                        if (!IsValidSelect(aux))
                         {
-                            tryagain = true;
-                            continue;
+                            SetError(Messages.SelectionInvalid);
+                            break;
                         }
                         _currentdate = aux;
-
                     }
                     break;
                 }
                 //show Notes
-                else if (!_options.ShowingNotes && _options.SwitchNotes.Equals(keyInfo.Value) && (HasNote(_itemsNotes, _currentdate) || HasNote(_itemsNoteshighlight, _currentdate)))
+                else if (!_options.ShowingNotes && _options.SwitchNotes.Equals(keyInfo.Value) && HasNote(_currentdate))
                 {
                     _localpaginator = new Paginator<string>(
                         FilterMode.StartsWith,
@@ -920,7 +649,7 @@ namespace PPlus.Controls
                 //completed input
                 else if (keyInfo.Value.IsPressEnterKey())
                 {
-                    if (!IsValidRange(_currentdate) || IsDateDisable(_currentdate))
+                    if (!IsValidSelect(_currentdate))
                     {
                         SetError(Messages.SelectionInvalid);
                     }
@@ -955,6 +684,10 @@ namespace PPlus.Controls
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));
+            if (!string.IsNullOrEmpty(ValidateError))
+            {
+                ClearBuffer();
+            }
             if (cancellationToken.IsCancellationRequested)
             {
                 endinput = true;
@@ -963,78 +696,139 @@ namespace PPlus.Controls
             return new ResultPrompt<DateTime>(_currentdate, abort, !endinput);
         }
 
+        private void ClearBuffer()
+        {
+            while (KeyAvailable)
+            {
+                WaitKeypress(CancellationToken.None);
+            }
+        }
+
+        private DateTime NextDayOfWeek(DateTime date, DayOfWeek dayOfWeek)
+        {
+            if (_options.DisabledWeekend && (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday))
+            {
+                return _options.Maxvalue;
+            }
+            while (!IsValidSelect(date) || date.DayOfWeek != dayOfWeek)
+            {
+                if (date.Date >= _options.Maxvalue)
+                {
+                    return date;
+                }
+                date = date.AddDays(1);
+            }
+            return date;
+        }
+
+        private DateTime PreviousDayOfWeek(DateTime date, DayOfWeek dayOfWeek)
+        {
+            if (_options.DisabledWeekend && (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday))
+            {
+                return _options.Minvalue;
+            }
+            while (!IsValidSelect(date) || date.DayOfWeek != dayOfWeek)
+            {
+                if (date.Date <= _options.Minvalue)
+                {
+                    return date;
+                }
+                date = date.AddDays(-1);
+            }
+            return date;
+        }
+
+        private DateTime NextDate(DateTime date)
+        {
+            if (date.Date < _options.Minvalue)
+            {
+                date = _options.Minvalue.Date;
+            }
+            if (date.Date > _options.Maxvalue)
+            {
+                date = _options.Maxvalue.Date;
+            }
+            while (!IsValidSelect(date))
+            {
+                if (date.Date >= _options.Maxvalue.Date)
+                {
+                    return date;
+                }
+                date = date.AddDays(1);
+            }
+            return date;
+        }
+
+        private DateTime PreviousDate(DateTime date)
+        {
+            if (date.Date < _options.Minvalue)
+            {
+                date = _options.Minvalue.Date;
+            }
+            if (date.Date > _options.Maxvalue)
+            {
+                date = _options.Maxvalue.Date;
+            }
+            while (!IsValidSelect(date))
+            {
+                if (date.Date <= _options.Minvalue.Date)
+                {
+                    return date;
+                }
+                date = date.AddDays(-1);
+            }
+            return date;
+        }
+
+        private void LoadDefaultHistory()
+        {
+            _defaultHistoric = null;
+            if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
+            {
+                var aux = FileHistory.LoadHistory(_options.OverwriteDefaultFrom, 1);
+                if (aux.Count == 1)
+                {
+                    try
+                    {
+                        _defaultHistoric = aux[0].History;
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+        }
+
+        private void SaveDefaultHistory(string value)
+        {
+            if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
+            {
+                FileHistory.ClearHistory(_options.OverwriteDefaultFrom);
+                var hist = FileHistory.AddHistory(value, _options.TimeoutOverwriteDefault, null);
+                FileHistory.SaveHistory(_options.OverwriteDefaultFrom, hist);
+            }
+        }
+
         private string[] GetNotes(DateTime date)
         { 
-            var result = new List<string>();
-            if (HasNote(_itemsNotes, _currentdate))
-            {
-                foreach (var item in _itemsNotes.First(x => x.Date.Date == date.Date).Notes)
-                {
-                    if (!result.Contains(item, StringComparer.InvariantCultureIgnoreCase))
-                    {
-                        result.Add(item);
-                    }
-                }
-            }
-            if (HasNote(_itemsNoteshighlight, _currentdate))
-            {
-                foreach (var item in _itemsNoteshighlight.First(x => x.Date.Date == date.Date).Notes)
-                {
-                    if (!result.Contains(item, StringComparer.InvariantCultureIgnoreCase))
-                    {
-                        result.Add(item);
-                    }
-                }
-            }
-            return result.ToArray();
+            return _options.ItemsNotes.Where(x => x.Date.Date == date).Select(x => x.Note).ToArray();
         }
 
-
-        private bool IsValidRange(DateTime date)
+        private bool IsValidSelect(DateTime date)
         {
-            if (date.Month < _options.MinMonth)
+            if (date.Date < _options.Minvalue.Date)
             {
                 return false;
             }
-            if (date.Month > _options.MaxMonth)
+            if (date.Date > _options.Maxvalue.Date)
             {
                 return false;
             }
-            if (date.Year < _options.MinYear)
+            if (_options.ItemsDisabled.Any(x => x.Date == date.Date))
             {
                 return false;
             }
-            if (date.Year > _options.MaxYear)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private bool IsValidToday()
-        {
-            if (_options.DisabledChangeYear)
-            {
-                if (DateTime.Now.Year != _currentdate.Year)
-                {
-                    return false;
-                }
-            }
-            if (_options.DisabledChangeMonth)
-            {
-                if (DateTime.Now.Month != _currentdate.Month)
-                {
-                    return false;
-                }
-            }
-            if (_options.DisabledChangeDay)
-            {
-                if (DateTime.Now.Day != _currentdate.Day)
-                {
-                    return false;
-                }
-            }
-            if (!IsValidRange(DateTime.Now))
+            if (_options.DisabledWeekend && (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday))
             {
                 return false;
             }
@@ -1043,28 +837,22 @@ namespace PPlus.Controls
 
         private bool IsDateDisable(DateTime date)
         {
-            if (_daysDisabled == null)
+            if (_options.DisabledWeekend && (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday))
             {
-                return false;
+                return true;
             }
-            return _daysDisabled.Any(x => x == date.Day);
+            return _options.ItemsDisabled.Any(x => x.Date == date.Date);
         }
-        private bool HasNote(IEnumerable<ItemCalendar> items, DateTime date)
+
+        private bool HasNote(DateTime date)
         {
-            if (items == null)
-            {
-                return false;
-            }
-            return items.Any(x => x.Date.Date == date.Date && x.Notes != null && x.Notes.Any(x => !string.IsNullOrEmpty(x)));
+            return _options.ItemsNotes.Any(x => x.Date.Date == date.Date);
         }
 
         private bool IsHighlight(DateTime date)
         {
-            if (_itemsNoteshighlight == null)
-            {
-                return false;
-            }
-            return _itemsNoteshighlight.Any(x => x.Date.Date == date.Date);
+            return _options.Itemshighlight.Any(x => x.Date == date.Date);
+
         }
 
         private void WriteTooltip(ScreenBuffer screenBuffer)
@@ -1095,28 +883,12 @@ namespace PPlus.Controls
                 }
                 return;
             }
-            var linedays = string.Empty;
-            var lineweek = string.Empty;
-            var linemonth = string.Empty;
-            var lineyear = string.Empty;
-            var linetoday = string.Empty;
-            if (!_options.DisabledChangeDay)
-            {
-                linedays = Messages.MoveDays;
-                lineweek = Messages.MoveDayWeek;
-            }
-            if (!_options.DisabledChangeMonth)
-            {
-                linemonth = Messages.MoveMonth;
-            }
-            if (!_options.DisabledChangeYear)
-            {
-                lineyear = Messages.MoveYear;
-            }
-            if (!_options.DisabledToday)
-            {
-                linetoday = $", {Messages.MoveToday}";
-            }
+            var linedays = Messages.MoveDays;
+            var lineweek = Messages.MoveDayWeek;
+            var linemonth = Messages.MoveMonth;
+            var lineyear = Messages.MoveMonth;
+            var linetoday = $", {Messages.MoveToday}";
+
             screenBuffer.NewLine();
             if (_options.OptEnabledAbortKey)
             {
@@ -1225,6 +997,7 @@ namespace PPlus.Controls
                 screenBuffer.NewLine();
             }
         }
+
         private void WriteCalendar(ScreenBuffer screenBuffer, DateTime currentdate)
         {
             if (!ConsolePlus.IsUnicodeSupported)
@@ -1239,22 +1012,8 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer("┌───────────────────────────┐", _options.GridStyle);
             screenBuffer.NewLine();
             screenBuffer.AddBuffer('│', _options.GridStyle);
-            if (_options.DisabledChangeMonth)
-            {
-                screenBuffer.AddBuffer($" {curmonth}", _options.DisabledStyle);
-            }
-            else
-            {
-                screenBuffer.AddBuffer($" {curmonth}", _options.MonthStyle);
-            }
-            if (_options.DisabledChangeYear)
-            {
-                screenBuffer.AddBuffer($" {curyear} ", _options.DisabledStyle);
-            }
-            else
-            {
-                screenBuffer.AddBuffer($" {curyear} ", _options.YearStyle);
-            }
+            screenBuffer.AddBuffer($" {curmonth}", _options.MonthStyle);
+            screenBuffer.AddBuffer($" {curyear} ", _options.YearStyle);
             screenBuffer.AddBuffer('│', _options.GridStyle);
             screenBuffer.NewLine();
             screenBuffer.AddBuffer("├───┬───┬───┬───┬───┬───┬───┤", _options.GridStyle);
@@ -1334,22 +1093,8 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer("+---------------------------+", _options.GridStyle);
             screenBuffer.NewLine();
             screenBuffer.AddBuffer('|', _options.GridStyle);
-            if (_options.DisabledChangeMonth)
-            {
-                screenBuffer.AddBuffer($" {curmonth}", _options.DisabledStyle);
-            }
-            else
-            {
-                screenBuffer.AddBuffer($" {curmonth}", _options.MonthStyle);
-            }
-            if (_options.DisabledChangeYear)
-            {
-                screenBuffer.AddBuffer($" {curyear} ", _options.DisabledStyle);
-            }
-            else
-            {
-                screenBuffer.AddBuffer($" {curyear} ", _options.YearStyle);
-            }
+            screenBuffer.AddBuffer($" {curmonth}", _options.MonthStyle);
+            screenBuffer.AddBuffer($" {curyear} ", _options.YearStyle);
             screenBuffer.AddBuffer('|', _options.GridStyle);
             screenBuffer.NewLine();
             screenBuffer.AddBuffer("|---+---+---+---+---+---+---|", _options.GridStyle);
@@ -1419,6 +1164,7 @@ namespace PPlus.Controls
             screenBuffer.NewLine();
             screenBuffer.AddBuffer("+---+---+---+---+---+---+---+", _options.GridStyle);
         }
+
         private void WriteNotes(ScreenBuffer screenBuffer)
         {
             if (_options.ShowingNotes)
@@ -1446,7 +1192,7 @@ namespace PPlus.Controls
         {
             var cday = auxdate.Date.ToString("dd");
             var strnote = " ";
-            if (HasNote(_itemsNoteshighlight, auxdate) || HasNote(_itemsNotes, auxdate))
+            if (HasNote(auxdate))
             {
                 strnote = "*";
             }
@@ -1481,8 +1227,6 @@ namespace PPlus.Controls
 
             return result.ToArray();
         }
-
-
 
         private DayOfWeek[] GetWeekdays()
         {

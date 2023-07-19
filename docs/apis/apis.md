@@ -60,6 +60,8 @@
 
 - [BaseOptions](./pplus.controls.baseoptions.md)
 
+- [CalendarScope](./pplus.controls.calendarscope.md)
+
 - [CaseOptions](./pplus.controls.caseoptions.md)
 
 - [CharacterWidth](./pplus.controls.characterwidth.md)

@@ -15,6 +15,7 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 - [Input - Basic](#input)
 - [Input - AutoComplete](#autocomplete)
 - [Input - MaskEdit](#maskedit)
+- [Calendar](#calendar)
 - [KeyPress & Confirm (yes/no style)](#keypress)
 - [Select](#select)
 - [Multi-Select](#multi-select)
@@ -57,6 +58,13 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 **Other samples input**
 
 [InputOverwriteDefaultFromSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputOverwriteDefaultFromSamples)
+
+### Calendar
+[**Top**](#promptplus-snapshot)  | [**Main**](index.md#table-of-contents)  
+
+[CalendarSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/CalendarSamples)
+
+![](./images/calendar1.gif)
 
 ### AutoComplete
 [**Top**](#promptplus-snapshot)  | [**Main**](index.md#table-of-contents)  

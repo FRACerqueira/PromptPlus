@@ -22,55 +22,73 @@ Implements [IPromptControls&lt;DateTime&gt;](./pplus.controls.ipromptcontrols-1.
 
 ## Methods
 
-### <a id="methods-adddisabled"/>**AddDisabled(Func&lt;Int32, Int32, IEnumerable&lt;Int32&gt;&gt;)**
+### <a id="methods-additem"/>**AddItem(CalendarScope, ItemCalendar[])**
 
-Add Disabled days in current month/year.
- <br>This function is triggered every month/year change
+Add scope(Note/Highlight/Disabled) items to calendar.
 
 ```csharp
-IControlCalendar AddDisabled(Func<Int32, Int32, IEnumerable<Int32>> value)
+IControlCalendar AddItem(CalendarScope scope, ItemCalendar[] values)
 ```
 
 #### Parameters
 
-`value` [Func&lt;Int32, Int32, IEnumerable&lt;Int32&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-3)<br>
-The function with params year and month. Return Enumerable of disabled days
+`scope` [CalendarScope](./pplus.controls.calendarscope.md)<br>
+The [CalendarScope](./pplus.controls.calendarscope.md) of item
+
+`values` [ItemCalendar[]](./pplus.controls.itemcalendar.md)<br>
+The [ItemCalendar](./pplus.controls.itemcalendar.md)
 
 #### Returns
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-addnotes"/>**AddNotes(Func&lt;Int32, Int32, IEnumerable&lt;ItemCalendar&gt;&gt;)**
+### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
 
-Add Notes in current month/year.
- <br>This function is triggered every month/year change
+Add a validator to accept sucessfull finish of control.
+ <br>Tip: see  to validators embeding
 
 ```csharp
-IControlCalendar AddNotes(Func<Int32, Int32, IEnumerable<ItemCalendar>> value)
+IControlCalendar AddValidators(Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters
 
-`value` [Func&lt;Int32, Int32, IEnumerable&lt;ItemCalendar&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-3)<br>
-The function with params year and month. Return [ItemCalendar](./pplus.controls.itemcalendar.md)
+`validators` [Func&lt;Object, ValidationResult&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+the function validator.
 
 #### Returns
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-addnoteshighlight"/>**AddNotesHighlight(Func&lt;Int32, Int32, IEnumerable&lt;ItemCalendar&gt;&gt;)**
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;DateTime, String&gt;)**
 
-Add Notes in current month/year with Highlight style.
- <br>This function is triggered every month/year change
+Dynamically change the description using a user role
 
 ```csharp
-IControlCalendar AddNotesHighlight(Func<Int32, Int32, IEnumerable<ItemCalendar>> value)
+IControlCalendar ChangeDescription(Func<DateTime, String> value)
 ```
 
 #### Parameters
 
-`value` [Func&lt;Int32, Int32, IEnumerable&lt;ItemCalendar&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-3)<br>
-The function with params year and month. Return [ItemCalendar](./pplus.controls.itemcalendar.md)
+`value` [Func&lt;DateTime, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply change
+
+#### Returns
+
+[IControlCalendar](./pplus.controls.icontrolcalendar.md)
+
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
+
+Custom config the control.
+
+```csharp
+IControlCalendar Config(Action<IPromptConfig> context)
+```
+
+#### Parameters
+
+`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+Action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
@@ -113,10 +131,10 @@ Name of CultureInfo to use
 
 ### <a id="methods-default"/>**Default(DateTime, Boolean)**
 
-Initial date to show.Default value is current date.
+Initial date.Default value is current date.
 
 ```csharp
-IControlCalendar Default(DateTime value, bool nextdateifdisabled)
+IControlCalendar Default(DateTime value, bool isPolicyNext)
 ```
 
 #### Parameters
@@ -124,43 +142,20 @@ IControlCalendar Default(DateTime value, bool nextdateifdisabled)
 `value` [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
 [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)
 
-`nextdateifdisabled` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+`isPolicyNext` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 Policy to next/previous date if seleted date is disabled
+ <br>true Next date, otherwise Previous date
 
 #### Returns
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-disabledchangeday"/>**DisabledChangeDay()**
+### <a id="methods-disabledweekends"/>**DisabledWeekends()**
 
-Disabled Change day.
-
-```csharp
-IControlCalendar DisabledChangeDay()
-```
-
-#### Returns
-
-[IControlCalendar](./pplus.controls.icontrolcalendar.md)
-
-### <a id="methods-disabledchangemonth"/>**DisabledChangeMonth()**
-
-Disabled Change month.
+Disabled Weekends.
 
 ```csharp
-IControlCalendar DisabledChangeMonth()
-```
-
-#### Returns
-
-[IControlCalendar](./pplus.controls.icontrolcalendar.md)
-
-### <a id="methods-disabledchangeyear"/>**DisabledChangeYear()**
-
-Disabled Change year.
-
-```csharp
-IControlCalendar DisabledChangeYear()
+IControlCalendar DisabledWeekends()
 ```
 
 #### Returns
@@ -209,12 +204,32 @@ Action to execute
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-notespagesize"/>**NotesPageSize(Int32)**
+### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
+
+Overwrite default start value with last result saved on history.
+
+```csharp
+IControlCalendar OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+name of file to save history
+
+`timeout` [Nullable&lt;TimeSpan&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The timeout for valid items saved. Default value is 365 days
+
+#### Returns
+
+[IControlCalendar](./pplus.controls.icontrolcalendar.md)
+
+### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page on notes.Default value for this control is 5.
 
 ```csharp
-IControlCalendar NotesPageSize(int value)
+IControlCalendar PageSize(int value)
 ```
 
 #### Parameters
@@ -226,41 +241,21 @@ Number of Max.items
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-rangemonth"/>**RangeMonth(Int32, Int32)**
+### <a id="methods-ranger"/>**Ranger(DateTime, DateTime)**
 
-Range of valid month.
+Defines a minimum and maximum range date
 
 ```csharp
-IControlCalendar RangeMonth(int min, int max)
+IControlCalendar Ranger(DateTime minvalue, DateTime maxvalue)
 ```
 
 #### Parameters
 
-`min` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Min. valid month
+`minvalue` [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+Minimum date
 
-`max` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Max. valid month
-
-#### Returns
-
-[IControlCalendar](./pplus.controls.icontrolcalendar.md)
-
-### <a id="methods-rangeyear"/>**RangeYear(Int32, Int32)**
-
-Range of valid year.
-
-```csharp
-IControlCalendar RangeYear(int min, int max)
-```
-
-#### Parameters
-
-`min` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Min. valid year
-
-`max` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Max. valid year
+`maxvalue` [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+Maximum date
 
 #### Returns
 

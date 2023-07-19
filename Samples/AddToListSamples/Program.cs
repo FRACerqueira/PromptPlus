@@ -38,7 +38,7 @@ namespace AddToListSamples
 
             PromptPlus.DoubleDash("For other features below see - input/Select samples (same behaviour)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
-            PromptPlus.WriteLine(". [yellow]AddValidators/AddValidator[/] - InputWithValidatorSamples");
+            PromptPlus.WriteLine(". [yellow]AddValidators[/] - InputWithValidatorSamples");
             PromptPlus.WriteLine(". [yellow]MaxLenght[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]AcceptInput[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]InputToCase[/] - InputBasicSamples");

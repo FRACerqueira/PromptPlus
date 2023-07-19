@@ -31,6 +31,7 @@ The hotkeys for each control can be  globally or for each instance. Valid values
 - HotKey.InvertSelectedDefault : F3
 - HotKey.RemoveItemDefault : F3
 - HotKey.ChartBarSwitchLegend : F3
+- HotKey.ChartBarSwitchOrder : F4
 - HotKey.ToggleExpandAllNodeDefault : F4
 - HotKey.ToggleExpandAllNodeDefault : F4
 
@@ -57,7 +58,10 @@ PromptPlus.Config.PasswordViewPress = new HotKey(UserHotKey.F7)
 - ToggleExpandAllPress
 - ChartBarSwitchTypePress
 - ChartBarSwitchLegendPress
+- ChartBarSwitchOrderPress
 - CalendarSwitchNotesPress
+
+
 
 
 ### Instance Hotkeys

@@ -39,7 +39,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Overwrite <see cref="SpinnersType"/>. ValueResult value is SpinnersType.Ascii
-        /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
+        /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected.</br>
         /// </summary>
         /// <param name="spinnersType">Spinners Type</param>
         /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>

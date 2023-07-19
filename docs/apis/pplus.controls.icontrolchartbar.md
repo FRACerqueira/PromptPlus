@@ -63,6 +63,23 @@ The [ChartBarType](./pplus.controls.chartbartype.md). Default value 'ChartType.F
 
 [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
+### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
+
+Custom config the control.
+
+```csharp
+IControlChartBar Config(Action<IPromptConfig> context)
+```
+
+#### Parameters
+
+`context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+Action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlChartBar](./pplus.controls.icontrolchartbar.md)
+
 ### <a id="methods-culture"/>**Culture(CultureInfo)**
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to on show value format.

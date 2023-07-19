@@ -36,6 +36,7 @@
 
 ### Newest controls and color improvement and layout
 
+![](./docs/images/calendar1.gif)
 ![](./docs/images/chartbar1.gif)
 ![](./docs/images/multiselectbrowser1.gif)
 ![](./docs/images/treeview1.gif)
@@ -155,6 +156,13 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 **Other samples input**
 
 [InputOverwriteDefaultFromSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/InputOverwriteDefaultFromSamples)
+
+### Calendar
+[**Top**](#table-of-contents)
+
+[CalendarSamples](https://github.com/FRACerqueira/PromptPlus/tree/Samples/CalendarSamples)
+
+![](./docs/images/calendar1.gif)
 
 ### AutoComplete
 [**Top**](#table-of-contents)

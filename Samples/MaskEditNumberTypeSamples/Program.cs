@@ -50,7 +50,7 @@ namespace MaskEditNumberTypeSamples
             PromptPlus.DoubleDash("For other features below see - input samples (same behaviour)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]ValidateOnDemand[/] - InputWithValidatorSamples");
-            PromptPlus.WriteLine(". [yellow]AddValidators/AddValidator[/] - InputWithValidatorSamples");
+            PromptPlus.WriteLine(". [yellow]AddValidators[/] - InputWithValidatorSamples");
             PromptPlus.WriteLine(". [yellow]InputToCase[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]OverwriteDefaultFrom[/] - InputOverwriteDefaultFromSamples");
             PromptPlus.WriteLine(". [yellow]Default[/] - InputBasicSamples");

@@ -31,6 +31,7 @@
 
 ### Newest controls and color improvement and layout
 
+![](./images/calendar1.gif)
 ![](./images/chartbar1.gif)
 ![](./images/multiselectbrowser1.gif)
 ![](./images/treeview1.gif)

@@ -3,7 +3,6 @@ using PPlus;
 using PPlus.Controls;
 
 PromptPlus.Clear();
-//PromptPlus.CursorTop = PromptPlus.BufferHeight;
 
 //Ensure default Culture for all controls
 PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
@@ -25,7 +24,6 @@ PromptPlus
     .Spinner(SpinnersType.DotsScrolling)
     .Run();
 PromptPlus.Clear();
-PromptPlus.CursorTop = PromptPlus.BufferHeight;
 
 PromptPlus
     .ChartBar("Control: ChartBar", "With legends")
@@ -46,7 +44,6 @@ PromptPlus
     .Spinner(SpinnersType.DotsScrolling)
     .Run();
 PromptPlus.Clear();
-PromptPlus.CursorTop = PromptPlus.BufferHeight;
 
 PromptPlus
     .ChartBar("Control: ChartBar", "Auto-Color, Custom Style")
@@ -72,7 +69,6 @@ PromptPlus
     .Spinner(SpinnersType.DotsScrolling)
     .Run();
 PromptPlus.Clear();
-PromptPlus.CursorTop = PromptPlus.BufferHeight;
 
 var items = new List<string>();
 for (int i = 1; i <= 10; i++)
@@ -101,7 +97,6 @@ PromptPlus
     .Spinner(SpinnersType.DotsScrolling)
     .Run();
 PromptPlus.Clear();
-PromptPlus.CursorTop = PromptPlus.BufferHeight;
 
 var auxc = Enum.GetValues(typeof(ChartBarType));
 foreach (var item in auxc)

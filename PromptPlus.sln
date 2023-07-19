@@ -98,6 +98,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SliderSwitchSamples", "Samp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChartSamples", "Samples\ChartSamples\ChartSamples.csproj", "{A0697CC0-24A0-48D4-BB7D-57A7DE3DBFAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarSamples", "Samples\CalendarSamples\CalendarSamples.csproj", "{248BA41C-17EF-42E3-A9B4-17FF7FA1311B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -333,6 +335,12 @@ Global
 		{A0697CC0-24A0-48D4-BB7D-57A7DE3DBFAB}.local|Any CPU.Build.0 = local|Any CPU
 		{A0697CC0-24A0-48D4-BB7D-57A7DE3DBFAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0697CC0-24A0-48D4-BB7D-57A7DE3DBFAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{248BA41C-17EF-42E3-A9B4-17FF7FA1311B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{248BA41C-17EF-42E3-A9B4-17FF7FA1311B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{248BA41C-17EF-42E3-A9B4-17FF7FA1311B}.local|Any CPU.ActiveCfg = Debug|Any CPU
+		{248BA41C-17EF-42E3-A9B4-17FF7FA1311B}.local|Any CPU.Build.0 = Debug|Any CPU
+		{248BA41C-17EF-42E3-A9B4-17FF7FA1311B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{248BA41C-17EF-42E3-A9B4-17FF7FA1311B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -374,6 +382,7 @@ Global
 		{BA95138C-AECE-46BA-AF3C-AEE26CF5F7FB} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
 		{3702034B-7D26-4BC3-AB1E-864C2EE2D785} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
 		{A0697CC0-24A0-48D4-BB7D-57A7DE3DBFAB} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
+		{248BA41C-17EF-42E3-A9B4-17FF7FA1311B} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E883401-DEB0-496F-A6BC-8AA0F44BC5B9}

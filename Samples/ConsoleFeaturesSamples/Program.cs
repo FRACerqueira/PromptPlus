@@ -8,69 +8,6 @@ Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
 PromptPlus.Clear();
 
-PromptPlus
-    .Calendar("Title", "Description")
-    .OverwriteDefaultFrom("testeCalendar")
-    .ChangeDescription((dt) => 
-    {
-        if (dt.Day == 10)
-        {
-            return "new description";
-        }
-        return string.Empty;
-    })
-    .AddDisabled((year, month) =>
-    {
-        return new int[] { 3, 5 };
-    })
-    .AddNotes((year, month) =>
-    {
-        if (month != 7)
-        {
-            return Array.Empty<ItemCalendar>();
-        }
-        return new List<ItemCalendar>
-        {
-            new ItemCalendar(15, month, year, "Note1", "note2","note3","note4","note5","note6","note7","note8"),
-            new ItemCalendar(25, month, year)
-        }.ToArray();
-    })
-    .AddNotesHighlight((year,month) =>
-    {
-        return new List<ItemCalendar>
-        {
-            new ItemCalendar(12, month, year, "Note1", "note2"),
-            new ItemCalendar(22, month, year)
-        }.ToArray();
-    })
-    .Run();
-
-PromptPlus
-    .KeyPress()
-    .Config(cfg => cfg.HideAfterFinish(true))
-    .Spinner(SpinnersType.DotsScrolling)
-    .Run();
-
-PromptPlus
-    .ChartBar("Control: ChartBar - basic usage","My Description")
-    .Type(ChartType.StandBar)
-    .AddItem("Label1", 10)
-    .AddItem("Label2", 20)
-    .AddItem("Label3", 30)
-    .AddItem("Label4", 40)
-    .AddItem("Label5", 50)
-    .AddItem("Label6", 60)
-    .AddItem("Label7", 70)
-    .AddItem("Label8", 80)
-    .EnabledInteractionUser(pagesize:3)
-    .Run();
-
-PromptPlus
-    .KeyPress()
-    .Config(cfg => cfg.HideAfterFinish(true))
-    .Spinner(SpinnersType.DotsScrolling)
-    .Run();
-
 PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
 PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
 PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");

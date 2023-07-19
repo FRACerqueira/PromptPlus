@@ -22,77 +22,47 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### <a id="properties-day"/>**Day**
+### <a id="properties-date"/>**Date**
 
-Get/Set Date
+Get Date
 
 ```csharp
-public int Day { get; }
+public DateTime Date { get; }
 ```
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
 
-### <a id="properties-notes"/>**Notes**
+### <a id="properties-note"/>**Note**
 
-Get/Set notes of Date
+Get note
 
 ```csharp
-public IEnumerable<String> Notes { get; }
+public string Note { get; }
 ```
 
 #### Property Value
 
-[IEnumerable&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 
-### <a id="constructors-.ctor"/>**ItemCalendar(Int32, Int32, Int32, String[])**
+### <a id="constructors-.ctor"/>**ItemCalendar(DateTime, String)**
 
-create a instance of day with notes
-
-```csharp
-public ItemCalendar(int day, int month, int year, String[] notes)
-```
-
-#### Parameters
-
-`day` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`month` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`year` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-
-`notes` [String[]](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-### <a id="constructors-.ctor"/>**ItemCalendar(DateTime, String[])**
-
-create a instance of day with notes
+Create a instance of day with notes
 
 ```csharp
-public ItemCalendar(DateTime date, String[] notes)
+public ItemCalendar(DateTime date, string note)
 ```
 
 #### Parameters
 
 `date` [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
+The date
 
-`notes` [String[]](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-## Methods
-
-### <a id="methods-addnote"/>**AddNote(String)**
-
-Add note
-
-```csharp
-public void AddNote(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`note` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The note
 
 
 - - -

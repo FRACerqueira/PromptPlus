@@ -49,78 +49,40 @@ namespace PPlus.Controls
         IControlCalendar Styles(StyleCalendar styletype, Style value);
 
         /// <summary>
-        /// Initial date to show.Default value is current date.
+        /// Initial date.Default value is current date.
         /// </summary>
         /// <param name="value"><see cref="DateTime"/></param>
-        /// <param name="nextdateifdisabled">Policy to next/previous date if seleted date is disabled</param>
+        /// <param name="isPolicyNext">
+        /// Policy to next/previous date if seleted date is disabled
+        /// <br>true Next date, otherwise Previous date</br>
+        /// </param>
         /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar Default(DateTime value,bool nextdateifdisabled = true);
+        IControlCalendar Default(DateTime value,bool isPolicyNext = true);
+
 
         /// <summary>
-        /// Disabled Change day.
+        /// Defines a minimum and maximum range date
         /// </summary>
-        /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar DisabledChangeDay();
-
-        /// <summary>
-        /// Disabled Change month.
-        /// </summary>
-        /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar DisabledChangeMonth();
-
-        /// <summary>
-        /// Disabled Change year.
-        /// </summary>
-        /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar DisabledChangeYear();
+        /// <param name="minvalue">Minimum date</param>
+        /// <param name="maxvalue">Maximum date</param>
+        /// <returns><see cref="IControlCalendar"/></returns>;
+        IControlCalendar Ranger(DateTime minvalue, DateTime maxvalue);
 
         /// <summary>
         /// Disabled Weekends.
         /// </summary>
         /// <returns><see cref="IControlCalendar"/></returns>
         IControlCalendar DisabledWeekends();
-        
-        /// <summary>
-        /// Add Notes in current month/year.
-        /// <br>This function is triggered every month/year change</br>
-        /// </summary>
-        /// <param name="value"> The function with params year and month. Return <see cref="ItemCalendar"/></param>
-        /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar AddNotes(Func<int, int, ItemCalendar[]> value);
 
         /// <summary>
-        /// Add Notes in current month/year with Highlight style.
-        /// <br>This function is triggered every month/year change</br>
+        /// Add scope(Note/Highlight/Disabled) items to calendar. 
         /// </summary>
-        /// <param name="value"> The function with params year and month. Return <see cref="ItemCalendar"/></param>
+        /// <param name="scope">The <see cref="CalendarScope"/> of item</param>
+        /// <param name="values">The <see cref="ItemCalendar"/></param>
         /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar AddNotesHighlight(Func<int, int, ItemCalendar[]>? value);
+        IControlCalendar AddItem(CalendarScope scope, params ItemCalendar[] values);
 
-        /// <summary>
-        /// Add Disabled days in current month/year.
-        /// <br>This function is triggered every month/year change</br>
-        /// </summary>
-        /// <param name="value"> The function with params year and month. Return Enumerable of disabled days</param>
-        /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar AddDisabled(Func<int,int, int[]>? value);
-
-
-        /// <summary>
-        /// Range of valid month.
-        /// </summary>
-        ///<param name="min">Min. valid month</param>
-        ///<param name="max">Max. valid month</param>
-        /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar RangeMonth(int min, int max);
-
-        /// <summary>
-        /// Range of valid year.
-        /// </summary>
-        ///<param name="min">Min. valid year</param>
-        ///<param name="max">Max. valid year</param>
-        /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar RangeYear(int min, int max);
-
+ 
         /// <summary>
         /// Overwrite a HotKey to show/hide notes of day. Default value is 'F2' 
         /// </summary>
@@ -133,7 +95,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar NotesPageSize(int value);
+        IControlCalendar PageSize(int value);
 
         /// <summary>
         /// Overwrite default start value with last result saved on history.

@@ -4,8 +4,6 @@
 // ***************************************************************************************
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PPlus.Controls
 {
@@ -14,59 +12,35 @@ namespace PPlus.Controls
     /// </summary>
     public class ItemCalendar
     {
-        private readonly List<string> _notes;
         private ItemCalendar()
         {
         }
 
         /// <summary>
-        /// create a instance of day with notes
+        /// Create a instance of day with notes
         /// </summary>
-        public ItemCalendar(int day, int month,int year, params string[] notes)
+        /// <param name="date">The date</param>
+        /// <param name="note">The note</param>
+        public ItemCalendar(DateTime date, string note= null)
         {
-            Day = day;
-            Date = new DateTime(year,month,day);
-            _notes = new();
-            if (notes != null)
-            {
-                _notes.AddRange(notes.Where(x => !string.IsNullOrEmpty(x)));
-            }
-        }
-
-        /// <summary>
-        /// create a instance of day with notes
-        /// </summary>
-        public ItemCalendar(DateTime date, params string[] notes)
-        {
-            Day = date.Day;
-            Date = date;
-            _notes = new();
-            if (notes != null)
-            {
-                _notes.AddRange(notes.Where(x => !string.IsNullOrEmpty(x)));
-            }
+            Date = date.Date;
+            Note = (note??string.Empty).Trim();
+            Id = date.Date.ToString("s") + note;
         }
 
 
         /// <summary>
-        /// Get/Set Date
+        /// Get Date
         /// </summary>
-        public int Day { get; }
-        /// <summary>
-        /// Get/Set notes of Date
-        /// </summary>
-        public IEnumerable<string> Notes => _notes;
-
-        internal DateTime  Date { get; }
+        public DateTime  Date { get; }
 
         /// <summary>
-        /// Add note
+        /// Get note
         /// </summary>
-        /// <param name="value"></param>
-        public void AddNote(string value)
-        { 
-            _notes.Add(value);  
-        }
+        public string Note { get; }
+
+        internal string Id { get; }
+
 
     }
 }

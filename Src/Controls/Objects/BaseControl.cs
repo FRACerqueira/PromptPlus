@@ -180,7 +180,7 @@ namespace PPlus.Controls.Objects
             bool notrender = false;
             while (!stoptoken.IsCancellationRequested)
             {
-                if (!notrender)
+                if (!notrender && !KeyAvailable)
                 {
                     ClearLastRender(result.ClearLastRender);
                     InputTemplate(_screenBuffer);
@@ -190,7 +190,7 @@ namespace PPlus.Controls.Objects
                         useractin.Invoke(_options.OptContext, result);
                     }
                 }
-                if (_options.OptShowCursor)
+                if (_options.OptShowCursor && !KeyAvailable)
                 {
                     ConsolePlus.CursorVisible = true;
                 }

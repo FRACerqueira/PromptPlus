@@ -62,7 +62,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 ### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). ValueResult value is SpinnersType.Ascii
- <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
+ <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected.
 
 ```csharp
 IControlKeyPress Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)

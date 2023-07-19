@@ -18,8 +18,6 @@
 
 	<ItemGroup>
 		<None Remove="Controls\Banner\FIGlet\Fonts\standard.flf" />
-		<None Remove="Controls\Calendar\CalendarTemplate.txt" />
-		<None Remove="Controls\Calendar\CalendarTemplateAscii.txt" />
 	</ItemGroup>
 
 	<PropertyGroup>
@@ -52,26 +50,38 @@
 	
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|.net6|AnyCPU'">
 		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+		<Deterministic>True</Deterministic>
+		<CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='local|.net6|AnyCPU'">
 	  <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+	  <Deterministic>True</Deterministic>
+	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|.net6|AnyCPU'">
 		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+		<Deterministic>True</Deterministic>
+		<CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
 		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+		<Deterministic>True</Deterministic>
+		<CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='local|netstandard2.1|AnyCPU'">
 	  <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+	  <Deterministic>True</Deterministic>
+	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.1|AnyCPU'">
 		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+		<Deterministic>True</Deterministic>
+		<CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|.net5|AnyCPU'">
@@ -84,6 +94,21 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|.net5|AnyCPU'">
 		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|.net7|AnyCPU'">
+	  <Deterministic>True</Deterministic>
+	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|.net7|AnyCPU'">
+	  <Deterministic>True</Deterministic>
+	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='local|.net7|AnyCPU'">
+	  <Deterministic>True</Deterministic>
+	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)'=='.net7'">
@@ -118,8 +143,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Include="Controls\Banner\FIGlet\Fonts\standard.flf" />
-		<EmbeddedResource Include="Controls\Calendar\CalendarTemplate.txt" />
-		<EmbeddedResource Include="Controls\Calendar\CalendarTemplateAscii.txt" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Resources\PromptPlusResources.Designer.cs">

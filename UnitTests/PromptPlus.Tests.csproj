@@ -35,9 +35,6 @@
 	  <None Update="AnsiExpectations\Confirm.txt">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
-	  <None Update="AnsiExpectations\Keypress.txt">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
 	  <None Update="AnsiExpectations\NotUnicodeDoubleDash.AsciiDoubleBorder.txt">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
