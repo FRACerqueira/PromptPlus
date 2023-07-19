@@ -291,6 +291,28 @@ namespace PPlus.Controls
                     endinput = true;
                     break;
                 }
+                if (keyInfo.Value.IsPressEnterKey())
+                {
+                    if (!IsValidSelect(_currentdate))
+                    {
+                        SetError(Messages.SelectionInvalid);
+                    }
+                    else
+                    {
+                        if (!TryValidate(_currentdate, _options.Validators))
+                        {
+                            if (!abort)
+                            {
+                                endinput = false;
+                            }
+                        }
+                        else
+                        {
+                            endinput = true;
+                        }
+                    }
+                    break;
+                }
                 if (_options.ShowingNotes)
                 {
                     //hide Notes
@@ -647,28 +669,6 @@ namespace PPlus.Controls
                     break;
                 }
                 //completed input
-                else if (keyInfo.Value.IsPressEnterKey())
-                {
-                    if (!IsValidSelect(_currentdate))
-                    {
-                        SetError(Messages.SelectionInvalid);
-                    }
-                    else
-                    {
-                        if (!TryValidate(_currentdate, _options.Validators))
-                        {
-                            if (!abort)
-                            {
-                                endinput = false;
-                            }
-                        }
-                        else
-                        {
-                            endinput = true;
-                        }
-                    }
-                    break;
-                }
                 else
                 {
                     if (ConsolePlus.Provider == "Memory")
