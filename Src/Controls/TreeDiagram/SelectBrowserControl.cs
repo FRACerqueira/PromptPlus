@@ -705,12 +705,21 @@ namespace PPlus.Controls
                 abort = true;
             }
             FinishResult = string.Empty;
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
             if (_localpaginator.SelectedIndex >= 0)
             {
                 FinishResult = _localpaginator.SelectedItem.MessagesNodes.TextItem;
-                return new ResultPrompt<ItemBrowser>(_localpaginator.SelectedItem.Value, abort, !endinput);
+                return new ResultPrompt<ItemBrowser>(_localpaginator.SelectedItem.Value, abort, !endinput, notrender);
             }
-            return new ResultPrompt<ItemBrowser>(null, abort, !endinput);
+            return new ResultPrompt<ItemBrowser>(null, abort, !endinput,notrender);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ItemBrowser result, bool aborted)

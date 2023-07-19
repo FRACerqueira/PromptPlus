@@ -427,7 +427,16 @@ namespace PPlus.Controls
             {
                 _startpos = inipos;
             }
-            return new ResultPrompt<bool>(true,abort,!endinput);
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
+            return new ResultPrompt<bool>(true,abort,!endinput,notrender);
         }
 
         private string TextOrder(ChartOrder value)

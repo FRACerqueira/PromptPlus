@@ -370,7 +370,16 @@ namespace PPlus.Controls
                 abort = true;
             }
             FinishResult = _options.ValueToString(_currentValue);
-            return new ResultPrompt<double>(_currentValue, abort, !endinput);
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
+            return new ResultPrompt<double>(_currentValue, abort, !endinput, notrender);
         }
 
         private int CurrentValueStep(double value)

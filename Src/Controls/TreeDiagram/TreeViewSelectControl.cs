@@ -501,12 +501,21 @@ namespace PPlus.Controls
                 abort = true;
             }
             FinishResult = string.Empty;
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
             if (_localpaginator.SelectedIndex >= 0)
             {
                 FinishResult = _localpaginator.SelectedItem.MessagesNodes.TextItem;
-                return new ResultPrompt<T>(_localpaginator.SelectedItem.Value, abort, !endinput);
+                return new ResultPrompt<T>(_localpaginator.SelectedItem.Value, abort, !endinput, notrender);
             }
-            return new ResultPrompt<T>(default, abort, !endinput);
+            return new ResultPrompt<T>(default, abort, !endinput, notrender);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, T result, bool aborted)

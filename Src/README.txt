@@ -16,7 +16,7 @@ All controls input/filter  (except Masked input) using **GNU Readline**
 (https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts.  
 
 PromptPlus Supports 4/8/24-bit colors in the terminal with auto-detection 
-of the current terminal's capabilities.
+of the current terminal's capabilities  and automatic color conversion..
 
 Visit the official page for complete documentation of PromptPlus:
 https://fracerqueira.github.io/PromptPlus

@@ -173,6 +173,14 @@ namespace PPlus.Controls.Objects
             }
         }
 
+        public void ClearBuffer()
+        {
+            while (KeyAvailable)
+            {
+                WaitKeypress(CancellationToken.None);
+            }
+        }
+
         public ResultPrompt<T> Start(CancellationToken stoptoken)
         {
             ConsolePlus.CursorVisible = false;
@@ -180,7 +188,7 @@ namespace PPlus.Controls.Objects
             bool notrender = false;
             while (!stoptoken.IsCancellationRequested)
             {
-                if (!notrender && !KeyAvailable)
+                if (!notrender)
                 {
                     ClearLastRender(result.ClearLastRender);
                     InputTemplate(_screenBuffer);
@@ -190,7 +198,7 @@ namespace PPlus.Controls.Objects
                         useractin.Invoke(_options.OptContext, result);
                     }
                 }
-                if (_options.OptShowCursor && !KeyAvailable)
+                if (_options.OptShowCursor)
                 {
                     ConsolePlus.CursorVisible = true;
                 }

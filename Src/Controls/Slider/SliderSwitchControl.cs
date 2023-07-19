@@ -272,7 +272,16 @@ namespace PPlus.Controls
                     FinishResult = _options.OffValue;
                 }
             }
-            return new ResultPrompt<bool>(_currentValue, abort, !endinput);
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
+            return new ResultPrompt<bool>(_currentValue, abort, !endinput, notrender);
         }
 
         private void LoadDefaultHistory()

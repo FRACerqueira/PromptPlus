@@ -204,6 +204,23 @@ Action to execute
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
+### <a id="methods-layout"/>**Layout(LayoutCalendar)**
+
+The layout canlendar. Default value is 'LayoutCalendar.SingleBorde'
+
+```csharp
+IControlCalendar Layout(LayoutCalendar value)
+```
+
+#### Parameters
+
+`value` [LayoutCalendar](./pplus.controls.layoutcalendar.md)<br>
+The [LayoutCalendar](./pplus.controls.layoutcalendar.md)
+
+#### Returns
+
+[IControlCalendar](./pplus.controls.icontrolcalendar.md)
+
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.

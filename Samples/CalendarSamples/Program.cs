@@ -27,6 +27,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with overwrite culture:pt-br
 
 cld = PromptPlus
     .Calendar("Date", "Select date")
+    .Layout(LayoutCalendar.DoubleGrid)
     .Culture("pt-BR")
     .Run();
 if (!cld.IsAborted)
@@ -39,6 +40,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Disabled Weekends");
 
 PromptPlus
     .Calendar("Date", "Select date")
+    .Layout(LayoutCalendar.HeavyGrid)
     .DisabledWeekends()
     .Run();
 
@@ -46,6 +48,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Disabled dates");
 
 PromptPlus
     .Calendar("Date", "Select date")
+    .Layout(LayoutCalendar.AsciiSingleGrid)
     .AddItem(CalendarScope.Disabled,
         new ItemCalendar(DateTime.Now.AddDays(1)),
         new ItemCalendar(DateTime.Now.AddDays(2)))
@@ -55,6 +58,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Notes");
 
 PromptPlus
     .Calendar("Date", "Select date")
+    .Layout(LayoutCalendar.AsciiDoubleGrid)
     .AddItem(CalendarScope.Note,
         new ItemCalendar(DateTime.Now.AddDays(1), "Note1"),
         new ItemCalendar(DateTime.Now.AddDays(1), "Note2"),
@@ -104,7 +108,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Styles");
 
 PromptPlus
     .Calendar("Date", "Select date")
-    .Styles(StyleCalendar.Grid, Style.Plain.Foreground(Color.Red))
+    .Styles(StyleCalendar.Line, Style.Plain.Foreground(Color.Red))
     .Styles(StyleCalendar.Day, Style.Plain.Foreground(Color.Yellow))
     .Styles(StyleCalendar.Highlight, Style.Plain.Foreground(Color.Blue))
     .Styles(StyleCalendar.Month, Style.Plain.Foreground(Color.Green))

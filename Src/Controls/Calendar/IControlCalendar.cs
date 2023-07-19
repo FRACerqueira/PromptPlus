@@ -17,6 +17,13 @@ namespace PPlus.Controls
     public interface IControlCalendar : IPromptControls<DateTime>
     {
         /// <summary>
+        /// The layout canlendar. Default value is 'LayoutCalendar.SingleBorde'
+        /// </summary>
+        /// <param name="value">The <see cref="LayoutCalendar"/></param>
+        /// <returns><see cref="IControlCalendar"/></returns>
+        IControlCalendar Layout(LayoutCalendar value);
+
+        /// <summary>
         /// <see cref="CultureInfo"/> to on show value format.
         /// </summary>
         /// <param name="value">CultureInfo to use</param>

@@ -23,11 +23,11 @@ namespace PPlus.Controls
             ItemsNotes = new();
             Itemshighlight = new();
         }
-
+        public LayoutCalendar Layout { get; set; } =  LayoutCalendar.SingleGrid;
         public CultureInfo CurrentCulture { get; set; } = null;
         public bool IsPolicyNext { get; set; } = true;
         public Style DescriptionStyle { get; set; } = PromptPlus.StyleSchema.Description();
-        public Style GridStyle { get; set; } = PromptPlus.StyleSchema.Prompt();
+        public Style LineStyle { get; set; } = PromptPlus.StyleSchema.Prompt();
         public Style DisabledStyle { get; set; } = PromptPlus.StyleSchema.Disabled();
         public Style SelectedStyle { get; set; } = PromptPlus.StyleSchema.Selected();
         public Style HighlightStyle { get; set; } = PromptPlus.StyleSchema.TaggedInfo();

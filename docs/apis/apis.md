@@ -132,6 +132,8 @@
 
 - [ItemCalendar](./pplus.controls.itemcalendar.md)
 
+- [LayoutCalendar](./pplus.controls.layoutcalendar.md)
+
 - [MaskedType](./pplus.controls.maskedtype.md)
 
 - [ProgressBarType](./pplus.controls.progressbartype.md)

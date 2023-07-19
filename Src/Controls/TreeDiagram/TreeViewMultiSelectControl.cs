@@ -605,12 +605,21 @@ namespace PPlus.Controls
                 SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
             }
             FinishResult = string.Empty;
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
             if (_seletedItems.Any())
             {
                 FinishResult = string.Join(", ", _seletedItems.Select(x => _options.TextNode(x.value)));
-                return new ResultPrompt<T[]>(_seletedItems.Select(x => x.value).ToArray(), abort, !endinput);
+                return new ResultPrompt<T[]>(_seletedItems.Select(x => x.value).ToArray(), abort, !endinput, notrender);
             }
-            return new ResultPrompt<T[]>(Array.Empty<T>(), abort, !endinput);
+            return new ResultPrompt<T[]>(Array.Empty<T>(), abort, !endinput,notrender);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, T[] result, bool aborted)

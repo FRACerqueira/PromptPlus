@@ -634,7 +634,16 @@ namespace PPlus.Controls
                     }
                 }
             }
-            return new ResultPrompt<ResultMasked>(new ResultMasked(_inputBuffer.RemoveMask(_inputBuffer.ToMasked(),true), _inputBuffer.ToMasked()), abort, !endinput);
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
+            return new ResultPrompt<ResultMasked>(new ResultMasked(_inputBuffer.RemoveMask(_inputBuffer.ToMasked(),true), _inputBuffer.ToMasked()), abort, !endinput, notrender);
         }
 
         private bool IsMaskTypeNotGeneric()

@@ -432,7 +432,16 @@ namespace PPlus.Controls
             {
                 endinput = false;
             }
-            return new ResultPrompt<T>(default, abort, !endinput);
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
+            return new ResultPrompt<T>(default, abort, !endinput, notrender);
         }
 
         private void SaveHistory(T value)

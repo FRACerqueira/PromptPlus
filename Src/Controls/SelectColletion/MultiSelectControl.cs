@@ -773,7 +773,17 @@ namespace PPlus.Controls
             {
                 FinishResult = string.Join(", ", _selectedItems.Select(x => x.Text));
             }
-            return new ResultPrompt<IEnumerable<T>>(_selectedItems.Select(x => x.Value).ToArray(), abort, !endinput);
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
+
+            return new ResultPrompt<IEnumerable<T>>(_selectedItems.Select(x => x.Value).ToArray(), abort, !endinput, notrender);
         }
 
         private void AddEnum()

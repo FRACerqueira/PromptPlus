@@ -8,6 +8,8 @@ Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
 PromptPlus.Clear();
 
+Console.WriteLine("\U0001F4BD");
+
 PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
 PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
 PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");

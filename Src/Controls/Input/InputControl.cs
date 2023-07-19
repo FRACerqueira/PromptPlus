@@ -453,7 +453,16 @@ namespace PPlus.Controls
                     }
                 }
             }
-            return new ResultPrompt<string>(FinishResult, abort,!endinput);
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
+            return new ResultPrompt<string>(FinishResult, abort,!endinput,notrender);
         }
 
 

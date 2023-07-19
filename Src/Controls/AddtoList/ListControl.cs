@@ -524,7 +524,16 @@ namespace PPlus.Controls
                     }
                 }
             }
-            return new ResultPrompt<IEnumerable<string>>(_options.Items.Select(x => x.Text), abort, !endinput);
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
+            return new ResultPrompt<IEnumerable<string>>(_options.Items.Select(x => x.Text), abort, !endinput,notrender);
         }
 
         private void ResetAutoComplete()

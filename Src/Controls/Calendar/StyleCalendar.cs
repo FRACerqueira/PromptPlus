@@ -11,9 +11,9 @@ namespace PPlus.Controls
     public enum StyleCalendar
     {
         /// <summary>
-        /// Grid lines
+        /// lines content
         /// </summary>
-        Grid,
+        Line,
         /// <summary>
         /// Disabled content
         /// </summary>

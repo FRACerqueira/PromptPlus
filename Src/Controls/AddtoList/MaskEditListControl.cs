@@ -719,9 +719,17 @@ namespace PPlus.Controls
                     }
                 }
             }
-            var result = new ResultPrompt<IEnumerable<ResultMasked>>(
-                _options.Items.Select(x => new ResultMasked(_inputBuffer.RemoveMask(x.Text, true), x.Text)), abort, !endinput);
-            return result;
+            if (!string.IsNullOrEmpty(ValidateError) || endinput)
+            {
+                ClearBuffer();
+            }
+            var notrender = false;
+            if (KeyAvailable)
+            {
+                notrender = true;
+            }
+            return new ResultPrompt<IEnumerable<ResultMasked>>(
+                _options.Items.Select(x => new ResultMasked(_inputBuffer.RemoveMask(x.Text, true), x.Text)), abort, !endinput,notrender);
         }
 
         private bool ResetAutoComplete()
