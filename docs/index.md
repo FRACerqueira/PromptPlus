@@ -1,72 +1,99 @@
-# <img align="left" width="100" height="100" src="./images/icon.png"> Welcome to PromptPlus
+# <img align="left" width="100" height="100" src="./images/icon.png">Welcome to PromptPlus
 
-Interactive command-line based application framework for **C# with powerful controls**.
-
-**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net6** and **.Net7** target frameworks.
-
-[![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
-[![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
+[![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
+[![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
 [![License](https://img.shields.io/github/license/FRACerqueira/PromptPlus)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
+[![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
+
+**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
 
 
-![](./images/PipeLine.gif)
+## Table of Contents
 
-All controls input/filter using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
-
-![](./images/Readline.gif)
-![](./images/InputHistory.gif)
-![](./images/InputSugestion.gif)
-
-**PromptPlus** has separate pakage integrate command line parse **CommandDotNet(4.3.0/6.0.0)**: 
-
-<p align="left">
-    <img valign="middle" width="80" height="80" src="./images/iconCmdNet.png">
-    <a href="https://fracerqueira.github.io/PromptPlus/ppluscmddotnet.html"><b>PromptPlus.CommandDotNet!!</b></a>
-</p>
-
-[![Downloads](https://img.shields.io/nuget/dt/PromptPlusCommandDotNet)](https://www.nuget.org/packages/PromptPlusCommandDotNet/)
-[![NuGet](https://img.shields.io/nuget/v/PromptPlusCommandDotNet)](https://www.nuget.org/packages/PromptPlusCommandDotNet/)
-
-**Innovative middleware policy for CommandDotNet with PromptPlus.CommandDotNet**:
-
-- Interative session with readline prompt, Sugestions and History.
-    - Now you can help to discover arguments (Sugestions) and history actions in interactive sessions.
-
-![](./images/PplusCmddotnetRepl.gif)
-
-- Wizard to find all the commands/options and arguments with prompt and run.
-    - Now you can discover and learn the existing commands, options and arguments.
-
-![](./images/PplusCmddotnetWizard.gif)
-
-**[CommandDotNet is third party applications. Visit official page for complete documentation](https://commanddotnet.bilal-fazlani.com)**
-
-An open-source guide to help you write better command-line programs, taking traditional UNIX principles and updating them for the modern day.
-
-**[Command Line Interface Guidelines](https://clig.dev/)**
-
-## Help
-- [Install](#install)
-- [Organization](#organization)
-    - [Pagination Behavior](#pagination-behavior)
-- [Global Settings](#global-settings)
-    - [Culture](#culture)
-    - [Colors](#colors)
-    - [Symbols](#symbols)
-    - [Hotkeys](#hotkeys)
-- [Load and Save Settings](#load-and-save-settings)
-- [**Api Controls**](#apis)
-- [**PromptPlus.CommandDotNet**](ppluscmddotnet.md)
-- [**Extensions**](#extensions)
-- [Snapshot of All Controls](#snapshot)
+- [Features](#features)
+- [Migrate Version](migrateversion.md)
+- [Installing](#installing)
+- [Examples](#examples)
+- [Controls Snapshot](snapshot.md)
+- [Console Engine](#console-engine)
+- [Culture](#culture)
+- [Colors](#colors)
+- [Hotkeys](#hotkeys)
+- [Keypress Extensions Emacs](#keypress-extensions-emacs)
+- [Validators](#validators)
+- [Global Settings](globalsettings.md)
 - [Supported Platforms](#supported-platforms)
+- [License](#license)
+- [API Reference](./apis/apis.md)
 
-# Documentation
+## What's News in V.4.0
 
-## Install
-[**Top**](#help)
+### Newest controls and color improvement and layout
 
-PromptPlus was developed in c# with the **netstandard2.1, .NET 6 AND .NET7 ** target frameworks.
+![](./images/calendar1.gif)
+![](./images/chartbar1.gif)
+![](./images/multiselectbrowser1.gif)
+![](./images/treeview1.gif)
+![](./images/treeview2.gif)
+![](./images/waittask1.gif)
+![](./images/progressbar1.gif)
+
+## Features
+[**Top**](#table-of-contents)
+ 
+**_All features have IntelliSense_. The PromptPlus have more 20 controls with many features like: filters, validators, history, sugestions, spinner(19 embeding type and plus custom yours!), colors and styles for control-elements** :
+- Banner Ascii
+- Input text / Secret / AutoComplete with spinner
+- MaskEdit Generic / Only Date / Only Time / DateTime / Number /  Currency
+- Select and Multi-Select(with group select!) 
+- AddTo(Add/Remove) items for text and masked text
+- Wait Keypress with animate spinner
+- Slider numeric ranger with gradient colors
+- Up-Down numeric ranger 
+- Switch (style on/off)
+- Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
+- Wait Time with countdown and spinner
+- Progress bar with 8 types , gradient colors and spinner
+- Browser File and Folder with multi-select, colors and spinner
+- Treeview hierarchical structures with multi-select and colors
+
+**All controls** have the same organization (see in action: [**Controls Snapshot**](snapshot.md)):
+- input/filter (except Masked input) using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
+- Prompt, description and data entry (ever)
+- Extra actions per stage : OnStartControl/OnInputRender/OnTryAcceptInput/OnFinishControl (ever)
+- Tooltips (ever and configurable) 
+- Filter by Contains / StartsWith (configurable) (depends on the control)
+- Collection subset items and interations (depends on the control)
+- Page information and page-size(depends on the control)
+- Spinner animmation (depends on the control)
+- Error message (depends on the control and validators)
+
+All controls use **fluent interface**; an object-oriented API whose design relies extensively on method chaining. Its goal is to increase code legibility. The term was coined in 2005 by Eric Evans and Martin Fowler.
+
+```csharp
+//MaskEdit Generic
+var mask = PromptPlus.MaskEdit("input", "MaskEdit Generic input")
+    .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
+    .DescriptionWithInputType(FormatWeek.Short)
+    .Run();
+```
+
+PromptPlus driver console  **Supports 4/8/24-bit colors** in the terminal with **auto-detection** of the current terminal's capabilities.
+
+## Migrate Version
+[**Top**](#table-of-contents)
+
+Until version 3 the console engine was based on a model from another project that has several serious problems that cause exceptions during execution in addition to increasing the complexity of the code for correct rendering...
+**PromptPlus v4** has been **completely rebuilt** for a better experience, with significant improvements with new controls and more developer power. The console driver now supports better rendering, with the ability to detect terminal capabilities and allow for 24-bit color, text overflow strategies based on terminal size, and left and right margins for a nicer layout.
+**The Controls have been revised to be more responsive, allow color styles in many of their elements**, and adapt to the terminal size even with resizing.
+
+For migrate V3 to V4 [**see this link**](migrateversion.md).
+
+## Installing
+[**Top**](#table-of-contents)
+
+PromptPlus was developed in c# with the **netstandard2.1, .NET 6 AND .NET7** target frameworks.
 
 ```
 Install-Package PromptPlus [-pre]
@@ -78,52 +105,138 @@ dotnet add package PromptPlus [--prerelease]
 
 **_Note:  [-pre]/[--prerelease] usage for pre-release versions_**
 
-## Organization
-[**Top**](#help)
+## Examples
+[**Top**](#table-of-contents)
 
-All controls have the same lines organization:
-- Message and data entry (ever)
-- Filter (depends on the control)
-- Description (configurable/optional)
-- Tooltips (configurable)
-- Collection subset items (depends on the control, page size and size of console/terminal)
-- Page information (depends on size colletion, page size and size of console/terminal)
-- Error message (depends on the control and validators)
+The folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/Samples) contains more **30** samples!.
 
-tooltips can be global (hotkey always active - default F1) and control specific. All controls have the properties to show hide tooltips.
-
-### Pagination Behavior
-[**Top**](#help)
-
-When a control has a collection it can be paged with a limit of items per page. When the item per page limit is not entered, the number of items per page is set to the maximum allowed by the console/terminal size. If the console/terminal is resized, an adjustment will be made to a number of items per page and a message will be issued on the console (only when it is a terminal)
-
-## Global Settings
-[**Top**](#help)
-- DisabledAllTooltips 
-    - Override options to EnabledStandardTooltip and EnabledPromptTooltip . Default = false
-- EnabledBeep 
-    - Enabled/disabled beep. Default = false
-- EnabledStandardTooltip 
-    - Show/Hide global tooltip. Default = true. When false then control´s tooltip not show.
-- EnabledPromptTooltip
-    - Enabled/disabled control´s tootip for default value. Default = true
-- EnabledAbortKey
-    - Enabled/disabled hotkey to abort prompt/control executation. Default = true
-- EnabledAbortAllPipes 
-    - Enabled/disabled hotkey to abort all pipes. Default = true
-- PasswordChar 
-    - Character default to password input. Default = '#'
-- DefaultCulture 
-    - Set default language/culture for all controls. Default = Current Culture application
- 
-
-```csharp
-//sample
-PromptPlus.EnabledAbortKey = false;
+```
+dotnet run --project [name of sample]
 ```
 
-### Culture
-[**Top**](#help)
+## Console Engine
+[**Top**](#table-of-contents)
+
+The console driver have the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout.
+The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
+
+### Wrap to Console - Code sample 
+
+The PromptPlus have wrap from console for key features **cross-plataform**.
+
+```csharp
+//Console.CursorLeft = 1;
+PromptPlus.CursorLeft = 1;
+//Console.ReadKey();
+PromptPlus.ReadKey();
+```
+
+### Extra commands to Console
+- Clear(Color? backcolor = null)
+  - Clear console with color and set BackgroundColor with color.
+- ClearLine(int? row = null, Style? style = null) 
+  - Clear row line with style 
+- ClearRestOfLine(Style? style = null)
+  - Clear rest of line
+- WriteLines(int steps = 1)
+  - write many new lines
+- SingleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
+  - Writes Write single dash after.
+- DoubleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
+  - Writes a pair of lines of dashes.
+- MoveCursor(CursorDirection direction, int steps)
+  - Move cursor by direction
+- WaitKeypress(bool intercept, CancellationToken? cancellationToken)
+  - Wait a keypress with cancelation token
+- ReadLineWithEmacs(uint? maxlenght = uint.MaxValue,Action<string,int> afteraccept = null, CaseOptions caseOptions = CaseOptions.Any)
+  - Read line from stream using Emacs keyboard shortcuts with maxlenght, case options and user action after each accepted keystroke
+
+### Extend Write / Writeline
+- Write(string value, Style? style = null, bool clearrestofline = false)
+    -  Write a text to output console with options for style and clear rest of line  
+- Write(Exception value, Style? style = null, bool clearrestofline = false)
+    -  Write a Exception to output console with options for style and clear rest of line  
+- WriteLine(string? value = null, Style? style = null, bool clearrestofline = true)
+    -  Write a text to output console with line terminator, option for style and clear rest of line (default)
+- WriteLine(Exception value, Style? style = null, bool clearrestofline = true)
+    -  Write a exception to output console with line terminator, option for style and clear rest of line (default)
+
+### Setup and auto detect - Code sample 
+
+```csharp
+PromptPlus.Setup((cfg) =>
+{
+    cfg.PadLeft = 2;
+    cfg.PadRight = 2;
+    cfg.Culture = new CultureInfo("en-us");
+    cfg.BackgroundColor = ConsoleColor.Blue;
+});
+PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
+PromptPlus.WriteLine($"IsTerminal: {PromptPlus.IsTerminal}");
+PromptPlus.WriteLine($"IsUnicodeSupported: {PromptPlus.IsUnicodeSupported}");
+PromptPlus.WriteLine($"OutputEncoding: {PromptPlus.OutputEncoding.EncodingName}");
+PromptPlus.WriteLine($"ColorDepth: {PromptPlus.ColorDepth}");
+PromptPlus.WriteLine($"BackgroundColor: {PromptPlus.BackgroundColor}");
+PromptPlus.WriteLine($"ForegroundColor: {PromptPlus.ForegroundColor}");
+PromptPlus.WriteLine($"SupportsAnsi: {PromptPlus.SupportsAnsi}");
+PromptPlus.WriteLine($"Buffers(Width/Height): {PromptPlus.BufferWidth}/{PromptPlus.BufferHeight}");
+PromptPlus.WriteLine($"PadScreen(Left/Right): {PromptPlus.PadLeft}/{PromptPlus.PadRight}\n");
+
+PromptPlus
+    .KeyPress()
+    .Config(cfg =>
+    {
+        cfg.HideAfterFinish(true)
+          .ShowTooltip(false) 
+          .ApplyStyle(StyleControls.Tooltips,Style.Plain.Foreground(Color.Grey100));
+    }) 
+    .Spinner(SpinnersType.Balloon)
+    .Run();
+    
+```
+
+### Output detect
+![](./images/consoleinfo.gif)
+
+
+### Overflow Capacity - Code sample 
+
+```csharp
+PromptPlus.Clear();
+PromptPlus.DoubleDash($"PromptPlus.Console Style.OverflowEllipsis");
+PromptPlus.WriteLine("[RED ON WHITE]TESTE[YELLOW] COLOR [/] BACK COLOR [/]" + 
+"asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", style: Style.OverflowEllipsis);
+
+PromptPlus.DoubleDash($"PromptPlus.Console Style.OverflowCrop");
+PromptPlus.WriteLine("[RED ON WHITE]TESTE[YELLOW] COLOR [/] BACK COLOR [/]" + 
+"asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", style: Style.OverflowCrop);
+
+PromptPlus.DoubleDash($"PromptPlus.Console default");
+PromptPlus.WriteLine("[RED ON WHITE]TESTE[YELLOW] COLOR [/] BACK COLOR [/]" + 
+"asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj");
+
+PromptPlus
+    .KeyPress()
+    .Config(cfg => cfg.HideAfterFinish(true))
+    .Spinner(SpinnersType.DotsScrolling)
+    .Run();
+```
+
+### Output Overflow Capacity
+
+![](./images/consoleoverflowcapacity.gif)
+
+
+#### Sample color capacity ([Projet sample](https://github.com/FRACerqueira/PromptPlus/tree/Samples/ConsoleFeaturesSamples))
+
+
+**_Note: This layout and code was inspired by the excellent project:spectreconsole, having the same color palette_**
+
+![](./images/consolecolorcapacity.gif)
+
+
+## Culture
+[**Top**](#table-of-contents)
 
 PromptPlus applies the language/culture **only when running controls**. The language/culture of the application is **not affected**. If language/culture is not informed, the application's language/culture will be used with fallback to en-US.
 
@@ -132,324 +245,132 @@ All messages are affected when changed language/culture. PromptPlus has language
 - pt-BR
  
 ```csharp
-//sample
+//sample global set for messages and validate
 PromptPlus.DefaultCulture = new CultureInfo("en-US");
+```
+
+```csharp
+//sample only control
+PromptPlus.MaskEdit("input", "MaskEdit DateOnly input")
+    .Mask(MaskedType.DateOnly)
+    .DescriptionWithInputType(FormatWeek.Short)
+    .Culture(new CultureInfo("en-us")) //overwrite culture
+    .AcceptEmptyValue()
+    .Run();
+
+PromptPlus.MaskEdit("input", "MaskEdit DateOnly input")
+    .Mask(MaskedType.DateOnly)
+    .DescriptionWithInputType(FormatWeek.Short)
+    .Culture("pt-br") //overwrite culture
+    .AcceptEmptyValue()
+    .Run();
 ```
 
 To use a non-embedded language/culture:
 
-- Use the **PromptPlusResources.resx** file in folder PromptPlus/Resources
+- Copy the **PromptPlusResources.resx** file in folder PromptPlus/Resources
 - Translate messages with same format to your language/culture
 - Convert .resx files to binary .resources files ([**reference link here**](https://docs.microsoft.com/en-us/dotnet/core/extensions/work-with-resx-files-programmatically))
-- Publish the compiled file (**PromptPlus.{Language}.resources**) in the same folder as the binaries.
+- Publish the compiled file (**PromptPlus.[Language].resources**) in the same folder as the binaries.
 
-### Colors
-[**Top**](#help)
+## Colors
+[**Top**](#table-of-contents)
 
 PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-color.org/). when there is the environment variable "no_color" the colors are disabled.
-PromptPlus has a configurable color(16 color) schema.
 
-- ForeColorSchema 
-    - Screen foreground color. Default = Console.ForegroundColor
-- BackColorSchema
-    - Screen background color. Default = Console.BackgroundColor
-- Pagination
-    - Page info foreground color. Default = Console.DarkGray
-- Hint
-    - Hit/tooltip info foreground color. Default = Console.DarkGray
-- Answer
-    - Answer foreground color. Default = Console.Cyan
-- Select
-    - Seleted item foreground color. Default = Console.Green
-- Disabled
-    - Disabled item foreground color. Default = Console.DarkGray
-- Filter
-    - Filter info foreground color. Default = Console.Yellow
-- Error
-    - Error info foreground color. Default = Console.Red
-- DoneSymbol
-    - Done symbol foreground color. Default = Console.Cyan
-- PromptSymbol
-    - Prompt symbol foreground color. Default = Console.Green
-- SliderBackcolor
-    - Sliders / Progress bar background color. Default = Console.DarkGray
-- SliderForecolor
-    - Sliders / Progress bar foreground color. Default = Console.Cyan
- 
- ```csharp
-//sample
-PromptPlus.ColorSchema.Answer = ConsoleColor.Cyan;
-```
+Prompt Plus also has commands for coloring parts of the text.
 
-PromptPlus also has commands **for coloring parts of text and underlining**.
-
+#### Direct console
 ```csharp
-//sample
-PromptPlus.WriteLine("This [cyan]is [red]a [white:blue]simples[/] line with [yellow!u]color[/]. End [/]line.");
+PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
+PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
 ````
 
+### Using Style
+
 ```csharp
-//sample
-PromptPlus.WriteLine("This is a simples ","line".White().OnBlue().Underline(), " with ", "color".Red());
+PromptPlus.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
+PromptPlus.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
+PromptPlus.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
+PromptPlus.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
 ````
 
-### Symbols
-[**Top**](#help)
+### Over controls
+```csharp
+PromptPlus
+    .Input("Input [blue]sample2[/]", "with [yellow]description[/]")
+    .Run();
+````
 
-PromptPlus has a configurable symbols with Unicode support and Fallback.
+### Escaping format characters
+To output a [ you use [[, and to output a ] you use ]].
+```csharp
+PromptPlus.WriteLine("[[Test]]");
+````
 
-- MaskEmpty
-    - Symbol : ■
-    - Fallback : double space
-    - Apply to : Empty character for input masked
-- File
-    - Symbol : ■
-    - Fallback : "- "
-    - Apply to : Symbol for file in browser control
- - Folder
-    - Symbol : ►
-    - Fallback : "> "
-    - Apply to : Symbol for folder in browser control
- - Prompt
-    - Symbol : →
-    - Fallback : "->"
-    - Apply to : Symbol for prompt control
- - Done
-    - Symbol : √
-    - Fallback : "V "
-    - Apply to : Symbol for prompt done
- - Error
-    - Symbol : »
-    - Fallback : "\>\>"
-    - Apply to : Symbol for message error
- - Selector
-    - Symbol : ›
-    - Fallback : "> "
-    - Apply to : Symbol for seletor item.
- - Selected
-    - Symbol : ♦
-    - Fallback : "* "
-    - Apply to : Symbol for Selected item.
- - NotSelect
-    - Symbol : ○
-    - Fallback : double space
-    - Apply to : Symbol for not Selected item.
- - TaskRun
-    - Symbol : ♦
-    - Fallback : "* "
-    - Apply to : Symbol for backgound process running.
- - Skiped
-    - Symbol : ×
-    - Fallback : "x "
-    - Apply to : Symbol for  backgound process canceled.
+Promptplus uses the **same default colors and engine(softly modified)** as the third party project: spectreconsole.
+
+[**Default color for controls and console**](colors.md)
+
+## Hotkeys
+[**Top**](#table-of-contents)
+
+Hotkeys (global and control-specific) are configurable.
 
  ```csharp
-//sample
-PromptPlus.Symbols.Done = new Symbol("√", "V ");
-```
-**_Note: new Symbol() return : Symbol = single space and Fallback = double space._**
-
-### Hotkeys
-[**Top**](#help)
-
-Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
-
-**Hotkeys Configurables:**
-
-- AbortAllPipesKeyPress
-    - Key for abort all pipes. Default = F7
-- TooltipKeyPress
-    - Key for Show/Hide tooltips. Default = F1
-- ResumePipesKeyPress
-    - Key for Show/Hide summary pipes. Default = F2
-- UnSelectFilter
-    - Key for Show input filter. Default = F4
-- SwitchViewPassword
-    - Key for Show/hide input password. Default = F5
-- SelectAll
-    - Key for toggle all items to selected. Default = F5
-- InvertSelect
-    - Key for invet selection to all items. Default = F6
-- RemoveAll
-    - Key for remove all items. Default = F4
-- MarkSelect
-    - Key for mark item in multi-select. Default = F8
-
-```csharp
-//sample
-PromptPlus.AbortAllPipesKeyPress = new HotKey(UserHotKey.F7, alt: true, ctrl: false, shift: false);
+//sample global
+PromptPlus.Config.SelectAllPress = new HotKey(UserHotKey.F7);
 ```
 
-## Load and Save Settings
-[**Top**](#help)
+[**Default Hotkeys for controls**](hotkeys.md)
 
-PromptPlus allows saving and loading a previous configuration of culture, behavior, hotkeys, colors and symbols.A file with the default configuration is available in the package in the Resources folder named **PromptPlus.config.json** . To load automatically the file must be placed in your project and published in the **same folder** as the binaries.
+## Keypress Extensions Emacs
+[**Top**](#table-of-contents)
 
-```csharp
-//sample save
-PromptPlus.SaveConfigToFile(folderfile: "YourFolder");
-//sample load
-PromptPlus.LoadConfigFromFile(folderfile: "YourFolder");
-```
+PromptPlus have a lot extensions to check Key-press with GNU Readline Emacs keyboard shortcuts.
+For more details [visit the **official API page**](./apis/pplus.promptpluskeyinfoextensions.md)
 
-**_Note: if the folderfile parameter is omitted, it will be saved/loaded from the default application folder_**
+## Validators
+[**Top**](#table-of-contents)
 
-## Apis
-[**Top**](#help)
+PromptPlus have a lot extensions to **commons validator** and **validator import**(No duplicate code!) 
 
-Controls/Commands | Details
---- | ---
-[Commands](commands.md) |  Command set for PromptPlus console
-[Color](colorcmd.md) | Easy to add some color-text and underline
-[ASCII-Banner](banner.md) |  ASCII text banner 
-[Any-key](anykey.md) |  Simple any key press
-[Key-Press](keypress.md) | Simple specific key
-[Confirm](confirm.md) | Simple confirm with  with tool tips and language detection 
-[AutoComplete](autocomplete.md) | Input text with sugestions, validator, and tooltips
-[Readline](readline.md) | Input text with GNU Readline Emacs keyboard shortcuts, sugestions and historic
-[Input](input.md) | Input text with input validator with tooltips
-[Extensions points](basemethods.md#sample-use-of-extraaction) | Input text with history/suguestions using extensions points
-[Password](input.md) | Input password with input validator and show/hide(optional) input value
-[MaskEdit-Generic](maskeditgeneric.md) | Input with masked input , tooltips and input validator
-[MaskEdit-Date](maskeditdate.md) | Date input with language parameter, tooltips and input validator
-[MaskEdit-Time](maskeditdate.md) | Time input with language parameter, tooltips and input validator
-[MaskEdit-Date/Time](maskeditdate.md) | Date and time input with language parameter, tooltips and input validator
-[MaskEdit-Number](maskeditnumber.md) | Numeric input with language parameter, tooltips and input validator
-[MaskEdit-Currency](maskeditnumber.md) | Currency input with language parameter, tooltips and input validator
-[Select](select.md)| Generic select input IEnumerable/Enum with auto-paginator and tooltips and more
-[MultiSelect](multiselect.md) | Generic multi select input IEnumerable/Enum with group, auto-paginator , tooltips and more
-[List](list.md) | Create Generic IEnumerable with auto-paginator, tooptip , input validator, message error by type/format and more
-[ListMasked](listmasked.md) | Create generic IEnumerable with maskededit, auto-paginator, tooptip , input validator
-[Browser](browser.md) | Browser files/folder with auto-paginator and tooltips
-[Slider-Number](slidernumber.md) | Numeric range with short/large step and tooltips
-[Number-Up/Down](slidernumber.md) | Numeric range with step and tooltips
-[Slider-Switch](sliderswitch.md) | Generic choice with customization and tooltips
-[Progress-Bar](progressbar.md) | Progress Bar with interation customization
-[Wait-Process](waitprocess.md) | Wait process with animation
-[PipeLine](pipeline.md) | Pipeline sequence to all prompts with condition by pipe and status summary
-
-## Extensions
-[**Top**](#help)
-
-PromptPlus have a extension to **import validators**. No duplicate code! 
+For more details see [**List validators embeding**](./apis/pplus.controls.promptvalidators.md)
 
 ```csharp
 private class MylCass
 {
     [Required(ErrorMessage = "{0} is required!")]
     [MinLength(3, ErrorMessage = "Min. Length = 3.")]
-    [MaxLength(5, ErrorMessage = "Min. Length = 5.")]
+    [MaxLength(5, ErrorMessage = "Max. Length = 5.")]
     [Display(Prompt ="My Input")]
     public string MyInput { get; set; }
 }
 ```
 ```csharp
 var inst = new MylCass();
-var name = PromptPlus.Input("Input Value for MyInput")
-    .Addvalidators(inst.ImportValidators(x => x.MyInput))
-    .Run(_stopApp);
+
+PromptPlus
+    .Input("Input sample2", "import validator from decorate")
+    .Default(inst.Text)
+    .AddValidators(PromptValidators.ImportValidators(inst,x => x!.Text!))
+    .Run();
 
 if (name.IsAborted)
 {
    return;
 }
-Console.WriteLine($"Your input: {name.Value}!");
+PromptPlus.WriteLine($"Your input: {name.Value}!");
 ```
 
-## Snapshot
-
-### Input
-[**Top**](#help) | [AutoComplete](autocomplete.md) | [Input](input.md) | [Password](input.md)
-
-![](./images/AutoComplete.gif)
-![](./images/Input.gif)
-![](./images/Password.gif)
-
-### Readline 
-[**Top**](#help) | [ReadLine](readline.md) | [Input & History /sugestion](basemethods.md#sample-use-of-extraaction)
-
-![](./images/Readline.gif)
-![](./images/InputHistory.gif)
-![](./images/InputSugestion.gif)
-
-### MaskEdit
-[**Top**](#help) | [MaskEdit Generic](maskeditgeneric.md) | [MaskEdit Date/Time](maskeditdate.md) | [MaskEdit Number/Currency](maskeditnumber.md) 
-
-![](./images/MaskEditGeneric.gif)
-![](./images/MaskEditDateTime.gif)
-![](./images/MaskEditNumber.gif)
-![](./images/MaskEditCurrency.gif)
-
-### KeyPress
-[**Top**](#help) | [Any key](anykey.md) | [Key Press](keypress.md)
-
-![](./images/Anykey.gif)
-![](./images/KeyPress.gif)
-
-### Selectors
-[**Top**](#help) | [Select](select.md) | [MultiSelect](multiselect.md)
-
-![](./images/Select.gif)
-![](./images/MultSelect.gif)
-
-### Confirm
-[**Top**](#help) | [Confirm](confirm.md) | [Slider Switch](sliderswitch.md)
-
-![](./images/Confirm.gif)
-![](./images/SliderSwitch.gif)
-
-### WaitProcess
-[**Top**](#help) | [WaitProcess](waitprocess.md) 
-
-![](./images/WaitProcess.gif)
-
-### ProgressBar
-[**Top**](#help) | [Progress Bar](progressbar.md)
-
-![](./images/ProgressBar.gif)
-
-### Slider Number
-[**Top**](#help) | [Slider Number](slidernumber.md) | [Number Up/Down](slidernumber.md)
-
-![](./images/SliderNumber.gif)
-![](./images/NumberUpDown.gif)
-
-### List
-[**Top**](#help) | [List / List & Sugestion](list.md) | [ListMasked](listmasked.md)
-
-![](./images/List.gif)
-![](./images/ListSugestion.gif)
-![](./images/MaskedList.gif)
-
-### Browser
-[**Top**](#help) | [Browser](browser.md)
-
-![](./images/Browser.gif)
-
-### PipeLine
-[**Top**](#help) | [PipeLine](pipeline.md)
-
-![](./images/PipeLine.gif)
-
-### ASCII-Banner
-[**Top**](#help) | [ASCII-Banner](banner.md)
-
-![](./images/Banner.gif)
-
-
-### Colors
-[**Top**](#help) | [Colors](colorcmd.md)
-
-![](./images/Colors.gif)
-
-### Commands
-[**Top**](#help) | [Commands](commands.md)
-
-![](./images/Commands.gif)
-
+```csharp
+//sample
+PromptPlus.EnabledAbortKey = false;
+```
 
 ## Supported platforms
-[**Top**](#help)
+[**Top**](#table-of-contents)
 
 - Windows
     - Command Prompt, PowerShell, Windows Terminal
@@ -457,3 +378,10 @@ Console.WriteLine($"Your input: {name.Value}!");
     - Windows Terminal (WSL 2)
 - macOS
     - Terminal.app
+
+## License
+[**Top**](#table-of-contents)
+
+Copyright 2021 @ Fernando Cerqueira
+
+PromptPlus project is licensed under the  the MIT license. For more information see [License](./LICENSE.md).
