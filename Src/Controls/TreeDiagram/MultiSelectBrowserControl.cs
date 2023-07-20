@@ -1243,13 +1243,9 @@ namespace PPlus.Controls
 
             if (!string.IsNullOrEmpty(defopt))
             {
-                foreach (var item in _flatnodes)
+                foreach (var item in _flatnodes.Where(x => x.Value.FullPath.Equals(defopt)))
                 {
-                    if (item.Value.FullPath.Equals(defopt))
-                    {
-                        defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(item);
-                        break;
-                    }
+                    defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(item);
                 }
             }
             else

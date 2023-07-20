@@ -25,6 +25,26 @@ PromptPlus
     .Run();
 PromptPlus.Clear();
 
+
+PromptPlus
+    .ChartBar("Control: ChartBar", "layout usage")
+    .AddItem("Label1", 10, Color.Blue)
+    .AddItem("Label2", 20, Color.Green)
+    .AddItem("Label3", 30, Color.Red)
+    .Layout(LayoutChart.Stacked)
+    .Run();
+
+PromptPlus
+    .KeyPress()
+    .Config(cfg =>
+    {
+        cfg.HideAfterFinish(true);
+        cfg.ShowTooltip(false);
+    })
+    .Spinner(SpinnersType.DotsScrolling)
+    .Run();
+PromptPlus.Clear();
+
 PromptPlus
     .ChartBar("Control: ChartBar", "With legends")
     .TitleAlignment(Alignment.Center)
@@ -84,7 +104,8 @@ PromptPlus
         index++;
     })
     .ShowLegends()
-    .EnabledInteractionUser(true,true,true,3)
+    .EnabledInteractionUser(true,true,true)
+    .PageSize(3)
     .Run();
 
 PromptPlus
@@ -102,7 +123,6 @@ var auxc = Enum.GetValues(typeof(ChartBarType));
 foreach (var item in auxc)
 {
     PromptPlus.Clear();
-    PromptPlus.CursorTop = PromptPlus.BufferHeight;
     var bt = (ChartBarType)Enum.Parse(typeof(ChartBarType), item.ToString()!);
     PromptPlus
         .ChartBar("Control: ChartBar", $"with ChartBarType:{bt}")

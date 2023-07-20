@@ -53,7 +53,7 @@ PromptPlus.Config.PageSize = 10;
 ## Symbols
 [**Top**](#promptplus-settings)
 
-Global symbols modify the graphical representation of some characters for all controls. Warning: Changes to these symbols may cause an unwanted layout.
+Global symbols modify the graphical representation of some characters for all controls. Warning: Changes to these symbols may cause an unwanted type.
 
 To set use : PromptPlus.Config. Symbols(SymbolType, value, unicode). Example :
 

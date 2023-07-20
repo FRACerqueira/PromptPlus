@@ -65,7 +65,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Defines type of mask control.
         /// </summary>
-        /// <param name="maskedType">Type masked</param>
+        /// <param name="maskedType"><see cref="MaskedType"/></param>
         /// <param name="promptmask">Prompt mask overwriter. Default value is '■'/'_'</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit Mask(MaskedType maskedType,char? promptmask = null);

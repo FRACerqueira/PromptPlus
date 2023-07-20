@@ -20,7 +20,7 @@ namespace SliderNumberUpDownModeSamples
             PromptPlus.DoubleDash($"Control:SliderNumber {cult} - auto larger/shot step usage");
             var sdl = PromptPlus
                .SliderNumber("SliderNumber","Larger = range/10 Short = range/100")
-               .MoveKeyPress(SliderNumberType.UpDown)
+               .Layout(LayoutSliderNumber.UpDown)
                .Range(0, 10)
                .FracionalDig(1)
                .Run();
@@ -32,7 +32,7 @@ namespace SliderNumberUpDownModeSamples
             PromptPlus.DoubleDash($"Control:SliderNumber {cult} - normal usage");
             PromptPlus
                .SliderNumber("SliderNumber")
-               .MoveKeyPress(SliderNumberType.UpDown)
+               .Layout(LayoutSliderNumber.UpDown)
                .Range(-100, 100)
                .Default(0)
                .FracionalDig(1)
@@ -43,7 +43,7 @@ namespace SliderNumberUpDownModeSamples
             PromptPlus.DoubleDash($"Control:SliderNumber with culture (pt-br) - normal usage");
             PromptPlus
                .SliderNumber("SliderNumber")
-               .MoveKeyPress(SliderNumberType.UpDown)
+               .Layout(LayoutSliderNumber.UpDown)
                .Range(-100, 100)
                .Culture(new CultureInfo("pt-br"))
                .Default(0)

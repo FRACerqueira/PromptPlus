@@ -6,29 +6,17 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents the Layout Calendar
+    /// Represents the Policy Invalid Date
     /// </summary>
-    public enum LayoutCalendar
+    public enum PolicyInvalidDate
     {
         /// <summary>
-        /// single line grid
+        /// Next valid date
         /// </summary>
-        SingleGrid,
+        NextDate,
         /// <summary>
-        /// Double line grid
+        /// Previous valid date
         /// </summary>
-        DoubleGrid,
-        /// <summary>
-        /// Acsii single grid
-        /// </summary>
-        AsciiSingleGrid,
-        /// <summary>
-        /// Acsii double grid
-        /// </summary>
-        AsciiDoubleGrid,
-        /// <summary>
-        /// Heavy line grid
-        /// </summary>
-        HeavyGrid
+        PreviousDate
     }
 }

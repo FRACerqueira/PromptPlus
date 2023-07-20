@@ -173,7 +173,7 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        aux += result.Key.ToString();
+                        aux += result.Key;
                     }
                     FinishResult = aux;
                 }

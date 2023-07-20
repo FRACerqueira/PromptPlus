@@ -41,7 +41,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Execute a action foreach item of colletion passed as a parameter
         /// </summary>
-        /// <typeparam name="T1">Type external colletion</typeparam>
+        /// <typeparam name="T1">Layout external colletion</typeparam>
         /// <param name="values">Colletion for interaction</param>
         /// <param name="action">Action to execute</param>
         /// <returns><see cref="IControlCalendar"/></returns>
@@ -59,12 +59,12 @@ namespace PPlus.Controls
         /// Initial date.Default value is current date.
         /// </summary>
         /// <param name="value"><see cref="DateTime"/></param>
-        /// <param name="isPolicyNext">
-        /// Policy to next/previous date if seleted date is disabled
-        /// <br>true Next date, otherwise Previous date</br>
+        /// <param name="policy">
+        /// Policy to next/previous valid date if seleted date is invalid
         /// </param>
         /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar Default(DateTime value,bool isPolicyNext = true);
+        IControlCalendar Default(DateTime value, PolicyInvalidDate policy = PolicyInvalidDate.NextDate);
+
 
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace PPlus.Controls
         /// <param name="minvalue">Minimum date</param>
         /// <param name="maxvalue">Maximum date</param>
         /// <returns><see cref="IControlCalendar"/></returns>;
-        IControlCalendar Ranger(DateTime minvalue, DateTime maxvalue);
+        IControlCalendar Range(DateTime minvalue, DateTime maxvalue);
 
         /// <summary>
         /// Disabled Weekends.
@@ -87,7 +87,7 @@ namespace PPlus.Controls
         /// <param name="scope">The <see cref="CalendarScope"/> of item</param>
         /// <param name="values">The <see cref="ItemCalendar"/></param>
         /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar AddItem(CalendarScope scope, params ItemCalendar[] values);
+        IControlCalendar AddItems(CalendarScope scope, params ItemCalendar[] values);
 
  
         /// <summary>

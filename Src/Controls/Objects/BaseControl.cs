@@ -337,11 +337,7 @@ namespace PPlus.Controls.Objects
 
         public bool FindAction(StageControl value, out Action<object, object> action)
         {
-            action = null;
-            if (_options.OptUserActions.ContainsKey(value))
-            {
-                action = _options.OptUserActions[value];
-            }
+            _options.OptUserActions.TryGetValue(value, out action);
             return action != null;
         }
     }

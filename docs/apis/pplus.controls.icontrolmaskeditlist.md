@@ -390,7 +390,7 @@ IControlMaskEditList Mask(MaskedType maskedType, Nullable<Char> promptmask)
 #### Parameters
 
 `maskedType` [MaskedType](./pplus.controls.maskedtype.md)<br>
-Type masked
+[MaskedType](./pplus.controls.maskedtype.md)
 
 `promptmask` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Prompt mask overwriter. Default value is '■'/'_'

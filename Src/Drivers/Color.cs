@@ -185,10 +185,10 @@ namespace PPlus
                 throw new PromptPlusException("Invalid Html Color. Lenght must be equal 7 and start with #");
             }
             int RGBint = Convert.ToInt32(value.Substring(1,6), 16);
-            byte Red = (byte)((RGBint >> 16) & 255);
-            byte Green = (byte)((RGBint >> 8) & 255);
-            byte Blue = (byte)(RGBint & 255);
-            return new Color(Red,Green, Blue);
+            byte localRed = (byte)((RGBint >> 16) & 255);
+            byte localGreen = (byte)((RGBint >> 8) & 255);
+            byte localBlue = (byte)(RGBint & 255);
+            return new Color(localRed,localGreen, localBlue);
         }
 
         /// <summary>

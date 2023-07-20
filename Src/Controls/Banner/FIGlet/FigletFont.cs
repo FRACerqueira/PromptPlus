@@ -26,13 +26,13 @@ namespace PPlus.FIGlet
 
         public int MaxLength { get; }
 
-        public int OldLayout { get; }
+        public int OldType { get; }
 
         public int CommentLines { get; }
 
         public int PrintDirection { get; }
 
-        public int FullLayout { get; }
+        public int FullType { get; }
 
         public int CodeTagCount { get; }
 
@@ -84,10 +84,10 @@ namespace PPlus.FIGlet
                 Height = Convert.ToInt32(TryGetMember(configs, 1));
                 BaseLine = Convert.ToInt32(TryGetMember(configs, 2));
                 MaxLength = Convert.ToInt32(TryGetMember(configs, 3));
-                OldLayout = Convert.ToInt32(TryGetMember(configs, 4));
+                OldType = Convert.ToInt32(TryGetMember(configs, 4));
                 CommentLines = Convert.ToInt32(TryGetMember(configs, 5));
                 PrintDirection = Convert.ToInt32(TryGetMember(configs, 6));
-                FullLayout = Convert.ToInt32(TryGetMember(configs, 7));
+                FullType = Convert.ToInt32(TryGetMember(configs, 7));
                 CodeTagCount = Convert.ToInt32(TryGetMember(configs, 8));
             }
             catch (IndexOutOfRangeException)

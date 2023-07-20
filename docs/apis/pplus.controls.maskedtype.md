@@ -12,7 +12,7 @@
 
 Namespace: PPlus.Controls
 
-Represents Masked Type input
+Represents Masked type input
 
 ```csharp
 public enum MaskedType

@@ -46,7 +46,7 @@ namespace PPlus
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="delay">The delay process</param>
-        /// <param name="spinnersType">spinners Type <see cref="SpinnersType"/></param>
+        /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
         /// <param name="showCountdown">True show Countdown, otherwise 'no'</param>
         /// <param name="config">The config action <see cref="IPromptConfig"/></param>
         /// <param name="cancellationToken"><see cref="CancellationToken"/> for control</param>

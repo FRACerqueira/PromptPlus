@@ -274,10 +274,10 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// Get/Set <see cref="HotKey"/> to toggle ChartBar Type view.
+        /// Get/Set <see cref="HotKey"/> to toggle ChartBar Layout view.
         /// <br>Default value : '[F2]'</br>
         /// </summary>
-        public HotKey ChartBarSwitchTypePress { get; set; } = HotKey.ChartBarSwitchType;
+        public HotKey ChartBarSwitchTypePress { get; set; } = HotKey.ChartBarSwitchLayout;
 
         /// <summary>
         /// Get/Set <see cref="HotKey"/> to toggle ChartBar Legend view.

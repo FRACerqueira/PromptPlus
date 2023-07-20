@@ -6,17 +6,17 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents the ChartBar Type 
+    /// Represents The layout slider 
     /// </summary>
-    public enum ChartType
+    public enum LayoutSliderNumber
     {
         /// <summary>
-        /// Standard bar
+        /// Use Left/Right arrows to change value and show bar
         /// </summary>
-        StandBar,
+        LeftRight,
         /// <summary>
-        /// Stack bar
+        /// Use Up/Down arrows to change value and not show bar
         /// </summary>
-        StackBar
+        UpDown
     }
 }

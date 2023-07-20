@@ -37,12 +37,12 @@ namespace PPlus.Controls
         IControlSliderNumber Default(double value);
 
         /// <summary>
-        /// Define the KeyPress to change value. Default value is Left or Right.
-        /// <br>When MoveKeyPress equal Up or Down , slider control not show Widgets</br>
+        /// Define the layout to change value. Default value is 'LayoutSliderNumber.LeftRight'.
+        /// <br>When Layout equal UpDown , slider control not show Widgets</br>
         /// </summary>
-        /// <param name="value">Left/Right or Up/Down. <see cref="SliderNumberType"/></param>
+        /// <param name="value">The <see cref="LayoutSliderNumber"/></param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
-        IControlSliderNumber MoveKeyPress(SliderNumberType value);
+        IControlSliderNumber Layout(LayoutSliderNumber value);
 
         /// <summary>
         /// Define Width to Widgets. Default value is 40.
@@ -53,7 +53,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Define type Bar to Slider.
-        /// <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored</br>
+        /// <br>Valid only When Layout equal LeftRight, otherwise its is ignored</br>
         /// </summary>
         /// <param name="value">The <see cref="SliderBarType"/>. Default value 'SliderBarType.Fill'</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
@@ -112,7 +112,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Dynamically change color Widgets
-        /// <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored</br>
+        /// <br>Valid only When Layout equal LeftRight mode, otherwise its is ignored</br>
         /// </summary>
         /// <param name="value">function to change color</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
@@ -120,7 +120,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Dynamically Change Gradient color Widgets
-        /// <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored</br>
+        /// <br>Valid only When Layout equal LeftRight mode, otherwise its is ignored</br>
         /// </summary>
         /// <param name="colors">list of colors Gradient</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>

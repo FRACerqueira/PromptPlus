@@ -315,7 +315,7 @@ namespace PPlus.Tests.Controls.Select
         {
             var ctrl = (SelectControl<MyEnum>)PromptPlus
                 .Select<MyEnum>("Select")
-                .AddItemTo(AdderScope.Remove,MyEnum.None);
+                .AddItemsTo(AdderScope.Remove,MyEnum.None);
             var init = ctrl.InitControl(CancellationToken.None);
             Assert.Equal("option one", init);
         }
@@ -335,7 +335,7 @@ namespace PPlus.Tests.Controls.Select
         {
             var ctrl = (SelectControl<MyEnum>)PromptPlus
                 .Select<MyEnum>("Select")
-                .AddItemTo(AdderScope.Disable, MyEnum.None);
+                .AddItemsTo(AdderScope.Disable, MyEnum.None);
             var init = ctrl.InitControl(CancellationToken.None);
             Assert.Equal("option one", init);
         }
@@ -573,7 +573,7 @@ namespace PPlus.Tests.Controls.Select
         {
             var ctrl = (SelectControl<MyEnum>)PromptPlus
                 .Select<MyEnum>("Select")
-                .AddItemTo(AdderScope.Disable, MyEnum.None);
+                .AddItemsTo(AdderScope.Disable, MyEnum.None);
             var init = ctrl.InitControl(CancellationToken.None);
             Assert.Equal("option one", init);
             var sb = new ScreenBuffer();

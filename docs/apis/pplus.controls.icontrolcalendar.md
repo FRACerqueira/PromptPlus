@@ -22,12 +22,12 @@ Implements [IPromptControls&lt;DateTime&gt;](./pplus.controls.ipromptcontrols-1.
 
 ## Methods
 
-### <a id="methods-additem"/>**AddItem(CalendarScope, ItemCalendar[])**
+### <a id="methods-additems"/>**AddItems(CalendarScope, ItemCalendar[])**
 
 Add scope(Note/Highlight/Disabled) items to calendar.
 
 ```csharp
-IControlCalendar AddItem(CalendarScope scope, ItemCalendar[] values)
+IControlCalendar AddItems(CalendarScope scope, ItemCalendar[] values)
 ```
 
 #### Parameters
@@ -129,12 +129,12 @@ Name of CultureInfo to use
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-default"/>**Default(DateTime, Boolean)**
+### <a id="methods-default"/>**Default(DateTime, PolicyInvalidDate)**
 
 Initial date.Default value is current date.
 
 ```csharp
-IControlCalendar Default(DateTime value, bool isPolicyNext)
+IControlCalendar Default(DateTime value, PolicyInvalidDate policy)
 ```
 
 #### Parameters
@@ -142,9 +142,8 @@ IControlCalendar Default(DateTime value, bool isPolicyNext)
 `value` [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)<br>
 [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)
 
-`isPolicyNext` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Policy to next/previous date if seleted date is disabled
- <br>true Next date, otherwise Previous date
+`policy` [PolicyInvalidDate](./pplus.controls.policyinvaliddate.md)<br>
+Policy to next/previous valid date if seleted date is invalid
 
 #### Returns
 
@@ -190,7 +189,7 @@ IControlCalendar Interaction<T1>(IEnumerable<T1> values, Action<IControlCalendar
 #### Type Parameters
 
 `T1`<br>
-Type external colletion
+Layout external colletion
 
 #### Parameters
 
@@ -258,12 +257,12 @@ Number of Max.items
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-ranger"/>**Ranger(DateTime, DateTime)**
+### <a id="methods-range"/>**Range(DateTime, DateTime)**
 
 Defines a minimum and maximum range date
 
 ```csharp
-IControlCalendar Ranger(DateTime minvalue, DateTime maxvalue)
+IControlCalendar Range(DateTime minvalue, DateTime maxvalue)
 ```
 
 #### Parameters

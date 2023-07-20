@@ -168,7 +168,7 @@ IControlWait Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nu
 #### Parameters
 
 `spinnersType` [SpinnersType](./pplus.controls.spinnerstype.md)<br>
-Spinners Type
+The [SpinnersType](./pplus.controls.spinnerstype.md)
 
 `SpinnerStyle` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Style of spinner. [Style](./pplus.style.md)

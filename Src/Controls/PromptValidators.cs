@@ -289,7 +289,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Boolean
+        /// Validation function for Is type Boolean
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -341,7 +341,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Byte
+        /// Validation function for Is type Byte
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -377,7 +377,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Char
+        /// Validation function for Is type Char
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -413,7 +413,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Decimal
+        /// Validation function for Is type Decimal
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -450,7 +450,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Double
+        /// Validation function for Is type Double
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -487,7 +487,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Short
+        /// Validation function for Is type Short
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -497,7 +497,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Int16
+        /// Validation function for Is type Int16
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -534,7 +534,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Int
+        /// Validation function for Is type Int
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -544,7 +544,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Int32
+        /// Validation function for Is type Int32
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -581,7 +581,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Long
+        /// Validation function for Is type Long
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -591,7 +591,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Int64
+        /// Validation function for Is type Int64
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -628,7 +628,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type SByte
+        /// Validation function for Is type SByte
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -665,7 +665,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Float
+        /// Validation function for Is type Float
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -675,7 +675,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Single
+        /// Validation function for Is type Single
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -712,7 +712,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type Ushort
+        /// Validation function for Is type Ushort
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -722,7 +722,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type UInt16
+        /// Validation function for Is type UInt16
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -759,7 +759,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type UInt
+        /// Validation function for Is type UInt
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -769,7 +769,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type UInt32
+        /// Validation function for Is type UInt32
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -806,7 +806,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type ULong
+        /// Validation function for Is type ULong
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -816,7 +816,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type UInt64
+        /// Validation function for Is type UInt64
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>
@@ -852,7 +852,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Validation function for Is Type DateTime
+        /// Validation function for Is type DateTime
         /// </summary>
         /// <param name="errorMessage">Custom error message to show</param>
         /// <returns>the Validation function</returns>

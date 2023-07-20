@@ -22,8 +22,8 @@ namespace PPlus.Controls
             Labels = new();
         }
 
-        public ChartType StartChartType { get; set; } = ChartType.StandBar;
-        public ChartType CurrentChartType { get; set; } = ChartType.StandBar;
+        public LayoutChart StartChartType { get; set; } = LayoutChart.Standard;
+        public LayoutChart CurrentChartType { get; set; } = LayoutChart.Standard;
         public char CharBar => '#';
         public ChartBarType BarType { get; set; } = ChartBarType.Fill;
         public int Witdth { get; set; } = _defaultSliderWitdth;
@@ -51,7 +51,7 @@ namespace PPlus.Controls
         public bool EnabledSwitchType { get; set; } = true;
         public bool EnabledSwitchLegend { get; set; } = true;
         public bool EnabledSwitchOrder { get; set; } = true;
-        public int Pagesize { get; set; } = 10;
+        public int PageSize { get; set; } = 10;
         public HotKey SwitchType { get; set; } = PromptPlus.Config.ChartBarSwitchTypePress;
         public HotKey SwitchLegend { get; set; } = PromptPlus.Config.ChartBarSwitchLegendPress;
         public HotKey SwitchOrder { get; set; } = PromptPlus.Config.ChartBarSwitchOrderPress;

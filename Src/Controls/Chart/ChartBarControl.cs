@@ -37,33 +37,30 @@ namespace PPlus.Controls
 
             _options.CurrentCulture ??= PromptPlus.Config.AppCulture;
 
-            if (_options.CurrentChartType == ChartType.StackBar)
+            if (_options.CurrentChartType == LayoutChart.Stacked)
             {
                 _options.ShowLegend = true;
             }
 
-            _totalvalue = _options.Labels.Sum(x => x.Value);
+            _totalvalue = _options.Labels.Sum(x => Math.Round(x.Value, _options.FracionalDig));
 
             //order items
             ChangeOrder();
 
             //auto-color
             var indexcolor = 15;
-            foreach (var item in _options.Labels)
+            foreach (var item in _options.Labels.Where(x => !x.ColorBar.HasValue))
             {
-                if (!item.ColorBar.HasValue)
+                if (Color.FromInt32(indexcolor) == Color.FromConsoleColor(ConsolePlus.BackgroundColor))
                 {
-                    if (Color.FromInt32(indexcolor) == Color.FromConsoleColor(ConsolePlus.BackgroundColor))
-                    {
-                        indexcolor--;
-                        if (indexcolor < 0)
-                        {
-                            indexcolor = 15;
-                        }
-                    }
-                    item.ColorBar = Color.FromInt32(indexcolor);
                     indexcolor--;
+                    if (indexcolor < 0)
+                    {
+                        indexcolor = 15;
+                    }
                 }
+                item.ColorBar = Color.FromInt32(indexcolor);
+                indexcolor--;
             }
 
             return string.Empty;
@@ -78,7 +75,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlChartBar Type(ChartType value)
+        public IControlChartBar Layout(LayoutChart value)
         {
             _options.StartChartType = value;
             _options.CurrentChartType = value;
@@ -205,23 +202,21 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlChartBar EnabledInteractionUser(bool switchType = true, bool switchLegend = true, bool switchorder = true, int? pagesize = null)
+        public IControlChartBar EnabledInteractionUser(bool switchType = true, bool switchLegend = true, bool switchorder = true)
         {
             _options.EnabledInteractionUser = true;
             _options.EnabledSwitchType = switchType;
             _options.EnabledSwitchLegend = switchLegend;
             _options.EnabledSwitchOrder = switchorder;
-            if (pagesize.HasValue)
+            return this;
+        }
+        public IControlChartBar PageSize(int value)
+        {
+            if (value < 1)
             {
-                if (pagesize.Value < 1)
-                {
-                    _options.Pagesize = 1;
-                }
-                else
-                {
-                    _options.Pagesize = pagesize.Value;
-                }
+                value = 1;
             }
+            _options.PageSize = value;
             return this;
         }
 
@@ -259,13 +254,13 @@ namespace PPlus.Controls
             WriteTitle(screenBuffer);
             switch (_options.CurrentChartType)
             {
-                case ChartType.StandBar:
+                case LayoutChart.Standard:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _options.Labels.Max(x => x.Value);
-                        WriteStandBar(screenBuffer, _options.BarType, _startpos, _totalvalue, ticketStep);
+                        WriteStandBar(screenBuffer, _options.BarType, _startpos, ticketStep);
                     }
                     break;
-                case ChartType.StackBar:
+                case LayoutChart.Stacked:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _totalvalue;
                         WriteStackBar(screenBuffer, _options.BarType, ticketStep);
@@ -276,7 +271,7 @@ namespace PPlus.Controls
             }
             if (_options.CurrentShowLegend)
             {
-                WriteLegends(screenBuffer, _startpos, _totalvalue);
+                WriteLegends(screenBuffer, _startpos);
             }
             WritePageInfo(screenBuffer);
             if (!_options.HideInfoOrder)
@@ -328,19 +323,19 @@ namespace PPlus.Controls
                 }
                 else if (_options.SwitchType.Equals(keyInfo.Value))
                 {
-                    if (_options.CurrentChartType == ChartType.StandBar)
+                    if (_options.CurrentChartType == LayoutChart.Standard)
                     {
-                        _options.CurrentChartType = ChartType.StackBar;
+                        _options.CurrentChartType = LayoutChart.Stacked;
                     }
                     else
                     {
-                        _options.CurrentChartType = ChartType.StandBar;
+                        _options.CurrentChartType = LayoutChart.Standard;
                     }
                     isvalidkey = true;
                 }
                 else if (_options.SwitchLegend.Equals(keyInfo.Value))
                 {
-                    if (_options.CurrentChartType == ChartType.StandBar)
+                    if (_options.CurrentChartType == LayoutChart.Standard)
                     {
                         _options.CurrentShowLegend = !_options.CurrentShowLegend;
                         isvalidkey = true;
@@ -362,9 +357,9 @@ namespace PPlus.Controls
                 }
                 else if (keyInfo.Value.IsPressPageUpKey(true))
                 {
-                    if (inipos - _options.Pagesize >= 0)
+                    if (inipos - _options.PageSize >= 0)
                     {
-                        inipos -= _options.Pagesize;
+                        inipos -= _options.PageSize;
                         isvalidkey = true;
                     }
                     else
@@ -375,9 +370,9 @@ namespace PPlus.Controls
                 }
                 else if (keyInfo.Value.IsPressPageDownKey(true))
                 {
-                    if (inipos + _options.Pagesize < _options.Labels.Count)
+                    if (inipos + _options.PageSize < _options.Labels.Count)
                     {
-                        inipos += _options.Pagesize;
+                        inipos += _options.PageSize;
                         isvalidkey = true;
                     }
                     else
@@ -455,18 +450,17 @@ namespace PPlus.Controls
         private void ShowInitialChart(ScreenBuffer screenBuffer)
         {
             WriteTitle(screenBuffer);
-            double totalvalue = _options.Labels.Sum(x => x.Value);
             switch (_options.StartChartType)
             {
-                case ChartType.StandBar:
+                case LayoutChart.Standard:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _options.Labels.Max(x => x.Value);
-                        WriteStandBar(screenBuffer, _options.BarType, 0, totalvalue, ticketStep);
+                        WriteStandBar(screenBuffer, _options.BarType, 0, ticketStep);
                     }
                     break;
-                case ChartType.StackBar:
+                case LayoutChart.Stacked:
                     {
-                        var ticketStep = double.Parse(_options.Witdth.ToString()) / totalvalue;
+                        var ticketStep = double.Parse(_options.Witdth.ToString()) / _totalvalue;
                         WriteStackBar(screenBuffer, _options.BarType, ticketStep);
                     }
                     break;
@@ -475,7 +469,7 @@ namespace PPlus.Controls
             }
             if (_options.ShowLegend)
             {
-                WriteLegends(screenBuffer, 0, totalvalue);
+                WriteLegends(screenBuffer, 0);
             }
             if (!_options.HideInfoOrder)
             {
@@ -576,9 +570,9 @@ namespace PPlus.Controls
             }
         }
 
-        private void WriteStandBar(ScreenBuffer screenBuffer,ChartBarType barType,int inipos,double totalvalue, double ticketStep)
+        private void WriteStandBar(ScreenBuffer screenBuffer,ChartBarType barType,int inipos,double ticketStep)
         {
-            var pagesize = _options.Pagesize;
+            var pagesize = _options.PageSize;
             if (!_options.EnabledInteractionUser)
             {
                 inipos = 0;
@@ -586,7 +580,7 @@ namespace PPlus.Controls
             }
             else
             {
-                if (_options.Pagesize >= _options.Labels.Count)
+                if (_options.PageSize >= _options.Labels.Count)
                 {
                     inipos = 0;
                 }
@@ -670,11 +664,11 @@ namespace PPlus.Controls
                     screenBuffer.AddBuffer(' ', Style.Plain, false, false);
                     if (!_options.HideValueBar)
                     {
-                        screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / totalvalue)}%)", _options.PercentStyle, false, false);
+                        screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / _totalvalue)}%)", _options.PercentStyle, false, false);
                     }
                     else
                     {
-                        screenBuffer.AddBuffer($"{ValueToString((100 * item.Value) / totalvalue)}%", _options.PercentStyle, false, false);
+                        screenBuffer.AddBuffer($"{ValueToString((100 * item.Value) / _totalvalue)}%", _options.PercentStyle, false, false);
                     }
                 }
             }
@@ -755,9 +749,9 @@ namespace PPlus.Controls
             screenBuffer.NewLine();
         }
 
-        private void WriteLegends(ScreenBuffer screenBuffer,int inipos, double totalvalue)
+        private void WriteLegends(ScreenBuffer screenBuffer,int inipos)
         {
-            var pagesize = _options.Pagesize;
+            var pagesize = _options.PageSize;
             if (!_options.EnabledInteractionUser)
             {
                 inipos = 0;
@@ -765,7 +759,7 @@ namespace PPlus.Controls
             }
             else
             {
-                if (_options.Pagesize >= _options.Labels.Count)
+                if (_options.PageSize >= _options.Labels.Count)
                 {
                     inipos = 0;
                 }
@@ -795,22 +789,22 @@ namespace PPlus.Controls
                     screenBuffer.AddBuffer(' ', Style.Plain, false, false);
                     if (_options.ShowLegendValue)
                     {
-                        if (totalvalue == 0)
+                        if (_totalvalue == 0)
                         {
                             screenBuffer.AddBuffer("(0%)", _options.PercentStyle, false, false);
                         }
                         else
                         {
-                            screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / totalvalue)}%)", _options.PercentStyle, false, false);
+                            screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / _totalvalue)}%)", _options.PercentStyle, false, false);
                         }
                     }
                     else
                     {
-                        if (totalvalue == 0)
+                        if (_totalvalue == 0)
                         {
                             screenBuffer.AddBuffer("0%", _options.PercentStyle, false, false);
                         }
-                        screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / totalvalue)}%)", _options.PercentStyle, false, false);
+                        screenBuffer.AddBuffer($"({ValueToString((100 * item.Value) / _totalvalue)}%)", _options.PercentStyle, false, false);
                     }
                 }
             }
@@ -846,7 +840,7 @@ namespace PPlus.Controls
             foreach (var item in _options.Labels)
             {
                 index++;
-                if (index > _options.Pagesize)
+                if (index > _options.PageSize)
                 {
                     index = 1;
                     page++;
@@ -859,7 +853,7 @@ namespace PPlus.Controls
         private void WritePageInfo(ScreenBuffer screenBuffer)
         {
             var defaultcharttip = string.Empty;
-            if (_options.Pagesize < _options.Labels.Count)
+            if (_options.PageSize < _options.Labels.Count)
             {
                 defaultcharttip =Messages.TooltipChart;
             }
@@ -867,7 +861,7 @@ namespace PPlus.Controls
             {
                 if (_options.OptEnabledAbortKey)
                 {
-                    if (_options.EnabledSwitchType && (_options.EnabledSwitchLegend && _options.CurrentChartType == ChartType.StandBar))
+                    if (_options.EnabledSwitchType && (_options.EnabledSwitchLegend && _options.CurrentChartType == LayoutChart.Standard))
                     {
                         if (string.IsNullOrEmpty(defaultcharttip))
                         {
@@ -917,7 +911,7 @@ namespace PPlus.Controls
 
                         }
                     }
-                    else if (_options.EnabledSwitchType && (!_options.EnabledSwitchLegend || _options.CurrentChartType == ChartType.StackBar))
+                    else if (_options.EnabledSwitchType && (!_options.EnabledSwitchLegend || _options.CurrentChartType == LayoutChart.Stacked))
                     {
                         if (string.IsNullOrEmpty(defaultcharttip))
                         {
@@ -962,7 +956,7 @@ namespace PPlus.Controls
                             }
                         }
                     }
-                    else if (!_options.EnabledSwitchType && (_options.EnabledSwitchLegend && _options.CurrentChartType == ChartType.StandBar))
+                    else if (!_options.EnabledSwitchType && (_options.EnabledSwitchLegend && _options.CurrentChartType == LayoutChart.Standard))
                     {
                         if (string.IsNullOrEmpty(defaultcharttip))
                         {
@@ -1051,7 +1045,7 @@ namespace PPlus.Controls
                 }
                 else
                 {
-                    if (_options.EnabledSwitchType && (_options.EnabledSwitchLegend && _options.CurrentChartType == ChartType.StandBar))
+                    if (_options.EnabledSwitchType && (_options.EnabledSwitchLegend && _options.CurrentChartType == LayoutChart.Standard))
                     {
                         if (string.IsNullOrEmpty(defaultcharttip))
                         {
@@ -1096,7 +1090,7 @@ namespace PPlus.Controls
                             }
                         }
                     }
-                    else if (_options.EnabledSwitchType && (!_options.EnabledSwitchLegend || _options.CurrentChartType == ChartType.StackBar))
+                    else if (_options.EnabledSwitchType && (!_options.EnabledSwitchLegend || _options.CurrentChartType == LayoutChart.Stacked))
                     {
                         if (string.IsNullOrEmpty(defaultcharttip))
                         {
@@ -1137,7 +1131,7 @@ namespace PPlus.Controls
                             }
                         }
                     }
-                    else if (!_options.EnabledSwitchType && (_options.EnabledSwitchLegend && _options.CurrentChartType == ChartType.StandBar))
+                    else if (!_options.EnabledSwitchType && (_options.EnabledSwitchLegend && _options.CurrentChartType == LayoutChart.Standard))
                     {
                         if (string.IsNullOrEmpty(defaultcharttip))
                         {
@@ -1196,12 +1190,12 @@ namespace PPlus.Controls
                     }
                 }
             }
-            if (_options.Pagesize >= _options.Labels.Count)
+            if (_options.PageSize >= _options.Labels.Count)
             {
                 return;
             }
             var selectedPage = _paginginfo.First(x => x.id == _options.Labels[_startpos].Id).page;
-            var pagecount = (_options.Labels.Count / _options.Pagesize) + 1;
+            var pagecount = (_options.Labels.Count / _options.PageSize) + 1;
             if (_options.OptShowTooltip)
             {
                 screenBuffer.NewLine();

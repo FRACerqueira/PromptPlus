@@ -174,14 +174,11 @@ namespace PPlus.Controls.Objects
 
         public EmacsBuffer LoadPrintable(string value)
         {
-            foreach (var item in value)
+            foreach (var item in value.Where(IsPrintable))
             {
-                if (IsPrintable(item))
+                if (Length + 1 <= _maxlength || _acceptInput.Invoke(item))
                 {
-                    if (Length + 1 <= _maxlength || _acceptInput.Invoke(item))
-                    {
-                        Insert(item);
-                    }
+                    Insert(item);
                 }
             }
             return this;

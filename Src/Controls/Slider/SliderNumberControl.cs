@@ -74,7 +74,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlSliderNumber MoveKeyPress(SliderNumberType value)
+        public IControlSliderNumber Layout(LayoutSliderNumber value)
         {
             _options.MoveKeyPress = value;
             return this;
@@ -227,7 +227,7 @@ namespace PPlus.Controls
             screenBuffer.SaveCursor();
             screenBuffer.WriteLineDescriptionSliderNumber(_options, _currentValue);
             screenBuffer.WriteLineTooltipsSliderNumber(_options);
-            if (_options.MoveKeyPress == SliderNumberType.LeftRight)
+            if (_options.MoveKeyPress == LayoutSliderNumber.LeftRight)
             {
                 screenBuffer.WriteLineWidgetsSliderNumber(_options, CurrentValueStep(_currentValue), _currentValue,ConsolePlus.IsUnicodeSupported);
             }
@@ -283,8 +283,8 @@ namespace PPlus.Controls
                     endinput = true;
                     break;
                 }
-                else if ((keyInfo.Value.IsPressDownArrowKey() && _options.MoveKeyPress == SliderNumberType.UpDown) ||
-                    (keyInfo.Value.IsPressLeftArrowKey() && _options.MoveKeyPress == SliderNumberType.LeftRight))
+                else if ((keyInfo.Value.IsPressDownArrowKey() && _options.MoveKeyPress == LayoutSliderNumber.UpDown) ||
+                    (keyInfo.Value.IsPressLeftArrowKey() && _options.MoveKeyPress == LayoutSliderNumber.LeftRight))
                 {
                     if (_currentValue.CompareTo(_options.Minvalue) == 0)
                     {
@@ -316,8 +316,8 @@ namespace PPlus.Controls
                         _currentValue = Math.Round(aux, _options.FracionalDig);
                     }
                 }
-                else if ((keyInfo.Value.IsPressUpArrowKey() && _options.MoveKeyPress == SliderNumberType.UpDown) ||
-                    (keyInfo.Value.IsPressRightArrowKey() && _options.MoveKeyPress == SliderNumberType.LeftRight))
+                else if ((keyInfo.Value.IsPressUpArrowKey() && _options.MoveKeyPress == LayoutSliderNumber.UpDown) ||
+                    (keyInfo.Value.IsPressRightArrowKey() && _options.MoveKeyPress == LayoutSliderNumber.LeftRight))
                 {
                     if (_currentValue.CompareTo(_options.Maxvalue) == 0)
                     {

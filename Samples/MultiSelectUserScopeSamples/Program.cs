@@ -47,8 +47,8 @@ namespace MultiSelectUserScopeSamples
             var sel = PromptPlus.MultiSelect<MyClass>("MultiSelect")
                 .AddItems(_datasample.Where(x => x.IsSeleted), selected: true)
                 .AddItems(_datasample.Where(x => !x.IsSeleted))
-                .AddItemsTo(AdderScope.Disable, _datasample.Where(x => x.IsDisabled))
-                .AddItemsTo(AdderScope.Remove, _datasample.Where(x => x.IsHide))
+                .AddItemsTo(AdderScope.Disable, _datasample.Where(x => x.IsDisabled).ToArray())
+                .AddItemsTo(AdderScope.Remove, _datasample.Where(x => x.IsHide).ToArray())
                 .TextSelector(x => x.MyText)
                 .EqualItems((item1, item2) => item1.Id == item2.Id)
                 .ChangeDescription(x => x.MyDesc)
@@ -58,8 +58,8 @@ namespace MultiSelectUserScopeSamples
 
             PromptPlus.DoubleDash("Control:MultiSelect - Using enum with AdderScope");
             PromptPlus.MultiSelect<MyEnum>("MultiSelect")
-                .AddItemTo(AdderScope.Disable, MyEnum.None)
-                .AddItemTo(AdderScope.Remove, MyEnum.Opc1)
+                .AddItemsTo(AdderScope.Disable, MyEnum.None)
+                .AddItemsTo(AdderScope.Remove, MyEnum.Opc1)
                 .Run();
             PromptPlus.WriteLines(2);
             PromptPlus.KeyPress("End Sample!, Press any key", cfg => cfg.ShowTooltip(false))

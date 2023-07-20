@@ -83,31 +83,25 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlSelect<T> AddItemTo(AdderScope scope, T value)
+        public IControlSelect<T> AddItemsTo(AdderScope scope,params T[] values)
         {
-            switch (scope)
+            foreach (var item in values)
             {
-                case AdderScope.Disable:
-                    {
-                        _options.DisableItems.Add(value);
-                    }
-                    break;
-                case AdderScope.Remove:
-                    {
-                        _options.RemoveItems.Add(value);
-                    }
-                    break;
-                default:
-                    throw new PromptPlusException($"AdderScope : {scope} Not Implemented");
-            }
-            return this;
-        }
-
-        public IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> value)
-        {
-            foreach (var item in value)
-            {
-                AddItemTo(scope, item);
+                switch (scope)
+                {
+                    case AdderScope.Disable:
+                        {
+                            _options.DisableItems.Add(item);
+                        }
+                        break;
+                    case AdderScope.Remove:
+                        {
+                            _options.RemoveItems.Add(item);
+                        }
+                        break;
+                    default:
+                        throw new PromptPlusException($"AdderScope : {scope} Not Implemented");
+                }
             }
             return this;
         }

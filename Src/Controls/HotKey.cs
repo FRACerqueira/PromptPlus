@@ -77,9 +77,9 @@ namespace PPlus.Controls
         public static HotKey SelectAllDefault => new(ConsoleKey.F2);
 
         /// <summary>
-        /// Get HotKey default for ChartBar Switch Type 'F2'
+        /// Get HotKey default for ChartBar Switch Layout 'F2'
         /// </summary>
-        public static HotKey ChartBarSwitchType => new(ConsoleKey.F2);
+        public static HotKey ChartBarSwitchLayout => new(ConsoleKey.F2);
 
 
         /// <summary>

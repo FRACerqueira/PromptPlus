@@ -57,7 +57,7 @@ IControlChartBar BarType(ChartBarType value)
 #### Parameters
 
 `value` [ChartBarType](./pplus.controls.chartbartype.md)<br>
-The [ChartBarType](./pplus.controls.chartbartype.md). Default value 'ChartType.Fill'
+The [ChartBarType](./pplus.controls.chartbartype.md). Default value 'ChartBarType.Fill'
 
 #### Returns
 
@@ -115,27 +115,24 @@ Name of CultureInfo to use
 
 [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
-### <a id="methods-enabledinteractionuser"/>**EnabledInteractionUser(Boolean, Boolean, Boolean, Nullable&lt;Int32&gt;)**
+### <a id="methods-enabledinteractionuser"/>**EnabledInteractionUser(Boolean, Boolean, Boolean)**
 
-Enabled Interaction to switch Type , Legend and order when browse the charts / Legends.
+Enabled Interaction to switch Layout , Legend and order when browse the charts / Legends.
 
 ```csharp
-IControlChartBar EnabledInteractionUser(bool switchType, bool switchLegend, bool switchorder, Nullable<Int32> pagesize)
+IControlChartBar EnabledInteractionUser(bool switchType, bool switchLegend, bool switchorder)
 ```
 
 #### Parameters
 
 `switchType` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Enabled switch Type
+Enabled switch Layout
 
 `switchLegend` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 Enabled switch legend
 
 `switchorder` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 Enabled switch Ordination
-
-`pagesize` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Set max.item view per page.Default value for this control is 10.
 
 #### Returns
 
@@ -230,7 +227,7 @@ The [HotKey](./pplus.controls.hotkey.md) to Switch ordination bar and label
 
 ### <a id="methods-hotkeyswitchtype"/>**HotKeySwitchType(HotKey)**
 
-Overwrite a HotKey to Switch Type Chart. Default value is 'F2'
+Overwrite a HotKey to Switch Layout Chart. Default value is 'F2'
 
 ```csharp
 IControlChartBar HotKeySwitchType(HotKey value)
@@ -239,7 +236,7 @@ IControlChartBar HotKeySwitchType(HotKey value)
 #### Parameters
 
 `value` [HotKey](./pplus.controls.hotkey.md)<br>
-The [HotKey](./pplus.controls.hotkey.md) to Switch Type Chart
+The [HotKey](./pplus.controls.hotkey.md) to Switch Layout Chart
 
 #### Returns
 
@@ -256,7 +253,7 @@ IControlChartBar Interaction<T1>(IEnumerable<T1> values, Action<IControlChartBar
 #### Type Parameters
 
 `T1`<br>
-Type external colletion
+Layout external colletion
 
 #### Parameters
 
@@ -265,6 +262,23 @@ Colletion for interaction
 
 `action` Action&lt;IControlChartBar, T1&gt;<br>
 Action to execute
+
+#### Returns
+
+[IControlChartBar](./pplus.controls.icontrolchartbar.md)
+
+### <a id="methods-layout"/>**Layout(LayoutChart)**
+
+Define layout to ChartBar.
+
+```csharp
+IControlChartBar Layout(LayoutChart value)
+```
+
+#### Parameters
+
+`value` [LayoutChart](./pplus.controls.layoutchart.md)<br>
+The [LayoutChart](./pplus.controls.layoutchart.md). Default value 'LayoutChart.Standard'
 
 #### Returns
 
@@ -299,6 +313,23 @@ IControlChartBar PadLeft(byte value)
 
 `value` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
 Number of spaces. Default value is 0.
+
+#### Returns
+
+[IControlChartBar](./pplus.controls.icontrolchartbar.md)
+
+### <a id="methods-pagesize"/>**PageSize(Int32)**
+
+Set max.item view per page. Default value for this control is 10.
+
+```csharp
+IControlChartBar PageSize(int value)
+```
+
+#### Parameters
+
+`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+Number of Max.items
 
 #### Returns
 
@@ -356,23 +387,6 @@ IControlChartBar TitleAlignment(Alignment value)
 
 `value` [Alignment](./pplus.controls.alignment.md)<br>
 The [Alignment](./pplus.controls.alignment.md) title
-
-#### Returns
-
-[IControlChartBar](./pplus.controls.icontrolchartbar.md)
-
-### <a id="methods-type"/>**Type(ChartType)**
-
-Define type to ChartBar.
-
-```csharp
-IControlChartBar Type(ChartType value)
-```
-
-#### Parameters
-
-`value` [ChartType](./pplus.controls.charttype.md)<br>
-The [ChartType](./pplus.controls.charttype.md). Default value 'ChartType.StandBar'
 
 #### Returns
 

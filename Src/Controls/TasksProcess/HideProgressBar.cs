@@ -21,7 +21,7 @@ namespace PPlus.Controls
         /// </summary>
         Delimit = 2,
         /// <summary>
-        /// Ranger
+        /// Range
         /// </summary>
         Ranger = 4
     }
