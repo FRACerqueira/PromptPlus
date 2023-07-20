@@ -22,12 +22,12 @@ Implements [IPromptControls&lt;DateTime&gt;](./pplus.controls.ipromptcontrols-1.
 
 ## Methods
 
-### <a id="methods-additems"/>**AddItems(CalendarScope, ItemCalendar[])**
+### <a id="methods-additems"/>**AddItems(CalendarScope, params ItemCalendar[])**
 
 Add scope(Note/Highlight/Disabled) items to calendar.
 
 ```csharp
-IControlCalendar AddItems(CalendarScope scope, ItemCalendar[] values)
+IControlCalendar AddItems(CalendarScope scope, params ItemCalendar[] values)
 ```
 
 #### Parameters
@@ -42,13 +42,13 @@ The [ItemCalendar](./pplus.controls.itemcalendar.md)
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+### <a id="methods-addvalidators"/>**AddValidators(params Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
 
 ```csharp
-IControlCalendar AddValidators(Func<Object, ValidationResult>[] validators)
+IControlCalendar AddValidators(params Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters

@@ -35,13 +35,13 @@ IControlMaskEdit AcceptEmptyValue()
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+### <a id="methods-addvalidators"/>**AddValidators(params Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
 
 ```csharp
-IControlMaskEdit AddValidators(Func<Object, ValidationResult>[] validators)
+IControlMaskEdit AddValidators(params Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters

@@ -40,13 +40,13 @@ function to accept
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+### <a id="methods-addvalidators"/>**AddValidators(params Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
 
 ```csharp
-IControlAutoComplete AddValidators(Func<Object, ValidationResult>[] validators)
+IControlAutoComplete AddValidators(params Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters

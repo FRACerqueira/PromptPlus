@@ -26,12 +26,12 @@ Implements IPromptControls&lt;IEnumerable&lt;T&gt;&gt;
 
 ## Methods
 
-### <a id="methods-adddefault"/>**AddDefault(T[])**
+### <a id="methods-adddefault"/>**AddDefault(params T[])**
 
 Add default value seleted to initial list.
 
 ```csharp
-IControlMultiSelect<T> AddDefault(T[] values)
+IControlMultiSelect<T> AddDefault(params T[] values)
 ```
 
 #### Parameters
@@ -141,12 +141,12 @@ true item selected, otherwise no
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, T[])**
+### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, params T[])**
 
 Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
 ```csharp
-IControlMultiSelect<T> AddItemsTo(AdderScope scope, T[] values)
+IControlMultiSelect<T> AddItemsTo(AdderScope scope, params T[] values)
 ```
 
 #### Parameters

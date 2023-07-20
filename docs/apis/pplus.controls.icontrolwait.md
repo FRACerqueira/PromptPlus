@@ -22,12 +22,12 @@ Implements [IPromptControls&lt;IEnumerable&lt;StateProcess&gt;&gt;](./pplus.cont
 
 ## Methods
 
-### <a id="methods-addstep"/>**AddStep(StepMode, Action&lt;CancellationToken&gt;[])**
+### <a id="methods-addstep"/>**AddStep(StepMode, params Action&lt;CancellationToken&gt;[])**
 
 Add list of tasks to execute.
 
 ```csharp
-IControlWait AddStep(StepMode stepMode, Action<CancellationToken>[] process)
+IControlWait AddStep(StepMode stepMode, params Action<CancellationToken>[] process)
 ```
 
 #### Parameters
@@ -42,12 +42,12 @@ list of tasks
 
 [IControlWait](./pplus.controls.icontrolwait.md)
 
-### <a id="methods-addstep"/>**AddStep(StepMode, String, String, Action&lt;CancellationToken&gt;[])**
+### <a id="methods-addstep"/>**AddStep(StepMode, String, String, params Action&lt;CancellationToken&gt;[])**
 
 Add list of tasks to execute with title and description
 
 ```csharp
-IControlWait AddStep(StepMode stepMode, string id, string description, Action<CancellationToken>[] process)
+IControlWait AddStep(StepMode stepMode, string id, string description, params Action<CancellationToken>[] process)
 ```
 
 #### Parameters
