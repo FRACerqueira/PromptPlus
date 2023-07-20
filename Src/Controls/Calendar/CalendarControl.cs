@@ -31,7 +31,7 @@ namespace PPlus.Controls
 
         #region IControlCalendar
 
-        public IControlCalendar Ranger(DateTime minvalue, DateTime maxvalue)
+        public IControlCalendar Range(DateTime minvalue, DateTime maxvalue)
         {
             if (minvalue > maxvalue)
             {
@@ -42,7 +42,7 @@ namespace PPlus.Controls
             return this; 
         }
 
-        public IControlCalendar AddItem(CalendarScope scope, params ItemCalendar[] values)
+        public IControlCalendar AddItems(CalendarScope scope, params ItemCalendar[] values)
         {
             switch (scope)
             {
@@ -135,10 +135,10 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlCalendar Default(DateTime value, bool isPolicyNext = true)
+        public IControlCalendar Default(DateTime value, PolicyInvalidDate policy = PolicyInvalidDate.NextDate)
         {
             _options.StartDate = value.Date;
-            _options.IsPolicyNext = isPolicyNext;
+            _options.PolicyInvalidDate = policy;
             return this;
         }
 
@@ -220,7 +220,7 @@ namespace PPlus.Controls
             _Weekdays = GetWeekdays();
             _options.FirstWeekDay = _options.CurrentCulture.DateTimeFormat.FirstDayOfWeek;
             var aux = _options.StartDate;
-            if (_options.IsPolicyNext)
+            if (_options.PolicyInvalidDate == PolicyInvalidDate.NextDate)
             {
                 aux = NextDate(aux);
                 if (!IsValidSelect(aux))
@@ -353,7 +353,7 @@ namespace PPlus.Controls
                 if (keyInfo.Value.IsPressHomeKey(true))
                 {
                     var aux = DateTime.Now.Date;
-                    if (_options.IsPolicyNext)
+                    if (_options.PolicyInvalidDate == PolicyInvalidDate.NextDate)
                     {
                         aux = NextDate(aux);
                         if (!IsValidSelect(aux))
@@ -378,7 +378,7 @@ namespace PPlus.Controls
                     break;
                 }
                 //next year
-                else if (keyInfo.Value.IsPressPageUpKey())
+                else if (keyInfo.Value.IsPressPageUpKey() && _currentdate.Date.Year < _options.Maxvalue.Year)
                 {
                     if (!DateTime.IsLeapYear(_currentdate.Year + 1) && _currentdate.Month == 2 && _currentdate.Day > 28)
                     {
@@ -405,7 +405,7 @@ namespace PPlus.Controls
                     break;
                 }
                 //previous year
-                else if (keyInfo.Value.IsPressPageDownKey())
+                else if (keyInfo.Value.IsPressPageDownKey() && _currentdate.Date.Year > _options.Minvalue.Year)
                 {
                     if (!DateTime.IsLeapYear(_currentdate.Year - 1) && _currentdate.Month == 2 && _currentdate.Day > 28)
                     {
@@ -434,6 +434,10 @@ namespace PPlus.Controls
                 //next month
                 else if (keyInfo.Value.IsPressTabKey())
                 {
+                    if (_currentdate.Month == 12 && _currentdate.Year == _options.Maxvalue.Year)
+                    {
+                        continue;
+                    }
                     if (_currentdate.Month == 12)
                     {
                         var aux = NextDate(new DateTime(_currentdate.Year + 1, 1, _currentdate.Day).Date);
@@ -510,6 +514,10 @@ namespace PPlus.Controls
                 //previous month
                 else if (keyInfo.Value.IsPressShiftTabKey())
                 {
+                    if (_currentdate.Month == 1 && _currentdate.Year == _options.Minvalue.Year)
+                    {
+                        continue;
+                    }
                     if (_currentdate.Month == 1)
                     {
                         var aux = PreviousDate(new DateTime(_currentdate.Year - 1, 12, _currentdate.Day).Date);
@@ -578,6 +586,10 @@ namespace PPlus.Controls
                 //next dayofweek
                 else if (keyInfo.Value.IsPressDownArrowKey(true))
                 {
+                    if (_currentdate.Month == 12 && _currentdate.Day+7 > 31 && _currentdate.Year == _options.Maxvalue.Year)
+                    {
+                        continue;
+                    }
                     var aux = NextDayOfWeek(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(7).Date, _currentdate.DayOfWeek);
                     if (!IsValidSelect(aux))
                     {
@@ -590,6 +602,10 @@ namespace PPlus.Controls
                 //previous dayofweek
                 else if (keyInfo.Value.IsPressUpArrowKey(true))
                 {
+                    if (_currentdate.Month == 1 && _currentdate.Day - 7 < 1 && _currentdate.Year == _options.Minvalue.Year)
+                    {
+                        continue;
+                    }
                     var aux = PreviousDayOfWeek(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(-7).Date, _currentdate.DayOfWeek);
                     if (!IsValidSelect(aux))
                     {
@@ -602,6 +618,10 @@ namespace PPlus.Controls
                 //previous day
                 else if (keyInfo.Value.IsPressLeftArrowKey(true))
                 {
+                    if (_currentdate.Month == 1 && _currentdate.Day - 1 == 0 && _currentdate.Year == _options.Minvalue.Year)
+                    {
+                        continue;
+                    }
                     if (_currentdate.Day == 1)
                     {
                         var aux = PreviousDate(new DateTime(_currentdate.Year, _currentdate.Month, _currentdate.Day).AddDays(-1).Date);
@@ -627,6 +647,10 @@ namespace PPlus.Controls
                 //next day
                 else if (keyInfo.Value.IsPressRightArrowKey(true))
                 {
+                    if (_currentdate.Month == 12 && _currentdate.Day == 31 && _currentdate.Year == _options.Maxvalue.Year)
+                    {
+                        continue;
+                    }
                     int maxday;
                     if (_currentdate.Month + 2 > 12)
                     {
@@ -679,7 +703,6 @@ namespace PPlus.Controls
                     }
                     break;
                 }
-                //completed input
                 else
                 {
                     if (ConsolePlus.Provider == "Memory")
@@ -1106,6 +1129,7 @@ namespace PPlus.Controls
                 }
             }
             screenBuffer.AddBuffer('|', _options.LineStyle);
+            var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
@@ -1114,8 +1138,23 @@ namespace PPlus.Controls
                 {
                     if (auxdate.Month == _currentdate.Month)
                     {
-                        WriteDay(screenBuffer, auxdate);
-                        auxdate = auxdate.AddDays(1);
+                        if (auxdate.Date == DateTime.MaxValue.Date)
+                        {
+                            if (!maxdate)
+                            {
+                                WriteDay(screenBuffer, auxdate);
+                                maxdate = true;
+                            }
+                            else
+                            {
+                                screenBuffer.AddBuffer("     ", _options.LineStyle);
+                            }
+                        }
+                        else
+                        {
+                            WriteDay(screenBuffer, auxdate);
+                            auxdate = auxdate.AddDays(1);
+                        }
                     }
                     else
                     {
@@ -1187,6 +1226,7 @@ namespace PPlus.Controls
                 }
             }
             screenBuffer.AddBuffer('|', _options.LineStyle);
+            var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
@@ -1195,8 +1235,23 @@ namespace PPlus.Controls
                 {
                     if (auxdate.Month == _currentdate.Month)
                     {
-                        WriteDay(screenBuffer, auxdate);
-                        auxdate = auxdate.AddDays(1);
+                        if (auxdate.Date == DateTime.MaxValue.Date)
+                        {
+                            if (!maxdate)
+                            {
+                                WriteDay(screenBuffer, auxdate);
+                                maxdate = true;
+                            }
+                            else
+                            {
+                                screenBuffer.AddBuffer("     ", _options.LineStyle);
+                            }
+                        }
+                        else
+                        {
+                            WriteDay(screenBuffer, auxdate);
+                            auxdate = auxdate.AddDays(1);
+                        }
                     }
                     else
                     {
@@ -1270,6 +1325,7 @@ namespace PPlus.Controls
                 }
             }
             screenBuffer.AddBuffer('│', _options.LineStyle);
+            var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
@@ -1278,8 +1334,23 @@ namespace PPlus.Controls
                 {
                     if (auxdate.Month == _currentdate.Month)
                     {
-                        WriteDay(screenBuffer, auxdate);
-                        auxdate = auxdate.AddDays(1);
+                        if (auxdate.Date == DateTime.MaxValue.Date)
+                        {
+                            if (!maxdate)
+                            {
+                                WriteDay(screenBuffer, auxdate);
+                                maxdate = true;
+                            }
+                            else
+                            {
+                                screenBuffer.AddBuffer("     ", _options.LineStyle);
+                            }
+                        }
+                        else
+                        {
+                            WriteDay(screenBuffer, auxdate);
+                            auxdate = auxdate.AddDays(1);
+                        }
                     }
                     else
                     {
@@ -1287,6 +1358,10 @@ namespace PPlus.Controls
                     }
                 }
                 screenBuffer.AddBuffer('│', _options.LineStyle);
+                if (auxdate.Date == DateTime.MaxValue.Date)
+                {
+                    break;
+                }
             }
             screenBuffer.NewLine();
             screenBuffer.AddBuffer("└───────────────────────────────────┘", _options.LineStyle);
@@ -1353,6 +1428,7 @@ namespace PPlus.Controls
                 }
             }
             screenBuffer.AddBuffer('║', _options.LineStyle);
+            var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
@@ -1361,8 +1437,23 @@ namespace PPlus.Controls
                 {
                     if (auxdate.Month == _currentdate.Month)
                     {
-                        WriteDay(screenBuffer, auxdate);
-                        auxdate = auxdate.AddDays(1);
+                        if (auxdate.Date == DateTime.MaxValue.Date)
+                        {
+                            if (!maxdate)
+                            {
+                                WriteDay(screenBuffer, auxdate);
+                                maxdate = true;
+                            }
+                            else
+                            {
+                                screenBuffer.AddBuffer("     ", _options.LineStyle);
+                            }
+                        }
+                        else
+                        {
+                            WriteDay(screenBuffer, auxdate);
+                            auxdate = auxdate.AddDays(1);
+                        }
                     }
                     else
                     {
@@ -1434,6 +1525,7 @@ namespace PPlus.Controls
                 }
             }
             screenBuffer.AddBuffer('▌', _options.LineStyle);
+            var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
@@ -1442,8 +1534,23 @@ namespace PPlus.Controls
                 {
                     if (auxdate.Month == _currentdate.Month)
                     {
-                        WriteDay(screenBuffer, auxdate);
-                        auxdate = auxdate.AddDays(1);
+                        if (auxdate.Date == DateTime.MaxValue.Date)
+                        {
+                            if (!maxdate)
+                            {
+                                WriteDay(screenBuffer, auxdate);
+                                maxdate = true;
+                            }
+                            else
+                            {
+                                screenBuffer.AddBuffer("     ", _options.LineStyle);
+                            }
+                        }
+                        else
+                        {
+                            WriteDay(screenBuffer, auxdate);
+                            auxdate = auxdate.AddDays(1);
+                        }
                     }
                     else
                     {

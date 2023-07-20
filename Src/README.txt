@@ -21,6 +21,8 @@ of the current terminal's capabilities  and automatic color conversion.
 Visit the official page for complete documentation of PromptPlus:
 https://fracerqueira.github.io/PromptPlus
 
+For migrate V3.3 to V4.0 see this link: https://fracerqueira.github.io/PromptPlus/migrateversion.html.
+
 PromptPlus was developed in c# with target frameworks:
 
 - netstandard2.1

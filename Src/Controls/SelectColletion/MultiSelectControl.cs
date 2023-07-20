@@ -100,18 +100,15 @@ namespace PPlus.Controls
 
             if (defvalue.HasValue)
             {
-                foreach (var item in defvalue.Value)
+                foreach (var item in defvalue.Value.Where(x => !IsDisabled(x)))
                 {
-                    if (!IsDisabled(item))
+                    IEnumerable<ItemMultSelect<T>> foundmark;
+                    foundmark = _options.Items.Where(x => !x.IsGroupHeader && _options.EqualItems(x.Value, item));
+                    foreach (var itemmark in foundmark)
                     {
-                        IEnumerable<ItemMultSelect<T>> foundmark;
-                        foundmark = _options.Items.Where(x => !x.IsGroupHeader && _options.EqualItems(x.Value, item));
-                        foreach (var itemmark in foundmark)
+                        if (_selectedItems.Count() <= _options.Maximum)
                         {
-                            if (_selectedItems.Count() <= _options.Maximum)
-                            {
-                                itemmark.IsCheck = true;
-                            }
+                            itemmark.IsCheck = true;
                         }
                     }
                 }
@@ -362,31 +359,25 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelect<T> AddItemTo(AdderScope scope, T value)
+        public IControlMultiSelect<T> AddItemsTo(AdderScope scope,params T[] values)
         {
-            switch (scope)
+            foreach (var item in values)
             {
-                case AdderScope.Disable:
-                    {
-                        _options.DisableItems.Add(value);
-                    }
-                    break;
-                case AdderScope.Remove:
-                    {
-                        _options.RemoveItems.Add(value);
-                    }
-                    break;
-                default:
-                    throw new PromptPlusException($"AdderScope : {scope} Not Implemented");
-            }
-            return this;
-        }
-
-        public IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> value)
-        {
-            foreach (var item in value)
-            {
-                AddItemTo(scope, item);
+                switch (scope)
+                {
+                    case AdderScope.Disable:
+                        {
+                            _options.DisableItems.Add(item);
+                        }
+                        break;
+                    case AdderScope.Remove:
+                        {
+                            _options.RemoveItems.Add(item);
+                        }
+                        break;
+                    default:
+                        throw new PromptPlusException($"AdderScope : {scope} Not Implemented");
+                }
             }
             return this;
         }

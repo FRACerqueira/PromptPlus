@@ -45,8 +45,8 @@ namespace SelectUserScopeSamples
             PromptPlus.DoubleDash("Control:Select - Using class with AdderScope and OrderBy");
             var sel = PromptPlus.Select<MyClass>("Select")
                 .AddItems(_datasample)
-                .AddItemsTo(AdderScope.Disable, _datasample.Where(x => x.IsDisabled))
-                .AddItemsTo(AdderScope.Remove, _datasample.Where(x => x.IsHide))
+                .AddItemsTo(AdderScope.Disable, _datasample.Where(x => x.IsDisabled).ToArray())
+                .AddItemsTo(AdderScope.Remove, _datasample.Where(x => x.IsHide).ToArray())
                 .TextSelector(x => x.MyText)
                 .EqualItems((item1, item2) => item1.Id == item2.Id)
                 .ChangeDescription(x => x.MyDesc)
@@ -56,8 +56,8 @@ namespace SelectUserScopeSamples
 
             PromptPlus.DoubleDash("Control:Select - Using enum with AdderScope");
             PromptPlus.Select<MyEnum>("Select")
-                .AddItemTo(AdderScope.Disable, MyEnum.None)
-                .AddItemTo(AdderScope.Remove, MyEnum.Opc1)
+                .AddItemsTo(AdderScope.Disable, MyEnum.None)
+                .AddItemsTo(AdderScope.Remove, MyEnum.Opc1)
                 .Run();
             PromptPlus.WriteLines(2);
             PromptPlus.KeyPress("End Sample!, Press any key", cfg => cfg.ShowTooltip(false))

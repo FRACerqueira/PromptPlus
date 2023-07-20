@@ -39,20 +39,20 @@ namespace PPlus.Controls
         IControlProgressBar<T> Culture(CultureInfo value);
 
         /// <summary>
-        /// Set <see cref="char"/> to show ProgressBar.Default value '#'
-        /// <br>Valid on ProgressBarType.Char, otherwise is ignored </br>
-        /// </summary>
-        /// <param name="value">Char to show</param>
-        /// <returns><see cref="IControlProgressBar{T}"/></returns>
-        IControlProgressBar<T> CharBar(char value);
-
-        /// <summary>
         /// <see cref="CultureInfo"/> to show value format.
         /// <br>Default value is global Promptplus Cultureinfo</br>  
         /// </summary>
         /// <param name="value">Name of CultureInfo to use</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
         IControlProgressBar<T> Culture(string value);
+
+        /// <summary>
+        /// Set <see cref="char"/> to show ProgressBar.Default value '#'
+        /// <br>Valid on ProgressBarType.Char, otherwise is ignored </br>
+        /// </summary>
+        /// <param name="value">Char to show</param>
+        /// <returns><see cref="IControlProgressBar{T}"/></returns>
+        IControlProgressBar<T> CharBar(char value);
 
         /// <summary>
         /// Finish answer to show when ProgressBar is completed.
@@ -65,7 +65,7 @@ namespace PPlus.Controls
         /// Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
-        /// <param name="spinnersType">Spinners Type</param>
+        /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
         /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>

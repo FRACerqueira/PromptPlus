@@ -25,25 +25,25 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 
 | Name | Value | Description |
 | --- | --: | --- |
-| Ascii | 0 | Ascii Type |
-| Dots | 1 | Dots Type |
-| DotsScrolling | 2 | Dots Scrolling Type |
-| DotArrow | 3 | Dots Arrow Type |
-| DotArrowHeavy | 4 | Dots Arrow Heavy Type |
-| Star | 5 | Star Type |
-| Flip | 6 | Flip Type |
-| Balloon | 7 | Balloon Type |
-| Noise | 8 | Noise Type |
-| Bounce | 9 | Bounce Type |
-| BouncingBar | 10 | Bouncing Bar Type |
-| BoxHeavy | 11 | Box Heavy Type |
-| Arrow | 12 | Arrow Type |
-| ArrowHeavy | 13 | Arrow Heavy Type |
-| DoubleArrow | 14 | Double Arrow Type |
-| RightArrow | 15 | Right Arrow Type |
-| LeftArrow | 16 | Left Arrow Type |
-| Pipe | 17 | Pipe Type |
-| Toggle | 18 | Toggle Type |
+| Ascii | 0 | Ascii type |
+| Dots | 1 | Dots type |
+| DotsScrolling | 2 | Dots Scrolling type |
+| DotArrow | 3 | Dots Arrow type |
+| DotArrowHeavy | 4 | Dots Arrow Heavy type |
+| Star | 5 | Star type |
+| Flip | 6 | Flip type |
+| Balloon | 7 | Balloon type |
+| Noise | 8 | Noise type |
+| Bounce | 9 | Bounce type |
+| BouncingBar | 10 | Bouncing Bar type |
+| BoxHeavy | 11 | Box Heavy type |
+| Arrow | 12 | Arrow type |
+| ArrowHeavy | 13 | Arrow Heavy type |
+| DoubleArrow | 14 | Double Arrow type |
+| RightArrow | 15 | Right Arrow type |
+| LeftArrow | 16 | Left Arrow type |
+| Pipe | 17 | Pipe type |
+| Toggle | 18 | Toggle type |
 | Custom | 19 | User custom spinner |
 
 

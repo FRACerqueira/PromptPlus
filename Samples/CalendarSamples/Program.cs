@@ -49,7 +49,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Disabled dates");
 PromptPlus
     .Calendar("Date", "Select date")
     .Layout(LayoutCalendar.AsciiSingleGrid)
-    .AddItem(CalendarScope.Disabled,
+    .AddItems(CalendarScope.Disabled,
         new ItemCalendar(DateTime.Now.AddDays(1)),
         new ItemCalendar(DateTime.Now.AddDays(2)))
     .Run();
@@ -59,7 +59,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Notes");
 PromptPlus
     .Calendar("Date", "Select date")
     .Layout(LayoutCalendar.AsciiDoubleGrid)
-    .AddItem(CalendarScope.Note,
+    .AddItems(CalendarScope.Note,
         new ItemCalendar(DateTime.Now.AddDays(1), "Note1"),
         new ItemCalendar(DateTime.Now.AddDays(1), "Note2"),
         new ItemCalendar(DateTime.Now.AddDays(1), "Note3"),
@@ -75,7 +75,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Highlight");
 
 PromptPlus
     .Calendar("Date", "Select date")
-    .AddItem(CalendarScope.Highlight,
+    .AddItems(CalendarScope.Highlight,
         new ItemCalendar(DateTime.Now.AddDays(1), "Note1"),
         new ItemCalendar(DateTime.Now.AddDays(1), "Note2"),
         new ItemCalendar(DateTime.Now.AddDays(1), "Note3"),
@@ -92,7 +92,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Range (1 month ago to c
 PromptPlus
     .Calendar("Date", "Select date")
     .Default(DateTime.Now.AddDays(-7))
-    .Ranger(DateTime.Now.AddMonths(-1),DateTime.Now)
+    .Range(DateTime.Now.AddMonths(-1),DateTime.Now)
     .Run();
 
 
@@ -115,7 +115,7 @@ PromptPlus
     .Styles(StyleCalendar.Selected, Style.Plain.Foreground(Color.Maroon))
     .Styles(StyleCalendar.WeekDay, Style.Plain.Foreground(Color.Aqua))
     .Styles(StyleCalendar.Year, Style.Plain.Foreground(Color.Violet))
-    .AddItem(CalendarScope.Highlight,
+    .AddItems(CalendarScope.Highlight,
         new ItemCalendar(DateTime.Now.AddDays(1), "Note1"),
        new ItemCalendar(DateTime.Now.AddDays(2)))
     .Run();

@@ -39,9 +39,9 @@ namespace PPlus
         /// </summary>
         public static void Reset()
         {
-            var (SupportsAnsi, _) = AnsiDetector.Detect();
+            var (localSupportsAnsi, _) = AnsiDetector.Detect();
             var termdetect = TerminalDetector.Detect();
-            var colordetect = ColorSystemDetector.Detect(SupportsAnsi);
+            var colordetect = ColorSystemDetector.Detect(localSupportsAnsi);
             var unicodesupported = false;
             if (IsRunningInUnitTest)
             {
@@ -71,7 +71,7 @@ namespace PPlus
                 {
                     unicodesupported = true;
                 }
-                var drvprofile = new ProfileDriveConsole(DefaultForegroundColor, DefaultBackgroundColor, termdetect, unicodesupported, SupportsAnsi, colordetect, Overflow.None, 0, 0);
+                var drvprofile = new ProfileDriveConsole(DefaultForegroundColor, DefaultBackgroundColor, termdetect, unicodesupported, localSupportsAnsi, colordetect, Overflow.None, 0, 0);
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     _consoledrive = new ConsoleDriveWindows(drvprofile);
@@ -228,7 +228,7 @@ namespace PPlus
         public static bool IsUnicodeSupported => Console.IsUnicodeSupported;
 
         /// <summary>
-        /// Get SupportsAnsi mode.
+        /// Get localSupportsAnsi mode.
         /// </summary>
         public static bool SupportsAnsi => Console.SupportsAnsi;
 

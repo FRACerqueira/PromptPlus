@@ -848,8 +848,8 @@ namespace PPlus.Tests.Controls.MultiSelect
             var ctrl = (MultiSelectControl<MyClass>)PromptPlus.MultiSelect<MyClass>("MultiSelect")
                 .AddItems(datasample.Where(x => x.IsSeleted), selected: true)
                 .AddItems(datasample.Where(x => !x.IsSeleted))
-                .AddItemsTo(AdderScope.Disable, datasample.Where(x => x.IsDisabled))
-                .AddItemsTo(AdderScope.Remove, datasample.Where(x => x.IsHide))
+                .AddItemsTo(AdderScope.Disable, datasample.Where(x => x.IsDisabled).ToArray())
+                .AddItemsTo(AdderScope.Remove, datasample.Where(x => x.IsHide).ToArray())
                 .TextSelector(x => x.MyText!)
                 .EqualItems((item1, item2) => item1.Id == item2.Id)
                 .ChangeDescription(x => x.MyDesc!)
@@ -875,8 +875,8 @@ namespace PPlus.Tests.Controls.MultiSelect
             var ctrl = (MultiSelectControl<MyClass>)PromptPlus.MultiSelect<MyClass>("MultiSelect")
                 .AddItems(datasample.Where(x => x.IsSeleted), selected: true)
                 .AddItems(datasample.Where(x => !x.IsSeleted))
-                .AddItemsTo(AdderScope.Disable, datasample.Where(x => x.IsDisabled))
-                .AddItemsTo(AdderScope.Remove, datasample.Where(x => x.IsHide))
+                .AddItemsTo(AdderScope.Disable, datasample.Where(x => x.IsDisabled).ToArray())
+                .AddItemsTo(AdderScope.Remove, datasample.Where(x => x.IsHide).ToArray())
                 .TextSelector(x => x.MyText!)
                 .EqualItems((item1, item2) => item1.Id == item2.Id)
                 .ChangeDescription(x => x.MyDesc!)
@@ -917,7 +917,7 @@ namespace PPlus.Tests.Controls.MultiSelect
         public void Should_SelectScopeEnumRemove1()
         {
             var ctrl = (MultiSelectControl<MyEnum>)PromptPlus.MultiSelect<MyEnum>("Select")
-                .AddItemTo(AdderScope.Remove, MyEnum.None);
+                .AddItemsTo(AdderScope.Remove, MyEnum.None);
             var init = ctrl.InitControl(CancellationToken.None);
             Assert.Equal("", init);
             var sb = new ScreenBuffer();
@@ -949,7 +949,7 @@ namespace PPlus.Tests.Controls.MultiSelect
         public void Should_SelectScopeEnumDisable()
         {
             var ctrl = (MultiSelectControl<MyEnum>)PromptPlus.MultiSelect<MyEnum>("Select")
-                .AddItemTo(AdderScope.Disable, MyEnum.None);
+                .AddItemsTo(AdderScope.Disable, MyEnum.None);
             var init = ctrl.InitControl(CancellationToken.None);
             Assert.Equal("", init);
             var sb = new ScreenBuffer();

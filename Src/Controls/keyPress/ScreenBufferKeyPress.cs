@@ -45,7 +45,7 @@ namespace PPlus.Controls
                         }
                         else
                         {
-                            aux.Append(options.KeyValids[i].Key.ToString());
+                            aux.Append(options.KeyValids[i].Key);
                         }
                         if (i < options.KeyValids.Count - 1)
                         {
@@ -122,7 +122,7 @@ namespace PPlus.Controls
                             modifiers += "Alt+";
                         }
                         aux.Append(modifiers);
-                        aux.Append(options.KeyValids[i].Key.ToString());
+                        aux.Append(options.KeyValids[i].Key);
                     }
                     if (i < options.KeyValids.Count - 1)
                     {

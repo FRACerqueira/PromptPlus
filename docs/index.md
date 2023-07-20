@@ -12,7 +12,7 @@
 ## Table of Contents
 
 - [Features](#features)
-- [Migrate Version](migrateversion.md)
+- [Migrate Version V3.3 to V4.0](migrateversion.md)
 - [Installing](#installing)
 - [Examples](#examples)
 - [Controls Snapshot](snapshot.md)
@@ -46,6 +46,7 @@
 - Banner Ascii
 - Input text / Secret / AutoComplete with spinner
 - MaskEdit Generic / Only Date / Only Time / DateTime / Number /  Currency
+- Calendar with multiple layouts
 - Select and Multi-Select(with group select!) 
 - AddTo(Add/Remove) items for text and masked text
 - Wait Keypress with animate spinner
@@ -54,6 +55,7 @@
 - Switch (style on/off)
 - Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
 - Wait Time with countdown and spinner
+- ChartBar with wnabled Interaction to switch Type , Legend and order when browse the charts / Legends.
 - Progress bar with 8 types , gradient colors and spinner
 - Browser File and Folder with multi-select, colors and spinner
 - Treeview hierarchical structures with multi-select and colors

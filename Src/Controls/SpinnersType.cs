@@ -12,79 +12,79 @@ namespace PPlus.Controls
     public enum SpinnersType
     {
         /// <summary>
-        /// Ascii Type
+        /// Ascii type
         /// </summary>
         Ascii,
         /// <summary>
-        /// Dots Type
+        /// Dots type
         /// </summary>
         Dots,
         /// <summary>
-        /// Dots Scrolling Type
+        /// Dots Scrolling type
         /// </summary>
         DotsScrolling,
         /// <summary>
-        /// Dots Arrow Type
+        /// Dots Arrow type
         /// </summary>
         DotArrow,
         /// <summary>
-        /// Dots Arrow Heavy Type
+        /// Dots Arrow Heavy type
         /// </summary>
         DotArrowHeavy,
         /// <summary>
-        /// Star Type
+        /// Star type
         /// </summary>
         Star,
         /// <summary>
-        /// Flip Type
+        /// Flip type
         /// </summary>
         Flip,
         /// <summary>
-        /// Balloon Type
+        /// Balloon type
         /// </summary>
         Balloon,
         /// <summary>
-        /// Noise Type
+        /// Noise type
         /// </summary>
         Noise,
         /// <summary>
-        /// Bounce Type
+        /// Bounce type
         /// </summary>
         Bounce,
         /// <summary>
-        /// Bouncing Bar Type
+        /// Bouncing Bar type
         /// </summary>
         BouncingBar,
         /// <summary>
-        /// Box Heavy Type
+        /// Box Heavy type
         /// </summary>
         BoxHeavy,
         /// <summary>
-        /// Arrow Type
+        /// Arrow type
         /// </summary>
         Arrow,
         /// <summary>
-        /// Arrow Heavy Type
+        /// Arrow Heavy type
         /// </summary>
         ArrowHeavy,
         /// <summary>
-        /// Double Arrow Type
+        /// Double Arrow type
         /// </summary>
         DoubleArrow,
         /// <summary>
-        /// Right Arrow Type
+        /// Right Arrow type
         /// </summary>
         RightArrow,
         /// <summary>
-        /// Left Arrow Type
+        /// Left Arrow type
         /// </summary>
         LeftArrow,
         /// <summary>
-        /// Pipe Type
+        /// Pipe type
         /// </summary>
         Pipe,
         /// <summary>
-        /// Toggle Type
+        /// Toggle type
         /// </summary>
         Toggle,
         /// <summary>

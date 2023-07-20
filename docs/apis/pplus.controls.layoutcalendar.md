@@ -25,11 +25,11 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 
 | Name | Value | Description |
 | --- | --: | --- |
-| HeavyGrid | 0 | Heavy line grid |
-| SingleGrid | 1 | single line grid |
-| DoubleGrid | 2 | Double line grid |
-| AsciiSingleGrid | 3 | Acsii single grid |
-| AsciiDoubleGrid | 4 | Acsii double grid |
+| SingleGrid | 0 | single line grid |
+| DoubleGrid | 1 | Double line grid |
+| AsciiSingleGrid | 2 | Acsii single grid |
+| AsciiDoubleGrid | 3 | Acsii double grid |
+| HeavyGrid | 4 | Heavy line grid |
 
 
 - - -

@@ -66,12 +66,12 @@ true item disabled, otherwise no
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
+### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, T[])**
 
 Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
 ```csharp
-IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
+IControlSelect<T> AddItemsTo(AdderScope scope, T[] values)
 ```
 
 #### Parameters
@@ -79,28 +79,8 @@ IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
 `scope` [AdderScope](./pplus.controls.adderscope.md)<br>
 scope Disable/Remove
 
-`values` IEnumerable&lt;T&gt;<br>
+`values` T[]<br>
 items colletion
-
-#### Returns
-
-[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
-
-### <a id="methods-additemto"/>**AddItemTo(AdderScope, T)**
-
-Add item to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
-
-```csharp
-IControlSelect<T> AddItemTo(AdderScope scope, T value)
-```
-
-#### Parameters
-
-`scope` [AdderScope](./pplus.controls.adderscope.md)<br>
-scope Disable/Remove
-
-`value` T<br>
-item
 
 #### Returns
 

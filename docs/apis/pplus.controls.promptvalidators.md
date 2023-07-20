@@ -106,7 +106,7 @@ the Validation function
 
 ### <a id="methods-istypeboolean"/>**IsTypeBoolean(String)**
 
-Validation function for Is Type Boolean
+Validation function for Is type Boolean
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeBoolean(string errorMessage)
@@ -123,7 +123,7 @@ the Validation function
 
 ### <a id="methods-istypebyte"/>**IsTypeByte(String)**
 
-Validation function for Is Type Byte
+Validation function for Is type Byte
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeByte(string errorMessage)
@@ -140,7 +140,7 @@ the Validation function
 
 ### <a id="methods-istypechar"/>**IsTypeChar(String)**
 
-Validation function for Is Type Char
+Validation function for Is type Char
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeChar(string errorMessage)
@@ -157,7 +157,7 @@ the Validation function
 
 ### <a id="methods-istypedatetime"/>**IsTypeDateTime(String)**
 
-Validation function for Is Type DateTime
+Validation function for Is type DateTime
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeDateTime(string errorMessage)
@@ -174,7 +174,7 @@ the Validation function
 
 ### <a id="methods-istypedecimal"/>**IsTypeDecimal(String)**
 
-Validation function for Is Type Decimal
+Validation function for Is type Decimal
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeDecimal(string errorMessage)
@@ -191,7 +191,7 @@ the Validation function
 
 ### <a id="methods-istypedouble"/>**IsTypeDouble(String)**
 
-Validation function for Is Type Double
+Validation function for Is type Double
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeDouble(string errorMessage)
@@ -208,7 +208,7 @@ the Validation function
 
 ### <a id="methods-istypefloat"/>**IsTypeFloat(String)**
 
-Validation function for Is Type Float
+Validation function for Is type Float
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeFloat(string errorMessage)
@@ -225,7 +225,7 @@ the Validation function
 
 ### <a id="methods-istypeint"/>**IsTypeInt(String)**
 
-Validation function for Is Type Int
+Validation function for Is type Int
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeInt(string errorMessage)
@@ -242,7 +242,7 @@ the Validation function
 
 ### <a id="methods-istypeint16"/>**IsTypeInt16(String)**
 
-Validation function for Is Type Int16
+Validation function for Is type Int16
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeInt16(string errorMessage)
@@ -259,7 +259,7 @@ the Validation function
 
 ### <a id="methods-istypeint32"/>**IsTypeInt32(String)**
 
-Validation function for Is Type Int32
+Validation function for Is type Int32
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeInt32(string errorMessage)
@@ -276,7 +276,7 @@ the Validation function
 
 ### <a id="methods-istypeint64"/>**IsTypeInt64(String)**
 
-Validation function for Is Type Int64
+Validation function for Is type Int64
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeInt64(string errorMessage)
@@ -293,7 +293,7 @@ the Validation function
 
 ### <a id="methods-istypelong"/>**IsTypeLong(String)**
 
-Validation function for Is Type Long
+Validation function for Is type Long
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeLong(string errorMessage)
@@ -310,7 +310,7 @@ the Validation function
 
 ### <a id="methods-istypesbyte"/>**IsTypeSByte(String)**
 
-Validation function for Is Type SByte
+Validation function for Is type SByte
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeSByte(string errorMessage)
@@ -327,7 +327,7 @@ the Validation function
 
 ### <a id="methods-istypeshort"/>**IsTypeShort(String)**
 
-Validation function for Is Type Short
+Validation function for Is type Short
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeShort(string errorMessage)
@@ -344,7 +344,7 @@ the Validation function
 
 ### <a id="methods-istypesingle"/>**IsTypeSingle(String)**
 
-Validation function for Is Type Single
+Validation function for Is type Single
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeSingle(string errorMessage)
@@ -361,7 +361,7 @@ the Validation function
 
 ### <a id="methods-istypeuint"/>**IsTypeUInt(String)**
 
-Validation function for Is Type UInt
+Validation function for Is type UInt
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeUInt(string errorMessage)
@@ -378,7 +378,7 @@ the Validation function
 
 ### <a id="methods-istypeuint16"/>**IsTypeUInt16(String)**
 
-Validation function for Is Type UInt16
+Validation function for Is type UInt16
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeUInt16(string errorMessage)
@@ -395,7 +395,7 @@ the Validation function
 
 ### <a id="methods-istypeuint32"/>**IsTypeUInt32(String)**
 
-Validation function for Is Type UInt32
+Validation function for Is type UInt32
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeUInt32(string errorMessage)
@@ -412,7 +412,7 @@ the Validation function
 
 ### <a id="methods-istypeuint64"/>**IsTypeUInt64(String)**
 
-Validation function for Is Type UInt64
+Validation function for Is type UInt64
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeUInt64(string errorMessage)
@@ -429,7 +429,7 @@ the Validation function
 
 ### <a id="methods-istypeulong"/>**IsTypeULong(String)**
 
-Validation function for Is Type ULong
+Validation function for Is type ULong
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeULong(string errorMessage)
@@ -446,7 +446,7 @@ the Validation function
 
 ### <a id="methods-istypeushort"/>**IsTypeUshort(String)**
 
-Validation function for Is Type Ushort
+Validation function for Is type Ushort
 
 ```csharp
 public static Func<Object, ValidationResult> IsTypeUshort(string errorMessage)

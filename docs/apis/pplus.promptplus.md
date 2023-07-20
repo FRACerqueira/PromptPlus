@@ -360,7 +360,7 @@ public static StyleSchema StyleSchema { get; }
 
 ### <a id="properties-supportsansi"/>**SupportsAnsi**
 
-Get SupportsAnsi mode.
+Get localSupportsAnsi mode.
 
 ```csharp
 public static bool SupportsAnsi { get; }
@@ -1948,7 +1948,7 @@ The prompt text to write
 The delay process
 
 `spinnersType` [SpinnersType](./pplus.controls.spinnerstype.md)<br>
-spinners Type [SpinnersType](./pplus.controls.spinnerstype.md)
+The [SpinnersType](./pplus.controls.spinnerstype.md)
 
 `showCountdown` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 True show Countdown, otherwise 'no'

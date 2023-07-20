@@ -35,6 +35,18 @@ public static HotKey CalendarSwitchNotes { get; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
+### <a id="properties-chartbarswitchlayout"/>**ChartBarSwitchLayout**
+
+Get HotKey default for ChartBar Switch Layout 'F2'
+
+```csharp
+public static HotKey ChartBarSwitchLayout { get; }
+```
+
+#### Property Value
+
+[HotKey](./pplus.controls.hotkey.md)<br>
+
 ### <a id="properties-chartbarswitchlegend"/>**ChartBarSwitchLegend**
 
 Get HotKey default for ChartBar Switch Legend 'F3'
@@ -53,18 +65,6 @@ Get HotKey default for ChartBar Switch Order 'F4'
 
 ```csharp
 public static HotKey ChartBarSwitchOrder { get; }
-```
-
-#### Property Value
-
-[HotKey](./pplus.controls.hotkey.md)<br>
-
-### <a id="properties-chartbarswitchtype"/>**ChartBarSwitchType**
-
-Get HotKey default for ChartBar Switch Type 'F2'
-
-```csharp
-public static HotKey ChartBarSwitchType { get; }
 ```
 
 #### Property Value

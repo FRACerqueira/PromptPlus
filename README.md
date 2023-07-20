@@ -14,7 +14,7 @@
 ## Table of Contents
 
 - [Features](#features)
-- [Migrate Version](#migrate-version)
+- [Migrate Version V3.3 to V4.0](#migrate-version)
 - [Console Engine](#console-engine)
 - [Installing](#installing)
 - [Examples](#examples)
@@ -51,6 +51,7 @@
 - Banner Ascii
 - Input text / Secret / AutoComplete with spinner
 - MaskEdit Generic / Only Date / Only Time / DateTime / Number /  Currency
+- Calendar with multiple layouts
 - Select and Multi-Select(with group select!) 
 - AddTo(Add/Remove) items for text and masked text
 - Wait Keypress with animate spinner
@@ -59,6 +60,7 @@
 - Switch (style on/off)
 - Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
 - Wait Time with countdown and spinner
+- ChartBar with wnabled Interaction to switch Type , Legend and order when browse the charts / Legends.
 - Progress bar with 8 types , gradient colors and spinner
 - Browser File and Folder with multi-select, colors and spinner
 - Treeview hierarchical structures with multi-select and colors
@@ -83,7 +85,7 @@ Until version 3 the console engine was based on a model from another project tha
 **PromptPlus v4** has been **completely rebuilt** for a better experience, with significant improvements with new controls and more developer power. The console driver now supports better rendering, with the ability to detect terminal capabilities and allow for 24-bit color, text overflow strategies based on terminal size, and left and right margins for a nicer layout.
 **The Controls have been revised to be more responsive, allow color styles in many of their elements**, and adapt to the terminal size even with resizing.
 
-For migrate V3 to V4 [**see this link**](https://fracerqueira.github.io/PromptPlus/migrateversion.html).
+For migrate V3.3 to V4.0 [**see this link**](https://fracerqueira.github.io/PromptPlus/migrateversion.html).
 
 ## Console Engine
 [**Top**](#table-of-contents)
@@ -429,7 +431,7 @@ PromptPlus.WriteLine($"Your input: {name.Value}!");
 
 - FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
 - The colors and some of its dependencies were inspired by the work of [spectreconsole](https://spectreconsole.net/).
-- The API Reference was inspired by the work of [xmldoc2md - Fork with improvements](https://github.com/FRACerqueira/xmldoc2mdPlus).
+- The API Reference was inspired by the work of [xmldoc2md (Fork with improvements)](https://github.com/FRACerqueira/xmldoc2md).
 
 ## Code of Conduct
 [**Top**](#table-of-contents)

@@ -70,8 +70,6 @@
 
 - [ChartOrder](./pplus.controls.chartorder.md)
 
-- [ChartType](./pplus.controls.charttype.md)
-
 - [Config](./pplus.controls.config.md)
 
 - [FilterMode](./pplus.controls.filtermode.md)
@@ -134,7 +132,13 @@
 
 - [LayoutCalendar](./pplus.controls.layoutcalendar.md)
 
+- [LayoutChart](./pplus.controls.layoutchart.md)
+
+- [LayoutSliderNumber](./pplus.controls.layoutslidernumber.md)
+
 - [MaskedType](./pplus.controls.maskedtype.md)
+
+- [PolicyInvalidDate](./pplus.controls.policyinvaliddate.md)
 
 - [ProgressBarType](./pplus.controls.progressbartype.md)
 
@@ -147,8 +151,6 @@
 - [ResultPrompt&lt;T&gt;](./pplus.controls.resultprompt-1.md)
 
 - [SliderBarType](./pplus.controls.sliderbartype.md)
-
-- [SliderNumberType](./pplus.controls.slidernumbertype.md)
 
 - [SpinnersType](./pplus.controls.spinnerstype.md)
 

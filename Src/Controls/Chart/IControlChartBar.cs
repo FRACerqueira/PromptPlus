@@ -17,20 +17,18 @@ namespace PPlus.Controls
     {
 
         /// <summary>
-        /// Define type to ChartBar.
+        /// Define layout to ChartBar.
         /// </summary>
-        /// <param name="value">The <see cref="ChartType"/>. Default value 'ChartType.StandBar'</param>
+        /// <param name="value">The <see cref="LayoutChart"/>. Default value 'LayoutChart.Standard'</param>
         /// <returns><see cref="IControlChartBar"/></returns>
-        IControlChartBar Type(ChartType value);
+        IControlChartBar Layout(LayoutChart value);
 
         /// <summary>
         /// Define type Bar to ChartBar.
         /// </summary>
-        /// <param name="value">The <see cref="ChartBarType"/>. Default value 'ChartType.Fill'</param>
+        /// <param name="value">The <see cref="ChartBarType"/>. Default value 'ChartBarType.Fill'</param>
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar BarType(ChartBarType value);
-
-
 
         /// <summary>
         /// <see cref="CultureInfo"/> to on show value format.
@@ -64,7 +62,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Execute a action foreach item of colletion passed as a parameter
         /// </summary>
-        /// <typeparam name="T1">Type external colletion</typeparam>
+        /// <typeparam name="T1">Layout external colletion</typeparam>
         /// <param name="values">Colletion for interaction</param>
         /// <param name="action">Action to execute</param>
         /// <returns><see cref="IControlChartBar"/></returns>
@@ -138,19 +136,27 @@ namespace PPlus.Controls
         IControlChartBar HideOrdination();
 
         /// <summary>
-        /// Enabled Interaction  to switch Type , Legend and order when browse the charts / Legends.
+        /// Enabled Interaction  to switch Layout , Legend and order when browse the charts / Legends.
         /// </summary>
-        /// <param name="switchType">Enabled switch Type </param>
+        /// <param name="switchType">Enabled switch Layout </param>
         /// <param name="switchLegend">Enabled switch legend</param>
         /// <param name="switchorder">Enabled switch Ordination</param>
-        /// <param name="pagesize">Set max.item view per page.Default value for this control is 10.</param>
         /// <returns><see cref="IControlChartBar"/></returns>
-        IControlChartBar EnabledInteractionUser(bool switchType = true, bool switchLegend = true, bool switchorder = true, int? pagesize = null);
+        IControlChartBar EnabledInteractionUser(bool switchType = true, bool switchLegend = true, bool switchorder = true);
+
 
         /// <summary>
-        /// Overwrite a HotKey to Switch Type Chart. Default value is 'F2' 
+        /// Set max.item view per page. Default value for this control is 10.
         /// </summary>
-        /// <param name="value">The <see cref="HotKey"/> to Switch Type Chart</param>
+        /// <param name="value">Number of Max.items</param>
+        /// <returns><see cref="IControlChartBar"/></returns>
+        IControlChartBar PageSize(int value);
+
+
+        /// <summary>
+        /// Overwrite a HotKey to Switch Layout Chart. Default value is 'F2' 
+        /// </summary>
+        /// <param name="value">The <see cref="HotKey"/> to Switch Layout Chart</param>
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar HotKeySwitchType(HotKey value);
 

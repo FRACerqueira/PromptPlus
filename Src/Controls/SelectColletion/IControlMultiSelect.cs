@@ -157,16 +157,6 @@ namespace PPlus.Controls
         IControlMultiSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable = false, bool selected = false);
 
         /// <summary>
-        /// Add item to scope Disable/Remove <seealso cref="AdderScope"/>
-        /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
-        /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
-        /// </summary>
-        /// <param name="scope">scope Disable/Remove</param>
-        /// <param name="value">item</param>
-        /// <returns><see cref="IControlMultiSelect{T}"/></returns>
-        IControlMultiSelect<T> AddItemTo(AdderScope scope, T value);
-
-        /// <summary>
         /// Add Items colletion to scope Disable/Remove <seealso cref="AdderScope"/>
         /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
         /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
@@ -174,7 +164,7 @@ namespace PPlus.Controls
         /// <param name="scope">scope Disable/Remove</param>
         /// <param name="values">items colletion</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
-        IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values);
+        IControlMultiSelect<T> AddItemsTo(AdderScope scope, params T[] values);
 
         /// <summary>
         /// Custom item comparator
@@ -182,7 +172,6 @@ namespace PPlus.Controls
         /// <param name="comparer">function comparator</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> EqualItems(Func<T, T, bool> comparer);
-
 
         /// <summary>
         /// Defines a minimum and maximum (optional) range of items seleted in the list

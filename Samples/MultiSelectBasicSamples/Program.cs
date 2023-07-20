@@ -126,7 +126,7 @@ namespace MultiSelectBasicSamples
             //PromptPlus.MultiSelect<string>("Select")
             //    .Interaction(MyCities(), (ctrl, item) =>
             //    {
-            //        ctrl.AddItem(item.City,false,true);
+            //        ctrl.AddItems(item.City,false,true);
             //    })
             //    .Run();
 
@@ -134,7 +134,7 @@ namespace MultiSelectBasicSamples
             //PromptPlus.MultiSelect<string>("Select")
             //    .Interaction(MyCities(), (ctrl, item) =>
             //    {
-            //        ctrl.AddItem(item.City, false, true);
+            //        ctrl.AddItems(item.City, false, true);
             //    })
             //    .OverflowAnswer(Overflow.None)
             //    .Run();

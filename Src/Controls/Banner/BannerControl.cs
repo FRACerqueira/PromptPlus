@@ -7,6 +7,7 @@
 using PPlus.FIGlet;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace PPlus.Controls
@@ -143,12 +144,9 @@ namespace PPlus.Controls
             }
             InitAsciiArt();
             var max = 0;
-            foreach (var item in _result)
+            foreach (var item in _result.Where(x => max < x.Length))
             {
-                if (max < item.Length)
-                {
-                    max = item.Length;
-                }
+                max = item.Length;
             }
             if (bannerDash != BannerDashOptions.None)
             {

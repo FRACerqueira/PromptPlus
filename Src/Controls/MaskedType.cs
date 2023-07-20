@@ -16,7 +16,7 @@ namespace PPlus.Controls
     }
 
     /// <summary>
-    /// Represents Masked Type input
+    /// Represents Masked type input
     /// </summary>
     public enum MaskedType
     {

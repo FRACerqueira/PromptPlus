@@ -63,7 +63,7 @@ public HotKey ChartBarSwitchOrderPress { get; set; }
 
 ### <a id="properties-chartbarswitchtypepress"/>**ChartBarSwitchTypePress**
 
-Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle ChartBar Type view.
+Get/Set [HotKey](./pplus.controls.hotkey.md) to toggle ChartBar Layout view.
  <br>Default value : '[F2]'
 
 ```csharp

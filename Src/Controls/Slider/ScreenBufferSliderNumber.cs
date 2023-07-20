@@ -113,7 +113,7 @@ namespace PPlus.Controls
         public static void WritePromptSliderNumber(this ScreenBuffer screenBuffer, SliderNumberOptions options)
         {
             screenBuffer.AddBuffer($"{options.OptPrompt}: ", options.OptStyleSchema.Prompt());
-            if (options.MoveKeyPress == SliderNumberType.UpDown)
+            if (options.MoveKeyPress == LayoutSliderNumber.UpDown)
             {
                 screenBuffer.AddBuffer($"[{options.Minvalue},{options.Maxvalue}] ",options.OptStyleSchema.Sugestion(),true,false);
             }
@@ -155,7 +155,7 @@ namespace PPlus.Controls
         private static string DefaultToolTipSliderNumber(SliderNumberOptions baseOptions)
         {
             var msgnav = Messages.SliderNumberLeftRightKeyNavigator;
-            if (baseOptions.MoveKeyPress != SliderNumberType.LeftRight)
+            if (baseOptions.MoveKeyPress != LayoutSliderNumber.LeftRight)
             {
                 msgnav = Messages.SliderNumberUpDownKeyNavigator;
             }

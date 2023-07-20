@@ -25,7 +25,7 @@ namespace PPlus.Controls
         }
         public LayoutCalendar Layout { get; set; } =  LayoutCalendar.SingleGrid;
         public CultureInfo CurrentCulture { get; set; } = null;
-        public bool IsPolicyNext { get; set; } = true;
+        public PolicyInvalidDate PolicyInvalidDate { get; set; } = PolicyInvalidDate.NextDate;
         public Style DescriptionStyle { get; set; } = PromptPlus.StyleSchema.Description();
         public Style LineStyle { get; set; } = PromptPlus.StyleSchema.Prompt();
         public Style DisabledStyle { get; set; } = PromptPlus.StyleSchema.Disabled();

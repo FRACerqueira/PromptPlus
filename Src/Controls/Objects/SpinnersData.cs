@@ -4,7 +4,9 @@ namespace PPlus.Controls.Objects
 {
     internal static class SpinnersData
     {
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) FallBackSpinner =
+        static SpinnersData()
+        {
+            FallBackSpinner =
             (new List<string>
             {
                     "-",
@@ -17,7 +19,7 @@ namespace PPlus.Controls.Objects
                     "/",
             }, false, 50);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) AsciiSpinner =
+            AsciiSpinner =
             (new List<string>
             {
                     "-",
@@ -30,8 +32,7 @@ namespace PPlus.Controls.Objects
                     "/",
             }, false, 50);
 
-
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Dots=
+            Dots =
             (new List<string>
             {
                     ".  ",
@@ -40,196 +41,245 @@ namespace PPlus.Controls.Objects
                     "   ",
             }, false, 180);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) DotsScrolling =
-            (new List<string>
-            {
-                    ".  ",
-                    ".. ",
-                    "...",
-                    " ..",
-                    "  .",
-                    "   ",
-            }, false, 200);
+            DotsScrolling =
+                (new List<string>
+                {
+                        ".  ",
+                        ".. ",
+                        "...",
+                        " ..",
+                        "  .",
+                        "   ",
+                }, false, 200);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Star =
-            (new List<string>
-            {
-                    "+",
-                    "x",
-                    "*",
-            }, false, 80);
+            Star =
+                (new List<string>
+                {
+                        "+",
+                        "x",
+                        "*",
+                }, false, 80);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Flip =
-            (new List<string>
-            {
-                    "_",
-                    "_",
-                    "_",
-                    "-",
-                    "`",
-                    "`",
-                    "'",
-                    "´",
-                    "-",
-                    "_",
-                    "_",
-                    "_",
-            }, false, 80);
+            Flip =
+                (new List<string>
+                {
+                        "_",
+                        "_",
+                        "_",
+                        "-",
+                        "`",
+                        "`",
+                        "'",
+                        "´",
+                        "-",
+                        "_",
+                        "_",
+                        "_",
+                }, false, 80);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Balloon =
-            (new List<string>
-            {
-                    ".",
-                    "o",
-                    "O",
-                    "°",
-                    "O",
-                    "o",
-            }, true, 120);
+            Balloon =
+                (new List<string>
+                {
+                        ".",
+                        "o",
+                        "O",
+                        "°",
+                        "O",
+                        "o",
+                }, true, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Noise =
-            (new List<string>
-            {
-                    "▓",
-                    "▒",
-                    "░",
-            }, true, 100);
+            Noise =
+                (new List<string>
+                {
+                        "▓",
+                        "▒",
+                        "░",
+                }, true, 100);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Bounce =
-            (new List<string>
-            {
-                "o     ",
-                " o    ",
-                "  o   ",
-                "   o  ",
-                "    o ",
-                "     o",
-                "    o ",
-                "   o  ",
-                "  o   ",
-                " o    ",
-                "o     "
-            }, false, 120);
+            Bounce =
+                (new List<string>
+                {
+                    "o     ",
+                    " o    ",
+                    "  o   ",
+                    "   o  ",
+                    "    o ",
+                    "     o",
+                    "    o ",
+                    "   o  ",
+                    "  o   ",
+                    " o    ",
+                    "o     "
+                }, false, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) BoxHeavy =
-            (new List<string>
-            {
-                    "▌",
-                    "▀",
-                    "▐",
-                    "▄",
-            }, true, 120);
+            BoxHeavy =
+                (new List<string>
+                {
+                        "▌",
+                        "▀",
+                        "▐",
+                        "▄",
+                }, true, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) DotArrow =
-            (new List<string>
-            {
-                    ">....",
-                    ".>...",
-                    "..>..",
-                    "...>.",
-                    "....>",
-            }, false, 120);
+            BoxHeavy =
+                (new List<string>
+                {
+                        "▌",
+                        "▀",
+                        "▐",
+                        "▄",
+                }, true, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Arrow =
-            (new List<string>
-            {
-                    ">    ",
-                    ">>   ",
-                    ">>>  ",
-                    ">>>> ",
-                    ">>>>>",
-            }, false, 120);
+            DotArrow =
+                (new List<string>
+                {
+                        ">....",
+                        ".>...",
+                        "..>..",
+                        "...>.",
+                        "....>",
+                }, false, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) DotArrowHeavy =
-            (new List<string>
-            {
-                    "►....",
-                    ".►...",
-                    "..►..",
-                    "...►.",
-                    "....►",
-            }, false, 120);
+            Arrow =
+                (new List<string>
+                {
+                        ">    ",
+                        ">>   ",
+                        ">>>  ",
+                        ">>>> ",
+                        ">>>>>",
+                }, false, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) ArrowHeavy =
-            (new List<string>
-            {
-                    "►    ",
-                    "►►   ",
-                    "►►►  ",
-                    "►►►► ",
-                    "►►►►►",
-            }, false, 120);
+            DotArrowHeavy =
+                (new List<string>
+                {
+                        "►....",
+                        ".►...",
+                        "..►..",
+                        "...►.",
+                        "....►",
+                }, false, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) DoubleArrow =
-            (new List<string>
-            {
-                    "»    ",
-                    "»»   ",
-                    "»»»  ",
-                    "»»»» ",
-                    "»»»»»",
-            }, false, 120);
+            ArrowHeavy =
+                (new List<string>
+                {
+                        "►    ",
+                        "►►   ",
+                        "►►►  ",
+                        "►►►► ",
+                        "►►►►►",
+                }, false, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) RightArrow =
-            (new List<string>
-            {
-                    "→    ",
-                    "→→   ",
-                    "→→→  ",
-                    "→→→→ ",
-                    "→→→→→",
-            }, false, 120);
+            DoubleArrow =
+                (new List<string>
+                {
+                        "»    ",
+                        "»»   ",
+                        "»»»  ",
+                        "»»»» ",
+                        "»»»»»",
+                }, false, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) LeftArrow =
-            (new List<string>
-            {
-                    "    ←",
-                    "   ←←",
-                    "  ←←←",
-                    " ←←←←",
-                    "←←←←←",
-            }, false, 120);
+            RightArrow =
+                (new List<string>
+                {
+                        "→    ",
+                        "→→   ",
+                        "→→→  ",
+                        "→→→→ ",
+                        "→→→→→",
+                }, false, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) BouncingBar =
-            (new List<string>
-            {
-                    "    ",
-                    "=   ",
-                    "==  ",
-                    "=== ",
-                    " ===",
-                    "  ==",
-                    "   =",
-                    "    ",
-                    "   =",
-                    "  ==",
-                    " ===",
-                    "====",
-                    "=== ",
-                    "==  ",
-                    "=   "
-            }, false, 80);
+            LeftArrow =
+                (new List<string>
+                {
+                        "    ←",
+                        "   ←←",
+                        "  ←←←",
+                        " ←←←←",
+                        "←←←←←",
+                }, false, 120);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Pipe =
-            (new List<string>
-            {
-                    "┤",
-                    "┘",
-                    "┴",
-                    "└",
-                    "├",
-                    "┌",
-                    "┬",
-                    "┐"
-            }, true, 80);
+            BouncingBar =
+                (new List<string>
+                {
+                        "    ",
+                        "=   ",
+                        "==  ",
+                        "=== ",
+                        " ===",
+                        "  ==",
+                        "   =",
+                        "    ",
+                        "   =",
+                        "  ==",
+                        " ===",
+                        "====",
+                        "=== ",
+                        "==  ",
+                        "=   "
+                }, false, 80);
 
-        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Toggle =
-            (new List<string>
-            {
-                    "=",
-                    "*",
-                    "-"
-            }, false, 80);
+            Pipe =
+                (new List<string>
+                {
+                        "┤",
+                        "┘",
+                        "┴",
+                        "└",
+                        "├",
+                        "┌",
+                        "┬",
+                        "┐"
+                }, true, 80);
+
+            Toggle =
+                (new List<string>
+                {
+                        "=",
+                        "*",
+                        "-"
+                }, false, 80);
+        }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) FallBackSpinner { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Star { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) AsciiSpinner { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Dots { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) DotsScrolling { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Flip { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Balloon { get; private set; }
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Noise { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Bounce { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) BoxHeavy { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) DotArrow { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Arrow { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) DotArrowHeavy { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) ArrowHeavy { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) DoubleArrow { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) RightArrow { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) LeftArrow { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) BouncingBar { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Pipe { get; private set; }
+
+        public static (IReadOnlyList<string> Frames, bool IsUnicode, int Interval) Toggle { get; private set; }
 
     }
 

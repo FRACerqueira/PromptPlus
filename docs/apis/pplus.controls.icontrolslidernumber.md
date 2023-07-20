@@ -25,7 +25,7 @@ Implements [IPromptControls&lt;Double&gt;](./pplus.controls.ipromptcontrols-1.md
 ### <a id="methods-bartype"/>**BarType(SliderBarType)**
 
 Define type Bar to Slider.
- <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored
+ <br>Valid only When Layout equal LeftRight, otherwise its is ignored
 
 ```csharp
 IControlSliderNumber BarType(SliderBarType value)
@@ -43,7 +43,7 @@ The [SliderBarType](./pplus.controls.sliderbartype.md). Default value 'SliderBar
 ### <a id="methods-changecolor"/>**ChangeColor(Func&lt;Double, Color&gt;)**
 
 Dynamically change color Widgets
- <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored
+ <br>Valid only When Layout equal LeftRight mode, otherwise its is ignored
 
 ```csharp
 IControlSliderNumber ChangeColor(Func<Double, Color> value)
@@ -78,7 +78,7 @@ function to apply change
 ### <a id="methods-changegradient"/>**ChangeGradient(Color[])**
 
 Dynamically Change Gradient color Widgets
- <br>Valid only When MoveKeyPress equal left/right mode, otherwise its is ignored
+ <br>Valid only When Layout equal LeftRight mode, otherwise its is ignored
 
 ```csharp
 IControlSliderNumber ChangeGradient(Color[] colors)
@@ -196,19 +196,19 @@ short step to change
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### <a id="methods-movekeypress"/>**MoveKeyPress(SliderNumberType)**
+### <a id="methods-layout"/>**Layout(LayoutSliderNumber)**
 
-Define the KeyPress to change value. Default value is Left or Right.
- <br>When MoveKeyPress equal Up or Down , slider control not show Widgets
+Define the layout to change value. Default value is 'LayoutSliderNumber.LeftRight'.
+ <br>When Layout equal UpDown , slider control not show Widgets
 
 ```csharp
-IControlSliderNumber MoveKeyPress(SliderNumberType value)
+IControlSliderNumber Layout(LayoutSliderNumber value)
 ```
 
 #### Parameters
 
-`value` [SliderNumberType](./pplus.controls.slidernumbertype.md)<br>
-Left/Right or Up/Down. [SliderNumberType](./pplus.controls.slidernumbertype.md)
+`value` [LayoutSliderNumber](./pplus.controls.layoutslidernumber.md)<br>
+The [LayoutSliderNumber](./pplus.controls.layoutslidernumber.md)
 
 #### Returns
 

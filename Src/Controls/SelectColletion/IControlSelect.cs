@@ -106,16 +106,6 @@ namespace PPlus.Controls
         IControlSelect<T> AddItems(IEnumerable<T> values, bool disable = false);
 
         /// <summary>
-        /// Add item to scope Disable/Remove <seealso cref="AdderScope"/>
-        /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
-        /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
-        /// </summary>
-        /// <param name="scope">scope Disable/Remove</param>
-        /// <param name="value">item</param>
-        /// <returns><see cref="IControlSelect{T}"/></returns>
-        IControlSelect<T> AddItemTo(AdderScope scope, T value);
-
-        /// <summary>
         /// Add Items colletion to scope Disable/Remove <seealso cref="AdderScope"/>
         /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
         /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
@@ -123,7 +113,7 @@ namespace PPlus.Controls
         /// <param name="scope">scope Disable/Remove</param>
         /// <param name="values">items colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
-        IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values);
+        IControlSelect<T> AddItemsTo(AdderScope scope, params T[] values);
 
         /// <summary>
         /// Custom item comparator
