@@ -40,13 +40,13 @@ function to accept
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+### <a id="methods-addvalidators"/>**AddValidators(params Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
 
 ```csharp
-IControlInput AddValidators(Func<Object, ValidationResult>[] validators)
+IControlInput AddValidators(params Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters

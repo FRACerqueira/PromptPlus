@@ -56,12 +56,12 @@ true accept system folder and files, otherwise 'no'
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### <a id="methods-addfixedselect"/>**AddFixedSelect(String[])**
+### <a id="methods-addfixedselect"/>**AddFixedSelect(params String[])**
 
 Fixed select (immutable) items in list
 
 ```csharp
-IControlMultiSelectBrowser AddFixedSelect(String[] values)
+IControlMultiSelectBrowser AddFixedSelect(params String[] values)
 ```
 
 #### Parameters

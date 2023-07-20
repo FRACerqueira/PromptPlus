@@ -66,12 +66,12 @@ true item disabled, otherwise no
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, T[])**
+### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, params T[])**
 
 Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
 ```csharp
-IControlSelect<T> AddItemsTo(AdderScope scope, T[] values)
+IControlSelect<T> AddItemsTo(AdderScope scope, params T[] values)
 ```
 
 #### Parameters

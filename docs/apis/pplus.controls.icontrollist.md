@@ -80,13 +80,13 @@ true the item cannot be removed; otherwise yes.
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### <a id="methods-addvalidators"/>**AddValidators(Func&lt;Object, ValidationResult&gt;[])**
+### <a id="methods-addvalidators"/>**AddValidators(params Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
  <br>Tip: see  to validators embeding
 
 ```csharp
-IControlList AddValidators(Func<Object, ValidationResult>[] validators)
+IControlList AddValidators(params Func<Object, ValidationResult>[] validators)
 ```
 
 #### Parameters

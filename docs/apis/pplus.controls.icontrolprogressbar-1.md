@@ -43,12 +43,12 @@ function to change color
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### <a id="methods-changegradient"/>**ChangeGradient(Color[])**
+### <a id="methods-changegradient"/>**ChangeGradient(params Color[])**
 
 Dynamically Change Gradient color in ProgressBar
 
 ```csharp
-IControlProgressBar<T> ChangeGradient(Color[] colors)
+IControlProgressBar<T> ChangeGradient(params Color[] colors)
 ```
 
 #### Parameters

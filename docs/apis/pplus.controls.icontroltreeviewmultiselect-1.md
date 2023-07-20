@@ -26,12 +26,12 @@ Implements IPromptControls&lt;T[]&gt;
 
 ## Methods
 
-### <a id="methods-addfixedselect"/>**AddFixedSelect(T[])**
+### <a id="methods-addfixedselect"/>**AddFixedSelect(params T[])**
 
 Fixed select (immutable) items in list
 
 ```csharp
-IControlTreeViewMultiSelect<T> AddFixedSelect(T[] values)
+IControlTreeViewMultiSelect<T> AddFixedSelect(params T[] values)
 ```
 
 #### Parameters

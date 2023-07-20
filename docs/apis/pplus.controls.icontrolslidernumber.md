@@ -75,13 +75,13 @@ function to apply change
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
-### <a id="methods-changegradient"/>**ChangeGradient(Color[])**
+### <a id="methods-changegradient"/>**ChangeGradient(params Color[])**
 
 Dynamically Change Gradient color Widgets
  <br>Valid only When Layout equal LeftRight mode, otherwise its is ignored
 
 ```csharp
-IControlSliderNumber ChangeGradient(Color[] colors)
+IControlSliderNumber ChangeGradient(params Color[] colors)
 ```
 
 #### Parameters

@@ -461,7 +461,7 @@ namespace PPlus.Controls.Objects
             _inputBuffer.Clear();
             if (_maskInputOptions.FillNumber.HasValue)
             {
-                foreach (var item in _localMask.Where(x => x == '9'))
+                foreach (var _ in _localMask.Where(x => x == '9'))
                 {
                     _inputBuffer.Append(_maskInputOptions.FillNumber.Value);
                 }
