@@ -917,7 +917,7 @@ namespace PPlus.Controls
             var linedays = Messages.MoveDays;
             var lineweek = Messages.MoveDayWeek;
             var linemonth = Messages.MoveMonth;
-            var lineyear = Messages.MoveMonth;
+            var lineyear = Messages.MoveYear;
             var linetoday = $", {Messages.MoveToday}";
 
             screenBuffer.NewLine();

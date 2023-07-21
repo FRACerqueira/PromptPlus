@@ -40,7 +40,7 @@ namespace PPlus.Controls
         IControlWait TaskTitle(string value);
 
         /// <summary>
-        /// Define if show Elapsed Time for each task and the format of Elapsed Time.
+        /// Define if show Elapsed Time for each task.
         /// </summary>
         /// <returns><see cref="IControlWait"/></returns>
         IControlWait ShowElapsedTime();
@@ -83,10 +83,10 @@ namespace PPlus.Controls
         /// Add list of tasks to execute with title and description
         /// </summary>
         /// <param name="stepMode">Sequential or parallel execution</param>
-        /// <param name="id">TaskTitle of tasks</param>
-        /// <param name="description">Description of tasks</param>
+        /// <param name="id">Id of tasks</param>
+        /// <param name="label">Label of tasks</param>
         /// <param name="process">list of tasks</param>
         /// <returns><see cref="IControlWait"/></returns>
-        IControlWait AddStep(StepMode stepMode, string? id, string? description, params Action<CancellationToken>[] process);
+        IControlWait AddStep(StepMode stepMode, string? id, string? label, params Action<CancellationToken>[] process);
     }
 }
