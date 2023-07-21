@@ -47,7 +47,7 @@ list of tasks
 Add list of tasks to execute with title and description
 
 ```csharp
-IControlWait AddStep(StepMode stepMode, string id, string description, params Action<CancellationToken>[] process)
+IControlWait AddStep(StepMode stepMode, string id, string label, params Action<CancellationToken>[] process)
 ```
 
 #### Parameters
@@ -56,10 +56,10 @@ IControlWait AddStep(StepMode stepMode, string id, string description, params Ac
 Sequential or parallel execution
 
 `id` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-TaskTitle of tasks
+Id of tasks
 
-`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Description of tasks
+`label` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Label of tasks
 
 `process` [Action&lt;CancellationToken&gt;[]](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 list of tasks

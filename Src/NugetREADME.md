@@ -10,7 +10,8 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
 
-## What news in PromptPlus V4.0.0
+## What news in PromptPlus V4.0.1
+- Fixed duplicate tooltip in calendar
 - New console engine
     - Supports 4/8/24-bit colors
     - Auto-detection of the current terminal's capabilities

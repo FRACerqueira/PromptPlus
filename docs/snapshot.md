@@ -127,7 +127,6 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 [**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [MultiSelectUserScopeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MultiSelectUserScopeSamples) ,
 [MultiSelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MultiSelectUserTypeSamples)
 
-
 ### Wait Process
 
 [**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [WaitTasksSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/WaitTasksSamples)

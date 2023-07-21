@@ -60,7 +60,7 @@
 - Switch (style on/off)
 - Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
 - Wait Time with countdown and spinner
-- ChartBar with wnabled Interaction to switch layout, Legend and order when browse the charts / Legends.
+- ChartBar with enabled Interaction to switch layout, Legend and order when browse the charts / Legends.
 - Progress bar with 8 types , gradient colors and spinner
 - Browser File and Folder with multi-select, colors and spinner
 - Treeview hierarchical structures with multi-select and colors
