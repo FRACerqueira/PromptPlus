@@ -1,7 +1,18 @@
 name: Build
 
-on: [push, pull_request]
-
+on:
+    push:
+        paths-ignore:
+            - '**.png'
+            - '**.gif'
+            - '**.md'
+            - 'README.txt'
+    pull_request:
+        paths-ignore:
+            - '**.png'
+            - '**.gif'
+            - '**.md'
+            - 'README.txt'
 env:
   DOTNET_VERSION: 7.0.x
 

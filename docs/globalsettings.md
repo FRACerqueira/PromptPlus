@@ -64,7 +64,6 @@ PromptPlus.Config.Symbols(SymbolType.Done, "V", "√");
 var values = PromptPlus.Config.Symbols(SymbolType.Done);
 ```
 
-
 ### SymbolType: (NO-UNICODE,UNICODE)
 
 - MaskEmpty: ("_", "■")
