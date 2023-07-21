@@ -82,4 +82,3 @@ var values = PromptPlus.Config.Symbols(SymbolType.Done);
 - DoubleBorder: ("=", "═")
 - SingleBorder: ("-", "─")
 - HeavyBorder: ("*", "━")
-

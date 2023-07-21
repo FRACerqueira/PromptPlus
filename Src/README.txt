@@ -29,9 +29,9 @@ PromptPlus was developed in c# with target frameworks:
 - .NET 6
 - .NET 7
 
-*** What news in PromptPlus V4.0.0 ***
+*** What news in PromptPlus V4.0.1 ***
 ---------------------------------------
-
+- Fixed duplicate tooltip in calendar
 - New console engine
     - Supports 4/8/24-bit colors
     - Auto-detection of the current terminal's capabilities

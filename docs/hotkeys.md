@@ -61,9 +61,6 @@ PromptPlus.Config.PasswordViewPress = new HotKey(UserHotKey.F7)
 - ChartBarSwitchOrderPress
 - CalendarSwitchNotesPress
 
-
-
-
 ### Instance Hotkeys
 [**Top**](#promptplus-hotkeys)
 
