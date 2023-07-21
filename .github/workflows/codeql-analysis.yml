@@ -1,18 +1,7 @@
 name: "CodeQL"
 
-on:
-    push:
-        paths-ignore:
-            - '**.png'
-            - '**.gif'
-            - '**.md'
-            - 'README.txt'
-    pull_request:
-        paths-ignore:
-            - '**.png'
-            - '**.gif'
-            - '**.md'
-            - 'README.txt' 
+on: [push, pull_request]
+
 env:
   DOTNET_VERSION: 7.0.x
 
