@@ -6,7 +6,7 @@
 |_|   |_|   \___/|_| |_| |_| .__/ \__|_|   |_|\__,_|___/
                            |_|
 
-Welcome to PromptPlus v4.0.0  
+Welcome to PromptPlus v4.0.2  
 =========================================================
 
 Interactive command-line toolkit for .Net core with powerful controls and commands
@@ -29,8 +29,17 @@ PromptPlus was developed in c# with target frameworks:
 - .NET 6
 - .NET 7
 
-*** What news in PromptPlus V4.0.1 ***
----------------------------------------
+*** What news in V4.0.2 *** 
+---------------------------
+
+- New Control Pipeline
+    - PromptPlus.Pipeline(T startvalue)
+- Add Answer key check equals "Yes"/"No" using config values
+    - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
+    - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
+
+*** What news in V4.0.1 ***
+---------------------------
 - Fixed duplicate tooltip in calendar
 - New console engine
     - Supports 4/8/24-bit colors
@@ -39,7 +48,7 @@ PromptPlus was developed in c# with target frameworks:
     - New support feature colors
 - All controls have been improved to accept color customization, new features and new design.
 - Added new filter for colletion by "Contains" or "StartsWith"
-- Added powerful new controls (eg: Calendar, Chartbar, Treeview, wait tasks Parallel/Sequential, 
+- Added powerful new controls (eg: Pipeline, Calendar, Chartbar, Treeview, wait tasks Parallel/Sequential, 
   8 progress bar types, wait timer, 19 spinners types, Gradient colors and more)
 
 **PromptPlus Controls - Sample Usage**

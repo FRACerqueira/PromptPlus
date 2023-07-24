@@ -27,7 +27,14 @@
 - [License](#license)
 - [API Reference](./apis/apis.md)
 
-## What's News in V.4.0
+## What news in V4.0.2
+- New Control Pipeline
+    - PromptPlus.Pipeline(T startvalue)
+- Add Answer key check equals "Yes"/"No" using config values
+    - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
+    - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
+    - 
+## What's News in V4.0.1
 
 ### Newest controls and color improvement and layout
 
