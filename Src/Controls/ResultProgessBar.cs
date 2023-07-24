@@ -8,6 +8,7 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents The Result to ProgessBar Controls
     /// </summary>
+    /// <typeparam name="T">Typeof return</typeparam>
     public readonly struct ResultProgessBar<T>
     {
         /// <summary>

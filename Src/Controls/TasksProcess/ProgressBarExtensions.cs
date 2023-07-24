@@ -24,7 +24,7 @@ namespace PPlus
         /// <summary>
         /// Create Progress Bar Control
         /// </summary>
-        /// <typeparam name="T">Typeof T</typeparam>
+        /// <typeparam name="T">Typeof return</typeparam>
         /// <param name="barType">The type Progress Bar. <see cref="ProgressBarType"/></param>
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="defaultresult">The instance result</param>
@@ -38,10 +38,10 @@ namespace PPlus
         /// <summary>
         /// Create instance Progress Bar Control
         /// </summary>
-        /// <typeparam name="T">Typeof T</typeparam>
+        /// <typeparam name="T">Typeof return</typeparam>
         /// <param name="barType">The type Progress Bar. <see cref="ProgressBarType"/></param>
         /// <param name="prompt">The prompt text to write</param>
-        /// <param name="defaultresult">The instance result</param>
+        /// <param name="defaultresult">The starting value for the result</param>
         /// <param name="description">The description text to write</param>
         /// <param name="config">The config action <see cref="IPromptConfig"/></param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>

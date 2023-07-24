@@ -21,6 +21,7 @@ public interface IControlSelect<T> : IPromptControls<T>
 #### Type Parameters
 
 `T`<br>
+typeof return
 
 Implements IPromptControls&lt;T&gt;
 

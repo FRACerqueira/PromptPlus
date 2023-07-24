@@ -13,6 +13,7 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents the interface with all Methods of the Select control
     /// </summary>
+    /// <typeparam name="T">typeof return</typeparam>
     public interface IControlSelect<T> : IPromptControls<T>
     {
         /// <summary>

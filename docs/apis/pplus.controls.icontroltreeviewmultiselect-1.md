@@ -21,6 +21,7 @@ public interface IControlTreeViewMultiSelect<T> : IPromptControls<T[]>
 #### Type Parameters
 
 `T`<br>
+type of return
 
 Implements IPromptControls&lt;T[]&gt;
 

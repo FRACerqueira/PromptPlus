@@ -72,6 +72,8 @@
 
 - [Config](./pplus.controls.config.md)
 
+- [EventPipe&lt;T&gt;](./pplus.controls.eventpipe-1.md)
+
 - [FilterMode](./pplus.controls.filtermode.md)
 
 - [FormatTime](./pplus.controls.formattime.md)
@@ -105,6 +107,8 @@
 - [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
 - [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+
+- [IControlPipeline&lt;T&gt;](./pplus.controls.icontrolpipeline-1.md)
 
 - [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 

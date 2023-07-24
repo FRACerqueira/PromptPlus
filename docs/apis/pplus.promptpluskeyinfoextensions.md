@@ -184,6 +184,23 @@ to check
 
 `true` if equal otherwise `false`.
 
+### <a id="methods-isnoresponsekey"/>**IsNoResponseKey(ConsoleKeyInfo)**
+
+Check ConsoleKeyInfo is Yes key
+
+```csharp
+public static bool IsNoResponseKey(ConsoleKeyInfo keyinfo)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
 ### <a id="methods-ispressbackspacekey"/>**IsPressBackspaceKey(ConsoleKeyInfo, Boolean)**
 
 Check ConsoleKeyInfo is End Key
@@ -520,6 +537,23 @@ Check ConsoleKeyInfo is Lowers Current Word Emacs Key
 
 ```csharp
 public static bool IsUppersCurrentWord(ConsoleKeyInfo keyinfo)
+```
+
+#### Parameters
+
+`keyinfo` ConsoleKeyInfo<br>
+to check
+
+#### Returns
+
+`true` if equal otherwise `false`.
+
+### <a id="methods-isyesresponsekey"/>**IsYesResponseKey(ConsoleKeyInfo)**
+
+Check ConsoleKeyInfo is Yes key
+
+```csharp
+public static bool IsYesResponseKey(ConsoleKeyInfo keyinfo)
 ```
 
 #### Parameters

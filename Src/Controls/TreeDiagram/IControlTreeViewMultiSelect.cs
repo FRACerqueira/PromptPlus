@@ -12,6 +12,7 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents the interface with all Methods of the TreeViewMultiSelect control
     /// </summary>
+    /// <typeparam name="T">type of return</typeparam>
     public interface IControlTreeViewMultiSelect<T> : IPromptControls<T[]>
     {
         /// <summary>

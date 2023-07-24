@@ -1285,6 +1285,53 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
+### <a id="methods-pipeline"/>**Pipeline&lt;T&gt;(T)**
+
+Create Pipeline Control
+
+```csharp
+public static IControlPipeline<T> Pipeline<T>(T startvalue)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of return
+
+#### Parameters
+
+`startvalue` T<br>
+Initial value
+
+#### Returns
+
+[PipelineControl&lt;T&gt;](./pplus.controls.pipeline.pipelinecontrol-1.md)
+
+### <a id="methods-pipeline"/>**Pipeline&lt;T&gt;(T, Action&lt;IPromptConfig&gt;)**
+
+Create Pipeline Control
+
+```csharp
+public static IControlPipeline<T> Pipeline<T>(T startvalue, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of return
+
+#### Parameters
+
+`startvalue` T<br>
+Initial value
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[PipelineControl&lt;T&gt;](./pplus.controls.pipeline.pipelinecontrol-1.md)
+
 ### <a id="methods-progressbar"/>**ProgressBar(String, String)**
 
 Create Progress Bar Control
@@ -1316,7 +1363,7 @@ public static IControlProgressBar<T> ProgressBar<T>(ProgressBarType barType, str
 #### Type Parameters
 
 `T`<br>
-Typeof T
+Typeof return
 
 #### Parameters
 
@@ -1347,7 +1394,7 @@ public static IControlProgressBar<T> ProgressBar<T>(ProgressBarType barType, str
 #### Type Parameters
 
 `T`<br>
-Typeof T
+Typeof return
 
 #### Parameters
 
@@ -1358,7 +1405,7 @@ The type Progress Bar. [ProgressBarType](./pplus.controls.progressbartype.md)
 The prompt text to write
 
 `defaultresult` T<br>
-The instance result
+The starting value for the result
 
 `description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The description text to write
