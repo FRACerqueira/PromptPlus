@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:ResultProgessBar<T> 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:PipeRunningStatus 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,57 +8,52 @@
 
 [**Back to List Api**](./apis.md)
 
-# ResultProgessBar&lt;T&gt;
+# PipeRunningStatus
 
-Namespace: PPlus.Controls
+Namespace: PPlus.Controls.Pipeline
 
-Represents The Result to ProgessBar Controls
+Represents the running status of the tube
 
 ```csharp
-public struct ResultProgessBar<T>
+public struct PipeRunningStatus
 ```
 
-#### Type Parameters
-
-`T`<br>
-Typeof return
-
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [ResultProgessBar&lt;T&gt;](./pplus.controls.resultprogessbar-1.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [PipeRunningStatus](./pplus.controls.pipeline.piperunningstatus.md)
 
 ## Properties
 
-### <a id="properties-context"/>**Context**
+### <a id="properties-pipe"/>**Pipe**
 
-Get conext value
+Get pipes id
 
 ```csharp
-public T Context { get; }
+public string Pipe { get; }
 ```
 
 #### Property Value
 
-T<br>
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### <a id="properties-lastvalue"/>**Lastvalue**
+### <a id="properties-status"/>**Status**
 
-Get last value progress
+Get status pipes
 
 ```csharp
-public double Lastvalue { get; }
+public PipeStatus Status { get; }
 ```
 
 #### Property Value
 
-[Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+[PipeStatus](./pplus.controls.pipeline.pipestatus.md)<br>
 
 ## Constructors
 
-### <a id="constructors-.ctor"/>**ResultProgessBar()**
+### <a id="constructors-.ctor"/>**PipeRunningStatus()**
 
-Create a ResultProgessBar
+Create a PipeRunningStatus
 
 ```csharp
-ResultProgessBar()
+PipeRunningStatus()
 ```
 
 **Remarks:**

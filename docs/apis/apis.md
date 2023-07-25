@@ -142,6 +142,10 @@
 
 - [MaskedType](./pplus.controls.maskedtype.md)
 
+- [PipeRunningStatus](./pplus.controls.piperunningstatus.md)
+
+- [PipeStatus](./pplus.controls.pipestatus.md)
+
 - [PolicyInvalidDate](./pplus.controls.policyinvaliddate.md)
 
 - [ProgressBarType](./pplus.controls.progressbartype.md)
@@ -149,6 +153,8 @@
 - [PromptValidators](./pplus.controls.promptvalidators.md)
 
 - [ResultMasked](./pplus.controls.resultmasked.md)
+
+- [ResultPipeline&lt;T&gt;](./pplus.controls.resultpipeline-1.md)
 
 - [ResultProgessBar&lt;T&gt;](./pplus.controls.resultprogessbar-1.md)
 

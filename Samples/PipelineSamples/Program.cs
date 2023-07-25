@@ -81,27 +81,20 @@ namespace PipelineSamples
                                 eventpipe.NextPipe("First Name");
                             }
                         }
-                    },
-                    (eventpipe, stoptoken) =>
-                    {
-                        if (eventpipe.Input.FirtName?.Length > 0)
-                        {
-                            return true;
-                        }
-                        return false;
                     })
                 .Run();
 
+            
             if (!pl.IsAborted)
             {
-                if ((pl.Value.FirtName!.Trim() + pl.Value.LastName!.Trim()).Length > 0)
+                if ((pl.Value.Context.FirtName!.Trim() + pl.Value.Context.LastName!.Trim()).Length > 0)
                 {
-                    var last = pl.Value.LastName!.Trim();
+                    var last = pl.Value.Context.LastName!.Trim();
                     if (last.Length > 0)
                     {
                         last = $", {last}";
                     }
-                    PromptPlus.WriteLine($"You input is {pl.Value.FirtName!}{last}");
+                    PromptPlus.WriteLine($"You input is {pl.Value.Context.FirtName!}{last}");
                 }
                 else
                 {
@@ -179,14 +172,14 @@ namespace PipelineSamples
 
             if (!pl1.IsAborted)
             {
-                if ((pl1.Value.FirtName!.Trim() + pl1.Value.LastName!.Trim()).Length > 0)
+                if ((pl1.Value.Context.FirtName!.Trim() + pl1.Value.Context.LastName!.Trim()).Length > 0)
                 {
-                    var last = pl1.Value.LastName!.Trim();
+                    var last = pl1.Value.Context.LastName!.Trim();
                     if (last.Length > 0)
                     {
                         last = $", {last}";
                     }
-                    PromptPlus.WriteLine($"You input is {pl1.Value.FirtName!}{last}");
+                    PromptPlus.WriteLine($"You input is {pl1.Value.Context.FirtName!}{last}");
                 }
                 else
                 {

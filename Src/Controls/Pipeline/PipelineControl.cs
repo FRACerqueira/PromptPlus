@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using PPlus.Controls.Objects;
 
-namespace PPlus.Controls.Pipeline
+namespace PPlus.Controls
 {
-    internal class PipelineControl<T> : BaseControl<T>, IControlPipeline<T>
+    internal class PipelineControl<T> : BaseControl<ResultPipeline<T>>, IControlPipeline<T>
     {
         private readonly PipelineOptions<T> _options;
         private EventPipe<T> _currentevent;
         private ReadOnlyCollection<string> _pipes;
+        private List<PipeRunningStatus> _runpipes;
 
         public PipelineControl(IConsoleControl console, PipelineOptions<T> options) : base(console, options)
         {
@@ -51,10 +50,26 @@ namespace PPlus.Controls.Pipeline
 
         #endregion
 
-        public override ResultPrompt<T> TryResult(CancellationToken cancellationToken)
+        public override ResultPrompt<ResultPipeline<T>> TryResult(CancellationToken cancellationToken)
         {
-            _currentevent = NextPipe(_currentevent,cancellationToken);
-            return new ResultPrompt<T>(_currentevent.Input, _currentevent.CancelPipeLine, _currentevent.CurrentPipe != null, false, false);
+            var index = _runpipes.FindIndex(x => x.Pipe == _currentevent.CurrentPipe);
+            if (index != -1)
+            {
+                for (int i = index+1; i < _pipes.Count; i++)
+                {
+                    _runpipes[i] = new PipeRunningStatus(_runpipes[i].Pipe, PipeStatus.Waiting, TimeSpan.Zero);
+                }
+            }
+            if (!_currentevent.CancelPipeLine)
+            {
+                _runpipes[index] = new PipeRunningStatus(_runpipes[index].Pipe, PipeStatus.Executed, _runpipes[index].Elapsedtime);
+            }
+            else
+            {
+                _runpipes[index] = new PipeRunningStatus(_runpipes[index].Pipe, PipeStatus.Canceled, _runpipes[index].Elapsedtime);
+            }
+            _currentevent = NextPipe(_currentevent, cancellationToken);
+            return new ResultPrompt<ResultPipeline<T>>(new ResultPipeline<T>(_currentevent.Input,_runpipes.ToArray()), _currentevent.CancelPipeLine, _currentevent.CurrentPipe != null, false, false);
         }
 
         private EventPipe<T> NextPipe(EventPipe<T> curevent, CancellationToken cancellationToken)
@@ -73,13 +88,19 @@ namespace PPlus.Controls.Pipeline
             var newevent = new EventPipe<T>(curevent.Input, from, cur, to, _pipes);
             while (cur != null && _options.Conditions.ContainsKey(cur))
             {
+                var sw = new Stopwatch();
+                sw.Start();
                 if (!_options.Conditions[cur].Invoke(newevent, cancellationToken))
                 {
+                    sw.Stop();
+                    var index = _runpipes.FindIndex(x => x.Pipe == cur);
+                    _runpipes[index] = new PipeRunningStatus(cur, PipeStatus.Jumped, sw.Elapsed);
                     newevent = NextPipe(newevent,cancellationToken);
                     cur = newevent.CurrentPipe;
                 }
                 else
                 {
+                    sw.Stop();
                     break;
                 }
             }
@@ -93,8 +114,9 @@ namespace PPlus.Controls.Pipeline
                 _currentevent = new EventPipe<T>(_options.CurrentValue, null, null, null, _pipes);
                 return string.Empty;
             }
-
+            _runpipes = new List<PipeRunningStatus>();
             _pipes = _options.Pipes.Keys.ToList().AsReadOnly();
+            _runpipes.AddRange(_pipes.Select(x => new PipeRunningStatus(x, PipeStatus.Waiting, TimeSpan.Zero)));
             var first = _pipes[0];
             string next = null;
             if (_pipes.Count > 1)
@@ -104,13 +126,19 @@ namespace PPlus.Controls.Pipeline
             _currentevent = new EventPipe<T>(_options.CurrentValue, null, first, next, _pipes);
             while (first != null &&  _options.Conditions.ContainsKey(first))
             {
+                var sw = new Stopwatch();
+                sw.Start();
                 if (!_options.Conditions[first].Invoke(_currentevent, cancellationToken))
                 {
+                    sw.Stop();
+                    var index = _runpipes.FindIndex(x => x.Pipe == _currentevent.CurrentPipe);
+                    _runpipes[index] = new PipeRunningStatus(_currentevent.CurrentPipe, PipeStatus.Jumped, sw.Elapsed);
                     _currentevent = NextPipe(_currentevent, cancellationToken);
                     first = _currentevent.CurrentPipe;
                 }
                 else
                 {
+                    sw.Stop();
                     break;
                 }
             }
@@ -121,11 +149,16 @@ namespace PPlus.Controls.Pipeline
         {
             if (_currentevent.CurrentPipe != null)
             {
+                var sw = new Stopwatch();
+                sw.Start();
                 _options.Pipes[_currentevent.CurrentPipe].Invoke(_currentevent, CancellationToken);
+                sw.Stop();
+                var index = _runpipes.FindIndex(x => x.Pipe == _currentevent.CurrentPipe);
+                _runpipes[index] = new PipeRunningStatus(_runpipes[index].Pipe, _runpipes[index].Status, sw.Elapsed);
             }
         }
 
-        public override void FinishTemplate(ScreenBuffer screenBuffer, T result, bool aborted)
+        public override void FinishTemplate(ScreenBuffer screenBuffer, ResultPipeline<T> result, bool aborted)
         {
             //none
         }

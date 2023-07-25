@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using PPlus.Controls;
-using PPlus.Controls.Pipeline;
 using System;
 
 namespace PPlus

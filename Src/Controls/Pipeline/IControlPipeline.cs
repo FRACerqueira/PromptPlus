@@ -8,7 +8,7 @@ namespace PPlus.Controls
     /// Represents the interface with all Methods of the Pipeline control
     /// </summary>
     /// <typeparam name="T">typeof return</typeparam>
-    public interface IControlPipeline<T> : IPromptControls<T>
+    public interface IControlPipeline<T> : IPromptControls<ResultPipeline<T>>
     {
         /// <summary>
         /// Add the pipe

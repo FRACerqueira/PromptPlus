@@ -15,7 +15,7 @@ Namespace: PPlus.Controls
 Represents the interface with all Methods of the Pipeline control
 
 ```csharp
-public interface IControlPipeline<T> : IPromptControls<T>
+public interface IControlPipeline<T> : IPromptControls<ResultPipeline<T>>
 ```
 
 #### Type Parameters
@@ -23,7 +23,7 @@ public interface IControlPipeline<T> : IPromptControls<T>
 `T`<br>
 typeof return
 
-Implements IPromptControls&lt;T&gt;
+Implements IPromptControls&lt;ResultPipeline&lt;T&gt;&gt;
 
 ## Methods
 

@@ -1305,7 +1305,7 @@ Initial value
 
 #### Returns
 
-[PipelineControl&lt;T&gt;](./pplus.controls.pipeline.pipelinecontrol-1.md)
+[PipelineControl&lt;T&gt;](./pplus.controls.pipelinecontrol-1.md)
 
 ### <a id="methods-pipeline"/>**Pipeline&lt;T&gt;(T, Action&lt;IPromptConfig&gt;)**
 
@@ -1330,7 +1330,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[PipelineControl&lt;T&gt;](./pplus.controls.pipeline.pipelinecontrol-1.md)
+[PipelineControl&lt;T&gt;](./pplus.controls.pipelinecontrol-1.md)
 
 ### <a id="methods-progressbar"/>**ProgressBar(String, String)**
 
