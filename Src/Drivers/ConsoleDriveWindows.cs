@@ -8,6 +8,7 @@ using PPlus.Drivers.Ansi;
 using System;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 
@@ -252,14 +253,14 @@ namespace PPlus.Drivers
             {
                 return 1;
             }
+            int pos = left;
             foreach (var segment in segments.Where(x => !x.IsAnsiControl))
             {
                 var overflow = segment.Style.OverflowStrategy;
                 var parts = segment.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var (_, first, last, part) in parts.Enumerate())
                 {
-                    var pos = left;
-                    if (pos < padleft)
+                    if (first && pos < padleft)
                     {
                         pos = padleft;
                     }
@@ -302,6 +303,7 @@ namespace PPlus.Drivers
                     if (!first)
                     {
                         qtd++;
+                        pos = padleft;
                     }
                 }
             }

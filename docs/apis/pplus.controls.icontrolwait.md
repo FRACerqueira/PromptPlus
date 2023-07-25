@@ -146,7 +146,7 @@ Number of concurrent tasks
 
 ### <a id="methods-showelapsedtime"/>**ShowElapsedTime()**
 
-Define if show Elapsed Time for each task and the format of Elapsed Time.
+Define if show Elapsed Time for each task.
 
 ```csharp
 IControlWait ShowElapsedTime()

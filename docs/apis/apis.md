@@ -72,6 +72,10 @@
 
 - [Config](./pplus.controls.config.md)
 
+- [EventPipe&lt;T&gt;](./pplus.controls.eventpipe-1.md)
+
+- [EventWaitProcess&lt;T&gt;](./pplus.controls.eventwaitprocess-1.md)
+
 - [FilterMode](./pplus.controls.filtermode.md)
 
 - [FormatTime](./pplus.controls.formattime.md)
@@ -106,6 +110,8 @@
 
 - [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
+- [IControlPipeline&lt;T&gt;](./pplus.controls.icontrolpipeline-1.md)
+
 - [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 - [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
@@ -120,7 +126,7 @@
 
 - [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-- [IControlWait](./pplus.controls.icontrolwait.md)
+- [IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
 
 - [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
@@ -138,6 +144,10 @@
 
 - [MaskedType](./pplus.controls.maskedtype.md)
 
+- [PipeRunningStatus](./pplus.controls.piperunningstatus.md)
+
+- [PipeStatus](./pplus.controls.pipestatus.md)
+
 - [PolicyInvalidDate](./pplus.controls.policyinvaliddate.md)
 
 - [ProgressBarType](./pplus.controls.progressbartype.md)
@@ -146,9 +156,13 @@
 
 - [ResultMasked](./pplus.controls.resultmasked.md)
 
+- [ResultPipeline&lt;T&gt;](./pplus.controls.resultpipeline-1.md)
+
 - [ResultProgessBar&lt;T&gt;](./pplus.controls.resultprogessbar-1.md)
 
 - [ResultPrompt&lt;T&gt;](./pplus.controls.resultprompt-1.md)
+
+- [ResultWaitProcess&lt;T&gt;](./pplus.controls.resultwaitprocess-1.md)
 
 - [SliderBarType](./pplus.controls.sliderbartype.md)
 

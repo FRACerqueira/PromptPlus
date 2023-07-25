@@ -14,6 +14,7 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents the interface with all Methods of the ProgressBar control
     /// </summary>
+    /// <typeparam name="T">typeof return</typeparam>
     public interface IControlProgressBar<T> :IPromptControls<ResultProgessBar<T>>
     {
         /// <summary>

@@ -13,6 +13,7 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents the interface with all Methods of the MultiSelect control
     /// </summary>
+    /// <typeparam name="T">typeof return</typeparam>
     public interface IControlMultiSelect<T> : IPromptControls<IEnumerable<T>>
     {
         /// <summary>

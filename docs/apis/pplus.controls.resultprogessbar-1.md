@@ -21,6 +21,7 @@ public struct ResultProgessBar<T>
 #### Type Parameters
 
 `T`<br>
+Typeof return
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [ResultProgessBar&lt;T&gt;](./pplus.controls.resultprogessbar-1.md)
 
@@ -28,7 +29,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ### <a id="properties-context"/>**Context**
 
-Get conext Result
+Get conext value
 
 ```csharp
 public T Context { get; }

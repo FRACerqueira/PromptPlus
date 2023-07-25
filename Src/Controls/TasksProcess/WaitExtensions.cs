@@ -16,10 +16,21 @@ namespace PPlus
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
-        /// <returns>IEnumerable <see cref="StateProcess"/> after Run method. <see cref="IControlWait"/></returns>
-        public static IControlWait WaitProcess(string prompt, string description=null)
+        /// <returns><see cref="IControlWait{T}"/></returns>
+        public static IControlWait<T> WaitProcess<T>(string prompt, string description = null)
         {
-            return WaitProcess(prompt,description, null);
+            return WaitProcess<T>(prompt, description, null);
+        }
+
+        /// <summary>
+        /// Create Wait Control
+        /// </summary>
+        /// <param name="prompt">The prompt text to write</param>
+        /// <param name="description">The description text to write</param>
+        /// <returns><see cref="IControlWait{T}"/></returns>
+        public static IControlWait<object> WaitProcess(string prompt, string description = null)
+        {
+            return WaitProcess<object>(prompt, description, null);
         }
 
         /// <summary>
@@ -28,17 +39,37 @@ namespace PPlus
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
         /// <param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns>IEnumerable <see cref="StateProcess"/> after Run method. <see cref="IControlWait"/></returns>
-        public static IControlWait WaitProcess(string prompt, string description, Action<IPromptConfig> config = null)
+        /// <returns><see cref="IControlWait{T}"/></returns>
+        public static IControlWait<T> WaitProcess<T>(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new WaitOptions(false)
+            var opt = new WaitOptions<T>(false)
             {
                 WaitTime = false,
                 OptPrompt = prompt,
                 OptDescription = description,
             };
             config?.Invoke(opt);
-            return new WaitControl(_consoledrive, opt);
+            return new WaitControl<T>(_consoledrive, opt);
+        }
+
+
+        /// <summary>
+        /// Create Wait Control
+        /// </summary>
+        /// <param name="prompt">The prompt text to write</param>
+        /// <param name="description">The description text to write</param>
+        /// <param name="config">The config action <see cref="IPromptConfig"/></param>
+        /// <returns><see cref="IControlWait{T}"/></returns>
+        public static IControlWait<object> WaitProcess(string prompt, string description, Action<IPromptConfig> config = null)
+        {
+            var opt = new WaitOptions<object>(false)
+            {
+                WaitTime = false,
+                OptPrompt = prompt,
+                OptDescription = description,
+            };
+            config?.Invoke(opt);
+            return new WaitControl<object>(_consoledrive, opt);
         }
 
         /// <summary>
@@ -50,11 +81,10 @@ namespace PPlus
         /// <param name="showCountdown">True show Countdown, otherwise 'no'</param>
         /// <param name="config">The config action <see cref="IPromptConfig"/></param>
         /// <param name="cancellationToken"><see cref="CancellationToken"/> for control</param>
-
         public static void WaitTimer(string prompt, TimeSpan delay, SpinnersType spinnersType = SpinnersType.Ascii, bool showCountdown = false, Action<IPromptConfig> config = null, CancellationToken? cancellationToken = null)
         {
             var cts = cancellationToken ?? CancellationToken.None;
-            var opt = new WaitOptions(false)
+            var opt = new WaitOptions<object>(false)
             {
                 WaitTime = true,
                 TimeDelay = delay,
@@ -64,9 +94,10 @@ namespace PPlus
             opt.HideAfterFinish(true);
             opt.EnabledAbortKey(false);
             config?.Invoke(opt);
-            var aux = new WaitControl(_consoledrive, opt);
+            var aux = new WaitControl<object>(_consoledrive, opt);
+            aux.Context(null);
             aux.Spinner(spinnersType);
-            aux.AddStep(StepMode.Sequential, (cts) =>
+            aux.AddStep(StepMode.Sequential, (eventw, cts) =>
             {
                 cts.WaitHandle.WaitOne(delay);
             });

@@ -3,28 +3,31 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using System;
+using System.Threading;
+
 namespace PPlus.Controls
 {
     /// <summary>
     /// Represents the commands to update values of Progress Bar
     /// </summary>
     /// <typeparam name="T">typeof instance result</typeparam>
-    public class UpdateProgressBar<T>
+    public class UpdateProgressBar<T> : IDisposable
     {
         private string _lastdescription;
         private double? _lastvalue;
-        private readonly object _root;
+        private readonly SemaphoreSlim semaphore = new(1, 1);
+        private bool _disposed;
 
         private UpdateProgressBar()
         {
             throw new PromptPlusException("UpdateProgressBar CTOR NotImplemented");
         }
 
-        internal UpdateProgressBar(T context, double value,double min, double max, string desc)
+        internal UpdateProgressBar(ref T context, double value,double min, double max, string desc)
         {
             _lastvalue = null;
             _lastdescription = desc;
-            _root = new object();
             Context = context;
             Finish = false;
             Value = value;
@@ -34,25 +37,24 @@ namespace PPlus.Controls
 
         internal bool HasChange()
         {
-            lock (_root)
+            var result = false;
+            semaphore.Wait();
+            if (_lastdescription != Description)
             {
-                var result = false;
-                if (_lastdescription != Description)
-                {
-                    _lastdescription = Description;
-                    result = true;
-                }
-                if (!_lastvalue.HasValue || _lastvalue != Value)
-                {
-                    _lastvalue = Value;
-                    result = true;
-                }
-                if (Finish)
-                {
-                    result = true;
-                }
-                return result;
+                _lastdescription = Description;
+                result = true;
             }
+            if (!_lastvalue.HasValue || _lastvalue != Value)
+            {
+                _lastvalue = Value;
+                result = true;
+            }
+            if (Finish)
+            {
+                result = true;
+            }
+            semaphore.Release();
+            return result;
         }
 
         /// <summary>
@@ -91,18 +93,17 @@ namespace PPlus.Controls
         /// <param name="value">new current value</param>
         public void Update(double value)
         {
-            lock (_root)
+            semaphore.Wait();
+            if (value > Maxvalue)
             {
-                if (value > Maxvalue)
-                {
-                    value = Maxvalue;
-                }
-                if (value < Minvalue)
-                {
-                    value = Minvalue;
-                }
-                Value = value;
+                value = Maxvalue;
             }
+            if (value < Minvalue)
+            {
+                value = Minvalue;
+            }
+            Value = value; 
+            semaphore.Release();
         }
 
         /// <summary>
@@ -111,7 +112,39 @@ namespace PPlus.Controls
         /// <param name="value">new description</param>
         public void ChangeDescription(string value)
         {
+            semaphore.Wait();
             Description = value;
+            semaphore.Release();
         }
-     }
+
+
+        #region IDisposable
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <param name="disposing">if disposing</param> 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
+            {
+                if (disposing)
+                {
+                    semaphore.Dispose();
+                }
+                _disposed = true;
+            }
+        }
+
+        #endregion
+    }
 }

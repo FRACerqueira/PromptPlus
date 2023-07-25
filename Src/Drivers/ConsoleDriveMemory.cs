@@ -304,17 +304,17 @@ namespace PPlus.Drivers
             {
                 return 1;
             }
+            var pos = left;
             foreach (var segment in segments.Where(x => !x.IsAnsiControl))
             {
                 var overflow = segment.Style.OverflowStrategy;
                 var parts = segment.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+                if (pos < padleft)
+                {
+                    pos = padleft;
+                }
                 foreach (var (_, first, last, part) in parts.Enumerate())
                 {
-                    var pos = left;
-                    if (pos < padleft)
-                    {
-                        pos = padleft;
-                    }
                     if (part != null)
                     {
                         pos += part.GetWidth();
@@ -355,6 +355,7 @@ namespace PPlus.Drivers
                     if (!first)
                     {
                         qtd++;
+                        pos = padleft;
                     }
                 }
             }

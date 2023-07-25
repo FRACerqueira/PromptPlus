@@ -32,7 +32,16 @@
 - [License](#license)
 - [API Reference](https://fracerqueira.github.io/PromptPlus/apis/apis.html)
 
-## What's News in V.4.0
+## What news in V4.0.2
+- New Control Pipeline
+    - PromptPlus.Pipeline(T startvalue)
+- Changed WaitControl to take context value in tasks and return context in result
+    - There are small break-chages  
+- Add Answer key check equals "Yes"/"No" using config values
+    - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
+    - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
+
+## What's News in V4.0.1
 
 ### Newest controls and color improvement and layout
 
@@ -131,6 +140,13 @@ dotnet run --project [name of sample]
 ## Controls Snapshot
 
 For each snapshot, the title is **name of projet** sample in folder **samples**
+
+### Pipeline
+
+[**Top**](#table-of-contents)  | [PipelineSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/PipelineSamples)
+
+**Not have snapshot**
+
 
 ### Input
 

@@ -15,7 +15,7 @@ Namespace: PPlus.Controls
 Represents the commands to update values of Progress Bar
 
 ```csharp
-public class UpdateProgressBar<T>
+public class UpdateProgressBar<T> : System.IDisposable
 ```
 
 #### Type Parameters
@@ -23,7 +23,8 @@ public class UpdateProgressBar<T>
 `T`<br>
 typeof instance result
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [UpdateProgressBar&lt;T&gt;](./pplus.controls.updateprogressbar-1.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [UpdateProgressBar&lt;T&gt;](./pplus.controls.updateprogressbar-1.md)<br>
+Implements [IDisposable](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable)
 
 ## Properties
 
@@ -113,6 +114,27 @@ public void ChangeDescription(string value)
 
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 new description
+
+### <a id="methods-dispose"/>**Dispose()**
+
+Dispose
+
+```csharp
+public void Dispose()
+```
+
+### <a id="methods-dispose"/>**Dispose(Boolean)**
+
+Dispose
+
+```csharp
+protected void Dispose(bool disposing)
+```
+
+#### Parameters
+
+`disposing` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+if disposing
 
 ### <a id="methods-update"/>**Update(Double)**
 

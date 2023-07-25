@@ -8,6 +8,7 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents The Result <typeparamref name="T"/> to Controls
     /// </summary>
+    /// <typeparam name="T">Typeof return</typeparam>
     public struct ResultPrompt<T>
     {
         /// <summary>

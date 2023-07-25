@@ -12,6 +12,7 @@
 
 For each snapshot, the title is **name of projet** in folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples).
 
+- [Pipeline](#pipeline)
 - [Input - Basic](#input)
 - [Input - AutoComplete](#autocomplete)
 - [Input - MaskEdit](#maskedit)
@@ -31,6 +32,13 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 - [TreeView Select](#treeview-select)
 - [TreeView Multi-Select](#treeview-multi-select)
 - [Banner - ASCII-ART](#banner)
+
+### Pipeline
+
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [PipelineSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/PipelineSamples)
+
+**Not have snapshot**
+
 
 ### Input
 

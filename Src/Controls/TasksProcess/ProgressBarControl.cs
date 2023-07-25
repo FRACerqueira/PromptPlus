@@ -28,6 +28,7 @@ namespace PPlus.Controls
         private (int CursorLeft, int CursorTop) _spinnerCursor;
         private (int CursorLeft, int CursorTop) _progressbarCursor;
         private int lastline = -1;
+        private T _context;
 
         public ProgressBarControl(IConsoleControl console, ProgressBarOptions<T> options) : base(console, options)
         {
@@ -42,10 +43,12 @@ namespace PPlus.Controls
             {
                 throw new PromptPlusException("Not have UpdateHandler to run");
             }
+
+            _context = _options.ValueResult;
             _ticketStep = double.Parse(_options.Witdth.ToString()) / (int.Parse(_options.Maxvalue.ToString()) - int.Parse(_options.Minvalue.ToString()));
             _ctsesc = new CancellationTokenSource();
             _lnkcts = CancellationTokenSource.CreateLinkedTokenSource(_ctsesc.Token, cancellationToken);
-            _handler = new UpdateProgressBar<T>(_options.ValueResult, _options.StartWith, _options.Minvalue, _options.Maxvalue, "");
+            _handler = new UpdateProgressBar<T>(ref _context, _options.StartWith, _options.Minvalue, _options.Maxvalue, "");
             return _handler.Value.ToString();
         }
 
@@ -82,6 +85,7 @@ namespace PPlus.Controls
                     _process?.Dispose();
                     _lnkcts?.Dispose();
                     _ctsesc?.Dispose();
+                    _handler?.Dispose();
 
                 }
                 _disposed = true;

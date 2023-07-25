@@ -21,6 +21,7 @@ public interface IControlProgressBar<T> : IPromptControls<ResultProgessBar<T>>
 #### Type Parameters
 
 `T`<br>
+typeof return
 
 Implements IPromptControls&lt;ResultProgessBar&lt;T&gt;&gt;
 

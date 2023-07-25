@@ -79,6 +79,36 @@ namespace PPlus
             return (keyinfo.KeyChar == 13 && keyinfo.Modifiers == 0) || (keyinfo.KeyChar == 10 && keyinfo.Modifiers == 0) || (emacskeys  && keyinfo.Key == ConsoleKey.J && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
+
+        /// <summary>
+        /// Check ConsoleKeyInfo is Yes key
+        /// </summary>
+        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
+        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        public static bool IsYesResponseKey(this ConsoleKeyInfo keyinfo)
+        {
+            if (!PromptPlus.Config.YesChar.HasValue)
+            { 
+                return false;
+            }
+            return char.ToLowerInvariant(keyinfo.KeyChar) == char.ToLowerInvariant(PromptPlus.Config.YesChar.Value) && keyinfo.Modifiers == 0;
+        }
+
+        /// <summary>
+        /// Check ConsoleKeyInfo is Yes key
+        /// </summary>
+        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
+        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        public static bool IsNoResponseKey(this ConsoleKeyInfo keyinfo)
+        {
+            if (!PromptPlus.Config.NoChar.HasValue)
+            {
+                return false;
+            }
+            return char.ToLowerInvariant(keyinfo.KeyChar) == char.ToLowerInvariant(PromptPlus.Config.NoChar.Value) && keyinfo.Modifiers == 0;
+        }
+
+
         /// <summary>
         /// Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
         /// <br>Alt+L = Lowers the case of every character from the cursor's position to the end of the current words</br>

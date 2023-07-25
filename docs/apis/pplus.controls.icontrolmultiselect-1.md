@@ -21,6 +21,7 @@ public interface IControlMultiSelect<T> : IPromptControls<IEnumerable<T>>
 #### Type Parameters
 
 `T`<br>
+typeof return
 
 Implements IPromptControls&lt;IEnumerable&lt;T&gt;&gt;
 
