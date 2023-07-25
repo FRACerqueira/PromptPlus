@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PPlus.Controls
@@ -12,11 +14,11 @@ namespace PPlus.Controls
     /// Represents the event to task process with with conex value
     /// </summary>
     /// <typeparam name="T">Typeof Input</typeparam>
-    public class EventWaitProcess<T>
+    public class EventWaitProcess<T> : IDisposable
     {
-        private object _lock = new object();
         private T _value = default;
-        private bool _cancelnext;
+        private readonly SemaphoreSlim semaphore = new(1, 1);
+        private bool _disposed;
 
         private EventWaitProcess()
         {
@@ -26,7 +28,7 @@ namespace PPlus.Controls
         internal EventWaitProcess(ref T value, bool cancelnextalltasks)
         {
             _value = value;
-            _cancelnext = cancelnextalltasks;
+            CancelAllNextTasks = cancelnextalltasks;
         }
 
 
@@ -37,40 +39,54 @@ namespace PPlus.Controls
         { 
             get 
             {
-                lock (_lock)
-                { 
-                    return _value;
-                }
+                T aux;
+                semaphore.Wait();
+                aux = _value;
+                semaphore.Release();
+                return aux;
             }
             set
             {
-                lock (_lock)
-                {
-                    _value = value;
-                }
+                semaphore.Wait();
+                _value = value;
+                semaphore.Release();
             }
         }
 
         /// <summary>
         /// Get/Set Cancel all next tasks.
         /// </summary>
-        public bool CancelAllNextTasks
+        public bool CancelAllNextTasks { get; set; }
+
+
+        #region IDisposable
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        public void Dispose()
         {
-            get
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose
+        /// </summary>
+        /// <param name="disposing">if disposing</param> 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposed)
             {
-                lock (_lock)
+                if (disposing)
                 {
-                    return _cancelnext;
+                    semaphore.Dispose();
                 }
-            }
-            set
-            {
-                lock (_lock)
-                {
-                    _cancelnext = value;
-                }
+                _disposed = true;
             }
         }
+
+        #endregion
     }
 }
 

@@ -73,6 +73,7 @@ namespace PPlus.Controls
                     _process?.Dispose();
                     _lnkcts?.Dispose();
                     _ctsesc?.Dispose();
+                    _event?.Dispose();
 
                 }
                 _disposed = true;

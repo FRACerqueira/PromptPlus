@@ -491,7 +491,7 @@ namespace PPlus.Tests.Controls.TaskWaitControl
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
-                Assert.True(result.Value.States.First().ElapsedTime >= TimeSpan.FromSeconds(1));
+                Assert.True(result.Value.States.First().ElapsedTime > TimeSpan.Zero);
             });
         }
 

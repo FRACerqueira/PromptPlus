@@ -15,7 +15,7 @@ Namespace: PPlus.Controls
 Represents the event to task process with with conex value
 
 ```csharp
-public class EventWaitProcess<T>
+public class EventWaitProcess<T> : System.IDisposable
 ```
 
 #### Type Parameters
@@ -23,16 +23,17 @@ public class EventWaitProcess<T>
 `T`<br>
 Typeof Input
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [EventWaitProcess&lt;T&gt;](./pplus.controls.eventwaitprocess-1.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [EventWaitProcess&lt;T&gt;](./pplus.controls.eventwaitprocess-1.md)<br>
+Implements [IDisposable](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable)
 
 ## Properties
 
-### <a id="properties-cancelnextall"/>**CancelNextAll**
+### <a id="properties-cancelallnexttasks"/>**CancelAllNextTasks**
 
-Context value
+Get/Set Cancel all next tasks.
 
 ```csharp
-public bool CancelNextAll { get; private set; }
+public bool CancelAllNextTasks { get; set; }
 ```
 
 #### Property Value
@@ -53,13 +54,26 @@ T<br>
 
 ## Methods
 
-### <a id="methods-cancelallnexttasks"/>**CancelAllNextTasks()**
+### <a id="methods-dispose"/>**Dispose()**
 
-Set Cancel all next tasks.
+Dispose
 
 ```csharp
-public void CancelAllNextTasks()
+public void Dispose()
 ```
+
+### <a id="methods-dispose"/>**Dispose(Boolean)**
+
+Dispose
+
+```csharp
+protected void Dispose(bool disposing)
+```
+
+#### Parameters
+
+`disposing` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+if disposing
 
 
 - - -
