@@ -60,14 +60,10 @@ namespace PPlus.Controls
                     _runpipes[i] = new PipeRunningStatus(_runpipes[i].Pipe, PipeStatus.Waiting, TimeSpan.Zero);
                 }
             }
-            if (!_currentevent.CancelPipeLine)
-            {
-                _runpipes[index] = new PipeRunningStatus(_runpipes[index].Pipe, PipeStatus.Executed, _runpipes[index].Elapsedtime);
-            }
-            else
-            {
-                _runpipes[index] = new PipeRunningStatus(_runpipes[index].Pipe, PipeStatus.Canceled, _runpipes[index].Elapsedtime);
-            }
+            _runpipes[index] = new PipeRunningStatus(
+                _runpipes[index].Pipe, 
+                !_currentevent.CancelPipeLine ? PipeStatus.Executed : PipeStatus.Canceled, 
+                _runpipes[index].Elapsedtime);
             _currentevent = NextPipe(_currentevent, cancellationToken);
             return new ResultPrompt<ResultPipeline<T>>(new ResultPipeline<T>(_currentevent.Input,_runpipes.ToArray()), _currentevent.CancelPipeLine, _currentevent.CurrentPipe != null, false, false);
         }
@@ -86,11 +82,11 @@ namespace PPlus.Controls
                 to = _pipes[_pipes.IndexOf(cur) + 1];
             }
             var newevent = new EventPipe<T>(curevent.Input, from, cur, to, _pipes);
-            while (cur != null && _options.Conditions.ContainsKey(cur))
+            while (cur != null && _options.Conditions.TryGetValue(cur, out var condition))
             {
                 var sw = new Stopwatch();
                 sw.Start();
-                if (!_options.Conditions[cur].Invoke(newevent, cancellationToken))
+                if (!condition.Invoke(newevent, cancellationToken))
                 {
                     sw.Stop();
                     var index = _runpipes.FindIndex(x => x.Pipe == cur);
@@ -124,11 +120,11 @@ namespace PPlus.Controls
                 next = _pipes[1];
             }
             _currentevent = new EventPipe<T>(_options.CurrentValue, null, first, next, _pipes);
-            while (first != null &&  _options.Conditions.ContainsKey(first))
+            while (first != null &&  _options.Conditions.TryGetValue(first, out var condition))
             {
                 var sw = new Stopwatch();
                 sw.Start();
-                if (!_options.Conditions[first].Invoke(_currentevent, cancellationToken))
+                if (!condition.Invoke(_currentevent, cancellationToken))
                 {
                     sw.Stop();
                     var index = _runpipes.FindIndex(x => x.Pipe == _currentevent.CurrentPipe);
