@@ -260,12 +260,9 @@ namespace PPlus.Drivers
                 var parts = segment.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var (_, first, last, part) in parts.Enumerate())
                 {
-                    if (first)
+                    if (first && pos < padleft)
                     {
-                        if (pos < padleft)
-                        {
-                            pos = padleft;
-                        }
+                        pos = padleft;
                     }
                     if (part != null)
                     {
