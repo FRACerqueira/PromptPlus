@@ -74,6 +74,8 @@
 
 - [EventPipe&lt;T&gt;](./pplus.controls.eventpipe-1.md)
 
+- [EventWaitProcess&lt;T&gt;](./pplus.controls.eventwaitprocess-1.md)
+
 - [FilterMode](./pplus.controls.filtermode.md)
 
 - [FormatTime](./pplus.controls.formattime.md)
@@ -124,7 +126,7 @@
 
 - [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
 
-- [IControlWait](./pplus.controls.icontrolwait.md)
+- [IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
 
 - [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
@@ -159,6 +161,8 @@
 - [ResultProgessBar&lt;T&gt;](./pplus.controls.resultprogessbar-1.md)
 
 - [ResultPrompt&lt;T&gt;](./pplus.controls.resultprompt-1.md)
+
+- [ResultWaitProcess&lt;T&gt;](./pplus.controls.resultwaitprocess-1.md)
 
 - [SliderBarType](./pplus.controls.sliderbartype.md)
 

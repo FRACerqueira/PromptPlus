@@ -14,9 +14,9 @@ using System.Threading.Tasks;
 
 namespace PPlus.Controls
 {
-    internal class WaitControl : BaseControl<IEnumerable<StateProcess>>, IControlWait, IDisposable
+    internal class WaitControl<T> : BaseControl<ResultWaitProcess<T>>, IControlWait<T>, IDisposable
     {
-        private readonly WaitOptions _options;
+        private readonly WaitOptions<T> _options;
         private CancellationTokenSource _lnkcts;
         private CancellationTokenSource _ctsesc;
         private Task _process;
@@ -24,8 +24,11 @@ namespace PPlus.Controls
         private (int CursorLeft, int CursorTop) _initialCursor;
         private (int CursorLeft, int CursorTop) _spinnerCursor;
         private int _promptlines;
+        private EventWaitProcess<T> _event;
+        private T _context;
 
-        public WaitControl(IConsoleControl console, WaitOptions options) : base(console, options)
+
+        public WaitControl(IConsoleControl console, WaitOptions<T> options) : base(console, options)
         {
             _options = options;
         }
@@ -36,6 +39,8 @@ namespace PPlus.Controls
             {
                 throw new PromptPlusException("Not have process to run");
             }
+            _context = _options.Context;
+            _event = new EventWaitProcess<T>(ref _context, false);
             _ctsesc = new CancellationTokenSource();
             _lnkcts = CancellationTokenSource.CreateLinkedTokenSource(_ctsesc.Token, cancellationToken);
             return string.Empty;
@@ -78,7 +83,7 @@ namespace PPlus.Controls
 
         #region IControlWait
 
-        public IControlWait Interaction<T>(IEnumerable<T> values, Action<IControlWait, T> action)
+        public IControlWait<T> Interaction<T1>(IEnumerable<T1> values, Action<IControlWait<T>, T1> action)
         {
             foreach (var item in values)
             {
@@ -86,30 +91,37 @@ namespace PPlus.Controls
             }
             return this;
         }
-        public IControlWait ShowElapsedTime()
+        public IControlWait<T> ShowElapsedTime()
         {
             _options.ShowElapsedTime = true;
             return this;
         }
 
-        public IControlWait Config(Action<IPromptConfig> context)
+        public IControlWait<T> Context(T value)
+        {
+            _options.Context = value;
+            return this;
+        }
+
+
+        public IControlWait<T> Config(Action<IPromptConfig> context)
         {
             context?.Invoke(_options);
             return this;
         }
-        public IControlWait Finish(string value)
+        public IControlWait<T> Finish(string value)
         {
             _options.Finish = value;
             return this;
         }
 
-        public IControlWait TaskTitle(string value)
+        public IControlWait<T> TaskTitle(string value)
         {
             _options.OverWriteTitlekName = value;
             return this;
         }
 
-        public IControlWait Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
+        public IControlWait<T> Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
         {
             if (spinnersType == SpinnersType.Custom && customspinner.Any())
             {
@@ -128,7 +140,7 @@ namespace PPlus.Controls
         }
 
 
-        public IControlWait MaxDegreeProcess(int value)
+        public IControlWait<T> MaxDegreeProcess(int value)
         {
             if (value < 1)
             {
@@ -138,12 +150,12 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlWait AddStep(StepMode stepMode, params Action<CancellationToken>[] process)
+        public IControlWait<T> AddStep(StepMode stepMode, params Action<EventWaitProcess<T>, CancellationToken>[] process)
         {
             return AddStep(stepMode, string.Empty, string.Empty, process);
         }
 
-        public IControlWait AddStep(StepMode stepMode, string id, string description, params Action<CancellationToken>[] process)
+        public IControlWait<T> AddStep(StepMode stepMode, string id, string description, params Action<EventWaitProcess<T>,CancellationToken>[] process)
         {
             foreach (var item in process)
             {
@@ -167,7 +179,7 @@ namespace PPlus.Controls
             _process ??= Task.Run(() => RunAllTasks(_lnkcts.Token), CancellationToken.None);
         }
 
-        public override ResultPrompt<IEnumerable<StateProcess>> TryResult(CancellationToken cancellationToken)
+        public override ResultPrompt<ResultWaitProcess<T>> TryResult(CancellationToken cancellationToken)
         {
             var abort = false;
             while (!_lnkcts.IsCancellationRequested)
@@ -203,10 +215,10 @@ namespace PPlus.Controls
                 abort = true;
                 _ctsesc.Cancel();
             }
-            return new ResultPrompt<IEnumerable<StateProcess>>(_options.States, abort);
+            return new ResultPrompt<ResultWaitProcess<T>>(new ResultWaitProcess<T>(_event.Context,_options.States.ToArray()), abort);
         }
 
-        public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<StateProcess> result, bool aborted)
+        public override void FinishTemplate(ScreenBuffer screenBuffer, ResultWaitProcess<T> result, bool aborted)
         {
             _ctsesc.Cancel();
             if (aborted)
@@ -282,7 +294,7 @@ namespace PPlus.Controls
                     {
                         samedesc = (firstdesc == _options.States[i].Description);
                     }
-                    if (!cancelationtoken.IsCancellationRequested)
+                    if (!cancelationtoken.IsCancellationRequested && !_event.CancelAllNextTasks)
                     {
                         var act = _options.Steps[i];
                         using var waitHandle = new AutoResetEvent(false);
@@ -297,7 +309,7 @@ namespace PPlus.Controls
                             tm.Start();
                             try
                             {
-                                act.Invoke(cancelationtoken);
+                                act.Invoke(_event,cancelationtoken);
                                 actsta = cancelationtoken.IsCancellationRequested? TaskStatus.Canceled: TaskStatus.RanToCompletion;
                             }
                             catch (Exception ex)

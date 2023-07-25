@@ -22,6 +22,18 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
+### <a id="properties-elapsedtime"/>**Elapsedtime**
+
+Get Elapsedtime pipe
+
+```csharp
+public TimeSpan Elapsedtime { get; }
+```
+
+#### Property Value
+
+[TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
+
 ### <a id="properties-pipe"/>**Pipe**
 
 Get pipes id

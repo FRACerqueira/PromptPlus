@@ -9,7 +9,12 @@ namespace PPlus.Controls
     /// <typeparam name="T">Typeof Input</typeparam>
     public class EventPipe<T>
     {
-        internal EventPipe(T value,string? from, string? current, string? to, ReadOnlyCollection<string> listpipes)
+        private EventPipe()
+        {
+            throw new PromptPlusException("EventPipe CTOR NotImplemented");
+        }
+
+        internal EventPipe(ref T value,string? from, string? current, string? to, ReadOnlyCollection<string> listpipes)
         {
             FromPipe = from;
             CurrentPipe = current;

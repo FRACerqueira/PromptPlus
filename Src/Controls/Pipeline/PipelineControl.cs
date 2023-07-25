@@ -14,7 +14,7 @@ namespace PPlus.Controls
         private EventPipe<T> _currentevent;
         private ReadOnlyCollection<string> _pipes;
         private List<PipeRunningStatus> _runpipes;
-
+        private T _context;
         public PipelineControl(IConsoleControl console, PipelineOptions<T> options) : base(console, options)
         {
             _options = options;
@@ -65,14 +65,14 @@ namespace PPlus.Controls
                 !_currentevent.CancelPipeLine ? PipeStatus.Executed : PipeStatus.Canceled, 
                 _runpipes[index].Elapsedtime);
             _currentevent = NextPipe(_currentevent, cancellationToken);
-            return new ResultPrompt<ResultPipeline<T>>(new ResultPipeline<T>(_currentevent.Input,_runpipes.ToArray()), _currentevent.CancelPipeLine, _currentevent.CurrentPipe != null, false, false);
+            return new ResultPrompt<ResultPipeline<T>>(new ResultPipeline<T>(_currentevent.Input, _runpipes.ToArray()), _currentevent.CancelPipeLine, _currentevent.CurrentPipe != null, false, false);
         }
 
         private EventPipe<T> NextPipe(EventPipe<T> curevent, CancellationToken cancellationToken)
         {
             if (curevent.ToPipe == null || curevent.CurrentPipe == null)
             {
-                return new EventPipe<T>(curevent.Input, curevent.CurrentPipe, null, null, _pipes);
+                return new EventPipe<T>(ref _context, curevent.CurrentPipe, null, null, _pipes);
             }
             var from = curevent.CurrentPipe;
             var cur = curevent.ToPipe;
@@ -81,7 +81,7 @@ namespace PPlus.Controls
             {
                 to = _pipes[_pipes.IndexOf(cur) + 1];
             }
-            var newevent = new EventPipe<T>(curevent.Input, from, cur, to, _pipes);
+            var newevent = new EventPipe<T>(ref _context, from, cur, to, _pipes);
             while (cur != null && _options.Conditions.TryGetValue(cur, out var condition))
             {
                 var sw = new Stopwatch();
@@ -105,9 +105,10 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
+            _context = _options.CurrentValue;
             if (_options.Pipes.Count == 0)
             {
-                _currentevent = new EventPipe<T>(_options.CurrentValue, null, null, null, _pipes);
+                _currentevent = new EventPipe<T>(ref _context, null, null, null, _pipes);
                 return string.Empty;
             }
             _runpipes = new List<PipeRunningStatus>();
@@ -119,7 +120,7 @@ namespace PPlus.Controls
             {
                 next = _pipes[1];
             }
-            _currentevent = new EventPipe<T>(_options.CurrentValue, null, first, next, _pipes);
+            _currentevent = new EventPipe<T>(ref _context, null, first, next, _pipes);
             while (first != null &&  _options.Conditions.TryGetValue(first, out var condition))
             {
                 var sw = new Stopwatch();

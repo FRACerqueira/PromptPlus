@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace PPlus.Controls
 {
-    internal class WaitOptions : BaseOptions
+    internal class WaitOptions<T> : BaseOptions
     {
         private WaitOptions()
         {
@@ -22,11 +22,12 @@ namespace PPlus.Controls
             Steps = new();
             States = new();
         }
+        public T Context { get; set; } = default;
         public TimeSpan TimeDelay { get; set; }
         public string OverWriteTitlekName { get; set; }
         public bool WaitTime { get; set; }
         public bool ShowCountdown { get; set; }
-        public List<Action<CancellationToken>> Steps { get; set; }
+        public List<Action<EventWaitProcess<T>, CancellationToken>> Steps { get; set; }
         public List<StateProcess> States { get; set; }
         public Style SpinnerStyle { get; set; } = PromptPlus.StyleSchema.Prompt();
         public string? Finish { get; set; }

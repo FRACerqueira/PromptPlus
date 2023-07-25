@@ -23,23 +23,23 @@ namespace WaitTasksSamples
                 .Run();
 
             PromptPlus.DoubleDash($"Control:WaitProcess - normal usage sequencial mode");
-            var wt1 = PromptPlus.WaitProcess("wait process", "main desc")
+            var wt1 = PromptPlus.WaitProcess<object>("wait process", "main desc")
                 .Finish($"end wait all process")
                 .Interaction(steps1, (ctrl, item) =>
                 {
                     ctrl.AddStep(StepMode.Sequential, $"id{item}",null,
-                            (cts) =>
+                            (eventw, cts) =>
                             {
                                 cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(item));
                             });
                 })
                 .ShowElapsedTime()
                 .AddStep(StepMode.Sequential, "id5-10", "Desc 5 and 10",
-                    (cts) =>
+                    (eventw, cts) =>
                     {
                         cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(5));
                     },
-                    (cts) =>
+                    (eventw, cts) =>
                     {
                         cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(10));
                     })
@@ -47,7 +47,7 @@ namespace WaitTasksSamples
 
             if (!wt1.IsAborted)
             {
-                foreach (var item in wt1.Value)
+                foreach (var item in wt1.Value.States)
                 {
                     PromptPlus.WriteLine($"You task {item.Id} - {item.Description}, {item.Status}, {item.ElapsedTime}, {item.StepMode}");
                 }
@@ -63,24 +63,24 @@ namespace WaitTasksSamples
 
 
             PromptPlus.DoubleDash($"Control:WaitProcess - normal usage Parallel mode");
-            wt1 = PromptPlus.WaitProcess("wait process", "main desc")
+            wt1 = PromptPlus.WaitProcess<object>("wait process", "main desc")
                 .Finish($"end wait all process")
                 .TaskTitle("MyProcess")
                 .Interaction(steps2, (ctrl, item) =>
                 {
                     ctrl.AddStep(StepMode.Parallel, $"id{item}",null,
-                            (cts) =>
+                            (eventw, cts) =>
                             {
                                 cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(item));
                             });
                 })
                 .ShowElapsedTime()
                 .AddStep(StepMode.Parallel, "id5-10", "Desc 5 and 10",
-                    (cts) =>
+                    (eventw, cts) =>
                     {
                         cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(5));
                     },
-                    (cts) =>
+                    (eventw, cts) =>
                     {
                         cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(10));
                     })
@@ -88,7 +88,7 @@ namespace WaitTasksSamples
 
             if (!wt1.IsAborted)
             {
-                foreach (var item in wt1.Value)
+                foreach (var item in wt1.Value.States)
                 {
                     PromptPlus.WriteLine($"You task {item.Id} - {item.Description}, {item.Status}, {item.ElapsedTime}, {item.StepMode}");
                 }

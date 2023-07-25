@@ -20,7 +20,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("UpdateProgressBar CTOR NotImplemented");
         }
 
-        internal UpdateProgressBar(T context, double value,double min, double max, string desc)
+        internal UpdateProgressBar(ref T context, double value,double min, double max, string desc)
         {
             _lastvalue = null;
             _lastdescription = desc;

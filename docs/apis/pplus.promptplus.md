@@ -1935,12 +1935,36 @@ The token to monitor for cancellation requests.
 
 <br>An oject that describes the System.ConsoleKey constant and Unicode character,<br>if any, that correspond to the pressed console key. The System.ConsoleKeyInfo<br>t also describes, in a bitwise combination of System.ConsoleModifiers values,<br>er one or more Shift, Alt, or Ctrl modifier keys was pressed simultaneously<br>with the console key.
 
+### <a id="methods-waitprocess"/>**WaitProcess&lt;T&gt;(String, String)**
+
+Create Wait Control
+
+```csharp
+public static IControlWait<T> WaitProcess<T>(string prompt, string description)
+```
+
+#### Type Parameters
+
+`T`<br>
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+#### Returns
+
+[IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
+
 ### <a id="methods-waitprocess"/>**WaitProcess(String, String)**
 
 Create Wait Control
 
 ```csharp
-public static IControlWait WaitProcess(string prompt, string description)
+public static IControlWait<Object> WaitProcess(string prompt, string description)
 ```
 
 #### Parameters
@@ -1953,14 +1977,41 @@ The description text to write
 
 #### Returns
 
-IEnumerable [StateProcess](./pplus.controls.stateprocess.md) after Run method. [IControlWait](./pplus.controls.icontrolwait.md)
+[IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
+
+### <a id="methods-waitprocess"/>**WaitProcess&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+
+Create Wait Control
+
+```csharp
+public static IControlWait<T> WaitProcess<T>(string prompt, string description, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
 
 ### <a id="methods-waitprocess"/>**WaitProcess(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Wait Control
 
 ```csharp
-public static IControlWait WaitProcess(string prompt, string description, Action<IPromptConfig> config)
+public static IControlWait<Object> WaitProcess(string prompt, string description, Action<IPromptConfig> config)
 ```
 
 #### Parameters
@@ -1976,7 +2027,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IEnumerable [StateProcess](./pplus.controls.stateprocess.md) after Run method. [IControlWait](./pplus.controls.icontrolwait.md)
+[IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
 
 ### <a id="methods-waittimer"/>**WaitTimer(String, TimeSpan, SpinnersType, Boolean, Action&lt;IPromptConfig&gt;, Nullable&lt;CancellationToken&gt;)**
 
