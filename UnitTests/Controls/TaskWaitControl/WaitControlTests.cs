@@ -342,24 +342,41 @@ namespace PPlus.Tests.Controls.TaskWaitControl
         [Fact]
         public void Should_EventChangeConext()
         {
+            var root = new object();
             var ctrl = (WaitControl<int>)PromptPlus.WaitProcess<int>("P", "D")
                 .MaxDegreeProcess(2)
                 .Context(0)
                 .AddStep(StepMode.Parallel, (evt, cts) =>
                 {
-                    evt.Context++;
+                    //not thread-safed
+                    lock (root)
+                    {
+                        evt.Context++;
+                    }
                 })
                 .AddStep(StepMode.Parallel, (evt, cts) =>
                 {
-                    evt.Context++;
+                    //not thread-safed
+                    lock (root)
+                    {
+                        evt.Context++;
+                    }
                 })
                 .AddStep(StepMode.Parallel, (evt, cts) =>
                 {
-                    evt.Context++;
+                    //not thread-safed
+                    lock (root)
+                    {
+                        evt.Context++;
+                    }
                 })
                 .AddStep(StepMode.Parallel, (evt, cts) =>
                 {
-                    evt.Context++;
+                    //not thread-safed
+                    lock (root)
+                    {
+                        evt.Context++;
+                    }
                 });
 
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
