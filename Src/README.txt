@@ -34,6 +34,8 @@ PromptPlus was developed in c# with target frameworks:
 
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
+- Changed WaitControl to take context value in tasks and return context in result
+    - There are small break-chages  
 - Add Answer key check equals "Yes"/"No" using config values
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)

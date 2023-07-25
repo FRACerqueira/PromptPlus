@@ -13,6 +13,8 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 ## What news in V4.0.2
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
+- Changed WaitControl to take context value in tasks and return context in result
+    - There are small break-chages  
 - Add Answer key check equals "Yes"/"No" using config values
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
