@@ -128,7 +128,7 @@ public void Dispose()
 Dispose
 
 ```csharp
-protected void Dispose(bool disposing)
+protected internal void Dispose(bool disposing)
 ```
 
 #### Parameters

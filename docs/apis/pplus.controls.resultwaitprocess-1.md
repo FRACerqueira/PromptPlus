@@ -65,6 +65,22 @@ ResultWaitProcess()
 
 Do not use this constructor!
 
+### <a id="constructors-.ctor"/>**ResultWaitProcess(T, StateProcess[])**
+
+Create a ResultPipeline.Purpose only for unit testing
+
+```csharp
+ResultWaitProcess(T conext, StateProcess[] stateprocess)
+```
+
+#### Parameters
+
+`conext` T<br>
+The value context
+
+`stateprocess` [StateProcess[]](./pplus.controls.stateprocess.md)<br>
+The state of process
+
 
 - - -
 [**Back to List Api**](./apis.md)

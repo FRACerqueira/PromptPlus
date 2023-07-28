@@ -72,6 +72,25 @@ PipeRunningStatus()
 
 Do not use this constructor!
 
+### <a id="constructors-.ctor"/>**PipeRunningStatus(String, PipeStatus, TimeSpan)**
+
+Create a PipeRunningStatus. Purpose only for unit testing
+
+```csharp
+PipeRunningStatus(string pipe, PipeStatus status, TimeSpan elapsedtime)
+```
+
+#### Parameters
+
+`pipe` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The pipe id
+
+`status` [PipeStatus](./pplus.controls.pipestatus.md)<br>
+The status
+
+`elapsedtime` [TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
+The elapsedtime
+
 
 - - -
 [**Back to List Api**](./apis.md)

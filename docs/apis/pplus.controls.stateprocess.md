@@ -108,6 +108,28 @@ StateProcess()
 
 Do not use this constructor!
 
+### <a id="constructors-.ctor"/>**StateProcess(String, String, TaskStatus, Exception, TimeSpan, StepMode)**
+
+Create The Process state.Purpose only for unit testing
+
+```csharp
+StateProcess(string id, string description, TaskStatus status, Exception exceptionProcess, TimeSpan elapsedtime, StepMode stepMode)
+```
+
+#### Parameters
+
+`id` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`status` [TaskStatus](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.taskstatus)<br>
+
+`exceptionProcess` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+
+`elapsedtime` [TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan)<br>
+
+`stepMode` [StepMode](./pplus.controls.stepmode.md)<br>
+
 
 - - -
 [**Back to List Api**](./apis.md)

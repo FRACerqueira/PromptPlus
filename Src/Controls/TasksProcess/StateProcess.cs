@@ -24,7 +24,10 @@ namespace PPlus.Controls
             throw new PromptPlusException("StateProcess CTOR NotImplemented");
         }
 
-        internal StateProcess(string? id, string? description, TaskStatus status,Exception exceptionProcess, TimeSpan elapsedtime, StepMode stepMode)
+        /// <summary>
+        /// Create The Process state.Purpose only for unit testing
+        /// </summary>
+        public StateProcess(string? id, string? description, TaskStatus status,Exception exceptionProcess, TimeSpan elapsedtime, StepMode stepMode)
         {
             Id = id;
             Description = description;

@@ -74,7 +74,7 @@ namespace PPlus.Controls
         /// Dispose
         /// </summary>
         /// <param name="disposing">if disposing</param> 
-        protected virtual void Dispose(bool disposing)
+        internal protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
             {

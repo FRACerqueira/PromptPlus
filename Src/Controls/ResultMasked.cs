@@ -21,7 +21,12 @@ namespace PPlus.Controls
             throw new PromptPlusException("ResultMasked CTOR NotImplemented");
         }
 
-        internal ResultMasked(string value, string valueMask)
+        /// <summary>
+        /// Create a ResultMasked. Purpose only for unit testing
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="valueMask"></param>
+        public ResultMasked(string value, string valueMask)
         {
             Input = value;
             Masked = valueMask;

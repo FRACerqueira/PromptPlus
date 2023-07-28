@@ -65,6 +65,22 @@ ResultProgessBar()
 
 Do not use this constructor!
 
+### <a id="constructors-.ctor"/>**ResultProgessBar(T, Double)**
+
+Create a ResultProgessBar.Purpose only for unit testing
+
+```csharp
+ResultProgessBar(T conext, double lastvalue)
+```
+
+#### Parameters
+
+`conext` T<br>
+The value context
+
+`lastvalue` [Double](https://docs.microsoft.com/en-us/dotnet/api/system.double)<br>
+The last value of bar
+
 
 - - -
 [**Back to List Api**](./apis.md)

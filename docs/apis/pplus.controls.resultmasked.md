@@ -60,6 +60,20 @@ ResultMasked()
 
 Do not use this constructor!
 
+### <a id="constructors-.ctor"/>**ResultMasked(String, String)**
+
+Create a ResultMasked. Purpose only for unit testing
+
+```csharp
+ResultMasked(string value, string valueMask)
+```
+
+#### Parameters
+
+`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
+`valueMask` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+
 
 - - -
 [**Back to List Api**](./apis.md)

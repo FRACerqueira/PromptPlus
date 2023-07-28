@@ -576,7 +576,14 @@ namespace PPlus.Controls
                         if (i < valuestep && valuestep > 0)
                         {
                             var top = ConsolePlus.CursorTop;
-                            qtd = ConsolePlus.Write(aux[i].Text[0].ToString(), OnStyle.Foreground(aux[i].Style.Foreground));
+                            if (aux[i].Text[0].Equals(' '))
+                            {
+                                qtd = ConsolePlus.Write(aux[i].Text[0].ToString(), OnStyle.Background(aux[i].Style.Foreground));
+                            }
+                            else
+                            {
+                                qtd = ConsolePlus.Write(aux[i].Text[0].ToString(), OnStyle.Foreground(aux[i].Style.Foreground));
+                            }
                             if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                             {
                                 var dif = top + qtd - ConsolePlus.BufferHeight;
