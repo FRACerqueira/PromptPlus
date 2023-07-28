@@ -29,7 +29,13 @@ PromptPlus was developed in c# with target frameworks:
 - .NET 6
 - .NET 7
 
-*** What news in V4.0.2 *** 
+*** Whats news in V4.0.3 *** 
+---------------------------
+- Fixed bug Control ProgressBar
+    - Not show gradient when setted ProgressBarType.Fill   
+- Improve testability of result classes/struct (Internal to public)
+
+*** Whats news in V4.0.2 *** 
 ---------------------------
 
 - New Control Pipeline
@@ -40,7 +46,7 @@ PromptPlus was developed in c# with target frameworks:
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
 
-*** What news in V4.0.1 ***
+*** Whats news in V4.0.1 ***
 ---------------------------
 - Fixed duplicate tooltip in calendar
 - New console engine

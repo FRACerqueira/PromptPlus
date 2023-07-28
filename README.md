@@ -32,7 +32,12 @@
 - [License](#license)
 - [API Reference](https://fracerqueira.github.io/PromptPlus/apis/apis.html)
 
-## What news in V4.0.2
+## Whats news in V4.0.3
+- Fixed bug Control ProgressBar
+    - Not show gradient when setted ProgressBarType.Fill   
+- Improve testability of result classes/struct (Internal to public)
+
+## Whats news in V4.0.2
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
 - Changed WaitControl to take context value in tasks and return context in result
@@ -41,7 +46,7 @@
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
 
-## What's News in V4.0.1
+## Whats news in V4.0.1
 
 ### Newest controls and color improvement and layout
 
