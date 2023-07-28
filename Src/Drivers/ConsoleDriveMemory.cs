@@ -87,6 +87,8 @@ namespace PPlus.Drivers
             _cursortop = top;
         }
 
+        public bool IsLegacy => _profile.IsLegacy;
+
         public bool IsTerminal => _profile.IsTerminal;
 
         public bool IsUnicodeSupported => _profile.IsUnicodeSupported;
@@ -95,7 +97,17 @@ namespace PPlus.Drivers
 
         public ColorSystem ColorDepth => _profile.ColorDepth;
 
-        public Style DefaultStyle => _profile.DefaultStyle;
+        public Style DefaultStyle
+        {
+            get
+            {
+                return _profile.DefaultStyle;
+            }
+            set
+            {
+                _profile.DefaultStyle = value;
+            }
+        }
 
         public byte PadLeft => _profile.PadLeft;
 
@@ -105,9 +117,31 @@ namespace PPlus.Drivers
 
         public int BufferHeight => _profile.BufferHeight;
 
-        public ConsoleColor ForegroundColor { get => _profile.ForegroundColor; set => _profile.ForegroundColor = value; }
+        public ConsoleColor ForegroundColor
+        {
+            get
+            {
+                return _profile.ForegroundColor;
+            }
+            set
+            {
+                _profile.ForegroundColor = value;
+                _profile.DefaultStyle = new Style(_profile.ForegroundColor, _profile.BackgroundColor, _profile.OverflowStrategy);
+            }
+        }
 
-        public ConsoleColor BackgroundColor { get => _profile.BackgroundColor; set => _profile.BackgroundColor = value; }
+        public ConsoleColor BackgroundColor
+        {
+            get
+            {
+                return _profile.BackgroundColor;
+            }
+            set
+            {
+                _profile.BackgroundColor = value;
+                _profile.DefaultStyle = new Style(_profile.ForegroundColor, _profile.BackgroundColor, _profile.OverflowStrategy);
+            }
+        }
 
         public Overflow OverflowStrategy => _profile.OverflowStrategy;
 

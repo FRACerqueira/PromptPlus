@@ -15,8 +15,9 @@ namespace PPlus.Drivers
         private static ConsoleColor? _defaultForegroundColor;
         private static ConsoleColor? _defaultBackgroundColor;
 
-        public ProfileDriveConsole(ConsoleColor defaultForegroundColor, ConsoleColor defaultBackgroundColor, bool isTerminal, bool unicodeSupported, bool supportsAnsi, ColorSystem colorDepth, Overflow overflowStrategy = Overflow.None, byte padleft = 0, byte padright = 0)
-        { 
+        public ProfileDriveConsole(ConsoleColor defaultForegroundColor, ConsoleColor defaultBackgroundColor, bool isTerminal, bool unicodeSupported, bool supportsAnsi,bool islegacy, ColorSystem colorDepth, Overflow overflowStrategy = Overflow.None, byte padleft = 0, byte padright = 0)
+        {
+            IsLegacy = islegacy;
             IsTerminal = isTerminal;
             IsUnicodeSupported = unicodeSupported;
             ColorDepth = colorDepth;
@@ -41,6 +42,8 @@ namespace PPlus.Drivers
 
         public string Provider => "Console";
 
+        public bool IsLegacy { get; private set; }
+
         public bool IsTerminal { get; private set; }
 
         public bool IsUnicodeSupported { get; private set; }
@@ -53,7 +56,11 @@ namespace PPlus.Drivers
         {   get
             {
                 return _defaultStyle;
-            }                
+            }
+            set
+            {
+                _defaultStyle = value;
+            }
         }
 
         public byte PadLeft { get; private set; }

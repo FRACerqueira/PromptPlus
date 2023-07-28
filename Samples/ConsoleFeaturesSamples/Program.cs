@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using PPlus;
 using PPlus.Controls;
@@ -10,9 +11,23 @@ namespace ConsoleFeaturesSamples
     {
         static void Main()
         {
+            PromptPlus.Clear();
+
             PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+
+            var oldbd = PromptPlus.BackgroundColor;
+            PromptPlus.BackgroundColor = Color.Red;
+            PromptPlus.AlternateScreen()
+                .CustomAction((cts) =>
+                {
+                    PromptPlus.Clear();
+                    PromptPlus.WaitTimer("Teste", TimeSpan.FromSeconds(5));
+                })
+                .Run();
+            PromptPlus.BackgroundColor = oldbd;
+
 
             PromptPlus.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
             PromptPlus.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
@@ -42,6 +57,7 @@ namespace ConsoleFeaturesSamples
                 cfg.BackgroundColor = ConsoleColor.Blue;
                 cfg.Culture = new CultureInfo("en-us");
             });
+
 
             PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
             PromptPlus.WriteLine($"IsTerminal: {PromptPlus.IsTerminal}");
@@ -119,6 +135,7 @@ namespace ConsoleFeaturesSamples
                     PromptPlus.WriteLine("|");
                 }
             }
+
             if (PromptPlus.ColorDepth >= ColorSystem.TrueColor)
             {
                 PromptPlus.WriteLine();

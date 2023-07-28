@@ -28,6 +28,12 @@ namespace PPlus
         /// </summary>
         public bool IsTerminal { get; set; }
 
+
+        /// <summary>
+        /// Get/Set Terminal is legacy.
+        /// </summary>
+        public bool IsLegacy { get; set; }
+
         /// <summary>
         /// Get/Set Unicode Supported.
         /// </summary>

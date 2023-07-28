@@ -24,6 +24,11 @@ namespace PPlus
         bool IsTerminal { get; }
 
         /// <summary>
+        /// Get Terminal is legacy.
+        /// </summary>
+        bool IsLegacy { get; }
+
+        /// <summary>
         /// Get Unicode Supported.
         /// </summary>
         bool IsUnicodeSupported { get; }
@@ -41,7 +46,7 @@ namespace PPlus
         /// <summary>
         /// Get default <see cref="Style"/> console.
         /// </summary>
-        Style DefaultStyle { get; }
+        Style DefaultStyle { get; internal set; }
 
         /// <summary>
         /// Get screen margin left

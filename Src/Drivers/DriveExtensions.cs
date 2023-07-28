@@ -39,14 +39,14 @@ namespace PPlus
         /// </summary>
         public static void Reset()
         {
-            var (localSupportsAnsi, _) = AnsiDetector.Detect();
+            var (localSupportsAnsi, localIsLegacy) = AnsiDetector.Detect();
             var termdetect = TerminalDetector.Detect();
             var colordetect = ColorSystemDetector.Detect(localSupportsAnsi);
             var unicodesupported = false;
             if (IsRunningInUnitTest)
             {
                 RunningConsoleMemory = true;
-                var drvprofile = new ProfileDriveMemory(DefaultForegroundColor, DefaultBackgroundColor, true, true, true, ColorSystem.TrueColor, Overflow.None, 0, 0);
+                var drvprofile = new ProfileDriveMemory(DefaultForegroundColor, DefaultBackgroundColor, true, true, true, localIsLegacy, ColorSystem.TrueColor, Overflow.None, 0, 0);
                 _consoledrive = new ConsoleDriveMemory(drvprofile);
             }
             else
@@ -71,7 +71,7 @@ namespace PPlus
                 {
                     unicodesupported = true;
                 }
-                var drvprofile = new ProfileDriveConsole(DefaultForegroundColor, DefaultBackgroundColor, termdetect, unicodesupported, localSupportsAnsi, colordetect, Overflow.None, 0, 0);
+                var drvprofile = new ProfileDriveConsole(DefaultForegroundColor, DefaultBackgroundColor, termdetect, unicodesupported, localSupportsAnsi, localIsLegacy, colordetect, Overflow.None, 0, 0);
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     _consoledrive = new ConsoleDriveWindows(drvprofile);
@@ -270,7 +270,10 @@ namespace PPlus
         public static ConsoleColor ForegroundColor 
         {
             get { return Console.ForegroundColor; }
-            set { Console.ForegroundColor = value; } 
+            set 
+            {
+                Console.ForegroundColor = value; 
+            } 
         }
 
         /// <summary>
@@ -279,7 +282,11 @@ namespace PPlus
         public static ConsoleColor BackgroundColor 
         {
             get { return Console.BackgroundColor; }
-            set { Console.BackgroundColor = value; }
+            set 
+            { 
+                Console.BackgroundColor = value;
+                _styleschema.UpdateBackgoundColor(Console.BackgroundColor);
+            }
         }
 
         /// <summary>
@@ -590,6 +597,7 @@ namespace PPlus
 
             var param = new ProfileSetup
             {
+                IsLegacy = _consoledrive.IsLegacy,
                 Culture = CultureInfo.CurrentCulture,
                 ColorDepth = RunningConsoleMemory ? ColorSystem.TrueColor : _consoledrive.ColorDepth,
                 IsTerminal = RunningConsoleMemory || _consoledrive.IsTerminal,
@@ -606,17 +614,17 @@ namespace PPlus
 
             if (RunningConsoleMemory)
             {
-                var drvprofile = new ProfileDriveMemory(param.ForegroundColor, param.BackgroundColor, param.IsTerminal, param.IsUnicodeSupported, param.SupportsAnsi, param.ColorDepth, param.OverflowStrategy, param.PadLeft, param.PadRight);
+                var drvprofile = new ProfileDriveMemory(param.ForegroundColor, param.BackgroundColor, param.IsTerminal, param.IsUnicodeSupported, param.SupportsAnsi, param.IsLegacy, param.ColorDepth, param.OverflowStrategy, param.PadLeft, param.PadRight);
                 _consoledrive = new ConsoleDriveMemory(drvprofile);
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                var drvprofile = new ProfileDriveConsole(param.ForegroundColor, param.BackgroundColor, param.IsTerminal, param.IsUnicodeSupported, param.SupportsAnsi, param.ColorDepth, param.OverflowStrategy, param.PadLeft, param.PadRight);
+                var drvprofile = new ProfileDriveConsole(param.ForegroundColor, param.BackgroundColor, param.IsTerminal, param.IsUnicodeSupported, param.SupportsAnsi, param.IsLegacy, param.ColorDepth, param.OverflowStrategy, param.PadLeft, param.PadRight);
                 _consoledrive = new ConsoleDriveWindows(drvprofile);
             }
             else
             {
-                var drvprofile = new ProfileDriveConsole(param.ForegroundColor, param.BackgroundColor, param.IsTerminal, param.IsUnicodeSupported, param.SupportsAnsi, param.ColorDepth, param.OverflowStrategy, param.PadLeft, param.PadRight);
+                var drvprofile = new ProfileDriveConsole(param.ForegroundColor, param.BackgroundColor, param.IsTerminal, param.IsUnicodeSupported, param.SupportsAnsi, param.IsLegacy, param.ColorDepth, param.OverflowStrategy, param.PadLeft, param.PadRight);
                 _consoledrive = new ConsoleDriveLinux(drvprofile);
             }
             _consoledrive.CursorVisible = true;
