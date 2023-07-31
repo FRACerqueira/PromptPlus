@@ -43,9 +43,9 @@ namespace PPlus.Drivers
 
         public bool IsUnicodeSupported { get; private set; }
 
-        public bool SupportsAnsi { get; private set; }
+        public bool SupportsAnsi { get; }
 
-        public ColorSystem ColorDepth { get; private set; }
+        public ColorSystem ColorDepth { get; }
 
         public Style DefaultStyle
         {
@@ -59,9 +59,9 @@ namespace PPlus.Drivers
             }
         }
 
-        public byte PadLeft { get; private set; }
+        public byte PadLeft { get; set; }
 
-        public byte PadRight { get; private set; }
+        public byte PadRight { get; set; }
 
         public int BufferWidth
         {

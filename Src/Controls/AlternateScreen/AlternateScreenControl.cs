@@ -4,14 +4,7 @@
 // ***************************************************************************************
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using PPlus.Controls.AlternateScreen;
 using PPlus.Controls.Objects;
 
 namespace PPlus.Controls
@@ -37,6 +30,18 @@ namespace PPlus.Controls
         public IControlAlternateScreen Config(Action<IPromptConfig> context)
         {
             context?.Invoke(_options);
+            return this;
+        }
+
+        public IControlAlternateScreen ForegroundColor(ConsoleColor value)
+        {
+            _options.ForeColor = value;
+            return this;
+        }
+
+        public IControlAlternateScreen BackgroundColor(ConsoleColor value)
+        {
+            _options.BackColor = value;
             return this;
         }
 
@@ -69,12 +74,18 @@ namespace PPlus.Controls
                 _resultaction = false;
             }
             _resultaction = true;
-           
+
+            var curforecolor = ConsolePlus.ForegroundColor;
+            var curbackcolor = ConsolePlus.BackgroundColor;
+
             try
             {
+
+                ConsolePlus.ForegroundColor = _options.ForeColor;
+                ConsolePlus.BackgroundColor = _options.BackColor;
                 // Switch to alternate screen
                 ConsolePlus.IsControlText = true;
-                ConsolePlus.Write("\u001b[?1049h\u001b[H", clearrestofline: false);
+                ConsolePlus.Write("\u001b[?1049h", clearrestofline: false);
                 ConsolePlus.IsControlText = false;
                 ConsolePlus.Clear();
                 _options.CustomAction.Invoke(CancellationToken);
@@ -85,6 +96,8 @@ namespace PPlus.Controls
                 ConsolePlus.IsControlText = true;
                 ConsolePlus.Write("\u001b[?1049l", clearrestofline: false);
                 ConsolePlus.IsControlText = false;
+                ConsolePlus.ForegroundColor = curforecolor;
+                ConsolePlus.BackgroundColor = curbackcolor;
             }
         }
 

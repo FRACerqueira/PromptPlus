@@ -110,7 +110,7 @@ namespace PPlus.Drivers
         }
 
         public byte PadLeft => _profile.PadLeft;
-
+ 
         public byte PadRight => _profile.PadRight;
 
         public int BufferWidth => _profile.BufferWidth;
@@ -125,6 +125,7 @@ namespace PPlus.Drivers
             }
             set
             {
+                Color.DefaultForecolor = Color.FromConsoleColor(value);
                 _profile.ForegroundColor = value;
                 _profile.DefaultStyle = new Style(_profile.ForegroundColor, _profile.BackgroundColor, _profile.OverflowStrategy);
             }
@@ -138,16 +139,18 @@ namespace PPlus.Drivers
             }
             set
             {
+                Color.DefaultBackcolor = Color.FromConsoleColor(value);
                 _profile.BackgroundColor = value;
                 _profile.DefaultStyle = new Style(_profile.ForegroundColor, _profile.BackgroundColor, _profile.OverflowStrategy);
+                this.UpdateStyle(_profile.BackgroundColor);
             }
         }
-
         public Overflow OverflowStrategy => _profile.OverflowStrategy;
 
         public void ResetColor()
         {
             _profile.ResetColor();
+            this.UpdateStyle(_profile.BackgroundColor);
         }
 
         public bool KeyAvailable => _inputdrive.KeyAvailable;

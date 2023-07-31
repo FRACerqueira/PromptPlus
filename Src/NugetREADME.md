@@ -11,8 +11,10 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 **PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
 
 ## Whats news in V4.0.3
+- New control to switch Alternate screen 
+- Fixed bug Console does not change foreground/background color correctly
 - Fixed bug Control ProgressBar
-    - Not show gradient when setted ProgressBarType.Fill   
+    - Not show gradient when setted ProgressBarType.Fill
 - Improve testability of result classes/struct (Internal to public)
 
 ## Whats news in V4.0.2
@@ -24,7 +26,7 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
 
-## Whats news in V4.0.1
+## Whats news in V4.0.X
 - Fixed duplicate tooltip in calendar
 - New console engine
     - Supports 4/8/24-bit colors
@@ -33,7 +35,7 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
     - New support feature colors
 - All controls have been improved to accept color customization, new features and new design.
 - Added new filter for colletion by "Contains" or "StartsWith"
-- Added powerful new controls (eg:Pipeline, Calendar, Chartbar, Treeview, wait tasks Parallel/Sequential, 8 progress bar types, wait timer, 19 spinners types, Gradient colors and more)
+- Added powerful new controls (eg: Switch Alternate screen, Pipeline, Calendar, Chartbar, Treeview, wait tasks Parallel/Sequential, 
 
 ## **PromptPlus Controls - Sample Usage**
 

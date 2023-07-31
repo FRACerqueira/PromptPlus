@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-// ***************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
+
+using System;
+using System.Threading;
 
 namespace PPlus.Controls
 {
@@ -33,6 +30,21 @@ namespace PPlus.Controls
         /// <param name="context">action to apply changes. <see cref="IPromptConfig"/></param>
         /// <returns><see cref="IControlAlternateScreen"/></returns>
         IControlAlternateScreen Config(Action<IPromptConfig> context);
+
+        /// <summary>
+        /// Set Foreground Color to AlternateScreen buffer.
+        /// </summary>
+        /// <param name="value">The Foreground</param>
+        /// <returns><see cref="IControlAlternateScreen"/></returns>
+        IControlAlternateScreen ForegroundColor(ConsoleColor value);
+
+        /// <summary>
+        /// Set Background Color to AlternateScreen buffer.
+        /// </summary>
+        /// <param name="value">The Background</param>
+        /// <returns><see cref="IControlAlternateScreen"/></returns>
+        IControlAlternateScreen BackgroundColor(ConsoleColor value);
+
 
 
     }

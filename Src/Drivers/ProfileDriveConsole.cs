@@ -63,9 +63,9 @@ namespace PPlus.Drivers
             }
         }
 
-        public byte PadLeft { get; private set; }
+        public byte PadLeft { get; }
 
-        public byte PadRight { get; private set; }
+        public byte PadRight { get; }
 
         public int BufferWidth
         {

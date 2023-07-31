@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using PPlus.Controls;
-using PPlus.Controls.AlternateScreen;
 using System;
 
 namespace PPlus

@@ -8,7 +8,6 @@ using PPlus.Drivers.Ansi;
 using System;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 
@@ -28,10 +27,32 @@ namespace PPlus.Drivers
 
         public bool IsControlText { get; set; }
 
-        public virtual bool CursorVisible
+        public  virtual bool CursorVisible
         {
-            get => Console.CursorVisible;
+            get
+            {
+                return Console.CursorVisible;
+            }
             set
+            {
+                ShowCusor(value);
+            }
+        }
+
+        private void ShowCusor(bool value)
+        {
+            if (_profile.SupportsAnsi)
+            {
+                if (value)
+                {
+                    Console.Write(AnsiSequences.SM());
+                }
+                else
+                {
+                    Console.Write(AnsiSequences.RM());
+                }
+            }
+            else
             {
                 Console.CursorVisible = value;
             }
@@ -91,9 +112,6 @@ namespace PPlus.Drivers
                 _profile.DefaultStyle = value; 
             }
         }
-            
-            
-            //=> _profile.DefaultStyle;
 
         public byte PadLeft => _profile.PadLeft;
 
@@ -130,6 +148,7 @@ namespace PPlus.Drivers
                 _profile.BackgroundColor = value;
                 _profile.DefaultStyle = new Style(_profile.ForegroundColor, _profile.BackgroundColor, _profile.OverflowStrategy);
                 Console.BackgroundColor = _profile.BackgroundColor;
+                this.UpdateStyle(_profile.BackgroundColor);
             }
         }
 
@@ -138,6 +157,9 @@ namespace PPlus.Drivers
         public void ResetColor()
         {
             _profile.ResetColor();
+            Console.BackgroundColor = _profile.BackgroundColor;
+            Console.ForegroundColor = _profile.ForegroundColor;
+            this.UpdateStyle(_profile.BackgroundColor);
         }
 
         public bool KeyAvailable => Console.KeyAvailable;

@@ -3,8 +3,6 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using System.Collections.Generic;
-
 namespace PPlus.Controls
 {
     /// <summary>

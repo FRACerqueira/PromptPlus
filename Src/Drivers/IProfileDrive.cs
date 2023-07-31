@@ -88,5 +88,5 @@ namespace PPlus
         /// </summary>
         void ResetColor();
 
-    }
+     }
 }

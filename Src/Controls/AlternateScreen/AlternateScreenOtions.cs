@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
 
-namespace PPlus.Controls.AlternateScreen
+using System;
+using System.Threading;
+
+namespace PPlus.Controls
 {
     internal class AlternateScreenOtions : BaseOptions
     {
@@ -18,6 +19,10 @@ namespace PPlus.Controls.AlternateScreen
         {
         }
         public Action<CancellationToken> CustomAction { get; set; }
+
+        public ConsoleColor ForeColor { get; set; }
+
+        public ConsoleColor BackColor { get; set; }
 
     }
 }

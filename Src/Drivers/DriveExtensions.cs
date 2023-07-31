@@ -532,10 +532,9 @@ namespace PPlus
         ///  Clear line
         /// </summary>
         /// <param name="row">The row to clear</param>
-        /// <param name="style">The style color to clear.</param>
-        public static void ClearLine(int? row = null, Style? style = null) 
-        { 
-            ClearLine(Console,row, style);  
+        public static void ClearLine(int? row = null)
+        {
+            ClearLine(Console, row);
         }
 
         /// <summary>
@@ -543,20 +542,18 @@ namespace PPlus
         /// </summary>
         /// <param name="consolebase">The <see cref="IConsoleBase"/></param>
         /// <param name="row">The row to clear</param>
-        /// <param name="style">The style color to clear.</param>
-        public static void ClearLine(this IConsoleBase consolebase, int? row = null, Style? style = null)
+        public static void ClearLine(this IConsoleBase consolebase, int? row = null)
         {
-            style ??= consolebase.DefaultStyle;
             row ??= consolebase.CursorTop;
             consolebase.SetCursorPosition(0, row.Value);
             if (consolebase.SupportsAnsi)
             {
-                consolebase.Write("", style.Value, true);
+                consolebase.Write("", clearrestofline: true);
             }
             else
             {
                 var aux = new string(' ', consolebase.BufferWidth);
-                consolebase.Write(aux, style.Value.Overflow(Overflow.Crop),true);
+                consolebase.Write(aux, clearrestofline:  true);
                 consolebase.SetCursorPosition(0, row.Value);
             }
         }
@@ -564,30 +561,27 @@ namespace PPlus
         /// <summary>
         ///  Clear rest of current line 
         /// </summary>
-        /// <param name="style">The style color to clear.</param>
-        public static void ClearRestOfLine(Style? style = null)
+        public static void ClearRestOfLine()
         {
-            ClearRestOfLine(Console, style);
+            ClearRestOfLine(Console);
         }
 
         /// <summary>
         ///  Clear rest of current line 
         /// </summary>
         /// <param name="consolebase">The <see cref="IConsoleBase"/></param>
-        /// <param name="style">The style color to clear.</param>
-        public static void ClearRestOfLine(this IConsoleBase consolebase, Style? style = null)
+        public static void ClearRestOfLine(this IConsoleBase consolebase)
         {
-            style ??= consolebase.DefaultStyle;
             if (consolebase.SupportsAnsi)
             {
-                consolebase.Write("", style.Value, true);
+                consolebase.Write("", clearrestofline: true);
             }
             else
             {
                 var row = consolebase.CursorTop;
                 var col = consolebase.CursorLeft;
                 var aux = new string(' ', consolebase.BufferWidth - consolebase.CursorLeft);
-                consolebase.Write(aux, style.Value.Overflow(Overflow.Crop), true);
+                consolebase.Write(aux, clearrestofline:  true);
                 consolebase.SetCursorPosition(col, row);
             }
         }
@@ -628,8 +622,14 @@ namespace PPlus
                 _consoledrive = new ConsoleDriveLinux(drvprofile);
             }
             _consoledrive.CursorVisible = true;
-            _styleschema.UpdateBackgoundColor(param.BackgroundColor);
+            _consoledrive.UpdateStyle(param.BackgroundColor);
             _consoledrive.Clear();
+        }
+
+
+        internal static void UpdateStyle(this IConsoleBase _, Color color)
+        {
+            _styleschema.UpdateBackgoundColor(color);
         }
 
         private static bool IsRunningInUnitTest

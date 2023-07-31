@@ -28,8 +28,10 @@
 - [API Reference](./apis/apis.md)
 
 ## Whats news in V4.0.3
+- New control to switch Alternate screen 
+- Fixed bug Console does not change foreground/background color correctly
 - Fixed bug Control ProgressBar
-    - Not show gradient when setted ProgressBarType.Fill   
+    - Not show gradient when setted ProgressBarType.Fill
 - Improve testability of result classes/struct (Internal to public)
 
 ## Whats news in V4.0.2
@@ -41,7 +43,7 @@
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
     - 
-## Whats news in V4.0.1
+## Whats news in V4.0.X
 
 ### Newest controls and color improvement and layout
 
@@ -73,6 +75,8 @@
 - Progress bar with 8 types , gradient colors and spinner
 - Browser File and Folder with multi-select, colors and spinner
 - Treeview hierarchical structures with multi-select and colors
+- Switch Alternate screen
+- Execution pipeline with conditions
 
 **All controls** have the same organization (see in action: [**Controls Snapshot**](snapshot.md)):
 - input/filter (except Masked input) using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
