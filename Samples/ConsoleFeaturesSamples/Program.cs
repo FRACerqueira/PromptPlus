@@ -10,6 +10,10 @@ namespace ConsoleFeaturesSamples
     {
         static void Main()
         {
+            PromptPlus.Reset();
+            PromptPlus.Clear();
+
+
             PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
@@ -42,6 +46,7 @@ namespace ConsoleFeaturesSamples
                 cfg.BackgroundColor = ConsoleColor.Blue;
                 cfg.Culture = new CultureInfo("en-us");
             });
+
 
             PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
             PromptPlus.WriteLine($"IsTerminal: {PromptPlus.IsTerminal}");
@@ -119,6 +124,7 @@ namespace ConsoleFeaturesSamples
                     PromptPlus.WriteLine("|");
                 }
             }
+
             if (PromptPlus.ColorDepth >= ColorSystem.TrueColor)
             {
                 PromptPlus.WriteLine();

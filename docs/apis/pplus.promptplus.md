@@ -498,6 +498,35 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
+### <a id="methods-alternatescreen"/>**AlternateScreen()**
+
+Create CustomAction Control
+
+```csharp
+public static IControlAlternateScreen AlternateScreen()
+```
+
+#### Returns
+
+[IControlAlternateScreen](./pplus.controls.icontrolalternatescreen.md)
+
+### <a id="methods-alternatescreen"/>**AlternateScreen(Action&lt;IPromptConfig&gt;)**
+
+Create CustomAction Control
+
+```csharp
+public static IControlAlternateScreen AlternateScreen(Action<IPromptConfig> config)
+```
+
+#### Parameters
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlAlternateScreen](./pplus.controls.icontrolalternatescreen.md)
+
 ### <a id="methods-autocomplete"/>**AutoComplete(String, Action&lt;IPromptConfig&gt;)**
 
 Create Auto Complete Control.
@@ -840,12 +869,12 @@ public static void Clear(Nullable<Color> backcolor)
 `backcolor` [Nullable&lt;Color&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Color](./pplus.color.md) Background
 
-### <a id="methods-clearline"/>**ClearLine(Nullable&lt;Int32&gt;, Nullable&lt;Style&gt;)**
+### <a id="methods-clearline"/>**ClearLine(Nullable&lt;Int32&gt;)**
 
 Clear line
 
 ```csharp
-public static void ClearLine(Nullable<Int32> row, Nullable<Style> style)
+public static void ClearLine(Nullable<Int32> row)
 ```
 
 #### Parameters
@@ -853,15 +882,12 @@ public static void ClearLine(Nullable<Int32> row, Nullable<Style> style)
 `row` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The row to clear
 
-`style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The style color to clear.
-
-### <a id="methods-clearline"/>**ClearLine(IConsoleBase, Nullable&lt;Int32&gt;, Nullable&lt;Style&gt;)**
+### <a id="methods-clearline"/>**ClearLine(IConsoleBase, Nullable&lt;Int32&gt;)**
 
 Clear line
 
 ```csharp
-public static void ClearLine(IConsoleBase consolebase, Nullable<Int32> row, Nullable<Style> style)
+public static void ClearLine(IConsoleBase consolebase, Nullable<Int32> row)
 ```
 
 #### Parameters
@@ -872,37 +898,26 @@ The [IConsoleBase](./pplus.iconsolebase.md)
 `row` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The row to clear
 
-`style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The style color to clear.
-
-### <a id="methods-clearrestofline"/>**ClearRestOfLine(Nullable&lt;Style&gt;)**
+### <a id="methods-clearrestofline"/>**ClearRestOfLine()**
 
 Clear rest of current line
 
 ```csharp
-public static void ClearRestOfLine(Nullable<Style> style)
+public static void ClearRestOfLine()
 ```
 
-#### Parameters
-
-`style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The style color to clear.
-
-### <a id="methods-clearrestofline"/>**ClearRestOfLine(IConsoleBase, Nullable&lt;Style&gt;)**
+### <a id="methods-clearrestofline"/>**ClearRestOfLine(IConsoleBase)**
 
 Clear rest of current line
 
 ```csharp
-public static void ClearRestOfLine(IConsoleBase consolebase, Nullable<Style> style)
+public static void ClearRestOfLine(IConsoleBase consolebase)
 ```
 
 #### Parameters
 
 `consolebase` [IConsoleBase](./pplus.iconsolebase.md)<br>
 The [IConsoleBase](./pplus.iconsolebase.md)
-
-`style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The style color to clear.
 
 ### <a id="methods-confirm"/>**Confirm(String, Action&lt;IPromptConfig&gt;)**
 

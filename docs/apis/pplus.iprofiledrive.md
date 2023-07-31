@@ -73,7 +73,7 @@ public abstract ColorSystem ColorDepth { get; }
 Get default [Style](./pplus.style.md) console.
 
 ```csharp
-public abstract Style DefaultStyle { get; }
+public abstract Style DefaultStyle { get; internal set; }
 ```
 
 #### Property Value
@@ -91,6 +91,18 @@ public abstract ConsoleColor ForegroundColor { get; set; }
 #### Property Value
 
 ConsoleColor<br>
+
+### <a id="properties-islegacy"/>**IsLegacy**
+
+Get Terminal is legacy.
+
+```csharp
+public abstract bool IsLegacy { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-isterminal"/>**IsTerminal**
 

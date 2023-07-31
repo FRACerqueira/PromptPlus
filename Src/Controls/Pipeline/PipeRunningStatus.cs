@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 
 namespace PPlus.Controls
 {
@@ -18,7 +23,13 @@ namespace PPlus.Controls
             throw new PromptPlusException("PipeStatus CTOR NotImplemented");
         }
 
-        internal PipeRunningStatus(string pipe, PipeStatus status,TimeSpan elapsedtime)
+        /// <summary>
+        /// Create a PipeRunningStatus. Purpose only for unit testing
+        /// </summary>
+        /// <param name="pipe">The pipe id</param>
+        /// <param name="status">The status</param>
+        /// <param name="elapsedtime">The elapsedtime</param>
+        public PipeRunningStatus(string pipe, PipeStatus status,TimeSpan elapsedtime)
         {
             Pipe = pipe;
             Status = status;

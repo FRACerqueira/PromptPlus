@@ -22,6 +22,20 @@ namespace PPlus.Controls
             throw new PromptPlusException("ResultPrompt CTOR NotImplemented");
         }
 
+        /// <summary>
+        /// Create a ResultPrompt. Purpose only for unit testing
+        /// </summary>
+        /// <param name="value">The value</param>
+        /// <param name="aborted">If aborted</param>
+        public ResultPrompt(T value, bool aborted)
+        {
+            Value = value;
+            IsAborted = aborted;
+            IsRunning = false;
+            NotRender = false;
+            ClearLastRender = true;
+        }
+
         internal static ResultPrompt<T> NullResult()
         {
             return new ResultPrompt<T>(default, false, true, false);

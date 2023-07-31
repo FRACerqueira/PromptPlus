@@ -90,6 +90,8 @@
 
 - [IBannerControl](./pplus.controls.ibannercontrol.md)
 
+- [IControlAlternateScreen](./pplus.controls.icontrolalternatescreen.md)
+
 - [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 - [IControlCalendar](./pplus.controls.icontrolcalendar.md)

@@ -6,26 +6,31 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents The Result to Pipeline Controls
+    /// Represents The Result to ProgessBar Controls
     /// </summary>
     /// <typeparam name="T">Typeof return</typeparam>
-    public readonly struct ResultPipeline<T>
+    public readonly struct ResultProgessBar<T>
     {
         /// <summary>
-        /// Create a ResultPipeline
+        /// Create a ResultProgessBar
         /// </summary>
         /// <remarks>
         /// Do not use this constructor!
         /// </remarks>
-        public ResultPipeline()
+        public ResultProgessBar()
         {
-            throw new PromptPlusException("ResultPipeline CTOR NotImplemented");
+            throw new PromptPlusException("ResultProgessBar CTOR NotImplemented");
         }
 
-        internal ResultPipeline(T conext, PipeRunningStatus[] pipes)
+        /// <summary>
+        /// Create a ResultProgessBar.Purpose only for unit testing
+        /// </summary>
+        /// <param name="conext">The value context</param>
+        /// <param name="lastvalue">The last value of bar</param>
+        public ResultProgessBar(T conext ,double lastvalue)
         {
             Context = conext;
-            Pipes = pipes;
+            Lastvalue = lastvalue;
         }
 
         /// <summary>
@@ -34,8 +39,8 @@ namespace PPlus.Controls
         public T Context { get; }
 
         /// <summary>
-        /// Get running status of pipeline
+        /// Get last value progress
         /// </summary>
-        public PipeRunningStatus[] Pipes { get; }
+        public double Lastvalue { get; }
     }
 }

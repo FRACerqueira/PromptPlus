@@ -3,15 +3,13 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using System.Collections.Generic;
-
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents The Result to WaitProcess Controls
+    /// Represents The Result to Pipeline Controls
     /// </summary>
     /// <typeparam name="T">Typeof return</typeparam>
-    public readonly struct ResultWaitProcess<T>
+    public readonly struct ResultPipeline<T>
     {
         /// <summary>
         /// Create a ResultPipeline
@@ -19,15 +17,20 @@ namespace PPlus.Controls
         /// <remarks>
         /// Do not use this constructor!
         /// </remarks>
-        public ResultWaitProcess()
+        public ResultPipeline()
         {
-            throw new PromptPlusException("ResultWaitProcess CTOR NotImplemented");
+            throw new PromptPlusException("ResultPipeline CTOR NotImplemented");
         }
 
-        internal ResultWaitProcess(T conext, StateProcess[] stateprocess)
+        /// <summary>
+        /// Create a ResultPipeline.Purpose only for unit testing
+        /// </summary>
+        /// <param name="conext">The value context</param>
+        /// <param name="pipes">The status pipes</param>
+        public ResultPipeline(T conext, PipeRunningStatus[] pipes)
         {
             Context = conext;
-            States = stateprocess;
+            Pipes = pipes;
         }
 
         /// <summary>
@@ -36,8 +39,8 @@ namespace PPlus.Controls
         public T Context { get; }
 
         /// <summary>
-        /// Get State of process
+        /// Get running status of pipeline
         /// </summary>
-        public StateProcess[] States { get; }
+        public PipeRunningStatus[] Pipes { get; }
     }
 }

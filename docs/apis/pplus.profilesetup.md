@@ -71,6 +71,18 @@ public ConsoleColor ForegroundColor { get; set; }
 
 ConsoleColor<br>
 
+### <a id="properties-islegacy"/>**IsLegacy**
+
+Get/Set Terminal is legacy.
+
+```csharp
+public bool IsLegacy { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-isterminal"/>**IsTerminal**
 
 Get/Set Terminal mode. if Running over Terminal mode or not.

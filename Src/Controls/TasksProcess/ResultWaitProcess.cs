@@ -6,26 +6,31 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents The Result to ProgessBar Controls
+    /// Represents The Result to WaitProcess Controls
     /// </summary>
     /// <typeparam name="T">Typeof return</typeparam>
-    public readonly struct ResultProgessBar<T>
+    public readonly struct ResultWaitProcess<T>
     {
         /// <summary>
-        /// Create a ResultProgessBar
+        /// Create a ResultPipeline
         /// </summary>
         /// <remarks>
         /// Do not use this constructor!
         /// </remarks>
-        public ResultProgessBar()
+        public ResultWaitProcess()
         {
-            throw new PromptPlusException("ResultProgessBar CTOR NotImplemented");
+            throw new PromptPlusException("ResultWaitProcess CTOR NotImplemented");
         }
 
-        internal ResultProgessBar(T conext ,double lastvalue)
+        /// <summary>
+        /// Create a ResultPipeline.Purpose only for unit testing
+        /// </summary>
+        /// <param name="conext">The value context</param>
+        /// <param name="stateprocess">The state of process</param>
+        public ResultWaitProcess(T conext, StateProcess[] stateprocess)
         {
             Context = conext;
-            Lastvalue = lastvalue;
+            States = stateprocess;
         }
 
         /// <summary>
@@ -34,8 +39,8 @@ namespace PPlus.Controls
         public T Context { get; }
 
         /// <summary>
-        /// Get last value progress
+        /// Get State of process
         /// </summary>
-        public double Lastvalue { get; }
+        public StateProcess[] States { get; }
     }
 }

@@ -14,10 +14,11 @@ namespace PPlus.Drivers
         private readonly Overflow _defaultOverflowStrategy;
         private ConsoleColor _foregroundColor;
         private ConsoleColor _backgroundColor;
-        private readonly Style _defaultStyle;
+        private Style _defaultStyle;
 
-        public ProfileDriveMemory(ConsoleColor defaultForegroundColor, ConsoleColor defaultBackgroundColor, bool isTerminal, bool unicodeSupported, bool supportsAnsi, ColorSystem colorDepth, Overflow overflowStrategy = Overflow.None, byte padleft = 0, byte padright = 0)
+        public ProfileDriveMemory(ConsoleColor defaultForegroundColor, ConsoleColor defaultBackgroundColor, bool isTerminal, bool unicodeSupported, bool supportsAnsi,bool islegacy, ColorSystem colorDepth, Overflow overflowStrategy = Overflow.None, byte padleft = 0, byte padright = 0)
         {
+            IsLegacy = islegacy;
             IsTerminal = isTerminal;
             IsUnicodeSupported = unicodeSupported;
             ColorDepth = colorDepth;
@@ -34,15 +35,17 @@ namespace PPlus.Drivers
 
         public Overflow OverflowStrategy => _defaultOverflowStrategy;
 
+        public bool IsLegacy { get; private set; }
+
         public bool IsTerminal { get; private set; }
 
         public string Provider => "Memory";
 
         public bool IsUnicodeSupported { get; private set; }
 
-        public bool SupportsAnsi { get; private set; }
+        public bool SupportsAnsi { get; }
 
-        public ColorSystem ColorDepth { get; private set; }
+        public ColorSystem ColorDepth { get; }
 
         public Style DefaultStyle
         {
@@ -50,11 +53,15 @@ namespace PPlus.Drivers
             {
                 return _defaultStyle;
             }
+            set
+            {
+                _defaultStyle = value;
+            }
         }
 
-        public byte PadLeft { get; private set; }
+        public byte PadLeft { get; set; }
 
-        public byte PadRight { get; private set; }
+        public byte PadRight { get; set; }
 
         public int BufferWidth
         {
@@ -96,6 +103,9 @@ namespace PPlus.Drivers
         {
             ForegroundColor = _defaultForegroundColor;
             BackgroundColor = _defaultBackgroundColor;
+            Color.DefaultForecolor = Color.FromConsoleColor(ForegroundColor);
+            Color.DefaultBackcolor = Color.FromConsoleColor(BackgroundColor);
+            _defaultStyle = new Style(ForegroundColor, BackgroundColor, _defaultStyle.OverflowStrategy);
         }
     }
 }

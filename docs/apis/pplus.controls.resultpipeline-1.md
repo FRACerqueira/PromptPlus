@@ -65,6 +65,22 @@ ResultPipeline()
 
 Do not use this constructor!
 
+### <a id="constructors-.ctor"/>**ResultPipeline(T, PipeRunningStatus[])**
+
+Create a ResultPipeline.Purpose only for unit testing
+
+```csharp
+ResultPipeline(T conext, PipeRunningStatus[] pipes)
+```
+
+#### Parameters
+
+`conext` T<br>
+The value context
+
+`pipes` [PipeRunningStatus[]](./pplus.controls.piperunningstatus.md)<br>
+The status pipes
+
 
 - - -
 [**Back to List Api**](./apis.md)

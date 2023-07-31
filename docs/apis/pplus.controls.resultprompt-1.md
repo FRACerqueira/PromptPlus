@@ -65,6 +65,22 @@ ResultPrompt()
 
 Do not use this constructor!
 
+### <a id="constructors-.ctor"/>**ResultPrompt(T, Boolean)**
+
+Create a ResultPrompt. Purpose only for unit testing
+
+```csharp
+ResultPrompt(T value, bool aborted)
+```
+
+#### Parameters
+
+`value` T<br>
+The value
+
+`aborted` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+If aborted
+
 
 - - -
 [**Back to List Api**](./apis.md)
