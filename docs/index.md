@@ -42,7 +42,7 @@
 - Add Answer key check equals "Yes"/"No" using config values
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
-    - 
+
 ## Whats news in V4.0.X
 
 ### Newest controls and color improvement and layout
