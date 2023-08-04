@@ -94,7 +94,7 @@ namespace TreeViewSamples
                     validselect: (item) => item.TypeInfo == TypeMyOrg.Funcionario,
                     setdisabled: (item) => item.TypeInfo != TypeMyOrg.Funcionario,
                     uniquenode: (item) => item.Id)
-                .Styles(StyleTreeView.SelectedRoot, Style.Plain.Foreground(Color.Yellow))
+                .Styles(StyleTreeView.SelectedRoot, Style.Default.Foreground(Color.Yellow))
                 .Interaction(MyOrg.LoadAreas(), (ctrl, item) =>
                 {
                     ctrl.AddNode(item);

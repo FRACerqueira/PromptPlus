@@ -9,15 +9,23 @@ namespace PPlus.Controls
 {
     internal class MaskEditListOptions : MaskEditOptions
     {
-        internal MaskEditListOptions(bool showcursor) : base(showcursor)
+        private MaskEditListOptions() : base(null, null, null, true)
         {
+            throw new PromptPlusException("MaskEditListOptions CTOR NotImplemented");
         }
-        public HotKey RemoveItemPress { get; set; } = PromptPlus.Config.RemoveItemPress;
-        public HotKey EditItemPress { get; set; } = PromptPlus.Config.EditItemPress;
+
+        internal MaskEditListOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        {
+            RemoveItemPress = config.RemoveItemPress;
+            EditItemPress = config.EditItemPress;
+            PageSize = config.PageSize;
+        }
+        public HotKey RemoveItemPress { get; set; }
+        public HotKey EditItemPress { get; set; }
         public IList<ItemListControl> Items { get; set; } = new List<ItemListControl>();
-        public bool AllowDuplicate { get; set; } = false;
-        public int PageSize { get; set; } = PromptPlus.Config.PageSize;
-        public int Minimum { get; set; } = 0;
+        public bool AllowDuplicate { get; set; }
+        public int PageSize { get; set; }
+        public int Minimum { get; set; }
         public int Maximum { get; set; } = int.MaxValue;
 
     }

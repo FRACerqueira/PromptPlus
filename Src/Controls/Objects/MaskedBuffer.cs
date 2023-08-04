@@ -93,7 +93,7 @@ namespace PPlus.Controls.Objects
 
             _promptmask = _maskInputOptions.Symbol(SymbolType.MaskEmpty)[0];
 
-            _cultureMasked = _maskInputOptions.CurrentCulture??PromptPlus.Config.AppCulture;
+            _cultureMasked = _maskInputOptions.CurrentCulture?? maskInputOptions.Config.AppCulture;
 
             _maskInputOptions.DefaultValue = _maskInputOptions.DefaultValue?.ToString() ?? string.Empty;
             _maskInputOptions.DefaultEmptyValue = _maskInputOptions.DefaultEmptyValue?.ToString() ?? string.Empty;

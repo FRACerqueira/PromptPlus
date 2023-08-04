@@ -485,14 +485,14 @@ namespace PPlus.Tests.Controls.TaskWaitControl
         [Fact]
         public void Should_WaitTime()
         {
-            var opt = new WaitOptions<object>(false)
+            var opt = new WaitOptions<object>(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false)
             {
                 WaitTime = true,
                 TimeDelay = TimeSpan.FromSeconds(1),
                 ShowCountdown = true,
                 OptPrompt = "P"
             };
-            var ctrl = new WaitControl<object>((IConsoleControl)PromptPlus.Console, opt);
+            var ctrl = new WaitControl<object>(PromptPlus._consoledrive, opt);
             ctrl.Spinner(SpinnersType.Ascii);
             ctrl.AddStep(StepMode.Sequential, (_, cts) =>
             {

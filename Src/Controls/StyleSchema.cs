@@ -47,43 +47,43 @@ namespace PPlus.Controls
                 switch (item)
                 {
                     case StyleControls.Prompt:
-                        _Styles.Add(item,Style.Plain.Foreground(ConsoleColor.White));
+                        _Styles.Add(item,Style.Default.Foreground(ConsoleColor.White));
                         break;
                     case StyleControls.Answer:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.Cyan));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Cyan));
                         break;
                     case StyleControls.Description:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.DarkYellow));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
                         break;
                     case StyleControls.Sugestion:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.Yellow));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Yellow));
                         break;
                     case StyleControls.Selected:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.Green));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Green));
                         break;
                     case StyleControls.UnSelected:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.Gray));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Gray));
                         break;
                     case StyleControls.Disabled:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.DarkGray));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
                         break;
                     case StyleControls.Error:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.Red));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Red));
                         break;
                     case StyleControls.Pagination:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.DarkGray));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
                         break;
                     case StyleControls.TaggedInfo:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.DarkYellow));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
                         break;
                     case StyleControls.Tooltips:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.DarkGray));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
                         break;
                     case StyleControls.Slider:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.Cyan).Background(ConsoleColor.DarkGray));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Cyan).Background(ConsoleColor.DarkGray));
                         break;
                     case StyleControls.Chart:
-                        _Styles.Add(item, Style.Plain.Foreground(ConsoleColor.White));
+                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.White));
                         break;
                     default:
                         throw new PromptPlusException($"{item} Not Implemented");
@@ -93,7 +93,6 @@ namespace PPlus.Controls
 
         internal void UpdateBackgoundColor(Color backgoundcolor)
         {
-            Style.Plain = Style.Plain.Background(backgoundcolor);
             var aux = Enum.GetValues(typeof(StyleControls)).Cast<StyleControls>();
             foreach (var item in aux)
             {

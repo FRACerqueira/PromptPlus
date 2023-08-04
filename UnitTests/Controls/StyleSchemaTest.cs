@@ -18,18 +18,18 @@ namespace PPlus.Tests.Controls
         public void Should_InitDefaultStyleSchema()
         {
             var ss = new StyleSchema();
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.White), ss.Prompt());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.Cyan), ss.Answer());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.DarkYellow), ss.Description());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.Yellow), ss.Sugestion());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.Gray), ss.UnSelected());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.Green), ss.Selected());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.DarkGray), ss.Disabled());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.Red), ss.Error());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.DarkGray), ss.Pagination());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.DarkYellow), ss.TaggedInfo());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.DarkGray), ss.Tooltips());
-            Assert.Equal(Style.Plain.Foreground(ConsoleColor.Cyan).Background(ConsoleColor.DarkGray), ss.Slider());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.White), ss.Prompt());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.Cyan), ss.Answer());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.DarkYellow), ss.Description());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.Yellow), ss.Sugestion());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.Gray), ss.UnSelected());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.Green), ss.Selected());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.DarkGray), ss.Disabled());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.Red), ss.Error());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.DarkGray), ss.Pagination());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.DarkYellow), ss.TaggedInfo());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.DarkGray), ss.Tooltips());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.Cyan).Background(ConsoleColor.DarkGray), ss.Slider());
         }
 
         [Fact]

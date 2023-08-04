@@ -11,19 +11,20 @@ namespace PPlus.Controls
 {
     internal class KeyPressOptions : BaseOptions
     {
-        private KeyPressOptions()
+        private KeyPressOptions() : base(null, null, null, true)
         {
             throw new PromptPlusException("KeyPressOptions CTOR NotImplemented");
         }
 
-        internal KeyPressOptions(bool showcursor) : base(showcursor)
+        internal KeyPressOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
+            SpinnerStyle = styleSchema.Prompt().Overflow(Overflow.Crop);
         }
 
-        public Spinners? Spinner { get; set; } = null;
-        public Style SpinnerStyle { get; set; } = PromptPlus.StyleSchema.Prompt().Overflow(Overflow.Crop);
+        public Spinners? Spinner { get; set; }
+        public Style SpinnerStyle { get; set; }
         public IList<ConsoleKeyInfo> KeyValids { get; set; } = new List<ConsoleKeyInfo>();
-        public Func<ConsoleKeyInfo, string> TextKey { get; set; } = null;
+        public Func<ConsoleKeyInfo, string> TextKey { get; set; }
         public bool HotkeysIsKeypress { get; set; }
     }
 }

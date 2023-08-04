@@ -22,7 +22,7 @@ namespace PPlus
     public static partial class PromptPlus
     {
         private static bool RunningConsoleMemory = false;
-        private static IConsoleControl _consoledrive;
+        internal static IConsoleControl _consoledrive;
         private static Config _configcontrols;
         private static StyleSchema _styleschema;
         private static readonly object lockrecord = new();
@@ -30,14 +30,6 @@ namespace PPlus
         private const ConsoleColor DefaultBackgroundColor = ConsoleColor.Black;
 
         static PromptPlus()
-        {
-            Reset();
-        }
-
-        /// <summary>
-        /// Reset all config and properties to default values
-        /// </summary>
-        public static void Reset()
         {
             var (localSupportsAnsi, localIsLegacy) = AnsiDetector.Detect();
             var termdetect = TerminalDetector.Detect();
@@ -81,9 +73,57 @@ namespace PPlus
                     _consoledrive = new ConsoleDriveLinux(drvprofile);
                 }
             }
-            _consoledrive.CursorVisible = true;
             _configcontrols = new();
             _styleschema = new();
+            _consoledrive.CursorVisible = true;
+            Reset(false);
+            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+        }
+
+        private static void CurrentDomain_ProcessExit(object? sender, EventArgs e)
+        {
+            var curleft = CursorLeft;
+            var curtop = CursorTop;
+            Profile(null);
+            // Switch to alternate screen
+            _consoledrive.SwapBuffer(TargetBuffer.Secondary);
+            IsControlText = true;
+            Write("\u001b[;r");
+            IsControlText = false;
+            ResetColor();
+            Clear();
+            // Switch back to primary screen
+            _consoledrive.SwapBuffer(TargetBuffer.Primary);
+            IsControlText = true;
+            Write("\u001b[;r");
+            IsControlText = false;
+            Profile(null);
+            if (IsTerminal)
+            {
+                SetCursorPosition(0, BufferHeight);
+            }
+            ResetColor();
+            ClearLine();
+            SetCursorPosition(0, curtop);
+        }
+
+        /// <summary>
+        /// Reset all config and properties to default values
+        /// </summary>
+        public static void Reset(bool resetstatusbar = false)
+        {
+            if (!resetstatusbar && !IsLegacy && SupportsAnsi)
+            {
+                // Switch to alternate screen
+                _consoledrive.SwapBuffer(TargetBuffer.Secondary);
+                ResetColor();
+                // Switch back to primary screen
+                _consoledrive.SwapBuffer(TargetBuffer.Primary);
+                ResetColor();
+            }
+            _configcontrols = new();
+            _styleschema = new();
+            _consoledrive.CursorVisible = true;
         }
 
         /// <summary>
@@ -111,10 +151,37 @@ namespace PPlus
         }
 
         /// <summary>
-        /// Gets the current Console drive.
+        /// Get the current Console drive Is Legcy.
         /// </summary>
-        public static IConsoleBase Console => _consoledrive;
+        public static bool IsLegacy => _consoledrive.IsLegacy;
 
+        /// <summary>
+        /// Get the Current Target Buffer
+        /// </summary>
+        public static TargetBuffer CurrentTargetBuffer => _consoledrive.CurrentBuffer;
+
+
+        /// <summary>
+        /// Swap Target Buffer
+        /// </summary>
+        public static bool SwapBuffer(TargetBuffer value)
+        {
+            return _consoledrive.SwapBuffer(value);
+        }
+
+        /// <summary>
+        /// Run custom action on Target Buffer
+        /// </summary>
+        public static bool RunOnBuffer(TargetBuffer value, Action<CancellationToken> customaction, ConsoleColor? defaultforecolor = null, ConsoleColor? defaultbackcolor = null, CancellationToken? cancellationToken = null)
+        {
+            return _consoledrive.OnBuffer(value,customaction,defaultforecolor,defaultbackcolor,cancellationToken);
+        }
+
+        internal static bool IsControlText
+        { 
+            get { return _consoledrive.IsControlText;}
+            set { _consoledrive.IsControlText = value; }
+        }
 
         /// <summary>
         /// Set ForegroundColor/BackgroundColor Console
@@ -133,24 +200,12 @@ namespace PPlus
         /// <br>and all Style-Schema are updated with backgoundcolor console</br>
         /// </summary>
         /// <param name="config">Action with <seealso cref="ProfileSetup"/> to configuration</param>
-        public static void Setup(Action<ProfileSetup> config)
+        /// <param name="resetstatusbar">Reset StatusBar</param>
+        public static void Setup(Action<ProfileSetup> config, bool resetstatusbar = false)
         {
-            Reset();
+            Reset(resetstatusbar);
             Profile(config);
-        }
-
-
-        /// <summary>
-        /// Overwrite current console with new console profile.
-        /// <br>After overwrite the new console the screeen is clear</br>
-        /// <br>and all Style-Schema are updated with backgoundcolor console</br>
-        /// </summary>
-        /// <param name="consolebase">The <see cref="IConsoleBase"/></param>
-        /// <param name="config">Action with <seealso cref="ProfileSetup"/> to configuration</param>
-        internal static void Setup(this IConsoleBase consolebase, Action<ProfileSetup> config)
-        {
-            Reset();
-            Profile(config);
+            Clear();
         }
 
         /// <summary>
@@ -172,7 +227,7 @@ namespace PPlus
         /// <returns>Number of lines write on console</returns>
         public static int Write(Exception value, Style? style = null, bool clearrestofline = false)
         {
-            return Console.Write(value.ToString(), style, clearrestofline);
+            return _consoledrive.Write(value.ToString(), style, clearrestofline);
         }
 
         /// <summary>
@@ -183,8 +238,8 @@ namespace PPlus
         /// <param name="clearrestofline">Clear rest of line after write</param>
         /// <returns>Number of lines write on console</returns>
         public static int Write(string value, Style? style = null, bool clearrestofline = false)
-        { 
-            return Console.Write(value,style,clearrestofline);
+        {
+            return _consoledrive.Write(value,style,clearrestofline);
         }
 
         /// <summary>
@@ -196,7 +251,7 @@ namespace PPlus
         /// <returns>Number of lines write on console</returns>
         public static int WriteLine(Exception value, Style? style = null, bool clearrestofline = true)
         {
-            return Console.WriteLine(value.ToString(), style, clearrestofline);
+            return _consoledrive.WriteLine(value.ToString(), style, clearrestofline);
         }
 
         /// <summary>
@@ -207,60 +262,55 @@ namespace PPlus
         /// <param name="clearrestofline">Clear rest of line after write</param>
         /// <returns>Number of lines write on console</returns>
         public static int WriteLine(string? value = null, Style? style = null, bool clearrestofline = true)
-        { 
-            return Console.WriteLine(value,style,clearrestofline);
+        {
+            return _consoledrive.WriteLine(value,style,clearrestofline);
         }
 
         /// <summary>
         /// Get provider mode.
         /// </summary>
-        public static string Provider => Console.Provider;
+        public static string Provider => _consoledrive.Provider;
 
         /// <summary>
         /// Get Terminal mode.
         /// </summary>
-        public static bool IsTerminal => Console.IsTerminal;
+        public static bool IsTerminal => _consoledrive.IsTerminal;
 
 
         /// <summary>
         /// Get Unicode Supported.
         /// </summary>
-        public static bool IsUnicodeSupported => Console.IsUnicodeSupported;
+        public static bool IsUnicodeSupported => _consoledrive.IsUnicodeSupported;
 
         /// <summary>
         /// Get localSupportsAnsi mode.
         /// </summary>
-        public static bool SupportsAnsi => Console.SupportsAnsi;
+        public static bool SupportsAnsi => _consoledrive.SupportsAnsi;
 
         /// <summary>
         /// Get Color capacity.<see cref="ColorSystem"/>
         /// </summary>
-        public static ColorSystem ColorDepth => Console.ColorDepth;
-
-        /// <summary>
-        /// Get default <see cref="Style"/> console.
-        /// </summary>
-        public static Style DefaultStyle => Console.DefaultStyle;
+        public static ColorSystem ColorDepth => _consoledrive.ColorDepth;
 
         /// <summary>
         /// Get screen margin left
         /// </summary>
-        public static byte PadLeft => Console.PadLeft;
+        public static byte PadLeft => _consoledrive.PadLeft;
 
         /// <summary>
         /// Get screen margin right
         /// </summary>
-        public static byte PadRight => Console.PadRight;
+        public static byte PadRight => _consoledrive.PadRight;
 
         /// <summary>
         /// Gets the width of the buffer area.
         /// </summary>
-        public static int BufferWidth => Console.BufferWidth;
+        public static int BufferWidth => _consoledrive.BufferWidth;
 
         /// <summary>
         /// Gets the height of the buffer area.
         /// </summary>
-        public static int BufferHeight => Console.BufferHeight;
+        public static int BufferHeight => _consoledrive.BufferHeight;
 
 
 
@@ -269,10 +319,10 @@ namespace PPlus
         /// </summary>
         public static ConsoleColor ForegroundColor 
         {
-            get { return Console.ForegroundColor; }
+            get { return _consoledrive.ForegroundColor; }
             set 
             {
-                Console.ForegroundColor = value; 
+                _consoledrive.ForegroundColor = value; 
             } 
         }
 
@@ -281,25 +331,25 @@ namespace PPlus
         /// </summary>
         public static ConsoleColor BackgroundColor 
         {
-            get { return Console.BackgroundColor; }
+            get { return _consoledrive.BackgroundColor; }
             set 
-            { 
-                Console.BackgroundColor = value;
-                _styleschema.UpdateBackgoundColor(Console.BackgroundColor);
+            {
+                _consoledrive.BackgroundColor = value;
+                _styleschema.UpdateBackgoundColor(_consoledrive.BackgroundColor);
             }
         }
 
         /// <summary>
         /// Get write Overflow Strategy.
         /// </summary>
-        public static Overflow OverflowStrategy => Console.OverflowStrategy;
+        public static Overflow OverflowStrategy => _consoledrive.OverflowStrategy;
 
         /// <summary>
         /// Reset colors to default values.
         /// </summary>
         public static void ResetColor()
         {
-            Console.ResetColor();
+            _consoledrive.ResetColor();
         }
 
         /// <summary>
@@ -309,7 +359,28 @@ namespace PPlus
         /// <param name="steps">The number of steps to move the cursor.</param>
         public static void MoveCursor(CursorDirection direction, int steps)
         {
-            Console.MoveCursor(direction, steps);
+            if (steps == 0)
+            {
+                return;
+            }
+            var left = _consoledrive.CursorLeft;
+            var top = _consoledrive.CursorTop;
+            switch (direction)
+            {
+                case CursorDirection.Up:
+                    top -= steps;
+                    break;
+                case CursorDirection.Down:
+                    top += steps;
+                    break;
+                case CursorDirection.Right:
+                    left += steps;
+                    break;
+                case CursorDirection.Left:
+                    left -= steps;
+                    break;
+            }
+            _consoledrive.SetCursorPosition(left, top);
         }
 
         /// <summary>
@@ -319,7 +390,7 @@ namespace PPlus
         /// <param name="top">The row position of the cursor. Rows are numbered from top to bottom starting at 0.</param>
         public static void SetCursorPosition(int left, int top)
         {
-            Console.SetCursorPosition(left, top);
+            _consoledrive.SetCursorPosition(left, top);
         }
 
         /// <summary>
@@ -335,7 +406,7 @@ namespace PPlus
         /// </returns>
         public static ConsoleKeyInfo ReadKey(bool intercept = false)
         {
-            return Console.ReadKey(intercept);
+            return _consoledrive.ReadKey(intercept);
         }
 
         /// <summary>
@@ -349,7 +420,7 @@ namespace PPlus
         /// </returns>
         public static string? ReadLine()
         {
-            return Console.ReadLine();
+            return _consoledrive.ReadLine();
         }
 
         /// <summary>
@@ -366,7 +437,7 @@ namespace PPlus
         ///</returns>
         public static ConsoleKeyInfo? WaitKeypress(bool intercept, CancellationToken? cancellationToken)
         { 
-            return Console.WaitKeypress(intercept, cancellationToken);
+            return _consoledrive.WaitKeypress(intercept, cancellationToken);
         }
 
         /// <summary>
@@ -374,8 +445,8 @@ namespace PPlus
         /// </summary>
         public static bool CursorVisible 
         {
-            get { return Console.CursorVisible; }
-            set { Console.CursorVisible = value; } 
+            get { return _consoledrive.CursorVisible; }
+            set { _consoledrive.CursorVisible = value; } 
         }
 
         /// <summary>
@@ -383,11 +454,11 @@ namespace PPlus
         /// </summary>
         public static int CursorLeft
         {
-            get { return Console.CursorLeft; }
+            get { return _consoledrive.CursorLeft; }
             set 
             { 
-                var top = Console.CursorTop;
-                Console.SetCursorPosition(value,top); 
+                var top = _consoledrive.CursorTop;
+                _consoledrive.SetCursorPosition(value,top); 
             }
         }
 
@@ -396,11 +467,11 @@ namespace PPlus
         /// </summary>
         public static int CursorTop
         {
-            get { return Console.CursorTop; }
+            get { return _consoledrive.CursorTop; }
             set
             {
-                var left = Console.CursorLeft;
-                Console.SetCursorPosition(left, value);
+                var left = _consoledrive.CursorLeft;
+                _consoledrive.SetCursorPosition(left, value);
             }
         }
 
@@ -408,29 +479,29 @@ namespace PPlus
         /// <returns>The column and row position of the cursor.</returns>
         public static (int Left, int Top) GetCursorPosition()
         {
-            return (Console.CursorLeft, Console.CursorTop);
+            return (_consoledrive.CursorLeft, _consoledrive.CursorTop);
         }
 
         /// <summary>
         /// Gets a value indicating whether a key press is available in the input stream.
         /// </summary>
-        public static bool KeyAvailable => Console.KeyAvailable;
+        public static bool KeyAvailable => _consoledrive.KeyAvailable;
 
         /// <summary>
         ///  Gets a value that indicates whether input has been redirected from the standard input stream.
         /// </summary>
-        public static bool IsInputRedirected => Console.IsInputRedirected;
+        public static bool IsInputRedirected => _consoledrive.IsInputRedirected;
 
 
         /// <summary>
         /// Get/set an encoding for standard input stream.
         /// </summary>
-        public static Encoding InputEncoding => Console.InputEncoding;
+        public static Encoding InputEncoding => _consoledrive.InputEncoding;
 
         /// <summary>
         /// Get standard input stream.
         /// </summary>
-        public static TextReader In => Console.In;
+        public static TextReader In => _consoledrive.In;
 
         /// <summary>
         /// set standard input stream.
@@ -438,43 +509,43 @@ namespace PPlus
         /// <param name="value">A stream that is the new standard input.</param>
         public static void SetIn(TextReader value)
         {
-            Console.SetIn(value);
+            _consoledrive.SetIn(value);
         }
 
         /// <summary>
         /// Get output CodePage.
         /// </summary>
-        public static int CodePage => Console.CodePage;
+        public static int CodePage => _consoledrive.CodePage;
 
 
         /// <summary>
         ///  Gets a value that indicates whether output has been redirected from the standard output stream.
         /// </summary>     
-        public static bool IsOutputRedirected => Console.IsOutputRedirected;
+        public static bool IsOutputRedirected => _consoledrive.IsOutputRedirected;
 
         /// <summary>
         ///  Gets a value that indicates whether error has been redirected from the standard error stream.
         /// </summary>
-        public static bool IsErrorRedirected => Console.IsErrorRedirected;
+        public static bool IsErrorRedirected => _consoledrive.IsErrorRedirected;
 
         /// <summary>
         /// Get/set an encoding for standard output stream.
         /// </summary>
         public static Encoding OutputEncoding 
         {
-            get { return Console.OutputEncoding; }
-            set { Console.OutputEncoding = value; } 
+            get { return _consoledrive.OutputEncoding; }
+            set { _consoledrive.OutputEncoding = value; } 
         }
 
         /// <summary>
         /// Get standard output stream.
         /// </summary>
-        public static TextWriter Out => Console.Out;
+        public static TextWriter Out => _consoledrive.Out;
 
         /// <summary>
         /// Get standard error stream.
         /// </summary>
-        public static TextWriter Error => Console.Error;
+        public static TextWriter Error => _consoledrive.Error;
 
 
         /// <summary>
@@ -482,8 +553,8 @@ namespace PPlus
         /// </summary>
         /// <param name="value">A stream that is the new standard output.</param>
         public static void SetOut(TextWriter value)
-        { 
-            Console.SetOut(value); 
+        {
+            _consoledrive.SetOut(value); 
         }
 
 
@@ -492,8 +563,8 @@ namespace PPlus
         /// </summary>
         /// <param name="value">A stream that is the new standard error.</param>
         public static void SetError(TextWriter value)
-        { 
-            Console.SetError(value);
+        {
+            _consoledrive.SetError(value);
         }
 
 
@@ -502,8 +573,8 @@ namespace PPlus
         /// <br>Move cursor fom top console.</br>
         /// </summary>
         public static void Clear()
-        { 
-            Console.Clear();
+        {
+            _consoledrive.Clear();
         }
 
         /// <summary>
@@ -516,7 +587,7 @@ namespace PPlus
             {
                 BackgroundColor = Color.ToConsoleColor(backcolor.Value);
             }
-            Console.Clear();
+            Clear();
         }
 
 
@@ -524,8 +595,8 @@ namespace PPlus
         /// Plays the sound of a beep through the console speaker.
         /// </summary>
         public static void Beep()
-        { 
-            Console.Beep();
+        {
+            _consoledrive.Beep();
         }
 
         /// <summary>
@@ -534,28 +605,20 @@ namespace PPlus
         /// <param name="row">The row to clear</param>
         public static void ClearLine(int? row = null)
         {
-            ClearLine(Console, row);
-        }
-
-        /// <summary>
-        ///  Clear line
-        /// </summary>
-        /// <param name="consolebase">The <see cref="IConsoleBase"/></param>
-        /// <param name="row">The row to clear</param>
-        public static void ClearLine(this IConsoleBase consolebase, int? row = null)
-        {
-            row ??= consolebase.CursorTop;
-            consolebase.SetCursorPosition(0, row.Value);
-            if (consolebase.SupportsAnsi)
+            row ??= _consoledrive.CursorTop;
+            SetCursorPosition(0, row.Value);
+            if (_consoledrive.SupportsAnsi)
             {
-                consolebase.Write("", clearrestofline: true);
+                _consoledrive.IsControlText = true;
+                Write(AnsiSequences.EL(0));
+                _consoledrive.IsControlText = false;
             }
             else
             {
-                var aux = new string(' ', consolebase.BufferWidth);
-                consolebase.Write(aux, clearrestofline:  true);
-                consolebase.SetCursorPosition(0, row.Value);
+                var aux = new string(' ', _consoledrive.BufferWidth);
+                Write(aux, clearrestofline: true);
             }
+            SetCursorPosition(0, row.Value);
         }
 
         /// <summary>
@@ -563,27 +626,20 @@ namespace PPlus
         /// </summary>
         public static void ClearRestOfLine()
         {
-            ClearRestOfLine(Console);
-        }
-
-        /// <summary>
-        ///  Clear rest of current line 
-        /// </summary>
-        /// <param name="consolebase">The <see cref="IConsoleBase"/></param>
-        public static void ClearRestOfLine(this IConsoleBase consolebase)
-        {
-            if (consolebase.SupportsAnsi)
+            var row = _consoledrive.CursorTop;
+            var col = _consoledrive.CursorLeft;
+            if (_consoledrive.SupportsAnsi)
             {
-                consolebase.Write("", clearrestofline: true);
+                _consoledrive.IsControlText = true;
+                Write(AnsiSequences.EL(0));
+                _consoledrive.IsControlText = false;
             }
             else
             {
-                var row = consolebase.CursorTop;
-                var col = consolebase.CursorLeft;
-                var aux = new string(' ', consolebase.BufferWidth - consolebase.CursorLeft);
-                consolebase.Write(aux, clearrestofline:  true);
-                consolebase.SetCursorPosition(col, row);
+                var aux = new string(' ', _consoledrive.BufferWidth - _consoledrive.CursorLeft);
+                Write(aux, clearrestofline: true);
             }
+            SetCursorPosition(col, row);
         }
 
         private static void Profile(Action<ProfileSetup> config)
@@ -603,7 +659,7 @@ namespace PPlus
                 ForegroundColor = DefaultForegroundColor,
                 BackgroundColor = DefaultBackgroundColor
             };
-            config.Invoke(param);
+            config?.Invoke(param);
             _configcontrols.DefaultCulture = param.Culture;
 
             if (RunningConsoleMemory)
@@ -623,11 +679,10 @@ namespace PPlus
             }
             _consoledrive.CursorVisible = true;
             _consoledrive.UpdateStyle(param.BackgroundColor);
-            _consoledrive.Clear();
         }
 
 
-        internal static void UpdateStyle(this IConsoleBase _, Color color)
+        internal static void UpdateStyle(this IConsoleControl _, Color color)
         {
             _styleschema.UpdateBackgoundColor(color);
         }

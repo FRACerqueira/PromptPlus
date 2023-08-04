@@ -171,7 +171,7 @@ namespace PPlus.Tests.Controls
         {
             var kp = new OptBaseTest(false);
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.IsUnicodeSupported = true;
             });
@@ -187,7 +187,7 @@ namespace PPlus.Tests.Controls
         {
             var kp = new OptBaseTest(false);
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.IsUnicodeSupported = false;
             });
@@ -201,7 +201,7 @@ namespace PPlus.Tests.Controls
         [Fact]
         public void Should_SetSymbolsIsUnicodeSupported()
         {
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.IsUnicodeSupported = true;
             });
@@ -214,7 +214,7 @@ namespace PPlus.Tests.Controls
         [Fact]
         public void Should_SetSymbolsNotIsUnicodeSupported()
         {
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.IsUnicodeSupported = false;
             });
@@ -226,7 +226,7 @@ namespace PPlus.Tests.Controls
 
         private class OptBaseTest : BaseOptions
         {
-            public OptBaseTest(bool showcursor) : base(showcursor)
+            public OptBaseTest(bool showcursor) : base(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive,  showcursor)
             {
             }
         }

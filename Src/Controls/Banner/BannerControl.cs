@@ -15,17 +15,19 @@ namespace PPlus.Controls
     internal class BannerControl : IBannerControl
     {
 
-        private readonly IConsoleBase _console;
+        private readonly IConsoleControl _console;
+        private readonly Config _config;
 
         private BannerControl()
         {
             throw new PromptPlusException("BannerControl CTOR NotImplemented");
         }
 
-        public BannerControl(IConsoleBase console, string value)
+        public BannerControl(Config config, IConsoleControl console, string value)
         {
             Text = value;
             _console = console;
+            _config = config;
         }
 
         public string Text { get; private set; }
@@ -154,19 +156,19 @@ namespace PPlus.Controls
                 switch (bannerDash)
                 {
                     case BannerDashOptions.AsciiSingleBorderUpDown:
-                        dach = PromptPlus.Config.Symbols(SymbolType.SingleBorder).value[0];
+                        dach = _config.Symbols(SymbolType.SingleBorder).value[0];
                         break;
                     case BannerDashOptions.AsciiDoubleBorderUpDown:
-                        dach = PromptPlus.Config.Symbols(SymbolType.DoubleBorder).value[0];
+                        dach = _config.Symbols(SymbolType.DoubleBorder).value[0];
                         break;
                     case BannerDashOptions.SingleBorderUpDown:
-                        dach = PromptPlus.Config.Symbols(SymbolType.SingleBorder).unicode[0];
+                        dach = _config.Symbols(SymbolType.SingleBorder).unicode[0];
                         break;
                     case BannerDashOptions.DoubleBorderUpDown:
-                        dach = PromptPlus.Config.Symbols(SymbolType.DoubleBorder).unicode[0];
+                        dach = _config.Symbols(SymbolType.DoubleBorder).unicode[0];
                         break;
                     case BannerDashOptions.HeavyBorderUpDown:
-                        dach = PromptPlus.Config.Symbols(SymbolType.HeavyBorder).unicode[0];
+                        dach = _config.Symbols(SymbolType.HeavyBorder).unicode[0];
                         break;
                     default:
                         break;
@@ -176,13 +178,13 @@ namespace PPlus.Controls
                     switch (bannerDash)
                     {
                         case BannerDashOptions.SingleBorderUpDown:
-                            dach = PromptPlus.Config.Symbols(SymbolType.SingleBorder).value[0];
+                            dach = _config.Symbols(SymbolType.SingleBorder).value[0];
                             break;
                         case BannerDashOptions.DoubleBorderUpDown:
-                            dach = PromptPlus.Config.Symbols(SymbolType.DoubleBorder).value[0];
+                            dach = _config.Symbols(SymbolType.DoubleBorder).value[0];
                             break;
                         case BannerDashOptions.HeavyBorderUpDown:
-                            dach = PromptPlus.Config.Symbols(SymbolType.HeavyBorder).value[0];
+                            dach = _config.Symbols(SymbolType.HeavyBorder).value[0];
                             break;
                         default:
                             break;
@@ -190,12 +192,12 @@ namespace PPlus.Controls
                 }
                 if (dach.HasValue)
                 {
-                    _console.WriteLine(new string(dach.Value, max), Style.Plain.Foreground(localcorlor).Overflow(Overflow.Crop));
+                    _console.WriteLine(new string(dach.Value, max), Style.Default.Foreground(localcorlor).Overflow(Overflow.Crop));
                 }
             }
             foreach (var item in _result)
             {
-                _console.WriteLine(item, Style.Plain.Foreground(localcorlor).Overflow(Overflow.Crop));
+                _console.WriteLine(item, Style.Default.Foreground(localcorlor).Overflow(Overflow.Crop));
             }
             if (bannerDash != BannerDashOptions.None)
             {
@@ -204,23 +206,23 @@ namespace PPlus.Controls
                 {
                     case BannerDashOptions.AsciiSingleBorderDown:
                     case BannerDashOptions.AsciiSingleBorderUpDown:
-                        dach = PromptPlus.Config.Symbols(SymbolType.SingleBorder).value[0];
+                        dach = _config.Symbols(SymbolType.SingleBorder).value[0];
                         break;
                     case BannerDashOptions.AsciiDoubleBorderDown:
                     case BannerDashOptions.AsciiDoubleBorderUpDown:
-                        dach = PromptPlus.Config.Symbols(SymbolType.DoubleBorder).value[0];
+                        dach = _config.Symbols(SymbolType.DoubleBorder).value[0];
                         break;
                     case BannerDashOptions.SingleBorderDown:
                     case BannerDashOptions.SingleBorderUpDown:
-                        dach = PromptPlus.Config.Symbols(SymbolType.SingleBorder).unicode[0];
+                        dach = _config.Symbols(SymbolType.SingleBorder).unicode[0];
                         break;
                     case BannerDashOptions.DoubleBorderDown:
                     case BannerDashOptions.DoubleBorderUpDown:
-                        dach = PromptPlus.Config.Symbols(SymbolType.DoubleBorder).unicode[0];
+                        dach = _config.Symbols(SymbolType.DoubleBorder).unicode[0];
                         break;
                     case BannerDashOptions.HeavyBorderDown:
                     case BannerDashOptions.HeavyBorderUpDown:
-                        dach = PromptPlus.Config.Symbols(SymbolType.HeavyBorder).unicode[0];
+                        dach = _config.Symbols(SymbolType.HeavyBorder).unicode[0];
                         break;
                     default:
                         break;
@@ -231,15 +233,15 @@ namespace PPlus.Controls
                     {
                         case BannerDashOptions.SingleBorderDown:
                         case BannerDashOptions.SingleBorderUpDown:
-                            dach = PromptPlus.Config.Symbols(SymbolType.SingleBorder).value[0];
+                            dach = _config.Symbols(SymbolType.SingleBorder).value[0];
                             break;
                         case BannerDashOptions.DoubleBorderDown:
                         case BannerDashOptions.DoubleBorderUpDown:
-                            dach = PromptPlus.Config.Symbols(SymbolType.DoubleBorder).value[0];
+                            dach = _config.Symbols(SymbolType.DoubleBorder).value[0];
                             break;
                         case BannerDashOptions.HeavyBorderDown:
                         case BannerDashOptions.HeavyBorderUpDown:
-                            dach = PromptPlus.Config.Symbols(SymbolType.HeavyBorder).value[0];
+                            dach = _config.Symbols(SymbolType.HeavyBorder).value[0];
                             break;
                         default:
                             break;
@@ -247,7 +249,7 @@ namespace PPlus.Controls
                 }
                 if (dach.HasValue)
                 {
-                    _console.WriteLine(new string(dach.Value, max), Style.Plain.Foreground(localcorlor).Overflow(Overflow.Crop));
+                    _console.WriteLine(new string(dach.Value, max), Style.Default.Foreground(localcorlor).Overflow(Overflow.Crop));
                 }
             }
         }

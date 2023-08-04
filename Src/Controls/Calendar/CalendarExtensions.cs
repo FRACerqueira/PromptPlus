@@ -42,7 +42,7 @@ namespace PPlus
         /// <returns><see cref="IControlCalendar"/></returns>
         public static IControlCalendar Calendar(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new CalendarOptions(true)
+            var opt = new CalendarOptions(_styleschema, _configcontrols, _consoledrive, true)
             {
                 OptPrompt = (prompt ?? string.Empty).Trim(),
                 OptDescription = (description ?? string.Empty).Trim()

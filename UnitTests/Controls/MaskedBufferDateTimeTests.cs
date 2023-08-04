@@ -305,7 +305,7 @@ namespace PPlus.Tests.Controls
         }
         internal class OptionsForMaskeditDateTime : MaskEditOptions
         {
-            public OptionsForMaskeditDateTime(CultureInfo culture, string defaultvalue) : base(false)
+            public OptionsForMaskeditDateTime(CultureInfo culture, string defaultvalue) : base(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false)
             {
                 Type = ControlMaskedType.DateTime;
                 DefaultValue = defaultvalue;

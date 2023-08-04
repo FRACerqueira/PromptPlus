@@ -12,15 +12,16 @@ namespace PPlus.Controls
 {
     internal class WaitOptions<T> : BaseOptions
     {
-        private WaitOptions()
+        private WaitOptions() : base(null, null, null, true)
         {
             throw new PromptPlusException("WaitOptions CTOR NotImplemented");
         }
 
-        internal WaitOptions(bool showcursor) : base(showcursor)
+        internal WaitOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             Steps = new();
             States = new();
+            SpinnerStyle = styleSchema.Prompt();
         }
         public T Context { get; set; } = default;
         public TimeSpan TimeDelay { get; set; }
@@ -29,7 +30,7 @@ namespace PPlus.Controls
         public bool ShowCountdown { get; set; }
         public List<Action<EventWaitProcess<T>, CancellationToken>> Steps { get; set; }
         public List<StateProcess> States { get; set; }
-        public Style SpinnerStyle { get; set; } = PromptPlus.StyleSchema.Prompt();
+        public Style SpinnerStyle { get; set; }
         public string? Finish { get; set; }
         public Spinners Spinner { get; set; } = new Spinners(SpinnersType.Ascii, false);
         public int MaxDegreeProcess { get; set; } = Environment.ProcessorCount;

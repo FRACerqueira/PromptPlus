@@ -266,7 +266,7 @@ namespace PPlus.Tests.Controls
 
         internal class OptionsForMaskeditTimeOnly : MaskEditOptions
         {
-            public OptionsForMaskeditTimeOnly(CultureInfo culture, string defaultvalue) : base(false)
+            public OptionsForMaskeditTimeOnly(CultureInfo culture, string defaultvalue) : base(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false)
             {
                 Type = ControlMaskedType.TimeOnly;
                 DefaultValue = defaultvalue;

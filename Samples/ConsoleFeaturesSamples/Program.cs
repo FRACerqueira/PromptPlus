@@ -13,7 +13,6 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Reset();
             PromptPlus.Clear();
 
-
             PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
@@ -36,7 +35,7 @@ namespace ConsoleFeaturesSamples
             PromptPlus
                 .KeyPress()
                 .Config(cfg => cfg.HideAfterFinish(true))
-                .Spinner(SpinnersType.DotsScrolling)
+                //.Spinner(SpinnersType.DotsScrolling)
                 .Run();
 
             PromptPlus.Setup((cfg) =>
@@ -47,9 +46,10 @@ namespace ConsoleFeaturesSamples
                 cfg.Culture = new CultureInfo("en-us");
             });
 
-
             PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
+            PromptPlus.WriteLine($"Current Buffer: {PromptPlus.CurrentTargetBuffer}");
             PromptPlus.WriteLine($"IsTerminal: {PromptPlus.IsTerminal}");
+            PromptPlus.WriteLine($"CodePage : {PromptPlus.CodePage}");
             PromptPlus.WriteLine($"IsUnicodeSupported: {PromptPlus.IsUnicodeSupported}");
             PromptPlus.WriteLine($"OutputEncoding: {PromptPlus.OutputEncoding.EncodingName}");
             PromptPlus.WriteLine($"ColorDepth: {PromptPlus.ColorDepth}");
@@ -65,7 +65,7 @@ namespace ConsoleFeaturesSamples
                 {
                     cfg.HideAfterFinish(true)
                       .ShowTooltip(false)
-                      .ApplyStyle(StyleControls.Tooltips, Style.Plain.Foreground(Color.Grey100));
+                      .ApplyStyle(StyleControls.Tooltips, Style.Default.Foreground(Color.Grey100));
                 })
                 .Spinner(SpinnersType.Balloon)
                 .Run();
@@ -149,7 +149,7 @@ namespace ConsoleFeaturesSamples
             PromptPlus.KeyPress("End Sample!, Press any key", cfg =>
             {
                 cfg.ShowTooltip(false);
-                cfg.ApplyStyle(StyleControls.Tooltips, Style.Plain.Foreground(Style.Plain.Background.GetInvertedColor()));
+                cfg.ApplyStyle(StyleControls.Tooltips, Style.Default.Foreground(Style.Default.Background.GetInvertedColor()));
             })
                 .Run();
 

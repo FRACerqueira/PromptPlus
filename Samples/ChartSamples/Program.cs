@@ -73,10 +73,10 @@ PromptPlus
     .PadLeft(2)
     .HideValue()
     .ShowLegends(true,false)
-    .Styles(StyleChart.Title, Style.Plain.Foreground(Color.Turquoise4))
-    .Styles(StyleChart.Label, Style.Plain.Foreground(Color.Yellow))
-    .Styles(StyleChart.Percent, Style.Plain.Foreground(Color.IndianRed))
-    .Styles(StyleChart.Value, Style.Plain.Foreground(Color.Aqua))
+    .Styles(StyleChart.Title, Style.Default.Foreground(Color.Turquoise4))
+    .Styles(StyleChart.Label, Style.Default.Foreground(Color.Yellow))
+    .Styles(StyleChart.Percent, Style.Default.Foreground(Color.IndianRed))
+    .Styles(StyleChart.Value, Style.Default.Foreground(Color.Aqua))
     .Run();
 
 PromptPlus
@@ -134,9 +134,9 @@ foreach (var item in auxc)
         .HideOrdination()
         .HideValue()
         .ShowLegends(true, false)
-        .Styles(StyleChart.Label, Style.Plain.Foreground(Color.Yellow))
-        .Styles(StyleChart.Percent, Style.Plain.Foreground(Color.IndianRed))
-        .Styles(StyleChart.Value, Style.Plain.Foreground(Color.Aqua))
+        .Styles(StyleChart.Label, Style.Default.Foreground(Color.Yellow))
+        .Styles(StyleChart.Percent, Style.Default.Foreground(Color.IndianRed))
+        .Styles(StyleChart.Value, Style.Default.Foreground(Color.Aqua))
         .Run();
     PromptPlus
         .KeyPress()

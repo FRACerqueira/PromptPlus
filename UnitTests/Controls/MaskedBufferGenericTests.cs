@@ -227,7 +227,7 @@ namespace PPlus.Tests.Controls
 
     internal class OptionsForMaskeditGeneric : MaskEditOptions
     {
-        public OptionsForMaskeditGeneric(string mask, string? defaultvalue) : base(false)
+        public OptionsForMaskeditGeneric(string mask, string? defaultvalue) : base(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false)
         {
             MaskValue = mask;
             DefaultValue = defaultvalue;

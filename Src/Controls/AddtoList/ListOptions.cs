@@ -11,27 +11,30 @@ namespace PPlus.Controls
 {
     internal class ListOptions : BaseOptions
     {
-        private ListOptions()
+        private ListOptions() : base(null, null, null, true)
         {
-            throw new NotImplementedException();
+            throw new PromptPlusException("AlternateScreenOtions CTOR NotImplemented");
         }
 
-        internal ListOptions(bool showcursor) : base(showcursor)
+        internal ListOptions(StyleSchema styleSchema, Config config, IConsoleControl console,bool showcursor) : base(styleSchema, config, console,showcursor)
         {
+            RemoveItemPress = config.RemoveItemPress;
+            EditItemPress = config.EditItemPress;
+            PageSize = config.PageSize;
         }
 
         public string DefaultValue { get; set; }
-        public HotKey RemoveItemPress { get; set; } = PromptPlus.Config.RemoveItemPress;
-        public HotKey EditItemPress { get; set; } = PromptPlus.Config.EditItemPress;
+        public HotKey RemoveItemPress { get; set; }
+        public HotKey EditItemPress { get; set; }
         public CaseOptions InputToCase { get; set; } = CaseOptions.Any;
-        public Func<char, bool>? AcceptInput { get; set; } = null;
+        public Func<char, bool>? AcceptInput { get; set; }
         public ushort MaxLenght { get; set; } = ushort.MaxValue;
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
         public Func<SugestionInput, SugestionOutput>? SuggestionHandler { get; set; }
         public IList<ItemListControl> Items { get; set; } = new List<ItemListControl>();
-        public bool AllowDuplicate { get; set; } = false;
-        public int PageSize { get; set; } = PromptPlus.Config.PageSize;
-        public int Minimum { get; set; } = 0;
+        public bool AllowDuplicate { get; set; }
+        public int PageSize { get; set; }
+        public int Minimum { get; set; }
         public int Maximum { get; set; } = int.MaxValue;
     }
 }

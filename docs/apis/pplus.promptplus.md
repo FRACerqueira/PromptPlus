@@ -94,18 +94,6 @@ public static Config Config { get; }
 
 [Config](./pplus.controls.config.md)<br>
 
-### <a id="properties-console"/>**Console**
-
-Gets the current Console drive.
-
-```csharp
-public static IConsoleBase Console { get; }
-```
-
-#### Property Value
-
-[IConsoleBase](./pplus.iconsolebase.md)<br>
-
 ### <a id="properties-cursorleft"/>**CursorLeft**
 
 Gets or sets a value column position of the cursor within the buffer area.
@@ -141,18 +129,6 @@ public static bool CursorVisible { get; set; }
 #### Property Value
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-defaultstyle"/>**DefaultStyle**
-
-Get default [Style](./pplus.style.md) console.
-
-```csharp
-public static Style DefaultStyle { get; }
-```
-
-#### Property Value
-
-[Style](./pplus.style.md)<br>
 
 ### <a id="properties-error"/>**Error**
 
@@ -220,6 +196,18 @@ Gets a value that indicates whether input has been redirected from the standard 
 
 ```csharp
 public static bool IsInputRedirected { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-islegacy"/>**IsLegacy**
+
+Get the current Console drive Is Legcy.
+
+```csharp
+public static bool IsLegacy { get; }
 ```
 
 #### Property Value
@@ -500,7 +488,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### <a id="methods-alternatescreen"/>**AlternateScreen()**
 
-Create CustomAction Control
+Create AlternateScreen Control
 
 ```csharp
 public static IControlAlternateScreen AlternateScreen()
@@ -512,7 +500,7 @@ public static IControlAlternateScreen AlternateScreen()
 
 ### <a id="methods-alternatescreen"/>**AlternateScreen(Action&lt;IPromptConfig&gt;)**
 
-Create CustomAction Control
+Create AlternateScreen Control
 
 ```csharp
 public static IControlAlternateScreen AlternateScreen(Action<IPromptConfig> config)
@@ -882,22 +870,6 @@ public static void ClearLine(Nullable<Int32> row)
 `row` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The row to clear
 
-### <a id="methods-clearline"/>**ClearLine(IConsoleBase, Nullable&lt;Int32&gt;)**
-
-Clear line
-
-```csharp
-public static void ClearLine(IConsoleBase consolebase, Nullable<Int32> row)
-```
-
-#### Parameters
-
-`consolebase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The [IConsoleBase](./pplus.iconsolebase.md)
-
-`row` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The row to clear
-
 ### <a id="methods-clearrestofline"/>**ClearRestOfLine()**
 
 Clear rest of current line
@@ -905,19 +877,6 @@ Clear rest of current line
 ```csharp
 public static void ClearRestOfLine()
 ```
-
-### <a id="methods-clearrestofline"/>**ClearRestOfLine(IConsoleBase)**
-
-Clear rest of current line
-
-```csharp
-public static void ClearRestOfLine(IConsoleBase consolebase)
-```
-
-#### Parameters
-
-`consolebase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The [IConsoleBase](./pplus.iconsolebase.md)
 
 ### <a id="methods-confirm"/>**Confirm(String, Action&lt;IPromptConfig&gt;)**
 
@@ -1018,31 +977,6 @@ public static void DoubleDash(string value, DashOptions dashOptions, int extrali
 ```
 
 #### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The value to write.
-
-`dashOptions` [DashOptions](./pplus.dashoptions.md)<br>
-[DashOptions](./pplus.dashoptions.md) character
-
-`extralines` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number lines to write after write value
-
-`style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The [Style](./pplus.style.md) to write.
-
-### <a id="methods-doubledash"/>**DoubleDash(IConsoleBase, String, DashOptions, Int32, Nullable&lt;Style&gt;)**
-
-Writes text line representation whie colors in a pair of lines of dashes.
-
-```csharp
-public static void DoubleDash(IConsoleBase consoleBase, string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
-```
-
-#### Parameters
-
-`consoleBase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The Console, see [IConsoleBase](./pplus.iconsolebase.md)
 
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The value to write.
@@ -1484,13 +1418,17 @@ The user action after each accepted keystroke. Firt param is input text, Second 
 
 The string input value.
 
-### <a id="methods-reset"/>**Reset()**
+### <a id="methods-reset"/>**Reset(Boolean)**
 
 Reset all config and properties to default values
 
 ```csharp
-public static void Reset()
+public static void Reset(bool resetstatusbar)
 ```
+
+#### Parameters
+
+`resetstatusbar` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### <a id="methods-resetcolor"/>**ResetColor()**
 
@@ -1633,19 +1571,22 @@ public static void SetOut(TextWriter value)
 `value` [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 A stream that is the new standard output.
 
-### <a id="methods-setup"/>**Setup(Action&lt;ProfileSetup&gt;)**
+### <a id="methods-setup"/>**Setup(Action&lt;ProfileSetup&gt;, Boolean)**
 
 Overwrite current console with new console profile.
  <br>After overwrite the new console the screeen is clear<br>and all Style-Schema are updated with backgoundcolor console
 
 ```csharp
-public static void Setup(Action<ProfileSetup> config)
+public static void Setup(Action<ProfileSetup> config, bool resetstatusbar)
 ```
 
 #### Parameters
 
 `config` [Action&lt;ProfileSetup&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 Action with [ProfileSetup](./pplus.profilesetup.md) to configuration
+
+`resetstatusbar` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Reset StatusBar
 
 ### <a id="methods-singledash"/>**SingleDash(String, DashOptions, Int32, Nullable&lt;Style&gt;)**
 
@@ -1656,31 +1597,6 @@ public static void SingleDash(string value, DashOptions dashOptions, int extrali
 ```
 
 #### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The value to write.
-
-`dashOptions` [DashOptions](./pplus.dashoptions.md)<br>
-[DashOptions](./pplus.dashoptions.md) character
-
-`extralines` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number lines to write after write value
-
-`style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The [Style](./pplus.style.md) to write.
-
-### <a id="methods-singledash"/>**SingleDash(IConsoleBase, String, DashOptions, Int32, Nullable&lt;Style&gt;)**
-
-Writes text line representation whie colors and Write single dash after.
-
-```csharp
-public static void SingleDash(IConsoleBase consoleBase, string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
-```
-
-#### Parameters
-
-`consoleBase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The Console, see [IConsoleBase](./pplus.iconsolebase.md)
 
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The value to write.
@@ -1779,6 +1695,18 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 #### Returns
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
+
+### <a id="methods-statusbar"/>**StatusBar()**
+
+Get Reference to StatusBar Control for current Screen
+
+```csharp
+public static IControlStatusbar StatusBar()
+```
+
+#### Returns
+
+[IControlStatusbar](./pplus.controls.icontrolstatusbar.md)
 
 ### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, String)**
 
@@ -2173,22 +2101,6 @@ public static void WriteLines(int steps)
 ```
 
 #### Parameters
-
-`steps` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Numbers de lines.
-
-### <a id="methods-writelines"/>**WriteLines(IConsoleBase, Int32)**
-
-Write lines with line terminator
-
-```csharp
-public static void WriteLines(IConsoleBase consoleBase, int steps)
-```
-
-#### Parameters
-
-`consoleBase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The Console, see [IConsoleBase](./pplus.iconsolebase.md)
 
 `steps` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Numbers de lines.

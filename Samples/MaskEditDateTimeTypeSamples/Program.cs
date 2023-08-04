@@ -14,7 +14,7 @@ namespace MaskEditDateTimeTypeSamples
             var cult = Thread.CurrentThread.CurrentCulture;
             PromptPlus.Config.DefaultCulture = cult;
 
-            PromptPlus.DoubleDash($"Your default Culture is {cult.Name}", DashOptions.HeavyBorder, style: Style.Plain.Foreground(Color.Yellow));
+            PromptPlus.DoubleDash($"Your default Culture is {cult.Name}", DashOptions.HeavyBorder, style: Style.Default.Foreground(Color.Yellow));
 
 
             PromptPlus.DoubleDash($"Control:MaskEdit DateTime ({cult.Name}) - minimal usage");
@@ -42,7 +42,7 @@ namespace MaskEditDateTimeTypeSamples
                 .Mask(MaskedType.DateTime)
                 .AcceptEmptyValue()
                 .DescriptionWithInputType(FormatWeek.Long)
-                .TypeTipStyle(Style.Plain.Foreground(Color.Aqua))
+                .TypeTipStyle(Style.Default.Foreground(Color.Aqua))
                 .Run();
 
             PromptPlus.DoubleDash($"Control:MaskEdit DateTime - with overwrite culture:pt-br.");

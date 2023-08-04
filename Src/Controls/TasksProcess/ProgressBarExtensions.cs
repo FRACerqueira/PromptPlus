@@ -47,7 +47,7 @@ namespace PPlus
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
         public static IControlProgressBar<T> ProgressBar<T>(ProgressBarType barType, string prompt, T defaultresult, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new ProgressBarOptions<T>(false)
+            var opt = new ProgressBarOptions<T>(_styleschema,_configcontrols,_consoledrive, false)
             {
                 ValueResult = defaultresult,
                 BarType = barType,

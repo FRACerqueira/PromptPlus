@@ -223,15 +223,15 @@ PromptPlus
 
 ```csharp
 PromptPlus.Clear();
-PromptPlus.DoubleDash($"PromptPlus.Console Style.OverflowEllipsis");
+PromptPlus.DoubleDash($"PromptPlus Style.OverflowEllipsis");
 PromptPlus.WriteLine("[RED ON WHITE]TESTE[YELLOW] COLOR [/] BACK COLOR [/]" + 
 "asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", style: Style.OverflowEllipsis);
 
-PromptPlus.DoubleDash($"PromptPlus.Console Style.OverflowCrop");
+PromptPlus.DoubleDash($"PromptPlus Style.OverflowCrop");
 PromptPlus.WriteLine("[RED ON WHITE]TESTE[YELLOW] COLOR [/] BACK COLOR [/]" + 
 "asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", style: Style.OverflowCrop);
 
-PromptPlus.DoubleDash($"PromptPlus.Console default");
+PromptPlus.DoubleDash($"PromptPlus default");
 PromptPlus.WriteLine("[RED ON WHITE]TESTE[YELLOW] COLOR [/] BACK COLOR [/]" + 
 "asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj");
 

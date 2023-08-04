@@ -58,7 +58,7 @@ namespace PPlus.Controls
         public static void WriteLineNotSelectorDisabled(this ScreenBuffer screenBuffer, BaseOptions options, string message)
         {
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer(' ', PromptPlus.Console.DefaultStyle, true);
+            screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.Disabled(),false, false);
         }
 
@@ -71,7 +71,7 @@ namespace PPlus.Controls
         public static void WriteLineNotSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message)
         {
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer(' ', PromptPlus.Console.DefaultStyle, true);
+            screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.UnSelected(), false,false);
         }
 
@@ -122,8 +122,8 @@ namespace PPlus.Controls
             if (options.OptEnabledAbortKey)
             {
                 return string.Format("{0}, {1}, {2}\n{3}, {4}",
-                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                    string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                    string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
+                    string.Format(Messages.TooltipCancelEsc, options.Config.AbortKeyPress),
                     Messages.SelectFisnishEnter,
                     Messages.TooltipPages,
                     Messages.TooltipSelectFilter);
@@ -131,7 +131,7 @@ namespace PPlus.Controls
             else
             {
                 return string.Format("{0}, {1}\n{2}, {3}",
-                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                    string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
                     Messages.SelectFisnishEnter,
                     Messages.TooltipPages,
                     Messages.TooltipSelectFilter);

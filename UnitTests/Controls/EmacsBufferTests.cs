@@ -21,9 +21,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer("abc" + (char)13);
             //when
             var qtdnotaccept = 0;
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 var ok = _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
                 if (!ok)
                 {
@@ -78,9 +78,9 @@ namespace PPlus.Tests.Controls
             // Given
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, 0, false, true, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -94,9 +94,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer("abc");
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -114,9 +114,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Home, false, false, false));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -133,9 +133,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer("abc");
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.T, false, false, true));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -152,9 +152,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer("abc");
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.L, false, false, true));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -172,9 +172,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Home, false, false, false));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.L, false, true, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -193,9 +193,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.U, false, false, true));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -214,9 +214,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Home, false, false, false));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.U, false, true, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -236,9 +236,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.K, false, false, true));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -259,9 +259,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.W, false, false, true));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -281,9 +281,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.C, false, true, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -304,9 +304,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.D, false, true, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -325,9 +325,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Home, false, false, false));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F, false, true, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -345,9 +345,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer("abc def ghi");
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.B, false, true, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -366,9 +366,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.H, false, false, true));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Backspace, false, false, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -387,9 +387,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer("abc def ghi");
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.A, false, false, true));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -399,9 +399,9 @@ namespace PPlus.Tests.Controls
             // Given
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.E, false, false, true));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -419,9 +419,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer("abc def ghi");
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Home, false, false, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -431,9 +431,9 @@ namespace PPlus.Tests.Controls
             // Given
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.End, false, false, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -452,9 +452,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.B, false, false, true));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -475,9 +475,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F, false, false, true));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then
@@ -497,9 +497,9 @@ namespace PPlus.Tests.Controls
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.D, false, false, true));
             PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Delete, false, false, false));
             //when
-            while (PromptPlus.Console.KeyAvailable)
+            while (PromptPlus.KeyAvailable)
             {
-                var keyinfo = PromptPlus.Console.ReadKey(false);
+                var keyinfo = PromptPlus.ReadKey(false);
                 _readlinedefault.TryAcceptedReadlineConsoleKey(keyinfo);
             }
             // Then

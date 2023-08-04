@@ -11,7 +11,7 @@ namespace PPlus.Tests.Controls.Banner
         [InlineData(CharacterWidth.Fitted)]
         public void Should_InitAsciiArtWithNoError(CharacterWidth value)
         {
-            var ctrl = new BannerControl((IConsoleControl)PromptPlus.Console, "Test");
+            var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
             ctrl.FIGletWidth(value);
             ctrl.InitAsciiArt();
         }
@@ -19,7 +19,7 @@ namespace PPlus.Tests.Controls.Banner
         [Fact]
         public void Should_LoadFontWithNoError()
         {
-            var ctrl = new BannerControl((IConsoleControl)PromptPlus.Console, "Test");
+            var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
             ctrl.InitAsciiArt();
             ctrl.LoadFont("starwars.flf");
         }
@@ -27,7 +27,7 @@ namespace PPlus.Tests.Controls.Banner
         [Fact]
         public void Should_LoadFontStreamWithNoError()
         {
-            var ctrl = new BannerControl((IConsoleControl)PromptPlus.Console, "Test");
+            var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
             ctrl.InitAsciiArt();
             using var sr = new FileStream("starwars.flf", FileMode.Open);
             ctrl.LoadFont(sr);
@@ -47,11 +47,11 @@ namespace PPlus.Tests.Controls.Banner
         [InlineData(BannerDashOptions.None)]
         public void Should_RunWithNoErrorUnicode(BannerDashOptions value)
         {
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.IsUnicodeSupported = true;
             });
-            var ctrl = new BannerControl((IConsoleControl)PromptPlus.Console, "Test");
+            var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
             ctrl.InitAsciiArt();
             ctrl.Run(null, value);
         }
@@ -70,11 +70,11 @@ namespace PPlus.Tests.Controls.Banner
         [InlineData(BannerDashOptions.None)]
         public void Should_RunWithNoErrorNotUnicode(BannerDashOptions value)
         {
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.IsUnicodeSupported= false;
             });
-            var ctrl = new BannerControl((IConsoleControl)PromptPlus.Console, "Test");
+            var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
             ctrl.InitAsciiArt();
             ctrl.Run(null, value);
         }
@@ -82,13 +82,13 @@ namespace PPlus.Tests.Controls.Banner
         [Fact]
         public void Should_Runoutput1()
         {
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = true;
             });
             var output = PromptPlus.RecordOutput(() =>
             {
-                var ctrl = new BannerControl((IConsoleControl)PromptPlus.Console, "Test");
+                var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
                 ctrl.InitAsciiArt();
                 ctrl.Run();
             });
@@ -99,13 +99,13 @@ namespace PPlus.Tests.Controls.Banner
         [Fact]
         public void Should_Runoutput2()
         {
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
             });
             var output = PromptPlus.RecordOutput(() =>
             {
-                var ctrl = new BannerControl((IConsoleControl)PromptPlus.Console, "Test");
+                var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
                 ctrl.InitAsciiArt();
                 ctrl.Run();
             });

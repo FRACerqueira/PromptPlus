@@ -8,7 +8,7 @@ namespace PPlus.Tests.AnsiDriverTest
         [Fact]
         public void Should_Cursor_Default()
         {
-            Assert.True(PromptPlus.Console.CursorVisible);
+            Assert.True(PromptPlus.CursorVisible);
         }
 
         [Theory]
@@ -16,9 +16,9 @@ namespace PPlus.Tests.AnsiDriverTest
         [InlineData(false)]
         public void Should_Change_Cursor(bool expected)
         {
-            PromptPlus.Console.CursorVisible = expected;
+            PromptPlus.CursorVisible = expected;
             // Then
-            Assert.Equal(expected, PromptPlus.Console.CursorVisible);
+            Assert.Equal(expected, PromptPlus.CursorVisible);
         }
 
 
@@ -29,10 +29,10 @@ namespace PPlus.Tests.AnsiDriverTest
         [InlineData(CursorDirection.Down, 100, 110)]
         public void Should_move_Cursor_Updown(CursorDirection direction, int step, int expected)
         {
-            PromptPlus.Console.SetCursorPosition(10, 10);
-            PromptPlus.Console.MoveCursor(direction, step);
+            PromptPlus.SetCursorPosition(10, 10);
+            PromptPlus.MoveCursor(direction, step);
             // Then
-            Assert.Equal(expected, PromptPlus.Console.CursorTop);
+            Assert.Equal(expected, PromptPlus.CursorTop);
         }
 
         [Theory]
@@ -42,10 +42,10 @@ namespace PPlus.Tests.AnsiDriverTest
         [InlineData(CursorDirection.Right, 200, 132)]
         public void Should_move_Cursor_LeftRight(CursorDirection direction, int step, int expected)
         {
-            PromptPlus.Console.SetCursorPosition(10, 10);
-            PromptPlus.Console.MoveCursor(direction, step);
+            PromptPlus.SetCursorPosition(10, 10);
+            PromptPlus.MoveCursor(direction, step);
             // Then
-            Assert.Equal(expected, PromptPlus.Console.CursorLeft);
+            Assert.Equal(expected, PromptPlus.CursorLeft);
         }
 
     }

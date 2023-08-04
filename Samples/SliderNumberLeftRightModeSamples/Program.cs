@@ -15,7 +15,7 @@ namespace SliderNumberLeftRightModeSamples
             var cult = Thread.CurrentThread.CurrentCulture;
             PromptPlus.Config.DefaultCulture = cult;
 
-            PromptPlus.DoubleDash($"Your default Culture is {cult.Name}", DashOptions.HeavyBorder, style: Style.Plain.Foreground(Color.Yellow));
+            PromptPlus.DoubleDash($"Your default Culture is {cult.Name}", DashOptions.HeavyBorder, style: Style.Default.Foreground(Color.Yellow));
 
             PromptPlus.DoubleDash($"Control:SliderNumber {cult} - auto larger/shot step usage");
             var sdl = PromptPlus

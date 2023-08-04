@@ -30,7 +30,7 @@ namespace PPlus
         /// <returns><see cref="IControlMaskEditList"/></returns>
         public static IControlMaskEditList AddtoMaskEditList(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new MaskEditListOptions(true)
+            var opt = new MaskEditListOptions(_styleschema, _configcontrols, _consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,
@@ -48,7 +48,7 @@ namespace PPlus
         /// <returns><see cref="IControlMaskEditList"/></returns>
         public static IControlMaskEditList AddtoMaskEditList(string prompt, Action<IPromptConfig> config)
         {
-            var opt = new MaskEditListOptions(true)
+            var opt = new MaskEditListOptions(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt
             };

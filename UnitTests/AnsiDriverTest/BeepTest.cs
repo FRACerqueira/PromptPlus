@@ -8,7 +8,7 @@ namespace PPlus.Tests.AnsiDriverTest
         [Fact]
         public void Should_can_beep()
         {
-            PromptPlus.Console.Beep();
+            PromptPlus.Beep();
         }
     }
 }

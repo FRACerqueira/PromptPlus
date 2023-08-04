@@ -11,8 +11,8 @@ namespace PPlus.Tests.Controls.KeyPress
         [Fact]
         public void Should_ValidInitControlPrompt()
         {
-            var opt = new KeyPressOptions(false);
-            var ctrl = new KeyPressControl((IConsoleControl)PromptPlus.Console, opt);
+            var opt = new KeyPressOptions(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false);
+            var ctrl = new KeyPressControl(PromptPlus._consoledrive, opt);
             var init = ctrl.InitControl(CancellationToken.None);
             Assert.Equal(Messages.AnyKey, opt.OptPrompt);
             Assert.Null(init);
@@ -22,16 +22,16 @@ namespace PPlus.Tests.Controls.KeyPress
         [Fact]
         public void Should_FinalizeControl()
         {
-            var opt = new KeyPressOptions(false);
-            var ctrl = new KeyPressControl((IConsoleControl)PromptPlus.Console, opt);
+            var opt = new KeyPressOptions(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false);
+            var ctrl = new KeyPressControl(PromptPlus._consoledrive, opt);
             ctrl.FinalizeControl(CancellationToken.None);
         }
 
         [Fact]
         public void Should_Dispose()
         {
-            var opt = new KeyPressOptions(false);
-            var ctrl = new KeyPressControl((IConsoleControl)PromptPlus.Console, opt);
+            var opt = new KeyPressOptions(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false);
+            var ctrl = new KeyPressControl(PromptPlus._consoledrive, opt);
             ctrl.Dispose();
             ctrl.Dispose();
         }
@@ -40,8 +40,8 @@ namespace PPlus.Tests.Controls.KeyPress
         [Fact]
         public void Should_ValidInitControlPromptValidkey()
         {
-            var opt = new KeyPressOptions(false);
-            var ctrl = new KeyPressControl((IConsoleControl)PromptPlus.Console, opt);
+            var opt = new KeyPressOptions(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false);
+            var ctrl = new KeyPressControl(PromptPlus._consoledrive, opt);
             ctrl.AddKeyValid(ConsoleKey.M);
             var init = ctrl.InitControl(CancellationToken.None);
             Assert.Equal(Messages.ValidAnyKey, opt.OptPrompt);
@@ -51,8 +51,8 @@ namespace PPlus.Tests.Controls.KeyPress
         [Fact]
         public void Should_AcceptFinalizeControl()
         {
-            var opt = new KeyPressOptions(false);
-            var ctrl = new KeyPressControl((IConsoleControl)PromptPlus.Console, opt);
+            var opt = new KeyPressOptions(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false);
+            var ctrl = new KeyPressControl(PromptPlus._consoledrive, opt);
             ctrl.FinalizeControl(CancellationToken.None);
         }
 

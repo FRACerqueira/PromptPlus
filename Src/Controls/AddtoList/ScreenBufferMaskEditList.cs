@@ -91,7 +91,7 @@ namespace PPlus.Controls
             if (isInAutoCompleteMode)
             {
                 return string.Format("{0}, {1}\n{2}, {3}",
-                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                 Messages.TooltipSugestionEsc,
                 Messages.TooltipSugestionToggle,
                 Messages.TooltipEnterPressList);
@@ -110,7 +110,7 @@ namespace PPlus.Controls
                                 aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                             }
                             return string.Format("{0}, {1}, {2}, {3}\n{4}, {5}",
-                                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                 Messages.TooltipAbortEdit,
                                 Messages.TooltipSugestionToggle,
                                 string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -129,7 +129,7 @@ namespace PPlus.Controls
                                 aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                             }
                             return string.Format("{0}, {1}, {2}, {3}\n{4}, {5}",
-                                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                 Messages.TooltipAbortEdit,
                                 Messages.TooltipSugestionToggle,
                                 string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -139,7 +139,7 @@ namespace PPlus.Controls
                         else
                         {
                             return string.Format("{0}, {1}, {2}\n{3}, {4}",
-                                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                 Messages.TooltipAbortEdit,
                                 Messages.TooltipSugestionToggle,
                                 string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -160,8 +160,8 @@ namespace PPlus.Controls
                                         aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                                     }
                                     return string.Format("{0}, {1}, {2}, {3}, {4}\n{5}, {6}, {7}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                         Messages.TooltipSugestionToggle,
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -181,8 +181,8 @@ namespace PPlus.Controls
                                         aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                                     }
                                     return string.Format("{0}, {1}, {2}, {3}, {4}\n{5}, {6}, {7}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                         Messages.TooltipSugestionToggle,
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -200,8 +200,8 @@ namespace PPlus.Controls
                                             aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                                         }
                                         return string.Format("{0}, {1}, {2}, {3}, {4}\n{5}, {6}, {7}",
-                                            string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                            string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                            string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                            string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                             Messages.TooltipSugestionToggle,
                                             string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                             string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -221,8 +221,8 @@ namespace PPlus.Controls
                                             aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                                         }
                                         return string.Format("{0}, {1}, {2}, {3}, {4}\n{5}, {6}, {7}",
-                                            string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                            string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                            string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                            string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                             Messages.TooltipSugestionToggle,
                                             string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                             string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -233,8 +233,8 @@ namespace PPlus.Controls
                                     else
                                     {
                                         return string.Format("{0}, {1}, {2}, {3}, {4}\n{5}, {6}",
-                                            string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                            string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                            string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                            string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                             Messages.TooltipSugestionToggle,
                                             string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                             string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -253,8 +253,8 @@ namespace PPlus.Controls
                                         aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                                     }
                                     return string.Format("{0}, {1}, {2},\n{3}, {4}, {5}",
-                                         string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                         string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                         string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                          Messages.TooltipSugestionToggle,
                                          Messages.TooltipPages,
                                          string.Format(Messages.MaskEditJump, aux),
@@ -272,8 +272,8 @@ namespace PPlus.Controls
                                         aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                                     }
                                     return string.Format("{0}, {1}, {2},\n{3}, {4}, {5}",
-                                         string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                         string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                         string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                          Messages.TooltipSugestionToggle,
                                          Messages.TooltipPages,
                                          string.Format(Messages.MaskEditJump, aux),
@@ -282,8 +282,8 @@ namespace PPlus.Controls
                                 else
                                 {
                                     return string.Format("{0}, {1}, {2},\n{3}, {4}",
-                                         string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                         string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                         string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                          Messages.TooltipSugestionToggle,
                                          Messages.TooltipPages,
                                          Messages.TooltipEnterPressList);
@@ -302,7 +302,7 @@ namespace PPlus.Controls
                                         aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                                     }
                                     return string.Format("{0}, {1}, {2}, {3}\n{4}, {5}, {6}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         Messages.TooltipSugestionToggle,
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -322,7 +322,7 @@ namespace PPlus.Controls
                                         aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                                     }
                                     return string.Format("{0}, {1}, {2}, {3}\n{4}, {5}, {6}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         Messages.TooltipSugestionToggle,
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -333,7 +333,7 @@ namespace PPlus.Controls
                                 else
                                 {
                                     return string.Format("{0}, {1}, {2}, {3}\n{4}, {5}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         Messages.TooltipSugestionToggle,
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
@@ -351,7 +351,7 @@ namespace PPlus.Controls
                                         aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                                     }
                                     return string.Format("{0}, {1}\n{2}, {3}, {4}",
-                                         string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                          Messages.TooltipSugestionToggle,
                                          Messages.TooltipPages,
                                          string.Format(Messages.MaskEditJump, aux),
@@ -369,7 +369,7 @@ namespace PPlus.Controls
                                         aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                                     }
                                     return string.Format("{0}, {1}\n{2}, {3}, {4}",
-                                         string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                          Messages.TooltipSugestionToggle,
                                          Messages.TooltipPages,
                                          string.Format(Messages.MaskEditJump, aux),
@@ -378,7 +378,7 @@ namespace PPlus.Controls
                                 else
                                 {
                                     return string.Format("{0}, {1}\n{2}, {3}",
-                                         string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                          Messages.TooltipSugestionToggle,
                                          Messages.TooltipPages,
                                          Messages.TooltipEnterPressList);
@@ -399,7 +399,7 @@ namespace PPlus.Controls
                                 aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                             }
                             return string.Format("{0}, {1}, {2}\n{3}, {4}, {5}",
-                                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                 Messages.TooltipAbortEdit,
                                 string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                 Messages.TooltipPages,
@@ -418,7 +418,7 @@ namespace PPlus.Controls
                                 aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                             }
                             return string.Format("{0}, {1}, {2}\n{3}, {4}, {5}",
-                                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                 Messages.TooltipAbortEdit,
                                 string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                 Messages.TooltipPages,
@@ -428,7 +428,7 @@ namespace PPlus.Controls
                         else
                         {
                             return string.Format("{0}, {1}, {2}\n{3}, {4}",
-                                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                 Messages.TooltipAbortEdit,
                                 string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                 Messages.TooltipPages,
@@ -449,8 +449,8 @@ namespace PPlus.Controls
                                         aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                                     }
                                     return string.Format("{0}, {1} {2}, {3}\n{4}, {5}, {6}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                         Messages.TooltipPages,
@@ -469,8 +469,8 @@ namespace PPlus.Controls
                                         aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                                     }
                                     return string.Format("{0}, {1} {2}, {3}\n{4}, {5}, {6}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                         Messages.TooltipPages,
@@ -480,8 +480,8 @@ namespace PPlus.Controls
                                 else
                                 {
                                     return string.Format("{0}, {1} {2}, {3}\n{4}, {5}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                         Messages.TooltipPages,
@@ -498,8 +498,8 @@ namespace PPlus.Controls
                                         aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                                     }
                                     return string.Format("{0}, {1}\n{2}, {3}, {4}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                         Messages.TooltipPages,
                                         string.Format(Messages.MaskEditJump, aux),
                                         Messages.TooltipEnterPressList);
@@ -516,8 +516,8 @@ namespace PPlus.Controls
                                         aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                                     }
                                     return string.Format("{0}, {1}\n{2}, {3}, {4}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                         Messages.TooltipPages,
                                         string.Format(Messages.MaskEditJump, aux),
                                         Messages.TooltipEnterPressList);
@@ -525,8 +525,8 @@ namespace PPlus.Controls
                                 else
                                 {
                                     return string.Format("{0}, {1}\n{2}, {3}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                         Messages.TooltipPages,
                                         Messages.TooltipEnterPressList);
                                 }
@@ -544,7 +544,7 @@ namespace PPlus.Controls
                                         aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                                     }
                                     return string.Format("{0}, {1}, {2}\n{3}, {4}, {5}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                         Messages.TooltipPages,
@@ -563,7 +563,7 @@ namespace PPlus.Controls
                                         aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                                     }
                                     return string.Format("{0}, {1}, {2}\n{3}, {4}, {5}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                         Messages.TooltipPages,
@@ -573,7 +573,7 @@ namespace PPlus.Controls
                                 else
                                 {
                                     return string.Format("{0}, {1}, {2}\n{3}, {4}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                         string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                         Messages.TooltipPages,
@@ -590,7 +590,7 @@ namespace PPlus.Controls
                                         aux = aux + " or " + $"'{baseOptions.CurrentCulture.DateTimeFormat.TimeSeparator}'";
                                     }
                                     return string.Format("{0}, {1}\n{2}, {3}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         Messages.TooltipPages,
                                         string.Format(Messages.MaskEditJump, aux),
                                         Messages.TooltipEnterPressList);
@@ -607,7 +607,7 @@ namespace PPlus.Controls
                                         aux = $"'{baseOptions.CurrentCulture.NumberFormat.CurrencyDecimalSeparator}'";
                                     }
                                     return string.Format("{0}, {1}\n{2}, {3}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         Messages.TooltipPages,
                                         string.Format(Messages.MaskEditJump, aux),
                                         Messages.TooltipEnterPressList);
@@ -615,7 +615,7 @@ namespace PPlus.Controls
                                 else
                                 {
                                     return string.Format("{0}\n{1}, {2}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         Messages.TooltipPages,
                                         Messages.TooltipEnterPressList);
                                 }

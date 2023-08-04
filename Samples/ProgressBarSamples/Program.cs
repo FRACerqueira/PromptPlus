@@ -23,6 +23,7 @@ namespace ProgressBarSamples
 
         static void Main(string[] args)
         {
+
             PromptPlus.WriteLine("Hello, World!");
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -86,17 +87,17 @@ namespace ProgressBarSamples
                 {
                     if (value <= 20)
                     {
-                        return Style.Plain.Foreground(Color.Violet);
+                        return Style.Default.Foreground(Color.Violet);
                     }
                     else if (value <= 60)
                     {
-                        return Style.Plain.Foreground(PromptPlus.StyleSchema.Slider().Foreground);
+                        return Style.Default.Foreground(PromptPlus.StyleSchema.Slider().Foreground);
                     }
                     else if (value <= 80)
                     {
-                        return Style.Plain.Foreground(Color.Yellow);
+                        return Style.Default.Foreground(Color.Yellow);
                     }
-                    return Style.Plain.Foreground(Color.Red);
+                    return Style.Default.Foreground(Color.Red);
                 })
                 .Run();
 

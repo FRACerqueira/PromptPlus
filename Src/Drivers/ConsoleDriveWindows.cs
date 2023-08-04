@@ -17,12 +17,15 @@ namespace PPlus.Drivers
     {
         internal const int IdleReadKey = 5;
         private readonly IProfileDrive _profile;
+        private TargetBuffer _currentBuffer;
+        private (int LastBufferWidth, int LastBufferHeight) _LastBufferSize = new (0,0);
 
         public ConsoleDriveWindows(IProfileDrive profile)
         {
             _profile = profile;
             Console.BackgroundColor = _profile.BackgroundColor;
             Console.ForegroundColor = _profile.ForegroundColor;
+            _currentBuffer = TargetBuffer.Primary;
         }
 
         public bool IsControlText { get; set; }
@@ -240,6 +243,7 @@ namespace PPlus.Drivers
             {
                 Console.Clear();
             }
+            _LastBufferSize = new(0, 0);
             SetCursorPosition(0, 0);
         }
 
@@ -261,7 +265,7 @@ namespace PPlus.Drivers
             if (PadLeft > 0 && CursorLeft < PadLeft)
             {
                 Console.SetCursorPosition(0, CursorTop);
-                WriteBackend(new Segment[] { new Segment(new string(' ', PadLeft), Style.Plain) }, false);
+                WriteBackend(new Segment[] { new Segment(new string(' ', PadLeft), Style.Default) }, false);
                 SetCursorPosition(PadLeft, CursorTop);
             }
             if (PadRight > 0 && CursorLeft > BufferWidth)
@@ -320,7 +324,7 @@ namespace PPlus.Drivers
             foreach (var segment in segments.Where(x => !x.IsAnsiControl))
             {
                 var overflow = segment.Style.OverflowStrategy;
-                var parts = segment.Text.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+                var parts = segment.Text.Split(Environment.NewLine, StringSplitOptions.None);
                 foreach (var (_, first, last, part) in parts.Enumerate())
                 {
                     if (first && pos < padleft)
@@ -384,6 +388,94 @@ namespace PPlus.Drivers
         {
             throw new PromptPlusException("CaptureRecord Not Implemented");
 
+        }
+
+        public TargetBuffer CurrentBuffer => _currentBuffer;
+
+        public bool EnabledExtend => !IsLegacy && SupportsAnsi;
+
+        public bool SwapBuffer(TargetBuffer value)
+        {
+            if (_currentBuffer == value)
+            {
+                return true;
+            }
+            if (!EnabledExtend)
+            {
+                return false;
+            }
+            // Switch to TargetBuffer screen
+            IsControlText = true;
+            switch (value)
+            {
+                case TargetBuffer.Primary:
+                    Write("\u001b[?1049l", clearrestofline: false);
+                    break;
+                case TargetBuffer.Secondary:
+                    Write("\u001b[?1049h", clearrestofline: false);
+                    break;
+            }
+            IsControlText = false;
+            _currentBuffer = value;
+            return true;
+        }
+
+        public bool OnBuffer(TargetBuffer target, Action<CancellationToken> value, ConsoleColor? defaultforecolor = null, ConsoleColor? defaultbackcolor = null, CancellationToken? cancellationToken = null)
+        {
+            // Switch to TargetBuffer screen
+            if (_currentBuffer == target)
+            {
+                value.Invoke(cancellationToken ?? CancellationToken.None);
+                return true;
+            }
+            if (!EnabledExtend)
+            {
+                return false;
+            }
+
+            var curforecolor = ForegroundColor;
+            var curbackcolor = BackgroundColor;
+            var curtarget = _currentBuffer;
+
+            try
+            {
+                ForegroundColor = defaultforecolor ?? curforecolor;
+                BackgroundColor = defaultbackcolor ?? curbackcolor;
+
+                IsControlText = true;
+                switch (target)
+                {
+                    case TargetBuffer.Primary:
+                        Write("\u001b[?1049l", clearrestofline: false);
+                        break;
+                    case TargetBuffer.Secondary:
+                        Write("\u001b[?1049h", clearrestofline: false);
+                        break;
+                }
+                _currentBuffer = target;
+                IsControlText = false;
+                Clear();
+                value.Invoke(cancellationToken ?? CancellationToken.None);
+            }
+            finally
+            {
+                // Switch back to primary screen
+                IsControlText = true;
+                switch (_currentBuffer)
+                {
+                    case TargetBuffer.Primary:
+                        Write("\u001b[?1049h", clearrestofline: false);
+                        break;
+                    case TargetBuffer.Secondary:
+                        Write("\u001b[?1049l", clearrestofline: false);
+                        break;
+                }
+                IsControlText = false;
+                ForegroundColor = curforecolor;
+                BackgroundColor = curbackcolor;
+                _currentBuffer = curtarget;
+            }
+            return true;
         }
     }
 }

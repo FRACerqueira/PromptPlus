@@ -1,4 +1,9 @@
-﻿using PPlus.Controls.Objects;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using PPlus.Controls.Objects;
 using System;
 
 namespace PPlus.Controls
@@ -189,8 +194,8 @@ namespace PPlus.Controls
             if (options.OptEnabledAbortKey)
             {
                 return string.Format("{0}, {1}, {2}, {3}\n{4}, {5}, {6}, {7}",
-                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                    string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                    string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
+                    string.Format(Messages.TooltipCancelEsc, options.Config.AbortKeyPress),
                     Messages.MultiSelectFisnishEnter,
                     Messages.TooltipPages,
                     Messages.TooltipSelectFilter,
@@ -201,7 +206,7 @@ namespace PPlus.Controls
             else
             {
                 return string.Format("{0}, {1}, {2}\n{3}, {4}, {5}, {6}",
-                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                    string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
                     Messages.MultiSelectFisnishEnter,
                     Messages.TooltipPages,
                     Messages.TooltipSelectFilter,

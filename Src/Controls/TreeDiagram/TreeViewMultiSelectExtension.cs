@@ -30,7 +30,7 @@ namespace PPlus
         /// <returns><see cref="IControlTreeViewMultiSelect{T}"/></returns>
         public static IControlTreeViewMultiSelect<T> TreeViewMultiSelect<T>(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new TreeViewOptions<T>(true)
+            var opt = new TreeViewOptions<T>(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,
@@ -48,7 +48,7 @@ namespace PPlus
         /// <returns><see cref="IControlTreeViewMultiSelect{T}"/></returns>
         public static IControlTreeViewMultiSelect<T> TreeViewMultiSelect<T>(string prompt, Action<IPromptConfig> config)
         {
-            var opt = new TreeViewOptions<T>(true)
+            var opt = new TreeViewOptions<T>(_styleschema, _configcontrols, _consoledrive, true)
             {
                 OptPrompt = prompt
             };

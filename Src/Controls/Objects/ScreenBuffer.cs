@@ -24,7 +24,7 @@ namespace PPlus.Controls.Objects
 
         public void NewLine()
         {
-            _buffer.Add(new StringStyle(Environment.NewLine, Style.Plain, true));
+            _buffer.Add(new StringStyle(Environment.NewLine, Style.Default, true));
         }
 
         public void SaveCursor()

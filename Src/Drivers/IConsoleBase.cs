@@ -5,21 +5,25 @@
 
 namespace PPlus
 {
+    /// <inheritdoc cref="ICursorDrive"/>
+    /// <inheritdoc cref="IInputDrive"/>
+    /// <inheritdoc cref="IOutputDrive"/>
+    /// <inheritdoc cref="IBackendTextWrite"/> 
+    /// <inheritdoc cref="IProfileDrive"/>
+    /// <inheritdoc cref="IConsoleExtendDrive"/>
     /// <summary>
     /// Represents the interface for any console.
     /// </summary>
-    public interface IConsoleBase : ICursorDrive, IInputDrive, IOutputDrive, IBackendTextWrite, IProfileDrive
+    public interface IConsoleBase : ICursorDrive, IInputDrive, IOutputDrive, IBackendTextWrite, IProfileDrive, IConsoleExtendDrive
     {
     }
 
-    /// <summary>
-    /// Represents the custom interface for record console.
-    /// </summary>
     internal interface IConsoleControl : IConsoleBase
     {
         bool IsControlText { get; set; }
         bool EnabledRecord { get; set; }
         string RecordConsole();
         string CaptureRecord(bool clearrecord);
+ 
     }
 }

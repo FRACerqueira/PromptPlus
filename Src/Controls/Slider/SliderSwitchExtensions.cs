@@ -30,7 +30,7 @@ namespace PPlus
         /// <returns><see cref="IControlSliderSwitch"/></returns>
         public static IControlSliderSwitch SliderSwitch(string prompt, string? description, Action<IPromptConfig> config = null)
         {
-            var opt = new SliderSwitchOptions(true)
+            var opt = new SliderSwitchOptions(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,

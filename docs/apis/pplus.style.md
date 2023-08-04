@@ -35,6 +35,18 @@ public Color Background { get; }
 
 [Color](./pplus.color.md)<br>
 
+### <a id="properties-default"/>**Default**
+
+Gets a [Style](./pplus.style.md) with the default colors and default overflow.
+
+```csharp
+public static Style Default { get; }
+```
+
+#### Property Value
+
+[Style](./pplus.style.md)<br>
+
 ### <a id="properties-foreground"/>**Foreground**
 
 Gets the foreground color.
@@ -82,18 +94,6 @@ public Overflow OverflowStrategy { get; }
 #### Property Value
 
 [Overflow](./pplus.overflow.md)<br>
-
-### <a id="properties-plain"/>**Plain**
-
-Gets a [Style](./pplus.style.md) with the default colors and and overflow None.
-
-```csharp
-public static Style Plain { get; internal set; }
-```
-
-#### Property Value
-
-[Style](./pplus.style.md)<br>
 
 ## Constructors
 

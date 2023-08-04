@@ -34,7 +34,7 @@ namespace PPlus
         /// <returns><see cref="IControlKeyPress"/></returns>
         public static IControlKeyPress Confirm(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new KeyPressOptions(true)
+            var opt = new KeyPressOptions(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,
@@ -60,7 +60,7 @@ namespace PPlus
         /// <returns><see cref="IControlKeyPress"/></returns>
         public static IControlKeyPress Confirm(string prompt, ConsoleKey opcyes , ConsoleKey opcno, string description = null, Action<IPromptConfig> config = null)
         {
-            var opt = new KeyPressOptions(true)
+            var opt = new KeyPressOptions(_styleschema, _configcontrols, _consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description
@@ -104,7 +104,7 @@ namespace PPlus
         /// <returns><see cref="IControlKeyPress"/></returns>
         public static IControlKeyPress KeyPress(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new KeyPressOptions(true)
+            var opt = new KeyPressOptions( _styleschema, _configcontrols, _consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description

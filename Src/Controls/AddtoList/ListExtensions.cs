@@ -30,7 +30,7 @@ namespace PPlus
         /// <returns><see cref="IControlList"/></returns>
         public static IControlList AddtoList(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new ListOptions(true)
+            var opt = new ListOptions(_styleschema, _configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,
@@ -48,7 +48,7 @@ namespace PPlus
         /// <returns><see cref="IControlList"/></returns>
         public static IControlList AddtoList(string prompt, Action<IPromptConfig> config)
         {
-            var opt = new ListOptions(true)
+            var opt = new ListOptions(_styleschema, _configcontrols, _consoledrive, true)
             {
                 OptPrompt = prompt
             };

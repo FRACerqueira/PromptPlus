@@ -19,7 +19,7 @@ namespace PPlus.Controls
         public StringStyle()
         {
             Text = string.Empty;
-            Style = Style.Plain;
+            Style = Style.Default;
             Width = 0;
 
         }
@@ -31,7 +31,7 @@ namespace PPlus.Controls
         public StringStyle(string text)
         {
             Text = text.NormalizeNewLines();
-            Style = Style.Plain;
+            Style = Style.Default;
             Width = text.GetWidth();
         }
 

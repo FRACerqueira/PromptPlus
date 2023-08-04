@@ -12,14 +12,31 @@ namespace PPlus.Controls
     internal class BrowserOptions : BaseOptions
     {
 
-        private BrowserOptions()
+        private BrowserOptions() : base(null, null, null, true)
         {
             throw new PromptPlusException("BrowserOptions CTOR NotImplemented");
         }
 
-        internal BrowserOptions(bool showcursor) : base(showcursor)
+        internal BrowserOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             FixedSelected = new();
+            SpinnerStyle = styleSchema.Prompt().Overflow(Overflow.Crop);
+            CurrentFolderStyle = styleSchema.TaggedInfo().Overflow(Overflow.Crop);
+            RootStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
+            SelectedRootStyle = styleSchema.Selected().Overflow(Overflow.Crop);
+            LineStyle = styleSchema.Prompt().Overflow(Overflow.Crop);
+            SizeStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
+            ExpandStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
+            FolderStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
+            FileStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
+            SelectedFolderStyle = styleSchema.Selected().Overflow(Overflow.Crop);
+            SelectedFileStyle = styleSchema.Selected().Overflow(Overflow.Crop);
+            SelectedSizeStyle = styleSchema.Selected().Overflow(Overflow.Crop);
+            SelectedExpandStyle = styleSchema.Selected().Overflow(Overflow.Crop);
+            PageSize = config.PageSize;
+            HotKeyTooltipFullPath = config.FullPathPress;
+            HotKeyToggleExpandPress = config.ToggleExpandPress;
+            HotKeyToggleExpandAllPress = config.ToggleExpandAllPress;
         }
 
         public bool DisabledRecursiveExpand { get; set; }
@@ -27,44 +44,44 @@ namespace PPlus.Controls
         public List<string> FixedSelected { get; set; }
         public int Minimum { get; set; }
         public int Maximum { get; set; } = int.MaxValue;
-        public Func<ItemBrowser, bool> ExpressionSeleted { get; set; } = null;
-        public Func<ItemBrowser, bool> ExpressionDisabled { get; set; } = null;
-        public Spinners? Spinner { get; set; } = null;
-        public Style SpinnerStyle { get; set; } = PromptPlus.StyleSchema.Prompt().Overflow(Overflow.Crop);
-        public Style CurrentFolderStyle { get; set; } = PromptPlus.StyleSchema.TaggedInfo().Overflow(Overflow.Crop);
-        public Style RootStyle { get; set; } = PromptPlus.StyleSchema.UnSelected().Overflow(Overflow.Crop);
-        public Style SelectedRootStyle { get; set; } = PromptPlus.StyleSchema.Selected().Overflow(Overflow.Crop);
-        public Style LineStyle { get; set; } = PromptPlus.StyleSchema.Prompt().Overflow(Overflow.Crop);
-        public Style SizeStyle { get; set; } = PromptPlus.StyleSchema.UnSelected().Overflow(Overflow.Crop);
-        public Style ExpandStyle { get; set; } = PromptPlus.StyleSchema.UnSelected().Overflow(Overflow.Crop);
-        public Style FolderStyle { get; set; } = PromptPlus.StyleSchema.UnSelected().Overflow(Overflow.Crop);
-        public Style FileStyle { get; set; } = PromptPlus.StyleSchema.UnSelected().Overflow(Overflow.Crop);
-        public Style SelectedFolderStyle { get; set; } = PromptPlus.StyleSchema.Selected().Overflow(Overflow.Crop);
-        public Style SelectedFileStyle { get; set; } = PromptPlus.StyleSchema.Selected().Overflow(Overflow.Crop);
-        public Style SelectedSizeStyle { get; set; } = PromptPlus.StyleSchema.Selected().Overflow(Overflow.Crop);
-        public Style SelectedExpandStyle { get; set; } = PromptPlus.StyleSchema.Selected().Overflow(Overflow.Crop);
-        public bool ExpandAll { get; set; } = false;
-        public bool SelectAll { get; set; } = false;
-        public Func<ItemBrowser, bool> SelectAllExpression { get; set; } = null;
+        public Func<ItemBrowser, bool> ExpressionSeleted { get; set; }
+        public Func<ItemBrowser, bool> ExpressionDisabled { get; set; }
+        public Spinners? Spinner { get; set; }
+        public Style SpinnerStyle { get; set; }
+        public Style CurrentFolderStyle { get; set; } 
+        public Style RootStyle { get; set; }
+        public Style SelectedRootStyle { get; set; }
+        public Style LineStyle { get; set; } 
+        public Style SizeStyle { get; set; } 
+        public Style ExpandStyle { get; set; }
+        public Style FolderStyle { get; set; }
+        public Style FileStyle { get; set; } 
+        public Style SelectedFolderStyle { get; set; }
+        public Style SelectedFileStyle { get; set; } 
+        public Style SelectedSizeStyle { get; set; }
+        public Style SelectedExpandStyle { get; set; }
+        public bool ExpandAll { get; set; }
+        public bool SelectAll { get; set; }
+        public Func<ItemBrowser, bool> SelectAllExpression { get; set; }
         public bool ShowLines { get; set; } = true;
         public bool ShowExpand { get; set; } = true;
-        public bool OnlyFolders { get; set; } = false;
+        public bool OnlyFolders { get; set; }
         public bool ShowSize { get; set; } = true;
-        public bool AcceptHiddenAttributes { get; set; } = false;
-        public bool AcceptSystemAttributes { get; set; } = false;
+        public bool AcceptHiddenAttributes { get; set; }
+        public bool AcceptSystemAttributes { get; set; }
         public string SearchFolderPattern { get; set; } = "*";
         public string SearchFilePattern { get; set; } = "*";
-        public int PageSize { get; set; } = PromptPlus.Config.PageSize;
+        public int PageSize { get; set; }
         public string RootFolder { get; set; } = AppDomain.CurrentDomain.BaseDirectory;
         public string DefautPath { get; set; } = null;
         public bool ShowCurrentFolder { get; set; } = true;
-        public bool ShowCurrentFullPath { get; set; } = false;
-        public HotKey HotKeyTooltipFullPath { get; set; } = PromptPlus.Config.FullPathPress;
-        public HotKey HotKeyToggleExpandPress { get; set; } = PromptPlus.Config.ToggleExpandPress;
-        public HotKey HotKeyToggleExpandAllPress { get; set; } = PromptPlus.Config.ToggleExpandAllPress;
-        public Action<ItemBrowser> BeforeExpanded { get; set; } = null;
-        public Action<ItemBrowser> AfterExpanded { get; set; } = null;
-        public Action<ItemBrowser> BeforeCollapsed { get; set; } = null;
-        public Action<ItemBrowser> AfterCollapsed { get; set; } = null;
+        public bool ShowCurrentFullPath { get; set; }
+        public HotKey HotKeyTooltipFullPath { get; set; }
+        public HotKey HotKeyToggleExpandPress { get; set; }
+        public HotKey HotKeyToggleExpandAllPress { get; set; }
+        public Action<ItemBrowser> BeforeExpanded { get; set; }
+        public Action<ItemBrowser> AfterExpanded { get; set; }
+        public Action<ItemBrowser> BeforeCollapsed { get; set; }
+        public Action<ItemBrowser> AfterCollapsed { get; set; }
     }
 }

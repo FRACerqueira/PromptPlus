@@ -12,14 +12,24 @@ namespace PPlus.Controls
     {
         private const int _defaultSliderWitdth = 80;
 
-        private ChartBarOptions()
+        private ChartBarOptions(): base(null,null, null, true)
         {
             throw new PromptPlusException("ChartBarOptions CTOR NotImplemented");
         }
 
-        internal ChartBarOptions(bool showcursor) : base(showcursor)
-        {
+        internal ChartBarOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        { 
             Labels = new();
+            DescriptionStyle = styleSchema.Description();
+            TitleStyle = styleSchema.Chart();
+            LabelStyle = styleSchema.Chart();
+            PercentStyle = styleSchema.Chart();
+            ValueStyle = styleSchema.Chart();
+            OrderStyle = styleSchema.Tooltips();
+            PageSize = config.PageSize;
+            SwitchType = config.ChartBarSwitchTypePress;
+            SwitchLegend = config.ChartBarSwitchLegendPress;
+            SwitchOrder = config.ChartBarSwitchOrderPress;
         }
 
         public LayoutChart StartChartType { get; set; } = LayoutChart.Standard;
@@ -27,15 +37,15 @@ namespace PPlus.Controls
         public char CharBar => '#';
         public ChartBarType BarType { get; set; } = ChartBarType.Fill;
         public int Witdth { get; set; } = _defaultSliderWitdth;
-        public int FracionalDig { get; set; } = 0;
+        public int FracionalDig { get; set; }
         public CultureInfo CurrentCulture { get; set; } = null;
         public Alignment TitleAligment { get; set; } = Alignment.Left;
-        public Style DescriptionStyle { get; set; } = PromptPlus.StyleSchema.Description();
-        public Style TitleStyle { get; set; } = PromptPlus.StyleSchema.Chart();
-        public Style LabelStyle { get; set; } = PromptPlus.StyleSchema.Chart();
-        public Style PercentStyle { get; set; } = PromptPlus.StyleSchema.Chart();
-        public Style ValueStyle { get; set; } = PromptPlus.StyleSchema.Chart();
-        public Style OrderStyle { get; set; } = PromptPlus.StyleSchema.Tooltips();
+        public Style DescriptionStyle { get; set; }
+        public Style TitleStyle { get; set; }
+        public Style LabelStyle { get; set; }
+        public Style PercentStyle { get; set; }
+        public Style ValueStyle { get; set; }
+        public Style OrderStyle { get; set; }
         public List<ItemChartBar> Labels { get; set; }
         public ChartOrder CurrentOrder { get; set; } = ChartOrder.None;
         public ChartOrder Order { get; set; } = ChartOrder.None;
@@ -43,18 +53,18 @@ namespace PPlus.Controls
         public bool HidePercentBar { get; set; }
         public bool HideValueBar { get; set; }
         public byte PadLeft { get; set; } = 0;
-        public bool CurrentShowLegend { get; set; } = false;
-        public bool ShowLegend { get; set; } = false;
+        public bool CurrentShowLegend { get; set; }
+        public bool ShowLegend { get; set; }
         public bool ShowLegendPercent { get; set; } = true;
         public bool ShowLegendValue { get; set; } = true;
         public bool EnabledInteractionUser { get; set; }
         public bool EnabledSwitchType { get; set; } = true;
         public bool EnabledSwitchLegend { get; set; } = true;
         public bool EnabledSwitchOrder { get; set; } = true;
-        public int PageSize { get; set; } = 10;
-        public HotKey SwitchType { get; set; } = PromptPlus.Config.ChartBarSwitchTypePress;
-        public HotKey SwitchLegend { get; set; } = PromptPlus.Config.ChartBarSwitchLegendPress;
-        public HotKey SwitchOrder { get; set; } = PromptPlus.Config.ChartBarSwitchOrderPress;
+        public int PageSize { get; set; }
+        public HotKey SwitchType { get; set; }
+        public HotKey SwitchLegend { get; set; }
+        public HotKey SwitchOrder { get; set; }
     }
 
 }

@@ -12,37 +12,48 @@ namespace PPlus.Controls
 {
     internal class CalendarOptions : BaseOptions
     {
-        private CalendarOptions()
+        private CalendarOptions() : base(null,null, null, true)
         {
             throw new PromptPlusException("CalendarOptions CTOR NotImplemented");
         }
 
-        internal CalendarOptions(bool showcursor) : base(showcursor)
+        internal CalendarOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             ItemsDisabled = new();
             ItemsNotes = new();
             Itemshighlight = new();
+            DescriptionStyle = styleSchema.Description();
+            LineStyle = styleSchema.Prompt();
+            DisabledStyle = styleSchema.Disabled();
+            SelectedStyle = styleSchema.Selected();
+            HighlightStyle = styleSchema.TaggedInfo();
+            DayStyle = styleSchema.Prompt();
+            MonthStyle = styleSchema.Prompt();
+            YearStyle = styleSchema.Prompt();
+            WeekDayStyle = styleSchema.Prompt();
+            SwitchNotes = config.CalendarSwitchNotesPress;
+            TimeoutOverwriteDefault = config.HistoryTimeout;
         }
         public LayoutCalendar Layout { get; set; } =  LayoutCalendar.SingleGrid;
         public CultureInfo CurrentCulture { get; set; } = null;
         public PolicyInvalidDate PolicyInvalidDate { get; set; } = PolicyInvalidDate.NextDate;
-        public Style DescriptionStyle { get; set; } = PromptPlus.StyleSchema.Description();
-        public Style LineStyle { get; set; } = PromptPlus.StyleSchema.Prompt();
-        public Style DisabledStyle { get; set; } = PromptPlus.StyleSchema.Disabled();
-        public Style SelectedStyle { get; set; } = PromptPlus.StyleSchema.Selected();
-        public Style HighlightStyle { get; set; } = PromptPlus.StyleSchema.TaggedInfo();
-        public Style DayStyle { get; set; } = PromptPlus.StyleSchema.Prompt();
-        public Style MonthStyle { get; set; } = PromptPlus.StyleSchema.Prompt();
-        public Style YearStyle { get; set; } = PromptPlus.StyleSchema.Prompt();
-        public Style WeekDayStyle { get; set; } = PromptPlus.StyleSchema.Prompt();
+        public Style DescriptionStyle { get; set; }
+        public Style LineStyle { get; set; }
+        public Style DisabledStyle { get; set; }
+        public Style SelectedStyle { get; set; }
+        public Style HighlightStyle { get; set; }
+        public Style DayStyle { get; set; }
+        public Style MonthStyle { get; set; }
+        public Style YearStyle { get; set; }
+        public Style WeekDayStyle { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Now.Date;
         public bool DisabledWeekend { get; set; }
-        public HotKey SwitchNotes { get; set; } = PromptPlus.Config.CalendarSwitchNotesPress;
+        public HotKey SwitchNotes { get; set; }
         public int PageSize { get; set; } = 5;
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
         public Func<DateTime, string> ChangeDescription { get; set; }
         public string? OverwriteDefaultFrom { get; set; } = null;
-        public TimeSpan TimeoutOverwriteDefault { get; set; } = PromptPlus.Config.HistoryTimeout;
+        public TimeSpan TimeoutOverwriteDefault { get; set; }
         public DateTime Maxvalue { get; set; } = DateTime.MaxValue;
         public DateTime Minvalue { get; set; } = DateTime.MinValue;
         public List<DateTime> ItemsDisabled { get; set; }

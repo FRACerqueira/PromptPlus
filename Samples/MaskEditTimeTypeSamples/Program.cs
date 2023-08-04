@@ -14,7 +14,7 @@ namespace MaskEditTimeTypeSamples
             var cult = Thread.CurrentThread.CurrentCulture;
             PromptPlus.Config.DefaultCulture = cult;
 
-            PromptPlus.DoubleDash($"Your default Culture is {cult.Name}", DashOptions.HeavyBorder, style: Style.Plain.Foreground(Color.Yellow));
+            PromptPlus.DoubleDash($"Your default Culture is {cult.Name}", DashOptions.HeavyBorder, style: Style.Default.Foreground(Color.Yellow));
 
 
             PromptPlus.DoubleDash($"Control:MaskEdit TimeOnly ({cult.Name}) - minimal usage");
@@ -42,7 +42,7 @@ namespace MaskEditTimeTypeSamples
                 .Mask(MaskedType.TimeOnly)
                 .AcceptEmptyValue()
                 .DescriptionWithInputType()
-                .TypeTipStyle(Style.Plain.Foreground(Color.IndianRed))
+                .TypeTipStyle(Style.Default.Foreground(Color.IndianRed))
                 .Run();
 
             PromptPlus.DoubleDash($"Control:MaskEdit TimeOnly - with overwrite culture:pt-br.");

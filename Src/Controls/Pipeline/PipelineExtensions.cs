@@ -30,7 +30,7 @@ namespace PPlus
         /// <returns><see cref="PipelineControl{T}"/></returns>
         public static IControlPipeline<T> Pipeline<T>(T startvalue, Action<IPromptConfig> config)
         {
-            var opt = new PipelineOptions<T>(false)
+            var opt = new PipelineOptions<T>(_styleschema,_configcontrols,_consoledrive, false)
             {
                 CurrentValue = startvalue
             };

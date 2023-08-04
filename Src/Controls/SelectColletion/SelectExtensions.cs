@@ -44,7 +44,7 @@ namespace PPlus
         /// <returns><see cref="IControlSelect{T}"/></returns>
         public static IControlSelect<T> Select<T>(string prompt, string description , Action<IPromptConfig> config = null)
         {
-            var opt = new SelectOptions<T>(true)
+            var opt = new SelectOptions<T>(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,

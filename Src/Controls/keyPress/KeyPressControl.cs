@@ -222,7 +222,7 @@ namespace PPlus.Controls
                 }
                 if (!_options.KeyValids.Any())
                 {
-                    if (!_options.OptEnabledAbortKey && PromptPlus.Config.AbortKeyPress.Equals(keyInfo.Value))
+                    if (!_options.OptEnabledAbortKey && _options.Config.AbortKeyPress.Equals(keyInfo.Value))
                     {
                         tryagain = true;
                     }

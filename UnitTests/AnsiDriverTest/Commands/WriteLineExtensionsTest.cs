@@ -13,7 +13,7 @@ namespace PPlus.Tests.AnsiDriverTest.Commands
         {
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.WriteLines(lines);
+                PromptPlus.WriteLines(lines);
             });
             //Then
             Assert.Equal(expected.Replace("\r\n", Environment.NewLine), output);
@@ -28,14 +28,14 @@ namespace PPlus.Tests.AnsiDriverTest.Commands
 
         public void Should_can_SingleDash_NotUnicodeSupported(DashOptions dashOption)
         {
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.IsUnicodeSupported = false;
             });
             // When
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.SingleDash("teste", dashOption);
+                PromptPlus.SingleDash("teste", dashOption);
             });
             //Then
             Assert.Equal(Expectations.GetVerifyAnsi($"NotUnicodeSingleDash.{dashOption}.txt"), output);
@@ -49,14 +49,14 @@ namespace PPlus.Tests.AnsiDriverTest.Commands
         [InlineData(DashOptions.HeavyBorder)]
         public void Should_can_DoubleDash_NotUnicodeSupported(DashOptions dashOption)
         {
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.IsUnicodeSupported = false;
             });
             // When
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.DoubleDash("teste", dashOption);
+                PromptPlus.DoubleDash("teste", dashOption);
             });
             //Then
             Assert.Equal(Expectations.GetVerifyAnsi($"NotUnicodeDoubleDash.{dashOption}.txt"), output);
@@ -71,13 +71,13 @@ namespace PPlus.Tests.AnsiDriverTest.Commands
 
         public void Should_can_SingleDash(DashOptions dashOption)
         {
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
             });
             // When
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.SingleDash("teste", dashOption);
+                PromptPlus.SingleDash("teste", dashOption);
             });
             //Then
             Assert.Equal(Expectations.GetVerifyAnsi($"SingleDash.{dashOption}.txt"), output);
@@ -94,7 +94,7 @@ namespace PPlus.Tests.AnsiDriverTest.Commands
         {
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.DoubleDash("teste", dashOption);
+                PromptPlus.DoubleDash("teste", dashOption);
             });
             //Then
             Assert.Equal(Expectations.GetVerifyAnsi($"DoubleDash.{dashOption}.txt"), output);

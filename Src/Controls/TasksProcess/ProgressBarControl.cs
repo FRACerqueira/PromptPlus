@@ -37,7 +37,7 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
-            _options.CurrentCulture ??= PromptPlus.Config.AppCulture;
+            _options.CurrentCulture ??= _options.Config.AppCulture;
 
             if (_options.UpdateHandler == null)
             {
@@ -480,7 +480,7 @@ namespace PPlus.Controls
                 char charbarOn = ' ';
                 char charbarOff = ' ';
                 string delimitbar = "│";
-                Style OnStyle = Style.Plain.Foreground(_options.OptStyleSchema.Slider().Foreground);
+                Style OnStyle = Style.Default.Foreground(_options.OptStyleSchema.Slider().Foreground);
                 if (_options.ChangeColor != null)
                 {
                     OnStyle = _options.ChangeColor(value);
@@ -556,7 +556,7 @@ namespace PPlus.Controls
                 if (_options.ShowDelimit)
                 {
                     var top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write(delimitbar, Style.Plain.Foreground(_options.OptStyleSchema.Slider().Background));
+                    qtd = ConsolePlus.Write(delimitbar, Style.Default.Foreground(_options.OptStyleSchema.Slider().Background));
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -612,7 +612,7 @@ namespace PPlus.Controls
                 if (offlenght > 0)
                 {
                     var top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write(new string(charbarOff, offlenght), Style.Plain.Foreground(_options.OptStyleSchema.Slider().Background));
+                    qtd = ConsolePlus.Write(new string(charbarOff, offlenght), Style.Default.Foreground(_options.OptStyleSchema.Slider().Background));
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -625,7 +625,7 @@ namespace PPlus.Controls
                 if (_options.ShowDelimit)
                 {
                     var top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write(delimitbar, Style.Plain.Foreground(_options.OptStyleSchema.Slider().Background));
+                    qtd = ConsolePlus.Write(delimitbar, Style.Default.Foreground(_options.OptStyleSchema.Slider().Background));
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
