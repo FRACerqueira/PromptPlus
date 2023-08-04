@@ -394,8 +394,8 @@ namespace PPlus.Drivers
                     if (!first)
                     {
                         qtd++;
-                        pos = padleft;
                     }
+                    pos = padleft;
                 }
             }
             return qtd;

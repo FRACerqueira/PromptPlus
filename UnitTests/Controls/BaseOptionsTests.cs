@@ -169,12 +169,12 @@ namespace PPlus.Tests.Controls
         [Fact]
         public void Should_DefaultSymbolsUnicodeSupported()
         {
-            var kp = new OptBaseTest(false);
             // Given
             PromptPlus.Setup((cfg) =>
             {
                 cfg.IsUnicodeSupported = true;
             });
+            var kp = new OptBaseTest(false);
             foreach (var item in PromptPlus.Config._globalSymbols.Keys)
             {
                 var syb = kp.Symbol(item);
@@ -185,12 +185,12 @@ namespace PPlus.Tests.Controls
         [Fact]
         public void Should_DefaultSymbolsNotUnicodeSupported()
         {
-            var kp = new OptBaseTest(false);
             // Given
             PromptPlus.Setup((cfg) =>
             {
                 cfg.IsUnicodeSupported = false;
             });
+            var kp = new OptBaseTest(false);
             foreach (var item in PromptPlus.Config._globalSymbols.Keys)
             {
                 var syb = kp.Symbol(item);

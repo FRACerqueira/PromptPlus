@@ -15,10 +15,10 @@ Namespace: PPlus
 Represents the interface for any console.
 
 ```csharp
-public interface IConsoleBase : ICursorDrive, IInputDrive, IOutputDrive, IBackendTextWrite, IProfileDrive
+public interface IConsoleBase : ICursorDrive, IInputDrive, IOutputDrive, IBackendTextWrite, IProfileDrive, IConsoleExtendDrive
 ```
 
-Implements [ICursorDrive](./pplus.icursordrive.md), [IInputDrive](./pplus.iinputdrive.md), [IOutputDrive](./pplus.ioutputdrive.md), [IBackendTextWrite](./pplus.ibackendtextwrite.md), [IProfileDrive](./pplus.iprofiledrive.md)
+Implements [ICursorDrive](./pplus.icursordrive.md), [IInputDrive](./pplus.iinputdrive.md), [IOutputDrive](./pplus.ioutputdrive.md), [IBackendTextWrite](./pplus.ibackendtextwrite.md), [IProfileDrive](./pplus.iprofiledrive.md), [IConsoleExtendDrive](./pplus.iconsoleextenddrive.md)
 
 
 - - -

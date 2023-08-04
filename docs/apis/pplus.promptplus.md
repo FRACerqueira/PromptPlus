@@ -94,6 +94,18 @@ public static Config Config { get; }
 
 [Config](./pplus.controls.config.md)<br>
 
+### <a id="properties-currenttargetbuffer"/>**CurrentTargetBuffer**
+
+Get the Current Target Buffer
+
+```csharp
+public static TargetBuffer CurrentTargetBuffer { get; }
+```
+
+#### Property Value
+
+[TargetBuffer](./pplus.targetbuffer.md)<br>
+
 ### <a id="properties-cursorleft"/>**CursorLeft**
 
 Gets or sets a value column position of the cursor within the buffer area.
@@ -485,35 +497,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
-
-### <a id="methods-alternatescreen"/>**AlternateScreen()**
-
-Create AlternateScreen Control
-
-```csharp
-public static IControlAlternateScreen AlternateScreen()
-```
-
-#### Returns
-
-[IControlAlternateScreen](./pplus.controls.icontrolalternatescreen.md)
-
-### <a id="methods-alternatescreen"/>**AlternateScreen(Action&lt;IPromptConfig&gt;)**
-
-Create AlternateScreen Control
-
-```csharp
-public static IControlAlternateScreen AlternateScreen(Action<IPromptConfig> config)
-```
-
-#### Parameters
-
-`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-#### Returns
-
-[IControlAlternateScreen](./pplus.controls.icontrolalternatescreen.md)
 
 ### <a id="methods-autocomplete"/>**AutoComplete(String, Action&lt;IPromptConfig&gt;)**
 
@@ -1438,6 +1421,30 @@ Reset colors to default values.
 public static void ResetColor()
 ```
 
+### <a id="methods-runonbuffer"/>**RunOnBuffer(TargetBuffer, Action&lt;CancellationToken&gt;, Nullable&lt;ConsoleColor&gt;, Nullable&lt;ConsoleColor&gt;, Nullable&lt;CancellationToken&gt;)**
+
+Run custom action on Target Buffer
+
+```csharp
+public static bool RunOnBuffer(TargetBuffer value, Action<CancellationToken> customaction, Nullable<ConsoleColor> defaultforecolor, Nullable<ConsoleColor> defaultbackcolor, Nullable<CancellationToken> cancellationToken)
+```
+
+#### Parameters
+
+`value` [TargetBuffer](./pplus.targetbuffer.md)<br>
+
+`customaction` [Action&lt;CancellationToken&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+
+`defaultforecolor` [Nullable&lt;ConsoleColor&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+`defaultbackcolor` [Nullable&lt;ConsoleColor&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+`cancellationToken` [Nullable&lt;CancellationToken&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+#### Returns
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
+
 ### <a id="methods-select"/>**Select&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
 
 Create Select Control.
@@ -1696,17 +1703,21 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
-### <a id="methods-statusbar"/>**StatusBar()**
+### <a id="methods-swapbuffer"/>**SwapBuffer(TargetBuffer)**
 
-Get Reference to StatusBar Control for current Screen
+Swap Target Buffer
 
 ```csharp
-public static IControlStatusbar StatusBar()
+public static bool SwapBuffer(TargetBuffer value)
 ```
+
+#### Parameters
+
+`value` [TargetBuffer](./pplus.targetbuffer.md)<br>
 
 #### Returns
 
-[IControlStatusbar](./pplus.controls.icontrolstatusbar.md)
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
 
 ### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, String)**
 

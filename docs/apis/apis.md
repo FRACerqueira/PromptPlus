@@ -26,6 +26,8 @@
 
 - [IConsoleBase](./pplus.iconsolebase.md)
 
+- [IConsoleExtendDrive](./pplus.iconsoleextenddrive.md)
+
 - [ICursorDrive](./pplus.icursordrive.md)
 
 - [IInputDrive](./pplus.iinputdrive.md)
@@ -48,13 +50,13 @@
 
 - [StyleExtensions](./pplus.styleextensions.md)
 
+- [TargetBuffer](./pplus.targetbuffer.md)
+
 ## Namespace PPlus.Controls
 
 - [AdderScope](./pplus.controls.adderscope.md)
 
 - [Alignment](./pplus.controls.alignment.md)
-
-- [AutoSize](./pplus.controls.autosize.md)
 
 - [BannerDashOptions](./pplus.controls.bannerdashoptions.md)
 
@@ -90,10 +92,6 @@
 
 - [IBannerControl](./pplus.controls.ibannercontrol.md)
 
-- [IColumnStatusbar](./pplus.controls.icolumnstatusbar.md)
-
-- [IControlAlternateScreen](./pplus.controls.icontrolalternatescreen.md)
-
 - [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
 - [IControlCalendar](./pplus.controls.icontrolcalendar.md)
@@ -125,8 +123,6 @@
 - [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
 - [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
-
-- [IControlStatusbar](./pplus.controls.icontrolstatusbar.md)
 
 - [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
@@ -201,8 +197,6 @@
 - [SugestionOutput](./pplus.controls.sugestionoutput.md)
 
 - [SymbolType](./pplus.controls.symboltype.md)
-
-- [TargetScreen](./pplus.controls.targetscreen.md)
 
 - [TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)
 

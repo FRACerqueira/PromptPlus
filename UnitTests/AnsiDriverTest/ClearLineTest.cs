@@ -8,8 +8,11 @@ namespace PPlus.Tests.AnsiDriverTest
         [Fact]
         public void Should_ClearLine()
         {
-            int cursorleft = 0;
-            int cursortop = 0;
+            int inicursorleft = PromptPlus.CursorLeft;
+            int inicursortop = PromptPlus.CursorTop;
+            int cursorleft = -1;
+            int cursortop = -1;
+
             var output = PromptPlus.RecordOutput(() =>
             {
                 PromptPlus.ClearLine();
@@ -18,7 +21,7 @@ namespace PPlus.Tests.AnsiDriverTest
             });
             // Then
             Assert.Equal(PromptPlus.PadLeft, cursorleft);
-            Assert.Equal(0, cursortop);
+            Assert.Equal(inicursortop, cursortop);
             Assert.Equal("\u001b[0K", output);
         }
 
@@ -43,8 +46,10 @@ namespace PPlus.Tests.AnsiDriverTest
         public void ClearRestOfLine()
         {
             PromptPlus.Write("test");
-            int cursorleft = 0;
-            int cursortop = 0;
+            int inicursorleft = PromptPlus.CursorLeft;
+            int inicursortop = PromptPlus.CursorTop;
+            int cursorleft = -1;
+            int cursortop = -1;
             var output = PromptPlus.RecordOutput(() =>
             {
                 PromptPlus.ClearRestOfLine();
@@ -52,8 +57,8 @@ namespace PPlus.Tests.AnsiDriverTest
                 cursortop = PromptPlus.CursorTop;
             });
             // Then
-            Assert.Equal(4, cursorleft);
-            Assert.Equal(0, cursortop);
+            Assert.Equal(inicursorleft, cursorleft);
+            Assert.Equal(inicursortop, cursortop);
             Assert.Equal("\u001b[0K", output);
         }
 

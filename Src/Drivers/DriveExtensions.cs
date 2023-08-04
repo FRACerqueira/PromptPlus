@@ -76,7 +76,6 @@ namespace PPlus
             _configcontrols = new();
             _styleschema = new();
             _consoledrive.CursorVisible = true;
-            Reset(false);
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
         }
 
@@ -110,17 +109,9 @@ namespace PPlus
         /// <summary>
         /// Reset all config and properties to default values
         /// </summary>
-        public static void Reset(bool resetstatusbar = false)
+        public static void Reset()
         {
-            if (!resetstatusbar && !IsLegacy && SupportsAnsi)
-            {
-                // Switch to alternate screen
-                _consoledrive.SwapBuffer(TargetBuffer.Secondary);
-                ResetColor();
-                // Switch back to primary screen
-                _consoledrive.SwapBuffer(TargetBuffer.Primary);
-                ResetColor();
-            }
+            ResetColor();
             _configcontrols = new();
             _styleschema = new();
             _consoledrive.CursorVisible = true;
@@ -200,10 +191,10 @@ namespace PPlus
         /// <br>and all Style-Schema are updated with backgoundcolor console</br>
         /// </summary>
         /// <param name="config">Action with <seealso cref="ProfileSetup"/> to configuration</param>
-        /// <param name="resetstatusbar">Reset StatusBar</param>
-        public static void Setup(Action<ProfileSetup> config, bool resetstatusbar = false)
+        public static void Setup(Action<ProfileSetup> config = null)
         {
-            Reset(resetstatusbar);
+            config ??= (cfg) => { };
+            Reset();
             Profile(config);
             Clear();
         }
