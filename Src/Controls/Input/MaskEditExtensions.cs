@@ -30,7 +30,7 @@ namespace PPlus
         /// <returns><see cref="IControlMaskEdit"/></returns>
         public static IControlMaskEdit MaskEdit(string prompt, string? description , Action<IPromptConfig> config = null)
         {
-            var opt = new MaskEditOptions(true)
+            var opt = new MaskEditOptions(_styleschema, _configcontrols, _consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,

@@ -270,7 +270,7 @@ namespace PPlus.Tests.Controls
 
     internal class OptionsForMaskeditNumber : MaskEditOptions
     {
-        public OptionsForMaskeditNumber(CultureInfo culture, int ammountInteger, int ammountDecimal, bool acceptSignal, string? defaultvalue) : base(false)
+        public OptionsForMaskeditNumber(CultureInfo culture, int ammountInteger, int ammountDecimal, bool acceptSignal, string? defaultvalue) : base(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false)
         {
             Type = ControlMaskedType.Number;
             DefaultValue = defaultvalue;

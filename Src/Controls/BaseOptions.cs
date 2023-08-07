@@ -12,30 +12,42 @@ namespace PPlus.Controls
     public abstract class BaseOptions : IPromptConfig
     {
         private readonly Dictionary<SymbolType, (string value, string unicode)> _optSymbols = new();
+        private readonly IConsoleControl _console;
 
         private BaseOptions()
         {
             throw new PromptPlusException("BaseOptions CTOR Not Implemented");
         }
 
-        internal BaseOptions(bool? showCursor = true)
+        internal BaseOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool? showCursor = true)
         {
-            Init();
+            _console = console;
+            Config = config;
+            OptStyleSchema = StyleSchema.Clone(styleSchema);
+            foreach (var item in config._globalSymbols.Keys)
+            {
+                _optSymbols.Add(item, config._globalSymbols[item]);
+            }
             OptShowCursor = showCursor ?? true;
+            OptShowTooltip = config.ShowTooltip;
+            OptHideAfterFinish = config.HideAfterFinish;
+            OptHideOnAbort = config.HideOnAbort;
+            OptEnabledAbortKey = config.EnabledAbortKey;
         }
 
+        internal StyleSchema OptStyleSchema { get; }
+        internal ConfigControls Config { get; }
         internal bool OptShowCursor { get; } = false;
         internal string OptPrompt { get; set; } = string.Empty;
         internal string OptDescription { get; set; } = string.Empty;
-        internal bool OptShowTooltip { get; set; } = PromptPlus.Config.ShowTooltip;
+        internal bool OptShowTooltip { get; set; }
 
         internal Dictionary<StageControl, Action<object, object?>> OptUserActions { get; private set; } = new();
-        internal StyleSchema OptStyleSchema { get; private set; } = new();
         internal string OptToolTip { get; private set; } = string.Empty;
-        internal bool OptHideAfterFinish { get; private set; } = PromptPlus.Config.HideAfterFinish;
-        internal bool OptHideOnAbort { get; private set; } = PromptPlus.Config.HideOnAbort;
-        internal bool OptEnabledAbortKey { get; private set; } = PromptPlus.Config.EnabledAbortKey;
-        internal object? OptContext { get; private set; } = null;
+        internal bool OptHideAfterFinish { get; private set; }
+        internal bool OptHideOnAbort { get; private set; }
+        internal bool OptEnabledAbortKey { get; private set; }
+        internal object? OptContext { get; private set; }
 
         #region IPromptConfig
 
@@ -143,7 +155,7 @@ namespace PPlus.Controls
 
         internal string Symbol(SymbolType schema)
         {
-            if (PromptPlus.Console.IsUnicodeSupported)
+            if (_console.IsUnicodeSupported)
             {
                 return _optSymbols[schema].unicode;
             }
@@ -151,13 +163,5 @@ namespace PPlus.Controls
         }
 
         #endregion
-
-        private void Init()
-        {
-            foreach (var item in PromptPlus.Config._globalSymbols.Keys)
-            {
-                _optSymbols.Add(item, PromptPlus.Config._globalSymbols[item]);
-            }
-        }
     }
 }

@@ -320,7 +320,7 @@ namespace PPlus.Tests.Controls.SliderSwitch
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -341,7 +341,7 @@ namespace PPlus.Tests.Controls.SliderSwitch
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -358,7 +358,7 @@ namespace PPlus.Tests.Controls.SliderSwitch
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -392,7 +392,7 @@ namespace PPlus.Tests.Controls.SliderSwitch
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -432,12 +432,12 @@ namespace PPlus.Tests.Controls.SliderSwitch
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow,false,false,false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow,false,false,false));
                 ctrl.TryResult(CancellationToken.None);
                 var sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
                 Assert.Contains(sb.Buffer, x => (x.Text ?? string.Empty).Contains("ChangeDescription=1"));
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);

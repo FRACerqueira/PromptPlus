@@ -25,7 +25,7 @@ namespace PPlus
             var (Left, Top) = GetCursorPosition();
             do
             {
-                var keyInfo = Console.ReadKey(true);
+                var keyInfo = ReadKey(true);
                 if (!_inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo))
                 {
                     if (keyInfo.IsPressEnterKey())

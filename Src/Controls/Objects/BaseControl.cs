@@ -1,6 +1,7 @@
 ﻿// ***************************************************************************************
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// This code was based on work from https://github.com/shibayan/Sharprompt
 // ***************************************************************************************
 
 using System;
@@ -24,12 +25,12 @@ namespace PPlus.Controls.Objects
 
         protected BaseControl(IConsoleControl console, BaseOptions options)
         {
-            AppcurrentCulture = Thread.CurrentThread.CurrentCulture;
-            if (PromptPlus.Config.AppCulture != AppcurrentCulture)
-            {
-                PromptPlus.Config.AppCulture = AppcurrentCulture;
-            }
             _options = options;
+            AppcurrentCulture = Thread.CurrentThread.CurrentCulture;
+            if (options.Config.AppCulture != AppcurrentCulture)
+            {
+                options.Config.AppCulture = AppcurrentCulture;
+            }
             _errorMessage = string.Empty;
             _screenBuffer = new();
             _lastBufferLines = null;
@@ -68,8 +69,8 @@ namespace PPlus.Controls.Objects
             var oldcursor = ConsolePlus.CursorVisible;
             try
             {
-                Thread.CurrentThread.CurrentCulture = PromptPlus.Config.DefaultCulture;
-                Thread.CurrentThread.CurrentUICulture = PromptPlus.Config.DefaultCulture;
+                Thread.CurrentThread.CurrentCulture = _options.Config.DefaultCulture;
+                Thread.CurrentThread.CurrentUICulture = _options.Config.DefaultCulture;
 
                 var initvalue = InitControl(stoptoken.Value);
 
@@ -311,7 +312,7 @@ namespace PPlus.Controls.Objects
 
         public bool CheckTooltipKeyPress(ConsoleKeyInfo keyInfo)
         {
-            if (PromptPlus.Config.TooltipKeyPress.Equals(keyInfo))
+            if (_options.Config.TooltipKeyPress.Equals(keyInfo))
             {
                 _options.OptShowTooltip = !_options.OptShowTooltip;
                 return true;
@@ -321,7 +322,7 @@ namespace PPlus.Controls.Objects
 
         public bool CheckAbortKey(ConsoleKeyInfo keyInfo)
         {
-            if (_options.OptEnabledAbortKey && PromptPlus.Config.AbortKeyPress.Equals(keyInfo))
+            if (_options.OptEnabledAbortKey && _options.Config.AbortKeyPress.Equals(keyInfo))
             {
                 return true;
             }

@@ -16,10 +16,9 @@ namespace AlternateScreenSamples
             })
             .Run();
 
-            PromptPlus.AlternateScreen()
-                .ForegroundColor(ConsoleColor.White)
-                .BackgroundColor(ConsoleColor.Red)
-                .CustomAction((cts) =>
+
+            PromptPlus.RunOnBuffer(TargetBuffer.Secondary,
+                (cts) =>
                 {
                     PromptPlus.WriteLine("This text run in secondary screen");
                     PromptPlus.WriteLines(2);
@@ -27,15 +26,16 @@ namespace AlternateScreenSamples
                     {
                         cfg.ShowTooltip(false);
                     })
-                    .Run();
-                 })
-                .Run();
+                    .Run(cts);
+                },
+                ConsoleColor.White,
+                ConsoleColor.Red);
 
             PromptPlus.WriteLines(2);
             PromptPlus.KeyPress("End Sample!, Press any key", cfg =>
             {
                 cfg.ShowTooltip(false);
-                cfg.ApplyStyle(StyleControls.Tooltips, Style.Plain.Foreground(Style.Plain.Background.GetInvertedColor()));
+                cfg.ApplyStyle(StyleControls.Tooltips, Style.Default.Foreground(Style.Default.Background.GetInvertedColor()));
             })
             .Run();
 

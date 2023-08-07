@@ -9,12 +9,12 @@ namespace PPlus.Tests.StandardDriverTest
         public void Should_can_beep()
         {
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
             });
             // When
-            PromptPlus.Console.Beep();
+            PromptPlus.Beep();
         }
     }
 }

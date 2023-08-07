@@ -42,7 +42,7 @@ namespace PPlus
         /// <returns><see cref="IControlChartBar"/></returns>
         public static IControlChartBar ChartBar(string title, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new ChartBarOptions(false)
+            var opt = new ChartBarOptions(_styleschema, _configcontrols, _consoledrive, false)
             {
                 OptPrompt = (title ?? string.Empty).Trim(),
                 OptDescription = (description ?? string.Empty).Trim()

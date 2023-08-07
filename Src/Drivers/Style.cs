@@ -16,8 +16,6 @@ namespace PPlus
         internal const string UnicodeEllipsis = "…";
         internal const string AsciiEllipsis = "...";
 
-        private static Style _initstyle => new(PromptPlus.Console.ForegroundColor, PromptPlus.Console.BackgroundColor,Overflow.None);
-
         /// <summary>
         /// create a new <see cref="Style"/> with default foreground/background colors and none overflow strategy.
         /// </summary>
@@ -42,19 +40,19 @@ namespace PPlus
         }
 
         /// <summary>
-        /// Gets a <see cref="Style"/> with the default colors and and overflow None.
+        /// Gets a <see cref="Style"/> with the default colors and overflow.None
         /// </summary>
-        public static Style Plain { get; internal set; } = new Style(_initstyle.Foreground, _initstyle.Background, _initstyle.OverflowStrategy);
+        public static Style Default => new(Color.DefaultForecolor, Color.DefaultBackcolor, Overflow.None);
 
         /// <summary>
         /// Gets a <see cref="Style"/> with the default colors and overflow Crop.
         /// </summary>
-        public static Style OverflowCrop => Plain.Overflow(Overflow.Crop);
+        public static Style OverflowCrop => Default.Overflow(Overflow.Crop);
 
         /// <summary>
         /// Gets a <see cref="Style"/> with the default colors and overflow Ellipsis.
         /// </summary>
-        public static Style OverflowEllipsis => Plain.Overflow(Overflow.Ellipsis);
+        public static Style OverflowEllipsis => Default.Overflow(Overflow.Ellipsis);
 
         /// <summary>
         /// Gets the foreground color.

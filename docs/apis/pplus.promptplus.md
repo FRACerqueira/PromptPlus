@@ -87,24 +87,24 @@ public static ColorSystem ColorDepth { get; }
 Get global properties for all controls.
 
 ```csharp
-public static Config Config { get; }
+public static ConfigControls Config { get; }
 ```
 
 #### Property Value
 
-[Config](./pplus.controls.config.md)<br>
+[ConfigControls](./pplus.controls.configcontrols.md)<br>
 
-### <a id="properties-console"/>**Console**
+### <a id="properties-currenttargetbuffer"/>**CurrentTargetBuffer**
 
-Gets the current Console drive.
+Get the Current Target Buffer
 
 ```csharp
-public static IConsoleBase Console { get; }
+public static TargetBuffer CurrentTargetBuffer { get; }
 ```
 
 #### Property Value
 
-[IConsoleBase](./pplus.iconsolebase.md)<br>
+[TargetBuffer](./pplus.targetbuffer.md)<br>
 
 ### <a id="properties-cursorleft"/>**CursorLeft**
 
@@ -141,18 +141,6 @@ public static bool CursorVisible { get; set; }
 #### Property Value
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-### <a id="properties-defaultstyle"/>**DefaultStyle**
-
-Get default [Style](./pplus.style.md) console.
-
-```csharp
-public static Style DefaultStyle { get; }
-```
-
-#### Property Value
-
-[Style](./pplus.style.md)<br>
 
 ### <a id="properties-error"/>**Error**
 
@@ -220,6 +208,18 @@ Gets a value that indicates whether input has been redirected from the standard 
 
 ```csharp
 public static bool IsInputRedirected { get; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+### <a id="properties-islegacy"/>**IsLegacy**
+
+Get the current Console drive Is Legcy.
+
+```csharp
+public static bool IsLegacy { get; }
 ```
 
 #### Property Value
@@ -497,35 +497,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 #### Returns
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
-
-### <a id="methods-alternatescreen"/>**AlternateScreen()**
-
-Create CustomAction Control
-
-```csharp
-public static IControlAlternateScreen AlternateScreen()
-```
-
-#### Returns
-
-[IControlAlternateScreen](./pplus.controls.icontrolalternatescreen.md)
-
-### <a id="methods-alternatescreen"/>**AlternateScreen(Action&lt;IPromptConfig&gt;)**
-
-Create CustomAction Control
-
-```csharp
-public static IControlAlternateScreen AlternateScreen(Action<IPromptConfig> config)
-```
-
-#### Parameters
-
-`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-#### Returns
-
-[IControlAlternateScreen](./pplus.controls.icontrolalternatescreen.md)
 
 ### <a id="methods-autocomplete"/>**AutoComplete(String, Action&lt;IPromptConfig&gt;)**
 
@@ -882,22 +853,6 @@ public static void ClearLine(Nullable<Int32> row)
 `row` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The row to clear
 
-### <a id="methods-clearline"/>**ClearLine(IConsoleBase, Nullable&lt;Int32&gt;)**
-
-Clear line
-
-```csharp
-public static void ClearLine(IConsoleBase consolebase, Nullable<Int32> row)
-```
-
-#### Parameters
-
-`consolebase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The [IConsoleBase](./pplus.iconsolebase.md)
-
-`row` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The row to clear
-
 ### <a id="methods-clearrestofline"/>**ClearRestOfLine()**
 
 Clear rest of current line
@@ -905,19 +860,6 @@ Clear rest of current line
 ```csharp
 public static void ClearRestOfLine()
 ```
-
-### <a id="methods-clearrestofline"/>**ClearRestOfLine(IConsoleBase)**
-
-Clear rest of current line
-
-```csharp
-public static void ClearRestOfLine(IConsoleBase consolebase)
-```
-
-#### Parameters
-
-`consolebase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The [IConsoleBase](./pplus.iconsolebase.md)
 
 ### <a id="methods-confirm"/>**Confirm(String, Action&lt;IPromptConfig&gt;)**
 
@@ -1018,31 +960,6 @@ public static void DoubleDash(string value, DashOptions dashOptions, int extrali
 ```
 
 #### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The value to write.
-
-`dashOptions` [DashOptions](./pplus.dashoptions.md)<br>
-[DashOptions](./pplus.dashoptions.md) character
-
-`extralines` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number lines to write after write value
-
-`style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The [Style](./pplus.style.md) to write.
-
-### <a id="methods-doubledash"/>**DoubleDash(IConsoleBase, String, DashOptions, Int32, Nullable&lt;Style&gt;)**
-
-Writes text line representation whie colors in a pair of lines of dashes.
-
-```csharp
-public static void DoubleDash(IConsoleBase consoleBase, string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
-```
-
-#### Parameters
-
-`consoleBase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The Console, see [IConsoleBase](./pplus.iconsolebase.md)
 
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The value to write.
@@ -1500,6 +1417,30 @@ Reset colors to default values.
 public static void ResetColor()
 ```
 
+### <a id="methods-runonbuffer"/>**RunOnBuffer(TargetBuffer, Action&lt;CancellationToken&gt;, Nullable&lt;ConsoleColor&gt;, Nullable&lt;ConsoleColor&gt;, Nullable&lt;CancellationToken&gt;)**
+
+Run custom action on Target Buffer
+
+```csharp
+public static bool RunOnBuffer(TargetBuffer value, Action<CancellationToken> customaction, Nullable<ConsoleColor> defaultforecolor, Nullable<ConsoleColor> defaultbackcolor, Nullable<CancellationToken> cancellationToken)
+```
+
+#### Parameters
+
+`value` [TargetBuffer](./pplus.targetbuffer.md)<br>
+
+`customaction` [Action&lt;CancellationToken&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+
+`defaultforecolor` [Nullable&lt;ConsoleColor&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+`defaultbackcolor` [Nullable&lt;ConsoleColor&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+`cancellationToken` [Nullable&lt;CancellationToken&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+
+#### Returns
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
+
 ### <a id="methods-select"/>**Select&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
 
 Create Select Control.
@@ -1636,7 +1577,6 @@ A stream that is the new standard output.
 ### <a id="methods-setup"/>**Setup(Action&lt;ProfileSetup&gt;)**
 
 Overwrite current console with new console profile.
- <br>After overwrite the new console the screeen is clear<br>and all Style-Schema are updated with backgoundcolor console
 
 ```csharp
 public static void Setup(Action<ProfileSetup> config)
@@ -1656,31 +1596,6 @@ public static void SingleDash(string value, DashOptions dashOptions, int extrali
 ```
 
 #### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The value to write.
-
-`dashOptions` [DashOptions](./pplus.dashoptions.md)<br>
-[DashOptions](./pplus.dashoptions.md) character
-
-`extralines` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number lines to write after write value
-
-`style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The [Style](./pplus.style.md) to write.
-
-### <a id="methods-singledash"/>**SingleDash(IConsoleBase, String, DashOptions, Int32, Nullable&lt;Style&gt;)**
-
-Writes text line representation whie colors and Write single dash after.
-
-```csharp
-public static void SingleDash(IConsoleBase consoleBase, string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
-```
-
-#### Parameters
-
-`consoleBase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The Console, see [IConsoleBase](./pplus.iconsolebase.md)
 
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The value to write.
@@ -1779,6 +1694,22 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 #### Returns
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
+
+### <a id="methods-swapbuffer"/>**SwapBuffer(TargetBuffer)**
+
+Swap Target Buffer
+
+```csharp
+public static bool SwapBuffer(TargetBuffer value)
+```
+
+#### Parameters
+
+`value` [TargetBuffer](./pplus.targetbuffer.md)<br>
+
+#### Returns
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
 
 ### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, String)**
 
@@ -2173,22 +2104,6 @@ public static void WriteLines(int steps)
 ```
 
 #### Parameters
-
-`steps` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Numbers de lines.
-
-### <a id="methods-writelines"/>**WriteLines(IConsoleBase, Int32)**
-
-Write lines with line terminator
-
-```csharp
-public static void WriteLines(IConsoleBase consoleBase, int steps)
-```
-
-#### Parameters
-
-`consoleBase` [IConsoleBase](./pplus.iconsolebase.md)<br>
-The Console, see [IConsoleBase](./pplus.iconsolebase.md)
 
 `steps` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Numbers de lines.

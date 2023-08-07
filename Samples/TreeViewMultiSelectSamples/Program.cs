@@ -96,7 +96,7 @@ namespace TreeViewMultiSelectSamples
                     separatePath: '|',
                     uniquenode: (item) => item.Id,
                     validselect: (item) => item.TypeInfo == TypeMyOrg.Funcionario)
-                .Styles(StyleTreeView.SelectedRoot, Style.Plain.Foreground(Color.Yellow))
+                .Styles(StyleTreeView.SelectedRoot, Style.Default.Foreground(Color.Yellow))
                 .PageSize(20)
                 .Interaction(MyOrg.LoadAreas(), (ctrl, item) =>
                 {

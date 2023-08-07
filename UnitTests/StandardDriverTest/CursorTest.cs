@@ -9,13 +9,13 @@ namespace PPlus.Tests.StandardDriverTest
         public void Should_Cursor_Default()
         {
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
             });
             // When
             // Then
-            Assert.True(PromptPlus.Console.CursorVisible);
+            Assert.True(PromptPlus.CursorVisible);
         }
 
         [Theory]
@@ -24,14 +24,14 @@ namespace PPlus.Tests.StandardDriverTest
         public void Should_Change_Cursor(bool expected)
         {
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
             });
             // When
-            PromptPlus.Console.CursorVisible = expected;
+            PromptPlus.CursorVisible = expected;
             // Then
-            Assert.Equal(expected, PromptPlus.Console.CursorVisible);
+            Assert.Equal(expected, PromptPlus.CursorVisible);
         }
 
 
@@ -43,15 +43,15 @@ namespace PPlus.Tests.StandardDriverTest
         public void Should_move_Cursor_Updown(CursorDirection direction, int step, int expected)
         {
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
             });
             // When
-            PromptPlus.Console.SetCursorPosition(10, 10);
-            PromptPlus.Console.MoveCursor(direction, step);
+            PromptPlus.SetCursorPosition(10, 10);
+            PromptPlus.MoveCursor(direction, step);
             // Then
-            Assert.Equal(expected, PromptPlus.Console.CursorTop);
+            Assert.Equal(expected, PromptPlus.CursorTop);
         }
 
         [Theory]
@@ -62,15 +62,15 @@ namespace PPlus.Tests.StandardDriverTest
         public void Should_move_Cursor_LeftRight(CursorDirection direction, int step, int expected)
         {
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
             });
             // When
-            PromptPlus.Console.SetCursorPosition(10, 10);
-            PromptPlus.Console.MoveCursor(direction, step);
+            PromptPlus.SetCursorPosition(10, 10);
+            PromptPlus.MoveCursor(direction, step);
             // Then
-            Assert.Equal(expected, PromptPlus.Console.CursorLeft);
+            Assert.Equal(expected, PromptPlus.CursorLeft);
         }
 
     }

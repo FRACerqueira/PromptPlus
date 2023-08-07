@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:Config 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:ConfigControls 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,17 +8,17 @@
 
 [**Back to List Api**](./apis.md)
 
-# Config
+# ConfigControls
 
 Namespace: PPlus.Controls
 
 Represents the common config properties for all controls.
 
 ```csharp
-public class Config
+public class ConfigControls
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Config](./pplus.controls.config.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ConfigControls](./pplus.controls.configcontrols.md)
 
 ## Properties
 

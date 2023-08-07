@@ -1,4 +1,9 @@
-﻿using PPlus.Controls.Objects;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using PPlus.Controls.Objects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -312,11 +317,12 @@ namespace PPlus.Controls
         {
             var endinput = false;
             var abort = false;
-            var oldinput = _inputBuffer.ToString();
+            string oldinput = string.Empty;
             bool tryagain;
             bool skipstartComplete;
             do
             {
+                oldinput = null;
                 ClearError();
                 tryagain = false;
                 ConsoleKeyInfo? keyInfo;
@@ -334,6 +340,8 @@ namespace PPlus.Controls
                     _finishautoCompleteRunning = false;
                     break;
                 }
+
+                oldinput = _inputBuffer.ToString();
 
                 keyInfo = WaitKeypress(cancellationToken);
 
@@ -439,18 +447,10 @@ namespace PPlus.Controls
             }
             else
             {
-                if (!skipstartComplete)
+                if (!skipstartComplete && oldinput != _inputBuffer.ToString() && oldinput != null)
                 {
-                    if (!_autoCompleteRunning && oldinput != _inputBuffer.ToString())
-                    {
-                        _autoCompleteRunning = true;
-                        _autoCompleteSendStart = true;
-                    }
-                    else
-                    {
-                        _autoCompleteSendStart = (oldinput != _inputBuffer.ToString());
-
-                    }
+                    _autoCompleteRunning = true;
+                    _autoCompleteSendStart = true;
                 }
             }
             var clear = !_autoCompleteRunning;

@@ -203,7 +203,7 @@ namespace PPlus.Controls
             _lasdescription = _options.OptDescription;
             if (_options.CurrentCulture == null)
             {
-                _options.CurrentCulture = PromptPlus.Config.AppCulture;
+                _options.CurrentCulture = _options.Config.AppCulture;
             }
             if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
             {
@@ -898,8 +898,8 @@ namespace PPlus.Controls
                 if (_options.OptEnabledAbortKey)
                 {
                     screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3} {4}",
-                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                        string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
+                        string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
                         Messages.SelectFisnishEnter,
                         Messages.TooltipPagesNotes,
                         string.Format(Messages.TooltipToggleNotes,_options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
@@ -907,7 +907,7 @@ namespace PPlus.Controls
                 else
                 {
                     screenBuffer.AddBuffer(string.Format("{0}, {1}\n{2}, {3}",
-                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                        string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                         Messages.SelectFisnishEnter,
                         Messages.TooltipPagesNotes,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
@@ -926,8 +926,8 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(linedays))
                 {
                     screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}\n{4}",
-                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                        string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
+                        string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
                         Messages.SelectFisnishEnter,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes),
                         $"{linedays}, {lineweek}"), _options.OptStyleSchema.Tooltips());
@@ -935,8 +935,8 @@ namespace PPlus.Controls
                 else
                 {
                     screenBuffer.AddBuffer(string.Format("{0}, {1}\n{2}, {3}",
-                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                        string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
+                        string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
                         Messages.SelectFisnishEnter,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
                 }
@@ -946,7 +946,7 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(linedays))
                 {
                     screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}",
-                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                        string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                         Messages.SelectFisnishEnter,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes),
                         $"{linedays}, {lineweek}"), _options.OptStyleSchema.Tooltips());
@@ -954,7 +954,7 @@ namespace PPlus.Controls
                 else
                 {
                     screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}",
-                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                        string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                         Messages.SelectFisnishEnter,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
                 }

@@ -75,8 +75,8 @@ namespace PPlus.Controls
                 if (isparent)
                 {
                     return string.Format("{0}, {1}, {2}, {3}\n{4}, {5}, {6}, {7}",
-                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                        string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
+                        string.Format(Messages.TooltipCancelEsc, options.Config.AbortKeyPress),
                         Messages.SelectFisnishEnter,
                         Messages.TooltipPages,
                         Messages.TooltipSelectFilter,
@@ -85,8 +85,8 @@ namespace PPlus.Controls
                         string.Format(Messages.TooltipToggleExpandAllPress, options.HotKeyToggleExpandAllPress));
                 }
                 return string.Format("{0}, {1}, {2}, {3}\n{4}, {5}",
-                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                    string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                    string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
+                    string.Format(Messages.TooltipCancelEsc, options.Config.AbortKeyPress),
                     Messages.SelectFisnishEnter,
                     string.Format(Messages.TooltipFullPath, options.HotKeyFullPathNodePress),
                     Messages.TooltipPages,
@@ -97,7 +97,7 @@ namespace PPlus.Controls
                 if (isparent)
                 {
                     return string.Format("{0}, {1}, {2} {3}\n{4}, {5}, {6}",
-                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                        string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
                         Messages.SelectFisnishEnter,
                         Messages.TooltipPages,
                         string.Format(Messages.TooltipFullPath, options.HotKeyFullPathNodePress),
@@ -107,7 +107,7 @@ namespace PPlus.Controls
 
                 }
                 return string.Format("{0}, {1}, {2}\n{3}, {4}",
-                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                    string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
                     Messages.SelectFisnishEnter,
                     Messages.TooltipPages,
                     Messages.TooltipSelectFilter,
@@ -119,7 +119,7 @@ namespace PPlus.Controls
         {
             screenBuffer.NewLine();
             screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
-            screenBuffer.AddBuffer(' ', PromptPlus.Console.DefaultStyle, true,false);
+            screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextSeleted, options.SelectedExpandStyle, true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.SelectedExpandStyle, true, false);
@@ -144,7 +144,7 @@ namespace PPlus.Controls
         {
             screenBuffer.NewLine();
             screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
-            screenBuffer.AddBuffer(' ', PromptPlus.Console.DefaultStyle, true, false);
+            screenBuffer.AddBuffer(' ', Style.Default, true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextSeleted, options.OptStyleSchema.Disabled(), true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.OptStyleSchema.Disabled(), true, false);
@@ -154,8 +154,8 @@ namespace PPlus.Controls
         public static void WriteLineNotSelectorTreeViewMultiSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data, bool isparent)
         {
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer(' ', PromptPlus.Console.DefaultStyle, true);
-            screenBuffer.AddBuffer(' ', PromptPlus.Console.DefaultStyle, true, false);
+            screenBuffer.AddBuffer(' ', Style.Default, true);
+            screenBuffer.AddBuffer(' ', Style.Default, true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextSeleted, options.ExpandStyle, true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.ExpandStyle, true, false);
@@ -179,8 +179,8 @@ namespace PPlus.Controls
         public static void WriteLineDisabledNotSelectorTreeViewMultiSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data)
         {
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer(' ', PromptPlus.Console.DefaultStyle, true);
-            screenBuffer.AddBuffer(' ', PromptPlus.Console.DefaultStyle, true,false);
+            screenBuffer.AddBuffer(' ', Style.Default, true);
+            screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextSeleted, options.OptStyleSchema.Disabled(), true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.OptStyleSchema.Disabled(), true, false);

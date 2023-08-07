@@ -145,12 +145,12 @@ namespace PPlus.Controls
             if (baseOptions.OptEnabledAbortKey)
             {
                 return string.Format("{0}, {1}",
-                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                    string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress));
+                    string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                    string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress));
             }
             else
             {
-                return string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress);
+                return string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress);
             }
         }
     }

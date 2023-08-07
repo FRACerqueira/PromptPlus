@@ -3,25 +3,16 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using System;
-using System.Globalization;
-
 namespace PPlus
 {
     /// <summary>
     /// Represents Profile Setup for console.
     /// </summary>
-    public class ProfileSetup 
+    public class ProfileSetup
     {
         internal ProfileSetup()
         {
         }
-
-        /// <summary>
-        /// Get/Set Default Culture for console
-        /// <br>Culture is global set fro threads</br>  
-        /// </summary>
-        public CultureInfo Culture { get; set; } = CultureInfo.CurrentCulture;
 
         /// <summary>
         /// Get/Set Terminal mode. if Running over Terminal mode or not.
@@ -63,17 +54,6 @@ namespace PPlus
         /// Get/Set write Overflow Strategy.
         /// </summary>
         public Overflow OverflowStrategy { get; set; }
-
-
-        /// <summary>
-        /// Get/Set Foreground console with color.
-        /// </summary>
-        public ConsoleColor ForegroundColor { get; set; }
-
-        /// <summary>
-        /// Get/Set BackgroundColor console with color.
-        /// </summary>
-        public ConsoleColor BackgroundColor { get; set; }
 
     }
 }

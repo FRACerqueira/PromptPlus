@@ -62,11 +62,11 @@ namespace PPlus.Controls
                 var color = options.ChangeColor(input);
                 if (options.BarType == SliderBarType.Fill)
                 {
-                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Plain.Foreground(color).Background(color), true, false);
+                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Default.Foreground(color).Background(color), true, false);
                 }
                 else
                 {
-                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Plain.Foreground(color), true, false);
+                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Default.Foreground(color), true, false);
                 }
             }
             else if (options.Gradient != null)
@@ -83,7 +83,7 @@ namespace PPlus.Controls
                         }
                         else
                         {
-                            screenBuffer.AddBuffer(aux[i].Text, Style.Plain.Foreground(aux[i].Style.Foreground), true, false);
+                            screenBuffer.AddBuffer(aux[i].Text, Style.Default.Foreground(aux[i].Style.Foreground), true, false);
                         }
                     }
                 }            
@@ -96,7 +96,7 @@ namespace PPlus.Controls
                 }
                 else
                 {
-                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Plain.Foreground(options.OptStyleSchema.Slider().Foreground), true, false);
+                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Default.Foreground(options.OptStyleSchema.Slider().Foreground), true, false);
                 }
             }
             if (options.BarType == SliderBarType.Fill)
@@ -105,7 +105,7 @@ namespace PPlus.Controls
             }
             else
             {
-                screenBuffer.AddBuffer(new string(bar, options.Witdth - valuestep), Style.Plain.Foreground(options.OptStyleSchema.Slider().Background), true, false);
+                screenBuffer.AddBuffer(new string(bar, options.Witdth - valuestep), Style.Default.Foreground(options.OptStyleSchema.Slider().Background), true, false);
             }
             screenBuffer.AddBuffer($" {options.ValueToString(options.Maxvalue)}", options.OptStyleSchema.UnSelected(),true,false);
         }
@@ -162,14 +162,14 @@ namespace PPlus.Controls
             if (baseOptions.OptEnabledAbortKey)
             {
                 return string.Format("{0}, {1}\n{2}",
-                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                 msgnav);
             }
             else
             {
                 return string.Format("{0},\n{1}",
-                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                 msgnav);
             }
         }

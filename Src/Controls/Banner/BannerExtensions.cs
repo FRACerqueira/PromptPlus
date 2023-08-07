@@ -16,7 +16,7 @@ namespace PPlus
         /// <returns><see cref="IBannerControl"/></returns>
         public static IBannerControl Banner(string value)
         {
-            return new BannerControl(_consoledrive,value);
+            return new BannerControl(_configcontrols, _consoledrive,value);
         }
     }
 }

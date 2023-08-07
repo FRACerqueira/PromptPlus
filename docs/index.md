@@ -27,6 +27,16 @@
 - [License](#license)
 - [API Reference](./apis/apis.md)
 
+## Whats news in V4.0.4
+- Fixed bug PromptPlus not restore terminal original setting when shutdown application
+- Fixed bug Autocomplete does not change result when backspace is pressed during search
+- Added Property CurrentBuffer in console drive to return Current Buffer running (Primary/Secondary)
+- Added SwapBuffer command to swith Primary/Secondar buffer (Valid only When console 'ansi'  suported)
+- Renamed 'AlternateScreen' to 'RunOnBuffer'. Now executes a custom action on TargetBuffer and returns to CurrentBuffer
+- Refactored console drivers initialization, control options initialization
+- Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
+    - Default value is = '850;65001'
+
 ## Whats news in V4.0.3
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
@@ -223,15 +233,15 @@ PromptPlus
 
 ```csharp
 PromptPlus.Clear();
-PromptPlus.DoubleDash($"PromptPlus.Console Style.OverflowEllipsis");
+PromptPlus.DoubleDash($"PromptPlus Style.OverflowEllipsis");
 PromptPlus.WriteLine("[RED ON WHITE]TESTE[YELLOW] COLOR [/] BACK COLOR [/]" + 
 "asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", style: Style.OverflowEllipsis);
 
-PromptPlus.DoubleDash($"PromptPlus.Console Style.OverflowCrop");
+PromptPlus.DoubleDash($"PromptPlus Style.OverflowCrop");
 PromptPlus.WriteLine("[RED ON WHITE]TESTE[YELLOW] COLOR [/] BACK COLOR [/]" + 
 "asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", style: Style.OverflowCrop);
 
-PromptPlus.DoubleDash($"PromptPlus.Console default");
+PromptPlus.DoubleDash($"PromptPlus default");
 PromptPlus.WriteLine("[RED ON WHITE]TESTE[YELLOW] COLOR [/] BACK COLOR [/]" + 
 "asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj");
 

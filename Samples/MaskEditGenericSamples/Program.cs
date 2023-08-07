@@ -31,7 +31,7 @@ namespace MaskEditGenericSamples
             PromptPlus.MaskEdit("input", "MaskEdit Generic input")
                 .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
                 .DescriptionWithInputType()
-                .TypeTipStyle(Style.Plain.Foreground(Color.Aqua))
+                .TypeTipStyle(Style.Default.Foreground(Color.Aqua))
                 .Run();
 
             PromptPlus.DoubleDash("For other features below see - input samples (same behaviour)");

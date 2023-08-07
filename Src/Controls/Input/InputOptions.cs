@@ -11,37 +11,42 @@ namespace PPlus.Controls
 {
     internal class InputOptions : BaseOptions
     {
-        private InputOptions()
+        private InputOptions() : base(null, null, null, true)
         {
             throw new PromptPlusException("InputOptions CTOR NotImplemented");
         }
 
-        internal InputOptions(bool showcursor) : base(showcursor)
+        internal InputOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
+            TimeoutOverwriteDefault = config.HistoryTimeout;
+            SwithView = config.PasswordViewPress;
+            SecretChar = config.SecretChar.Value;
+            HistoryPageSize = config.PageSize;
+            HistoryTimeout = config.HistoryTimeout;
         }
 
         public FilterMode FilterType { get; set; } = FilterMode.StartsWith;
         public string? OverwriteDefaultFrom { get; set; } = null;
-        public TimeSpan TimeoutOverwriteDefault { get; set; } = PromptPlus.Config.HistoryTimeout;
-        public bool EnabledViewSecret { get; set; } = false;
-        public HotKey SwithView { get; set; } = PromptPlus.Config.PasswordViewPress;
+        public TimeSpan TimeoutOverwriteDefault { get; set; }
+        public bool EnabledViewSecret { get; set; }
+        public HotKey SwithView { get; set; }
         public CaseOptions InputToCase { get; set; } = CaseOptions.Any;
-        public Func<char, bool>? AcceptInput { get; set; } = null;
+        public Func<char, bool>? AcceptInput { get; set; }
         public ushort MaxLenght { get; set; } = ushort.MaxValue;
-        public char SecretChar { get; set; } = PromptPlus.Config.SecretChar.Value;
+        public char SecretChar { get; set; }
         public bool IsSecret { get; set; }
         public string DefaultEmptyValue { get; set; }
         public string DefaultValue { get; set; }
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
         public bool ValidateOnDemand { get; set; }
         public Func<string, string> ChangeDescription { get; set; }
-        public int HistoryPageSize { get; set; } = PromptPlus.Config.PageSize;
-        public int HistoryMinimumPrefixLength { get; set; } = 0;
+        public int HistoryPageSize { get; set; }
+        public int HistoryMinimumPrefixLength { get; set; }
         public byte HistoryMaxItems { get; set; } = byte.MaxValue;
-        public TimeSpan HistoryTimeout { get; set; } = PromptPlus.Config.HistoryTimeout;
+        public TimeSpan HistoryTimeout { get; set; }
         public string? HistoryFileName { get; set; }
         public Func<SugestionInput, SugestionOutput>? SuggestionHandler { get; set; }
-        public bool ShowingHistory { get; set; } = false;
+        public bool ShowingHistory { get; set; }
         public bool HistoryEnabled => !string.IsNullOrEmpty(HistoryFileName);
 
     }

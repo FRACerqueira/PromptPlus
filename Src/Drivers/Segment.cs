@@ -17,7 +17,7 @@ namespace PPlus.Drivers
     internal class Segment
     {
         //cache style to ansicontrol
-        private static readonly Style _styletoAnsicontrol = Style.Plain;
+        private static readonly Style _styletoAnsicontrol = Style.Default;
 
         private Segment()
         {

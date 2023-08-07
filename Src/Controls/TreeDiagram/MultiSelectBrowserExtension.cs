@@ -31,7 +31,7 @@ namespace PPlus
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
         public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new BrowserOptions(true)
+            var opt = new BrowserOptions(_styleschema, _configcontrols, _consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,
@@ -50,7 +50,7 @@ namespace PPlus
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
         public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, Action<IPromptConfig> config)
         {
-            var opt = new BrowserOptions(true)
+            var opt = new BrowserOptions(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 Spinner = new Spinners(SpinnersType.Ascii, _consoledrive.IsUnicodeSupported)

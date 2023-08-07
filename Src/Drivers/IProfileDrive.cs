@@ -3,8 +3,6 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using System;
-
 namespace PPlus
 {
     /// <summary>
@@ -44,11 +42,6 @@ namespace PPlus
         ColorSystem ColorDepth { get; }
 
         /// <summary>
-        /// Get default <see cref="Style"/> console.
-        /// </summary>
-        Style DefaultStyle { get; internal set; }
-
-        /// <summary>
         /// Get screen margin left
         /// </summary>
         byte PadLeft { get; }
@@ -69,24 +62,8 @@ namespace PPlus
         int BufferHeight { get; }
 
         /// <summary>
-        /// Get/Set Foreground console with color.
-        /// </summary>
-        ConsoleColor ForegroundColor { get; set; }
-
-        /// <summary>
-        /// Get/set BackgroundColor console with color.
-        /// </summary>
-        ConsoleColor BackgroundColor { get; set; }
-
-        /// <summary>
         /// Get write Overflow Strategy.
         /// </summary>
         Overflow OverflowStrategy { get; }
-
-        /// <summary>
-        /// Reset colors to default values.
-        /// </summary>
-        void ResetColor();
-
      }
 }

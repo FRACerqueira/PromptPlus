@@ -15,7 +15,9 @@
             ActionOnDispose = null;
             waitHandle.WaitOne();
             Environment.SetEnvironmentVariable("PromptPlusOverUnitTest", "true");
+            PromptPlus.Setup();
             PromptPlus.Reset();
+            PromptPlus.Clear();
         }
 
         public void Dispose()

@@ -9,7 +9,7 @@ namespace PPlus.Tests.StandardDriverTest
         public void Should_Position_Default()
         {
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
             });
@@ -21,12 +21,12 @@ namespace PPlus.Tests.StandardDriverTest
 
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.Write("TEST\nNEWLINE");
-                cursorleft = PromptPlus.Console.CursorLeft;
-                cursortop = PromptPlus.Console.CursorTop;
-                PromptPlus.Console.Clear();
-                afterclearcursorleft = PromptPlus.Console.CursorLeft;
-                afterclearcursortop = PromptPlus.Console.CursorTop;
+                PromptPlus.Write("TEST\nNEWLINE");
+                cursorleft = PromptPlus.CursorLeft;
+                cursortop = PromptPlus.CursorTop;
+                PromptPlus.Clear();
+                afterclearcursorleft = PromptPlus.CursorLeft;
+                afterclearcursortop = PromptPlus.CursorTop;
 
             });
             // Then
@@ -40,7 +40,7 @@ namespace PPlus.Tests.StandardDriverTest
         public void Should_Position_padleft()
         {
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
                 cfg.PadLeft = 2;
@@ -52,12 +52,12 @@ namespace PPlus.Tests.StandardDriverTest
             int afterclearcursortop = 0;
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.Write("TEST\nNEWLINE");
-                cursorleft = PromptPlus.Console.CursorLeft;
-                cursortop = PromptPlus.Console.CursorTop;
-                PromptPlus.Console.Clear();
-                afterclearcursorleft = PromptPlus.Console.CursorLeft;
-                afterclearcursortop = PromptPlus.Console.CursorTop;
+                PromptPlus.Write("TEST\nNEWLINE");
+                cursorleft = PromptPlus.CursorLeft;
+                cursortop = PromptPlus.CursorTop;
+                PromptPlus.Clear();
+                afterclearcursorleft = PromptPlus.CursorLeft;
+                afterclearcursortop = PromptPlus.CursorTop;
             });
             // Then
             Assert.Equal(9, cursorleft);

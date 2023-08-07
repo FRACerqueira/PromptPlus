@@ -30,7 +30,7 @@ namespace PPlus
         /// <returns><see cref="IControlInput"/></returns>
         public static IControlInput Input(string prompt, string? description, Action<IPromptConfig> config = null)
         {
-            var opt = new InputOptions(true)
+            var opt = new InputOptions(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,

@@ -22,18 +22,6 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ## Properties
 
-### <a id="properties-backgroundcolor"/>**BackgroundColor**
-
-Get/Set BackgroundColor console with color.
-
-```csharp
-public ConsoleColor BackgroundColor { get; set; }
-```
-
-#### Property Value
-
-ConsoleColor<br>
-
 ### <a id="properties-colordepth"/>**ColorDepth**
 
 Get/Set Color capacity.[ColorSystem](./pplus.colorsystem.md)
@@ -45,31 +33,6 @@ public ColorSystem ColorDepth { get; set; }
 #### Property Value
 
 [ColorSystem](./pplus.colorsystem.md)<br>
-
-### <a id="properties-culture"/>**Culture**
-
-Get/Set Default Culture for console
- <br>Culture is global set fro threads
-
-```csharp
-public CultureInfo Culture { get; set; }
-```
-
-#### Property Value
-
-[CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
-
-### <a id="properties-foregroundcolor"/>**ForegroundColor**
-
-Get/Set Foreground console with color.
-
-```csharp
-public ConsoleColor ForegroundColor { get; set; }
-```
-
-#### Property Value
-
-ConsoleColor<br>
 
 ### <a id="properties-islegacy"/>**IsLegacy**
 

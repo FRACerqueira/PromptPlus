@@ -8,25 +8,25 @@ namespace PPlus.Tests.AnsiDriverTest
         [Fact]
         public void Should_can_SetIn()
         {
-            PromptPlus.Console.SetIn(TextReader.Null);
+            PromptPlus.SetIn(TextReader.Null);
             // Then
-            Assert.True(PromptPlus.Console.IsInputRedirected);
+            Assert.True(PromptPlus.IsInputRedirected);
         }
 
         [Fact]
         public void Should_can_SetOut()
         {
-            PromptPlus.Console.SetOut(TextWriter.Null);
+            PromptPlus.SetOut(TextWriter.Null);
             // Then
-            Assert.True(PromptPlus.Console.IsOutputRedirected);
+            Assert.True(PromptPlus.IsOutputRedirected);
         }
 
         [Fact]
         public void Should_can_SetError()
         {
-            PromptPlus.Console.SetError(TextWriter.Null);
+            PromptPlus.SetError(TextWriter.Null);
             // Then
-            Assert.True(PromptPlus.Console.IsErrorRedirected);
+            Assert.True(PromptPlus.IsErrorRedirected);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace PPlus
         /// <returns><see cref="IControlAutoComplete"/></returns>
         public static IControlAutoComplete AutoComplete(string prompt, string? description, Action<IPromptConfig> config = null)
         {
-            var opt = new AutoCompleteOptions(true)
+            var opt = new AutoCompleteOptions(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,

@@ -31,7 +31,7 @@ namespace PPlus.Controls
         {
             if (_options.CurrentCulture == null)
             {
-                _options.CurrentCulture = PromptPlus.Config.AppCulture;
+                _options.CurrentCulture = _options.Config.AppCulture;
             }
 
             _options.Validators.Add(PromptValidators.Required());

@@ -6,8 +6,8 @@
 |_|   |_|   \___/|_| |_| |_| .__/ \__|_|   |_|\__,_|___/
                            |_|
 
-Welcome to PromptPlus v4.0.2  
-=========================================================
+Welcome to PromptPlus
+=====================
 
 Interactive command-line toolkit for .Net core with powerful controls and commands
 to create professional console applications.
@@ -21,13 +21,24 @@ of the current terminal's capabilities  and automatic color conversion.
 Visit the official page for complete documentation of PromptPlus:
 https://fracerqueira.github.io/PromptPlus
 
-For migrate V3.3 to V4.0 see this link: https://fracerqueira.github.io/PromptPlus/migrateversion.html.
+For migrate V3.3 to V4.X see this link: https://fracerqueira.github.io/PromptPlus/migrateversion.html.
 
 PromptPlus was developed in c# with target frameworks:
 
 - netstandard2.1
 - .NET 6
 - .NET 7
+
+*** Whats news in V4.0.4 *** 
+----------------------------
+- Fixed bug PromptPlus not restore terminal original setting when shutdown application
+- Fixed bug Autocomplete does not change result when backspace is pressed during search
+- Added Property CurrentBuffer in console drive to return Current Buffer running (Primary/Secondary)
+- Added SwapBuffer command to swith Primary/Secondar buffer (Valid only When console 'ansi'  suported)
+- Renamed 'AlternateScreen' to 'RunOnBuffer'. Now executes a custom action on TargetBuffer and returns to CurrentBuffer
+- Refactored console drivers initialization, control options initialization
+- Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
+    - Default value is = '850;65001'
 
 *** Whats news in V4.0.3 *** 
 ---------------------------

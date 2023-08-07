@@ -20,18 +20,6 @@ public interface IProfileDrive
 
 ## Properties
 
-### <a id="properties-backgroundcolor"/>**BackgroundColor**
-
-Get/set BackgroundColor console with color.
-
-```csharp
-public abstract ConsoleColor BackgroundColor { get; set; }
-```
-
-#### Property Value
-
-ConsoleColor<br>
-
 ### <a id="properties-bufferheight"/>**BufferHeight**
 
 Gets the height of the buffer area.
@@ -67,30 +55,6 @@ public abstract ColorSystem ColorDepth { get; }
 #### Property Value
 
 [ColorSystem](./pplus.colorsystem.md)<br>
-
-### <a id="properties-defaultstyle"/>**DefaultStyle**
-
-Get default [Style](./pplus.style.md) console.
-
-```csharp
-public abstract Style DefaultStyle { get; internal set; }
-```
-
-#### Property Value
-
-[Style](./pplus.style.md)<br>
-
-### <a id="properties-foregroundcolor"/>**ForegroundColor**
-
-Get/Set Foreground console with color.
-
-```csharp
-public abstract ConsoleColor ForegroundColor { get; set; }
-```
-
-#### Property Value
-
-ConsoleColor<br>
 
 ### <a id="properties-islegacy"/>**IsLegacy**
 
@@ -187,16 +151,6 @@ public abstract bool SupportsAnsi { get; }
 #### Property Value
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-## Methods
-
-### <a id="methods-resetcolor"/>**ResetColor()**
-
-Reset colors to default values.
-
-```csharp
-void ResetColor()
-```
 
 
 - - -

@@ -233,7 +233,7 @@ namespace PPlus.Tests.Controls.TaskWaitControl
             CompletesIn(3000, () =>
             {
                 ctrl.InputTemplate(new ScreenBuffer());
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 Thread.Sleep(500);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.IsAborted);
@@ -260,7 +260,7 @@ namespace PPlus.Tests.Controls.TaskWaitControl
             CompletesIn(3000, () =>
             {
                 ctrl.InputTemplate(new ScreenBuffer());
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 Thread.Sleep(500);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(!result.IsAborted);
@@ -485,14 +485,14 @@ namespace PPlus.Tests.Controls.TaskWaitControl
         [Fact]
         public void Should_WaitTime()
         {
-            var opt = new WaitOptions<object>(false)
+            var opt = new WaitOptions<object>(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false)
             {
                 WaitTime = true,
                 TimeDelay = TimeSpan.FromSeconds(1),
                 ShowCountdown = true,
                 OptPrompt = "P"
             };
-            var ctrl = new WaitControl<object>((IConsoleControl)PromptPlus.Console, opt);
+            var ctrl = new WaitControl<object>(PromptPlus._consoledrive, opt);
             ctrl.Spinner(SpinnersType.Ascii);
             ctrl.AddStep(StepMode.Sequential, (_, cts) =>
             {

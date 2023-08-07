@@ -19,15 +19,15 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents the common config properties for all controls.
     /// </summary>
-    public class Config
+    public class ConfigControls
     {
         internal Dictionary<SymbolType, (string value, string unicode)> _globalSymbols = new();
 
-        internal Config()
+        internal ConfigControls(CultureInfo culture)
         {
             InitSymbols();
-            AppCulture = Thread.CurrentThread.CurrentCulture;
-            DefaultCulture = null;
+            AppCulture = culture;
+            DefaultCulture = AppCulture;
         }
 
         private CultureInfo? _defaultCulture;

@@ -30,7 +30,7 @@ namespace PPlus
         /// <returns><see cref="IControlSliderNumber"/></returns>
         public static IControlSliderNumber SliderNumber(string prompt, string? description, Action<IPromptConfig> config = null)
         {
-            var opt = new SliderNumberOptions(true)
+            var opt = new SliderNumberOptions(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,

@@ -3,7 +3,6 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-
 using PPlus.Controls;
 using System;
 
@@ -42,7 +41,7 @@ namespace PPlus
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         public static IControlMultiSelect<T> MultiSelect<T>(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new MultiSelectOptions<T>(true)
+            var opt = new MultiSelectOptions<T>(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description    

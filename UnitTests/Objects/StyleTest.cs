@@ -24,8 +24,8 @@ namespace PPlus.Tests.Objects
             // Given
             var result = Style.OverflowCrop;
             // Then
-            result.Foreground.ShouldBe(Style.Plain.Foreground);
-            result.Background.ShouldBe(Style.Plain.Background);
+            result.Foreground.ShouldBe(Style.Default.Foreground);
+            result.Background.ShouldBe(Style.Default.Background);
             result.OverflowStrategy.ShouldBe(Overflow.Crop);
         }
 
@@ -35,8 +35,8 @@ namespace PPlus.Tests.Objects
             // Given
             var result = Style.OverflowEllipsis;
             // Then
-            result.Foreground.ShouldBe(Style.Plain.Foreground);
-            result.Background.ShouldBe(Style.Plain.Background);
+            result.Foreground.ShouldBe(Style.Default.Foreground);
+            result.Background.ShouldBe(Style.Default.Background);
             result.OverflowStrategy.ShouldBe(Overflow.Ellipsis);
         }
 
@@ -62,7 +62,7 @@ namespace PPlus.Tests.Objects
         public void Should_change_overflow()
         {
             // Given
-            var result = Style.Plain.Overflow(Overflow.Ellipsis);
+            var result = Style.Default.Overflow(Overflow.Ellipsis);
             // Then
             result.OverflowStrategy.ShouldBe(Overflow.Ellipsis);
         }
@@ -71,7 +71,7 @@ namespace PPlus.Tests.Objects
         public void Should_change_Foreground()
         {
             // Given
-            var result = Style.Plain.Foreground(Color.Red);
+            var result = Style.Default.Foreground(Color.Red);
             // Then
             result.OverflowStrategy.ShouldBe(Overflow.None);
             result.Foreground.ShouldBe(Color.Red);
@@ -81,7 +81,7 @@ namespace PPlus.Tests.Objects
         public void Should_change_Background()
         {
             // Given
-            var result = Style.Plain.Background(Color.Red);
+            var result = Style.Default.Background(Color.Red);
             // Then
             result.Background.ShouldBe(Color.Red);
         }

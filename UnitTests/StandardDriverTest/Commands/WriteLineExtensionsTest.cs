@@ -13,14 +13,14 @@ namespace PPlus.Tests.StandardDriverTest.Commands
         {
             expected += (Environment.NewLine.Length * lines);
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
             });
             // When
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.WriteLines(lines);
+                PromptPlus.WriteLines(lines);
             });
             //Then
             Assert.Equal(expected, output.Length);
@@ -37,14 +37,14 @@ namespace PPlus.Tests.StandardDriverTest.Commands
         public void Should_can_SingleDash(DashOptions dashOption)
         {
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
             });
             // When
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.SingleDash("teste", dashOption);
+                PromptPlus.SingleDash("teste", dashOption);
             });
             //Then
             Assert.Equal(Expectations.GetVerifyStd($"SingleDash.{dashOption}.txt"), output);
@@ -59,14 +59,14 @@ namespace PPlus.Tests.StandardDriverTest.Commands
         public void Should_can_DoubleDash(DashOptions dashOption)
         {
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.SupportsAnsi = false;
             });
             // When
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.DoubleDash("teste", dashOption);
+                PromptPlus.DoubleDash("teste", dashOption);
             });
             //Then
             Assert.Equal(Expectations.GetVerifyStd($"DoubleDash.{dashOption}.txt"), output);

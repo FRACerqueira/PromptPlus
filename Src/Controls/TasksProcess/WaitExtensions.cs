@@ -42,7 +42,7 @@ namespace PPlus
         /// <returns><see cref="IControlWait{T}"/></returns>
         public static IControlWait<T> WaitProcess<T>(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new WaitOptions<T>(false)
+            var opt = new WaitOptions<T>(_styleschema,_configcontrols,_consoledrive, false)
             {
                 WaitTime = false,
                 OptPrompt = prompt,
@@ -62,7 +62,7 @@ namespace PPlus
         /// <returns><see cref="IControlWait{T}"/></returns>
         public static IControlWait<object> WaitProcess(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new WaitOptions<object>(false)
+            var opt = new WaitOptions<object>(_styleschema, _configcontrols, _consoledrive, false)
             {
                 WaitTime = false,
                 OptPrompt = prompt,
@@ -84,7 +84,7 @@ namespace PPlus
         public static void WaitTimer(string prompt, TimeSpan delay, SpinnersType spinnersType = SpinnersType.Ascii, bool showCountdown = false, Action<IPromptConfig> config = null, CancellationToken? cancellationToken = null)
         {
             var cts = cancellationToken ?? CancellationToken.None;
-            var opt = new WaitOptions<object>(false)
+            var opt = new WaitOptions<object>(_styleschema, _configcontrols, _consoledrive, false)
             {
                 WaitTime = true,
                 TimeDelay = delay,

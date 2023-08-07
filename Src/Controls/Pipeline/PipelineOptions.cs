@@ -11,12 +11,12 @@ namespace PPlus.Controls
 {
     internal class PipelineOptions<T> : BaseOptions
     {
-        private PipelineOptions()
+        private PipelineOptions() : base(null, null, null, true)
         {
             throw new PromptPlusException("PipelineOptions CTOR NotImplemented");
         }
 
-        internal PipelineOptions(bool showcursor) : base(showcursor)
+        internal PipelineOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             Pipes = new Dictionary<string, Action<EventPipe<T>, CancellationToken>>();
             Conditions = new Dictionary<string, Func<EventPipe<T>, CancellationToken, bool>>();

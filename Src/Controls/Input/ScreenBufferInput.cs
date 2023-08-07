@@ -51,15 +51,15 @@ namespace PPlus.Controls
                     if (baseOptions.OptEnabledAbortKey)
                     {
                         return string.Format("{0}, {1}, {2}, {3}",
-                            string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                            string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                             string.Format(Messages.TooltipViewPassword, baseOptions.SwithView),
-                            string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                            string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                             Messages.InputFisnishEnter);
                     }
                     else
                     {
                         return string.Format("{0}, {1}, {2}",
-                            string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                            string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                             string.Format(Messages.TooltipViewPassword, baseOptions.SwithView),
                             Messages.InputFisnishEnter);
                     }
@@ -69,14 +69,14 @@ namespace PPlus.Controls
                     if (baseOptions.OptEnabledAbortKey)
                     {
                         return string.Format("{0}, {1}, {2}",
-                            string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                            string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                            string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                            string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                             Messages.InputFisnishEnter);
                     }
                     else
                     {
                         return string.Format("{0}, {1}",
-                            string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                            string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                             Messages.InputFisnishEnter);
                     }
                 }
@@ -88,7 +88,7 @@ namespace PPlus.Controls
                     if (baseOptions.ShowingHistory)
                     {
                         return string.Format("{0}, {1}, {2}\n{3}, {4}",
-                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                         Messages.TooltipHistoryEsc,
                         Messages.SelectFisnishEnter,
                         Messages.TooltipPages,
@@ -99,7 +99,7 @@ namespace PPlus.Controls
                         if (isInAutoCompleteMode)
                         {
                             return string.Format("{0}, {1}, {2}\n{3}, {4}",
-                            string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                            string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                             Messages.TooltipSugestionEsc,
                             Messages.InputFisnishEnter,
                             string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
@@ -112,8 +112,8 @@ namespace PPlus.Controls
                                 if (baseOptions.OptEnabledAbortKey)
                                 {
                                     return string.Format("{0}, {1}, {2}\n{3}, {4}",
-                                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                    string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                    string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                    string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                     Messages.InputFisnishEnter,
                                     string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
                                     Messages.TooltipSugestionToggle);
@@ -121,7 +121,7 @@ namespace PPlus.Controls
                                 else
                                 {
                                     return string.Format("{0}, {1}, {2}, {3}",
-                                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                    string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     Messages.InputFisnishEnter,
                                     string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
                                     Messages.TooltipSugestionToggle);
@@ -132,15 +132,15 @@ namespace PPlus.Controls
                                 if (baseOptions.OptEnabledAbortKey)
                                 {
                                     return string.Format("{0}, {1}, {2}, {3}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                        string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                         Messages.InputFisnishEnter,
                                         string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength));
                                 }
                                 else
                                 {
                                     return string.Format("{0}, {1}, {2}",
-                                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         Messages.InputFisnishEnter,
                                         string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength));
                                 }
@@ -153,7 +153,7 @@ namespace PPlus.Controls
                     if (isInAutoCompleteMode)
                     {
                         return string.Format("{0}, {1}, {2}, {3}",
-                        string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                        string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                         Messages.TooltipSugestionEsc,
                         Messages.InputFisnishEnter,
                         Messages.TooltipSugestionToggle);
@@ -165,15 +165,15 @@ namespace PPlus.Controls
                             if (baseOptions.OptEnabledAbortKey)
                             {
                                 return string.Format("{0}, {1}, {2}, {3}",
-                                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                 Messages.TooltipSugestionToggle,
                                 Messages.InputFisnishEnter,
-                                string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress));
+                                string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress));
                             }
                             else
                             {
                                 return string.Format("{0}, {1}, {2}",
-                                string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                 Messages.InputFisnishEnter,
                                 Messages.TooltipSugestionToggle);
                             }
@@ -183,14 +183,14 @@ namespace PPlus.Controls
                             if (baseOptions.OptEnabledAbortKey)
                             {
                                 return string.Format("{0}, {1}, {2}",
-                                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
-                                    string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress),
+                                    string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
+                                    string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                     Messages.InputFisnishEnter);
                             }
                             else
                             {
                                 return string.Format("{0}, {1}",
-                                    string.Format(Messages.TooltipToggle, PromptPlus.Config.TooltipKeyPress),
+                                    string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     Messages.InputFisnishEnter);
                             }
                         }

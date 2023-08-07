@@ -32,6 +32,16 @@
 - [License](#license)
 - [API Reference](https://fracerqueira.github.io/PromptPlus/apis/apis.html)
 
+## Whats news in V4.0.4
+- Fixed bug PromptPlus not restore terminal original setting when shutdown application
+- Fixed bug Autocomplete does not change result when backspace is pressed during search
+- Added Property CurrentBuffer in console drive to return Current Buffer running (Primary/Secondary)
+- Added SwapBuffer command to swith Primary/Secondar buffer (Valid only When console 'ansi'  suported)
+- Renamed 'AlternateScreen' to 'RunOnBuffer'. Now executes a custom action on TargetBuffer and returns to CurrentBuffer
+- Refactored console drivers initialization, control options initialization
+- Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
+    - Default value is = '850;65001'
+
 ## Whats news in V4.0.3
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
@@ -462,6 +472,7 @@ PromptPlus.WriteLine($"Your input: {name.Value}!");
 - FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
 - The colors and some of its dependencies were inspired by the work of [spectreconsole](https://spectreconsole.net/).
 - The API Reference was inspired by the work of [xmldoc2md (Fork with improvements)](https://github.com/FRACerqueira/xmldoc2md).
+- The EastAsianWidth and base-control was inspired by the work of [Sharprompt](https://github.com/shibayan/Sharprompt)
 
 ## Code of Conduct
 [**Top**](#table-of-contents)

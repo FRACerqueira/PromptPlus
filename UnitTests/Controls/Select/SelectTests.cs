@@ -417,7 +417,7 @@ namespace PPlus.Tests.Controls.Select
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -454,7 +454,7 @@ namespace PPlus.Tests.Controls.Select
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -483,7 +483,7 @@ namespace PPlus.Tests.Controls.Select
                 var sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
                 Assert.Contains(sb.Buffer, x => (x.Text ?? string.Empty).Contains("ChangeDescription=1"));
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.DownArrow,false,false,false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.DownArrow,false,false,false));
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -504,7 +504,7 @@ namespace PPlus.Tests.Controls.Select
             CompletesIn(100, () =>
             {
                 var sb = new ScreenBuffer();
-                PromptPlus.InputBuffer("o");
+                PromptPlus.MemoryInputBuffer("o");
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -530,7 +530,7 @@ namespace PPlus.Tests.Controls.Select
             CompletesIn(100, () =>
             {
                 var sb = new ScreenBuffer();
-                PromptPlus.InputBuffer("b");
+                PromptPlus.MemoryInputBuffer("b");
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -555,7 +555,7 @@ namespace PPlus.Tests.Controls.Select
             CompletesIn(100, () =>
             {
                 var sb = new ScreenBuffer();
-                PromptPlus.InputBuffer("s");
+                PromptPlus.MemoryInputBuffer("s");
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -596,7 +596,7 @@ namespace PPlus.Tests.Controls.Select
             CompletesIn(100, () =>
             {
                 var sb = new ScreenBuffer();
-                PromptPlus.InputBuffer("t");
+                PromptPlus.MemoryInputBuffer("t");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsRunning);
                 Assert.False(result.IsAborted);
@@ -615,7 +615,7 @@ namespace PPlus.Tests.Controls.Select
             CompletesIn(100, () =>
             {
                 var sb = new ScreenBuffer();
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsRunning);
                 Assert.False(result.IsAborted);
@@ -632,7 +632,7 @@ namespace PPlus.Tests.Controls.Select
             CompletesIn(100, () =>
             {
                 var sb = new ScreenBuffer();
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.IsRunning);
                 Assert.False(result.IsAborted);

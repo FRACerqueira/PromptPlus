@@ -65,7 +65,7 @@ namespace PPlus.Controls.Objects
         {
             if (options.OptEnabledAbortKey)
             {
-                return string.Format(Messages.TooltipCancelEsc, PromptPlus.Config.AbortKeyPress);
+                return string.Format(Messages.TooltipCancelEsc, options.Config.AbortKeyPress);
             }
             else
             {

@@ -353,7 +353,7 @@ namespace PPlus.Tests.Controls
 
         internal class OptionsForMaskeditDateOnly : MaskEditOptions
         {
-            public OptionsForMaskeditDateOnly(CultureInfo culture, string defaultvalue) : base(false)
+            public OptionsForMaskeditDateOnly(CultureInfo culture, string defaultvalue) : base(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false)
             {
                 Type = ControlMaskedType.DateOnly;
                 DefaultValue = defaultvalue;

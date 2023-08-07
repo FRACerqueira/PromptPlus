@@ -134,7 +134,7 @@ namespace PPlus.Controls
         {
             if (_options.CurrentCulture == null)
             {
-                _options.CurrentCulture = PromptPlus.Config.AppCulture;
+                _options.CurrentCulture = _options.Config.AppCulture;
             }
 
             var max = double.Parse(_options.Maxvalue.ToString());

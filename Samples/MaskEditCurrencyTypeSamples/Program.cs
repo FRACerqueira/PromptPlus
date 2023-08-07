@@ -14,7 +14,7 @@ namespace MaskEditCurrencyTypeSamples
             var cult = Thread.CurrentThread.CurrentCulture;
             PromptPlus.Config.DefaultCulture = cult;
 
-            PromptPlus.DoubleDash($"Your default Culture is {cult.Name}", DashOptions.HeavyBorder, style: Style.Plain.Foreground(Color.Yellow));
+            PromptPlus.DoubleDash($"Your default Culture is {cult.Name}", DashOptions.HeavyBorder, style: Style.Default.Foreground(Color.Yellow));
 
             PromptPlus.DoubleDash($"Control:MaskEdit Currency ({cult.Name}) - minimal usage");
 
@@ -34,8 +34,8 @@ namespace MaskEditCurrencyTypeSamples
             PromptPlus.MaskEdit("input", "MaskEdit Currency input")
                 .Mask(MaskedType.Currency)
                 .AmmoutPositions(10, 2, true)
-                .PositiveStyle(Style.Plain.Foreground(Color.Green))
-                .NegativeStyle(Style.Plain.Foreground(Color.IndianRed))
+                .PositiveStyle(Style.Default.Foreground(Color.Green))
+                .NegativeStyle(Style.Default.Foreground(Color.IndianRed))
                 .Run();
 
             PromptPlus.DoubleDash($"Control:Currency - with overwrite culture:pt-br.");

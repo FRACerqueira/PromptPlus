@@ -20,13 +20,13 @@
 
 - [CursorDirection](./pplus.cursordirection.md)
 
-- [CursorExtension](./pplus.cursorextension.md)
-
 - [DashOptions](./pplus.dashoptions.md)
 
 - [IBackendTextWrite](./pplus.ibackendtextwrite.md)
 
 - [IConsoleBase](./pplus.iconsolebase.md)
+
+- [IConsoleExtendDrive](./pplus.iconsoleextenddrive.md)
 
 - [ICursorDrive](./pplus.icursordrive.md)
 
@@ -50,6 +50,8 @@
 
 - [StyleExtensions](./pplus.styleextensions.md)
 
+- [TargetBuffer](./pplus.targetbuffer.md)
+
 ## Namespace PPlus.Controls
 
 - [AdderScope](./pplus.controls.adderscope.md)
@@ -70,7 +72,7 @@
 
 - [ChartOrder](./pplus.controls.chartorder.md)
 
-- [Config](./pplus.controls.config.md)
+- [ConfigControls](./pplus.controls.configcontrols.md)
 
 - [EventPipe&lt;T&gt;](./pplus.controls.eventpipe-1.md)
 
@@ -89,8 +91,6 @@
 - [HotKey](./pplus.controls.hotkey.md)
 
 - [IBannerControl](./pplus.controls.ibannercontrol.md)
-
-- [IControlAlternateScreen](./pplus.controls.icontrolalternatescreen.md)
 
 - [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 

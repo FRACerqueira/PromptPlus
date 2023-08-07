@@ -15,12 +15,12 @@ namespace PPlus.Tests.AnsiDriverTest
 
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.Write("TEST\nNEWLINE");
-                cursorleft = PromptPlus.Console.CursorLeft;
-                cursortop = PromptPlus.Console.CursorTop;
-                PromptPlus.Console.Clear();
-                afterclearcursorleft = PromptPlus.Console.CursorLeft;
-                afterclearcursortop = PromptPlus.Console.CursorTop;
+                PromptPlus.Write("TEST\nNEWLINE");
+                cursorleft = PromptPlus.CursorLeft;
+                cursortop = PromptPlus.CursorTop;
+                PromptPlus.Clear();
+                afterclearcursorleft = PromptPlus.CursorLeft;
+                afterclearcursortop = PromptPlus.CursorTop;
 
             });
             // Then
@@ -34,7 +34,7 @@ namespace PPlus.Tests.AnsiDriverTest
         public void Should_Position_padleft()
         {
             // Given
-            PromptPlus.Console.Setup((cfg) =>
+            PromptPlus.Setup((cfg) =>
             {
                 cfg.PadLeft = 2;
             });
@@ -45,12 +45,12 @@ namespace PPlus.Tests.AnsiDriverTest
             int afterclearcursortop = 0;
             var output = PromptPlus.RecordOutput(() =>
             {
-                PromptPlus.Console.Write("TEST\nNEWLINE");
-                cursorleft = PromptPlus.Console.CursorLeft;
-                cursortop = PromptPlus.Console.CursorTop;
-                PromptPlus.Console.Clear();
-                afterclearcursorleft = PromptPlus.Console.CursorLeft;
-                afterclearcursortop = PromptPlus.Console.CursorTop;
+                PromptPlus.Write("TEST\nNEWLINE");
+                cursorleft = PromptPlus.CursorLeft;
+                cursortop = PromptPlus.CursorTop;
+                PromptPlus.Clear();
+                afterclearcursorleft = PromptPlus.CursorLeft;
+                afterclearcursortop = PromptPlus.CursorTop;
             });
             // Then
             Assert.Equal(9, cursorleft);
