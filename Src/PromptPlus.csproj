@@ -30,7 +30,7 @@
 		<PackageId>PromptPlus</PackageId>
 		<PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
 		<PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
-		<Version>4.0.3</Version>
+		<Version>4.0.4</Version>
 		<PackageIcon>icon.png</PackageIcon>
 		<Copyright>© 2021 - Fernando Cerqueira </Copyright>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>

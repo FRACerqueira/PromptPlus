@@ -42,12 +42,11 @@ namespace PPlus
             }
             else
             {
-                if (System.Console.OutputEncoding.CodePage == 850)
+                var (codepagefrom, codepageto) = ConvertCodePage;
+
+                if (System.Console.OutputEncoding.CodePage.ToString() == codepagefrom)
                 {
-                    System.Console.OutputEncoding = Encoding.GetEncoding(65001);
-                }
-                if (System.Console.OutputEncoding.CodePage == 65001 || System.Console.OutputEncoding.CodePage == 1200)
-                {
+                    System.Console.OutputEncoding = Encoding.GetEncoding(int.Parse(codepageto));
                     unicodesupported = true;
                 }
                 else if (System.Console.OutputEncoding.Equals(Encoding.Unicode))
@@ -347,8 +346,8 @@ namespace PPlus
         /// <summary>
         /// Sets the position of the cursor.
         /// </summary>
-        /// <param name="left">The column position of the cursor. Columns are numbered from left to right starting at 0.</param>
-        /// <param name="top">The row position of the cursor. Rows are numbered from top to bottom starting at 0.</param>
+        /// <param name="left">The column position of the cursor. Columns are numbered codepagefrom left to right starting at 0.</param>
+        /// <param name="top">The row position of the cursor. Rows are numbered codepagefrom top to bottom starting at 0.</param>
         public static void SetCursorPosition(int left, int top)
         {
             _consoledrive.SetCursorPosition(left, top);
@@ -371,7 +370,7 @@ namespace PPlus
         }
 
         /// <summary>
-        /// <br>Read the line from stream. A line is defined as a sequence of characters followed by</br>
+        /// <br>Read the line codepagefrom stream. A line is defined as a sequence of characters followed by</br>
         /// <br>a car return ('\r'), a line feed ('\n'), or a carriage return</br>
         /// <br>immedy followed by a line feed. The resulting string does not</br>
         /// <br>contain the terminating carriage return and/or line feed.</br>
@@ -385,7 +384,7 @@ namespace PPlus
         }
 
         /// <summary>
-        /// Wait Keypress from standard input stream
+        /// Wait Keypress codepagefrom standard input stream
         /// </summary>
         /// <param name="intercept">Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.</param>
         /// <param name="cancellationToken"> The token to monitor for cancellation requests.</param> 
@@ -447,7 +446,7 @@ namespace PPlus
         public static bool KeyAvailable => _consoledrive.KeyAvailable;
 
         /// <summary>
-        ///  Gets a value that indicates whether input has been redirected from the standard input stream.
+        ///  Gets a value that indicates whether input has been redirected codepagefrom the standard input stream.
         /// </summary>
         public static bool IsInputRedirected => _consoledrive.IsInputRedirected;
 
@@ -478,12 +477,12 @@ namespace PPlus
 
 
         /// <summary>
-        ///  Gets a value that indicates whether output has been redirected from the standard output stream.
+        ///  Gets a value that indicates whether output has been redirected codepagefrom the standard output stream.
         /// </summary>     
         public static bool IsOutputRedirected => _consoledrive.IsOutputRedirected;
 
         /// <summary>
-        ///  Gets a value that indicates whether error has been redirected from the standard error stream.
+        ///  Gets a value that indicates whether error has been redirected codepagefrom the standard error stream.
         /// </summary>
         public static bool IsErrorRedirected => _consoledrive.IsErrorRedirected;
 
@@ -629,6 +628,25 @@ namespace PPlus
                     return true;
                 }
                 return false;
+            }
+        }
+
+        private static (string from, string to) ConvertCodePage
+        {
+            get
+            {
+                (string from, string to) result = ("850", "65001");
+                var aux = Environment.GetEnvironmentVariable("PromptPlusConvertCodePage") ?? string.Empty;
+                if (!string.IsNullOrEmpty(aux) && aux.Split(";", StringSplitOptions.RemoveEmptyEntries).Length == 2)
+                {
+                    result.from = aux.Split(";", StringSplitOptions.RemoveEmptyEntries)[0];
+                    result.to = aux.Split(";", StringSplitOptions.RemoveEmptyEntries)[1];
+                }
+                else
+                {
+                    Environment.SetEnvironmentVariable("PromptPlusConvertCodePage", "850;65001");
+                }
+                return result;
             }
         }
 
