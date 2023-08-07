@@ -3,8 +3,6 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using System;
-
 namespace PPlus.Drivers
 {
     internal class ProfileDriveMemory : IProfileDrive
