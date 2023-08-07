@@ -27,7 +27,7 @@ namespace PPlus
         private static ConfigControls _configcontrols;
         private static readonly StyleSchema _styleschema;
         private static readonly object lockrecord = new();
-        private static Encoding OriginalCodePageEncode;
+        private static readonly Encoding OriginalCodePageEncode;
         static PromptPlus()
         {
             AppConsoleCulture = CultureInfo.CurrentCulture;
