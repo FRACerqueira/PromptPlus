@@ -27,6 +27,7 @@ namespace PPlus
         private static ConfigControls _configcontrols;
         private static readonly StyleSchema _styleschema;
         private static readonly object lockrecord = new();
+        private static Encoding OriginalCodePageEncode;
         static PromptPlus()
         {
             AppConsoleCulture = CultureInfo.CurrentCulture;
@@ -42,6 +43,7 @@ namespace PPlus
             }
             else
             {
+                OriginalCodePageEncode = System.Console.OutputEncoding;
                 var (codepagefrom, codepageto) = ConvertCodePage;
 
                 if (System.Console.OutputEncoding.CodePage.ToString() == codepagefrom)
@@ -82,6 +84,10 @@ namespace PPlus
         private static void CurrentDomain_ProcessExit(object? sender, EventArgs e)
         {
             Thread.CurrentThread.CurrentCulture = AppConsoleCulture;
+            if (!IsRunningInUnitTest)
+            {
+                System.Console.OutputEncoding = OriginalCodePageEncode;
+            }
             ResetColor();
         }
 
