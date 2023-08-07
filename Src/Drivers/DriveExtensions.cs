@@ -92,6 +92,7 @@ namespace PPlus
         public static void Reset()
         {
             ResetColor();
+            Profile((cfg) => cfg.OverflowStrategy = Overflow.None);
             _configcontrols = new(AppConsoleCulture);
             _consoledrive.CursorVisible = true;
         }
@@ -611,7 +612,7 @@ namespace PPlus
                 IsTerminal = RunningConsoleMemory || _consoledrive.IsTerminal,
                 IsUnicodeSupported = RunningConsoleMemory || _consoledrive.IsUnicodeSupported,
                 SupportsAnsi = RunningConsoleMemory || _consoledrive.SupportsAnsi,
-                OverflowStrategy = Overflow.None,
+                OverflowStrategy = _consoledrive.OverflowStrategy,
                 PadLeft = 0,
                 PadRight = 0,
             };
