@@ -472,6 +472,7 @@ PromptPlus.WriteLine($"Your input: {name.Value}!");
 - FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
 - The colors and some of its dependencies were inspired by the work of [spectreconsole](https://spectreconsole.net/).
 - The API Reference was inspired by the work of [xmldoc2md (Fork with improvements)](https://github.com/FRACerqueira/xmldoc2md).
+- The EastAsianWidth and base-control was inspired by the work of [Sharprompt](https://github.com/shibayan/Sharprompt)
 
 ## Code of Conduct
 [**Top**](#table-of-contents)
