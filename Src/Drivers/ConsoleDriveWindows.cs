@@ -16,17 +16,21 @@ namespace PPlus.Drivers
     internal class ConsoleDriveWindows : IConsoleControl
     {
         internal const int IdleReadKey = 5;
-        private readonly IProfileDrive _profile;
+        private IProfileDrive _profile;
         private TargetBuffer _currentBuffer;
-        private (int LastBufferWidth, int LastBufferHeight) _LastBufferSize = new (0,0);
 
         public ConsoleDriveWindows(IProfileDrive profile)
         {
             _profile = profile;
-            Console.BackgroundColor = _profile.BackgroundColor;
-            Console.ForegroundColor = _profile.ForegroundColor;
             _currentBuffer = TargetBuffer.Primary;
         }
+
+        public void UpdateProfile(ProfileSetup value)
+        {
+            Out.Flush();
+            _profile = new ProfileDriveConsole(value.IsTerminal, value.IsUnicodeSupported, value.SupportsAnsi, value.IsLegacy, value.ColorDepth, value.OverflowStrategy, value.PadLeft, value.PadRight);
+        }
+
 
         public bool IsControlText { get; set; }
 
@@ -104,18 +108,6 @@ namespace PPlus.Drivers
 
         public ColorSystem ColorDepth => _profile.ColorDepth;
 
-        public Style DefaultStyle
-        {
-            get 
-            {
-                return _profile.DefaultStyle;
-            }
-            set
-            { 
-                _profile.DefaultStyle = value; 
-            }
-        }
-
         public byte PadLeft => _profile.PadLeft;
 
         public byte PadRight => _profile.PadRight;
@@ -128,14 +120,12 @@ namespace PPlus.Drivers
         {
             get
             {
-                return _profile.ForegroundColor;
+                return Console.ForegroundColor;
             }
             set
             {
-                Color.DefaultForecolor = Color.FromConsoleColor(value);
-                _profile.ForegroundColor = value;
-                _profile.DefaultStyle = new Style(_profile.ForegroundColor, _profile.BackgroundColor, _profile.OverflowStrategy);
-                Console.ForegroundColor = _profile.ForegroundColor;
+                Console.ForegroundColor = value;
+                Color.DefaultForecolor = value;
             }
         }
 
@@ -143,15 +133,12 @@ namespace PPlus.Drivers
         {
             get
             {
-                return _profile.BackgroundColor;
+                return Console.BackgroundColor;
             }
             set
             {
-                Color.DefaultBackcolor = Color.FromConsoleColor(value);
-                _profile.BackgroundColor = value;
-                _profile.DefaultStyle = new Style(_profile.ForegroundColor, _profile.BackgroundColor, _profile.OverflowStrategy);
-                Console.BackgroundColor = _profile.BackgroundColor;
-                this.UpdateStyle(_profile.BackgroundColor);
+                Console.BackgroundColor = value;
+                Color.DefaultBackcolor = value;
             }
         }
 
@@ -159,10 +146,10 @@ namespace PPlus.Drivers
 
         public void ResetColor()
         {
-            _profile.ResetColor();
-            Console.BackgroundColor = _profile.BackgroundColor;
-            Console.ForegroundColor = _profile.ForegroundColor;
-            this.UpdateStyle(_profile.BackgroundColor);
+            Console.ResetColor();
+            Color.DefaultForecolor = ForegroundColor;
+            Color.DefaultBackcolor = BackgroundColor;
+
         }
 
         public bool KeyAvailable => Console.KeyAvailable;
@@ -243,7 +230,6 @@ namespace PPlus.Drivers
             {
                 Console.Clear();
             }
-            _LastBufferSize = new(0, 0);
             SetCursorPosition(0, 0);
         }
 
@@ -260,7 +246,7 @@ namespace PPlus.Drivers
             }
             if (style == null)
             {
-                style = _profile.DefaultStyle;
+                style = Style.Default;
             }
             if (PadLeft > 0 && CursorLeft < PadLeft)
             {
@@ -284,7 +270,7 @@ namespace PPlus.Drivers
             }
             if (clearrestofline)
             {
-                WriteBackend(new Segment[] { new Segment("", _profile.DefaultStyle) }, true);
+                WriteBackend(new Segment[] { new Segment("", Style.Default) }, true);
             }
             return qtd;
         }
@@ -339,8 +325,15 @@ namespace PPlus.Drivers
                             case Overflow.None:
                                 if (pos > width)
                                 {
-                                    pos = padleft;
-                                    qtd++;
+                                    while (pos > width)
+                                    { 
+                                        pos -= width;
+                                        qtd++;
+                                    }
+                                    if (pos < padleft)
+                                    {
+                                        pos = padleft;
+                                    }
                                 }
                                 break;
                             case Overflow.Crop:
@@ -370,8 +363,8 @@ namespace PPlus.Drivers
                     if (!first)
                     {
                         qtd++;
+                        pos = padleft;
                     }
-                    pos = padleft;
                 }
             }
             return qtd;
@@ -384,10 +377,9 @@ namespace PPlus.Drivers
             throw new PromptPlusException("RecordConsole Not Implemented");
         }
 
-        public string CaptureRecord(bool clearrecord)
+        public string CaptureRecord(bool _)
         {
             throw new PromptPlusException("CaptureRecord Not Implemented");
-
         }
 
         public TargetBuffer CurrentBuffer => _currentBuffer;

@@ -16,7 +16,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("AlternateScreenOtions CTOR NotImplemented");
         }
 
-        internal ListOptions(StyleSchema styleSchema, Config config, IConsoleControl console,bool showcursor) : base(styleSchema, config, console,showcursor)
+        internal ListOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console,bool showcursor) : base(styleSchema, config, console,showcursor)
         {
             RemoveItemPress = config.RemoveItemPress;
             EditItemPress = config.EditItemPress;

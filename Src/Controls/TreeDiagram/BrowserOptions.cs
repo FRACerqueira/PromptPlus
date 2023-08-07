@@ -17,7 +17,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("BrowserOptions CTOR NotImplemented");
         }
 
-        internal BrowserOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal BrowserOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             FixedSelected = new();
             SpinnerStyle = styleSchema.Prompt().Overflow(Overflow.Crop);

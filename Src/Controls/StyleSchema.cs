@@ -14,12 +14,11 @@ namespace PPlus.Controls
     /// </summary>
     public class StyleSchema
     {
-        private readonly Dictionary<StyleControls, Style> _Styles;
+        private Dictionary<StyleControls, Style> _Styles;
 
         internal StyleSchema()
         {
-            _Styles = new Dictionary<StyleControls, Style>();
-            Init();
+            _Styles = Init();
         }
 
         /// <summary>
@@ -39,56 +38,58 @@ namespace PPlus.Controls
             return _Styles[styleControls];
         }
 
-        private void Init()
+        internal Dictionary<StyleControls, Style> Init()
         {
+            var auxdic = new Dictionary<StyleControls, Style>();
             var aux = Enum.GetValues(typeof(StyleControls)).Cast<StyleControls>();
             foreach (var item in aux) 
             {
                 switch (item)
                 {
                     case StyleControls.Prompt:
-                        _Styles.Add(item,Style.Default.Foreground(ConsoleColor.White));
+                        auxdic.Add(item,Style.Default.Foreground(ConsoleColor.White));
                         break;
                     case StyleControls.Answer:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Cyan));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Cyan));
                         break;
                     case StyleControls.Description:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
                         break;
                     case StyleControls.Sugestion:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Yellow));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Yellow));
                         break;
                     case StyleControls.Selected:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Green));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Green));
                         break;
                     case StyleControls.UnSelected:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Gray));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Gray));
                         break;
                     case StyleControls.Disabled:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
                         break;
                     case StyleControls.Error:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Red));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Red));
                         break;
                     case StyleControls.Pagination:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
                         break;
                     case StyleControls.TaggedInfo:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
                         break;
                     case StyleControls.Tooltips:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
                         break;
                     case StyleControls.Slider:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.Cyan).Background(ConsoleColor.DarkGray));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Cyan).Background(ConsoleColor.DarkGray));
                         break;
                     case StyleControls.Chart:
-                        _Styles.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
                         break;
                     default:
                         throw new PromptPlusException($"{item} Not Implemented");
                 }
             }
+            return auxdic;
         }
 
         internal void UpdateBackgoundColor(Color backgoundcolor)

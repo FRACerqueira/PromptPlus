@@ -16,7 +16,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("KeyPressOptions CTOR NotImplemented");
         }
 
-        internal KeyPressOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal KeyPressOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             SpinnerStyle = styleSchema.Prompt().Overflow(Overflow.Crop);
         }

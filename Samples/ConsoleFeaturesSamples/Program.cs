@@ -35,16 +35,16 @@ namespace ConsoleFeaturesSamples
             PromptPlus
                 .KeyPress()
                 .Config(cfg => cfg.HideAfterFinish(true))
-                //.Spinner(SpinnersType.DotsScrolling)
                 .Run();
 
             PromptPlus.Setup((cfg) =>
             {
                 cfg.PadLeft = 2;
                 cfg.PadRight = 2;
-                cfg.BackgroundColor = ConsoleColor.Blue;
-                cfg.Culture = new CultureInfo("en-us");
             });
+
+            PromptPlus.BackgroundColor = ConsoleColor.Blue;
+            PromptPlus.Clear();
 
             PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
             PromptPlus.WriteLine($"Current Buffer: {PromptPlus.CurrentTargetBuffer}");

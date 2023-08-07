@@ -14,7 +14,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("MaskEditListOptions CTOR NotImplemented");
         }
 
-        internal MaskEditListOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal MaskEditListOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             RemoveItemPress = config.RemoveItemPress;
             EditItemPress = config.EditItemPress;

@@ -148,7 +148,7 @@ namespace PPlus.Tests.Controls.TaskProgressBar
             CompletesIn(3000, () =>
             {
                 ctrl.InputTemplate(new ScreenBuffer());
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 Thread.Sleep(500);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.IsAborted);
@@ -178,7 +178,7 @@ namespace PPlus.Tests.Controls.TaskProgressBar
             {
                 CompletesIn(3000, () =>
                 {
-                    PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                    PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                     var result = ctrl.TryResult(CancellationToken.None);
                 });
             });

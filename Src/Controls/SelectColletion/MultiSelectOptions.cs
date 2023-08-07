@@ -16,7 +16,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("MultiSelectOptions CTOR NotImplemented");
         }
 
-        internal MultiSelectOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal MultiSelectOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             TimeoutOverwriteDefault = config.HistoryTimeout;
             PageSize = config.PageSize;

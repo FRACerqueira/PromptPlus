@@ -9,14 +9,9 @@ namespace PPlus.Drivers
 {
     internal class ProfileDriveMemory : IProfileDrive
     {
-        private readonly ConsoleColor _defaultForegroundColor;
-        private readonly ConsoleColor _defaultBackgroundColor;
         private readonly Overflow _defaultOverflowStrategy;
-        private ConsoleColor _foregroundColor;
-        private ConsoleColor _backgroundColor;
-        private Style _defaultStyle;
 
-        public ProfileDriveMemory(ConsoleColor defaultForegroundColor, ConsoleColor defaultBackgroundColor, bool isTerminal, bool unicodeSupported, bool supportsAnsi,bool islegacy, ColorSystem colorDepth, Overflow overflowStrategy = Overflow.None, byte padleft = 0, byte padright = 0)
+        public ProfileDriveMemory(bool isTerminal, bool unicodeSupported, bool supportsAnsi,bool islegacy, ColorSystem colorDepth, Overflow overflowStrategy = Overflow.None, byte padleft = 0, byte padright = 0)
         {
             IsLegacy = islegacy;
             IsTerminal = isTerminal;
@@ -26,11 +21,6 @@ namespace PPlus.Drivers
             PadRight = padright;
             SupportsAnsi = supportsAnsi;
             _defaultOverflowStrategy = overflowStrategy;
-            _defaultStyle = new Style(defaultForegroundColor, defaultBackgroundColor, _defaultOverflowStrategy);
-            _defaultBackgroundColor = defaultBackgroundColor;
-            _defaultForegroundColor = defaultForegroundColor;
-            ForegroundColor = defaultForegroundColor;
-            BackgroundColor = defaultBackgroundColor;
         }
 
         public Overflow OverflowStrategy => _defaultOverflowStrategy;
@@ -46,18 +36,6 @@ namespace PPlus.Drivers
         public bool SupportsAnsi { get; }
 
         public ColorSystem ColorDepth { get; }
-
-        public Style DefaultStyle
-        {
-            get
-            {
-                return _defaultStyle;
-            }
-            set
-            {
-                _defaultStyle = value;
-            }
-        }
 
         public byte PadLeft { get; set; }
 
@@ -77,35 +55,6 @@ namespace PPlus.Drivers
             {
                 return 80;
             }
-        }
-
-        public ConsoleColor ForegroundColor
-        {
-            get => _foregroundColor;
-            set
-            {
-                _foregroundColor = value;
-                Color.DefaultForecolor = Color.FromConsoleColor(value);
-            }
-        }
-
-        public ConsoleColor BackgroundColor
-        {
-            get => _backgroundColor;
-            set
-            {
-                _backgroundColor = value;
-                Color.DefaultBackcolor = Color.FromConsoleColor(value);
-            }
-        }
-
-        public void ResetColor()
-        {
-            ForegroundColor = _defaultForegroundColor;
-            BackgroundColor = _defaultBackgroundColor;
-            Color.DefaultForecolor = Color.FromConsoleColor(ForegroundColor);
-            Color.DefaultBackcolor = Color.FromConsoleColor(BackgroundColor);
-            _defaultStyle = new Style(ForegroundColor, BackgroundColor, _defaultStyle.OverflowStrategy);
         }
     }
 }

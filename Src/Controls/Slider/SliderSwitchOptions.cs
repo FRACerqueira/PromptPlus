@@ -15,7 +15,7 @@ namespace PPlus.Controls
         {
             throw new PromptPlusException("SliderSwitchOptions CTOR NotImplemented");
         }
-        internal SliderSwitchOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal SliderSwitchOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             StyleStateOn = styleSchema.Slider();
             StyleStateOff = styleSchema.Slider();

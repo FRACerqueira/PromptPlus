@@ -35,9 +35,9 @@ namespace PPlus.Tests.Controls.InputAutoComplete
             var init = ctrl.InitControl(CancellationToken.None);
             CompletesIn(3000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 var result = ctrl.TryResult(CancellationToken.None);
                 var max = 2000;
                 while (!ctrl.IsAutoCompleteFinish)
@@ -77,9 +77,9 @@ namespace PPlus.Tests.Controls.InputAutoComplete
             var init = ctrl.InitControl(CancellationToken.None);
             CompletesIn(3000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 var result = ctrl.TryResult(CancellationToken.None);
                 var max = 2000;
                 while (!ctrl.IsAutoCompleteFinish)
@@ -121,9 +121,9 @@ namespace PPlus.Tests.Controls.InputAutoComplete
             var init = ctrl.InitControl(CancellationToken.None);
             CompletesIn(3000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 var result = ctrl.TryResult(CancellationToken.None);
                 var max = 2000;
                 while (!ctrl.IsAutoCompleteFinish)
@@ -147,7 +147,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
                 Assert.DoesNotContain(sb.Buffer, x => (x.Text ?? string.Empty).Contains("AA:3"));
                 Assert.DoesNotContain(sb.Buffer, x => (x.Text ?? string.Empty).Contains("AA:4"));
                 Assert.DoesNotContain(sb.Buffer, x => (x.Text ?? string.Empty).Contains("AA:5"));
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.PageDown, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.PageDown, false, false, false));
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -176,9 +176,9 @@ namespace PPlus.Tests.Controls.InputAutoComplete
             var init = ctrl.InitControl(CancellationToken.None);
             CompletesIn(3000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
                 var max = 2000;
                 while (!ctrl.IsAutoCompleteFinish)
@@ -192,7 +192,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
                 }
                 Assert.True(ctrl.IsAutoCompleteFinish);
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.DownArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.DownArrow, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 var sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -220,9 +220,9 @@ namespace PPlus.Tests.Controls.InputAutoComplete
             var init = ctrl.InitControl(CancellationToken.None);
             CompletesIn(3000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
                 var max = 2000;
                 while (!ctrl.IsAutoCompleteFinish)
@@ -236,7 +236,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
                 }
                 Assert.True(ctrl.IsAutoCompleteFinish);
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.DownArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.DownArrow, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 var sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -247,7 +247,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
                 Assert.Contains(sb.Buffer, x => (x.Text ?? string.Empty).Contains("AA:3"));
                 Assert.Contains(sb.Buffer, x => (x.Text ?? string.Empty).Contains("AA:4"));
                 Assert.DoesNotContain(sb.Buffer, x => (x.Text ?? string.Empty).Contains("AA:5"));
-                PromptPlus.InputBuffer("B");
+                PromptPlus.MemoryInputBuffer("B");
                 result = ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -520,7 +520,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(10000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -540,9 +540,9 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(10000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -563,11 +563,11 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(10000, () =>
             {
-                PromptPlus.InputBuffer("1");
+                PromptPlus.MemoryInputBuffer("1");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer("2");
+                PromptPlus.MemoryInputBuffer("2");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer("3");
+                PromptPlus.MemoryInputBuffer("3");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -588,8 +588,8 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer("A");
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer("A");
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -610,11 +610,11 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -635,7 +635,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -656,7 +656,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer("a");
+                PromptPlus.MemoryInputBuffer("a");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -678,7 +678,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -702,9 +702,9 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer("X");
+                PromptPlus.MemoryInputBuffer("X");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -729,9 +729,9 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer("x");
+                PromptPlus.MemoryInputBuffer("x");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -752,7 +752,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -775,7 +775,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -812,7 +812,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -833,7 +833,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
                 var sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -855,7 +855,7 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
                 var sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -883,12 +883,12 @@ namespace PPlus.Tests.Controls.InputAutoComplete
 
             CompletesIn(1000, () =>
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
                 var sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
                 Assert.Contains(sb.Buffer, x => (x.Text ?? string.Empty).Contains("ChangeDescription=1"));
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);

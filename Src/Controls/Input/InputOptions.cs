@@ -16,7 +16,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("InputOptions CTOR NotImplemented");
         }
 
-        internal InputOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal InputOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             TimeoutOverwriteDefault = config.HistoryTimeout;
             SwithView = config.PasswordViewPress;

@@ -18,7 +18,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("MaskEditOptions CTOR NotImplemented");
         }
 
-        internal MaskEditOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal MaskEditOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             TimeoutOverwriteDefault = config.HistoryTimeout;
             TypeTipStyle = styleSchema.Sugestion();

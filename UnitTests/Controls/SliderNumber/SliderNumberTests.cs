@@ -277,7 +277,7 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -299,7 +299,7 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -317,7 +317,7 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -353,7 +353,7 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -395,12 +395,12 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Tab, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Tab, false, false, false));
                 ctrl.TryResult(CancellationToken.None);
                 var sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
                 Assert.Contains(sb.Buffer, x => (x.Text ?? string.Empty).Contains("ChangeDescription=1"));
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Tab, true, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Tab, true, false, false));
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -422,11 +422,11 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
 
                 Assert.Equal(0.1, result.Value);
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
                 result = ctrl.TryResult(CancellationToken.None);
                 Assert.Equal(0, result.Value);
             });
@@ -479,11 +479,11 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
 
                 Assert.Equal(5,result.Value);
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
                 result = ctrl.TryResult(CancellationToken.None);
                 Assert.Equal(0, result.Value);
             });
@@ -502,11 +502,11 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Tab, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Tab, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
 
                 Assert.Equal(15, result.Value);
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Tab, true, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.Tab, true, false, false));
                 result = ctrl.TryResult(CancellationToken.None);
                 Assert.Equal(0, result.Value);
             });
@@ -526,11 +526,11 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.UpArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.UpArrow, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
 
                 Assert.Equal(5, result.Value);
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.DownArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.DownArrow, false, false, false));
                 result = ctrl.TryResult(CancellationToken.None);
                 Assert.Equal(0, result.Value);
             });
@@ -549,7 +549,7 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.RightArrow, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.Equal(0, result.Value);
             });
@@ -569,7 +569,7 @@ namespace PPlus.Tests.Controls.SliderNumber
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.LeftArrow, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.Equal(10, result.Value);
             });

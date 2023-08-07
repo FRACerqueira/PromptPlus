@@ -202,7 +202,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -239,7 +239,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -268,7 +268,7 @@ namespace PPlus.Tests.Controls.MultiSelect
                 var sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
                 Assert.Contains(sb.Buffer, x => (x.Text ?? string.Empty).Contains("ChangeDescription=1"));
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.DownArrow, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.DownArrow, false, false, false));
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -289,7 +289,7 @@ namespace PPlus.Tests.Controls.MultiSelect
             CompletesIn(100, () =>
             {
                 var sb = new ScreenBuffer();
-                PromptPlus.InputBuffer("o");
+                PromptPlus.MemoryInputBuffer("o");
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -315,7 +315,7 @@ namespace PPlus.Tests.Controls.MultiSelect
             CompletesIn(100, () =>
             {
                 var sb = new ScreenBuffer();
-                PromptPlus.InputBuffer("b");
+                PromptPlus.MemoryInputBuffer("b");
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -340,7 +340,7 @@ namespace PPlus.Tests.Controls.MultiSelect
             CompletesIn(100, () =>
             {
                 var sb = new ScreenBuffer();
-                PromptPlus.InputBuffer("s");
+                PromptPlus.MemoryInputBuffer("s");
                 ctrl.TryResult(CancellationToken.None);
                 sb = new ScreenBuffer();
                 ctrl.InputTemplate(sb);
@@ -365,7 +365,7 @@ namespace PPlus.Tests.Controls.MultiSelect
             CompletesIn(100, () =>
             {
                 var sb = new ScreenBuffer();
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsRunning);
                 Assert.False(result.IsAborted);
@@ -382,7 +382,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F2, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F2, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -405,7 +405,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F7, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F7, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -428,7 +428,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F7, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F7, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -448,7 +448,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(" ");
+                PromptPlus.MemoryInputBuffer(" ");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -468,7 +468,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(" ");
+                PromptPlus.MemoryInputBuffer(" ");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -486,7 +486,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F3, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F3, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -506,7 +506,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F3, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F3, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -529,7 +529,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -552,7 +552,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -575,7 +575,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -598,7 +598,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -620,7 +620,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(" ");
+                PromptPlus.MemoryInputBuffer(" ");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -644,7 +644,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -673,7 +673,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -721,7 +721,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(" ");
+                PromptPlus.MemoryInputBuffer(" ");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -742,12 +742,12 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(" ");
+                PromptPlus.MemoryInputBuffer(" ");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
                 Assert.True(result.Value.Count() == 3);
-                PromptPlus.InputBuffer(" ");
+                PromptPlus.MemoryInputBuffer(" ");
                 result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -768,7 +768,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(" ");
+                PromptPlus.MemoryInputBuffer(" ");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -788,7 +788,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F2, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F2, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -808,7 +808,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F2, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F2, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -829,9 +829,9 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(" ");
+                PromptPlus.MemoryInputBuffer(" ");
                 var result = ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F3, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F3, false, false, false));
                 result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -859,7 +859,7 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(Environment.NewLine);
+                PromptPlus.MemoryInputBuffer(Environment.NewLine);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -886,10 +886,10 @@ namespace PPlus.Tests.Controls.MultiSelect
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F2, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F2, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.Value.Count() == 5);
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F3, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F3, false, false, false));
                 result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);

@@ -17,7 +17,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("TreeViewOptions CTOR NotImplemented");
         }
 
-        internal TreeViewOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal TreeViewOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             CurrentNodeStyle = styleSchema.TaggedInfo().Overflow(Overflow.Crop);
             LineStyle = styleSchema.Prompt().Overflow(Overflow.Crop);

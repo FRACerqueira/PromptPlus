@@ -19,7 +19,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("BaseOptions CTOR Not Implemented");
         }
 
-        internal BaseOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool? showCursor = true)
+        internal BaseOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool? showCursor = true)
         {
             _console = console;
             Config = config;
@@ -34,7 +34,7 @@ namespace PPlus.Controls
             OptEnabledAbortKey = config.EnabledAbortKey;
         }
 
-        internal Config Config { get; }
+        internal ConfigControls Config { get; }
         internal bool OptShowCursor { get; } = false;
         internal string OptPrompt { get; set; } = string.Empty;
         internal string OptDescription { get; set; } = string.Empty;

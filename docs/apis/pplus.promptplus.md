@@ -1401,17 +1401,13 @@ The user action after each accepted keystroke. Firt param is input text, Second 
 
 The string input value.
 
-### <a id="methods-reset"/>**Reset(Boolean)**
+### <a id="methods-reset"/>**Reset()**
 
 Reset all config and properties to default values
 
 ```csharp
-public static void Reset(bool resetstatusbar)
+public static void Reset()
 ```
-
-#### Parameters
-
-`resetstatusbar` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### <a id="methods-resetcolor"/>**ResetColor()**
 
@@ -1578,22 +1574,19 @@ public static void SetOut(TextWriter value)
 `value` [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 A stream that is the new standard output.
 
-### <a id="methods-setup"/>**Setup(Action&lt;ProfileSetup&gt;, Boolean)**
+### <a id="methods-setup"/>**Setup(Action&lt;ProfileSetup&gt;)**
 
 Overwrite current console with new console profile.
  <br>After overwrite the new console the screeen is clear<br>and all Style-Schema are updated with backgoundcolor console
 
 ```csharp
-public static void Setup(Action<ProfileSetup> config, bool resetstatusbar)
+public static void Setup(Action<ProfileSetup> config)
 ```
 
 #### Parameters
 
 `config` [Action&lt;ProfileSetup&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 Action with [ProfileSetup](./pplus.profilesetup.md) to configuration
-
-`resetstatusbar` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Reset StatusBar
 
 ### <a id="methods-singledash"/>**SingleDash(String, DashOptions, Int32, Nullable&lt;Style&gt;)**
 

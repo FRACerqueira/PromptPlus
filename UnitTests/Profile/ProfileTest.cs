@@ -12,52 +12,12 @@ namespace PPlus.Tests.Profile
             Assert.True(PromptPlus.Provider == "Memory");
         }
 
-
-        [Fact]
-        public void Should_Change_DefaultForegroundColor()
-        {
-            // given
-            PromptPlus.Setup((cfg) =>
-            {
-                cfg.ForegroundColor = ConsoleColor.Red;
-            });
-            // Then
-            Assert.Equal(ConsoleColor.Red, PromptPlus.ForegroundColor);
-        }
-
-        [Fact]
-        public void Should_Change_BackgroundColor()
-        {
-            // given
-            PromptPlus.Setup((cfg) =>
-            {
-                cfg.BackgroundColor = ConsoleColor.Red;
-            });
-            // Then
-            Assert.Equal(ConsoleColor.Red, PromptPlus.BackgroundColor);
-        }
-
         [Fact]
         public void Should_default_DefaultStyle()
         {
             Assert.Equal<ConsoleColor>(PromptPlus.ForegroundColor, Style.Default.Foreground);
             Assert.Equal<ConsoleColor>(PromptPlus.BackgroundColor, Style.Default.Background);
         }
-
-        [Fact]
-        public void Should_change_DefaultStyle()
-        {
-            // given
-            PromptPlus.Setup((cfg) =>
-            {
-                cfg.ForegroundColor = ConsoleColor.Red;
-                cfg.BackgroundColor = ConsoleColor.Red;
-            });
-            // Then
-            Assert.Equal<ConsoleColor>(ConsoleColor.Red, Style.Default.Foreground);
-            Assert.Equal<ConsoleColor>(ConsoleColor.Red, Style.Default.Background);
-        }
-
 
         [Fact]
         public void Should_default_BufferHeight()

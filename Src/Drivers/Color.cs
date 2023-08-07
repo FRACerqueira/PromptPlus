@@ -16,15 +16,18 @@ namespace PPlus
     /// </summary>
     public struct Color : IEquatable<Color>
     {
+        internal static Color DefaultMemoryBackcolor => new(0, 0, 0, 0);
+        internal static Color DefaultMemoryForecolor => new(7, 192, 192, 192);
+
         /// <summary>
         /// Gets the default Backcolor color.
         /// </summary>
-        public static Color DefaultBackcolor { get; internal set; } = new Color(0, 0, 0, 0);
+        public static Color DefaultBackcolor { get; internal set; } = DefaultMemoryBackcolor;
 
         /// <summary>
         /// Gets the default Forecolor color.
         /// </summary>
-        public static Color DefaultForecolor { get; internal set; } = new Color(7, 192, 192, 192);
+        public static Color DefaultForecolor { get; internal set; } = DefaultMemoryForecolor;
 
         /// <summary>
         /// Gets the red component.

@@ -17,7 +17,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("SliderNumberOptions CTOR NotImplemented");
         }
 
-        internal SliderNumberOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal SliderNumberOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             TimeoutOverwriteDefault = config.HistoryTimeout;
         }

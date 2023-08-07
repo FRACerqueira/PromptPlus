@@ -14,7 +14,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("AutoCompleteOptions CTOR NotImplemented");
         }
 
-        internal AutoCompleteOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal AutoCompleteOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             PageSize = config.PageSize;
             MinimumPrefixLength = config.CompletionMinimumPrefixLength;

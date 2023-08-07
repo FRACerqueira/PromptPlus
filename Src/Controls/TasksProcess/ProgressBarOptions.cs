@@ -19,7 +19,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("ProgressBarOptions CTOR NotImplemented");
         }
 
-        internal ProgressBarOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal ProgressBarOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             SpinnerStyle = styleSchema.Prompt();
         }

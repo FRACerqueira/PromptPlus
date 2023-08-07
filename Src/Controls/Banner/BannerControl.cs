@@ -16,14 +16,14 @@ namespace PPlus.Controls
     {
 
         private readonly IConsoleControl _console;
-        private readonly Config _config;
+        private readonly ConfigControls _config;
 
         private BannerControl()
         {
             throw new PromptPlusException("BannerControl CTOR NotImplemented");
         }
 
-        public BannerControl(Config config, IConsoleControl console, string value)
+        public BannerControl(ConfigControls config, IConsoleControl console, string value)
         {
             Text = value;
             _console = console;

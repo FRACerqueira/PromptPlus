@@ -244,7 +244,7 @@ namespace PPlus.Tests.Controls.KeyPress
                 .KeyPress("P", "D");
             CompletesIn(100, () => 
             {
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer("A");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -263,7 +263,7 @@ namespace PPlus.Tests.Controls.KeyPress
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo('A', ConsoleKey.A, true, true, true));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo('A', ConsoleKey.A, true, true, true));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -285,7 +285,7 @@ namespace PPlus.Tests.Controls.KeyPress
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1,false,false,false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1,false,false,false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
@@ -304,7 +304,7 @@ namespace PPlus.Tests.Controls.KeyPress
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -320,7 +320,7 @@ namespace PPlus.Tests.Controls.KeyPress
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.True(result.IsAborted);
                 Assert.False(result.IsRunning);
@@ -337,12 +337,12 @@ namespace PPlus.Tests.Controls.KeyPress
 
             CompletesIn(600, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)0, ConsoleKey.F1, false, false, false));
                 ctrl.TryResult(CancellationToken.None);
                 Thread.Sleep(300);
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 var result = ctrl.TryResult(CancellationToken.None);
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
                 Assert.True(result.IsAborted);
                 Assert.False(result.IsRunning);
             });
@@ -358,8 +358,8 @@ namespace PPlus.Tests.Controls.KeyPress
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
-                PromptPlus.InputBuffer("A");
+                PromptPlus.MemoryInputBuffer(new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false));
+                PromptPlus.MemoryInputBuffer("A");
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.Equal('A', result.Value.KeyChar);
@@ -395,8 +395,8 @@ namespace PPlus.Tests.Controls.KeyPress
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer("A");
-                PromptPlus.InputBuffer(inputchar);
+                PromptPlus.MemoryInputBuffer("A");
+                PromptPlus.MemoryInputBuffer(inputchar);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.Equal(inputchar, result.Value.KeyChar.ToString());
@@ -416,8 +416,8 @@ namespace PPlus.Tests.Controls.KeyPress
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer("A");
-                PromptPlus.InputBuffer(inputchar);
+                PromptPlus.MemoryInputBuffer("A");
+                PromptPlus.MemoryInputBuffer(inputchar);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.Equal(inputchar, result.Value.KeyChar.ToString());
@@ -436,8 +436,8 @@ namespace PPlus.Tests.Controls.KeyPress
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer("A");
-                PromptPlus.InputBuffer(inputchar);
+                PromptPlus.MemoryInputBuffer("A");
+                PromptPlus.MemoryInputBuffer(inputchar);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.Equal(inputchar, result.Value.KeyChar.ToString());
@@ -469,8 +469,8 @@ namespace PPlus.Tests.Controls.KeyPress
 
             CompletesIn(100, () =>
             {
-                PromptPlus.InputBuffer("A");
-                PromptPlus.InputBuffer(inputchar);
+                PromptPlus.MemoryInputBuffer("A");
+                PromptPlus.MemoryInputBuffer(inputchar);
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.Equal(inputchar, result.Value.KeyChar.ToString());

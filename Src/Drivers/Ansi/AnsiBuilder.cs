@@ -94,7 +94,7 @@ namespace PPlus.Drivers.Ansi
             startcodes = Array.Empty<byte>();
             var fg = false;
             var bg = false;
-            if (style.Foreground != profileDrive.ForegroundColor)
+            if (style.Foreground != Color.DefaultForecolor)
             {
                 fg = true;
                 startcodes = AnsiColorBuilder.GetAnsiCodes(profileDrive.ColorDepth,
@@ -102,7 +102,7 @@ namespace PPlus.Drivers.Ansi
                         true).ToArray();
             }
 
-            if (style.Background != profileDrive.BackgroundColor)
+            if (style.Background != Color.DefaultBackcolor)
             {
                 bg = true;
                 startcodes = startcodes.Concat(
@@ -122,16 +122,14 @@ namespace PPlus.Drivers.Ansi
                 if (fg)
                 {
                     startcodes = startcodes.Concat(AnsiColorBuilder.GetAnsiCodes(profileDrive.ColorDepth,
-                        profileDrive.ForegroundColor,
-                        //Color.DefaultForecolor,
+                        Color.DefaultForecolor,
                         true)).ToArray();
                 }
                 if (bg)
                 {
                     startcodes = startcodes.Concat(AnsiColorBuilder.GetAnsiCodes(
                         profileDrive.ColorDepth,
-                        profileDrive.BackgroundColor,
-                        //Color.DefaultBackcolor,
+                        Color.DefaultBackcolor,
                         false)).ToArray();
                 }
                 result.Append(AnsiSequences.SGR(startcodes));

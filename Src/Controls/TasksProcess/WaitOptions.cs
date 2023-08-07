@@ -17,7 +17,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("WaitOptions CTOR NotImplemented");
         }
 
-        internal WaitOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal WaitOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             Steps = new();
             States = new();

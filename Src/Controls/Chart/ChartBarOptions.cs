@@ -17,7 +17,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("ChartBarOptions CTOR NotImplemented");
         }
 
-        internal ChartBarOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal ChartBarOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         { 
             Labels = new();
             DescriptionStyle = styleSchema.Description();

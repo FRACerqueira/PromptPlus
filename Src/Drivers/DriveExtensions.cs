@@ -21,16 +21,15 @@ namespace PPlus
     /// </summary>
     public static partial class PromptPlus
     {
-        private static bool RunningConsoleMemory = false;
+        private static readonly bool RunningConsoleMemory = false;
+        private static readonly CultureInfo AppConsoleCulture;
         internal static IConsoleControl _consoledrive;
-        private static Config _configcontrols;
-        private static StyleSchema _styleschema;
+        private static ConfigControls _configcontrols;
+        private static readonly StyleSchema _styleschema;
         private static readonly object lockrecord = new();
-        private const ConsoleColor DefaultForegroundColor = ConsoleColor.Gray;
-        private const ConsoleColor DefaultBackgroundColor = ConsoleColor.Black;
-
         static PromptPlus()
         {
+            AppConsoleCulture = CultureInfo.CurrentCulture;
             var (localSupportsAnsi, localIsLegacy) = AnsiDetector.Detect();
             var termdetect = TerminalDetector.Detect();
             var colordetect = ColorSystemDetector.Detect(localSupportsAnsi);
@@ -38,7 +37,7 @@ namespace PPlus
             if (IsRunningInUnitTest)
             {
                 RunningConsoleMemory = true;
-                var drvprofile = new ProfileDriveMemory(DefaultForegroundColor, DefaultBackgroundColor, true, true, true, localIsLegacy, ColorSystem.TrueColor, Overflow.None, 0, 0);
+                var drvprofile = new ProfileDriveMemory(true, true, true, false, ColorSystem.TrueColor, Overflow.None, 0, 0);
                 _consoledrive = new ConsoleDriveMemory(drvprofile);
             }
             else
@@ -63,7 +62,7 @@ namespace PPlus
                 {
                     unicodesupported = true;
                 }
-                var drvprofile = new ProfileDriveConsole(DefaultForegroundColor, DefaultBackgroundColor, termdetect, unicodesupported, localSupportsAnsi, localIsLegacy, colordetect, Overflow.None, 0, 0);
+                var drvprofile = new ProfileDriveConsole(termdetect, unicodesupported, localSupportsAnsi, localIsLegacy, colordetect, Overflow.None, 0, 0);
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     _consoledrive = new ConsoleDriveWindows(drvprofile);
@@ -73,37 +72,18 @@ namespace PPlus
                     _consoledrive = new ConsoleDriveLinux(drvprofile);
                 }
             }
-            _configcontrols = new();
+            _configcontrols = new(AppConsoleCulture);
             _styleschema = new();
             _consoledrive.CursorVisible = true;
+            Color.DefaultForecolor = _consoledrive.ForegroundColor;
+            Color.DefaultBackcolor = _consoledrive.BackgroundColor;
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
         }
 
         private static void CurrentDomain_ProcessExit(object? sender, EventArgs e)
         {
-            var curleft = CursorLeft;
-            var curtop = CursorTop;
-            Profile(null);
-            // Switch to alternate screen
-            _consoledrive.SwapBuffer(TargetBuffer.Secondary);
-            IsControlText = true;
-            Write("\u001b[;r");
-            IsControlText = false;
+            Thread.CurrentThread.CurrentCulture = AppConsoleCulture;
             ResetColor();
-            Clear();
-            // Switch back to primary screen
-            _consoledrive.SwapBuffer(TargetBuffer.Primary);
-            IsControlText = true;
-            Write("\u001b[;r");
-            IsControlText = false;
-            Profile(null);
-            if (IsTerminal)
-            {
-                SetCursorPosition(0, BufferHeight);
-            }
-            ResetColor();
-            ClearLine();
-            SetCursorPosition(0, curtop);
         }
 
         /// <summary>
@@ -112,32 +92,23 @@ namespace PPlus
         public static void Reset()
         {
             ResetColor();
-            _configcontrols = new();
-            _styleschema = new();
+            _configcontrols = new(AppConsoleCulture);
             _consoledrive.CursorVisible = true;
         }
 
         /// <summary>
-        /// InputBuffer to test console
+        /// MemoryInputBuffer to test console
         /// </summary>
-        internal static void InputBuffer(string value)
+        internal static void MemoryInputBuffer(string value)
         {
-            if (_consoledrive.Provider != "Memory")
-            {
-                return;
-            }
             ((ConsoleDriveMemory)_consoledrive).InputBuffer(value);
         }
 
         /// <summary>
-        /// InputBuffer to test console
+        /// MemoryInputBuffer to test console
         /// </summary>
-        internal static void InputBuffer(ConsoleKeyInfo value)
+        internal static void MemoryInputBuffer(ConsoleKeyInfo value)
         {
-            if (_consoledrive.Provider != "Memory")
-            {
-                return;
-            }
             ((ConsoleDriveMemory)_consoledrive).InputBuffer(value);
         }
 
@@ -183,26 +154,23 @@ namespace PPlus
         {
             _consoledrive.ForegroundColor = forecorlor;
             _consoledrive.BackgroundColor = background;
+            _styleschema.UpdateBackgoundColor(background);
         }
 
         /// <summary>
         /// Overwrite current console with new console profile.
-        /// <br>After overwrite the new console the screeen is clear</br>
-        /// <br>and all Style-Schema are updated with backgoundcolor console</br>
         /// </summary>
         /// <param name="config">Action with <seealso cref="ProfileSetup"/> to configuration</param>
         public static void Setup(Action<ProfileSetup> config = null)
         {
             config ??= (cfg) => { };
-            Reset();
             Profile(config);
-            Clear();
         }
 
         /// <summary>
         /// Get global properties for all controls.
         /// </summary>
-        public static Config Config => _configcontrols;
+        public static ConfigControls Config => _configcontrols;
 
         /// <summary>
         /// Get global Style-Schema for all controls.
@@ -341,6 +309,7 @@ namespace PPlus
         public static void ResetColor()
         {
             _consoledrive.ResetColor();
+            _styleschema.Init();
         }
 
         /// <summary>
@@ -448,8 +417,7 @@ namespace PPlus
             get { return _consoledrive.CursorLeft; }
             set 
             { 
-                var top = _consoledrive.CursorTop;
-                _consoledrive.SetCursorPosition(value,top); 
+                _consoledrive.SetCursorPosition(value, _consoledrive.CursorTop); 
             }
         }
 
@@ -461,8 +429,7 @@ namespace PPlus
             get { return _consoledrive.CursorTop; }
             set
             {
-                var left = _consoledrive.CursorLeft;
-                _consoledrive.SetCursorPosition(left, value);
+                _consoledrive.SetCursorPosition(_consoledrive.CursorLeft, value);
             }
         }
 
@@ -577,6 +544,7 @@ namespace PPlus
             if (backcolor.HasValue)
             {
                 BackgroundColor = Color.ToConsoleColor(backcolor.Value);
+                _styleschema.UpdateBackgoundColor(backcolor.Value);
             }
             Clear();
         }
@@ -638,8 +606,7 @@ namespace PPlus
 
             var param = new ProfileSetup
             {
-                IsLegacy = _consoledrive.IsLegacy,
-                Culture = CultureInfo.CurrentCulture,
+                IsLegacy = RunningConsoleMemory ? false: _consoledrive.IsLegacy,
                 ColorDepth = RunningConsoleMemory ? ColorSystem.TrueColor : _consoledrive.ColorDepth,
                 IsTerminal = RunningConsoleMemory || _consoledrive.IsTerminal,
                 IsUnicodeSupported = RunningConsoleMemory || _consoledrive.IsUnicodeSupported,
@@ -647,35 +614,9 @@ namespace PPlus
                 OverflowStrategy = Overflow.None,
                 PadLeft = 0,
                 PadRight = 0,
-                ForegroundColor = DefaultForegroundColor,
-                BackgroundColor = DefaultBackgroundColor
             };
             config?.Invoke(param);
-            _configcontrols.DefaultCulture = param.Culture;
-
-            if (RunningConsoleMemory)
-            {
-                var drvprofile = new ProfileDriveMemory(param.ForegroundColor, param.BackgroundColor, param.IsTerminal, param.IsUnicodeSupported, param.SupportsAnsi, param.IsLegacy, param.ColorDepth, param.OverflowStrategy, param.PadLeft, param.PadRight);
-                _consoledrive = new ConsoleDriveMemory(drvprofile);
-            }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                var drvprofile = new ProfileDriveConsole(param.ForegroundColor, param.BackgroundColor, param.IsTerminal, param.IsUnicodeSupported, param.SupportsAnsi, param.IsLegacy, param.ColorDepth, param.OverflowStrategy, param.PadLeft, param.PadRight);
-                _consoledrive = new ConsoleDriveWindows(drvprofile);
-            }
-            else
-            {
-                var drvprofile = new ProfileDriveConsole(param.ForegroundColor, param.BackgroundColor, param.IsTerminal, param.IsUnicodeSupported, param.SupportsAnsi, param.IsLegacy, param.ColorDepth, param.OverflowStrategy, param.PadLeft, param.PadRight);
-                _consoledrive = new ConsoleDriveLinux(drvprofile);
-            }
-            _consoledrive.CursorVisible = true;
-            _consoledrive.UpdateStyle(param.BackgroundColor);
-        }
-
-
-        internal static void UpdateStyle(this IConsoleControl _, Color color)
-        {
-            _styleschema.UpdateBackgoundColor(color);
+            _consoledrive.UpdateProfile(param);
         }
 
         private static bool IsRunningInUnitTest

@@ -19,7 +19,7 @@ namespace PPlus
         /// <param name="style">The <see cref="Style"/> to write.</param>
         public static void SingleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
         {
-            var aux = Segment.Parse(value, style ?? _consoledrive.DefaultStyle);
+            var aux = Segment.Parse(value, style ?? Style.Default);
             if (aux.Length > 1)
             {
                 throw new PromptPlusException("Text cannot be more than one line");
@@ -77,7 +77,7 @@ namespace PPlus
         /// <param name="style">The <see cref="Style"/> to write.</param>
         public static void DoubleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
         {
-            var aux = Segment.Parse(value, style ?? _consoledrive.DefaultStyle);
+            var aux = Segment.Parse(value, style ?? Style.Default);
             if (aux.Length > 1)
             {
                 throw new PromptPlusException("Text cannot be more than one line");

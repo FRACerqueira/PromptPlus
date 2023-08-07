@@ -17,7 +17,7 @@ namespace PPlus.Controls
             throw new PromptPlusException("CalendarOptions CTOR NotImplemented");
         }
 
-        internal CalendarOptions(StyleSchema styleSchema, Config config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
+        internal CalendarOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             ItemsDisabled = new();
             ItemsNotes = new();
