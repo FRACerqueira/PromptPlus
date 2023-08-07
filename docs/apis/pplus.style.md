@@ -37,7 +37,7 @@ public Color Background { get; }
 
 ### <a id="properties-default"/>**Default**
 
-Gets a [Style](./pplus.style.md) with the default colors and default overflow.
+Gets a [Style](./pplus.style.md) with the default colors and overflow.None
 
 ```csharp
 public static Style Default { get; }

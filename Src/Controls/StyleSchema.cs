@@ -14,7 +14,7 @@ namespace PPlus.Controls
     /// </summary>
     public class StyleSchema
     {
-        private Dictionary<StyleControls, Style> _Styles;
+        private readonly Dictionary<StyleControls, Style> _Styles;
 
         internal StyleSchema()
         {

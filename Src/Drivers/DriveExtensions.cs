@@ -23,7 +23,7 @@ namespace PPlus
     {
         private static readonly bool RunningConsoleMemory = false;
         private static readonly CultureInfo AppConsoleCulture;
-        internal static IConsoleControl _consoledrive;
+        internal static readonly IConsoleControl _consoledrive;
         private static ConfigControls _configcontrols;
         private static readonly StyleSchema _styleschema;
         private static readonly object lockrecord = new();
@@ -606,7 +606,7 @@ namespace PPlus
 
             var param = new ProfileSetup
             {
-                IsLegacy = RunningConsoleMemory ? false: _consoledrive.IsLegacy,
+                IsLegacy = !RunningConsoleMemory && _consoledrive.IsLegacy,
                 ColorDepth = RunningConsoleMemory ? ColorSystem.TrueColor : _consoledrive.ColorDepth,
                 IsTerminal = RunningConsoleMemory || _consoledrive.IsTerminal,
                 IsUnicodeSupported = RunningConsoleMemory || _consoledrive.IsUnicodeSupported,

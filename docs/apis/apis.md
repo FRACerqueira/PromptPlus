@@ -72,7 +72,7 @@
 
 - [ChartOrder](./pplus.controls.chartorder.md)
 
-- [Config](./pplus.controls.config.md)
+- [ConfigControls](./pplus.controls.configcontrols.md)
 
 - [EventPipe&lt;T&gt;](./pplus.controls.eventpipe-1.md)
 

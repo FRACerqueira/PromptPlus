@@ -87,12 +87,12 @@ public static ColorSystem ColorDepth { get; }
 Get global properties for all controls.
 
 ```csharp
-public static Config Config { get; }
+public static ConfigControls Config { get; }
 ```
 
 #### Property Value
 
-[Config](./pplus.controls.config.md)<br>
+[ConfigControls](./pplus.controls.configcontrols.md)<br>
 
 ### <a id="properties-currenttargetbuffer"/>**CurrentTargetBuffer**
 
@@ -1577,7 +1577,6 @@ A stream that is the new standard output.
 ### <a id="methods-setup"/>**Setup(Action&lt;ProfileSetup&gt;)**
 
 Overwrite current console with new console profile.
- <br>After overwrite the new console the screeen is clear<br>and all Style-Schema are updated with backgoundcolor console
 
 ```csharp
 public static void Setup(Action<ProfileSetup> config)

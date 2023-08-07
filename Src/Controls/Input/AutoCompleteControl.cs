@@ -447,13 +447,10 @@ namespace PPlus.Controls
             }
             else
             {
-                if (!skipstartComplete)
+                if (!skipstartComplete && oldinput != _inputBuffer.ToString() && oldinput != null)
                 {
-                    if (oldinput != _inputBuffer.ToString() && oldinput != null)
-                    {
-                        _autoCompleteRunning = true;
-                        _autoCompleteSendStart = true;
-                    }
+                    _autoCompleteRunning = true;
+                    _autoCompleteSendStart = true;
                 }
             }
             var clear = !_autoCompleteRunning;

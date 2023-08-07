@@ -40,9 +40,9 @@ namespace PPlus
         }
 
         /// <summary>
-        /// Gets a <see cref="Style"/> with the default colors and default overflow.
+        /// Gets a <see cref="Style"/> with the default colors and overflow.None
         /// </summary>
-        public static Style Default => new(PromptPlus._consoledrive.ForegroundColor, PromptPlus._consoledrive.BackgroundColor, PromptPlus._consoledrive.OverflowStrategy);
+        public static Style Default => new(Color.DefaultForecolor, Color.DefaultBackcolor, Overflow.None);
 
         /// <summary>
         /// Gets a <see cref="Style"/> with the default colors and overflow Crop.

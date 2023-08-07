@@ -20,6 +20,42 @@ public interface IConsoleBase : ICursorDrive, IInputDrive, IOutputDrive, IBacken
 
 Implements [ICursorDrive](./pplus.icursordrive.md), [IInputDrive](./pplus.iinputdrive.md), [IOutputDrive](./pplus.ioutputdrive.md), [IBackendTextWrite](./pplus.ibackendtextwrite.md), [IProfileDrive](./pplus.iprofiledrive.md), [IConsoleExtendDrive](./pplus.iconsoleextenddrive.md)
 
+## Properties
+
+### <a id="properties-backgroundcolor"/>**BackgroundColor**
+
+Get/set console BackgroundColor
+
+```csharp
+public abstract ConsoleColor BackgroundColor { get; set; }
+```
+
+#### Property Value
+
+ConsoleColor<br>
+
+### <a id="properties-foregroundcolor"/>**ForegroundColor**
+
+Get/set console ForegroundColor
+
+```csharp
+public abstract ConsoleColor ForegroundColor { get; set; }
+```
+
+#### Property Value
+
+ConsoleColor<br>
+
+## Methods
+
+### <a id="methods-resetcolor"/>**ResetColor()**
+
+Reset colors to default values.
+
+```csharp
+void ResetColor()
+```
+
 
 - - -
 [**Back to List Api**](./apis.md)

@@ -475,7 +475,7 @@ namespace PPlus.Drivers
 
             try
             {
-                ForegroundColor = defaultforecolor??curforecolor;
+                ForegroundColor = defaultforecolor ?? curforecolor;
                 BackgroundColor = defaultbackcolor ?? curbackcolor;
 
                 IsControlText = true;
