@@ -23,6 +23,7 @@ namespace PPlus.Controls
         {
             _console = console;
             Config = config;
+            OptStyleSchema = StyleSchema.Clone(styleSchema);
             foreach (var item in config._globalSymbols.Keys)
             {
                 _optSymbols.Add(item, config._globalSymbols[item]);
@@ -34,6 +35,7 @@ namespace PPlus.Controls
             OptEnabledAbortKey = config.EnabledAbortKey;
         }
 
+        internal StyleSchema OptStyleSchema { get; }
         internal ConfigControls Config { get; }
         internal bool OptShowCursor { get; } = false;
         internal string OptPrompt { get; set; } = string.Empty;
@@ -41,7 +43,6 @@ namespace PPlus.Controls
         internal bool OptShowTooltip { get; set; }
 
         internal Dictionary<StageControl, Action<object, object?>> OptUserActions { get; private set; } = new();
-        internal StyleSchema OptStyleSchema { get; private set; } = new();
         internal string OptToolTip { get; private set; } = string.Empty;
         internal bool OptHideAfterFinish { get; private set; }
         internal bool OptHideOnAbort { get; private set; }

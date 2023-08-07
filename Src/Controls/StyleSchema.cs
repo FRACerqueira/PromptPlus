@@ -21,6 +21,11 @@ namespace PPlus.Controls
             _Styles = Init();
         }
 
+        private StyleSchema(Dictionary<StyleControls, Style> newtyles)
+        {
+            _Styles = newtyles;
+        }
+
         /// <summary>
         /// Apply style current instance of control
         /// </summary>
@@ -101,6 +106,60 @@ namespace PPlus.Controls
                 stl = stl.Background(backgoundcolor);
                 _Styles[item] = stl;
             }
+        }
+
+        internal static StyleSchema Clone(StyleSchema source)
+        {
+            var auxdic = new Dictionary<StyleControls, Style>();
+            var aux = Enum.GetValues(typeof(StyleControls)).Cast<StyleControls>();
+            foreach (var item in aux)
+            {
+                switch (item)
+                {
+                    case StyleControls.Prompt:
+                        auxdic.Add(item, source.Prompt());
+                        break;
+                    case StyleControls.Answer:
+                        auxdic.Add(item, source.Answer());
+                        break;
+                    case StyleControls.Description:
+                        auxdic.Add(item, source.Description());
+                        break;
+                    case StyleControls.Sugestion:
+                        auxdic.Add(item, source.Sugestion());
+                        break;
+                    case StyleControls.Selected:
+                        auxdic.Add(item, source.Selected());
+                        break;
+                    case StyleControls.UnSelected:
+                        auxdic.Add(item, source.UnSelected());
+                        break;
+                    case StyleControls.Disabled:
+                        auxdic.Add(item, source.Disabled());
+                        break;
+                    case StyleControls.Error:
+                        auxdic.Add(item, source.Error());
+                        break;
+                    case StyleControls.Pagination:
+                        auxdic.Add(item, source.Pagination());
+                        break;
+                    case StyleControls.TaggedInfo:
+                        auxdic.Add(item, source.TaggedInfo());
+                        break;
+                    case StyleControls.Tooltips:
+                        auxdic.Add(item, source.Tooltips());
+                        break;
+                    case StyleControls.Slider:
+                        auxdic.Add(item, source.Slider());
+                        break;
+                    case StyleControls.Chart:
+                        auxdic.Add(item, source.Chart());
+                        break;
+                    default:
+                        throw new PromptPlusException($"{item} Not Implemented");
+                }
+            }
+            return new StyleSchema(auxdic);
         }
     }
 }
