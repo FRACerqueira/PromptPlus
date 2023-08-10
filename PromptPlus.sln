@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputOverwriteDefaultFromSa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputWithHistorySamples", "Samples\InputWithHistorySamples\InputWithHistorySamples.csproj", "{18B14A8D-ECC9-459D-B6DD-E1DB0B41F6CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputWithSugestionSamples", "Samples\InputWithSugestionSamples\InputWithSugestionSamples.csproj", "{2F6D86EC-48C3-4D7C-B5B3-BC2782F37316}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputWithSuggestionSamples", "Samples\InputWithSuggestionSamples\InputWithSuggestionSamples.csproj", "{2F6D86EC-48C3-4D7C-B5B3-BC2782F37316}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputSecretSamples", "Samples\InputSecretSamples\InputSecretSamples.csproj", "{637CFEA4-42A1-4B90-B825-FB63C79DE7D8}"
 EndProject

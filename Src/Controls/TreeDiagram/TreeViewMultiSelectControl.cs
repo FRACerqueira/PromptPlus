@@ -19,13 +19,13 @@ namespace PPlus.Controls
         private Paginator<ItemTreeViewFlatNode<T>> _localpaginator;
         private TreeView<T> _browserTreeView = null;
         private bool _rootExpand = true;
-        private List<(string UniqueId, string Fullpath, T value)> _seletedItems;
+        private List<(string UniqueId, string Fullpath, T value)> _selectedItems;
 
         public TreeViewMultiSelectControl(IConsoleControl console, TreeViewOptions<T> options) : base(console, options)
         {
             _options = options;
             _flatnodes = new();
-            _seletedItems = new();
+            _selectedItems = new();
         }
 
         #region IControlTreeViewMultiSelect
@@ -154,13 +154,13 @@ namespace PPlus.Controls
         public IControlTreeViewMultiSelect<T> RootNode(T value, Func<T, string> textnode, Func<T, bool>? validselect = null, Func<T, bool>? setdisabled = null, char? separatePath = null, Func<T, string> uniquenode = null)
         {
             _options.TextNode = textnode ?? throw new PromptPlusException("Not have Text-Node to run");
-            _options.ExpressionSeleted = validselect;
+            _options.ExpressionSelected = validselect;
             _options.ExpressionDisabled = setdisabled;
             var diabled = _options.ExpressionDisabled?.Invoke(value) ?? false;
             _options.Nodes = new TreeOption<T>
             {
                 Disabled = diabled,
-                Selected = !diabled && (_options.ExpressionSeleted?.Invoke(value) ?? false),
+                Selected = !diabled && (_options.ExpressionSelected?.Invoke(value) ?? false),
                 Node = value
             };
             if (separatePath.HasValue)
@@ -191,7 +191,7 @@ namespace PPlus.Controls
                 _options.Nodes.Childrens = new();
             }
             var diabled = _options.ExpressionDisabled?.Invoke(value) ?? false;
-            var selected = !diabled && (_options.ExpressionSeleted?.Invoke(value) ?? false);
+            var selected = !diabled && (_options.ExpressionSelected?.Invoke(value) ?? false);
             _options.Nodes.Childrens.Add(new TreeOption<T> { Node = value, Disabled = diabled, Selected = selected});
             return this;
         }
@@ -205,7 +205,7 @@ namespace PPlus.Controls
             var nodeparent = _options.FindNode(null, parent) ?? throw new PromptPlusException("Not found parent node!. Add parent node first!");
             nodeparent.Childrens ??= new();
             var diabled = _options.ExpressionDisabled?.Invoke(value) ?? false;
-            var selected = !diabled && (_options.ExpressionSeleted?.Invoke(value) ?? false);
+            var selected = !diabled && (_options.ExpressionSelected?.Invoke(value) ?? false);
             nodeparent.Childrens.Add(new TreeOption<T> { Node = value, Disabled = diabled, Selected = selected });
             return this;
         }
@@ -289,7 +289,7 @@ namespace PPlus.Controls
                 throw new PromptPlusException("FixedSelected Count > Maximum Selected");
             }
 
-            _browserTreeView = new TreeView<T>(_options.ExpressionSeleted)
+            _browserTreeView = new TreeView<T>(_options.ExpressionSelected)
             {
                 TextTree = _options.TextNode
             };
@@ -356,9 +356,9 @@ namespace PPlus.Controls
             {
                 screenBuffer.SaveCursor();
                 string answer = FinishResult;
-                if (_seletedItems.Any())
+                if (_selectedItems.Any())
                 {
-                    answer = string.Join(", ", _seletedItems.Select(x => _options.TextNode(x.value)));
+                    answer = string.Join(", ", _selectedItems.Select(x => _options.TextNode(x.value)));
                 }
                 screenBuffer.WriteAnswer(_options, answer);
             }
@@ -375,7 +375,7 @@ namespace PPlus.Controls
                     screenBuffer.NewLine();
                     if (_options.ShowCurrentFulPathNode)
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentSeleted}: {showItem.MessagesNodes.TextFullpath}", _options.CurrentNodeStyle);
+                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {showItem.MessagesNodes.TextFullpath}", _options.CurrentNodeStyle);
                     }
                     else
                     {
@@ -415,7 +415,7 @@ namespace PPlus.Controls
                     }
                 }
             }
-            screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _seletedItems.Count);
+            screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _selectedItems.Count);
         }
 
         public override ResultPrompt<T[]> TryResult(CancellationToken cancellationToken)
@@ -467,13 +467,13 @@ namespace PPlus.Controls
                         }
                         else
                         {
-                            var aux = _seletedItems.ToArray();
+                            var aux = _selectedItems.ToArray();
                             _browserTreeView.SelectAll(fnode);
                             AddSelectAll(fnode);
-                            if (_seletedItems.Count > _options.Maximum)
+                            if (_selectedItems.Count > _options.Maximum)
                             {
                                 _browserTreeView.UnSelectectAll(fnode);
-                                _seletedItems = aux.ToList();
+                                _selectedItems = aux.ToList();
                                 if (_filterBuffer.Length > 0)
                                 {
                                     _filterBuffer.Clear();
@@ -492,7 +492,7 @@ namespace PPlus.Controls
                 }
                 else if (keyInfo.Value.IsPressEnterKey())
                 {
-                    if (_seletedItems.Count < _options.Minimum)
+                    if (_selectedItems.Count < _options.Minimum)
                     {
                         _filterBuffer.Clear();
                         endinput = false;
@@ -598,7 +598,7 @@ namespace PPlus.Controls
                 endinput = true;
                 abort = true;
             }
-            else if (_seletedItems.Count > _options.Maximum)
+            else if (_selectedItems.Count > _options.Maximum)
             {
                 _filterBuffer.Clear();
                 endinput = false;
@@ -614,10 +614,10 @@ namespace PPlus.Controls
             {
                 notrender = true;
             }
-            if (_seletedItems.Any())
+            if (_selectedItems.Any())
             {
-                FinishResult = string.Join(", ", _seletedItems.Select(x => _options.TextNode(x.value)));
-                return new ResultPrompt<T[]>(_seletedItems.Select(x => x.value).ToArray(), abort, !endinput, notrender);
+                FinishResult = string.Join(", ", _selectedItems.Select(x => _options.TextNode(x.value)));
+                return new ResultPrompt<T[]>(_selectedItems.Select(x => x.value).ToArray(), abort, !endinput, notrender);
             }
             return new ResultPrompt<T[]>(Array.Empty<T>(), abort, !endinput,notrender);
         }
@@ -648,7 +648,7 @@ namespace PPlus.Controls
 
         private bool IsFixedSelect(T item, Func<T, string> uniquenode)
         {
-            if (_options.ExpressionSeleted?.Invoke(item) ?? true)
+            if (_options.ExpressionSelected?.Invoke(item) ?? true)
             {
                 if (uniquenode == null)
                 {
@@ -803,7 +803,7 @@ namespace PPlus.Controls
             }
             if (item.Level == 0)
             {
-                result.TextSeleted = item.IsSelected ? $" {_options.Symbol(SymbolType.Selected)} " : $" {_options.Symbol(SymbolType.NotSelect)} ";
+                result.TextSelected = item.IsSelected ? $" {_options.Symbol(SymbolType.Selected)} " : $" {_options.Symbol(SymbolType.NotSelect)} ";
                 return result;
             }
 
@@ -861,7 +861,7 @@ namespace PPlus.Controls
             {
                 auxline[auxline.Length - 1] = _options.Symbol(SymbolType.TreeLinecorner);
             }
-            result.TextSeleted = item.IsSelected ? $" {_options.Symbol(SymbolType.Selected)} " : $" {_options.Symbol(SymbolType.NotSelect)} ";
+            result.TextSelected = item.IsSelected ? $" {_options.Symbol(SymbolType.Selected)} " : $" {_options.Symbol(SymbolType.NotSelect)} ";
             foreach (var itemaux in auxline)
             {
                 result.TextLines += itemaux;
@@ -896,12 +896,12 @@ namespace PPlus.Controls
 
         private void RemoveSelectAll(TreeNode<T> node)
         {
-            var index = _seletedItems.FindIndex(x => x.UniqueId == node.UniqueId);
+            var index = _selectedItems.FindIndex(x => x.UniqueId == node.UniqueId);
             if (index >= 0)
             {
                 if (!IsFixedSelect(node.Value, _options.UniqueNode))
                 {
-                    _seletedItems.RemoveAt(index);
+                    _selectedItems.RemoveAt(index);
                 }
             }
             if (node.Childrens != null)
@@ -915,12 +915,12 @@ namespace PPlus.Controls
 
         private void AddSelectAll(TreeNode<T> node)
         {
-            var index = _seletedItems.FindIndex(x => x.UniqueId == node.UniqueId);
+            var index = _selectedItems.FindIndex(x => x.UniqueId == node.UniqueId);
             if (index < 0)
             {
                 if (node.IsSelected)
                 {
-                    _seletedItems.Add(new(node.UniqueId, DefaultFullPath(node.Value), node.Value));
+                    _selectedItems.Add(new(node.UniqueId, DefaultFullPath(node.Value), node.Value));
                 }
             }
             if (node.Childrens != null)

@@ -43,7 +43,7 @@ function to accept
 ### <a id="methods-addvalidators"/>**AddValidators(params Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>Tip: see  to validators embeding
+ <br>Tip: see  to validators embedding
 
 ```csharp
 IControlInput AddValidators(params Func<Object, ValidationResult>[] validators)
@@ -282,18 +282,18 @@ char secret
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
+### <a id="methods-maxlength"/>**MaxLength(UInt16)**
 
-MaxLenght of input text.
+MaxLength of input text.
 
 ```csharp
-IControlInput MaxLenght(ushort value)
+IControlInput MaxLength(ushort value)
 ```
 
 #### Parameters
 
 `value` [UInt16](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
-Lenght
+Length
 
 #### Returns
 
@@ -319,18 +319,18 @@ The timeout for valid items saved. Default value is 365 days
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
+### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SuggestionInput, SuggestionOutput&gt;)**
 
 Add Suggestion Handler feature
 
 ```csharp
-IControlInput SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
+IControlInput SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value)
 ```
 
 #### Parameters
 
-`value` [Func&lt;SugestionInput, SugestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.md) and [SugestionOutput](./pplus.controls.sugestionoutput.md)
+`value` [Func&lt;SuggestionInput, SuggestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply suggestions. [SuggestionInput](./pplus.controls.suggestioninput.md) and [SuggestionOutput](./pplus.controls.suggestionoutput.md)
 
 #### Returns
 

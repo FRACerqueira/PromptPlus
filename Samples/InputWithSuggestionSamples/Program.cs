@@ -7,28 +7,28 @@ PromptPlus.WriteLine("Hello, World!");
 //Ensure ValueResult Culture for all controls
 PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
 
-SugestionOutput SugestionInputSample(SugestionInput arg)
+SuggestionOutput SuggestionInputSample(SuggestionInput arg)
 {
-    var result = new SugestionOutput();
+    var result = new SuggestionOutput();
     if (arg.Text.StartsWith("s", StringComparison.CurrentCultureIgnoreCase))
     {
-        result.Add("sugestion 1");
-        result.Add("sugestion 2");
-        result.Add("sugestion 3");
+        result.Add("suggestion 1");
+        result.Add("suggestion 2");
+        result.Add("suggestion 3");
     }
     else
     {
-        result.Add("other sugestion 1");
-        result.Add("other sugestion 2");
-        result.Add("other sugestion 3");
+        result.Add("other suggestion 1");
+        result.Add("other suggestion 2");
+        result.Add("other suggestion 3");
     }
     return result;
 }
 
-PromptPlus.DoubleDash("Control:Input - with sugestions.");
+PromptPlus.DoubleDash("Control:Input - with suggestions.");
 var in1 = PromptPlus
-    .Input("Input sample", "input with sugestions.")
-    .SuggestionHandler(SugestionInputSample)
+    .Input("Input sample", "input with suggestions.")
+    .SuggestionHandler(SuggestionInputSample)
     .Run();
 
 if (!in1.IsAborted)

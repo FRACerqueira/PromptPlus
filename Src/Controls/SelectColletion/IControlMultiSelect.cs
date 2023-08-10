@@ -47,7 +47,7 @@ namespace PPlus.Controls
         IControlMultiSelect<T> AppendGroupOnDescription();
 
         /// <summary>
-        /// Add default value seleted to initial list.
+        /// Add default value selected to initial list.
         /// </summary>
         /// <param name="values">Value default</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -69,7 +69,7 @@ namespace PPlus.Controls
         IControlMultiSelect<T> OrderByDescending(Expression<Func<T, object>> value);
 
         /// <summary>
-        /// Overwrite defaults start seleted value with last result saved on history.
+        /// Overwrite defaults start selected value with last result saved on history.
         /// </summary>
         /// <param name="value">name of file to save history</param>
         /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
@@ -175,7 +175,7 @@ namespace PPlus.Controls
         IControlMultiSelect<T> EqualItems(Func<T, T, bool> comparer);
 
         /// <summary>
-        /// Defines a minimum and maximum (optional) range of items seleted in the list
+        /// Defines a minimum and maximum (optional) range of items selected in the list
         /// </summary>
         /// <param name="minvalue">Minimum number of items</param>
         /// <param name="maxvalue">Maximum number of items</param>

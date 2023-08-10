@@ -60,7 +60,7 @@ namespace PPlus.Controls
                     case StyleControls.Description:
                         auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
                         break;
-                    case StyleControls.Sugestion:
+                    case StyleControls.Suggestion:
                         auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Yellow));
                         break;
                     case StyleControls.Selected:
@@ -125,8 +125,8 @@ namespace PPlus.Controls
                     case StyleControls.Description:
                         auxdic.Add(item, source.Description());
                         break;
-                    case StyleControls.Sugestion:
-                        auxdic.Add(item, source.Sugestion());
+                    case StyleControls.Suggestion:
+                        auxdic.Add(item, source.Suggestion());
                         break;
                     case StyleControls.Selected:
                         auxdic.Add(item, source.Selected());

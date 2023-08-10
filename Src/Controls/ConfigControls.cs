@@ -84,7 +84,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Get/Set Page Size from colletions.
-        /// <br>Default value : 10. If value less than 1 internal sette to 1.</br>
+        /// <br>Default value : 10. If value less than 1 internal set to 1.</br>
         /// </summary>
         public int PageSize 
         {
@@ -104,7 +104,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Get/Set Minimum Prefix Length.
-        /// <br>Default value : 3.If value less than 0 internal sette to 0.</br>
+        /// <br>Default value : 3.If value less than 0 internal set to 0.</br>
         /// </summary>
         public int CompletionMinimumPrefixLength 
         {
@@ -123,7 +123,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Get/Set Interval in mileseconds to wait start Completion funcion.
-        /// <br>Default value : 1000. If value less than 10 internal sette to 10.</br>
+        /// <br>Default value : 1000. If value less than 10 internal set to 10.</br>
         /// </summary>
         public int CompletionWaitToStart
         {
@@ -142,7 +142,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Get/Set Completion Max Items to return.
-        /// <br>Default value : 1000. If value  less than 1 internal sette to 1.</br>
+        /// <br>Default value : 1000. If value  less than 1 internal set to 1.</br>
         /// </summary>  
         public int CompletionMaxCount 
         {

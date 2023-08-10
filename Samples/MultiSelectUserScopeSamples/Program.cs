@@ -28,7 +28,7 @@ namespace MultiSelectUserScopeSamples
         public string MyText { get; set; }
         public string MyDesc { get; set; }
         public bool IsDisabled { get; set; }
-        public bool IsSeleted { get; set; }
+        public bool IsSelected { get; set; }
         public bool IsHide { get; set; }
     }
 
@@ -45,14 +45,14 @@ namespace MultiSelectUserScopeSamples
 
             PromptPlus.DoubleDash("Control:MultiSelect - Using class with AdderScope and OrderBy");
             var sel = PromptPlus.MultiSelect<MyClass>("MultiSelect")
-                .AddItems(_datasample.Where(x => x.IsSeleted), selected: true)
-                .AddItems(_datasample.Where(x => !x.IsSeleted))
+                .AddItems(_datasample.Where(x => x.IsSelected), selected: true)
+                .AddItems(_datasample.Where(x => !x.IsSelected))
                 .AddItemsTo(AdderScope.Disable, _datasample.Where(x => x.IsDisabled).ToArray())
                 .AddItemsTo(AdderScope.Remove, _datasample.Where(x => x.IsHide).ToArray())
                 .TextSelector(x => x.MyText)
                 .EqualItems((item1, item2) => item1.Id == item2.Id)
                 .ChangeDescription(x => x.MyDesc)
-                .AddDefault(_datasample.Where(x => x.IsSeleted).ToArray())
+                .AddDefault(_datasample.Where(x => x.IsSelected).ToArray())
                 .OrderBy((item) => item.Id)
                 .Run();
 
@@ -70,12 +70,12 @@ namespace MultiSelectUserScopeSamples
         {
             var aux = new List<MyClass>
             {
-                new MyClass { Id = 4, MyText = "Text4", MyDesc="Text4 for id=4", IsDisabled = false, IsHide = false , IsSeleted = true},
+                new MyClass { Id = 4, MyText = "Text4", MyDesc="Text4 for id=4", IsDisabled = false, IsHide = false , IsSelected = true},
                 new MyClass { Id = 5, MyText = "Text5", MyDesc="Text5 for id=5", IsDisabled = false, IsHide = false },
                 new MyClass { Id = 6, MyText = "Text6", MyDesc="Text6 for id=6", IsDisabled = false, IsHide = true },
                 new MyClass { Id = 1, MyText = "Text1", MyDesc="Text1 for id=1", IsDisabled = false, IsHide = false },
                 new MyClass { Id = 0, MyText = "Text1", MyDesc="Text1 for id=0", IsDisabled = false, IsHide = false },
-                new MyClass { Id = 2, MyText = "Text2", MyDesc="Text2 for id=2", IsDisabled = true, IsSeleted = true },
+                new MyClass { Id = 2, MyText = "Text2", MyDesc="Text2 for id=2", IsDisabled = true, IsSelected = true },
                 new MyClass { Id = 3, MyText = "Text3", MyDesc="Text3 for id=3", IsDisabled = true, IsHide = false }
             };
             return aux;

@@ -104,7 +104,7 @@ namespace PPlus.Controls
                     return string.Format("{0}, {1}, {2}\n{3}, {4}",
                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                     Messages.TooltipHistoryEsc,
-                    Messages.SelectFisnishEnter,
+                    Messages.SelectFinishEnter,
                     Messages.TooltipPages,
                     Messages.TooltipHistoryClear);
                 }
@@ -114,9 +114,9 @@ namespace PPlus.Controls
                     {
                         return string.Format("{0}, {1}\n{2}, {3}",
                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                        Messages.TooltipSugestionEsc,
+                        Messages.TooltipSuggestionEsc,
                         string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
-                        Messages.TooltipSugestionToggle);
+                        Messages.TooltipSuggestionToggle);
                     }
                     else
                     {
@@ -135,7 +135,7 @@ namespace PPlus.Controls
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                     string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
-                                    Messages.TooltipSugestionToggle,
+                                    Messages.TooltipSuggestionToggle,
                                     Messages.MaskEditErase,
                                     string.Format(Messages.MaskEditJump, aux));
                                 }
@@ -154,7 +154,7 @@ namespace PPlus.Controls
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                     string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
-                                    Messages.TooltipSugestionToggle,
+                                    Messages.TooltipSuggestionToggle,
                                     Messages.MaskEditErase,
                                     string.Format(Messages.MaskEditJump, aux));
                                 }
@@ -164,7 +164,7 @@ namespace PPlus.Controls
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                                     string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
-                                    Messages.TooltipSugestionToggle,
+                                    Messages.TooltipSuggestionToggle,
                                     Messages.MaskEditErase);
                                 }
                             }
@@ -180,7 +180,7 @@ namespace PPlus.Controls
                                     return string.Format("{0}, {1}, {2},\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
-                                    Messages.TooltipSugestionToggle,
+                                    Messages.TooltipSuggestionToggle,
                                     Messages.MaskEditErase,
                                     string.Format(Messages.MaskEditJump, aux));
                                 }
@@ -198,7 +198,7 @@ namespace PPlus.Controls
                                     return string.Format("{0}, {1}, {2},\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
-                                    Messages.TooltipSugestionToggle,
+                                    Messages.TooltipSuggestionToggle,
                                     Messages.MaskEditErase,
                                     string.Format(Messages.MaskEditJump, aux));
                                 }
@@ -207,7 +207,7 @@ namespace PPlus.Controls
                                     return string.Format("{0}, {1},\n{2}, {3}",
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
-                                    Messages.TooltipSugestionToggle,
+                                    Messages.TooltipSuggestionToggle,
                                     Messages.MaskEditErase);
                                 }
                             }
@@ -307,8 +307,8 @@ namespace PPlus.Controls
                 {
                     return string.Format("{0}, {1}, {2}",
                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                    Messages.TooltipSugestionEsc,
-                    Messages.TooltipSugestionToggle);
+                    Messages.TooltipSuggestionEsc,
+                    Messages.TooltipSuggestionToggle);
                 }
                 else
                 {
@@ -318,7 +318,7 @@ namespace PPlus.Controls
                         {
                             return string.Format("{0}, {1},\n{2}, {3}",
                             string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                            Messages.TooltipSugestionToggle,
+                            Messages.TooltipSuggestionToggle,
                             string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
                             Messages.MaskEditErase);
                         }
@@ -326,7 +326,7 @@ namespace PPlus.Controls
                         {
                             return string.Format("{0}, {1}, {2}",
                             string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                            Messages.TooltipSugestionToggle,
+                            Messages.TooltipSuggestionToggle,
                             Messages.MaskEditErase);
                         }
                     }

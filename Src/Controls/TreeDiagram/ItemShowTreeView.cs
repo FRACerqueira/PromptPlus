@@ -13,11 +13,11 @@ namespace PPlus.Controls
             TextItem = string.Empty;
             TextLines = string.Empty;
             TextFullpath = string.Empty;
-            TextSeleted = string.Empty;
+            TextSelected = string.Empty;
             TextSize = string.Empty;
         }
         public string TextSize { get; set; }
-        public string TextSeleted { get; set; }
+        public string TextSelected { get; set; }
         public string TextLines { get; set; }
         public string TextItem { get; set; }
         public string TextFullpath { get; set; }
@@ -28,9 +28,9 @@ namespace PPlus.Controls
             {
                 if (!string.IsNullOrEmpty(TextExpand))
                 {
-                    return $"{TextLines}{TextExpand}{TextSeleted}{TextItem}{TextSize}";
+                    return $"{TextLines}{TextExpand}{TextSelected}{TextItem}{TextSize}";
                 }
-                return $"{TextLines}{TextSeleted}{TextItem}{TextSize}";
+                return $"{TextLines}{TextSelected}{TextItem}{TextSize}";
             }
         } 
     }

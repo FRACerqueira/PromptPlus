@@ -18,7 +18,7 @@ namespace PPlus.Controls
                 {
                     screenBuffer.WriteAnswer(options, input.Substring(0, filter.Length));
                     screenBuffer.SaveCursor();
-                    screenBuffer.WriteSugestion(options, input.Substring(filter.Length));
+                    screenBuffer.WriteSuggestion(options, input.Substring(filter.Length));
                 }
                 else
                 {
@@ -35,7 +35,7 @@ namespace PPlus.Controls
                 foreach (var itempart in parts)
                 {
                     pos++;
-                    screenBuffer.WriteSugestion(options, itempart);
+                    screenBuffer.WriteSuggestion(options, itempart);
                     if (first)
                     {
                         first = false;
@@ -74,7 +74,7 @@ namespace PPlus.Controls
                     return string.Format("{0}, {1}, {2}, {3} \n{4}, {5}, {6}\n{7}, {8}, {9}",
                         string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
                         string.Format(Messages.TooltipCancelEsc, options.Config.AbortKeyPress),
-                        Messages.MultiSelectFisnishEnter,
+                        Messages.MultiSelectFinishEnter,
                         Messages.TooltipPages,
                         Messages.TooltipSelectFilter,
                         Messages.TooltipPressSpace,
@@ -86,7 +86,7 @@ namespace PPlus.Controls
                 return string.Format("{0}, {1}, {2}, {3}\n{4}, {5}, {6}, {7}",
                     string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
                     string.Format(Messages.TooltipCancelEsc, options.Config.AbortKeyPress),
-                    Messages.MultiSelectFisnishEnter,
+                    Messages.MultiSelectFinishEnter,
                     Messages.TooltipPressSpace,
                     string.Format(Messages.TooltipFullPath, options.HotKeyTooltipFullPath),
                     Messages.TooltipPages,
@@ -99,7 +99,7 @@ namespace PPlus.Controls
                 {
                     return string.Format("{0}, {1}, {2} {3}\n{4}, {5}, {6}, {7}",
                         string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
-                        Messages.MultiSelectFisnishEnter,
+                        Messages.MultiSelectFinishEnter,
                         Messages.TooltipPages,
                         string.Format(Messages.TooltipFullPath, options.HotKeyTooltipFullPath),
                         Messages.TooltipSelectFilter,
@@ -110,7 +110,7 @@ namespace PPlus.Controls
                 }
                 return string.Format("{0}, {1}, {2}\n{3}, {4}, {5}",
                     string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
-                    Messages.MultiSelectFisnishEnter,
+                    Messages.MultiSelectFinishEnter,
                     Messages.TooltipPages,
                     Messages.TooltipSelectFilter,
                     string.Format(Messages.TooltipFullPath, options.HotKeyTooltipFullPath),
@@ -140,7 +140,7 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true,false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextSeleted, options.SelectedExpandStyle, true,false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.SelectedExpandStyle, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.SelectedExpandStyle, true,false);
             if (data.IsRoot)
             {
@@ -166,7 +166,7 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true,false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextSeleted, options.OptStyleSchema.Disabled(), true,false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.OptStyleSchema.Disabled(), true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.OptStyleSchema.Disabled(), true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.OptStyleSchema.Disabled(), true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextSize, options.OptStyleSchema.Disabled(), true,false);
@@ -178,7 +178,7 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true,false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextSeleted, options.ExpandStyle, true,false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.ExpandStyle, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.ExpandStyle, true,false);
             if (data.IsRoot)
             {
@@ -204,7 +204,7 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true,false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextSeleted, options.OptStyleSchema.Disabled(), true,false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.OptStyleSchema.Disabled(), true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.OptStyleSchema.Disabled(), true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.OptStyleSchema.Disabled(), true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextSize, options.OptStyleSchema.Disabled(), true,false);

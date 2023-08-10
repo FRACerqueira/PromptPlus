@@ -9,46 +9,46 @@ using System.Collections.ObjectModel;
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents The Sugestion output struct.
+    /// Represents The Suggestion output struct.
     /// </summary>
-    public struct SugestionOutput
+    public struct SuggestionOutput
     {
         private readonly List<string> _items;
 
         /// <summary>
-        /// Create a empty SugestionOutput
+        /// Create a empty SuggestionOutput
         /// </summary>
-        public SugestionOutput()
+        public SuggestionOutput()
         {
             _items = new();
         }
 
-        internal SugestionOutput(IList<string> items)
+        internal SuggestionOutput(IList<string> items)
         {
             _items.AddRange(items);
-            Sugestions = new ReadOnlyCollection<string>(_items);
+            Suggestions = new ReadOnlyCollection<string>(_items);
         }
 
         /// <summary>
-        /// Add sugestion
+        /// Add suggestion
         /// </summary>
-        /// <param name="value">text sugestion</param>
+        /// <param name="value">text suggestion</param>
         public void Add(string value)
         {
             _items.Add(value);
-            Sugestions = new ReadOnlyCollection<string>(_items);
+            Suggestions = new ReadOnlyCollection<string>(_items);
         }
 
         /// <summary>
-        /// Add Enumerable sugestions
+        /// Add Enumerable suggestions
         /// </summary>
-        /// <param name="items">Enumerable text sugestions</param>
+        /// <param name="items">Enumerable text suggestions</param>
         public void AddRange(IEnumerable<string> items)
         {
             _items.AddRange(items);
-            Sugestions = new ReadOnlyCollection<string>(_items);
+            Suggestions = new ReadOnlyCollection<string>(_items);
         }
 
-        internal ReadOnlyCollection<string> Sugestions { get; private set; }
+        internal ReadOnlyCollection<string> Suggestions { get; private set; }
     }
 }

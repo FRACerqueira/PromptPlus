@@ -551,12 +551,12 @@ namespace PPlus.Tests.Controls.InputAutoComplete
         }
 
         [Fact]
-        public void Should_TryResultMaxLenght()
+        public void Should_TryResultMaxLength()
         {
             var ctrl = (AutoCompleteControl)PromptPlus
                .AutoComplete("P", "D")
                .CompletionAsyncService(MYServiceCompleteAsync)
-               .MaxLenght(2);
+               .MaxLength(2);
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
 
             ctrl.InitControl(CancellationToken.None);

@@ -53,11 +53,11 @@ namespace PPlus.Controls
         IControlInput AcceptInput(Func<char, bool> value);
 
         /// <summary>
-        /// MaxLenght of input text.
+        /// MaxLength of input text.
         /// </summary>
-        /// <param name="value">Lenght</param>
+        /// <param name="value">Length</param>
         /// <returns><see cref="IControlInput"/></returns>
-        IControlInput MaxLenght(ushort value);
+        IControlInput MaxLength(ushort value);
 
         /// <summary>
         /// The input is a secret. the input text is masked to '#' (default value)
@@ -75,7 +75,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add a validator to accept sucessfull finish of control.
-        /// <br>Tip: see <see cref="PromptValidators"/> to validators embeding</br>
+        /// <br>Tip: see <see cref="PromptValidators"/> to validators embedding</br>
         /// </summary>
         /// <param name="validators">the function validator. <see cref="ValidationResult"/></param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -105,9 +105,9 @@ namespace PPlus.Controls
         /// <summary>
         /// Add Suggestion Handler feature
         /// </summary>
-        /// <param name="value">function to apply suggestions. <see cref="SugestionInput"/> and <seealso cref="SugestionOutput"/></param>
+        /// <param name="value">function to apply suggestions. <see cref="SuggestionInput"/> and <seealso cref="SuggestionOutput"/></param>
         /// <returns><see cref="IControlInput"/></returns>
-        IControlInput SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
+        IControlInput SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value);
 
         /// <summary>
         /// Minimum chars to enabled history feature. Default value is 0.

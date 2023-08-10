@@ -10,7 +10,7 @@
 
 ## Table of Contents
 
-For each snapshot, the title is **name of projet** in folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples).
+For each snapshot, the title is **name of project** in folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples).
 
 - [Pipeline](#pipeline)
 - [Alternate screen](#alternate-screen)
@@ -25,7 +25,7 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 - [Wait Time](#wait-time)
 - [Chart Bar](#chart-bar)
 - [Progress Bar](#progress-bar)
-- [Slider Swith (on/off style)](#slider-swith)
+- [Slider Switch (on/off style)](#slider-switch)
 - [Slider Number (vertical/Horizontal with bar)](#slider-number)
 - [Add to List Basic/Masked](#add-to-list)
 - [Browser Select file/folder](#browser-select)
@@ -60,7 +60,7 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 
 ![](./images/inputsample3.gif)
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputWithSugestionSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithSugestionSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [InputWithSuggestionSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithSuggestionSamples)
 
 ![](./images/inputsample4.gif)
 
@@ -165,9 +165,9 @@ For each snapshot, the title is **name of projet** in folder at github [**Sample
 
 ![](./images/progressbar1.gif)
 
-### Slider Swith
+### Slider Switch
 
-[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SliderSwithSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderSwithSamples)
+[**Top**](#promptplus-snapshot) | [**Main**](index.md#table-of-contents) | [SliderSwitchSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderSwitchSamples)
 
 ![](./images/sliderswitch1.gif)
 

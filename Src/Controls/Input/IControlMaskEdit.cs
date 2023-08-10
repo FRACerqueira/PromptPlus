@@ -18,7 +18,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Overwrite <see cref="Style"/> to region tip type input.
         /// <br>Default Foreground : 'ConsoleColor.Yellow'</br>
-        /// <br>Default Background : same Console Background when setted</br>
+        /// <br>Default Background : same Console Background when set</br>
         /// </summary>
         /// <param name="value">Style</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
@@ -28,7 +28,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Overwrite <see cref="Style"/> to region neggative input.
         /// <br>Default Foreground : 'StyleControls.Answer'</br>
-        /// <br>Default Background : Same Console Background when setted</br>
+        /// <br>Default Background : Same Console Background when set</br>
         /// </summary>
         /// <param name="value">Style</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
@@ -37,7 +37,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Overwrite <see cref="Style"/> to region positive input.
         /// <br>Default Foreground : 'StyleControls.Answer'</br>
-        /// <br>Default Background : Same Console Background when setted</br>
+        /// <br>Default Background : Same Console Background when set</br>
         /// </summary>
         /// <param name="value">Style</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
@@ -127,12 +127,12 @@ namespace PPlus.Controls
         IControlMaskEdit FormatTime(FormatTime value);
 
         /// <summary>
-        /// Defines integer lenght, decimal lenght and accept signl.
+        /// Defines integer length, decimal length and accept signl.
         /// <br>Valid only for type MaskedType.Number or Currency, otherwise this set will be ignored.</br>
         /// <br>This set is Requeried for these types.</br>
         /// </summary>
-        /// <param name="intvalue">integer lenght</param>
-        /// <param name="decimalvalue">decimal lenght</param>
+        /// <param name="intvalue">integer length</param>
+        /// <param name="decimalvalue">decimal length</param>
         /// <param name="acceptSignal">True accept signal; otherwise, no.</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
         IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal);
@@ -168,7 +168,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add a validator to accept sucessfull finish of control.
-        /// <br>Tip: see <see cref="PromptValidators"/> to validators embeding</br>
+        /// <br>Tip: see <see cref="PromptValidators"/> to validators embedding</br>
         /// </summary>
         /// <param name="validators">the function validator. <see cref="ValidationResult"/></param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
@@ -198,9 +198,9 @@ namespace PPlus.Controls
         /// <summary>
         /// Add Suggestion (with mask!) Handler feature
         /// </summary>
-        /// <param name="value">function to apply suggestions. <see cref="SugestionInput"/> and <seealso cref="SugestionOutput"/></param>
+        /// <param name="value">function to apply suggestions. <see cref="SuggestionInput"/> and <seealso cref="SuggestionOutput"/></param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
-        IControlMaskEdit SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
+        IControlMaskEdit SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value);
 
         /// <summary>
         /// Minimum chars (without mask!) to enabled history feature.

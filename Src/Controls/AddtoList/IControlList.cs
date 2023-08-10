@@ -48,15 +48,15 @@ namespace PPlus.Controls
         IControlList AcceptInput(Func<char, bool> value);
 
         /// <summary>
-        /// MaxLenght of input text.
+        /// MaxLength of input text.
         /// </summary>
-        /// <param name="value">Lenght</param>
+        /// <param name="value">Length</param>
         /// <returns><see cref="IControlList"/></returns>
-        IControlList MaxLenght(ushort value);
+        IControlList MaxLength(ushort value);
 
         /// <summary>
         /// Add a validator to accept sucessfull finish of control.
-        /// <br>Tip: see <see cref="PromptValidators"/> to validators embeding</br>
+        /// <br>Tip: see <see cref="PromptValidators"/> to validators embedding</br>
         /// </summary>
         /// <param name="validators">the function validator. <see cref="ValidationResult"/></param>
         /// <returns><see cref="IControlList"/></returns>
@@ -72,9 +72,9 @@ namespace PPlus.Controls
         /// <summary>
         /// Add Suggestion Handler feature
         /// </summary>
-        /// <param name="value">function to apply suggestions. <see cref="SugestionInput"/> and <seealso cref="SugestionOutput"/></param>
+        /// <param name="value">function to apply suggestions. <see cref="SuggestionInput"/> and <seealso cref="SuggestionOutput"/></param>
         /// <returns><see cref="IControlList"/></returns>
-        IControlList SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
+        IControlList SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value);
 
         /// <summary>
         /// Add item to list

@@ -6,12 +6,12 @@ namespace PPlus.Tests.Controls.AddToList
 {
     public class AddToListTests : BaseTest
     {
-        SugestionOutput SugestionInputSample(SugestionInput arg)
+        SuggestionOutput SuggestionInputSample(SuggestionInput arg)
         {
-            var result = new SugestionOutput();
-            result.Add("sugestion 1");
-            result.Add("sugestion 2");
-            result.Add("sugestion 3");
+            var result = new SuggestionOutput();
+            result.Add("suggestion 1");
+            result.Add("suggestion 2");
+            result.Add("suggestion 3");
             return result;
         }
 
@@ -263,11 +263,11 @@ namespace PPlus.Tests.Controls.AddToList
         }
 
         [Fact]
-        public void Should_TryResultMaxLenght()
+        public void Should_TryResultMaxLength()
         {
             var ctrl = (ListControl)PromptPlus
                 .AddtoList("P", "D")
-                .MaxLenght(3);
+                .MaxLength(3);
             ctrl.InitControl(CancellationToken.None);
 
             CompletesIn(100, () =>
@@ -405,11 +405,11 @@ namespace PPlus.Tests.Controls.AddToList
         }
 
         [Fact]
-        public void Should_TryResulSugestion1()
+        public void Should_TryResulSuggestion1()
         {
             var ctrl = (ListControl)PromptPlus
                 .AddtoList("P", "D")
-                .SuggestionHandler(SugestionInputSample);
+                .SuggestionHandler(SuggestionInputSample);
             ctrl.InitControl(CancellationToken.None);
 
             CompletesIn(100, () =>
@@ -420,16 +420,16 @@ namespace PPlus.Tests.Controls.AddToList
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
-                Assert.Equal("sugestion 1", result.Value.First());
+                Assert.Equal("suggestion 1", result.Value.First());
             });
         }
 
         [Fact]
-        public void Should_TryResulSugestion2()
+        public void Should_TryResulSuggestion2()
         {
             var ctrl = (ListControl)PromptPlus
                 .AddtoList("P", "D")
-                .SuggestionHandler(SugestionInputSample);
+                .SuggestionHandler(SuggestionInputSample);
             ctrl.InitControl(CancellationToken.None);
 
             CompletesIn(100, () =>
@@ -440,16 +440,16 @@ namespace PPlus.Tests.Controls.AddToList
                 var result = ctrl.TryResult(CancellationToken.None);
                 Assert.False(result.IsAborted);
                 Assert.True(result.IsRunning);
-                Assert.Equal("sugestion 3", result.Value.First());
+                Assert.Equal("suggestion 3", result.Value.First());
             });
         }
 
         [Fact]
-        public void Should_TryResulCancelSugestion()
+        public void Should_TryResulCancelSuggestion()
         {
             var ctrl = (ListControl)PromptPlus
                 .AddtoList("P", "D")
-                .SuggestionHandler(SugestionInputSample);
+                .SuggestionHandler(SuggestionInputSample);
             ctrl.InitControl(CancellationToken.None);
 
             CompletesIn(100, () =>

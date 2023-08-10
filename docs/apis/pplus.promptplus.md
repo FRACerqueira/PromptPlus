@@ -1383,13 +1383,13 @@ The returned value is null if the end of the input stream has been reached.
 <br>Read the line from stream using Emacs keyboard shortcuts. A line is defined as a sequence of characters followed by<br>a car return ('\r'), a line feed ('\n'), or a carriage return<br>immedy followed by a line feed. The resulting string does not<br>contain the terminating carriage return and/or line feed.
 
 ```csharp
-public static string ReadLineWithEmacs(Nullable<UInt32> maxlenght, CaseOptions caseOptions, Action<String, Int32> afteraccept)
+public static string ReadLineWithEmacs(Nullable<UInt32> maxlength, CaseOptions caseOptions, Action<String, Int32> afteraccept)
 ```
 
 #### Parameters
 
-`maxlenght` [Nullable&lt;UInt32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The input Max-lenght
+`maxlength` [Nullable&lt;UInt32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+The input Max-length
 
 `caseOptions` [CaseOptions](./pplus.controls.caseoptions.md)<br>
 The input [CaseOptions](./pplus.controls.caseoptions.md)

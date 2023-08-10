@@ -45,7 +45,7 @@ The [ItemCalendar](./pplus.controls.itemcalendar.md)
 ### <a id="methods-addvalidators"/>**AddValidators(params Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>Tip: see  to validators embeding
+ <br>Tip: see  to validators embedding
 
 ```csharp
 IControlCalendar AddValidators(params Func<Object, ValidationResult>[] validators)

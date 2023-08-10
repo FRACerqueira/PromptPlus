@@ -112,7 +112,7 @@ namespace PPlus.Controls.Objects
             }
         }
 
-        public int Lenght => _frames.Count;
+        public int Length => _frames.Count;
         public int Interval => _interval;
         public bool IsReseted => _index == -1;
         public void Reset()

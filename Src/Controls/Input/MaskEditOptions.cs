@@ -21,7 +21,7 @@ namespace PPlus.Controls
         internal MaskEditOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             TimeoutOverwriteDefault = config.HistoryTimeout;
-            TypeTipStyle = styleSchema.Sugestion();
+            TypeTipStyle = styleSchema.Suggestion();
             PositiveStyle = styleSchema.Answer();
             NegativeStyle = styleSchema.Answer();
             HistoryPageSize = config.PageSize;
@@ -58,7 +58,7 @@ namespace PPlus.Controls
         public byte HistoryMaxItems { get; set; } = byte.MaxValue;
         public TimeSpan HistoryTimeout { get; set; }
         public string? HistoryFileName { get; set; }
-        public Func<SugestionInput, SugestionOutput>? SuggestionHandler { get; set; }
+        public Func<SuggestionInput, SuggestionOutput>? SuggestionHandler { get; set; }
         public bool ShowingHistory { get; set; }
         public bool HistoryEnabled => !string.IsNullOrEmpty(HistoryFileName);
         public bool DescriptionWithInputType { get; set; }

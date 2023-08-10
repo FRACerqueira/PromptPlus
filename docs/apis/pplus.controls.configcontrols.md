@@ -77,7 +77,7 @@ public HotKey ChartBarSwitchTypePress { get; set; }
 ### <a id="properties-completionmaxcount"/>**CompletionMaxCount**
 
 Get/Set Completion Max Items to return.
- <br>Default value : 1000. If value  less than 1 internal sette to 1.
+ <br>Default value : 1000. If value  less than 1 internal set to 1.
 
 ```csharp
 public int CompletionMaxCount { get; set; }
@@ -90,7 +90,7 @@ public int CompletionMaxCount { get; set; }
 ### <a id="properties-completionminimumprefixlength"/>**CompletionMinimumPrefixLength**
 
 Get/Set Minimum Prefix Length.
- <br>Default value : 3.If value less than 0 internal sette to 0.
+ <br>Default value : 3.If value less than 0 internal set to 0.
 
 ```csharp
 public int CompletionMinimumPrefixLength { get; set; }
@@ -103,7 +103,7 @@ public int CompletionMinimumPrefixLength { get; set; }
 ### <a id="properties-completionwaittostart"/>**CompletionWaitToStart**
 
 Get/Set Interval in mileseconds to wait start Completion funcion.
- <br>Default value : 1000. If value less than 10 internal sette to 10.
+ <br>Default value : 1000. If value less than 10 internal set to 10.
 
 ```csharp
 public int CompletionWaitToStart { get; set; }
@@ -232,7 +232,7 @@ public Nullable<Char> NoChar { get; set; }
 ### <a id="properties-pagesize"/>**PageSize**
 
 Get/Set Page Size from colletions.
- <br>Default value : 10. If value less than 1 internal sette to 1.
+ <br>Default value : 10. If value less than 1 internal set to 1.
 
 ```csharp
 public int PageSize { get; set; }

@@ -19,7 +19,7 @@ namespace PPlus.Controls
         internal InputOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             TimeoutOverwriteDefault = config.HistoryTimeout;
-            SwithView = config.PasswordViewPress;
+            SwitchView = config.PasswordViewPress;
             SecretChar = config.SecretChar.Value;
             HistoryPageSize = config.PageSize;
             HistoryTimeout = config.HistoryTimeout;
@@ -29,10 +29,10 @@ namespace PPlus.Controls
         public string? OverwriteDefaultFrom { get; set; } = null;
         public TimeSpan TimeoutOverwriteDefault { get; set; }
         public bool EnabledViewSecret { get; set; }
-        public HotKey SwithView { get; set; }
+        public HotKey SwitchView { get; set; }
         public CaseOptions InputToCase { get; set; } = CaseOptions.Any;
         public Func<char, bool>? AcceptInput { get; set; }
-        public ushort MaxLenght { get; set; } = ushort.MaxValue;
+        public ushort MaxLength { get; set; } = ushort.MaxValue;
         public char SecretChar { get; set; }
         public bool IsSecret { get; set; }
         public string DefaultEmptyValue { get; set; }
@@ -45,7 +45,7 @@ namespace PPlus.Controls
         public byte HistoryMaxItems { get; set; } = byte.MaxValue;
         public TimeSpan HistoryTimeout { get; set; }
         public string? HistoryFileName { get; set; }
-        public Func<SugestionInput, SugestionOutput>? SuggestionHandler { get; set; }
+        public Func<SuggestionInput, SuggestionOutput>? SuggestionHandler { get; set; }
         public bool ShowingHistory { get; set; }
         public bool HistoryEnabled => !string.IsNullOrEmpty(HistoryFileName);
 

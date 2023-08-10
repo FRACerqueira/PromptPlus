@@ -192,9 +192,9 @@
 
 - [StyleTreeView](./pplus.controls.styletreeview.md)
 
-- [SugestionInput](./pplus.controls.sugestioninput.md)
+- [SuggestionInput](./pplus.controls.suggestioninput.md)
 
-- [SugestionOutput](./pplus.controls.sugestionoutput.md)
+- [SuggestionOutput](./pplus.controls.suggestionoutput.md)
 
 - [SymbolType](./pplus.controls.symboltype.md)
 

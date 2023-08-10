@@ -36,11 +36,11 @@ namespace AutoCompleteSamples
                 .MinimumPrefixLength(1)
                 .Run();
 
-            PromptPlus.DoubleDash("For other features below see - input samples (same behaviour)");
+            PromptPlus.DoubleDash("For other features below see - input samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]ValidateOnDemand[/] - InputWithValidatorSamples");
             PromptPlus.WriteLine(". [yellow]AddValidators[/] - InputWithValidatorSamples");
-            PromptPlus.WriteLine(". [yellow]MaxLenght[/] - InputBasicSamples");
+            PromptPlus.WriteLine(". [yellow]MaxLength[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]AcceptInput[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]InputToCase[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]OverwriteDefaultFrom[/] - InputOverwriteDefaultFromSamples");

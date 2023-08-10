@@ -68,7 +68,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
         /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
-        /// <param name="speedAnimation">Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
+        /// <param name="speedAnimation">Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
         IControlProgressBar<T> Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);

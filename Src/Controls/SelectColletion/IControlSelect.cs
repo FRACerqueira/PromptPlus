@@ -33,14 +33,14 @@ namespace PPlus.Controls
         IControlSelect<T> Config(Action<IPromptConfig> context);
 
         /// <summary>
-        /// Default value seleted.
+        /// Default value selected.
         /// </summary>
         /// <param name="value">Value default</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
         IControlSelect<T> Default(T value);
 
         /// <summary>
-        /// Overwrite defaults start seleted value with last result saved on history.
+        /// Overwrite defaults start selected value with last result saved on history.
         /// </summary>
         /// <param name="value">name of file to save history</param>
         /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>

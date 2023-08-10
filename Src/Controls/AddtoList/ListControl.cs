@@ -19,7 +19,7 @@ namespace PPlus.Controls
         private Paginator<ItemListControl> _localpaginator;
         private bool _isInAutoCompleteMode;
         private int _completionsIndex = -1;
-        private SugestionOutput? _completions = null;
+        private SuggestionOutput? _completions = null;
         private int _editingItem = -1;
         public ListControl(IConsoleControl console, ListOptions options) : base(console, options)
         {
@@ -75,7 +75,7 @@ namespace PPlus.Controls
                 (item) => !item.Immutable);
             _localpaginator.UnSelected();
 
-            _inputBuffer = new(_options.InputToCase, _options.AcceptInput, _options.MaxLenght);
+            _inputBuffer = new(_options.InputToCase, _options.AcceptInput, _options.MaxLength);
             if (!string.IsNullOrEmpty(_options.DefaultValue))
             {
                 _inputBuffer.LoadPrintable(_options.DefaultValue);
@@ -128,15 +128,15 @@ namespace PPlus.Controls
         }
 
           
-        public IControlList SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
+        public IControlList SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value)
         {
             _options.SuggestionHandler = value;
             return this;
         }
 
-        public IControlList MaxLenght(ushort value)
+        public IControlList MaxLength(ushort value)
         {
-            _options.MaxLenght = value;
+            _options.MaxLength = value;
             return this;
         }
 
@@ -232,7 +232,7 @@ namespace PPlus.Controls
             if (_isInAutoCompleteMode)
             {
                 var answer = FinishResult;
-                screenBuffer.WriteSugestion(_options, answer);
+                screenBuffer.WriteSuggestion(_options, answer);
                 screenBuffer.SaveCursor();
             }
             else
@@ -336,13 +336,13 @@ namespace PPlus.Controls
                     }
                     _editingItem = -1;
                 }
-                //edit Item seleted
+                //edit Item selected
                 else if (_options.EditItemPress.Equals(keyInfo.Value) && _editingItem < 0 && _localpaginator.SelectedIndex >= 0)
                 {
                     _inputBuffer.Clear().LoadPrintable(_localpaginator.SelectedItem.Text);
                     _editingItem = _localpaginator.SelectedIndex;
                 }
-                //remove Item seleted
+                //remove Item selected
                 else if (_options.RemoveItemPress.Equals(keyInfo.Value) && _localpaginator.SelectedIndex >= 0)
                 {
                     if (_localpaginator.SelectedItem.Immutable)
@@ -464,13 +464,13 @@ namespace PPlus.Controls
                     _editingItem = -1;
                     break;
                 }
-                //apply sugestion and not edit
+                //apply suggestion and not edit
                 else if (_editingItem < 0 && _options.SuggestionHandler != null && (keyInfo.Value.IsPressTabKey() || keyInfo.Value.IsPressShiftTabKey()))
                 {
                     if (!_isInAutoCompleteMode)
                     {
-                        _completions = _options.SuggestionHandler.Invoke(new SugestionInput(_inputBuffer.ToString(), _options.OptContext));
-                        if (_completions.HasValue && _completions.Value.Sugestions.Count > 0)
+                        _completions = _options.SuggestionHandler.Invoke(new SuggestionInput(_inputBuffer.ToString(), _options.OptContext));
+                        if (_completions.HasValue && _completions.Value.Suggestions.Count > 0)
                         {
                             _completionsIndex = -1;
                             _isInAutoCompleteMode = true;
@@ -483,7 +483,7 @@ namespace PPlus.Controls
                     }
                     ExecuteAutoComplete(keyInfo.Value.IsPressShiftTabKey());
                 }
-                //cancel sugestion
+                //cancel suggestion
                 else if (_options.SuggestionHandler != null && _isInAutoCompleteMode && keyInfo.Value.IsPressEscKey())
                 {
                     _isInAutoCompleteMode = false;
@@ -557,14 +557,14 @@ namespace PPlus.Controls
             {
                 NextCompletions();
             }
-            _inputBuffer.Clear().LoadPrintable(_completions.Value.Sugestions[_completionsIndex]);
+            _inputBuffer.Clear().LoadPrintable(_completions.Value.Suggestions[_completionsIndex]);
             return true;
         }
 
         private void NextCompletions()
         {
             _completionsIndex++;
-            if (_completionsIndex > _completions.Value.Sugestions.Count - 1)
+            if (_completionsIndex > _completions.Value.Suggestions.Count - 1)
             {
                 _completionsIndex = 0;
             }
@@ -575,7 +575,7 @@ namespace PPlus.Controls
             _completionsIndex--;
             if (_completionsIndex < 0)
             {
-                _completionsIndex = _completions.Value.Sugestions.Count - 1;
+                _completionsIndex = _completions.Value.Suggestions.Count - 1;
             }
         }
 

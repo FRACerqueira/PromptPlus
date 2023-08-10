@@ -33,11 +33,11 @@ namespace PPlus.Controls.Objects
             }
         }
 
-        public static void WriteSugestion(this ScreenBuffer screenBuffer, BaseOptions options, string input)
+        public static void WriteSuggestion(this ScreenBuffer screenBuffer, BaseOptions options, string input)
         {
             if (!string.IsNullOrEmpty(input))
             {
-                screenBuffer.AddBuffer(input, options.OptStyleSchema.Sugestion(), true);
+                screenBuffer.AddBuffer(input, options.OptStyleSchema.Suggestion(), true);
             }
         }
 

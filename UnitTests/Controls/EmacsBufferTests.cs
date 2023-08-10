@@ -125,7 +125,7 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        //Emacs keyboard shortcut when when have any text with lenght > 1
+        //Emacs keyboard shortcut when when have any text with length > 1
         //Transpose the previous two characters
         internal void Should_have_accept_ctrl_T()
         {

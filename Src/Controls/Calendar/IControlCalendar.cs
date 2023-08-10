@@ -60,7 +60,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value"><see cref="DateTime"/></param>
         /// <param name="policy">
-        /// Policy to next/previous valid date if seleted date is invalid
+        /// Policy to next/previous valid date if selected date is invalid
         /// </param>
         /// <returns><see cref="IControlCalendar"/></returns>
         IControlCalendar Default(DateTime value, PolicyInvalidDate policy = PolicyInvalidDate.NextDate);
@@ -114,7 +114,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add a validator to accept sucessfull finish of control.
-        /// <br>Tip: see <see cref="PromptValidators"/> to validators embeding</br>
+        /// <br>Tip: see <see cref="PromptValidators"/> to validators embedding</br>
         /// </summary>
         /// <param name="validators">the function validator. <see cref="ValidationResult"/></param>
         /// <returns><see cref="IControlCalendar"/></returns>

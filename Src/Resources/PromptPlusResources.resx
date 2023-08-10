@@ -135,8 +135,8 @@
   <data name="CurrentFolder" xml:space="preserve">
     <value>Current folder</value>
   </data>
-  <data name="CurrentSeleted" xml:space="preserve">
-    <value>Current seleted</value>
+  <data name="CurrentSelected" xml:space="preserve">
+    <value>Current selected</value>
   </data>
   <data name="Done" xml:space="preserve">
     <value>Done</value>
@@ -150,8 +150,8 @@
   <data name="Group" xml:space="preserve">
     <value>Group</value>
   </data>
-  <data name="InputFisnishEnter" xml:space="preserve">
-    <value>Enter:Fisnish</value>
+  <data name="InputFinishEnter" xml:space="preserve">
+    <value>Enter:Finish</value>
   </data>
   <data name="InvalidMask" xml:space="preserve">
     <value>Invalid Mask</value>
@@ -219,8 +219,8 @@
   <data name="MoveYear" xml:space="preserve">
     <value>PgUp/PgDown:Change Year</value>
   </data>
-  <data name="MultiSelectFisnishEnter" xml:space="preserve">
-    <value>Enter:Fisnish, Space:Check/Uncheck</value>
+  <data name="MultiSelectFinishEnter" xml:space="preserve">
+    <value>Enter:Finish, Space:Check/Uncheck</value>
   </data>
   <data name="MultiSelectMaxSelection" xml:space="preserve">
     <value>Maximum item selection({0}) has been exceeded</value>
@@ -261,8 +261,8 @@
   <data name="PressedKey" xml:space="preserve">
     <value>Pressed key</value>
   </data>
-  <data name="SelectFisnishEnter" xml:space="preserve">
-    <value>Enter:Fisnish</value>
+  <data name="SelectFinishEnter" xml:space="preserve">
+    <value>Enter:Finish</value>
   </data>
   <data name="SelectionDisabled" xml:space="preserve">
     <value>Item disabled</value>
@@ -295,10 +295,10 @@
     <value>Up/Down/PgUp/PgDown:Move</value>
   </data>
   <data name="TooltipChartSwitchLegend" xml:space="preserve">
-    <value>{0}:Swith view Legdend</value>
+    <value>{0}:Switch view legend</value>
   </data>
   <data name="TooltipChartSwitchOrder" xml:space="preserve">
-    <value>{0}:Swith order view</value>
+    <value>{0}:Switch order view</value>
   </data>
   <data name="TooltipChartSwitchType" xml:space="preserve">
     <value>{0}:Toggle Chart type</value>
@@ -307,7 +307,7 @@
     <value>{0}:Edit item</value>
   </data>
   <data name="TooltipEnterPressList" xml:space="preserve">
-    <value>Enter:Add, Ctrl+Enter:Fisnish</value>
+    <value>Enter:Add, Ctrl+Enter:Finish</value>
   </data>
   <data name="TooltipFullPath" xml:space="preserve">
     <value>{0}:Toggle Full Path</value>
@@ -322,7 +322,7 @@
     <value>Down/PgDown:Historic(Min. {0} chars)</value>
   </data>
   <data name="TooltipInvertSelectAll" xml:space="preserve">
-    <value>{0}:Invert Seleted</value>
+    <value>{0}:Invert Selected</value>
   </data>
   <data name="TooltipOrder" xml:space="preserve">
     <value>Ordination: {0}</value>
@@ -345,11 +345,11 @@
   <data name="TooltipSelectFilter" xml:space="preserve">
     <value>Filter:Enter text to filter the items</value>
   </data>
-  <data name="TooltipSugestionEsc" xml:space="preserve">
-    <value>Esc:Cancel sugestion</value>
+  <data name="TooltipSuggestionEsc" xml:space="preserve">
+    <value>Esc:Cancel suggestion</value>
   </data>
-  <data name="TooltipSugestionToggle" xml:space="preserve">
-    <value>Tab/Shift Tab:Sugestions</value>
+  <data name="TooltipSuggestionToggle" xml:space="preserve">
+    <value>Tab/Shift Tab:Suggestions</value>
   </data>
   <data name="TooltipToggle" xml:space="preserve">
     <value>{0}:Toggle tooltips</value>
@@ -364,7 +364,7 @@
     <value>{0}:Toggle Notes</value>
   </data>
   <data name="TooltipViewPassword" xml:space="preserve">
-    <value>{0}:Swith view password</value>
+    <value>{0}:Switch view password</value>
   </data>
   <data name="ValidAnyKey" xml:space="preserve">
     <value>Press a valid key</value>

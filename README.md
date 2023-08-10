@@ -6,9 +6,9 @@
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
 
-**Interactive command-line toolkit for .Net core with powerful controls and commands to create professional console applications.**
+**Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
 
-**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
+**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
 **[Visit the official page for more documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
 
 ## Table of Contents
@@ -36,7 +36,7 @@
 - Fixed bug PromptPlus not restore terminal original setting when shutdown application
 - Fixed bug Autocomplete does not change result when backspace is pressed during search
 - Added Property CurrentBuffer in console drive to return Current Buffer running (Primary/Secondary)
-- Added SwapBuffer command to swith Primary/Secondar buffer (Valid only When console 'ansi'  suported)
+- Added SwapBuffer command to switch Primary/Secondary buffer (Valid only When console 'ansi'  supported)
 - Renamed 'AlternateScreen' to 'RunOnBuffer'. Now executes a custom action on TargetBuffer and returns to CurrentBuffer
 - Refactored console drivers initialization, control options initialization
 - Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
@@ -46,14 +46,14 @@
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
 - Fixed bug Control ProgressBar
-    - Not show gradient when setted ProgressBarType.Fill
+    - Not show gradient when set ProgressBarType.Fill
 - Improve testability of result classes/struct (Internal to public)
 
 ## Whats news in V4.0.2
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
 - Changed WaitControl to take context value in tasks and return context in result
-    - There are small break-chages  
+    - There are small break-changes  
 - Add Answer key check equals "Yes"/"No" using config values
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
@@ -73,7 +73,7 @@
 ## Features
 [**Top**](#table-of-contents)
 
-**All features have IntelliSense. The PromptPlus have more 20 controls with many features like: filters, validators, history, sugestions, spinner(19 embeding type and plus custom yours!), colors and styles for control-elements** :
+**All features have IntelliSense. PromptPlus has more than 20 controls with many features like: filters, validators, history, suggestions, spinner(19 embedding type and plus custom yours!), colors and styles for control-elements** :
 - Banner Ascii
 - Input text / Secret / AutoComplete with spinner
 - MaskEdit Generic / Only Date / Only Time / DateTime / Number /  Currency
@@ -99,9 +99,9 @@
 - Extra actions per stage : OnStartControl/OnInputRender/OnTryAcceptInput/OnFinishControl (ever)
 - Tooltips (ever and configurable) 
 - Filter by Contains / StartsWith (configurable) (depends on the control)
-- Collection subset items and interations (depends on the control)
+- Collection subset items and iterations (depends on the control)
 - Page information and page-size(depends on the control)
-- Spinner animmation (depends on the control)
+- Spinner animation (depends on the control)
 - Error message (depends on the control and validators)
  
 PromptPlus driver console  **Supports 4/8/24-bit colors** in the terminal with **auto-detection** of the current terminal's capabilities.
@@ -118,7 +118,7 @@ For migrate V3.3 to V4.0 [**see this link**](https://fracerqueira.github.io/Prom
 ## Console Engine
 [**Top**](#table-of-contents)
 
-The console driver have the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout and automatic color conversion.
+The console driver has the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout and automatic color conversion.
 The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
 
 ### Sample Output detect (ConsoleFeaturesSamples)
@@ -158,7 +158,7 @@ dotnet run --project [name of sample]
 
 ## Controls Snapshot
 
-For each snapshot, the title is **name of projet** sample in folder **samples**
+For each snapshot, the title is **name of project** sample in folder **samples**
 
 ### Pipeline
 
@@ -186,7 +186,7 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 
 ![](./docs/images/inputsample3.gif)
 
-[**Top**](#table-of-contents) | [InputWithSugestionSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithSugestionSamples)
+[**Top**](#table-of-contents) | [InputWithSuggestionSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithSuggestionSamples)
 
 ![](./docs/images/inputsample4.gif)
 
@@ -391,7 +391,7 @@ if (!in1.IsAborted)
 
 PromptPlus applies the language/culture **only when running controls**. The language/culture of the application is **not affected**. If language/culture is not informed, the application's language/culture will be used with fallback to en-US.
 
-All messages are affected when changed language/culture. PromptPlus has languages embeded:
+All messages are affected when changed language/culture. PromptPlus has languages embedded:
 - en-US (Default)
 - pt-BR
 
