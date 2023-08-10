@@ -143,7 +143,7 @@ IControlCalendar Default(DateTime value, PolicyInvalidDate policy)
 [DateTime](https://docs.microsoft.com/en-us/dotnet/api/system.datetime)
 
 `policy` [PolicyInvalidDate](./pplus.controls.policyinvaliddate.md)<br>
-Policy to next/previous valid date if seleted date is invalid
+Policy to next/previous valid date if selected date is invalid
 
 #### Returns
 

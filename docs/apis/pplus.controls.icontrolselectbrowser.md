@@ -143,7 +143,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### <a id="methods-default"/>**Default(String)**
 
-Default item (fullpath) seleted when started
+Default item (fullpath) selected when started
 
 ```csharp
 IControlSelectBrowser Default(string value)

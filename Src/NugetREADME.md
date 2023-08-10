@@ -10,7 +10,24 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 **PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
 
+## Whats news in V4.0.5
+
+- Fixed bug PromptPlus not restore StyleSchema when ResetColor
+- Fixed Spell checking (Breking Changes)
+    - SugestionInput to SuggestionInput
+        - Controls : MaskEdit/AddTolist/Input
+    - SugestionOutput to SuggestionOutput
+        - Controls : MaskEdit/AddTolist/Input
+    - MaxLenght to MaxLength 
+        - Controls : AutoComplete/AddTolist/Input
+    - StyleControls.Sugestion to StyleControls.Suggestion
+    - StyleSchemaExtensions.Sugestion to StyleSchemaExtensions.Suggestion
+    - PromptPlusException.Plataform to  PromptPlusException.Platform
+
+    **Special thanks to [ivideon](https://github.com/ividyon) for spell checking corrections, all documentation and wrong method/property names**
+
 ## Whats news in V4.0.4
+
 - Fixed bug PromptPlus not restore terminal original setting when shutdown application
 - Fixed bug Autocomplete does not change result when backspace is pressed during search
 - Added Property CurrentBuffer in console drive to return Current Buffer running (Primary/Secondary)
@@ -21,6 +38,7 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
     - Default value is = '850;65001'
 
 ## Whats news in V4.0.3
+
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
 - Fixed bug Control ProgressBar
@@ -28,6 +46,7 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 - Improve testability of result classes/struct (Internal to public)
 
 ## Whats news in V4.0.2
+
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
 - Changed WaitControl to take context value in tasks and return context in result
@@ -37,6 +56,7 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
 
 ## Whats news in V4.0.X
+
 - Fixed duplicate tooltip in calendar
 - New console engine
     - Supports 4/8/24-bit colors

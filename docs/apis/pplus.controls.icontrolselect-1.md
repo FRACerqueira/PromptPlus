@@ -135,7 +135,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### <a id="methods-default"/>**Default(T)**
 
-Default value seleted.
+Default value selected.
 
 ```csharp
 IControlSelect<T> Default(T value)
@@ -246,7 +246,7 @@ expresion to sort the colletion
 
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
-Overwrite defaults start seleted value with last result saved on history.
+Overwrite defaults start selected value with last result saved on history.
 
 ```csharp
 IControlSelect<T> OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)

@@ -315,7 +315,7 @@ namespace PPlus
         public static void ResetColor()
         {
             _consoledrive.ResetColor();
-            _styleschema.Init();
+            _styleschema.UpdateBackgoundColor(_consoledrive.BackgroundColor);
         }
 
         /// <summary>

@@ -29,6 +29,22 @@ PromptPlus was developed in C# with target frameworks:
 - .NET 6
 - .NET 7
 
+*** Whats news in V4.0.5 *** 
+----------------------------
+- Fixed bug PromptPlus not restore StyleSchema when ResetColor
+- Fixed Spell checking (Breking Changes)
+    - SugestionInput to SuggestionInput
+        - Controls : MaskEdit/AddTolist/Input
+    - SugestionOutput to SuggestionOutput
+        - Controls : MaskEdit/AddTolist/Input
+    - MaxLenght to MaxLength 
+        - Controls : AutoComplete/AddTolist/Input
+    - StyleControls.Sugestion to StyleControls.Suggestion
+    - StyleSchemaExtensions.Sugestion to StyleSchemaExtensions.Suggestion
+    - PromptPlusException.Plataform to  PromptPlusException.Platform
+
+    ** Special thanks to ivideon (https://github.com/ividyon) for spell checking corrections, all documentation and wrong method/property names**
+
 *** Whats news in V4.0.4 *** 
 ----------------------------
 - Fixed bug PromptPlus not restore terminal original setting when shutdown application

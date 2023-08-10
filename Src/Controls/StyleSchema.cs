@@ -18,7 +18,7 @@ namespace PPlus.Controls
 
         internal StyleSchema()
         {
-            _Styles = Init();
+            _Styles = StyleSchema.Init();
         }
 
         private StyleSchema(Dictionary<StyleControls, Style> newtyles)
@@ -43,7 +43,7 @@ namespace PPlus.Controls
             return _Styles[styleControls];
         }
 
-        internal Dictionary<StyleControls, Style> Init()
+        internal static Dictionary<StyleControls, Style> Init()
         {
             var auxdic = new Dictionary<StyleControls, Style>();
             var aux = Enum.GetValues(typeof(StyleControls)).Cast<StyleControls>();
