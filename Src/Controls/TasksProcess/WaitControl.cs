@@ -271,7 +271,7 @@ namespace PPlus.Controls
             }
         }
 
-        private void RunAllTasks(CancellationToken cancelationtoken)
+        private void RunAllTasks(CancellationToken cancellationtoken)
         {
             var i = 0;
             var timerSpinner = new Stopwatch();
@@ -295,7 +295,7 @@ namespace PPlus.Controls
                     {
                         samedesc = (firstdesc == _options.States[i].Description);
                     }
-                    if (!cancelationtoken.IsCancellationRequested && !_event.CancelAllNextTasks)
+                    if (!cancellationtoken.IsCancellationRequested && !_event.CancelAllNextTasks)
                     {
                         var act = _options.Steps[i];
                         using var waitHandle = new AutoResetEvent(false);
@@ -310,8 +310,8 @@ namespace PPlus.Controls
                             tm.Start();
                             try
                             {
-                                act.Invoke(_event,cancelationtoken);
-                                actsta = cancelationtoken.IsCancellationRequested? TaskStatus.Canceled: TaskStatus.RanToCompletion;
+                                act.Invoke(_event,cancellationtoken);
+                                actsta = cancellationtoken.IsCancellationRequested? TaskStatus.Canceled: TaskStatus.RanToCompletion;
                             }
                             catch (Exception ex)
                             {
@@ -360,8 +360,8 @@ namespace PPlus.Controls
                         break;
                     }
                 }
-                while (!cancelationtoken.IsCancellationRequested && currentmode == StepMode.Parallel && i < _options.Steps.Count && _options.States[i].StepMode == StepMode.Parallel);
-                if (cancelationtoken.IsCancellationRequested)
+                while (!cancellationtoken.IsCancellationRequested && currentmode == StepMode.Parallel && i < _options.Steps.Count && _options.States[i].StepMode == StepMode.Parallel);
+                if (cancellationtoken.IsCancellationRequested)
                 {
                     for (int pos = 0; i < tasks.Count; i++)
                     {
@@ -541,7 +541,7 @@ namespace PPlus.Controls
                     _promptlines = qtdlines;
                 }
                 timerSpinner.Start();
-                var tkspinner = Task.Run(() => ShowSpinner(detailsElapsedTime, timerSpinner, cancelationtoken), CancellationToken.None);
+                var tkspinner = Task.Run(() => ShowSpinner(detailsElapsedTime, timerSpinner, cancellationtoken), CancellationToken.None);
                 Task.WaitAll(tasks.Select(x => x.Item2).Where(x => !x.IsCompleted).ToArray(), CancellationToken.None);
                 timerSpinner.Stop();
                 if (!tkspinner.IsCanceled && !tkspinner.IsCompleted)
@@ -576,13 +576,13 @@ namespace PPlus.Controls
             ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
         }
 
-        private void ShowSpinner(List<(int left, int top, Stopwatch sw)> elapsetm, Stopwatch timer, CancellationToken cancelationtoken)
+        private void ShowSpinner(List<(int left, int top, Stopwatch sw)> elapsetm, Stopwatch timer, CancellationToken cancellationtoken)
         {
-            while (timer.IsRunning && !cancelationtoken.IsCancellationRequested)
+            while (timer.IsRunning && !cancellationtoken.IsCancellationRequested)
             {
                 var qtdlines = 0;
                 ConsolePlus.SetCursorPosition(_spinnerCursor.CursorLeft,_spinnerCursor.CursorTop);
-                var spn = _options.Spinner.NextFrame(cancelationtoken);
+                var spn = _options.Spinner.NextFrame(cancellationtoken);
                 var top = ConsolePlus.CursorTop;
                 var qtd = ConsolePlus.Write($"{spn}", _options.SpinnerStyle, false);
                 //space for ShowElapsedTime

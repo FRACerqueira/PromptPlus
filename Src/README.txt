@@ -23,7 +23,7 @@ https://fracerqueira.github.io/PromptPlus
 
 For migrate V3.3 to V4.X see this link: https://fracerqueira.github.io/PromptPlus/migrateversion.html.
 
-PromptPlus was developed in c# with target frameworks:
+PromptPlus was developed in C# with target frameworks:
 
 - netstandard2.1
 - .NET 6
@@ -34,7 +34,7 @@ PromptPlus was developed in c# with target frameworks:
 - Fixed bug PromptPlus not restore terminal original setting when shutdown application
 - Fixed bug Autocomplete does not change result when backspace is pressed during search
 - Added Property CurrentBuffer in console drive to return Current Buffer running (Primary/Secondary)
-- Added SwapBuffer command to swith Primary/Secondar buffer (Valid only When console 'ansi'  suported)
+- Added SwapBuffer command to switch Primary/Secondary buffer (Valid only When console 'ansi'  supported)
 - Renamed 'AlternateScreen' to 'RunOnBuffer'. Now executes a custom action on TargetBuffer and returns to CurrentBuffer
 - Refactored console drivers initialization, control options initialization
 - Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
@@ -45,7 +45,7 @@ PromptPlus was developed in c# with target frameworks:
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
 - Fixed bug Control ProgressBar
-    - Not show gradient when setted ProgressBarType.Fill
+    - Not show gradient when set ProgressBarType.Fill
 - Improve testability of result classes/struct (Internal to public)
 
 *** Whats news in V4.0.2 *** 
@@ -54,7 +54,7 @@ PromptPlus was developed in c# with target frameworks:
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
 - Changed WaitControl to take context value in tasks and return context in result
-    - There are small break-chages  
+    - There are small break-changes
 - Add Answer key check equals "Yes"/"No" using config values
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)

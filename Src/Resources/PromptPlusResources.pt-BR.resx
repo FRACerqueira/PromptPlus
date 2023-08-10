@@ -135,7 +135,7 @@
   <data name="CurrentFolder" xml:space="preserve">
     <value>Pasta corrente</value>
   </data>
-  <data name="CurrentSeleted" xml:space="preserve">
+  <data name="CurrentSelected" xml:space="preserve">
     <value>Selecionado</value>
   </data>
   <data name="Done" xml:space="preserve">
@@ -150,7 +150,7 @@
   <data name="Group" xml:space="preserve">
     <value>Grupo</value>
   </data>
-  <data name="InputFisnishEnter" xml:space="preserve">
+  <data name="InputFinishEnter" xml:space="preserve">
     <value>Enter:Concluir</value>
   </data>
   <data name="InvalidMask" xml:space="preserve">
@@ -219,7 +219,7 @@
   <data name="MoveYear" xml:space="preserve">
     <value>PgUp/PgDown:Mudar Ano</value>
   </data>
-  <data name="MultiSelectFisnishEnter" xml:space="preserve">
+  <data name="MultiSelectFinishEnter" xml:space="preserve">
     <value>Enter:Concluir, Space:Marcar/Desmarcar</value>
   </data>
   <data name="MultiSelectMaxSelection" xml:space="preserve">
@@ -261,7 +261,7 @@
   <data name="PressedKey" xml:space="preserve">
     <value>Tecla pressionada</value>
   </data>
-  <data name="SelectFisnishEnter" xml:space="preserve">
+  <data name="SelectFinishEnter" xml:space="preserve">
     <value>Enter:Concluir</value>
   </data>
   <data name="SelectionDisabled" xml:space="preserve">
@@ -295,7 +295,7 @@
     <value>Up/Down/PgUp/PgDown:Mover</value>
   </data>
   <data name="TooltipChartSwitchLegend" xml:space="preserve">
-    <value>{0}:Ver/Esconder legdenda</value>
+    <value>{0}:Ver/Esconder legenda</value>
   </data>
   <data name="TooltipChartSwitchOrder" xml:space="preserve">
     <value>{0}:Mudar ordenação</value>
@@ -342,10 +342,10 @@
   <data name="TooltipSelectFilter" xml:space="preserve">
     <value>Filtro:Dgite um texto para filtrar</value>
   </data>
-  <data name="TooltipSugestionEsc" xml:space="preserve">
+  <data name="TooltipSuggestionEsc" xml:space="preserve">
     <value>Esc:Cancelar sugestões</value>
   </data>
-  <data name="TooltipSugestionToggle" xml:space="preserve">
+  <data name="TooltipSuggestionToggle" xml:space="preserve">
     <value>Tab/Shift Tab:Sugestões</value>
   </data>
   <data name="TooltipToggle" xml:space="preserve">

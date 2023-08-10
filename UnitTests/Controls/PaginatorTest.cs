@@ -60,7 +60,7 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        public void Should_have_seletedItem()
+        public void Should_have_selectedItem()
         {
             // Given
             var items = new List<string>();
@@ -96,7 +96,7 @@ namespace PPlus.Tests.Controls
 
 
         [Fact]
-        public void Should_have_seletedItem_with_FistItem()
+        public void Should_have_selectedItem_with_FistItem()
         {
             // Given
             var items = new List<string>();
@@ -113,7 +113,7 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        public void Should_have_seletedItem_with_LastItem()
+        public void Should_have_selectedItem_with_LastItem()
         {
             // Given
             var items = new List<string>();
@@ -130,7 +130,7 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        public void Should_have_seletedItem_with_NextPage_unselect()
+        public void Should_have_selectedItem_with_NextPage_unselect()
         {
             // Given
             var items = new List<string>();
@@ -149,7 +149,7 @@ namespace PPlus.Tests.Controls
         [Theory]
         [InlineData(IndexOption.FirstItem)]
         [InlineData(IndexOption.FirstItemWhenHasPages)]
-        internal void Should_have_seletedItem_with_NextPage_FistSelect(IndexOption opc)
+        internal void Should_have_selectedItem_with_NextPage_FistSelect(IndexOption opc)
         {
             // Given
             var items = new List<string>();
@@ -168,7 +168,7 @@ namespace PPlus.Tests.Controls
         [Theory]
         [InlineData(IndexOption.LastItem)]
         [InlineData(IndexOption.LastItemWhenHasPages)]
-        internal void Should_have_seletedItem_with_NextPage_LastSelect(IndexOption opc)
+        internal void Should_have_selectedItem_with_NextPage_LastSelect(IndexOption opc)
         {
             // Given
             var items = new List<string>();
@@ -185,7 +185,7 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        public void Should_have_seletedItem_with_FistItem_and_validator_Select()
+        public void Should_have_selectedItem_with_FistItem_and_validator_Select()
         {
             // Given
             var items = new List<string>();
@@ -201,7 +201,7 @@ namespace PPlus.Tests.Controls
             Assert.Equal("1", pg.SelectedItem);
         }
         [Fact]
-        public void Should_have_seletedItem_with_LastItem_and_validator_Select()
+        public void Should_have_selectedItem_with_LastItem_and_validator_Select()
         {
             // Given
             var items = new List<string>();
@@ -220,7 +220,7 @@ namespace PPlus.Tests.Controls
         [Theory]
         [InlineData(IndexOption.FirstItem)]
         [InlineData(IndexOption.FirstItemWhenHasPages)]
-        internal void Should_have_seletedItem_with_NextPage_FistSelect_and_validator_Select(IndexOption opc)
+        internal void Should_have_selectedItem_with_NextPage_FistSelect_and_validator_Select(IndexOption opc)
         {
             // Given
             var items = new List<string>();
@@ -239,7 +239,7 @@ namespace PPlus.Tests.Controls
         [Theory]
         [InlineData(IndexOption.LastItem)]
         [InlineData(IndexOption.LastItemWhenHasPages)]
-        internal void Should_have_seletedItem_with_NextPage_LastSelect_and_validator_Selec(IndexOption opc)
+        internal void Should_have_selectedItem_with_NextPage_LastSelect_and_validator_Selec(IndexOption opc)
         {
             // Given
             var items = new List<string>();
@@ -256,7 +256,7 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        internal void Should_have_seletedItem_with_UpdateFilter()
+        internal void Should_have_selectedItem_with_UpdateFilter()
         {
             // Given
             var items = new List<string>();
@@ -275,7 +275,7 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        internal void Should_have_seletedItem_with_UpdateFilter_and_tryget()
+        internal void Should_have_selectedItem_with_UpdateFilter_and_tryget()
         {
             // Given
             var items = new List<string>();

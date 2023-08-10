@@ -25,14 +25,14 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
         /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
-        /// <param name="speedAnimation">Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
+        /// <param name="speedAnimation">Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
         IControlAutoComplete Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
         /// <summary>
         /// Number minimum of chars to accept autocomplete
-        /// <br>Default value : 3. If value less than 0 internal sette to 0.</br>
+        /// <br>Default value : 3. If value less than 0 internal set to 0.</br>
         /// </summary>
         /// <param name="value">Number of chars</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
@@ -40,7 +40,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Number of mileseconds to wait before to start function autocomplete
-        /// <br>Default value : 1000. If value less than 10 internal sette to 10.</br>
+        /// <br>Default value : 1000. If value less than 10 internal set to 10.</br>
         /// </summary>
         /// <param name="value">Number of mileseconds</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
@@ -101,15 +101,15 @@ namespace PPlus.Controls
         IControlAutoComplete AcceptInput(Func<char, bool> value);
 
         /// <summary>
-        /// MaxLenght of input text.
+        /// MaxLength of input text.
         /// </summary>
-        /// <param name="value">Lenght</param>
+        /// <param name="value">Length</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
-        IControlAutoComplete MaxLenght(ushort value);
+        IControlAutoComplete MaxLength(ushort value);
 
         /// <summary>
         /// Add a validator to accept sucessfull finish of control.
-        /// <br>Tip: see <see cref="PromptValidators"/> to validators embeding</br>
+        /// <br>Tip: see <see cref="PromptValidators"/> to validators embedding</br>
         /// </summary>
         /// <param name="validators">the function validator. <see cref="ValidationResult"/></param>
         /// <returns><see cref="IControlAutoComplete"/></returns>

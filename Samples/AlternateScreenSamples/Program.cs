@@ -10,7 +10,7 @@ namespace AlternateScreenSamples
 
             PromptPlus.DoubleDash($"PromptPlus AlternateScreen");
             PromptPlus.SetCursorPosition(0,PromptPlus.CursorTop+1);
-            PromptPlus.KeyPress("Press any key to Swith secondary screen", cfg =>
+            PromptPlus.KeyPress("Press any key to Switch secondary screen", cfg =>
             {
                 cfg.ShowTooltip(false);
             })
@@ -22,7 +22,7 @@ namespace AlternateScreenSamples
                 {
                     PromptPlus.WriteLine("This text run in secondary screen");
                     PromptPlus.WriteLines(2);
-                    PromptPlus.KeyPress("Press any key to Swith primary screen", cfg =>
+                    PromptPlus.KeyPress("Press any key to Switch primary screen", cfg =>
                     {
                         cfg.ShowTooltip(false);
                     })

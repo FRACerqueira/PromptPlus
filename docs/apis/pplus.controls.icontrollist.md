@@ -83,7 +83,7 @@ true the item cannot be removed; otherwise yes.
 ### <a id="methods-addvalidators"/>**AddValidators(params Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>Tip: see  to validators embeding
+ <br>Tip: see  to validators embedding
 
 ```csharp
 IControlList AddValidators(params Func<Object, ValidationResult>[] validators)
@@ -220,18 +220,18 @@ Action to execute
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
+### <a id="methods-maxlength"/>**MaxLength(UInt16)**
 
-MaxLenght of input text.
+MaxLength of input text.
 
 ```csharp
-IControlList MaxLenght(ushort value)
+IControlList MaxLength(ushort value)
 ```
 
 #### Parameters
 
 `value` [UInt16](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
-Lenght
+Length
 
 #### Returns
 
@@ -274,18 +274,18 @@ Maximum number of items
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
+### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SuggestionInput, SuggestionOutput&gt;)**
 
 Add Suggestion Handler feature
 
 ```csharp
-IControlList SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
+IControlList SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value)
 ```
 
 #### Parameters
 
-`value` [Func&lt;SugestionInput, SugestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.md) and [SugestionOutput](./pplus.controls.sugestionoutput.md)
+`value` [Func&lt;SuggestionInput, SuggestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply suggestions. [SuggestionInput](./pplus.controls.suggestioninput.md) and [SuggestionOutput](./pplus.controls.suggestionoutput.md)
 
 #### Returns
 

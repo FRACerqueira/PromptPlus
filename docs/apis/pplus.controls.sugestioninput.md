@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:SugestionInput 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:SuggestionInput 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,17 +8,17 @@
 
 [**Back to List Api**](./apis.md)
 
-# SugestionInput
+# SuggestionInput
 
 Namespace: PPlus.Controls
 
-Represents The Sugestion Input struct.
+Represents The Suggestion Input struct.
 
 ```csharp
-public struct SugestionInput
+public struct SuggestionInput
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [SugestionInput](./pplus.controls.sugestioninput.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [SuggestionInput](./pplus.controls.suggestioninput.md)
 
 ## Properties
 
@@ -36,7 +36,7 @@ public object Context { get; }
 
 ### <a id="properties-text"/>**Text**
 
-Get Sugestion Text input
+Get Suggestion Text input
 
 ```csharp
 public string Text { get; }
@@ -48,12 +48,12 @@ public string Text { get; }
 
 ## Constructors
 
-### <a id="constructors-.ctor"/>**SugestionInput()**
+### <a id="constructors-.ctor"/>**SuggestionInput()**
 
-Create a SugestionInput
+Create a SuggestionInput
 
 ```csharp
-SugestionInput()
+SuggestionInput()
 ```
 
 **Remarks:**

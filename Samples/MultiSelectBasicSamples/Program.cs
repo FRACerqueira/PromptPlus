@@ -73,7 +73,7 @@ namespace MultiSelectBasicSamples
             {
                 foreach (var item in multsel.Value)
                 {
-                    PromptPlus.WriteLine($"You seleted item is {item}");
+                    PromptPlus.WriteLine($"You selected item is {item}");
                 }
             }
 
@@ -92,7 +92,7 @@ namespace MultiSelectBasicSamples
             {
                 foreach (var item in multsel.Value)
                 {
-                    PromptPlus.WriteLine($"You seleted item is {item}");
+                    PromptPlus.WriteLine($"You selected item is {item}");
                 }
             }
 
@@ -102,8 +102,8 @@ namespace MultiSelectBasicSamples
                 .FilterType(FilterMode.StartsWith)
                 .Run();
 
-            PromptPlus.DoubleDash("Control:MultiSelect - Diabled Item/seleted item");
-            PromptPlus.MultiSelect<string>("Which cities would you like to visit?", "London is disabled,Seattle disabled and seleted,Tokyo is started selected")
+            PromptPlus.DoubleDash("Control:MultiSelect - Diabled Item/selected item");
+            PromptPlus.MultiSelect<string>("Which cities would you like to visit?", "London is disabled,Seattle disabled and selected,Tokyo is started selected")
                 .AddItem("Seattle",true,true)
                 .AddItem("London", true)
                 .AddItem("Tokyo",false,true)
@@ -149,7 +149,7 @@ namespace MultiSelectBasicSamples
                 .Range(2,3)
                 .Run();
 
-            PromptPlus.DoubleDash("For other basic features below see - input samples (same behaviour)");
+            PromptPlus.DoubleDash("For other basic features below see - input samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]OverwriteDefaultFrom[/] - InputOverwriteDefaultFromSamples");
             PromptPlus.WriteLines(2);

@@ -21,7 +21,7 @@ namespace PPlus.Tests.Controls
             Assert.Equal(Style.Default.Foreground(ConsoleColor.White), ss.Prompt());
             Assert.Equal(Style.Default.Foreground(ConsoleColor.Cyan), ss.Answer());
             Assert.Equal(Style.Default.Foreground(ConsoleColor.DarkYellow), ss.Description());
-            Assert.Equal(Style.Default.Foreground(ConsoleColor.Yellow), ss.Sugestion());
+            Assert.Equal(Style.Default.Foreground(ConsoleColor.Yellow), ss.Suggestion());
             Assert.Equal(Style.Default.Foreground(ConsoleColor.Gray), ss.UnSelected());
             Assert.Equal(Style.Default.Foreground(ConsoleColor.Green), ss.Selected());
             Assert.Equal(Style.Default.Foreground(ConsoleColor.DarkGray), ss.Disabled());
@@ -50,7 +50,7 @@ namespace PPlus.Tests.Controls
 
             Assert.Equal(Color.Aquamarine1, ss.Answer().Background);
             Assert.Equal(Color.Aquamarine1, ss.Description().Background);
-            Assert.Equal(Color.Aquamarine1, ss.Sugestion().Background);
+            Assert.Equal(Color.Aquamarine1, ss.Suggestion().Background);
             Assert.Equal(Color.Aquamarine1, ss.UnSelected().Background);
             Assert.Equal(Color.Aquamarine1, ss.Selected().Background);
             Assert.Equal(Color.Aquamarine1, ss.Disabled().Background);

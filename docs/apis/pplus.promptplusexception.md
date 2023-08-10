@@ -85,12 +85,12 @@ public string Message { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### <a id="properties-plataform"/>**Plataform**
+### <a id="properties-platform"/>**Platform**
 
-The Plataform running
+The Platform running
 
 ```csharp
-public string Plataform { get; }
+public string Platform { get; }
 ```
 
 #### Property Value

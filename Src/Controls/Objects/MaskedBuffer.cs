@@ -573,12 +573,12 @@ namespace PPlus.Controls.Objects
             return this;
         }
 
-        internal string RemoveMask(string value, bool skiplenght)
+        internal string RemoveMask(string value, bool skiplength)
         {
             SignalNumberInput = " "[0];
             SignalTimeInput = string.Empty;
             _validSignalNumber = $"{_cultureMasked.NumberFormat.PositiveSign[0]}{_cultureMasked.NumberFormat.NegativeSign[0]}";
-            return UnMaskValue(value, skiplenght);
+            return UnMaskValue(value, skiplength);
         }
 
 

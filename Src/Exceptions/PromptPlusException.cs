@@ -19,7 +19,7 @@ namespace PPlus
         /// <param name="message">The message for exception</param>
         public PromptPlusException(string message) : base(message)
         {
-            Plataform = RuntimeInformation.OSDescription;
+            Platform = RuntimeInformation.OSDescription;
             Framework = RuntimeInformation.FrameworkDescription;
             Version = typeof(PromptPlusException).Assembly.GetName().Version.ToString();
         }
@@ -33,8 +33,8 @@ namespace PPlus
         /// </summary>
         public string Framework { get; }
         /// <summary>
-        /// The Plataform running 
+        /// The Platform running 
         /// </summary>
-        public string Plataform { get; }
+        public string Platform { get; }
     }
 }

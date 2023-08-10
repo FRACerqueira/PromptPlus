@@ -6,7 +6,7 @@
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
-**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
+**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
 
 
 ## Table of Contents
@@ -31,7 +31,7 @@
 - Fixed bug PromptPlus not restore terminal original setting when shutdown application
 - Fixed bug Autocomplete does not change result when backspace is pressed during search
 - Added Property CurrentBuffer in console drive to return Current Buffer running (Primary/Secondary)
-- Added SwapBuffer command to swith Primary/Secondar buffer (Valid only When console 'ansi'  suported)
+- Added SwapBuffer command to switch Primary/Secondary buffer (Valid only When console 'ansi'  supported)
 - Renamed 'AlternateScreen' to 'RunOnBuffer'. Now executes a custom action on TargetBuffer and returns to CurrentBuffer
 - Refactored console drivers initialization, control options initialization
 - Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
@@ -41,14 +41,14 @@
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
 - Fixed bug Control ProgressBar
-    - Not show gradient when setted ProgressBarType.Fill
+    - Not show gradient when set ProgressBarType.Fill
 - Improve testability of result classes/struct (Internal to public)
 
 ## Whats news in V4.0.2
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
 - Changed WaitControl to take context value in tasks and return context in result
-    - There are small break-chages  
+    - There are small break-changes  
 - Add Answer key check equals "Yes"/"No" using config values
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
@@ -68,7 +68,7 @@
 ## Features
 [**Top**](#table-of-contents)
  
-**_All features have IntelliSense_. The PromptPlus have more 20 controls with many features like: filters, validators, history, sugestions, spinner(19 embeding type and plus custom yours!), colors and styles for control-elements** :
+**_All features have IntelliSense_. PromptPlus has more than 20 controls with many features like: filters, validators, history, suggestions, spinner(19 embedding type and plus custom yours!), colors and styles for control-elements** :
 - Banner Ascii
 - Input text / Secret / AutoComplete with spinner
 - MaskEdit Generic / Only Date / Only Time / DateTime / Number /  Currency
@@ -94,9 +94,9 @@
 - Extra actions per stage : OnStartControl/OnInputRender/OnTryAcceptInput/OnFinishControl (ever)
 - Tooltips (ever and configurable) 
 - Filter by Contains / StartsWith (configurable) (depends on the control)
-- Collection subset items and interations (depends on the control)
+- Collection subset items and iterations (depends on the control)
 - Page information and page-size(depends on the control)
-- Spinner animmation (depends on the control)
+- Spinner animation (depends on the control)
 - Error message (depends on the control and validators)
 
 All controls use **fluent interface**; an object-oriented API whose design relies extensively on method chaining. Its goal is to increase code legibility. The term was coined in 2005 by Eric Evans and Martin Fowler.
@@ -123,7 +123,7 @@ For migrate V3 to V4 [**see this link**](migrateversion.md).
 ## Installing
 [**Top**](#table-of-contents)
 
-PromptPlus was developed in c# with the **netstandard2.1, .NET 6 AND .NET7** target frameworks.
+PromptPlus was developed in C# with the **netstandard2.1**, **.NET 6** AND **.NET 7** target frameworks.
 
 ```
 Install-Package PromptPlus [-pre]
@@ -147,12 +147,12 @@ dotnet run --project [name of sample]
 ## Console Engine
 [**Top**](#table-of-contents)
 
-The console driver have the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout.
+The console driver has the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout.
 The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
 
 ### Wrap to Console - Code sample 
 
-The PromptPlus have wrap from console for key features **cross-plataform**.
+PromptPlus has **cross-platform** wrap to console for key features.
 
 ```csharp
 //Console.CursorLeft = 1;
@@ -165,21 +165,21 @@ PromptPlus.ReadKey();
 - Clear(Color? backcolor = null)
   - Clear console with color and set BackgroundColor with color.
 - ClearLine(int? row = null, Style? style = null) 
-  - Clear row line with style 
+  - Clear row line with style.
 - ClearRestOfLine(Style? style = null)
-  - Clear rest of line
+  - Clear rest of line.
 - WriteLines(int steps = 1)
-  - write many new lines
+  - Write many new lines.
 - SingleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
-  - Writes Write single dash after.
+  - Writes a line with a single dash line after.
 - DoubleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
-  - Writes a pair of lines of dashes.
+  - Writes a line between a pair of dash lines.
 - MoveCursor(CursorDirection direction, int steps)
   - Move cursor by direction
 - WaitKeypress(bool intercept, CancellationToken? cancellationToken)
-  - Wait a keypress with cancelation token
-- ReadLineWithEmacs(uint? maxlenght = uint.MaxValue,Action<string,int> afteraccept = null, CaseOptions caseOptions = CaseOptions.Any)
-  - Read line from stream using Emacs keyboard shortcuts with maxlenght, case options and user action after each accepted keystroke
+  - Wait a keypress with cancellation token
+- ReadLineWithEmacs(uint? maxlength = uint.MaxValue,Action<string,int> afteraccept = null, CaseOptions caseOptions = CaseOptions.Any)
+  - Read line from stream using Emacs keyboard shortcuts with maxlength, case options and user action after each accepted keystroke
 
 ### Extend Write / Writeline
 - Write(string value, Style? style = null, bool clearrestofline = false)
@@ -257,7 +257,7 @@ PromptPlus
 ![](./images/consoleoverflowcapacity.gif)
 
 
-#### Sample color capacity ([Projet sample](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples))
+#### Sample color capacity ([Project sample](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples))
 
 
 **_Note: This layout and code was inspired by the excellent project:spectreconsole, having the same color palette_**
@@ -270,7 +270,7 @@ PromptPlus
 
 PromptPlus applies the language/culture **only when running controls**. The language/culture of the application is **not affected**. If language/culture is not informed, the application's language/culture will be used with fallback to en-US.
 
-All messages are affected when changed language/culture. PromptPlus has languages embeded:
+All messages are affected when changed language/culture. PromptPlus has languages embedded:
 - en-US (Default)
 - pt-BR
  
@@ -366,7 +366,7 @@ For more details [visit the **official API page**](./apis/pplus.promptpluskeyinf
 
 PromptPlus have a lot extensions to **commons validator** and **validator import**(No duplicate code!) 
 
-For more details see [**List validators embeding**](./apis/pplus.controls.promptvalidators.md)
+For more details see [**List validators embedding**](./apis/pplus.controls.promptvalidators.md)
 
 ```csharp
 private class MylCass

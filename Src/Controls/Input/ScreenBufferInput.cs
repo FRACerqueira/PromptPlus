@@ -52,16 +52,16 @@ namespace PPlus.Controls
                     {
                         return string.Format("{0}, {1}, {2}, {3}",
                             string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                            string.Format(Messages.TooltipViewPassword, baseOptions.SwithView),
+                            string.Format(Messages.TooltipViewPassword, baseOptions.SwitchView),
                             string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
-                            Messages.InputFisnishEnter);
+                            Messages.InputFinishEnter);
                     }
                     else
                     {
                         return string.Format("{0}, {1}, {2}",
                             string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                            string.Format(Messages.TooltipViewPassword, baseOptions.SwithView),
-                            Messages.InputFisnishEnter);
+                            string.Format(Messages.TooltipViewPassword, baseOptions.SwitchView),
+                            Messages.InputFinishEnter);
                     }
                 }
                 else
@@ -71,13 +71,13 @@ namespace PPlus.Controls
                         return string.Format("{0}, {1}, {2}",
                             string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                             string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
-                            Messages.InputFisnishEnter);
+                            Messages.InputFinishEnter);
                     }
                     else
                     {
                         return string.Format("{0}, {1}",
                             string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                            Messages.InputFisnishEnter);
+                            Messages.InputFinishEnter);
                     }
                 }
             }
@@ -90,7 +90,7 @@ namespace PPlus.Controls
                         return string.Format("{0}, {1}, {2}\n{3}, {4}",
                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                         Messages.TooltipHistoryEsc,
-                        Messages.SelectFisnishEnter,
+                        Messages.SelectFinishEnter,
                         Messages.TooltipPages,
                         Messages.TooltipHistoryClear);
                     }
@@ -100,10 +100,10 @@ namespace PPlus.Controls
                         {
                             return string.Format("{0}, {1}, {2}\n{3}, {4}",
                             string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                            Messages.TooltipSugestionEsc,
-                            Messages.InputFisnishEnter,
+                            Messages.TooltipSuggestionEsc,
+                            Messages.InputFinishEnter,
                             string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
-                            Messages.TooltipSugestionToggle);
+                            Messages.TooltipSuggestionToggle);
                         }
                         else
                         {
@@ -114,17 +114,17 @@ namespace PPlus.Controls
                                     return string.Format("{0}, {1}, {2}\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
-                                    Messages.TooltipSugestionToggle);
+                                    Messages.TooltipSuggestionToggle);
                                 }
                                 else
                                 {
                                     return string.Format("{0}, {1}, {2}, {3}",
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength),
-                                    Messages.TooltipSugestionToggle);
+                                    Messages.TooltipSuggestionToggle);
                                 }
                             }
                             else
@@ -134,14 +134,14 @@ namespace PPlus.Controls
                                     return string.Format("{0}, {1}, {2}, {3}",
                                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                         string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
-                                        Messages.InputFisnishEnter,
+                                        Messages.InputFinishEnter,
                                         string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength));
                                 }
                                 else
                                 {
                                     return string.Format("{0}, {1}, {2}",
                                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                                        Messages.InputFisnishEnter,
+                                        Messages.InputFinishEnter,
                                         string.Format(Messages.TooltipHistoryToggle, baseOptions.HistoryMinimumPrefixLength));
                                 }
                             }
@@ -154,9 +154,9 @@ namespace PPlus.Controls
                     {
                         return string.Format("{0}, {1}, {2}, {3}",
                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                        Messages.TooltipSugestionEsc,
-                        Messages.InputFisnishEnter,
-                        Messages.TooltipSugestionToggle);
+                        Messages.TooltipSuggestionEsc,
+                        Messages.InputFinishEnter,
+                        Messages.TooltipSuggestionToggle);
                     }
                     else
                     {
@@ -166,16 +166,16 @@ namespace PPlus.Controls
                             {
                                 return string.Format("{0}, {1}, {2}, {3}",
                                 string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                                Messages.TooltipSugestionToggle,
-                                Messages.InputFisnishEnter,
+                                Messages.TooltipSuggestionToggle,
+                                Messages.InputFinishEnter,
                                 string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress));
                             }
                             else
                             {
                                 return string.Format("{0}, {1}, {2}",
                                 string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                                Messages.InputFisnishEnter,
-                                Messages.TooltipSugestionToggle);
+                                Messages.InputFinishEnter,
+                                Messages.TooltipSuggestionToggle);
                             }
                         }
                         else
@@ -185,13 +185,13 @@ namespace PPlus.Controls
                                 return string.Format("{0}, {1}, {2}",
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter);
+                                    Messages.InputFinishEnter);
                             }
                             else
                             {
                                 return string.Format("{0}, {1}",
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter);
+                                    Messages.InputFinishEnter);
                             }
                         }
                     }

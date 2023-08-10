@@ -36,13 +36,13 @@ namespace AddToListSamples
                 .Run();
 
 
-            PromptPlus.DoubleDash("For other features below see - input/Select samples (same behaviour)");
+            PromptPlus.DoubleDash("For other features below see - input/Select samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]AddValidators[/] - InputWithValidatorSamples");
-            PromptPlus.WriteLine(". [yellow]MaxLenght[/] - InputBasicSamples");
+            PromptPlus.WriteLine(". [yellow]MaxLength[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]AcceptInput[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]InputToCase[/] - InputBasicSamples");
-            PromptPlus.WriteLine(". [yellow]SuggestionHandler[/] - InputWithSugestionSamples");
+            PromptPlus.WriteLine(". [yellow]SuggestionHandler[/] - InputWithSuggestionSamples");
             PromptPlus.WriteLine(". [yellow]Interaction[/] - SelectBasicSamples");
             PromptPlus.WriteLine(". [yellow]PageSize[/] - SelectBasicSamples");
             PromptPlus.WriteLines(2);

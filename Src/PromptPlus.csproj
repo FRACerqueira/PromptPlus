@@ -22,7 +22,7 @@
 
 	<PropertyGroup>
 		<Authors>Fernando Cerqueira</Authors>
-		<Description>Interactive command-line toolkit for .Net core with powerful controls and commands to create professional console applications.</Description>
+		<Description>Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.</Description>
 		<PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
 		<PackageTags>cli;command-line;console;interactive;prompt;terminal;c#;toolkit</PackageTags>
 		<RepositoryUrl>https://fracerqueira.github.io/PromptPlus</RepositoryUrl>

@@ -32,7 +32,7 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// Get Length of item. If a folder lenght represents number of item. If file lenght represents the size in bytes
+        /// Get Length of item. If a folder length represents number of item. If file length represents the size in bytes
         /// </summary>
         public long Length { get; internal set; }
 

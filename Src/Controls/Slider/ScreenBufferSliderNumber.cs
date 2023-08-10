@@ -115,7 +115,7 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer($"{options.OptPrompt}: ", options.OptStyleSchema.Prompt());
             if (options.MoveKeyPress == LayoutSliderNumber.UpDown)
             {
-                screenBuffer.AddBuffer($"[{options.Minvalue},{options.Maxvalue}] ",options.OptStyleSchema.Sugestion(),true,false);
+                screenBuffer.AddBuffer($"[{options.Minvalue},{options.Maxvalue}] ",options.OptStyleSchema.Suggestion(),true,false);
             }
         }
 

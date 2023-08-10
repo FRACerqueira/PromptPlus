@@ -28,7 +28,7 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | Prompt | 0 | Prompt Region |
 | Answer | 1 | Answer Region |
 | Description | 2 | Description Region |
-| Sugestion | 3 | Sugestion Region |
+| Suggestion | 3 | Suggestion Region |
 | Selected | 4 | Selected state |
 | UnSelected | 5 | UnSelected state |
 | Disabled | 6 | Disabled state |

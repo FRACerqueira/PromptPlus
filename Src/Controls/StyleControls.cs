@@ -23,9 +23,9 @@ namespace PPlus.Controls
         /// </summary>
         Description,
         /// <summary>
-        /// Sugestion Region
+        /// Suggestion Region
         /// </summary>
-        Sugestion,
+        Suggestion,
         /// <summary>
         /// Selected state
         /// </summary>

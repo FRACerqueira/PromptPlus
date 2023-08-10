@@ -40,7 +40,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
         /// <param name="spinnerStyle">Style of spinner. <see cref="Style"/></param>
-        /// <param name="speedAnimation">Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
+        /// <param name="speedAnimation">Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
         IControlSelectBrowser Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
@@ -135,7 +135,7 @@ namespace PPlus.Controls
         IControlSelectBrowser Root(string value, bool expandall = true, Func<ItemBrowser, bool>? validselect = null, Func<ItemBrowser, bool>? setdisabled = null);
 
         /// <summary>
-        /// Default item (fullpath) seleted when started
+        /// Default item (fullpath) selected when started
         /// </summary>
         /// <param name="value">fullpath</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>

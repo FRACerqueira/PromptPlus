@@ -39,7 +39,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="Style"/> text Prompt.
         /// <br>ValueResult Foreground : 'ConsoleColor.White'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style Prompt(this StyleSchema schema)
         {
@@ -50,7 +50,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="Style"/> text Chart.
         /// <br>ValueResult Foreground : 'ConsoleColor.White'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style Chart(this StyleSchema schema)
         {
@@ -70,7 +70,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="Style"/> text Answer.
         /// <br>ValueResult Foreground : 'ConsoleColor.Cyan'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style Answer(this StyleSchema schema)
         {
@@ -80,7 +80,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="Style"/> text Description.
         /// <br>ValueResult Foreground : 'ConsoleColor.DarkYellow'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style Description(this StyleSchema schema)
         {
@@ -89,20 +89,20 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// Get <see cref="Style"/> text Sugestion.
+        /// Get <see cref="Style"/> text Suggestion.
         /// <br>ValueResult Foreground : 'ConsoleColor.Yellow'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
-        public static Style Sugestion(this StyleSchema schema)
+        public static Style Suggestion(this StyleSchema schema)
         {
-            return schema.GetStyle(StyleControls.Sugestion);
+            return schema.GetStyle(StyleControls.Suggestion);
         }
 
 
         /// <summary>
         /// Get <see cref="Style"/> text Selected.
         /// <br>ValueResult Foreground : 'ConsoleColor.Green'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style Selected(this StyleSchema schema)
         {
@@ -113,7 +113,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="Style"/> text UnSelected.
         /// <br>ValueResult Foreground : 'ConsoleColor.Gray'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style UnSelected(this StyleSchema schema)
         {
@@ -123,7 +123,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="Style"/> text Disabled.
         /// <br>ValueResult Foreground : 'ConsoleColor.DarkGray'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style Disabled(this StyleSchema schema)
         {
@@ -133,7 +133,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="Style"/> text Error.
         /// <br>ValueResult Foreground : 'ConsoleColor.Red'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style Error(this StyleSchema schema)
         {
@@ -143,7 +143,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="Style"/> text Pagination.
         /// <br>ValueResult Foreground : 'ConsoleColor.DarkGray'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style Pagination(this StyleSchema schema)
         {
@@ -153,7 +153,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="Style"/> text Tagged info.
         /// <br>ValueResult Foreground : 'ConsoleColor.DarkYellow'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style TaggedInfo(this StyleSchema schema)
         {
@@ -163,7 +163,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Get <see cref="Style"/> text Tooltips.
         /// <br>ValueResult Foreground : 'ConsoleColor.DarkGray'</br>
-        /// <br>ValueResult Background : same Console Background when setted</br>
+        /// <br>ValueResult Background : same Console Background when set</br>
         /// </summary>
         public static Style Tooltips(this StyleSchema schema)
         {
