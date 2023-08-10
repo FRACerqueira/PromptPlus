@@ -8,7 +8,7 @@ using System;
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents the elememt to hide on ProgressBar
+    /// Represents the element to hide on ProgressBar
     /// </summary>
     [Flags]
     public enum HideProgressBar

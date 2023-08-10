@@ -32,23 +32,23 @@
 - [License](#license)
 - [API Reference](https://fracerqueira.github.io/PromptPlus/apis/apis.html)
 
-## Whats news in V4.0.5
+## What's new in V4.0.5
 
 - Fixed bug PromptPlus not restore StyleSchema when ResetColor
-- Fixed Spell checking (Breking Changes)
+- Fixed Spell checking (Breaking Changes)
     - SugestionInput to SuggestionInput
-        - Controls : MaskEdit/AddTolist/Input
+        - Controls: MaskEdit/AddTolist/Input
     - SugestionOutput to SuggestionOutput
-        - Controls : MaskEdit/AddTolist/Input
+        - Controls: MaskEdit/AddTolist/Input
     - MaxLenght to MaxLength 
-        - Controls : AutoComplete/AddTolist/Input
+        - Controls: AutoComplete/AddTolist/Input
     - StyleControls.Sugestion to StyleControls.Suggestion
     - StyleSchemaExtensions.Sugestion to StyleSchemaExtensions.Suggestion
     - PromptPlusException.Plataform to  PromptPlusException.Platform
 
-    **Special thanks to [ivideon](https://github.com/ividyon) for spell checking corrections, all documentation and wrong method/property names**
+    **Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation and wrong method/property names**
 
-## Whats news in V4.0.4
+## What's new in V4.0.4
 
 - Fixed bug PromptPlus not restore terminal original setting when shutdown application
 - Fixed bug Autocomplete does not change result when backspace is pressed during search
@@ -59,7 +59,7 @@
 - Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
     - Default value is = '850;65001'
 
-## Whats news in V4.0.3
+## What's new in V4.0.3
 
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
@@ -67,7 +67,7 @@
     - Not show gradient when set ProgressBarType.Fill
 - Improve testability of result classes/struct (Internal to public)
 
-## Whats news in V4.0.2
+## What's new in V4.0.2
 
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
@@ -77,7 +77,7 @@
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
 
-## Whats news in V4.0.X
+## What's new in V4.0.X
 
 ### Newest controls and color improvement and layout
 
@@ -115,7 +115,7 @@
 **All controls** have the same organization (see in action: [**Controls Snapshot**](#controls-snapshot)):
 - input/filter (except Masked input) using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
 - Prompt, description and data entry (ever)
-- Extra actions per stage : OnStartControl/OnInputRender/OnTryAcceptInput/OnFinishControl (ever)
+- Extra actions per stage: OnStartControl/OnInputRender/OnTryAcceptInput/OnFinishControl (ever)
 - Tooltips (ever and configurable) 
 - Filter by Contains / StartsWith (configurable) (depends on the control)
 - Collection subset items and iterations (depends on the control)
@@ -426,7 +426,7 @@ To use a non-embedded language/culture:
 
 PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-color.org/). when there is the environment variable "no_color" the colors are disabled.
 
-PromptPlus also has commands for coloring parts of the text using **direct console, styles and Over elememnts of controls**.
+PromptPlus also has commands for coloring parts of the text using **direct console, styles and Over elements of controls**.
 
 Promptplus uses the **same default colors and engine(softly modified)** as the third party project: spectreconsole.
 For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#colors) or see the samples in folder **Samples**
