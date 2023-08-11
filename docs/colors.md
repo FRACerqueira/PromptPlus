@@ -16,7 +16,7 @@ The color class has implicit conversion to ConsoleColor. There are conversion me
 - Console Color
 	-	Converts a System.Console.ConsoleColor
 - RGB
-	-	Converts a RGB formar (R,G,B)
+	-	Converts a RGB format (R,G,B)
 - Name
 	-	Converts a name standard color
 

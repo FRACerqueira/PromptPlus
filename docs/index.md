@@ -27,23 +27,23 @@
 - [License](#license)
 - [API Reference](./apis/apis.md)
 
-## Whats news in V4.0.5
+## What's new in V4.0.5
 
 - Fixed bug PromptPlus not restore StyleSchema when ResetColor
-- Fixed Spell checking (Breking Changes)
+- Fixed Spell checking (Breaking Changes)
     - SugestionInput to SuggestionInput
-        - Controls : MaskEdit/AddTolist/Input
+        - Controls: MaskEdit/AddTolist/Input
     - SugestionOutput to SuggestionOutput
-        - Controls : MaskEdit/AddTolist/Input
+        - Controls: MaskEdit/AddTolist/Input
     - MaxLenght to MaxLength 
-        - Controls : AutoComplete/AddTolist/Input
+        - Controls: AutoComplete/AddTolist/Input
     - StyleControls.Sugestion to StyleControls.Suggestion
     - StyleSchemaExtensions.Sugestion to StyleSchemaExtensions.Suggestion
     - PromptPlusException.Plataform to  PromptPlusException.Platform
 
-    **Special thanks to [ivideon](https://github.com/ividyon) for spell checking corrections, all documentation and wrong method/property names**
+    **Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation and wrong method/property names**
 
-## Whats news in V4.0.4
+## What's new in V4.0.4
 
 - Fixed bug PromptPlus not restore terminal original setting when shutdown application
 - Fixed bug Autocomplete does not change result when backspace is pressed during search
@@ -54,7 +54,7 @@
 - Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
     - Default value is = '850;65001'
 
-## Whats news in V4.0.3
+## What's new in V4.0.3
 
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
@@ -62,7 +62,7 @@
     - Not show gradient when set ProgressBarType.Fill
 - Improve testability of result classes/struct (Internal to public)
 
-## Whats news in V4.0.2
+## What's new in V4.0.2
 
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
@@ -72,7 +72,7 @@
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
 
-## Whats news in V4.0.X
+## What's new in V4.0.X
 
 ### Newest controls and color improvement and layout
 
