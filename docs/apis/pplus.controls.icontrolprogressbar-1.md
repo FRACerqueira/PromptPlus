@@ -185,7 +185,7 @@ Fracional Digits
 ### <a id="methods-hideelements"/>**HideElements(HideProgressBar)**
 
 Hide elements in ProgressBar. Default is Show all elements
- <br>For more one element use | separate (Enum Flag)
+ <br>For more one element use '|' separate (Enum Flag)
 
 ```csharp
 IControlProgressBar<T> HideElements(HideProgressBar value)

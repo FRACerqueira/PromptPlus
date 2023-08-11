@@ -19,7 +19,7 @@ namespace PPlus.Controls
     {
         /// <summary>
         /// Hide elements in ProgressBar. Default is Show all elements
-        /// <br>For more one element use | separate (Enum Flag)</br>
+        /// <br>For more one element use '|' separate (Enum Flag)</br>
         /// </summary>
         /// <param name="value">element to hide. <see cref="HideProgressBar"/></param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
