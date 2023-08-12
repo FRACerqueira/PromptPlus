@@ -29,6 +29,8 @@
 
 ## What's new in V4.0.5
 
+- Added new proprty 'ExtraExceptionInfo' to write extra console exception info
+- Improved terminal mode detection
 - Fixed bug PromptPlus not restore StyleSchema when ResetColor
 - Fixed Spell checking (Breaking Changes)
     - SugestionInput to SuggestionInput

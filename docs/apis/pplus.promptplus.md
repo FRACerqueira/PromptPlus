@@ -154,6 +154,18 @@ public static TextWriter Error { get; }
 
 [TextWriter](https://docs.microsoft.com/en-us/dotnet/api/system.io.textwriter)<br>
 
+### <a id="properties-extraexceptioninfo"/>**ExtraExceptionInfo**
+
+Get/set extra console exception info
+
+```csharp
+public static bool ExtraExceptionInfo { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-foregroundcolor"/>**ForegroundColor**
 
 Get/Set Foreground console with color.

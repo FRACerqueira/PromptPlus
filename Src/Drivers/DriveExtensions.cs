@@ -92,6 +92,11 @@ namespace PPlus
         }
 
         /// <summary>
+        /// Get/set extra console exception info
+        /// </summary>
+        public static bool ExtraExceptionInfo { get; set;}
+
+        /// <summary>
         /// Reset all config and properties to default values
         /// </summary>
         public static void Reset()

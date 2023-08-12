@@ -86,6 +86,10 @@ namespace PPlus.Controls.Objects
                 }
                 FinalizeControl(stoptoken.Value);
             }
+            catch (Exception ex)
+            {
+                throw new PromptPlusException(ex.Message,ex);
+            }
             finally
             {
                 ConsolePlus.CursorVisible = oldcursor;

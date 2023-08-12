@@ -154,6 +154,36 @@ public PromptPlusException(string message)
 `message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The message for exception
 
+### <a id="constructors-.ctor"/>**PromptPlusException(String, Exception)**
+
+Represents an exception thrown by PromptPlus
+
+```csharp
+public PromptPlusException(string message, Exception innerexception)
+```
+
+#### Parameters
+
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The message exception
+
+`innerexception` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
+The inner exception
+
+## Methods
+
+### <a id="methods-tostring"/>**ToString()**
+
+Write string exception
+
+```csharp
+public string ToString()
+```
+
+#### Returns
+
+The string exception
+
 
 - - -
 [**Back to List Api**](./apis.md)
