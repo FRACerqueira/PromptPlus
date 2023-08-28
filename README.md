@@ -26,9 +26,9 @@
 - [Keypress Extensions Emacs](#keypress-extensions-emacs)
 - [Validators](#validators)
 - [Supported Platforms](#supported-platforms)
-- [Inspiration Notes](#inspiration-notes)
 - [Code of Conduct](#code-of-conduct)
 - [Contributing](#contributing)
+- [Credits](#credits)
 - [License](#license)
 - [API Reference](https://fracerqueira.github.io/PromptPlus/apis/apis.html)
 
@@ -496,7 +496,7 @@ Copyright 2021 @ Fernando Cerqueira
 
 PromptPlus is licensed under the MIT license. For more information see [LICENSE](LICENSE.md).
 
-* For Spectre.Console licensing information, see [LICENSE-spectreconsole](LICENSE/LICENSE-SpectreConsole.md).
-* For Sharprompt licensing information, see [LICENSE-spectreconsole](LICENSE/LICENSE-Sharprompt.md).
-* For xmldoc2md licensing information, see [LICENSE-spectreconsole](LICENSE/LICENSE-xmldoc2md.md).
-* For FIGlet.Net licensing information, see [LICENSE-spectreconsole](LICENSE/LICENSE-FIGlet.Net.md).
+* For Spectre.Console licensing information, see [LICENSE-SpectreConsole](LICENSE/LICENSE-SpectreConsole.md).
+* For Sharprompt licensing information, see [LICENSE-Sharprompt](LICENSE/LICENSE-Sharprompt.md).
+* For xmldoc2md licensing information, see [LICENSE-xmldoc2md](LICENSE/LICENSE-xmldoc2md.md).
+* For FIGlet.Net licensing information, see [LICENSE-FIGlet.Net](LICENSE/LICENSE-FIGlet.Net.md).
