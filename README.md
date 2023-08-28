@@ -466,14 +466,6 @@ PromptPlus.WriteLine($"Your input: {name.Value}!");
 - macOS
     - Terminal.app
 
-## Inspiration notes
-[**Top**](#table-of-contents)
-
-- FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
-- The colors and some of its dependencies were inspired by the work of [spectreconsole](https://spectreconsole.net/).
-- The API Reference was inspired by the work of [xmldoc2md (Fork with improvements)](https://github.com/FRACerqueira/xmldoc2md).
-- The EastAsianWidth and base-control was inspired by the work of [Sharprompt](https://github.com/shibayan/Sharprompt)
-
 ## Code of Conduct
 [**Top**](#table-of-contents)
 
@@ -484,9 +476,27 @@ For more information see the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 
+## Credits
+[**Top**](#table-of-contents)
+
+PromptPlus includes code from other software released under the MIT license:
+
+- [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+- [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
+- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
+
+PromptPlus includes the following under the AGPLv3 license:
+
+- [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net), Copyright (c) WenceyWang.
+
 ## License
 [**Top**](#table-of-contents)
 
 Copyright 2021 @ Fernando Cerqueira
 
-PromptPlus project is licensed under the  the MIT license. For more information see [License](LICENSE.md).
+PromptPlus is licensed under the MIT license. For more information see [LICENSE](LICENSE.md).
+
+* For Spectre.Console licensing information, see [LICENSE-spectreconsole](LICENSE/LICENSE-SpectreConsole.md).
+* For Sharprompt licensing information, see [LICENSE-spectreconsole](LICENSE/LICENSE-Sharprompt.md).
+* For xmldoc2md licensing information, see [LICENSE-spectreconsole](LICENSE/LICENSE-xmldoc2md.md).
+* For FIGlet.Net licensing information, see [LICENSE-spectreconsole](LICENSE/LICENSE-FIGlet.Net.md).

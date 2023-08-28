@@ -1,6 +1,6 @@
 MIT License
 
-Copyright 2021 (c) Fernando Cerqueira
+Copyright (c) 2022 Charles de Vandière
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,9 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-PromptPlus includes code from other software related under the MIT license:
-
-- Spectre.Console, Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen. For licensing see /LICENSE/LICENSE-SpectreConsole.md
-- Sharprompt, Copyright (c) 2019 shibayan. For licensing see /LICENSE/LICENSE-Sharprompt.md
-- xmldoc2md, Copyright (c) 2022 Charles de Vandière. For licensing see /LICENSE/LICENSE-xmldoc2md.md
