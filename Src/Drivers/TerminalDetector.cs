@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using System;
-using static PPlus.Drivers.Ansi.AnsiDetector;
 using System.Runtime.InteropServices;
 
 namespace PPlus.Drivers

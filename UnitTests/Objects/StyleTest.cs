@@ -1,4 +1,10 @@
-﻿using PPlus.Drivers;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// Copyright 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+// https://spectreconsole.net
+// ***************************************************************************************
+
+using PPlus.Drivers;
 using PPlus.Tests.Util;
 using Shouldly;
 

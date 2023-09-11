@@ -1,4 +1,10 @@
-﻿using System.Collections.Generic;
+﻿// **********************************************************************************************************
+// MIT LICENCE
+// Copyright 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+// https://spectreconsole.net
+// **********************************************************************************************************
+
+using System.Collections.Generic;
 
 namespace PPlus.Controls.Objects
 {

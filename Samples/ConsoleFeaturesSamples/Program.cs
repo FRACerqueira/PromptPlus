@@ -1,4 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿// ***************************************************************************************
+// MIT LICENCE
+// Copyright 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+// https://spectreconsole.net
+// ***************************************************************************************
 
 using PPlus;
 using PPlus.Controls;

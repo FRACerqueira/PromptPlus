@@ -1,7 +1,7 @@
 ﻿// **********************************************************************************************************
 // MIT LICENCE
-// The maintenance and evolution is maintained by the PromptPlus project under MIT license
-// This code was based on work from https://github.com/sindresorhus/cli-spinners/blob/master/spinners.json
+// Copyright 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+// https://spectreconsole.net
 // **********************************************************************************************************
 
 namespace PPlus.Controls

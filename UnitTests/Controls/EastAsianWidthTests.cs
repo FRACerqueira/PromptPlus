@@ -1,4 +1,10 @@
-﻿using PPlus.Controls.Objects;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// Copyright (c) 2019 shibayan.
+// https://github.com/shibayan/Sharprompt
+// ***************************************************************************************
+
+using PPlus.Controls.Objects;
 using PPlus.Tests.Util;
 
 namespace PPlus.Tests.Controls

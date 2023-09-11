@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using PPlus.Controls;
 using PPlus.Controls.Objects;
 

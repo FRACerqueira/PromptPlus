@@ -145,3 +145,17 @@ var kp = PromptPlus
 
 Copyright 2021 @ Fernando Cerqueira
 PromptPlus project is licensed under the  the MIT license.
+
+
+**Credits**
+-----------
+
+PromptPlus includes code from other software released under the MIT license:
+
+Spectre.Console, Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+Sharprompt, Copyright (c) 2019 shibayan.
+xmldoc2md, Copyright (c) 2022 Charles de Vandière.
+
+PromptPlus includes the following under the AGPLv3 license:
+
+FIGlet.Net, Copyright (c) WenceyWang.

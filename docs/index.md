@@ -25,6 +25,7 @@
 - [Global Settings](globalsettings.md)
 - [Supported Platforms](#supported-platforms)
 - [License](#license)
+- [Credits](#credits)
 - [API Reference](./apis/apis.md)
 
 ## What's new in V4.0.5
@@ -436,3 +437,17 @@ PromptPlus.EnabledAbortKey = false;
 Copyright 2021 @ Fernando Cerqueira
 
 PromptPlus project is licensed under the  the MIT license. For more information see [License](./LICENSE.md).
+
+## Credits
+[**Top**](#table-of-contents)
+
+PromptPlus includes code from other software released under the MIT license:
+
+- [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+- [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
+- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
+
+PromptPlus includes the following under the AGPLv3 license:
+
+- [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net), Copyright (c) WenceyWang.
+

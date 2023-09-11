@@ -1,7 +1,7 @@
 ﻿// ***************************************************************************************
 // MIT LICENCE
-// The maintenance and evolution is maintained by the PromptPlus project under MIT license
-// This code was based on work from https://github.com/shibayan/Sharprompt
+// Copyright (c) 2019 shibayan.
+// https://github.com/shibayan/Sharprompt
 // ***************************************************************************************
 
 using System;
