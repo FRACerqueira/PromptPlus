@@ -150,7 +150,7 @@ The new engine detects support ansi commands and adjust output for this function
 
 ### Sample color capacity (ConsoleFeaturesSamples)
 
-**_Note: This layout and code was inspired by the excellent project:spectreconsole, having the same color palette_**
+**_Note: This layout and code were based (code copy and adaptation) on the excellent project: spectrum console, having the same color palette_**
 
 ![](./docs/images/consolecolorcapacity.gif)
 
