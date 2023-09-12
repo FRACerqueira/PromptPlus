@@ -66,8 +66,6 @@
 
 - [CaseOptions](./pplus.controls.caseoptions.md)
 
-- [CharacterWidth](./pplus.controls.characterwidth.md)
-
 - [ChartBarType](./pplus.controls.chartbartype.md)
 
 - [ChartOrder](./pplus.controls.chartorder.md)

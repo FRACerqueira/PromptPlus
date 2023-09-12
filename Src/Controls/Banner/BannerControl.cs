@@ -1,14 +1,11 @@
 ﻿// ***************************************************************************************
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
-// This code was based on work from https://github.com/WenceyWang/FIGlet.Net
 // ***************************************************************************************
 
-using PPlus.FIGlet;
-using System;
+using PPlus.FIGletCore;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace PPlus.Controls
 {
@@ -28,87 +25,12 @@ namespace PPlus.Controls
             Text = value;
             _console = console;
             _config = config;
+            Font = new FigletFont();
         }
 
         public string Text { get; private set; }
-        public FIGletFont Font { get; private set; } = FIGletFont.Default;
-        public CharacterWidth CharacterWidth { get; private set; } = CharacterWidth.Fitted;
 
-        private string[] _result;
-        private int Height => Font?.Height ?? 0;
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0056:Use index operator", Justification = "<Pending>")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1846:Prefer 'AsSpan' over 'Substring'", Justification = "<Pending>")]
-        public void InitAsciiArt()
-        {
-            if (string.IsNullOrEmpty(Text))
-            {
-                return;
-            }
-            Text = Text.Replace(Environment.NewLine, "");
-
-            _result = new string[Font.Height];
-
-            switch (CharacterWidth)
-            {
-                case CharacterWidth.Full:
-                    {
-                        for (var currentLine = 0; currentLine < Height; currentLine++)
-                        {
-                            var lineBuilder = new StringBuilder();
-                            foreach (var currentChar in Text)
-                            {
-                                lineBuilder.Append(Font.GetCharacter(currentChar, currentLine));
-                                lineBuilder.Append(' ');
-                            }
-                            _result[currentLine] = lineBuilder.ToString();
-                        }
-                        break;
-                    }
-                case CharacterWidth.Fitted:
-                    {
-                        for (var currentLine = 0; currentLine < Height; currentLine++)
-                        {
-                            var lineBuilder = new StringBuilder();
-                            foreach (var currentChar in Text)
-                            {
-                                lineBuilder.Append(Font.GetCharacter(currentChar, currentLine));
-                            }
-                            _result[currentLine] = lineBuilder.ToString();
-                        }
-                        break;
-                    }
-                case CharacterWidth.Smush:
-                    {
-                        for (var currentLine = 0; currentLine < Height; currentLine++)
-                        {
-                            var lineBuilder = new StringBuilder();
-                            lineBuilder.Append(Font.GetCharacter(Text[0], currentLine));
-                            var lastChar = Text[0];
-                            for (var currentCharIndex = 1; currentCharIndex < Text.Length; currentCharIndex++)
-                            {
-                                var currentChar = Text[currentCharIndex];
-                                var currentCharacterLine = Font.GetCharacter(currentChar, currentLine);
-                                if (lastChar != ' ' && currentChar != ' ')
-                                {
-                                    if (lineBuilder[lineBuilder.Length - 1] == ' ')
-                                    {
-                                        lineBuilder[lineBuilder.Length - 1] = currentCharacterLine[0];
-                                    }
-                                    lineBuilder.Append(currentCharacterLine.Substring(1));
-                                }
-                                else
-                                {
-                                    lineBuilder.Append(currentCharacterLine);
-                                }
-                                lastChar = currentChar;
-                            }
-                            _result[currentLine] = lineBuilder.ToString();
-                        }
-                        break;
-                    }
-            }
-        }
+        public FigletFont Font { get; private set; }
 
         public IBannerControl LoadFont(Stream value)
         {
@@ -116,26 +38,20 @@ namespace PPlus.Controls
             {
                 throw new PromptPlusException("BannerControl.LoadFont is null");
             }
-            Font = new FIGletFont(value);
+            Font = new FigletFont(value);
             return this;
         }
 
         public IBannerControl LoadFont(string value)
         {
-            FIGletFont result;
-            using (var fso = File.Open(value, FileMode.Open))
+            if (value == null)
             {
-                result = new FIGletFont(fso);
+                throw new PromptPlusException("BannerControl.LoadFont is null");
             }
-            Font = result;
+            Font = new FigletFont(value);
             return this;
         }
 
-        public IBannerControl FIGletWidth(CharacterWidth value)
-        {
-            CharacterWidth = value;
-            return this;
-        }
 
         public void Run(Color? color = null, BannerDashOptions bannerDash = BannerDashOptions.None)
         {
@@ -144,9 +60,9 @@ namespace PPlus.Controls
             {
                 localcorlor = color.Value;
             }
-            InitAsciiArt();
+            var result = Font.ToAsciiArt(Text); 
             var max = 0;
-            foreach (var item in _result.Where(x => max < x.Length))
+            foreach (var item in result.Where(x => max < x.Length))
             {
                 max = item.Length;
             }
@@ -195,7 +111,7 @@ namespace PPlus.Controls
                     _console.WriteLine(new string(dach.Value, max), Style.Default.Foreground(localcorlor).Overflow(Overflow.Crop));
                 }
             }
-            foreach (var item in _result)
+            foreach (var item in result)
             {
                 _console.WriteLine(item, Style.Default.Foreground(localcorlor).Overflow(Overflow.Crop));
             }

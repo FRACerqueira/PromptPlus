@@ -1,4 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+
 using PPlus;
 using PPlus.Controls;
 
@@ -21,7 +26,6 @@ PromptPlus
 PromptPlus
     .Banner("StarWars")
     .LoadFont("starwars.flf")
-    .FIGletWidth(CharacterWidth.Smush)
     .Run(Color.Blue);
 
 PromptPlus.WriteLines(2);

@@ -1,4 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using PPlus.Controls;
 using PPlus.Controls.Objects;

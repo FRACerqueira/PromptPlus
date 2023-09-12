@@ -27,13 +27,6 @@ namespace PPlus.Controls
         IBannerControl LoadFont(Stream value);
 
         /// <summary>
-        /// Set <see cref="CharacterWidth"/> for the banner
-        /// </summary>
-        /// <param name="value">CharacterWidth <see cref="CharacterWidth"/> </param>
-        /// <returns><see cref="IBannerControl"/></returns>
-        IBannerControl FIGletWidth(CharacterWidth value);
-
-        /// <summary>
         /// Execute this control and show banner.
         /// </summary>
         /// <param name="color">The foregound <see cref="Color"/> text</param>

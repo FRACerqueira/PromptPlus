@@ -1,26 +1,19 @@
-﻿using PPlus.Controls;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using PPlus.Controls;
 using PPlus.Tests.Util;
 
 namespace PPlus.Tests.Controls.Banner
 {
     public  class BannerTests : BaseTest
     {
-        [Theory]
-        [InlineData(CharacterWidth.Full)]
-        [InlineData(CharacterWidth.Smush)]
-        [InlineData(CharacterWidth.Fitted)]
-        public void Should_InitAsciiArtWithNoError(CharacterWidth value)
-        {
-            var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
-            ctrl.FIGletWidth(value);
-            ctrl.InitAsciiArt();
-        }
-
         [Fact]
         public void Should_LoadFontWithNoError()
         {
             var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
-            ctrl.InitAsciiArt();
             ctrl.LoadFont("starwars.flf");
         }
 
@@ -28,7 +21,6 @@ namespace PPlus.Tests.Controls.Banner
         public void Should_LoadFontStreamWithNoError()
         {
             var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
-            ctrl.InitAsciiArt();
             using var sr = new FileStream("starwars.flf", FileMode.Open);
             ctrl.LoadFont(sr);
         }
@@ -52,7 +44,6 @@ namespace PPlus.Tests.Controls.Banner
                 cfg.IsUnicodeSupported = true;
             });
             var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
-            ctrl.InitAsciiArt();
             ctrl.Run(null, value);
         }
 
@@ -75,7 +66,6 @@ namespace PPlus.Tests.Controls.Banner
                 cfg.IsUnicodeSupported= false;
             });
             var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
-            ctrl.InitAsciiArt();
             ctrl.Run(null, value);
         }
 
@@ -89,7 +79,6 @@ namespace PPlus.Tests.Controls.Banner
             var output = PromptPlus.RecordOutput(() =>
             {
                 var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
-                ctrl.InitAsciiArt();
                 ctrl.Run();
             });
             Assert.Equal(Expectations.GetVerifyAnsi("Banner.txt"), output);
@@ -106,7 +95,6 @@ namespace PPlus.Tests.Controls.Banner
             var output = PromptPlus.RecordOutput(() =>
             {
                 var ctrl = new BannerControl(PromptPlus.Config, PromptPlus._consoledrive, "Test");
-                ctrl.InitAsciiArt();
                 ctrl.Run();
             });
             Assert.Equal(Expectations.GetVerifyStd("Banner.txt"), output);

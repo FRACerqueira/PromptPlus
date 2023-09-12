@@ -13,7 +13,9 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 ## What's new in V4.0.5
 
 - Added new proprty 'ExtraExceptionInfo' to write extra console exception info
-- Improved terminal mode detection
+- Improved terminal mode detection (for Windows 11 Versions)
+- Rebuilt FIGlet with MIT License 
+- Fixed credits (MIT License Copyright) 
 - Fixed bug PromptPlus not restore StyleSchema when ResetColor
 - Fixed Spell checking (Breaking Changes)
     - SugestionInput to SuggestionInput
@@ -24,9 +26,9 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
         - Controls: AutoComplete/AddTolist/Input
     - StyleControls.Sugestion to StyleControls.Suggestion
     - StyleSchemaExtensions.Sugestion to StyleSchemaExtensions.Suggestion
-    - PromptPlusException.Plataform to  PromptPlusException.Platform
+    - PromptPlusException.Plataform to PromptPlusException.Platform
 
-    **Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation and wrong method/property names**
+**Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation, fixed credits (MIT License Copyright) and wrong method/property names**
 
 ## What's new in V4.0.4
 
@@ -133,7 +135,4 @@ PromptPlus includes code from other software released under the MIT license:
 - [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
 - [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
 - [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
-
-PromptPlus includes the following under the AGPLv3 license:
-
-- [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net), Copyright (c) WenceyWang.
+- [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU

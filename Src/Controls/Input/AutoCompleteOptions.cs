@@ -1,4 +1,9 @@
-﻿using PPlus.Controls.Objects;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using PPlus.Controls.Objects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -20,23 +20,6 @@ public interface IBannerControl
 
 ## Methods
 
-### <a id="methods-figletwidth"/>**FIGletWidth(CharacterWidth)**
-
-Set [CharacterWidth](./pplus.controls.characterwidth.md) for the banner
-
-```csharp
-IBannerControl FIGletWidth(CharacterWidth value)
-```
-
-#### Parameters
-
-`value` [CharacterWidth](./pplus.controls.characterwidth.md)<br>
-CharacterWidth [CharacterWidth](./pplus.controls.characterwidth.md)
-
-#### Returns
-
-[IBannerControl](./pplus.controls.ibannercontrol.md)
-
 ### <a id="methods-loadfont"/>**LoadFont(String)**
 
 Load external font from file

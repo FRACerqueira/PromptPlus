@@ -35,7 +35,9 @@
 ## What's new in V4.0.5
 
 - Added new proprty 'ExtraExceptionInfo' to write extra console exception info
-- Improved terminal mode detection
+- Improved terminal mode detection (for Windows 11 Versions)
+- Rebuilt FIGlet with MIT License 
+- Fixed credits (MIT License Copyright) 
 - Fixed bug PromptPlus not restore StyleSchema when ResetColor
 - Fixed Spell checking (Breaking Changes)
     - SugestionInput to SuggestionInput
@@ -46,9 +48,9 @@
         - Controls: AutoComplete/AddTolist/Input
     - StyleControls.Sugestion to StyleControls.Suggestion
     - StyleSchemaExtensions.Sugestion to StyleSchemaExtensions.Suggestion
-    - PromptPlusException.Plataform to  PromptPlusException.Platform
+    - PromptPlusException.Plataform to PromptPlusException.Platform
 
-    **Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation and wrong method/property names**
+**Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation, fixed credits (MIT License Copyright) and wrong method/property names**
 
 ## What's new in V4.0.4
 
@@ -499,15 +501,12 @@ See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 ## Credits
 [**Top**](#table-of-contents)
 
-PromptPlus includes code from other software released under the MIT license:
+PromptPlus includes code from other software released under the **MIT license**:
 
 - [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
 - [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
 - [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
-
-PromptPlus includes the following under the AGPLv3 license:
-
-- [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net), Copyright (c) WenceyWang.
+- [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU
 
 ## License
 [**Top**](#table-of-contents)
@@ -519,4 +518,4 @@ PromptPlus is licensed under the MIT license. For more information see [LICENSE]
 * For Spectre.Console licensing information, see [LICENSE-SpectreConsole](LICENSE/LICENSE-SpectreConsole.md).
 * For Sharprompt licensing information, see [LICENSE-Sharprompt](LICENSE/LICENSE-Sharprompt.md).
 * For xmldoc2md licensing information, see [LICENSE-xmldoc2md](LICENSE/LICENSE-xmldoc2md.md).
-* For FIGlet.Net licensing information, see [LICENSE-FIGlet.Net](LICENSE/LICENSE-FIGlet.Net.md).
+* For FIGlet licensing information, see [LICENSE-FIGlet](LICENSE/LICENSE-FIGlet.md).

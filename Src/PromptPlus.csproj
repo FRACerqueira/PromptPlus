@@ -17,7 +17,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Remove="Controls\Banner\FIGlet\Fonts\standard.flf" />
+		<None Remove="Controls\Banner\FIGletCore\standard.flf" />
 	</ItemGroup>
 
 	<PropertyGroup>
@@ -142,7 +142,7 @@
 		<None Include="..\README.md" Pack="false" />
 	</ItemGroup>
 	<ItemGroup>
-		<EmbeddedResource Include="Controls\Banner\FIGlet\Fonts\standard.flf" />
+		<EmbeddedResource Include="Controls\Banner\FIGletCore\standard.flf" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Resources\PromptPlusResources.Designer.cs">
