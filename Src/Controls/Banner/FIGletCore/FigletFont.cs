@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace PPlus.FIGletCore
@@ -49,12 +50,12 @@ namespace PPlus.FIGletCore
             var res = new List<string>();
             for (int i = 1; i <= Height; i++)
             {
-                var resline = "";
+                var resline = new StringBuilder();
                 foreach (var car in strText)
                 {
-                    resline += GetCharacter(car, i);
+                    resline.Append(GetCharacter(car, i));
                 }
-                res.Add(resline);
+                res.Add(resline.ToString());
             }
             return res.ToArray();
         }
