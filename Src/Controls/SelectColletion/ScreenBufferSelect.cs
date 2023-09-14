@@ -87,7 +87,7 @@ namespace PPlus.Controls
         public static void WriteLineDescriptionSelect<T>(this ScreenBuffer screenBuffer, SelectOptions<T> options, ItemSelect<T> input)
         {
             var result = options.OptDescription;
-            if (options.DescriptionSelector != null)
+            if (options.DescriptionSelector != null && input != null)
             {
                 result = options.DescriptionSelector.Invoke(input.Value);
             }
