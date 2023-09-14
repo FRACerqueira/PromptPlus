@@ -159,6 +159,6 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)|$(TargetFramework)'=='local|.net7'">
-		<Exec Command="xmldoc2md $(SolutionDir)Src\bin\Debug\.net7\PromptPlus.dll $(SolutionDir)docs\apis --templatefile $(SolutionDir)Src\docapitemplate.md  --excludeinternal --index-page-name apis --back-button &quot;Back to List Api&quot; --link-back-button &quot;./apis.md&quot; --back-index-button &quot;Main&quot; --link-backindex-button &quot;../index.md#table-of-contents&quot;" />
+		<Exec Command="xmldoc2md $(SolutionDir)Src\bin\local\.net7\PromptPlus.dll $(SolutionDir)docs\apis --templatefile $(SolutionDir)Src\docapitemplate.md  --excludeinternal --index-page-name apis --back-button &quot;Back to List Api&quot; --link-back-button &quot;./apis.md&quot; --back-index-button &quot;Main&quot; --link-backindex-button &quot;../index.md#table-of-contents&quot;" />
 	</Target>
 </Project>

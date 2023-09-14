@@ -125,6 +125,19 @@ public CultureInfo DefaultCulture { get; set; }
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
 
+### <a id="properties-disablechangetooltip"/>**DisableChangeTooltip**
+
+Get/Set Disable show Tooltip for all controls at startup.
+ <br>Default value : false
+
+```csharp
+public bool DisableChangeTooltip { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-edititempress"/>**EditItemPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to Edit item.
@@ -140,7 +153,7 @@ public HotKey EditItemPress { get; set; }
 
 ### <a id="properties-enabledabortkey"/>**EnabledAbortKey**
 
-Get/Set enabled abortKey(ESC) for all controls.
+Get/Set enable abortKey(ESC) for all controls.
  <br>Default value : true
 
 ```csharp
@@ -296,7 +309,7 @@ public HotKey SelectAllPress { get; set; }
 
 ### <a id="properties-showtooltip"/>**ShowTooltip**
 
-Get/Set enabled show Tooltip for all controls.
+Get/Set enable show Tooltip for all controls at startup.
  <br>Default value : true
 
 ```csharp
@@ -339,7 +352,7 @@ Get/Set [HotKey](./pplus.controls.hotkey.md) to show/hide Tooltip.
  <br>Default value : '[F1]'
 
 ```csharp
-public HotKey TooltipKeyPress { get; }
+public HotKey TooltipKeyPress { get; set; }
 ```
 
 #### Property Value

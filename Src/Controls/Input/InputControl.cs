@@ -33,6 +33,11 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
+            if (_options.FilterType == FilterMode.Disabled && _options.HistoryMinimumPrefixLength > 0)
+            {
+                throw new PromptPlusException("HistoryMinimumPrefixLength mustbe zero when FilterType is Disabled");
+            }
+
             if (_options.IsSecret)
             {
                 _options.SuggestionHandler = null;
@@ -473,8 +478,12 @@ namespace PPlus.Controls
                 return _itemsHistory.Where(x => x.History.Contains(_inputBuffer.ToString(), StringComparison.InvariantCultureIgnoreCase)
                                 && DateTime.Now < new DateTime(x.TimeOutTicks));
             }
-            return _itemsHistory.Where(x => x.History.StartsWith(_inputBuffer.ToString(), StringComparison.InvariantCultureIgnoreCase)
+            else if (filterMode == FilterMode.StartsWith)
+            {
+                return _itemsHistory.Where(x => x.History.StartsWith(_inputBuffer.ToString(), StringComparison.InvariantCultureIgnoreCase)
                             && DateTime.Now < new DateTime(x.TimeOutTicks));
+            }
+            return _itemsHistory.Where(x => DateTime.Now < new DateTime(x.TimeOutTicks));
         }
 
         private void ClearMode()

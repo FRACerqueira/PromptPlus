@@ -96,6 +96,23 @@ Value description with style
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
+### <a id="methods-disablechangetooltip"/>**DisableChangeTooltip(Boolean)**
+
+Overwrite default DisableChangeTooltip of control
+
+```csharp
+IPromptConfig DisableChangeTooltip(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
 ### <a id="methods-enabledabortkey"/>**EnabledAbortKey(Boolean)**
 
 Overwrite default Enabled/Disabled AbortKey press of control

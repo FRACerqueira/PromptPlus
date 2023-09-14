@@ -607,7 +607,7 @@ namespace PPlus.Controls
                             }
                             else
                             {
-                                if (!_selectedItems.Select(x => x.Value).Any(x => x.Equals(item.Value))) 
+                                if (!_selectedItems.Select(x => x.Value).Any(x => x.Equals(item.Value)))
                                 {
                                     _selectedItems.Add(item);
                                 }
@@ -723,7 +723,7 @@ namespace PPlus.Controls
                         }
                     }
                 }
-                else if (_filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
+                else if (_options.FilterType != FilterMode.Disabled && _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
                 {
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
                 }

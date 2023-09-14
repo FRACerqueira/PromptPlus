@@ -369,7 +369,7 @@ namespace PPlus.Controls
                 {
                     continue;
                 }
-                else if (_filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
+                else if (_options.FilterType != FilterMode.Disabled && _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
                 {
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
                     if (_localpaginator.Count == 1 && !_localpaginator.IsUnSelected && _options.AutoSelect)

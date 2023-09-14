@@ -164,13 +164,19 @@ namespace PPlus.Controls
         public TimeSpan HistoryTimeout { get; set; } = FileHistory.DefaultHistoryTimeout;
 
         /// <summary>
-        /// Get/Set enabled show Tooltip for all controls.
+        /// Get/Set enable show Tooltip for all controls at startup.
         /// <br>Default value : true</br>
         /// </summary>
         public bool ShowTooltip { get; set; } = true;
 
         /// <summary>
-        /// Get/Set enabled abortKey(ESC) for all controls.
+        /// Get/Set Disable show Tooltip for all controls at startup.
+        /// <br>Default value : false</br>
+        /// </summary>
+        public bool DisableChangeTooltip { get; set; }
+
+        /// <summary>
+        /// Get/Set enable abortKey(ESC) for all controls.
         /// <br>Default value : true</br>
         /// </summary>
         public bool EnabledAbortKey { get; set; } = true;
@@ -264,7 +270,7 @@ namespace PPlus.Controls
         /// Get/Set <see cref="HotKey"/> to show/hide Tooltip.
         /// <br>Default value : '[F1]'</br>
         /// </summary>
-        public HotKey TooltipKeyPress => HotKey.TooltipDefault;
+        public HotKey TooltipKeyPress { get; set; } = HotKey.TooltipDefault;
 
         /// <summary>
         /// Get/Set <see cref="HotKey"/> to toggle password view.

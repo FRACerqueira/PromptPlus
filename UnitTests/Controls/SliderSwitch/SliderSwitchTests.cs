@@ -309,7 +309,7 @@ namespace PPlus.Tests.Controls.SliderSwitch
             var sb = new ScreenBuffer();
             ctrl.FinishTemplate(sb, true, true);
             Assert.Contains(sb.Buffer, x => !x.SaveCursor);
-            Assert.Contains(sb.Buffer, x => (x.Text ?? string.Empty).Trim() == "P:");
+            Assert.Contains(sb.Buffer, x => (x.Text ?? string.Empty).Trim() == "P");
             Assert.DoesNotContain(sb.Buffer, x => (x.Text ?? string.Empty) == "D");
             Assert.DoesNotContain(sb.Buffer, x => (x.Text ?? string.Empty).Contains("On"));
             Assert.Contains(sb.Buffer, x => (x.Text ?? string.Empty) == Messages.CanceledKey);

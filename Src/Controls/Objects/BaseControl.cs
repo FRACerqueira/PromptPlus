@@ -319,7 +319,10 @@ namespace PPlus.Controls.Objects
         {
             if (_options.Config.TooltipKeyPress.Equals(keyInfo))
             {
-                _options.OptShowTooltip = !_options.OptShowTooltip;
+                if (!_options.OptDisableChangeTooltip)
+                {
+                    _options.OptShowTooltip = !_options.OptShowTooltip;
+                }
                 return true;
             }
             return false;

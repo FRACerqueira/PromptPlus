@@ -31,11 +31,16 @@ PromptPlus was developed in C# with target frameworks:
 
 *** What's new in V4.0.5 ***
 ----------------------------
-- Added new proprty 'ExtraExceptionInfo' to write extra console exception info
+- Added new global propety 'ExtraExceptionInfo' to write extra console exception info
+- Added new global propety 'DisableChangeTooltip' to disable change initial ShowTooltip
+- Added new Method DisableChangeTooltip(bool value) to overwrite default DisableChangeTooltip in control 
+- Added new item to Enum FilterMode : 'Disabled'. This item disable filter feature in coletions
+- Improved to not show text prompt when text value is null or empty
 - Improved terminal mode detection (for Windows 11 Versions)
-- Rebuilt FIGlet with MIT License 
+- Rebuilt FIGlet to MIT License 
 - Fixed credits (MIT License Copyright) 
 - Fixed bug PromptPlus not restore StyleSchema when ResetColor
+- Fixed bug Exception trying to filter Select prompt with description
 - Fixed Spell checking (Breaking Changes)
     - SugestionInput to SuggestionInput
         - Controls: MaskEdit/AddTolist/Input

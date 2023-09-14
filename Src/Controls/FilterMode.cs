@@ -17,6 +17,10 @@ namespace PPlus.Controls
         /// <summary>
         /// Filter with start with text
         /// </summary>
-        StartsWith
+        StartsWith,
+        /// <summary>
+        /// Disabled Filter feature
+        /// </summary>
+        Disabled
     }
 }

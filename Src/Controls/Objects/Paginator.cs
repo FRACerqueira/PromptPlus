@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 
 namespace PPlus.Controls.Objects
@@ -54,12 +55,17 @@ namespace PPlus.Controls.Objects
                         .Where(x => _textSelector(x).StartsWith(FilterTerm, StringComparison.InvariantCultureIgnoreCase))
                         .ToArray();
                 }
-                else
+                else if (_filterMode == FilterMode.Contains)
                 {
                     _filteredItems = _items
                         .Where(x => _textSelector(x).Contains(FilterTerm, StringComparison.InvariantCultureIgnoreCase))
                         .ToArray();
                 }
+                else // Disabled
+                {
+                    _filteredItems = _items.ToArray();
+                }
+
 
                 for (var i = (_userpageSize * SelectedPage) + SelectedIndex; i < _filteredItems.Length; i++)
                 {
@@ -399,6 +405,10 @@ namespace PPlus.Controls.Objects
             {
                 _filteredItems = _items.Where(x => _textSelector(x).Contains(FilterTerm, StringComparison.InvariantCultureIgnoreCase))
                                        .ToArray();
+            }
+            else if (_filterMode == FilterMode.Disabled)
+            {
+                _filteredItems = _items.ToArray();
             }
             else
             {

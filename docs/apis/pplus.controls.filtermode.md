@@ -27,6 +27,7 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | --- | --: | --- |
 | Contains | 0 | Filter with Contains text |
 | StartsWith | 1 | Filter with start with text |
+| Disabled | 2 | Disabled Filter feature |
 
 
 - - -

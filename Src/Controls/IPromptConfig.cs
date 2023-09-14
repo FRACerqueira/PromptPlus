@@ -27,6 +27,13 @@ namespace PPlus.Controls
         IPromptConfig ShowTooltip(bool value);
 
         /// <summary>
+        /// Overwrite default DisableChangeTooltip of control
+        /// </summary>
+        /// <param name="value">value</param>
+        /// <returns><see cref="IPromptConfig"/></returns>
+        IPromptConfig DisableChangeTooltip(bool value);
+
+        /// <summary>
         /// Overwrite default Clear render area of control after finished
         /// </summary>
         /// <param name="value">value</param>
