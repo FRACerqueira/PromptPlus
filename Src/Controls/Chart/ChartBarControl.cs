@@ -277,7 +277,7 @@ namespace PPlus.Controls
             if (!_options.HideInfoOrder)
             {
                 screenBuffer.AddBuffer(' ', Style.Default, true);
-                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, TextOrder(_options.CurrentOrder)), _options.OrderStyle);
+                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, ChartBarControl.TextOrder(_options.CurrentOrder)), _options.OrderStyle);
             }
         }
 
@@ -434,7 +434,7 @@ namespace PPlus.Controls
             return new ResultPrompt<bool>(true,abort,!endinput,notrender);
         }
 
-        private string TextOrder(ChartOrder value)
+        private static string TextOrder(ChartOrder value)
         {
             return value switch
             {
@@ -477,7 +477,7 @@ namespace PPlus.Controls
                 {
                     screenBuffer.AddBuffer(new string(' ', _options.PadLeft), Style.Default, true);
                 }
-                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, TextOrder(_options.CurrentOrder)), _options.OrderStyle);
+                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, ChartBarControl.TextOrder(_options.CurrentOrder)), _options.OrderStyle);
                 screenBuffer.NewLine();
             }
         }
@@ -814,26 +814,15 @@ namespace PPlus.Controls
         private void ChangeOrder()
         {
             //order items
-            switch (_options.CurrentOrder)
+            _options.Labels = _options.CurrentOrder switch
             {
-                case ChartOrder.None:
-                    _options.Labels = _options.Labels.OrderBy(x => x.Id).ToList();
-                    break;
-                case ChartOrder.Highest:
-                    _options.Labels = _options.Labels.OrderByDescending(x => x.Value).ToList();
-                    break;
-                case ChartOrder.Smallest:
-                    _options.Labels = _options.Labels.OrderBy(x => x.Value).ToList();
-                    break;
-                case ChartOrder.LabelAsc:
-                    _options.Labels = _options.Labels.OrderBy(x => x.Label).ToList();
-                    break;
-                case ChartOrder.LabelDec:
-                    _options.Labels = _options.Labels.OrderByDescending(x => x.Label).ToList();
-                    break;
-                default:
-                    throw new PromptPlusException($"ChartOrder {_options.Order} Not implemented");
-            }
+                ChartOrder.None => _options.Labels.OrderBy(x => x.Id).ToList(),
+                ChartOrder.Highest => _options.Labels.OrderByDescending(x => x.Value).ToList(),
+                ChartOrder.Smallest => _options.Labels.OrderBy(x => x.Value).ToList(),
+                ChartOrder.LabelAsc => _options.Labels.OrderBy(x => x.Label).ToList(),
+                ChartOrder.LabelDec => _options.Labels.OrderByDescending(x => x.Label).ToList(),
+                _ => throw new PromptPlusException($"ChartOrder {_options.Order} Not implemented"),
+            };
             var auxpaginginfo = new List<(int id, int page)>();
             var page = 0;
             var index = 0;

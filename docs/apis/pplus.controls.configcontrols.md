@@ -307,6 +307,19 @@ public HotKey SelectAllPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
+### <a id="properties-showonlyexistingpagination"/>**ShowOnlyExistingPagination**
+
+Get/Set Show pagination only if exists
+ <br>Default value : false
+
+```csharp
+public bool ShowOnlyExistingPagination { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-showtooltip"/>**ShowTooltip**
 
 Get/Set enable show Tooltip for all controls at startup.

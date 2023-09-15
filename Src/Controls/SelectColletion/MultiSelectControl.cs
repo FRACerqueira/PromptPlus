@@ -39,24 +39,15 @@ namespace PPlus.Controls
 
             if (typeof(T).IsEnum)
             {
-                if (_options.TextSelector == null)
-                {
-                    _options.TextSelector = EnumDisplay;
-                }
+                _options.TextSelector ??= EnumDisplay;
                 AddEnum();
             }
             else
             {
-                if (_options.TextSelector == null)
-                {
-                    _options.TextSelector = (item) => item.ToString();
-                }
+                _options.TextSelector ??= (item) => item.ToString();
             }
 
-            if (_options.EqualItems == null)
-            {
-                _options.EqualItems = (item1, item2) => item1.Equals(item2);
-            }
+            _options.EqualItems ??= (item1, item2) => item1.Equals(item2);
 
             foreach (var item in _options.Items.Where(x => !x.IsGroupHeader))
             {
@@ -111,7 +102,7 @@ namespace PPlus.Controls
                     foundmark = _options.Items.Where(x => !x.IsGroupHeader && _options.EqualItems(x.Value, item));
                     foreach (var itemmark in foundmark)
                     {
-                        if (_selectedItems.Count() <= _options.Maximum)
+                        if (_selectedItems.Count <= _options.Maximum)
                         {
                             itemmark.IsCheck = true;
                         }
@@ -511,7 +502,15 @@ namespace PPlus.Controls
                     }
                 }
             }
-            screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _selectedItems.Count);
+            if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
+            {
+                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _selectedItems.Count);
+            }
+            else
+            {
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer($"{Messages.Tagged}: {_selectedItems.Count}, ", _options.OptStyleSchema.TaggedInfo(), true);
+            }
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<T> result, bool aborted)

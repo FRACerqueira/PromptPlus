@@ -179,6 +179,20 @@ public IPromptConfig SetContext(object value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
+### <a id="methods-showonlyexistingpagination"/>**ShowOnlyExistingPagination(Boolean)**
+
+```csharp
+public IPromptConfig ShowOnlyExistingPagination(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
 ### <a id="methods-showtooltip"/>**ShowTooltip(Boolean)**
 
 ```csharp

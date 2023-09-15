@@ -175,6 +175,13 @@ namespace PPlus.Controls
         /// </summary>
         public bool DisableChangeTooltip { get; set; }
 
+
+        /// <summary>
+        /// Get/Set Show pagination only if exists
+        /// <br>Default value : false</br>
+        /// </summary>
+        public bool ShowOnlyExistingPagination { get; set; }
+
         /// <summary>
         /// Get/Set enable abortKey(ESC) for all controls.
         /// <br>Default value : true</br>

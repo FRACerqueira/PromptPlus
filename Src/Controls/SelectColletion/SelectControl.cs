@@ -320,7 +320,10 @@ namespace PPlus.Controls
                     }
                 }
             }
-            screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+            if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
+            {
+                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+            }
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, T result, bool aborted)

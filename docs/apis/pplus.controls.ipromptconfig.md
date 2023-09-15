@@ -215,6 +215,23 @@ value
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
+### <a id="methods-showonlyexistingpagination"/>**ShowOnlyExistingPagination(Boolean)**
+
+Overwrite default Show pagination only if exists
+
+```csharp
+IPromptConfig ShowOnlyExistingPagination(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
 ### <a id="methods-showtooltip"/>**ShowTooltip(Boolean)**
 
 Overwrite default Show/Hide Tooltip of control

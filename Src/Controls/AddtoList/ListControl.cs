@@ -276,7 +276,10 @@ namespace PPlus.Controls
             }
             if (_localpaginator.Count > 0)
             {
-                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
+                {
+                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                }
             }
         }
 
@@ -404,7 +407,7 @@ namespace PPlus.Controls
                         }
                         else
                         {
-                            if (_options.Items.Count(x => x.Text.Equals(aux, StringComparison.InvariantCultureIgnoreCase)) > 0)
+                            if (_options.Items.Any(x => x.Text.Equals(aux, StringComparison.InvariantCultureIgnoreCase)))
                             {
                                 SetError(Messages.ListItemAlreadyexists);
                                 break;
@@ -435,7 +438,7 @@ namespace PPlus.Controls
                     if (!_options.AllowDuplicate)
                     {
                         var aux = _inputBuffer.ToString();
-                        if (_options.Items.Count(x => x.Text.Equals(aux, StringComparison.InvariantCultureIgnoreCase)) > 0)
+                        if (_options.Items.Any(x => x.Text.Equals(aux, StringComparison.InvariantCultureIgnoreCase)))
                         {
                             SetError(Messages.ListItemAlreadyexists);
                             break;

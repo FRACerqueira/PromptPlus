@@ -183,7 +183,7 @@ namespace PPlus.Controls.Objects
         {
             while (KeyAvailable)
             {
-                WaitKeypress(CancellationToken.None);
+                WaitKeypress(CancellationToken);
             }
         }
 

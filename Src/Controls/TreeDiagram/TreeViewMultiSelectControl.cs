@@ -415,7 +415,15 @@ namespace PPlus.Controls
                     }
                 }
             }
-            screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _selectedItems.Count);
+            if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
+            {
+                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _selectedItems.Count);
+            }
+            else
+            {
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer($"{Messages.Tagged}: {_selectedItems.Count}, ", _options.OptStyleSchema.TaggedInfo(), true);
+            }
         }
 
         public override ResultPrompt<T[]> TryResult(CancellationToken cancellationToken)

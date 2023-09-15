@@ -287,9 +287,9 @@ namespace PPlus.Controls
                         screenBuffer.WriteLineNotSelector(_options, value);
                     }
                 }
-                if (_localpaginator.PageCount > 1)
+                if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLinePagination(_options,_localpaginator.PaginationMessage());
+                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
                 }
             }
         }
