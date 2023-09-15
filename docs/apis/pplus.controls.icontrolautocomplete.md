@@ -43,7 +43,7 @@ function to accept
 ### <a id="methods-addvalidators"/>**AddValidators(params Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>Tip: see  to validators embeding
+ <br>Tip: see  to validators embedding
 
 ```csharp
 IControlAutoComplete AddValidators(params Func<Object, ValidationResult>[] validators)
@@ -113,7 +113,7 @@ Number of max.items
 ### <a id="methods-completionwaittostart"/>**CompletionWaitToStart(Int32)**
 
 Number of mileseconds to wait before to start function autocomplete
- <br>Default value : 1000. If value less than 10 internal sette to 10.
+ <br>Default value : 1000. If value less than 10 internal set to 10.
 
 ```csharp
 IControlAutoComplete CompletionWaitToStart(int value)
@@ -196,18 +196,18 @@ Transform option
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### <a id="methods-maxlenght"/>**MaxLenght(UInt16)**
+### <a id="methods-maxlength"/>**MaxLength(UInt16)**
 
-MaxLenght of input text.
+MaxLength of input text.
 
 ```csharp
-IControlAutoComplete MaxLenght(ushort value)
+IControlAutoComplete MaxLength(ushort value)
 ```
 
 #### Parameters
 
 `value` [UInt16](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
-Lenght
+Length
 
 #### Returns
 
@@ -216,7 +216,7 @@ Lenght
 ### <a id="methods-minimumprefixlength"/>**MinimumPrefixLength(Int32)**
 
 Number minimum of chars to accept autocomplete
- <br>Default value : 3. If value less than 0 internal sette to 0.
+ <br>Default value : 3. If value less than 0 internal set to 0.
 
 ```csharp
 IControlAutoComplete MinimumPrefixLength(int value)
@@ -286,7 +286,7 @@ The [SpinnersType](./pplus.controls.spinnerstype.md)
 Style of spinner. [Style](./pplus.style.md)
 
 `speedAnimation` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored
+Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored
 
 `customspinner` [IEnumerable&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored

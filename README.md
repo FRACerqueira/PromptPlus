@@ -6,9 +6,9 @@
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
 
-**Interactive command-line toolkit for .Net core with powerful controls and commands to create professional console applications.**
+**Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
 
-**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
+**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
 **[Visit the official page for more documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
 
 ## Table of Contents
@@ -26,39 +26,68 @@
 - [Keypress Extensions Emacs](#keypress-extensions-emacs)
 - [Validators](#validators)
 - [Supported Platforms](#supported-platforms)
-- [Inspiration Notes](#inspiration-notes)
 - [Code of Conduct](#code-of-conduct)
 - [Contributing](#contributing)
+- [Credits](#credits)
 - [License](#license)
 - [API Reference](https://fracerqueira.github.io/PromptPlus/apis/apis.html)
 
-## Whats news in V4.0.4
+## What's new in V4.0.5
+
+- Added new global propety 'ExtraExceptionInfo' to write extra console exception info
+- Added new global propety 'DisableToggleTooltip' to disable toggle Tooltip
+- Added new global propety 'ShowOnlyExistingPagination' to disable Page information when pagination not exists 
+- Added new Method DisableToggleTooltip(bool value) to overwrite default DisableToggleTooltip in control 
+- Added new Method ShowOnlyExistingPagination(bool value) to overwrite default Overwrite default Show pagination only if exists in control
+- Added new item to Enum FilterMode : 'Disabled'. This item disable filter feature in coletions
+- Improved to not show text prompt when text value is null or empty
+- Improved terminal mode detection (for Windows 11 Versions)
+- Rebuilt FIGlet to MIT License 
+- Fixed credits (MIT License Copyright) 
+- Fixed bug PromptPlus not restore StyleSchema when ResetColor
+- Fixed Spell checking (Breaking Changes)
+    - SugestionInput to SuggestionInput
+        - Controls: MaskEdit/AddTolist/Input
+    - SugestionOutput to SuggestionOutput
+        - Controls: MaskEdit/AddTolist/Input
+    - MaxLenght to MaxLength 
+        - Controls: AutoComplete/AddTolist/Input
+    - StyleControls.Sugestion to StyleControls.Suggestion
+    - StyleSchemaExtensions.Sugestion to StyleSchemaExtensions.Suggestion
+    - PromptPlusException.Plataform to PromptPlusException.Platform
+
+**Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation, fixed credits (MIT License Copyright) and wrong method/property names**
+
+## What's new in V4.0.4
+
 - Fixed bug PromptPlus not restore terminal original setting when shutdown application
 - Fixed bug Autocomplete does not change result when backspace is pressed during search
 - Added Property CurrentBuffer in console drive to return Current Buffer running (Primary/Secondary)
-- Added SwapBuffer command to swith Primary/Secondar buffer (Valid only When console 'ansi'  suported)
+- Added SwapBuffer command to switch Primary/Secondary buffer (Valid only When console 'ansi'  supported)
 - Renamed 'AlternateScreen' to 'RunOnBuffer'. Now executes a custom action on TargetBuffer and returns to CurrentBuffer
 - Refactored console drivers initialization, control options initialization
 - Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
     - Default value is = '850;65001'
 
-## Whats news in V4.0.3
+## What's new in V4.0.3
+
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
 - Fixed bug Control ProgressBar
-    - Not show gradient when setted ProgressBarType.Fill
+    - Not show gradient when set ProgressBarType.Fill
 - Improve testability of result classes/struct (Internal to public)
 
-## Whats news in V4.0.2
+## What's new in V4.0.2
+
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
 - Changed WaitControl to take context value in tasks and return context in result
-    - There are small break-chages  
+    - There are small break-changes  
 - Add Answer key check equals "Yes"/"No" using config values
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
 
-## Whats news in V4.0.X
+## What's new in V4.0.X
 
 ### Newest controls and color improvement and layout
 
@@ -73,7 +102,7 @@
 ## Features
 [**Top**](#table-of-contents)
 
-**All features have IntelliSense. The PromptPlus have more 20 controls with many features like: filters, validators, history, sugestions, spinner(19 embeding type and plus custom yours!), colors and styles for control-elements** :
+**All features have IntelliSense. PromptPlus has more than 20 controls with many features like: filters, validators, history, suggestions, spinner(19 embedding type and plus custom yours!), colors and styles for control-elements** :
 - Banner Ascii
 - Input text / Secret / AutoComplete with spinner
 - MaskEdit Generic / Only Date / Only Time / DateTime / Number /  Currency
@@ -96,12 +125,12 @@
 **All controls** have the same organization (see in action: [**Controls Snapshot**](#controls-snapshot)):
 - input/filter (except Masked input) using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
 - Prompt, description and data entry (ever)
-- Extra actions per stage : OnStartControl/OnInputRender/OnTryAcceptInput/OnFinishControl (ever)
+- Extra actions per stage: OnStartControl/OnInputRender/OnTryAcceptInput/OnFinishControl (ever)
 - Tooltips (ever and configurable) 
 - Filter by Contains / StartsWith (configurable) (depends on the control)
-- Collection subset items and interations (depends on the control)
+- Collection subset items and iterations (depends on the control)
 - Page information and page-size(depends on the control)
-- Spinner animmation (depends on the control)
+- Spinner animation (depends on the control)
 - Error message (depends on the control and validators)
  
 PromptPlus driver console  **Supports 4/8/24-bit colors** in the terminal with **auto-detection** of the current terminal's capabilities.
@@ -109,8 +138,7 @@ PromptPlus driver console  **Supports 4/8/24-bit colors** in the terminal with *
 ## Migrate Version
 [**Top**](#table-of-contents)
 
-Until version 3 the console engine was based on a model from another project that has several serious problems that cause exceptions during execution in addition to increasing the complexity of the code for correct rendering...
-**PromptPlus v4** has been **completely rebuilt** for a better experience, with significant improvements with new controls and more developer power. The console driver now supports better rendering, with the ability to detect terminal capabilities and allow for 24-bit color, text overflow strategies based on terminal size, and left and right margins for a nicer layout.
+Until version 3 the console engine was based on a model from another project. **PromptPlus v4** has been **completely rebuilt** for a better experience, with significant improvements with new controls and more developer power. The console driver now supports better rendering, with the ability to detect terminal capabilities and allow for 24-bit color, text overflow strategies based on terminal size, and left and right margins for a nicer layout.
 **The Controls have been revised to be more responsive, allow color styles in many of their elements**, and adapt to the terminal size even with resizing.
 
 For migrate V3.3 to V4.0 [**see this link**](https://fracerqueira.github.io/PromptPlus/migrateversion.html).
@@ -118,7 +146,7 @@ For migrate V3.3 to V4.0 [**see this link**](https://fracerqueira.github.io/Prom
 ## Console Engine
 [**Top**](#table-of-contents)
 
-The console driver have the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout and automatic color conversion.
+The console driver has the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout and automatic color conversion.
 The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
 
 ### Sample Output detect (ConsoleFeaturesSamples)
@@ -130,7 +158,7 @@ The new engine detects support ansi commands and adjust output for this function
 
 ### Sample color capacity (ConsoleFeaturesSamples)
 
-**_Note: This layout and code was inspired by the excellent project:spectreconsole, having the same color palette_**
+**_Note: This layout and code were based (code copy and adaptation) on the excellent project: spectrum console, having the same color palette_**
 
 ![](./docs/images/consolecolorcapacity.gif)
 
@@ -158,7 +186,7 @@ dotnet run --project [name of sample]
 
 ## Controls Snapshot
 
-For each snapshot, the title is **name of projet** sample in folder **samples**
+For each snapshot, the title is **name of project** sample in folder **samples**
 
 ### Pipeline
 
@@ -186,7 +214,7 @@ For each snapshot, the title is **name of projet** sample in folder **samples**
 
 ![](./docs/images/inputsample3.gif)
 
-[**Top**](#table-of-contents) | [InputWithSugestionSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithSugestionSamples)
+[**Top**](#table-of-contents) | [InputWithSuggestionSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithSuggestionSamples)
 
 ![](./docs/images/inputsample4.gif)
 
@@ -391,7 +419,7 @@ if (!in1.IsAborted)
 
 PromptPlus applies the language/culture **only when running controls**. The language/culture of the application is **not affected**. If language/culture is not informed, the application's language/culture will be used with fallback to en-US.
 
-All messages are affected when changed language/culture. PromptPlus has languages embeded:
+All messages are affected when changed language/culture. PromptPlus has languages embedded:
 - en-US (Default)
 - pt-BR
 
@@ -407,7 +435,7 @@ To use a non-embedded language/culture:
 
 PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-color.org/). when there is the environment variable "no_color" the colors are disabled.
 
-PromptPlus also has commands for coloring parts of the text using **direct console, styles and Over elememnts of controls**.
+PromptPlus also has commands for coloring parts of the text using **direct console, styles and Over elements of controls**.
 
 Promptplus uses the **same default colors and engine(softly modified)** as the third party project: spectreconsole.
 For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#colors) or see the samples in folder **Samples**
@@ -466,14 +494,6 @@ PromptPlus.WriteLine($"Your input: {name.Value}!");
 - macOS
     - Terminal.app
 
-## Inspiration notes
-[**Top**](#table-of-contents)
-
-- FIGlet was inspired by the work of [FIGlet.Net](https://github.com/WenceyWang/FIGlet.Net).
-- The colors and some of its dependencies were inspired by the work of [spectreconsole](https://spectreconsole.net/).
-- The API Reference was inspired by the work of [xmldoc2md (Fork with improvements)](https://github.com/FRACerqueira/xmldoc2md).
-- The EastAsianWidth and base-control was inspired by the work of [Sharprompt](https://github.com/shibayan/Sharprompt)
-
 ## Code of Conduct
 [**Top**](#table-of-contents)
 
@@ -484,9 +504,24 @@ For more information see the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 
+## Credits
+[**Top**](#table-of-contents)
+
+PromptPlus includes code from other software released under the **MIT license**:
+
+- [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+- [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
+- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
+- [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU
+
 ## License
 [**Top**](#table-of-contents)
 
 Copyright 2021 @ Fernando Cerqueira
 
-PromptPlus project is licensed under the  the MIT license. For more information see [License](LICENSE.md).
+PromptPlus is licensed under the MIT license. For more information see [LICENSE](LICENSE.md).
+
+* For Spectre.Console licensing information, see [LICENSE-SpectreConsole](LICENSE/LICENSE-SpectreConsole.md).
+* For Sharprompt licensing information, see [LICENSE-Sharprompt](LICENSE/LICENSE-Sharprompt.md).
+* For xmldoc2md licensing information, see [LICENSE-xmldoc2md](LICENSE/LICENSE-xmldoc2md.md).
+* For FIGlet licensing information, see [LICENSE-FIGlet](LICENSE/LICENSE-FIGlet.md).

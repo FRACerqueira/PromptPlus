@@ -277,7 +277,7 @@ namespace PPlus.Controls
             if (!_options.HideInfoOrder)
             {
                 screenBuffer.AddBuffer(' ', Style.Default, true);
-                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, TextOrder(_options.CurrentOrder)), _options.OrderStyle);
+                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, ChartBarControl.TextOrder(_options.CurrentOrder)), _options.OrderStyle);
             }
         }
 
@@ -434,7 +434,7 @@ namespace PPlus.Controls
             return new ResultPrompt<bool>(true,abort,!endinput,notrender);
         }
 
-        private string TextOrder(ChartOrder value)
+        private static string TextOrder(ChartOrder value)
         {
             return value switch
             {
@@ -477,7 +477,7 @@ namespace PPlus.Controls
                 {
                     screenBuffer.AddBuffer(new string(' ', _options.PadLeft), Style.Default, true);
                 }
-                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, TextOrder(_options.CurrentOrder)), _options.OrderStyle);
+                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, ChartBarControl.TextOrder(_options.CurrentOrder)), _options.OrderStyle);
                 screenBuffer.NewLine();
             }
         }
@@ -585,7 +585,7 @@ namespace PPlus.Controls
                     inipos = 0;
                 }
             }
-            var maxlenghtlabel = _options.Labels.Max(x => x.Label.Length);
+            var maxlengthlabel = _options.Labels.Max(x => x.Label.Length);
             char charbarOn = ' ';
             switch (barType)
             {
@@ -650,7 +650,7 @@ namespace PPlus.Controls
                 }
                 else
                 {
-                    screenBuffer.AddBuffer(item.Label.PadRight(maxlenghtlabel) , _options.LabelStyle);
+                    screenBuffer.AddBuffer(item.Label.PadRight(maxlengthlabel) , _options.LabelStyle);
                     screenBuffer.AddBuffer(": ",Style.Default, false, false);
                     screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle, false, true);
                 }
@@ -765,7 +765,7 @@ namespace PPlus.Controls
                 }
             }
 
-            var maxlenghtlabel = _options.Labels.Max(x => x.Label.Length);
+            var maxlengthlabel = _options.Labels.Max(x => x.Label.Length);
 
             foreach (var item in _options.Labels.Skip(inipos).Take(pagesize))
             {
@@ -775,7 +775,7 @@ namespace PPlus.Controls
                     screenBuffer.AddBuffer(new string(' ', _options.PadLeft),Style.Default, false, false);
                 }
                 screenBuffer.AddBuffer("■ ", Style.Default.Foreground(item.ColorBar.Value), false, false);
-                screenBuffer.AddBuffer($"{item.Label.PadRight(maxlenghtlabel)}", _options.LabelStyle);
+                screenBuffer.AddBuffer($"{item.Label.PadRight(maxlengthlabel)}", _options.LabelStyle);
                 if (_options.ShowLegendValue || _options.ShowLegendPercent)
                 {
                     screenBuffer.AddBuffer(": ", Style.Default, false, false);
@@ -814,26 +814,15 @@ namespace PPlus.Controls
         private void ChangeOrder()
         {
             //order items
-            switch (_options.CurrentOrder)
+            _options.Labels = _options.CurrentOrder switch
             {
-                case ChartOrder.None:
-                    _options.Labels = _options.Labels.OrderBy(x => x.Id).ToList();
-                    break;
-                case ChartOrder.Highest:
-                    _options.Labels = _options.Labels.OrderByDescending(x => x.Value).ToList();
-                    break;
-                case ChartOrder.Smallest:
-                    _options.Labels = _options.Labels.OrderBy(x => x.Value).ToList();
-                    break;
-                case ChartOrder.LabelAsc:
-                    _options.Labels = _options.Labels.OrderBy(x => x.Label).ToList();
-                    break;
-                case ChartOrder.LabelDec:
-                    _options.Labels = _options.Labels.OrderByDescending(x => x.Label).ToList();
-                    break;
-                default:
-                    throw new PromptPlusException($"ChartOrder {_options.Order} Not implemented");
-            }
+                ChartOrder.None => _options.Labels.OrderBy(x => x.Id).ToList(),
+                ChartOrder.Highest => _options.Labels.OrderByDescending(x => x.Value).ToList(),
+                ChartOrder.Smallest => _options.Labels.OrderBy(x => x.Value).ToList(),
+                ChartOrder.LabelAsc => _options.Labels.OrderBy(x => x.Label).ToList(),
+                ChartOrder.LabelDec => _options.Labels.OrderByDescending(x => x.Label).ToList(),
+                _ => throw new PromptPlusException($"ChartOrder {_options.Order} Not implemented"),
+            };
             var auxpaginginfo = new List<(int id, int page)>();
             var page = 0;
             var index = 0;
@@ -870,7 +859,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}, {5}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend),
                                     string.Format(Messages.TooltipChartSwitchOrder,_options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
@@ -880,7 +869,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend)), _options.OptStyleSchema.Tooltips());
                             }
@@ -892,7 +881,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}\n{4}, {5}, {6}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend),
@@ -903,7 +892,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}\n{4}, {5}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend)), _options.OptStyleSchema.Tooltips());
@@ -920,7 +909,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}, {4}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
                             }
@@ -929,7 +918,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType)), _options.OptStyleSchema.Tooltips());
                             }
                         }
@@ -940,7 +929,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}, {5}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
@@ -950,7 +939,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType)), _options.OptStyleSchema.Tooltips());
                             }
@@ -965,7 +954,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend),
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
                             }
@@ -974,7 +963,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend)), _options.OptStyleSchema.Tooltips());
                             }
                         }
@@ -985,7 +974,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}, {5}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend),    
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
@@ -995,7 +984,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend)), _options.OptStyleSchema.Tooltips());
                             }
@@ -1010,7 +999,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
                             }
                             else
@@ -1018,7 +1007,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter), _options.OptStyleSchema.Tooltips());
+                                    Messages.InputFinishEnter), _options.OptStyleSchema.Tooltips());
                             }
                         }
                         else
@@ -1028,7 +1017,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}, {4}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
                             }
@@ -1037,7 +1026,7 @@ namespace PPlus.Controls
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip), _options.OptStyleSchema.Tooltips());
                             }
                         }
@@ -1053,7 +1042,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend),
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
@@ -1062,7 +1051,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend)), _options.OptStyleSchema.Tooltips());
                             }
@@ -1073,7 +1062,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}, {5}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend),
@@ -1083,7 +1072,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend)), _options.OptStyleSchema.Tooltips());
@@ -1098,7 +1087,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
                             }
@@ -1106,7 +1095,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType)), _options.OptStyleSchema.Tooltips());
                             }
                         }
@@ -1116,7 +1105,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType),
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
@@ -1125,7 +1114,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchType, _options.SwitchType)), _options.OptStyleSchema.Tooltips());
                             }
@@ -1139,7 +1128,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend),
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
                             }
@@ -1147,7 +1136,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend)), _options.OptStyleSchema.Tooltips());
                             }
                         }
@@ -1157,7 +1146,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}, {4}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend),
                                     string.Format(Messages.TooltipChartSwitchOrder, _options.SwitchOrder)), _options.OptStyleSchema.Tooltips());
@@ -1166,7 +1155,7 @@ namespace PPlus.Controls
                             {
                                 screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}",
                                     string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                    Messages.InputFisnishEnter,
+                                    Messages.InputFinishEnter,
                                     defaultcharttip,
                                     string.Format(Messages.TooltipChartSwitchLegend, _options.SwitchLegend)), _options.OptStyleSchema.Tooltips());
                             }
@@ -1178,13 +1167,13 @@ namespace PPlus.Controls
                         {
                             screenBuffer.AddBuffer(string.Format("{0}, {1}",
                                 string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                Messages.InputFisnishEnter), _options.OptStyleSchema.Tooltips());
+                                Messages.InputFinishEnter), _options.OptStyleSchema.Tooltips());
                         }
                         else
                         {
                             screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}",
                                 string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                                Messages.InputFisnishEnter,
+                                Messages.InputFinishEnter,
                                 defaultcharttip), _options.OptStyleSchema.Tooltips());
                         }
                     }

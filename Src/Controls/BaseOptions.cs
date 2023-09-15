@@ -33,6 +33,8 @@ namespace PPlus.Controls
             OptHideAfterFinish = config.HideAfterFinish;
             OptHideOnAbort = config.HideOnAbort;
             OptEnabledAbortKey = config.EnabledAbortKey;
+            OptDisableChangeTooltip = config.DisableToggleTooltip;
+            OptShowOnlyExistingPagination = config.ShowOnlyExistingPagination;
         }
 
         internal StyleSchema OptStyleSchema { get; }
@@ -41,6 +43,8 @@ namespace PPlus.Controls
         internal string OptPrompt { get; set; } = string.Empty;
         internal string OptDescription { get; set; } = string.Empty;
         internal bool OptShowTooltip { get; set; }
+        internal bool OptDisableChangeTooltip { get; set; }
+        internal bool OptShowOnlyExistingPagination { get; set; }
 
         internal Dictionary<StageControl, Action<object, object?>> OptUserActions { get; private set; } = new();
         internal string OptToolTip { get; private set; } = string.Empty;
@@ -62,6 +66,20 @@ namespace PPlus.Controls
         public IPromptConfig ShowTooltip(bool value)
         {
             OptShowTooltip = value;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IPromptConfig ShowOnlyExistingPagination(bool value)
+        {
+            OptShowOnlyExistingPagination = value;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IPromptConfig DisableToggleTooltip(bool value)
+        {
+            OptDisableChangeTooltip = value;
             return this;
         }
 

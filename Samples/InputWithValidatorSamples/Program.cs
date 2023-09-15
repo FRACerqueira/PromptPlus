@@ -1,4 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using PPlus;
@@ -21,10 +25,10 @@ internal class Program
         //Ensure ValueResult Culture for all controls
         PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
 
-        PromptPlus.DoubleDash("Control:Input - with MaxLenght and validator");
+        PromptPlus.DoubleDash("Control:Input - with MaxLength and validator");
         var in1 = PromptPlus
-            .Input("Input sample1", "My MaxLenght is 5 and MinLenght is 2")
-            .MaxLenght(5)
+            .Input("Input sample1", "My MaxLength is 5 and MinLength is 2")
+            .MaxLength(5)
             .AddValidators(PromptValidators.MinLength(2))
             .Run();
 
@@ -35,8 +39,8 @@ internal class Program
 
         PromptPlus.DoubleDash("Control:Input - with ValidateOnDemand - Execute validators foreach input");
         PromptPlus
-            .Input("Input sample1", "My MaxLenght is 5 and MinLenght is 2")
-            .MaxLenght(5)
+            .Input("Input sample1", "My MaxLength is 5 and MinLength is 2")
+            .MaxLength(5)
             .AddValidators(PromptValidators.MinLength(2))
             .ValidateOnDemand()
             .Run();

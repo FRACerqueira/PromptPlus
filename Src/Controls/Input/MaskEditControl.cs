@@ -22,7 +22,7 @@ namespace PPlus.Controls
         private string _originalText = string.Empty;
         private bool _isInAutoCompleteMode;
         private int _completionsIndex = -1;
-        private SugestionOutput? _completions = null;
+        private SuggestionOutput? _completions = null;
         private string _defaultHistoric = null;
 
 
@@ -33,6 +33,11 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
+            if (_options.FilterType == FilterMode.Disabled && _options.HistoryMinimumPrefixLength > 0)
+            {
+                throw new PromptPlusException("HistoryMinimumPrefixLength mustbe zero when FilterType is Disabled");
+            }
+
             if (_options.CurrentCulture == null)
             {
                 _options.CurrentCulture = _options.Config.AppCulture;
@@ -188,7 +193,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMaskEdit SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
+        public IControlMaskEdit SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value)
         {
             _options.SuggestionHandler = value;
             return this;
@@ -338,7 +343,7 @@ namespace PPlus.Controls
             screenBuffer.WritePrompt(_options, "");
             if (_isInAutoCompleteMode || _options.ShowingHistory)
             {
-                screenBuffer.WriteSugestion(_options, _inputBuffer.ToMasked());
+                screenBuffer.WriteSuggestion(_options, _inputBuffer.ToMasked());
                 screenBuffer.SaveCursor();
             }
             else
@@ -374,7 +379,7 @@ namespace PPlus.Controls
                         screenBuffer.WriteLineNotSelector(_options, value);
                     }
                 }
-                if (_localpaginator.PageCount > 1)
+                if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
                 {
                     screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
                 }
@@ -414,13 +419,13 @@ namespace PPlus.Controls
                 {
                     keyInfo = keyInfo.Value.ToCase(_options.InputToCase);
                 }
-                //apply sugestion
+                //apply suggestion
                 if (_options.SuggestionHandler != null && (keyInfo.Value.IsPressTabKey() || keyInfo.Value.IsPressShiftTabKey()))
                 {
                     if (!_isInAutoCompleteMode)
                     {
-                        _completions = _options.SuggestionHandler.Invoke(new SugestionInput(_inputBuffer.ToString(), _options.OptContext));
-                        if (_completions.HasValue && _completions.Value.Sugestions.Count > 0)
+                        _completions = _options.SuggestionHandler.Invoke(new SuggestionInput(_inputBuffer.ToString(), _options.OptContext));
+                        if (_completions.HasValue && _completions.Value.Suggestions.Count > 0)
                         {
                             _completionsIndex = -1;
                             _options.ShowingHistory = false;
@@ -434,7 +439,7 @@ namespace PPlus.Controls
                     }
                     ExecuteAutoComplete(keyInfo.Value.IsPressShiftTabKey());
                 }
-                //cancel sugestion
+                //cancel suggestion
                 else if (_options.SuggestionHandler != null && _isInAutoCompleteMode && keyInfo.Value.IsPressEscKey())
                 {
                     _inputBuffer.Clear().Load(_originalText);
@@ -693,14 +698,14 @@ namespace PPlus.Controls
             }
             _inputBuffer
                 .Clear()
-                .Load(_inputBuffer.RemoveMask(_completions.Value.Sugestions[_completionsIndex],true));
+                .Load(_inputBuffer.RemoveMask(_completions.Value.Suggestions[_completionsIndex],true));
             return true;
         }
 
         private void NextCompletions()
         {
             _completionsIndex++;
-            if (_completionsIndex > _completions.Value.Sugestions.Count - 1)
+            if (_completionsIndex > _completions.Value.Suggestions.Count - 1)
             {
                 _completionsIndex = 0;
             }
@@ -711,7 +716,7 @@ namespace PPlus.Controls
             _completionsIndex--;
             if (_completionsIndex < 0)
             {
-                _completionsIndex = _completions.Value.Sugestions.Count - 1;
+                _completionsIndex = _completions.Value.Suggestions.Count - 1;
             }
         }
 
@@ -724,9 +729,13 @@ namespace PPlus.Controls
                             .Contains(_inputBuffer.RemoveMask(_inputBuffer.ToMasked(), true), StringComparison.InvariantCultureIgnoreCase)
                                 && DateTime.Now < new DateTime(x.TimeOutTicks));
             }
-            return _itemsHistory.Where(x => _inputBuffer.RemoveMask(x.History, true)
+            else if (filterMode == FilterMode.StartsWith)
+            {
+                return _itemsHistory.Where(x => _inputBuffer.RemoveMask(x.History, true)
                         .StartsWith(_inputBuffer.RemoveMask(_inputBuffer.ToMasked(), true), StringComparison.InvariantCultureIgnoreCase)
                             && DateTime.Now < new DateTime(x.TimeOutTicks));
+            }
+            return _itemsHistory.Where(x => DateTime.Now < new DateTime(x.TimeOutTicks));
         }
 
         private void LoadHistory()

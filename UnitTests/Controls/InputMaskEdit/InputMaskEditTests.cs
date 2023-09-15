@@ -1,4 +1,9 @@
-﻿using System.Globalization;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System.Globalization;
 using PPlus.Controls;
 using PPlus.Controls.Objects;
 using PPlus.Tests.Util;
@@ -8,9 +13,9 @@ namespace PPlus.Tests.Controls.InputMaskEdit
     public class InputMaskEditTests : BaseTest
     {
 
-        SugestionOutput SugestionInputSample(SugestionInput arg)
+        SuggestionOutput SuggestionInputSample(SuggestionInput arg)
         {
-            var result = new SugestionOutput();
+            var result = new SuggestionOutput();
             result.Add("123-AAA");
             result.Add("234-BBB");
             result.Add("567-CCC");
@@ -999,12 +1004,12 @@ namespace PPlus.Tests.Controls.InputMaskEdit
 
 
         [Fact]
-        public void Should_TryResulSugestion1()
+        public void Should_TryResulSuggestion1()
         {
             var ctrl = (MaskEditControl)PromptPlus
                 .MaskEdit("P", "D")
                 .Mask("9{3}-AAA")
-                .SuggestionHandler(SugestionInputSample);
+                .SuggestionHandler(SuggestionInputSample);
             ctrl.InitControl(CancellationToken.None);
 
             CompletesIn(100, () =>
@@ -1018,12 +1023,12 @@ namespace PPlus.Tests.Controls.InputMaskEdit
         }
 
         [Fact]
-        public void Should_TryResulSugestion2()
+        public void Should_TryResulSuggestion2()
         {
             var ctrl = (MaskEditControl)PromptPlus
                 .MaskEdit("P", "D")
                 .Mask("9{3}-AAA")
-                .SuggestionHandler(SugestionInputSample);
+                .SuggestionHandler(SuggestionInputSample);
             ctrl.InitControl(CancellationToken.None);
 
             CompletesIn(100, () =>
@@ -1038,12 +1043,12 @@ namespace PPlus.Tests.Controls.InputMaskEdit
 
 
         [Fact]
-        public void Should_TryResulCancelSugestion()
+        public void Should_TryResulCancelSuggestion()
         {
             var ctrl = (MaskEditControl)PromptPlus
                 .MaskEdit("P", "D")
                 .Mask("9{3}-AAA")
-                .SuggestionHandler(SugestionInputSample);
+                .SuggestionHandler(SuggestionInputSample);
             ctrl.InitControl(CancellationToken.None);
 
             CompletesIn(100, () =>

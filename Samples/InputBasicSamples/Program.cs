@@ -1,4 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+
 using System.Globalization;
 using PPlus;
 using PPlus.Controls;
@@ -25,10 +30,10 @@ PromptPlus
     .Input("Input [blue]sample2[/]", "with [yellow]description[/]")
     .Run();
 
-PromptPlus.DoubleDash("Control input - with MaxLenght");
+PromptPlus.DoubleDash("Control input - with MaxLength");
 PromptPlus
-    .Input("Input sample3", "My MaxLenght is 5")
-    .MaxLenght(5)
+    .Input("Input sample3", "My MaxLength is 5")
+    .MaxLength(5)
     .Run();
 
 PromptPlus.DoubleDash("Control:Input - with CaseOptions");
@@ -60,7 +65,7 @@ PromptPlus
     .Input("Input sample8", "Dynamically change the description using a user role")
     .ChangeDescription((inputvalue) =>
     {
-        var aux = $"Input [yellow]lenght[/] is {(inputvalue ?? string.Empty).Length}";
+        var aux = $"Input [yellow]length[/] is {(inputvalue ?? string.Empty).Length}";
         return aux;
     })
     .Run();

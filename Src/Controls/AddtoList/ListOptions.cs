@@ -28,9 +28,9 @@ namespace PPlus.Controls
         public HotKey EditItemPress { get; set; }
         public CaseOptions InputToCase { get; set; } = CaseOptions.Any;
         public Func<char, bool>? AcceptInput { get; set; }
-        public ushort MaxLenght { get; set; } = ushort.MaxValue;
+        public ushort MaxLength { get; set; } = ushort.MaxValue;
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
-        public Func<SugestionInput, SugestionOutput>? SuggestionHandler { get; set; }
+        public Func<SuggestionInput, SuggestionOutput>? SuggestionHandler { get; set; }
         public IList<ItemListControl> Items { get; set; } = new List<ItemListControl>();
         public bool AllowDuplicate { get; set; }
         public int PageSize { get; set; }

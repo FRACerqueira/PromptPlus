@@ -44,8 +44,8 @@ namespace PPlus.Controls
             {
                 return string.Format("{0}, {1}\n{2}, {3}",
                 string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                Messages.TooltipSugestionEsc,
-                Messages.TooltipSugestionToggle,
+                Messages.TooltipSuggestionEsc,
+                Messages.TooltipSuggestionToggle,
                 Messages.TooltipEnterPressList);
             }
             else
@@ -57,7 +57,7 @@ namespace PPlus.Controls
                         return string.Format("{0}, {1}, {2}\n{3}, {4}",
                             string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                             Messages.TooltipAbortEdit,
-                            Messages.TooltipSugestionToggle,
+                            Messages.TooltipSuggestionToggle,
                             string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                             Messages.TooltipEnterPressList);
                     }
@@ -70,7 +70,7 @@ namespace PPlus.Controls
                                 return string.Format("{0}, {1}, {2}, {3}, {4}\n{5}, {6}",
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                     string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
-                                    Messages.TooltipSugestionToggle,
+                                    Messages.TooltipSuggestionToggle,
                                     string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                     string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                     Messages.TooltipPages,
@@ -81,7 +81,7 @@ namespace PPlus.Controls
                                 return string.Format("{0}, {1}, {2},\n{3}, {4}",
                                      string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                                      string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
-                                     Messages.TooltipSugestionToggle,
+                                     Messages.TooltipSuggestionToggle,
                                      Messages.TooltipPages,
                                      Messages.TooltipEnterPressList);
                             }
@@ -92,7 +92,7 @@ namespace PPlus.Controls
                             {
                                 return string.Format("{0}, {1}, {2}, {3}\n{4}, {5}",
                                     string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                                    Messages.TooltipSugestionToggle,
+                                    Messages.TooltipSuggestionToggle,
                                     string.Format(Messages.TooltipEditItem, baseOptions.EditItemPress),
                                     string.Format(Messages.TooltipRemoveItem, baseOptions.RemoveItemPress),
                                     Messages.TooltipPages,
@@ -102,7 +102,7 @@ namespace PPlus.Controls
                             {
                                 return string.Format("{0}, {1}\n{2}, {3}",
                                      string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                                     Messages.TooltipSugestionToggle,
+                                     Messages.TooltipSuggestionToggle,
                                      Messages.TooltipPages,
                                      Messages.TooltipEnterPressList);
                             }

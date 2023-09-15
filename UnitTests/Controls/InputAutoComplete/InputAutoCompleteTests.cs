@@ -1,4 +1,9 @@
-﻿using PPlus.Controls;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using PPlus.Controls;
 using PPlus.Controls.Objects;
 using PPlus.Tests.Util;
 
@@ -551,12 +556,12 @@ namespace PPlus.Tests.Controls.InputAutoComplete
         }
 
         [Fact]
-        public void Should_TryResultMaxLenght()
+        public void Should_TryResultMaxLength()
         {
             var ctrl = (AutoCompleteControl)PromptPlus
                .AutoComplete("P", "D")
                .CompletionAsyncService(MYServiceCompleteAsync)
-               .MaxLenght(2);
+               .MaxLength(2);
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
 
             ctrl.InitControl(CancellationToken.None);

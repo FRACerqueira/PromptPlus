@@ -608,11 +608,11 @@ namespace PPlus.Controls
                         cursor = (cursor.CursorLeft, cursor.CursorTop - dif);
                     }
                 }
-                var offlenght = _options.Witdth - CurrentValueStep(value);
-                if (offlenght > 0)
+                var offlength = _options.Witdth - CurrentValueStep(value);
+                if (offlength > 0)
                 {
                     var top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write(new string(charbarOff, offlenght), Style.Default.Foreground(_options.OptStyleSchema.Slider().Background));
+                    qtd = ConsolePlus.Write(new string(charbarOff, offlength), Style.Default.Foreground(_options.OptStyleSchema.Slider().Background));
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;

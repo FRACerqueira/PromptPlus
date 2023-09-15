@@ -17,12 +17,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Remove="Controls\Banner\FIGlet\Fonts\standard.flf" />
+		<None Remove="Controls\Banner\FIGletCore\standard.flf" />
 	</ItemGroup>
 
 	<PropertyGroup>
 		<Authors>Fernando Cerqueira</Authors>
-		<Description>Interactive command-line toolkit for .Net core with powerful controls and commands to create professional console applications.</Description>
+		<Description>Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.</Description>
 		<PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
 		<PackageTags>cli;command-line;console;interactive;prompt;terminal;c#;toolkit</PackageTags>
 		<RepositoryUrl>https://fracerqueira.github.io/PromptPlus</RepositoryUrl>
@@ -30,7 +30,7 @@
 		<PackageId>PromptPlus</PackageId>
 		<PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
 		<PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
-		<Version>4.0.4</Version>
+		<Version>4.0.5</Version>
 		<PackageIcon>icon.png</PackageIcon>
 		<Copyright>© 2021 - Fernando Cerqueira </Copyright>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
@@ -142,7 +142,7 @@
 		<None Include="..\README.md" Pack="false" />
 	</ItemGroup>
 	<ItemGroup>
-		<EmbeddedResource Include="Controls\Banner\FIGlet\Fonts\standard.flf" />
+		<EmbeddedResource Include="Controls\Banner\FIGletCore\standard.flf" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Update="Resources\PromptPlusResources.Designer.cs">
@@ -159,6 +159,6 @@
 	</ItemGroup>
 
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)|$(TargetFramework)'=='local|.net7'">
-		<Exec Command="xmldoc2md $(SolutionDir)Src\bin\Debug\.net7\PromptPlus.dll $(SolutionDir)docs\apis --templatefile $(SolutionDir)Src\docapitemplate.md  --excludeinternal --index-page-name apis --back-button &quot;Back to List Api&quot; --link-back-button &quot;./apis.md&quot; --back-index-button &quot;Main&quot; --link-backindex-button &quot;../index.md#table-of-contents&quot;" />
+		<Exec Command="xmldoc2md $(SolutionDir)Src\bin\local\.net7\PromptPlus.dll $(SolutionDir)docs\apis --templatefile $(SolutionDir)Src\docapitemplate.md  --excludeinternal --index-page-name apis --back-button &quot;Back to List Api&quot; --link-back-button &quot;./apis.md&quot; --back-index-button &quot;Main&quot; --link-backindex-button &quot;../index.md#table-of-contents&quot;" />
 	</Target>
 </Project>

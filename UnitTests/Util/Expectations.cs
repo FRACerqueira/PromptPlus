@@ -1,4 +1,9 @@
-﻿using System.Text;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System.Text;
 
 namespace PPlus.Tests.Util
 {

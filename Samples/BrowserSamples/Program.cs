@@ -1,4 +1,9 @@
-﻿using System.Globalization;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System.Globalization;
 using PPlus;
 using PPlus.Controls;
 
@@ -42,13 +47,13 @@ namespace BrowserSamples
                 .Run();
 
             PromptPlus.DoubleDash("Control:Browser - DisabledRecursiveExpand usage");
-            PromptPlus.Browser("Browser", "expand-all has same behaviour expand when used DisabledRecursiveExpand.")
+            PromptPlus.Browser("Browser", "expand-all has same behavior expand when used DisabledRecursiveExpand.")
                 .Root(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Root.FullName, false)
                 .DisabledRecursiveExpand()
                 .Run();
 
             PromptPlus.DoubleDash("Control:Browser - AcceptHiddenAttributes/AcceptSystemAttributes usage");
-            PromptPlus.Browser("Browser", "expandall has same behaviour expand when used DisabledRecursiveExpand.")
+            PromptPlus.Browser("Browser", "expandall has same behavior expand when used DisabledRecursiveExpand.")
                 .Root(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Root.FullName, false)
                 .DisabledRecursiveExpand()
                 .AcceptHiddenAttributes(true)

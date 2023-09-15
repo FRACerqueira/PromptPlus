@@ -94,7 +94,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### <a id="methods-default"/>**Default(Boolean)**
 
-Default value for swith
+Default value for switch
 
 ```csharp
 IControlSliderSwitch Default(bool value)

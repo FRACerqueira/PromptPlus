@@ -900,7 +900,7 @@ namespace PPlus.Controls
                     screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3} {4}",
                         string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                         string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                        Messages.SelectFisnishEnter,
+                        Messages.SelectFinishEnter,
                         Messages.TooltipPagesNotes,
                         string.Format(Messages.TooltipToggleNotes,_options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
                 }
@@ -908,7 +908,7 @@ namespace PPlus.Controls
                 {
                     screenBuffer.AddBuffer(string.Format("{0}, {1}\n{2}, {3}",
                         string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                        Messages.SelectFisnishEnter,
+                        Messages.SelectFinishEnter,
                         Messages.TooltipPagesNotes,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
                 }
@@ -928,7 +928,7 @@ namespace PPlus.Controls
                     screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}, {3}\n{4}",
                         string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                         string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                        Messages.SelectFisnishEnter,
+                        Messages.SelectFinishEnter,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes),
                         $"{linedays}, {lineweek}"), _options.OptStyleSchema.Tooltips());
                 }
@@ -937,7 +937,7 @@ namespace PPlus.Controls
                     screenBuffer.AddBuffer(string.Format("{0}, {1}\n{2}, {3}",
                         string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                         string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
-                        Messages.SelectFisnishEnter,
+                        Messages.SelectFinishEnter,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
                 }
             }
@@ -947,7 +947,7 @@ namespace PPlus.Controls
                 {
                     screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}\n{3}",
                         string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                        Messages.SelectFisnishEnter,
+                        Messages.SelectFinishEnter,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes),
                         $"{linedays}, {lineweek}"), _options.OptStyleSchema.Tooltips());
                 }
@@ -955,7 +955,7 @@ namespace PPlus.Controls
                 {
                     screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}",
                         string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
-                        Messages.SelectFisnishEnter,
+                        Messages.SelectFinishEnter,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
                 }
             }
@@ -1579,7 +1579,7 @@ namespace PPlus.Controls
                         screenBuffer.WriteLineNotSelector(_options, item);
                     }
                 }
-                if (_localpaginator.PageCount > 1)
+                if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
                 {
                     screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
                 }

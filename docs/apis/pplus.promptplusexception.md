@@ -85,12 +85,12 @@ public string Message { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-### <a id="properties-plataform"/>**Plataform**
+### <a id="properties-platform"/>**Platform**
 
-The Plataform running
+The Platform running
 
 ```csharp
-public string Plataform { get; }
+public string Platform { get; }
 ```
 
 #### Property Value
@@ -139,20 +139,19 @@ public string Version { get; }
 
 [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-## Constructors
+## Methods
 
-### <a id="constructors-.ctor"/>**PromptPlusException(String)**
+### <a id="methods-tostring"/>**ToString()**
 
-Represents an exception thrown by PromptPlus
+Write string exception
 
 ```csharp
-public PromptPlusException(string message)
+public string ToString()
 ```
 
-#### Parameters
+#### Returns
 
-`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The message for exception
+The string exception
 
 
 - - -

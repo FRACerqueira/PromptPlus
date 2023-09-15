@@ -53,7 +53,7 @@ Any new code should also have reasonable unit test coverage.
 ## Contributing process
 ### Get buyoff or find open community issues or features
 
- * Through GitHub, or through the [GitHub discussions](https://github.com/spectreconsole/spectre.console/discussions) (preferred),
+ * Through GitHub, or through the [GitHub discussions](https://github.com/FRACerqueira/PromptPlus/discussions) (preferred),
    you talk about a feature you would like to see (or a bug), and why it should be in PromptPlus.
    * If approved through the GitHub discussions, ensure an accompanying GitHub issue is created with
      information and a link back to the discussion.
@@ -105,7 +105,7 @@ Submitting PR:
    and issues that you are resolving. This is a tremendous help for us in evaluation and acceptance.
  * Once the pull request is in, please do not delete the branch or close the pull request
    (unless something is wrong with it).
- * One of the Spectre.Console team members, or one of the maintainers, will evaluate it within a
+ * One of the PromptPlus team members, or one of the maintainers, will evaluate it within a
    reasonable time period (which is to say usually within 1-3 weeks). Some things get evaluated
    faster or fast tracked. We are human and we have active lives outside of open source so don't
    fret if you haven't seen any activity on your pull request within a month or two.
@@ -146,7 +146,7 @@ The only reasons a pull request should be closed and resubmitted are as follows:
    Then the old branch is closed with a note on the newer branch this supersedes #github_number.
 
 ## Other general information
-If you reformat code or hit core functionality without an approval from a person on the Spectre.Console Team,
+If you reformat code or hit core functionality without an approval from a person on the PromptPlus Team,
 it's likely that no matter how awesome it looks afterwards, it will probably not get accepted.
 Reformatting code makes it harder for us to evaluate exactly what was changed.
 
@@ -158,4 +158,4 @@ Harder for us roughly translates to a longer SLA for your pull request.
 ## Acknowledgement
 
 This contribution guide was taken from the [Chocolatey project](https://chocolatey.org/)
-with permission and was edited to follow Spectre.Console's conventions and processes.
+with permission and was edited to follow PromptPlus's conventions and processes.

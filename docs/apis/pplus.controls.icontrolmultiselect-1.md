@@ -29,7 +29,7 @@ Implements IPromptControls&lt;IEnumerable&lt;T&gt;&gt;
 
 ### <a id="methods-adddefault"/>**AddDefault(params T[])**
 
-Add default value seleted to initial list.
+Add default value selected to initial list.
 
 ```csharp
 IControlMultiSelect<T> AddDefault(params T[] values)
@@ -356,7 +356,7 @@ Overflow strategy
 
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
-Overwrite defaults start seleted value with last result saved on history.
+Overwrite defaults start selected value with last result saved on history.
 
 ```csharp
 IControlMultiSelect<T> OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
@@ -393,7 +393,7 @@ Number of Max.items
 
 ### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
 
-Defines a minimum and maximum (optional) range of items seleted in the list
+Defines a minimum and maximum (optional) range of items selected in the list
 
 ```csharp
 IControlMultiSelect<T> Range(int minvalue, Nullable<Int32> maxvalue)

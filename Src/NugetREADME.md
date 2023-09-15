@@ -1,6 +1,6 @@
 # **Welcome to PromptPlus**
 
-**Interactive command-line toolkit for .Net core with powerful controls and commands to create professional console applications.**
+**Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
 
 All controls input/filter (except Masked input) using [**GNU Readline**](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts.  
 
@@ -8,35 +8,65 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 #### [Visit the official page for complete documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)
 
-**PromptPlus** was developed in c# with the **netstandard2.1**, **.Net 6** and **.Net 7** target frameworks.
+**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
 
-## Whats news in V4.0.4
+## What's new in V4.0.5
+
+- Added new global propety 'ExtraExceptionInfo' to write extra console exception info
+- Added new global propety 'DisableToggleTooltip' to disable toggle Tooltip
+- Added new global propety 'ShowOnlyExistingPagination' to disable Page information when pagination not exists 
+- Added new Method DisableToggleTooltip(bool value) to overwrite default DisableToggleTooltip in control 
+- Added new Method ShowOnlyExistingPagination(bool value) to overwrite default Overwrite default Show pagination only if exists in control 
+- Added new item to Enum FilterMode : 'Disabled'. This item disable filter feature in coletions
+- Improved to not show text prompt when text value is null or empty
+- Improved terminal mode detection (for Windows 11 Versions)
+- Rebuilt FIGlet to MIT License 
+- Fixed credits (MIT License Copyright) 
+- Fixed bug PromptPlus not restore StyleSchema when ResetColor
+- Fixed Spell checking (Breaking Changes)
+    - SugestionInput to SuggestionInput
+        - Controls: MaskEdit/AddTolist/Input
+    - SugestionOutput to SuggestionOutput
+        - Controls: MaskEdit/AddTolist/Input
+    - MaxLenght to MaxLength 
+        - Controls: AutoComplete/AddTolist/Input
+    - StyleControls.Sugestion to StyleControls.Suggestion
+    - StyleSchemaExtensions.Sugestion to StyleSchemaExtensions.Suggestion
+    - PromptPlusException.Plataform to PromptPlusException.Platform
+
+**Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation, fixed credits (MIT License Copyright) and wrong method/property names**
+
+## What's new in V4.0.4
+
 - Fixed bug PromptPlus not restore terminal original setting when shutdown application
 - Fixed bug Autocomplete does not change result when backspace is pressed during search
 - Added Property CurrentBuffer in console drive to return Current Buffer running (Primary/Secondary)
-- Added SwapBuffer command to swith Primary/Secondar buffer (Valid only When console 'ansi'  suported)
+- Added SwapBuffer command to switch Primary/Secondary buffer (Valid only When console 'ansi'  supported)
 - Renamed 'AlternateScreen' to 'RunOnBuffer'. Now executes a custom action on TargetBuffer and returns to CurrentBuffer
 - Refactored console drivers initialization, control options initialization
 - Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
     - Default value is = '850;65001'
 
-## Whats news in V4.0.3
+## What's new in V4.0.3
+
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
 - Fixed bug Control ProgressBar
-    - Not show gradient when setted ProgressBarType.Fill
+    - Not show gradient when set ProgressBarType.Fill
 - Improve testability of result classes/struct (Internal to public)
 
-## Whats news in V4.0.2
+## What's new in V4.0.2
+
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
 - Changed WaitControl to take context value in tasks and return context in result
-    - There are small break-chages  
+    - There are small break-changes  
 - Add Answer key check equals "Yes"/"No" using config values
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
 
-## Whats news in V4.0.X
+## What's new in V4.0.X
+
 - Fixed duplicate tooltip in calendar
 - New console engine
     - Supports 4/8/24-bit colors
@@ -103,3 +133,12 @@ Copyright 2021 @ Fernando Cerqueira
 
 This project is licensed under the [MIT License](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 
+
+## **Credits**
+
+PromptPlus includes code from other software released under the MIT license:
+
+- [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+- [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
+- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
+- [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU

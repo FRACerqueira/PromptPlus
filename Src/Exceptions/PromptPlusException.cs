@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace PPlus
@@ -17,12 +22,25 @@ namespace PPlus
         /// Represents an exception thrown by PromptPlus
         /// </summary>
         /// <param name="message">The message for exception</param>
-        public PromptPlusException(string message) : base(message)
+        internal PromptPlusException(string message) : base(message)
         {
-            Plataform = RuntimeInformation.OSDescription;
+            Platform = RuntimeInformation.OSDescription;
             Framework = RuntimeInformation.FrameworkDescription;
             Version = typeof(PromptPlusException).Assembly.GetName().Version.ToString();
         }
+
+        /// <summary>
+        /// Represents an exception thrown by PromptPlus
+        /// </summary>
+        /// <param name="message">The message exception</param>
+        /// <param name="innerexception">The inner exception</param>
+        internal PromptPlusException(string message, Exception innerexception) : base(message, innerexception)
+        {
+            Platform = RuntimeInformation.OSDescription;
+            Framework = RuntimeInformation.FrameworkDescription;
+            Version = typeof(PromptPlusException).Assembly.GetName().Version.ToString();
+        }
+
 
         /// <summary>
         /// The version of PromptPlus running
@@ -33,8 +51,21 @@ namespace PPlus
         /// </summary>
         public string Framework { get; }
         /// <summary>
-        /// The Plataform running 
+        /// The Platform running 
         /// </summary>
-        public string Plataform { get; }
+        public string Platform { get; }
+
+        /// <summary>
+        /// Write string exception
+        /// </summary>
+        /// <returns>The string exception</returns>
+        public override string ToString()
+        {
+            if (PromptPlus.ExtraExceptionInfo)
+            {
+                return $"{Environment.NewLine} Console/Terminal Inf.: PromptPlus Version:{Version},Framework: {Framework}, Platform{Platform}, IsLegacy: {PromptPlus.IsLegacy}, IsTerminal: {PromptPlus.IsTerminal}, IsUnicodeSupported: {PromptPlus.IsUnicodeSupported}, SupportsAnsi: {PromptPlus.SupportsAnsi},Buffers(Width/Height): {PromptPlus.BufferWidth}/{PromptPlus.BufferHeight},OutputEncoding: {PromptPlus.OutputEncoding.EncodingName},CodePage : {PromptPlus.CodePage}, PadScreen(Left/Right): {PromptPlus.PadLeft}/{PromptPlus.PadRight},Current Buffer: {PromptPlus.CurrentTargetBuffer}, ColorDepth: {PromptPlus.ColorDepth}{Environment.NewLine}{base.ToString()}";
+            }
+            return base.ToString();
+        }
     }
 }

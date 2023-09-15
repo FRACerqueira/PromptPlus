@@ -18,7 +18,7 @@ namespace PPlus.Controls
                 {
                     screenBuffer.WriteAnswer(options, input.Substring(0, filter.Length));
                     screenBuffer.SaveCursor();
-                    screenBuffer.WriteSugestion(options, input.Substring(filter.Length));
+                    screenBuffer.WriteSuggestion(options, input.Substring(filter.Length));
                 }
                 else
                 {
@@ -41,7 +41,7 @@ namespace PPlus.Controls
                 foreach (var itempart in parts)
                 {
                     pos++;
-                    screenBuffer.WriteSugestion(options, itempart);
+                    screenBuffer.WriteSuggestion(options, itempart);
                     if (pos < parts.Length)
                     {
                         screenBuffer.WriteAnswer(options, filter.ToString());
@@ -87,7 +87,7 @@ namespace PPlus.Controls
         public static void WriteLineDescriptionSelect<T>(this ScreenBuffer screenBuffer, SelectOptions<T> options, ItemSelect<T> input)
         {
             var result = options.OptDescription;
-            if (options.DescriptionSelector != null)
+            if (options.DescriptionSelector != null && input != null)
             {
                 result = options.DescriptionSelector.Invoke(input.Value);
             }
@@ -124,7 +124,7 @@ namespace PPlus.Controls
                 return string.Format("{0}, {1}, {2}\n{3}, {4}",
                     string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
                     string.Format(Messages.TooltipCancelEsc, options.Config.AbortKeyPress),
-                    Messages.SelectFisnishEnter,
+                    Messages.SelectFinishEnter,
                     Messages.TooltipPages,
                     Messages.TooltipSelectFilter);
             }
@@ -132,7 +132,7 @@ namespace PPlus.Controls
             {
                 return string.Format("{0}, {1}\n{2}, {3}",
                     string.Format(Messages.TooltipToggle, options.Config.TooltipKeyPress),
-                    Messages.SelectFisnishEnter,
+                    Messages.SelectFinishEnter,
                     Messages.TooltipPages,
                     Messages.TooltipSelectFilter);
             }

@@ -56,14 +56,14 @@
   - DescriptionSelector(Func<T, string> value);
   - TO: ChangeDescription(Func<string, string> value);
 - Changed: 
-  - SuggestionHandler(Func<SugestionInput, SugestionOutput> value, bool EnterTryFininsh = false)
-  - TO: SuggestionHandler(Func<SugestionInput, SugestionOutput> value);
+  - SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value, bool EnterTryFininsh = false)
+  - TO: SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value);
   
 ### Autocomplete
 
 - Removed: CompletionInterval(value) 
 - Removed: AcceptWithoutMatch()
-- Changegd:
+- Changed:
   - SpeedAnimation(int value)
   - TO: Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
 - Changed: 
@@ -168,7 +168,7 @@
 
 - Many Changes, see new Keypress  Control
 
-### Slider (Number/Swith)
+### Slider (Number/Switch)
 
 - Many Changes, see new Sliders Control
 

@@ -44,7 +44,7 @@ namespace PPlus.Controls
         public List<string> FixedSelected { get; set; }
         public int Minimum { get; set; }
         public int Maximum { get; set; } = int.MaxValue;
-        public Func<ItemBrowser, bool> ExpressionSeleted { get; set; }
+        public Func<ItemBrowser, bool> ExpressionSelected { get; set; }
         public Func<ItemBrowser, bool> ExpressionDisabled { get; set; }
         public Spinners? Spinner { get; set; }
         public Style SpinnerStyle { get; set; }

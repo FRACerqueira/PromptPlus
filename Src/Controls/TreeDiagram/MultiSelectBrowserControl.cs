@@ -28,14 +28,14 @@ namespace PPlus.Controls
         private Task _taskspinner;
         private bool _disposed;
         private bool _loadFolderFinish = true;
-        private List<(string UniqueId, ItemBrowser value)> _seletedItems;
+        private List<(string UniqueId, ItemBrowser value)> _selectedItems;
         private bool _rootExpand = true;
 
         public MultiSelectBrowserControl(IConsoleControl console, BrowserOptions options) : base(console, options)
         {
             _options = options;
             _flatnodes = new();
-            _seletedItems = new();
+            _selectedItems = new();
         }
 
 
@@ -217,7 +217,7 @@ namespace PPlus.Controls
         {
             _options.RootFolder = value;
             _options.ExpandAll = expandall;
-            _options.ExpressionSeleted = validselect;
+            _options.ExpressionSelected = validselect;
             _options.ExpressionDisabled = setdisabled;
             return this;
         }
@@ -351,7 +351,7 @@ namespace PPlus.Controls
             _ctsesc = new CancellationTokenSource();
             _lnkcts = CancellationTokenSource.CreateLinkedTokenSource(_ctsesc.Token, cancellationToken);
 
-            _browserTreeView = new TreeView<ItemBrowser>(_options.ExpressionSeleted)
+            _browserTreeView = new TreeView<ItemBrowser>(_options.ExpressionSelected)
             {
                 TextTree = (item) => item.Name
             };
@@ -488,7 +488,7 @@ namespace PPlus.Controls
                     screenBuffer.NewLine();
                     if (_options.ShowCurrentFullPath)
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentSeleted}: {showItem.Value.FullPath}", _options.CurrentFolderStyle, true);
+                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {showItem.Value.FullPath}", _options.CurrentFolderStyle, true);
                     }
                     else
                     {
@@ -525,8 +525,16 @@ namespace PPlus.Controls
                         screenBuffer.WriteLineNotMultiSelectorBrowser(_options, item);
                     }
                 }
-            }           
-            screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(),_seletedItems.Count);
+            }
+            if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
+            {
+                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _selectedItems.Count);
+            }
+            else
+            {
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer($"{Messages.Tagged}: {_selectedItems.Count}, ", _options.OptStyleSchema.TaggedInfo(), true);
+            }
         }
 
         public override ResultPrompt<ItemBrowser[]> TryResult(CancellationToken cancellationToken)
@@ -556,7 +564,7 @@ namespace PPlus.Controls
                 {
                     cancellationToken.WaitHandle.WaitOne(10);
                 }
-                return new ResultPrompt<ItemBrowser[]>(_seletedItems.Select(x => x.value).ToArray(), _lnkcts.Token.IsCancellationRequested, true, true, false);
+                return new ResultPrompt<ItemBrowser[]>(_selectedItems.Select(x => x.value).ToArray(), _lnkcts.Token.IsCancellationRequested, true, true, false);
             }
             do
             {
@@ -607,13 +615,13 @@ namespace PPlus.Controls
                         }
                         else
                         {
-                            var aux = _seletedItems.ToArray();
+                            var aux = _selectedItems.ToArray();
                             _browserTreeView.SelectAll(fnode);
                             AddSelectAll(fnode);
-                            if (_seletedItems.Count > _options.Maximum)
+                            if (_selectedItems.Count > _options.Maximum)
                             {
                                 _browserTreeView.UnSelectectAll(fnode);
-                                _seletedItems = aux.ToList();
+                                _selectedItems = aux.ToList();
                                 if (_filterBuffer.Length > 0)
                                 {
                                     _filterBuffer.Clear();
@@ -632,7 +640,7 @@ namespace PPlus.Controls
                 }
                 else if (keyInfo.Value.IsPressEnterKey())
                 {
-                    if (_seletedItems.Count < _options.Minimum)
+                    if (_selectedItems.Count < _options.Minimum)
                     {
                         _filterBuffer.Clear();
                         endinput = false;
@@ -644,7 +652,7 @@ namespace PPlus.Controls
                     }
                     break;
                 }
-                else if (_filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
+                else if (_options.FilterType != FilterMode.Disabled && _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
                 {
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
                     break;
@@ -778,7 +786,7 @@ namespace PPlus.Controls
                 endinput = true;
                 abort = true;
             }
-            else if (_seletedItems.Count > _options.Maximum)
+            else if (_selectedItems.Count > _options.Maximum)
             {
                 _filterBuffer.Clear();
                 endinput = false;
@@ -794,10 +802,10 @@ namespace PPlus.Controls
             {
                 notrender = true;
             }
-            if (_seletedItems.Any())
+            if (_selectedItems.Any())
             {
-                FinishResult = string.Join(", ", _seletedItems.Select(x => x.value.Name));
-                return new ResultPrompt<ItemBrowser[]>(_seletedItems.Select(x => x.value).ToArray(), abort, !endinput, notrender);
+                FinishResult = string.Join(", ", _selectedItems.Select(x => x.value.Name));
+                return new ResultPrompt<ItemBrowser[]>(_selectedItems.Select(x => x.value).ToArray(), abort, !endinput, notrender);
             }
             return new ResultPrompt<ItemBrowser[]>(Array.Empty<ItemBrowser>(), abort, !endinput, notrender);
         }
@@ -820,12 +828,12 @@ namespace PPlus.Controls
 
         private void RemoveSelectAll(TreeNode<ItemBrowser> node)
         {
-            var index = _seletedItems.FindIndex(x => x.UniqueId == node.UniqueId);
+            var index = _selectedItems.FindIndex(x => x.UniqueId == node.UniqueId);
             if (index >= 0)
             {
                 if (!IsFixedSelect(node))
                 {
-                    _seletedItems.RemoveAt(index);
+                    _selectedItems.RemoveAt(index);
                 }
             }
             if (node.Childrens != null)
@@ -843,12 +851,12 @@ namespace PPlus.Controls
             {
                 return;
             }
-            var index = _seletedItems.FindIndex(x => x.UniqueId == node.UniqueId);
+            var index = _selectedItems.FindIndex(x => x.UniqueId == node.UniqueId);
             if (index < 0)
             {
                 if (node.IsSelected)
                 {
-                    _seletedItems.Add(new(node.UniqueId, node.Value));
+                    _selectedItems.Add(new(node.UniqueId, node.Value));
                 }
             }
             if (node.Childrens != null)
@@ -923,7 +931,7 @@ namespace PPlus.Controls
             TryLoadFolder(true, null, _options.RootFolder, _options.ExpandAll, cancellationToken);
             if (cancellationToken.IsCancellationRequested)
             {
-                _browserTreeView = new TreeView<ItemBrowser>(_options.ExpressionSeleted)
+                _browserTreeView = new TreeView<ItemBrowser>(_options.ExpressionSelected)
                 {
                     TextTree = (item) => item.Name
                 };
@@ -955,7 +963,7 @@ namespace PPlus.Controls
             };
             if (item.Level == 0)
             {
-                result.TextSeleted = item.IsSelected ? $" {_options.Symbol(SymbolType.Selected)} " : $" {_options.Symbol(SymbolType.NotSelect)} ";
+                result.TextSelected = item.IsSelected ? $" {_options.Symbol(SymbolType.Selected)} " : $" {_options.Symbol(SymbolType.NotSelect)} ";
                 return result;
             }
 
@@ -1017,7 +1025,7 @@ namespace PPlus.Controls
             {
                 result.TextLines += itemaux;
             }
-            result.TextSeleted = item.IsSelected ? $" {_options.Symbol(SymbolType.Selected)} " : $" {_options.Symbol(SymbolType.NotSelect)} ";
+            result.TextSelected = item.IsSelected ? $" {_options.Symbol(SymbolType.Selected)} " : $" {_options.Symbol(SymbolType.NotSelect)} ";
             if (item.Value.IsFolder)
             {
                 if (_options.ShowSize)
@@ -1116,7 +1124,7 @@ namespace PPlus.Controls
                 node.IsDisabled = _options.ExpressionDisabled?.Invoke(node.Value) ?? false;
                 if (!node.IsDisabled)
                 {
-                    node.IsSelected = _options.ExpressionSeleted?.Invoke(node.Value) ?? false;
+                    node.IsSelected = _options.ExpressionSelected?.Invoke(node.Value) ?? false;
                 }
                 if (!node.IsSelected)
                 {
@@ -1192,7 +1200,7 @@ namespace PPlus.Controls
                     newnode.IsDisabled = _options.ExpressionDisabled?.Invoke(newnode.Value) ?? false;
                     if (!newnode.IsDisabled)
                     {
-                        newnode.IsSelected = _options.ExpressionSeleted?.Invoke(newnode.Value) ?? false;
+                        newnode.IsSelected = _options.ExpressionSelected?.Invoke(newnode.Value) ?? false;
                     }
                     if (!newnode.IsSelected)
                     {
@@ -1218,13 +1226,13 @@ namespace PPlus.Controls
                     }
                 }
             }
-            node.UpdateTreeLenght<ItemBrowser>();
+            node.UpdateTreeLength<ItemBrowser>();
             return node;
         }
 
         private bool IsFixedSelect(TreeNode<ItemBrowser> item)
         {
-            if (_options.ExpressionSeleted?.Invoke(item.Value) ?? true)
+            if (_options.ExpressionSelected?.Invoke(item.Value) ?? true)
             {
                 return _options.FixedSelected.Any(x => x.Equals(item.Value.FullPath, StringComparison.InvariantCultureIgnoreCase));
             }
@@ -1235,7 +1243,7 @@ namespace PPlus.Controls
         {
             Optional<ItemTreeViewFlatNode<ItemBrowser>> defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.s_empty;
             var nodeselect = _browserTreeView.Root;
-            _seletedItems.Clear();
+            _selectedItems.Clear();
             AddSelectAll(nodeselect);
             LoadFlatNodes(_browserTreeView.CurrentNode, false);
 

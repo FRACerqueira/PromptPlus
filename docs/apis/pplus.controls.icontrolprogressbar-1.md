@@ -185,7 +185,7 @@ Fracional Digits
 ### <a id="methods-hideelements"/>**HideElements(HideProgressBar)**
 
 Hide elements in ProgressBar. Default is Show all elements
- <br>For more one element use | separate (Enum Flag)
+ <br>For more one element use '|' separate (Enum Flag)
 
 ```csharp
 IControlProgressBar<T> HideElements(HideProgressBar value)
@@ -218,7 +218,7 @@ The [SpinnersType](./pplus.controls.spinnerstype.md)
 Style of spinner. [Style](./pplus.style.md)
 
 `speedAnimation` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Number of mileseconds foreach interation of spinner. Valid only to SpinnersType.custom, otherwise will be ignored
+Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored
 
 `customspinner` [IEnumerable&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored

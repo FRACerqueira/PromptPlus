@@ -168,7 +168,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### <a id="methods-default"/>**Default(T)**
 
-Default item node seleted when started
+Default item node selected when started
 
 ```csharp
 IControlTreeViewMultiSelect<T> Default(T value)

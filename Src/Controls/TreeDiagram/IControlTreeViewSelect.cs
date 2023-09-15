@@ -89,7 +89,7 @@ namespace PPlus.Controls
         IControlTreeViewSelect<T> AddNode(T Parent, T value);
 
         /// <summary>
-        /// Default item node seleted when started
+        /// Default item node selected when started
         /// </summary>
         /// <param name="value">value node</param>
         /// <returns><see cref="IControlTreeViewSelect{T}"/></returns>

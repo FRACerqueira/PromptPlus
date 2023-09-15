@@ -1,7 +1,8 @@
 ﻿// ***************************************************************************************
 // MIT LICENCE
+// Copyright 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+// https://spectreconsole.net
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
-// This code was based on work from https://github.com/spectreconsole/spectre.console
 // ***************************************************************************************
 
 using System;
@@ -185,7 +186,7 @@ namespace PPlus
         {
             if (value == null || value.Length != 7 || !value.StartsWith("#"))
             {
-                throw new PromptPlusException("Invalid Html Color. Lenght must be equal 7 and start with #");
+                throw new PromptPlusException("Invalid Html Color. Length must be equal 7 and start with #");
             }
             int RGBint = Convert.ToInt32(value.Substring(1,6), 16);
             byte localRed = (byte)((RGBint >> 16) & 255);

@@ -1,4 +1,9 @@
-﻿using PPlus.Controls.Objects;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using PPlus.Controls.Objects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,12 +40,12 @@ namespace PPlus.Controls
         public TimeSpan TimeoutOverwriteDefault { get; set; }
         public CaseOptions InputToCase { get; set; } = CaseOptions.Any;
         public Func<char, bool>? AcceptInput { get; set; } 
-        public ushort MaxLenght { get; set; } = ushort.MaxValue;
+        public ushort MaxLength { get; set; } = ushort.MaxValue;
         public string DefaultEmptyValue { get; set; }
         public string DefaultValue { get; set; }
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
         public bool ValidateOnDemand { get; set; }
         public Func<string, string> ChangeDescription { get; set; }
-        public Func<SugestionInput, SugestionOutput>? SuggestionHandler { get; set; }
+        public Func<SuggestionInput, SuggestionOutput>? SuggestionHandler { get; set; }
     }
 }

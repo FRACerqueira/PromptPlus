@@ -173,7 +173,7 @@ namespace PPlus.Controls
         public IControlSelectBrowser Root(string value, bool expandall = true, Func<ItemBrowser, bool>? validselect = null, Func<ItemBrowser, bool>? setdisabled = null)
         {
             _options.RootFolder = value;
-            _options.ExpressionSeleted = validselect;
+            _options.ExpressionSelected = validselect;
             _options.ExpressionDisabled = setdisabled;
             _options.ExpandAll = expandall;
             return this;
@@ -310,7 +310,7 @@ namespace PPlus.Controls
             _ctsesc = new CancellationTokenSource();
             _lnkcts = CancellationTokenSource.CreateLinkedTokenSource(_ctsesc.Token, cancellationToken);
 
-            _browserTreeView = new TreeView<ItemBrowser>(_options.ExpressionSeleted)
+            _browserTreeView = new TreeView<ItemBrowser>(_options.ExpressionSelected)
             {
                 TextTree = (item) => item.Name
             };
@@ -443,7 +443,7 @@ namespace PPlus.Controls
                     screenBuffer.NewLine();
                     if (_options.ShowCurrentFullPath)
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentSeleted}: {showItem.Value.FullPath}", _options.CurrentFolderStyle, true);
+                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {showItem.Value.FullPath}", _options.CurrentFolderStyle, true);
                     }
                     else
                     {
@@ -481,7 +481,10 @@ namespace PPlus.Controls
                     }
                 }
             }
-            screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+            if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
+            {
+                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+            }
         }
 
         public override ResultPrompt<ItemBrowser> TryResult(CancellationToken cancellationToken)
@@ -544,7 +547,7 @@ namespace PPlus.Controls
                     _localpaginator.Home();
                     break;
                 }
-                else if (_filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
+                else if (_options.FilterType != FilterMode.Disabled && _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
                 {
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
                     break;
@@ -560,7 +563,7 @@ namespace PPlus.Controls
                         }
                         else
                         {
-                            if (!_options.ExpressionSeleted?.Invoke(_localpaginator.SelectedItem.Value) ?? false)
+                            if (!_options.ExpressionSelected?.Invoke(_localpaginator.SelectedItem.Value) ?? false)
                             {
                                 SetError(Messages.SelectionInvalid);
                             }
@@ -1091,7 +1094,7 @@ namespace PPlus.Controls
                     }
                 }
             }
-            node.UpdateTreeLenght<ItemBrowser>();
+            node.UpdateTreeLength<ItemBrowser>();
             return node;
         }
     }

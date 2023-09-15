@@ -1,7 +1,8 @@
 ﻿// **********************************************************************************************************
 // MIT LICENCE
+// Copyright 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+// https://spectreconsole.net
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
-// This code was based on work from https://github.com/spectreconsole/spectre.console
 // **********************************************************************************************************
 
 using System.Collections.Generic;
@@ -112,7 +113,7 @@ namespace PPlus.Controls.Objects
             }
         }
 
-        public int Lenght => _frames.Count;
+        public int Length => _frames.Count;
         public int Interval => _interval;
         public bool IsReseted => _index == -1;
         public void Reset()

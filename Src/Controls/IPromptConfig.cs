@@ -26,6 +26,21 @@ namespace PPlus.Controls
         /// <returns><see cref="IPromptConfig"/></returns>
         IPromptConfig ShowTooltip(bool value);
 
+
+        /// <summary>
+        /// Overwrite default Show pagination only if exists
+        /// </summary>
+        /// <param name="value">value</param>
+        /// <returns><see cref="IPromptConfig"/></returns>
+        IPromptConfig ShowOnlyExistingPagination(bool value);
+
+        /// <summary>
+        /// Overwrite default DisableToggleTooltip of control
+        /// </summary>
+        /// <param name="value">value</param>
+        /// <returns><see cref="IPromptConfig"/></returns>
+        IPromptConfig DisableToggleTooltip(bool value);
+
         /// <summary>
         /// Overwrite default Clear render area of control after finished
         /// </summary>

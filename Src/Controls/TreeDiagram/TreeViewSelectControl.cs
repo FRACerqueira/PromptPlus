@@ -111,7 +111,7 @@ namespace PPlus.Controls
         public IControlTreeViewSelect<T> RootNode(T value, Func<T, string> textnode, bool expandall = false, Func<T, bool>? validselect = null, Func<T, bool>? setdisabled = null, char? separatePath = null, Func<T, string> uniquenode = null)
         {
             _options.TextNode = textnode ?? throw new PromptPlusException("Not have Text-Node to run");
-            _options.ExpressionSeleted = validselect;
+            _options.ExpressionSelected = validselect;
             _options.ExpressionDisabled = setdisabled;
             _options.ExpandAll = expandall;
             var diabled = _options.ExpressionDisabled?.Invoke(value) ?? false;
@@ -235,7 +235,7 @@ namespace PPlus.Controls
                 throw new PromptPlusException("Not have Childrens nodes to run");
             }
  
-            _browserTreeView = new TreeView<T>(_options.ExpressionSeleted)
+            _browserTreeView = new TreeView<T>(_options.ExpressionSelected)
             {
                 TextTree = _options.TextNode
             };
@@ -306,7 +306,7 @@ namespace PPlus.Controls
                     screenBuffer.NewLine();
                     if (_options.ShowCurrentFulPathNode)
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentSeleted}: {showItem.MessagesNodes.TextFullpath}", _options.CurrentNodeStyle);
+                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {showItem.MessagesNodes.TextFullpath}", _options.CurrentNodeStyle);
                     }
                     else
                     {
@@ -346,7 +346,10 @@ namespace PPlus.Controls
                     }
                 }
             }
-            screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+            if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
+            {
+                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+            }
         }
 
         public override ResultPrompt<T> TryResult(CancellationToken cancellationToken)
@@ -380,7 +383,7 @@ namespace PPlus.Controls
                 {
                     break;
                 }
-                else if (_filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
+                else if (_options.FilterType != FilterMode.Disabled &&  _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
                 {
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
                     break;
@@ -396,7 +399,7 @@ namespace PPlus.Controls
                         }
                         else
                         {
-                            if (!_options.ExpressionSeleted?.Invoke(_localpaginator.SelectedItem.Value) ?? true)
+                            if (!_options.ExpressionSelected?.Invoke(_localpaginator.SelectedItem.Value) ?? true)
                             {
                                 SetError(Messages.SelectionInvalid);
                             }

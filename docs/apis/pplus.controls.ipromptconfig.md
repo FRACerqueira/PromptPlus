@@ -96,6 +96,23 @@ Value description with style
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
+### <a id="methods-disabletoggletooltip"/>**DisableToggleTooltip(Boolean)**
+
+Overwrite default DisableToggleTooltip of control
+
+```csharp
+IPromptConfig DisableToggleTooltip(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
 ### <a id="methods-enabledabortkey"/>**EnabledAbortKey(Boolean)**
 
 Overwrite default Enabled/Disabled AbortKey press of control
@@ -192,6 +209,23 @@ IPromptConfig SetContext(object value)
 #### Parameters
 
 `value` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-showonlyexistingpagination"/>**ShowOnlyExistingPagination(Boolean)**
+
+Overwrite default Show pagination only if exists
+
+```csharp
+IPromptConfig ShowOnlyExistingPagination(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 value
 
 #### Returns

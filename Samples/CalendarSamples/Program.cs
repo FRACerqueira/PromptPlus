@@ -1,4 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
 using System.Globalization;
 using PPlus;
 using PPlus.Controls;
@@ -120,7 +124,7 @@ PromptPlus
        new ItemCalendar(DateTime.Now.AddDays(2)))
     .Run();
 
-PromptPlus.DoubleDash("For other features below see - input samples (same behaviour)");
+PromptPlus.DoubleDash("For other features below see - input samples (same behavior)");
 PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
 PromptPlus.WriteLine(". [yellow]AddValidators[/] - InputWithValidatorSamples");
 PromptPlus.WriteLine(". [yellow]OverwriteDefaultFrom[/] - InputOverwriteDefaultFromSamples");

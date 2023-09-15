@@ -83,7 +83,7 @@ namespace PPlus.Controls
             return null;
         }
 
-        public static void UpdateTreeLenght<T>(this TreeNode<ItemBrowser> node)
+        public static void UpdateTreeLength<T>(this TreeNode<ItemBrowser> node)
         {
             var currentnode = node;
             while (currentnode.PrevNode != null)

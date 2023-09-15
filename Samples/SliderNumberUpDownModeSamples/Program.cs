@@ -1,4 +1,9 @@
-﻿using System.Globalization;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System.Globalization;
 using PPlus;
 using PPlus.Controls;
 
@@ -26,7 +31,7 @@ namespace SliderNumberUpDownModeSamples
                .Run();
             if (!sdl.IsAborted)
             {
-                PromptPlus.WriteLine($"You seleted is {sdl.Value}");
+                PromptPlus.WriteLine($"You selected is {sdl.Value}");
             }
 
             PromptPlus.DoubleDash($"Control:SliderNumber {cult} - normal usage");
@@ -52,7 +57,7 @@ namespace SliderNumberUpDownModeSamples
                .LargeStep(1)
                .Run();
 
-            PromptPlus.DoubleDash("For other basic features below see - input samples (same behaviour)");
+            PromptPlus.DoubleDash("For other basic features below see - input samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]OverwriteDefaultFrom[/] - InputOverwriteDefaultFromSamples");
             PromptPlus.WriteLines(2);

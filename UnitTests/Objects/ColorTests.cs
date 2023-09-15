@@ -1,4 +1,13 @@
-﻿using PPlus.Tests.Util;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// Copyright 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+// https://spectreconsole.net
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+
+
+using PPlus.Tests.Util;
 using Shouldly;
 
 namespace PPlus.Tests.Objects

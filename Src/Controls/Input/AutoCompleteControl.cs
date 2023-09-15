@@ -71,7 +71,7 @@ namespace PPlus.Controls
                 LoadDefaultHistory();
             }
 
-            _inputBuffer = new(_options.InputToCase, _options.AcceptInput, _options.MaxLenght);
+            _inputBuffer = new(_options.InputToCase, _options.AcceptInput, _options.MaxLength);
 
             if (!string.IsNullOrEmpty(_defaultHistoric))
             {
@@ -223,9 +223,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlAutoComplete MaxLenght(ushort value)
+        public IControlAutoComplete MaxLength(ushort value)
         {
-            _options.MaxLenght = value;
+            _options.MaxLength = value;
             return this;
         }
 

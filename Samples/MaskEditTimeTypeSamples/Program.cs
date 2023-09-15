@@ -1,4 +1,9 @@
-﻿using System.Globalization;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System.Globalization;
 using PPlus;
 using PPlus.Controls;
 
@@ -90,7 +95,7 @@ namespace MaskEditTimeTypeSamples
                 .AcceptEmptyValue()
                 .Run();
 
-            PromptPlus.DoubleDash("For other features below see - input samples (same behaviour)");
+            PromptPlus.DoubleDash("For other features below see - input samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]ValidateOnDemand[/] - InputWithValidatorSamples");
             PromptPlus.WriteLine(". [yellow]AddValidators[/] - InputWithValidatorSamples");
@@ -98,7 +103,7 @@ namespace MaskEditTimeTypeSamples
             PromptPlus.WriteLine(". [yellow]OverwriteDefaultFrom[/] - InputOverwriteDefaultFromSamples");
             PromptPlus.WriteLine(". [yellow]Default[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]DefaultIfEmpty[/] - InputBasicSamples");
-            PromptPlus.WriteLine(". [yellow]SuggestionHandler[/] - InputWithSugestionSamples");
+            PromptPlus.WriteLine(". [yellow]SuggestionHandler[/] - InputWithSuggestionSamples");
             PromptPlus.WriteLine(". [yellow]HistoryEnabled[/] - InputWithHistorySamples");
             PromptPlus.WriteLine(". [yellow]HistoryMinimumPrefixLength[/] - InputWithHistorySamples");
             PromptPlus.WriteLine(". [yellow]HistoryTimeout[/] - InputWithHistorySamples");

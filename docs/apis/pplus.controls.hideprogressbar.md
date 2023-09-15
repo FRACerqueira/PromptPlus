@@ -12,7 +12,7 @@
 
 Namespace: PPlus.Controls
 
-Represents the elememt to hide on ProgressBar
+Represents the element to hide on ProgressBar
 
 ```csharp
 public enum HideProgressBar

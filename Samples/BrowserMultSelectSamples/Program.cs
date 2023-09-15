@@ -1,4 +1,9 @@
-﻿using PPlus;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using PPlus;
 using PPlus.Controls;
 
 namespace BrowserMultSelectSamples
@@ -47,13 +52,13 @@ namespace BrowserMultSelectSamples
                 .Run();
 
             PromptPlus.DoubleDash("Control:BrowserMultiSelect - DisabledRecursiveExpand usage");
-            PromptPlus.BrowserMultiSelect("Browser", "expandall has same behaviour expand when used DisabledRecursiveExpand.")
+            PromptPlus.BrowserMultiSelect("Browser", "expandall has same behavior expand when used DisabledRecursiveExpand.")
                 .Root(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Root.FullName, true)
                 .DisabledRecursiveExpand()
                 .Run();
 
             PromptPlus.DoubleDash("Control:BrowserMultiSelect - AcceptHiddenAttributes/AcceptSystemAttributes usage");
-            PromptPlus.BrowserMultiSelect("Browser", "expandall has same behaviour expand when used DisabledRecursiveExpand.")
+            PromptPlus.BrowserMultiSelect("Browser", "expandall has same behavior expand when used DisabledRecursiveExpand.")
                 .Root(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Root.FullName, false)
                 .DisabledRecursiveExpand()
                 .AcceptHiddenAttributes(true)

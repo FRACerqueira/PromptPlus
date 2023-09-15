@@ -39,7 +39,7 @@ namespace PPlus.Controls
         public int Minimum { get; set; }
         public int Maximum { get; set; } = int.MaxValue;
         public List<T> FixedSelected { get; set; } = new();
-        public Func<T, bool>? ExpressionSeleted { get; set; }
+        public Func<T, bool>? ExpressionSelected { get; set; }
         public Func<T, bool>? ExpressionDisabled { get; set; }
         public bool SelectAll { get; set; }
         public Func<T, bool> SelectAllExpression { get; set; }

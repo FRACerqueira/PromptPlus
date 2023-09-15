@@ -1,4 +1,9 @@
-﻿using System.Globalization;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System.Globalization;
 using PPlus;
 
 namespace AddtoMaskEditListSamples
@@ -42,13 +47,13 @@ namespace AddtoMaskEditListSamples
                 .Default("XYZ 232")
                 .Run();
 
-            PromptPlus.DoubleDash("[yellow]For other features to maskededit see - MaskEdit samples (same behaviour)[/]");
-            PromptPlus.DoubleDash("For other features below see - input/Select samples (same behaviour)");
+            PromptPlus.DoubleDash("[yellow]For other features to maskededit see - MaskEdit samples (same behavior)[/]");
+            PromptPlus.DoubleDash("For other features below see - input/Select samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]AddValidators[/] - InputWithValidatorSamples");
-            PromptPlus.WriteLine(". [yellow]MaxLenght[/] - InputBasicSamples");
+            PromptPlus.WriteLine(". [yellow]MaxLength[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]InputToCase[/] - InputBasicSamples");
-            PromptPlus.WriteLine(". [yellow]SuggestionHandler[/] - InputWithSugestionSamples");
+            PromptPlus.WriteLine(". [yellow]SuggestionHandler[/] - InputWithSuggestionSamples");
             PromptPlus.WriteLine(". [yellow]Interaction[/] - SelectBasicSamples");
             PromptPlus.WriteLine(". [yellow]PageSize[/] - SelectBasicSamples");
             PromptPlus.WriteLines(2);

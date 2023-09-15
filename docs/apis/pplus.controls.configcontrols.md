@@ -77,7 +77,7 @@ public HotKey ChartBarSwitchTypePress { get; set; }
 ### <a id="properties-completionmaxcount"/>**CompletionMaxCount**
 
 Get/Set Completion Max Items to return.
- <br>Default value : 1000. If value  less than 1 internal sette to 1.
+ <br>Default value : 1000. If value  less than 1 internal set to 1.
 
 ```csharp
 public int CompletionMaxCount { get; set; }
@@ -90,7 +90,7 @@ public int CompletionMaxCount { get; set; }
 ### <a id="properties-completionminimumprefixlength"/>**CompletionMinimumPrefixLength**
 
 Get/Set Minimum Prefix Length.
- <br>Default value : 3.If value less than 0 internal sette to 0.
+ <br>Default value : 3.If value less than 0 internal set to 0.
 
 ```csharp
 public int CompletionMinimumPrefixLength { get; set; }
@@ -103,7 +103,7 @@ public int CompletionMinimumPrefixLength { get; set; }
 ### <a id="properties-completionwaittostart"/>**CompletionWaitToStart**
 
 Get/Set Interval in mileseconds to wait start Completion funcion.
- <br>Default value : 1000. If value less than 10 internal sette to 10.
+ <br>Default value : 1000. If value less than 10 internal set to 10.
 
 ```csharp
 public int CompletionWaitToStart { get; set; }
@@ -125,6 +125,19 @@ public CultureInfo DefaultCulture { get; set; }
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
 
+### <a id="properties-disabletoggletooltip"/>**DisableToggleTooltip**
+
+Get/Set Disable toggle Tooltip for all controls at startup.
+ <br>Default value : false
+
+```csharp
+public bool DisableToggleTooltip { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-edititempress"/>**EditItemPress**
 
 Get/Set [HotKey](./pplus.controls.hotkey.md) to Edit item.
@@ -140,7 +153,7 @@ public HotKey EditItemPress { get; set; }
 
 ### <a id="properties-enabledabortkey"/>**EnabledAbortKey**
 
-Get/Set enabled abortKey(ESC) for all controls.
+Get/Set enable abortKey(ESC) for all controls.
  <br>Default value : true
 
 ```csharp
@@ -232,7 +245,7 @@ public Nullable<Char> NoChar { get; set; }
 ### <a id="properties-pagesize"/>**PageSize**
 
 Get/Set Page Size from colletions.
- <br>Default value : 10. If value less than 1 internal sette to 1.
+ <br>Default value : 10. If value less than 1 internal set to 1.
 
 ```csharp
 public int PageSize { get; set; }
@@ -294,9 +307,22 @@ public HotKey SelectAllPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
+### <a id="properties-showonlyexistingpagination"/>**ShowOnlyExistingPagination**
+
+Get/Set Show pagination only if exists
+ <br>Default value : false
+
+```csharp
+public bool ShowOnlyExistingPagination { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-showtooltip"/>**ShowTooltip**
 
-Get/Set enabled show Tooltip for all controls.
+Get/Set enable show Tooltip for all controls at startup.
  <br>Default value : true
 
 ```csharp
@@ -339,7 +365,7 @@ Get/Set [HotKey](./pplus.controls.hotkey.md) to show/hide Tooltip.
  <br>Default value : '[F1]'
 
 ```csharp
-public HotKey TooltipKeyPress { get; }
+public HotKey TooltipKeyPress { get; set; }
 ```
 
 #### Property Value

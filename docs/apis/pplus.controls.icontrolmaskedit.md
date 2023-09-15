@@ -38,7 +38,7 @@ IControlMaskEdit AcceptEmptyValue()
 ### <a id="methods-addvalidators"/>**AddValidators(params Func&lt;Object, ValidationResult&gt;[])**
 
 Add a validator to accept sucessfull finish of control.
- <br>Tip: see  to validators embeding
+ <br>Tip: see  to validators embedding
 
 ```csharp
 IControlMaskEdit AddValidators(params Func<Object, ValidationResult>[] validators)
@@ -55,7 +55,7 @@ the function validator.
 
 ### <a id="methods-ammoutpositions"/>**AmmoutPositions(Int32, Int32, Boolean)**
 
-Defines integer lenght, decimal lenght and accept signl.
+Defines integer length, decimal length and accept signl.
  <br>Valid only for type MaskedType.Number or Currency, otherwise this set will be ignored.<br>This set is Requeried for these types.
 
 ```csharp
@@ -65,10 +65,10 @@ IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue, bool acceptSign
 #### Parameters
 
 `intvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-integer lenght
+integer length
 
 `decimalvalue` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-decimal lenght
+decimal length
 
 `acceptSignal` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 True accept signal; otherwise, no.
@@ -416,7 +416,7 @@ Prompt mask overwriter. Default value is '■'/'_'
 ### <a id="methods-negativestyle"/>**NegativeStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region neggative input.
- <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
+ <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when set
 
 ```csharp
 IControlMaskEdit NegativeStyle(Style value)
@@ -454,7 +454,7 @@ The timeout for valid items saved. Default value is 365 days
 ### <a id="methods-positivestyle"/>**PositiveStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region positive input.
- <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when setted
+ <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when set
 
 ```csharp
 IControlMaskEdit PositiveStyle(Style value)
@@ -469,18 +469,18 @@ Style
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SugestionInput, SugestionOutput&gt;)**
+### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SuggestionInput, SuggestionOutput&gt;)**
 
 Add Suggestion (with mask!) Handler feature
 
 ```csharp
-IControlMaskEdit SuggestionHandler(Func<SugestionInput, SugestionOutput> value)
+IControlMaskEdit SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value)
 ```
 
 #### Parameters
 
-`value` [Func&lt;SugestionInput, SugestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
-function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.md) and [SugestionOutput](./pplus.controls.sugestionoutput.md)
+`value` [Func&lt;SuggestionInput, SuggestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply suggestions. [SuggestionInput](./pplus.controls.suggestioninput.md) and [SuggestionOutput](./pplus.controls.suggestionoutput.md)
 
 #### Returns
 
@@ -489,7 +489,7 @@ function to apply suggestions. [SugestionInput](./pplus.controls.sugestioninput.
 ### <a id="methods-typetipstyle"/>**TypeTipStyle(Style)**
 
 Overwrite [Style](./pplus.style.md) to region tip type input.
- <br>Default Foreground : 'ConsoleColor.Yellow'<br>Default Background : same Console Background when setted
+ <br>Default Foreground : 'ConsoleColor.Yellow'<br>Default Background : same Console Background when set
 
 ```csharp
 IControlMaskEdit TypeTipStyle(Style value)

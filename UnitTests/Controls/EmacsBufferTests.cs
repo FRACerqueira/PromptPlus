@@ -1,4 +1,9 @@
-﻿using PPlus.Controls.Objects;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using PPlus.Controls.Objects;
 using PPlus.Tests.Util;
 
 namespace PPlus.Tests.Controls
@@ -125,7 +130,7 @@ namespace PPlus.Tests.Controls
         }
 
         [Fact]
-        //Emacs keyboard shortcut when when have any text with lenght > 1
+        //Emacs keyboard shortcut when when have any text with length > 1
         //Transpose the previous two characters
         internal void Should_have_accept_ctrl_T()
         {

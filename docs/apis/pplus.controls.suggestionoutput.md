@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:SugestionOutput 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:SuggestionOutput 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,33 +8,33 @@
 
 [**Back to List Api**](./apis.md)
 
-# SugestionOutput
+# SuggestionOutput
 
 Namespace: PPlus.Controls
 
-Represents The Sugestion output struct.
+Represents The Suggestion output struct.
 
 ```csharp
-public struct SugestionOutput
+public struct SuggestionOutput
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [SugestionOutput](./pplus.controls.sugestionoutput.md)
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [SuggestionOutput](./pplus.controls.suggestionoutput.md)
 
 ## Constructors
 
-### <a id="constructors-.ctor"/>**SugestionOutput()**
+### <a id="constructors-.ctor"/>**SuggestionOutput()**
 
-Create a empty SugestionOutput
+Create a empty SuggestionOutput
 
 ```csharp
-SugestionOutput()
+SuggestionOutput()
 ```
 
 ## Methods
 
 ### <a id="methods-add"/>**Add(String)**
 
-Add sugestion
+Add suggestion
 
 ```csharp
 void Add(string value)
@@ -43,11 +43,11 @@ void Add(string value)
 #### Parameters
 
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-text sugestion
+text suggestion
 
 ### <a id="methods-addrange"/>**AddRange(IEnumerable&lt;String&gt;)**
 
-Add Enumerable sugestions
+Add Enumerable suggestions
 
 ```csharp
 void AddRange(IEnumerable<String> items)
@@ -56,7 +56,7 @@ void AddRange(IEnumerable<String> items)
 #### Parameters
 
 `items` [IEnumerable&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
-Enumerable text sugestions
+Enumerable text suggestions
 
 
 - - -

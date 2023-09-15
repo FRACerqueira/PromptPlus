@@ -6,29 +6,29 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents The Sugestion Input struct.
+    /// Represents The Suggestion Input struct.
     /// </summary>
-    public readonly struct SugestionInput
+    public readonly struct SuggestionInput
     {
         /// <summary>
-        /// Create a SugestionInput
+        /// Create a SuggestionInput
         /// </summary>
         /// <remarks>
         /// Do not use this constructor!
         /// </remarks>
-        public SugestionInput()
+        public SuggestionInput()
         {
-            throw new PromptPlusException("SugestionInput CTOR NotImplemented");
+            throw new PromptPlusException("SuggestionInput CTOR NotImplemented");
         }
 
-        internal SugestionInput(string input, object context)
+        internal SuggestionInput(string input, object context)
         {
             Text = input;
             Context = context;
         }
 
         /// <summary>
-        /// Get Sugestion Text input
+        /// Get Suggestion Text input
         /// </summary>
         public string Text { get; }
 

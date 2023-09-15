@@ -14,7 +14,7 @@ namespace PPlus.Controls
     public interface IControlSliderSwitch : IPromptControls<bool>
     {
         /// <summary>
-        /// Default value for swith
+        /// Default value for switch
         /// </summary>
         /// <param name="value">true is 'on', otherwise 'off'</param>
         /// <returns><see cref="IControlSliderSwitch"/></returns>

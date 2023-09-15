@@ -48,8 +48,8 @@ namespace PPlus.Controls
             {
                 return string.Format("{0}, {1}, {2}, {3}",
                 string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                Messages.TooltipSugestionEsc,
-                Messages.InputFisnishEnter,
+                Messages.TooltipSuggestionEsc,
+                Messages.InputFinishEnter,
                 Messages.TooltipPages);
             }
             else
@@ -59,13 +59,13 @@ namespace PPlus.Controls
                     return string.Format("{0}, {1}, {2}",
                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
                         string.Format(Messages.TooltipCancelEsc, baseOptions.Config.AbortKeyPress),
-                        Messages.InputFisnishEnter);
+                        Messages.InputFinishEnter);
                 }
                 else
                 {
                     return string.Format("{0}, {1}",
                         string.Format(Messages.TooltipToggle, baseOptions.Config.TooltipKeyPress),
-                        Messages.InputFisnishEnter);
+                        Messages.InputFinishEnter);
                 }
             }
         }

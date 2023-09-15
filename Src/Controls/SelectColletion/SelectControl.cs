@@ -320,7 +320,10 @@ namespace PPlus.Controls
                     }
                 }
             }
-            screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+            if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
+            {
+                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+            }
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, T result, bool aborted)
@@ -369,7 +372,7 @@ namespace PPlus.Controls
                 {
                     continue;
                 }
-                else if (_filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
+                else if (_options.FilterType != FilterMode.Disabled && _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
                 {
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
                     if (_localpaginator.Count == 1 && !_localpaginator.IsUnSelected && _options.AutoSelect)

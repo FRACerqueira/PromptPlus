@@ -62,7 +62,7 @@ namespace PPlus.Controls.Objects
 
             switch (keyinfo.Key)
             {
-                //Emacs keyboard shortcut when when have any text with lenght > 1
+                //Emacs keyboard shortcut when when have any text with length > 1
                 //Transpose the previous two characters
                 case ConsoleKey.T when keyinfo.Modifiers == ConsoleModifiers.Control && Length > 1:
                     {

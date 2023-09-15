@@ -1,4 +1,9 @@
-﻿using System;
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
 using PPlus.Controls;
 using PPlus.Controls.Objects;
 
@@ -12,15 +17,15 @@ namespace PPlus
         /// <br>immedy followed by a line feed. The resulting string does not</br>
         /// <br>contain the terminating carriage return and/or line feed.</br>
         /// </summary>
-        /// <param name="maxlenght">The input Max-lenght</param>
+        /// <param name="maxlength">The input Max-length</param>
         /// <param name="caseOptions">The input <see cref="CaseOptions"/></param>
         /// <param name="afteraccept">The user action after each accepted keystroke. Firt param is input text, Second param is relative cursor position of text</param>
         /// <returns>
         /// The string input value.
         /// </returns>
-        public static string ReadLineWithEmacs(uint? maxlenght = uint.MaxValue, CaseOptions caseOptions = CaseOptions.Any, Action<string,int> afteraccept = null)
+        public static string ReadLineWithEmacs(uint? maxlength = uint.MaxValue, CaseOptions caseOptions = CaseOptions.Any, Action<string,int> afteraccept = null)
         {
-            var _inputBuffer = new EmacsBuffer(caseOptions, null,maxlenght.Value);
+            var _inputBuffer = new EmacsBuffer(caseOptions, null,maxlength.Value);
             var endinput = false;
             var (Left, Top) = GetCursorPosition();
             do

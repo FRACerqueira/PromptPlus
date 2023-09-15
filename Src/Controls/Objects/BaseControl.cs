@@ -1,7 +1,8 @@
 ﻿// ***************************************************************************************
 // MIT LICENCE
+// Copyright (c) 2019 shibayan.
+// https://github.com/shibayan/Sharprompt
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
-// This code was based on work from https://github.com/shibayan/Sharprompt
 // ***************************************************************************************
 
 using System;
@@ -85,6 +86,10 @@ namespace PPlus.Controls.Objects
                     useractout.Invoke(_options.OptContext, FinishResult);
                 }
                 FinalizeControl(stoptoken.Value);
+            }
+            catch (Exception ex)
+            {
+                throw new PromptPlusException(ex.Message,ex);
             }
             finally
             {
@@ -178,7 +183,7 @@ namespace PPlus.Controls.Objects
         {
             while (KeyAvailable)
             {
-                WaitKeypress(CancellationToken.None);
+                WaitKeypress(CancellationToken);
             }
         }
 
@@ -314,7 +319,10 @@ namespace PPlus.Controls.Objects
         {
             if (_options.Config.TooltipKeyPress.Equals(keyInfo))
             {
-                _options.OptShowTooltip = !_options.OptShowTooltip;
+                if (!_options.OptDisableChangeTooltip)
+                {
+                    _options.OptShowTooltip = !_options.OptShowTooltip;
+                }
                 return true;
             }
             return false;
