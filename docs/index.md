@@ -31,9 +31,9 @@
 ## What's new in V4.0.5
 
 - Added new global propety 'ExtraExceptionInfo' to write extra console exception info
-- Added new global propety 'DisableChangeTooltip' to disable change initial ShowTooltip
+- Added new global propety 'DisableToggleTooltip' to disable toggle Tooltip
 - Added new global propety 'ShowOnlyExistingPagination' to disable Page information when pagination not exists 
-- Added new Method DisableChangeTooltip(bool value) to overwrite default DisableChangeTooltip in control 
+- Added new Method DisableToggleTooltip(bool value) to overwrite default DisableToggleTooltip in control 
 - Added new Method ShowOnlyExistingPagination(bool value) to overwrite default Overwrite default Show pagination only if exists in control 
 - Added new item to Enum FilterMode : 'Disabled'. This item disable filter feature in coletions
 - Improved to not show text prompt when text value is null or empty

@@ -81,10 +81,10 @@ public IPromptConfig Description(string value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-disablechangetooltip"/>**DisableChangeTooltip(Boolean)**
+### <a id="methods-disabletoggletooltip"/>**DisableToggleTooltip(Boolean)**
 
 ```csharp
-public IPromptConfig DisableChangeTooltip(bool value)
+public IPromptConfig DisableToggleTooltip(bool value)
 ```
 
 #### Parameters

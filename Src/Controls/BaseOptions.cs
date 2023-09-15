@@ -33,7 +33,7 @@ namespace PPlus.Controls
             OptHideAfterFinish = config.HideAfterFinish;
             OptHideOnAbort = config.HideOnAbort;
             OptEnabledAbortKey = config.EnabledAbortKey;
-            OptDisableChangeTooltip = config.DisableChangeTooltip;
+            OptDisableChangeTooltip = config.DisableToggleTooltip;
             OptShowOnlyExistingPagination = config.ShowOnlyExistingPagination;
         }
 
@@ -77,7 +77,7 @@ namespace PPlus.Controls
         }
 
         /// <inheritdoc/>
-        public IPromptConfig DisableChangeTooltip(bool value)
+        public IPromptConfig DisableToggleTooltip(bool value)
         {
             OptDisableChangeTooltip = value;
             return this;

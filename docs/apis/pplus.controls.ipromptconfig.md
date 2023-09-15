@@ -96,12 +96,12 @@ Value description with style
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-disablechangetooltip"/>**DisableChangeTooltip(Boolean)**
+### <a id="methods-disabletoggletooltip"/>**DisableToggleTooltip(Boolean)**
 
-Overwrite default DisableChangeTooltip of control
+Overwrite default DisableToggleTooltip of control
 
 ```csharp
-IPromptConfig DisableChangeTooltip(bool value)
+IPromptConfig DisableToggleTooltip(bool value)
 ```
 
 #### Parameters

@@ -35,11 +35,11 @@ namespace PPlus.Controls
         IPromptConfig ShowOnlyExistingPagination(bool value);
 
         /// <summary>
-        /// Overwrite default DisableChangeTooltip of control
+        /// Overwrite default DisableToggleTooltip of control
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig DisableChangeTooltip(bool value);
+        IPromptConfig DisableToggleTooltip(bool value);
 
         /// <summary>
         /// Overwrite default Clear render area of control after finished

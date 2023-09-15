@@ -77,8 +77,8 @@ namespace PromptPlusTemplate
             //Note: Hide tooltips at statup for all controls. Default value : true
             PromptPlus.Config.ShowTooltip = false;
 
-            //Note: Disabled change ShowTooltip. Default value : false 
-            PromptPlus.Config.DisableChangeTooltip = true;
+            //Note: DisableToggle Tooltip. Default value : false 
+            PromptPlus.Config.DisableToggleTooltip = true;
 
             //Note: Show pagination only if exists. Default value : false 
             PromptPlus.Config.ShowOnlyExistingPagination = true;

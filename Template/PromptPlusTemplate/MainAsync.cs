@@ -48,7 +48,7 @@ namespace PromptPlusTemplate
                 .Config(cfg => 
                 {
                     cfg.ShowOnlyExistingPagination(false)
-                      .DisableChangeTooltip(false)
+                      .DisableToggleTooltip(false)
                       .ShowTooltip(true);
                 })
                 .AddItem("Opc1")

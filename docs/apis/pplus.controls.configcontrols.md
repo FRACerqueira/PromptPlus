@@ -125,13 +125,13 @@ public CultureInfo DefaultCulture { get; set; }
 
 [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
 
-### <a id="properties-disablechangetooltip"/>**DisableChangeTooltip**
+### <a id="properties-disabletoggletooltip"/>**DisableToggleTooltip**
 
-Get/Set Disable show Tooltip for all controls at startup.
+Get/Set Disable toggle Tooltip for all controls at startup.
  <br>Default value : false
 
 ```csharp
-public bool DisableChangeTooltip { get; set; }
+public bool DisableToggleTooltip { get; set; }
 ```
 
 #### Property Value

@@ -170,10 +170,10 @@ namespace PPlus.Controls
         public bool ShowTooltip { get; set; } = true;
 
         /// <summary>
-        /// Get/Set Disable show Tooltip for all controls at startup.
+        /// Get/Set Disable toggle Tooltip for all controls at startup.
         /// <br>Default value : false</br>
         /// </summary>
-        public bool DisableChangeTooltip { get; set; }
+        public bool DisableToggleTooltip { get; set; }
 
 
         /// <summary>
