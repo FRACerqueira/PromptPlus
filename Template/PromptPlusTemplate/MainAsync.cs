@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using PPlus;
+using PPlus.Controls;
 
 namespace PromptPlusTemplate
 {
@@ -27,6 +28,7 @@ namespace PromptPlusTemplate
                 .AddItem("Opc1")
                 .AddItem("Opc2")
                 .AddItem("Opc3")
+                .FilterType(FilterMode.Disabled) // disable filter feature
                 .Run(_cancellationToken);
 
             //check if result is not valid (AKA: Aborted by CTRL+C (_cancellationToken.IsCancellationRequested = true) or [ESC])
@@ -36,10 +38,32 @@ namespace PromptPlusTemplate
                 //do anything (Graceful Shutdown)
                 return await ValueTask.FromResult(-1);
             }
-
             //get valid result
             var Inputcontent = result.Value;
             //do anything with Inputcontent.
+
+            PromptPlus.DoubleDash("Choose a option with overwrite global setting");
+            result = PromptPlus
+                .Select<string>("Seleted") // show prompt
+                .Config(cfg => 
+                {
+                    cfg.ShowOnlyExistingPagination(false)
+                      .DisableChangeTooltip(false)
+                      .ShowTooltip(true);
+                })
+                .AddItem("Opc1")
+                .AddItem("Opc2")
+                .AddItem("Opc3")
+                .FilterType(FilterMode.Contains) // this is the default filter if this command is omitted
+                .Run(_cancellationToken);
+            if (result.IsAborted)
+            {
+                //abnormal termination
+                //do anything (Graceful Shutdown)
+                return await ValueTask.FromResult(-1);
+            }
+
+
 
             //Check if user Aborted by CTRL+C
             //Must be setted Console.CancelKeyPress event.See comment code in Program.cs
