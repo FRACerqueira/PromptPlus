@@ -110,11 +110,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{AD
 		LICENSE\LICENSE-Sharprompt.md = LICENSE\LICENSE-Sharprompt.md
 		LICENSE\LICENSE-SpectreConsole.md = LICENSE\LICENSE-SpectreConsole.md
 		LICENSE\LICENSE-xmldoc2md.md = LICENSE\LICENSE-xmldoc2md.md
+		LICENSE.md = LICENSE.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{0468C89D-43EE-4B08-96BB-FDDA42033AA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PromptPlusTemplate", "Template\PromptPlusTemplate\PromptPlusTemplate.csproj", "{E713CD59-5AB5-40AA-80B3-436D0C6511DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlusTemplate", "Template\PromptPlusTemplate\PromptPlusTemplate.csproj", "{E713CD59-5AB5-40AA-80B3-436D0C6511DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Doc", "Doc", "{B8D852AA-9C22-4AC9-8B56-314388EE37FD}"
+	ProjectSection(SolutionItems) = preProject
+		docs\LICENSE.md = docs\LICENSE.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -420,6 +426,7 @@ Global
 		{184F90B1-EBF2-4D34-88B3-9D7A252CB2B4} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
 		{83BB7962-34D7-4F51-8856-94BDC7B68A64} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
 		{E713CD59-5AB5-40AA-80B3-436D0C6511DA} = {0468C89D-43EE-4B08-96BB-FDDA42033AA5}
+		{B8D852AA-9C22-4AC9-8B56-314388EE37FD} = {ADBB4294-4DC0-43FC-A57A-4C2F9BDB68A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E883401-DEB0-496F-A6BC-8AA0F44BC5B9}

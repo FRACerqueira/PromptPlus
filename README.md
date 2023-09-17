@@ -521,7 +521,7 @@ Copyright 2021 @ Fernando Cerqueira
 
 PromptPlus is licensed under the MIT license. For more information see [LICENSE](LICENSE.md).
 
-* For Spectre.Console licensing information, see [LICENSE-SpectreConsole](LICENSE/LICENSE-SpectreConsole.md).
-* For Sharprompt licensing information, see [LICENSE-Sharprompt](LICENSE/LICENSE-Sharprompt.md).
-* For xmldoc2md licensing information, see [LICENSE-xmldoc2md](LICENSE/LICENSE-xmldoc2md.md).
-* For FIGlet licensing information, see [LICENSE-FIGlet](LICENSE/LICENSE-FIGlet.md).
+* For Spectre.Console licensing information, see [LICENSE-SpectreConsole](Licenses/LICENSE-SpectreConsole.md).
+* For Sharprompt licensing information, see [LICENSE-Sharprompt](Licenses/LICENSE-Sharprompt.md).
+* For xmldoc2md licensing information, see [LICENSE-xmldoc2md](Licenses/LICENSE-xmldoc2md.md).
+* For FIGlet licensing information, see [LICENSE-FIGlet](Licenses/LICENSE-FIGlet.md).

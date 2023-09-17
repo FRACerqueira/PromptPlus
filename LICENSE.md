@@ -22,6 +22,7 @@ SOFTWARE.
 
 PromptPlus includes code from other software related under the MIT license:
 
-- Spectre.Console, Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen. For licensing see /LICENSE/LICENSE-SpectreConsole.md
-- Sharprompt, Copyright (c) 2019 shibayan. For licensing see /LICENSE/LICENSE-Sharprompt.md
-- xmldoc2md, Copyright (c) 2022 Charles de Vandière. For licensing see /LICENSE/LICENSE-xmldoc2md.md
+- [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
+- [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
+- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
+- [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU
