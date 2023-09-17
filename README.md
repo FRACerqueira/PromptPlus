@@ -519,7 +519,7 @@ PromptPlus includes code from other software released under the **MIT license**:
 
 Copyright 2021 @ Fernando Cerqueira
 
-PromptPlus is licensed under the MIT license. For more information see [LICENSE](LICENSE.md).
+PromptPlus is licensed under the MIT license. For more information see [LICENSE](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE).
 
 * For Spectre.Console licensing information, see [LICENSE-SpectreConsole](Licenses/LICENSE-SpectreConsole.md).
 * For Sharprompt licensing information, see [LICENSE-Sharprompt](Licenses/LICENSE-Sharprompt.md).

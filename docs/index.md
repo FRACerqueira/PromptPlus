@@ -443,7 +443,7 @@ PromptPlus.EnabledAbortKey = false;
 
 Copyright 2021 @ Fernando Cerqueira
 
-PromptPlus is licensed under the MIT license. For more information see [LICENSE](./LICENSE.md).
+PromptPlus is licensed under the MIT license. For more information see [LICENSE](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE).
 
 ## Credits
 [**Top**](#table-of-contents)

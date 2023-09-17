@@ -154,7 +154,7 @@ var kp = PromptPlus
 
 Copyright 2021 @ Fernando Cerqueira
 PromptPlus project is licensed under the  the MIT license.
-
+https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE
 
 **Credits**
 -----------
