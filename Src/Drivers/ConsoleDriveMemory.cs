@@ -29,6 +29,7 @@ namespace PPlus.Drivers
         private StringBuilder _writerbuild;
         private List<Segment> _recordsegments;
         private bool _enabledRecord;
+        private bool _WriteToErroOutput;
         private TargetBuffer _currentBuffer;
 
         public ConsoleDriveMemory(IProfileDrive profile)
@@ -404,6 +405,15 @@ namespace PPlus.Drivers
             set
             {
                 _enabledRecord = value;
+            }
+        }
+
+        public bool WriteToErroOutput
+        {
+            get { return _WriteToErroOutput; }
+            set
+            {
+                _WriteToErroOutput = value;
             }
         }
 

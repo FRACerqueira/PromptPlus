@@ -17,6 +17,25 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Reset();
             PromptPlus.Clear();
 
+            //write to standard error output stream for any output included within 'using'
+            using (PromptPlus.OutputError())
+            {
+                PromptPlus.WriteLine("Test");
+            }
+
+            //local change IgnoreErrorColorTokens
+            using (PromptPlus.EscapeColorTokens())
+            {
+                PromptPlus.WriteLine("MalformedColor_TokenAnyText[c4201]_Othertext");
+                PromptPlus.WriteLine("ValidformedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
+            }
+
+            //global change IgnoreErrorColorTokens
+            PromptPlus.IgnoreErrorColorTokens = true;
+            PromptPlus.WriteLine("MalformedColorToken_AnyText[c4201]_Othertext[/]");
+            PromptPlus.WriteLine("ValidformedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
+            PromptPlus.IgnoreErrorColorTokens = false;
+
             PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");

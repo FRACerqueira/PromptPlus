@@ -41,10 +41,6 @@ namespace PPlus.Controls.Objects
         public bool TryAcceptedReadlineConsoleKey(ConsoleKeyInfo keyinfo)
         {
             var isvalid = false;
-            if (!_acceptInput.Invoke(keyinfo.KeyChar))
-            {
-                return isvalid;
-            }
 
             //skip key tab and enter.
             if (keyinfo.Key == ConsoleKey.Tab || keyinfo.Key == ConsoleKey.Enter)
@@ -56,6 +52,10 @@ namespace PPlus.Controls.Objects
 
             if (IsPrintable(keyinfo))
             {
+                if (!_acceptInput.Invoke(keyinfo.KeyChar))
+                {
+                    return isvalid;
+                }
                 Insert(keyinfo.KeyChar);
                 return isvalid;
             }

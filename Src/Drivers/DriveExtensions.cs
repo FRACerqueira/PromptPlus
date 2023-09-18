@@ -96,6 +96,33 @@ namespace PPlus
         /// </summary>
         public static bool ExtraExceptionInfo { get; set;}
 
+
+        /// <summary>
+        /// Get/set Accept malformed color token
+        /// <br>When the value is true and the malformed color token returns the default style color and raw text</br>
+        /// </summary>
+        public static bool IgnoreErrorColorTokens { get; set;}
+
+
+        /// <summary>
+        /// Get instance Ignore malformed color token
+        /// <br>The output text will ignore the color tokens until the 'dispose' is done.</br>
+        /// </summary>
+        /// <returns>IDisposable</returns>
+        public static IDisposable EscapeColorTokens()
+        {
+            return new SkipErrorColorToken();
+        }
+
+        /// <summary>
+        /// write to standard error output stream for any output included within 'using' or run dispose()
+        /// </summary>
+        /// <returns>IDisposable</returns>
+        public static IDisposable OutputError()
+        {
+            return new RedirectToErrorOutput();
+        }
+
         /// <summary>
         /// Reset all config and properties to default values
         /// </summary>
