@@ -31,21 +31,21 @@ namespace PPlus.Controls
 
         #region IControlSelect
 
-        public IControlSelect<T> AddSeparationline(SeparationLineType typeSeparation = SeparationLineType.SingleLine, char? value = null)
+        public IControlSelect<T> Separator(SeparatorLine separatorLine = SeparatorLine.SingleLine, char? value = null)
         {
-            switch (typeSeparation)
+            switch (separatorLine)
             {
-                case SeparationLineType.DoubleLine:
-                case SeparationLineType.SingleLine:
+                case SeparatorLine.DoubleLine:
+                case SeparatorLine.SingleLine:
                     _options.Items.Add(new ItemSelect<T> 
                     { 
                         Disabled = true, 
                         IsGroupHeader = true, 
-                        IsSeparationline = true,
-                        SeparationType = typeSeparation,
+                        IsSeparator = true,
+                        SeparatorType = separatorLine,
                     });
                     break;
-                case SeparationLineType.Char:
+                case SeparatorLine.Char:
                     if (!value.HasValue)
                     {
                         throw new PromptPlusException($"char value is empty");
@@ -54,13 +54,13 @@ namespace PPlus.Controls
                     {
                         Disabled = true,
                         IsGroupHeader = true,
-                        IsSeparationline = true,
-                        SeparationType = typeSeparation,
+                        IsSeparator = true,
+                        SeparatorType = separatorLine,
                         CharSeparation = value.Value
                     });
                     break;
                 default:
-                    throw new PromptPlusException($"Not implemented TypeSeparation: {typeSeparation}");
+                    throw new PromptPlusException($"Not implemented SeparatorLine: {separatorLine}");
             }
             return this;
         }
@@ -288,7 +288,7 @@ namespace PPlus.Controls
             var maxlensep = 0;
             foreach (var item in _options.Items)
             {
-                if (item.IsGroupHeader && !item.IsSeparationline)
+                if (item.IsGroupHeader && !item.IsSeparator)
                 {
                     if (maxlensep < item.Group.Length)
                     { 
@@ -331,11 +331,11 @@ namespace PPlus.Controls
             {
                 if (_options.IsOrderDescending)
                 {
-                    _options.Items = _options.Items.Where(x => !x.IsSeparationline).OrderByDescending(x => x.Group ?? string.Empty + _options.OrderBy.Invoke(x.Value)).ToList();
+                    _options.Items = _options.Items.Where(x => !x.IsSeparator).OrderByDescending(x => x.Group ?? string.Empty + _options.OrderBy.Invoke(x.Value)).ToList();
                 }
                 else
                 {
-                    _options.Items = _options.Items.Where(x => !x.IsSeparationline).OrderBy(x => x.Group ?? string.Empty +  _options.OrderBy.Invoke(x.Value)).ToList();
+                    _options.Items = _options.Items.Where(x => !x.IsSeparator).OrderBy(x => x.Group ?? string.Empty +  _options.OrderBy.Invoke(x.Value)).ToList();
                 }
             }
 
@@ -346,9 +346,10 @@ namespace PPlus.Controls
                 defvaluepage,
                 (item1, item2) => item1.UniqueId == item2.UniqueId,
                 (item) => item.Text??string.Empty, 
-                (item) => !item.IsGroupHeader && IsEnnabled(item));
+                (item) => !item.IsGroupHeader && IsEnnabled(item),
+                (item) => !item.IsGroupHeader);
 
-            if (_localpaginator.TotalCount > 0 &&  _localpaginator.SelectedItem != null && (_localpaginator.SelectedItem.Disabled || _localpaginator.SelectedItem.IsGroupHeader)) 
+            if (_localpaginator.TotalCountValid > 0 &&  _localpaginator.SelectedItem != null && (_localpaginator.SelectedItem.Disabled || _localpaginator.SelectedItem.IsGroupHeader)) 
             {
                 _localpaginator.UnSelected();
                 if (!defvalue.HasValue)
@@ -398,18 +399,18 @@ namespace PPlus.Controls
                 var indentgroup = string.Empty;
                 if (item.IsGroupHeader)
                 {
-                    if (item.IsSeparationline)
+                    if (item.IsSeparator)
                     {
                         value = new string('-', _lengthSeparationline);
-                        switch (item.SeparationType.Value)
+                        switch (item.SeparatorType.Value)
                         {
-                            case SeparationLineType.SingleLine:
+                            case SeparatorLine.SingleLine:
                                 value = new string(_options.Symbol(SymbolType.SingleBorder)[0], _lengthSeparationline);
                                 break;
-                            case SeparationLineType.DoubleLine:
+                            case SeparatorLine.DoubleLine:
                                 value = new string(_options.Symbol(SymbolType.DoubleBorder)[0], _lengthSeparationline);
                                 break;
-                            case SeparationLineType.Char:
+                            case SeparatorLine.Char:
                                 value = new string(item.CharSeparation.Value, _lengthSeparationline);
                                 break;
                         }

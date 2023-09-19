@@ -10,7 +10,7 @@ namespace PPlus.Controls
     /// Represents Type Separation line
     /// </summary>
 
-    public enum SeparationLineType
+    public enum SeparatorLine
     {
         /// <summary>
         /// Single Line 

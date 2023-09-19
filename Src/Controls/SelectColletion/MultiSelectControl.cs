@@ -162,10 +162,11 @@ namespace PPlus.Controls
                 Optional<ItemMultSelect<T>>.s_empty,
                 (item1,item2) => item1.UniqueId == item2.UniqueId,
                 (item) => item.Text??string.Empty,
-                (item) => !item.Disabled);
+                (item) => !item.Disabled,
+                (item) => !item.IsGroupHeader);
 
 
-            if (_localpaginator.TotalCount > 0 && _localpaginator.SelectedItem != null && _localpaginator.SelectedItem.Disabled)
+            if (_localpaginator.TotalCountValid > 0 && _localpaginator.SelectedItem != null && _localpaginator.SelectedItem.Disabled)
             {
                 _localpaginator.UnSelected();
                 if (!defvalue.HasValue)

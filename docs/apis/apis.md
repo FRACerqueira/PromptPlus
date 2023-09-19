@@ -164,7 +164,7 @@
 
 - [ResultWaitProcess&lt;T&gt;](./pplus.controls.resultwaitprocess-1.md)
 
-- [SeparationLineType](./pplus.controls.separationlinetype.md)
+- [SeparatorLine](./pplus.controls.separatorline.md)
 
 - [SliderBarType](./pplus.controls.sliderbartype.md)
 

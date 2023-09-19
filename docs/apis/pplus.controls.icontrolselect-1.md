@@ -133,26 +133,6 @@ items colletion
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### <a id="methods-addseparationline"/>**AddSeparationline(SeparationLineType, Nullable&lt;Char&gt;)**
-
-Add Separation line
-
-```csharp
-IControlSelect<T> AddSeparationline(SeparationLineType typeSeparation, Nullable<Char> value)
-```
-
-#### Parameters
-
-`typeSeparation` [SeparationLineType](./pplus.controls.separationlinetype.md)<br>
-Type Separation line.Default value is SeparationLineType.SingleLine [SeparationLineType](./pplus.controls.separationlinetype.md)
-
-`value` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Char Separation line. Valid only SeparationLineType is SeparationLineType.Char
-
-#### Returns
-
-[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
-
 ### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription()**
 
 Append group text on description
@@ -356,6 +336,26 @@ IControlSelect<T> PageSize(int value)
 
 `value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Number of Max.items
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
+### <a id="methods-separator"/>**Separator(SeparatorLine, Nullable&lt;Char&gt;)**
+
+Add Separation line
+
+```csharp
+IControlSelect<T> Separator(SeparatorLine separatorLine, Nullable<Char> value)
+```
+
+#### Parameters
+
+`separatorLine` [SeparatorLine](./pplus.controls.separatorline.md)<br>
+Type Separation line.Default value is SeparatorLine.SingleLine [SeparatorLine](./pplus.controls.separatorline.md)
+
+`value` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Char Separation line. Valid only SeparatorLine is SeparatorLine.Char
 
 #### Returns
 

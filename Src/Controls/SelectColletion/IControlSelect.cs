@@ -109,10 +109,10 @@ namespace PPlus.Controls
         /// <summary>
         /// Add Separation line
         /// </summary>
-        /// <param name="typeSeparation">Type Separation line.Default value is SeparationLineType.SingleLine <see cref="SeparationLineType"/></param>
-        /// <param name="value">Char Separation line. Valid only SeparationLineType is SeparationLineType.Char</param>
+        /// <param name="separatorLine">Type Separation line.Default value is SeparatorLine.SingleLine <see cref="SeparatorLine"/></param>
+        /// <param name="value">Char Separation line. Valid only SeparatorLine is SeparatorLine.Char</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
-        IControlSelect<T> AddSeparationline(SeparationLineType typeSeparation = SeparationLineType.SingleLine, char? value = null);
+        IControlSelect<T> Separator(SeparatorLine separatorLine  = SeparatorLine.SingleLine, char? value = null);
 
         /// <summary>
         /// Add items colletion to list

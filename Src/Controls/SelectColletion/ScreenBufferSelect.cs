@@ -16,9 +16,9 @@ namespace PPlus.Controls
             {
                 if (input.StartsWith(filter.ToString(), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    screenBuffer.WriteAnswer(options, input.Substring(0, filter.Length));
+                    screenBuffer.WriteAnswer(options, input[..filter.Length]);
                     screenBuffer.SaveCursor();
-                    screenBuffer.WriteSuggestion(options, input.Substring(filter.Length));
+                    screenBuffer.WriteSuggestion(options, input[filter.Length..]);
                 }
                 else
                 {

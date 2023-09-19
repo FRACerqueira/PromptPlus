@@ -7,15 +7,19 @@ using System.Threading.Tasks;
 
 namespace PPlus.Drivers
 {
-    internal class SkipErrorColorToken : IDisposable
+    internal class ConfigColorToken : IDisposable
     {
         private bool _disposed = false;
         private bool _globalIgnoreMalformedColorToken;
 
-        public SkipErrorColorToken()
+        private ConfigColorToken()
         {
-            _globalIgnoreMalformedColorToken = PromptPlus.IgnoreErrorColorTokens;
-            PromptPlus.IgnoreErrorColorTokens = true;
+        }
+
+        public ConfigColorToken(bool IgnoreColorTokens)
+        {
+            _globalIgnoreMalformedColorToken = PromptPlus.IgnoreColorTokens;
+            PromptPlus.IgnoreColorTokens = IgnoreColorTokens;
         }
 
         #region IDisposable
@@ -32,7 +36,7 @@ namespace PPlus.Drivers
             {
                 if (disposing)
                 {
-                    PromptPlus.IgnoreErrorColorTokens = _globalIgnoreMalformedColorToken;
+                    PromptPlus.IgnoreColorTokens = _globalIgnoreMalformedColorToken;
                 }
                 _disposed = true;
             }

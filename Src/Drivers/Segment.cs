@@ -72,62 +72,55 @@ namespace PPlus.Drivers
                 result.Add(new Segment("", style));
                 return result.ToArray();
             }
+
+            if (PromptPlus.IgnoreColorTokens)
+            {
+                result.Add(new Segment(text, style));
+                return result.ToArray();
+            }
+
             using var tokenizer = new MarkupTokenizer(localtext);
 
             var stack = new Stack<Style>();
 
-            try
+            while (tokenizer.MoveNext())
             {
-                while (tokenizer.MoveNext())
+                var token = tokenizer.Current;
+                if (token == null)
                 {
-                    var token = tokenizer.Current;
-                    if (token == null)
+                    break;
+                }
+
+                if (token.Kind == MarkupTokenKind.Open)
+                {
+                    var parsedStyle = StyleParser.Parse(token.Value, style.OverflowStrategy);
+                    stack.Push(parsedStyle);
+                }
+                else if (token.Kind == MarkupTokenKind.Close)
+                {
+                    if (stack.Count == 0)
                     {
-                        break;
+                        throw new PromptPlusException($"Encountered closing tag when none was expected near position {token.Position}.");
                     }
 
-                    if (token.Kind == MarkupTokenKind.Open)
-                    {
-                        var parsedStyle = StyleParser.Parse(token.Value, style.OverflowStrategy);
-                        stack.Push(parsedStyle);
-                    }
-                    else if (token.Kind == MarkupTokenKind.Close)
-                    {
-                        if (stack.Count == 0)
-                        {
-                            throw new PromptPlusException($"Encountered closing tag when none was expected near position {token.Position}.");
-                        }
-
-                        stack.Pop();
-                    }
-                    else if (token.Kind == MarkupTokenKind.Text)
-                    {
-                        // Get the effective style.
-                        var effectiveStyle = Combine(style, stack.Reverse());
-                        result.Add(new Segment(token.Value, effectiveStyle));
-                    }
-                    else
-                    {
-                        throw new PromptPlusException("Encountered unknown markup token.");
-                    }
+                    stack.Pop();
                 }
-                if (stack.Count > 0)
+                else if (token.Kind == MarkupTokenKind.Text)
                 {
-                    throw new PromptPlusException("Unbalanced markup stack. Did you forget to close a tag?");
-                }
-            }
-            catch (PromptPlusException)
-            {
-                if (PromptPlus.IgnoreErrorColorTokens)
-                {
-                    result.Clear();
-                    result.Add(new Segment(text, style));
+                    // Get the effective style.
+                    var effectiveStyle = Combine(style, stack.Reverse());
+                    result.Add(new Segment(token.Value, effectiveStyle));
                 }
                 else
                 {
-                    throw;
+                    throw new PromptPlusException("Encountered unknown markup token.");
                 }
             }
+            if (stack.Count > 0)
+            {
+                throw new PromptPlusException("Unbalanced markup stack. Did you forget to close a tag?");
+            }
+
             return result.ToArray();
         }
 

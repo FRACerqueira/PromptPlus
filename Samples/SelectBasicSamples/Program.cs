@@ -39,11 +39,10 @@ namespace SelectSamples
         }
 
 
-        static void Main(string[] args)
+        static void Main()
         {
             PromptPlus.WriteLine("Hello, World!");
 
-                 .Separator() //Default Separator : SeparationLineType.SingleLine
             //Ensure ValueResult Culture for all controls
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
 
@@ -122,13 +121,13 @@ namespace SelectSamples
             PromptPlus.Select<string>("Select")
                  .AddItem("Seattle")
                  .AddItem("New York")
-                 .AddSeparationline() //Default Separationline : SeparationLineType.SingleLine
+                 .Separator() //Default SeparatorLine : SeparatorLine.SingleLine
                  .AddItem("Tokyo")
                  .AddItem("Singapore")
                  .AddItem("Shanghai")
-                 .AddSeparationline(SeparationLineType.DoubleLine)
+                 .Separator(SeparatorLine.DoubleLine)
                  .AddItem("London")
-                 .AddSeparationline(SeparationLineType.Char, '*')
+                 .Separator(SeparatorLine.Char, '*')
                  .AddItem("Other city")
                  .Run();
 

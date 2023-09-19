@@ -274,7 +274,7 @@ namespace PPlus.Tests.Controls
 
         internal class OptionsForMaskeditCurrency : MaskEditOptions
         {
-            public OptionsForMaskeditCurrency(CultureInfo culture, int ammountInteger, int ammountDecimal, bool acceptSignal, string defaultvalue) : base(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false)
+            public OptionsForMaskeditCurrency(CultureInfo culture, int ammountInteger, int ammountDecimal, bool acceptSignal, string? defaultvalue) : base(PromptPlus.StyleSchema, PromptPlus.Config, PromptPlus._consoledrive, false)
             {
                 Type = ControlMaskedType.Currency;
                 DefaultValue = defaultvalue;

@@ -11,14 +11,14 @@ namespace MultiSelectUserTypeSamples
     internal class MyClass
     {
         public int Id { get; set; }
-        public string MyText { get; set; }
-        public string MyDesc { get; set; }
+        public required string MyText { get; set; }
+        public required string MyDesc { get; set; }
     }
 
     internal class Program
     {
         private static IEnumerable<MyClass>? _datasample;
-        static void Main(string[] args)
+        static void Main()
         {
             _datasample = LoadData();
             PromptPlus.WriteLine("Hello, World!");

@@ -178,13 +178,13 @@ public static ConsoleColor ForegroundColor { get; set; }
 
 ConsoleColor<br>
 
-### <a id="properties-ignoreerrorcolortokens"/>**IgnoreErrorColorTokens**
+### <a id="properties-ignorecolortokens"/>**IgnoreColorTokens**
 
 Get/set Accept malformed color token
- <br>When the value is true and the malformed color token returns the default style color and raw text
+ <br>When the value is true and the color tokens is ignored
 
 ```csharp
-public static bool IgnoreErrorColorTokens { get; set; }
+public static bool IgnoreColorTokens { get; set; }
 ```
 
 #### Property Value
@@ -396,6 +396,19 @@ public static bool SupportsAnsi { get; }
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ## Methods
+
+### <a id="methods-acceptcolortokens"/>**AcceptColorTokens()**
+
+Create context to Accept color tokens
+ <br>The output text will Accept Color Tokens until the 'dispose' is done.
+
+```csharp
+public static IDisposable AcceptColorTokens()
+```
+
+#### Returns
+
+IDisposable
 
 ### <a id="methods-addtolist"/>**AddtoList(String, String)**
 
@@ -1000,7 +1013,7 @@ The [Style](./pplus.style.md) to write.
 
 ### <a id="methods-escapecolortokens"/>**EscapeColorTokens()**
 
-Get instance Ignore malformed color token
+Create context to ignore color tokens
  <br>The output text will ignore the color tokens until the 'dispose' is done.
 
 ```csharp
@@ -1257,7 +1270,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### <a id="methods-outputerror"/>**OutputError()**
 
-write to standard error output stream for any output included within 'using' or run dispose()
+Create context to write on standard error output stream for any output included until the 'dispose' is done.
 
 ```csharp
 public static IDisposable OutputError()

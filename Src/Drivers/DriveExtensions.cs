@@ -104,23 +104,34 @@ namespace PPlus
 
         /// <summary>
         /// Get/set Accept malformed color token
-        /// <br>When the value is true and the malformed color token returns the default style color and raw text</br>
+        /// <br>When the value is true and the color tokens is ignored</br>
         /// </summary>
-        public static bool IgnoreErrorColorTokens { get; set;}
+        public static bool IgnoreColorTokens { get; set;}
 
 
         /// <summary>
-        /// Get instance Ignore malformed color token
+        /// Create context to ignore color tokens
         /// <br>The output text will ignore the color tokens until the 'dispose' is done.</br>
         /// </summary>
         /// <returns>IDisposable</returns>
         public static IDisposable EscapeColorTokens()
         {
-            return new SkipErrorColorToken();
+            return new ConfigColorToken(true);
         }
 
         /// <summary>
-        /// write to standard error output stream for any output included within 'using' or run dispose()
+        /// Create context to Accept color tokens
+        /// <br>The output text will Accept Color Tokens until the 'dispose' is done.</br>
+        /// </summary>
+        /// <returns>IDisposable</returns>
+        public static IDisposable AcceptColorTokens()
+        {
+            return new ConfigColorToken(false);
+        }
+
+
+        /// <summary>
+        ///  Create context to write on standard error output stream for any output included until the 'dispose' is done.
         /// </summary>
         /// <returns>IDisposable</returns>
         public static IDisposable OutputError()

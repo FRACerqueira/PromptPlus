@@ -44,6 +44,7 @@ namespace PromptPlusTemplate
 
             //start Application
             int exitcode = -2;
+#pragma warning disable CS0168 // Variable is declared but never used
             try
             {
                 exitcode = await main.Run();
@@ -59,6 +60,7 @@ namespace PromptPlusTemplate
             {
                 //do anything
             }
+#pragma warning restore CS0168 // Variable is declared but never used
 
             //return to Environment exitcode (0: Normal termination, otherwhise abnormal termination)
             Environment.Exit(exitcode);
