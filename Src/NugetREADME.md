@@ -10,72 +10,24 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 **PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
 
-## What's new in V4.0.5
+## What's new in V4.0.6
 
-- Added new global propety 'ExtraExceptionInfo' to write extra console exception info
-- Added new global propety 'DisableToggleTooltip' to disable toggle Tooltip
-- Added new global propety 'ShowOnlyExistingPagination' to disable Page information when pagination not exists 
-- Added new Method DisableToggleTooltip(bool value) to overwrite default DisableToggleTooltip in control 
-- Added new Method ShowOnlyExistingPagination(bool value) to overwrite default Overwrite default Show pagination only if exists in control 
-- Added new item to Enum FilterMode : 'Disabled'. This item disable filter feature in coletions
-- Improved to not show text prompt when text value is null or empty
-- Improved terminal mode detection (for Windows 11 Versions)
-- Rebuilt FIGlet to MIT License 
-- Fixed credits (MIT License Copyright) 
-- Fixed bug PromptPlus not restore StyleSchema when ResetColor
-- Fixed Spell checking (Breaking Changes)
-    - SugestionInput to SuggestionInput
-        - Controls: MaskEdit/AddTolist/Input
-    - SugestionOutput to SuggestionOutput
-        - Controls: MaskEdit/AddTolist/Input
-    - MaxLenght to MaxLength 
-        - Controls: AutoComplete/AddTolist/Input
-    - StyleControls.Sugestion to StyleControls.Suggestion
-    - StyleSchemaExtensions.Sugestion to StyleSchemaExtensions.Suggestion
-    - PromptPlusException.Plataform to PromptPlusException.Platform
-
-**Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation, fixed credits (MIT License Copyright) and wrong method/property names**
-
-## What's new in V4.0.4
-
-- Fixed bug PromptPlus not restore terminal original setting when shutdown application
-- Fixed bug Autocomplete does not change result when backspace is pressed during search
-- Added Property CurrentBuffer in console drive to return Current Buffer running (Primary/Secondary)
-- Added SwapBuffer command to switch Primary/Secondary buffer (Valid only When console 'ansi'  supported)
-- Renamed 'AlternateScreen' to 'RunOnBuffer'. Now executes a custom action on TargetBuffer and returns to CurrentBuffer
-- Refactored console drivers initialization, control options initialization
-- Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
-    - Default value is = '850;65001'
-
-## What's new in V4.0.3
-
-- New control to switch Alternate screen 
-- Fixed bug Console does not change foreground/background color correctly
-- Fixed bug Control ProgressBar
-    - Not show gradient when set ProgressBarType.Fill
-- Improve testability of result classes/struct (Internal to public)
-
-## What's new in V4.0.2
-
-- New Control Pipeline
-    - PromptPlus.Pipeline(T startvalue)
-- Changed WaitControl to take context value in tasks and return context in result
-    - There are small break-changes  
-- Add Answer key check equals "Yes"/"No" using config values
-    - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
-    - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
-
-## What's new in V4.0.X
-
-- Fixed duplicate tooltip in calendar
-- New console engine
-    - Supports 4/8/24-bit colors
-    - Auto-detection of the current terminal's capabilities
-    - New commands
-    - New support feature colors
-- All controls have been improved to accept color customization, new features and new design.
-- Added new filter for colletion by "Contains" or "StartsWith"
-- Added powerful new controls (eg: Switch Alternate screen, Pipeline, Calendar, Chartbar, Treeview, wait tasks Parallel/Sequential, 
+- Bug fixed: grouped item ordering. The sort option will be ignored
+- Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
+    - Affeted Controls : AddtoList/Input
+- Improvement : Direct writes to standard error output stream
+    - New Commands : OutputError()
+    - Sample with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
+- New feature: Escaping format characters color 
+    - Global property : IgnoreColorTokens
+    - New Commands : EscapeColorTokens()/AcceptColorTokens()
+    - Sample with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
+- New feature: Group items in the select control
+    - Sample with commemts in project SelectBasicSamples
+- New feature: Add separator line in the select control
+    - Sample with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
+ 
+**Special thanks to [ividyon](https://github.com/ividyon) for suggesting improvements and actively participating in this release**
 
 ## **PromptPlus Controls - Sample Usage**
 
