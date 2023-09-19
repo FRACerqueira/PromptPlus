@@ -43,6 +43,7 @@ namespace SelectSamples
         {
             PromptPlus.WriteLine("Hello, World!");
 
+                 .Separator() //Default Separator : SeparationLineType.SingleLine
             //Ensure ValueResult Culture for all controls
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
 
