@@ -93,7 +93,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{191C90E6-4
 		docs\migrateversion.md = docs\migrateversion.md
 		docs\snapshot.md = docs\snapshot.md
 		docs\validators.md = docs\validators.md
-		whatsnew.md = whatsnew.md
+		whatsnewprev.md = whatsnewprev.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SliderSwitchSamples", "Samples\SliderSwitchSamples\SliderSwitchSamples.csproj", "{3702034B-7D26-4BC3-AB1E-864C2EE2D785}"

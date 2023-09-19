@@ -11,7 +11,7 @@
 
 ## Table of Contents
 
-- [What's new - previous versions](https://github.com/FRACerqueira/PromptPlus/blob/main/whatsnew.md)
+- [What's new - previous versions](https://github.com/FRACerqueira/PromptPlus/blob/main/whatsnewprev.md)
 - [Features](#features)
 - [Migrate Version V3.3 to V4.0](migrateversion.md)
 - [Installing](#installing)
