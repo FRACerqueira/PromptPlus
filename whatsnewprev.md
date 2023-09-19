@@ -6,7 +6,7 @@
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
-[**Main**](readme.md#table-of-contents)  
+[**Main**](https://github.com/FRACerqueira/PromptPlus)  
 
 ## What's new in V4.0.5
 [**Top**](#promptplus-whats-new)
