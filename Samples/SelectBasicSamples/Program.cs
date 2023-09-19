@@ -38,12 +38,24 @@ namespace SelectSamples
             };
         }
 
+
         static void Main(string[] args)
         {
             PromptPlus.WriteLine("Hello, World!");
 
             //Ensure ValueResult Culture for all controls
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
+
+            PromptPlus.DoubleDash("Control:Select - basic usage with group and AppendGroupOnDescription");
+            var selgrp = PromptPlus.Select<string>("Which cities would you like to visit?")
+                 .AddItemsGrouped("North America", new[] { "Seattle", "Boston", "New York" })
+                 .AddItemsGrouped("Asia", new[] { "Tokyo", "Singapore", "Shanghai" })
+                 .AddItem("South America (Any)")
+                 .AddItem("Europe (Any)")
+                 .AppendGroupOnDescription()
+                 .Run();
+
+
 
             PromptPlus.DoubleDash("Control:Select - basic usage");
 
@@ -115,7 +127,6 @@ namespace SelectSamples
                     ctrl.AddItem(item.City);
                 })
                 .Run();
-
 
             PromptPlus.DoubleDash("For other basic features below see - input samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");

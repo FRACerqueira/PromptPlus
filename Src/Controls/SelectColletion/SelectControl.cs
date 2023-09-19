@@ -21,6 +21,7 @@ namespace PPlus.Controls
         private Paginator<ItemSelect<T>> _localpaginator;
         private readonly EmacsBuffer _filterBuffer = new(CaseOptions.Uppercase,modefilter:true);
         private Optional<T> _defaultHistoric = Optional<T>.Create(null);
+        private bool ShowingFilter => _filterBuffer.Length > 0;
 
         public SelectControl(IConsoleControl console, SelectOptions<T> options) : base(console, options)
         {
@@ -28,6 +29,51 @@ namespace PPlus.Controls
         }
 
         #region IControlSelect
+
+
+        public IControlSelect<T> AppendGroupOnDescription()
+        {
+            _options.ShowGroupOnDescription = true;
+            return this;
+        }
+
+        public IControlSelect<T> AddItemGrouped(string group, T value, bool disable = false)
+        {
+            var found = false;
+            var added = false;
+            foreach (var item in _options.Items.Where(x => !x.IsGroupHeader && !string.IsNullOrEmpty(x.Group)))
+            {
+                if (item.Group == group)
+                {
+                    item.IsLastItemGroup = false;
+                    found = true;
+                }
+                else if (item.Group != group && found)
+                {
+                    added = true;
+                    _options.Items.Add(new ItemSelect<T> { Value = value, Group = group, IsLastItemGroup = true, Disabled = disable});
+                    break;
+                }
+            }
+            if (!found || !added)
+            {
+                if (!found)
+                {
+                    _options.Items.Add(new ItemSelect<T> { IsGroupHeader = true, Text = null, Value = default, Group = group, Disabled = disable});
+                }
+                _options.Items.Add(new ItemSelect<T> { Value = value, Group = group, IsLastItemGroup = true, Disabled = disable});
+            }
+            return this;
+        }
+
+        public IControlSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable = false)
+        {
+            foreach (var item in value)
+            {
+                AddItemGrouped(group, item, disable);
+            }
+            return this;
+        }
 
         public IControlSelect<T> OrderBy(Expression<Func<T, object>> value)
         {
@@ -182,7 +228,7 @@ namespace PPlus.Controls
                 _options.EqualItems = (item1, item2) => item1.Equals(item2);
             }
 
-            foreach (var item in _options.Items)
+            foreach (var item in _options.Items.Where(x => !x.IsGroupHeader))
             {
                 item.Text = _options.TextSelector.Invoke(item.Value);
             }
@@ -192,7 +238,7 @@ namespace PPlus.Controls
                 int index;
                 do
                 {
-                    index = _options.Items.FindIndex(x => _options.EqualItems(x.Value, item));
+                    index = _options.Items.FindIndex(x => x.IsGroupHeader ? false : _options.EqualItems(x.Value, item));
                     if (index >= 0)
                     {
                         _options.Items.RemoveAt(index);
@@ -204,7 +250,7 @@ namespace PPlus.Controls
             foreach (var item in _options.DisableItems)
             {
                 List<ItemSelect<T>> founds;
-                founds = _options.Items.FindAll(x => _options.EqualItems(x.Value, item));
+                founds = _options.Items.FindAll(x => x.IsGroupHeader ? false : _options.EqualItems(x.Value, item));
                 if (founds.Any())
                 {
                     foreach (var itemfound in founds)
@@ -230,7 +276,7 @@ namespace PPlus.Controls
 
             if (defvalue.HasValue)
             {
-                var found = _options.Items.FirstOrDefault(x => _options.EqualItems(x.Value, defvalue.Value));
+                var found = _options.Items.FirstOrDefault(x => !x.IsGroupHeader && _options.EqualItems(x.Value, defvalue.Value));
                 if (found != null && !found.Disabled)
                 {
                     defvaluepage = Optional<ItemSelect<T>>.Create(found);
@@ -241,11 +287,11 @@ namespace PPlus.Controls
             {
                 if (_options.IsOrderDescending)
                 {
-                    _options.Items = _options.Items.OrderByDescending(x => _options.OrderBy.Invoke(x.Value)).ToList();
+                    _options.Items = _options.Items.OrderByDescending(x => x.Group ?? string.Empty + _options.OrderBy.Invoke(x.Value)).ToList();
                 }
                 else
                 {
-                    _options.Items = _options.Items.OrderBy(x => _options.OrderBy.Invoke(x.Value)).ToList();
+                    _options.Items = _options.Items.OrderBy(x => x.Group ?? string.Empty +  _options.OrderBy.Invoke(x.Value)).ToList();
                 }
             }
 
@@ -256,9 +302,9 @@ namespace PPlus.Controls
                 defvaluepage,
                 (item1, item2) => item1.UniqueId == item2.UniqueId,
                 (item) => item.Text??string.Empty, 
-                IsEnnabled);
+                (item) => !item.IsGroupHeader && IsEnnabled(item));
 
-            if (_localpaginator.TotalCount > 0 &&  _localpaginator.SelectedItem != null && _localpaginator.SelectedItem.Disabled) 
+            if (_localpaginator.TotalCount > 0 &&  _localpaginator.SelectedItem != null && (_localpaginator.SelectedItem.Disabled || _localpaginator.SelectedItem.IsGroupHeader)) 
             {
                 _localpaginator.UnSelected();
                 if (!defvalue.HasValue)
@@ -287,7 +333,7 @@ namespace PPlus.Controls
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options, "");
-            if (_filterBuffer.Length > 0)
+            if (ShowingFilter)
             {
                 screenBuffer.WriteFilterSelect(_options, FinishResult, _filterBuffer);
                 screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
@@ -304,19 +350,40 @@ namespace PPlus.Controls
             var subset = _localpaginator.ToSubset();
             foreach (var item in subset)
             {
+                string value;
+                var indentgroup = string.Empty;
+                if (item.IsGroupHeader)
+                {
+                    value = item.Group;
+                }
+                else
+                {
+                    value = item.Text;
+                    if (!string.IsNullOrEmpty(item.Group))
+                    {
+                        if (item.IsLastItemGroup)
+                        {
+                            indentgroup = $" {_options.Symbol(SymbolType.IndentEndGroup)}";
+                        }
+                        else
+                        {
+                            indentgroup = $" {_options.Symbol(SymbolType.IndentGroup)}";
+                        }
+                    }
+                }
                 if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemSelect<T>>.Default.Equals(item, selectedItem))
                 {
-                    screenBuffer.WriteLineSelector(_options, item.Text);
+                    screenBuffer.WriteLineSelector(_options, value, indentgroup);
                 }
                 else
                 {
                     if (IsDisabled(item))
                     {
-                        screenBuffer.WriteLineNotSelectorDisabled(_options, item.Text);
+                        screenBuffer.WriteLineNotSelectorDisabled(_options, value,indentgroup);
                     }
                     else
                     {
-                        screenBuffer.WriteLineNotSelector(_options, item.Text);
+                        screenBuffer.WriteLineNotSelector(_options, value, indentgroup);
                     }
                 }
             }

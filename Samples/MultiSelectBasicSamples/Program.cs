@@ -126,25 +126,6 @@ namespace MultiSelectBasicSamples
             PromptPlus.MultiSelect<MyEnum>("SelMultiSelectect")
                 .Run();
 
-
-            //PromptPlus.DoubleDash("Control:MultiSelect - Using Interaction");
-            //PromptPlus.MultiSelect<string>("Select")
-            //    .Interaction(MyCities(), (ctrl, item) =>
-            //    {
-            //        ctrl.AddItems(item.City,false,true);
-            //    })
-            //    .Run();
-
-            //PromptPlus.DoubleDash("Control:MultiSelect - Overwrite OverflowAnswer");
-            //PromptPlus.MultiSelect<string>("Select")
-            //    .Interaction(MyCities(), (ctrl, item) =>
-            //    {
-            //        ctrl.AddItems(item.City, false, true);
-            //    })
-            //    .OverflowAnswer(Overflow.None)
-            //    .Run();
-
-
             PromptPlus.DoubleDash("Control:MultiSelect - Using Range(min,max) selected");
             PromptPlus.MultiSelect<string>("Select","Min.selected 2, max.selected 3")
                 .Interaction(MyCities(), (ctrl, item) =>

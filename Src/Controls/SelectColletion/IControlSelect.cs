@@ -91,6 +91,12 @@ namespace PPlus.Controls
         IControlSelect<T> ChangeDescription(Func<T, string> value);
 
         /// <summary>
+        /// Append group text on description
+        /// </summary>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
+        IControlSelect<T> AppendGroupOnDescription();
+
+        /// <summary>
         /// Add item to list
         /// </summary>
         /// <param name="value">Item to add</param>
@@ -115,6 +121,24 @@ namespace PPlus.Controls
         /// <param name="values">items colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
         IControlSelect<T> AddItemsTo(AdderScope scope, params T[] values);
+
+        /// <summary>
+        /// Add Item in a group to list
+        /// </summary>
+        /// <param name="group">Group name</param>
+        /// <param name="value">Item to add</param>
+        /// <param name="disable">true item disabled, otherwise no</param>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
+        IControlSelect<T> AddItemGrouped(string group, T value, bool disable = false);
+
+        /// <summary>
+        /// Add Items colletion in a group to List
+        /// </summary>
+        /// <param name="group">Group name</param>
+        /// <param name="value">items colletion to add</param>
+        /// <param name="disable">true item disabled, otherwise no</param>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
+        IControlSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable = false);
 
         /// <summary>
         /// Custom item comparator

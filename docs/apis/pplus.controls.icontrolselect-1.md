@@ -47,6 +47,29 @@ true item disabled, otherwise no
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
+### <a id="methods-additemgrouped"/>**AddItemGrouped(String, T, Boolean)**
+
+Add Item in a group to list
+
+```csharp
+IControlSelect<T> AddItemGrouped(string group, T value, bool disable)
+```
+
+#### Parameters
+
+`group` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Group name
+
+`value` T<br>
+Item to add
+
+`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item disabled, otherwise no
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
 ### <a id="methods-additems"/>**AddItems(IEnumerable&lt;T&gt;, Boolean)**
 
 Add items colletion to list
@@ -58,6 +81,29 @@ IControlSelect<T> AddItems(IEnumerable<T> values, bool disable)
 #### Parameters
 
 `values` IEnumerable&lt;T&gt;<br>
+items colletion to add
+
+`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item disabled, otherwise no
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
+### <a id="methods-additemsgrouped"/>**AddItemsGrouped(String, IEnumerable&lt;T&gt;, Boolean)**
+
+Add Items colletion in a group to List
+
+```csharp
+IControlSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable)
+```
+
+#### Parameters
+
+`group` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Group name
+
+`value` IEnumerable&lt;T&gt;<br>
 items colletion to add
 
 `disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
@@ -82,6 +128,18 @@ scope Disable/Remove
 
 `values` T[]<br>
 items colletion
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
+### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription()**
+
+Append group text on description
+
+```csharp
+IControlSelect<T> AppendGroupOnDescription()
+```
 
 #### Returns
 

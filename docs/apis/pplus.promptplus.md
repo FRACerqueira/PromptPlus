@@ -178,6 +178,19 @@ public static ConsoleColor ForegroundColor { get; set; }
 
 ConsoleColor<br>
 
+### <a id="properties-ignoreerrorcolortokens"/>**IgnoreErrorColorTokens**
+
+Get/set Accept malformed color token
+ <br>When the value is true and the malformed color token returns the default style color and raw text
+
+```csharp
+public static bool IgnoreErrorColorTokens { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-in"/>**In**
 
 Get standard input stream.
@@ -985,6 +998,19 @@ Number lines to write after write value
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Style](./pplus.style.md) to write.
 
+### <a id="methods-escapecolortokens"/>**EscapeColorTokens()**
+
+Get instance Ignore malformed color token
+ <br>The output text will ignore the color tokens until the 'dispose' is done.
+
+```csharp
+public static IDisposable EscapeColorTokens()
+```
+
+#### Returns
+
+IDisposable
+
 ### <a id="methods-getcursorposition"/>**GetCursorPosition()**
 
 Gets the position of the cursor.
@@ -1228,6 +1254,18 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 #### Returns
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-outputerror"/>**OutputError()**
+
+write to standard error output stream for any output included within 'using' or run dispose()
+
+```csharp
+public static IDisposable OutputError()
+```
+
+#### Returns
+
+IDisposable
 
 ### <a id="methods-pipeline"/>**Pipeline&lt;T&gt;(T)**
 

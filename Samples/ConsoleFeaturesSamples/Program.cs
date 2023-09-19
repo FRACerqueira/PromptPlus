@@ -23,18 +23,27 @@ namespace ConsoleFeaturesSamples
                 PromptPlus.WriteLine("Test");
             }
 
-            //local change IgnoreErrorColorTokens
-            using (PromptPlus.EscapeColorTokens())
-            {
-                PromptPlus.WriteLine("MalformedColor_TokenAnyText[c4201]_Othertext");
-                PromptPlus.WriteLine("ValidformedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
-            }
+            //standard 
+            PromptPlus.WriteLine("MalformedColor_TokenAnyText[[c4201]]_Othertext");
 
             //global change IgnoreErrorColorTokens
             PromptPlus.IgnoreErrorColorTokens = true;
+            //write text with char token
             PromptPlus.WriteLine("MalformedColorToken_AnyText[c4201]_Othertext[/]");
+            //show text with color
             PromptPlus.WriteLine("ValidformedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
             PromptPlus.IgnoreErrorColorTokens = false;
+            
+            //change local IgnoreErrorColorTokens 
+            using (PromptPlus.EscapeColorTokens())
+            {
+                //write text with char token
+                PromptPlus.WriteLine("MalformedColor_TokenAnyText[c4201]_Othertext");
+                //show text with color
+                PromptPlus.WriteLine("ValidformedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
+            }
+            //restore original value IgnoreErrorColorTokens 
+
 
             PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");

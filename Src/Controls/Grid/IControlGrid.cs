@@ -15,7 +15,7 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents the interface with all Methods of the Grid control
     /// </summary>
-    public interface IControlGrid<T> : IPromptControls<T> where T : class
+    internal interface IControlGrid<T> : IPromptControls<T> where T : class
     {
         /// <summary>
         /// Custom config the control.

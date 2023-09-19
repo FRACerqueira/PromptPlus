@@ -8,7 +8,7 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents the Mode Grid Title
     /// </summary>
-    public enum ShowGridTitleMode
+    internal enum ShowGridTitleMode
     {
         /// <summary>
         /// Show Title in line

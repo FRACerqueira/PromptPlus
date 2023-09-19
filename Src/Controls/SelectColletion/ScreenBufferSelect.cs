@@ -55,24 +55,49 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineNotSelectorDisabled(this ScreenBuffer screenBuffer, BaseOptions options, string message)
+        public static void WriteLineNotSelectorDisabled(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "")
         {
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer(' ', Style.Default, true);
-            screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.Disabled(),false, false);
+            if (string.IsNullOrEmpty(indentgroup))
+            {
+                screenBuffer.AddBuffer(' ', Style.Default, true);
+                screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.Disabled(), false, false);
+            }
+            else
+            {
+                screenBuffer.AddBuffer($" {indentgroup}", Style.Default, true);
+                screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.Disabled(), false, false);
+            }
         }
 
-        public static void WriteLineSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message)
+        public static void WriteLineSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "")
         {
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)} {message}", options.OptStyleSchema.Selected(), false);
+            if (string.IsNullOrEmpty(indentgroup))
+            {
+                screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)} {message}", options.OptStyleSchema.Selected(), false);
+            }
+            else 
+            {
+                screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)}", options.OptStyleSchema.Selected(), false);
+                screenBuffer.AddBuffer($"{indentgroup}", Style.Default, true);
+                screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.Selected(), false);
+            }
         }
 
-        public static void WriteLineNotSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message)
+        public static void WriteLineNotSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "")
         {
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer(' ', Style.Default, true);
-            screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.UnSelected(), false,false);
+            if (string.IsNullOrEmpty(indentgroup))
+            {
+                screenBuffer.AddBuffer(' ', Style.Default, true);
+                screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.UnSelected(), false, false);
+            }
+            else
+            {
+                screenBuffer.AddBuffer($" {indentgroup}", Style.Default, true);
+                screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.UnSelected(), false, false);
+            }
         }
 
 
@@ -87,9 +112,20 @@ namespace PPlus.Controls
         public static void WriteLineDescriptionSelect<T>(this ScreenBuffer screenBuffer, SelectOptions<T> options, ItemSelect<T> input)
         {
             var result = options.OptDescription;
-            if (options.DescriptionSelector != null && input != null)
+            if (input != null)
             {
-                result = options.DescriptionSelector.Invoke(input.Value);
+                if (options.DescriptionSelector != null)
+                {
+                    result = options.DescriptionSelector.Invoke(input.Value);
+                }
+                if (options.ShowGroupOnDescription && !string.IsNullOrEmpty(input.Group ?? string.Empty))
+                {
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        result += ", ";
+                    }
+                    result = $"{Messages.Group}: {input.Group}{result ?? string.Empty}";
+                }
             }
             if (!string.IsNullOrEmpty(result))
             {

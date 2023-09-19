@@ -46,7 +46,12 @@ namespace PPlus
                 OriginalCodePageEncode = System.Console.OutputEncoding;
                 var (codepagefrom, codepageto) = ConvertCodePage;
 
-                if (System.Console.OutputEncoding.CodePage.ToString() == codepagefrom)
+                if (System.Console.OutputEncoding.CodePage.ToString() == codepageto)
+                {
+                    unicodesupported = true;
+                }
+
+                else if (System.Console.OutputEncoding.CodePage.ToString() == codepagefrom)
                 {
                     System.Console.OutputEncoding = Encoding.GetEncoding(int.Parse(codepageto));
                     unicodesupported = true;
