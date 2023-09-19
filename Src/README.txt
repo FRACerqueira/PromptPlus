@@ -43,7 +43,7 @@ PromptPlus was developed in C# with target frameworks:
     - New Commands : EscapeColorTokens()/AcceptColorTokens()
     - Sample with commemts in project ConsoleFeatures Samples(https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
 - New feature: Group items in the select control
-    - Sample with commemts in project SelectBasicSamples
+    - Sample with commemts in project SelectBasic Samples(https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
 - New feature: Add separator line in the select control
     - Sample with commemts in project SelectBasic Samples(https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
   
