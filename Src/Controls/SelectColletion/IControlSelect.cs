@@ -65,6 +65,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Sort list by expression
         /// <br>Sort options remove all Separation line</br>
+        /// <br>Sort options is ignored when has grouped items</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
@@ -73,6 +74,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Sort Descending list by expression
         /// <br>Sort options remove all Separation line</br>
+        /// <br>Sort options is ignored when has grouped items</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>

@@ -271,7 +271,7 @@ Action to execute
 ### <a id="methods-orderby"/>**OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort list by expression
- <br>Sort options remove all Separation line
+ <br>Sort options remove all Separation line<br>Sort options is ignored when has grouped items
 
 ```csharp
 IControlSelect<T> OrderBy(Expression<Func<T, Object>> value)
@@ -289,7 +289,7 @@ expresion to sort the colletion
 ### <a id="methods-orderbydescending"/>**OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort Descending list by expression
- <br>Sort options remove all Separation line
+ <br>Sort options remove all Separation line<br>Sort options is ignored when has grouped items
 
 ```csharp
 IControlSelect<T> OrderByDescending(Expression<Func<T, Object>> value)

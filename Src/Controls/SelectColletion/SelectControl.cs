@@ -327,15 +327,21 @@ namespace PPlus.Controls
                 }
             }
 
+            var hasgroup = _options.Items.Any(x => x.IsGroupHeader);
+            if (hasgroup)
+            {
+                _options.OrderBy = null;
+            }
+
             if (_options.OrderBy != null)
             {
                 if (_options.IsOrderDescending)
                 {
-                    _options.Items = _options.Items.Where(x => !x.IsSeparator).OrderByDescending(x => x.Group ?? string.Empty + _options.OrderBy.Invoke(x.Value)).ToList();
+                    _options.Items = _options.Items.Where(x => !x.IsSeparator).OrderByDescending(x => x.Group ?? string.Empty + _options.OrderBy.Invoke(x.Value) ?? x.Text).ToList();
                 }
                 else
                 {
-                    _options.Items = _options.Items.Where(x => !x.IsSeparator).OrderBy(x => x.Group ?? string.Empty +  _options.OrderBy.Invoke(x.Value)).ToList();
+                    _options.Items = _options.Items.Where(x => !x.IsSeparator).OrderBy(x => x.Group ?? string.Empty +  _options.OrderBy.Invoke(x.Value) ?? x.Text).ToList();
                 }
             }
 

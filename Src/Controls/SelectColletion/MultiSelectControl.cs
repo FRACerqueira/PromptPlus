@@ -137,6 +137,12 @@ namespace PPlus.Controls
                 _options.Maximum = _options.Items.Count;
             }
 
+            var hasgroup = _options.Items.Any(x => x.IsGroupHeader);
+            if (hasgroup)
+            {
+                _options.OrderBy = null;
+            }
+
             if (_options.OrderBy != null)
             {
                 if (_options.IsOrderDescending)

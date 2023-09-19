@@ -139,7 +139,6 @@ namespace SelectSamples
                  .AddItem("South America (Any)")
                  .AddItem("Europe (Any)")
                  .AppendGroupOnDescription()
-                 .OrderBy(x => x)
                  .Run();
 
 
