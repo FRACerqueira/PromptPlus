@@ -164,6 +164,8 @@
 
 - [ResultWaitProcess&lt;T&gt;](./pplus.controls.resultwaitprocess-1.md)
 
+- [SeparationLineType](./pplus.controls.separationlinetype.md)
+
 - [SliderBarType](./pplus.controls.sliderbartype.md)
 
 - [SpinnersType](./pplus.controls.spinnerstype.md)

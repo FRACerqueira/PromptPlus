@@ -21,6 +21,9 @@ namespace PPlus.Controls
         public string Group { get; set; }
         public bool IsGroupHeader { get; set; }
         public bool IsLastItemGroup { get; set; }
+        public bool IsSeparationline { get; set; }
+        public SeparationLineType? SeparationType { get; set; }
+        public char? CharSeparation { get; set; }
 
     }
 }

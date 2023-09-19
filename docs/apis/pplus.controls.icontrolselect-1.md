@@ -133,6 +133,26 @@ items colletion
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
+### <a id="methods-addseparationline"/>**AddSeparationline(SeparationLineType, Nullable&lt;Char&gt;)**
+
+Add Separation line
+
+```csharp
+IControlSelect<T> AddSeparationline(SeparationLineType typeSeparation, Nullable<Char> value)
+```
+
+#### Parameters
+
+`typeSeparation` [SeparationLineType](./pplus.controls.separationlinetype.md)<br>
+Type Separation line.Default value is SeparationLineType.SingleLine [SeparationLineType](./pplus.controls.separationlinetype.md)
+
+`value` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Char Separation line. Valid only SeparationLineType is SeparationLineType.Char
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
 ### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription()**
 
 Append group text on description
@@ -271,6 +291,7 @@ Action to execute
 ### <a id="methods-orderby"/>**OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort list by expression
+ <br>Sort options remove all Separation line
 
 ```csharp
 IControlSelect<T> OrderBy(Expression<Func<T, Object>> value)
@@ -288,6 +309,7 @@ expresion to sort the colletion
 ### <a id="methods-orderbydescending"/>**OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort Descending list by expression
+ <br>Sort options remove all Separation line
 
 ```csharp
 IControlSelect<T> OrderByDescending(Expression<Func<T, Object>> value)

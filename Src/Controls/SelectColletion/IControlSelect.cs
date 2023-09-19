@@ -64,6 +64,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Sort list by expression
+        /// <br>Sort options remove all Separation line</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
@@ -71,6 +72,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Sort Descending list by expression
+        /// <br>Sort options remove all Separation line</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
@@ -103,6 +105,14 @@ namespace PPlus.Controls
         /// <param name="disable">true item disabled, otherwise no</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
         IControlSelect<T> AddItem(T value, bool disable = false);
+
+        /// <summary>
+        /// Add Separation line
+        /// </summary>
+        /// <param name="typeSeparation">Type Separation line.Default value is SeparationLineType.SingleLine <see cref="SeparationLineType"/></param>
+        /// <param name="value">Char Separation line. Valid only SeparationLineType is SeparationLineType.Char</param>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
+        IControlSelect<T> AddSeparationline(SeparationLineType typeSeparation = SeparationLineType.SingleLine, char? value = null);
 
         /// <summary>
         /// Add items colletion to list

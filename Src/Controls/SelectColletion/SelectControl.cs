@@ -22,6 +22,7 @@ namespace PPlus.Controls
         private readonly EmacsBuffer _filterBuffer = new(CaseOptions.Uppercase,modefilter:true);
         private Optional<T> _defaultHistoric = Optional<T>.Create(null);
         private bool ShowingFilter => _filterBuffer.Length > 0;
+        private int _lengthSeparationline = 20;
 
         public SelectControl(IConsoleControl console, SelectOptions<T> options) : base(console, options)
         {
@@ -30,6 +31,39 @@ namespace PPlus.Controls
 
         #region IControlSelect
 
+        public IControlSelect<T> AddSeparationline(SeparationLineType typeSeparation = SeparationLineType.SingleLine, char? value = null)
+        {
+            switch (typeSeparation)
+            {
+                case SeparationLineType.DoubleLine:
+                case SeparationLineType.SingleLine:
+                    _options.Items.Add(new ItemSelect<T> 
+                    { 
+                        Disabled = true, 
+                        IsGroupHeader = true, 
+                        IsSeparationline = true,
+                        SeparationType = typeSeparation,
+                    });
+                    break;
+                case SeparationLineType.Char:
+                    if (!value.HasValue)
+                    {
+                        throw new PromptPlusException($"char value is empty");
+                    }
+                    _options.Items.Add(new ItemSelect<T>
+                    {
+                        Disabled = true,
+                        IsGroupHeader = true,
+                        IsSeparationline = true,
+                        SeparationType = typeSeparation,
+                        CharSeparation = value.Value
+                    });
+                    break;
+                default:
+                    throw new PromptPlusException($"Not implemented TypeSeparation: {typeSeparation}");
+            }
+            return this;
+        }
 
         public IControlSelect<T> AppendGroupOnDescription()
         {
@@ -209,24 +243,15 @@ namespace PPlus.Controls
 
             if (typeof(T).IsEnum)
             {
-                if (_options.TextSelector == null)
-                {
-                    _options.TextSelector = EnumDisplay;
-                }
+                _options.TextSelector ??= EnumDisplay;
                 AddEnum();
             }
             else
             {
-                if (_options.TextSelector == null)
-                {
-                    _options.TextSelector = (item) => item.ToString();
-                }
+                _options.TextSelector ??= (item) => item.ToString();
             }
 
-            if (_options.EqualItems == null)
-            {
-                _options.EqualItems = (item1, item2) => item1.Equals(item2);
-            }
+            _options.EqualItems ??= (item1, item2) => item1.Equals(item2);
 
             foreach (var item in _options.Items.Where(x => !x.IsGroupHeader))
             {
@@ -238,7 +263,7 @@ namespace PPlus.Controls
                 int index;
                 do
                 {
-                    index = _options.Items.FindIndex(x => x.IsGroupHeader ? false : _options.EqualItems(x.Value, item));
+                    index = _options.Items.FindIndex(x => !x.IsGroupHeader && _options.EqualItems(x.Value, item));
                     if (index >= 0)
                     {
                         _options.Items.RemoveAt(index);
@@ -250,7 +275,7 @@ namespace PPlus.Controls
             foreach (var item in _options.DisableItems)
             {
                 List<ItemSelect<T>> founds;
-                founds = _options.Items.FindAll(x => x.IsGroupHeader ? false : _options.EqualItems(x.Value, item));
+                founds = _options.Items.FindAll(x => !x.IsGroupHeader && _options.EqualItems(x.Value, item));
                 if (founds.Any())
                 {
                     foreach (var itemfound in founds)
@@ -260,7 +285,26 @@ namespace PPlus.Controls
                 }
             }
 
-            
+            var maxlensep = 0;
+            foreach (var item in _options.Items)
+            {
+                if (item.IsGroupHeader && !item.IsSeparationline)
+                {
+                    if (maxlensep < item.Text.Length)
+                    { 
+                        maxlensep = item.Text.Length;
+                    }
+                }
+                else if (!item.IsGroupHeader)
+                {
+                    if (maxlensep < item.Text.Length)
+                    {
+                        maxlensep = item.Text.Length;
+                    }
+                }
+            }
+            _lengthSeparationline = maxlensep;
+
             Optional<T> defvalue = Optional<T>.s_empty;
 
             Optional<ItemSelect<T>> defvaluepage = Optional<ItemSelect<T>>.s_empty;
@@ -287,11 +331,11 @@ namespace PPlus.Controls
             {
                 if (_options.IsOrderDescending)
                 {
-                    _options.Items = _options.Items.OrderByDescending(x => x.Group ?? string.Empty + _options.OrderBy.Invoke(x.Value)).ToList();
+                    _options.Items = _options.Items.Where(x => !x.IsSeparationline).OrderByDescending(x => x.Group ?? string.Empty + _options.OrderBy.Invoke(x.Value)).ToList();
                 }
                 else
                 {
-                    _options.Items = _options.Items.OrderBy(x => x.Group ?? string.Empty +  _options.OrderBy.Invoke(x.Value)).ToList();
+                    _options.Items = _options.Items.Where(x => !x.IsSeparationline).OrderBy(x => x.Group ?? string.Empty +  _options.OrderBy.Invoke(x.Value)).ToList();
                 }
             }
 
@@ -354,7 +398,26 @@ namespace PPlus.Controls
                 var indentgroup = string.Empty;
                 if (item.IsGroupHeader)
                 {
-                    value = item.Group;
+                    if (item.IsSeparationline)
+                    {
+                        value = new string('-', _lengthSeparationline);
+                        switch (item.SeparationType.Value)
+                        {
+                            case SeparationLineType.SingleLine:
+                                value = new string(_options.Symbol(SymbolType.SingleBorder)[0], _lengthSeparationline);
+                                break;
+                            case SeparationLineType.DoubleLine:
+                                value = new string(_options.Symbol(SymbolType.DoubleBorder)[0], _lengthSeparationline);
+                                break;
+                            case SeparationLineType.Char:
+                                value = new string(item.CharSeparation.Value, _lengthSeparationline);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        value = item.Group;
+                    }
                 }
                 else
                 {

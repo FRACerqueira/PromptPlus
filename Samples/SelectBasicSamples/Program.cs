@@ -46,17 +46,6 @@ namespace SelectSamples
             //Ensure ValueResult Culture for all controls
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
 
-            PromptPlus.DoubleDash("Control:Select - basic usage with group and AppendGroupOnDescription");
-            var selgrp = PromptPlus.Select<string>("Which cities would you like to visit?")
-                 .AddItemsGrouped("North America", new[] { "Seattle", "Boston", "New York" })
-                 .AddItemsGrouped("Asia", new[] { "Tokyo", "Singapore", "Shanghai" })
-                 .AddItem("South America (Any)")
-                 .AddItem("Europe (Any)")
-                 .AppendGroupOnDescription()
-                 .Run();
-
-
-
             PromptPlus.DoubleDash("Control:Select - basic usage");
 
             var sel = PromptPlus.Select<string>("Select")
@@ -127,6 +116,32 @@ namespace SelectSamples
                     ctrl.AddItem(item.City);
                 })
                 .Run();
+
+            PromptPlus.DoubleDash("Control:Select - basic usage with Separationline");
+            PromptPlus.Select<string>("Select")
+                 .AddItem("Seattle")
+                 .AddItem("New York")
+                 .AddSeparationline() //Default Separationline : SeparationLineType.SingleLine
+                 .AddItem("Tokyo")
+                 .AddItem("Singapore")
+                 .AddItem("Shanghai")
+                 .AddSeparationline(SeparationLineType.DoubleLine)
+                 .AddItem("London")
+                 .AddSeparationline(SeparationLineType.Char, '*')
+                 .AddItem("Other city")
+                 .Run();
+
+
+            PromptPlus.DoubleDash("Control:Select - basic usage with group and AppendGroupOnDescription");
+            PromptPlus.Select<string>("Which cities would you like to visit?")
+                 .AddItemsGrouped("North America", new[] { "Seattle", "Boston", "New York" })
+                 .AddItemsGrouped("Asia", new[] { "Tokyo", "Singapore", "Shanghai" })
+                 .AddItem("South America (Any)")
+                 .AddItem("Europe (Any)")
+                 .AppendGroupOnDescription()
+                 .OrderBy(x => x)
+                 .Run();
+
 
             PromptPlus.DoubleDash("For other basic features below see - input samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
