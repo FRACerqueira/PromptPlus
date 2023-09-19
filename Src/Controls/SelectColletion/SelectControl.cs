@@ -290,9 +290,9 @@ namespace PPlus.Controls
             {
                 if (item.IsGroupHeader && !item.IsSeparationline)
                 {
-                    if (maxlensep < item.Text.Length)
+                    if (maxlensep < item.Group.Length)
                     { 
-                        maxlensep = item.Text.Length;
+                        maxlensep = item.Group.Length;
                     }
                 }
                 else if (!item.IsGroupHeader)
