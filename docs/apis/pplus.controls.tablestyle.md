@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:LayoutCalendar 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:TableStyle 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,28 +8,30 @@
 
 [**Back to List Api**](./apis.md)
 
-# LayoutCalendar
+# TableStyle
 
 Namespace: PPlus.Controls
 
-Represents the Layout Calendar
+Represents the Style of content Table
 
 ```csharp
-public enum LayoutCalendar
+public enum TableStyle
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [LayoutCalendar](./pplus.controls.layoutcalendar.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [TableStyle](./pplus.controls.tablestyle.md)<br>
 Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icomparable), [IFormattable](https://docs.microsoft.com/en-us/dotnet/api/system.iformattable), [IConvertible](https://docs.microsoft.com/en-us/dotnet/api/system.iconvertible)
 
 ## Fields
 
 | Name | Value | Description |
 | --- | --: | --- |
-| SingleGrid | 0 | single line grid |
-| DoubleGrid | 1 | Double line grid |
-| AsciiSingleGrid | 2 | Acsii single grid |
-| AsciiDoubleGrid | 3 | Acsii double grid |
-| HeavyGrid | 4 | Heavy line grid |
+| Grid | 0 | Grid lines |
+| Title | 1 | Title content |
+| Header | 2 | Header content |
+| SelectedHeader | 3 | Selected Header content |
+| Content | 4 | Data content |
+| DisabledContent | 5 | Disabled content |
+| SelectedSContent | 6 | Selected content |
 
 
 - - -

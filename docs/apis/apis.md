@@ -62,6 +62,8 @@
 
 - [BaseOptions](./pplus.controls.baseoptions.md)
 
+- [CalendarLayout](./pplus.controls.calendarlayout.md)
+
 - [CalendarScope](./pplus.controls.calendarscope.md)
 
 - [CaseOptions](./pplus.controls.caseoptions.md)
@@ -122,6 +124,8 @@
 
 - [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
+- [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
+
 - [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 - [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
@@ -135,8 +139,6 @@
 - [ItemBrowser](./pplus.controls.itembrowser.md)
 
 - [ItemCalendar](./pplus.controls.itemcalendar.md)
-
-- [LayoutCalendar](./pplus.controls.layoutcalendar.md)
 
 - [LayoutChart](./pplus.controls.layoutchart.md)
 
@@ -161,6 +163,8 @@
 - [ResultProgessBar&lt;T&gt;](./pplus.controls.resultprogessbar-1.md)
 
 - [ResultPrompt&lt;T&gt;](./pplus.controls.resultprompt-1.md)
+
+- [ResultTable&lt;T&gt;](./pplus.controls.resulttable-1.md)
 
 - [ResultWaitProcess&lt;T&gt;](./pplus.controls.resultwaitprocess-1.md)
 
@@ -197,6 +201,12 @@
 - [SuggestionOutput](./pplus.controls.suggestionoutput.md)
 
 - [SymbolType](./pplus.controls.symboltype.md)
+
+- [TableLayout](./pplus.controls.tablelayout.md)
+
+- [TableStyle](./pplus.controls.tablestyle.md)
+
+- [TableTitleMode](./pplus.controls.tabletitlemode.md)
 
 - [TreeNode&lt;T&gt;](./pplus.controls.treenode-1.md)
 

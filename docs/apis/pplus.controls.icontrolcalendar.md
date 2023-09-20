@@ -203,18 +203,18 @@ Action to execute
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-layout"/>**Layout(LayoutCalendar)**
+### <a id="methods-layout"/>**Layout(CalendarLayout)**
 
-The layout canlendar. Default value is 'LayoutCalendar.SingleBorde'
+The layout canlendar. Default value is 'CalendarLayout.SingleBorde'
 
 ```csharp
-IControlCalendar Layout(LayoutCalendar value)
+IControlCalendar Layout(CalendarLayout value)
 ```
 
 #### Parameters
 
-`value` [LayoutCalendar](./pplus.controls.layoutcalendar.md)<br>
-The [LayoutCalendar](./pplus.controls.layoutcalendar.md)
+`value` [CalendarLayout](./pplus.controls.calendarlayout.md)<br>
+The [CalendarLayout](./pplus.controls.calendarlayout.md)
 
 #### Returns
 

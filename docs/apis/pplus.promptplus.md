@@ -1774,6 +1774,27 @@ public static bool SwapBuffer(TargetBuffer value)
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
 
+### <a id="methods-table"/>**Table&lt;T&gt;(Action&lt;IPromptConfig&gt;)**
+
+Create Table Control to Write to console.
+
+```csharp
+public static IControlTable<T> Table<T>(Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+
+#### Parameters
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlChartBar](./pplus.controls.icontrolchartbar.md)
+
 ### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, String)**
 
 Create TreeView Control.

@@ -31,7 +31,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with overwrite culture:pt-br
 
 cld = PromptPlus
     .Calendar("Date", "Select date")
-    .Layout(LayoutCalendar.DoubleGrid)
+    .Layout(CalendarLayout.DoubleGrid)
     .Culture("pt-BR")
     .Run();
 if (!cld.IsAborted)
@@ -44,7 +44,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Disabled Weekends");
 
 PromptPlus
     .Calendar("Date", "Select date")
-    .Layout(LayoutCalendar.HeavyGrid)
+    .Layout(CalendarLayout.HeavyGrid)
     .DisabledWeekends()
     .Run();
 
@@ -52,7 +52,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Disabled dates");
 
 PromptPlus
     .Calendar("Date", "Select date")
-    .Layout(LayoutCalendar.AsciiSingleGrid)
+    .Layout(CalendarLayout.AsciiSingleGrid)
     .AddItems(CalendarScope.Disabled,
         new ItemCalendar(DateTime.Now.AddDays(1)),
         new ItemCalendar(DateTime.Now.AddDays(2)))
@@ -62,7 +62,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Notes");
 
 PromptPlus
     .Calendar("Date", "Select date")
-    .Layout(LayoutCalendar.AsciiDoubleGrid)
+    .Layout(CalendarLayout.AsciiDoubleGrid)
     .AddItems(CalendarScope.Note,
         new ItemCalendar(DateTime.Now.AddDays(1), "Note1"),
         new ItemCalendar(DateTime.Now.AddDays(1), "Note2"),

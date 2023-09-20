@@ -22,7 +22,7 @@ namespace PPlus.Controls
         private readonly EmacsBuffer _filterBuffer = new(CaseOptions.Uppercase,modefilter:true);
         private Optional<T> _defaultHistoric = Optional<T>.Create(null);
         private bool ShowingFilter => _filterBuffer.Length > 0;
-        private int _lengthSeparationline = 20;
+        private int _lengthSeparationline;
 
         public SelectControl(IConsoleControl console, SelectOptions<T> options) : base(console, options)
         {
@@ -180,7 +180,7 @@ namespace PPlus.Controls
                         }
                         break;
                     default:
-                        throw new PromptPlusException($"AdderScope : {scope} Not Implemented");
+                        throw new PromptPlusException($"AddItemsTo : {scope} Not Implemented");
                 }
             }
             return this;

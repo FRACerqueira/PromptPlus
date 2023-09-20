@@ -10,7 +10,7 @@ namespace PPlus.Drivers
     internal class ConfigColorToken : IDisposable
     {
         private bool _disposed = false;
-        private bool _globalIgnoreMalformedColorToken;
+        private readonly bool _globalIgnoreMalformedColorToken;
 
         private ConfigColorToken()
         {

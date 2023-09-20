@@ -6,17 +6,29 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents the Mode Grid Title
+    /// Represents the Table Layout 
     /// </summary>
-    internal enum ShowGridTitleMode
+    public enum TableLayout
     {
         /// <summary>
-        /// Show Title in line
+        /// single line grid
         /// </summary>
-        InLine,
+        SingleGrid,
         /// <summary>
-        /// Show Title in row
+        /// Double line grid
         /// </summary>
-        InRow
+        DoubleGrid,
+        /// <summary>
+        /// Acsii single grid
+        /// </summary>
+        AsciiSingleGrid,
+        /// <summary>
+        /// Acsii double grid
+        /// </summary>
+        AsciiDoubleGrid,
+        /// <summary>
+        /// Heavy line grid
+        /// </summary>
+        HeavyGrid
     }
 }

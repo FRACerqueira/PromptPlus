@@ -62,7 +62,7 @@ Do not use this constructor!
 
 ### <a id="constructors-.ctor"/>**ResultMasked(String, String)**
 
-Create a ResultMasked. Purpose only for unit testing
+Create ResultMasked instance.
 
 ```csharp
 ResultMasked(string value, string valueMask)

@@ -6,29 +6,17 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents the Layout Calendar
+    /// Represents the Mode Table Title
     /// </summary>
-    public enum LayoutCalendar
+    public enum TableTitleMode
     {
         /// <summary>
-        /// single line grid
+        /// Show Title in line
         /// </summary>
-        SingleGrid,
+        InLine,
         /// <summary>
-        /// Double line grid
+        /// Show Title in row
         /// </summary>
-        DoubleGrid,
-        /// <summary>
-        /// Acsii single grid
-        /// </summary>
-        AsciiSingleGrid,
-        /// <summary>
-        /// Acsii double grid
-        /// </summary>
-        AsciiDoubleGrid,
-        /// <summary>
-        /// Heavy line grid
-        /// </summary>
-        HeavyGrid
+        InRow
     }
 }

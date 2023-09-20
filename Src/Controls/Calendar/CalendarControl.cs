@@ -79,7 +79,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlCalendar Layout(LayoutCalendar value)
+        public IControlCalendar Layout(CalendarLayout value)
         {
             _options.Layout = value;
             return this;
@@ -1034,13 +1034,13 @@ namespace PPlus.Controls
             {
                 switch (_options.Layout)
                 {
-                    case LayoutCalendar.SingleGrid:
-                    case LayoutCalendar.AsciiSingleGrid:
+                    case CalendarLayout.SingleGrid:
+                    case CalendarLayout.AsciiSingleGrid:
                         WriteCalendarAsciiSingleGrid(screenBuffer, currentdate);
                         break;
-                    case LayoutCalendar.HeavyGrid:
-                    case LayoutCalendar.DoubleGrid:
-                    case LayoutCalendar.AsciiDoubleGrid:
+                    case CalendarLayout.HeavyGrid:
+                    case CalendarLayout.DoubleGrid:
+                    case CalendarLayout.AsciiDoubleGrid:
                         WriteCalendarAsciiDoubleGrid(screenBuffer, currentdate);
                         break;
                     default:
@@ -1050,19 +1050,19 @@ namespace PPlus.Controls
             }
             switch (_options.Layout)
             {
-                case LayoutCalendar.HeavyGrid:
+                case CalendarLayout.HeavyGrid:
                     WriteCalendarHeavyGrid(screenBuffer, currentdate);
                     break;
-                case LayoutCalendar.SingleGrid:
+                case CalendarLayout.SingleGrid:
                     WriteCalendarSingleGrid(screenBuffer, currentdate);
                     break;
-                case LayoutCalendar.DoubleGrid:
+                case CalendarLayout.DoubleGrid:
                     WriteCalendarDoubleGrid(screenBuffer, currentdate);
                     break;
-                case LayoutCalendar.AsciiSingleGrid:
+                case CalendarLayout.AsciiSingleGrid:
                     WriteCalendarAsciiSingleGrid(screenBuffer, currentdate);
                     break;
-                case LayoutCalendar.AsciiDoubleGrid:
+                case CalendarLayout.AsciiDoubleGrid:
                     WriteCalendarAsciiDoubleGrid(screenBuffer, currentdate);
                     break;
                 default:
