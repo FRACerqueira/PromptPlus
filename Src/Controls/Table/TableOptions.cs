@@ -56,7 +56,7 @@ namespace PPlus.Controls
 
         public byte[] FilterColumns { get; set; } = Array.Empty<byte>();
 
-        public TableLayout Layout { get; set; } = TableLayout.SingleGrid;
+        public TableLayout Layout { get; set; } = TableLayout.SingleGridFull;
 
         public Style GridStyle { get; set; }
 
@@ -80,11 +80,11 @@ namespace PPlus.Controls
 
         public List<ItemItemColumn<T>> Columns { get; set; } = new List<ItemItemColumn<T>>();
 
-        public List<ItemTableHeader> Headers { get; set; } = new();
+        public List<ItemTableMergeHeader> MergeHeaders { get; set; } = new();
 
-        public List<ItemTableHeader> MergeHeaders { get; set; } = new();
-
-        public bool UseSeparator { get; set; }
+        public bool HideHeaders { get; set; }
+        
+        public bool WithSeparatorRows { get; set; }
 
         public bool HasAutoFit{ get; set; }
 
@@ -97,6 +97,7 @@ namespace PPlus.Controls
         public bool IsColumnsNavigation { get; set; }
 
         public Func<T, byte, string> SelectedTemplate { get; set; }
+
         public Func<T, byte, string> FinishTemplate { get; set; }
 
         public bool RemoveTableAtFinish { get; set; } = true;

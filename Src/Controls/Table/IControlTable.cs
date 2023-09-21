@@ -132,7 +132,7 @@ namespace PPlus.Controls
         IControlTable<T> FilterByColumns(params byte[] indexColumn);
 
         /// <summary>
-        /// The Table layout. Default value is 'TableLayout.SingleBorde'
+        /// The Table layout. Default value is 'TableLayout.SingleGridFull'
         /// </summary>
         /// <param name="value">The <see cref="TableLayout"/></param>
         /// <returns><see cref="IControlTable{T}"/></returns>
@@ -151,29 +151,23 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">Title</param>
         /// <param name="alignment">alignment title</param>
-        /// <param name="tableTitleMode">InLine: Write the title above the grid. InRow : Write the title inside the grid as a row</param>
+        /// <param name="titleMode">InLine: Write the title above the grid. InRow : Write the title inside the grid as a row</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> Title(string value, Alignment alignment = Alignment.Center, TableTitleMode tableTitleMode = TableTitleMode.InLine);
+        IControlTable<T> Title(string value, Alignment alignment = Alignment.Center, TableTitleMode titleMode = TableTitleMode.InLine);
 
         /// <summary>
         /// Add Column
         /// </summary>
         /// <param name="field">Expression that defines the field associated with the column</param>
-        /// <param name="minwidth">Minimum column width</param>
-        /// <param name="maxwidth">Maximum column width</param>
-        /// <param name="alignment">alignment content</param>
-        /// <param name="textcrop">If true the value will be truncated by the maximum size, otherwise an extra new line will be created</param>
+        /// <param name="width">column width</param>
         /// <param name="format">Function to format the field.If not informed, it will be ToString()</param>
+        /// <param name="alignment">alignment content</param>
+        /// <param name="title">The Column title</param>
+        /// <param name="titlealignment">alignment title</param>
+        /// <param name="titlereplaceswidth">title width overrides column width when greater</param>
+        /// <param name="textcrop">If true the value will be truncated by the maximum size, otherwise an extra new line will be created</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> AddColumn(Expression<Func<T, object>> field, byte minwidth, byte? maxwidth, Alignment alignment = Alignment.Left, bool textcrop = false, Func<object, string> format = null);
-
-        /// <summary>
-        /// Add Column Title
-        /// </summary>
-        /// <param name="value">The Column title</param>
-        /// <param name="alignment">alignment title</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> AddColumnTitle(string value, Alignment alignment = Alignment.Center);
+        IControlTable<T> AddColumn(Expression < Func<T, object>> field, byte width, Func<object, string> format = null,Alignment alignment = Alignment.Left, string? title = null, Alignment titlealignment = Alignment.Center,bool titlereplaceswidth = true, bool textcrop = false);
 
         /// <summary>
         /// Add extra row with merger columns
@@ -183,13 +177,19 @@ namespace PPlus.Controls
         /// <param name="startColumn">start column</param>
         /// <param name="endcolumn">Final column</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> MergeColumnTitle(string value, byte startColumn, byte endcolumn, Alignment alignment = Alignment.Center);
+        IControlTable<T> MergeColumns(string value, byte startColumn, byte endcolumn, Alignment alignment = Alignment.Center);
 
         /// <summary>
         /// Set separator between rows. Default none.
         /// </summary>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> SeparatorRows();
+        IControlTable<T> WithSeparatorRows();
+
+        /// <summary>
+        /// Hide columns headers. Default false.
+        /// </summary>
+        /// <returns><see cref="IControlTable{T}"/></returns>
+        IControlTable<T> HideHeaders();
 
         /// <summary>
         /// Set the grid to have the current console width

@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.IO.Pipes;
 using PPlus;
+using PPlus.Controls;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace TableBasicSamples
@@ -32,10 +33,12 @@ namespace TableBasicSamples
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
 
             PromptPlus.Table<MyTable>()
+                .Title("Test",titleMode:TableTitleMode.InRow)
+                .WithSeparatorRows()
                 .AddItems(CreateItem())
-                .AddColumn((item) => item.Id, 10, null)
-                .AddColumn((item) => item.MyDate, 15, null)
-                .AddColumn((item) => item.MyText, 20, null,format:(arg) => $"Text: {arg}")
+                .AddColumn((item) => item.Id, 10)
+                .AddColumn((item) => item.MyDate, 15)
+                .AddColumn((item) => item.MyText, 20, format:(arg) => $"Text: {arg}")
                 .AddFormatType<DateTime>(FmtDate)
                 .AddFormatType<int>(FmtInt)
                 .EnabledInteractionUser(

@@ -5,22 +5,14 @@
 
 namespace PPlus.Controls
 {
-    internal readonly struct ItemTableHeader
+    internal readonly struct ItemTableMergeHeader
     {
-        public ItemTableHeader()
+        public ItemTableMergeHeader()
         {
-            throw new PromptPlusException("ItemHeader CTOR NotImplemented");
+            throw new PromptPlusException("ItemTableMergeHeader CTOR NotImplemented");
         }
 
-        public ItemTableHeader(string header, Alignment align)
-        {
-            Header = header;
-            Align = align;
-            StartColumn = 0;
-            EndColumn = 0;
-        }
-
-        public ItemTableHeader(string header, Alignment align, byte start,byte end)
+        public ItemTableMergeHeader(string header, Alignment align, byte start,byte end)
         {
             Header = header;
             Align = align;

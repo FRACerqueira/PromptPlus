@@ -11,24 +11,44 @@ namespace PPlus.Controls
     public enum TableLayout
     {
         /// <summary>
-        /// single line grid
+        /// single line grid with separator Columns
         /// </summary>
-        SingleGrid,
+        SingleGridFull,
         /// <summary>
-        /// Double line grid
+        /// single line grid without separator Columns
         /// </summary>
-        DoubleGrid,
+        SingleGridSoft,
         /// <summary>
-        /// Acsii single grid
+        /// Double line grid with separator Columns
         /// </summary>
-        AsciiSingleGrid,
+        DoubleGridFull,
         /// <summary>
-        /// Acsii double grid
+        /// Double line grid without separator Columns
         /// </summary>
-        AsciiDoubleGrid,
+        DoubleGridSoft,
         /// <summary>
-        /// Heavy line grid
+        /// Acsii single grid with separator Columns
         /// </summary>
-        HeavyGrid
+        AsciiSingleGridFull,
+        /// <summary>
+        /// Acsii single grid without separator Columns
+        /// </summary>
+        AsciiSingleGridSoft,
+        /// <summary>
+        /// Acsii double grid with separator Columns
+        /// </summary>
+        AsciiDoubleGridFull,
+        /// <summary>
+        /// Acsii double grid without separator Columns
+        /// </summary>
+        AsciiDoubleGridSoft,
+        /// <summary>
+        /// Heavy line grid  with separator Columns
+        /// </summary>
+        HeavyGridFull,
+        /// <summary>
+        /// Heavy line grid without separator Columns
+        /// </summary>
+        HeavyGridSoft
     }
 }

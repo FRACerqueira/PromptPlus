@@ -26,12 +26,12 @@ Implements IPromptControls&lt;ResultTable&lt;T&gt;&gt;
 
 ## Methods
 
-### <a id="methods-addcolumn"/>**AddColumn(Expression&lt;Func&lt;T, Object&gt;&gt;, Byte, Nullable&lt;Byte&gt;, Alignment, Boolean, Func&lt;Object, String&gt;)**
+### <a id="methods-addcolumn"/>**AddColumn(Expression&lt;Func&lt;T, Object&gt;&gt;, Byte, Func&lt;Object, String&gt;, Alignment, String, Alignment, Boolean, Boolean)**
 
 Add Column
 
 ```csharp
-IControlTable<T> AddColumn(Expression<Func<T, Object>> field, byte minwidth, Nullable<Byte> maxwidth, Alignment alignment, bool textcrop, Func<Object, String> format)
+IControlTable<T> AddColumn(Expression<Func<T, Object>> field, byte width, Func<Object, String> format, Alignment alignment, string title, Alignment titlealignment, bool titlereplaceswidth, bool textcrop)
 ```
 
 #### Parameters
@@ -39,40 +39,26 @@ IControlTable<T> AddColumn(Expression<Func<T, Object>> field, byte minwidth, Nul
 `field` Expression&lt;Func&lt;T, Object&gt;&gt;<br>
 Expression that defines the field associated with the column
 
-`minwidth` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
-Minimum column width
-
-`maxwidth` [Nullable&lt;Byte&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Maximum column width
-
-`alignment` [Alignment](./pplus.controls.alignment.md)<br>
-alignment content
-
-`textcrop` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-If true the value will be truncated by the maximum size, otherwise an extra new line will be created
+`width` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
+column width
 
 `format` [Func&lt;Object, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 Function to format the field.If not informed, it will be ToString()
 
-#### Returns
+`alignment` [Alignment](./pplus.controls.alignment.md)<br>
+alignment content
 
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-addcolumntitle"/>**AddColumnTitle(String, Alignment)**
-
-Add Column Title
-
-```csharp
-IControlTable<T> AddColumnTitle(string value, Alignment alignment)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`title` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The Column title
 
-`alignment` [Alignment](./pplus.controls.alignment.md)<br>
+`titlealignment` [Alignment](./pplus.controls.alignment.md)<br>
 alignment title
+
+`titlereplaceswidth` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+title width overrides column width when greater
+
+`textcrop` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+If true the value will be truncated by the maximum size, otherwise an extra new line will be created
 
 #### Returns
 
@@ -332,6 +318,18 @@ Filter Mode
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
+### <a id="methods-hideheaders"/>**HideHeaders()**
+
+Hide columns headers. Default false.
+
+```csharp
+IControlTable<T> HideHeaders()
+```
+
+#### Returns
+
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
+
 ### <a id="methods-interaction"/>**Interaction&lt;T1&gt;(IEnumerable&lt;T1&gt;, Action&lt;IControlTable&lt;T&gt;, T1&gt;)**
 
 Execute a action foreach item of colletion passed as a parameter
@@ -359,7 +357,7 @@ Action to execute
 
 ### <a id="methods-layout"/>**Layout(TableLayout)**
 
-The Table layout. Default value is 'TableLayout.SingleBorde'
+The Table layout. Default value is 'TableLayout.SingleGridFull'
 
 ```csharp
 IControlTable<T> Layout(TableLayout value)
@@ -374,12 +372,12 @@ The [TableLayout](./pplus.controls.tablelayout.md)
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-mergecolumntitle"/>**MergeColumnTitle(String, Byte, Byte, Alignment)**
+### <a id="methods-mergecolumns"/>**MergeColumns(String, Byte, Byte, Alignment)**
 
 Add extra row with merger columns
 
 ```csharp
-IControlTable<T> MergeColumnTitle(string value, byte startColumn, byte endcolumn, Alignment alignment)
+IControlTable<T> MergeColumns(string value, byte startColumn, byte endcolumn, Alignment alignment)
 ```
 
 #### Parameters
@@ -471,18 +469,6 @@ Number of Max.rows
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-separatorrows"/>**SeparatorRows()**
-
-Set separator between rows. Default none.
-
-```csharp
-IControlTable<T> SeparatorRows()
-```
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
 ### <a id="methods-styles"/>**Styles(TableStyle, Style)**
 
 Styles for Table elements
@@ -508,7 +494,7 @@ The [Style](./pplus.style.md)
 Set Title Table
 
 ```csharp
-IControlTable<T> Title(string value, Alignment alignment, TableTitleMode tableTitleMode)
+IControlTable<T> Title(string value, Alignment alignment, TableTitleMode titleMode)
 ```
 
 #### Parameters
@@ -519,8 +505,20 @@ Title
 `alignment` [Alignment](./pplus.controls.alignment.md)<br>
 alignment title
 
-`tableTitleMode` [TableTitleMode](./pplus.controls.tabletitlemode.md)<br>
+`titleMode` [TableTitleMode](./pplus.controls.tabletitlemode.md)<br>
 InLine: Write the title above the grid. InRow : Write the title inside the grid as a row
+
+#### Returns
+
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
+
+### <a id="methods-withseparatorrows"/>**WithSeparatorRows()**
+
+Set separator between rows. Default none.
+
+```csharp
+IControlTable<T> WithSeparatorRows()
+```
 
 #### Returns
 
