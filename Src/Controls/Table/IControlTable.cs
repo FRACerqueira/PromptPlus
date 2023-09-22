@@ -39,21 +39,6 @@ namespace PPlus.Controls
         IControlTable<T> OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 
         /// <summary>
-        /// <see cref="CultureInfo"/> to on show value format.
-        /// </summary>
-        /// <param name="value">CultureInfo to use</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> Culture(CultureInfo value);
-
-        /// <summary>
-        /// <see cref="CultureInfo"/> to show value format.
-        /// <br>Default value is global Promptplus Cultureinfo</br>  
-        /// </summary>
-        /// <param name="value">Name of CultureInfo to use</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> Culture(string value);
-
-        /// <summary>
         /// Execute a action foreach item of colletion passed as a parameter
         /// </summary>
         /// <typeparam name="T1">Layout external colletion</typeparam>
@@ -117,19 +102,12 @@ namespace PPlus.Controls
         IControlTable<T> OrderByDescending(Expression<Func<T, object>> value);
 
         /// <summary>
-        /// Filter strategy for filter rows 
-        /// <br>Default value is FilterMode.Contains</br>
-        /// </summary>
-        /// <param name="value">Filter Mode</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> FilterType(FilterMode value = FilterMode.Disabled);
-
-        /// <summary>
         /// Set Columns used by Filter strategy
         /// </summary>
+        /// <param name="filter">Filter strategy for filter rows</param>
         /// <param name="indexColumn">list (cardinality) of columns</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> FilterByColumns(params byte[] indexColumn);
+        IControlTable<T> FilterByColumns(FilterMode filter = FilterMode.Contains,params ushort[] indexColumn);
 
         /// <summary>
         /// The Table layout. Default value is 'TableLayout.SingleGridFull'
@@ -137,6 +115,16 @@ namespace PPlus.Controls
         /// <param name="value">The <see cref="TableLayout"/></param>
         /// <returns><see cref="IControlTable{T}"/></returns>
         IControlTable<T> Layout(TableLayout value);
+
+        /// <summary>
+        /// Dynamically change the description using a user role
+        /// </summary>
+        /// <param name="value">
+        /// function to apply change
+        /// <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)</br>
+        /// </param>
+        /// <returns><see cref="IControlTable{T}"/></returns>
+        IControlTable<T> ChangeDescription(Func<T, int, int, string> value);
 
         /// <summary>
         /// Styles for Table elements
@@ -159,25 +147,16 @@ namespace PPlus.Controls
         /// Add Column
         /// </summary>
         /// <param name="field">Expression that defines the field associated with the column</param>
-        /// <param name="width">column width</param>
+        /// <param name="width">column size</param>
         /// <param name="format">Function to format the field.If not informed, it will be ToString()</param>
         /// <param name="alignment">alignment content</param>
         /// <param name="title">The Column title</param>
         /// <param name="titlealignment">alignment title</param>
         /// <param name="titlereplaceswidth">title width overrides column width when greater</param>
-        /// <param name="textcrop">If true the value will be truncated by the maximum size, otherwise an extra new line will be created</param>
+        /// <param name="textcrop">If true the value will be truncated by the column size, otherwise, the content will be written in several lines</param>
+        /// <param name="maxslidinglines">Maximum Sliding Lines when the content length is greater than the column size and textcrop = false.</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> AddColumn(Expression < Func<T, object>> field, byte width, Func<object, string> format = null,Alignment alignment = Alignment.Left, string? title = null, Alignment titlealignment = Alignment.Center,bool titlereplaceswidth = true, bool textcrop = false);
-
-        /// <summary>
-        /// Add extra row with merger columns
-        /// </summary>
-        /// <param name="value">The merge Column title</param>
-        /// <param name="alignment">alignment title</param>
-        /// <param name="startColumn">start column</param>
-        /// <param name="endcolumn">Final column</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> MergeColumns(string value, byte startColumn, byte endcolumn, Alignment alignment = Alignment.Center);
+        IControlTable<T> AddColumn(Expression < Func<T, object>> field, ushort width, Func<object, string> format = null,Alignment alignment = Alignment.Left, string? title = null, Alignment titlealignment = Alignment.Center,bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null);
 
         /// <summary>
         /// Set separator between rows. Default none.
@@ -192,28 +171,40 @@ namespace PPlus.Controls
         IControlTable<T> HideHeaders();
 
         /// <summary>
+        /// Hide selector row. Default false.
+        /// </summary>
+        /// <returns><see cref="IControlTable{T}"/></returns>
+        IControlTable<T> HideSelectorRow();
+
+        /// <summary>
         /// Set the grid to have the current console width
         /// </summary>
         /// <param name="indexColumn">list (cardinality) of columns that will be affected</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> AutoFit(params byte[] indexColumn);
+        IControlTable<T> AutoFit(params ushort[] indexColumn);
 
         /// <summary>
         /// Global function to format columns by field type when not specified by 'AddColumn'.
         /// </summary>
-        /// <param name="type">type to convert to format to string</param>
+        /// <typeparam name="T1">Type to convert</typeparam>
         /// <param name="funcfomatType">The function</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> AddFormatType<T1>(Func<object, string> funcfomatType);
+        IControlTable<T> AddFormatType<T1>(Func<object,string> funcfomatType);
 
         /// <summary>
         /// Wait Select row with [enter].Default not wait (only display all rows)
         /// </summary>
-        /// <param name="selectedTemplate">message template function when selected item</param>
-        /// <param name="finishTemplate">message template function when finish control with seleted item</param>
+        /// <param name="selectedTemplate">
+        /// message template function when selected item. 
+        /// <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)</br>
+        /// </param>
+        /// <param name="finishTemplate">
+        /// message template function when finish control with seleted item
+        /// <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)</br>
+        /// </param>
         /// <param name="removetable">True not write table, otherwise write last state of table</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> EnabledInteractionUser(Func<T, byte, string> selectedTemplate = null, Func<T, byte, string> finishTemplate = null, bool removetable = true);
+        IControlTable<T> EnabledInteractionUser(Func<T, int, int, string> selectedTemplate = null, Func<T, int, int, string> finishTemplate = null, bool removetable = true);
 
         /// <summary>
         /// Enable Columns Navigation. Default, Rows Navigation.

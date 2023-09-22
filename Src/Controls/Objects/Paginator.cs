@@ -87,6 +87,9 @@ namespace PPlus.Controls.Objects
 
         public int SelectedIndex { get; private set; } = 0;
 
+        public int CurrentIndex => (_userpageSize * SelectedPage) + SelectedIndex;
+
+
         public T SelectedItem
         {
             get

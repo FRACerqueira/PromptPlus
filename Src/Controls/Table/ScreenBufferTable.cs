@@ -54,5 +54,15 @@ namespace PPlus.Controls
                 }
             }
         }
+
+        public static void WriteLineDescriptionTable<T>(this ScreenBuffer screenBuffer, TableOptions<T> options)
+        {
+            var result = options.OptDescription;
+            if (!string.IsNullOrEmpty(result))
+            {
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+            }
+        }
     }
 }

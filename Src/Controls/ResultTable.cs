@@ -43,12 +43,12 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Row number
+        /// Row number, base 0.
         /// </summary>
         public int Row { get; }
 
         /// <summary>
-        /// Column number
+        /// Column number, base 0.
         /// </summary>
         public int Column { get; }
 

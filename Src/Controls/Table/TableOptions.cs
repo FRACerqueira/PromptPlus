@@ -23,6 +23,7 @@ namespace PPlus.Controls
             PageSize = config.PageSize;
             GridStyle = styleSchema.Prompt();
             HeaderStyle = styleSchema.Prompt();
+            SelectedColHeader = styleSchema.Selected();
             TitleStyle = styleSchema.Prompt();
             SelectedHeaderStyle = styleSchema.Selected();
             ContentStyle = styleSchema.Prompt();
@@ -34,7 +35,7 @@ namespace PPlus.Controls
 
         public Func<T, object> OrderBy { get; set; }
 
-        public FilterMode FilterType { get; set; } = FilterMode.Contains;
+        public FilterMode FilterType { get; set; } = FilterMode.Disabled;
 
         public string? OverwriteDefaultFrom { get; set; } = null;
 
@@ -52,9 +53,7 @@ namespace PPlus.Controls
 
         public int PageSize { get; set; }
 
-        public CultureInfo CurrentCulture { get; set; } = null;
-
-        public byte[] FilterColumns { get; set; } = Array.Empty<byte>();
+        public ushort[] FilterColumns { get; set; } = Array.Empty<ushort>();
 
         public TableLayout Layout { get; set; } = TableLayout.SingleGridFull;
 
@@ -63,6 +62,8 @@ namespace PPlus.Controls
         public Style TitleStyle { get; set; }
 
         public Style HeaderStyle { get; set; }
+
+        public Style SelectedColHeader { get; set; }
 
         public Style SelectedHeaderStyle { get; set; }
 
@@ -80,7 +81,7 @@ namespace PPlus.Controls
 
         public List<ItemItemColumn<T>> Columns { get; set; } = new List<ItemItemColumn<T>>();
 
-        public List<ItemTableMergeHeader> MergeHeaders { get; set; } = new();
+        public bool HideSelectorRow { get; set; }
 
         public bool HideHeaders { get; set; }
         
@@ -88,17 +89,19 @@ namespace PPlus.Controls
 
         public bool HasAutoFit{ get; set; }
 
-        public byte[] AutoFitColumns { get; set; } = Array.Empty<byte>();
+        public ushort[] AutoFitColumns { get; set; } = Array.Empty<ushort>();
 
-        public Dictionary<Type,Func<object,string>> FormatTypes = new();
+        public Dictionary<Type,Func<object, string>> FormatTypes = new();
 
         public bool IsInteraction { get; set; }
 
         public bool IsColumnsNavigation { get; set; }
 
-        public Func<T, byte, string> SelectedTemplate { get; set; }
+        public Func<T, int, int, string> SelectedTemplate { get; set; }
 
-        public Func<T, byte, string> FinishTemplate { get; set; }
+        public Func<T, int, int, string> FinishTemplate { get; set; }
+
+        public Func<T, int, int, string> ChangeDescription { get; set; }
 
         public bool RemoveTableAtFinish { get; set; } = true;
     }

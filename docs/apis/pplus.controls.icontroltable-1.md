@@ -26,12 +26,12 @@ Implements IPromptControls&lt;ResultTable&lt;T&gt;&gt;
 
 ## Methods
 
-### <a id="methods-addcolumn"/>**AddColumn(Expression&lt;Func&lt;T, Object&gt;&gt;, Byte, Func&lt;Object, String&gt;, Alignment, String, Alignment, Boolean, Boolean)**
+### <a id="methods-addcolumn"/>**AddColumn(Expression&lt;Func&lt;T, Object&gt;&gt;, UInt16, Func&lt;Object, String&gt;, Alignment, String, Alignment, Boolean, Boolean, Nullable&lt;Int32&gt;)**
 
 Add Column
 
 ```csharp
-IControlTable<T> AddColumn(Expression<Func<T, Object>> field, byte width, Func<Object, String> format, Alignment alignment, string title, Alignment titlealignment, bool titlereplaceswidth, bool textcrop)
+IControlTable<T> AddColumn(Expression<Func<T, Object>> field, ushort width, Func<Object, String> format, Alignment alignment, string title, Alignment titlealignment, bool titlereplaceswidth, bool textcrop, Nullable<Int32> maxslidinglines)
 ```
 
 #### Parameters
@@ -39,8 +39,8 @@ IControlTable<T> AddColumn(Expression<Func<T, Object>> field, byte width, Func<O
 `field` Expression&lt;Func&lt;T, Object&gt;&gt;<br>
 Expression that defines the field associated with the column
 
-`width` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
-column width
+`width` [UInt16](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
+column size
 
 `format` [Func&lt;Object, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 Function to format the field.If not informed, it will be ToString()
@@ -58,7 +58,10 @@ alignment title
 title width overrides column width when greater
 
 `textcrop` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-If true the value will be truncated by the maximum size, otherwise an extra new line will be created
+If true the value will be truncated by the column size, otherwise, the content will be written in several lines
+
+`maxslidinglines` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Maximum Sliding Lines when the content length is greater than the column size and textcrop = false.
 
 #### Returns
 
@@ -75,6 +78,7 @@ IControlTable<T> AddFormatType<T1>(Func<Object, String> funcfomatType)
 #### Type Parameters
 
 `T1`<br>
+Type to convert
 
 #### Parameters
 
@@ -145,18 +149,36 @@ items colletion
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-autofit"/>**AutoFit(params Byte[])**
+### <a id="methods-autofit"/>**AutoFit(params UInt16[])**
 
 Set the grid to have the current console width
 
 ```csharp
-IControlTable<T> AutoFit(params Byte[] indexColumn)
+IControlTable<T> AutoFit(params UInt16[] indexColumn)
 ```
 
 #### Parameters
 
-`indexColumn` [Byte[]](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
+`indexColumn` [UInt16[]](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
 list (cardinality) of columns that will be affected
+
+#### Returns
+
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
+
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;T, Int32, Int32, String&gt;)**
+
+Dynamically change the description using a user role
+
+```csharp
+IControlTable<T> ChangeDescription(Func<T, Int32, Int32, String> value)
+```
+
+#### Parameters
+
+`value` Func&lt;T, Int32, Int32, String&gt;<br>
+function to apply change
+ <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)
 
 #### Returns
 
@@ -174,41 +196,6 @@ IControlTable<T> Config(Action<IPromptConfig> context)
 
 `context` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-culture"/>**Culture(CultureInfo)**
-
-[CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to on show value format.
-
-```csharp
-IControlTable<T> Culture(CultureInfo value)
-```
-
-#### Parameters
-
-`value` [CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo)<br>
-CultureInfo to use
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-culture"/>**Culture(String)**
-
-[CultureInfo](https://docs.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo) to show value format.
- <br>Default value is global Promptplus Cultureinfo
-
-```csharp
-IControlTable<T> Culture(string value)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Name of CultureInfo to use
 
 #### Returns
 
@@ -243,21 +230,23 @@ IControlTable<T> EnableColumnsNavigation()
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-enabledinteractionuser"/>**EnabledInteractionUser(Func&lt;T, Byte, String&gt;, Func&lt;T, Byte, String&gt;, Boolean)**
+### <a id="methods-enabledinteractionuser"/>**EnabledInteractionUser(Func&lt;T, Int32, Int32, String&gt;, Func&lt;T, Int32, Int32, String&gt;, Boolean)**
 
 Wait Select row with [enter].Default not wait (only display all rows)
 
 ```csharp
-IControlTable<T> EnabledInteractionUser(Func<T, Byte, String> selectedTemplate, Func<T, Byte, String> finishTemplate, bool removetable)
+IControlTable<T> EnabledInteractionUser(Func<T, Int32, Int32, String> selectedTemplate, Func<T, Int32, Int32, String> finishTemplate, bool removetable)
 ```
 
 #### Parameters
 
-`selectedTemplate` Func&lt;T, Byte, String&gt;<br>
-message template function when selected item
+`selectedTemplate` Func&lt;T, Int32, Int32, String&gt;<br>
+message template function when selected item. 
+ <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)
 
-`finishTemplate` Func&lt;T, Byte, String&gt;<br>
+`finishTemplate` Func&lt;T, Int32, Int32, String&gt;<br>
 message template function when finish control with seleted item
+ <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)
 
 `removetable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 True not write table, otherwise write last state of table
@@ -283,36 +272,21 @@ function comparator
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-filterbycolumns"/>**FilterByColumns(params Byte[])**
+### <a id="methods-filterbycolumns"/>**FilterByColumns(FilterMode, params UInt16[])**
 
 Set Columns used by Filter strategy
 
 ```csharp
-IControlTable<T> FilterByColumns(params Byte[] indexColumn)
+IControlTable<T> FilterByColumns(FilterMode filter, params UInt16[] indexColumn)
 ```
 
 #### Parameters
 
-`indexColumn` [Byte[]](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
+`filter` [FilterMode](./pplus.controls.filtermode.md)<br>
+Filter strategy for filter rows
+
+`indexColumn` [UInt16[]](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
 list (cardinality) of columns
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-filtertype"/>**FilterType(FilterMode)**
-
-Filter strategy for filter rows 
- <br>Default value is FilterMode.Contains
-
-```csharp
-IControlTable<T> FilterType(FilterMode value)
-```
-
-#### Parameters
-
-`value` [FilterMode](./pplus.controls.filtermode.md)<br>
-Filter Mode
 
 #### Returns
 
@@ -324,6 +298,18 @@ Hide columns headers. Default false.
 
 ```csharp
 IControlTable<T> HideHeaders()
+```
+
+#### Returns
+
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
+
+### <a id="methods-hideselectorrow"/>**HideSelectorRow()**
+
+Hide selector row. Default false.
+
+```csharp
+IControlTable<T> HideSelectorRow()
 ```
 
 #### Returns
@@ -367,32 +353,6 @@ IControlTable<T> Layout(TableLayout value)
 
 `value` [TableLayout](./pplus.controls.tablelayout.md)<br>
 The [TableLayout](./pplus.controls.tablelayout.md)
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-mergecolumns"/>**MergeColumns(String, Byte, Byte, Alignment)**
-
-Add extra row with merger columns
-
-```csharp
-IControlTable<T> MergeColumns(string value, byte startColumn, byte endcolumn, Alignment alignment)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-The merge Column title
-
-`startColumn` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
-start column
-
-`endcolumn` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
-Final column
-
-`alignment` [Alignment](./pplus.controls.alignment.md)<br>
-alignment title
 
 #### Returns
 

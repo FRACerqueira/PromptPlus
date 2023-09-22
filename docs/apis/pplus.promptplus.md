@@ -1774,26 +1774,83 @@ public static bool SwapBuffer(TargetBuffer value)
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
 
-### <a id="methods-table"/>**Table&lt;T&gt;(Action&lt;IPromptConfig&gt;)**
+### <a id="methods-table"/>**Table&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
 
 Create Table Control to Write to console.
 
 ```csharp
-public static IControlTable<T> Table<T>(Action<IPromptConfig> config)
+public static IControlTable<T> Table<T>(string prompt, Action<IPromptConfig> config)
 ```
 
 #### Type Parameters
 
 `T`<br>
+type of data to table
 
 #### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
 
 `config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlChartBar](./pplus.controls.icontrolchartbar.md)
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
+
+### <a id="methods-table"/>**Table&lt;T&gt;(String, String)**
+
+
+
+```csharp
+public static IControlTable<T> Table<T>(string prompt, string description)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+#### Returns
+
+IControlTable&lt;T&gt;
+
+### <a id="methods-table"/>**Table&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+
+
+
+```csharp
+public static IControlTable<T> Table<T>(string prompt, string description, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+IControlTable&lt;T&gt;
 
 ### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, String)**
 

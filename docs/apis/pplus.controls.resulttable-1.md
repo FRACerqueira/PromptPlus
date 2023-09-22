@@ -29,7 +29,7 @@ Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) 
 
 ### <a id="properties-column"/>**Column**
 
-Column number
+Column number, base 0.
 
 ```csharp
 public int Column { get; }
@@ -53,7 +53,7 @@ public object ColumnValue { get; }
 
 ### <a id="properties-row"/>**Row**
 
-Row number
+Row number, base 0.
 
 ```csharp
 public int Row { get; }
