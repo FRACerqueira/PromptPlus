@@ -4,10 +4,8 @@
 // ***************************************************************************************
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -303,6 +301,7 @@ namespace PPlus.Controls.Table
                 screenBuffer.NewLine();
                 return;
             }
+
             string answer = null;
             if (!aborted && _options.FinishTemplate != null)
             {
@@ -324,6 +323,7 @@ namespace PPlus.Controls.Table
             if (!_options.RemoveTableAtFinish)
             {
                 WriteTable(screenBuffer);
+                screenBuffer.NewLine();
             }
         }
 

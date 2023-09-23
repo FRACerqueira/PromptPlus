@@ -80,9 +80,9 @@ namespace TableBasicSamples
                 //.AutoFit(1,2)
                 .AddFormatType<DateTime>(FmtDate)
                 .AddFormatType<int>(FmtInt)
-                //.EnabledInteractionUser(
-                //    selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
-                //    finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
+                .EnabledInteractionUser(
+                    selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
+                    finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
                 .Run();
             if (!tbl.IsAborted)
             { 

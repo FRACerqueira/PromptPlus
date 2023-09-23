@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using PPlus.Controls.Objects;
 
 namespace PPlus.Controls
