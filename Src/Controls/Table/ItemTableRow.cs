@@ -17,6 +17,5 @@ namespace PPlus.Controls
         public string UniqueId => _uniqueId;
         public T Value { get; set; }
         public bool Disabled { get; set; }
-        public bool IsSeparator { get; set; }
     }
 }

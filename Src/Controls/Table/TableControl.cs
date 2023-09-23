@@ -104,7 +104,7 @@ namespace PPlus.Controls.Table
                 int index;
                 do
                 {
-                    index = _options.Items.FindIndex(x => !x.IsSeparator && _options.EqualItems(x.Value, item));
+                    index = _options.Items.FindIndex(x => _options.EqualItems(x.Value, item));
                     if (index >= 0)
                     {
                         _options.Items.RemoveAt(index);
@@ -116,7 +116,7 @@ namespace PPlus.Controls.Table
             foreach (var item in _options.DisableItems)
             {
                 List<ItemTableRow<T>> founds;
-                founds = _options.Items.FindAll(x => !x.IsSeparator && _options.EqualItems(x.Value, item));
+                founds = _options.Items.FindAll(x =>_options.EqualItems(x.Value, item));
                 if (founds.Any())
                 {
                     foreach (var itemfound in founds)
@@ -152,11 +152,11 @@ namespace PPlus.Controls.Table
             {
                 if (_options.IsOrderDescending)
                 {
-                    _options.Items = _options.Items.Where(x => !x.IsSeparator).OrderByDescending(x => _options.OrderBy.Invoke(x.Value)).ToList();
+                    _options.Items = _options.Items.OrderByDescending(x => _options.OrderBy.Invoke(x.Value)).ToList();
                 }
                 else
                 {
-                    _options.Items = _options.Items.Where(x => !x.IsSeparator).OrderBy(x => _options.OrderBy.Invoke(x.Value)).ToList();
+                    _options.Items = _options.Items.OrderBy(x => _options.OrderBy.Invoke(x.Value)).ToList();
                 }
             }
             var skip = 0;
@@ -484,7 +484,7 @@ namespace PPlus.Controls.Table
 
         public IControlTable<T> AddItem(T value, bool disable = false)
         {
-            _options.Items.Add(new ItemTableRow<T>() { Value = value, Disabled = disable, IsSeparator = false });
+            _options.Items.Add(new ItemTableRow<T>() { Value = value, Disabled = disable});
             return this;
         }
 
