@@ -927,44 +927,40 @@ namespace PPlus.Controls.Table
         {
             screenBuffer.NewLine();
             tit = TableControl<T>.AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth - 2);
+            var sep = ' ';
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
-                    screenBuffer.AddBuffer(' ', Style.Default.Overflow(Overflow.Crop));
-                    screenBuffer.AddBuffer(tit, _options.TitleStyle.Overflow(Overflow.Crop));
-                    screenBuffer.AddBuffer(' ', Style.Default.Overflow(Overflow.Crop));
                     break;
                 case TableLayout.SingleGridSoft:
                 case TableLayout.SingleGridFull:
-                    screenBuffer.AddBuffer('│', _options.GridStyle.Overflow(Overflow.Crop));
-                    screenBuffer.AddBuffer(tit, _options.TitleStyle.Overflow(Overflow.Crop));
-                    screenBuffer.AddBuffer('│', _options.GridStyle.Overflow(Overflow.Crop));
+                    sep = '│';
                     break;
                 case TableLayout.DoubleGridFull:
                 case TableLayout.DoubleGridSoft:
-                    screenBuffer.AddBuffer('║', _options.GridStyle.Overflow(Overflow.Crop));
-                    screenBuffer.AddBuffer(tit, _options.TitleStyle.Overflow(Overflow.Crop));
-                    screenBuffer.AddBuffer('║', _options.GridStyle.Overflow(Overflow.Crop));
+                    sep = '║';
                     break;
                 case TableLayout.AsciiSingleGridFull:
                 case TableLayout.AsciiSingleGridSoft:
                 case TableLayout.AsciiDoubleGridFull:
                 case TableLayout.AsciiDoubleGridSoft:
-                    screenBuffer.AddBuffer('|', _options.GridStyle.Overflow(Overflow.Crop));
-                    screenBuffer.AddBuffer(tit, _options.TitleStyle.Overflow(Overflow.Crop));
-                    screenBuffer.AddBuffer('|', _options.GridStyle.Overflow(Overflow.Crop));
+                    sep = '|';
                     break;
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
             }
+            screenBuffer.AddBuffer(sep, _options.GridStyle.Overflow(Overflow.Crop));
+            screenBuffer.AddBuffer(tit, _options.TitleStyle.Overflow(Overflow.Crop));
+            screenBuffer.AddBuffer(sep, _options.GridStyle.Overflow(Overflow.Crop));
+
             screenBuffer.NewLine();
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
                     BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
                     break;
-                case TableLayout.SingleGridSoft:
                 case TableLayout.SingleGridFull:
+                case TableLayout.SingleGridSoft:
                     if (_options.HideHeaders)
                     {
                         if (_options.Layout == TableLayout.SingleGridFull)
@@ -1074,8 +1070,8 @@ namespace PPlus.Controls.Table
                 case TableLayout.HideGrid:
                     BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
                     break;
-                case TableLayout.SingleGridSoft:
                 case TableLayout.SingleGridFull:
+                case TableLayout.SingleGridSoft:
                     if (_options.HideHeaders)
                     {
                         if (_options.Layout == TableLayout.SingleGridFull)
@@ -1433,7 +1429,7 @@ namespace PPlus.Controls.Table
             }
         }
 
-          private bool IsEnnabled(ItemTableRow<T> item)
+        private bool IsEnnabled(ItemTableRow<T> item)
         {
             return !IsDisabled(item);
         }
