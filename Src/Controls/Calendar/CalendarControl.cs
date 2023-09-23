@@ -35,7 +35,7 @@ namespace PPlus.Controls
         {
             if (minvalue > maxvalue)
             {
-                throw new PromptPlusException($"Range invalid. Minvalue({minvalue.Date.ToString("d")}) > Maxvalue({maxvalue.Date.ToString("d")})");
+                throw new PromptPlusException($"Range invalid. Minvalue({minvalue.Date:d}) > Maxvalue({maxvalue.Date:d})");
             }
             _options.Maxvalue = maxvalue.Date;
             _options.Minvalue = minvalue.Date;
@@ -201,10 +201,7 @@ namespace PPlus.Controls
                 .Distinct().ToList();
 
             _lasdescription = _options.OptDescription;
-            if (_options.CurrentCulture == null)
-            {
-                _options.CurrentCulture = _options.Config.AppCulture;
-            }
+            _options.CurrentCulture ??= _options.Config.AppCulture;
             if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
             {
                 LoadDefaultHistory();
@@ -1073,7 +1070,7 @@ namespace PPlus.Controls
         private void WriteCalendarAsciiSingleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
         {
             var curmonth = currentdate.Date.ToString("MMMM", _options.CurrentCulture).PadRight(28);
-            curmonth = $"{curmonth.Substring(0, 1).ToUpperInvariant()}{curmonth.Substring(1)}";
+            curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
             screenBuffer.AddBuffer("+-----------------------------------+", _options.LineStyle);
@@ -1089,14 +1086,14 @@ namespace PPlus.Controls
             foreach (var item in _Weekdays)
             {
                 var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
-                abr = $"{abr.Substring(0, 1).ToUpperInvariant()}{abr.Substring(1)}";
+                abr = $"{abr[..1].ToUpperInvariant()}{abr[1..]}";
                 if (abr.Length < 3)
                 {
                     abr = abr.PadLeft(3, ' ');
                 }
                 if (abr.Length > 3)
                 {
-                    abr = abr.Substring(0, 3);
+                    abr = abr[..3];
                 }
                 abr = $" {abr} ";
                 if (item == _currentdate.DayOfWeek)
@@ -1170,7 +1167,7 @@ namespace PPlus.Controls
         private void WriteCalendarAsciiDoubleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
         {
             var curmonth = currentdate.Date.ToString("MMMM", _options.CurrentCulture).PadRight(28);
-            curmonth = $"{curmonth.Substring(0, 1).ToUpperInvariant()}{curmonth.Substring(1)}";
+            curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
             screenBuffer.AddBuffer("+===================================+", _options.LineStyle);
@@ -1186,14 +1183,14 @@ namespace PPlus.Controls
             foreach (var item in _Weekdays)
             {
                 var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
-                abr = $"{abr.Substring(0, 1).ToUpperInvariant()}{abr.Substring(1)}";
+                abr = $"{abr[..1].ToUpperInvariant()}{abr[1..]}";
                 if (abr.Length < 3)
                 {
                     abr = abr.PadLeft(3, ' ');
                 }
                 if (abr.Length > 3)
                 {
-                    abr = abr.Substring(0, 3);
+                    abr = abr[..3];
                 }
                 abr = $" {abr} ";
                 if (item == _currentdate.DayOfWeek)
@@ -1267,7 +1264,7 @@ namespace PPlus.Controls
         private void WriteCalendarSingleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
         {
             var curmonth = currentdate.Date.ToString("MMMM", _options.CurrentCulture).PadRight(28);
-            curmonth = $"{curmonth.Substring(0, 1).ToUpperInvariant()}{curmonth.Substring(1)}";
+            curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
             screenBuffer.AddBuffer("┌───────────────────────────────────┐", _options.LineStyle);
@@ -1285,14 +1282,14 @@ namespace PPlus.Controls
             foreach (var item in _Weekdays)
             {
                 var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
-                abr = $"{abr.Substring(0,1).ToUpperInvariant()}{abr.Substring(1)}";
+                abr = $"{abr[..1].ToUpperInvariant()}{abr[1..]}";
                 if (abr.Length < 3)
                 { 
                     abr = abr.PadLeft(3, ' ');
                 }
                 if (abr.Length > 3)
                 {
-                    abr = abr.Substring(0,3);
+                    abr = abr[..3];
                 }
                 abr = $" {abr} ";
                 if (item == _currentdate.DayOfWeek)
@@ -1370,7 +1367,7 @@ namespace PPlus.Controls
         private void WriteCalendarDoubleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
         {
             var curmonth = currentdate.Date.ToString("MMMM", _options.CurrentCulture).PadRight(28);
-            curmonth = $"{curmonth.Substring(0, 1).ToUpperInvariant()}{curmonth.Substring(1)}";
+            curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
             screenBuffer.AddBuffer("╔═══════════════════════════════════╗", _options.LineStyle);
@@ -1388,14 +1385,14 @@ namespace PPlus.Controls
             foreach (var item in _Weekdays)
             {
                 var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
-                abr = $"{abr.Substring(0, 1).ToUpperInvariant()}{abr.Substring(1)}";
+                abr = $"{abr[..1].ToUpperInvariant()}{abr[1..]}";
                 if (abr.Length < 3)
                 {
                     abr = abr.PadLeft(3, ' ');
                 }
                 if (abr.Length > 3)
                 {
-                    abr = abr.Substring(0, 3);
+                    abr = abr[..3];
                 }
                 abr = $" {abr} ";
                 if (item == _currentdate.DayOfWeek)
@@ -1469,7 +1466,7 @@ namespace PPlus.Controls
         private void WriteCalendarHeavyGrid(ScreenBuffer screenBuffer, DateTime currentdate)
         {
             var curmonth = currentdate.Date.ToString("MMMM", _options.CurrentCulture).PadRight(28);
-            curmonth = $"{curmonth.Substring(0, 1).ToUpperInvariant()}{curmonth.Substring(1)}";
+            curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
             screenBuffer.AddBuffer("▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌", _options.LineStyle);
@@ -1485,14 +1482,14 @@ namespace PPlus.Controls
             foreach (var item in _Weekdays)
             {
                 var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
-                abr = $"{abr.Substring(0, 1).ToUpperInvariant()}{abr.Substring(1)}";
+                abr = $"{abr[..1].ToUpperInvariant()}{abr[1..]}";
                 if (abr.Length < 3)
                 {
                     abr = abr.PadLeft(3, ' ');
                 }
                 if (abr.Length > 3)
                 {
-                    abr = abr.Substring(0, 3);
+                    abr = abr[..3];
                 }
                 abr = $" {abr} ";
                 if (item == _currentdate.DayOfWeek)

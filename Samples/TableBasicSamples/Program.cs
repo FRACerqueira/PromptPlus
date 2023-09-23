@@ -31,7 +31,7 @@ namespace TableBasicSamples
 
 
 
-        static void Main(string[] args)
+        static void Main()
         {
             static MyTable[] CreateItems()
             {
