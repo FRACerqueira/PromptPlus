@@ -11,11 +11,11 @@ namespace PPlus.Controls
     public enum TableTitleMode
     {
         /// <summary>
-        /// Show Title in line
+        /// Show title in line
         /// </summary>
         InLine,
         /// <summary>
-        /// Show Title in row
+        /// Show title in row
         /// </summary>
         InRow
     }

@@ -18,5 +18,7 @@ namespace PPlus.Controls
         public Func<object, string>? Format { get; set; }
         public string Title { get; set; }
         public Alignment AlignTitle { get; set; }
+        public bool TitleReplacesWidth { get; set; }
+
     }
 }

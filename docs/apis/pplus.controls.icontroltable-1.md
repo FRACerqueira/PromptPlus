@@ -151,7 +151,7 @@ items colletion
 
 ### <a id="methods-autofit"/>**AutoFit(params UInt16[])**
 
-Set the grid to have the current console width
+Set the grid to auto-resize to current console width
 
 ```csharp
 IControlTable<T> AutoFit(params UInt16[] indexColumn)
@@ -160,7 +160,8 @@ IControlTable<T> AutoFit(params UInt16[] indexColumn)
 #### Parameters
 
 `indexColumn` [UInt16[]](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
-list (cardinality) of columns that will be affected
+List (cardinality) of columns that will be affected.
+ <br>If none all columns that will be affected
 
 #### Returns
 

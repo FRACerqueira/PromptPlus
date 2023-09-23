@@ -177,9 +177,12 @@ namespace PPlus.Controls
         IControlTable<T> HideSelectorRow();
 
         /// <summary>
-        /// Set the grid to have the current console width
+        /// Set the grid to auto-resize to current console width
         /// </summary>
-        /// <param name="indexColumn">list (cardinality) of columns that will be affected</param>
+        /// <param name="indexColumn">
+        /// List (cardinality) of columns that will be affected.
+        /// <br>If none all columns that will be affected</br>
+        /// </param>
         /// <returns><see cref="IControlTable{T}"/></returns>
         IControlTable<T> AutoFit(params ushort[] indexColumn);
 

@@ -25,8 +25,8 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 
 | Name | Value | Description |
 | --- | --: | --- |
-| InLine | 0 | Show Title in line |
-| InRow | 1 | Show Title in row |
+| InLine | 0 | Show title in line |
+| InRow | 1 | Show title in row |
 
 
 - - -

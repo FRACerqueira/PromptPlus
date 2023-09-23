@@ -42,6 +42,22 @@ namespace PPlus.Controls.Table
                 throw new PromptPlusException("Not found columns definition");
             }
 
+            //re-calc column width when IsColumnsNavigation
+            if (_options.IsColumnsNavigation)
+            {
+                for (int i = 0; i < _options.Columns.Count; i++)
+                {
+                    var w = (ushort)(!_options.Columns[i].TitleReplacesWidth ? 
+                        _options.Columns[i].Width 
+                        : (_options.Columns[i].Width < _options.Columns[i].Title.Length) ? 
+                            _options.Columns[i].Title.Length 
+                            : _options.Columns[i].Width);
+
+                    _options.Columns[i].Width = w;
+                    _options.Columns[i].OriginalWidth = w;
+                }
+            }
+
             if (!_options.HideSelectorRow)
             {
                 _options.Columns.Insert(0, new ItemItemColumn<T> { Field = ((_) => _options.Symbol(SymbolType.Selector)), Title = " ", Width = 1, OriginalWidth = 1 });
@@ -256,7 +272,7 @@ namespace PPlus.Controls.Table
             }
             if (!ShowingFilter)
             {
-                screenBuffer.WriteLineDescriptionTable(_options);
+                screenBuffer.WriteLineDescriptionTable(_localpaginator.SelectedItem.Value,_currentrow,_currentcol, _options);
             }
 
             WriteTable(screenBuffer);
@@ -326,7 +342,7 @@ namespace PPlus.Controls.Table
                 {
                     isvalidkey = true;
                 }
-                else if (keyInfo.Value.IsPressLeftArrowKey(true) && !ShowingFilter)
+                else if (keyInfo.Value.IsPressLeftArrowKey(true) && !ShowingFilter && _options.IsColumnsNavigation)
                 {
                     var minpos = 0;
                     if (!_options.HideSelectorRow)
@@ -343,7 +359,7 @@ namespace PPlus.Controls.Table
                     }
                     isvalidkey = true;
                 }
-                else if (keyInfo.Value.IsPressRightArrowKey(true) && !ShowingFilter)
+                else if (keyInfo.Value.IsPressRightArrowKey(true) && !ShowingFilter && _options.IsColumnsNavigation)
                 {
                     if (_currentcol < _options.Columns.Count - 1)
                     {
@@ -417,7 +433,7 @@ namespace PPlus.Controls.Table
                     maxslidinglines = null;
                 }
             }
-            var tit = title ?? string.Empty;
+            var tit = $"  {(title ?? string.Empty).Trim()}";
             if (tit.Length > byte.MaxValue)
             { 
                 tit = tit[..byte.MaxValue];
@@ -425,16 +441,16 @@ namespace PPlus.Controls.Table
             try
             {
                 var fieldname = GetNameUnaryExpression(field);
-                if (string.IsNullOrEmpty(tit))
+                if (string.IsNullOrEmpty(tit.Trim()))
                 {
-                    tit = fieldname;
+                    tit = $"  {fieldname}";
                 }
             }
             catch (Exception ex)
             {
                 throw new PromptPlusException($"Expression field must be UnaryExpression", ex);
             }
-            var w = (ushort)(!titlereplaceswidth ? width : (width < tit.Length) ? tit.Length : width);
+            var w = (ushort)(!titlereplaceswidth ? width : (width < tit.Trim().Length) ? tit.Trim().Length : width);
 
             _options.Columns.Add(new ItemItemColumn<T>() 
             { 
@@ -446,7 +462,8 @@ namespace PPlus.Controls.Table
                 TextCrop = textcrop, 
                 Title = tit, 
                 AlignTitle = titlealignment,
-                MaxSlidingLines = maxslidinglines
+                MaxSlidingLines = maxslidinglines,
+                TitleReplacesWidth = titlereplaceswidth
             });
             return this;
         }
@@ -711,12 +728,17 @@ namespace PPlus.Controls.Table
 
         private void BuildLineColumn(ScreenBuffer screenBuffer,char startln,char sepln, char endln, char contentln)
         {
-            screenBuffer.AddBuffer($"{startln}{new string(contentln, _options.Columns[0].Width)}", _options.GridStyle.Overflow(Overflow.Crop));
+            var stl = _options.GridStyle.Overflow(Overflow.Crop);
+            if ( _options.Layout == TableLayout.HideGrid)
+            {
+                stl = Style.Default.Overflow(Overflow.Crop);
+            }
+            screenBuffer.AddBuffer($"{startln}{new string(contentln, _options.Columns[0].Width)}", stl);
             foreach (var item in _options.Columns.Skip(1))
             {
-                screenBuffer.AddBuffer($"{sepln}{new string(contentln, item.Width)}", _options.GridStyle.Overflow(Overflow.Crop));
+                screenBuffer.AddBuffer($"{sepln}{new string(contentln, item.Width)}", stl);
             }
-            screenBuffer.AddBuffer(endln, _options.GridStyle.Overflow(Overflow.Crop));
+            screenBuffer.AddBuffer(endln, stl);
         }
 
         private object GetValueColumn(int column, ItemTableRow<T> item)
@@ -890,6 +912,11 @@ namespace PPlus.Controls.Table
             tit = TableControl<T>.AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth - 2);
             switch (_options.Layout)
             {
+                case TableLayout.HideGrid:
+                    screenBuffer.AddBuffer(' ', Style.Default.Overflow(Overflow.Crop));
+                    screenBuffer.AddBuffer(tit, _options.TitleStyle.Overflow(Overflow.Crop));
+                    screenBuffer.AddBuffer(' ', Style.Default.Overflow(Overflow.Crop));
+                    break;
                 case TableLayout.SingleGridSoft:
                 case TableLayout.SingleGridFull:
                     screenBuffer.AddBuffer('│', _options.GridStyle.Overflow(Overflow.Crop));
@@ -914,6 +941,9 @@ namespace PPlus.Controls.Table
             screenBuffer.NewLine();
             switch (_options.Layout)
             {
+                case TableLayout.HideGrid:
+                    BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                    break;
                 case TableLayout.DoubleGridSoft:
                     break;
                 case TableLayout.AsciiSingleGridSoft:
@@ -958,6 +988,9 @@ namespace PPlus.Controls.Table
             {
                 switch (_options.Layout)
                 {
+                    case TableLayout.HideGrid:
+                        BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                        break;
                     case TableLayout.SingleGridFull:
                     case TableLayout.SingleGridSoft:
                         BuildLineColumn(screenBuffer, '┌', '─', '┐', '─');
@@ -981,6 +1014,9 @@ namespace PPlus.Controls.Table
             }
             switch (_options.Layout)
             {
+                case TableLayout.HideGrid:
+                    BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                    break;
                 case TableLayout.SingleGridSoft:
                 case TableLayout.SingleGridFull:
                     if (_options.HideHeaders)
@@ -1028,24 +1064,52 @@ namespace PPlus.Controls.Table
             }
             screenBuffer.NewLine();
             var col = -1;
+            var sep = " ";
+            var stl = _options.GridStyle.Overflow(Overflow.Crop);
+            switch (_options.Layout)
+            {
+                case TableLayout.HideGrid:
+                    stl = Style.Default.Overflow(Overflow.Crop);
+                    break;
+                case TableLayout.SingleGridFull:
+                case TableLayout.SingleGridSoft:
+                    sep = "│";
+                    break;
+                case TableLayout.DoubleGridFull:
+                case TableLayout.DoubleGridSoft:
+                    break;
+                case TableLayout.AsciiSingleGridFull:
+                case TableLayout.AsciiSingleGridSoft:
+                    break;
+                case TableLayout.AsciiDoubleGridFull:
+                case TableLayout.AsciiDoubleGridSoft:
+                    break;
+                case TableLayout.HeavyGridFull:
+                case TableLayout.HeavyGridSoft:
+                    break;
+            }
             foreach (var item in _options.Columns)
             {
                 col++;
-                screenBuffer.AddBuffer('│', _options.GridStyle.Overflow(Overflow.Crop));
-                var h = TableControl<T>.AlignmentText(item.Title, item.AlignTitle, item.Width);
+                screenBuffer.AddBuffer(sep, stl);
                 if (_options.IsColumnsNavigation && _options.IsInteraction && col == _currentcol)
                 {
+                    var h = TableControl<T>.AlignmentText($"{_options.Symbol(SymbolType.Selector)} {item.Title.Trim()}", item.AlignTitle, item.Width);
                     screenBuffer.AddBuffer(h, _options.SelectedColHeader.Overflow(Overflow.Crop));
                 }
                 else
                 {
+                    var h = TableControl<T>.AlignmentText(item.Title.Trim(), item.AlignTitle, item.Width);
                     screenBuffer.AddBuffer(h, _options.HeaderStyle.Overflow(Overflow.Crop));
                 }
             }
-            screenBuffer.AddBuffer('│', _options.GridStyle.Overflow(Overflow.Crop));
+            screenBuffer.AddBuffer(sep, stl);
             screenBuffer.NewLine();
             switch (_options.Layout)
             {
+                case TableLayout.HideGrid:
+                    BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                    break;
                 case TableLayout.SingleGridFull:
                     BuildLineColumn(screenBuffer, '├', '┼', '┤', '─');
                     break;
@@ -1092,88 +1156,21 @@ namespace PPlus.Controls.Table
 
                 var cols = GetTextColumns(item.Value, out var lines);
 
+                var sep = " ";
+                var sepcol = " ";
+                var stl = _options.GridStyle.Overflow(Overflow.Crop);
                 switch (_options.Layout)
                 {
+                    case TableLayout.HideGrid:
+                        stl = Style.Default.Overflow(Overflow.Crop);
+                        break;
                     case TableLayout.SingleGridFull:
+                        sep = "│";
+                        sepcol = "│";
+                        break;
                     case TableLayout.SingleGridSoft:
-                        {
-                            for (int i = 0; i < lines; i++)
-                            {
-                                for (int itemcol = 0; itemcol < cols.Count; itemcol++)
-                                {
-                                    if (itemcol == 0)
-                                    {
-                                        screenBuffer.AddBuffer("│", _options.GridStyle.Overflow(Overflow.Crop));
-                                    }
-                                    else if (_options.Layout == TableLayout.SingleGridFull)
-                                    {
-                                        screenBuffer.AddBuffer("│", _options.GridStyle.Overflow(Overflow.Crop));
-                                    }
-                                    else if (_options.Layout == TableLayout.SingleGridSoft)
-                                    {
-                                        screenBuffer.AddBuffer(" ", _options.GridStyle.Overflow(Overflow.Crop));
-                                    }
-                                    string col = null;
-                                    if (cols[itemcol].Length > i)
-                                    {
-                                        col = TableControl<T>.AlignmentText(cols[itemcol][i], _options.Columns[itemcol].AlignCol, _options.Columns[itemcol].Width);
-                                    }
-                                    else
-                                    {
-                                        col = new string(' ', _options.Columns[itemcol].Width);
-                                    }
-                                    if (!_options.HideSelectorRow && itemcol == 0 && !isseleted)
-                                    {
-                                        col = " ";
-                                    }
-                                    if (isseleted)
-                                    {
-                                        if (_options.IsColumnsNavigation)
-                                        {
-                                            if (itemcol == _currentcol || !_options.HideSelectorRow && itemcol == 0)
-                                            {
-                                                screenBuffer.AddBuffer(col, _options.SelectedContentStyle.Overflow(Overflow.Crop), true);
-                                            }
-                                            else
-                                            {
-                                                screenBuffer.AddBuffer(col, _options.ContentStyle.Overflow(Overflow.Crop), true);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            screenBuffer.AddBuffer(col, _options.SelectedContentStyle.Overflow(Overflow.Crop), true);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        var stl = _options.ContentStyle.Overflow(Overflow.Crop);
-                                        if (isdisabled)
-                                        {
-                                            stl = _options.DisabledContentStyle.Overflow(Overflow.Crop);
-                                        }
-                                        screenBuffer.AddBuffer(col, stl, true);
-                                    }
-                                }
-                                screenBuffer.AddBuffer("│", _options.GridStyle.Overflow(Overflow.Crop));
-                                if (lines > 1 && i != lines-1)
-                                {
-                                    screenBuffer.NewLine();
-                                }
-                            }
-
-                            if (_options.WithSeparatorRows && pos < subset.Count)
-                            {
-                                screenBuffer.NewLine();
-                                if (_options.Layout == TableLayout.SingleGridSoft)
-                                {
-                                    BuildLineColumn(screenBuffer, '├', '─', '┤', '─');
-                                }
-                                else
-                                {
-                                    BuildLineColumn(screenBuffer, '├', '┼', '┤', '─');
-                                }
-                            }
-                        }
+                        sep = "│";
+                        sepcol = " ";
                         break;
                     case TableLayout.DoubleGridFull:
                     case TableLayout.DoubleGridSoft:
@@ -1187,8 +1184,99 @@ namespace PPlus.Controls.Table
                     case TableLayout.HeavyGridFull:
                     case TableLayout.HeavyGridSoft:
                         break;
-                    default:
-                        break;
+                }
+
+                for (int i = 0; i < lines; i++)
+                {
+                    for (int itemcol = 0; itemcol < cols.Count; itemcol++)
+                    {
+                        if (itemcol == 0)
+                        {
+                            screenBuffer.AddBuffer(sep, stl);
+                        }
+                        else
+                        { 
+                            screenBuffer.AddBuffer(sepcol, stl);
+                        }
+                        string col = null;
+                        if (cols[itemcol].Length > i)
+                        {
+                            col = TableControl<T>.AlignmentText(cols[itemcol][i], _options.Columns[itemcol].AlignCol, _options.Columns[itemcol].Width);
+                        }
+                        else
+                        {
+                            col = new string(' ', _options.Columns[itemcol].Width);
+                        }
+                        if (!_options.HideSelectorRow && itemcol == 0 && !isseleted)
+                        {
+                            col = " ";
+                        }
+                        if (isseleted)
+                        {
+                            if (_options.IsColumnsNavigation)
+                            {
+                                if (itemcol == _currentcol || !_options.HideSelectorRow && itemcol == 0)
+                                {
+                                    screenBuffer.AddBuffer(col, _options.SelectedContentStyle.Overflow(Overflow.Crop), true);
+                                }
+                                else
+                                {
+                                    screenBuffer.AddBuffer(col, _options.ContentStyle.Overflow(Overflow.Crop), true);
+                                }
+                            }
+                            else
+                            {
+                                screenBuffer.AddBuffer(col, _options.SelectedContentStyle.Overflow(Overflow.Crop), true);
+                            }
+                        }
+                        else
+                        {
+                            var stld = _options.ContentStyle.Overflow(Overflow.Crop);
+                            if (isdisabled)
+                            {
+                                stld = _options.DisabledContentStyle.Overflow(Overflow.Crop);
+                            }
+                            screenBuffer.AddBuffer(col, stld, true);
+                        }
+                    }
+                    screenBuffer.AddBuffer(sep, stl);
+                    if (lines > 1 && i != lines - 1)
+                    {
+                        screenBuffer.NewLine();
+                    }
+                }
+
+                if (_options.WithSeparatorRows && pos < subset.Count)
+                {
+                    screenBuffer.NewLine();
+                    switch (_options.Layout)
+                    {
+                        case TableLayout.HideGrid:
+                            BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                            break;
+                        case TableLayout.SingleGridFull:
+                            BuildLineColumn(screenBuffer, '├', '┼', '┤', '─');
+                            break;
+                        case TableLayout.SingleGridSoft:
+                            BuildLineColumn(screenBuffer, '├', '─', '┤', '─');
+                            break;
+                        case TableLayout.DoubleGridFull:
+                            break;
+                        case TableLayout.DoubleGridSoft:
+                            break;
+                        case TableLayout.AsciiSingleGridFull:
+                            break;
+                        case TableLayout.AsciiSingleGridSoft:
+                            break;
+                        case TableLayout.AsciiDoubleGridFull:
+                            break;
+                        case TableLayout.AsciiDoubleGridSoft:
+                            break;
+                        case TableLayout.HeavyGridFull:
+                            break;
+                        case TableLayout.HeavyGridSoft:
+                            break;
+                    }
                 }
             }
         }
@@ -1198,6 +1286,9 @@ namespace PPlus.Controls.Table
             screenBuffer.NewLine();
             switch (_options.Layout)
             {
+                case TableLayout.HideGrid:
+                    BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                    break;
                 case TableLayout.SingleGridFull:
                     BuildLineColumn(screenBuffer, '└', '┴', '┘', '─');
                     break;

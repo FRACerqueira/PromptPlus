@@ -55,9 +55,16 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineDescriptionTable<T>(this ScreenBuffer screenBuffer, TableOptions<T> options)
+        public static void WriteLineDescriptionTable<T>(this ScreenBuffer screenBuffer,T input,int rowpos, int colpos, TableOptions<T> options)
         {
             var result = options.OptDescription;
+            if (input != null)
+            {
+                if (options.ChangeDescription != null)
+                {
+                    result = options.ChangeDescription.Invoke(input,rowpos,colpos);
+                }
+            }
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
