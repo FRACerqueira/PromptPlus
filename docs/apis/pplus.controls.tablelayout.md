@@ -25,16 +25,17 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 
 | Name | Value | Description |
 | --- | --: | --- |
-| SingleGridFull | 0 | single line grid with separator Columns |
-| SingleGridSoft | 1 | single line grid without separator Columns |
-| DoubleGridFull | 2 | Double line grid with separator Columns |
-| DoubleGridSoft | 3 | Double line grid without separator Columns |
-| AsciiSingleGridFull | 4 | Acsii single grid with separator Columns |
-| AsciiSingleGridSoft | 5 | Acsii single grid without separator Columns |
-| AsciiDoubleGridFull | 6 | Acsii double grid with separator Columns |
-| AsciiDoubleGridSoft | 7 | Acsii double grid without separator Columns |
-| HeavyGridFull | 8 | Heavy line grid with separator Columns |
-| HeavyGridSoft | 9 | Heavy line grid without separator Columns |
+| HideGrid | 0 | Hide line grid |
+| SingleGridFull | 1 | single line grid with separator Columns |
+| SingleGridSoft | 2 | single line grid without separator Columns |
+| DoubleGridFull | 3 | Double line grid with separator Columns |
+| DoubleGridSoft | 4 | Double line grid without separator Columns |
+| AsciiSingleGridFull | 5 | Acsii single grid with separator Columns |
+| AsciiSingleGridSoft | 6 | Acsii single grid without separator Columns |
+| AsciiDoubleGridFull | 7 | Acsii double grid with separator Columns |
+| AsciiDoubleGridSoft | 8 | Acsii double grid without separator Columns |
+| HeavyGridFull | 9 | Heavy line grid with separator Columns |
+| HeavyGridSoft | 10 | Heavy line grid without separator Columns |
 
 
 - - -

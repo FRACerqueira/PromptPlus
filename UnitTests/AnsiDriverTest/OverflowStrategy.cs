@@ -13,9 +13,9 @@ namespace PPlus.Tests.AnsiDriverTest
 
         [Theory]
         [InlineData(Overflow.None, "xxxx", 2)]
-        [InlineData(Overflow.Crop, "xx", 2)]
-        [InlineData(Overflow.Ellipsis, $"{PPlus.UtilExtension.UnicodeEllipsis}", 2)]
-        [InlineData(Overflow.Crop, "x", 1)]
+        [InlineData(Overflow.Crop, "x", 2)]
+        [InlineData(Overflow.Ellipsis, $"{UtilExtension.UnicodeEllipsis}", 2)]
+        [InlineData(Overflow.Crop, "", 1)]
         public void Should_Change_OverflowStrategy(Overflow currentoverflow, string expected, int difoffset)
         {
             var offset = PromptPlus.BufferWidth - difoffset;

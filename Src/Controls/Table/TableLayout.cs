@@ -11,6 +11,10 @@ namespace PPlus.Controls
     public enum TableLayout
     {
         /// <summary>
+        /// Hide line grid
+        /// </summary>
+        HideGrid,
+        /// <summary>
         /// single line grid with separator Columns
         /// </summary>
         SingleGridFull,
