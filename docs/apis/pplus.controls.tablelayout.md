@@ -34,8 +34,6 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | AsciiSingleGridSoft | 6 | Acsii single grid without separator Columns |
 | AsciiDoubleGridFull | 7 | Acsii double grid with separator Columns |
 | AsciiDoubleGridSoft | 8 | Acsii double grid without separator Columns |
-| HeavyGridFull | 9 | Heavy line grid with separator Columns |
-| HeavyGridSoft | 10 | Heavy line grid without separator Columns |
 
 
 - - -

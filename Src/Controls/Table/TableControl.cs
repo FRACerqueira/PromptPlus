@@ -270,12 +270,13 @@ namespace PPlus.Controls.Table
                     screenBuffer.SaveCursor();
                 }
             }
-            if (!ShowingFilter)
+            if (!_options.IsInteraction || !ShowingFilter)
             {
                 screenBuffer.WriteLineDescriptionTable(_localpaginator.SelectedItem.Value,_currentrow,_currentcol, _options);
             }
 
             WriteTable(screenBuffer);
+
             if (_options.IsInteraction && (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1))
             {
                 screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
@@ -753,12 +754,9 @@ namespace PPlus.Controls.Table
         private List<string[]> GetTextColumns(T value, out int lines)
         {
             var cols = new List<string>();
-            string col = GetTextColumn(value, _options.Columns[0].Field, _options.Columns[0].Format);
-            cols.Add(col);
-            foreach (var defcol in _options.Columns.Skip(1))
+            foreach (var defcol in _options.Columns)
             {
-                col = GetTextColumn(value, defcol.Field, defcol.Format);
-                cols.Add(col);
+                cols.Add(GetTextColumn(value, defcol.Field, defcol.Format));
             }
             var result = new List<string[]>();
             for (int i = 0; i < cols.Count; i++)
@@ -827,7 +825,10 @@ namespace PPlus.Controls.Table
 
         private static string[] SplitIntoChunks(string value, int chunkSize, int? maxsplit)
         {
-            if (string.IsNullOrEmpty(value)) throw new PromptPlusException("SplitIntoChunks: The string cannot be null.");
+            if (string.IsNullOrEmpty(value))
+            {
+                return new string[] { "" };
+            }
             if (chunkSize < 1) throw new PromptPlusException("SplitIntoChunks: The chunk size should be equal or greater than one.");
 
             int divResult = Math.DivRem(value.Length, chunkSize, out int remainder);
@@ -856,6 +857,10 @@ namespace PPlus.Controls.Table
         private string GetTextColumn(T value, Func<T, object> objcol, Func<object, string> objftm)
         {
             var obj = objcol(value);
+            if (obj == null) 
+            {
+                return "";
+            }
             string col;
             if (objftm != null)
             {
@@ -874,14 +879,16 @@ namespace PPlus.Controls.Table
 
         private void WriteTable(ScreenBuffer screenBuffer)
         {
+            WriteTableTitle(screenBuffer);
+            WriteTableHeader(screenBuffer);
             if (!_options.IsInteraction)
             {
                 WriteTableAllRows(screenBuffer);
-                return;
             }
-            WriteTableTitle(screenBuffer);
-            WriteTableHeader(screenBuffer);
-            WriteTableRows(screenBuffer);
+            else
+            {
+                WriteTableRows(screenBuffer);
+            }
             WriteTableFooter(screenBuffer);
         }
 
@@ -925,15 +932,17 @@ namespace PPlus.Controls.Table
                     break;
                 case TableLayout.DoubleGridFull:
                 case TableLayout.DoubleGridSoft:
+                    screenBuffer.AddBuffer('║', _options.GridStyle.Overflow(Overflow.Crop));
+                    screenBuffer.AddBuffer(tit, _options.TitleStyle.Overflow(Overflow.Crop));
+                    screenBuffer.AddBuffer('║', _options.GridStyle.Overflow(Overflow.Crop));
                     break;
                 case TableLayout.AsciiSingleGridFull:
                 case TableLayout.AsciiSingleGridSoft:
-                    break;
                 case TableLayout.AsciiDoubleGridFull:
                 case TableLayout.AsciiDoubleGridSoft:
-                    break;
-                case TableLayout.HeavyGridFull:
-                case TableLayout.HeavyGridSoft:
+                    screenBuffer.AddBuffer('|', _options.GridStyle.Overflow(Overflow.Crop));
+                    screenBuffer.AddBuffer(tit, _options.TitleStyle.Overflow(Overflow.Crop));
+                    screenBuffer.AddBuffer('|', _options.GridStyle.Overflow(Overflow.Crop));
                     break;
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
@@ -943,14 +952,6 @@ namespace PPlus.Controls.Table
             {
                 case TableLayout.HideGrid:
                     BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
-                    break;
-                case TableLayout.DoubleGridSoft:
-                    break;
-                case TableLayout.AsciiSingleGridSoft:
-                    break;
-                case TableLayout.AsciiDoubleGridSoft:
-                    break;
-                case TableLayout.HeavyGridSoft:
                     break;
                 case TableLayout.SingleGridSoft:
                 case TableLayout.SingleGridFull:
@@ -971,12 +972,58 @@ namespace PPlus.Controls.Table
                     }
                     break;
                 case TableLayout.DoubleGridFull:
+                case TableLayout.DoubleGridSoft:
+                    if (_options.HideHeaders)
+                    {
+                        if (_options.Layout == TableLayout.DoubleGridFull)
+                        {
+                            BuildLineColumn(screenBuffer, '╠', '╦', '╣', '═');
+                        }
+                        else
+                        {
+                            BuildLineColumn(screenBuffer, '╠', '═', '╣', '═');
+                        }
+                    }
+                    else
+                    {
+                        BuildLineColumn(screenBuffer, '╠', '╦', '╣', '═');
+                    }
                     break;
                 case TableLayout.AsciiSingleGridFull:
+                case TableLayout.AsciiSingleGridSoft:
+                    if (_options.HideHeaders)
+                    {
+                        if (_options.Layout == TableLayout.AsciiSingleGridFull)
+                        {
+                            BuildLineColumn(screenBuffer, '|', '+', '|', '-');
+                        }
+                        else
+                        {
+                            BuildLineColumn(screenBuffer, '|', '-', '|', '-');
+                        }
+                    }
+                    else
+                    {
+                        BuildLineColumn(screenBuffer, '|', '+', '|', '-');
+                    }
                     break;
                 case TableLayout.AsciiDoubleGridFull:
-                    break;
-                case TableLayout.HeavyGridFull:
+                case TableLayout.AsciiDoubleGridSoft:
+                    if (_options.HideHeaders)
+                    {
+                        if (_options.Layout == TableLayout.AsciiDoubleGridFull)
+                        {
+                            BuildLineColumn(screenBuffer, '|', '+', '|', '=');
+                        }
+                        else
+                        {
+                            BuildLineColumn(screenBuffer, '|', '=', '|', '=');
+                        }
+                    }
+                    else
+                    {
+                        BuildLineColumn(screenBuffer, '|', '+', '|', '=');
+                    }
                     break;
             }
         }
@@ -997,15 +1044,15 @@ namespace PPlus.Controls.Table
                         break;
                     case TableLayout.DoubleGridFull:
                     case TableLayout.DoubleGridSoft:
+                        BuildLineColumn(screenBuffer, '╔', '═', '╗', '═');
                         break;
                     case TableLayout.AsciiSingleGridFull:
                     case TableLayout.AsciiSingleGridSoft:
+                        BuildLineColumn(screenBuffer, '+', '-', '+', '-');
                         break;
                     case TableLayout.AsciiDoubleGridFull:
                     case TableLayout.AsciiDoubleGridSoft:
-                        break;
-                    case TableLayout.HeavyGridFull:
-                    case TableLayout.HeavyGridSoft:
+                        BuildLineColumn(screenBuffer, '+', '=', '+', '=');
                         break;
                     default:
                         throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
@@ -1036,20 +1083,58 @@ namespace PPlus.Controls.Table
                     }
                     break;
                 case TableLayout.DoubleGridFull:
-                    break;
                 case TableLayout.DoubleGridSoft:
+                    if (_options.HideHeaders)
+                    {
+                        if (_options.Layout == TableLayout.DoubleGridFull)
+                        {
+                            BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                        }
+                        else
+                        {
+                            BuildLineColumn(screenBuffer, '╔', '═', '╗', '═');
+                        }
+                    }
+                    else
+                    {
+                        BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                    }
                     break;
                 case TableLayout.AsciiSingleGridFull:
-                    break;
                 case TableLayout.AsciiSingleGridSoft:
+                    if (_options.HideHeaders)
+                    {
+                        if (_options.Layout == TableLayout.AsciiSingleGridFull)
+                        {
+                            BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                        }
+                        else
+                        {
+                            BuildLineColumn(screenBuffer, '+', '-', '+', '-');
+                        }
+                    }
+                    else
+                    {
+                        BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                    }
                     break;
                 case TableLayout.AsciiDoubleGridFull:
-                    break;
                 case TableLayout.AsciiDoubleGridSoft:
-                    break;
-                case TableLayout.HeavyGridFull:
-                    break;
-                case TableLayout.HeavyGridSoft:
+                    if (_options.HideHeaders)
+                    {
+                        if (_options.Layout == TableLayout.AsciiDoubleGridFull)
+                        {
+                            BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                        }
+                        else
+                        {
+                            BuildLineColumn(screenBuffer, '+', '=', '+', '=');
+                        }
+                    }
+                    else
+                    {
+                        BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                    }
                     break;
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
@@ -1064,7 +1149,8 @@ namespace PPlus.Controls.Table
             }
             screenBuffer.NewLine();
             var col = -1;
-            var sep = " ";
+            var sepstart = " ";
+            var sepend = " ";
             var stl = _options.GridStyle.Overflow(Overflow.Crop);
             switch (_options.Layout)
             {
@@ -1073,25 +1159,26 @@ namespace PPlus.Controls.Table
                     break;
                 case TableLayout.SingleGridFull:
                 case TableLayout.SingleGridSoft:
-                    sep = "│";
+                    sepstart = "│";
+                    sepend = "│";
                     break;
                 case TableLayout.DoubleGridFull:
                 case TableLayout.DoubleGridSoft:
+                    sepstart = "║";
+                    sepend = "║";
                     break;
                 case TableLayout.AsciiSingleGridFull:
                 case TableLayout.AsciiSingleGridSoft:
-                    break;
                 case TableLayout.AsciiDoubleGridFull:
                 case TableLayout.AsciiDoubleGridSoft:
-                    break;
-                case TableLayout.HeavyGridFull:
-                case TableLayout.HeavyGridSoft:
+                    sepstart = "|";
+                    sepend = "|";
                     break;
             }
             foreach (var item in _options.Columns)
             {
                 col++;
-                screenBuffer.AddBuffer(sep, stl);
+                screenBuffer.AddBuffer(sepstart, stl);
                 if (_options.IsColumnsNavigation && _options.IsInteraction && col == _currentcol)
                 {
                     var h = TableControl<T>.AlignmentText($"{_options.Symbol(SymbolType.Selector)} {item.Title.Trim()}", item.AlignTitle, item.Width);
@@ -1103,7 +1190,7 @@ namespace PPlus.Controls.Table
                     screenBuffer.AddBuffer(h, _options.HeaderStyle.Overflow(Overflow.Crop));
                 }
             }
-            screenBuffer.AddBuffer(sep, stl);
+            screenBuffer.AddBuffer(sepend, stl);
             screenBuffer.NewLine();
             switch (_options.Layout)
             {
@@ -1113,24 +1200,22 @@ namespace PPlus.Controls.Table
                 case TableLayout.SingleGridFull:
                     BuildLineColumn(screenBuffer, '├', '┼', '┤', '─');
                     break;
-                case TableLayout.DoubleGridFull:
-                    break;
-                case TableLayout.AsciiSingleGridFull:
-                    break;
-                case TableLayout.AsciiDoubleGridFull:
-                    break;
-                case TableLayout.HeavyGridFull:
-                    break;
                 case TableLayout.SingleGridSoft:
                     BuildLineColumn(screenBuffer, '├', '┴', '┤', '─');
                     break;
+                case TableLayout.DoubleGridFull:
+                    BuildLineColumn(screenBuffer, '╠', '╬', '╣', '═');
+                    break;
                 case TableLayout.DoubleGridSoft:
+                    BuildLineColumn(screenBuffer, '╠', '╩', '╣', '═');
                     break;
+                case TableLayout.AsciiSingleGridFull:
                 case TableLayout.AsciiSingleGridSoft:
+                    BuildLineColumn(screenBuffer, '|', '+', '|', '-');
                     break;
+                case TableLayout.AsciiDoubleGridFull:
                 case TableLayout.AsciiDoubleGridSoft:
-                    break;
-                case TableLayout.HeavyGridSoft:
+                    BuildLineColumn(screenBuffer, '|', '+', '|', '=');
                     break;
             }
         }
@@ -1173,16 +1258,22 @@ namespace PPlus.Controls.Table
                         sepcol = " ";
                         break;
                     case TableLayout.DoubleGridFull:
+                        sep = "║";
+                        sepcol = "║";
+                        break;
                     case TableLayout.DoubleGridSoft:
+                        sep = "║";
+                        sepcol = " ";
                         break;
                     case TableLayout.AsciiSingleGridFull:
                     case TableLayout.AsciiSingleGridSoft:
-                        break;
                     case TableLayout.AsciiDoubleGridFull:
-                    case TableLayout.AsciiDoubleGridSoft:
+                        sep = "|";
+                        sepcol = "|";
                         break;
-                    case TableLayout.HeavyGridFull:
-                    case TableLayout.HeavyGridSoft:
+                    case TableLayout.AsciiDoubleGridSoft:
+                        sep = "|";
+                        sepcol = " ";
                         break;
                 }
 
@@ -1261,20 +1352,22 @@ namespace PPlus.Controls.Table
                             BuildLineColumn(screenBuffer, '├', '─', '┤', '─');
                             break;
                         case TableLayout.DoubleGridFull:
+                            BuildLineColumn(screenBuffer, '╠', '╬', '╣', '═');
                             break;
                         case TableLayout.DoubleGridSoft:
+                            BuildLineColumn(screenBuffer, '╠', '═', '╣', '═');
                             break;
                         case TableLayout.AsciiSingleGridFull:
+                            BuildLineColumn(screenBuffer, '|', '+', '|', '-');
                             break;
                         case TableLayout.AsciiSingleGridSoft:
+                            BuildLineColumn(screenBuffer, '|', '-', '|', '-');
                             break;
                         case TableLayout.AsciiDoubleGridFull:
+                            BuildLineColumn(screenBuffer, '|', '+', '|', '=');
                             break;
                         case TableLayout.AsciiDoubleGridSoft:
-                            break;
-                        case TableLayout.HeavyGridFull:
-                            break;
-                        case TableLayout.HeavyGridSoft:
+                            BuildLineColumn(screenBuffer, '|', '=', '|', '=');
                             break;
                     }
                 }
@@ -1296,20 +1389,22 @@ namespace PPlus.Controls.Table
                     BuildLineColumn(screenBuffer, '└', '─', '┘', '─');
                     break;
                 case TableLayout.DoubleGridFull:
+                    BuildLineColumn(screenBuffer, '╚', '╩', '╝', '═');
                     break;
                 case TableLayout.DoubleGridSoft:
+                    BuildLineColumn(screenBuffer, '╚', '═', '╝', '═');
                     break;
                 case TableLayout.AsciiSingleGridFull:
+                    BuildLineColumn(screenBuffer, '+', '+', '+', '-');
                     break;
                 case TableLayout.AsciiSingleGridSoft:
+                    BuildLineColumn(screenBuffer, '+', '-', '+', '-');
                     break;
                 case TableLayout.AsciiDoubleGridFull:
+                    BuildLineColumn(screenBuffer, '+', '+', '+', '=');
                     break;
                 case TableLayout.AsciiDoubleGridSoft:
-                    break;
-                case TableLayout.HeavyGridFull:
-                    break;
-                case TableLayout.HeavyGridSoft:
+                    BuildLineColumn(screenBuffer, '+', '=', '+', '=');
                     break;
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");

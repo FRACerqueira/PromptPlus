@@ -45,14 +45,6 @@ namespace PPlus.Controls
         /// <summary>
         /// Acsii double grid without separator Columns
         /// </summary>
-        AsciiDoubleGridSoft,
-        /// <summary>
-        /// Heavy line grid  with separator Columns
-        /// </summary>
-        HeavyGridFull,
-        /// <summary>
-        /// Heavy line grid without separator Columns
-        /// </summary>
-        HeavyGridSoft
+        AsciiDoubleGridSoft
     }
 }
