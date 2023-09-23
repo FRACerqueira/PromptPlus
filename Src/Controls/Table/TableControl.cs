@@ -246,48 +246,45 @@ namespace PPlus.Controls.Table
                 _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.Width);
             }
 
+            if (!_options.IsInteraction)
+            {
+                return;
+            }
+
             screenBuffer.WritePrompt(_options, "");
 
-            if (_options.IsInteraction)
+            bool hasprompt = !string.IsNullOrEmpty(_options.OptPrompt);
+            string answer = null;
+            if (_options.SelectedTemplate != null)
             {
-                bool hasprompt = !string.IsNullOrEmpty(_options.OptPrompt);
-                string answer = null;
-                if (_options.SelectedTemplate != null)
+                if (_localpaginator.Count > 0)
                 {
-                    if (_localpaginator.Count > 0)
-                    {
-                        answer = _options.SelectedTemplate.Invoke(_localpaginator.SelectedItem.Value, _currentrow, _currentcol);
-                    }
+                    answer = _options.SelectedTemplate.Invoke(_localpaginator.SelectedItem.Value, _currentrow, _currentcol);
                 }
-                if (!string.IsNullOrEmpty(answer))
+            }
+            if (!string.IsNullOrEmpty(answer))
+            {
+                screenBuffer.AddBuffer(answer, _options.OptStyleSchema.Answer());
+                hasprompt = true;
+            }
+            if (!ShowingFilter)
+            {
+                screenBuffer.SaveCursor();
+            }
+            else
+            {
+                if (hasprompt)
                 {
-                    screenBuffer.AddBuffer(answer, _options.OptStyleSchema.Answer());
-                    hasprompt = true;
+                    screenBuffer.NewLine();
                 }
-                if (!ShowingFilter)
-                {
-                    screenBuffer.SaveCursor();
-                }
-                else
-                {
-                    if (hasprompt)
-                    {
-                        screenBuffer.NewLine();
-                    }
-                    screenBuffer.WriteTaggedInfo(_options, $"{Messages.Filter}: ");
-                    screenBuffer.WriteFilterTable(_options, _filterBuffer.ToString(), _filterBuffer);
-                    screenBuffer.SaveCursor();
-                }
+                screenBuffer.WriteTaggedInfo(_options, $"{Messages.Filter}: ");
+                screenBuffer.WriteFilterTable(_options, _filterBuffer.ToString(), _filterBuffer);
+                screenBuffer.SaveCursor();
             }
 
             if (!ShowingFilter)
             {
                 screenBuffer.WriteLineDescriptionTable(_options.IsInteraction?_localpaginator.SelectedItem.Value:null,_currentrow,_currentcol, _options);
-            }
-
-            if (!_options.IsInteraction)
-            {
-                return;
             }
 
             WriteTable(screenBuffer);

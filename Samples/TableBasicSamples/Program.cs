@@ -38,7 +38,7 @@ namespace TableBasicSamples
                 var result = new List<MyTable>();
                 var flag = false;
                 result.Add(new MyTable { Id = 0, MyDate = new DateTime(), MyText = $"Test0 linha1{Environment.NewLine}Test3 linha2", ComplexCol = new MyComplexCol("C0") });
-                for (int i = 1; i < 5; i++)
+                for (int i = 1; i < 15; i++)
                 {
                     flag = !flag;
                     if (flag)
