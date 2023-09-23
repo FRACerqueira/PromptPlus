@@ -48,7 +48,7 @@ namespace PPlus.Controls
         IControlTable<T> Interaction<T1>(IEnumerable<T1> values, Action<IControlTable<T>, T1> action);
 
         /// <summary>
-        /// Set max.item view per page.Default value for this control is 10.
+        /// Set max.item view per page.Default value for this control is 5.
         /// </summary>
         /// <param name="value">Number of Max.rows</param>
         /// <returns><see cref="IControlTable{T}"/></returns>

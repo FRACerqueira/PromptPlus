@@ -415,7 +415,7 @@ The timeout for valid items saved. Default value is 365 days
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page.Default value for this control is 10.
+Set max.item view per page.Default value for this control is 5.
 
 ```csharp
 IControlTable<T> PageSize(int value)

@@ -20,7 +20,7 @@ namespace PPlus.Controls
         internal TableOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             TimeoutOverwriteDefault = config.HistoryTimeout;
-            PageSize = config.PageSize;
+            PageSize = 5;
             GridStyle = styleSchema.Prompt();
             HeaderStyle = styleSchema.Prompt();
             SelectedColHeader = styleSchema.Selected();

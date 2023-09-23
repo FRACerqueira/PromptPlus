@@ -38,7 +38,7 @@ namespace TableBasicSamples
                 var result = new List<MyTable>();
                 var flag = false;
                 result.Add(new MyTable { Id = 0, MyDate = new DateTime(), MyText = $"Test0 linha1{Environment.NewLine}Test3 linha2", ComplexCol = new MyComplexCol("C0") });
-                for (int i = 1; i < 200; i++)
+                for (int i = 1; i < 5; i++)
                 {
                     flag = !flag;
                     if (flag)
@@ -64,14 +64,14 @@ namespace TableBasicSamples
                 //.HideSelectorRow()
                 //.Default(data[1])
                 //.ChangeDescription((item,row,col) => $"{item.ComplexCol.Name}")
-                .PageSize(5)
+                //.PageSize(6)
                 .EnableColumnsNavigation()
                 .WithSeparatorRows()
                 .FilterByColumns(FilterMode.Contains, 1, 4)
                 .Layout(TableLayout.SingleGridFull)
                 .Title("Test", titleMode: TableTitleMode.InRow)
                 .AddItems(data)
-                .AddItem(new MyTable { Id = 6, MyDate = new DateTime().AddDays(1), MyText = "Test6 disabled", ComplexCol = new MyComplexCol("C6") }, true)
+                .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled", ComplexCol = new MyComplexCol($"C{data.Length}") }, true)
                 .AddColumn(field: (item) => item.Id, width: 10)
                 .AddColumn(field: (item) => item.MyDate!, width: 15/*,alignment: Alignment.Center*/)
                 .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text: {arg}", maxslidinglines: 5/*, textcrop:true*/)
@@ -80,13 +80,15 @@ namespace TableBasicSamples
                 //.AutoFit(1,2)
                 .AddFormatType<DateTime>(FmtDate)
                 .AddFormatType<int>(FmtInt)
-                .EnabledInteractionUser(
-                    selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
-                    finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
+                //.EnabledInteractionUser(
+                //    selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
+                //    finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
                 .Run();
             if (!tbl.IsAborted)
             { 
             }
+
+            Console.ReadKey();
         }
 
         private static string FmtInt(object arg)

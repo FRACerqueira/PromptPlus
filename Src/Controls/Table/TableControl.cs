@@ -41,44 +41,50 @@ namespace PPlus.Controls.Table
             {
                 throw new PromptPlusException("Not found columns definition");
             }
-
-            //re-calc column width when IsColumnsNavigation
-            if (_options.IsColumnsNavigation)
+            if (_options.IsInteraction)
             {
-                for (int i = 0; i < _options.Columns.Count; i++)
+                //re-calc column width when IsColumnsNavigation
+                if (_options.IsColumnsNavigation)
                 {
-                    var w = (ushort)(!_options.Columns[i].TitleReplacesWidth ? 
-                        _options.Columns[i].Width 
-                        : (_options.Columns[i].Width < _options.Columns[i].Title.Length) ? 
-                            _options.Columns[i].Title.Length 
-                            : _options.Columns[i].Width);
+                    for (int i = 0; i < _options.Columns.Count; i++)
+                    {
+                        var w = (ushort)(!_options.Columns[i].TitleReplacesWidth ?
+                            _options.Columns[i].Width
+                            : (_options.Columns[i].Width < _options.Columns[i].Title.Length) ?
+                                _options.Columns[i].Title.Length
+                                : _options.Columns[i].Width);
 
-                    _options.Columns[i].Width = w;
-                    _options.Columns[i].OriginalWidth = w;
+                        _options.Columns[i].Width = w;
+                        _options.Columns[i].OriginalWidth = w;
+                    }
                 }
+                //validate/re-calc FilterColumns
+                if (_options.FilterColumns.Length > 1)
+                {
+                    if (!_options.HideSelectorRow)
+                    {
+                        for (int i = 0; i < _options.FilterColumns.Length; i++)
+                        {
+                            _options.FilterColumns[i]++;
+                        }
+                    }
+                    for (int i = 0; i < _options.FilterColumns.Length; i++)
+                    {
+                        if (_options.FilterColumns[i] > _options.Columns.Count)
+                        {
+                            throw new PromptPlusException($"FilterColumns {i} Not found in columns definition");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                _options.HideSelectorRow = true;
             }
 
             if (!_options.HideSelectorRow)
             {
                 _options.Columns.Insert(0, new ItemItemColumn<T> { Field = ((_) => _options.Symbol(SymbolType.Selector)), Title = " ", Width = 1, OriginalWidth = 1 });
-            }
-
-            if (_options.FilterColumns.Length > 1)
-            {
-                if (!_options.HideSelectorRow)
-                {
-                    for (int i = 0; i < _options.FilterColumns.Length; i++)
-                    {
-                        _options.FilterColumns[i]++;
-                    }
-                }
-                for (int i = 0; i < _options.FilterColumns.Length; i++)
-                {
-                    if (_options.FilterColumns[i] > _options.Columns.Count)
-                    {
-                        throw new PromptPlusException($"FilterColumns {i} Not found in columns definition");
-                    }
-                }
             }
 
             if (_options.IsColumnsNavigation && _options.IsInteraction)
@@ -127,24 +133,26 @@ namespace PPlus.Controls.Table
             }
 
             Optional<T> defvalue = Optional<T>.s_empty;
-
             Optional<ItemTableRow<T>> defvaluepage = Optional<ItemTableRow<T>>.s_empty;
 
-            if (_options.DefaultValue.HasValue)
+            if (_options.IsInteraction)
             {
-                defvalue = Optional<T>.Create(_options.DefaultValue.Value);
-            }
-            if (_defaultHistoric.HasValue)
-            {
-                defvalue = Optional<T>.Create(_defaultHistoric.Value);
-            }
-
-            if (defvalue.HasValue)
-            {
-                var found = _options.Items.FirstOrDefault(x => _options.EqualItems(x.Value, defvalue.Value));
-                if (found != null && !found.Disabled)
+                if (_options.DefaultValue.HasValue)
                 {
-                    defvaluepage = Optional<ItemTableRow<T>>.Create(found);
+                    defvalue = Optional<T>.Create(_options.DefaultValue.Value);
+                }
+                if (_defaultHistoric.HasValue)
+                {
+                    defvalue = Optional<T>.Create(_defaultHistoric.Value);
+                }
+
+                if (defvalue.HasValue)
+                {
+                    var found = _options.Items.FirstOrDefault(x => _options.EqualItems(x.Value, defvalue.Value));
+                    if (found != null && !found.Disabled)
+                    {
+                        defvaluepage = Optional<ItemTableRow<T>>.Create(found);
+                    }
                 }
             }
 
@@ -165,7 +173,7 @@ namespace PPlus.Controls.Table
                 skip = 1;
             }
 
-            if (_options.FilterType == FilterMode.Disabled)
+            if (_options.IsInteraction && _options.FilterType == FilterMode.Disabled)
             {
                 _localpaginator = new Paginator<ItemTableRow<T>>(
                     _options.FilterType,
@@ -175,8 +183,9 @@ namespace PPlus.Controls.Table
                     (item1, item2) => item1.UniqueId == item2.UniqueId,
                     null,
                     IsEnnabled);
+                _currentrow = _localpaginator.CurrentIndex;
             }
-            else 
+            else if (_options.IsInteraction)
             {
                 _localpaginator = new Paginator<ItemTableRow<T>>(
                     _options.FilterType,
@@ -186,9 +195,8 @@ namespace PPlus.Controls.Table
                     (item1, item2) => item1.UniqueId == item2.UniqueId,
                     (item) => SearchContent(item, skip),
                     IsEnnabled);
-
+                _currentrow = _localpaginator.CurrentIndex;
             }
-            _currentrow = _localpaginator.CurrentIndex;
 
             return string.Empty;
         }
@@ -199,48 +207,49 @@ namespace PPlus.Controls.Table
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
+            //Calculate Table Length again when set autofit
+            if (_options.HasAutoFit)
+            {
+                for (ushort i = 0; i < _options.Columns.Count; i++)
+                {
+                    _options.Columns[i].Width = _options.Columns[i].OriginalWidth;
+                }
+                _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth);
+                if (_totalTableLenWidth < ConsolePlus.BufferWidth - 1)
+                {
+                    var diff = ConsolePlus.BufferWidth - 1 - _totalTableLenWidth;
+                    do
+                    {
+                        for (ushort i = 0; i < _options.Columns.Count; i++)
+                        {
+                            ushort index = i;
+                            if (i == 0 && !_options.HideSelectorRow)
+                            {
+                                continue;
+                            }
+                            if (!_options.HideSelectorRow)
+                            {
+                                index--;
+                            }
+                            if (_options.AutoFitColumns.Length == 0 || _options.AutoFitColumns.Contains(index))
+                            {
+                                _options.Columns[i].Width++;
+                                diff--;
+                            }
+                            if (diff == 0)
+                            {
+                                break;
+                            }
+                        }
+                    } while (diff > 0);
+                }
+                _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.Width);
+            }
+
+            screenBuffer.WritePrompt(_options, "");
+
             if (_options.IsInteraction)
             {
-                //Calculate Table Length again when set autofit
-                if (_options.HasAutoFit)
-                {
-                    for (ushort i = 0; i < _options.Columns.Count; i++)
-                    {
-                        _options.Columns[i].Width = _options.Columns[i].OriginalWidth;
-                    }
-                    _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth);
-                    if (_totalTableLenWidth < ConsolePlus.BufferWidth - 1)
-                    {
-                        var diff = ConsolePlus.BufferWidth - 1 - _totalTableLenWidth;
-                        do
-                        {
-                            for (ushort i = 0; i < _options.Columns.Count; i++)
-                            {
-                                ushort index = i;
-                                if (i == 0 && !_options.HideSelectorRow)
-                                {
-                                    continue;
-                                }
-                                if (!_options.HideSelectorRow)
-                                {
-                                    index--;
-                                }
-                                if (_options.AutoFitColumns.Length == 0 || _options.AutoFitColumns.Contains(index))
-                                {
-                                    _options.Columns[i].Width++;
-                                    diff--;
-                                }
-                                if (diff == 0)
-                                {
-                                    break;
-                                }
-                            }
-                        } while (diff > 0);
-                    }
-                    _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.Width);
-                }
-
-                screenBuffer.WritePrompt(_options, "");
                 bool hasprompt = !string.IsNullOrEmpty(_options.OptPrompt);
                 string answer = null;
                 if (_options.SelectedTemplate != null)
@@ -270,14 +279,20 @@ namespace PPlus.Controls.Table
                     screenBuffer.SaveCursor();
                 }
             }
-            if (!_options.IsInteraction || !ShowingFilter)
+
+            if (!ShowingFilter)
             {
-                screenBuffer.WriteLineDescriptionTable(_localpaginator.SelectedItem.Value,_currentrow,_currentcol, _options);
+                screenBuffer.WriteLineDescriptionTable(_options.IsInteraction?_localpaginator.SelectedItem.Value:null,_currentrow,_currentcol, _options);
+            }
+
+            if (!_options.IsInteraction)
+            {
+                return;
             }
 
             WriteTable(screenBuffer);
 
-            if (_options.IsInteraction && (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1))
+            if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
                 screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
             }
@@ -287,6 +302,8 @@ namespace PPlus.Controls.Table
         {
             if (!_options.IsInteraction)
             {
+                WriteTable(screenBuffer);
+                screenBuffer.NewLine();
                 return;
             }
             string answer = null;
@@ -317,7 +334,7 @@ namespace PPlus.Controls.Table
         {
             if (!_options.IsInteraction)
             {
-                return new ResultPrompt<ResultTable<T>>(ResultTable<T>.NullResult(),false);
+                return new ResultPrompt<ResultTable<T>>(ResultTable<T>.NullResult(),false,false,false);
             }
             var endinput = false;
             var abort = false;
@@ -881,14 +898,7 @@ namespace PPlus.Controls.Table
         {
             WriteTableTitle(screenBuffer);
             WriteTableHeader(screenBuffer);
-            if (!_options.IsInteraction)
-            {
-                WriteTableAllRows(screenBuffer);
-            }
-            else
-            {
-                WriteTableRows(screenBuffer);
-            }
+            WriteTableRows(screenBuffer);
             WriteTableFooter(screenBuffer);
         }
 
@@ -1222,7 +1232,16 @@ namespace PPlus.Controls.Table
 
         private void WriteTableRows(ScreenBuffer screenBuffer)
         {
-            var subset = _localpaginator.ToSubset();
+
+            ArraySegment<ItemTableRow<T>> subset;
+            if (!_options.IsInteraction)
+            {
+                subset = new ArraySegment<ItemTableRow<T>>(_options.Items.ToArray(), 0, _options.Items.Count);
+            }
+            else
+            {
+                subset = _localpaginator.ToSubset();
+            }
             var pos = 0;
             foreach (var item in subset)
             {
@@ -1230,13 +1249,16 @@ namespace PPlus.Controls.Table
                 screenBuffer.NewLine();
                 var isseleted = false;
                 var isdisabled = false;
-                if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemTableRow<T>>.Default.Equals(item, selectedItem))
+                if (_options.IsInteraction)
                 {
-                    isseleted = true;
-                }
-                else
-                {
-                    isdisabled = IsDisabled(item);
+                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemTableRow<T>>.Default.Equals(item, selectedItem))
+                    {
+                        isseleted = true;
+                    }
+                    else
+                    {
+                        isdisabled = IsDisabled(item);
+                    }
                 }
 
                 var cols = GetTextColumns(item.Value, out var lines);
@@ -1411,11 +1433,7 @@ namespace PPlus.Controls.Table
             }
         }
 
-        private void WriteTableAllRows(ScreenBuffer screenBuffer)
-        {
-        }
-
-        private bool IsEnnabled(ItemTableRow<T> item)
+          private bool IsEnnabled(ItemTableRow<T> item)
         {
             return !IsDisabled(item);
         }
