@@ -26,6 +26,8 @@ namespace PPlus.Controls.Table
         private int _currentrow = -1;
         private int _currentcol = -1;
         private int _totalTableLenWidth;
+        private ushort[] _maxlencontentcols;
+        private int? _oldBufferWidth;
 
         public TableControl(IConsoleControl console, TableOptions<T> options) : base(console, options)
         {
@@ -94,7 +96,25 @@ namespace PPlus.Controls.Table
                 }
             }
 
-            //Calculate Table Length
+            if (_options.AutoFill)
+            {
+                //Calculate max content Length
+                _maxlencontentcols = new ushort[_options.Columns.Count];
+
+                foreach (var item in _options.Items.Select(x => x.Value))
+                {
+                    for (int i = 0; i < _options.Columns.Count; i++)
+                    {
+                        var text = GetTextColumn(item, _options.Columns[i].Field, _options.Columns[i].Format);
+                        var lentext = text.NormalizeNewLines().Split(Environment.NewLine).Max(x => x.Length);
+                        if (_maxlencontentcols[i] < lentext)
+                        {
+                            _maxlencontentcols[i] = (ushort)lentext;
+                        }
+                    }
+                }
+            }
+
             _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth);
 
             if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
@@ -205,32 +225,25 @@ namespace PPlus.Controls.Table
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
-            //Calculate Table Length again when set autofit
-            if (_options.HasAutoFit)
+            if (_options.AutoFill && ((_oldBufferWidth??0) != ConsolePlus.BufferWidth))
             {
+                _oldBufferWidth = ConsolePlus.BufferWidth;
                 for (ushort i = 0; i < _options.Columns.Count; i++)
                 {
                     _options.Columns[i].Width = _options.Columns[i].OriginalWidth;
                 }
                 _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth);
-                if (_totalTableLenWidth < ConsolePlus.BufferWidth - 1)
+                var diff = ConsolePlus.BufferWidth - 1 - _totalTableLenWidth;
+                do
                 {
-                    var diff = ConsolePlus.BufferWidth - 1 - _totalTableLenWidth;
-                    do
+                    if (diff > 0)
                     {
+                        var haschange = false;
                         for (ushort i = 0; i < _options.Columns.Count; i++)
                         {
-                            ushort index = i;
-                            if (i == 0 && !_options.HideSelectorRow)
+                            if (_options.Columns[i].Width+1 <= _maxlencontentcols[i])
                             {
-                                continue;
-                            }
-                            if (!_options.HideSelectorRow)
-                            {
-                                index--;
-                            }
-                            if (_options.AutoFitColumns.Length == 0 || _options.AutoFitColumns.Contains(index))
-                            {
+                                haschange = true;
                                 _options.Columns[i].Width++;
                                 diff--;
                             }
@@ -239,9 +252,54 @@ namespace PPlus.Controls.Table
                                 break;
                             }
                         }
-                    } while (diff > 0);
-                }
+                        if (!haschange)
+                        {
+                            diff = 0;
+                        }
+                    }
+                } while (diff > 0);
                 _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.Width);
+            }
+            else
+            {
+                //Calculate Table Length again when set autofit
+                if (_options.HasAutoFit)
+                {
+                    for (ushort i = 0; i < _options.Columns.Count; i++)
+                    {
+                        _options.Columns[i].Width = _options.Columns[i].OriginalWidth;
+                    }
+                    _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth);
+                    var diff = ConsolePlus.BufferWidth - 1 - _totalTableLenWidth;
+                    do
+                    {
+                        if (diff > 0)
+                        {
+                            for (ushort i = 0; i < _options.Columns.Count; i++)
+                            {
+                                ushort index = i;
+                                if (i == 0 && !_options.HideSelectorRow)
+                                {
+                                    continue;
+                                }
+                                if (!_options.HideSelectorRow)
+                                {
+                                    index--;
+                                }
+                                if (_options.AutoFitColumns.Length == 0 || _options.AutoFitColumns.Contains(index))
+                                {
+                                    _options.Columns[i].Width++;
+                                    diff--;
+                                }
+                                if (diff == 0)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    } while (diff > 0);
+                    _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.Width);
+                }
             }
 
             if (!_options.IsInteraction)
@@ -439,8 +497,68 @@ namespace PPlus.Controls.Table
 
         #region IControlTable
 
+        public IControlTable<T> AutoFill()
+        {
+            if (_options.Columns.Count > 0)
+            {
+                throw new PromptPlusException($"AutoFill cannot be run with AddColumn");
+            }
+            _options.AutoFill = true;
+            var colpropInfo = typeof(T).GetProperties();
+            for (int i = 0; i < colpropInfo.Length; i++)
+            {
+                var tc = Type.GetTypeCode(colpropInfo[i].PropertyType);
+                var isvalid = true;
+                if (isvalid && tc == TypeCode.Object)
+                {
+                    isvalid = !colpropInfo[i].PropertyType.IsClass;
+                    if (isvalid && Nullable.GetUnderlyingType(colpropInfo[i].PropertyType) != null)
+                    {
+                        var aux = Type.GetTypeCode(Nullable.GetUnderlyingType(colpropInfo[i].PropertyType));
+                        if (aux == TypeCode.Object || aux == TypeCode.DBNull)
+                        {
+                            isvalid = false;
+                        }
+                    }
+                }
+                else if (tc == TypeCode.DBNull)
+                {
+                    isvalid = false;
+                }
+                if (isvalid)
+                {
+                    var tit = $"  {(colpropInfo[i].Name ?? string.Empty).Trim()}";
+                    if (tit.Length > byte.MaxValue)
+                    {
+                        tit = tit[..byte.MaxValue];
+                    }
+
+                    _options.Columns.Add(new ItemItemColumn<T>()
+                    {
+                        AlignCol = Alignment.Left,
+                        Field = Generate(colpropInfo[i].Name).Compile(),
+                        Format = null,
+                        Width = (ushort)tit.Trim().Length,
+                        OriginalWidth = (ushort)tit.Trim().Length,
+                        TextCrop = false,
+                        Title = tit,
+                        AlignTitle = Alignment.Center,
+                        MaxSlidingLines = null,
+                        TitleReplacesWidth = true
+                    });
+                }
+            }
+
+            return this;
+        }
+
         public IControlTable<T> AddColumn(Expression<Func<T, object>> field, ushort width, Func<object, string> format = null, Alignment alignment = Alignment.Left, string? title = null, Alignment titlealignment = Alignment.Center, bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null)
         {
+            if (_options.AutoFill)
+            {
+                throw new PromptPlusException($"AddColumn cannot be run with AutoFill");
+            }
+
             if (maxslidinglines.HasValue)
             {
                 if (maxslidinglines.Value <= 0)
@@ -537,6 +655,10 @@ namespace PPlus.Controls.Table
 
         public IControlTable<T> AutoFit(params ushort[] indexColumn)
         {
+            if (_options.AutoFill)
+            {
+                throw new PromptPlusException($"AutoFit cannot be run with AutoFill");
+            }
             _options.HasAutoFit = true;
             _options.AutoFitColumns = indexColumn;
             return this;
@@ -566,13 +688,13 @@ namespace PPlus.Controls.Table
             return this;
         }
 
-        public IControlTable<T> EnableColumnsNavigation()
+        public IControlTable<T> ColumnsNavigation()
         {
             _options.IsColumnsNavigation = true;
             return this;
         }
 
-        public IControlTable<T> EnabledInteractionUser(Func<T, int, int, string> selectedTemplate = null, Func<T, int, int, string> finishTemplate = null, bool removetable = true)
+        public IControlTable<T> UserInteraction(Func<T, int, int, string> selectedTemplate = null, Func<T, int, int, string> finishTemplate = null, bool removetable = true)
         {
             _options.IsInteraction = true;
             _options.SelectedTemplate = selectedTemplate;
@@ -652,9 +774,9 @@ namespace PPlus.Controls.Table
             return this;
         }
 
-        public IControlTable<T> WithSeparatorRows()
+        public IControlTable<T> SeparatorRows()
         {
-            _options.WithSeparatorRows = true;
+            _options.SeparatorRows = true;
             return this;
         }
 
@@ -702,6 +824,13 @@ namespace PPlus.Controls.Table
 
         #endregion
 
+        private static Expression<Func<T, object>> Generate(string property_name)
+        {
+            var parameter = Expression.Parameter(typeof(T));
+
+            return Expression.Lambda<Func<T, object>>(
+                Expression.Convert(Expression.Property(parameter, property_name), typeof(object)), parameter);
+        }
         private static string GetNameUnaryExpression(Expression<Func<T, object>> exp)
         {
             if (exp.Body is not MemberExpression body)
@@ -743,10 +872,10 @@ namespace PPlus.Controls.Table
 
         private void BuildLineColumn(ScreenBuffer screenBuffer,char startln,char sepln, char endln, char contentln)
         {
-            var stl = _options.GridStyle.Overflow(Overflow.Crop);
+            var stl = _options.GridStyle;
             if ( _options.Layout == TableLayout.HideGrid)
             {
-                stl = Style.Default.Overflow(Overflow.Crop);
+                stl = Style.Default;
             }
             screenBuffer.AddBuffer($"{startln}{new string(contentln, _options.Columns[0].Width)}", stl);
             foreach (var item in _options.Columns.Skip(1))
@@ -906,11 +1035,92 @@ namespace PPlus.Controls.Table
             {
                 if (string.IsNullOrEmpty(tit))
                 {
+                    screenBuffer.NewLine();
+                    switch (_options.Layout)
+                    {
+                        case TableLayout.HideGrid:
+                            BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                            break;
+                        case TableLayout.SingleGridFull:
+                        case TableLayout.SingleGridSoft:
+                            if (_options.HideHeaders)
+                            {
+                                if (_options.Layout == TableLayout.SingleGridFull)
+                                {
+                                    BuildLineColumn(screenBuffer, '┌', '┬', '┐', '─');
+                                }
+                                else
+                                {
+                                    BuildLineColumn(screenBuffer, '┌', '─', '┐', '─');
+                                }
+                            }
+                            else
+                            {
+                                BuildLineColumn(screenBuffer, '┌', '┬', '┐', '─');
+                            }
+                            break;
+                        case TableLayout.DoubleGridFull:
+                        case TableLayout.DoubleGridSoft:
+                            if (_options.HideHeaders)
+                            {
+                                if (_options.Layout == TableLayout.DoubleGridFull)
+                                {
+                                    BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                                }
+                                else
+                                {
+                                    BuildLineColumn(screenBuffer, '╔', '═', '╗', '═');
+                                }
+                            }
+                            else
+                            {
+                                BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                            }
+                            break;
+                        case TableLayout.AsciiSingleGridFull:
+                        case TableLayout.AsciiSingleGridSoft:
+                            if (_options.HideHeaders)
+                            {
+                                if (_options.Layout == TableLayout.AsciiSingleGridFull)
+                                {
+                                    BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                                }
+                                else
+                                {
+                                    BuildLineColumn(screenBuffer, '+', '-', '+', '-');
+                                }
+                            }
+                            else
+                            {
+                                BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                            }
+                            break;
+                        case TableLayout.AsciiDoubleGridFull:
+                        case TableLayout.AsciiDoubleGridSoft:
+                            if (_options.HideHeaders)
+                            {
+                                if (_options.Layout == TableLayout.AsciiDoubleGridFull)
+                                {
+                                    BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                                }
+                                else
+                                {
+                                    BuildLineColumn(screenBuffer, '+', '=', '+', '=');
+                                }
+                            }
+                            else
+                            {
+                                BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                            }
+                            break;
+                        default:
+                            throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
+                    }
                     return;
                 }
                 screenBuffer.NewLine();
                 tit = TableControl<T>.AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth);
-                screenBuffer.AddBuffer(tit, _options.TitleStyle.Overflow(Overflow.Crop));
+                screenBuffer.AddBuffer(tit, _options.TitleStyle);
                 tit = string.Empty;
             }
             WriteTopTable(screenBuffer);
@@ -946,9 +1156,9 @@ namespace PPlus.Controls.Table
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
             }
-            screenBuffer.AddBuffer(sep, _options.GridStyle.Overflow(Overflow.Crop));
-            screenBuffer.AddBuffer(tit, _options.TitleStyle.Overflow(Overflow.Crop));
-            screenBuffer.AddBuffer(sep, _options.GridStyle.Overflow(Overflow.Crop));
+            screenBuffer.AddBuffer(sep, _options.GridStyle);
+            screenBuffer.AddBuffer(tit, _options.TitleStyle);
+            screenBuffer.AddBuffer(sep, _options.GridStyle);
 
             screenBuffer.NewLine();
             switch (_options.Layout)
@@ -1154,11 +1364,11 @@ namespace PPlus.Controls.Table
             var col = -1;
             var sepstart = " ";
             var sepend = " ";
-            var stl = _options.GridStyle.Overflow(Overflow.Crop);
+            var stl = _options.GridStyle;
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
-                    stl = Style.Default.Overflow(Overflow.Crop);
+                    stl = Style.Default;
                     break;
                 case TableLayout.SingleGridFull:
                 case TableLayout.SingleGridSoft:
@@ -1185,12 +1395,12 @@ namespace PPlus.Controls.Table
                 if (_options.IsColumnsNavigation && _options.IsInteraction && col == _currentcol)
                 {
                     var h = TableControl<T>.AlignmentText($"{_options.Symbol(SymbolType.Selector)} {item.Title.Trim()}", item.AlignTitle, item.Width);
-                    screenBuffer.AddBuffer(h, _options.SelectedColHeader.Overflow(Overflow.Crop));
+                    screenBuffer.AddBuffer(h, _options.SelectedColHeader);
                 }
                 else
                 {
                     var h = TableControl<T>.AlignmentText(item.Title.Trim(), item.AlignTitle, item.Width);
-                    screenBuffer.AddBuffer(h, _options.HeaderStyle.Overflow(Overflow.Crop));
+                    screenBuffer.AddBuffer(h, _options.HeaderStyle);
                 }
             }
             screenBuffer.AddBuffer(sepend, stl);
@@ -1258,11 +1468,11 @@ namespace PPlus.Controls.Table
 
                 var sep = " ";
                 var sepcol = " ";
-                var stl = _options.GridStyle.Overflow(Overflow.Crop);
+                var stl = _options.GridStyle;
                 switch (_options.Layout)
                 {
                     case TableLayout.HideGrid:
-                        stl = Style.Default.Overflow(Overflow.Crop);
+                        stl = Style.Default;
                         break;
                     case TableLayout.SingleGridFull:
                         sep = "│";
@@ -1323,24 +1533,24 @@ namespace PPlus.Controls.Table
                             {
                                 if (itemcol == _currentcol || !_options.HideSelectorRow && itemcol == 0)
                                 {
-                                    screenBuffer.AddBuffer(col, _options.SelectedContentStyle.Overflow(Overflow.Crop), true);
+                                    screenBuffer.AddBuffer(col, _options.SelectedContentStyle, true);
                                 }
                                 else
                                 {
-                                    screenBuffer.AddBuffer(col, _options.ContentStyle.Overflow(Overflow.Crop), true);
+                                    screenBuffer.AddBuffer(col, _options.ContentStyle, true);
                                 }
                             }
                             else
                             {
-                                screenBuffer.AddBuffer(col, _options.SelectedContentStyle.Overflow(Overflow.Crop), true);
+                                screenBuffer.AddBuffer(col, _options.SelectedContentStyle, true);
                             }
                         }
                         else
                         {
-                            var stld = _options.ContentStyle.Overflow(Overflow.Crop);
+                            var stld = _options.ContentStyle;
                             if (isdisabled)
                             {
-                                stld = _options.DisabledContentStyle.Overflow(Overflow.Crop);
+                                stld = _options.DisabledContentStyle;
                             }
                             screenBuffer.AddBuffer(col, stld, true);
                         }
@@ -1352,7 +1562,7 @@ namespace PPlus.Controls.Table
                     }
                 }
 
-                if (_options.WithSeparatorRows && pos < subset.Count)
+                if (_options.SeparatorRows && pos < subset.Count)
                 {
                     screenBuffer.NewLine();
                     switch (_options.Layout)

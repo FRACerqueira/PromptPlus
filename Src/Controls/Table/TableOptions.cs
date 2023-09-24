@@ -19,7 +19,7 @@ namespace PPlus.Controls
         internal TableOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             TimeoutOverwriteDefault = config.HistoryTimeout;
-            PageSize = 5;
+            PageSize = config.PageSize;
             GridStyle = styleSchema.Prompt();
             HeaderStyle = styleSchema.Prompt();
             SelectedColHeader = styleSchema.Selected();
@@ -84,7 +84,7 @@ namespace PPlus.Controls
 
         public bool HideHeaders { get; set; }
         
-        public bool WithSeparatorRows { get; set; }
+        public bool SeparatorRows { get; set; }
 
         public bool HasAutoFit{ get; set; }
 
@@ -103,5 +103,8 @@ namespace PPlus.Controls
         public Func<T, int, int, string> ChangeDescription { get; set; }
 
         public bool RemoveTableAtFinish { get; set; } = true;
+
+        public bool AutoFill { get; set; }
+
     }
 }
