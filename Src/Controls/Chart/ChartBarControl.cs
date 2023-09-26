@@ -169,21 +169,21 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlChartBar HideOrdination()
+        public IControlChartBar HideOrdination(bool value = true)
         {
-            _options.HideInfoOrder= true;
+            _options.HideInfoOrder= value;
             return this;
         }
 
-        public IControlChartBar HidePercent()
-        {
-            _options.HidePercentBar = true;
+        public IControlChartBar HidePercent(bool value = true)
+        {   
+            _options.HidePercentBar = value;
             return this;
         }
 
-        public IControlChartBar HideValue()
+        public IControlChartBar HideValue(bool value = true)
         {
-            _options.HideValueBar = true;
+            _options.HideValueBar = value;
             return this;
         }
 

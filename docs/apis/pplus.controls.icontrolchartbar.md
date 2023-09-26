@@ -155,37 +155,52 @@ Fracional Digits
 
 [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
-### <a id="methods-hideordination"/>**HideOrdination()**
+### <a id="methods-hideordination"/>**HideOrdination(Boolean)**
 
 Hide info of ordination labels
 
 ```csharp
-IControlChartBar HideOrdination()
+IControlChartBar HideOrdination(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Hide info of ordination labels.
 
 #### Returns
 
 [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
-### <a id="methods-hidepercent"/>**HidePercent()**
+### <a id="methods-hidepercent"/>**HidePercent(Boolean)**
 
-Hide Percent in bar
+Hide Percent in bar.Default false
 
 ```csharp
-IControlChartBar HidePercent()
+IControlChartBar HidePercent(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Hide Percent
 
 #### Returns
 
 [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
-### <a id="methods-hidevalue"/>**HideValue()**
+### <a id="methods-hidevalue"/>**HideValue(Boolean)**
 
-Hide value in bar
+Hide value in bar.Default false
 
 ```csharp
-IControlChartBar HideValue()
+IControlChartBar HideValue(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Hide value
 
 #### Returns
 

@@ -106,5 +106,7 @@ namespace PPlus.Controls
 
         public bool AutoFill { get; set; }
 
+        public ushort? MinColWidth { get; set; }
+
     }
 }

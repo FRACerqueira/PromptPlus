@@ -65,9 +65,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlSelect<T> AppendGroupOnDescription()
+        public IControlSelect<T> AppendGroupOnDescription(bool value = true)
         {
-            _options.ShowGroupOnDescription = true;
+            _options.ShowGroupOnDescription = value;
             return this;
         }
 
@@ -186,9 +186,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlSelect<T> AutoSelect()
+        public IControlSelect<T> AutoSelect(bool value = true)
         {
-            _options.AutoSelect = true;
+            _options.AutoSelect = value;
             return this;
         }
 

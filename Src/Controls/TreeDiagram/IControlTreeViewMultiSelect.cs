@@ -78,10 +78,11 @@ namespace PPlus.Controls
         IControlTreeViewMultiSelect<T> FilterType(FilterMode value);
 
         /// <summary>
-        /// Start treeview with all childs Expanded
+        /// Start treeview with all childs Expanded. Default false
         /// </summary>
+        /// <param name="value">Start treeview with all childs Expanded</param>
         /// <returns><see cref="IControlTreeViewMultiSelect{T}"/></returns>
-        IControlTreeViewMultiSelect<T> ExpandAll();
+        IControlTreeViewMultiSelect<T> ExpandAll(bool value = true);
 
         /// <summary>
         /// Fixed select (immutable) items in list
@@ -132,7 +133,7 @@ namespace PPlus.Controls
         IControlTreeViewMultiSelect<T> Default(T value);
 
         /// <summary>
-        /// Append name node parent on description
+        /// Append name node parent on description. Default true
         /// </summary>
         /// <param name="value">true Append current name node parent on description, not append</param>
         /// <returns><see cref="IControlTreeViewMultiSelect{T}"/></returns>

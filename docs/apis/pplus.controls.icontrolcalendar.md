@@ -149,13 +149,18 @@ Policy to next/previous valid date if selected date is invalid
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-disabledweekends"/>**DisabledWeekends()**
+### <a id="methods-disabledweekends"/>**DisabledWeekends(Boolean)**
 
-Disabled Weekends.
+Disabled Weekends.Default false;
 
 ```csharp
-IControlCalendar DisabledWeekends()
+IControlCalendar DisabledWeekends(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Disabled weekends
 
 #### Returns
 

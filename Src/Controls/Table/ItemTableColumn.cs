@@ -11,8 +11,8 @@ namespace PPlus.Controls
     {
         public Func<T, object> Field { get; set; }
         public Alignment AlignCol { get; set; }
-        public ushort Width { get; set; }
-        public ushort OriginalWidth { get; set; }
+        public int Width { get; set; }
+        public int OriginalWidth { get; set; }
         public bool TextCrop { get; set; }
         public int? MaxSlidingLines { get; set; }
         public Func<object, string>? Format { get; set; }

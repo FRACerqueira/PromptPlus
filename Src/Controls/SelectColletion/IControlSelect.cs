@@ -95,10 +95,11 @@ namespace PPlus.Controls
         IControlSelect<T> ChangeDescription(Func<T, string> value);
 
         /// <summary>
-        /// Append group text on description
+        /// Append group text on description. Default false
         /// </summary>
+        /// <param name="value">Append group text on description</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
-        IControlSelect<T> AppendGroupOnDescription();
+        IControlSelect<T> AppendGroupOnDescription(bool value = true);
 
         /// <summary>
         /// Add item to list
@@ -160,9 +161,10 @@ namespace PPlus.Controls
         IControlSelect<T> EqualItems(Func<T, T, bool> comparer);
 
         /// <summary>
-        /// Automatically select item when only one item is in the list 
+        /// Automatically select item when only one item is in the list . Default false.
         /// </summary>
+        /// <param name="value">Automatically select</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
-        IControlSelect<T> AutoSelect();
+        IControlSelect<T> AutoSelect(bool value = true);
     }
 }

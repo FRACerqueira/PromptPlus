@@ -102,9 +102,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlCalendar DisabledWeekends()
+        public IControlCalendar DisabledWeekends(bool value = true)
         { 
-            _options.DisabledWeekend = true;
+            _options.DisabledWeekend = value;
             return this;
         }
 

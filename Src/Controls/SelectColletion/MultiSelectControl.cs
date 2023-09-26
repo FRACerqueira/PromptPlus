@@ -229,9 +229,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelect<T> AppendGroupOnDescription()
+        public IControlMultiSelect<T> AppendGroupOnDescription(bool value = true)
         {
-            _options.ShowGroupOnDescription = true;
+            _options.ShowGroupOnDescription = value;
             return this;
         }
         public IControlMultiSelect<T> HotKeySelectAll(HotKey value)

@@ -103,16 +103,18 @@ namespace PPlus.Controls
         IControlChartBar OrderBy(ChartOrder chartOrder);
 
         /// <summary>
-        /// Hide Percent in bar
+        /// Hide Percent in bar.Default false
         /// </summary>
+        /// <param name="value">Hide Percent</param>
         /// <returns><see cref="IControlChartBar"/></returns>
-        IControlChartBar HidePercent();
+        IControlChartBar HidePercent(bool value = true);
 
         /// <summary>
-        /// Hide value in bar
+        /// Hide value in bar.Default false
         /// </summary>
+        /// <param name="value">Hide value</param>
         /// <returns><see cref="IControlChartBar"/></returns>
-        IControlChartBar HideValue();
+        IControlChartBar HideValue(bool value = true);
 
         /// <summary>
         /// Pad-Left to write ChartBar
@@ -132,8 +134,9 @@ namespace PPlus.Controls
         /// <summary>
         /// Hide info of ordination labels
         /// </summary>
+        /// <param name="value">Hide info of ordination labels.</param>
         /// <returns><see cref="IControlChartBar"/></returns>
-        IControlChartBar HideOrdination();
+        IControlChartBar HideOrdination(bool value = true);
 
         /// <summary>
         /// Enabled Interaction  to switch Layout , Legend and order when browse the charts / Legends.

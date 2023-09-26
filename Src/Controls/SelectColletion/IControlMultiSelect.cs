@@ -41,10 +41,11 @@ namespace PPlus.Controls
         IControlMultiSelect<T> OverflowAnswer(Overflow value);
 
         /// <summary>
-        /// Append group text on description
+        /// Append group text on description. Default false
         /// </summary>
+        /// <param name="value">Append group text on description</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
-        IControlMultiSelect<T> AppendGroupOnDescription();
+        IControlMultiSelect<T> AppendGroupOnDescription(bool value = true);
 
         /// <summary>
         /// Add default value selected to initial list.

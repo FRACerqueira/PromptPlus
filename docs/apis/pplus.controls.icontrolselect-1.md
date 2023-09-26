@@ -133,25 +133,35 @@ items colletion
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription()**
+### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription(Boolean)**
 
-Append group text on description
+Append group text on description. Default false
 
 ```csharp
-IControlSelect<T> AppendGroupOnDescription()
+IControlSelect<T> AppendGroupOnDescription(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Append group text on description
 
 #### Returns
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### <a id="methods-autoselect"/>**AutoSelect()**
+### <a id="methods-autoselect"/>**AutoSelect(Boolean)**
 
-Automatically select item when only one item is in the list
+Automatically select item when only one item is in the list . Default false.
 
 ```csharp
-IControlSelect<T> AutoSelect()
+IControlSelect<T> AutoSelect(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Automatically select
 
 #### Returns
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -29,15 +29,7 @@ namespace PPlus.Controls.Table
         private int _totalTableLenWidth;
         private int[] _maxlencontentcols;
         private int? _oldBufferWidth;
-        private (int startWrite, int endwrite) _tableviewport;
-        private MoveViewport _moveviewport = MoveViewport.None;
-        private enum MoveViewport
-        { 
-            None,
-            Left,
-            Right
-        }
-
+        private (int startWrite,int endwrite) _tableviewport;
 
         public TableControl(IConsoleControl console, TableOptions<T> options) : base(console, options)
         {
@@ -58,7 +50,7 @@ namespace PPlus.Controls.Table
                 {
                     for (int i = 0; i < _options.Columns.Count; i++)
                     {
-                        var w = (ushort)(!_options.Columns[i].TitleReplacesWidth ?
+                        var w = (!_options.Columns[i].TitleReplacesWidth ?
                             _options.Columns[i].Width
                             : (_options.Columns[i].Width < _options.Columns[i].Title.Length) ?
                                 _options.Columns[i].Title.Length
@@ -125,8 +117,9 @@ namespace PPlus.Controls.Table
                 }
             }
 
-            _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth);
+            _totalTableLenWidth = (_options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth))-1;
 
+            //show all columns and grid
             _tableviewport = (0, _totalTableLenWidth);
 
             if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
@@ -237,20 +230,21 @@ namespace PPlus.Controls.Table
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
-            if (_options.AutoFill && _options.MinColWidth == null && (_oldBufferWidth??0) != ConsolePlus.BufferWidth)
+            if (_options.AutoFill && ((_oldBufferWidth??0) != ConsolePlus.BufferWidth))
             {
-                for (ushort i = 0; i < _options.Columns.Count; i++)
+                _oldBufferWidth = ConsolePlus.BufferWidth;
+                for (var i = 0; i < _options.Columns.Count; i++)
                 {
                     _options.Columns[i].Width = _options.Columns[i].OriginalWidth;
                 }
-                _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth);
+                _totalTableLenWidth = (_options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth)) - 1;
                 var diff = ConsolePlus.BufferWidth - 1 - _totalTableLenWidth;
                 do
                 {
                     if (diff > 0)
                     {
                         var haschange = false;
-                        for (ushort i = 0; i < _options.Columns.Count; i++)
+                        for (var i = 0; i < _options.Columns.Count; i++)
                         {
                             if (_options.Columns[i].Width+1 <= _maxlencontentcols[i])
                             {
@@ -268,31 +262,29 @@ namespace PPlus.Controls.Table
                             diff = 0;
                         }
                     }
+
+
                 } while (diff > 0);
-                _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.Width);
-                if (_oldBufferWidth == null)
-                {
-                    _tableviewport = (0, _totalTableLenWidth);
-                }
+                _totalTableLenWidth = (_options.Columns.Count + 1 + _options.Columns.Sum(x => x.Width))-1;
             }
             else
             {
                 //Calculate Table Length again when set autofit
                 if (_options.HasAutoFit)
                 {
-                    for (ushort i = 0; i < _options.Columns.Count; i++)
+                    for (var i = 0; i < _options.Columns.Count; i++)
                     {
                         _options.Columns[i].Width = _options.Columns[i].OriginalWidth;
                     }
-                    _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth);
+                    _totalTableLenWidth = (_options.Columns.Count + 1 + _options.Columns.Sum(x => x.OriginalWidth)) - 1;
                     var diff = ConsolePlus.BufferWidth - 1 - _totalTableLenWidth;
                     do
                     {
                         if (diff > 0)
                         {
-                            for (ushort i = 0; i < _options.Columns.Count; i++)
+                            for (var i = 0; i < _options.Columns.Count; i++)
                             {
-                                ushort index = i;
+                                var index = i;
                                 if (i == 0 && !_options.HideSelectorRow)
                                 {
                                     continue;
@@ -313,75 +305,22 @@ namespace PPlus.Controls.Table
                             }
                         }
                     } while (diff > 0);
-                    _totalTableLenWidth = _options.Columns.Count + 1 + _options.Columns.Sum(x => x.Width);
+                    _totalTableLenWidth = (_options.Columns.Count + 1 + _options.Columns.Sum(x => x.Width))-1;
                 }
             }
 
             //ajust _tableviewport
-
-            if (_moveviewport != MoveViewport.None || ((_oldBufferWidth ?? 0) != ConsolePlus.BufferWidth && (_tableviewport.endwrite - _tableviewport.startWrite) > ConsolePlus.BufferWidth - 1))
-                {
-                    switch (_moveviewport)
-                    {
-                        case TableControl<T>.MoveViewport.None:
-                            {
-                                var end = _tableviewport.startWrite + (ConsolePlus.BufferWidth - 1);
-                                if (end > _totalTableLenWidth)
-                                {
-                                    end = _totalTableLenWidth;
-                                }
-                                _tableviewport = (_tableviewport.startWrite, end);
-                            }
-                            break;
-                        case TableControl<T>.MoveViewport.Left when _tableviewport.startWrite != 0:
-                            {
-                                var start = _tableviewport.startWrite - ConsolePlus.BufferWidth;
-                                if (start < 0)
-                                {
-                                    start = 0;
-                                }
-                                var end = start + (ConsolePlus.BufferWidth - 1);
-                                if (end > _totalTableLenWidth)
-                                {
-                                    end = _totalTableLenWidth;
-                                }
-                                _tableviewport = (start, end);
-                            }
-                            break;
-                        case TableControl<T>.MoveViewport.Right when _tableviewport.endwrite != _totalTableLenWidth:
-                            {
-                                var end = _tableviewport.endwrite + ConsolePlus.BufferWidth;
-                                if (end > _totalTableLenWidth)
-                                {
-                                    end = _totalTableLenWidth;
-                                }
-                                _tableviewport = (_tableviewport.endwrite + 1, end);
-                            }
-                            break;
-                    }
-                }
-
-            if (_options.IsColumnsNavigation)
+            if ((_tableviewport.endwrite - _tableviewport.startWrite) > ConsolePlus.BufferWidth-1)
             {
-                var columnspos = GetColumnsPosition();
-                var poscol = columnspos[_currentcol];
-                if ( (_oldBufferWidth ?? 0) != ConsolePlus.BufferWidth || _tableviewport.startWrite > poscol || _tableviewport.endwrite < poscol || poscol + _options.Columns[_currentcol].Width > _tableviewport.endwrite)
+                var end = _tableviewport.startWrite + (ConsolePlus.BufferWidth - 1);
+                if (end > _totalTableLenWidth)
                 {
-                    var start = poscol;
-                    if (start <= 2) 
-                    {
-                        start = 0;
-                    }
-                    var end = start + (ConsolePlus.BufferWidth - 1);
-                    if (end > _totalTableLenWidth)
-                    {
-                        end = _totalTableLenWidth;
-                    }
-                    _tableviewport = (start, end);
+                    end = _totalTableLenWidth;
                 }
+                _tableviewport = (_tableviewport.startWrite, end);
             }
 
-            _oldBufferWidth = ConsolePlus.BufferWidth;
+
 
             if (!_options.IsInteraction)
             {
@@ -423,24 +362,14 @@ namespace PPlus.Controls.Table
             {
                 screenBuffer.WriteLineDescriptionTable(_options.IsInteraction?_localpaginator.SelectedItem.Value:null,_currentrow,_currentcol, _options);
             }
+            screenBuffer.NewLine();
+            screenBuffer.AddBuffer($"{_totalTableLenWidth} => Tableviewport {_tableviewport.startWrite}/{_tableviewport.endwrite} : {_tableviewport.endwrite - _tableviewport.startWrite}/{ConsolePlus.BufferWidth}",Style.Default);
 
             WriteTable(screenBuffer);
 
-            var haspag = false;
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
-                haspag = true;
                 screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
-            }
-            if (_tableviewport.startWrite != 0 || _tableviewport.endwrite != _totalTableLenWidth)
-            {
-                var spc = " ";
-                if (!haspag)
-                {
-                    screenBuffer.NewLine();
-                    spc = "";
-                }
-                screenBuffer.AddBuffer($"{spc}Cols: {_tableviewport.startWrite}/{_tableviewport.endwrite} of {_totalTableLenWidth}", _options.OptStyleSchema.Pagination(), true);
             }
         }
 
@@ -487,7 +416,6 @@ namespace PPlus.Controls.Table
             var endinput = false;
             var abort = false;
             var isvalidkey = false;
-            _moveviewport = MoveViewport.None;
             do
             {
                 var keyInfo = WaitKeypress(cancellationToken);
@@ -521,8 +449,8 @@ namespace PPlus.Controls.Table
                         _currentcol--;
                     }
                     else
-                    { 
-                        _currentcol = _options.Columns.Count-1;
+                    {
+                        _currentcol = _options.Columns.Count - 1;
                     }
                     isvalidkey = true;
                 }
@@ -553,14 +481,14 @@ namespace PPlus.Controls.Table
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
                     isvalidkey = true;
                 }
-                else if (keyInfo.Value.IsPressSpecialKey(ConsoleKey.RightArrow, ConsoleModifiers.Control))
+                else if (keyInfo.Value.IsPressSpecialKey(ConsoleKey.Add, ConsoleModifiers.Control) && _totalTableLenWidth > (ConsolePlus.BufferWidth-1))
                 {
-                    _moveviewport = MoveViewport.Right;
-                    isvalidkey = true;
-                }
-                else if (keyInfo.Value.IsPressSpecialKey(ConsoleKey.LeftArrow, ConsoleModifiers.Control))
-                {
-                    _moveviewport = MoveViewport.Left;
+                    var end = (_tableviewport.endwrite + 1) + (ConsolePlus.BufferWidth-1);
+                    if (end > _totalTableLenWidth)
+                    {
+                        end = _totalTableLenWidth;
+                    }
+                    _tableviewport = new(_tableviewport.endwrite+1, end);
                     isvalidkey = true;
                 }
                 else
@@ -601,13 +529,12 @@ namespace PPlus.Controls.Table
 
         #region IControlTable
 
-        public IControlTable<T> AutoFill(ushort? minwidth)
+        public IControlTable<T> AutoFill()
         {
             if (_options.Columns.Count > 0)
             {
                 throw new PromptPlusException($"AutoFill cannot be run with AddColumn");
             }
-            _options.MinColWidth = minwidth;
             _options.AutoFill = true;
             var colpropInfo = typeof(T).GetProperties();
             for (int i = 0; i < colpropInfo.Length; i++)
@@ -637,18 +564,14 @@ namespace PPlus.Controls.Table
                     {
                         tit = tit[..byte.MaxValue];
                     }
-                    var w = tit.Trim().Length;
-                    if (tit.Trim().Length < (_options.MinColWidth ?? tit.Trim().Length))
-                    {
-                        w = _options.MinColWidth?? tit.Trim().Length;
-                    }
+
                     _options.Columns.Add(new ItemItemColumn<T>()
                     {
                         AlignCol = Alignment.Left,
-                        Field = GenerateLambdaField(colpropInfo[i].Name).Compile(),
+                        Field = Generate(colpropInfo[i].Name).Compile(),
                         Format = null,
-                        Width = w,
-                        OriginalWidth = w,
+                        Width = tit.Trim().Length,
+                        OriginalWidth = tit.Trim().Length,
                         TextCrop = false,
                         Title = tit,
                         AlignTitle = Alignment.Center,
@@ -661,7 +584,7 @@ namespace PPlus.Controls.Table
             return this;
         }
 
-        public IControlTable<T> AddColumn(Expression<Func<T, object>> field, ushort width, Func<object, string> format = null, Alignment alignment = Alignment.Left, string? title = null, Alignment titlealignment = Alignment.Center, bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null)
+        public IControlTable<T> AddColumn(Expression<Func<T, object>> field, int width, Func<object, string> format = null, Alignment alignment = Alignment.Left, string? title = null, Alignment titlealignment = Alignment.Center, bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null)
         {
             if (_options.AutoFill)
             {
@@ -692,6 +615,7 @@ namespace PPlus.Controls.Table
             {
                 throw new PromptPlusException($"Expression field must be UnaryExpression", ex);
             }
+
             var w = (!titlereplaceswidth ? width : (width < tit.Trim().Length) ? tit.Trim().Length : width);
 
             _options.Columns.Add(new ItemItemColumn<T>() 
@@ -762,7 +686,7 @@ namespace PPlus.Controls.Table
             return this;
         }
 
-        public IControlTable<T> AutoFit(params ushort[] indexColumn)
+        public IControlTable<T> AutoFit(params int[] indexColumn)
         {
             if (_options.AutoFill)
             {
@@ -828,7 +752,7 @@ namespace PPlus.Controls.Table
             return this;
         }
 
-        public IControlTable<T> FilterByColumns(FilterMode filter = FilterMode.Contains, params ushort[] indexColumn)
+        public IControlTable<T> FilterByColumns(FilterMode filter = FilterMode.Contains, params int[] indexColumn)
         {
             if (filter == FilterMode.Disabled)
             {
@@ -938,33 +862,13 @@ namespace PPlus.Controls.Table
 
         #endregion
 
-        private List<int> GetColumnsPosition()
-        {
-            var skp = 0;
-            var start = 0;
-            var result = new List<int>();
-            if (!_options.HideSelectorRow)
-            {
-                skp = 1;
-                start = 2;
-                result.Add(0);
-            }
-            foreach (var item in _options.Columns.Skip(skp))
-            {
-                result.Add(start);
-                start += item.Width + 1;
-            }
-            return result;
-        }
-
-        private static Expression<Func<T, object>> GenerateLambdaField(string property_name)
+        private static Expression<Func<T, object>> Generate(string property_name)
         {
             var parameter = Expression.Parameter(typeof(T));
 
             return Expression.Lambda<Func<T, object>>(
                 Expression.Convert(Expression.Property(parameter, property_name), typeof(object)), parameter);
         }
-
         private static string GetNameUnaryExpression(Expression<Func<T, object>> exp)
         {
             if (exp.Body is not MemberExpression body)
@@ -990,7 +894,7 @@ namespace PPlus.Controls.Table
                         if (value.Length < maxlenght)
                         {
                             var spc = new string(' ', (maxlenght - value.Length) / 2);
-                            value = $"{spc}{value}{spc} ".PadRight(maxlenght - 2);
+                            value = $"{spc}{value}{spc}".PadRight(maxlenght);
                         }
                     }
                     break;
@@ -1003,20 +907,70 @@ namespace PPlus.Controls.Table
             }
             return value;
         }
-
-        private void BuildLineColumn(ScreenBuffer screenBuffer,char startln,char sepln, char endln, char contentln)
+        private static List<List<StringStyle>> BuildRenderText(string value, Style style)
         {
+            return new List<List<StringStyle>>
+            {
+                new(){ new StringStyle(value, style) }
+            };
+        }
+
+        private List<List<StringStyle>> BuildRenderLineColumn(char startln, char sepln, char endln, char contentln)
+        {
+            var result = new List<List<StringStyle>>
+            {
+                new()
+            };
             var stl = _options.GridStyle;
-            if ( _options.Layout == TableLayout.HideGrid)
+            if (_options.Layout == TableLayout.HideGrid)
             {
                 stl = Style.Default;
             }
-            screenBuffer.AddBuffer($"{startln}{new string(contentln, _options.Columns[0].Width)}", stl);
+            result[0].Add(new StringStyle($"{startln}{new string(contentln, _options.Columns[0].Width)}", stl, true));
             foreach (var item in _options.Columns.Skip(1))
             {
-                screenBuffer.AddBuffer($"{sepln}{new string(contentln, item.Width)}", stl);
+                result[0].Add(new StringStyle($"{sepln}{new string(contentln, item.Width)}", stl,false));
             }
-            screenBuffer.AddBuffer(endln, stl);
+            result[0].Add(new StringStyle(endln.ToString(), stl, false));
+            return result;
+        }
+
+        private void WriteLineBuildRender(ScreenBuffer screenBuffer, List<List<StringStyle>> buidertext, int start, int end, bool hasnewline = true)
+        {
+            foreach (var item1 in buidertext)
+            {
+                if (hasnewline)
+                {
+                    screenBuffer.NewLine();
+                    screenBuffer.AddBuffer("", Style.Default, false, true);
+                }
+                var cur = (int)ConsolePlus.PadLeft;
+                var aux = cur;
+                foreach (var item2 in item1)
+                {
+                    aux += item2.Width;
+                    if (aux < start)
+                    {
+                        continue;
+                    }
+                    StringStyle valuetext = item2;
+                    if (valuetext.Width > start)
+                    {
+                        valuetext = new StringStyle(valuetext.Text[start..], valuetext.Style);
+                    }
+                    if (cur + valuetext.Width > ConsolePlus.BufferWidth-1)
+                    { 
+                        valuetext = new StringStyle(valuetext.Text.Substring(0, ConsolePlus.BufferWidth-1-cur), valuetext.Style);
+                    }
+                    valuetext = new StringStyle(valuetext.Text, valuetext.Style.Overflow(Overflow.Crop),true,false);
+                    screenBuffer.Add(valuetext);
+                    cur += valuetext.Width;
+                    if (cur >= end)
+                    {
+                        break;
+                    }
+                }
+            }
         }
 
         private object GetValueColumn(int column, ItemTableRow<T> item)
@@ -1088,7 +1042,7 @@ namespace PPlus.Controls.Table
             }
             else
             {
-                for (ushort i = 0; i < _options.Columns.Count; i++)
+                for (var i = 0; i < _options.Columns.Count; i++)
                 {
                     if (i < skip || !_options.FilterColumns.Contains(i))
                     {
@@ -1156,61 +1110,30 @@ namespace PPlus.Controls.Table
 
         private void WriteTable(ScreenBuffer screenBuffer)
         {
-            var sb = new ScreenBuffer();
-            WriteTableTitle(sb);
-            WriteTableHeader(sb);
-            WriteTableRows(sb);
-            WriteTableFooter(sb);
-            var pos = (int)ConsolePlus.PadLeft;
-            foreach (var item in sb.Buffer)
-            {
-                if (item.Text == Environment.NewLine)
-                {
-                    pos = ConsolePlus.PadLeft;
-                    screenBuffer.AddBuffer(item.Text, item.Style, true,true);
-                    continue;
-                }
-                if (pos >= _tableviewport.endwrite)
-                {
-                    continue;
-                }
-                if (pos + item.Width < _tableviewport.startWrite)
-                {
-                    pos += item.Width;
-                }
-                else
-                {
-                    var strb = new StringBuilder();
-                    foreach (var chartext in item.Text)
-                    {
-                        pos++;
-                        if (pos < _tableviewport.startWrite)
-                        {
-                            continue;
-                        }
-                        strb.Append(chartext);
-                        if (pos >= _tableviewport.endwrite)
-                        {
-                            break;
-                        }
-                    }
-                    screenBuffer.AddBuffer(strb.ToString(), item.Style, true, false);
-                }
-            }
+            WriteTableTitle(screenBuffer);
+            WriteTableHeader(screenBuffer);
+            WriteTableRows(screenBuffer);
+            WriteTableFooter(screenBuffer);
+        }
+
+        private List<List<StringStyle>> WriteLineColumn(char startln, char sepln, char endln, char contentln)
+        {
+            return BuildRenderLineColumn(startln, sepln, endln, contentln);
         }
 
         private void WriteTableTitle(ScreenBuffer screenBuffer)
         {
+            var resultbuild = new List<List<StringStyle>>();
+
             var tit = _options.Title;
             if (_options.TitleMode == TableTitleMode.InLine)
             {
                 if (string.IsNullOrEmpty(tit))
                 {
-                    screenBuffer.NewLine();
                     switch (_options.Layout)
                     {
                         case TableLayout.HideGrid:
-                            BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                            resultbuild.AddRange(WriteLineColumn(' ', ' ', ' ', ' '));
                             break;
                         case TableLayout.SingleGridFull:
                         case TableLayout.SingleGridSoft:
@@ -1218,16 +1141,16 @@ namespace PPlus.Controls.Table
                             {
                                 if (_options.Layout == TableLayout.SingleGridFull)
                                 {
-                                    BuildLineColumn(screenBuffer, '┌', '┬', '┐', '─');
+                                    resultbuild.AddRange(WriteLineColumn('┌', '┬', '┐', '─'));
                                 }
                                 else
                                 {
-                                    BuildLineColumn(screenBuffer, '┌', '─', '┐', '─');
+                                    resultbuild.AddRange(WriteLineColumn('┌', '─', '┐', '─'));
                                 }
                             }
                             else
                             {
-                                BuildLineColumn(screenBuffer, '┌', '┬', '┐', '─');
+                                resultbuild.AddRange(WriteLineColumn('┌', '┬', '┐', '─'));
                             }
                             break;
                         case TableLayout.DoubleGridFull:
@@ -1236,16 +1159,16 @@ namespace PPlus.Controls.Table
                             {
                                 if (_options.Layout == TableLayout.DoubleGridFull)
                                 {
-                                    BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                                    resultbuild.AddRange(WriteLineColumn('╔', '╦', '╗', '═'));
                                 }
                                 else
                                 {
-                                    BuildLineColumn(screenBuffer, '╔', '═', '╗', '═');
+                                    resultbuild.AddRange(WriteLineColumn('╔', '═', '╗', '═'));
                                 }
                             }
                             else
                             {
-                                BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                                resultbuild.AddRange(WriteLineColumn('╔', '╦', '╗', '═'));
                             }
                             break;
                         case TableLayout.AsciiSingleGridFull:
@@ -1254,16 +1177,16 @@ namespace PPlus.Controls.Table
                             {
                                 if (_options.Layout == TableLayout.AsciiSingleGridFull)
                                 {
-                                    BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                                    resultbuild.AddRange(WriteLineColumn('+', '+', '+', '-'));
                                 }
                                 else
                                 {
-                                    BuildLineColumn(screenBuffer, '+', '-', '+', '-');
+                                    resultbuild.AddRange(WriteLineColumn('+', '-', '+', '-'));
                                 }
                             }
                             else
                             {
-                                BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                                resultbuild.AddRange(WriteLineColumn('+', '+', '+', '-'));
                             }
                             break;
                         case TableLayout.AsciiDoubleGridFull:
@@ -1272,26 +1195,27 @@ namespace PPlus.Controls.Table
                             {
                                 if (_options.Layout == TableLayout.AsciiDoubleGridFull)
                                 {
-                                    BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                                    resultbuild.AddRange(WriteLineColumn('+', '+', '+', '='));
                                 }
                                 else
                                 {
-                                    BuildLineColumn(screenBuffer, '+', '=', '+', '=');
+                                    resultbuild.AddRange(WriteLineColumn('+', '=', '+', '='));
                                 }
                             }
                             else
                             {
-                                BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                                resultbuild.AddRange(WriteLineColumn('+', '+', '+', '='));
                             }
                             break;
                         default:
                             throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
                     }
+                    WriteLineBuildRender(screenBuffer, resultbuild, _tableviewport.startWrite, _tableviewport.endwrite);
                     return;
                 }
-                screenBuffer.NewLine();
-                tit = TableControl<T>.AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth);
-                screenBuffer.AddBuffer(tit, _options.TitleStyle);
+                tit = AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth);
+                resultbuild.AddRange(BuildRenderText(tit, _options.TitleStyle));
+                WriteLineBuildRender(screenBuffer, resultbuild, _tableviewport.startWrite, _tableviewport.endwrite,_options.IsInteraction);
                 tit = string.Empty;
             }
             WriteTopTable(screenBuffer);
@@ -1303,8 +1227,9 @@ namespace PPlus.Controls.Table
 
         private void WriteTitleInRow(string tit, ScreenBuffer screenBuffer)
         {
-            screenBuffer.NewLine();
-            tit = TableControl<T>.AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth - 2);
+            var resultbuild = new List<List<StringStyle>>();
+
+            tit = AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth - 2);
             var sep = ' ';
             switch (_options.Layout)
             {
@@ -1327,15 +1252,17 @@ namespace PPlus.Controls.Table
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
             }
-            screenBuffer.AddBuffer(sep, _options.GridStyle);
-            screenBuffer.AddBuffer(tit, _options.TitleStyle);
-            screenBuffer.AddBuffer(sep, _options.GridStyle);
 
-            screenBuffer.NewLine();
+            var aux = BuildRenderText(sep.ToString(), _options.GridStyle);
+            aux[0].AddRange(BuildRenderText(tit, _options.TitleStyle)[0]);
+            aux[0].AddRange(BuildRenderText(sep.ToString(), _options.GridStyle)[0]);
+
+            resultbuild.AddRange(aux);
+
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
-                    BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                    resultbuild.AddRange(WriteLineColumn(' ', ' ', ' ', ' '));
                     break;
                 case TableLayout.SingleGridFull:
                 case TableLayout.SingleGridSoft:
@@ -1343,16 +1270,16 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.SingleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '├', '┬', '┤', '─');
+                            resultbuild.AddRange(WriteLineColumn('├', '┬', '┤', '─'));
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '├', '─', '┤', '─');
+                            resultbuild.AddRange(WriteLineColumn('├', '─', '┤', '─'));
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '├', '┬', '┤', '─');
+                        resultbuild.AddRange(WriteLineColumn('├', '┬', '┤', '─'));
                     }
                     break;
                 case TableLayout.DoubleGridFull:
@@ -1361,16 +1288,16 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.DoubleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '╠', '╦', '╣', '═');
+                            resultbuild.AddRange(WriteLineColumn('╠', '╦', '╣', '═'));
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '╠', '═', '╣', '═');
+                            resultbuild.AddRange(WriteLineColumn('╠', '═', '╣', '═'));
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '╠', '╦', '╣', '═');
+                        resultbuild.AddRange(WriteLineColumn('╠', '╦', '╣', '═'));
                     }
                     break;
                 case TableLayout.AsciiSingleGridFull:
@@ -1379,16 +1306,16 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.AsciiSingleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '|', '+', '|', '-');
+                            resultbuild.AddRange(WriteLineColumn('|', '+', '|', '-'));
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '|', '-', '|', '-');
+                            resultbuild.AddRange(WriteLineColumn('|', '-', '|', '-'));
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '|', '+', '|', '-');
+                        resultbuild.AddRange(WriteLineColumn('|', '+', '|', '-'));
                     }
                     break;
                 case TableLayout.AsciiDoubleGridFull:
@@ -1397,56 +1324,59 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.AsciiDoubleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '|', '+', '|', '=');
+                            resultbuild.AddRange(WriteLineColumn('|', '+', '|', '='));
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '|', '=', '|', '=');
+                            resultbuild.AddRange(WriteLineColumn('|', '=', '|', '='));
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '|', '+', '|', '=');
+                        resultbuild.AddRange(WriteLineColumn('|', '+', '|', '='));
                     }
                     break;
             }
+            WriteLineBuildRender(screenBuffer, resultbuild, _tableviewport.startWrite, _tableviewport.endwrite);
         }
 
         private void WriteTopTable(ScreenBuffer screenBuffer)
         {
-            screenBuffer.NewLine();
+            var resultbuild = new List<List<StringStyle>>();
+
             if (_options.TitleMode == TableTitleMode.InRow && !string.IsNullOrEmpty(_options.Title))
             {
                 switch (_options.Layout)
                 {
                     case TableLayout.HideGrid:
-                        BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                        resultbuild.AddRange(WriteLineColumn(' ', ' ', ' ', ' '));
                         break;
                     case TableLayout.SingleGridFull:
                     case TableLayout.SingleGridSoft:
-                        BuildLineColumn(screenBuffer, '┌', '─', '┐', '─');
+                        resultbuild.AddRange(WriteLineColumn('┌', '─', '┐', '─'));
                         break;
                     case TableLayout.DoubleGridFull:
                     case TableLayout.DoubleGridSoft:
-                        BuildLineColumn(screenBuffer, '╔', '═', '╗', '═');
+                        resultbuild.AddRange(WriteLineColumn('╔', '═', '╗', '═'));
                         break;
                     case TableLayout.AsciiSingleGridFull:
                     case TableLayout.AsciiSingleGridSoft:
-                        BuildLineColumn(screenBuffer, '+', '-', '+', '-');
+                        resultbuild.AddRange(WriteLineColumn('+', '-', '+', '-'));
                         break;
                     case TableLayout.AsciiDoubleGridFull:
                     case TableLayout.AsciiDoubleGridSoft:
-                        BuildLineColumn(screenBuffer, '+', '=', '+', '=');
+                        resultbuild.AddRange(WriteLineColumn('+', '=', '+', '='));
                         break;
                     default:
                         throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
                 }
+                WriteLineBuildRender(screenBuffer, resultbuild, _tableviewport.startWrite, _tableviewport.endwrite, _options.IsInteraction);
                 return;
             }
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
-                    BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                    resultbuild.AddRange(WriteLineColumn(' ', ' ', ' ', ' '));
                     break;
                 case TableLayout.SingleGridFull:
                 case TableLayout.SingleGridSoft:
@@ -1454,16 +1384,16 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.SingleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '┌', '┬', '┐', '─');
+                            resultbuild.AddRange(WriteLineColumn('┌', '┬', '┐', '─'));
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '┌', '─', '┐', '─');
+                            resultbuild.AddRange(WriteLineColumn('┌', '─', '┐', '─'));
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '┌', '┬', '┐', '─');
+                        resultbuild.AddRange(WriteLineColumn('┌', '┬', '┐', '─'));
                     }
                     break;
                 case TableLayout.DoubleGridFull:
@@ -1472,16 +1402,16 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.DoubleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                            resultbuild.AddRange(WriteLineColumn('╔', '╦', '╗', '═'));
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '╔', '═', '╗', '═');
+                            resultbuild.AddRange(WriteLineColumn('╔', '═', '╗', '═'));
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                        resultbuild.AddRange(WriteLineColumn('╔', '╦', '╗', '═'));
                     }
                     break;
                 case TableLayout.AsciiSingleGridFull:
@@ -1490,16 +1420,16 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.AsciiSingleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                            resultbuild.AddRange(WriteLineColumn('+', '+', '+', '-'));
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '+', '-', '+', '-');
+                            resultbuild.AddRange(WriteLineColumn('+', '-', '+', '-'));
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                        resultbuild.AddRange(WriteLineColumn('+', '+', '+', '-'));
                     }
                     break;
                 case TableLayout.AsciiDoubleGridFull:
@@ -1508,21 +1438,22 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.AsciiDoubleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                            resultbuild.AddRange(WriteLineColumn('+', '+', '+', '='));
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '+', '=', '+', '=');
+                            resultbuild.AddRange(WriteLineColumn('+', '=', '+', '='));
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                        resultbuild.AddRange(WriteLineColumn('+', '+', '+', '='));
                     }
                     break;
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
             }
+            WriteLineBuildRender(screenBuffer, resultbuild, _tableviewport.startWrite, _tableviewport.endwrite);
         }
 
         private void WriteTableHeader(ScreenBuffer screenBuffer)
@@ -1531,7 +1462,7 @@ namespace PPlus.Controls.Table
             {
                 return;
             }
-            screenBuffer.NewLine();
+            var resultbuild = new List<List<StringStyle>>();
             var col = -1;
             var sepstart = " ";
             var sepend = " ";
@@ -1559,49 +1490,54 @@ namespace PPlus.Controls.Table
                     sepend = "|";
                     break;
             }
+
+            var aux = new List<List<StringStyle>>() { new() };
+
             foreach (var item in _options.Columns)
             {
                 col++;
-                screenBuffer.AddBuffer(sepstart, stl);
+                aux[0].AddRange(BuildRenderText(sepstart, stl)[0]);
                 if (_options.IsColumnsNavigation && _options.IsInteraction && col == _currentcol)
                 {
                     var h = TableControl<T>.AlignmentText($"{_options.Symbol(SymbolType.Selector)} {item.Title.Trim()}", item.AlignTitle, item.Width);
-                    screenBuffer.AddBuffer(h, _options.SelectedColHeader);
+                    aux[0].AddRange(BuildRenderText(h, _options.SelectedColHeader)[0]);
                 }
                 else
                 {
                     var h = TableControl<T>.AlignmentText(item.Title.Trim(), item.AlignTitle, item.Width);
-                    screenBuffer.AddBuffer(h, _options.HeaderStyle);
+                    aux[0].AddRange(BuildRenderText(h, _options.HeaderStyle)[0]);
                 }
             }
-            screenBuffer.AddBuffer(sepend, stl);
-            screenBuffer.NewLine();
+            aux[0].AddRange(BuildRenderText(sepend, stl)[0]);
+            resultbuild.AddRange(aux);
+
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
-                    BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                    resultbuild.AddRange(WriteLineColumn(' ', ' ', ' ', ' '));
                     break;
                 case TableLayout.SingleGridFull:
-                    BuildLineColumn(screenBuffer, '├', '┼', '┤', '─');
+                    resultbuild.AddRange(WriteLineColumn('├', '┼', '┤', '─'));
                     break;
                 case TableLayout.SingleGridSoft:
-                    BuildLineColumn(screenBuffer, '├', '┴', '┤', '─');
+                    resultbuild.AddRange(WriteLineColumn('├', '┴', '┤', '─'));
                     break;
                 case TableLayout.DoubleGridFull:
-                    BuildLineColumn(screenBuffer, '╠', '╬', '╣', '═');
+                    resultbuild.AddRange(WriteLineColumn('╠', '╬', '╣', '═'));
                     break;
                 case TableLayout.DoubleGridSoft:
-                    BuildLineColumn(screenBuffer, '╠', '╩', '╣', '═');
+                    resultbuild.AddRange(WriteLineColumn('╠', '╩', '╣', '═'));
                     break;
                 case TableLayout.AsciiSingleGridFull:
                 case TableLayout.AsciiSingleGridSoft:
-                    BuildLineColumn(screenBuffer, '|', '+', '|', '-');
+                    resultbuild.AddRange(WriteLineColumn('|', '+', '|', '-'));
                     break;
                 case TableLayout.AsciiDoubleGridFull:
                 case TableLayout.AsciiDoubleGridSoft:
-                    BuildLineColumn(screenBuffer, '|', '+', '|', '=');
+                    resultbuild.AddRange(WriteLineColumn('|', '+', '|', '='));
                     break;
             }
+            WriteLineBuildRender(screenBuffer, resultbuild, _tableviewport.startWrite, _tableviewport.endwrite);
         }
 
         private void WriteTableRows(ScreenBuffer screenBuffer)
@@ -1617,10 +1553,10 @@ namespace PPlus.Controls.Table
                 subset = _localpaginator.ToSubset();
             }
             var pos = 0;
+            var resultbuild = new List<List<StringStyle>>();
             foreach (var item in subset)
             {
                 pos++;
-                screenBuffer.NewLine();
                 var isseleted = false;
                 var isdisabled = false;
                 if (_options.IsInteraction)
@@ -1672,23 +1608,23 @@ namespace PPlus.Controls.Table
                         sepcol = " ";
                         break;
                 }
-
                 for (int i = 0; i < lines; i++)
                 {
+                    var auxline = new List<List<StringStyle>>() { new() };
                     for (int itemcol = 0; itemcol < cols.Count; itemcol++)
                     {
                         if (itemcol == 0)
                         {
-                            screenBuffer.AddBuffer(sep, stl);
+                            auxline[0].AddRange(BuildRenderText(sep, stl)[0]);
                         }
                         else
-                        { 
-                            screenBuffer.AddBuffer(sepcol, stl);
+                        {
+                            auxline[0].AddRange(BuildRenderText(sepcol, stl)[0]);
                         }
                         string col = null;
                         if (cols[itemcol].Length > i)
                         {
-                            col = TableControl<T>.AlignmentText(cols[itemcol][i], _options.Columns[itemcol].AlignCol, _options.Columns[itemcol].Width);
+                            col = AlignmentText(cols[itemcol][i], _options.Columns[itemcol].AlignCol, _options.Columns[itemcol].Width);
                         }
                         else
                         {
@@ -1704,16 +1640,16 @@ namespace PPlus.Controls.Table
                             {
                                 if (itemcol == _currentcol || !_options.HideSelectorRow && itemcol == 0)
                                 {
-                                    screenBuffer.AddBuffer(col, _options.SelectedContentStyle, true);
+                                    auxline[0].AddRange(BuildRenderText(col, _options.SelectedContentStyle)[0]);
                                 }
                                 else
                                 {
-                                    screenBuffer.AddBuffer(col, _options.ContentStyle, true);
+                                    auxline[0].AddRange(BuildRenderText(col, _options.ContentStyle)[0]);
                                 }
                             }
                             else
                             {
-                                screenBuffer.AddBuffer(col, _options.SelectedContentStyle, true);
+                                auxline[0].AddRange(BuildRenderText(col, _options.SelectedContentStyle)[0]);
                             }
                         }
                         else
@@ -1723,88 +1659,87 @@ namespace PPlus.Controls.Table
                             {
                                 stld = _options.DisabledContentStyle;
                             }
-                            screenBuffer.AddBuffer(col, stld, true);
+                            auxline[0].AddRange(BuildRenderText(col, stld)[0]);
                         }
                     }
-                    screenBuffer.AddBuffer(sep, stl);
-                    if (lines > 1 && i != lines - 1)
-                    {
-                        screenBuffer.NewLine();
-                    }
+                    auxline[0].AddRange(BuildRenderText(sep, stl)[0]);
+                    resultbuild.AddRange(auxline);
                 }
 
                 if (_options.SeparatorRows && pos < subset.Count)
                 {
-                    screenBuffer.NewLine();
                     switch (_options.Layout)
                     {
                         case TableLayout.HideGrid:
-                            BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                            resultbuild.AddRange(WriteLineColumn(' ', ' ', ' ', ' '));
                             break;
                         case TableLayout.SingleGridFull:
-                            BuildLineColumn(screenBuffer, '├', '┼', '┤', '─');
+                            resultbuild.AddRange(WriteLineColumn('├', '┼', '┤', '─'));
                             break;
                         case TableLayout.SingleGridSoft:
-                            BuildLineColumn(screenBuffer, '├', '─', '┤', '─');
+                            resultbuild.AddRange(WriteLineColumn('├', '─', '┤', '─'));
                             break;
                         case TableLayout.DoubleGridFull:
-                            BuildLineColumn(screenBuffer, '╠', '╬', '╣', '═');
+                            resultbuild.AddRange(WriteLineColumn('╠', '╬', '╣', '═'));
                             break;
                         case TableLayout.DoubleGridSoft:
-                            BuildLineColumn(screenBuffer, '╠', '═', '╣', '═');
+                            resultbuild.AddRange(WriteLineColumn('╠', '═', '╣', '═'));
                             break;
                         case TableLayout.AsciiSingleGridFull:
-                            BuildLineColumn(screenBuffer, '|', '+', '|', '-');
+                            resultbuild.AddRange(WriteLineColumn('|', '+', '|', '-'));
                             break;
                         case TableLayout.AsciiSingleGridSoft:
-                            BuildLineColumn(screenBuffer, '|', '-', '|', '-');
+                            resultbuild.AddRange(WriteLineColumn('|', '-', '|', '-'));
                             break;
                         case TableLayout.AsciiDoubleGridFull:
-                            BuildLineColumn(screenBuffer, '|', '+', '|', '=');
+                            resultbuild.AddRange(WriteLineColumn('|', '+', '|', '='));
                             break;
                         case TableLayout.AsciiDoubleGridSoft:
-                            BuildLineColumn(screenBuffer, '|', '=', '|', '=');
+                            resultbuild.AddRange(WriteLineColumn('|', '=', '|', '='));
                             break;
                     }
                 }
             }
+            WriteLineBuildRender(screenBuffer, resultbuild, _tableviewport.startWrite, _tableviewport.endwrite);
         }
 
         private void WriteTableFooter(ScreenBuffer screenBuffer)
         {
-            screenBuffer.NewLine();
+            var resultbuild = new List<List<StringStyle>>();
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
-                    BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
+                    resultbuild.AddRange(WriteLineColumn(' ', ' ', ' ', ' '));
                     break;
                 case TableLayout.SingleGridFull:
-                    BuildLineColumn(screenBuffer, '└', '┴', '┘', '─');
+                    resultbuild.AddRange(WriteLineColumn('└', '┴', '┘', '─'));
                     break;
                 case TableLayout.SingleGridSoft:
-                    BuildLineColumn(screenBuffer, '└', '─', '┘', '─');
+                    resultbuild.AddRange(WriteLineColumn('└', '─', '┘', '─'));
                     break;
                 case TableLayout.DoubleGridFull:
-                    BuildLineColumn(screenBuffer, '╚', '╩', '╝', '═');
+                    resultbuild.AddRange(WriteLineColumn('╚', '╩', '╝', '═'));
                     break;
                 case TableLayout.DoubleGridSoft:
-                    BuildLineColumn(screenBuffer, '╚', '═', '╝', '═');
+                    resultbuild.AddRange(WriteLineColumn('╚', '═', '╝', '═'));
                     break;
                 case TableLayout.AsciiSingleGridFull:
-                    BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                    resultbuild.AddRange(WriteLineColumn('+', '+', '+', '-'));
                     break;
                 case TableLayout.AsciiSingleGridSoft:
-                    BuildLineColumn(screenBuffer, '+', '-', '+', '-');
+                    resultbuild.AddRange(WriteLineColumn('+', '-', '+', '-'));
                     break;
                 case TableLayout.AsciiDoubleGridFull:
-                    BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                    resultbuild.AddRange(WriteLineColumn('+', '+', '+', '='));
                     break;
                 case TableLayout.AsciiDoubleGridSoft:
-                    BuildLineColumn(screenBuffer, '+', '=', '+', '=');
+                    resultbuild.AddRange(WriteLineColumn('+', '=', '+', '='));
                     break;
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
             }
+            WriteLineBuildRender(screenBuffer, resultbuild, _tableviewport.startWrite, _tableviewport.endwrite);
+
         }
 
         private bool IsEnnabled(ItemTableRow<T> item)

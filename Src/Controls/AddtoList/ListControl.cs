@@ -171,9 +171,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlList AllowDuplicate()
+        public IControlList AllowDuplicate(bool value = true)
         {
-            _options.AllowDuplicate = true;
+            _options.AllowDuplicate = value;
             return this;
         }
 

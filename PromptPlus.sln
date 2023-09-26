@@ -117,7 +117,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{04
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlusTemplate", "Template\PromptPlusTemplate\PromptPlusTemplate.csproj", "{E713CD59-5AB5-40AA-80B3-436D0C6511DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableBasicSamples", "Samples\TableBasicSamples\TableBasicSamples.csproj", "{C5189623-17BD-472E-8A11-832115ABD152}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableSamples", "Samples\TableBasicSamples\TableSamples.csproj", "{C5189623-17BD-472E-8A11-832115ABD152}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

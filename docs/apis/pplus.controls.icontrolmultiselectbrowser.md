@@ -259,7 +259,7 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all folders
 
 ### <a id="methods-nospinner"/>**NoSpinner()**
 
-Not show Spinner
+Not show Spinner.
 
 ```csharp
 IControlMultiSelectBrowser NoSpinner()
@@ -402,7 +402,7 @@ the function
 
 ### <a id="methods-showcurrentfolder"/>**ShowCurrentFolder(Boolean)**
 
-Append name current folder on description
+Append name current folder on description. Default value true
 
 ```csharp
 IControlMultiSelectBrowser ShowCurrentFolder(bool value)

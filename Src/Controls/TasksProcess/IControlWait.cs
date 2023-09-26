@@ -46,10 +46,11 @@ namespace PPlus.Controls
         IControlWait<T> TaskTitle(string value);
 
         /// <summary>
-        /// Define if show Elapsed Time for each task.
+        /// Define if show Elapsed Time for each task.Default false.
         /// </summary>
+        /// <param name="value">show Elapsed Time</param>
         /// <returns><see cref="IControlWait{T}"/></returns>
-        IControlWait<T> ShowElapsedTime();
+        IControlWait<T> ShowElapsedTime(bool value = true);
 
         /// <summary>
         /// Custom config the control.

@@ -76,10 +76,11 @@ namespace PPlus.Controls
         IControlCalendar Range(DateTime minvalue, DateTime maxvalue);
 
         /// <summary>
-        /// Disabled Weekends.
+        /// Disabled Weekends.Default false;
         /// </summary>
+        /// <param name="value">Disabled weekends</param>
         /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar DisabledWeekends();
+        IControlCalendar DisabledWeekends(bool value = true);
 
         /// <summary>
         /// Add scope(Note/Highlight/Disabled) items to calendar. 

@@ -131,13 +131,13 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelectBrowser AcceptHiddenAttributes(bool value)
+        public IControlMultiSelectBrowser AcceptHiddenAttributes(bool value = true)
         {
             _options.AcceptHiddenAttributes = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser AcceptSystemAttributes(bool value)
+        public IControlMultiSelectBrowser AcceptSystemAttributes(bool value = true)
         {
             _options.AcceptSystemAttributes = value;
             return this;

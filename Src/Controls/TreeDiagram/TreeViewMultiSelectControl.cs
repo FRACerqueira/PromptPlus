@@ -174,9 +174,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewMultiSelect<T> ExpandAll()
+        public IControlTreeViewMultiSelect<T> ExpandAll(bool value = true)
         {
-            _options.ExpandAll = true;
+            _options.ExpandAll = value;
             return this;
         }
 
