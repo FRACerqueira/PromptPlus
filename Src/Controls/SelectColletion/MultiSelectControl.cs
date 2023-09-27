@@ -59,7 +59,7 @@ namespace PPlus.Controls
                 int index;
                 do
                 {
-                    index = _options.Items.FindIndex(x => x.IsGroupHeader ? false : _options.EqualItems(x.Value, item));
+                    index = _options.Items.FindIndex(x => !x.IsGroupHeader && _options.EqualItems(x.Value, item));
                     if (index >= 0)
                     {
                         _options.Items.RemoveAt(index);
@@ -71,7 +71,7 @@ namespace PPlus.Controls
             foreach (var item in _options.DisableItems)
             {
                 List<ItemMultSelect<T>> founds;
-                founds = _options.Items.FindAll(x => x.IsGroupHeader ? false : _options.EqualItems(x.Value, item));
+                founds = _options.Items.FindAll(x => !x.IsGroupHeader && _options.EqualItems(x.Value, item));
                 if (founds.Any())
                 {
                     foreach (var itemfound in founds)

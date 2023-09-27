@@ -907,7 +907,7 @@ namespace PPlus.Controls
             }
             if (item.IsParentLast())
             {
-                auxline[auxline.Length - 1] = _options.Symbol(SymbolType.TreeLinecorner);
+                auxline[^1] = _options.Symbol(SymbolType.TreeLinecorner);
             }
             foreach (var itemaux in auxline)
             {

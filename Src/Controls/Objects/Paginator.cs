@@ -110,15 +110,7 @@ namespace PPlus.Controls.Objects
                 {
                     return _filteredItems.Length;
                 }
-                var qtd = _filteredItems.Length;
-                foreach (var item in _filteredItems)
-                {
-                    if (!_countvalidator.Invoke(item))
-                    { 
-                        qtd--;
-                    }
-                }
-                return qtd;
+                return _filteredItems.Length - _filteredItems.Where(item => !_countvalidator.Invoke(item)).Count();
             }
         }
 

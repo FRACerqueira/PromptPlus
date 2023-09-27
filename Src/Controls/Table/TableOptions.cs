@@ -90,7 +90,7 @@ namespace PPlus.Controls
 
         public ushort[] AutoFitColumns { get; set; } = Array.Empty<ushort>();
 
-        public Dictionary<Type,Func<object, string>> FormatTypes = new();
+        public Dictionary<Type,Func<object, string>> FormatTypes { get; set; } = new();
 
         public bool IsInteraction { get; set; }
 
