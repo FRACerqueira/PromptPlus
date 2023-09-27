@@ -66,27 +66,28 @@ namespace TableSamples
             public string D31 { get; set; } = new string('x', 20);
         }
 
+        internal static MyTable[] CreateItems(int max)
+        {
+            var result = new List<MyTable>();
+            var flag = false;
+            result.Add(new MyTable { Id = 0, MyDate = DateTime.Now, MyText = $"Test0 linha1{Environment.NewLine}Test0 linha2", ComplexCol = new MyComplexCol("C0") });
+            for (int i = 1; i < max; i++)
+            {
+                flag = !flag;
+                if (flag)
+                {
+                    result.Add(new MyTable { Id = i, MyText = $"Test{i}", ComplexCol = new MyComplexCol($"C{i}") });
+                }
+                else
+                {
+                    result.Add(new MyTable { Id = i, MyDate = DateTime.Now.AddDays(i), MyText = $"Test{i} very very very very very very very very very very very very very very very long", ComplexCol = new MyComplexCol($"C{i}") });
+                }
+            }
+            return result.ToArray();
+        }
+
         static void Main()
         {
-            static MyTable[] CreateItems(int max)
-            {
-                var result = new List<MyTable>();
-                var flag = false;
-                result.Add(new MyTable { Id = 0, MyDate = DateTime.Now, MyText = $"Test0 linha1{Environment.NewLine}Test0 linha2", ComplexCol = new MyComplexCol("C0") });
-                for (int i = 1; i < max; i++)
-                {
-                    flag = !flag;
-                    if (flag)
-                    {
-                        result.Add(new MyTable { Id = i, MyText = $"Test{i}", ComplexCol = new MyComplexCol($"C{i}") });
-                    }
-                    else
-                    {
-                        result.Add(new MyTable { Id = i, MyDate = DateTime.Now.AddDays(i), MyText = $"Test{i} very very very very very very very very  long" + new string('x',150), ComplexCol = new MyComplexCol($"C{i}") });
-                    }
-                }
-                return result.ToArray();
-            }
 
             //Ensure ValueResult Culture for all controls
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
@@ -94,9 +95,10 @@ namespace TableSamples
             var data = CreateItems(20);
 
             PromptPlus.DoubleDash("Control:Table - Autofill UserInteraction basic usage");
+
             var tbl = PromptPlus.Table<MyTable>("Your Prompt", "Descripion Table")
                 .AddItems(data)
-                .AutoFill()
+                .AutoFill(0,80)
                 .AddFormatType<DateTime>(FmtDate)
                 .UserInteraction(
                     selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
@@ -112,7 +114,7 @@ namespace TableSamples
                  {
                      ctrl.AddItem(new MyTableManyCols() { MyText = "x" });
                  })
-                 .AutoFill(10)
+                 .AutoFill()
                  .AddFormatType<DateTime>(FmtDate)
                  .UserInteraction(
                      selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
@@ -138,18 +140,17 @@ namespace TableSamples
                 .Title("Test", titleMode: TableTitleMode.InRow)
                 .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled", ComplexCol = new MyComplexCol($"C{data.Length}") }, true)
                 .AddItems(data)
-                .AutoFill(10)
                 .AddColumn(field: (item) => item.Id, width: 10)
                 .AddColumn(field: (item) => item.MyDate!, width: 15/*,alignment: Alignment.Center*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text: {arg}", maxslidinglines: 5/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text1: {arg}", title: $"Mytext1", maxslidinglines: 5/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text2: {arg}", title: $"Mytext2", maxslidinglines: 5/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text3: {arg}", title: $"Mytext3", maxslidinglines: 5/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text4: {arg}", title: $"Mytext4", maxslidinglines: 5/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text5: {arg}", title: $"Mytext5", maxslidinglines: 5/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text8: {arg}", title: $"Mytext8", maxslidinglines: 5/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text9: {arg}", title: $"Mytext9", maxslidinglines: 5/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text10: {arg}", title: $"Mytext10", maxslidinglines: 5/*, textcrop:true*/)
+                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text: {arg}", maxslidinglines: 2/*, textcrop:true*/)
+                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text1: {arg}", title: $"Mytext1", maxslidinglines: 2/*, textcrop:true*/)
+                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text2: {arg}", title: $"Mytext2", maxslidinglines: 2/*, textcrop:true*/)
+                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text3: {arg}", title: $"Mytext3", maxslidinglines: 2/*, textcrop:true*/)
+                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text4: {arg}", title: $"Mytext4", maxslidinglines: 2/*, textcrop:true*/)
+                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text5: {arg}", title: $"Mytext5", maxslidinglines: 2/*, textcrop:true*/)
+                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text8: {arg}", title: $"Mytext8", maxslidinglines: 2/*, textcrop:true*/)
+                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text9: {arg}", title: $"Mytext9", maxslidinglines: 2/*, textcrop:true*/)
+                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text10: {arg}", title: $"Mytext10", maxslidinglines: 2/*, textcrop:true*/)
                 .AddColumn(field: (item) => item.ComplexCol, width: 20, format: (arg) => $"{((MyComplexCol)arg).Id}:{((MyComplexCol)arg).Name}")
                 .AddColumn(field: (item) => item.ComplexCol.Name, width: 10)
                 .AddFormatType<DateTime>(FmtDate)
@@ -170,6 +171,7 @@ namespace TableSamples
                 foreach (var iteml in typelayout)
                 {
                     var hideheaders = true;
+                    //hideheaders (true/false)
                     for (int h = 0; h < 2; h++)
                     {
                         hideheaders = !hideheaders;
@@ -178,7 +180,7 @@ namespace TableSamples
                         for (int i = 0; i < 2; i++)
                         {
                             seprow = !seprow;
-                            PromptPlus.DoubleDash($"Control:Table (Write only) - Autofill Write Table Layout({iteml}) , Title({itemt}) , sep.row({seprow}) hide headers({hideheaders})");
+                            PromptPlus.DoubleDash($"Autofill Layout({iteml}), Title({itemt}), sep.row({seprow}), hide headers({hideheaders})",style: Style.Default.Foreground(Color.Yellow));
                             var lt = (TableLayout)Enum.Parse(typeof(TableLayout), iteml.ToString()!);
                             PromptPlus.Table<MyTable>("")
                                 .Title("Test", Alignment.Center, tm)

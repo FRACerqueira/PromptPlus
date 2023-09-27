@@ -1,4 +1,4 @@
-# **Welcome to PromptPlus**
+﻿# **Welcome to PromptPlus**
 
 **Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
 
@@ -10,8 +10,11 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 **PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
 
-## What's new in V4.0.6
+## What's new in V4.1.0
 
+- New Control : Table<T> , Display data in a grid-table   
+    - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+- Improvement commands with default values ​​(all controls)
 - Bug fixed: grouped item ordering. The sort option will be ignored
 - Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
     - Affeted Controls : AddtoList/Input
@@ -92,5 +95,5 @@ PromptPlus includes code from other software released under the MIT license:
 
 - [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
 - [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
-- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandi�re.
+- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
 - [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU

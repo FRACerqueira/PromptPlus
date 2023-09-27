@@ -108,5 +108,7 @@ namespace PPlus.Controls
 
         public ushort? MinColWidth { get; set; }
 
+        public ushort? MaxColWidth { get; set; }
+
     }
 }

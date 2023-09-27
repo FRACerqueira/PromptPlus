@@ -282,6 +282,9 @@
   <data name="SliderSwitchKeyNavigator" xml:space="preserve">
     <value>Left/Right:Change, Enter:Finish</value>
   </data>
+  <data name="TableMoveCols" xml:space="preserve">
+    <value>Left/Right:Move column</value>
+  </data>
   <data name="Task" xml:space="preserve">
     <value>Task</value>
   </data>

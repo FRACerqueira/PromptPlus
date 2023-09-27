@@ -11,6 +11,7 @@ namespace PPlus.Controls.Objects
     {
         public static void UpdateCulture()
         {
+            TableMoveCols = PromptPlusResources.TableMoveCols;
             MoveToday = PromptPlusResources.MoveToday;
             MoveDays = PromptPlusResources.MoveDays;
             MoveDayWeek = PromptPlusResources.MoveDayWeek;
@@ -104,6 +105,8 @@ namespace PPlus.Controls.Objects
             Pressedkey = PromptPlusResources.PressedKey;
             AnyKey = PromptPlusResources.AnyKey;
         }
+
+        public static string TableMoveCols { get; private set; } = PromptPlusResources.TableMoveCols;
         public static string MoveToday { get; private set; } = PromptPlusResources.MoveToday;
         public static string MoveDays { get; private set; } = PromptPlusResources.MoveDays;
         public static string MoveDayWeek { get; private set; } = PromptPlusResources.MoveDayWeek;

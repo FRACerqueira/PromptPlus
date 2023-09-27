@@ -29,8 +29,11 @@
 - [Credits](#credits)
 - [API Reference](./apis/apis.md)
 
-## What's new in V4.0.6
+## What's new in V4.1.0
 
+- New Control : Table<T> , Display data in a grid-table   
+    - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+- Improvement commands with default values ​​(all controls)
 - Bug fixed: grouped item ordering. The sort option will be ignored
 - Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
     - Affeted Controls : AddtoList/Input

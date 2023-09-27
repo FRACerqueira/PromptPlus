@@ -34,23 +34,26 @@
 - [API Reference](https://fracerqueira.github.io/PromptPlus/apis/apis.html)
 
 ## What's new in the latest version
-### V4.0.6
+### V4.1.0
 [**Top**](#table-of-contents)
 
-- Bug fixed: grouped item ordering. The sort option will be ignored
+- New Control : Table<T> , Display data in a grid-table   
+    - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+- Improvement commands with default values ​​(all controls)
+- - Bug fixed: grouped item ordering. The sort option will be ignored
 - Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
     - Affeted Controls : AddtoList/Input
 - Improvement : Direct writes to standard error output stream
     - New Commands : OutputError()
-    - Sample with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
+    - Samples with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
 - New feature: Escaping format characters color 
     - Global property : IgnoreColorTokens
     - New Commands : EscapeColorTokens()/AcceptColorTokens()
-    - Sample with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
+    - Samples with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
 - New feature: Group items in the select control
-    - Sample with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
+    - Samples with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
 - New feature: Add separator line in the select control
-    - Sample with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
+    - Samples with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
   
 **Special thanks to [ividyon](https://github.com/ividyon) for suggesting improvements and actively participating in this release**
      
