@@ -146,6 +146,12 @@ dotnet run --project [name of sample]
 
 For each snapshot, the title is **name of project** sample in folder **samples**
 
+### Table
+
+[**Top**](#table-of-contents)  | [TableSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+![](./docs/images/Table1.gif)
+
+
 ### Pipeline
 
 [**Top**](#table-of-contents)  | [PipelineSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/PipelineSamples)

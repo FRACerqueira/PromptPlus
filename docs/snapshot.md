@@ -12,6 +12,7 @@
 
 For each snapshot, the title is **name of project** in folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples).
 
+- [Table](#table)
 - [Pipeline](#pipeline)
 - [Alternate screen](#alternate-screen)
 - [Input - Basic](#input)
@@ -33,6 +34,12 @@ For each snapshot, the title is **name of project** in folder at github [**Sampl
 - [TreeView Select](#treeview-select)
 - [TreeView Multi-Select](#treeview-multi-select)
 - [Banner - ASCII-ART](#banner)
+
+### Table
+
+[**Top**](#promptplus-snapshot)  | [TableSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+![](./images/Table1.gif)
+
 
 ### Pipeline
 
