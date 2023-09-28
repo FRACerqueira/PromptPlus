@@ -50,7 +50,7 @@
         - Formatting by column or by data type definition
 
 - Improvement commands with default values ​​(all controls)
-- - Bug fixed: grouped item ordering. The sort option will be ignored
+- Bug fixed: grouped item ordering. The sort option will be ignored
 - Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
     - Affeted Controls : AddtoList/Input
 - Improvement : Direct writes to standard error output stream
