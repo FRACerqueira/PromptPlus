@@ -39,6 +39,16 @@
 
 - New Control : Table<T> , Display data in a grid-table   
     - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+    - Main features :
+        - More than 100 layout combinations
+        - Navigation by row and columns
+        - Scroll the table when it is larger than the screen
+        - Scroll text when it is larger than the column size
+        - Automatic header and column completion
+        - Color customization of each element
+        - Search for data filtered by columns
+        - Formatting by column or by data type definition
+
 - Improvement commands with default values ​​(all controls)
 - - Bug fixed: grouped item ordering. The sort option will be ignored
 - Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
