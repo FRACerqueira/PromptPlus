@@ -23,10 +23,6 @@ namespace PPlus.Controls
         /// </summary>
         Header,
         /// <summary>
-        /// Seletecd Column Header content
-        /// </summary>
-        SelectedColHeader,
-        /// <summary>
         /// Selected Header content
         /// </summary>
         SelectedHeader,
@@ -41,6 +37,6 @@ namespace PPlus.Controls
         /// <summary>
         /// Selected content
         /// </summary>
-        SelectedSContent
+        SelectedContent
     }
 }

@@ -108,6 +108,37 @@ namespace TableSamples
             {
             }
 
+            PromptPlus.DoubleDash("Control:Table - Autofill UserInteraction HideSelectorRow");
+
+            PromptPlus.Table<MyTable>("Your Prompt", "Descripion Table")
+                .AddItems(data)
+                .HideSelectorRow()
+                .AutoFill(0, 80)
+                .AddFormatType<DateTime>(FmtDate)
+                .UserInteraction(
+                    selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
+                    finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
+                .Run();
+
+            PromptPlus.DoubleDash("Control:Table - Autofill UserInteraction custom colors");
+
+            PromptPlus.Table<MyTable>("Your Prompt", "Descripion Table")
+                .AddItems(data)
+                .Styles(TableStyle.Content, Style.Default.Foreground(Color.Yellow))
+                .Styles(TableStyle.DisabledContent, Style.Default.Foreground(Color.Magenta1))
+                .Styles(TableStyle.Grid, Style.Default.Foreground(Color.Red))
+                .Styles(TableStyle.Header, Style.Default.Foreground(Color.Blue))
+                .Styles(TableStyle.SelectedHeader, Style.Default.Foreground(Color.Aqua))
+                .Styles(TableStyle.SelectedContent, Style.Default.Foreground(Color.Aquamarine3))
+                .Styles(TableStyle.Title, Style.Default.Foreground(Color.Cyan1))
+                .AutoFill(0, 80)
+                .AddFormatType<DateTime>(FmtDate)
+                .UserInteraction(
+                    selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
+                    finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
+                .Run();
+
+
             PromptPlus.DoubleDash("Control:Table - Autofill UserInteraction with many columns and RowNavigation(Default)");
             PromptPlus.Table<MyTableManyCols>("Your Prompt", "Descripion Table")
                  .Interaction<object>(new Array[5], (ctrl, _) =>

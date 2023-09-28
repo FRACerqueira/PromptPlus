@@ -101,12 +101,12 @@ namespace PPlus.Controls
         IControlTable<T> OrderByDescending(Expression<Func<T, object>> value);
 
         /// <summary>
-        /// Set Columns used by Filter strategy
+        /// Set Columns used by Filter strategy. 
         /// </summary>
-        /// <param name="filter">Filter strategy for filter rows</param>
+        /// <param name="filter">Filter strategy for filter rows.Default value is FilterMode.Disabled</param>
         /// <param name="indexColumn">list (cardinality) of columns</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> FilterByColumns(FilterMode filter = FilterMode.Contains,params ushort[] indexColumn);
+        IControlTable<T> FilterByColumns(FilterMode filter,params ushort[] indexColumn);
 
         /// <summary>
         /// The Table layout. Default value is 'TableLayout.SingleGridFull'
@@ -137,8 +137,8 @@ namespace PPlus.Controls
         /// Set Title Table
         /// </summary>
         /// <param name="value">Title</param>
-        /// <param name="alignment">alignment title</param>
-        /// <param name="titleMode">InLine: Write the title above the grid. InRow : Write the title inside the grid as a row</param>
+        /// <param name="alignment">alignment title. Default value is Alignment.Center</param>
+        /// <param name="titleMode">InLine(Default): Write the title above the grid. InRow : Write the title inside the grid as a row</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
         IControlTable<T> Title(string value, Alignment alignment = Alignment.Center, TableTitleMode titleMode = TableTitleMode.InLine);
 

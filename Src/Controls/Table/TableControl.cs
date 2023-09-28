@@ -562,37 +562,42 @@ namespace PPlus.Controls.Table
                 else if (keyInfo.Value.IsPressLeftArrowKey(true) && !ShowingFilter)
                 {
                     _moveviewport = MoveViewport.Left;
-                    var minpos = 0;
-                    if (!_options.HideSelectorRow)
-                    {
-                        minpos = 1;
-                    }
-                    if (_currentcol > minpos)
-                    {
-                        _currentcol--;
-                    }
-                    else
-                    { 
-                        _currentcol = _options.Columns.Count-1;
-                    }
-                    isvalidkey = true;
-                }
-                else if (keyInfo.Value.IsPressRightArrowKey(true) && !ShowingFilter)
-                {
-                    _moveviewport = MoveViewport.Right;
-
-                    if (_currentcol < _options.Columns.Count - 1)
-                    {
-                        _currentcol++;
-                    }
-                    else
+                    if (_options.IsColumnsNavigation)
                     {
                         var minpos = 0;
                         if (!_options.HideSelectorRow)
                         {
                             minpos = 1;
                         }
-                        _currentcol = minpos;
+                        if (_currentcol > minpos)
+                        {
+                            _currentcol--;
+                        }
+                        else
+                        {
+                            _currentcol = _options.Columns.Count - 1;
+                        }
+                    }
+                    isvalidkey = true;
+                }
+                else if (keyInfo.Value.IsPressRightArrowKey(true) && !ShowingFilter)
+                {
+                    _moveviewport = MoveViewport.Right;
+                    if (_options.IsColumnsNavigation)
+                    {
+                        if (_currentcol < _options.Columns.Count - 1)
+                        {
+                            _currentcol++;
+                        }
+                        else
+                        {
+                            var minpos = 0;
+                            if (!_options.HideSelectorRow)
+                            {
+                                minpos = 1;
+                            }
+                            _currentcol = minpos;
+                        }
                     }
                     isvalidkey = true;
                 }
@@ -606,16 +611,6 @@ namespace PPlus.Controls.Table
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
                     isvalidkey = true;
                 }
-                //else if (keyInfo.Value.IsPressSpecialKey(ConsoleKey.RightArrow, ConsoleModifiers.Control))
-                //{
-                //    _moveviewport = MoveViewport.Right;
-                //    isvalidkey = true;
-                //}
-                //else if (keyInfo.Value.IsPressSpecialKey(ConsoleKey.LeftArrow, ConsoleModifiers.Control))
-                //{
-                //    _moveviewport = MoveViewport.Left;
-                //    isvalidkey = true;
-                //}
                 else
                 {
                     if (ConsolePlus.Provider == "Memory")
@@ -902,14 +897,17 @@ namespace PPlus.Controls.Table
             return this;
         }
 
-        public IControlTable<T> FilterByColumns(FilterMode filter = FilterMode.Contains, params ushort[] indexColumn)
+        public IControlTable<T> FilterByColumns(FilterMode filter, params ushort[] indexColumn)
         {
+            _options.FilterType = filter;
             if (filter == FilterMode.Disabled)
             {
-                throw new PromptPlusException($"Invalid filter : {filter}");
+                _options.FilterColumns = null;
             }
-            _options.FilterType = filter;
-            _options.FilterColumns = indexColumn;
+            else
+            {
+                _options.FilterColumns = indexColumn;
+            }
             return this;
         }
 
@@ -981,9 +979,6 @@ namespace PPlus.Controls.Table
                 case TableStyle.Header:
                     _options.HeaderStyle = value;
                     break;
-                case TableStyle.SelectedColHeader:
-                    _options.SelectedColHeader = value;
-                    break;
                 case TableStyle.SelectedHeader:
                     _options.SelectedHeaderStyle = value;
                     break;
@@ -993,7 +988,7 @@ namespace PPlus.Controls.Table
                 case TableStyle.DisabledContent:
                     _options.DisabledContentStyle = value;
                     break;
-                case TableStyle.SelectedSContent:
+                case TableStyle.SelectedContent:
                     _options.SelectedContentStyle = value;
                     break;
                 default:
@@ -1640,7 +1635,7 @@ namespace PPlus.Controls.Table
                 if (_options.IsColumnsNavigation && _options.IsInteraction && col == _currentcol)
                 {
                     var h = TableControl<T>.AlignmentText($"{_options.Symbol(SymbolType.Selector)} {item.Title.Trim()}", item.AlignTitle, item.Width);
-                    screenBuffer.AddBuffer(h, _options.SelectedColHeader);
+                    screenBuffer.AddBuffer(h, _options.SelectedHeaderStyle);
                 }
                 else
                 {
@@ -1713,6 +1708,7 @@ namespace PPlus.Controls.Table
 
                 var sep = " ";
                 var sepcol = " ";
+                var sepend = " ";
                 var stl = _options.GridStyle;
                 switch (_options.Layout)
                 {
@@ -1720,29 +1716,35 @@ namespace PPlus.Controls.Table
                         stl = Style.Default;
                         break;
                     case TableLayout.SingleGridFull:
-                        sep = (_options.HideSelectorRow && isseleted)? "├" : "│";
+                        sep = (_options.HideSelectorRow && isseleted) ? "├" : "│";
+                        sepend = (_options.HideSelectorRow && isseleted) ? "┤" : "│";
                         sepcol = "│";
                         break;
                     case TableLayout.SingleGridSoft:
                         sep = (_options.HideSelectorRow && isseleted) ? "├" : "│";
+                        sepend = (_options.HideSelectorRow && isseleted) ? "┤" : "│";
                         sepcol = " ";
                         break;
                     case TableLayout.DoubleGridFull:
                         sep = (_options.HideSelectorRow && isseleted) ? "╠" : "║";
+                        sepend = (_options.HideSelectorRow && isseleted) ? "╣" : "║";
                         sepcol = "║";
                         break;
                     case TableLayout.DoubleGridSoft:
                         sep = (_options.HideSelectorRow && isseleted) ? "╠" : "║";
+                        sepend = (_options.HideSelectorRow && isseleted) ? "╣" : "║";
                         sepcol = " ";
                         break;
                     case TableLayout.AsciiSingleGridFull:
                     case TableLayout.AsciiSingleGridSoft:
                     case TableLayout.AsciiDoubleGridFull:
                         sep = (_options.HideSelectorRow && isseleted) ? "[" : "|";
+                        sepend = (_options.HideSelectorRow && isseleted) ? "]" : "|";
                         sepcol = "|";
                         break;
                     case TableLayout.AsciiDoubleGridSoft:
                         sep = (_options.HideSelectorRow && isseleted) ? "[" : "|";
+                        sepend = (_options.HideSelectorRow && isseleted) ? "]" : "|";
                         sepcol = " ";
                         break;
                 }
@@ -1753,14 +1755,7 @@ namespace PPlus.Controls.Table
                     {
                         if (itemcol == 0)
                         {
-                            if (_options.HideSelectorRow && isseleted)
-                            {
-                                screenBuffer.AddBuffer(sep, _options.SelectedContentStyle);
-                            }
-                            else
-                            {
-                                screenBuffer.AddBuffer(sep, stl);
-                            }
+                            screenBuffer.AddBuffer(sep, stl);
                         }
                         else
                         { 
@@ -1807,7 +1802,7 @@ namespace PPlus.Controls.Table
                             screenBuffer.AddBuffer(col, stld, true);
                         }
                     }
-                    screenBuffer.AddBuffer(sep, stl);
+                    screenBuffer.AddBuffer(sepend, stl);
                     if (lines > 1 && i != lines - 1)
                     {
                         screenBuffer.NewLine();

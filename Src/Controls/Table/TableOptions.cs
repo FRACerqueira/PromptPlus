@@ -22,9 +22,8 @@ namespace PPlus.Controls
             PageSize = config.PageSize;
             GridStyle = styleSchema.Prompt();
             HeaderStyle = styleSchema.Prompt();
-            SelectedColHeader = styleSchema.Selected();
-            TitleStyle = styleSchema.Prompt();
             SelectedHeaderStyle = styleSchema.Selected();
+            TitleStyle = styleSchema.Prompt();
             ContentStyle = styleSchema.Prompt();
             DisabledContentStyle = styleSchema.Disabled();
             SelectedContentStyle = styleSchema.Selected();
@@ -61,8 +60,6 @@ namespace PPlus.Controls
         public Style TitleStyle { get; set; }
 
         public Style HeaderStyle { get; set; }
-
-        public Style SelectedColHeader { get; set; }
 
         public Style SelectedHeaderStyle { get; set; }
 

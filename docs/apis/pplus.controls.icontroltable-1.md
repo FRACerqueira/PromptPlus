@@ -276,7 +276,7 @@ function comparator
 
 ### <a id="methods-filterbycolumns"/>**FilterByColumns(FilterMode, params UInt16[])**
 
-Set Columns used by Filter strategy
+Set Columns used by Filter strategy.
 
 ```csharp
 IControlTable<T> FilterByColumns(FilterMode filter, params UInt16[] indexColumn)
@@ -285,7 +285,7 @@ IControlTable<T> FilterByColumns(FilterMode filter, params UInt16[] indexColumn)
 #### Parameters
 
 `filter` [FilterMode](./pplus.controls.filtermode.md)<br>
-Filter strategy for filter rows
+Filter strategy for filter rows.Default value is FilterMode.Disabled
 
 `indexColumn` [UInt16[]](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
 list (cardinality) of columns
@@ -509,10 +509,10 @@ IControlTable<T> Title(string value, Alignment alignment, TableTitleMode titleMo
 Title
 
 `alignment` [Alignment](./pplus.controls.alignment.md)<br>
-alignment title
+alignment title. Default value is Alignment.Center
 
 `titleMode` [TableTitleMode](./pplus.controls.tabletitlemode.md)<br>
-InLine: Write the title above the grid. InRow : Write the title inside the grid as a row
+InLine(Default): Write the title above the grid. InRow : Write the title inside the grid as a row
 
 #### Returns
 
