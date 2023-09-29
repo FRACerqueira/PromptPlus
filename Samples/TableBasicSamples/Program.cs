@@ -140,12 +140,14 @@ namespace TableSamples
 
 
             PromptPlus.DoubleDash("Control:Table - Autofill UserInteraction with many columns and RowNavigation(Default)");
+            var newid = -1;
             PromptPlus.Table<MyTableManyCols>("Your Prompt", "Descripion Table")
                  .Interaction<object>(new Array[5], (ctrl, _) =>
                  {
-                     ctrl.AddItem(new MyTableManyCols() { MyText = "x" });
+                     newid++;
+                     ctrl.AddItem(new MyTableManyCols() { Id = newid, MyText = "x" });
                  })
-                 .AutoFill()
+                 .FilterByColumns(FilterMode.Contains)
                  .AddFormatType<DateTime>(FmtDate)
                  .UserInteraction(
                      selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",

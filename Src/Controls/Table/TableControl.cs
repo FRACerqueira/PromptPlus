@@ -610,6 +610,10 @@ namespace PPlus.Controls.Table
                 {
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
                     isvalidkey = true;
+                    if (_localpaginator.Count == 1 && !_localpaginator.IsUnSelected && _options.AutoSelect)
+                    {
+                        endinput = true;
+                    }
                 }
                 else
                 {
@@ -648,6 +652,12 @@ namespace PPlus.Controls.Table
         }
 
         #region IControlTable
+
+        public IControlTable<T> AutoSelect(bool value = true)
+        {
+            _options.AutoSelect = value;
+            return this;
+        }
 
         public IControlTable<T> AutoFill(params ushort?[] minmaxwidth)
         {

@@ -240,5 +240,12 @@ namespace PPlus.Controls
         /// <returns><see cref="IControlTable{T}"/></returns>
         IControlTable<T> ColumnsNavigation(bool value = true);
 
+        /// <summary>
+        /// Automatically select and finalize item when only one item is in the list . Default false.
+        /// </summary>
+        /// <param name="value">Automatically select</param>
+        /// <returns><see cref="IControlTable{T}"/></returns>
+        IControlTable<T> AutoSelect(bool value = true);
+
     }
 }

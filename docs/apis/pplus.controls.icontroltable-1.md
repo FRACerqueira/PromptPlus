@@ -187,6 +187,23 @@ List (cardinality) of columns that will be affected.
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
+### <a id="methods-autoselect"/>**AutoSelect(Boolean)**
+
+Automatically select and finalize item when only one item is in the list . Default false.
+
+```csharp
+IControlTable<T> AutoSelect(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Automatically select
+
+#### Returns
+
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
+
 ### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;T, Int32, Int32, String&gt;)**
 
 Dynamically change the description using a user role

@@ -152,7 +152,7 @@ Append group text on description
 
 ### <a id="methods-autoselect"/>**AutoSelect(Boolean)**
 
-Automatically select item when only one item is in the list . Default false.
+Automatically select and finalize item when only one item is in the list . Default false.
 
 ```csharp
 IControlSelect<T> AutoSelect(bool value)

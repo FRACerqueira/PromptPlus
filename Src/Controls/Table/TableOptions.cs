@@ -29,6 +29,8 @@ namespace PPlus.Controls
             SelectedContentStyle = styleSchema.Selected();
         }
 
+        public bool AutoSelect { get; set; }
+
         public bool IsOrderDescending { get; set; }
 
         public Func<T, object> OrderBy { get; set; }

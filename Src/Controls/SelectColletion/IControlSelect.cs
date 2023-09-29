@@ -161,7 +161,7 @@ namespace PPlus.Controls
         IControlSelect<T> EqualItems(Func<T, T, bool> comparer);
 
         /// <summary>
-        /// Automatically select item when only one item is in the list . Default false.
+        /// Automatically select and finalize item when only one item is in the list . Default false.
         /// </summary>
         /// <param name="value">Automatically select</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
