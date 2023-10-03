@@ -38,13 +38,14 @@ PromptPlus was developed in C# with target frameworks:
         - More than 100 layout combinations
         - Navigation by row and columns
         - Scroll the table when it is larger than the screen
-        - Scroll text when it is larger than the column size
+        - Split text when it is larger than the column size
         - Automatic header and column completion
         - Color customization of each element
         - Search for data filtered by columns
         - Formatting by column or by data type definition
 - Improvement commands with default values ​​(all controls)
 - Bug fixed: grouped item ordering. The sort option will be ignored
+    - Affeted Controls : Select/MultiSelect
 - Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
     - Affeted Controls : AddtoList/Input
 - Improvement : Direct writes to standard error output stream
