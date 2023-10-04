@@ -38,7 +38,7 @@
 [**Top**](#table-of-contents)
 
 - New Control : Table<T> ([see in action - Snapshot](https://github.com/FRACerqueira/PromptPlus#table)) :  Display/Select data in a grid/table
-    - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+    - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
     - Main features :
         - More than 100 layout combinations
         - Navigation by row and columns
