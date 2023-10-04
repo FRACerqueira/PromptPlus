@@ -160,7 +160,7 @@ For each snapshot, the title is **name of project** sample in folder **samples**
 
 ### Table
 
-[**Top**](#table-of-contents)  | [TableSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+[**Top**](#table-of-contents)  | [TableSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
 
 ![](./docs/images/Table1.gif)
 
