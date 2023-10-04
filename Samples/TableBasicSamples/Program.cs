@@ -147,6 +147,7 @@ namespace TableSamples
                      newid++;
                      ctrl.AddItem(new MyTableManyCols() { Id = newid, MyText = "x" });
                  })
+                 .AutoFill(10)
                  .FilterByColumns(FilterMode.Contains)
                  .AddFormatType<DateTime>(FmtDate)
                  .UserInteraction(

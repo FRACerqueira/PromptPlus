@@ -367,6 +367,7 @@ namespace PPlus.Controls.Table
             }
 
             //ajust _tableviewport
+            var columnspos = GetColumnsPosition();
 
             if (!_options.IsColumnsNavigation || ((_oldBufferWidth ?? 0) != ConsolePlus.BufferWidth && (_tableviewport.endwrite - _tableviewport.startWrite) > ConsolePlus.BufferWidth - 1))
             {
@@ -411,7 +412,6 @@ namespace PPlus.Controls.Table
             }
             else
             {
-                var columnspos = GetColumnsPosition();
                 var poscol = columnspos[_currentcol];
                 if ( (_oldBufferWidth ?? 0) != ConsolePlus.BufferWidth || _tableviewport.startWrite > poscol || _tableviewport.endwrite < poscol || poscol + _options.Columns[_currentcol].Width > _tableviewport.endwrite)
                 {
@@ -490,7 +490,30 @@ namespace PPlus.Controls.Table
                     screenBuffer.NewLine();
                     spc = "";
                 }
-                screenBuffer.AddBuffer($"{spc}Cols: {_tableviewport.startWrite}/{_tableviewport.endwrite} of {_totalTableLenWidth}", _options.OptStyleSchema.Pagination(), true);
+                var viewstartcol = -1;
+                var viewendcol = -1;
+                var tot = !_options.HideSelectorRow? _options.Columns.Count-1: _options.Columns.Count;
+                var poscol = (int)ConsolePlus.PadLeft;
+                for (int i = 0; i < columnspos.Count; i++)
+                {
+                    if (columnspos[i] + _options.Columns[i].Width < _tableviewport.startWrite)
+                    {
+                        continue;
+                    }
+                    if (viewstartcol < 0)
+                    {
+                        viewstartcol = i;
+                    }
+                    if (columnspos[i] <= _tableviewport.endwrite)
+                    {
+                        viewendcol = i;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                screenBuffer.AddBuffer($"{spc}Cols: {viewstartcol}~{viewendcol} of {tot}", _options.OptStyleSchema.Pagination(), true);
             }
         }
 
