@@ -493,7 +493,6 @@ namespace PPlus.Controls.Table
                 var viewstartcol = -1;
                 var viewendcol = -1;
                 var tot = !_options.HideSelectorRow? _options.Columns.Count-1: _options.Columns.Count;
-                var poscol = (int)ConsolePlus.PadLeft;
                 for (int i = 0; i < columnspos.Count; i++)
                 {
                     if (columnspos[i] + _options.Columns[i].Width < _tableviewport.startWrite)
