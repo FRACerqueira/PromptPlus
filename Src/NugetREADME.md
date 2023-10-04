@@ -13,7 +13,6 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 ## What's new in V4.1.0
 
 - New Control : Table<T> , Display/Select data in a grid/table 
-    - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
     - Main features :
         - More than 100 layout combinations
         - Navigation by row and columns
@@ -30,15 +29,11 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
     - Affeted Controls : AddtoList/Input
 - Improvement : Direct writes to standard error output stream
     - New Commands : OutputError()
-    - Sample with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
 - New feature: Escaping format characters color 
     - Global property : IgnoreColorTokens
     - New Commands : EscapeColorTokens()/AcceptColorTokens()
-    - Sample with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
 - New feature: Group items in the select control
-    - Sample with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
 - New feature: Add separator line in the select control
-    - Sample with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
  
 **Special thanks to [ividyon](https://github.com/ividyon) for suggesting improvements and actively participating in this release**
 
