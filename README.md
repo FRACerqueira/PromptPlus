@@ -37,7 +37,7 @@
 ### V4.1.0
 [**Top**](#table-of-contents)
 
-- New Control : Table<T> , Display data in a grid-table   
+- New Control : Table<T> ([see in action - Snapshot](https://github.com/FRACerqueira/PromptPlus#table)) :  Display/Select data in a grid/table
     - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
     - Main features :
         - More than 100 layout combinations
@@ -90,7 +90,7 @@
 - Treeview hierarchical structures with multi-select and colors
 - Switch Alternate screen
 - Execution pipeline with conditions
-- Table with multiple layouts
+- Table with multiple layouts (Display/Select data in a grid/table)
 
 **All controls** have the same organization (see in action: [**Controls Snapshot**](#controls-snapshot)):
 - input/filter (except Masked input) using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
@@ -161,6 +161,7 @@ For each snapshot, the title is **name of project** sample in folder **samples**
 ### Table
 
 [**Top**](#table-of-contents)  | [TableSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+
 ![](./docs/images/Table1.gif)
 
 
@@ -483,7 +484,7 @@ See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 ## Credits
 [**Top**](#table-of-contents)
 
-PromptPlus includes code from other software released under the **MIT license**:
+PromptPlus **includes code** from other software released under the **MIT license**:
 
 - [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
 - [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.

@@ -31,8 +31,7 @@
 
 ## What's new in V4.1.0
 
-- New Control : Table<T> , Display data in a grid-table   
-    - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+- New Control : Table<T> ([see in action - Snapshot](snapshot.md#table)) :  Display/Select data in a grid/table
     - Main features :
         - More than 100 layout combinations
         - Navigation by row and columns
@@ -415,7 +414,7 @@ PromptPlus is licensed under the MIT license. For more information see [LICENSE]
 ## Credits
 [**Top**](#table-of-contents)
 
-PromptPlus includes code from other software released under the MIT license:
+PromptPlus **includes code** from other software released under the **MIT license**:
 
 - [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
 - [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.

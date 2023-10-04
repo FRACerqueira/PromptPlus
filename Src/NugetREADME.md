@@ -12,7 +12,7 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 ## What's new in V4.1.0
 
-- New Control : Table<T> , Display data in a grid-table   
+- New Control : Table<T> , Display/Select data in a grid/table 
     - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
     - Main features :
         - More than 100 layout combinations
@@ -101,7 +101,7 @@ This project is licensed under the [MIT License](https://github.com/FRACerqueira
 
 ## **Credits**
 
-PromptPlus includes code from other software released under the MIT license:
+PromptPlus **includes code** from other software released under the **MIT license**:
 
 - [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
 - [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.

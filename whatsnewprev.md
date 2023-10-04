@@ -6,10 +6,8 @@
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
-[**Main**](https://github.com/FRACerqueira/PromptPlus)  
-
 ## What's new in V4.0.5
-[**Top**](#promptplus-whats-new)
+[**Main**](https://github.com/FRACerqueira/PromptPlus/#table-of-contents) | [**Top**](#promptplus-whats-new)
 
 - Added new global propety 'ExtraExceptionInfo' to write extra console exception info
 - Added new global propety 'DisableToggleTooltip' to disable toggle Tooltip
@@ -36,7 +34,7 @@
 **Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation, fixed credits (MIT License Copyright) and wrong method/property names**
 
 ## What's new in V4.0.4
-[**Top**](#promptplus-whats-new)
+[**Main**](https://github.com/FRACerqueira/PromptPlus/#table-of-contents) | [**Top**](#promptplus-whats-new)
 
 - Fixed bug PromptPlus not restore terminal original setting when shutdown application
 - Fixed bug Autocomplete does not change result when backspace is pressed during search
@@ -48,7 +46,7 @@
     - Default value is = '850;65001'
 
 ## What's new in V4.0.3
-[**Top**](#promptplus-whats-new)
+[**Main**](https://github.com/FRACerqueira/PromptPlus/#table-of-contents) | [**Top**](#promptplus-whats-new)
 
 - New control to switch Alternate screen 
 - Fixed bug Console does not change foreground/background color correctly
@@ -57,7 +55,7 @@
 - Improve testability of result classes/struct (Internal to public)
 
 ## What's new in V4.0.2
-[**Top**](#promptplus-whats-new)
+[**Main**](https://github.com/FRACerqueira/PromptPlus/#table-of-contents) | [**Top**](#promptplus-whats-new)
 
 - New Control Pipeline
     - PromptPlus.Pipeline(T startvalue)
@@ -68,7 +66,7 @@
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
 
 ## What's new in V4.0.0
-[**Top**](#promptplus-whats-new)
+[**Main**](https://github.com/FRACerqueira/PromptPlus/#table-of-contents) | [**Top**](#promptplus-whats-new)
 
 ### Newest controls and color improvement and layout
 
