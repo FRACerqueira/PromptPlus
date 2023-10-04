@@ -28,11 +28,12 @@ namespace PPlus.Controls
         IControlSelectBrowser NoSpinner();
 
         /// <summary>
-        /// Disabled ExpandAll Feature. Only item in Top-level are expanded
+        /// Disabled ExpandAll Feature. Only item in Top-level are expanded. Default false
         /// <br>Overwrite Root option ExpandAll to false</br>
         /// </summary>
+        /// <param name="value">Disabled ExpandAll Feature</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
-        IControlSelectBrowser DisabledRecursiveExpand();
+        IControlSelectBrowser DisabledRecursiveExpand(bool value = true);
 
         /// <summary>
         /// Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii
@@ -86,14 +87,14 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">true accept hidden folder and files, otherwise 'no'</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
-        IControlSelectBrowser AcceptHiddenAttributes(bool value);
+        IControlSelectBrowser AcceptHiddenAttributes(bool value = true);
 
         /// <summary>
         /// Accept system folder and files in browser. Default is false
         /// </summary>
         /// <param name="value">true accept system folder and files, otherwise 'no'</param>
         /// <returns><see cref="IControlSelectBrowser"/></returns>
-        IControlSelectBrowser AcceptSystemAttributes(bool value);
+        IControlSelectBrowser AcceptSystemAttributes(bool value = true);
 
         /// <summary>
         /// Search folder pattern. Default is '*'

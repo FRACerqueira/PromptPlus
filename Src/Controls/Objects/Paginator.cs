@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
 
 namespace PPlus.Controls.Objects
@@ -21,9 +20,11 @@ namespace PPlus.Controls.Objects
         private readonly Func<T, bool> _validatorAction;
         private readonly FilterMode _filterMode;
         private readonly Func<T, T, bool>? _founddefault;
+        private readonly Func<T, bool>? _countvalidator;
 
-        public Paginator(FilterMode filterMode, IEnumerable<T> items, int pageSize, Optional<T> defaultValue, Func<T, T, bool>? founddefault, Func<T, string> textSelector = null, Func<T, bool> validatorAction = null)
+        public Paginator(FilterMode filterMode, IEnumerable<T> items, int pageSize, Optional<T> defaultValue, Func<T, T, bool>? founddefault, Func<T, string>? textSelector = null, Func<T, bool> validatorAction = null, Func<T, bool> countvalidator = null)
         {
+            _countvalidator = countvalidator;
             _filterMode = filterMode;
             _items = items.ToArray();
             _userpageSize = pageSize;
@@ -86,6 +87,9 @@ namespace PPlus.Controls.Objects
 
         public int SelectedIndex { get; private set; } = 0;
 
+        public int CurrentIndex => (_userpageSize * SelectedPage) + SelectedIndex;
+
+
         public T SelectedItem
         {
             get
@@ -95,6 +99,18 @@ namespace PPlus.Controls.Objects
                     return default;
                 }
                 return _filteredItems[(_userpageSize * SelectedPage) + SelectedIndex];
+            }
+        }
+
+        public int TotalCountValid
+        { 
+            get 
+            {
+                if (_countvalidator == null)
+                {
+                    return _filteredItems.Length;
+                }
+                return _filteredItems.Length - _filteredItems.Where(item => !_countvalidator.Invoke(item)).Count();
             }
         }
 
@@ -232,7 +248,7 @@ namespace PPlus.Controls.Objects
 
         public string PaginationMessage()
         {
-            return string.Format(Messages.PaginationTemplate, TotalCount, SelectedPage + 1, PageCount);
+            return string.Format(Messages.PaginationTemplate, TotalCountValid, SelectedPage + 1, PageCount);
         }
 
         public bool LastItem()

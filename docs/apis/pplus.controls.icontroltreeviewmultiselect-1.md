@@ -183,13 +183,18 @@ value node
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
-### <a id="methods-expandall"/>**ExpandAll()**
+### <a id="methods-expandall"/>**ExpandAll(Boolean)**
 
-Start treeview with all childs Expanded
+Start treeview with all childs Expanded. Default false
 
 ```csharp
-IControlTreeViewMultiSelect<T> ExpandAll()
+IControlTreeViewMultiSelect<T> ExpandAll(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Start treeview with all childs Expanded
 
 #### Returns
 
@@ -372,7 +377,7 @@ the function
 
 ### <a id="methods-showcurrentnode"/>**ShowCurrentNode(Boolean)**
 
-Append name node parent on description
+Append name node parent on description. Default true
 
 ```csharp
 IControlTreeViewMultiSelect<T> ShowCurrentNode(bool value)

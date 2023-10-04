@@ -17,6 +17,40 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Reset();
             PromptPlus.Clear();
 
+            //standard 
+            PromptPlus.DoubleDash($"PromptPlus IgnoreColorTokens = false - Default value and usage" );
+            PromptPlus.WriteLine("Valid[[]]formedColor_TokenAny[[RED ON WHITE]]Text[[/]]_[[YELLOW]]Othertext[[/]]");
+            PromptPlus.WriteLine("ValidformedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
+
+            PromptPlus.DoubleDash($"PromptPlus IgnoreColorTokens = true");
+            //global change IgnoreColorTokens
+            PromptPlus.IgnoreColorTokens = true;
+            //show text with no color!
+            PromptPlus.WriteLine("Valid[]formedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
+            //create context to IgnoreColorTokens  = false
+            using (PromptPlus.AcceptColorTokens())
+            {
+                PromptPlus.DoubleDash($"PromptPlus with context IgnoreColorTokens = false");
+                //show text with color!
+                PromptPlus.WriteLine("ValidformedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
+            }
+
+            PromptPlus.IgnoreColorTokens = false;
+            //create context to IgnoreColorTokens  = true
+            using (PromptPlus.EscapeColorTokens())
+            {
+                PromptPlus.DoubleDash($"PromptPlus with context IgnoreColorTokens = true");
+                //show text with color
+                PromptPlus.WriteLine("ValidformedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
+            }
+            //restore original value IgnoreColorTokens 
+
+            //write to standard error output stream for any output included within 'using'
+            using (PromptPlus.OutputError())
+            {
+                PromptPlus.WriteLine("Test Output Error");
+            }
+
             PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");

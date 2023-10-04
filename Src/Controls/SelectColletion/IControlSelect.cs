@@ -64,6 +64,8 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Sort list by expression
+        /// <br>Sort options remove all Separation line</br>
+        /// <br>Sort options is ignored when has grouped items</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
@@ -71,6 +73,8 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Sort Descending list by expression
+        /// <br>Sort options remove all Separation line</br>
+        /// <br>Sort options is ignored when has grouped items</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
@@ -91,12 +95,27 @@ namespace PPlus.Controls
         IControlSelect<T> ChangeDescription(Func<T, string> value);
 
         /// <summary>
+        /// Append group text on description. Default false
+        /// </summary>
+        /// <param name="value">Append group text on description</param>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
+        IControlSelect<T> AppendGroupOnDescription(bool value = true);
+
+        /// <summary>
         /// Add item to list
         /// </summary>
         /// <param name="value">Item to add</param>
         /// <param name="disable">true item disabled, otherwise no</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
         IControlSelect<T> AddItem(T value, bool disable = false);
+
+        /// <summary>
+        /// Add Separation line
+        /// </summary>
+        /// <param name="separatorLine">Type Separation line.Default value is SeparatorLine.SingleLine <see cref="SeparatorLine"/></param>
+        /// <param name="value">Char Separation line. Valid only SeparatorLine is SeparatorLine.Char</param>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
+        IControlSelect<T> Separator(SeparatorLine separatorLine  = SeparatorLine.SingleLine, char? value = null);
 
         /// <summary>
         /// Add items colletion to list
@@ -117,6 +136,24 @@ namespace PPlus.Controls
         IControlSelect<T> AddItemsTo(AdderScope scope, params T[] values);
 
         /// <summary>
+        /// Add Item in a group to list
+        /// </summary>
+        /// <param name="group">Group name</param>
+        /// <param name="value">Item to add</param>
+        /// <param name="disable">true item disabled, otherwise no</param>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
+        IControlSelect<T> AddItemGrouped(string group, T value, bool disable = false);
+
+        /// <summary>
+        /// Add Items colletion in a group to List
+        /// </summary>
+        /// <param name="group">Group name</param>
+        /// <param name="value">items colletion to add</param>
+        /// <param name="disable">true item disabled, otherwise no</param>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
+        IControlSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable = false);
+
+        /// <summary>
         /// Custom item comparator
         /// </summary>
         /// <param name="comparer">function comparator</param>
@@ -124,9 +161,10 @@ namespace PPlus.Controls
         IControlSelect<T> EqualItems(Func<T, T, bool> comparer);
 
         /// <summary>
-        /// Automatically select item when only one item is in the list 
+        /// Automatically select and finalize item when only one item is in the list . Default false.
         /// </summary>
+        /// <param name="value">Automatically select</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
-        IControlSelect<T> AutoSelect();
+        IControlSelect<T> AutoSelect(bool value = true);
     }
 }

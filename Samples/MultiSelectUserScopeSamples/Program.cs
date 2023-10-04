@@ -30,8 +30,8 @@ namespace MultiSelectUserScopeSamples
     internal class MyClass
     {
         public int Id { get; set; }
-        public string MyText { get; set; }
-        public string MyDesc { get; set; }
+        public required string MyText { get; set; }
+        public required string MyDesc { get; set; }
         public bool IsDisabled { get; set; }
         public bool IsSelected { get; set; }
         public bool IsHide { get; set; }
@@ -40,7 +40,7 @@ namespace MultiSelectUserScopeSamples
     internal class Program
     {
         private static IEnumerable<MyClass>? _datasample;
-        static void Main(string[] args)
+        static void Main()
         {
             _datasample = LoadData();
             PromptPlus.WriteLine("Hello, World!");

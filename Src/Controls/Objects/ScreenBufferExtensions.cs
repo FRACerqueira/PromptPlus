@@ -19,9 +19,9 @@ namespace PPlus.Controls.Objects
         public static void WritePrompt(this ScreenBuffer screenBuffer, BaseOptions options, string input)
         {
             var prompt = options.OptPrompt ?? string.Empty;
-            screenBuffer.AddBuffer(prompt, options.OptStyleSchema.Prompt());
             if (!string.IsNullOrEmpty(prompt))
             {
+                screenBuffer.AddBuffer(prompt, options.OptStyleSchema.Prompt());
                 screenBuffer.AddBuffer(": ", options.OptStyleSchema.Prompt());
             }
             if (!string.IsNullOrEmpty(input))

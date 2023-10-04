@@ -102,8 +102,9 @@ namespace PPlus.Controls
         /// <summary>
         /// Allow duplicate items.Default value for this control is false.
         /// </summary>
+        /// <param name="value">Allow duplicate items</param>
         /// <returns><see cref="IControlList"/></returns>
-        IControlList AllowDuplicate();
+        IControlList AllowDuplicate(bool value = true);
 
         /// <summary>
         /// Defines a minimum and maximum (optional) range of items in the list

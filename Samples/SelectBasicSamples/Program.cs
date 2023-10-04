@@ -38,7 +38,8 @@ namespace SelectSamples
             };
         }
 
-        static void Main(string[] args)
+
+        static void Main()
         {
             PromptPlus.WriteLine("Hello, World!");
 
@@ -115,6 +116,30 @@ namespace SelectSamples
                     ctrl.AddItem(item.City);
                 })
                 .Run();
+
+            PromptPlus.DoubleDash("Control:Select - basic usage with Separationline");
+            PromptPlus.Select<string>("Select")
+                 .AddItem("Seattle")
+                 .AddItem("New York")
+                 .Separator() //Default SeparatorLine : SeparatorLine.SingleLine
+                 .AddItem("Tokyo")
+                 .AddItem("Singapore")
+                 .AddItem("Shanghai")
+                 .Separator(SeparatorLine.DoubleLine)
+                 .AddItem("London")
+                 .Separator(SeparatorLine.Char, '*')
+                 .AddItem("Other city")
+                 .Run();
+
+
+            PromptPlus.DoubleDash("Control:Select - basic usage with group and AppendGroupOnDescription");
+            PromptPlus.Select<string>("Which cities would you like to visit?")
+                 .AddItemsGrouped("North America", new[] { "Seattle", "Boston", "New York" })
+                 .AddItemsGrouped("Asia", new[] { "Tokyo", "Singapore", "Shanghai" })
+                 .AddItem("South America (Any)")
+                 .AddItem("Europe (Any)")
+                 .AppendGroupOnDescription()
+                 .Run();
 
 
             PromptPlus.DoubleDash("For other basic features below see - input samples (same behavior)");

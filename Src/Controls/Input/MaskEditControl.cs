@@ -94,9 +94,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMaskEdit AcceptEmptyValue()
+        public IControlMaskEdit AcceptEmptyValue(bool value = true)
         {
-            _options.AcceptEmptyValue = true;
+            _options.AcceptEmptyValue = value;
             return this;
         }
 
@@ -261,9 +261,16 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMaskEdit FillZeros()
+        public IControlMaskEdit FillZeros(bool value = true)
         {
-            _options.FillNumber = MaskedBuffer.Defaultfill;
+            if (value)
+            {
+                _options.FillNumber = MaskedBuffer.Defaultfill;
+            }
+            else
+            {
+                _options.FillNumber = null;
+            }
             return this;
         }
 

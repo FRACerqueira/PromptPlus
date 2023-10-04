@@ -98,13 +98,18 @@ the function validator.
 
 [IControlList](./pplus.controls.icontrollist.md)
 
-### <a id="methods-allowduplicate"/>**AllowDuplicate()**
+### <a id="methods-allowduplicate"/>**AllowDuplicate(Boolean)**
 
 Allow duplicate items.Default value for this control is false.
 
 ```csharp
-IControlList AllowDuplicate()
+IControlList AllowDuplicate(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Allow duplicate items
 
 #### Returns
 

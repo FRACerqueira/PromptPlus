@@ -149,13 +149,18 @@ Policy to next/previous valid date if selected date is invalid
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-disabledweekends"/>**DisabledWeekends()**
+### <a id="methods-disabledweekends"/>**DisabledWeekends(Boolean)**
 
-Disabled Weekends.
+Disabled Weekends.Default false;
 
 ```csharp
-IControlCalendar DisabledWeekends()
+IControlCalendar DisabledWeekends(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Disabled weekends
 
 #### Returns
 
@@ -203,18 +208,18 @@ Action to execute
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-layout"/>**Layout(LayoutCalendar)**
+### <a id="methods-layout"/>**Layout(CalendarLayout)**
 
-The layout canlendar. Default value is 'LayoutCalendar.SingleBorde'
+The layout canlendar. Default value is 'CalendarLayout.SingleBorde'
 
 ```csharp
-IControlCalendar Layout(LayoutCalendar value)
+IControlCalendar Layout(CalendarLayout value)
 ```
 
 #### Parameters
 
-`value` [LayoutCalendar](./pplus.controls.layoutcalendar.md)<br>
-The [LayoutCalendar](./pplus.controls.layoutcalendar.md)
+`value` [CalendarLayout](./pplus.controls.calendarlayout.md)<br>
+The [CalendarLayout](./pplus.controls.calendarlayout.md)
 
 #### Returns
 

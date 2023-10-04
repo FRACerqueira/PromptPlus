@@ -131,13 +131,13 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelectBrowser AcceptHiddenAttributes(bool value)
+        public IControlMultiSelectBrowser AcceptHiddenAttributes(bool value = true)
         {
             _options.AcceptHiddenAttributes = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser AcceptSystemAttributes(bool value)
+        public IControlMultiSelectBrowser AcceptSystemAttributes(bool value = true)
         {
             _options.AcceptSystemAttributes = value;
             return this;
@@ -1019,7 +1019,7 @@ namespace PPlus.Controls
             }
             if (item.IsParentLast())
             {
-                auxline[auxline.Length - 1] = _options.Symbol(SymbolType.TreeLinecorner);
+                auxline[^1] = _options.Symbol(SymbolType.TreeLinecorner);
             }
             foreach (var itemaux in auxline)
             {

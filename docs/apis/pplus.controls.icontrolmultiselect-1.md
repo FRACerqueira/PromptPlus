@@ -162,13 +162,18 @@ items colletion
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription()**
+### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription(Boolean)**
 
-Append group text on description
+Append group text on description. Default false
 
 ```csharp
-IControlMultiSelect<T> AppendGroupOnDescription()
+IControlMultiSelect<T> AppendGroupOnDescription(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Append group text on description
 
 #### Returns
 
@@ -322,6 +327,7 @@ expresion to sort the colletion
 ### <a id="methods-orderbydescending"/>**OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort Descending list by expression
+ <br>Sort options is ignored when has grouped items
 
 ```csharp
 IControlMultiSelect<T> OrderByDescending(Expression<Func<T, Object>> value)
@@ -357,6 +363,7 @@ Overflow strategy
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite defaults start selected value with last result saved on history.
+ <br>Sort options is ignored when has grouped items
 
 ```csharp
 IControlMultiSelect<T> OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)

@@ -106,7 +106,7 @@ namespace PPlus
                     }
                 case Overflow.Crop:
                     {
-                        var max = bufferWidth - (offset + value.Length);
+                        var max = bufferWidth-1 - (offset + value.Length);
                         if (max >= 0)
                         {
                             return value;
@@ -124,7 +124,7 @@ namespace PPlus
                     }
                 case Overflow.Ellipsis:
                     {
-                        var max = bufferWidth - (offset + value.Length);
+                        var max = bufferWidth-1 - (offset + value.Length);
                         if (max >= 0)
                         {
                             return value;
@@ -137,11 +137,11 @@ namespace PPlus
                         {
                             max *= -1;
                         }
-                        if (value.Length <= Ellipsis(unicodesupoorted).Length || value.Length - max - Ellipsis(unicodesupoorted).Length - 1 <= 0)
+                        if (value.Length <= Ellipsis(unicodesupoorted).Length || value.Length - max - Ellipsis(unicodesupoorted).Length <= 0)
                         {
                             return Ellipsis(unicodesupoorted);
                         }
-                        var aux = value.Substring(0, value.Length - max - Ellipsis(unicodesupoorted).Length -1);
+                        var aux = value.Substring(0, value.Length - max - Ellipsis(unicodesupoorted).Length);
                         return $"{aux}{Ellipsis(unicodesupoorted)}";
                     }
             }

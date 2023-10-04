@@ -165,13 +165,18 @@ Number of concurrent tasks
 
 [IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
 
-### <a id="methods-showelapsedtime"/>**ShowElapsedTime()**
+### <a id="methods-showelapsedtime"/>**ShowElapsedTime(Boolean)**
 
-Define if show Elapsed Time for each task.
+Define if show Elapsed Time for each task.Default false.
 
 ```csharp
-IControlWait<T> ShowElapsedTime()
+IControlWait<T> ShowElapsedTime(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+show Elapsed Time
 
 #### Returns
 

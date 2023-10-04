@@ -49,7 +49,7 @@ namespace PPlus.Controls
         public char? FillNumber { get; set; } = null;
         public CaseOptions InputToCase { get; set; } = CaseOptions.Any;
         public string DefaultEmptyValue { get; set; }
-        public string DefaultValue { get; set; }
+        public string? DefaultValue { get; set; }
         public IList<Func<object, ValidationResult>> Validators { get; } = new List<Func<object, ValidationResult>>();
         public bool ValidateOnDemand { get; set; }
         public Func<string, string> ChangeDescription { get; set; }

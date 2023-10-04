@@ -46,7 +46,12 @@ namespace PPlus
                 OriginalCodePageEncode = System.Console.OutputEncoding;
                 var (codepagefrom, codepageto) = ConvertCodePage;
 
-                if (System.Console.OutputEncoding.CodePage.ToString() == codepagefrom)
+                if (System.Console.OutputEncoding.CodePage.ToString() == codepageto)
+                {
+                    unicodesupported = true;
+                }
+
+                else if (System.Console.OutputEncoding.CodePage.ToString() == codepagefrom)
                 {
                     System.Console.OutputEncoding = Encoding.GetEncoding(int.Parse(codepageto));
                     unicodesupported = true;
@@ -95,6 +100,44 @@ namespace PPlus
         /// Get/set extra console exception info
         /// </summary>
         public static bool ExtraExceptionInfo { get; set;}
+
+
+        /// <summary>
+        /// Get/set Accept malformed color token
+        /// <br>When the value is true and the color tokens is ignored</br>
+        /// </summary>
+        public static bool IgnoreColorTokens { get; set;}
+
+
+        /// <summary>
+        /// Create context to ignore color tokens
+        /// <br>The output text will ignore the color tokens until the 'dispose' is done.</br>
+        /// </summary>
+        /// <returns>IDisposable</returns>
+        public static IDisposable EscapeColorTokens()
+        {
+            return new ConfigColorToken(true);
+        }
+
+        /// <summary>
+        /// Create context to Accept color tokens
+        /// <br>The output text will Accept Color Tokens until the 'dispose' is done.</br>
+        /// </summary>
+        /// <returns>IDisposable</returns>
+        public static IDisposable AcceptColorTokens()
+        {
+            return new ConfigColorToken(false);
+        }
+
+
+        /// <summary>
+        ///  Create context to write on standard error output stream for any output included until the 'dispose' is done.
+        /// </summary>
+        /// <returns>IDisposable</returns>
+        public static IDisposable OutputError()
+        {
+            return new RedirectToErrorOutput();
+        }
 
         /// <summary>
         /// Reset all config and properties to default values

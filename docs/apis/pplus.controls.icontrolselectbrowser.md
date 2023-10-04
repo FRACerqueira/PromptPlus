@@ -158,14 +158,19 @@ fullpath
 
 [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
-### <a id="methods-disabledrecursiveexpand"/>**DisabledRecursiveExpand()**
+### <a id="methods-disabledrecursiveexpand"/>**DisabledRecursiveExpand(Boolean)**
 
-Disabled ExpandAll Feature. Only item in Top-level are expanded
+Disabled ExpandAll Feature. Only item in Top-level are expanded. Default false
  <br>Overwrite Root option ExpandAll to false
 
 ```csharp
-IControlSelectBrowser DisabledRecursiveExpand()
+IControlSelectBrowser DisabledRecursiveExpand(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Disabled ExpandAll Feature
 
 #### Returns
 

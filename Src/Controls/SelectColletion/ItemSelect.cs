@@ -18,6 +18,12 @@ namespace PPlus.Controls
         public T Value { get; set; }
         public string Text { get; set; }
         public bool Disabled { get; set; }
+        public string Group { get; set; }
+        public bool IsGroupHeader { get; set; }
+        public bool IsLastItemGroup { get; set; }
+        public bool IsSeparator { get; set; }
+        public SeparatorLine? SeparatorType { get; set; }
+        public char? CharSeparation { get; set; }
 
     }
 }

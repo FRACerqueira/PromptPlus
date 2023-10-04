@@ -77,14 +77,14 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlSelectBrowser DisabledRecursiveExpand()
+        public IControlSelectBrowser DisabledRecursiveExpand(bool value = true)
         {
-            _options.DisabledRecursiveExpand = true;
+            _options.DisabledRecursiveExpand = value;
             _options.ExpandAll = false;
             return this;
         }
 
-        public IControlSelectBrowser AcceptHiddenAttributes(bool value)
+        public IControlSelectBrowser AcceptHiddenAttributes(bool value = true)
         {
             _options.AcceptHiddenAttributes = value;
             return this;
@@ -95,7 +95,7 @@ namespace PPlus.Controls
             _options.FilterType = value;
             return this;
         }
-        public IControlSelectBrowser AcceptSystemAttributes(bool value)
+        public IControlSelectBrowser AcceptSystemAttributes(bool value = true)
         {
             _options.AcceptSystemAttributes = value;
             return this;
@@ -907,7 +907,7 @@ namespace PPlus.Controls
             }
             if (item.IsParentLast())
             {
-                auxline[auxline.Length - 1] = _options.Symbol(SymbolType.TreeLinecorner);
+                auxline[^1] = _options.Symbol(SymbolType.TreeLinecorner);
             }
             foreach (var itemaux in auxline)
             {

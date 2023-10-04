@@ -47,6 +47,29 @@ true item disabled, otherwise no
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
+### <a id="methods-additemgrouped"/>**AddItemGrouped(String, T, Boolean)**
+
+Add Item in a group to list
+
+```csharp
+IControlSelect<T> AddItemGrouped(string group, T value, bool disable)
+```
+
+#### Parameters
+
+`group` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Group name
+
+`value` T<br>
+Item to add
+
+`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item disabled, otherwise no
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
 ### <a id="methods-additems"/>**AddItems(IEnumerable&lt;T&gt;, Boolean)**
 
 Add items colletion to list
@@ -58,6 +81,29 @@ IControlSelect<T> AddItems(IEnumerable<T> values, bool disable)
 #### Parameters
 
 `values` IEnumerable&lt;T&gt;<br>
+items colletion to add
+
+`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+true item disabled, otherwise no
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
+### <a id="methods-additemsgrouped"/>**AddItemsGrouped(String, IEnumerable&lt;T&gt;, Boolean)**
+
+Add Items colletion in a group to List
+
+```csharp
+IControlSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable)
+```
+
+#### Parameters
+
+`group` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Group name
+
+`value` IEnumerable&lt;T&gt;<br>
 items colletion to add
 
 `disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
@@ -87,13 +133,35 @@ items colletion
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### <a id="methods-autoselect"/>**AutoSelect()**
+### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription(Boolean)**
 
-Automatically select item when only one item is in the list
+Append group text on description. Default false
 
 ```csharp
-IControlSelect<T> AutoSelect()
+IControlSelect<T> AppendGroupOnDescription(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Append group text on description
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
+### <a id="methods-autoselect"/>**AutoSelect(Boolean)**
+
+Automatically select and finalize item when only one item is in the list . Default false.
+
+```csharp
+IControlSelect<T> AutoSelect(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Automatically select
 
 #### Returns
 
@@ -213,6 +281,7 @@ Action to execute
 ### <a id="methods-orderby"/>**OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort list by expression
+ <br>Sort options remove all Separation line<br>Sort options is ignored when has grouped items
 
 ```csharp
 IControlSelect<T> OrderBy(Expression<Func<T, Object>> value)
@@ -230,6 +299,7 @@ expresion to sort the colletion
 ### <a id="methods-orderbydescending"/>**OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort Descending list by expression
+ <br>Sort options remove all Separation line<br>Sort options is ignored when has grouped items
 
 ```csharp
 IControlSelect<T> OrderByDescending(Expression<Func<T, Object>> value)
@@ -276,6 +346,26 @@ IControlSelect<T> PageSize(int value)
 
 `value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Number of Max.items
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
+### <a id="methods-separator"/>**Separator(SeparatorLine, Nullable&lt;Char&gt;)**
+
+Add Separation line
+
+```csharp
+IControlSelect<T> Separator(SeparatorLine separatorLine, Nullable<Char> value)
+```
+
+#### Parameters
+
+`separatorLine` [SeparatorLine](./pplus.controls.separatorline.md)<br>
+Type Separation line.Default value is SeparatorLine.SingleLine [SeparatorLine](./pplus.controls.separatorline.md)
+
+`value` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+Char Separation line. Valid only SeparatorLine is SeparatorLine.Char
 
 #### Returns
 

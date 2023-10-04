@@ -34,7 +34,7 @@ namespace PPlus.Controls
             SwitchNotes = config.CalendarSwitchNotesPress;
             TimeoutOverwriteDefault = config.HistoryTimeout;
         }
-        public LayoutCalendar Layout { get; set; } =  LayoutCalendar.SingleGrid;
+        public CalendarLayout Layout { get; set; } =  CalendarLayout.SingleGrid;
         public CultureInfo CurrentCulture { get; set; } = null;
         public PolicyInvalidDate PolicyInvalidDate { get; set; } = PolicyInvalidDate.NextDate;
         public Style DescriptionStyle { get; set; }

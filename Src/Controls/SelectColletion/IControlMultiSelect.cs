@@ -41,10 +41,11 @@ namespace PPlus.Controls
         IControlMultiSelect<T> OverflowAnswer(Overflow value);
 
         /// <summary>
-        /// Append group text on description
+        /// Append group text on description. Default false
         /// </summary>
+        /// <param name="value">Append group text on description</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
-        IControlMultiSelect<T> AppendGroupOnDescription();
+        IControlMultiSelect<T> AppendGroupOnDescription(bool value = true);
 
         /// <summary>
         /// Add default value selected to initial list.
@@ -63,6 +64,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Sort Descending list by expression
+        /// <br>Sort options is ignored when has grouped items</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -70,6 +72,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Overwrite defaults start selected value with last result saved on history.
+        /// <br>Sort options is ignored when has grouped items</br>
         /// </summary>
         /// <param name="value">name of file to save history</param>
         /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>

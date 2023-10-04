@@ -178,6 +178,19 @@ public static ConsoleColor ForegroundColor { get; set; }
 
 ConsoleColor<br>
 
+### <a id="properties-ignorecolortokens"/>**IgnoreColorTokens**
+
+Get/set Accept malformed color token
+ <br>When the value is true and the color tokens is ignored
+
+```csharp
+public static bool IgnoreColorTokens { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-in"/>**In**
 
 Get standard input stream.
@@ -383,6 +396,19 @@ public static bool SupportsAnsi { get; }
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ## Methods
+
+### <a id="methods-acceptcolortokens"/>**AcceptColorTokens()**
+
+Create context to Accept color tokens
+ <br>The output text will Accept Color Tokens until the 'dispose' is done.
+
+```csharp
+public static IDisposable AcceptColorTokens()
+```
+
+#### Returns
+
+IDisposable
 
 ### <a id="methods-addtolist"/>**AddtoList(String, String)**
 
@@ -985,6 +1011,19 @@ Number lines to write after write value
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Style](./pplus.style.md) to write.
 
+### <a id="methods-escapecolortokens"/>**EscapeColorTokens()**
+
+Create context to ignore color tokens
+ <br>The output text will ignore the color tokens until the 'dispose' is done.
+
+```csharp
+public static IDisposable EscapeColorTokens()
+```
+
+#### Returns
+
+IDisposable
+
 ### <a id="methods-getcursorposition"/>**GetCursorPosition()**
 
 Gets the position of the cursor.
@@ -1228,6 +1267,18 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 #### Returns
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-outputerror"/>**OutputError()**
+
+Create context to write on standard error output stream for any output included until the 'dispose' is done.
+
+```csharp
+public static IDisposable OutputError()
+```
+
+#### Returns
+
+IDisposable
 
 ### <a id="methods-pipeline"/>**Pipeline&lt;T&gt;(T)**
 
@@ -1722,6 +1773,84 @@ public static bool SwapBuffer(TargetBuffer value)
 #### Returns
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
+
+### <a id="methods-table"/>**Table&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
+
+Create Table Control to Write to console.
+
+```csharp
+public static IControlTable<T> Table<T>(string prompt, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
+
+### <a id="methods-table"/>**Table&lt;T&gt;(String, String)**
+
+
+
+```csharp
+public static IControlTable<T> Table<T>(string prompt, string description)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+#### Returns
+
+IControlTable&lt;T&gt;
+
+### <a id="methods-table"/>**Table&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+
+
+
+```csharp
+public static IControlTable<T> Table<T>(string prompt, string description, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+IControlTable&lt;T&gt;
 
 ### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, String)**
 

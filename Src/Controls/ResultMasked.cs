@@ -22,7 +22,7 @@ namespace PPlus.Controls
         }
 
         /// <summary>
-        /// Create a ResultMasked. Purpose only for unit testing
+        /// Create ResultMasked instance.
         /// </summary>
         /// <param name="value"></param>
         /// <param name="valueMask"></param>

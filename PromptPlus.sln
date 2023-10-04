@@ -93,6 +93,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{191C90E6-4
 		docs\migrateversion.md = docs\migrateversion.md
 		docs\snapshot.md = docs\snapshot.md
 		docs\validators.md = docs\validators.md
+		whatsnewprev.md = whatsnewprev.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SliderSwitchSamples", "Samples\SliderSwitchSamples\SliderSwitchSamples.csproj", "{3702034B-7D26-4BC3-AB1E-864C2EE2D785}"
@@ -116,6 +117,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{0468C89D-43EE-4B08-96BB-FDDA42033AA5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlusTemplate", "Template\PromptPlusTemplate\PromptPlusTemplate.csproj", "{E713CD59-5AB5-40AA-80B3-436D0C6511DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableSamples", "Samples\TableBasicSamples\TableSamples.csproj", "{C5189623-17BD-472E-8A11-832115ABD152}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -376,6 +379,12 @@ Global
 		{E713CD59-5AB5-40AA-80B3-436D0C6511DA}.local|Any CPU.Build.0 = Debug|Any CPU
 		{E713CD59-5AB5-40AA-80B3-436D0C6511DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E713CD59-5AB5-40AA-80B3-436D0C6511DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5189623-17BD-472E-8A11-832115ABD152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5189623-17BD-472E-8A11-832115ABD152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5189623-17BD-472E-8A11-832115ABD152}.local|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5189623-17BD-472E-8A11-832115ABD152}.local|Any CPU.Build.0 = Debug|Any CPU
+		{C5189623-17BD-472E-8A11-832115ABD152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5189623-17BD-472E-8A11-832115ABD152}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -421,6 +430,7 @@ Global
 		{184F90B1-EBF2-4D34-88B3-9D7A252CB2B4} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
 		{83BB7962-34D7-4F51-8856-94BDC7B68A64} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
 		{E713CD59-5AB5-40AA-80B3-436D0C6511DA} = {0468C89D-43EE-4B08-96BB-FDDA42033AA5}
+		{C5189623-17BD-472E-8A11-832115ABD152} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E883401-DEB0-496F-A6BC-8AA0F44BC5B9}

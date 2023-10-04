@@ -176,8 +176,8 @@ namespace PPlus.Controls.Objects
             if (!string.IsNullOrEmpty(_logicalMaskDateTime))
             {
                 _maskIniTime = _logicalMaskDateTime.IndexOf(_promptmask) + 1;
-                _iniTime = _logicalMaskDateTime.Substring(0, _maskIniTime).ToCharArray().Count(x => x == '9');
-                _diffIniTime = _logicalMaskDateTime.Substring(0, _maskIniTime).ToCharArray().Count(x => x != '9');
+                _iniTime = _logicalMaskDateTime[.._maskIniTime].ToCharArray().Count(x => x == '9');
+                _diffIniTime = _logicalMaskDateTime[.._maskIniTime].ToCharArray().Count(x => x != '9');
             }
 
             try
@@ -344,7 +344,7 @@ namespace PPlus.Controls.Objects
                 }
                 else
                 {
-                    var aux = _inputBuffer.ToString().Substring(0, Position) + _inputBuffer.ToString().Substring(Position + 1);
+                    var aux = _inputBuffer.ToString()[..Position] + _inputBuffer.ToString()[(Position + 1)..];
                     _inputBuffer.Clear();
                     _inputBuffer.Append(aux);
                     _inputBuffer.Append(_maskInputOptions.FillNumber.Value);
@@ -477,9 +477,9 @@ namespace PPlus.Controls.Objects
             return this;
         }
 
-        public string ToBackwardString() => OutputMask.Substring(0, LogicalPosition(Position));
+        public string ToBackwardString() => OutputMask[..LogicalPosition(Position)];
 
-        public string ToForwardString() => OutputMask.Substring(LogicalPosition(Position));
+        public string ToForwardString() => OutputMask[LogicalPosition(Position)..];
 
         public override string ToString() => _inputBuffer.ToString();
 
@@ -492,11 +492,11 @@ namespace PPlus.Controls.Objects
             string aux;
             if (_maskInputOptions.FillNumber.HasValue && (_isTypeTime || _isTypeDateTime))
             {
-                aux = OutputMask.Substring(0, _validPosition[Length - 1] + 1).Replace(_promptmask.ToString(), _maskInputOptions.FillNumber.ToString());
+                aux = OutputMask[..(_validPosition[Length - 1] + 1)].Replace(_promptmask.ToString(), _maskInputOptions.FillNumber.ToString());
             }
             else
             {
-                aux = OutputMask.Substring(0, _validPosition[Length - 1] + 1).Replace(_promptmask.ToString(), string.Empty);
+                aux = OutputMask[..(_validPosition[Length - 1] + 1)].Replace(_promptmask.ToString(), string.Empty);
             }
             switch (_maskInputOptions.Type)
             {
@@ -611,7 +611,7 @@ namespace PPlus.Controls.Objects
                 var index = logicalMask.IndexOf(sep, Position + 1);
                 if (index >= 0)
                 {
-                    index = logicalMask.Substring(0, index).ToCharArray().Count(x => x == '9');
+                    index = logicalMask[..index].ToCharArray().Count(x => x == '9');
                     if (index == Position)
                     {
                         index = 0;
@@ -807,7 +807,7 @@ namespace PPlus.Controls.Objects
                 Position = _iniTime;
                 return true;
             }
-            var aux = _logicalMaskDateTime.Substring(0, index).ToCharArray().Count(x => x == '9');
+            var aux = _logicalMaskDateTime[..index].ToCharArray().Count(x => x == '9');
             if (aux >= Length)
             {
                 return false;
@@ -837,7 +837,7 @@ namespace PPlus.Controls.Objects
                 var index = logicalMask.IndexOf(sep, Position + 1);
                 if (index >= 0)
                 {
-                    index = logicalMask.Substring(0, index).ToCharArray().Count(x => x == '9');
+                    index = logicalMask[..index].ToCharArray().Count(x => x == '9');
                 }
                 else
                 {
@@ -938,8 +938,8 @@ namespace PPlus.Controls.Objects
                             {
                                 return string.Empty;
                             }
-                            var fmt = _maskInputOptions.DateFmt.Substring(2).ToCharArray();
-                            var yl = _maskInputOptions.DateFmt.Substring(0, 1);
+                            var fmt = _maskInputOptions.DateFmt[2..].ToCharArray();
+                            var yl = _maskInputOptions.DateFmt[..1];
                             var unmaskresult = string.Empty;
                             foreach (var item in fmt)
                             {
@@ -1058,8 +1058,8 @@ namespace PPlus.Controls.Objects
                                 {
                                     return string.Empty;
                                 }
-                                var fmt = _maskInputOptions.DateFmt.Substring(2).ToCharArray();
-                                var yl = _maskInputOptions.DateFmt.Substring(0, 1);
+                                var fmt = _maskInputOptions.DateFmt[2..].ToCharArray();
+                                var yl = _maskInputOptions.DateFmt[..1];
                                 var unmaskresult = string.Empty;
                                 foreach (var item in fmt)
                                 {
@@ -1362,11 +1362,11 @@ namespace PPlus.Controls.Objects
                     {
                         throw new PromptPlusException(Messages.InvalidMask);
                     }
-                    if (!CharsEditMask.Contains(maskConv[maskConv.Length - 1]))
+                    if (!CharsEditMask.Contains(maskConv[^1]))
                     {
                         throw new PromptPlusException(Messages.InvalidMask);
                     }
-                    maskchar = maskConv[maskConv.Length - 1].ToString();
+                    maskchar = maskConv[^1].ToString();
                     if (!"CNX".Contains(maskchar.ToUpperInvariant()[0]))
                     {
                         throw new PromptPlusException(Messages.InvalidMask);
@@ -1381,11 +1381,11 @@ namespace PPlus.Controls.Objects
                     {
                         throw new PromptPlusException(Messages.InvalidMask);
                     }
-                    if (!CharsEditMask.Contains(maskConv[maskConv.Length - 1]))
+                    if (!CharsEditMask.Contains(maskConv[^1]))
                     {
                         throw new PromptPlusException(Messages.InvalidMask);
                     }
-                    maskchar = maskConv[maskConv.Length - 1].ToString();
+                    maskchar = maskConv[^1].ToString();
                     flagdup = true;
                     flagskip = true;
                 }
@@ -1769,7 +1769,7 @@ namespace PPlus.Controls.Objects
                             break;
                         case ControlMaskedType.DateTime:
                         case ControlMaskedType.DateOnly:
-                            var fmt = _maskInputOptions.DateFmt.Substring(2).ToCharArray();
+                            var fmt = _maskInputOptions.DateFmt[2..].ToCharArray();
                             var postime = false;
                             if (logpos <= 1)
                             {
@@ -1801,7 +1801,7 @@ namespace PPlus.Controls.Objects
                                     result[logpos].Tooltip = Messages.MaskEditPosYear;
                                 }
                             }
-                            else if (logpos <= 5 && _maskInputOptions.DateFmt.Substring(0, 1) == "2")
+                            else if (logpos <= 5 && _maskInputOptions.DateFmt[..1] == "2")
                             {
                                 if (fmt[2] == 'D')
                                 {
@@ -1816,7 +1816,7 @@ namespace PPlus.Controls.Objects
                                     result[logpos].Tooltip = Messages.MaskEditPosYear;
                                 }
                             }
-                            else if (logpos <= 7 && _maskInputOptions.DateFmt.Substring(0, 1) == "4")
+                            else if (logpos <= 7 && _maskInputOptions.DateFmt[..1] == "4")
                             {
                                 if (fmt[2] == 'D')
                                 {
@@ -1871,7 +1871,7 @@ namespace PPlus.Controls.Objects
                             break;
                         case ControlMaskedType.Number:
                         case ControlMaskedType.Currency:
-                            result[result.Count - 1].Tooltip = Messages.MaskEditPosNumeric;
+                            result[^1].Tooltip = Messages.MaskEditPosNumeric;
                             break;
                         default:
                             break;
@@ -1970,7 +1970,7 @@ namespace PPlus.Controls.Objects
             }
             if (result.StartsWith(_maskInputOptions.CurrentCulture.NumberFormat.NumberGroupSeparator))
             {
-                result = result.Substring(1);
+                result = result[1..];
             }
             if (_maskInputOptions.AmmountDecimal > 0)
             {
@@ -2007,7 +2007,7 @@ namespace PPlus.Controls.Objects
             }
             if (result.StartsWith(_maskInputOptions.CurrentCulture.NumberFormat.CurrencyGroupSeparator))
             {
-                result = result.Substring(1);
+                result = result[1..];
             }
             if (_maskInputOptions.AmmountDecimal > 0)
             {
@@ -2050,13 +2050,13 @@ namespace PPlus.Controls.Objects
             }
 
             var defaultdateValue = auxdt.ToString(_maskInputOptions.CurrentCulture.DateTimeFormat.UniversalSortableDateTimePattern);
-            var dtstring = defaultdateValue.Substring(0, defaultdateValue.IndexOf(' '));
+            var dtstring = defaultdateValue[..defaultdateValue.IndexOf(' ')];
             switch (_maskInputOptions.FmtYear)
             {
                 case FormatYear.Long:
                     break;
                 case FormatYear.Short:
-                    dtstring = dtstring.Substring(2);
+                    dtstring = dtstring[2..];
                     break;
                 default:
                     break;
@@ -2078,7 +2078,7 @@ namespace PPlus.Controls.Objects
                 }
             }
             dtstring = $"{stddtfmt[0]}{_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator}{stddtfmt[1]}{_maskInputOptions.CurrentCulture.DateTimeFormat.DateSeparator}{stddtfmt[2]}";
-            var tmstring = defaultdateValue.Substring(defaultdateValue.IndexOf(' ') + 1);
+            var tmstring = defaultdateValue[(defaultdateValue.IndexOf(' ') + 1)..];
             tmstring = tmstring.Replace("Z", "");
             var tmelem = tmstring.Split(':');
             var hr = int.Parse(tmelem[0]);

@@ -22,14 +22,19 @@ Implements [IPromptControls&lt;ResultMasked&gt;](./pplus.controls.ipromptcontrol
 
 ## Methods
 
-### <a id="methods-acceptemptyvalue"/>**AcceptEmptyValue()**
+### <a id="methods-acceptemptyvalue"/>**AcceptEmptyValue(Boolean)**
 
 Accept empty value
  <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.
 
 ```csharp
-IControlMaskEdit AcceptEmptyValue()
+IControlMaskEdit AcceptEmptyValue(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Accept empty value
 
 #### Returns
 
@@ -201,14 +206,19 @@ show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-fillzeros"/>**FillZeros()**
+### <a id="methods-fillzeros"/>**FillZeros(Boolean)**
 
-Fill zeros mask.
+Fill zeros mask.Default false.
  <br>Not valid for type MaskedType.Generic (this set will be ignored).<br>When used this feature the AcceptEmptyValue feature will be ignored.<br>When MaskedType.Number or MaskedType.Currency this feature is always on.
 
 ```csharp
-IControlMaskEdit FillZeros()
+IControlMaskEdit FillZeros(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Fill zeros mask
 
 #### Returns
 

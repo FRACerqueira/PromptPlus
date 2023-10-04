@@ -31,6 +31,7 @@ namespace PPlus.Drivers
             _profile = new ProfileDriveConsole(value.IsTerminal, value.IsUnicodeSupported, value.SupportsAnsi, value.IsLegacy, value.ColorDepth, value.OverflowStrategy, value.PadLeft, value.PadRight);
         }
 
+        public bool WriteToErroOutput { get; set; }
 
         public bool IsControlText { get; set; }
 
@@ -286,7 +287,14 @@ namespace PPlus.Drivers
         {
             var qtd = CountLines(segments, CursorLeft, BufferWidth, PadLeft);
             var aux = AnsiBuilder.Build(out int spaces, _profile, CursorLeft, segments, clearrestofline);
-            Console.Write(aux);
+            if (WriteToErroOutput)
+            {
+                Console.Error.Write(aux);
+            }
+            else
+            {
+                Console.Out.Write(aux);
+            }
             if (clearrestofline && spaces > 0)
             {
                 var pos = CursorLeft - spaces;

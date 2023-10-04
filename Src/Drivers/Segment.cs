@@ -65,14 +65,21 @@ namespace PPlus.Drivers
             {
                 throw new PromptPlusException("ParseAnsiControl with test null");
             }
-            text = text.NormalizeNewLines();
+            var localtext = text.NormalizeNewLines();
             var result = new List<Segment>();
-            if (text.Length == 0)
+            if (localtext.Length == 0)
             {
                 result.Add(new Segment("", style));
                 return result.ToArray();
             }
-            using var tokenizer = new MarkupTokenizer(text);
+
+            if (PromptPlus.IgnoreColorTokens)
+            {
+                result.Add(new Segment(text, style));
+                return result.ToArray();
+            }
+
+            using var tokenizer = new MarkupTokenizer(localtext);
 
             var stack = new Stack<Style>();
 
@@ -109,8 +116,7 @@ namespace PPlus.Drivers
                     throw new PromptPlusException("Encountered unknown markup token.");
                 }
             }
-
-            if (stack.Count > 1)
+            if (stack.Count > 0)
             {
                 throw new PromptPlusException("Unbalanced markup stack. Did you forget to close a tag?");
             }

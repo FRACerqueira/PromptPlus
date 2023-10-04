@@ -59,7 +59,7 @@ namespace PPlus.Controls
                 int index;
                 do
                 {
-                    index = _options.Items.FindIndex(x => x.IsGroupHeader ? false : _options.EqualItems(x.Value, item));
+                    index = _options.Items.FindIndex(x => !x.IsGroupHeader && _options.EqualItems(x.Value, item));
                     if (index >= 0)
                     {
                         _options.Items.RemoveAt(index);
@@ -71,7 +71,7 @@ namespace PPlus.Controls
             foreach (var item in _options.DisableItems)
             {
                 List<ItemMultSelect<T>> founds;
-                founds = _options.Items.FindAll(x => x.IsGroupHeader ? false : _options.EqualItems(x.Value, item));
+                founds = _options.Items.FindAll(x => !x.IsGroupHeader && _options.EqualItems(x.Value, item));
                 if (founds.Any())
                 {
                     foreach (var itemfound in founds)
@@ -137,6 +137,12 @@ namespace PPlus.Controls
                 _options.Maximum = _options.Items.Count;
             }
 
+            var hasgroup = _options.Items.Any(x => x.IsGroupHeader);
+            if (hasgroup)
+            {
+                _options.OrderBy = null;
+            }
+
             if (_options.OrderBy != null)
             {
                 if (_options.IsOrderDescending)
@@ -162,10 +168,11 @@ namespace PPlus.Controls
                 Optional<ItemMultSelect<T>>.s_empty,
                 (item1,item2) => item1.UniqueId == item2.UniqueId,
                 (item) => item.Text??string.Empty,
-                (item) => !item.Disabled);
+                (item) => !item.Disabled,
+                (item) => !item.IsGroupHeader);
 
 
-            if (_localpaginator.TotalCount > 0 && _localpaginator.SelectedItem != null && _localpaginator.SelectedItem.Disabled)
+            if (_localpaginator.TotalCountValid > 0 && _localpaginator.SelectedItem != null && _localpaginator.SelectedItem.Disabled)
             {
                 _localpaginator.UnSelected();
                 if (!defvalue.HasValue)
@@ -222,9 +229,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelect<T> AppendGroupOnDescription()
+        public IControlMultiSelect<T> AppendGroupOnDescription(bool value = true)
         {
-            _options.ShowGroupOnDescription = true;
+            _options.ShowGroupOnDescription = value;
             return this;
         }
         public IControlMultiSelect<T> HotKeySelectAll(HotKey value)

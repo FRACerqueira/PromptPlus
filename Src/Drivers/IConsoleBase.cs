@@ -36,6 +36,7 @@ namespace PPlus
 
     internal interface IConsoleControl : IConsoleBase
     {
+        bool WriteToErroOutput { get; set; }
         bool IsControlText { get; set; }
         bool EnabledRecord { get; set; }
         string RecordConsole();

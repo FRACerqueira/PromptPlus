@@ -38,7 +38,7 @@ namespace PPlus.Controls
         IControlMultiSelectBrowser Config(Action<IPromptConfig> context);
 
         /// <summary>
-        /// Not show Spinner
+        /// Not show Spinner.
         /// </summary>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
         IControlMultiSelectBrowser NoSpinner();
@@ -103,14 +103,14 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">true accept hidden folder and files, otherwise 'no'</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        IControlMultiSelectBrowser AcceptHiddenAttributes(bool value);
+        IControlMultiSelectBrowser AcceptHiddenAttributes(bool value = true);
 
         /// <summary>
         /// Accept system folder and files in browser. Default is false
         /// </summary>
         /// <param name="value">true accept system folder and files, otherwise 'no'</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        IControlMultiSelectBrowser AcceptSystemAttributes(bool value);
+        IControlMultiSelectBrowser AcceptSystemAttributes(bool value = true);
 
         /// <summary>
         /// Search folder pattern. Default is '*'
@@ -166,7 +166,7 @@ namespace PPlus.Controls
         IControlMultiSelectBrowser AddFixedSelect(params string[] values);
 
         /// <summary>
-        /// Append name current folder on description
+        /// Append name current folder on description. Default value true
         /// </summary>
         /// <param name="value">true Append current name folder on description, not append</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>

@@ -92,9 +92,9 @@ namespace PPlus.Controls
             }
             return this;
         }
-        public IControlWait<T> ShowElapsedTime()
+        public IControlWait<T> ShowElapsedTime(bool value = true)
         {
-            _options.ShowElapsedTime = true;
+            _options.ShowElapsedTime = value;
             return this;
         }
 

@@ -74,8 +74,9 @@ namespace PPlus.Controls
         /// Accept empty value
         /// <br>Valid only for type not equal MaskedType.Generic, otherwise this set will be ignored.</br>
         /// </summary>
+        /// <param name="value">Accept empty value</param> 
         /// <returns><see cref="IControlMaskEdit"/></returns>
-        IControlMaskEdit AcceptEmptyValue();
+        IControlMaskEdit AcceptEmptyValue(bool value = true);
 
         /// <summary>
         /// Default value (with mask!) when finished value is empty.
@@ -86,13 +87,14 @@ namespace PPlus.Controls
         IControlMaskEdit DefaultIfEmpty(string value,bool zeroIsEmpty = true);
 
         /// <summary>
-        /// Fill zeros mask.
+        /// Fill zeros mask.Default false.
         /// <br>Not valid for type MaskedType.Generic (this set will be ignored).</br>
         /// <br>When used this feature the AcceptEmptyValue feature will be ignored.</br>
         /// <br>When MaskedType.Number or MaskedType.Currency this feature is always on.</br>
         /// </summary>
+        /// <param name="value">Fill zeros mask</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
-        IControlMaskEdit FillZeros();
+        IControlMaskEdit FillZeros(bool value = true);
 
         /// <summary>
         /// <see cref="CultureInfo"/> to validate input when the type is not generic.
