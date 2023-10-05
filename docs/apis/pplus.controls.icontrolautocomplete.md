@@ -95,7 +95,7 @@ function to autocomplete
 
 ### <a id="methods-completionmaxcount"/>**CompletionMaxCount(Int32)**
 
-The max.items to return from function autocomplete.
+The max.items to return from function autocomplete.The value must be greater than or equal to 1
 
 ```csharp
 IControlAutoComplete CompletionMaxCount(int value)
@@ -113,7 +113,7 @@ Number of max.items
 ### <a id="methods-completionwaittostart"/>**CompletionWaitToStart(Int32)**
 
 Number of mileseconds to wait before to start function autocomplete
- <br>Default value : 1000. If value less than 10 internal set to 10.
+ <br>Default value : 1000. The value must be greater than or equal to 100.
 
 ```csharp
 IControlAutoComplete CompletionWaitToStart(int value)
@@ -198,7 +198,8 @@ Transform option
 
 ### <a id="methods-maxlength"/>**MaxLength(UInt16)**
 
-MaxLength of input text.
+MaxLength of input text.The value must be greater than or equal to 1
+ <br>Default value is 0 (no limit)
 
 ```csharp
 IControlAutoComplete MaxLength(ushort value)
@@ -216,7 +217,7 @@ Length
 ### <a id="methods-minimumprefixlength"/>**MinimumPrefixLength(Int32)**
 
 Number minimum of chars to accept autocomplete
- <br>Default value : 3. If value less than 0 internal set to 0.
+ <br>Default value : 3.The value must be greater than or equal to 1
 
 ```csharp
 IControlAutoComplete MinimumPrefixLength(int value)
@@ -253,7 +254,8 @@ IControlAutoComplete
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page.Default value for this control is 10.
+Set max.item view per page.
+ <br>Default value : 10.The value must be greater than or equal to 1
 
 ```csharp
 IControlAutoComplete PageSize(int value)

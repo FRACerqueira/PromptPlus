@@ -38,18 +38,19 @@ namespace PPlus.Controls
         IControlMultiSelectBrowser Config(Action<IPromptConfig> context);
 
         /// <summary>
-        /// Not show Spinner.
+        /// Not show Spinner. default value is false (SpinnersType.Ascii)
         /// </summary>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        IControlMultiSelectBrowser NoSpinner();
+        IControlMultiSelectBrowser NoSpinner(bool value = true);
 
 
         /// <summary>
-        /// Disabled ExpandAll Feature. Only item in Top-level are expanded
-        /// <br>Overwrite Root option ExpandAll to false</br>
+        /// Disabled ExpandAll Feature. Only item in Top-level are expanded. Default false
+        /// <br>DisabledRecursiveExpand cannot be used when Root setted with parameter expandall = true</br>
         /// </summary>
+        /// <param name="value">Disabled ExpandAll Feature</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        IControlMultiSelectBrowser DisabledRecursiveExpand();
+        IControlMultiSelectBrowser DisabledRecursiveExpand(bool value = true);
 
         /// <summary>
         /// Overwrite <see cref="SpinnersType"/>. Default value is SpinnersType.Ascii
@@ -75,28 +76,28 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">true Show lines, otherwise 'no'</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        IControlMultiSelectBrowser ShowLines(bool value);
+        IControlMultiSelectBrowser ShowLines(bool value = true);
 
         /// <summary>
         /// Show expand SymbolType.Expanded. Default is true
         /// </summary>
         /// <param name="value">true Show Expanded SymbolType, otherwise 'no'</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        IControlMultiSelectBrowser ShowExpand(bool value);
+        IControlMultiSelectBrowser ShowExpand(bool value = true);
 
         /// <summary>
         /// Load only Folders on browser. Default is false
         /// </summary>
         /// <param name="value">true only Folders, otherwise Folders and files</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        IControlMultiSelectBrowser OnlyFolders(bool value);
+        IControlMultiSelectBrowser OnlyFolders(bool value = true);
 
         /// <summary>
         /// Show folder and file size in browser. Default is true
         /// </summary>
         /// <param name="value">true Show size, otherwise 'no'</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        IControlMultiSelectBrowser ShowSize(bool value);
+        IControlMultiSelectBrowser ShowSize(bool value = true);
 
         /// <summary>
         /// Accept hidden folder and files in browser. Default is false
@@ -127,7 +128,8 @@ namespace PPlus.Controls
         IControlMultiSelectBrowser SearchFilePattern(string value);
 
         /// <summary>
-        /// Set max.item view per page.Default value for this control is 10.
+        /// Set max.item view per page.
+        /// <br>Default value : 10.The value must be greater than or equal to 1</br>
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
@@ -150,9 +152,10 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Set folder root to browser
+        /// <br>parameter expandall = true cannot be used with DisabledRecursiveExpand</br>
         /// </summary>
         /// <param name="value">full path folder root</param>
-        /// <param name="expandall">true expand all folder, otherwise 'no'</param>
+        /// <param name="expandall">true expand all folder, otherwise 'no'. Expandall = true cannot be used with DisabledRecursiveExpand</param>
         /// <param name="validselect">Accept select/mark item that satisfy the function</param>
         /// <param name="setdisabled">Disabled all items that satisfy the disabled function</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
@@ -170,7 +173,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">true Append current name folder on description, not append</param>
         /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        IControlMultiSelectBrowser ShowCurrentFolder(bool value);
+        IControlMultiSelectBrowser ShowCurrentFolder(bool value = true);
 
         /// <summary>
         /// Overwrite a HotKey toggle current name folder to FullPath. Default value is 'F2' 

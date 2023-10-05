@@ -190,7 +190,11 @@ namespace PPlus
         /// </summary>
         public static bool RunOnBuffer(TargetBuffer value, Action<CancellationToken> customaction, ConsoleColor? defaultforecolor = null, ConsoleColor? defaultbackcolor = null, CancellationToken? cancellationToken = null)
         {
-            return _consoledrive.OnBuffer(value,customaction,defaultforecolor,defaultbackcolor,cancellationToken);
+            var curbackcolor = BackgroundColor;
+            _styleschema.UpdateBackgoundColor(Color.FromConsoleColor(defaultbackcolor ?? curbackcolor));
+            var aux =  _consoledrive.OnBuffer(value,customaction,defaultforecolor,defaultbackcolor,cancellationToken);
+            _styleschema.UpdateBackgoundColor(Color.FromConsoleColor(curbackcolor));
+            return aux;
         }
 
         internal static bool IsControlText

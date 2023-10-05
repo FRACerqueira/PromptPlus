@@ -53,7 +53,7 @@ namespace PPlus.Controls.Table
                 throw new PromptPlusException("Not found columns definition");
             }
 
-            //Validate layout
+            //Validate layout SupportsAnsi
             if (!ConsolePlus.SupportsAnsi)
             {
                 switch (_options.Layout)
@@ -683,9 +683,11 @@ namespace PPlus.Controls.Table
 
         public IControlTable<T> AutoFill(params ushort?[] minmaxwidth)
         {
-            if (_options.Columns.Count > 0)
+            //AutoFill cannot be used with AddColumn and/or AutoFit
+
+            if (_options.Columns.Count > 0 || _options.HasAutoFit)
             {
-                throw new PromptPlusException($"AutoFill cannot be run with AddColumn");
+                throw new PromptPlusException($"AutoFill cannot be used with AddColumn and/or AutoFit");
             }
             if (minmaxwidth.Length > 2)
             {
@@ -766,7 +768,7 @@ namespace PPlus.Controls.Table
         {
             if (_options.AutoFill)
             {
-                throw new PromptPlusException($"AddColumn cannot be run with AutoFill");
+                throw new PromptPlusException($"AddColumn cannot be used with AutoFill");
             }
 
             if (maxslidinglines.HasValue)
@@ -867,7 +869,7 @@ namespace PPlus.Controls.Table
         {
             if (_options.AutoFill)
             {
-                throw new PromptPlusException($"AutoFit cannot be run with AutoFill");
+                throw new PromptPlusException($"AutoFit cannot be used with AutoFill");
             }
             _options.HasAutoFit = true;
             _options.AutoFitColumns = indexColumn;
@@ -977,6 +979,10 @@ namespace PPlus.Controls.Table
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -986,7 +992,7 @@ namespace PPlus.Controls.Table
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;

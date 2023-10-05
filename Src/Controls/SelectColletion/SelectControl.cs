@@ -33,6 +33,10 @@ namespace PPlus.Controls
 
         public IControlSelect<T> Separator(SeparatorLine separatorLine = SeparatorLine.SingleLine, char? value = null)
         {
+            if (_options.OrderBy != null)
+            {
+                throw new PromptPlusException("Separator cannot be used OrderBy/OrderByDescending");
+            }
             switch (separatorLine)
             {
                 case SeparatorLine.DoubleLine:
@@ -73,6 +77,10 @@ namespace PPlus.Controls
 
         public IControlSelect<T> AddItemGrouped(string group, T value, bool disable = false)
         {
+            if (_options.OrderBy != null)
+            {
+                throw new PromptPlusException("AddItemGrouped cannot be used OrderBy/OrderByDescending");
+            }
             var found = false;
             var added = false;
             foreach (var item in _options.Items.Where(x => !x.IsGroupHeader && !string.IsNullOrEmpty(x.Group)))
@@ -102,6 +110,10 @@ namespace PPlus.Controls
 
         public IControlSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable = false)
         {
+            if (_options.OrderBy != null)
+            {
+                throw new PromptPlusException("AddItemsGrouped cannot be used OrderBy/OrderByDescending");
+            }
             foreach (var item in value)
             {
                 AddItemGrouped(group, item, disable);
@@ -111,6 +123,10 @@ namespace PPlus.Controls
 
         public IControlSelect<T> OrderBy(Expression<Func<T, object>> value)
         {
+            if (_options.Items.Any(x => x.IsGroupHeader))
+            {
+                throw new PromptPlusException("OrderBy cannot be used Separator or Grouped item");
+            }
             _options.IsOrderDescending = false;
             _options.OrderBy = value.Compile();
             return this;
@@ -118,6 +134,10 @@ namespace PPlus.Controls
 
         public IControlSelect<T> OrderByDescending(Expression<Func<T, object>> value)
         {
+            if (_options.Items.Any(x => x.IsGroupHeader))
+            {
+                throw new PromptPlusException("OrderByDescending cannot be used Separator or Grouped item");
+            }
             _options.IsOrderDescending = true;
             _options.OrderBy = value.Compile();
             return this;
@@ -136,6 +156,10 @@ namespace PPlus.Controls
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -220,7 +244,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -325,12 +349,6 @@ namespace PPlus.Controls
                 {
                     defvaluepage = Optional<ItemSelect<T>>.Create(found);
                 }
-            }
-
-            var hasgroup = _options.Items.Any(x => x.IsGroupHeader);
-            if (hasgroup)
-            {
-                _options.OrderBy = null;
             }
 
             if (_options.OrderBy != null)

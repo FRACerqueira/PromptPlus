@@ -175,14 +175,19 @@ fullpath
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### <a id="methods-disabledrecursiveexpand"/>**DisabledRecursiveExpand()**
+### <a id="methods-disabledrecursiveexpand"/>**DisabledRecursiveExpand(Boolean)**
 
-Disabled ExpandAll Feature. Only item in Top-level are expanded
- <br>Overwrite Root option ExpandAll to false
+Disabled ExpandAll Feature. Only item in Top-level are expanded. Default false
+ <br>DisabledRecursiveExpand cannot be used when Root setted with parameter expandall = true
 
 ```csharp
-IControlMultiSelectBrowser DisabledRecursiveExpand()
+IControlMultiSelectBrowser DisabledRecursiveExpand(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+Disabled ExpandAll Feature
 
 #### Returns
 
@@ -257,13 +262,17 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all folders
 
 [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
 
-### <a id="methods-nospinner"/>**NoSpinner()**
+### <a id="methods-nospinner"/>**NoSpinner(Boolean)**
 
-Not show Spinner.
+Not show Spinner. default value is false (SpinnersType.Ascii)
 
 ```csharp
-IControlMultiSelectBrowser NoSpinner()
+IControlMultiSelectBrowser NoSpinner(bool value)
 ```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 #### Returns
 
@@ -288,7 +297,8 @@ true only Folders, otherwise Folders and files
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page.Default value for this control is 10.
+Set max.item view per page.
+ <br>Default value : 10.The value must be greater than or equal to 1
 
 ```csharp
 IControlMultiSelectBrowser PageSize(int value)
@@ -326,6 +336,7 @@ Maximum number of items
 ### <a id="methods-root"/>**Root(String, Boolean, Func&lt;ItemBrowser, Boolean&gt;, Func&lt;ItemBrowser, Boolean&gt;)**
 
 Set folder root to browser
+ <br>parameter expandall = true cannot be used with DisabledRecursiveExpand
 
 ```csharp
 IControlMultiSelectBrowser Root(string value, bool expandall, Func<ItemBrowser, Boolean> validselect, Func<ItemBrowser, Boolean> setdisabled)
@@ -337,7 +348,7 @@ IControlMultiSelectBrowser Root(string value, bool expandall, Func<ItemBrowser, 
 full path folder root
 
 `expandall` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true expand all folder, otherwise 'no'
+true expand all folder, otherwise 'no'. Expandall = true cannot be used with DisabledRecursiveExpand
 
 `validselect` [Func&lt;ItemBrowser, Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 Accept select/mark item that satisfy the function

@@ -90,7 +90,7 @@ public int CompletionMaxCount { get; set; }
 ### <a id="properties-completionminimumprefixlength"/>**CompletionMinimumPrefixLength**
 
 Get/Set Minimum Prefix Length.
- <br>Default value : 3.If value less than 0 internal set to 0.
+ <br>Default value : 3.If value less than 1 internal set to 1.
 
 ```csharp
 public int CompletionMinimumPrefixLength { get; set; }
@@ -103,7 +103,7 @@ public int CompletionMinimumPrefixLength { get; set; }
 ### <a id="properties-completionwaittostart"/>**CompletionWaitToStart**
 
 Get/Set Interval in mileseconds to wait start Completion funcion.
- <br>Default value : 1000. If value less than 10 internal set to 10.
+ <br>Default value : 1000. If value less than 100 internal set to 100.
 
 ```csharp
 public int CompletionWaitToStart { get; set; }

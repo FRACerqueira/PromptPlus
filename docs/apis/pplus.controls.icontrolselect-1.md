@@ -50,6 +50,7 @@ true item disabled, otherwise no
 ### <a id="methods-additemgrouped"/>**AddItemGrouped(String, T, Boolean)**
 
 Add Item in a group to list
+ <br>AddItemGrouped cannot be used with OrderBy/OrderByDescending
 
 ```csharp
 IControlSelect<T> AddItemGrouped(string group, T value, bool disable)
@@ -93,6 +94,7 @@ true item disabled, otherwise no
 ### <a id="methods-additemsgrouped"/>**AddItemsGrouped(String, IEnumerable&lt;T&gt;, Boolean)**
 
 Add Items colletion in a group to List
+ <br>AddItemsGrouped cannot be used with OrderBy/OrderByDescending
 
 ```csharp
 IControlSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable)
@@ -281,7 +283,7 @@ Action to execute
 ### <a id="methods-orderby"/>**OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort list by expression
- <br>Sort options remove all Separation line<br>Sort options is ignored when has grouped items
+ <br>OrderBy cannot be used Separator or Grouped item
 
 ```csharp
 IControlSelect<T> OrderBy(Expression<Func<T, Object>> value)
@@ -299,7 +301,7 @@ expresion to sort the colletion
 ### <a id="methods-orderbydescending"/>**OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort Descending list by expression
- <br>Sort options remove all Separation line<br>Sort options is ignored when has grouped items
+ <br>OrderByDescending cannot be used Separator or Grouped item
 
 ```csharp
 IControlSelect<T> OrderByDescending(Expression<Func<T, Object>> value)
@@ -336,7 +338,8 @@ The timeout for valid items saved. Default value is 365 days
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page.Default value for this control is 10.
+Set max.item view per page.
+ <br>Default value : 10.The value must be greater than or equal to 1
 
 ```csharp
 IControlSelect<T> PageSize(int value)
@@ -354,6 +357,7 @@ Number of Max.items
 ### <a id="methods-separator"/>**Separator(SeparatorLine, Nullable&lt;Char&gt;)**
 
 Add Separation line
+ <br>Separatorcannot be used with OrderBy/OrderByDescending
 
 ```csharp
 IControlSelect<T> Separator(SeparatorLine separatorLine, Nullable<Char> value)

@@ -57,6 +57,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Sort list by expression
+        /// <br>OrderBy cannot be used with Grouped item</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -64,7 +65,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Sort Descending list by expression
-        /// <br>Sort options is ignored when has grouped items</br>
+        /// <br>OrderBy cannot be used with Grouped item</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -72,7 +73,6 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Overwrite defaults start selected value with last result saved on history.
-        /// <br>Sort options is ignored when has grouped items</br>
         /// </summary>
         /// <param name="value">name of file to save history</param>
         /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
@@ -80,7 +80,8 @@ namespace PPlus.Controls
         IControlMultiSelect<T> OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 
         /// <summary>
-        /// Set max.item view per page.Default value for this control is 10.
+        /// Set max.item view per page.
+        /// <br>Default value : 10.The value must be greater than or equal to 1</br>
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -142,6 +143,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add Item in a group to list
+        /// <br>AddItemGrouped cannot be used with OrderBy/OrderByDescending</br>
         /// </summary>
         /// <param name="group">Group name</param>
         /// <param name="value">Item to add</param>
@@ -152,6 +154,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add Items colletion in a group to List
+        /// <br>AddItemsGrouped cannot be used with OrderBy/OrderByDescending</br>
         /// </summary>
         /// <param name="group">Group name</param>
         /// <param name="value">items colletion to add</param>

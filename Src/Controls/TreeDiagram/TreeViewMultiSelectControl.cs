@@ -52,15 +52,15 @@ namespace PPlus.Controls
             }
             if (minvalue < 0)
             {
-                minvalue = 0;
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue})");
             }
             if (maxvalue < 0)
             {
-                maxvalue = minvalue;
+                throw new PromptPlusException($"Ranger invalid. maxvalue({maxvalue})");
             }
             if (minvalue > maxvalue)
             {
-                throw new PromptPlusException($"RangerSelect invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue}) > maxvalue({maxvalue})");
             }
             _options.Minimum = minvalue;
             _options.Maximum = maxvalue.Value;
@@ -129,13 +129,13 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewMultiSelect<T> ShowLines(bool value)
+        public IControlTreeViewMultiSelect<T> ShowLines(bool value = true)
         {
             _options.ShowLines = value;
             return this;
         }
 
-        public IControlTreeViewMultiSelect<T> ShowExpand(bool value)
+        public IControlTreeViewMultiSelect<T> ShowExpand(bool value = true)
         {
             _options.ShowLines = value;
             return this;
@@ -145,7 +145,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -216,7 +216,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewMultiSelect<T> ShowCurrentNode(bool value)
+        public IControlTreeViewMultiSelect<T> ShowCurrentNode(bool value = true)
         {
             _options.ShowCurrentNode = value;
             return this;

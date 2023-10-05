@@ -133,17 +133,6 @@ namespace PPlus.Tests.Controls.Input
         }
 
         [Fact]
-        public void Should_ValidInitControlPromptSecretNotDefaultValue()
-        {
-            var ctrl = (InputControl)PromptPlus
-                .Input("P", "D")
-                .IsSecret()
-                .Default("Default");
-            var init = ctrl.InitControl(CancellationToken.None);
-            Assert.Empty(init);
-        }
-
-        [Fact]
         public void Should_FinalizeControl()
         {
             var ctrl = (InputControl)PromptPlus.Input("P", "D");

@@ -165,7 +165,7 @@ The timeout for valid items saved. Default value is 365 days
 
 ### <a id="methods-width"/>**Width(Int32)**
 
-Define Width to Widgets. Default value is 6.
+Define Width to Widgets. Default value is 6.The value must be greater than or equal to 6.
 
 ```csharp
 IControlSliderSwitch Width(int value)

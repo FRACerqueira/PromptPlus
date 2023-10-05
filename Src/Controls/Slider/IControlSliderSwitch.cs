@@ -35,7 +35,7 @@ namespace PPlus.Controls
         IControlSliderSwitch OnValue(string value);
 
         /// <summary>
-        /// Define Width to Widgets. Default value is 6.
+        /// Define Width to Widgets. Default value is 6.The value must be greater than or equal to 6.
         /// </summary>
         /// <param name="value">Width</param>
         /// <returns><see cref="IControlSliderSwitch"/></returns>

@@ -104,16 +104,16 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Get/Set Minimum Prefix Length.
-        /// <br>Default value : 3.If value less than 0 internal set to 0.</br>
+        /// <br>Default value : 3.If value less than 1 internal set to 1.</br>
         /// </summary>
         public int CompletionMinimumPrefixLength 
         {
             get { return _completionMinimumPrefixLength; }
             set
             {
-                if (value < 0)
+                if (value < 1)
                 {
-                    value = 0;
+                    value = 1;
                 }
                 _completionMinimumPrefixLength = value;
             }
@@ -123,16 +123,16 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Get/Set Interval in mileseconds to wait start Completion funcion.
-        /// <br>Default value : 1000. If value less than 10 internal set to 10.</br>
+        /// <br>Default value : 1000. If value less than 100 internal set to 100.</br>
         /// </summary>
         public int CompletionWaitToStart
         {
             get { return _completionWaitToStart; }
             set
             {
-                if (value < 10)
+                if (value < 100)
                 {
-                    value = 10;
+                    value = 100;
                 }
                 _completionWaitToStart = value;
             }

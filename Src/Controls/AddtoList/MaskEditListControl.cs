@@ -255,13 +255,14 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMaskEditList Mask(string value = null, char? promptmask = null)
+        public IControlMaskEditList Mask(string value, char? promptmask = null)
         {
             _options.Type = ControlMaskedType.Generic;
-            if (value != null)
+            if (string.IsNullOrEmpty(value))
             {
-                _options.MaskValue = value;
+                throw new PromptPlusException("Mask is Null Or Empty");
             }
+            _options.MaskValue = value;
             if (promptmask != null)
             {
                 _options.Symbols(SymbolType.MaskEmpty, promptmask.Value.ToString());
@@ -285,7 +286,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;

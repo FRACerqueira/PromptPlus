@@ -53,7 +53,7 @@ namespace BrowserMultSelectSamples
 
             PromptPlus.DoubleDash("Control:BrowserMultiSelect - DisabledRecursiveExpand usage");
             PromptPlus.BrowserMultiSelect("Browser", "expandall has same behavior expand when used DisabledRecursiveExpand.")
-                .Root(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Root.FullName, true)
+                .Root(new DirectoryInfo(AppDomain.CurrentDomain.BaseDirectory).Root.FullName, false)
                 .DisabledRecursiveExpand()
                 .Run();
 

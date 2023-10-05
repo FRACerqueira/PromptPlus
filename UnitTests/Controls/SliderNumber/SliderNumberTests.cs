@@ -222,6 +222,7 @@ namespace PPlus.Tests.Controls.SliderNumber
         {
             var ctrl = (SliderNumberControl)PromptPlus
                 .SliderNumber("P", "D")
+                .Range(0, 100)
                 .Config((cfg) =>
                 {
                     cfg.Tooltips("CustomTooltip");

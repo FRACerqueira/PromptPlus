@@ -71,14 +71,25 @@ namespace PPlus.Controls
 
         #region IControlSelectBrowser
 
-        public IControlSelectBrowser NoSpinner()
+        public IControlSelectBrowser NoSpinner(bool value = true)
         {
-            _options.Spinner = null;
+            if (value)
+            {
+                _options.Spinner = null;
+            }
+            else
+            {
+                _options.Spinner = new Spinners(SpinnersType.Ascii, ConsolePlus.IsUnicodeSupported);
+            }
             return this;
         }
 
         public IControlSelectBrowser DisabledRecursiveExpand(bool value = true)
         {
+            if (_options.ExpandAll)
+            {
+                throw new PromptPlusException("DisabledRecursiveExpand cannot be used when Root setted with expandall = true");
+            }
             _options.DisabledRecursiveExpand = value;
             _options.ExpandAll = false;
             return this;
@@ -133,6 +144,13 @@ namespace PPlus.Controls
 
         public IControlSelectBrowser Default(string value)
         {
+            if (!string.IsNullOrEmpty(_options.DefautPath))
+            {
+                if (_options.DefautPath.StartsWith(_options.RootFolder))
+                {
+                    throw new PromptPlusException($"Defaut Path({value}) Not child of Root Folder({_options.RootFolder}). Set root first!");
+                }
+            }
             _options.DefautPath = value;
             return this;
         }
@@ -154,7 +172,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlSelectBrowser OnlyFolders(bool value)
+        public IControlSelectBrowser OnlyFolders(bool value = true)
         {
             _options.OnlyFolders = value;
             return this;
@@ -164,7 +182,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -172,6 +190,21 @@ namespace PPlus.Controls
 
         public IControlSelectBrowser Root(string value, bool expandall = true, Func<ItemBrowser, bool>? validselect = null, Func<ItemBrowser, bool>? setdisabled = null)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                value = AppDomain.CurrentDomain.BaseDirectory;
+            }
+            if (expandall && _options.DisabledRecursiveExpand)
+            {
+                throw new PromptPlusException("expandall = true cannot be used with DisabledRecursiveExpand");
+            }
+            if (!string.IsNullOrEmpty(_options.DefautPath))
+            {
+                if (_options.DefautPath.StartsWith(_options.RootFolder))
+                {
+                    throw new PromptPlusException($"Defaut Path({_options.DefautPath}) Not child of Root Folder({value})");
+                }
+            }
             _options.RootFolder = value;
             _options.ExpressionSelected = validselect;
             _options.ExpressionDisabled = setdisabled;
@@ -191,25 +224,25 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlSelectBrowser ShowCurrentFolder(bool value)
+        public IControlSelectBrowser ShowCurrentFolder(bool value = true)
         {
             _options.ShowCurrentFolder = value;
             return this;
         }
 
-        public IControlSelectBrowser ShowExpand(bool value)
+        public IControlSelectBrowser ShowExpand(bool value = true)
         {
             _options.ShowExpand = value;
             return this;
         }
 
-        public IControlSelectBrowser ShowLines(bool value)
+        public IControlSelectBrowser ShowLines(bool value = true)
         {
             _options.ShowLines = value;
             return this;
         }
 
-        public IControlSelectBrowser ShowSize(bool value)
+        public IControlSelectBrowser ShowSize(bool value = true)
         {
             _options.ShowSize = value;
             return this;
@@ -289,24 +322,14 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(_options.RootFolder))
+            if (!Directory.Exists(_options.RootFolder))
             {
-                throw new PromptPlusException("Not have Root Folder to run");
+                throw new PromptPlusException($"RootFolder({_options.RootFolder}) not found");
             }
-
-            if (!string.IsNullOrEmpty(_options.DefautPath))
+            if (!string.IsNullOrEmpty(_options.DefautPath) && !Directory.Exists(_options.DefautPath))
             {
-                if (_options.DefautPath.StartsWith(_options.RootFolder))
-                {
-                    throw new PromptPlusException("Defaut Path Not child of Root Folder");
-                }
+                throw new PromptPlusException($"DefautPath({_options.DefautPath}) not found");
             }
-
-            if (_options.DisabledRecursiveExpand)
-            {
-                _options.ExpandAll = false;
-            }
-
             _ctsesc = new CancellationTokenSource();
             _lnkcts = CancellationTokenSource.CreateLinkedTokenSource(_ctsesc.Token, cancellationToken);
 
@@ -1003,10 +1026,7 @@ namespace PPlus.Controls
             else
             {
                 var rootdi = new DirectoryInfo(pathroot);
-                if (!rootdi.Exists)
-                {
-                    throw new PromptPlusException("Root not exists");
-                }
+
                 node = _browserTreeView.AddRootNode(new ItemBrowser
                 {
                     CurrentFolder = rootdi.Name,
@@ -1026,10 +1046,7 @@ namespace PPlus.Controls
             if (loadfiles)
             {
                 var di = new DirectoryInfo(node.Value.FullPath);
-                if (!di.Exists)
-                {
-                    throw new PromptPlusException("Node Folder not exists");
-                }
+
                 try
                 {
                     if (!cancellationToken.IsCancellationRequested)

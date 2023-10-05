@@ -137,12 +137,6 @@ namespace PPlus.Controls
                 _options.Maximum = _options.Items.Count;
             }
 
-            var hasgroup = _options.Items.Any(x => x.IsGroupHeader);
-            if (hasgroup)
-            {
-                _options.OrderBy = null;
-            }
-
             if (_options.OrderBy != null)
             {
                 if (_options.IsOrderDescending)
@@ -211,6 +205,10 @@ namespace PPlus.Controls
 
         public IControlMultiSelect<T> OrderBy(Expression<Func<T, object>> value)
         {
+            if (_options.Items.Any(x => x.IsGroupHeader))
+            {
+                throw new PromptPlusException("OrderBy cannot be used with Grouped item");
+            }
             _options.IsOrderDescending = false;
             _options.OrderBy = value.Compile();
             return this;
@@ -218,6 +216,10 @@ namespace PPlus.Controls
 
         public IControlMultiSelect<T> OrderByDescending(Expression<Func<T, object>> value)
         {
+            if (_options.Items.Any(x => x.IsGroupHeader))
+            {
+                throw new PromptPlusException("OrderByDescending cannot be used with Grouped item");
+            }
             _options.IsOrderDescending = true;
             _options.OrderBy = value.Compile();
             return this;
@@ -270,6 +272,10 @@ namespace PPlus.Controls
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -279,7 +285,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -326,6 +332,10 @@ namespace PPlus.Controls
 
         public IControlMultiSelect<T> AddItemGrouped(string group, T value, bool disable = false, bool selected = false)
         {
+            if (_options.OrderBy != null)
+            {
+                throw new PromptPlusException("AddItemGrouped cannot be used OrderBy/OrderByDescending");
+            }
             var found = false;
             var added = false;
             foreach (var item in _options.Items.Where(x => !x.IsGroupHeader && !string.IsNullOrEmpty(x.Group)))
@@ -355,6 +365,10 @@ namespace PPlus.Controls
 
         public IControlMultiSelect<T> AddItemsGrouped(string group, IEnumerable<T> value,  bool disable = false, bool selected = false)
         {
+            if (_options.OrderBy != null)
+            {
+                throw new PromptPlusException("AddItemsGrouped cannot be used OrderBy/OrderByDescending");
+            }
             foreach (var item in value)
             {
                 AddItemGrouped(group, item, disable,selected);
@@ -399,15 +413,15 @@ namespace PPlus.Controls
             }
             if (minvalue < 0)
             {
-                minvalue = 0;
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue})");
             }
             if (maxvalue < 0)
             {
-                maxvalue = minvalue;
+                throw new PromptPlusException($"Ranger invalid. maxvalue({maxvalue})");
             }
             if (minvalue > maxvalue)
             {
-                throw new PromptPlusException($"RangerSelect invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue}) > maxvalue({maxvalue})");
             }
             _options.Minimum = minvalue;
             _options.Maximum = maxvalue.Value;

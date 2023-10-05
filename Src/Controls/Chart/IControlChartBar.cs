@@ -46,7 +46,7 @@ namespace PPlus.Controls
         IControlChartBar Culture(string value);
 
         /// <summary>
-        /// Define Width to ChartBar. Default value is 80.
+        /// Define Width to ChartBar. Default value is 80.The value must be greater than or equal to 10.
         /// </summary>
         /// <param name="value">Width</param>
         /// <returns><see cref="IControlChartBar"/></returns>
@@ -149,7 +149,8 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// Set max.item view per page. Default value for this control is 10.
+        /// Set max.item view per page when EnabledInteractionUser is active
+        /// <br>Default value : 10.The value must be greater than or equal to 1</br>
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlChartBar"/></returns>
@@ -157,21 +158,21 @@ namespace PPlus.Controls
 
 
         /// <summary>
-        /// Overwrite a HotKey to Switch Layout Chart. Default value is 'F2' 
+        /// Overwrite a HotKey to Switch Layout Chart when EnabledInteractionUser is active. Default value is 'F2' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to Switch Layout Chart</param>
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar HotKeySwitchType(HotKey value);
 
         /// <summary>
-        /// Overwrite a HotKey to Switch Legend Chart. Default value is 'F3' 
+        /// Overwrite a HotKey to Switch Legend Chart when EnabledInteractionUser is active. Default value is 'F3' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to Switch Legend Chart</param>
         /// <returns><see cref="IControlChartBar"/></returns>
         IControlChartBar HotKeySwitchLegend(HotKey value);
 
         /// <summary>
-        /// Overwrite a HotKey to Switch ordination bar and label. Default value is 'F4' 
+        /// Overwrite a HotKey to Switch ordination bar and label when EnabledInteractionUser is active. Default value is 'F4' 
         /// </summary>
         /// <param name="value">The <see cref="HotKey"/> to Switch ordination bar and label</param>
         /// <returns><see cref="IControlChartBar"/></returns>

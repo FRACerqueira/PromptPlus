@@ -102,6 +102,10 @@ namespace PPlus.Controls
 
         public IControlChartBar Width(int value)
         {
+            if (value < 10)
+            {
+                throw new PromptPlusException("Width must be greater than or equal to 10");
+            }
             _options.Witdth = value;
             return this;
         }
@@ -156,7 +160,7 @@ namespace PPlus.Controls
         {
             if (value < 0)
             {
-                value = 0;
+                throw new PromptPlusException("FracionalDig must be greater than or equal to 0");
             }
             _options.FracionalDig = value;
             return this;
@@ -214,7 +218,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;

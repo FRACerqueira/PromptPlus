@@ -273,7 +273,7 @@ short step to change
 
 ### <a id="methods-width"/>**Width(Int32)**
 
-Define Width to Widgets. Default value is 40.
+Define Width to Widgets. Default value is 40.The value must be greater than or equal to 10.
 
 ```csharp
 IControlSliderNumber Width(int value)

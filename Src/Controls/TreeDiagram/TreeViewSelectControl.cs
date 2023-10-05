@@ -86,13 +86,13 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewSelect<T> ShowLines(bool value)
+        public IControlTreeViewSelect<T> ShowLines(bool value = true)
         {
             _options.ShowLines = value;
             return this;
         }
 
-        public IControlTreeViewSelect<T> ShowExpand(bool value)
+        public IControlTreeViewSelect<T> ShowExpand(bool value = true)
         {
             _options.ShowLines = value;
             return this;
@@ -102,7 +102,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -166,7 +166,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewSelect<T> ShowCurrentNode(bool value)
+        public IControlTreeViewSelect<T> ShowCurrentNode(bool value = true)
         {
             _options.ShowCurrentNode = value;
             return this;

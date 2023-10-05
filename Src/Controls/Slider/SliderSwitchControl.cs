@@ -105,6 +105,10 @@ namespace PPlus.Controls
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -112,6 +116,10 @@ namespace PPlus.Controls
 
         public IControlSliderSwitch Width(int value)
         {
+            if (value< 6)
+            {
+                throw new PromptPlusException("Width must be greater than or equal to 6");
+            }
             _options.Witdth = value;
             return this;
         }

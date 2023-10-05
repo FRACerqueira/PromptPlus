@@ -162,6 +162,10 @@ namespace PPlus.Controls
 
         public IControlProgressBar<T> FracionalDig(int value)
         {
+            if (value < 0)
+            {
+                throw new PromptPlusException("FracionalDig must be greater than 0");
+            }
             _options.FracionalDig = value;
             return this;
         }
@@ -190,6 +194,10 @@ namespace PPlus.Controls
 
         public IControlProgressBar<T> Default(double value)
         {
+            if (value < 0)
+            {
+                throw new PromptPlusException("Default must be greater than 0");
+            }
             _options.StartWith = value;
             return this;
         }
@@ -202,9 +210,9 @@ namespace PPlus.Controls
 
         public IControlProgressBar<T> Width(int value)
         {
-            if (value <= 0)
+            if (value < 10)
             {
-                value = 1;
+                throw new PromptPlusException("Default must be greater than 10");
             }
             _options.Witdth = value;
             return this;

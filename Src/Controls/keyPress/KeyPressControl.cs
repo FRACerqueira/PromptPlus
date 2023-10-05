@@ -124,7 +124,6 @@ namespace PPlus.Controls
                     {
                         _options.OptPrompt = Messages.ValidAnyKey;
                     }
-
                 }
             }
             return null;

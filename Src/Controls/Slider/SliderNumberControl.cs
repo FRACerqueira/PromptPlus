@@ -63,6 +63,10 @@ namespace PPlus.Controls
 
         public IControlSliderNumber FracionalDig(int value)
         {
+            if (value < 0)
+            {
+                throw new PromptPlusException("FracionalDig must be greater than or equal to 0");
+            }
             _options.FracionalDig = value;
             return this;
         }
@@ -85,6 +89,10 @@ namespace PPlus.Controls
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -110,6 +118,10 @@ namespace PPlus.Controls
 
         public IControlSliderNumber Width(int value)
         {
+            if (value < 10)
+            {
+                throw new PromptPlusException("Width must be greater than or equal to 10");
+            }
             _options.Witdth = value;
             return this;
         }
@@ -137,12 +149,12 @@ namespace PPlus.Controls
                 _options.CurrentCulture = _options.Config.AppCulture;
             }
 
-            var max = double.Parse(_options.Maxvalue.ToString());
-            var min = double.Parse(_options.Minvalue.ToString());
-            var val = double.Parse(_options.Value.ToString());
-            if (min > max)
+            var max = _options.Maxvalue;
+            var min = _options.Minvalue;
+            var val = _options.Value;
+            if (min == max)
             {
-                throw new PromptPlusException($"Minvalue({_options.Minvalue}) >  Maxvalue({_options.Minvalue})");
+                throw new PromptPlusException($"Range Minvalue to Maxvalue must be greater than 0");
             }
             if (val > max)
             {

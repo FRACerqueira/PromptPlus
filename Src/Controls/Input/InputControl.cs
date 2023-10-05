@@ -33,20 +33,6 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
-            if (_options.FilterType == FilterMode.Disabled && _options.HistoryMinimumPrefixLength > 0)
-            {
-                throw new PromptPlusException("HistoryMinimumPrefixLength mustbe zero when FilterType is Disabled");
-            }
-
-            if (_options.IsSecret)
-            {
-                _options.SuggestionHandler = null;
-                _options.DefaultEmptyValue = null;
-                _options.DefaultValue = null;
-                _options.SuggestionHandler = null;
-                _options.HistoryFileName = null;
-            }
-
             if (_options.HistoryEnabled)
             {
                 LoadHistory();
@@ -81,6 +67,10 @@ namespace PPlus.Controls
 
         public IControlInput FilterType(FilterMode value)
         {
+            if (value == FilterMode.Disabled)
+            {
+                _options.HistoryMinimumPrefixLength = 0;
+            }
             _options.FilterType = value;
             return this;
         }
@@ -90,6 +80,10 @@ namespace PPlus.Controls
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -119,6 +113,10 @@ namespace PPlus.Controls
 
         public IControlInput DefaultIfEmpty(string value)
         {
+            if (_options.IsSecret)
+            {
+                throw new PromptPlusException("DefaultIfEmpty cannot be used with input secret");
+            }
             _options.DefaultEmptyValue = value;
             return this;
         }
@@ -131,18 +129,34 @@ namespace PPlus.Controls
 
         public IControlInput HistoryEnabled(string value)
         {
+            if (_options.IsSecret)
+            {
+                throw new PromptPlusException("HistoryEnabled cannot be used with input secret");
+            }
             _options.HistoryFileName = value;
             return this;
         }
 
         public IControlInput HistoryMaxItems(byte value)
         {
+            if (value < 1)
+            {
+                throw new PromptPlusException("HistoryMaxItems must be greater than 0");
+            }
             _options.HistoryMaxItems = value;
             return this;
         }
 
         public IControlInput HistoryMinimumPrefixLength(int value)
         {
+            if (value < 0)
+            {
+                throw new PromptPlusException("HistoryMinimumPrefixLength must be greater than or equal to zero");
+            }
+            if (_options.FilterType == FilterMode.Disabled && value > 0)
+            {
+                throw new PromptPlusException("HistoryMinimumPrefixLength mustbe zero when FilterType is Disabled");
+            }
             _options.HistoryMinimumPrefixLength = value;
             return this;
         }
@@ -151,7 +165,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("HistoryPageSize must be greater than or equal to 1");
             }
             _options.HistoryPageSize = value;
             return this;
@@ -159,18 +173,42 @@ namespace PPlus.Controls
 
         public IControlInput HistoryTimeout(TimeSpan value)
         {
+            if (value.TotalMilliseconds == 0)
+            {
+                throw new PromptPlusException("HistoryTimeout must be greater than 0");
+            }
             _options.HistoryTimeout = value;
             return this;
         }
 
         public IControlInput Default(string value)
         {
+            if (_options.IsSecret)
+            {
+                throw new PromptPlusException("Default cannot be used with input secret");
+            }
             _options.DefaultValue = value;
             return this;
         }
 
         public IControlInput IsSecret(char? value = '#' )
         {
+            if (_options.SuggestionHandler != null)
+            {
+                throw new PromptPlusException("Input secret cannot have suggestionhandler");
+            }
+            if (_options.DefaultEmptyValue != null)
+            {
+                throw new PromptPlusException("Input secret cannot have DefaultEmptyValue");
+            }
+            if (_options.DefaultValue != null)
+            {
+                throw new PromptPlusException("Input secret cannot have DefaultValue");
+            }
+            if (_options.HistoryFileName != null)
+            {
+                throw new PromptPlusException("Input secret cannot have HistoryEnabled");
+            }
             if (value.HasValue)
             { 
                 _options.SecretChar = value.Value;
@@ -191,6 +229,10 @@ namespace PPlus.Controls
 
         public IControlInput SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value)
         {
+            if (_options.IsSecret)
+            {
+                throw new PromptPlusException("Suggestion handler cannot be used with input secret");
+            }
             _options.SuggestionHandler = value;
             return this;
         }
@@ -203,6 +245,10 @@ namespace PPlus.Controls
 
         public IControlInput MaxLength(ushort value)
         {
+            if (value < 1)
+            {
+                throw new PromptPlusException("MaxLength must be greater than 0");
+            }
             _options.MaxLength = value;
             return this;
         }

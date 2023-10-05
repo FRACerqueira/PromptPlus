@@ -145,7 +145,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = Environment.ProcessorCount;
+                throw new PromptPlusException("MaxDegreeProcess must be greater than 0");
             }
             _options.MaxDegreeProcess = value;
             return this;

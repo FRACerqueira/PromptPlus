@@ -227,7 +227,7 @@ Fill zeros mask
 ### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
 Filter strategy for filter items in History colletion
- <br>Default value is FilterMode.StartsWith
+ <br>Default value is FilterMode.StartsWith<br>When  is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero
 
 ```csharp
 IControlMaskEdit FilterType(FilterMode value)
@@ -315,8 +315,8 @@ maximum items saved
 
 ### <a id="methods-historyminimumprefixlength"/>**HistoryMinimumPrefixLength(Int32)**
 
-Minimum chars (without mask!) to enabled history feature.
- <br>History items are filtered by the starts with entry.
+Minimum chars to enabled history feature. Default value is 0.
+ <br>History items are filtered by the starts with entry.<br>When command FilterType set to  Disabled History items the value must be zero
 
 ```csharp
 IControlMaskEdit HistoryMinimumPrefixLength(int value)

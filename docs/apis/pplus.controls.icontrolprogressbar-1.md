@@ -246,7 +246,7 @@ Handler.See [UpdateProgressBar&lt;T&gt;](./pplus.controls.updateprogressbar-1.md
 
 ### <a id="methods-width"/>**Width(Int32)**
 
-Define Width to ProgressBar. Default value is 80.
+Define Width to ProgressBar. Default value is 80.The value must be greater than or equal to 10.
 
 ```csharp
 IControlProgressBar<T> Width(int value)

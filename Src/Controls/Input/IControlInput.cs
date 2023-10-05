@@ -53,7 +53,8 @@ namespace PPlus.Controls
         IControlInput AcceptInput(Func<char, bool> value);
 
         /// <summary>
-        /// MaxLength of input text.
+        /// MaxLength of input text.The value must be greater than or equal to 1
+        /// <br>Default value is 0 (no limit)</br>
         /// </summary>
         /// <param name="value">Length</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -112,6 +113,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Minimum chars to enabled history feature. Default value is 0.
         /// <br>History items are filtered by the starts with entry.</br>
+        /// <br>When command FilterType set to <see cref="FilterMode"/> Disabled History items the value must be zero</br>
         /// </summary>
         /// <param name="value">Minimum chars number</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -150,6 +152,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Filter strategy for filter items in History colletion
         /// <br>Default value is FilterMode.StartsWith</br>
+        /// <br>When <see cref="FilterMode"/> is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>
         /// <returns><see cref="IControlInput"/></returns>

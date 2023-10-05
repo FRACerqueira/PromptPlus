@@ -45,7 +45,7 @@ namespace PPlus.Controls
         IControlSliderNumber Layout(LayoutSliderNumber value);
 
         /// <summary>
-        /// Define Width to Widgets. Default value is 40.
+        /// Define Width to Widgets. Default value is 40.The value must be greater than or equal to 10.
         /// </summary>
         /// <param name="value">Width</param>
         /// <returns><see cref="IControlSliderNumber"/></returns>

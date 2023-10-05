@@ -48,7 +48,8 @@ namespace PPlus.Controls
         IControlSelect<T> OverwriteDefaultFrom(string value, TimeSpan? timeout= null);
 
         /// <summary>
-        /// Set max.item view per page.Default value for this control is 10.
+        /// Set max.item view per page.
+        /// <br>Default value : 10.The value must be greater than or equal to 1</br>
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
@@ -64,8 +65,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Sort list by expression
-        /// <br>Sort options remove all Separation line</br>
-        /// <br>Sort options is ignored when has grouped items</br>
+        /// <br>OrderBy cannot be used Separator or Grouped item</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
@@ -73,8 +73,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Sort Descending list by expression
-        /// <br>Sort options remove all Separation line</br>
-        /// <br>Sort options is ignored when has grouped items</br>
+        /// <br>OrderByDescending cannot be used Separator or Grouped item</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
@@ -111,6 +110,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add Separation line
+        /// <br>Separatorcannot be used with OrderBy/OrderByDescending</br>
         /// </summary>
         /// <param name="separatorLine">Type Separation line.Default value is SeparatorLine.SingleLine <see cref="SeparatorLine"/></param>
         /// <param name="value">Char Separation line. Valid only SeparatorLine is SeparatorLine.Char</param>
@@ -137,6 +137,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add Item in a group to list
+        /// <br>AddItemGrouped cannot be used with OrderBy/OrderByDescending</br>
         /// </summary>
         /// <param name="group">Group name</param>
         /// <param name="value">Item to add</param>
@@ -146,6 +147,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add Items colletion in a group to List
+        /// <br>AddItemsGrouped cannot be used with OrderBy/OrderByDescending</br>
         /// </summary>
         /// <param name="group">Group name</param>
         /// <param name="value">items colletion to add</param>

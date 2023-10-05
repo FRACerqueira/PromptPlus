@@ -208,7 +208,7 @@ Hide value
 
 ### <a id="methods-hotkeyswitchlegend"/>**HotKeySwitchLegend(HotKey)**
 
-Overwrite a HotKey to Switch Legend Chart. Default value is 'F3'
+Overwrite a HotKey to Switch Legend Chart when EnabledInteractionUser is active. Default value is 'F3'
 
 ```csharp
 IControlChartBar HotKeySwitchLegend(HotKey value)
@@ -225,7 +225,7 @@ The [HotKey](./pplus.controls.hotkey.md) to Switch Legend Chart
 
 ### <a id="methods-hotkeyswitchorder"/>**HotKeySwitchOrder(HotKey)**
 
-Overwrite a HotKey to Switch ordination bar and label. Default value is 'F4'
+Overwrite a HotKey to Switch ordination bar and label when EnabledInteractionUser is active. Default value is 'F4'
 
 ```csharp
 IControlChartBar HotKeySwitchOrder(HotKey value)
@@ -242,7 +242,7 @@ The [HotKey](./pplus.controls.hotkey.md) to Switch ordination bar and label
 
 ### <a id="methods-hotkeyswitchtype"/>**HotKeySwitchType(HotKey)**
 
-Overwrite a HotKey to Switch Layout Chart. Default value is 'F2'
+Overwrite a HotKey to Switch Layout Chart when EnabledInteractionUser is active. Default value is 'F2'
 
 ```csharp
 IControlChartBar HotKeySwitchType(HotKey value)
@@ -335,7 +335,8 @@ Number of spaces. Default value is 0.
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page. Default value for this control is 10.
+Set max.item view per page when EnabledInteractionUser is active
+ <br>Default value : 10.The value must be greater than or equal to 1
 
 ```csharp
 IControlChartBar PageSize(int value)
@@ -409,7 +410,7 @@ The [Alignment](./pplus.controls.alignment.md) title
 
 ### <a id="methods-width"/>**Width(Int32)**
 
-Define Width to ChartBar. Default value is 80.
+Define Width to ChartBar. Default value is 80.The value must be greater than or equal to 10.
 
 ```csharp
 IControlChartBar Width(int value)

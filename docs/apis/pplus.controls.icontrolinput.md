@@ -146,7 +146,7 @@ Overwrite a [HotKey](./pplus.controls.hotkey.md) to toggle view. Default value i
 ### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
 Filter strategy for filter items in History colletion
- <br>Default value is FilterMode.StartsWith
+ <br>Default value is FilterMode.StartsWith<br>When  is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero
 
 ```csharp
 IControlInput FilterType(FilterMode value)
@@ -199,7 +199,7 @@ maximum items saved
 ### <a id="methods-historyminimumprefixlength"/>**HistoryMinimumPrefixLength(Int32)**
 
 Minimum chars to enabled history feature. Default value is 0.
- <br>History items are filtered by the starts with entry.
+ <br>History items are filtered by the starts with entry.<br>When command FilterType set to  Disabled History items the value must be zero
 
 ```csharp
 IControlInput HistoryMinimumPrefixLength(int value)
@@ -284,7 +284,8 @@ char secret
 
 ### <a id="methods-maxlength"/>**MaxLength(UInt16)**
 
-MaxLength of input text.
+MaxLength of input text.The value must be greater than or equal to 1
+ <br>Default value is 0 (no limit)
 
 ```csharp
 IControlInput MaxLength(ushort value)

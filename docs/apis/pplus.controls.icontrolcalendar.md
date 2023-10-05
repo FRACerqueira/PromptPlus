@@ -247,7 +247,8 @@ The timeout for valid items saved. Default value is 365 days
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page on notes.Default value for this control is 5.
+Set max.item notes view per page.
+ <br>Default value : 5.The value must be greater than or equal to 1
 
 ```csharp
 IControlCalendar PageSize(int value)

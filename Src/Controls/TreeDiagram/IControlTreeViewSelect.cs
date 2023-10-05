@@ -44,17 +44,18 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">true Show lines, otherwise 'no'</param>
         /// <returns><see cref="IControlTreeViewSelect{T}"/></returns>
-        IControlTreeViewSelect<T> ShowLines(bool value);
+        IControlTreeViewSelect<T> ShowLines(bool value = true);
 
         /// <summary>
         /// Show expand SymbolType.Expanded. Default is true
         /// </summary>
         /// <param name="value">true Show Expanded SymbolType, otherwise 'no'</param>
         /// <returns><see cref="IControlTreeViewSelect{T}"/></returns>
-        IControlTreeViewSelect<T> ShowExpand(bool value);
+        IControlTreeViewSelect<T> ShowExpand(bool value = true);
 
         /// <summary>
-        /// Set max.item view per page.Default value for this control is 10.
+        /// Set max.item view per page.
+        /// <br>Default value : 10.The value must be greater than or equal to 1</br>
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlTreeViewSelect{T}"/></returns>
@@ -100,7 +101,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">true Append current name node parent on description, not append</param>
         /// <returns><see cref="IControlTreeViewSelect{T}"/></returns>
-        IControlTreeViewSelect<T> ShowCurrentNode(bool value);
+        IControlTreeViewSelect<T> ShowCurrentNode(bool value = true);
 
         /// <summary>
         /// Overwrite a HotKey toggle current name node parent to FullPath. Default value is 'F2' 

@@ -44,9 +44,9 @@ namespace PPlus.Controls
 
         public IBannerControl LoadFont(string value)
         {
-            if (value == null)
+            if (string.IsNullOrEmpty(value))
             {
-                throw new PromptPlusException("BannerControl.LoadFont is null");
+                throw new PromptPlusException("BannerControl.LoadFont is null or empty");
             }
             Font = new FigletFont(value);
             return this;
@@ -55,6 +55,10 @@ namespace PPlus.Controls
 
         public void Run(Color? color = null, BannerDashOptions bannerDash = BannerDashOptions.None)
         {
+            if (string.IsNullOrEmpty(Text))
+            {
+                return;
+            }
             Color localcorlor = _console.ForegroundColor;
             if (color != null)
             {

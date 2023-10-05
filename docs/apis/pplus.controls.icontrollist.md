@@ -227,7 +227,8 @@ Action to execute
 
 ### <a id="methods-maxlength"/>**MaxLength(UInt16)**
 
-MaxLength of input text.
+MaxLength of input text.The value must be greater than or equal to 1
+ <br>Default value is 0 (no limit)
 
 ```csharp
 IControlList MaxLength(ushort value)
@@ -244,7 +245,8 @@ Length
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page.Default value for this control is 10.
+Set max.item view per page.
+ <br>Default value : 10.The value must be greater than or equal to 1
 
 ```csharp
 IControlList PageSize(int value)

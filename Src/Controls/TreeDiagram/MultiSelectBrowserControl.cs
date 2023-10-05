@@ -88,16 +88,27 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelectBrowser DisabledRecursiveExpand()
+        public IControlMultiSelectBrowser DisabledRecursiveExpand(bool value = true)
         {
-            _options.DisabledRecursiveExpand = true;
+            if (_options.ExpandAll)
+            {
+                throw new PromptPlusException("DisabledRecursiveExpand cannot be used when Root setted with expandall = true");
+            }
+            _options.DisabledRecursiveExpand = value;
             _options.ExpandAll = false;
             return this;
         }
 
-        public IControlMultiSelectBrowser NoSpinner()
+        public IControlMultiSelectBrowser NoSpinner(bool value = true)
         {
-            _options.Spinner = null;
+            if (value)
+            {
+                _options.Spinner = null;
+            }
+            else
+            {
+                _options.Spinner = new Spinners(SpinnersType.Ascii, ConsolePlus.IsUnicodeSupported);
+            }
             return this;
         }
 
@@ -116,15 +127,15 @@ namespace PPlus.Controls
             }
             if (minvalue < 0)
             {
-                minvalue = 0;
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue})");
             }
             if (maxvalue < 0)
             {
-                maxvalue = minvalue;
+                throw new PromptPlusException($"Ranger invalid. maxvalue({maxvalue})");
             }
             if (minvalue > maxvalue)
             {
-                throw new PromptPlusException($"RangerSelect invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue}) > maxvalue({maxvalue})");
             }
             _options.Minimum = minvalue;
             _options.Maximum = maxvalue.Value;
@@ -175,6 +186,13 @@ namespace PPlus.Controls
 
         public IControlMultiSelectBrowser Default(string value)
         {
+            if (!string.IsNullOrEmpty(_options.DefautPath))
+            {
+                if (_options.DefautPath.StartsWith(_options.RootFolder))
+                {
+                    throw new PromptPlusException($"Defaut Path({value}) Not child of Root Folder({_options.RootFolder}). Set root first!");
+                }
+            }
             _options.DefautPath = value;
             return this;
         }
@@ -197,7 +215,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelectBrowser OnlyFolders(bool value)
+        public IControlMultiSelectBrowser OnlyFolders(bool value = true)
         {
             _options.OnlyFolders = value;
             return this;
@@ -207,7 +225,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -215,6 +233,21 @@ namespace PPlus.Controls
 
         public IControlMultiSelectBrowser Root(string value,bool expandall, Func<ItemBrowser, bool>? validselect = null, Func<ItemBrowser, bool>? setdisabled = null)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                value = AppDomain.CurrentDomain.BaseDirectory;
+            }
+            if (expandall && _options.DisabledRecursiveExpand)
+            {
+                throw new PromptPlusException("expandall = true cannot be used with DisabledRecursiveExpand");
+            }
+            if (!string.IsNullOrEmpty(_options.DefautPath))
+            {
+                if (_options.DefautPath.StartsWith(_options.RootFolder))
+                {
+                    throw new PromptPlusException($"Defaut Path({_options.DefautPath}) Not child of Root Folder({value})");
+                }
+            }
             _options.RootFolder = value;
             _options.ExpandAll = expandall;
             _options.ExpressionSelected = validselect;
@@ -234,25 +267,25 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelectBrowser ShowCurrentFolder(bool value)
+        public IControlMultiSelectBrowser ShowCurrentFolder(bool value = true)
         {
             _options.ShowCurrentFolder = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser ShowExpand(bool value)
+        public IControlMultiSelectBrowser ShowExpand(bool value = true)
         {
             _options.ShowExpand = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser ShowLines(bool value)
+        public IControlMultiSelectBrowser ShowLines(bool value = true)
         {
             _options.ShowLines = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser ShowSize(bool value)
+        public IControlMultiSelectBrowser ShowSize(bool value = true)
         {
             _options.ShowSize = value;
             return this;
@@ -330,24 +363,14 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(_options.RootFolder))
+            if (!Directory.Exists(_options.RootFolder))
             {
-                throw new PromptPlusException("Not have Root Folder to run");
+                throw new PromptPlusException($"RootFolder({_options.RootFolder}) not found");
             }
-
-            if (!string.IsNullOrEmpty(_options.DefautPath))
+            if (!string.IsNullOrEmpty(_options.DefautPath) && !Directory.Exists(_options.DefautPath))
             {
-                if (_options.DefautPath.StartsWith(_options.RootFolder))
-                {
-                    throw new PromptPlusException("Defaut Path Not child of Root Folder");
-                }
+                throw new PromptPlusException($"DefautPath({_options.DefautPath}) not found");
             }
-
-            if (_options.DisabledRecursiveExpand)
-            {
-                _options.ExpandAll = false;
-            }
-
             _ctsesc = new CancellationTokenSource();
             _lnkcts = CancellationTokenSource.CreateLinkedTokenSource(_ctsesc.Token, cancellationToken);
 
@@ -358,7 +381,6 @@ namespace PPlus.Controls
 
             FinishResult = string.Empty;
             return FinishResult;
-
         }
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
@@ -1110,10 +1132,7 @@ namespace PPlus.Controls
             else
             {
                 var rootdi = new DirectoryInfo(pathroot);
-                if (!rootdi.Exists)
-                {
-                    throw new PromptPlusException("Root not exists");
-                }
+ 
                 node = _browserTreeView.AddRootNode(new ItemBrowser
                 {
                     CurrentFolder = rootdi.Name,
@@ -1145,10 +1164,7 @@ namespace PPlus.Controls
             if (loadfiles)
             {
                 var di = new DirectoryInfo(node.Value.FullPath);
-                if (!di.Exists)
-                {
-                    throw new PromptPlusException("Node Folder not exists");
-                }
+
                 try
                 {
                     if (!cancellationToken.IsCancellationRequested)
