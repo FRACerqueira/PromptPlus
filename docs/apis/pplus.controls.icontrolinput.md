@@ -95,6 +95,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 ### <a id="methods-default"/>**Default(String)**
 
 Default value when stated.
+ <br>Default cannot be used with IsSecret
 
 ```csharp
 IControlInput Default(string value)
@@ -164,7 +165,7 @@ Filter Mode
 ### <a id="methods-historyenabled"/>**HistoryEnabled(String)**
 
 Enabled saved history inputs.
- <br>The history file is saved in  in the 'PromptPlus.History' folder.
+ <br>HistoryEnabled cannot be used with IsSecret<br>The history file is saved in  in the 'PromptPlus.History' folder.
 
 ```csharp
 IControlInput HistoryEnabled(string value)
@@ -268,6 +269,7 @@ Transform option
 ### <a id="methods-issecret"/>**IsSecret(Nullable&lt;Char&gt;)**
 
 The input is a secret. the input text is masked to '#' (default value)
+ <br>Input secret cannot be used with suggestionhandler<br>Input secret cannot be used with DefaultEmptyValue<br>Input secret cannot be used with DefaultValue<br>Input secret cannot be used with OverwriteDefaultFrom<br>Input secret cannot be used with HistoryEnabled
 
 ```csharp
 IControlInput IsSecret(Nullable<Char> value)
@@ -303,6 +305,7 @@ Length
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
+ <br>OverwriteDefaultFrom cannot be used with IsSecret
 
 ```csharp
 IControlInput OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
@@ -323,6 +326,7 @@ The timeout for valid items saved. Default value is 365 days
 ### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SuggestionInput, SuggestionOutput&gt;)**
 
 Add Suggestion Handler feature
+ <br>SuggestionHandler cannot be used with IsSecret
 
 ```csharp
 IControlInput SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value)

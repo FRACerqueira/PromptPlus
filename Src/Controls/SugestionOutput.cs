@@ -23,6 +23,15 @@ namespace PPlus.Controls
             _items = new();
         }
 
+        /// <summary>
+        /// Create a new instance of SuggestionOutput
+        /// </summary>
+        /// <returns><see cref="SuggestionOutput"/></returns>
+        public static SuggestionOutput Create()
+        { 
+            return new SuggestionOutput();
+        }
+
         internal SuggestionOutput(IList<string> items)
         {
             _items.AddRange(items);
@@ -33,20 +42,24 @@ namespace PPlus.Controls
         /// Add suggestion
         /// </summary>
         /// <param name="value">text suggestion</param>
-        public void Add(string value)
+        /// <returns><see cref="SuggestionOutput"/></returns>
+        public SuggestionOutput Add(string value)
         {
             _items.Add(value);
             Suggestions = new ReadOnlyCollection<string>(_items);
+            return this;
         }
 
         /// <summary>
         /// Add Enumerable suggestions
         /// </summary>
         /// <param name="items">Enumerable text suggestions</param>
-        public void AddRange(IEnumerable<string> items)
+        /// <returns><see cref="SuggestionOutput"/></returns>
+        public SuggestionOutput AddRange(IEnumerable<string> items)
         {
             _items.AddRange(items);
             Suggestions = new ReadOnlyCollection<string>(_items);
+            return this;
         }
 
         internal ReadOnlyCollection<string> Suggestions { get; private set; }

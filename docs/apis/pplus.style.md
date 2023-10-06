@@ -105,6 +105,22 @@ create a new [Style](./pplus.style.md) with default foreground/background colors
 Style()
 ```
 
+### <a id="constructors-.ctor"/>**Style(Color, Overflow)**
+
+Create a new instance of [Style](./pplus.style.md) with foreground, default backgroundcolors and overflow strategy.
+
+```csharp
+Style(Color foreground, Overflow overflowStrategy)
+```
+
+#### Parameters
+
+`foreground` [Color](./pplus.color.md)<br>
+[Color](./pplus.color.md) foreground
+
+`overflowStrategy` [Overflow](./pplus.overflow.md)<br>
+[Overflow](./pplus.overflow.md) Strategy
+
 ### <a id="constructors-.ctor"/>**Style(Color, Color, Overflow)**
 
 Create a new instance of [Style](./pplus.style.md) with foreground/background colors and overflow strategy.

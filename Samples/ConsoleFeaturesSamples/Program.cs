@@ -5,6 +5,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using System.Globalization;
 using PPlus;
 using PPlus.Controls;
 
@@ -16,6 +17,27 @@ namespace ConsoleFeaturesSamples
         {
             PromptPlus.Reset();
             PromptPlus.Clear();
+
+            //global
+            PromptPlus.Config.EnabledAbortKey = false;
+            PromptPlus.StyleSchema.ApplyStyle(StyleControls.Prompt, new Style(Color.Red));
+            //by instance
+            PromptPlus.Input("").Config(cfg =>
+            {
+                cfg
+                 .ApplyStyle(StyleControls.Answer, new Style(Color.Yellow))
+                 .EnabledAbortKey(true);
+            });
+
+            PromptPlus.WriteLine("[RED ON WHITE]Hello[/] [YELLOW]Word[/]");
+
+            PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+
+            PromptPlus.AppendText("[RGB(255,0,0) ON WHITE]Test[/]")
+                .And(" COLOR ",Color.Yellow)
+                .And(" BACK COLOR ",new Style(Color.Red,Color.White))
+                .And("other text")
+                .WriteLine();
 
             //standard 
             PromptPlus.DoubleDash($"PromptPlus IgnoreColorTokens = false - Default value and usage" );
@@ -55,6 +77,7 @@ namespace ConsoleFeaturesSamples
             PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
 
+            PromptPlus.WriteLine("Test", new Style(ConsoleColor.Red, ConsoleColor.White, Overflow.None));
             PromptPlus.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
             PromptPlus.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
             PromptPlus.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));

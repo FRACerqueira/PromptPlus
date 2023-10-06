@@ -214,6 +214,10 @@
 
 - [UserHotKey](./pplus.controls.userhotkey.md)
 
+## Namespace PPlus.Drivers
+
+- [IAppendText](./pplus.drivers.iappendtext.md)
+
 
 - - -
 

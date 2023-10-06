@@ -536,6 +536,63 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
+### <a id="methods-appendtext"/>**AppendText(String)**
+
+Add text to the recording buffer
+
+```csharp
+public static IAppendText AppendText(string text)
+```
+
+#### Parameters
+
+`text` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Text to write
+
+#### Returns
+
+[IAppendText](./pplus.drivers.iappendtext.md)
+
+### <a id="methods-appendtext"/>**AppendText(String, Style)**
+
+Add text to the recording buffer with [Style](./pplus.style.md)
+
+```csharp
+public static IAppendText AppendText(string text, Style style)
+```
+
+#### Parameters
+
+`text` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Text to write
+
+`style` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md)
+
+#### Returns
+
+[IAppendText](./pplus.drivers.iappendtext.md)
+
+### <a id="methods-appendtext"/>**AppendText(String, Color)**
+
+Add text to the recording buffer with forecolor [Color](./pplus.color.md)
+
+```csharp
+public static IAppendText AppendText(string text, Color color)
+```
+
+#### Parameters
+
+`text` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+Text to write
+
+`color` [Color](./pplus.color.md)<br>
+The forecolor. [Color](./pplus.color.md)
+
+#### Returns
+
+[IAppendText](./pplus.drivers.iappendtext.md)
+
 ### <a id="methods-autocomplete"/>**AutoComplete(String, Action&lt;IPromptConfig&gt;)**
 
 Create Auto Complete Control.

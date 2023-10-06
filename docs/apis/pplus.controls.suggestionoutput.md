@@ -37,7 +37,7 @@ SuggestionOutput()
 Add suggestion
 
 ```csharp
-void Add(string value)
+SuggestionOutput Add(string value)
 ```
 
 #### Parameters
@@ -45,18 +45,38 @@ void Add(string value)
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 text suggestion
 
+#### Returns
+
+[SuggestionOutput](./pplus.controls.suggestionoutput.md)
+
 ### <a id="methods-addrange"/>**AddRange(IEnumerable&lt;String&gt;)**
 
 Add Enumerable suggestions
 
 ```csharp
-void AddRange(IEnumerable<String> items)
+SuggestionOutput AddRange(IEnumerable<String> items)
 ```
 
 #### Parameters
 
 `items` [IEnumerable&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 Enumerable text suggestions
+
+#### Returns
+
+[SuggestionOutput](./pplus.controls.suggestionoutput.md)
+
+### <a id="methods-create"/>**Create()**
+
+Create a new instance of SuggestionOutput
+
+```csharp
+SuggestionOutput Create()
+```
+
+#### Returns
+
+[SuggestionOutput](./pplus.controls.suggestionoutput.md)
 
 
 - - -

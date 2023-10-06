@@ -77,6 +77,10 @@ namespace PPlus.Controls
 
         public IControlInput OverwriteDefaultFrom(string value, TimeSpan? timeout)
         {
+            if (_options.IsSecret)
+            {
+                throw new PromptPlusException("OverwriteDefaultFrom cannot be used with input secret");
+            }
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
@@ -200,6 +204,10 @@ namespace PPlus.Controls
             if (_options.DefaultEmptyValue != null)
             {
                 throw new PromptPlusException("Input secret cannot have DefaultEmptyValue");
+            }
+            if ((_options.OverwriteDefaultFrom??string.Empty).Length > 0)
+            {
+                throw new PromptPlusException("Input secret cannot have OverwriteDefaultFrom");
             }
             if (_options.DefaultValue != null)
             {

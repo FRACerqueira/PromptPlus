@@ -97,6 +97,44 @@ namespace PPlus
         }
 
         /// <summary>
+        /// Add text to the recording buffer
+        /// </summary>
+        /// <param name="text">Text to write</param>
+        /// <returns><see cref="IAppendText"/></returns>
+        public static IAppendText AppendText(string text)
+        {
+            var ctrl = new AppendTextControl();
+            ctrl.And(text);
+            return ctrl;
+        }
+
+        /// <summary>
+        /// Add text to the recording buffer with <see cref="Style"/>
+        /// </summary>
+        /// <param name="text">Text to write</param>
+        /// <param name="style">The <see cref="Style"/></param>
+        /// <returns><see cref="IAppendText"/></returns>
+        public static IAppendText AppendText(string text, Style style)
+        {
+            var ctrl = new AppendTextControl();
+            ctrl.And(text, style);
+            return ctrl;
+        }
+
+        /// <summary>
+        /// Add text to the recording buffer with forecolor <see cref="Color"/>
+        /// </summary>
+        /// <param name="text">Text to write</param>
+        /// <param name="color">The forecolor. <see cref="Color"/></param>
+        /// <returns><see cref="IAppendText"/></returns>
+        public static IAppendText AppendText(string text, Color color)
+        {
+            var ctrl = new AppendTextControl();
+            ctrl.And(text, color);
+            return ctrl;
+        }
+
+        /// <summary>
         /// Get/set extra console exception info
         /// </summary>
         public static bool ExtraExceptionInfo { get; set;}

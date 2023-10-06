@@ -24,6 +24,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Default value when stated.
+        /// <br>Default cannot be used with IsSecret</br>
         /// </summary>
         /// <param name="value">Value default</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -31,6 +32,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Overwrite default start value with last result saved on history.
+        /// <br>OverwriteDefaultFrom cannot be used with IsSecret</br>
         /// </summary>
         /// <param name="value">name of file to save history</param>
         /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
@@ -62,6 +64,11 @@ namespace PPlus.Controls
 
         /// <summary>
         /// The input is a secret. the input text is masked to '#' (default value)
+        /// <br>Input secret cannot be used with suggestionhandler</br>
+        /// <br>Input secret cannot be used with DefaultEmptyValue</br>
+        /// <br>Input secret cannot be used with DefaultValue</br>
+        /// <br>Input secret cannot be used with OverwriteDefaultFrom</br>
+        /// <br>Input secret cannot be used with HistoryEnabled</br>
         /// </summary>
         /// <param name="value">char secret</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -105,6 +112,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add Suggestion Handler feature
+        /// <br>SuggestionHandler cannot be used with IsSecret</br>
         /// </summary>
         /// <param name="value">function to apply suggestions. <see cref="SuggestionInput"/> and <seealso cref="SuggestionOutput"/></param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -121,6 +129,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Enabled saved history inputs.
+        /// <br>HistoryEnabled cannot be used with IsSecret</br>
         /// <br>The history file is saved in <see cref="Environment.SpecialFolder.UserProfile"/> in the 'PromptPlus.History' folder.</br> 
         /// </summary>
         /// <param name="value">name of file to saved history</param>
