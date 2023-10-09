@@ -50,8 +50,8 @@ namespace SelectUserScopeSamples
             PromptPlus.DoubleDash("Control:Select - Using class with AdderScope and OrderBy");
             var sel = PromptPlus.Select<MyClass>("Select")
                 .AddItems(_datasample)
-                .AddItemsTo(AdderScope.Disable, _datasample.Where(x => x.IsDisabled).ToArray())
-                .AddItemsTo(AdderScope.Remove, _datasample.Where(x => x.IsHide).ToArray())
+                .AddItemsTo(AdderScope.Disable, _datasample.Where(x => x.IsDisabled))
+                .AddItemsTo(AdderScope.Remove, _datasample.Where(x => x.IsHide))
                 .TextSelector(x => x.MyText)
                 .EqualItems((item1, item2) => item1.Id == item2.Id)
                 .ChangeDescription(x => x.MyDesc)

@@ -55,7 +55,7 @@ namespace MaskEditDateTimeTypeSamples
             PromptPlus.MaskEdit("input", "MaskEdit DateTime input")
                 .Mask(MaskedType.DateTime)
                 .DescriptionWithInputType(FormatWeek.Long)
-                .Culture(new CultureInfo("pt-br"))
+                .Culture("pt-br")
                 .AcceptEmptyValue()
                 .Run();
 

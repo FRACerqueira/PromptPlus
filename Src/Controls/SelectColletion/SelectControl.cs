@@ -187,7 +187,20 @@ namespace PPlus.Controls
             return this;
         }
 
+        public IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
+        {
+            InternalAdd(scope, values);
+            return this;
+        }
+
+
         public IControlSelect<T> AddItemsTo(AdderScope scope,params T[] values)
+        {
+            InternalAdd(scope,values);
+            return this;
+        }
+
+        private void InternalAdd(AdderScope scope, IEnumerable<T> values)
         {
             foreach (var item in values)
             {
@@ -207,7 +220,6 @@ namespace PPlus.Controls
                         throw new PromptPlusException($"AddItemsTo : {scope} Not Implemented");
                 }
             }
-            return this;
         }
 
         public IControlSelect<T> AutoSelect(bool value = true)

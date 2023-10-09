@@ -12,7 +12,7 @@
 
 Namespace: PPlus.Controls
 
-Interface for config controls and overwrite default values
+Interface for config controls to overwrite default values
 
 ```csharp
 public interface IPromptConfig

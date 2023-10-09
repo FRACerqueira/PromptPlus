@@ -16,7 +16,8 @@ namespace PPlus
         /// <param name="dashOptions"><see cref="DashOptions"/> character</param>
         /// <param name="extralines">Number lines to write after write value</param>
         /// <param name="style">The <see cref="Style"/> to write.</param>
-        public static void SingleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
+        /// <returns>Number of lines write on console</returns>
+        public static int SingleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
         {
             var aux = Segment.Parse(value, style ?? Style.Default);
             if (aux.Length > 1)
@@ -49,9 +50,10 @@ namespace PPlus
                         break;
                 }
             }
-            WriteLine(aux[0].Text, aux[0].Style);
-            WriteLine(new string(wrapperChar, aux[0].Text.Length), aux[0].Style);
+            int lines = WriteLine(aux[0].Text, aux[0].Style);
+            lines += WriteLine(new string(wrapperChar, aux[0].Text.Length), aux[0].Style);
             WriteLines(extralines);
+            return lines + extralines;
         }
 
         /// <summary>
@@ -74,7 +76,8 @@ namespace PPlus
         /// <param name="dashOptions"><see cref="DashOptions"/> character</param>
         /// <param name="extralines">Number lines to write after write value</param>
         /// <param name="style">The <see cref="Style"/> to write.</param>
-        public static void DoubleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
+        /// <returns>Number of lines write on console</returns>
+        public static int DoubleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null)
         {
             var aux = Segment.Parse(value, style ?? Style.Default);
             if (aux.Length > 1)
@@ -107,10 +110,11 @@ namespace PPlus
                         break;
                 }
             }
-            WriteLine(new string(wrapperChar, aux[0].Text.Length), aux[0].Style);
-            WriteLine(aux[0].Text, aux[0].Style);
-            WriteLine(new string(wrapperChar, aux[0].Text.Length), aux[0].Style);
+            int lines = WriteLine(new string(wrapperChar, aux[0].Text.Length), aux[0].Style);
+            lines += WriteLine(aux[0].Text, aux[0].Style);
+            lines += WriteLine(new string(wrapperChar, aux[0].Text.Length), aux[0].Style);
             WriteLines(extralines);
+            return lines + extralines;
         }
     }
 }

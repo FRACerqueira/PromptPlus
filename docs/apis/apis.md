@@ -216,7 +216,7 @@
 
 ## Namespace PPlus.Drivers
 
-- [IAppendText](./pplus.drivers.iappendtext.md)
+- [IJointConsole](./pplus.drivers.ijointconsole.md)
 
 
 - - -

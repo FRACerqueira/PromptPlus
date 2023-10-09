@@ -378,6 +378,18 @@ namespace PPlus.Controls
 
         public IControlMultiSelect<T> AddItemsTo(AdderScope scope,params T[] values)
         {
+            InternalAdd(scope, values);
+            return this;
+        }
+
+        public IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
+        {
+            InternalAdd(scope, values);
+            return this;
+        }
+
+        private void InternalAdd(AdderScope scope, IEnumerable<T> values)
+        {
             foreach (var item in values)
             {
                 switch (scope)
@@ -396,7 +408,6 @@ namespace PPlus.Controls
                         throw new PromptPlusException($"AdderScope : {scope} Not Implemented");
                 }
             }
-            return this;
         }
 
         public IControlMultiSelect<T> OverflowAnswer(Overflow value)

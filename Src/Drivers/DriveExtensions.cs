@@ -43,28 +43,28 @@ namespace PPlus
             }
             else
             {
-                OriginalCodePageEncode = System.Console.OutputEncoding;
+                OriginalCodePageEncode = Console.OutputEncoding;
                 var (codepagefrom, codepageto) = ConvertCodePage;
 
-                if (System.Console.OutputEncoding.CodePage.ToString() == codepageto)
+                if (Console.OutputEncoding.CodePage.ToString() == codepageto)
                 {
                     unicodesupported = true;
                 }
 
-                else if (System.Console.OutputEncoding.CodePage.ToString() == codepagefrom)
+                else if (Console.OutputEncoding.CodePage.ToString() == codepagefrom)
                 {
-                    System.Console.OutputEncoding = Encoding.GetEncoding(int.Parse(codepageto));
+                    Console.OutputEncoding = Encoding.GetEncoding(int.Parse(codepageto));
                     unicodesupported = true;
                 }
-                else if (System.Console.OutputEncoding.Equals(Encoding.Unicode))
-                {
-                    unicodesupported = true;
-                }
-                else if (System.Console.OutputEncoding.Equals(Encoding.BigEndianUnicode))
+                else if (Console.OutputEncoding.Equals(Encoding.Unicode))
                 {
                     unicodesupported = true;
                 }
-                else if (System.Console.OutputEncoding.Equals(Encoding.UTF32))
+                else if (Console.OutputEncoding.Equals(Encoding.BigEndianUnicode))
+                {
+                    unicodesupported = true;
+                }
+                else if (Console.OutputEncoding.Equals(Encoding.UTF32))
                 {
                     unicodesupported = true;
                 }
@@ -91,46 +91,18 @@ namespace PPlus
             Thread.CurrentThread.CurrentCulture = AppConsoleCulture;
             if (!IsRunningInUnitTest)
             {
-                System.Console.OutputEncoding = OriginalCodePageEncode;
+                Console.OutputEncoding = OriginalCodePageEncode;
             }
             ResetColor();
         }
 
         /// <summary>
-        /// Add text to the recording buffer
+        /// Start Join Commands
         /// </summary>
-        /// <param name="text">Text to write</param>
-        /// <returns><see cref="IAppendText"/></returns>
-        public static IAppendText AppendText(string text)
+        /// <returns><see cref="IJointConsole"/></returns>
+        public static IJointConsole Join()
         {
-            var ctrl = new AppendTextControl();
-            ctrl.And(text);
-            return ctrl;
-        }
-
-        /// <summary>
-        /// Add text to the recording buffer with <see cref="Style"/>
-        /// </summary>
-        /// <param name="text">Text to write</param>
-        /// <param name="style">The <see cref="Style"/></param>
-        /// <returns><see cref="IAppendText"/></returns>
-        public static IAppendText AppendText(string text, Style style)
-        {
-            var ctrl = new AppendTextControl();
-            ctrl.And(text, style);
-            return ctrl;
-        }
-
-        /// <summary>
-        /// Add text to the recording buffer with forecolor <see cref="Color"/>
-        /// </summary>
-        /// <param name="text">Text to write</param>
-        /// <param name="color">The forecolor. <see cref="Color"/></param>
-        /// <returns><see cref="IAppendText"/></returns>
-        public static IAppendText AppendText(string text, Color color)
-        {
-            var ctrl = new AppendTextControl();
-            ctrl.And(text, color);
+            var ctrl = new JoinConsoleControl();
             return ctrl;
         }
 
@@ -246,7 +218,7 @@ namespace PPlus
         /// </summary>
         /// <param name="forecorlor">The <see cref="Color"/> ForegroundColor</param>
         /// <param name="background">The <see cref="Color"/> BackgroundColor</param>
-        public static void ConsoleDefaultColor(Color forecorlor, Color background)
+        public static void DefaultColor(Color forecorlor, Color background)
         {
             _consoledrive.ForegroundColor = forecorlor;
             _consoledrive.BackgroundColor = background;

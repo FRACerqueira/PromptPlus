@@ -20,24 +20,26 @@ namespace ConsoleFeaturesSamples
 
             //global
             PromptPlus.Config.EnabledAbortKey = false;
+            PromptPlus.Config.PageSize = 5;
             PromptPlus.StyleSchema.ApplyStyle(StyleControls.Prompt, new Style(Color.Red));
             //by instance
             PromptPlus.Input("").Config(cfg =>
             {
                 cfg
-                 .ApplyStyle(StyleControls.Answer, new Style(Color.Yellow))
+                 .ApplyStyle(StyleControls.Prompt, new Style(Color.Yellow))
                  .EnabledAbortKey(true);
             });
 
-            PromptPlus.WriteLine("[RED ON WHITE]Hello[/] [YELLOW]Word[/]");
-
             PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
 
-            PromptPlus.AppendText("[RGB(255,0,0) ON WHITE]Test[/]")
-                .And(" COLOR ",Color.Yellow)
-                .And(" BACK COLOR ",new Style(Color.Red,Color.White))
-                .And("other text")
-                .WriteLine();
+            PromptPlus.Join()
+                .DoubleDash($"PromptPlus Join")
+                .Write("[RGB(255,0,0) ON WHITE]Test[/]")
+                .Write(" COLOR ",Style.Default.Foreground(Color.Yellow))
+                .Write(" BACK COLOR ",new Style(Color.Red,Color.White))
+                .Write("other text")
+                .WriteLine()
+                .CountLines();
 
             //standard 
             PromptPlus.DoubleDash($"PromptPlus IgnoreColorTokens = false - Default value and usage" );
@@ -104,7 +106,7 @@ namespace ConsoleFeaturesSamples
                 cfg.PadRight = 2;
             });
 
-            PromptPlus.BackgroundColor = ConsoleColor.Blue;
+            //PromptPlus.BackgroundColor = ConsoleColor.Blue;
             PromptPlus.Clear();
 
             PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
@@ -130,6 +132,8 @@ namespace ConsoleFeaturesSamples
                 })
                 .Spinner(SpinnersType.Balloon)
                 .Run();
+
+            PromptPlus.BackgroundColor = ConsoleColor.Black;
 
             PromptPlus.Clear();
 

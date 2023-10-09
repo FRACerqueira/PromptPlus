@@ -38,6 +38,7 @@ namespace MaskEditNumberTypeSamples
 
             PromptPlus.MaskEdit("input", "MaskEdit Number input")
                 .Mask(MaskedType.Number)
+                .Culture("pt-br")
                 .AmmoutPositions(10, 2, true)
                 .PositiveStyle(Style.Default.Foreground(Color.Green))
                 .NegativeStyle(Style.Default.Foreground(Color.IndianRed))

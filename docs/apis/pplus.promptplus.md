@@ -536,63 +536,6 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### <a id="methods-appendtext"/>**AppendText(String)**
-
-Add text to the recording buffer
-
-```csharp
-public static IAppendText AppendText(string text)
-```
-
-#### Parameters
-
-`text` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Text to write
-
-#### Returns
-
-[IAppendText](./pplus.drivers.iappendtext.md)
-
-### <a id="methods-appendtext"/>**AppendText(String, Style)**
-
-Add text to the recording buffer with [Style](./pplus.style.md)
-
-```csharp
-public static IAppendText AppendText(string text, Style style)
-```
-
-#### Parameters
-
-`text` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Text to write
-
-`style` [Style](./pplus.style.md)<br>
-The [Style](./pplus.style.md)
-
-#### Returns
-
-[IAppendText](./pplus.drivers.iappendtext.md)
-
-### <a id="methods-appendtext"/>**AppendText(String, Color)**
-
-Add text to the recording buffer with forecolor [Color](./pplus.color.md)
-
-```csharp
-public static IAppendText AppendText(string text, Color color)
-```
-
-#### Parameters
-
-`text` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Text to write
-
-`color` [Color](./pplus.color.md)<br>
-The forecolor. [Color](./pplus.color.md)
-
-#### Returns
-
-[IAppendText](./pplus.drivers.iappendtext.md)
-
 ### <a id="methods-autocomplete"/>**AutoComplete(String, Action&lt;IPromptConfig&gt;)**
 
 Create Auto Complete Control.
@@ -1030,12 +973,12 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### <a id="methods-consoledefaultcolor"/>**ConsoleDefaultColor(Color, Color)**
+### <a id="methods-defaultcolor"/>**DefaultColor(Color, Color)**
 
 Set ForegroundColor/BackgroundColor Console
 
 ```csharp
-public static void ConsoleDefaultColor(Color forecorlor, Color background)
+public static void DefaultColor(Color forecorlor, Color background)
 ```
 
 #### Parameters
@@ -1051,7 +994,7 @@ The [Color](./pplus.color.md) BackgroundColor
 Writes text line representation whie colors in a pair of lines of dashes.
 
 ```csharp
-public static void DoubleDash(string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
+public static int DoubleDash(string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
 ```
 
 #### Parameters
@@ -1067,6 +1010,10 @@ Number lines to write after write value
 
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Style](./pplus.style.md) to write.
+
+#### Returns
+
+Number of lines write on console
 
 ### <a id="methods-escapecolortokens"/>**EscapeColorTokens()**
 
@@ -1135,6 +1082,18 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 #### Returns
 
 [IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-join"/>**Join()**
+
+Start Join Commands
+
+```csharp
+public static IJointConsole Join()
+```
+
+#### Returns
+
+[IJointConsole](./pplus.drivers.ijointconsole.md)
 
 ### <a id="methods-keypress"/>**KeyPress()**
 
@@ -1712,7 +1671,7 @@ Action with [ProfileSetup](./pplus.profilesetup.md) to configuration
 Writes text line representation whie colors and Write single dash after.
 
 ```csharp
-public static void SingleDash(string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
+public static int SingleDash(string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
 ```
 
 #### Parameters
@@ -1728,6 +1687,10 @@ Number lines to write after write value
 
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Style](./pplus.style.md) to write.
+
+#### Returns
+
+Number of lines write on console
 
 ### <a id="methods-slidernumber"/>**SliderNumber(String, Action&lt;IPromptConfig&gt;)**
 

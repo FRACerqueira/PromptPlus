@@ -8,7 +8,7 @@ using System;
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Interface for config controls and overwrite default values
+    /// Interface for config controls to overwrite default values
     /// </summary>
     public interface IPromptConfig
     {

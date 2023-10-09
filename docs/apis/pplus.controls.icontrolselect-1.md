@@ -135,6 +135,26 @@ items colletion
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
+### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
+
+Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
+
+```csharp
+IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
+```
+
+#### Parameters
+
+`scope` [AdderScope](./pplus.controls.adderscope.md)<br>
+scope Disable/Remove
+
+`values` IEnumerable&lt;T&gt;<br>
+items colletion
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
 ### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription(Boolean)**
 
 Append group text on description. Default false

@@ -4,6 +4,7 @@
 // ***************************************************************************************
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -134,6 +135,16 @@ namespace PPlus.Controls
         /// <param name="values">items colletion</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
         IControlSelect<T> AddItemsTo(AdderScope scope, params T[] values);
+
+        /// <summary>
+        /// Add Items colletion to scope Disable/Remove <seealso cref="AdderScope"/>
+        /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
+        /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
+        /// </summary>
+        /// <param name="scope">scope Disable/Remove</param>
+        /// <param name="values">items colletion</param>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
+        IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values);
 
         /// <summary>
         /// Add Item in a group to list
