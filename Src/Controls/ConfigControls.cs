@@ -188,6 +188,11 @@ namespace PPlus.Controls
         /// </summary>
         public bool EnabledAbortKey { get; set; } = true;
 
+        /// <summary>
+        /// Get/Set hide Answer controls.
+        /// <br>Default value : false</br>
+        /// </summary>
+        public bool HideAnswer { get; set; } = false;
 
         /// <summary>
         /// Get/Set hide controls after finish for all controls.

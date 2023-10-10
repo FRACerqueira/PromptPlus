@@ -147,6 +147,23 @@ value
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
+### <a id="methods-hideanswer"/>**HideAnswer(Boolean)**
+
+Overwrite default Hide Answer
+
+```csharp
+IPromptConfig HideAnswer(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
 ### <a id="methods-hideonabort"/>**HideOnAbort(Boolean)**
 
 Overwrite default Clear render area of control after AbortKey press

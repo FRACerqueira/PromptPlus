@@ -413,21 +413,38 @@ namespace PPlus.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
+            var first = _options.OptHideAnswer && _options.OptPrompt.Length == 0; 
+
             screenBuffer.WritePrompt(_options, "");
             if (ShowingFilter)
             {
-                screenBuffer.WriteFilterSelect(_options, FinishResult, _filterBuffer);
+                if (_options.OptHideAnswer)
+                {
+                    var spc = _options.OptPrompt.Length == 0 ? "" : " ";
+                    screenBuffer.WriteSuggestion(_options, $"{spc}{_filterBuffer}");
+                    _options.OptShowCursor = true;
+                }
+                else
+                {
+                    screenBuffer.WriteFilterSelect(_options, FinishResult, _filterBuffer);
+                }
+                screenBuffer.SaveCursor();
                 screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                first = false;
             }
             else
             {
-                screenBuffer.WriteAnswer(_options, FinishResult);
-                screenBuffer.SaveCursor();
+                if (!_options.OptHideAnswer)
+                {
+                    screenBuffer.WriteAnswer(_options, FinishResult);
+                    screenBuffer.SaveCursor();
+                }
+                else
+                {
+                    _options.OptShowCursor = false;
+                }
             }
             screenBuffer.WriteLineDescriptionSelect(_options,_localpaginator.SelectedItem);
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            screenBuffer.WriteLineTooltipsSelect(_options);
-
             var subset = _localpaginator.ToSubset();
             foreach (var item in subset)
             {
@@ -471,26 +488,33 @@ namespace PPlus.Controls
                         }
                     }
                 }
+                if (first && _options.OptHideAnswer)
+                {
+                    screenBuffer.SaveCursor();
+                }
                 if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemSelect<T>>.Default.Equals(item, selectedItem))
                 {
-                    screenBuffer.WriteLineSelector(_options, value, indentgroup);
+                    screenBuffer.WriteLineSelector(_options, value, indentgroup,!first);
                 }
                 else
                 {
                     if (IsDisabled(item))
                     {
-                        screenBuffer.WriteLineNotSelectorDisabled(_options, value,indentgroup);
+                        screenBuffer.WriteLineNotSelectorDisabled(_options, value,indentgroup,!first);
                     }
                     else
                     {
-                        screenBuffer.WriteLineNotSelector(_options, value, indentgroup);
+                        screenBuffer.WriteLineNotSelector(_options, value, indentgroup, !first);
                     }
                 }
+                first =false;
             }
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
                 screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
+            screenBuffer.WriteLineTooltipsSelect(_options);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, T result, bool aborted)
@@ -500,12 +524,16 @@ namespace PPlus.Controls
             {
                 answer = Messages.CanceledKey;
             }
-            screenBuffer.WriteDone(_options, answer);
-            screenBuffer.NewLine();
             if (!aborted)
             {
                 SaveHistory(result);
             }
+            if (_options.OptHideAnswer)
+            {
+                return;
+            }
+            screenBuffer.WriteDone(_options, answer);
+            screenBuffer.NewLine();
         }
 
         public override ResultPrompt<T> TryResult(CancellationToken cancellationToken)

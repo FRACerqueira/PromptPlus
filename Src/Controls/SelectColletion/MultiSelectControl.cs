@@ -443,30 +443,48 @@ namespace PPlus.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
+            var first = _options.OptHideAnswer && _options.OptPrompt.Length == 0;
+
             screenBuffer.WritePrompt(_options, "");
             if (ShowingFilter)
             {
-                if (_localpaginator.TryGetSelectedItem(out var showItem))
+                if (_options.OptHideAnswer)
                 {
-                    var item = showItem.Text;
-                    screenBuffer.WriteFilterMultiSelect(_options, item, _filterBuffer);
+                    var spc = _options.OptPrompt.Length == 0 ? "" : " ";
+                    screenBuffer.WriteSuggestion(_options, $"{spc}{_filterBuffer}");
+                    _options.OptShowCursor = true;
+                    screenBuffer.SaveCursor();
                 }
                 else
                 {
-                    screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToBackward());
-                    screenBuffer.SaveCursor();
-                    screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToForward());
+                    if (_localpaginator.TryGetSelectedItem(out var showItem))
+                    {
+                        var item = showItem.Text;
+                        screenBuffer.WriteFilterMultiSelect(_options, item, _filterBuffer);
+                    }
+                    else
+                    {
+                        screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToBackward());
+                        screenBuffer.SaveCursor();
+                        screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToForward());
+                    }
                 }
                 screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                first = false;
             }
             else
             {
-                screenBuffer.WriteAnswer(_options, FinishResult);
-                screenBuffer.SaveCursor();
+                if (!_options.OptHideAnswer)
+                {
+                    screenBuffer.WriteAnswer(_options, FinishResult);
+                    screenBuffer.SaveCursor();
+                }
+                else
+                {
+                    _options.OptShowCursor = false;
+                }
             }
             screenBuffer.WriteLineDescriptionMultiSelect(_options, _localpaginator.SelectedItem);
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            screenBuffer.WriteLineTooltipsMultiSelect(_options);
             var subset = _localpaginator.ToSubset();
             foreach (var item in subset)
             {
@@ -491,23 +509,27 @@ namespace PPlus.Controls
                         }
                     }
                 }
+                if (first && _options.OptHideAnswer)
+                {
+                    screenBuffer.SaveCursor();
+                }
                 if (item.IsCheck)
                 {
                     if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
                     {
-                        screenBuffer.WriteLineIndentCheckSelect(_options, indentgroup);
+                        screenBuffer.WriteLineIndentCheckSelect(_options, indentgroup,!first);
                         screenBuffer.WriteCheckValueSelect(_options, value);
                     }
                     else
                     {
                         if (item.Disabled)
                         {
-                            screenBuffer.WriteLineIndentCheckUnSelect(_options, indentgroup);
+                            screenBuffer.WriteLineIndentCheckUnSelect(_options, indentgroup, !first);
                             screenBuffer.WriteCheckedValueDisabled(_options, value);
                         }
                         else
                         {
-                            screenBuffer.WriteLineIndentCheckNotSelect(_options, indentgroup);
+                            screenBuffer.WriteLineIndentCheckNotSelect(_options, indentgroup,!first);
                             screenBuffer.WriteCheckValueNotSelect(_options, value);
                         }
                     }
@@ -516,23 +538,24 @@ namespace PPlus.Controls
                 {
                     if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
                     {
-                        screenBuffer.WriteLineIndentUncheckedSelect(_options, indentgroup);
+                        screenBuffer.WriteLineIndentUncheckedSelect(_options, indentgroup,!first);
                         screenBuffer.WriteUncheckedValueSelect(_options, value);
                     }
                     else
                     {
                         if (item.Disabled)
                         {
-                            screenBuffer.WriteLineIndentUncheckedDisabled(_options, indentgroup);
+                            screenBuffer.WriteLineIndentUncheckedDisabled(_options, indentgroup,!first);
                             screenBuffer.WriteUncheckedValueDisabled(_options, value);
                         }
                         else
                         {
-                            screenBuffer.WriteLineIndentUncheckedNotSelect(_options, indentgroup);
+                            screenBuffer.WriteLineIndentUncheckedNotSelect(_options, indentgroup,!first);
                             screenBuffer.WriteUncheckedValueNotSelect(_options, value);
                         }
                     }
                 }
+                first = false;
             }
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
@@ -543,6 +566,8 @@ namespace PPlus.Controls
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer($"{Messages.Tagged}: {_selectedItems.Count}, ", _options.OptStyleSchema.TaggedInfo(), true);
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
+            screenBuffer.WriteLineTooltipsMultiSelect(_options);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<T> result, bool aborted)
@@ -555,6 +580,10 @@ namespace PPlus.Controls
             else
             {
                 SaveHistory(result);
+            }
+            if (_options.OptHideAnswer)
+            {
+                return;
             }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();

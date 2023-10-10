@@ -123,6 +123,20 @@ public IPromptConfig HideAfterFinish(bool value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
+### <a id="methods-hideanswer"/>**HideAnswer(Boolean)**
+
+```csharp
+public IPromptConfig HideAnswer(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
 ### <a id="methods-hideonabort"/>**HideOnAbort(Boolean)**
 
 ```csharp

@@ -69,7 +69,7 @@ namespace MultiSelectBasicSamples
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
 
             PromptPlus.DoubleDash("Control:MultiSelect - basic usage with PageSize");
-            var multsel = PromptPlus.MultiSelect<string>("Which cities would you like to visit?")
+            var multsel = PromptPlus.MultiSelect<string>(""/*"Which cities would you like to visit?"*/)
                  .AddItems(new []{ "Seattle", "Boston", "New York", "Tokyo", "Singapore", "Shanghai" })
                  .PageSize(4)
                  .Run();

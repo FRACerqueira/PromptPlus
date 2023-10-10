@@ -55,9 +55,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineNotSelectorDisabled(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "")
+        public static void WriteLineNotSelectorDisabled(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "", bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             if (string.IsNullOrEmpty(indentgroup))
             {
                 screenBuffer.AddBuffer(' ', Style.Default, true);
@@ -70,9 +73,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "")
+        public static void WriteLineSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "", bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             if (string.IsNullOrEmpty(indentgroup))
             {
                 screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)} {message}", options.OptStyleSchema.Selected(), false);
@@ -85,9 +91,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineNotSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "")
+        public static void WriteLineNotSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "", bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             if (string.IsNullOrEmpty(indentgroup))
             {
                 screenBuffer.AddBuffer(' ', Style.Default, true);

@@ -181,6 +181,10 @@ namespace PPlus.Controls
             {
                 FinishResult = Messages.CanceledKey;
             }
+            if (_options.OptHideAnswer)
+            {
+                return;
+            }
             screenBuffer.WriteDoneKeyPress(_options, FinishResult);
             screenBuffer.NewLine();
         }

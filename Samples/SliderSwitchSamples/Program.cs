@@ -45,7 +45,7 @@ namespace SliderSwitchSamples
             PromptPlus
                .SliderSwitch("SliderSwitch")
                .OnValue("custom [green]on[/]")
-               .OffValue("custom [red]on[/]")
+               .OffValue("custom [red]off[/]")
                .Run();
 
             PromptPlus.DoubleDash($"Control:SliderSwitch ({cult.Name}) - ChangeColorOn/ChangeColorOff");

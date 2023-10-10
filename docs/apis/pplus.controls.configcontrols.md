@@ -190,6 +190,19 @@ public bool HideAfterFinish { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
+### <a id="properties-hideanswer"/>**HideAnswer**
+
+Get/Set hide Answer controls.
+ <br>Default value : false
+
+```csharp
+public bool HideAnswer { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-hideonabort"/>**HideOnAbort**
 
 Get/Set hide controls On Abort for all controls.

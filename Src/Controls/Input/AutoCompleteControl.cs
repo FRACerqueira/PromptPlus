@@ -279,8 +279,6 @@ namespace PPlus.Controls
                 screenBuffer.AddBuffer($" {spn}",_options.SpinnerStyle,true);
             }
             screenBuffer.WriteLineDescriptionAutoComplete(_options, FinishResult);
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            screenBuffer.WriteLineTooltipsAutoComplete(_options, _localpaginator.TotalCount > 0 && !_autoCompleteRunning);
             if (!_autoCompleteRunning && _inputBuffer.ToString().Length >= _options.MinimumPrefixLength && _localpaginator.TotalCount > 0)
             {
                 var subset = _localpaginator.ToSubset();
@@ -300,6 +298,8 @@ namespace PPlus.Controls
                     screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
                 }
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
+            screenBuffer.WriteLineTooltipsAutoComplete(_options, _localpaginator.TotalCount > 0 && !_autoCompleteRunning);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, string result, bool aborted)
@@ -316,6 +316,10 @@ namespace PPlus.Controls
                 {
                     SaveDefaultHistory(answer);
                 }
+            }
+            if (_options.OptHideAnswer)
+            {
+                return;
             }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();

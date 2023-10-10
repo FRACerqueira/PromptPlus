@@ -3,6 +3,8 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using System;
+
 namespace PPlus.Controls.Objects
 {
     internal static class ScreenBufferExtensions
@@ -22,7 +24,10 @@ namespace PPlus.Controls.Objects
             if (!string.IsNullOrEmpty(prompt))
             {
                 screenBuffer.AddBuffer(prompt, options.OptStyleSchema.Prompt());
-                screenBuffer.AddBuffer(": ", options.OptStyleSchema.Prompt());
+                if (!options.OptHideAnswer)
+                {
+                    screenBuffer.AddBuffer(": ", options.OptStyleSchema.Prompt());
+                }
             }
             if (!string.IsNullOrEmpty(input))
             {

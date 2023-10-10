@@ -17,14 +17,14 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig EnabledAbortKey(bool value);
+        IPromptConfig EnabledAbortKey(bool value = true);
 
         /// <summary>
         /// Overwrite default Show/Hide Tooltip of control
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig ShowTooltip(bool value);
+        IPromptConfig ShowTooltip(bool value = true);
 
 
         /// <summary>
@@ -32,21 +32,21 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig ShowOnlyExistingPagination(bool value);
+        IPromptConfig ShowOnlyExistingPagination(bool value = true);
 
         /// <summary>
         /// Overwrite default DisableToggleTooltip of control
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig DisableToggleTooltip(bool value);
+        IPromptConfig DisableToggleTooltip(bool value = true);
 
         /// <summary>
         /// Overwrite default Clear render area of control after finished
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig HideAfterFinish(bool value);
+        IPromptConfig HideAfterFinish(bool value = true);
 
 
         /// <summary>
@@ -54,7 +54,14 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig HideOnAbort(bool value);
+        IPromptConfig HideOnAbort(bool value = true);
+
+        /// <summary>
+        /// Overwrite default Hide Answer
+        /// </summary>
+        /// <param name="value">value</param>
+        /// <returns><see cref="IPromptConfig"/></returns>
+        IPromptConfig HideAnswer(bool value = true);
 
         /// <summary>
         /// Add generic action for the control when change <see cref="StageControl"/> of control

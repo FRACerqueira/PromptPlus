@@ -24,7 +24,13 @@ if (!kp1.IsAborted)
 PromptPlus.DoubleDash("Control:Keypress - anykey - Ignore ESC");
 PromptPlus
     .KeyPress()
-    .Config((cfg) => cfg.EnabledAbortKey(false))
+    .Config((cfg) =>
+    {
+        cfg
+        .EnabledAbortKey(false)
+        .HideAfterFinish(true);
+    })
+    .Spinner(SpinnersType.DotsScrolling)
     .Run();
 
 PromptPlus.DoubleDash("Control keypress - with sppiner");

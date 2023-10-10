@@ -39,7 +39,7 @@ namespace PPlus.Controls
 
         internal StyleSchema OptStyleSchema { get; }
         internal ConfigControls Config { get; }
-        internal bool OptShowCursor { get; } = false;
+        internal bool OptShowCursor { get; set; } = false;
         internal string OptPrompt { get; set; } = string.Empty;
         internal string OptDescription { get; set; } = string.Empty;
         internal bool OptShowTooltip { get; set; }
@@ -52,48 +52,57 @@ namespace PPlus.Controls
         internal bool OptHideOnAbort { get; private set; }
         internal bool OptEnabledAbortKey { get; private set; }
         internal object? OptContext { get; private set; }
+        internal bool OptHideAnswer { get; private set; }
+
 
         #region IPromptConfig
 
         /// <inheritdoc/>
-        public IPromptConfig EnabledAbortKey(bool value)
+        public IPromptConfig EnabledAbortKey(bool value = true)
         {
             OptEnabledAbortKey = value;
             return this;
         }
 
         /// <inheritdoc/>
-        public IPromptConfig ShowTooltip(bool value)
+        public IPromptConfig ShowTooltip(bool value = true)
         {
             OptShowTooltip = value;
             return this;
         }
 
         /// <inheritdoc/>
-        public IPromptConfig ShowOnlyExistingPagination(bool value)
+        public IPromptConfig ShowOnlyExistingPagination(bool value = true)
         {
             OptShowOnlyExistingPagination = value;
             return this;
         }
 
         /// <inheritdoc/>
-        public IPromptConfig DisableToggleTooltip(bool value)
+        public IPromptConfig DisableToggleTooltip(bool value = true)
         {
             OptDisableChangeTooltip = value;
             return this;
         }
 
         /// <inheritdoc/>
-        public IPromptConfig HideAfterFinish(bool value)
+        public IPromptConfig HideAfterFinish(bool value = true)
         {
             OptHideAfterFinish = value;
             return this;
         }
 
         /// <inheritdoc/>
-        public IPromptConfig HideOnAbort(bool value)
+        public IPromptConfig HideOnAbort(bool value = true)
         {
             OptHideOnAbort = value;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IPromptConfig HideAnswer(bool value = true)
+        { 
+            OptHideAnswer = value;
             return this;
         }
 

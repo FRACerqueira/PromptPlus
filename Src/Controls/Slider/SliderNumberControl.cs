@@ -5,6 +5,7 @@
 
 using PPlus.Controls.Objects;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 
@@ -234,15 +235,21 @@ namespace PPlus.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.WritePromptSliderNumber(_options);
-            screenBuffer.WriteAnswer(_options, _options.ValueToString(_currentValue));
+            var first = _options.OptHideAnswer && _options.OptPrompt.Length == 0;
+
+            screenBuffer.WritePrompt(_options, "");
+            if (_options.MoveKeyPress == LayoutSliderNumber.UpDown)
+            {
+                screenBuffer.AddBuffer($"[{_options.Minvalue},{_options.Maxvalue}] ", _options.OptStyleSchema.Suggestion(), true, false);
+                screenBuffer.WriteAnswer(_options, _options.ValueToString(_currentValue));
+            }
             screenBuffer.SaveCursor();
             screenBuffer.WriteLineDescriptionSliderNumber(_options, _currentValue);
-            screenBuffer.WriteLineTooltipsSliderNumber(_options);
             if (_options.MoveKeyPress == LayoutSliderNumber.LeftRight)
             {
-                screenBuffer.WriteLineWidgetsSliderNumber(_options, CurrentValueStep(_currentValue), _currentValue,ConsolePlus.IsUnicodeSupported);
+                screenBuffer.WriteLineWidgetsSliderNumber(_options, CurrentValueStep(_currentValue), _currentValue,ConsolePlus.IsUnicodeSupported,!first);
             }
+            screenBuffer.WriteLineTooltipsSliderNumber(_options);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, double result, bool aborted)
@@ -258,6 +265,10 @@ namespace PPlus.Controls
             else
             {
                 answer = Messages.CanceledKey;
+            }
+            if (_options.OptHideAnswer)
+            {
+                return;
             }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();

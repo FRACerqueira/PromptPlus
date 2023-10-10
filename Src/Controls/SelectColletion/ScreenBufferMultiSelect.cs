@@ -81,16 +81,22 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer(message, options.OptStyleSchema.Pagination(), true, false);
         }
 
-        public static void WriteLineIndentCheckSelect(this ScreenBuffer screenBuffer, BaseOptions options, string message)
+        public static void WriteLineIndentCheckSelect(this ScreenBuffer screenBuffer, BaseOptions options, string message, bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)} {options.Symbol(SymbolType.Selected)} ", options.OptStyleSchema.Selected(), true);
             screenBuffer.AddBuffer(message, options.OptStyleSchema.UnSelected(),true,false);
         }
 
-        public static void WriteLineIndentCheckUnSelect(this ScreenBuffer screenBuffer, BaseOptions options, string message)
+        public static void WriteLineIndentCheckUnSelect(this ScreenBuffer screenBuffer, BaseOptions options, string message, bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer($"  {options.Symbol(SymbolType.Selected)} ", options.OptStyleSchema.Disabled(), true);
             screenBuffer.AddBuffer(message, options.OptStyleSchema.Disabled(), true, false);
         }
@@ -103,9 +109,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineIndentCheckNotSelect(this ScreenBuffer screenBuffer, BaseOptions options, string message)
+        public static void WriteLineIndentCheckNotSelect(this ScreenBuffer screenBuffer, BaseOptions options, string message, bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer($"  {options.Symbol(SymbolType.Selected)} ", options.OptStyleSchema.UnSelected(), true);
             screenBuffer.AddBuffer(message, options.OptStyleSchema.UnSelected(), false, false);
         }
@@ -118,9 +127,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineIndentUncheckedDisabled(this ScreenBuffer screenBuffer, BaseOptions options, string message)
+        public static void WriteLineIndentUncheckedDisabled(this ScreenBuffer screenBuffer, BaseOptions options, string message, bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer($"  {options.Symbol(SymbolType.NotSelect)} ", options.OptStyleSchema.Disabled(), true);
             screenBuffer.AddBuffer(message, options.OptStyleSchema.UnSelected(),false,false);
         }
@@ -141,9 +153,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineIndentUncheckedSelect(this ScreenBuffer screenBuffer, BaseOptions options, string message)
+        public static void WriteLineIndentUncheckedSelect(this ScreenBuffer screenBuffer, BaseOptions options, string message, bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)} {options.Symbol(SymbolType.NotSelect)} ", options.OptStyleSchema.Selected(),true);
             screenBuffer.AddBuffer(message, options.OptStyleSchema.UnSelected(), false, false);
         }
@@ -155,9 +170,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineIndentUncheckedNotSelect(this ScreenBuffer screenBuffer, BaseOptions options, string message)
+        public static void WriteLineIndentUncheckedNotSelect(this ScreenBuffer screenBuffer, BaseOptions options, string message, bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer($"  {options.Symbol(SymbolType.NotSelect)} ", options.OptStyleSchema.UnSelected(),true);
             screenBuffer.AddBuffer(message, options.OptStyleSchema.UnSelected(), false, false);
         }

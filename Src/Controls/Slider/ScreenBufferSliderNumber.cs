@@ -12,7 +12,7 @@ namespace PPlus.Controls
     internal static class ScreenBufferSliderNumber
     {
 
-        public static void WriteLineWidgetsSliderNumber(this ScreenBuffer screenBuffer, SliderNumberOptions options,int valuestep, double input, bool isunicode)
+        public static void WriteLineWidgetsSliderNumber(this ScreenBuffer screenBuffer, SliderNumberOptions options,int valuestep, double input, bool isunicode, bool newline)
         {
             var bar = ' ';
             switch (options.BarType)
@@ -55,7 +55,10 @@ namespace PPlus.Controls
                 default:
                     throw new PromptPlusException($"Not implemented {options.BarType}");
             }
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer($"{options.ValueToString(options.Minvalue)} ", options.OptStyleSchema.UnSelected(),true);
             if (options.ChangeColor != null)
             {
@@ -108,14 +111,9 @@ namespace PPlus.Controls
                 screenBuffer.AddBuffer(new string(bar, options.Witdth - valuestep), Style.Default.Foreground(options.OptStyleSchema.Slider().Background), true, false);
             }
             screenBuffer.AddBuffer($" {options.ValueToString(options.Maxvalue)}", options.OptStyleSchema.UnSelected(),true,false);
-        }
-
-        public static void WritePromptSliderNumber(this ScreenBuffer screenBuffer, SliderNumberOptions options)
-        {
-            screenBuffer.AddBuffer($"{options.OptPrompt}: ", options.OptStyleSchema.Prompt());
-            if (options.MoveKeyPress == LayoutSliderNumber.UpDown)
-            {
-                screenBuffer.AddBuffer($"[{options.Minvalue},{options.Maxvalue}] ",options.OptStyleSchema.Suggestion(),true,false);
+            if (options.OptHideAnswer)
+            { 
+                screenBuffer.AddBuffer($" ({options.ValueToString(input)})", options.OptStyleSchema.TaggedInfo(), true, false);
             }
         }
 
