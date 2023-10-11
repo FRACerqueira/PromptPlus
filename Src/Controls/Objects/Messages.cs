@@ -32,7 +32,6 @@ namespace PPlus.Controls.Objects
             TooltipChart = PromptPlusResources.TooltipChart;
             ValidAnyKey = PromptPlusResources.ValidAnyKey;
             PaginatorHome = PromptPlusResources.PaginatorHome;
-            AddedItems = PromptPlusResources.AddedItems;
             Done = PromptPlusResources.Done;
             Wait = PromptPlusResources.Wait;
             SelectionInvalid = PromptPlusResources.SelectionInvalid;
@@ -127,7 +126,6 @@ namespace PPlus.Controls.Objects
         public static string TooltipChart { get; private set; } = PromptPlusResources.TooltipChart;
         public static string ValidAnyKey { get; private set; } = PromptPlusResources.ValidAnyKey;
         public static string PaginatorHome { get; private set; } = PromptPlusResources.PaginatorHome;
-        public static string AddedItems { get; private set; } = PromptPlusResources.AddedItems;
         public static string Done { get; private set; } = PromptPlusResources.Done;
         public static string Wait { get; private set; } = PromptPlusResources.Wait;
         public static string SelectionInvalid { get; private set; } = PromptPlusResources.SelectionInvalid;

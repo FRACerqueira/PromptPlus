@@ -29,10 +29,7 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
-            if (_options.CurrentCulture == null)
-            {
-                _options.CurrentCulture = _options.Config.AppCulture;
-            }
+            _options.CurrentCulture ??= _options.Config.AppCulture;
 
             _options.Validators.Add(PromptValidators.Required());
             if (_options.Type == ControlMaskedType.Generic)
@@ -358,14 +355,7 @@ namespace PPlus.Controls
                 }
             }
             screenBuffer.WriteLineDescriptionMaskEditList(_options, _inputBuffer.ToMasked(), _inputBuffer.Tooltip);
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            screenBuffer.WriteLineTooltipsMaskEditList(_options, _isInAutoCompleteMode, _editingItem >= 0, _localpaginator.SelectedIndex >= 0);
             var subset = _localpaginator.ToSubset();
-            if (subset.Count > 0) 
-            {
-                screenBuffer.NewLine();
-                screenBuffer.AddBuffer(Messages.AddedItems, _options.OptStyleSchema.TaggedInfo());
-            }
             var pos = -1;
             foreach (var item in subset)
             {
@@ -393,6 +383,8 @@ namespace PPlus.Controls
                     screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
                 }
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
+            screenBuffer.WriteLineTooltipsMaskEditList(_options, _isInAutoCompleteMode, _editingItem >= 0, _localpaginator.SelectedIndex >= 0);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<ResultMasked> result, bool aborted)
@@ -401,6 +393,10 @@ namespace PPlus.Controls
             if (aborted)
             {
                 answer = Messages.CanceledKey;
+            }
+            if (_options.OptHideAnswer)
+            {
+                return;
             }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();

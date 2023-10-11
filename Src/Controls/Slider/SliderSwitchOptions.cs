@@ -4,6 +4,7 @@
 // ***************************************************************************************
 
 using System;
+using PPlus.Controls.Objects;
 
 namespace PPlus.Controls
 {
@@ -26,8 +27,8 @@ namespace PPlus.Controls
         public Style StyleStateOff { get; set; }
         public bool DefaultValue { get; set; }
         public int Witdth { get; set; } = _defaultSliderWitdth;
-        public string OffValue { get; set; } = null;
-        public string OnValue { get; set; } = null;
+        public string OffValue { get; set; } = Messages.OffValue;
+        public string OnValue { get; set; } = Messages.OnValue;
         public Func<bool, string> ChangeDescription { get; set; }
         public string? OverwriteDefaultFrom { get; set; } = null;
         public TimeSpan TimeoutOverwriteDefault { get; set; }

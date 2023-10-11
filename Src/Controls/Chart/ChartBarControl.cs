@@ -18,7 +18,6 @@ namespace PPlus.Controls
         private int _startpos;
         private int _indexLabel;
         private (int id,int page)[] _paginginfo;
-
         private double _totalvalue;
 
         public ChartBarControl(IConsoleControl console, ChartBarOptions options) : base(console, options)
@@ -191,12 +190,6 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlChartBar PadLeft(byte value)
-        {
-            _options.PadLeft = value;
-            return this;
-        }
-
         public IControlChartBar ShowLegends(bool withvalue = true, bool withPercent = true)
         {
             _options.CurrentShowLegend = true;
@@ -261,37 +254,42 @@ namespace PPlus.Controls
                 case LayoutChart.Standard:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _options.Labels.Max(x => x.Value);
-                        WriteStandBar(screenBuffer, _options.BarType, _startpos, ticketStep);
+                        WriteStandBar(screenBuffer, _options.BarType, _startpos, ticketStep, true);
                     }
                     break;
                 case LayoutChart.Stacked:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _totalvalue;
-                        WriteStackBar(screenBuffer, _options.BarType, ticketStep);
+                        WriteStackBar(screenBuffer, _options.BarType, ticketStep, true);
                     }
                     break;
                 default:
                     throw new PromptPlusException($"Show ChartType {_options.CurrentChartType} Not implemented");
+            }
+            if (!_options.HideInfoOrder)
+            {
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, TextOrder(_options.CurrentOrder)), _options.OrderStyle);
             }
             if (_options.CurrentShowLegend)
             {
                 WriteLegends(screenBuffer, _startpos);
             }
             WritePageInfo(screenBuffer);
-            if (!_options.HideInfoOrder)
-            {
-                screenBuffer.AddBuffer(' ', Style.Default, true);
-                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, ChartBarControl.TextOrder(_options.CurrentOrder)), _options.OrderStyle);
-            }
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, bool result, bool aborted)
         {
+
             _options.CurrentChartType = _options.StartChartType;
             if (_options.CurrentOrder != _options.Order)
             {
                 _options.CurrentOrder = _options.Order;
                 ChangeOrder();
+            }
+            if (_options.OptHideAnswer && _options.EnabledInteractionUser)
+            {
+                return;
             }
             ShowInitialChart(screenBuffer);
         }
@@ -459,31 +457,28 @@ namespace PPlus.Controls
                 case LayoutChart.Standard:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _options.Labels.Max(x => x.Value);
-                        WriteStandBar(screenBuffer, _options.BarType, 0, ticketStep);
+                        WriteStandBar(screenBuffer, _options.BarType, 0, ticketStep,true);
                     }
                     break;
                 case LayoutChart.Stacked:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _totalvalue;
-                        WriteStackBar(screenBuffer, _options.BarType, ticketStep);
+                        WriteStackBar(screenBuffer, _options.BarType, ticketStep, true);
                     }
                     break;
                 default:
                     throw new PromptPlusException($"Show ChartType {_options.CurrentChartType} Not implemented");
             }
+            if (!_options.HideInfoOrder)
+            {
+                screenBuffer.NewLine();
+                 screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, TextOrder(_options.CurrentOrder)), _options.OrderStyle);
+            }
             if (_options.ShowLegend)
             {
                 WriteLegends(screenBuffer, 0);
             }
-            if (!_options.HideInfoOrder)
-            {
-                if (_options.PadLeft > 0)
-                {
-                    screenBuffer.AddBuffer(new string(' ', _options.PadLeft), Style.Default, true);
-                }
-                screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, ChartBarControl.TextOrder(_options.CurrentOrder)), _options.OrderStyle);
-                screenBuffer.NewLine();
-            }
+            screenBuffer.NewLine();
         }
 
         private void WriteTitle(ScreenBuffer screenBuffer)
@@ -497,19 +492,19 @@ namespace PPlus.Controls
                 switch (_options.TitleAligment)
                 {
                     case Alignment.Left:
-                        screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length + _options.PadLeft), _options.TitleStyle);
+                        screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length), _options.TitleStyle);
                         break;
                     case Alignment.Right:
                         {
                             var aux = _options.OptPrompt;
                             if (aux.Length < _options.Witdth)
                             {
-                                aux = new string(' ', _options.Witdth - _options.OptPrompt.Length - _options.PadLeft) + _options.OptPrompt;
-                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.PadLeft), _options.TitleStyle);
+                                aux = new string(' ', _options.Witdth - _options.OptPrompt.Length) + _options.OptPrompt;
+                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length), _options.TitleStyle);
                             }
                             else
                             {
-                                screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length + _options.PadLeft), _options.TitleStyle);
+                                screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length), _options.TitleStyle);
                             }
                         }
                         break;
@@ -518,12 +513,12 @@ namespace PPlus.Controls
                             var aux = _options.OptPrompt;
                             if (aux.Length < _options.Witdth)
                             {
-                                aux = new string(' ', (_options.Witdth - _options.OptPrompt.Length - _options.PadLeft) / 2) + _options.OptPrompt;
-                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.PadLeft), _options.TitleStyle);
+                                aux = new string(' ', (_options.Witdth - _options.OptPrompt.Length) / 2) + _options.OptPrompt;
+                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length), _options.TitleStyle);
                             }
                             else
                             {
-                                screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length + _options.PadLeft), _options.TitleStyle);
+                                screenBuffer.AddBuffer(_options.OptPrompt.PadLeft(_options.OptPrompt.Length), _options.TitleStyle);
                             }
                         }
                         break;
@@ -537,19 +532,19 @@ namespace PPlus.Controls
                 switch (_options.TitleAligment)
                 {
                     case Alignment.Left:
-                        screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length + _options.PadLeft), _options.OptStyleSchema.Description());
+                        screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length), _options.OptStyleSchema.Description());
                         break;
                     case Alignment.Right:
                         {
                             var aux = _options.OptDescription;
                             if (aux.Length < _options.Witdth)
                             {
-                                aux = new string(' ', _options.Witdth - _options.OptDescription.Length - _options.PadLeft) + _options.OptDescription;
-                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.PadLeft), _options.OptStyleSchema.Description());
+                                aux = new string(' ', _options.Witdth - _options.OptDescription.Length) + _options.OptDescription;
+                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length), _options.OptStyleSchema.Description());
                             }
                             else
                             {
-                                screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length + _options.PadLeft), _options.OptStyleSchema.Description());
+                                screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length), _options.OptStyleSchema.Description());
                             }
                         }
                         break;
@@ -558,23 +553,22 @@ namespace PPlus.Controls
                             var aux = _options.OptDescription;
                             if (aux.Length < _options.Witdth)
                             {
-                                aux = new string(' ', (_options.Witdth - _options.OptDescription.Length - _options.PadLeft) / 2) + _options.OptDescription;
-                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length + _options.PadLeft), _options.OptStyleSchema.Description());
+                                aux = new string(' ', (_options.Witdth - _options.OptDescription.Length) / 2) + _options.OptDescription;
+                                screenBuffer.AddBuffer(aux.PadLeft(aux.Length), _options.OptStyleSchema.Description());
                             }
                             else
                             {
-                                screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length + _options.PadLeft), _options.OptStyleSchema.Description());
+                                screenBuffer.AddBuffer(_options.OptDescription.PadLeft(_options.OptDescription.Length), _options.OptStyleSchema.Description());
                             }
                         }
                         break;
                     default:
                         throw new PromptPlusException($"Alignment {_options.TitleAligment} Not implemented");
                 }
-                screenBuffer.NewLine();
             }
         }
 
-        private void WriteStandBar(ScreenBuffer screenBuffer,ChartBarType barType,int inipos,double ticketStep)
+        private void WriteStandBar(ScreenBuffer screenBuffer,ChartBarType barType,int inipos,double ticketStep, bool First)
         {
             var pagesize = _options.PageSize;
             if (!_options.EnabledInteractionUser)
@@ -638,10 +632,17 @@ namespace PPlus.Controls
                 {
                     OnStyle = Style.Default.Background(item.ColorBar.Value);
                 }
-                screenBuffer.NewLine();
-                if (_options.PadLeft > 0)
+                if (First)
                 {
-                    screenBuffer.AddBuffer(new string(' ',_options.PadLeft), Style.Default,false,false);
+                    if (!(string.IsNullOrEmpty(_options.OptPrompt) && string.IsNullOrEmpty(_options.OptDescription)))
+                    {
+                        screenBuffer.NewLine();
+                    }
+                    First = false;
+                }
+                else
+                {
+                    screenBuffer.NewLine();
                 }
                 var tkt = (int)(ticketStep * item.Value);
                 if (tkt == 0)
@@ -676,16 +677,21 @@ namespace PPlus.Controls
                     }
                 }
             }
-            screenBuffer.NewLine();
         }
 
-        private void WriteStackBar(ScreenBuffer screenBuffer, ChartBarType barType, double ticketStep)
+        private void WriteStackBar(ScreenBuffer screenBuffer, ChartBarType barType, double ticketStep, bool First)
         {
             char charbarOn = ' ';
-            screenBuffer.NewLine();
-            if (_options.PadLeft > 0)
+            if (First)
             {
-                screenBuffer.AddBuffer(new string(' ', _options.PadLeft), Style.Default, false, false);
+                if (!(string.IsNullOrEmpty(_options.OptPrompt) && string.IsNullOrEmpty(_options.OptDescription)))
+                {
+                    screenBuffer.NewLine();
+                }
+            }
+            else
+            {
+                screenBuffer.NewLine();
             }
             switch (barType)
             {
@@ -750,7 +756,6 @@ namespace PPlus.Controls
                 }
                 screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle, false, true);
             }
-            screenBuffer.NewLine();
         }
 
         private void WriteLegends(ScreenBuffer screenBuffer,int inipos)
@@ -774,10 +779,6 @@ namespace PPlus.Controls
             foreach (var item in _options.Labels.Skip(inipos).Take(pagesize))
             {
                 screenBuffer.NewLine();
-                if (_options.PadLeft > 0)
-                {
-                    screenBuffer.AddBuffer(new string(' ', _options.PadLeft),Style.Default, false, false);
-                }
                 screenBuffer.AddBuffer("■ ", Style.Default.Foreground(item.ColorBar.Value), false, false);
                 screenBuffer.AddBuffer($"{item.Label.PadRight(maxlengthlabel)}", _options.LabelStyle);
                 if (_options.ShowLegendValue || _options.ShowLegendPercent)
@@ -812,7 +813,6 @@ namespace PPlus.Controls
                     }
                 }
             }
-            screenBuffer.NewLine();
         }
 
         private void ChangeOrder()
@@ -845,6 +845,16 @@ namespace PPlus.Controls
 
         private void WritePageInfo(ScreenBuffer screenBuffer)
         {
+            if (_options.PageSize < _options.Labels.Count)
+            {
+                var selectedPage = _paginginfo.First(x => x.id == _options.Labels[_startpos].Id).page;
+                var pagecount = (_options.Labels.Count / _options.PageSize) + 1;
+                if (_options.OptShowTooltip)
+                {
+                    screenBuffer.NewLine();
+                }
+                screenBuffer.AddBuffer(string.Format(Messages.PaginationTemplate, _options.Labels.Count, selectedPage + 1, pagecount), _options.OptStyleSchema.Pagination());
+            }
             var defaultcharttip = string.Empty;
             if (_options.PageSize < _options.Labels.Count)
             {
@@ -852,6 +862,7 @@ namespace PPlus.Controls
             }
             if (_options.OptShowTooltip)
             {
+                screenBuffer.NewLine();
                 if (_options.OptEnabledAbortKey)
                 {
                     if (_options.EnabledSwitchType && (_options.EnabledSwitchLegend && _options.CurrentChartType == LayoutChart.Standard))
@@ -1183,17 +1194,6 @@ namespace PPlus.Controls
                     }
                 }
             }
-            if (_options.PageSize >= _options.Labels.Count)
-            {
-                return;
-            }
-            var selectedPage = _paginginfo.First(x => x.id == _options.Labels[_startpos].Id).page;
-            var pagecount = (_options.Labels.Count / _options.PageSize) + 1;
-            if (_options.OptShowTooltip)
-            {
-                screenBuffer.NewLine();
-            }
-            screenBuffer.AddBuffer(string.Format(Messages.PaginationTemplate, _options.Labels.Count, selectedPage + 1, pagecount), _options.OptStyleSchema.Pagination());
         }
 
         private string ValueToString(double value)

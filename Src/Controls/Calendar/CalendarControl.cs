@@ -249,13 +249,13 @@ namespace PPlus.Controls
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
             WriteTitle(screenBuffer);
-            if (!string.IsNullOrEmpty(ValidateError))
-            {
-                screenBuffer.AddBuffer(ValidateError, _options.OptStyleSchema.Error(), true);
-                screenBuffer.NewLine();
-            }
             WriteCalendar(screenBuffer, _currentdate);
             WriteNotes(screenBuffer);
+            if (!string.IsNullOrEmpty(ValidateError))
+            {
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer(ValidateError, _options.OptStyleSchema.Error(), true);
+            }
             WriteTooltip(screenBuffer);
         }
 
@@ -272,6 +272,10 @@ namespace PPlus.Controls
                 {
                     SaveDefaultHistory(answer);
                 }
+            }
+            if (_options.OptHideAnswer)
+            {
+                return;
             }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();

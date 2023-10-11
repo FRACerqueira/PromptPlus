@@ -117,13 +117,6 @@ namespace PPlus.Controls
         IControlChartBar HideValue(bool value = true);
 
         /// <summary>
-        /// Pad-Left to write ChartBar
-        /// </summary>
-        /// <param name="value">Number of spaces. Default value is 0.</param>
-        /// <returns><see cref="IControlChartBar"/></returns>
-        IControlChartBar PadLeft(byte value);
-
-        /// <summary>
         /// Show Legends after ChartBar
         /// </summary>
         /// <param name="withvalue">Show value in legend</param>

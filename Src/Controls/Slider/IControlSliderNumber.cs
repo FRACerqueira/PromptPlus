@@ -37,6 +37,15 @@ namespace PPlus.Controls
         IControlSliderNumber Default(double value);
 
         /// <summary>
+        /// Overwrite default start value with last result saved on history.
+        /// <br>OverwriteDefaultFrom cannot be used with IsSecret</br>
+        /// </summary>
+        /// <param name="value">name of file to save history</param>
+        /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
+        /// <returns><see cref="IControlInput"/></returns>
+        IControlSliderNumber OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
+
+        /// <summary>
         /// Define the layout to change value. Default value is 'LayoutSliderNumber.LeftRight'.
         /// <br>When Layout equal UpDown , slider control not show Widgets</br>
         /// </summary>
@@ -94,14 +103,6 @@ namespace PPlus.Controls
         /// <param name="context">action to apply changes. <see cref="IPromptConfig"/></param>
         /// <returns><see cref="IControlSliderNumber"/></returns>
         IControlSliderNumber Config(Action<IPromptConfig> context);
-
-        /// <summary>
-        /// Overwrite default start value with last result saved on history.
-        /// </summary>
-        /// <param name="value">name of file to save history</param>
-        /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
-        /// <returns><see cref="IControlSliderNumber"/></returns>
-        IControlSliderNumber OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 
         /// <summary>
         /// Dynamically change the description using a user role

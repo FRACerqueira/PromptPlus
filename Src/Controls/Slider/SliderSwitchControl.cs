@@ -141,6 +141,14 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, bool result, bool aborted)
         {
+            if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
+            {
+                SaveDefaultHistory(result.ToString());
+            }
+            if (_options.OptHideAnswer)
+            {
+                return;
+            }
             if (aborted)
             {
                 screenBuffer.WritePrompt(_options, "");
@@ -148,10 +156,6 @@ namespace PPlus.Controls
             }
             else
             {
-                if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
-                {
-                    SaveDefaultHistory(result.ToString());
-                }
                 if (result)
                 {
                     if (string.IsNullOrEmpty(_options.OnValue))
@@ -188,14 +192,29 @@ namespace PPlus.Controls
         {
             var segments = Segment.Parse(FinishResult, _options.OptStyleSchema.Answer());
             screenBuffer.WritePrompt(_options, "");
-            foreach (var item in segments.Where(x => !x.IsAnsiControl))
+            if (!_options.OptHideAnswer)
             {
-                screenBuffer.WriteAnswer(_options, item.Text);
+                foreach (var item in segments.Where(x => !x.IsAnsiControl))
+                {
+                    screenBuffer.WriteAnswer(_options, item.Text);
+                }
+                _options.OptShowCursor = true;
+            }
+            else
+            {
+                _options.OptShowCursor = false;
             }
             screenBuffer.SaveCursor();
-            screenBuffer.WriteLineDescriptionSliderSwitch(_options, _currentValue);
+            var hasdesc = screenBuffer.WriteLineDescriptionSliderSwitch(_options, _currentValue);
+            if (!string.IsNullOrEmpty(_options.OptPrompt) || hasdesc)
+            {
+                screenBuffer.WriteLineWidgetsSliderSwitch(_options, _currentValue,true);
+            }
+            else
+            {
+                screenBuffer.WriteLineWidgetsSliderSwitch(_options, _currentValue,false);
+            }
             screenBuffer.WriteLineTooltipsSliderSwitch(_options);
-            screenBuffer.WriteLineWidgetsSliderSwitch(_options, _currentValue);
         }
 
         public override ResultPrompt<bool> TryResult(CancellationToken cancellationToken)

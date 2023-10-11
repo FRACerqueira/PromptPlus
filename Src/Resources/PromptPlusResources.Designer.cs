@@ -61,15 +61,6 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Added items.
-        /// </summary>
-        internal static string AddedItems {
-            get {
-                return ResourceManager.GetString("AddedItems", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Answers.
         /// </summary>
         internal static string Answers {

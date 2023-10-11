@@ -55,7 +55,7 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineDescriptionTable<T>(this ScreenBuffer screenBuffer,T input,int rowpos, int colpos, TableOptions<T> options)
+        public static bool WriteLineDescriptionTable<T>(this ScreenBuffer screenBuffer,T input,int rowpos, int colpos, TableOptions<T> options)
         {
             var result = options.OptDescription;
             if (input != null)
@@ -69,7 +69,9 @@ namespace PPlus.Controls
             {
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                return true;
             }
+            return false;
         }
 
         public static void WriteLineTooltipsTable<T>(this ScreenBuffer screenBuffer, TableOptions<T> options, bool isfiltering, bool ismovecol)

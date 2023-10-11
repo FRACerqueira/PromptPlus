@@ -218,10 +218,12 @@ namespace PPlus.Controls
         /// <param name="selectedTemplate">
         /// message template function when selected item. 
         /// <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)</br>
+        /// <br>If HideAnswer = true, this function will be ignored</br>
         /// </param>
         /// <param name="finishTemplate">
         /// message template function when finish control with seleted item
         /// <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)</br>
+        /// <br>If HideAnswer = true, this function will be ignored</br>
         /// </param>
         /// <returns><see cref="IControlTable{T}"/></returns>
         IControlTable<T> UserInteraction(Func<T, int, int, string> selectedTemplate = null, Func<T, int, int, string> finishTemplate = null);

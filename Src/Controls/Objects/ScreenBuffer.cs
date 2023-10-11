@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PPlus.Controls.Objects
 {
@@ -29,7 +30,10 @@ namespace PPlus.Controls.Objects
 
         public void SaveCursor()
         {
-            _buffer.Add(new StringStyle() { SaveCursor = true });
+            if (!_buffer.Any(x => x.SaveCursor))
+            {
+                _buffer.Add(new StringStyle() { SaveCursor = true });
+            }
         }
 
         public void Clear()

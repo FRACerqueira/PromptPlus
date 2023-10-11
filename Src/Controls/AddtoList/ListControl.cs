@@ -226,6 +226,10 @@ namespace PPlus.Controls
             {
                 answer = Messages.CanceledKey;
             }
+            if (_options.OptHideAnswer)
+            {
+                return;
+            }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();
         }
@@ -250,14 +254,7 @@ namespace PPlus.Controls
                 screenBuffer.WriteAnswer(_options, _inputBuffer.ToForward());
             }
             screenBuffer.WriteLineDescriptionList(_options, FinishResult);
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            screenBuffer.WriteLineTooltipsList(_options, _isInAutoCompleteMode, _editingItem >=0, _localpaginator.SelectedIndex >=0);
             var subset = _localpaginator.ToSubset();
-            if (subset.Count > 0)
-            {
-                screenBuffer.NewLine();
-                screenBuffer.AddBuffer(Messages.AddedItems, _options.OptStyleSchema.TaggedInfo());
-            }
             var pos = -1;
             foreach (var item in subset)
             {
@@ -285,6 +282,8 @@ namespace PPlus.Controls
                     screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
                 }
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
+            screenBuffer.WriteLineTooltipsList(_options, _isInAutoCompleteMode, _editingItem >= 0, _localpaginator.SelectedIndex >= 0);
         }
 
         public override ResultPrompt<IEnumerable<string>> TryResult(CancellationToken cancellationToken)

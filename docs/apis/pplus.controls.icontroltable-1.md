@@ -548,11 +548,11 @@ IControlTable<T> UserInteraction(Func<T, Int32, Int32, String> selectedTemplate,
 
 `selectedTemplate` Func&lt;T, Int32, Int32, String&gt;<br>
 message template function when selected item. 
- <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)
+ <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)<br>If HideAnswer = true, this function will be ignored
 
 `finishTemplate` Func&lt;T, Int32, Int32, String&gt;<br>
 message template function when finish control with seleted item
- <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)
+ <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)<br>If HideAnswer = true, this function will be ignored
 
 #### Returns
 

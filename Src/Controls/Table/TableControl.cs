@@ -32,6 +32,7 @@ namespace PPlus.Controls.Table
         private int? _oldBufferWidth;
         private (int startWrite, int endwrite) _tableviewport;
         private MoveViewport _moveviewport = MoveViewport.None;
+        private bool _hasprompt;
         private enum MoveViewport
         { 
             None,
@@ -431,14 +432,10 @@ namespace PPlus.Controls.Table
 
             _oldBufferWidth = ConsolePlus.BufferWidth;
 
-            if (!_options.IsInteraction)
-            {
-                return;
-            }
 
             screenBuffer.WritePrompt(_options, "");
 
-            bool hasprompt = !string.IsNullOrEmpty(_options.OptPrompt);
+            _hasprompt = !string.IsNullOrEmpty(_options.OptPrompt);
             string answer = null;
             if (_options.SelectedTemplate != null)
             {
@@ -447,34 +444,58 @@ namespace PPlus.Controls.Table
                     answer = _options.SelectedTemplate.Invoke(_localpaginator.SelectedItem.Value, _currentrow, _currentcol);
                 }
             }
-            if (!string.IsNullOrEmpty(answer))
+            if (!string.IsNullOrEmpty(answer) && !_options.OptHideAnswer && _options.IsInteraction)
             {
                 screenBuffer.AddBuffer(answer, _options.OptStyleSchema.Answer());
-                hasprompt = true;
-            }
-            if (!ShowingFilter)
-            {
+                _hasprompt = true;
                 screenBuffer.SaveCursor();
+            }
+
+            var hasdesc = screenBuffer.WriteLineDescriptionTable(_options.IsInteraction ? _localpaginator.SelectedItem?.Value : null, _currentrow, _currentcol, _options);
+            if (hasdesc)
+            {
+                _hasprompt = true;
+            }
+
+            if (_options.IsInteraction)
+            {
+                if (!ShowingFilter)
+                {
+                    if (_options.FilterType != FilterMode.Disabled && _options.OptHideAnswer)
+                    {
+                        if (_hasprompt)
+                        {
+                            screenBuffer.NewLine();
+                        }
+                        screenBuffer.WriteTaggedInfo(_options, $"{Messages.Filter}: ");
+                        _options.OptShowCursor = true;
+                        _hasprompt = true;
+                    }
+                    else if (_options.OptHideAnswer)
+                    {
+                        _options.OptShowCursor = false;
+                    }
+                    screenBuffer.SaveCursor();
+                }
+                else
+                {
+                    _options.OptShowCursor = true;
+                    if (_hasprompt)
+                    {
+                        screenBuffer.NewLine();
+                    }
+                    screenBuffer.WriteTaggedInfo(_options, $"{Messages.Filter}: ");
+                    screenBuffer.WriteFilterTable(_options, _filterBuffer.ToString(), _filterBuffer);
+                    screenBuffer.SaveCursor();
+                    _hasprompt = true;
+                }
             }
             else
             {
-                if (hasprompt)
-                {
-                    screenBuffer.NewLine();
-                }
-                screenBuffer.WriteTaggedInfo(_options, $"{Messages.Filter}: ");
-                screenBuffer.WriteFilterTable(_options, _filterBuffer.ToString(), _filterBuffer);
-                screenBuffer.SaveCursor();
+                return;
             }
 
-            if (!ShowingFilter)
-            {
-                screenBuffer.WriteLineDescriptionTable(_options.IsInteraction?_localpaginator.SelectedItem.Value:null,_currentrow,_currentcol, _options);
-            }
-
-            screenBuffer.WriteLineTooltipsTable(_options, ShowingFilter,_options.IsColumnsNavigation || _tableviewport.startWrite != 0 || _tableviewport.endwrite != _totalTableLenWidth);
-
-            WriteTable(screenBuffer);
+            WriteTable(screenBuffer, _hasprompt);
 
             var haspag = false;
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
@@ -514,14 +535,25 @@ namespace PPlus.Controls.Table
                 }
                 screenBuffer.AddBuffer($"{spc}Cols: {viewstartcol}~{viewendcol} of {tot}", _options.OptStyleSchema.Pagination(), true);
             }
+            screenBuffer.WriteLineTooltipsTable(_options, ShowingFilter, _options.IsColumnsNavigation || _tableviewport.startWrite != 0 || _tableviewport.endwrite != _totalTableLenWidth);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultTable<T> result, bool aborted)
         {
+            if (!aborted && !_options.IsInteraction)
+            {
+                SaveHistory(result.RowValue);
+            }
+ 
             if (!_options.IsInteraction)
             {
-                WriteTable(screenBuffer);
+                WriteTable(screenBuffer, _hasprompt);
                 screenBuffer.NewLine();
+                return;
+            }
+
+            if (_options.OptHideAnswer)
+            {
                 return;
             }
 
@@ -539,13 +571,10 @@ namespace PPlus.Controls.Table
                 screenBuffer.AddBuffer(answer, _options.OptStyleSchema.Answer(), false);
             }
             screenBuffer.NewLine();
-            if (!aborted)
-            {
-                SaveHistory(result.RowValue);
-            }
+
             if (!_options.RemoveTableAtFinish)
             {
-                WriteTable(screenBuffer);
+                WriteTable(screenBuffer, _hasprompt);
                 screenBuffer.NewLine();
             }
         }
@@ -1261,10 +1290,10 @@ namespace PPlus.Controls.Table
             return col;
         }
 
-        private void WriteTable(ScreenBuffer screenBuffer)
+        private void WriteTable(ScreenBuffer screenBuffer,bool startnewline)
         {
             var sb = new ScreenBuffer();
-            WriteTableTitle(sb);
+            WriteTableTitle(sb,startnewline);
             WriteTableHeader(sb);
             WriteTableRows(sb);
             WriteTableFooter(sb);
@@ -1306,14 +1335,17 @@ namespace PPlus.Controls.Table
             }
         }
 
-        private void WriteTableTitle(ScreenBuffer screenBuffer)
+        private void WriteTableTitle(ScreenBuffer screenBuffer, bool startnewline)
         {
             var tit = _options.Title;
             if (_options.TitleMode == TableTitleMode.InLine)
             {
                 if (string.IsNullOrEmpty(tit))
                 {
-                    screenBuffer.NewLine();
+                    if (startnewline)
+                    {
+                        screenBuffer.NewLine();
+                    }
                     switch (_options.Layout)
                     {
                         case TableLayout.HideGrid:
@@ -1400,8 +1432,9 @@ namespace PPlus.Controls.Table
                 tit = TableControl<T>.AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth);
                 screenBuffer.AddBuffer(tit, _options.TitleStyle);
                 tit = string.Empty;
+                startnewline = true;
             }
-            WriteTopTable(screenBuffer);
+            WriteTopTable(screenBuffer, startnewline);
             if (!string.IsNullOrEmpty(tit))
             {
                 WriteTitleInRow(tit, screenBuffer);
@@ -1519,9 +1552,12 @@ namespace PPlus.Controls.Table
             }
         }
 
-        private void WriteTopTable(ScreenBuffer screenBuffer)
+        private void WriteTopTable(ScreenBuffer screenBuffer, bool startnewline)
         {
-            screenBuffer.NewLine();
+            if (startnewline)
+            {
+                screenBuffer.NewLine();
+            }
             if (_options.TitleMode == TableTitleMode.InRow && !string.IsNullOrEmpty(_options.Title))
             {
                 switch (_options.Layout)

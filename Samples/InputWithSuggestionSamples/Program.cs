@@ -11,7 +11,7 @@ PromptPlus.WriteLine("Hello, World!");
 //Ensure ValueResult Culture for all controls
 PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
 
-SuggestionOutput SuggestionInputSample(SuggestionInput arg)
+static SuggestionOutput SuggestionInputSample(SuggestionInput arg)
 {
     if (arg.Text.StartsWith("s", StringComparison.CurrentCultureIgnoreCase))
     {
@@ -30,13 +30,7 @@ SuggestionOutput SuggestionInputSample(SuggestionInput arg)
 PromptPlus.DoubleDash("Control:Input - with suggestions.");
 var in1 = PromptPlus
     .Input("Input sample", "input with suggestions.")
-    .SuggestionHandler((input) => 
-    {
-        return SuggestionOutput
-            .Create()
-            .AddRange(
-                new string[] { "Opc1", "Opc2", "Opc3" });
-    })
+    .SuggestionHandler(SuggestionInputSample)
     .Run();
 
 if (!in1.IsAborted)

@@ -145,10 +145,7 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
-            if (_options.CurrentCulture == null)
-            {
-                _options.CurrentCulture = _options.Config.AppCulture;
-            }
+            _options.CurrentCulture ??= _options.Config.AppCulture;
 
             var max = _options.Maxvalue;
             var min = _options.Minvalue;

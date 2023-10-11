@@ -19,10 +19,11 @@ namespace SliderSwitchSamples
             var cult = Thread.CurrentThread.CurrentCulture;
 
             PromptPlus.Config.DefaultCulture = new CultureInfo("pt-br");
+
             PromptPlus.DoubleDash($"Control:SliderSwitch (pt-br) - minimal usage");
             var sdl = PromptPlus
                .SliderSwitch("SliderSwitch")
-                .Run();
+               .Run();
             if (!sdl.IsAborted)
             {
                 PromptPlus.WriteLine($"You Pressed {sdl.Value}");

@@ -316,23 +316,6 @@ The sort type
 
 [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
-### <a id="methods-padleft"/>**PadLeft(Byte)**
-
-Pad-Left to write ChartBar
-
-```csharp
-IControlChartBar PadLeft(byte value)
-```
-
-#### Parameters
-
-`value` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
-Number of spaces. Default value is 0.
-
-#### Returns
-
-[IControlChartBar](./pplus.controls.icontrolchartbar.md)
-
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page when EnabledInteractionUser is active

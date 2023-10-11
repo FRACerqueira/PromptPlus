@@ -217,6 +217,7 @@ The [LayoutSliderNumber](./pplus.controls.layoutslidernumber.md)
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
+ <br>OverwriteDefaultFrom cannot be used with IsSecret
 
 ```csharp
 IControlSliderNumber OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
@@ -232,7 +233,7 @@ The timeout for valid items saved. Default value is 365 days
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
+[IControlInput](./pplus.controls.icontrolinput.md)
 
 ### <a id="methods-range"/>**Range(Double, Double)**
 
