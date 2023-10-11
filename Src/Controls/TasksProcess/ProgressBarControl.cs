@@ -225,9 +225,12 @@ namespace PPlus.Controls
             ConsolePlus.SetCursorPosition(0, ConsolePlus.CursorTop);
             _initialCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
 
-            int qtd;
+            int qtd = 0;
             var top = ConsolePlus.CursorTop;
-            qtd = ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Wait : _options.OptPrompt)}: ", _options.OptStyleSchema.Prompt(), false);
+            if (!_options.OptHideAnswer)
+            {
+                qtd = ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Wait : _options.OptPrompt)}: ", _options.OptStyleSchema.Prompt(), false);
+            }
             if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
             {
                 var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -236,8 +239,12 @@ namespace PPlus.Controls
 
             _spinnerCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
 
+
             top = ConsolePlus.CursorTop;
-            qtd = ConsolePlus.WriteLine();
+            if (_options.ShowPercent || _options.Spinner != null)
+            {
+                qtd = ConsolePlus.WriteLine();
+            }
             if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
             {
                 var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -256,25 +263,7 @@ namespace PPlus.Controls
                     _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
                 }
             }
-            if (_options.OptShowTooltip)
-            {
-                var tp = _options.OptToolTip;
-                if (string.IsNullOrEmpty(tp))
-                {
-                    tp = ScreenBufferExtensions.EscTooltip(_options);
-                }
-                if (!string.IsNullOrEmpty(tp))
-                {
-                    top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.WriteLine(tp, _options.OptStyleSchema.Tooltips(), true);
-                    if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
-                    {
-                        var dif = top + qtd - ConsolePlus.BufferHeight;
-                        _spinnerCursor = (_spinnerCursor.CursorLeft, _spinnerCursor.CursorTop - dif);
-                        _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
-                    }
-                }
-            }
+
             _progressbarCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
             _process = Task.Run(() =>
             {
@@ -324,7 +313,7 @@ namespace PPlus.Controls
                 }
                 if (_handler.HasChange())
                 {
-                    WriteProgressBar(_handler.Value, _handler.Description, _progressbarCursor,false);
+                    WriteProgressBar(_handler.Value, _handler.Description, _progressbarCursor);
                 }
                 else if (_process.IsCompleted || abort)
                 {
@@ -354,6 +343,7 @@ namespace PPlus.Controls
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultProgessBar<T> result, bool aborted)
         {
             _ctsesc.Cancel();
+
             ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
             for (int i = _initialCursor.CursorTop; i < lastline; i++)
             {
@@ -369,12 +359,21 @@ namespace PPlus.Controls
             var endvalue = result.Lastvalue;
             if (aborted)
             {
-                var aux = Messages.CanceledKey.Replace("[", "[[").Replace("]", "]]");
-                if (!string.IsNullOrEmpty(_options.OptPrompt))
+                var aux = "";
+                if (!_options.OptHideAnswer)
                 {
-                    ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), false);
+                    aux = Messages.CanceledKey.Replace("[", "[[").Replace("]", "]]");
+                    if (!string.IsNullOrEmpty(_options.OptPrompt))
+                    {
+                        ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), false);
+                    }
                 }
-                ConsolePlus.WriteLine(aux, _options.OptStyleSchema.Answer(),false);
+                else
+                {
+                    var perc = _handler.Value / (_options.Maxvalue - _options.Minvalue) * 100;
+                    ConsolePlus.Write($"{perc}% ", _options.OptStyleSchema.Answer(), false);
+                }
+                ConsolePlus.WriteLine(aux, _options.OptStyleSchema.Answer(), false);
             }
             else
             {
@@ -385,17 +384,28 @@ namespace PPlus.Controls
                     ConsolePlus.WriteLine(" ", _options.OptStyleSchema.Answer(), true);
                 }
                 else
-                { 
-                ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Done : _options.OptPrompt)}", _options.OptStyleSchema.Prompt(), false);
-                if (!string.IsNullOrEmpty(_options.OptPrompt))
                 {
-                    ConsolePlus.Write(": ", _options.OptStyleSchema.Prompt(), false);
-                    ConsolePlus.WriteLine(Messages.Done, _options.OptStyleSchema.Answer(), true);
-                }
-                else
-                {
-                    ConsolePlus.WriteLine(" ", _options.OptStyleSchema.Answer(), true);
-                }
+                    if (_options.OptHideAnswer)
+                    {
+                        if (_options.ShowPercent)
+                        {
+                            var perc = _handler.Value / (_options.Maxvalue - _options.Minvalue) * 100;
+                            ConsolePlus.WriteLine($"{perc}% ", _options.OptStyleSchema.Answer(), false);
+                        }
+                    }
+                    else
+                    {
+                        ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Done : _options.OptPrompt)}", _options.OptStyleSchema.Prompt(), false);
+                        if (!string.IsNullOrEmpty(_options.OptPrompt))
+                        {
+                            ConsolePlus.Write(": ", _options.OptStyleSchema.Prompt(), false);
+                            ConsolePlus.WriteLine(Messages.Done, _options.OptStyleSchema.Answer(), true);
+                        }
+                        else
+                        {
+                            ConsolePlus.WriteLine(" ", _options.OptStyleSchema.Answer(), true);
+                        }
+                    }
                 }
             }
             if (!string.IsNullOrEmpty(_options.OptDescription))
@@ -403,9 +413,7 @@ namespace PPlus.Controls
                 ConsolePlus.WriteLine(_options.OptDescription, _options.OptStyleSchema.Description());
             }
             _progressbarCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
-            WriteProgressBar(endvalue, null, _progressbarCursor, true);
-            var perc = _handler.Value / (_options.Maxvalue - _options.Minvalue) * 100;
-            ConsolePlus.WriteLine($"{ValueToString(perc)}%", _options.OptStyleSchema.Prompt(), false);
+            WriteProgressBar(endvalue, null, _progressbarCursor);
         }
 
         private void WriteSpinnerAndPercent(UpdateProgressBar<T> handler, CancellationToken cancellationToken)
@@ -425,8 +433,8 @@ namespace PPlus.Controls
                         {
                             var perc = handler.Value / (_options.Maxvalue - _options.Minvalue) * 100;
                             top = ConsolePlus.CursorTop;
-                            qtd = ConsolePlus.Write($"{spn} ", _options.SpinnerStyle);
-                            qtd += ConsolePlus.Write($"{ValueToString(perc)}% ", _options.OptStyleSchema.Prompt());
+                            qtd = ConsolePlus.Write($"{ValueToString(perc)}% ", _options.OptStyleSchema.Answer());
+                            qtd += ConsolePlus.Write($"{spn}", _options.SpinnerStyle);
                         }
                         else
                         {
@@ -447,7 +455,7 @@ namespace PPlus.Controls
                         {
                             var top = ConsolePlus.CursorTop;
                             var perc = handler.Value / (_options.Maxvalue - _options.Minvalue) * 100;
-                            var qtd = ConsolePlus.Write($"{ValueToString(perc)}% ", _options.OptStyleSchema.Prompt());
+                            var qtd = ConsolePlus.Write($"{ValueToString(perc)}% ", _options.OptStyleSchema.Answer());
                             if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                             {
                                 var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -464,7 +472,7 @@ namespace PPlus.Controls
             }
         }
 
-        private void WriteProgressBar(double value,string handlerdescription, (int CursorLeft, int CursorTop) cursor,bool isfinished)
+        private void WriteProgressBar(double value,string handlerdescription, (int CursorLeft, int CursorTop) cursor)
         {
             lock (_root)
             {
@@ -669,19 +677,44 @@ namespace PPlus.Controls
                         cursor = (cursor.CursorLeft, cursor.CursorTop - dif);
                     }
                 }
-                if (!isfinished)
+
+                var topd = ConsolePlus.CursorTop;
+                qtd = ConsolePlus.Write(handlerdescription ?? string.Empty, _options.OptStyleSchema.TaggedInfo(), true);
+                if (ConsolePlus.IsTerminal && topd + qtd >= ConsolePlus.BufferHeight)
                 {
-                    var top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write(handlerdescription ?? string.Empty, _options.OptStyleSchema.TaggedInfo(), true);
-                    if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
+                    var dif = topd + qtd - ConsolePlus.BufferHeight;
+                    _spinnerCursor = (_spinnerCursor.CursorLeft, _spinnerCursor.CursorTop - dif);
+                    _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
+                    _progressbarCursor = (_progressbarCursor.CursorLeft, _progressbarCursor.CursorTop - dif);
+                    cursor = (cursor.CursorLeft, cursor.CursorTop - dif);
+                }
+
+                if (_options.OptShowTooltip)
+                {
+                    var tp = _options.OptToolTip;
+                    if (string.IsNullOrEmpty(tp))
                     {
-                        var dif = top + qtd - ConsolePlus.BufferHeight;
-                        _spinnerCursor = (_spinnerCursor.CursorLeft, _spinnerCursor.CursorTop - dif);
-                        _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
-                        _progressbarCursor = (_progressbarCursor.CursorLeft, _progressbarCursor.CursorTop - dif);
-                        cursor = (cursor.CursorLeft, cursor.CursorTop - dif);
+                        tp = ScreenBufferExtensions.EscTooltip(_options);
+                    }
+                    if (!string.IsNullOrEmpty(tp))
+                    {
+                        var top = ConsolePlus.CursorTop;
+                        if (handlerdescription != null)
+                        {
+                            qtd = ConsolePlus.WriteLine();
+                        }
+                        qtd += ConsolePlus.WriteLine(tp, _options.OptStyleSchema.Tooltips(), true);
+                        if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
+                        {
+                            var dif = top + qtd - ConsolePlus.BufferHeight;
+                            _spinnerCursor = (_spinnerCursor.CursorLeft, _spinnerCursor.CursorTop - dif);
+                            _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
+                            _progressbarCursor = (_progressbarCursor.CursorLeft, _progressbarCursor.CursorTop - dif);
+                            cursor = (cursor.CursorLeft, cursor.CursorTop - dif);
+                        }
                     }
                 }
+
                 lastline = ConsolePlus.CursorTop;
             }
         }
