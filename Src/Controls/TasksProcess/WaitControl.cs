@@ -222,10 +222,15 @@ namespace PPlus.Controls
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultWaitProcess<T> result, bool aborted)
         {
             _ctsesc.Cancel();
+            ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
+            if (_options.OptHideAnswer)
+            {
+                return;
+            }
             if (aborted)
             {
                 var aux = Messages.CanceledKey.Replace("[", "[[").Replace("]", "]]");
-                ConsolePlus.Write($"{_options.OptPrompt ?? string.Empty}: ", _options.OptStyleSchema.Prompt(), false);
+                ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Wait : _options.OptPrompt)}: ", _options.OptStyleSchema.Prompt(), false);
                 ConsolePlus.WriteLine(aux, _options.OptStyleSchema.Answer(), true);
                 if (!string.IsNullOrEmpty(_options.OptDescription))
                 {
@@ -234,38 +239,25 @@ namespace PPlus.Controls
             }
             else
             {
-                var haspromt = false;
                 if (!string.IsNullOrEmpty(_options.Finish) || _options.WaitTime)
                 {
                     if (_options.WaitTime)
                     { 
                         _options.Finish = _options.TimeDelay.ToString();
                     }
-                    haspromt = true;
-                    ConsolePlus.Write($"{_options.OptPrompt ?? string.Empty}: ", _options.OptStyleSchema.Prompt(), false);
+                    ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Wait : _options.OptPrompt)}: ", _options.OptStyleSchema.Prompt(), false);
                     ConsolePlus.Write(_options.Finish, _options.OptStyleSchema.Answer(), true);
+                    ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
+                    if (!string.IsNullOrEmpty(_options.OptDescription))
+                    {
+                        ConsolePlus.WriteLine(_options.OptDescription, _options.OptStyleSchema.Description(), true);
+                    }
                 }
                 else
                 {
                     if (!string.IsNullOrEmpty(_options.OptPrompt))
                     {
-                        haspromt = true;
-                        ConsolePlus.Write(_options.OptPrompt, _options.OptStyleSchema.Prompt(), true);
-                    }
-                }
-                if (!string.IsNullOrEmpty(_options.OptDescription))
-                {
-                    if (haspromt)
-                    {
-                        ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
-                    }
-                    ConsolePlus.WriteLine(_options.OptDescription, _options.OptStyleSchema.Description(), true);
-                }
-                else
-                {
-                    if (haspromt)
-                    {
-                        ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
+                        ConsolePlus.WriteLine(_options.OptPrompt, _options.OptStyleSchema.Prompt(), true);
                     }
                 }
             }
@@ -400,7 +392,23 @@ namespace PPlus.Controls
                 var qtdlines = 0;
                 ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
                 var top = ConsolePlus.CursorTop;
-                var qtd = ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Wait : _options.OptPrompt)}: ", _options.OptStyleSchema.Prompt(), false);
+                var qtd = 0;
+                var haspmt = true;
+                if (_options.OptHideAnswer)
+                {
+                    if (!string.IsNullOrEmpty(_options.OptPrompt))
+                    {
+                        qtd = ConsolePlus.Write($"{_options.OptPrompt} ", _options.OptStyleSchema.Prompt(), false);
+                    }
+                    else
+                    {
+                        haspmt = false;
+                    }
+                }
+                else
+                {
+                    qtd = ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Wait : _options.OptPrompt)}: ", _options.OptStyleSchema.Prompt(), false);
+                }
                 if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                 {
                     var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -409,72 +417,66 @@ namespace PPlus.Controls
                 qtdlines += qtd;
 
                 _spinnerCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
-                if (_options.OptShowTooltip)
+
+                top = ConsolePlus.CursorTop;
+                qtd = ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
+                if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                 {
-                    var tp = _options.OptToolTip;
-                    if (string.IsNullOrEmpty(tp))
-                    {
-                        tp = ScreenBufferExtensions.EscTooltip(_options);
-                    }
-                    if (!string.IsNullOrEmpty(tp))
-                    {
-                        top = ConsolePlus.CursorTop;
-                        qtd = ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
-                        qtd += ConsolePlus.Write(tp, _options.OptStyleSchema.Tooltips(), true);
-                        if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
-                        {
-                            var dif = top + qtd - ConsolePlus.BufferHeight;
-                            _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
-                            _spinnerCursor = (_spinnerCursor.CursorLeft, _spinnerCursor.CursorTop - dif);
-                        }
-                        qtdlines += qtd;
-                    }
+                    var dif = top + qtd - ConsolePlus.BufferHeight;
+                    _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
+                    _spinnerCursor = (_spinnerCursor.CursorLeft, _spinnerCursor.CursorTop - dif);
                 }
+                qtdlines += qtd;
+
                 if (!string.IsNullOrEmpty(_options.OptDescription))
                 {
                     top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
-                    qtd += ConsolePlus.Write(_options.OptDescription, _options.OptStyleSchema.Description(), true);
+                    qtd += ConsolePlus.WriteLine(_options.OptDescription, _options.OptStyleSchema.Description(), true);
+                    if (!haspmt)
+                    {
+                        _spinnerCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
+                    }
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
                         _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
                         _spinnerCursor = (_spinnerCursor.CursorLeft, _spinnerCursor.CursorTop - dif);
                     }
+                    haspmt = true;
                     qtdlines += qtd;
                 }
 
                 if (!_options.WaitTime)
                 {
-                    top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
-                    if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
-                    {
-                        var dif = top + qtd - ConsolePlus.BufferHeight;
-                        _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
-                        _spinnerCursor = (_spinnerCursor.CursorLeft, _spinnerCursor.CursorTop - dif);
-                    }
-                    qtdlines += qtd;
-
                     var max = executelist.Count;
                     for (int pos = 0; pos < max; pos++)
                     {
                         string symb;
                         if (pos == max - 1)
                         {
-                            symb = " └─";
+                            if (max == 1 && !haspmt)
+                            {
+                                symb = "─";
+                            }
+                            else
+                            {
+                                symb = "└─";
+                            }
                         }
                         else
                         {
-                            symb = " ├─";
+                            symb = "├─";
                             if (max == 1)
                             {
-                                symb = " └─";
+                                if (haspmt)
+                                {
+                                    symb = "└─";
+                                }
                             }
                         }
                         if (!ConsolePlus.IsUnicodeSupported)
                         {
-                            symb = " >>";
+                            symb = ">>";
                         }
                         var tasknamecult = Messages.Task;
                         if (!string.IsNullOrEmpty(_options.OverWriteTitlekName))
@@ -536,6 +538,33 @@ namespace PPlus.Controls
                         }
                     }
                 }
+
+                if (_options.OptShowTooltip)
+                {
+                    var tp = _options.OptToolTip;
+                    if (string.IsNullOrEmpty(tp))
+                    {
+                        tp = ScreenBufferExtensions.EscTooltip(_options);
+                    }
+                    if (!string.IsNullOrEmpty(tp))
+                    {
+                        top = ConsolePlus.CursorTop;
+                        qtd = 0;
+                        if (!_options.WaitTime)
+                        {
+                            qtd = ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
+                        }
+                        qtd += ConsolePlus.Write(tp, _options.OptStyleSchema.Tooltips(), true);
+                        if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
+                        {
+                            var dif = top + qtd - ConsolePlus.BufferHeight;
+                            _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
+                            _spinnerCursor = (_spinnerCursor.CursorLeft, _spinnerCursor.CursorTop - dif);
+                        }
+                        qtdlines += qtd;
+                    }
+                }
+
                 if (_promptlines < qtdlines)
                 {
                     _promptlines = qtdlines;

@@ -132,9 +132,12 @@ namespace PPlus.Controls
         }
 
 
-        public static void WriteLineSelectorBrowser(this ScreenBuffer screenBuffer, BrowserOptions options, ItemTreeViewFlatNode<ItemBrowser> data)
+        public static void WriteLineSelectorBrowser(this ScreenBuffer screenBuffer, BrowserOptions options, ItemTreeViewFlatNode<ItemBrowser> data, bool newline)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
             screenBuffer.AddBuffer(' ', Style.Default, true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);
@@ -157,9 +160,12 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer(data.MessagesNodes.TextSize, options.SelectedSizeStyle, true, false);
         }
 
-        public static void WriteLineDisabledSelectorBrowser(this ScreenBuffer screenBuffer, BrowserOptions options, ItemTreeViewFlatNode<ItemBrowser> data)
+        public static void WriteLineDisabledSelectorBrowser(this ScreenBuffer screenBuffer, BrowserOptions options, ItemTreeViewFlatNode<ItemBrowser> data, bool newline)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true,false);
@@ -168,9 +174,12 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer(data.MessagesNodes.TextSize, options.OptStyleSchema.Disabled(), true,false);
         }
 
-        public static void WriteLineNotSelectorBrowser(this ScreenBuffer screenBuffer, BrowserOptions options, ItemTreeViewFlatNode<ItemBrowser> data)
+        public static void WriteLineNotSelectorBrowser(this ScreenBuffer screenBuffer, BrowserOptions options, ItemTreeViewFlatNode<ItemBrowser> data, bool newline)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);
@@ -193,8 +202,12 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer(data.MessagesNodes.TextSize, options.SizeStyle, true, false);
         }
 
-        public static void WriteLineDisabledNotSelectorBrowser(this ScreenBuffer screenBuffer, BrowserOptions options, ItemTreeViewFlatNode<ItemBrowser> data)
+        public static void WriteLineDisabledNotSelectorBrowser(this ScreenBuffer screenBuffer, BrowserOptions options, ItemTreeViewFlatNode<ItemBrowser> data, bool newline)
         {
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.NewLine();
             screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer(' ', Style.Default, true, false);
