@@ -187,7 +187,7 @@ For each snapshot, the title is **name of project** sample in folder **samples**
 
 [**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddToListSamples)
 
-![](./docs/images/AddToList.gif)
+![](./docs/images/AddtoList.gif)
 
 [**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddtoMaskEditListSamples)
 
