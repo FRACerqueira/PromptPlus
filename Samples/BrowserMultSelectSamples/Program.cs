@@ -20,7 +20,6 @@ namespace BrowserMultSelectSamples
             var brw = PromptPlus.BrowserMultiSelect("Browser")
                 .Run();
 
-
             if (!brw.IsAborted)
             {
                 foreach (var item in brw.Value)
@@ -37,9 +36,7 @@ namespace BrowserMultSelectSamples
             PromptPlus.BrowserMultiSelect("Browser")
                 .SelectAll(item => !item.IsFolder)
                 .Run();
-
-
-
+            
             PromptPlus.DoubleDash("Control:BrowserMultiSelect - Start Expandall usage");
             PromptPlus.BrowserMultiSelect("Browser")
                 .Root(root, true)
@@ -76,6 +73,8 @@ namespace BrowserMultSelectSamples
                 .Root(root, true)
                 .OnlyFolders(true)
                 .Run();
+
+            PromptPlus.Clear();
 
             PromptPlus.DoubleDash("Control:BrowserMultiSelect - Valid Selected item function");
             PromptPlus.BrowserMultiSelect("Browser")

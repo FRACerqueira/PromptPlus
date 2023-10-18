@@ -254,19 +254,19 @@ namespace PPlus.Controls
                 case LayoutChart.Standard:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _options.Labels.Max(x => x.Value);
-                        WriteStandBar(screenBuffer, _options.BarType, _startpos, ticketStep, true);
+                        WriteStandBar(screenBuffer, _options.BarType, _startpos, ticketStep);
                     }
                     break;
                 case LayoutChart.Stacked:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _totalvalue;
-                        WriteStackBar(screenBuffer, _options.BarType, ticketStep, true);
+                        WriteStackBar(screenBuffer, _options.BarType, ticketStep);
                     }
                     break;
                 default:
                     throw new PromptPlusException($"Show ChartType {_options.CurrentChartType} Not implemented");
             }
-            if (!_options.HideInfoOrder)
+            if (!_options.HideInfoOrder && !_options.OptMinimalRender)
             {
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(string.Format(Messages.TooltipOrder, TextOrder(_options.CurrentOrder)), _options.OrderStyle);
@@ -280,16 +280,15 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, bool result, bool aborted)
         {
-
+            if (_options.OptMinimalRender && _options.EnabledInteractionUser)
+            {
+                return;
+            }
             _options.CurrentChartType = _options.StartChartType;
             if (_options.CurrentOrder != _options.Order)
             {
                 _options.CurrentOrder = _options.Order;
                 ChangeOrder();
-            }
-            if (_options.OptHideAnswer && _options.EnabledInteractionUser)
-            {
-                return;
             }
             ShowInitialChart(screenBuffer);
         }
@@ -457,13 +456,13 @@ namespace PPlus.Controls
                 case LayoutChart.Standard:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _options.Labels.Max(x => x.Value);
-                        WriteStandBar(screenBuffer, _options.BarType, 0, ticketStep,true);
+                        WriteStandBar(screenBuffer, _options.BarType, 0, ticketStep);
                     }
                     break;
                 case LayoutChart.Stacked:
                     {
                         var ticketStep = double.Parse(_options.Witdth.ToString()) / _totalvalue;
-                        WriteStackBar(screenBuffer, _options.BarType, ticketStep, true);
+                        WriteStackBar(screenBuffer, _options.BarType, ticketStep);
                     }
                     break;
                 default:
@@ -483,7 +482,7 @@ namespace PPlus.Controls
 
         private void WriteTitle(ScreenBuffer screenBuffer)
         {
-            if (string.IsNullOrEmpty(_options.OptPrompt) && string.IsNullOrEmpty(_options.OptDescription))
+            if (_options.OptMinimalRender)
             {
                 return;
             }
@@ -568,7 +567,7 @@ namespace PPlus.Controls
             }
         }
 
-        private void WriteStandBar(ScreenBuffer screenBuffer,ChartBarType barType,int inipos,double ticketStep, bool First)
+        private void WriteStandBar(ScreenBuffer screenBuffer,ChartBarType barType,int inipos,double ticketStep)
         {
             var pagesize = _options.PageSize;
             if (!_options.EnabledInteractionUser)
@@ -625,6 +624,7 @@ namespace PPlus.Controls
                 default:
                     throw new PromptPlusException($"Not implemented {barType}");
             }
+            var first = true;
             foreach (var item in _options.Labels.Skip(inipos).Take(pagesize))
             {
                 var OnStyle = Style.Default.Foreground(item.ColorBar.Value);
@@ -632,17 +632,23 @@ namespace PPlus.Controls
                 {
                     OnStyle = Style.Default.Background(item.ColorBar.Value);
                 }
-                if (First)
+                if (!_options.OptMinimalRender)
                 {
                     if (!(string.IsNullOrEmpty(_options.OptPrompt) && string.IsNullOrEmpty(_options.OptDescription)))
                     {
                         screenBuffer.NewLine();
                     }
-                    First = false;
                 }
                 else
                 {
-                    screenBuffer.NewLine();
+                    if (!first)
+                    {
+                        screenBuffer.NewLine();
+                    }
+                    else
+                    {
+                        first = false;
+                    }
                 }
                 var tkt = (int)(ticketStep * item.Value);
                 if (tkt == 0)
@@ -679,10 +685,10 @@ namespace PPlus.Controls
             }
         }
 
-        private void WriteStackBar(ScreenBuffer screenBuffer, ChartBarType barType, double ticketStep, bool First)
+        private void WriteStackBar(ScreenBuffer screenBuffer, ChartBarType barType, double ticketStep)
         {
             char charbarOn = ' ';
-            if (First)
+            if (!_options.OptMinimalRender)
             {
                 if (!(string.IsNullOrEmpty(_options.OptPrompt) && string.IsNullOrEmpty(_options.OptDescription)))
                 {
@@ -853,7 +859,21 @@ namespace PPlus.Controls
                 {
                     screenBuffer.NewLine();
                 }
-                screenBuffer.AddBuffer(string.Format(Messages.PaginationTemplate, _options.Labels.Count, selectedPage + 1, pagecount), _options.OptStyleSchema.Pagination());
+                if (_options.OptMinimalRender)
+                {
+                    screenBuffer.AddBuffer(_options.OptPaginationTemplate(_options.Labels.Count, selectedPage + 1, pagecount), _options.OptStyleSchema.Pagination());
+                }
+                else
+                {
+                    if (_options.OptPaginationTemplate != null)
+                    {
+                        screenBuffer.AddBuffer(_options.OptPaginationTemplate(_options.Labels.Count, selectedPage + 1, pagecount), _options.OptStyleSchema.Pagination());
+                    }
+                    else
+                    {
+                        screenBuffer.AddBuffer(string.Format(Messages.PaginationTemplate, _options.Labels.Count, selectedPage + 1, pagecount), _options.OptStyleSchema.Pagination());
+                    }
+                }
             }
             var defaultcharttip = string.Empty;
             if (_options.PageSize < _options.Labels.Count)

@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -29,11 +29,17 @@
 - [Credits](#credits)
 - [API Reference](./apis/apis.md)
 
-## What's new in V4.1.0
+## What's new in V4.1.1
 
-- New Control : Table<T> ([see in action - Snapshot](snapshot.md#table)) :  Display/Select data in a grid/table
+- Split feature Control Table:
+    - PromptPlus.TableSelect\<T> to Select item in table : Select row, column and data in a grid/table 
+        - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
+    - PromptPlus.Table\<T> to write table in console : Show data in a grid/table 
+        - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
+- New Control : TableMultSelect\<T> :  Select multi-data in a grid/table 
+    - Samples in project [Table MultiSelect Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableMultiSelectSamples)
     - Main features :
-        - More than 100 layout combinations
+        - More than 80 layout combinations
         - Navigation by row and columns
         - Scroll the table when it is larger than the screen
         - Split text when it is larger than the column size
@@ -41,29 +47,50 @@
         - Color customization of each element
         - Search for data filtered by columns
         - Formatting by column or by data type definition
-- Improvement commands with default values ​​(all controls)
-- Bug fixed: grouped item ordering. The sort option will be ignored
-    - Affeted Controls : Select/MultiSelect
-- Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
-    - Affeted Controls : AddtoList/Input
-- Improvement : Direct writes to standard error output stream
-    - New Commands : OutputError()
-    - Sample with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
-- New feature: Escaping format characters color 
-    - Global property : IgnoreColorTokens
-    - New Commands : EscapeColorTokens()/AcceptColorTokens()
-    - Sample with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
-- New feature: Group items in the select control
-    - Sample with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
-- New feature: Add separator line in the select control
-    - Sample with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
-  
-**Special thanks to [ividyon](https://github.com/ividyon) for suggesting improvements and actively participating in this release**
+- New feature: 
+    - MinimalRender the prompt and control description are not rendered, showing only the minimum necessary without using resources.
+        - Global property : MinimalRender
+        - Instance control(By config command): MinimalRender(bool value = true)
+- New feature: 
+    - Pagination Template to customize pagination information
+        - Global property : PaginationTemplate
+        - Instance control(By config command) : PaginationTemplate(Func<int, int, int, string>? value)
+- New feature: 
+    - PromptPlus.Join() 
+    - Fluent-Interface to write text (less code typed) 
+- Changed feature:
+    - Moved tooltips and validation message to the end of render to all control
+- Improvement : 
+    - Optimized the Calendar control to have symbols when selecting elements
+- Improvement :
+    - Optimize Render of ProgressBar (less lines)
+- Improvement : 
+    - Optimize Render of SliderNumber (less lines)
+- Improvement : 
+    - Optimize resource usage in rendering (less cultural dependency)
+- Improvement : 
+    - Reinforce the validation of invalid or optional parameters in all controls
+- Renamed command: 
+    - 'DescriptionWithInputType' to 'ShowTipInputType'.
+    - Now extra-line to tip InputType
+- Renamed command: 
+    - 'AppendGroupOnDescription' to 'ShowTipGroup'.
+    - Now extra-line to tip group
+- Fixed bug : 
+    - The Slide Switch Control does not show on/off values ​​when they are not customized
+- Fixed bug : 
+    - Alternate screen doesn't update background style when changing color
+- Fixed bug : 
+    - Exception when try delete[F3] in empty colletion in AddTolist/AddtoMaskEditList control
+- Fixed bug : 
+    - Edit[F2] Immutable item in AddTolist/AddtoMaskEditList control
+- Fixed bug : 
+    - CTRL-V (paste data) does not show input in some controls
 
 ## Features
 [**Top**](#table-of-contents)
  
-**_All features have IntelliSense_. PromptPlus has more than 20 controls with many features like: filters, validators, history, suggestions, spinner(19 embedding type and plus custom yours!), colors and styles for control-elements** :
+**_All features have IntelliSense_. PromptPlus has more than 25 controls with many features like: filters, validators, history, suggestions, spinner(19 embedding type and plus custom yours!), colors and styles for control-elements** :
 - Banner Ascii
 - Input text / Secret / AutoComplete with spinner
 - MaskEdit Generic / Only Date / Only Time / DateTime / Number /  Currency
@@ -82,7 +109,7 @@
 - Treeview hierarchical structures with multi-select and colors
 - Switch Alternate screen
 - Execution pipeline with conditions
-- Table with multiple layouts
+- Table, TableSelect and TableMultSelct with multiple layouts
  
 **All controls** have the same organization (see in action: [**Controls Snapshot**](snapshot.md)):
 - input/filter (except Masked input) using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  

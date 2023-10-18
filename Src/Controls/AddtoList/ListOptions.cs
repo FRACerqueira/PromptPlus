@@ -36,5 +36,6 @@ namespace PPlus.Controls
         public int PageSize { get; set; }
         public int Minimum { get; set; }
         public int Maximum { get; set; } = int.MaxValue;
+        public Func<string, string> ChangeDescription { get; set; }
     }
 }

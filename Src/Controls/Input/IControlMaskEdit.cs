@@ -140,11 +140,11 @@ namespace PPlus.Controls
         IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal);
 
         /// <summary>
-        /// Append to description the tip of type input. 
+        /// Show the tip of type input. 
         /// </summary>
         /// <param name="week">show name of week for type date. <see cref="FormatWeek"/></param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
-        IControlMaskEdit DescriptionWithInputType(FormatWeek week = FormatWeek.None);
+        IControlMaskEdit ShowTipInputType(FormatWeek week = FormatWeek.None);
 
         /// <summary>
         /// Default value (with mask!) when stated.

@@ -246,8 +246,12 @@ namespace PPlus.Controls.Objects
             return (startindex, auxpage);
         }
 
-        public string PaginationMessage()
+        public string PaginationMessage(Func<int, int, int, string>? template)
         {
+            if (template != null)
+            {
+                return template(TotalCountValid, SelectedPage + 1, PageCount);
+            }
             return string.Format(Messages.PaginationTemplate, TotalCountValid, SelectedPage + 1, PageCount);
         }
 

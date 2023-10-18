@@ -108,10 +108,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlternateScreenSamples", "S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{ADBB4294-4DC0-43FC-A57A-4C2F9BDB68A8}"
 	ProjectSection(SolutionItems) = preProject
-		LICENSE\LICENSE-FIGlet.md = LICENSE\LICENSE-FIGlet.md
-		LICENSE\LICENSE-Sharprompt.md = LICENSE\LICENSE-Sharprompt.md
-		LICENSE\LICENSE-SpectreConsole.md = LICENSE\LICENSE-SpectreConsole.md
-		LICENSE\LICENSE-xmldoc2md.md = LICENSE\LICENSE-xmldoc2md.md
+		Licenses\LICENSE-FIGlet.md = Licenses\LICENSE-FIGlet.md
+		Licenses\LICENSE-Sharprompt.md = Licenses\LICENSE-Sharprompt.md
+		Licenses\LICENSE-SpectreConsole.md = Licenses\LICENSE-SpectreConsole.md
+		Licenses\LICENSE-xmldoc2md.md = Licenses\LICENSE-xmldoc2md.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{0468C89D-43EE-4B08-96BB-FDDA42033AA5}"
@@ -119,6 +119,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlusTemplate", "Template\PromptPlusTemplate\PromptPlusTemplate.csproj", "{E713CD59-5AB5-40AA-80B3-436D0C6511DA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableSamples", "Samples\TableBasicSamples\TableSamples.csproj", "{C5189623-17BD-472E-8A11-832115ABD152}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableSelectSamples", "Samples\TableSelectSamples\TableSelectSamples.csproj", "{BD6DBBD6-682B-4954-ADE5-F557721D5D51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableMultiSelectSamples", "Samples\TableMultiSelectSamples\TableMultiSelectSamples.csproj", "{15F4B106-58B7-4F6E-9E01-E47EB17E6A10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -385,6 +389,18 @@ Global
 		{C5189623-17BD-472E-8A11-832115ABD152}.local|Any CPU.Build.0 = Debug|Any CPU
 		{C5189623-17BD-472E-8A11-832115ABD152}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5189623-17BD-472E-8A11-832115ABD152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD6DBBD6-682B-4954-ADE5-F557721D5D51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD6DBBD6-682B-4954-ADE5-F557721D5D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD6DBBD6-682B-4954-ADE5-F557721D5D51}.local|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD6DBBD6-682B-4954-ADE5-F557721D5D51}.local|Any CPU.Build.0 = Debug|Any CPU
+		{BD6DBBD6-682B-4954-ADE5-F557721D5D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD6DBBD6-682B-4954-ADE5-F557721D5D51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15F4B106-58B7-4F6E-9E01-E47EB17E6A10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F4B106-58B7-4F6E-9E01-E47EB17E6A10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15F4B106-58B7-4F6E-9E01-E47EB17E6A10}.local|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F4B106-58B7-4F6E-9E01-E47EB17E6A10}.local|Any CPU.Build.0 = Debug|Any CPU
+		{15F4B106-58B7-4F6E-9E01-E47EB17E6A10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15F4B106-58B7-4F6E-9E01-E47EB17E6A10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -431,6 +447,8 @@ Global
 		{83BB7962-34D7-4F51-8856-94BDC7B68A64} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
 		{E713CD59-5AB5-40AA-80B3-436D0C6511DA} = {0468C89D-43EE-4B08-96BB-FDDA42033AA5}
 		{C5189623-17BD-472E-8A11-832115ABD152} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
+		{BD6DBBD6-682B-4954-ADE5-F557721D5D51} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
+		{15F4B106-58B7-4F6E-9E01-E47EB17E6A10} = {F85DFC6B-0BBA-4B8D-BBF7-8FE175FE165C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2E883401-DEB0-496F-A6BC-8AA0F44BC5B9}

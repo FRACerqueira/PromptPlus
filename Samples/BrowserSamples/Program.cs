@@ -25,7 +25,6 @@ namespace BrowserSamples
             var brw = PromptPlus.Browser("Browser")
                 .Run();
 
-
             if (!brw.IsAborted)
             {
                 PromptPlus.WriteLine($"You item name is {brw.Value.Name}");

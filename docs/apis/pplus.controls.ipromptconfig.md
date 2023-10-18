@@ -147,23 +147,6 @@ value
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-hideanswer"/>**HideAnswer(Boolean)**
-
-Overwrite default Hide Answer
-
-```csharp
-IPromptConfig HideAnswer(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-value
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
 ### <a id="methods-hideonabort"/>**HideOnAbort(Boolean)**
 
 Overwrite default Clear render area of control after AbortKey press
@@ -176,6 +159,42 @@ IPromptConfig HideOnAbort(bool value)
 
 `value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-minimalrender"/>**MinimalRender(Boolean)**
+
+Overwrite default Hide Answer
+ <br>When true, the prompt and control description are not rendered, showing only the minimum necessary without using resources (except the default tooltips when used)
+
+```csharp
+IPromptConfig MinimalRender(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-paginationtemplate"/>**PaginationTemplate(Func&lt;Int32, Int32, Int32, String&gt;)**
+
+Overwrite PaginationTemplate
+
+```csharp
+IPromptConfig PaginationTemplate(Func<Int32, Int32, Int32, String> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;Int32, Int32, Int32, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-4)<br>
+The function
+ <br>string to show = Func(Total items,Current Page,Total pages)
 
 #### Returns
 

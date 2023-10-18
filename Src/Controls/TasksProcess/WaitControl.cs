@@ -118,7 +118,7 @@ namespace PPlus.Controls
 
         public IControlWait<T> TaskTitle(string value)
         {
-            _options.OverWriteTitlekName = value;
+            _options.OverWriteTitleName = value;
             return this;
         }
 
@@ -223,41 +223,36 @@ namespace PPlus.Controls
         {
             _ctsesc.Cancel();
             ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
-            if (_options.OptHideAnswer)
-            {
-                return;
-            }
+
             if (aborted)
             {
-                var aux = Messages.CanceledKey.Replace("[", "[[").Replace("]", "]]");
-                ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Wait : _options.OptPrompt)}: ", _options.OptStyleSchema.Prompt(), false);
-                ConsolePlus.WriteLine(aux, _options.OptStyleSchema.Answer(), true);
-                if (!string.IsNullOrEmpty(_options.OptDescription))
+                if (!_options.OptMinimalRender && !_options.OptHideAfterFinish)
                 {
-                    ConsolePlus.WriteLine(_options.OptDescription, _options.OptStyleSchema.Description(), true);
+                    var aux = Messages.CanceledKey.Replace("[", "[[").Replace("]", "]]");
+                    if (!string.IsNullOrEmpty(_options.OptPrompt))
+                    {
+                        ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), false);
+                    }
+                    ConsolePlus.WriteLine(aux, _options.OptStyleSchema.Answer(), true);
+                    if (!string.IsNullOrEmpty(_options.OptDescription))
+                    {
+                        ConsolePlus.WriteLine(_options.OptDescription, _options.OptStyleSchema.Description(), true);
+                    }
                 }
             }
             else
             {
                 if (!string.IsNullOrEmpty(_options.Finish) || _options.WaitTime)
                 {
-                    if (_options.WaitTime)
+                    if (_options.WaitTime && !_options.OptHideAfterFinish)
                     { 
                         _options.Finish = _options.TimeDelay.ToString();
                     }
-                    ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Wait : _options.OptPrompt)}: ", _options.OptStyleSchema.Prompt(), false);
-                    ConsolePlus.Write(_options.Finish, _options.OptStyleSchema.Answer(), true);
-                    ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
-                    if (!string.IsNullOrEmpty(_options.OptDescription))
+                    if (!_options.OptMinimalRender && !string.IsNullOrEmpty(_options.OptPrompt) && !string.IsNullOrEmpty(_options.Finish))
                     {
-                        ConsolePlus.WriteLine(_options.OptDescription, _options.OptStyleSchema.Description(), true);
-                    }
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(_options.OptPrompt))
-                    {
-                        ConsolePlus.WriteLine(_options.OptPrompt, _options.OptStyleSchema.Prompt(), true);
+                        ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), false);
+                        ConsolePlus.Write(_options.Finish, _options.OptStyleSchema.Answer(), true);
+                        ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
                     }
                 }
             }
@@ -393,30 +388,24 @@ namespace PPlus.Controls
                 ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
                 var top = ConsolePlus.CursorTop;
                 var qtd = 0;
-                var haspmt = true;
-                if (_options.OptHideAnswer)
+                var haspmt = false;
+                if (!_options.OptMinimalRender && !string.IsNullOrEmpty(_options.OptPrompt))
                 {
-                    if (!string.IsNullOrEmpty(_options.OptPrompt))
+                    haspmt = true;
+                    qtd = ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), false);
+                    _spinnerCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
+                    if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
-                        qtd = ConsolePlus.Write($"{_options.OptPrompt} ", _options.OptStyleSchema.Prompt(), false);
-                    }
-                    else
-                    {
-                        haspmt = false;
+                        var dif = top + qtd - ConsolePlus.BufferHeight;
+                        _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
                     }
                 }
                 else
                 {
-                    qtd = ConsolePlus.Write($"{(string.IsNullOrEmpty(_options.OptPrompt) ? Messages.Wait : _options.OptPrompt)}: ", _options.OptStyleSchema.Prompt(), false);
-                }
-                if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
-                {
-                    var dif = top + qtd - ConsolePlus.BufferHeight;
-                    _initialCursor = (_initialCursor.CursorLeft, _initialCursor.CursorTop - dif);
+                    _spinnerCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
                 }
                 qtdlines += qtd;
 
-                _spinnerCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
 
                 top = ConsolePlus.CursorTop;
                 qtd = ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
@@ -428,7 +417,7 @@ namespace PPlus.Controls
                 }
                 qtdlines += qtd;
 
-                if (!string.IsNullOrEmpty(_options.OptDescription))
+                if (!string.IsNullOrEmpty(_options.OptDescription) && !_options.OptMinimalRender)
                 {
                     top = ConsolePlus.CursorTop;
                     qtd += ConsolePlus.WriteLine(_options.OptDescription, _options.OptStyleSchema.Description(), true);
@@ -478,21 +467,35 @@ namespace PPlus.Controls
                         {
                             symb = ">>";
                         }
-                        var tasknamecult = Messages.Task;
-                        if (!string.IsNullOrEmpty(_options.OverWriteTitlekName))
+                        var tasktitle = string.Empty;
+                        if (!string.IsNullOrEmpty(_options.OverWriteTitleName))
                         {
-                            tasknamecult = _options.OverWriteTitlekName;
+                            tasktitle = _options.OverWriteTitleName;
                         }
                         desc = _options.States[executelist[pos]].Description;
                         if (string.IsNullOrEmpty(desc))
                         {
-                            var index = (executelist[pos] + 1).ToString("00");
-                            desc = $"{tasknamecult}({index})";
+                            var index = (executelist[pos] + 1).ToString("000");
+                            if (string.IsNullOrEmpty(tasktitle))
+                            {
+                                desc = $"{index}";
+                            }
+                            else
+                            {
+                                desc = $"{tasktitle}({index})";
+                            }
                         }
                         else if (samedesc)
                         {
-                            var index = (executelist[pos] + 1).ToString("00");
-                            desc = $"{tasknamecult}({index}) {desc}";
+                            var index = (executelist[pos] + 1).ToString("000");
+                            if (string.IsNullOrEmpty(tasktitle))
+                            {
+                                desc = $"{index}:{desc}";
+                            }
+                            else
+                            {
+                                desc = $"{tasktitle}({index}):{desc}";
+                            }
                         }
                         top = ConsolePlus.CursorTop;
                         qtd = ConsolePlus.Write($"{symb} {desc}", _options.OptStyleSchema.Description(), false);

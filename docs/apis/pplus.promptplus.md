@@ -1796,7 +1796,7 @@ public static bool SwapBuffer(TargetBuffer value)
 
 ### <a id="methods-table"/>**Table&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
 
-Create Table Control to Write to console.
+Write Table in console.
 
 ```csharp
 public static IControlTable<T> Table<T>(string prompt, Action<IPromptConfig> config)
@@ -1821,7 +1821,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### <a id="methods-table"/>**Table&lt;T&gt;(String, String)**
 
-
+Write Table in console.
 
 ```csharp
 public static IControlTable<T> Table<T>(string prompt, string description)
@@ -1842,11 +1842,11 @@ The description text to write
 
 #### Returns
 
-IControlTable&lt;T&gt;
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
 ### <a id="methods-table"/>**Table&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
 
-
+Write Table in console.
 
 ```csharp
 public static IControlTable<T> Table<T>(string prompt, string description, Action<IPromptConfig> config)
@@ -1870,7 +1870,163 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlTable&lt;T&gt;
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
+
+### <a id="methods-tablemultiselect"/>**TableMultiSelect&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
+
+Create Table MultiSelect Control.
+
+```csharp
+public static IControlTableMultiSelect<T> TableMultiSelect<T>(string prompt, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlTableMultiSelect&lt;T&gt;](./pplus.controls.icontroltablemultiselect-1.md)
+
+### <a id="methods-tablemultiselect"/>**TableMultiSelect&lt;T&gt;(String, String)**
+
+Create Table MultiSelect Control.
+
+```csharp
+public static IControlTableMultiSelect<T> TableMultiSelect<T>(string prompt, string description)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+#### Returns
+
+[IControlTableMultiSelect&lt;T&gt;](./pplus.controls.icontroltablemultiselect-1.md)
+
+### <a id="methods-tablemultiselect"/>**TableMultiSelect&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+
+Create Table MultiSelect Control to Write to console.
+
+```csharp
+public static IControlTableMultiSelect<T> TableMultiSelect<T>(string prompt, string description, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlTableMultiSelect&lt;T&gt;](./pplus.controls.icontroltablemultiselect-1.md)
+
+### <a id="methods-tableselect"/>**TableSelect&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
+
+Create Table Select Control.
+
+```csharp
+public static IControlTableSelect<T> TableSelect<T>(string prompt, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlTableSelect&lt;T&gt;](./pplus.controls.icontroltableselect-1.md)
+
+### <a id="methods-tableselect"/>**TableSelect&lt;T&gt;(String, String)**
+
+Create Table Select Control.
+
+```csharp
+public static IControlTableSelect<T> TableSelect<T>(string prompt, string description)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+#### Returns
+
+[IControlTableSelect&lt;T&gt;](./pplus.controls.icontroltableselect-1.md)
+
+### <a id="methods-tableselect"/>**TableSelect&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+
+Create Table Select Control.
+
+```csharp
+public static IControlTableSelect<T> TableSelect<T>(string prompt, string description, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlTableSelect&lt;T&gt;](./pplus.controls.icontroltableselect-1.md)
 
 ### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, String)**
 

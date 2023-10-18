@@ -38,10 +38,8 @@ namespace PPlus.Controls
                 throw new PromptPlusException("HistoryMinimumPrefixLength mustbe zero when FilterType is Disabled");
             }
 
-            if (_options.CurrentCulture == null)
-            {
-                _options.CurrentCulture = _options.Config.AppCulture;
-            }
+            _options.CurrentCulture ??= _options.Config.AppCulture;
+
             if (_options.HistoryEnabled)
             {
                 LoadHistory();
@@ -327,9 +325,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMaskEdit DescriptionWithInputType(FormatWeek week = FormatWeek.None)
+        public IControlMaskEdit ShowTipInputType(FormatWeek week = FormatWeek.None)
         {
-            _options.DescriptionWithInputType = true;
+            _options.ShowTipInputType = true;
             _options.ShowDayWeek = week;
             return this;
         }
@@ -370,13 +368,13 @@ namespace PPlus.Controls
                     SaveDefaultHistory(answer);
                 }
             }
+            if (_options.OptMinimalRender)
+            {
+                return;
+            }
             if (aborted)
             {
                 answer = Messages.CanceledKey;
-            }
-            if (_options.OptHideAnswer)
-            {
-                return;
             }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();
@@ -392,20 +390,29 @@ namespace PPlus.Controls
             }
             else
             {
-                if (_inputBuffer.NegativeNumberInput)
+                if (_options.Type == ControlMaskedType.Number || _options.Type == ControlMaskedType.Currency)
                 {
-                    screenBuffer.WriteNegativeAnswer(_options, _inputBuffer.ToBackwardString());
-                    screenBuffer.SaveCursor();
-                    screenBuffer.WriteNegativeAnswer(_options, _inputBuffer.ToForwardString());
+                    if (_inputBuffer.NegativeNumberInput)
+                    {
+                        screenBuffer.WriteNegativeAnswer(_options, _inputBuffer.ToBackwardString());
+                        screenBuffer.SaveCursor();
+                        screenBuffer.WriteNegativeAnswer(_options, _inputBuffer.ToForwardString());
+                    }
+                    else
+                    {
+                        screenBuffer.WritePositiveAnswer(_options, _inputBuffer.ToBackwardString());
+                        screenBuffer.SaveCursor();
+                        screenBuffer.WritePositiveAnswer(_options, _inputBuffer.ToForwardString());
+                    }
                 }
                 else
                 {
-                    screenBuffer.WritePositiveAnswer(_options, _inputBuffer.ToBackwardString());
+                    screenBuffer.WriteAnswer(_options, _inputBuffer.ToBackwardString());
                     screenBuffer.SaveCursor();
-                    screenBuffer.WritePositiveAnswer(_options, _inputBuffer.ToForwardString());
+                    screenBuffer.WriteAnswer(_options, _inputBuffer.ToForwardString());
                 }
             }
-            screenBuffer.WriteLineDescriptionMaskEdit(_options, _inputBuffer.ToMasked(), _inputBuffer.Tooltip);
+            screenBuffer.WriteLineDescriptionMaskEdit(_options, _inputBuffer.ToMasked());
             if (_options.ShowingHistory)
             {
                 var subset = _localpaginator.ToSubset();
@@ -423,9 +430,10 @@ namespace PPlus.Controls
                 }
                 if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
                 }
             }
+            screenBuffer.WriteLineTipCharMaskEdit(_options, _inputBuffer.ToMasked(), _inputBuffer.Tooltip);
             screenBuffer.WriteLineValidate(ValidateError, _options);
             screenBuffer.WriteLineTooltipsMaskEdit(_options, _isInAutoCompleteMode);
         }
@@ -638,7 +646,10 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));

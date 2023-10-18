@@ -115,6 +115,23 @@ Allow duplicate items
 
 [IControlList](./pplus.controls.icontrollist.md)
 
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;String, String&gt;)**
+
+Dynamically change the description using a user role
+
+```csharp
+IControlList ChangeDescription(Func<String, String> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;String, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply change
+
+#### Returns
+
+[IControlList](./pplus.controls.icontrollist.md)
+
 ### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.

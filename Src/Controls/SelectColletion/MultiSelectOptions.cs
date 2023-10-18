@@ -46,7 +46,7 @@ namespace PPlus.Controls
 
         public int Maximum { get; set; } = int.MaxValue;
 
-        public bool ShowGroupOnDescription { get; set; }
+        public bool ShowGroupTip { get; set; }
 
         public Func<T, string> TextSelector { get; set; }
 

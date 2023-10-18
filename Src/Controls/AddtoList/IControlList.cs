@@ -130,5 +130,12 @@ namespace PPlus.Controls
         /// <returns><see cref="IControlList"/></returns>
         IControlList HotKeyRemoveItem(HotKey value);
 
+        /// <summary>
+        /// Dynamically change the description using a user role
+        /// </summary>
+        /// <param name="value">function to apply change</param>
+        /// <returns><see cref="IControlList"/></returns>
+        IControlList ChangeDescription(Func<string, string> value);
+
     }
 }

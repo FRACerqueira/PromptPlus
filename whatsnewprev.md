@@ -1,10 +1,45 @@
-# <img align="left" width="100" height="100" src="./docs/images/icon.png">PromptPlus What's new
+﻿# <img align="left" width="100" height="100" src="./docs/images/icon.png">PromptPlus What's new
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
+
+### V4.1.0
+[**Main**](https://github.com/FRACerqueira/PromptPlus/#table-of-contents) | [**Top**](#promptplus-whats-new)
+
+- New Control : Table<T> ([see in action - Snapshot](https://github.com/FRACerqueira/PromptPlus#table)) :  Display/Select data in a grid/table
+    - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+    - Main features :
+        - More than 100 layout combinations
+        - Navigation by row and columns
+        - Scroll the table when it is larger than the screen
+        - Split text when it is larger than the column size
+        - Automatic header and column completion
+        - Color customization of each element
+        - Search for data filtered by columns
+        - Formatting by column or by data type definition
+
+- Improvement commands with default values ​​(all controls)
+- Bug fixed: grouped item ordering. The sort option will be ignored
+    - Affeted Controls : Select/MultiSelect
+- Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
+    - Affeted Controls : AddtoList/Input
+- Improvement : Direct writes to standard error output stream
+    - New Commands : OutputError()
+    - Samples with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
+- New feature: Escaping format characters color 
+    - Global property : IgnoreColorTokens
+    - New Commands : EscapeColorTokens()/AcceptColorTokens()
+    - Samples with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
+- New feature: Group items in the select control
+    - Samples with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
+- New feature: Add separator line in the select control
+    - Samples with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
+
+**Special thanks to [ividyon](https://github.com/ividyon) for suggesting improvements and actively participating in this release**
+
 
 ## What's new in V4.0.5
 [**Main**](https://github.com/FRACerqueira/PromptPlus/#table-of-contents) | [**Top**](#promptplus-whats-new)

@@ -5,7 +5,6 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using System.Globalization;
 using PPlus;
 using PPlus.Controls;
 
@@ -21,7 +20,7 @@ namespace ConsoleFeaturesSamples
             //global
             PromptPlus.Config.EnabledAbortKey = false;
             PromptPlus.Config.PageSize = 5;
-            PromptPlus.StyleSchema.ApplyStyle(StyleControls.Prompt, new Style(Color.Red));
+            PromptPlus.StyleSchema.ApplyStyle(StyleControls.Prompt, new Style(Color.Aqua));
             //by instance
             PromptPlus.Input("").Config(cfg =>
             {
@@ -106,7 +105,7 @@ namespace ConsoleFeaturesSamples
                 cfg.PadRight = 2;
             });
 
-            //PromptPlus.BackgroundColor = ConsoleColor.Blue;
+            PromptPlus.BackgroundColor = ConsoleColor.Blue;
             PromptPlus.Clear();
 
             PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
@@ -133,10 +132,7 @@ namespace ConsoleFeaturesSamples
                 .Spinner(SpinnersType.Balloon)
                 .Run();
 
-            PromptPlus.BackgroundColor = ConsoleColor.Black;
-
             PromptPlus.Clear();
-
 
             PromptPlus.DoubleDash($"[yellow]Sample Colors capacities [/]", DashOptions.HeavyBorder, 1);
             PromptPlus.Write("|");

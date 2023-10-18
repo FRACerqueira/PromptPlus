@@ -51,7 +51,6 @@ namespace MaskEditCurrencyTypeSamples
                 .Culture(new CultureInfo("pt-br"))
                 .Run();
 
-
             PromptPlus.DoubleDash("For other features below see - input samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");
             PromptPlus.WriteLine(". [yellow]ValidateOnDemand[/] - InputWithValidatorSamples");

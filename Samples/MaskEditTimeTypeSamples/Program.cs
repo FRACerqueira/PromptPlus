@@ -46,7 +46,7 @@ namespace MaskEditTimeTypeSamples
             PromptPlus.MaskEdit("input", "MaskEdit [BLUE]TimeOnly[/] [YELLOW]input[/]")
                 .Mask(MaskedType.TimeOnly)
                 .AcceptEmptyValue()
-                .DescriptionWithInputType()
+                .ShowTipInputType()
                 .TypeTipStyle(Style.Default.Foreground(Color.IndianRed))
                 .Run();
 
@@ -54,20 +54,18 @@ namespace MaskEditTimeTypeSamples
 
             PromptPlus.MaskEdit("input", "MaskEdit TimeOnly input")
                 .Mask(MaskedType.TimeOnly)
-                .DescriptionWithInputType()
+                .ShowTipInputType()
                 .Culture("pt-br")
                 .AcceptEmptyValue()
                 .Run();
-
 
             PromptPlus.DoubleDash($"Control:MaskEdit TimeOnly ({cult.Name}) - overwrite prompt mask char.");
 
             PromptPlus.MaskEdit("input", "MaskEdit TimeOnly input")
                 .Mask(MaskedType.TimeOnly, '_')
                 .AcceptEmptyValue()
-                .DescriptionWithInputType()
+                .ShowTipInputType()
                 .Run();
-
 
             PromptPlus.DoubleDash($"Control:MaskEdit TimeOnly ({cult.Name}) - with format time.");
 
@@ -75,7 +73,7 @@ namespace MaskEditTimeTypeSamples
                 .Mask(MaskedType.TimeOnly)
                 .AcceptEmptyValue()
                 .FormatTime(FormatTime.OnlyHM)
-                .DescriptionWithInputType()
+                .ShowTipInputType()
                 .Run();
 
             PromptPlus.DoubleDash($"Control:MaskEdit TimeOnly ({cult.Name}) - with FillZeros.");
@@ -83,9 +81,8 @@ namespace MaskEditTimeTypeSamples
             PromptPlus.MaskEdit("input", "MaskEdit TimeOnly input")
                 .Mask(MaskedType.TimeOnly)
                 .FillZeros()
-                .DescriptionWithInputType()
+                .ShowTipInputType()
                 .Run();
-
 
             PromptPlus.DoubleDash($"Control:MaskEdit TimeOnly ({cult.Name}) - with FillZeros and AcceptEmptyValue.");
 

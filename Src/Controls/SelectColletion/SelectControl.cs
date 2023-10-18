@@ -69,9 +69,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlSelect<T> AppendGroupOnDescription(bool value = true)
+        public IControlSelect<T> ShowTipGroup(bool value = true)
         {
-            _options.ShowGroupOnDescription = value;
+            _options.ShowGroupTip = value;
             return this;
         }
 
@@ -413,29 +413,24 @@ namespace PPlus.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
-            var first = _options.OptHideAnswer && _options.OptPrompt.Length == 0; 
-
             screenBuffer.WritePrompt(_options, "");
+            var first = !string.IsNullOrEmpty(_options.OptPrompt);
             if (ShowingFilter)
             {
-                if (_options.OptHideAnswer)
-                {
-                    var spc = _options.OptPrompt.Length == 0 ? "" : " ";
-                    screenBuffer.WriteSuggestion(_options, $"{spc}{_filterBuffer}");
-                    _options.OptShowCursor = true;
-                }
-                else
-                {
-                    screenBuffer.WriteFilterSelect(_options, FinishResult, _filterBuffer);
-                }
-                screenBuffer.SaveCursor();
-                screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
                 first = false;
+                screenBuffer.WriteFilterSelect(_options, FinishResult, _filterBuffer);
+                screenBuffer.SaveCursor();
+                if (!_options.OptMinimalRender)
+                {
+                    screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                }
+                _options.OptShowCursor = true;
             }
             else
             {
-                if (!_options.OptHideAnswer)
+                if (!_options.OptMinimalRender)
                 {
+                    first = false;
                     screenBuffer.WriteAnswer(_options, FinishResult);
                     screenBuffer.SaveCursor();
                 }
@@ -444,10 +439,18 @@ namespace PPlus.Controls
                     _options.OptShowCursor = false;
                 }
             }
-            screenBuffer.WriteLineDescriptionSelect(_options,_localpaginator.SelectedItem);
+            var hasdesc  = screenBuffer.WriteLineDescriptionSelect(_options,_localpaginator.SelectedItem);
+            if (first && hasdesc)
+            {
+                first = false;
+            }
             var subset = _localpaginator.ToSubset();
             foreach (var item in subset)
             {
+                if (first)
+                {
+                    screenBuffer.SaveCursor();
+                }
                 string value;
                 var indentgroup = string.Empty;
                 if (item.IsGroupHeader)
@@ -488,7 +491,7 @@ namespace PPlus.Controls
                         }
                     }
                 }
-                if (first && _options.OptHideAnswer)
+                if (_options.OptMinimalRender)
                 {
                     screenBuffer.SaveCursor();
                 }
@@ -511,9 +514,14 @@ namespace PPlus.Controls
             }
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
-                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
             }
             screenBuffer.WriteLineValidate(ValidateError, _options);
+            if (_options.ShowGroupTip && !string.IsNullOrEmpty(_localpaginator.SelectedItem?.Group ?? string.Empty))
+            {
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer(_localpaginator.SelectedItem.Group, _options.OptStyleSchema.Tooltips());
+            }
             screenBuffer.WriteLineTooltipsSelect(_options);
         }
 
@@ -528,7 +536,7 @@ namespace PPlus.Controls
             {
                 SaveHistory(result);
             }
-            if (_options.OptHideAnswer)
+            if (_options.OptMinimalRender)
             {
                 return;
             }
@@ -602,7 +610,10 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));

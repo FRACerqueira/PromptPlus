@@ -189,23 +189,6 @@ Valid only for type MaskedType.Number or MaskedType.Currency, otherwise this set
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-descriptionwithinputtype"/>**DescriptionWithInputType(FormatWeek)**
-
-Append to description the tip of type input.
-
-```csharp
-IControlMaskEdit DescriptionWithInputType(FormatWeek week)
-```
-
-#### Parameters
-
-`week` [FormatWeek](./pplus.controls.formatweek.md)<br>
-show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
 ### <a id="methods-fillzeros"/>**FillZeros(Boolean)**
 
 Fill zeros mask.Default false.
@@ -474,6 +457,23 @@ IControlMaskEdit PositiveStyle(Style value)
 
 `value` [Style](./pplus.style.md)<br>
 Style
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-showtipinputtype"/>**ShowTipInputType(FormatWeek)**
+
+Show the tip of type input.
+
+```csharp
+IControlMaskEdit ShowTipInputType(FormatWeek week)
+```
+
+#### Parameters
+
+`week` [FormatWeek](./pplus.controls.formatweek.md)<br>
+show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 #### Returns
 

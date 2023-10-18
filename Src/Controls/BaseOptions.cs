@@ -32,6 +32,7 @@ namespace PPlus.Controls
             OptShowTooltip = config.ShowTooltip;
             OptHideAfterFinish = config.HideAfterFinish;
             OptHideOnAbort = config.HideOnAbort;
+            OptMinimalRender = config.MinimalRender;
             OptEnabledAbortKey = config.EnabledAbortKey;
             OptDisableChangeTooltip = config.DisableToggleTooltip;
             OptShowOnlyExistingPagination = config.ShowOnlyExistingPagination;
@@ -52,7 +53,8 @@ namespace PPlus.Controls
         internal bool OptHideOnAbort { get; private set; }
         internal bool OptEnabledAbortKey { get; private set; }
         internal object? OptContext { get; private set; }
-        internal bool OptHideAnswer { get; private set; }
+        internal bool OptMinimalRender { get; private set; }
+        internal Func<int, int, int, string>? OptPaginationTemplate { get; private set; }
 
 
         #region IPromptConfig
@@ -100,9 +102,16 @@ namespace PPlus.Controls
         }
 
         /// <inheritdoc/>
-        public IPromptConfig HideAnswer(bool value = true)
+        public IPromptConfig MinimalRender(bool value = true)
         { 
-            OptHideAnswer = value;
+            OptMinimalRender = value;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IPromptConfig PaginationTemplate(Func<int, int, int, string>? value)
+        {
+            OptPaginationTemplate = value;
             return this;
         }
 

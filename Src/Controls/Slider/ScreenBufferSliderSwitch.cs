@@ -11,7 +11,11 @@ namespace PPlus.Controls
     {
         public static bool WriteLineDescriptionSliderSwitch(this ScreenBuffer screenBuffer, SliderSwitchOptions options, bool input)
         {
-            var result = options.OptDescription;
+            var result = string.Empty;
+            if (!options.OptMinimalRender)
+            {
+                result = options.OptDescription;
+            }
             if (options.ChangeDescription != null)
             {
                 result = options.ChangeDescription.Invoke(input);

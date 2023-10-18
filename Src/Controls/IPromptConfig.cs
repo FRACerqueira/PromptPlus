@@ -58,10 +58,21 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Overwrite default Hide Answer
+        /// <br>When true, the prompt and control description are not rendered, showing only the minimum necessary without using resources (except the default tooltips when used)</br>
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig HideAnswer(bool value = true);
+        IPromptConfig MinimalRender(bool value = true);
+
+        /// <summary>
+        /// Overwrite PaginationTemplate
+        /// </summary>
+        /// <param name="value">
+        /// The function
+        /// <br>string to show = Func(Total items,Current Page,Total pages)</br>
+        /// </param>
+        /// <returns><see cref="IPromptConfig"/></returns>
+        IPromptConfig PaginationTemplate(Func<int, int, int, string>? value);
 
         /// <summary>
         /// Add generic action for the control when change <see cref="StageControl"/> of control

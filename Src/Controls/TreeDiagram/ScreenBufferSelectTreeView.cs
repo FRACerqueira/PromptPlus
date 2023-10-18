@@ -115,9 +115,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineSelectorTreeViewSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data, bool isparent)
+        public static void WriteLineSelectorTreeViewSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data, bool isparent,bool newline)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
             screenBuffer.AddBuffer(' ', Style.Default, true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);
@@ -139,9 +142,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineDisabledSelectorTreeViewSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data)
+        public static void WriteLineDisabledSelectorTreeViewSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data,bool newline)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true,false);
@@ -149,9 +155,12 @@ namespace PPlus.Controls
             screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.OptStyleSchema.Disabled(), true, false);
         }
 
-        public static void WriteLineNotSelectorTreeViewSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data, bool isparent)
+        public static void WriteLineNotSelectorTreeViewSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data, bool isparent, bool newline)
         {
-            screenBuffer.NewLine();
+            if (newline) 
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);
@@ -173,9 +182,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineDisabledNotSelectorTreeViewSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data)
+        public static void WriteLineDisabledNotSelectorTreeViewSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data, bool newline)
         {
-            screenBuffer.NewLine();
+            if (newline) 
+            {
+                screenBuffer.NewLine();
+            }
             screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);

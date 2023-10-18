@@ -22,6 +22,7 @@ PromptPlus.DoubleDash($"Control:Calendar ({cult.Name}) - minimal usage");
 var cld =  PromptPlus
     .Calendar("Date", "Select date")
     .Run();
+
 if (!cld.IsAborted)
 {
     PromptPlus.WriteLine($"You input is {cld.Value}");
@@ -38,7 +39,6 @@ if (!cld.IsAborted)
 {
     PromptPlus.WriteLine($"You input is {cld.Value}");
 }
-
 
 PromptPlus.DoubleDash($"Control:Calendar DateTime - with Disabled Weekends");
 
@@ -74,7 +74,6 @@ PromptPlus
         new ItemCalendar(DateTime.Now.AddDays(1), "Note8"))
     .Run();
 
-
 PromptPlus.DoubleDash($"Control:Calendar DateTime - with Highlight");
 
 PromptPlus
@@ -99,14 +98,12 @@ PromptPlus
     .Range(DateTime.Now.AddMonths(-1),DateTime.Now)
     .Run();
 
-
 PromptPlus.DoubleDash($"Control:Calendar DateTime - with ChangeDescription");
 
 PromptPlus
     .Calendar("Date", "Select date")
     .ChangeDescription((date) => date.Date == DateTime.Now.Date?"Today":string.Empty)
     .Run();
-
 
 PromptPlus.DoubleDash($"Control:Calendar DateTime - with Styles");
 

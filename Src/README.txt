@@ -29,13 +29,18 @@ PromptPlus was developed in C# with target frameworks:
 - .NET 6
 - .NET 7
 
-*** What's new in V4.1.0 ***
+*** What's new in V4.1.1 ***
 ----------------------------
 
-- New Control : Table<T> , Display data in a grid-table   
-    - Samples in project Table Samples(https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSamples)
+- Split feature Control Table:
+    - PromptPlus.TableSelect<T> to Select item in table : Select row, column and data in a grid/table 
+        - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
+    - PromptPlus.Table<T> to write table in console : Show data in a grid/table 
+        - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
+- New Control : TableMultSelect<T> :  Select multi-data in a grid/table 
+    - Samples in project [Table MultiSelect Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableMultiSelectSamples)
     - Main features :
-        - More than 100 layout combinations
+        - More than 80 layout combinations
         - Navigation by row and columns
         - Scroll the table when it is larger than the screen
         - Split text when it is larger than the column size
@@ -43,24 +48,45 @@ PromptPlus was developed in C# with target frameworks:
         - Color customization of each element
         - Search for data filtered by columns
         - Formatting by column or by data type definition
-- Improvement commands with default values ​​(all controls)
-- Bug fixed: grouped item ordering. The sort option will be ignored
-    - Affeted Controls : Select/MultiSelect
-- Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
-    - Affeted Controls : AddtoList/Input
-- Improvement : Direct writes to standard error output stream
-    - New Commands : OutputError()
-    - Samples with commemts in project ConsoleFeatures Samples(https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
-- New feature: Escaping format characters color 
-    - Global property : IgnoreColorTokens
-    - New Commands : EscapeColorTokens()/AcceptColorTokens()
-    - Samples with commemts in project ConsoleFeatures Samples(https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
-- New feature: Group items in the select control
-    - Sample with commemts in project SelectBasic Samples(https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
-- New feature: Add separator line in the select control
-    - Samples with commemts in project SelectBasic Samples(https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
-  
-**Special thanks to ividyon(https://github.com/ividyon) for suggesting improvements and actively participating in this release**
+- New feature: 
+    - MinimalRender the prompt and control description are not rendered, showing only the minimum necessary without using resources.
+        - Global property : MinimalRender
+        - Instance control(By config command): MinimalRender(bool value = true)
+- New feature: 
+    - Pagination Template to customize pagination information
+        - Global property : PaginationTemplate
+        - Instance control(By config command) : PaginationTemplate(Func<int, int, int, string>? value)
+- New feature: 
+    - PromptPlus.Join() 
+    - Fluent-Interface to write text (less code typed) 
+- Changed feature:
+    - Moved tooltips and validation message to the end of render to all control
+- Improvement : 
+    - Optimized the Calendar control to have symbols when selecting elements
+- Improvement :
+    - Optimize Render of ProgressBar (less lines)
+- Improvement : 
+    - Optimize Render of SliderNumber (less lines)
+- Improvement : 
+    - Optimize resource usage in rendering (less cultural dependency)
+- Improvement : 
+    - Reinforce the validation of invalid or optional parameters in all controls
+- Renamed command: 
+    - 'DescriptionWithInputType' to 'ShowTipInputType'.
+    - Now extra-line to tip InputType
+- Renamed command: 
+    - 'AppendGroupOnDescription' to 'ShowTipGroup'.
+    - Now extra-line to tip group
+- Fixed bug : 
+    - The Slide Switch Control does not show on/off values ​​when they are not customized
+- Fixed bug : 
+    - Alternate screen doesn't update background style when changing color
+- Fixed bug : 
+    - Exception when try delete[F3] in empty colletion in AddTolist/AddtoMaskEditList control
+- Fixed bug : 
+    - Edit[F2] Immutable item in AddTolist/AddtoMaskEditList control
+- Fixed bug : 
+    - CTRL-V (paste data) does not show input in some controls
 
 **PromptPlus Controls - Sample Usage**
 --------------------------------------
@@ -73,7 +99,7 @@ PromptPlus
 //MaskEdit DateTime
 var mask = PromptPlus.MaskEdit("input", "MaskEdit DateTime input")
     .Mask(MaskedType.DateTime)
-    .DescriptionWithInputType(FormatWeek.Short)
+    .ShowTipInputType(FormatWeek.Short)
     .Culture("en-us")
     .AcceptEmptyValue()
     .Run();

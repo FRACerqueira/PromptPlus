@@ -15,14 +15,14 @@ Namespace: PPlus.Controls
 Represents the interface with all Methods of the Table control
 
 ```csharp
-public interface IControlTable<T> : IPromptControls<ResultTable<T>>
+public interface IControlTable<T> : IPromptControls<Boolean>
 ```
 
 #### Type Parameters
 
 `T`<br>
 
-Implements IPromptControls&lt;ResultTable&lt;T&gt;&gt;
+Implements [IPromptControls&lt;Boolean&gt;](./pplus.controls.ipromptcontrols-1.md)
 
 ## Methods
 
@@ -90,12 +90,12 @@ The function
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-additem"/>**AddItem(T, Boolean)**
+### <a id="methods-additem"/>**AddItem(T)**
 
 Add item to list
 
 ```csharp
-IControlTable<T> AddItem(T value, bool disable)
+IControlTable<T> AddItem(T value)
 ```
 
 #### Parameters
@@ -103,48 +103,22 @@ IControlTable<T> AddItem(T value, bool disable)
 `value` T<br>
 Item to add
 
-`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true item disabled, otherwise no
-
 #### Returns
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-additems"/>**AddItems(IEnumerable&lt;T&gt;, Boolean)**
+### <a id="methods-additems"/>**AddItems(IEnumerable&lt;T&gt;)**
 
 Add items to list
 
 ```csharp
-IControlTable<T> AddItems(IEnumerable<T> values, bool disable)
+IControlTable<T> AddItems(IEnumerable<T> values)
 ```
 
 #### Parameters
 
 `values` IEnumerable&lt;T&gt;<br>
 items colletion to add
-
-`disable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-true item disabled, otherwise no
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, params T[])**
-
-Add Items to list with scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
-
-```csharp
-IControlTable<T> AddItemsTo(AdderScope scope, params T[] values)
-```
-
-#### Parameters
-
-`scope` [AdderScope](./pplus.controls.adderscope.md)<br>
-scope Disable/Remove
-
-`values` T[]<br>
-items colletion
 
 #### Returns
 
@@ -187,59 +161,6 @@ List (cardinality) of columns that will be affected.
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-autoselect"/>**AutoSelect(Boolean)**
-
-Automatically select and finalize item when UserInteraction is active and only one item is in the list . Default false.
-
-```csharp
-IControlTable<T> AutoSelect(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Automatically select
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;T, Int32, Int32, String&gt;)**
-
-Dynamically change the description using a user role when UserInteraction is active
-
-```csharp
-IControlTable<T> ChangeDescription(Func<T, Int32, Int32, String> value)
-```
-
-#### Parameters
-
-`value` Func&lt;T, Int32, Int32, String&gt;<br>
-function to apply change
- <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-columnsnavigation"/>**ColumnsNavigation(Boolean)**
-
-Enable Columns Navigation when UserInteraction is active. Default false.
- <br>When the column size is greater than the screen size, the content will be truncated
-
-```csharp
-IControlTable<T> ColumnsNavigation(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Enable Columns Navigation
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
 ### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
@@ -257,60 +178,6 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-default"/>**Default(T)**
-
-Default value selected.
-
-```csharp
-IControlTable<T> Default(T value)
-```
-
-#### Parameters
-
-`value` T<br>
-Value default
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-equalitems"/>**EqualItems(Func&lt;T, T, Boolean&gt;)**
-
-Custom item comparator
-
-```csharp
-IControlTable<T> EqualItems(Func<T, T, Boolean> comparer)
-```
-
-#### Parameters
-
-`comparer` Func&lt;T, T, Boolean&gt;<br>
-function comparator
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-filterbycolumns"/>**FilterByColumns(FilterMode, params UInt16[])**
-
-Set Columns used by Filter strategy when UserInteraction is active.
-
-```csharp
-IControlTable<T> FilterByColumns(FilterMode filter, params UInt16[] indexColumn)
-```
-
-#### Parameters
-
-`filter` [FilterMode](./pplus.controls.filtermode.md)<br>
-Filter strategy for filter rows.Default value is FilterMode.Disabled
-
-`indexColumn` [UInt16[]](https://docs.microsoft.com/en-us/dotnet/api/system.uint16)<br>
-list (cardinality) of columns
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
 ### <a id="methods-hideheaders"/>**HideHeaders(Boolean)**
 
 Hide columns headers. Default false.
@@ -323,23 +190,6 @@ IControlTable<T> HideHeaders(bool value)
 
 `value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 Hide headers
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-hideselectorrow"/>**HideSelectorRow(Boolean)**
-
-Hide selector row. Default false.
-
-```csharp
-IControlTable<T> HideSelectorRow(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Hide selector row
 
 #### Returns
 
@@ -421,61 +271,6 @@ expresion to sort the rows
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
-
-Overwrite defaults start selected value with last result saved on history when UserInteraction is active.
-
-```csharp
-IControlTable<T> OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
-```
-
-#### Parameters
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-name of file to save history
-
-`timeout` [Nullable&lt;TimeSpan&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-The timeout for valid items saved. Default value is 365 days
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-pagesize"/>**PageSize(Int32)**
-
-Set max.item view per page when UserInteraction is active.
- <br>Default value : 10.The value must be greater than or equal to 1
-
-```csharp
-IControlTable<T> PageSize(int value)
-```
-
-#### Parameters
-
-`value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
-Number of Max.rows
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-preservetable"/>**PreserveTable(Boolean)**
-
-Preserve table at end UserInteraction is active. Default is false.
-
-```csharp
-IControlTable<T> PreserveTable(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Preserve table at end
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
 ### <a id="methods-separatorrows"/>**SeparatorRows(Boolean)**
 
 Set separator between rows. Default false.
@@ -531,28 +326,6 @@ alignment title. Default value is Alignment.Center
 
 `titleMode` [TableTitleMode](./pplus.controls.tabletitlemode.md)<br>
 InLine(Default): Write the title above the grid. InRow : Write the title inside the grid as a row
-
-#### Returns
-
-[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
-
-### <a id="methods-userinteraction"/>**UserInteraction(Func&lt;T, Int32, Int32, String&gt;, Func&lt;T, Int32, Int32, String&gt;)**
-
-Wait Select item with [enter].Default not wait (only display all items)
-
-```csharp
-IControlTable<T> UserInteraction(Func<T, Int32, Int32, String> selectedTemplate, Func<T, Int32, Int32, String> finishTemplate)
-```
-
-#### Parameters
-
-`selectedTemplate` Func&lt;T, Int32, Int32, String&gt;<br>
-message template function when selected item. 
- <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)<br>If HideAnswer = true, this function will be ignored
-
-`finishTemplate` Func&lt;T, Int32, Int32, String&gt;<br>
-message template function when finish control with seleted item
- <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)<br>If HideAnswer = true, this function will be ignored
 
 #### Returns
 

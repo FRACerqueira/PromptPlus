@@ -27,6 +27,8 @@ namespace PPlus.Controls
             ContentStyle = styleSchema.Prompt();
             DisabledContentStyle = styleSchema.Disabled();
             SelectedContentStyle = styleSchema.Selected();
+            SelectAllPress = config.SelectAllPress;
+            InvertSelectedPress = config.InvertSelectedPress;
         }
 
         public bool AutoSelect { get; set; }
@@ -50,6 +52,8 @@ namespace PPlus.Controls
         public Func<T, T, bool> EqualItems { get; set; }
 
         public Optional<T> DefaultValue { get; set; } = Optional<T>.Create(null);
+
+        public Optional<IList<T>> DefaultValues { get; set; } = Optional<IList<T>>.Create(null);
 
         public int PageSize { get; set; }
 
@@ -99,15 +103,26 @@ namespace PPlus.Controls
 
         public Func<T, int, int, string> FinishTemplate { get; set; }
 
-        public Func<T, int, int, string> ChangeDescription { get; set; }
+        public Func<IEnumerable<T>, string> MultiSelectedTemplate { get; set; }
 
-        public bool RemoveTableAtFinish { get; set; } = true;
+        public Func<IEnumerable<T>, string> MultiFinishTemplate { get; set; }
+
+        public Func<T, int, int, string> ChangeDescription { get; set; }
 
         public bool AutoFill { get; set; }
 
         public ushort? MinColWidth { get; set; }
 
         public ushort? MaxColWidth { get; set; }
+
+        public int Minimum { get; set; }
+
+        public int Maximum { get; set; } = int.MaxValue;
+
+        public HotKey SelectAllPress { get; set; }
+
+        public HotKey InvertSelectedPress { get; set; }
+
 
     }
 }

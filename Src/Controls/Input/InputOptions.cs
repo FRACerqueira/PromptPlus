@@ -26,7 +26,7 @@ namespace PPlus.Controls
         }
 
         public FilterMode FilterType { get; set; } = FilterMode.StartsWith;
-        public string? OverwriteDefaultFrom { get; set; } = null;
+        public string? OverwriteDefaultFrom { get; set; }
         public TimeSpan TimeoutOverwriteDefault { get; set; }
         public bool EnabledViewSecret { get; set; }
         public HotKey SwitchView { get; set; }
@@ -48,6 +48,5 @@ namespace PPlus.Controls
         public Func<SuggestionInput, SuggestionOutput>? SuggestionHandler { get; set; }
         public bool ShowingHistory { get; set; }
         public bool HistoryEnabled => !string.IsNullOrEmpty(HistoryFileName);
-
     }
 }

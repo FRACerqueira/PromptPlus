@@ -25,7 +25,7 @@ if (!in1.IsAborted)
 
 PromptPlus.DoubleDash("Control:Input - secret change mask to '*'");
 
-PromptPlus.Config.PasswordViewPress = new PPlus.Controls.HotKey(UserHotKey.F7);
+PromptPlus.Config.PasswordViewPress = new HotKey(UserHotKey.F7);
 
 var in2 = PromptPlus
     .Input("Input secret sample2")
@@ -36,7 +36,6 @@ if (!in2.IsAborted)
 {
     PromptPlus.WriteLine($"You input is {in2.Value}");
 }
-
 
 PromptPlus.DoubleDash("Control:Input - secret with change view");
 PromptPlus

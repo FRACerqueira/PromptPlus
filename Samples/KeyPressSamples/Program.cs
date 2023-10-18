@@ -30,7 +30,6 @@ PromptPlus
         .EnabledAbortKey(false)
         .HideAfterFinish(true);
     })
-    .Spinner(SpinnersType.DotsScrolling)
     .Run();
 
 PromptPlus.DoubleDash("Control keypress - with sppiner");

@@ -99,6 +99,20 @@ namespace PPlus.Controls
             } 
         }
 
+        private Func<int, int, int, string>? _paginationTemplate = null;
+
+        /// <summary>
+        /// Get/Set Custom PaginationTemplate
+        /// <br>string to show = Func(Total items,Current Page,Total pages)</br>
+        /// </summary>
+        public Func<int,int,int,string>? PaginationTemplate
+        {
+            get { return _paginationTemplate; }
+            set
+            {
+                _paginationTemplate = value;
+            }
+        }
 
         private int _completionMinimumPrefixLength = 3;
 
@@ -189,10 +203,11 @@ namespace PPlus.Controls
         public bool EnabledAbortKey { get; set; } = true;
 
         /// <summary>
-        /// Get/Set hide Answer controls.
+        /// Get/Set Minimal Render.
         /// <br>Default value : false</br>
+        /// <br>When true, the prompt and control description are not rendered, showing only the minimum necessary without using resources (except the default tooltips when used)</br>
         /// </summary>
-        public bool HideAnswer { get; set; } = false;
+        public bool MinimalRender { get; set; } = false;
 
         /// <summary>
         /// Get/Set hide controls after finish for all controls.

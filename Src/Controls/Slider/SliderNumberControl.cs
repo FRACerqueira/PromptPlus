@@ -5,7 +5,6 @@
 
 using PPlus.Controls.Objects;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 
@@ -232,19 +231,26 @@ namespace PPlus.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
-            var first = _options.OptHideAnswer && _options.OptPrompt.Length == 0;
-
+            var hasprompt = false;
             screenBuffer.WritePrompt(_options, "");
             if (_options.MoveKeyPress == LayoutSliderNumber.UpDown)
             {
+                hasprompt = true;
                 screenBuffer.AddBuffer($"[{_options.Minvalue},{_options.Maxvalue}] ", _options.OptStyleSchema.Suggestion(), true, false);
                 screenBuffer.WriteAnswer(_options, _options.ValueToString(_currentValue));
+                screenBuffer.SaveCursor();
             }
-            screenBuffer.SaveCursor();
-            screenBuffer.WriteLineDescriptionSliderNumber(_options, _currentValue);
+            var hasdesc = screenBuffer.WriteLineDescriptionSliderNumber(_options, _currentValue);
+            if (hasdesc)
+            {
+                if (!hasprompt)
+                {
+                    hasprompt = true;
+                }
+            }
             if (_options.MoveKeyPress == LayoutSliderNumber.LeftRight)
             {
-                screenBuffer.WriteLineWidgetsSliderNumber(_options, CurrentValueStep(_currentValue), _currentValue,ConsolePlus.IsUnicodeSupported,!first);
+                screenBuffer.WriteLineWidgetsSliderNumber(_options, CurrentValueStep(_currentValue), _currentValue,ConsolePlus.IsUnicodeSupported, hasprompt);
             }
             screenBuffer.WriteLineTooltipsSliderNumber(_options);
         }
@@ -263,7 +269,7 @@ namespace PPlus.Controls
             {
                 answer = Messages.CanceledKey;
             }
-            if (_options.OptHideAnswer)
+            if (_options.OptMinimalRender)
             {
                 return;
             }

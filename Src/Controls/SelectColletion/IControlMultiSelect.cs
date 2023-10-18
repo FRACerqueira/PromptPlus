@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -42,11 +41,11 @@ namespace PPlus.Controls
         IControlMultiSelect<T> OverflowAnswer(Overflow value);
 
         /// <summary>
-        /// Append group text on description. Default false
+        /// Show tip with text of group. Default false
         /// </summary>
-        /// <param name="value">Append group text on description</param>
+        /// <param name="value">If True, it shows the tip with the group text, otherwise nothing.</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
-        IControlMultiSelect<T> AppendGroupOnDescription(bool value = true);
+        IControlMultiSelect<T> ShowTipGroup(bool value = true);
 
         /// <summary>
         /// Add default value selected to initial list.
@@ -54,6 +53,13 @@ namespace PPlus.Controls
         /// <param name="values">Value default</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> AddDefault(params T[] values);
+
+        /// <summary>
+        /// Add default value selected to initial list.
+        /// </summary>
+        /// <param name="values">Values default</param>
+        /// <returns><see cref="IControlMultiSelect{T}"/></returns>
+        IControlMultiSelect<T> AddDefault(IEnumerable<T> values);
 
 
         /// <summary>

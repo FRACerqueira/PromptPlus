@@ -46,7 +46,7 @@ namespace PPlus.Controls
 
         public Func<T, string> DescriptionSelector { get; set; }
 
-        public bool ShowGroupOnDescription { get; set; }
+        public bool ShowGroupTip { get; set; }
 
         public int PageSize { get; set; }
 

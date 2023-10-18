@@ -17,7 +17,7 @@ namespace WaitTasksSamples
 
             var steps1 = new List<int>
             {
-                1, 2, 3, 4, 5 
+                1, 2, 3, 3, 3
             };
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -39,14 +39,14 @@ namespace WaitTasksSamples
                             });
                 })
                 .ShowElapsedTime()
-                .AddStep(StepMode.Sequential, "id5-10", "Desc 5 and 10",
+                .AddStep(StepMode.Sequential, "id2-4", "Desc 4 and 2",
                     (eventw, cts) =>
                     {
-                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(5));
+                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(2));
                     },
                     (eventw, cts) =>
                     {
-                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(10));
+                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(4));
                     })
                 .Run();
 
@@ -63,7 +63,7 @@ namespace WaitTasksSamples
 
             var steps2 = new List<int>
             {
-                1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11, 12, 13
+                1, 2, 3, 4, 5, 6, 7
             };
 
 
@@ -71,6 +71,7 @@ namespace WaitTasksSamples
             wt1 = PromptPlus.WaitProcess<object>("wait process", "main desc")
                 .Finish($"end wait all process")
                 .TaskTitle("MyProcess")
+                .MaxDegreeProcess(4)
                 .Interaction(steps2, (ctrl, item) =>
                 {
                     ctrl.AddStep(StepMode.Parallel, $"id{item}",null,
@@ -80,14 +81,14 @@ namespace WaitTasksSamples
                             });
                 })
                 .ShowElapsedTime()
-                .AddStep(StepMode.Parallel, "id5-10", "Desc 5 and 10",
+                .AddStep(StepMode.Parallel, "id2-5", "Desc 2 and 5",
                     (eventw, cts) =>
                     {
-                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(5));
+                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(2));
                     },
                     (eventw, cts) =>
                     {
-                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(10));
+                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(4));
                     })
                 .Run();
 

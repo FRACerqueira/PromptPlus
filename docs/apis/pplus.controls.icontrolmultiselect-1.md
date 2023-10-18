@@ -44,6 +44,23 @@ Value default
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
+### <a id="methods-adddefault"/>**AddDefault(IEnumerable&lt;T&gt;)**
+
+Add default value selected to initial list.
+
+```csharp
+IControlMultiSelect<T> AddDefault(IEnumerable<T> values)
+```
+
+#### Parameters
+
+`values` IEnumerable&lt;T&gt;<br>
+Values default
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
 ### <a id="methods-additem"/>**AddItem(T, Boolean, Boolean)**
 
 Add item to list
@@ -179,23 +196,6 @@ scope Disable/Remove
 
 `values` IEnumerable&lt;T&gt;<br>
 items colletion
-
-#### Returns
-
-[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription(Boolean)**
-
-Append group text on description. Default false
-
-```csharp
-IControlMultiSelect<T> AppendGroupOnDescription(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Append group text on description
 
 #### Returns
 
@@ -436,6 +436,23 @@ Minimum number of items
 
 `maxvalue` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Maximum number of items
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-showtipgroup"/>**ShowTipGroup(Boolean)**
+
+Show tip with text of group. Default false
+
+```csharp
+IControlMultiSelect<T> ShowTipGroup(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+If True, it shows the tip with the group text, otherwise nothing.
 
 #### Returns
 

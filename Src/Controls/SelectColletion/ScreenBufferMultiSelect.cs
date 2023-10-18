@@ -49,35 +49,33 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineDescriptionMultiSelect<T>(this ScreenBuffer screenBuffer, MultiSelectOptions<T> options, ItemMultSelect<T>? input)
+        public static bool WriteLineDescriptionMultiSelect<T>(this ScreenBuffer screenBuffer, MultiSelectOptions<T> options, ItemMultSelect<T>? input)
         {
-            var result = options.OptDescription;
+            string result = string.Empty;
+            if (!options.OptMinimalRender)
+            {
+                result = options.OptDescription;
+            }
             if (input != null)
             {
                 if (options.DescriptionSelector != null)
                 {
                     result = options.DescriptionSelector.Invoke(input.Value);
                 }
-                if (options.ShowGroupOnDescription && !string.IsNullOrEmpty(input.Group ?? string.Empty))
-                {
-                    if (!string.IsNullOrEmpty(result))
-                    {
-                        result += ", ";
-                    }
-                    result = $"{Messages.Group}: {input.Group}{result ?? string.Empty}";
-                }
             }
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                return true;
             }
+            return false;
         }
 
         public static void WriteLinePaginationMultiSelect(this ScreenBuffer screenBuffer, BaseOptions options,  string message, int tagged)
         {
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer($"{Messages.Tagged}: {tagged}, ", options.OptStyleSchema.TaggedInfo(), true); 
+            screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selected)}: {tagged}, ", options.OptStyleSchema.TaggedInfo(), true);
             screenBuffer.AddBuffer(message, options.OptStyleSchema.Pagination(), true, false);
         }
 

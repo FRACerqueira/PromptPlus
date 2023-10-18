@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
@@ -95,11 +94,11 @@ namespace PPlus.Controls
         IControlSelect<T> ChangeDescription(Func<T, string> value);
 
         /// <summary>
-        /// Append group text on description. Default false
+        /// Show tip with text of group. Default false
         /// </summary>
-        /// <param name="value">Append group text on description</param>
+        /// <param name="value">If True, it shows the tip with the group text, otherwise nothing.</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
-        IControlSelect<T> AppendGroupOnDescription(bool value = true);
+        IControlSelect<T> ShowTipGroup(bool value = true);
 
         /// <summary>
         /// Add item to list

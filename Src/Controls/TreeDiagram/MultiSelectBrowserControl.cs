@@ -395,24 +395,35 @@ namespace PPlus.Controls
                 _firstLoad = false;
                 ConsolePlus.CursorVisible = false;
                 var top = ConsolePlus.CursorTop;
-                var qtd = ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), true);
-                if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
+                var qtd = 0;
+                if (!string.IsNullOrEmpty(_options.OptPrompt) && !_options.OptMinimalRender)
                 {
-                    var dif = top + qtd - ConsolePlus.BufferHeight;
-                    scrool += dif;
+                    qtd = ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), true);
+                    if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
+                    {
+                        var dif = top + qtd - ConsolePlus.BufferHeight;
+                        scrool += dif;
+                    }
                 }
-
-                top = ConsolePlus.CursorTop;
-                qtd = ConsolePlus.Write($"{Messages.Loading} ", _options.OptStyleSchema.Answer(), false);
-                if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
+                if (!_options.OptMinimalRender)
                 {
-                    var dif = top + qtd - ConsolePlus.BufferHeight;
-                    scrool += dif;
+                    top = ConsolePlus.CursorTop;
+                    qtd = ConsolePlus.Write($"... ", _options.OptStyleSchema.Answer(), false);
+                    if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
+                    {
+                        var dif = top + qtd - ConsolePlus.BufferHeight;
+                        scrool += dif;
+                    }
                 }
 
                 _cusorSpinner = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
 
-                if (!string.IsNullOrEmpty(_options.OptDescription))
+                if (_options.Spinner != null)
+                {
+                    qtd = ConsolePlus.WriteLine();
+                }
+
+                if (!string.IsNullOrEmpty(_options.OptDescription) && !_options.OptMinimalRender)
                 {
                     top = ConsolePlus.CursorTop;
                     qtd = ConsolePlus.WriteLine();
@@ -432,31 +443,6 @@ namespace PPlus.Controls
                     }
 
                 }
-                if (_options.OptShowTooltip)
-                {
-                    var tp = _options.OptToolTip;
-                    if (string.IsNullOrEmpty(tp))
-                    {
-                        tp = ScreenBufferSelectBrowser.DefaultToolTipSelectLoadRoot(_options);
-                    }
-                    top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.WriteLine();
-                    if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
-                    {
-                        var dif = top + qtd - ConsolePlus.BufferHeight;
-                        scrool += dif;
-                        _cusorSpinner = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
-                    }
-                    top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write(tp, _options.OptStyleSchema.Tooltips());
-                    if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
-                    {
-                        var dif = top + qtd - ConsolePlus.BufferHeight;
-                        scrool += dif;
-                        _cusorSpinner = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
-                    }
-                }
-                CursorTop -= scrool;
                 if (_options.Spinner != null)
                 {
                     _loadFolderFinish = false;
@@ -477,13 +463,19 @@ namespace PPlus.Controls
                 }
             }
             screenBuffer.WritePrompt(_options, "");
+            var hasprompt = (_options.OptPrompt ?? string.Empty).Length > 0 && !_options.OptMinimalRender;
+
             if (_filterBuffer.Length > 0)
             {
+                hasprompt = true;
                 if (_localpaginator.TryGetSelectedItem(out var showItem))
                 {
                     var item = showItem.Value.Name;
                     screenBuffer.WriteFilterBrowserMultiSelect(_options, item,_filterBuffer);
-                    screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                    if (!_options.OptMinimalRender)
+                    {
+                        screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                    }
                 }
                 else
                 {
@@ -494,12 +486,24 @@ namespace PPlus.Controls
             }
             else
             {
-                screenBuffer.SaveCursor();
-                screenBuffer.WriteAnswer(_options, FinishResult);
+                if (!_options.OptMinimalRender)
+                {
+                    if (hasprompt)
+                    {
+                        screenBuffer.SaveCursor();
+                    }
+                    screenBuffer.WriteAnswer(_options, FinishResult);
+                    //try save cursor
+                    screenBuffer.SaveCursor();
+                }
             }
-            if (!string.IsNullOrEmpty(_options.OptDescription))
+            if (!string.IsNullOrEmpty(_options.OptDescription) && !_options.OptMinimalRender)
             {
-                screenBuffer.NewLine();
+                if (hasprompt)
+                {
+                    screenBuffer.NewLine();
+                }
+                hasprompt = true;
                 screenBuffer.AddBuffer(_options.OptDescription, _options.OptStyleSchema.Description());
             }
             var subset = _localpaginator.ToSubset();
@@ -507,7 +511,10 @@ namespace PPlus.Controls
             {
                 if (_localpaginator.TryGetSelectedItem(out var showItem))
                 {
-                    screenBuffer.NewLine();
+                    if (hasprompt)
+                    {
+                        screenBuffer.NewLine();
+                    }
                     if (_options.ShowCurrentFullPath)
                     {
                         screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {showItem.Value.FullPath}", _options.CurrentFolderStyle, true);
@@ -516,13 +523,12 @@ namespace PPlus.Controls
                     {
                         screenBuffer.AddBuffer($"{Messages.CurrentFolder}: {showItem.Value.CurrentFolder}", _options.CurrentFolderStyle, true);
                     }
+                    hasprompt = true;
+                    //try save cursor
+                    screenBuffer.SaveCursor();
                 }
             }
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            if (_localpaginator.TryGetSelectedItem(out var selectedItem))
-            {
-                screenBuffer.WriteLineTooltipsMultiSelectBrowser(_options, selectedItem);
-            }
+            _localpaginator.TryGetSelectedItem(out var selectedItem);
             foreach (var item in subset)
             {
                 if (EqualityComparer<ItemTreeViewFlatNode<ItemBrowser>>.Default.Equals(item, selectedItem))
@@ -548,14 +554,19 @@ namespace PPlus.Controls
                     }
                 }
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
-                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _selectedItems.Count);
+                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate), _selectedItems.Count);
             }
             else
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{Messages.Tagged}: {_selectedItems.Count}, ", _options.OptStyleSchema.TaggedInfo(), true);
+                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.OptStyleSchema.TaggedInfo(), true);
+            }
+            if (_localpaginator.TryGetSelectedItem(out var selitem))
+            {
+                screenBuffer.WriteLineTooltipsMultiSelectBrowser(_options, selitem);
             }
         }
 
@@ -798,7 +809,20 @@ namespace PPlus.Controls
                 }
                 else
                 {
-                    tryagain = true;
+                    if (ConsolePlus.Provider == "Memory")
+                    {
+                        if (!KeyAvailable)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
+                    }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));
             if (cancellationToken.IsCancellationRequested)
@@ -834,6 +858,10 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ItemBrowser[] result, bool aborted)
         {
+            if (_options.OptMinimalRender)
+            {
+                return;
+            }
             string answer = string.Join(", ", result.Select(x => x.FullPath));
             if (aborted)
             {

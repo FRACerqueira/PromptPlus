@@ -231,9 +231,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelect<T> AppendGroupOnDescription(bool value = true)
+        public IControlMultiSelect<T> ShowTipGroup(bool value = true)
         {
-            _options.ShowGroupOnDescription = value;
+            _options.ShowGroupTip = value;
             return this;
         }
         public IControlMultiSelect<T> HotKeySelectAll(HotKey value)
@@ -251,6 +251,19 @@ namespace PPlus.Controls
         public IControlMultiSelect<T> Config(Action<IPromptConfig> context)
         {
             context?.Invoke(_options);
+            return this;
+        }
+
+        public IControlMultiSelect<T> AddDefault(IEnumerable<T> value)
+        {
+            foreach (var item in value)
+            {
+                if (_options.DefaultValues.Value == null)
+                {
+                    _options.DefaultValues = Optional<IList<T>>.Create(new List<T>());
+                }
+                _options.DefaultValues.Value.Add(Optional<T>.Create(item));
+            }
             return this;
         }
 
@@ -443,51 +456,54 @@ namespace PPlus.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
-            var first = _options.OptHideAnswer && _options.OptPrompt.Length == 0;
-
             screenBuffer.WritePrompt(_options, "");
+            var first = !string.IsNullOrEmpty(_options.OptPrompt);
             if (ShowingFilter)
             {
-                if (_options.OptHideAnswer)
+                _options.OptShowCursor = true;
+                if (_localpaginator.TryGetSelectedItem(out var showItem))
                 {
-                    var spc = _options.OptPrompt.Length == 0 ? "" : " ";
-                    screenBuffer.WriteSuggestion(_options, $"{spc}{_filterBuffer}");
-                    _options.OptShowCursor = true;
+                    var item = showItem.Text;
+                    screenBuffer.WriteFilterMultiSelect(_options, item, _filterBuffer);
                     screenBuffer.SaveCursor();
                 }
                 else
                 {
-                    if (_localpaginator.TryGetSelectedItem(out var showItem))
-                    {
-                        var item = showItem.Text;
-                        screenBuffer.WriteFilterMultiSelect(_options, item, _filterBuffer);
-                    }
-                    else
-                    {
-                        screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToBackward());
-                        screenBuffer.SaveCursor();
-                        screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToForward());
-                    }
+                    screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToBackward());
+                    screenBuffer.SaveCursor();
+                    screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToForward());
                 }
-                screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                if (!_options.OptMinimalRender)
+                {
+                    screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                }
                 first = false;
             }
             else
             {
-                if (!_options.OptHideAnswer)
+                if (!_options.OptMinimalRender)
                 {
                     screenBuffer.WriteAnswer(_options, FinishResult);
-                    screenBuffer.SaveCursor();
+                    first = false;
                 }
                 else
                 {
                     _options.OptShowCursor = false;
                 }
+                screenBuffer.SaveCursor();
             }
-            screenBuffer.WriteLineDescriptionMultiSelect(_options, _localpaginator.SelectedItem);
+            var hasdesc = screenBuffer.WriteLineDescriptionMultiSelect(_options, _localpaginator.SelectedItem);
+            if (first && hasdesc)
+            {
+                first = false;
+            }
             var subset = _localpaginator.ToSubset();
             foreach (var item in subset)
             {
+                if (first)
+                {
+                    screenBuffer.SaveCursor();
+                }
                 string value;
                 var indentgroup = string.Empty;
                 if (item.IsGroupHeader)
@@ -509,10 +525,7 @@ namespace PPlus.Controls
                         }
                     }
                 }
-                if (first && _options.OptHideAnswer)
-                {
-                    screenBuffer.SaveCursor();
-                }
+ 
                 if (item.IsCheck)
                 {
                     if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
@@ -559,14 +572,19 @@ namespace PPlus.Controls
             }
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
-                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _selectedItems.Count);
+                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate), _selectedItems.Count);
             }
             else
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{Messages.Tagged}: {_selectedItems.Count}, ", _options.OptStyleSchema.TaggedInfo(), true);
+                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.OptStyleSchema.TaggedInfo(), true);
             }
             screenBuffer.WriteLineValidate(ValidateError, _options);
+            if (_options.ShowGroupTip && !string.IsNullOrEmpty(_localpaginator.SelectedItem?.Group ?? string.Empty))
+            {
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer(_localpaginator.SelectedItem.Group, _options.OptStyleSchema.Tooltips());
+            }
             screenBuffer.WriteLineTooltipsMultiSelect(_options);
         }
 
@@ -581,7 +599,7 @@ namespace PPlus.Controls
             {
                 SaveHistory(result);
             }
-            if (_options.OptHideAnswer)
+            if (_options.OptMinimalRender)
             {
                 return;
             }
@@ -812,7 +830,10 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));
@@ -839,7 +860,7 @@ namespace PPlus.Controls
                 notrender = true;
             }
 
-            return new ResultPrompt<IEnumerable<T>>(_selectedItems.Select(x => x.Value).ToArray(), abort, !endinput, notrender);
+            return new ResultPrompt<IEnumerable<T>>(_selectedItems.Select(x => x.Value), abort, !endinput, notrender);
         }
 
         private void AddEnum()

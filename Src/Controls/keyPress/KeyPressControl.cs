@@ -181,7 +181,7 @@ namespace PPlus.Controls
             {
                 FinishResult = Messages.CanceledKey;
             }
-            if (_options.OptHideAnswer)
+            if (_options.OptMinimalRender)
             {
                 return;
             }
@@ -261,7 +261,10 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));

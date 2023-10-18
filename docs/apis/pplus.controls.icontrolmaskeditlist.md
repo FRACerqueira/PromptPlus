@@ -216,23 +216,6 @@ initial value
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### <a id="methods-descriptionwithinputtype"/>**DescriptionWithInputType(FormatWeek)**
-
-Append to desription the tip of type input.
-
-```csharp
-IControlMaskEditList DescriptionWithInputType(FormatWeek week)
-```
-
-#### Parameters
-
-`week` [FormatWeek](./pplus.controls.formatweek.md)<br>
-show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
-
-#### Returns
-
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
-
 ### <a id="methods-fillzeros"/>**FillZeros()**
 
 Fill zeros mask.
@@ -467,6 +450,23 @@ Minimum number of items
 
 `maxvalue` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Maximum number of items
+
+#### Returns
+
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
+
+### <a id="methods-showtipinputtype"/>**ShowTipInputType(FormatWeek)**
+
+Append to desription the tip of type input.
+
+```csharp
+IControlMaskEditList ShowTipInputType(FormatWeek week)
+```
+
+#### Parameters
+
+`week` [FormatWeek](./pplus.controls.formatweek.md)<br>
+show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 #### Returns
 

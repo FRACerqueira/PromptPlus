@@ -126,6 +126,10 @@
 
 - [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
+- [IControlTableMultiSelect&lt;T&gt;](./pplus.controls.icontroltablemultiselect-1.md)
+
+- [IControlTableSelect&lt;T&gt;](./pplus.controls.icontroltableselect-1.md)
+
 - [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
 - [IControlTreeViewSelect&lt;T&gt;](./pplus.controls.icontroltreeviewselect-1.md)
@@ -164,7 +168,7 @@
 
 - [ResultPrompt&lt;T&gt;](./pplus.controls.resultprompt-1.md)
 
-- [ResultTable&lt;T&gt;](./pplus.controls.resulttable-1.md)
+- [ResultTableSelect&lt;T&gt;](./pplus.controls.resulttableselect-1.md)
 
 - [ResultWaitProcess&lt;T&gt;](./pplus.controls.resultwaitprocess-1.md)
 

@@ -295,7 +295,7 @@ namespace PPlus.Controls
                 }
                 if (_localpaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
                 }
             }
             screenBuffer.WriteLineValidate(ValidateError, _options);
@@ -317,7 +317,7 @@ namespace PPlus.Controls
                     SaveDefaultHistory(answer);
                 }
             }
-            if (_options.OptHideAnswer)
+            if (_options.OptMinimalRender)
             {
                 return;
             }
@@ -416,7 +416,10 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));

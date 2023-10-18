@@ -111,15 +111,17 @@ namespace PPlus.Controls
                 screenBuffer.AddBuffer(new string(bar, options.Witdth - valuestep), Style.Default.Foreground(options.OptStyleSchema.Slider().Background), true, false);
             }
             screenBuffer.AddBuffer($" {options.ValueToString(options.Maxvalue)}", options.OptStyleSchema.UnSelected(),true,false);
-            if (options.OptHideAnswer)
-            { 
-                screenBuffer.AddBuffer($" ({options.ValueToString(input)})", options.OptStyleSchema.TaggedInfo(), true, false);
-            }
+            screenBuffer.AddBuffer($" ({options.ValueToString(input)})", options.OptStyleSchema.TaggedInfo(), true, false);
+            screenBuffer.SaveCursor();
         }
 
-        public static void WriteLineDescriptionSliderNumber(this ScreenBuffer screenBuffer, SliderNumberOptions options, double input)
+        public static bool WriteLineDescriptionSliderNumber(this ScreenBuffer screenBuffer, SliderNumberOptions options, double input)
         {
-            var result = options.OptDescription;
+            var result = string.Empty;
+            if (!options.OptMinimalRender)
+            {
+                result = options.OptDescription;
+            }
             if (options.ChangeDescription != null)
             {
                 result = options.ChangeDescription.Invoke(input);
@@ -128,7 +130,9 @@ namespace PPlus.Controls
             {
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                return true;
             }
+            return false;
         }
 
         public static void WriteLineTooltipsSliderNumber(this ScreenBuffer screenBuffer, SliderNumberOptions options)

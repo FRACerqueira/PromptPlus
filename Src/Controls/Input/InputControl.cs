@@ -293,7 +293,8 @@ namespace PPlus.Controls
             {
                 answer = Messages.CanceledKey;
             }
-            if (_options.OptHideAnswer)
+
+            if (_options.OptMinimalRender)
             {
                 return;
             }
@@ -345,7 +346,7 @@ namespace PPlus.Controls
                 }
                 if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
                 }
             }
             screenBuffer.WriteLineValidate(ValidateError, _options);
@@ -494,11 +495,14 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
-            } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));
-            if (cancellationToken.IsCancellationRequested)
+           } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));
+           if (cancellationToken.IsCancellationRequested)
             {
                 _inputBuffer.Clear();
                 endinput = true;

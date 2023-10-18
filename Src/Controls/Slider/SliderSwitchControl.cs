@@ -145,7 +145,7 @@ namespace PPlus.Controls
             {
                 SaveDefaultHistory(result.ToString());
             }
-            if (_options.OptHideAnswer)
+            if (_options.OptMinimalRender)
             {
                 return;
             }
@@ -192,27 +192,29 @@ namespace PPlus.Controls
         {
             var segments = Segment.Parse(FinishResult, _options.OptStyleSchema.Answer());
             screenBuffer.WritePrompt(_options, "");
-            if (!_options.OptHideAnswer)
+            var hasprompt = !string.IsNullOrEmpty(_options.OptPrompt);
+            if (!_options.OptMinimalRender)
             {
+                hasprompt = true;
                 foreach (var item in segments.Where(x => !x.IsAnsiControl))
                 {
                     screenBuffer.WriteAnswer(_options, item.Text);
                 }
-                _options.OptShowCursor = true;
+                screenBuffer.SaveCursor();
             }
             else
             {
-                _options.OptShowCursor = false;
+                hasprompt = false;
             }
-            screenBuffer.SaveCursor();
             var hasdesc = screenBuffer.WriteLineDescriptionSliderSwitch(_options, _currentValue);
-            if (!string.IsNullOrEmpty(_options.OptPrompt) || hasdesc)
+            if (hasprompt || hasdesc)
             {
                 screenBuffer.WriteLineWidgetsSliderSwitch(_options, _currentValue,true);
             }
             else
             {
                 screenBuffer.WriteLineWidgetsSliderSwitch(_options, _currentValue,false);
+                screenBuffer.SaveCursor();
             }
             screenBuffer.WriteLineTooltipsSliderSwitch(_options);
         }

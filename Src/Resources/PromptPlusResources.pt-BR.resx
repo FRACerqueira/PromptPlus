@@ -117,26 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Answers" xml:space="preserve">
-    <value>Respostas</value>
-  </data>
   <data name="AnyKey" xml:space="preserve">
     <value>Pressione qualquer tecla </value>
   </data>
   <data name="CanceledKey" xml:space="preserve">
     <value>Cancelado</value>
   </data>
-  <data name="Checked" xml:space="preserve">
-    <value>Marcado</value>
-  </data>
   <data name="CurrentFolder" xml:space="preserve">
     <value>Pasta corrente</value>
   </data>
   <data name="CurrentSelected" xml:space="preserve">
     <value>Selecionado</value>
-  </data>
-  <data name="Done" xml:space="preserve">
-    <value>Feito</value>
   </data>
   <data name="EditMode" xml:space="preserve">
     <value>Modo de edição</value>
@@ -161,9 +152,6 @@
   </data>
   <data name="ListMinSelection" xml:space="preserve">
     <value>Mínimo de {0} itens é necessário</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Carregando</value>
   </data>
   <data name="MaskEditErase" xml:space="preserve">
     <value>Ctrl+Del/Ctrl+L:Apagar tudo, Home/End:Saltar</value>
@@ -250,7 +238,7 @@
     <value>Padrão</value>
   </data>
   <data name="PaginationTemplate" xml:space="preserve">
-    <value>{0} itens, {1}/{2} paginas</value>
+    <value>{0} itens, {1}/{2} páginas</value>
   </data>
   <data name="PaginatorHome" xml:space="preserve">
     <value>Home:Primeira página</value>
@@ -267,9 +255,6 @@
   <data name="SelectionInvalid" xml:space="preserve">
     <value>Seleção inválida</value>
   </data>
-  <data name="ShowingNotes" xml:space="preserve">
-    <value>Mostrando notas</value>
-  </data>
   <data name="SliderNumberLeftRightKeyNavigator" xml:space="preserve">
     <value>Left/Right:Valor curto, Tab/Shift+Tab:Valor grande, Enter:Concluir</value>
   </data>
@@ -281,9 +266,6 @@
   </data>
   <data name="TableMoveCols" xml:space="preserve">
     <value>Left/Right:Move colunas</value>
-  </data>
-  <data name="Task" xml:space="preserve">
-    <value>Tarefa</value>
   </data>
   <data name="TooltipAbortEdit" xml:space="preserve">
     <value>Esc:Cancelar Edição</value>
@@ -383,9 +365,6 @@
   </data>
   <data name="Validkeys" xml:space="preserve">
     <value>Teclas válidas</value>
-  </data>
-  <data name="Wait" xml:space="preserve">
-    <value>Esperando</value>
   </data>
   <data name="YesChar" xml:space="preserve">
     <value>S</value>

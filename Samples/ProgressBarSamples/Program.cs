@@ -15,7 +15,7 @@ namespace ProgressBarSamples
         {
             while (!token.IsCancellationRequested && !prgbar.Finish)
             {
-                token.WaitHandle.WaitOne(30);
+                token.WaitHandle.WaitOne(10);
                 prgbar.Update(prgbar.Value + 1);
                 prgbar.ChangeDescription($"Desc {prgbar.Value}");
                 if (prgbar.Value >= prgbar.Maxvalue)
@@ -64,6 +64,8 @@ namespace ProgressBarSamples
                 .UpdateHandler(MyPrgBarHandler)
                 .Spinner(SpinnersType.BouncingBar)
                 .Run();
+
+            PromptPlus.DoubleDash("Control:ProgressBar - Hide Percent");
 
             PromptPlus.ProgressBar(ProgressBarType.Fill, "ProgressBar", new object(), "My Description")
                  .UpdateHandler(MyPrgBarHandler)

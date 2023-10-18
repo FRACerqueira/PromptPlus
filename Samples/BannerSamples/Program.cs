@@ -9,17 +9,17 @@ using PPlus.Controls;
 
 //ValueResult Banner
 PromptPlus
-    .Banner("PromptPlus v4.0")
+    .Banner("PromptPlus v4.X")
     .Run();
 
 //with Forecolor
 PromptPlus
-    .Banner("PromptPlus v4.0")
+    .Banner("PromptPlus v4.X")
     .Run(Color.Green);
 
 //with border
 PromptPlus
-    .Banner("PromptPlus v4.0")
+    .Banner("PromptPlus v4.X")
     .Run(Color.Yellow,BannerDashOptions.DoubleBorderUpDown);
 
 //Load external font

@@ -145,7 +145,7 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="week">show name of week for type date. <see cref="FormatWeek"/></param>
         /// <returns><see cref="IControlMaskEditList"/></returns>
-        IControlMaskEditList DescriptionWithInputType(FormatWeek week = FormatWeek.None);
+        IControlMaskEditList ShowTipInputType(FormatWeek week = FormatWeek.None);
 
         /// <summary>
         /// Transform char input using <see cref="CaseOptions"/>.

@@ -117,26 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Answers" xml:space="preserve">
-    <value>Answers</value>
-  </data>
   <data name="AnyKey" xml:space="preserve">
     <value>Press any key </value>
   </data>
   <data name="CanceledKey" xml:space="preserve">
     <value>Canceled</value>
   </data>
-  <data name="Checked" xml:space="preserve">
-    <value>Checked</value>
-  </data>
   <data name="CurrentFolder" xml:space="preserve">
     <value>Current folder</value>
   </data>
   <data name="CurrentSelected" xml:space="preserve">
     <value>Current selected</value>
-  </data>
-  <data name="Done" xml:space="preserve">
-    <value>Done</value>
   </data>
   <data name="EditMode" xml:space="preserve">
     <value>Edit mode</value>
@@ -161,9 +152,6 @@
   </data>
   <data name="ListMinSelection" xml:space="preserve">
     <value>A minimum input of {0} items is required</value>
-  </data>
-  <data name="Loading" xml:space="preserve">
-    <value>Loading</value>
   </data>
   <data name="MaskEditErase" xml:space="preserve">
     <value>Ctrl+Del/Ctrl+L:Erase all, Home/End:Jump</value>
@@ -267,9 +255,6 @@
   <data name="SelectionInvalid" xml:space="preserve">
     <value>Selection Invalid</value>
   </data>
-  <data name="ShowingNotes" xml:space="preserve">
-    <value>Showing notes</value>
-  </data>
   <data name="SliderNumberLeftRightKeyNavigator" xml:space="preserve">
     <value>Left/Right:Short change, Tab/Shift+Tab:Larger change, Enter:Finish</value>
   </data>
@@ -281,9 +266,6 @@
   </data>
   <data name="TableMoveCols" xml:space="preserve">
     <value>Left/Right:Move column</value>
-  </data>
-  <data name="Task" xml:space="preserve">
-    <value>Task</value>
   </data>
   <data name="TooltipAbortEdit" xml:space="preserve">
     <value>Esc:Cancel Edit</value>
@@ -386,9 +368,6 @@
   </data>
   <data name="Validkeys" xml:space="preserve">
     <value>Valid keys</value>
-  </data>
-  <data name="Wait" xml:space="preserve">
-    <value>Wait</value>
   </data>
   <data name="YesChar" xml:space="preserve">
     <value>Y</value>

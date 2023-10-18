@@ -22,7 +22,6 @@ namespace PPlus.Controls
         private DayOfWeek[] _Weekdays;
         private string _defaultHistoric = null;
         private DateTime? _lastcurrentDate;
-        private string _lasdescription = null;
 
         public CalendarControl(IConsoleControl console, CalendarOptions options) : base(console, options)
         {
@@ -204,7 +203,6 @@ namespace PPlus.Controls
             _options.Itemshighlight = _options.Itemshighlight
                 .Distinct().ToList();
 
-            _lasdescription = _options.OptDescription;
             _options.CurrentCulture ??= _options.Config.AppCulture;
             if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
             {
@@ -273,7 +271,7 @@ namespace PPlus.Controls
                     SaveDefaultHistory(answer);
                 }
             }
-            if (_options.OptHideAnswer)
+            if (_options.OptMinimalRender)
             {
                 return;
             }
@@ -988,7 +986,11 @@ namespace PPlus.Controls
 
         private void WriteTitle(ScreenBuffer screenBuffer)
         {
-            var desc = _lasdescription;
+            var desc = string.Empty;
+            if (!_options.OptMinimalRender)
+            {
+                desc = _options.OptDescription;
+            }
             if (_options.ChangeDescription != null)
             {
                 if (!_lastcurrentDate.HasValue)
@@ -1005,27 +1007,19 @@ namespace PPlus.Controls
                     }
                 }
             }
-            if (string.IsNullOrEmpty(desc))
-            {
-                desc = _options.OptDescription;
-            }
-            _lasdescription = desc;
 
-            if (string.IsNullOrEmpty(_options.OptPrompt) && string.IsNullOrEmpty(_options.OptDescription))
-            {
-                return;
-            }
-            if (!string.IsNullOrEmpty(_options.OptPrompt))
+            if (!string.IsNullOrEmpty(_options.OptPrompt) && !_options.OptMinimalRender)
             {
                 screenBuffer.AddBuffer(_options.OptPrompt, _options.OptStyleSchema.Prompt());
                 screenBuffer.AddBuffer(": ", _options.OptStyleSchema.Prompt());
             }
-            screenBuffer.AddBuffer(_currentdate.ToString("d"), _options.OptStyleSchema.Answer());
-            screenBuffer.SaveCursor();
-            if (_options.ShowingNotes)
+            var stl = _options.OptStyleSchema.Answer();
+            if (_options.ShowingNotes && !_options.OptMinimalRender)
             {
-                screenBuffer.AddBuffer($" ({Messages.ShowingNotes})", _options.OptStyleSchema.TaggedInfo());
+                stl = _options.OptStyleSchema.TaggedInfo();
             }
+            screenBuffer.AddBuffer(_currentdate.ToString("d"), stl);
+            screenBuffer.SaveCursor();
             screenBuffer.NewLine();
             if (!string.IsNullOrEmpty(desc))
             {
@@ -1103,13 +1097,14 @@ namespace PPlus.Controls
                 {
                     abr = abr[..3];
                 }
-                abr = $" {abr} ";
                 if (item == _currentdate.DayOfWeek)
                 {
+                    abr = $"<{abr}>";
                     screenBuffer.AddBuffer(abr, _options.SelectedStyle);
                 }
                 else
                 {
+                    abr = $" {abr} ";
                     screenBuffer.AddBuffer(abr, _options.WeekDayStyle);
                 }
             }
@@ -1200,13 +1195,14 @@ namespace PPlus.Controls
                 {
                     abr = abr[..3];
                 }
-                abr = $" {abr} ";
                 if (item == _currentdate.DayOfWeek)
                 {
+                    abr = $"<{abr}>";
                     screenBuffer.AddBuffer(abr, _options.SelectedStyle);
                 }
                 else
                 {
+                    abr = $" {abr} ";
                     screenBuffer.AddBuffer(abr, _options.WeekDayStyle);
                 }
             }
@@ -1299,13 +1295,14 @@ namespace PPlus.Controls
                 {
                     abr = abr[..3];
                 }
-                abr = $" {abr} ";
                 if (item == _currentdate.DayOfWeek)
                 {
+                    abr = $"<{abr}>";
                     screenBuffer.AddBuffer(abr, _options.SelectedStyle);
                 }
                 else
                 {
+                    abr = $" {abr} ";
                     screenBuffer.AddBuffer(abr, _options.WeekDayStyle);
                 }
             }
@@ -1402,13 +1399,14 @@ namespace PPlus.Controls
                 {
                     abr = abr[..3];
                 }
-                abr = $" {abr} ";
                 if (item == _currentdate.DayOfWeek)
                 {
+                    abr = $"<{abr}>";
                     screenBuffer.AddBuffer(abr, _options.SelectedStyle);
                 }
                 else
                 {
+                    abr = $" {abr} ";
                     screenBuffer.AddBuffer(abr, _options.WeekDayStyle);
                 }
             }
@@ -1499,13 +1497,14 @@ namespace PPlus.Controls
                 {
                     abr = abr[..3];
                 }
-                abr = $" {abr} ";
                 if (item == _currentdate.DayOfWeek)
                 {
+                    abr = $"<{abr}>";
                     screenBuffer.AddBuffer(abr, _options.SelectedStyle);
                 }
                 else
                 {
+                    abr = $" {abr} ";
                     screenBuffer.AddBuffer(abr, _options.WeekDayStyle);
                 }
             }
@@ -1586,7 +1585,7 @@ namespace PPlus.Controls
                 }
                 if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
                 }
             }
         }
@@ -1605,13 +1604,34 @@ namespace PPlus.Controls
             }
             else if (auxdate == _currentdate)
             {
-                screenBuffer.AddBuffer($" {strnote}{cday} ", _options.SelectedStyle);
+                if (IsHighlight(auxdate))
+                {
+                    if (strnote == "*")
+                    {
+                        screenBuffer.AddBuffer($"#{strnote}{cday}#", _options.SelectedStyle);
+                    }
+                    else
+                    {
+                        screenBuffer.AddBuffer($" #{cday}#", _options.SelectedStyle);
+                    }
+                }
+                else
+                {
+                    if (strnote == "*")
+                    {
+                        screenBuffer.AddBuffer($"<{strnote}{cday}>", _options.SelectedStyle);
+                    }
+                    else
+                    {
+                        screenBuffer.AddBuffer($" <{cday}>", _options.SelectedStyle);
+                    }
+                }
             }
             else
             {
                 if (IsHighlight(auxdate))
                 {
-                    screenBuffer.AddBuffer($" {strnote}{cday} ", _options.HighlightStyle);
+                    screenBuffer.AddBuffer($" {strnote}{cday}#", _options.HighlightStyle);
                 }
                 else
                 {

@@ -166,5 +166,6 @@ namespace PPlus.Controls
         /// <param name="value">Filter Mode</param>
         /// <returns><see cref="IControlInput"/></returns>
         IControlInput FilterType(FilterMode value);
+
     }
 }

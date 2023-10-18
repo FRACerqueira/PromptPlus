@@ -19,13 +19,13 @@ namespace AddtoMaskEditListSamples
             PromptPlus.DoubleDash("Control:AddtoMaskEditList - minimal usage");
             PromptPlus.AddtoMaskEditList("Input value")
                 .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
-                .DescriptionWithInputType()
+                .ShowTipInputType()
                 .Run();
 
             PromptPlus.DoubleDash("Control:AddtoMaskEditList - AllowDuplicate");
             PromptPlus.AddtoMaskEditList("Input value")
                 .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
-                .DescriptionWithInputType()
+                .ShowTipInputType()
                 .AllowDuplicate()
                 .Run();
 
@@ -33,7 +33,7 @@ namespace AddtoMaskEditListSamples
             PromptPlus.DoubleDash("Control:AddtoMaskEditList - Range, Min. 2 items, Max. 5 items");
             PromptPlus.AddtoMaskEditList("Input value")
                 .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
-                .DescriptionWithInputType()
+                .ShowTipInputType()
                 .Range(2, 5)
                 .Run();
 
@@ -41,7 +41,7 @@ namespace AddtoMaskEditListSamples
             PromptPlus.DoubleDash("Control:AddtoMaskEditList - initial values/Default value");
             PromptPlus.AddtoMaskEditList("Input value")
                 .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
-                .DescriptionWithInputType()
+                .ShowTipInputType()
                 .AddItem("XYZ 232-aaa-AX-sdd")
                 .AddItem("XYZ 232-aaa-AX-zzz", true)
                 .Default("XYZ 232")

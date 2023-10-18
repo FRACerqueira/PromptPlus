@@ -190,19 +190,6 @@ public bool HideAfterFinish { get; set; }
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### <a id="properties-hideanswer"/>**HideAnswer**
-
-Get/Set hide Answer controls.
- <br>Default value : false
-
-```csharp
-public bool HideAnswer { get; set; }
-```
-
-#### Property Value
-
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
 ### <a id="properties-hideonabort"/>**HideOnAbort**
 
 Get/Set hide controls On Abort for all controls.
@@ -242,6 +229,19 @@ public HotKey InvertSelectedPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
+### <a id="properties-minimalrender"/>**MinimalRender**
+
+Get/Set Minimal Render.
+ <br>Default value : false<br>When true, the prompt and control description are not rendered, showing only the minimum necessary without using resources (except the default tooltips when used)
+
+```csharp
+public bool MinimalRender { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-nochar"/>**NoChar**
 
 Get/Set value for NO answer
@@ -267,6 +267,19 @@ public int PageSize { get; set; }
 #### Property Value
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### <a id="properties-paginationtemplate"/>**PaginationTemplate**
+
+Get/Set Custom PaginationTemplate
+ <br>string to show = Func(Total items,Current Page,Total pages)
+
+```csharp
+public Func<Int32, Int32, Int32, String> PaginationTemplate { get; set; }
+```
+
+#### Property Value
+
+[Func&lt;Int32, Int32, Int32, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-4)<br>
 
 ### <a id="properties-passwordviewpress"/>**PasswordViewPress**
 

@@ -123,10 +123,10 @@ public IPromptConfig HideAfterFinish(bool value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-hideanswer"/>**HideAnswer(Boolean)**
+### <a id="methods-hideonabort"/>**HideOnAbort(Boolean)**
 
 ```csharp
-public IPromptConfig HideAnswer(bool value)
+public IPromptConfig HideOnAbort(bool value)
 ```
 
 #### Parameters
@@ -137,15 +137,29 @@ public IPromptConfig HideAnswer(bool value)
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-hideonabort"/>**HideOnAbort(Boolean)**
+### <a id="methods-minimalrender"/>**MinimalRender(Boolean)**
 
 ```csharp
-public IPromptConfig HideOnAbort(bool value)
+public IPromptConfig MinimalRender(bool value)
 ```
 
 #### Parameters
 
 `value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-paginationtemplate"/>**PaginationTemplate(Func&lt;Int32, Int32, Int32, String&gt;)**
+
+```csharp
+public IPromptConfig PaginationTemplate(Func<Int32, Int32, Int32, String> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;Int32, Int32, Int32, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-4)<br>
 
 #### Returns
 

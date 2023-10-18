@@ -34,6 +34,7 @@ namespace MaskEditNumberTypeSamples
                 PromptPlus.WriteLine($"You input without mask is {mask.Value.Input}");
             }
 
+
             PromptPlus.DoubleDash($"Control:MaskEdit Number ({cult.Name}) - Positive/Negative style");
 
             PromptPlus.MaskEdit("input", "MaskEdit Number input")
@@ -51,7 +52,6 @@ namespace MaskEditNumberTypeSamples
                 .AmmoutPositions(10, 2, true)
                 .Culture(new CultureInfo("pt-br"))
                 .Run();
-
 
             PromptPlus.DoubleDash("For other features below see - input samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");

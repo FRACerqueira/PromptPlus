@@ -90,6 +90,12 @@ namespace PPlus.Controls
 
         #region IControlList
 
+        public IControlList ChangeDescription(Func<string, string> value)
+        {
+            _options.ChangeDescription = value;
+            return this;
+        }
+
         public IControlList Interaction<T>(IEnumerable<T> values, Action<IControlList, T> action)
         {
             foreach (var item in values)
@@ -221,14 +227,14 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<string> result, bool aborted)
         {
+            if (_options.OptMinimalRender)
+            {
+                return;
+            }
             string answer = string.Join(", ", result);
             if (aborted)
             {
                 answer = Messages.CanceledKey;
-            }
-            if (_options.OptHideAnswer)
-            {
-                return;
             }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();
@@ -245,7 +251,7 @@ namespace PPlus.Controls
             }
             else
             {
-                if (_editingItem >= 0)
+                if (_editingItem >= 0 && !_options.OptMinimalRender)
                 {
                     screenBuffer.WriteTaggedInfo(_options, $"({Messages.EditMode}) ");
                 }
@@ -279,7 +285,7 @@ namespace PPlus.Controls
             {
                 if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
                 }
             }
             screenBuffer.WriteLineValidate(ValidateError, _options);
@@ -343,7 +349,7 @@ namespace PPlus.Controls
                     _editingItem = -1;
                 }
                 //edit Item selected
-                else if (_options.EditItemPress.Equals(keyInfo.Value) && _editingItem < 0 && _localpaginator.SelectedIndex >= 0)
+                else if (_options.EditItemPress.Equals(keyInfo.Value) && _editingItem < 0 && _localpaginator.SelectedIndex >= 0 && !_localpaginator.SelectedItem.Immutable)
                 {
                     _inputBuffer.Clear().LoadPrintable(_localpaginator.SelectedItem.Text);
                     _editingItem = _localpaginator.SelectedIndex;
@@ -362,27 +368,30 @@ namespace PPlus.Controls
                     {
                         _localpaginator = new Paginator<ItemListControl>(
                             FilterMode.StartsWith,
-                            _options.Items, 
-                            _options.PageSize, 
+                            _options.Items,
+                            _options.PageSize,
                             Optional<ItemListControl>.s_empty,
                             (item1, item2) => item1.UniqueId == item2.UniqueId,
                             (item) => item.Text,
                             (item) => !item.Immutable);
-                        _inputBuffer.Clear();
+                        _localpaginator.UnSelected();
                     }
-                    if (pos > _options.Items.Count - 1)
+                    else
                     {
-                        pos = _options.Items.Count - 1;
+                        if (pos > _options.Items.Count - 1)
+                        {
+                            pos = _options.Items.Count - 1;
+                        }
+                        var item = _options.Items[pos];
+                        _localpaginator = new Paginator<ItemListControl>(
+                            FilterMode.StartsWith,
+                            _options.Items,
+                            _options.PageSize,
+                            Optional<ItemListControl>.Create(item),
+                            (item1, item2) => item1.UniqueId == item2.UniqueId,
+                            (item) => item.Text,
+                            (item) => !item.Immutable);
                     }
-                    var item = _options.Items[pos];
-                    _localpaginator = new Paginator<ItemListControl>(
-                        FilterMode.StartsWith,
-                        _options.Items, 
-                        _options.PageSize, 
-                        Optional<ItemListControl>.Create(item),
-                        (item1, item2) => item1.UniqueId == item2.UniqueId,
-                        (item) => item.Text,
-                        (item) => !item.Immutable);
                     _inputBuffer.Clear();
                     _editingItem = -1;
                 }
@@ -507,7 +516,10 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));

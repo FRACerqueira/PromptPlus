@@ -155,23 +155,6 @@ items colletion
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription(Boolean)**
-
-Append group text on description. Default false
-
-```csharp
-IControlSelect<T> AppendGroupOnDescription(bool value)
-```
-
-#### Parameters
-
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Append group text on description
-
-#### Returns
-
-[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
-
 ### <a id="methods-autoselect"/>**AutoSelect(Boolean)**
 
 Automatically select and finalize item when only one item is in the list . Default false.
@@ -390,6 +373,23 @@ Type Separation line.Default value is SeparatorLine.SingleLine [SeparatorLine](.
 
 `value` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Char Separation line. Valid only SeparatorLine is SeparatorLine.Char
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
+### <a id="methods-showtipgroup"/>**ShowTipGroup(Boolean)**
+
+Show tip with text of group. Default false
+
+```csharp
+IControlSelect<T> ShowTipGroup(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+If True, it shows the tip with the group text, otherwise nothing.
 
 #### Returns
 

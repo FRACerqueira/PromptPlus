@@ -9,9 +9,18 @@ namespace PPlus.Controls
 {
     internal static class ScreenBufferList
     {
-        public static void WriteLineDescriptionList(this ScreenBuffer screenBuffer, ListOptions options, string _)
+        public static void WriteLineDescriptionList(this ScreenBuffer screenBuffer, ListOptions options, string input)
         {
-            var result = options.OptDescription;
+            string result = string.Empty;
+            if (!options.OptMinimalRender)
+            {
+                result = options.OptDescription;
+
+            }
+            if (options.ChangeDescription != null)
+            {
+                result = options.ChangeDescription.Invoke(input);
+            }
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
