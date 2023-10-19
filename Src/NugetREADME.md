@@ -10,7 +10,7 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 **PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
 
-## What's new in V4.1.1
+## What's new in V4.2.0
 
 - Split feature Control Table:
     - PromptPlus.TableSelect\<T> to Select item in table : Select row, column and data in a grid/table 
@@ -41,6 +41,9 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
     - Fluent-Interface to write text (less code typed) 
 - Changed feature:
     - Moved tooltips and validation message to the end of render to all control
+- Improvement : 
+    - Color Token now accepts ':' to separate foreground color from background color
+    - eg: [RED:BLUE] = [RED ON BLUE]
 - Improvement : 
     - Optimized the Calendar control to have symbols when selecting elements
 - Improvement :
@@ -127,9 +130,9 @@ This project is licensed under the [MIT License](https://github.com/FRACerqueira
 
 ## **Credits**
 
-PromptPlus **includes code** from other software released under the **MIT license**:
+
+PromptPlus **<u>includes code(copy)</u>** from other software released under the **MIT license**:
 
 - [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
-- [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
-- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
+- [EastAsianWidth.NET](https://github.com/iodes/EastAsianWidth.NET), Copyright (c) 2020 Kevin So.
 - [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU

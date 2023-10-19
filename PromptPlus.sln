@@ -92,7 +92,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{191C90E6-4
 		docs\index.md = docs\index.md
 		docs\migrateversion.md = docs\migrateversion.md
 		docs\snapshot.md = docs\snapshot.md
-		docs\validators.md = docs\validators.md
 		whatsnewprev.md = whatsnewprev.md
 	EndProjectSection
 EndProject
@@ -109,7 +108,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{ADBB4294-4DC0-43FC-A57A-4C2F9BDB68A8}"
 	ProjectSection(SolutionItems) = preProject
 		Licenses\LICENSE-FIGlet.md = Licenses\LICENSE-FIGlet.md
-		Licenses\LICENSE-Sharprompt.md = Licenses\LICENSE-Sharprompt.md
+		Licenses\LICENSE-EastAsianWidth.md = Licenses\LICENSE-EastAsianWidth.md
 		Licenses\LICENSE-SpectreConsole.md = Licenses\LICENSE-SpectreConsole.md
 		Licenses\LICENSE-xmldoc2md.md = Licenses\LICENSE-xmldoc2md.md
 	EndProjectSection
@@ -120,9 +119,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PromptPlusTemplate", "Templ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableSamples", "Samples\TableBasicSamples\TableSamples.csproj", "{C5189623-17BD-472E-8A11-832115ABD152}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableSelectSamples", "Samples\TableSelectSamples\TableSelectSamples.csproj", "{BD6DBBD6-682B-4954-ADE5-F557721D5D51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableSelectSamples", "Samples\TableSelectSamples\TableSelectSamples.csproj", "{BD6DBBD6-682B-4954-ADE5-F557721D5D51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TableMultiSelectSamples", "Samples\TableMultiSelectSamples\TableMultiSelectSamples.csproj", "{15F4B106-58B7-4F6E-9E01-E47EB17E6A10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TableMultiSelectSamples", "Samples\TableMultiSelectSamples\TableMultiSelectSamples.csproj", "{15F4B106-58B7-4F6E-9E01-E47EB17E6A10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

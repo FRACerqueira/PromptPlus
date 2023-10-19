@@ -272,16 +272,11 @@ namespace PPlus.Controls
                 var currentmode = _options.States[i].StepMode;
                 var executelist = new List<int>();
                 string firstdesc = _options.States[i].Description;
-                bool samedesc = true;
                 var detailsElapsedTime = new List<(int left, int top, Stopwatch sw)>();
                 var degreecount = 0;
                 do
                 {
                     executelist.Add(i);
-                    if (samedesc)
-                    {
-                        samedesc = (firstdesc == _options.States[i].Description);
-                    }
                     if (!cancellationtoken.IsCancellationRequested && !_event.CancelAllNextTasks)
                     {
                         var act = _options.Steps[i];
@@ -364,25 +359,18 @@ namespace PPlus.Controls
                 }
 
                 string desc;
-                if (samedesc)
+                var auxdesc = new List<string>();
+                foreach (var item in executelist)
                 {
-                    desc = firstdesc;
+                    var dj = _options.States[item].Description;
+                    if (!string.IsNullOrEmpty(dj) && !auxdesc.Contains(dj))
+                    {
+                        auxdesc.Add(dj);
+                    }
                 }
-                else
+                if (auxdesc.Any())
                 {
-                    var auxdesc = new List<string>();
-                    foreach (var item in executelist)
-                    {
-                        var dj = _options.States[item].Description;
-                        if (!string.IsNullOrEmpty(dj) && !auxdesc.Contains(dj))
-                        {
-                            auxdesc.Add(dj);
-                        }
-                    }
-                    if (auxdesc.Any())
-                    {
-                        desc = string.Join(",", auxdesc.ToArray());
-                    }
+                    desc = string.Join(",", auxdesc.ToArray());
                 }
                 var qtdlines = 0;
                 ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
@@ -483,18 +471,6 @@ namespace PPlus.Controls
                             else
                             {
                                 desc = $"{tasktitle}({index})";
-                            }
-                        }
-                        else if (samedesc)
-                        {
-                            var index = (executelist[pos] + 1).ToString("000");
-                            if (string.IsNullOrEmpty(tasktitle))
-                            {
-                                desc = $"{index}:{desc}";
-                            }
-                            else
-                            {
-                                desc = $"{tasktitle}({index}):{desc}";
                             }
                         }
                         top = ConsolePlus.CursorTop;

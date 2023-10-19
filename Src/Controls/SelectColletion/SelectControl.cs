@@ -444,7 +444,7 @@ namespace PPlus.Controls
             {
                 first = false;
             }
-            var subset = _localpaginator.ToSubset();
+            var subset = _localpaginator.GetPageData();
             foreach (var item in subset)
             {
                 if (first)
@@ -495,7 +495,7 @@ namespace PPlus.Controls
                 {
                     screenBuffer.SaveCursor();
                 }
-                if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemSelect<T>>.Default.Equals(item, selectedItem))
+                if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<ItemSelect<T>>.Default.Equals(item, selectedItem))
                 {
                     screenBuffer.WriteLineSelector(_options, value, indentgroup,!first);
                 }

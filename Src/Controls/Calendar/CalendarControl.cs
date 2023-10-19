@@ -1571,10 +1571,10 @@ namespace PPlus.Controls
         {
             if (_options.ShowingNotes)
             {
-                var subset = _localpaginator.ToSubset();
+                var subset = _localpaginator.GetPageData();
                 foreach (var item in subset)
                 {
-                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<string>.Default.Equals(item, selectedItem))
+                    if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<string>.Default.Equals(item, selectedItem))
                     {
                         screenBuffer.WriteLineSelector(_options, item);
                     }

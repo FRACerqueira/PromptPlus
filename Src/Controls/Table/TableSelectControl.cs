@@ -1687,7 +1687,7 @@ namespace PPlus.Controls.Table
         {
 
             ArraySegment<ItemTableRow<T>> subset;
-            subset = _localpaginator.ToSubset();
+            subset = _localpaginator.GetPageData();
             var pos = 0;
             foreach (var item in subset)
             {
@@ -1695,7 +1695,7 @@ namespace PPlus.Controls.Table
                 screenBuffer.NewLine();
                 var isseleted = false;
                 var isdisabled = false;
-                if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemTableRow<T>>.Default.Equals(item, selectedItem))
+                if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<ItemTableRow<T>>.Default.Equals(item, selectedItem))
                 {
                     isseleted = true;
                 }

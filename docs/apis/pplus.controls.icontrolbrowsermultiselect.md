@@ -1,21 +1,21 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlMultiSelectBrowser 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:IControlBrowserMultiSelect 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
 [**Back to List Api**](./apis.md)
 
-# IControlMultiSelectBrowser
+# IControlBrowserMultiSelect
 
 Namespace: PPlus.Controls
 
 Represents the interface with all Methods of the BrowserMultiSelect control
 
 ```csharp
-public interface IControlMultiSelectBrowser : IPromptControls<ItemBrowser[]>
+public interface IControlBrowserMultiSelect : IPromptControls<ItemBrowser[]>
 ```
 
 Implements [IPromptControls&lt;ItemBrowser[]&gt;](./pplus.controls.ipromptcontrols-1.md)
@@ -27,7 +27,7 @@ Implements [IPromptControls&lt;ItemBrowser[]&gt;](./pplus.controls.ipromptcontro
 Accept hidden folder and files in browser. Default is false
 
 ```csharp
-IControlMultiSelectBrowser AcceptHiddenAttributes(bool value)
+IControlBrowserMultiSelect AcceptHiddenAttributes(bool value)
 ```
 
 #### Parameters
@@ -37,14 +37,14 @@ true accept hidden folder and files, otherwise 'no'
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-acceptsystemattributes"/>**AcceptSystemAttributes(Boolean)**
 
 Accept system folder and files in browser. Default is false
 
 ```csharp
-IControlMultiSelectBrowser AcceptSystemAttributes(bool value)
+IControlBrowserMultiSelect AcceptSystemAttributes(bool value)
 ```
 
 #### Parameters
@@ -54,14 +54,14 @@ true accept system folder and files, otherwise 'no'
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-addfixedselect"/>**AddFixedSelect(params String[])**
 
 Fixed select (immutable) items in list
 
 ```csharp
-IControlMultiSelectBrowser AddFixedSelect(params String[] values)
+IControlBrowserMultiSelect AddFixedSelect(params String[] values)
 ```
 
 #### Parameters
@@ -71,14 +71,14 @@ list with fullpath immutable items selected
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-aftercollapsed"/>**AfterCollapsed(Action&lt;ItemBrowser&gt;)**
 
 Action to execute after Collapsed
 
 ```csharp
-IControlMultiSelectBrowser AfterCollapsed(Action<ItemBrowser> value)
+IControlBrowserMultiSelect AfterCollapsed(Action<ItemBrowser> value)
 ```
 
 #### Parameters
@@ -88,14 +88,14 @@ The action
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-afterexpanded"/>**AfterExpanded(Action&lt;ItemBrowser&gt;)**
 
 Action to execute after Expanded
 
 ```csharp
-IControlMultiSelectBrowser AfterExpanded(Action<ItemBrowser> value)
+IControlBrowserMultiSelect AfterExpanded(Action<ItemBrowser> value)
 ```
 
 #### Parameters
@@ -105,14 +105,14 @@ The action
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-beforecollapsed"/>**BeforeCollapsed(Action&lt;ItemBrowser&gt;)**
 
 Action to execute before Collapsed
 
 ```csharp
-IControlMultiSelectBrowser BeforeCollapsed(Action<ItemBrowser> value)
+IControlBrowserMultiSelect BeforeCollapsed(Action<ItemBrowser> value)
 ```
 
 #### Parameters
@@ -122,14 +122,14 @@ The action
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-beforeexpanded"/>**BeforeExpanded(Action&lt;ItemBrowser&gt;)**
 
 Action to execute before Expanded
 
 ```csharp
-IControlMultiSelectBrowser BeforeExpanded(Action<ItemBrowser> value)
+IControlBrowserMultiSelect BeforeExpanded(Action<ItemBrowser> value)
 ```
 
 #### Parameters
@@ -139,14 +139,14 @@ The action
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-config"/>**Config(Action&lt;IPromptConfig&gt;)**
 
 Custom config the control.
 
 ```csharp
-IControlMultiSelectBrowser Config(Action<IPromptConfig> context)
+IControlBrowserMultiSelect Config(Action<IPromptConfig> context)
 ```
 
 #### Parameters
@@ -156,14 +156,14 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-default"/>**Default(String)**
 
 Default item (fullpath) selected when started
 
 ```csharp
-IControlMultiSelectBrowser Default(string value)
+IControlBrowserMultiSelect Default(string value)
 ```
 
 #### Parameters
@@ -173,7 +173,7 @@ fullpath
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-disabledrecursiveexpand"/>**DisabledRecursiveExpand(Boolean)**
 
@@ -181,7 +181,7 @@ Disabled ExpandAll Feature. Only item in Top-level are expanded. Default false
  <br>DisabledRecursiveExpand cannot be used when Root setted with parameter expandall = true
 
 ```csharp
-IControlMultiSelectBrowser DisabledRecursiveExpand(bool value)
+IControlBrowserMultiSelect DisabledRecursiveExpand(bool value)
 ```
 
 #### Parameters
@@ -191,7 +191,7 @@ Disabled ExpandAll Feature
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
@@ -199,7 +199,7 @@ Filter strategy for filter items in colletion
  <br>Default value is FilterMode.Contains
 
 ```csharp
-IControlMultiSelectBrowser FilterType(FilterMode value)
+IControlBrowserMultiSelect FilterType(FilterMode value)
 ```
 
 #### Parameters
@@ -209,14 +209,14 @@ Filter Mode
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-hotkeyfullpath"/>**HotKeyFullPath(HotKey)**
 
 Overwrite a HotKey toggle current name folder to FullPath. Default value is 'F2'
 
 ```csharp
-IControlMultiSelectBrowser HotKeyFullPath(HotKey value)
+IControlBrowserMultiSelect HotKeyFullPath(HotKey value)
 ```
 
 #### Parameters
@@ -226,14 +226,14 @@ The [HotKey](./pplus.controls.hotkey.md) to toggle current name folder to FullPa
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-hotkeytoggleexpand"/>**HotKeyToggleExpand(HotKey)**
 
 Overwrite a HotKey expand/Collap current folder selected. Default value is 'F3'
 
 ```csharp
-IControlMultiSelectBrowser HotKeyToggleExpand(HotKey value)
+IControlBrowserMultiSelect HotKeyToggleExpand(HotKey value)
 ```
 
 #### Parameters
@@ -243,14 +243,14 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collapse current folder selec
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-hotkeytoggleexpandall"/>**HotKeyToggleExpandAll(HotKey)**
 
 Overwrite a HotKey expand/Collap all folders. Default value is 'F4'
 
 ```csharp
-IControlMultiSelectBrowser HotKeyToggleExpandAll(HotKey value)
+IControlBrowserMultiSelect HotKeyToggleExpandAll(HotKey value)
 ```
 
 #### Parameters
@@ -260,14 +260,14 @@ The [HotKey](./pplus.controls.hotkey.md) to expand/Collap all folders
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-nospinner"/>**NoSpinner(Boolean)**
 
 Not show Spinner. default value is false (SpinnersType.Ascii)
 
 ```csharp
-IControlMultiSelectBrowser NoSpinner(bool value)
+IControlBrowserMultiSelect NoSpinner(bool value)
 ```
 
 #### Parameters
@@ -276,14 +276,14 @@ IControlMultiSelectBrowser NoSpinner(bool value)
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-onlyfolders"/>**OnlyFolders(Boolean)**
 
 Load only Folders on browser. Default is false
 
 ```csharp
-IControlMultiSelectBrowser OnlyFolders(bool value)
+IControlBrowserMultiSelect OnlyFolders(bool value)
 ```
 
 #### Parameters
@@ -293,7 +293,7 @@ true only Folders, otherwise Folders and files
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
@@ -301,7 +301,7 @@ Set max.item view per page.
  <br>Default value : 10.The value must be greater than or equal to 1
 
 ```csharp
-IControlMultiSelectBrowser PageSize(int value)
+IControlBrowserMultiSelect PageSize(int value)
 ```
 
 #### Parameters
@@ -311,14 +311,14 @@ Number of Max.items
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-range"/>**Range(Int32, Nullable&lt;Int32&gt;)**
 
 Defines a minimum and maximum (optional) range of items selected in the list
 
 ```csharp
-IControlMultiSelectBrowser Range(int minvalue, Nullable<Int32> maxvalue)
+IControlBrowserMultiSelect Range(int minvalue, Nullable<Int32> maxvalue)
 ```
 
 #### Parameters
@@ -331,7 +331,7 @@ Maximum number of items
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-root"/>**Root(String, Boolean, Func&lt;ItemBrowser, Boolean&gt;, Func&lt;ItemBrowser, Boolean&gt;)**
 
@@ -339,7 +339,7 @@ Set folder root to browser
  <br>parameter expandall = true cannot be used with DisabledRecursiveExpand
 
 ```csharp
-IControlMultiSelectBrowser Root(string value, bool expandall, Func<ItemBrowser, Boolean> validselect, Func<ItemBrowser, Boolean> setdisabled)
+IControlBrowserMultiSelect Root(string value, bool expandall, Func<ItemBrowser, Boolean> validselect, Func<ItemBrowser, Boolean> setdisabled)
 ```
 
 #### Parameters
@@ -358,14 +358,14 @@ Disabled all items that satisfy the disabled function
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-searchfilepattern"/>**SearchFilePattern(String)**
 
 Search file pattern. Default is '*'
 
 ```csharp
-IControlMultiSelectBrowser SearchFilePattern(string value)
+IControlBrowserMultiSelect SearchFilePattern(string value)
 ```
 
 #### Parameters
@@ -375,14 +375,14 @@ Search pattern
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-searchfolderpattern"/>**SearchFolderPattern(String)**
 
 Search folder pattern. Default is '*'
 
 ```csharp
-IControlMultiSelectBrowser SearchFolderPattern(string value)
+IControlBrowserMultiSelect SearchFolderPattern(string value)
 ```
 
 #### Parameters
@@ -392,14 +392,14 @@ Search pattern
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-selectall"/>**SelectAll(Func&lt;ItemBrowser, Boolean&gt;)**
 
 Select all items that satisfy the selection function
 
 ```csharp
-IControlMultiSelectBrowser SelectAll(Func<ItemBrowser, Boolean> validselect)
+IControlBrowserMultiSelect SelectAll(Func<ItemBrowser, Boolean> validselect)
 ```
 
 #### Parameters
@@ -409,14 +409,14 @@ the function
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-showcurrentfolder"/>**ShowCurrentFolder(Boolean)**
 
 Append name current folder on description. Default value true
 
 ```csharp
-IControlMultiSelectBrowser ShowCurrentFolder(bool value)
+IControlBrowserMultiSelect ShowCurrentFolder(bool value)
 ```
 
 #### Parameters
@@ -426,14 +426,14 @@ true Append current name folder on description, not append
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-showexpand"/>**ShowExpand(Boolean)**
 
 Show expand SymbolType.Expanded. Default is true
 
 ```csharp
-IControlMultiSelectBrowser ShowExpand(bool value)
+IControlBrowserMultiSelect ShowExpand(bool value)
 ```
 
 #### Parameters
@@ -443,14 +443,14 @@ true Show Expanded SymbolType, otherwise 'no'
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-showlines"/>**ShowLines(Boolean)**
 
 Show lines of level. Default is true
 
 ```csharp
-IControlMultiSelectBrowser ShowLines(bool value)
+IControlBrowserMultiSelect ShowLines(bool value)
 ```
 
 #### Parameters
@@ -460,14 +460,14 @@ true Show lines, otherwise 'no'
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-showsize"/>**ShowSize(Boolean)**
 
 Show folder and file size in browser. Default is true
 
 ```csharp
-IControlMultiSelectBrowser ShowSize(bool value)
+IControlBrowserMultiSelect ShowSize(bool value)
 ```
 
 #### Parameters
@@ -477,7 +477,7 @@ true Show size, otherwise 'no'
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
@@ -485,7 +485,7 @@ Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is Spi
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlMultiSelectBrowser Spinner(SpinnersType spinnersType, Nullable<Style> spinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
+IControlBrowserMultiSelect Spinner(SpinnersType spinnersType, Nullable<Style> spinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters
@@ -504,14 +504,14 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-styles"/>**Styles(StyleBrowser, Style)**
 
 Overwrite Styles Browser. [StyleBrowser](./pplus.controls.stylebrowser.md)
 
 ```csharp
-IControlMultiSelectBrowser Styles(StyleBrowser styletype, Style value)
+IControlBrowserMultiSelect Styles(StyleBrowser styletype, Style value)
 ```
 
 #### Parameters
@@ -524,7 +524,7 @@ Styles Browser
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 
 - - -

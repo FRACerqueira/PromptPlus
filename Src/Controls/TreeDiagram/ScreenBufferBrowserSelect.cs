@@ -8,7 +8,7 @@ using System;
 
 namespace PPlus.Controls
 {
-    internal static class ScreenBufferSelectBrowser
+    internal static class ScreenBufferBrowserSelect
     {
         public static void WriteFilterBrowserSelect(this ScreenBuffer screenBuffer, BrowserOptions options, string input, EmacsBuffer filter)
         {

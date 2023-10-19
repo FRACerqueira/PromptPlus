@@ -278,7 +278,7 @@ namespace PPlus.Controls
             if (_filterBuffer.Length > 0)
             {
                 hasprompt = true;
-                if (_localpaginator.TryGetSelectedItem(out var showItem))
+                if (_localpaginator.TryGetSelected(out var showItem))
                 {
                     screenBuffer.WriteFilterTreeViewSelect(_options, showItem.MessagesNodes.TextItem, _filterBuffer);
                     screenBuffer.SaveCursor();
@@ -314,8 +314,8 @@ namespace PPlus.Controls
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(_options.OptDescription, _options.OptStyleSchema.Description());
             }
-            var subset = _localpaginator.ToSubset();
-            var showitem = _localpaginator.TryGetSelectedItem(out var selectedItem);
+            var subset = _localpaginator.GetPageData();
+            var showitem = _localpaginator.TryGetSelected(out var selectedItem);
             if (_options.ShowCurrentNode && !_options.OptMinimalRender)
             {
                 if (showitem)

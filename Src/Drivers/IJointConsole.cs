@@ -68,7 +68,7 @@ namespace PPlus.Drivers
         IJointConsole WriteLine(string? value = null, Style? style = null, bool clearrestofline = true);
 
         /// <summary>
-        /// Writes text line representation whie colors and Write single dash after.
+        /// Writes text line representation whie colors and Write single dash after and next.
         /// </summary>
         /// <param name="value">The value to write.</param>
         /// <param name="dashOptions"><see cref="DashOptions"/> character</param>

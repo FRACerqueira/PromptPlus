@@ -8,7 +8,7 @@ using System;
 
 namespace PPlus.Controls
 {
-    internal static class ScreenBufferSelectTreeView
+    internal static class ScreenBufferTreeViewSelect
     {
         public static void WriteFilterTreeViewSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, string input, EmacsBuffer filter)
         {

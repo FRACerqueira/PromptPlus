@@ -461,7 +461,7 @@ namespace PPlus.Controls
             if (ShowingFilter)
             {
                 _options.OptShowCursor = true;
-                if (_localpaginator.TryGetSelectedItem(out var showItem))
+                if (_localpaginator.TryGetSelected(out var showItem))
                 {
                     var item = showItem.Text;
                     screenBuffer.WriteFilterMultiSelect(_options, item, _filterBuffer);
@@ -497,7 +497,7 @@ namespace PPlus.Controls
             {
                 first = false;
             }
-            var subset = _localpaginator.ToSubset();
+            var subset = _localpaginator.GetPageData();
             foreach (var item in subset)
             {
                 if (first)
@@ -528,7 +528,7 @@ namespace PPlus.Controls
  
                 if (item.IsCheck)
                 {
-                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
+                    if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
                     {
                         screenBuffer.WriteLineIndentCheckSelect(_options, indentgroup,!first);
                         screenBuffer.WriteCheckValueSelect(_options, value);
@@ -549,7 +549,7 @@ namespace PPlus.Controls
                 }
                 else
                 {
-                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
+                    if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
                     {
                         screenBuffer.WriteLineIndentUncheckedSelect(_options, indentgroup,!first);
                         screenBuffer.WriteUncheckedValueSelect(_options, value);
@@ -707,7 +707,7 @@ namespace PPlus.Controls
                 }
                 else if (keyInfo.Value.IsPressSpaceKey())
                 {
-                    _localpaginator.TryGetSelectedItem(out var currentItem);
+                    _localpaginator.TryGetSelected(out var currentItem);
                     _filterBuffer.Clear();
                     _localpaginator.UpdateFilter(_filterBuffer.ToString(), Optional<ItemMultSelect<T>>.Create(currentItem));
                     if (currentItem != null)

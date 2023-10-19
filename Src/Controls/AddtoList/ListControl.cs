@@ -260,12 +260,12 @@ namespace PPlus.Controls
                 screenBuffer.WriteAnswer(_options, _inputBuffer.ToForward());
             }
             screenBuffer.WriteLineDescriptionList(_options, FinishResult);
-            var subset = _localpaginator.ToSubset();
+            var subset = _localpaginator.GetPageData();
             var pos = -1;
             foreach (var item in subset)
             {
                 pos++;
-                if (!item.Immutable && _localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<string>.Default.Equals(item.Text, selectedItem.Text) && pos == _localpaginator.SelectedIndex)
+                if (!item.Immutable && _localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<string>.Default.Equals(item.Text, selectedItem.Text) && pos == _localpaginator.SelectedIndex)
                 {
                     screenBuffer.WriteLineSelector(_options, item.Text);
                 }

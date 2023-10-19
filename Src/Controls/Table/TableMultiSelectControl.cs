@@ -626,7 +626,7 @@ namespace PPlus.Controls.Table
                 }
                 else if (keyInfo.Value.IsPressSpaceKey())
                 {
-                    _localpaginator.TryGetSelectedItem(out var currentItem);
+                    _localpaginator.TryGetSelected(out var currentItem);
                     _filterBuffer.Clear();
                     _localpaginator.UpdateFilter(_filterBuffer.ToString(), Optional<ItemTableRow<T>>.Create(currentItem));
                     if (currentItem != null)
@@ -1807,7 +1807,7 @@ namespace PPlus.Controls.Table
         {
 
             ArraySegment<ItemTableRow<T>> subset;
-            subset = _localpaginator.ToSubset();
+            subset = _localpaginator.GetPageData();
             var pos = 0;
             foreach (var item in subset)
             {
@@ -1816,7 +1816,7 @@ namespace PPlus.Controls.Table
                 var isseleted = false;
                 var isdisabled = false;
                 var ischeck = item.IsCheck;
-                if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemTableRow<T>>.Default.Equals(item, selectedItem))
+                if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<ItemTableRow<T>>.Default.Equals(item, selectedItem))
                 {
                     isseleted = true;
                 }

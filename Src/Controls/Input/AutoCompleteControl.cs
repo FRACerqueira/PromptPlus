@@ -281,10 +281,10 @@ namespace PPlus.Controls
             screenBuffer.WriteLineDescriptionAutoComplete(_options, FinishResult);
             if (!_autoCompleteRunning && _inputBuffer.ToString().Length >= _options.MinimumPrefixLength && _localpaginator.TotalCount > 0)
             {
-                var subset = _localpaginator.ToSubset();
+                var subset = _localpaginator.GetPageData();
                 foreach (var item in subset)
                 {
-                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<string>.Default.Equals(item, selectedItem))
+                    if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<string>.Default.Equals(item, selectedItem))
                     {
                         screenBuffer.WriteLineSelector(_options, item);
                     }

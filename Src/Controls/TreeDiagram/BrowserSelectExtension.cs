@@ -12,52 +12,50 @@ namespace PPlus
     public static partial class PromptPlus
     {
         /// <summary>
-        /// Create MultiSelect Browser Control. 
+        /// Create Browser Control. 
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
-        /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, string? description = null)
+        /// <returns><see cref="IControlBrowserSelect"/></returns>
+        public static IControlBrowserSelect Browser(string prompt, string? description = null)
         {
-            return BrowserMultiSelect(prompt, description, null);
+            return Browser(prompt, description, null);
         }
 
         /// <summary>
-        /// Create MultiSelect Browser Control. 
+        /// Create Browser Control. 
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, string description, Action<IPromptConfig> config = null)
+        /// <returns><see cref="IControlBrowserSelect"/></returns>
+        public static IControlBrowserSelect Browser(string prompt, string description, Action<IPromptConfig> config = null)
         {
-            var opt = new BrowserOptions(_styleschema, _configcontrols, _consoledrive, true)
+            var opt = new BrowserOptions(_styleschema,_configcontrols,_consoledrive, true)
             {
                 OptPrompt = prompt,
                 OptDescription = description,
                 Spinner = new Spinners(SpinnersType.Ascii, _consoledrive.IsUnicodeSupported)
             };
             config?.Invoke(opt);
-            opt.ApplyStyle(StyleControls.Answer, opt.OptStyleSchema.Answer().Overflow(Overflow.Ellipsis));
-            return new MultiSelectBrowserControl(_consoledrive, opt);
+            return new BrowserSelectControl(_consoledrive, opt);
         }
 
         /// <summary>
-        /// Create MultiSelect Browser Control. 
+        /// Create Browser Control. 
         /// </summary>
         /// <param name="prompt">The prompt text to write</param>
         ///<param name="config">The config action <see cref="IPromptConfig"/></param>
-        /// <returns><see cref="IControlMultiSelectBrowser"/></returns>
-        public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, Action<IPromptConfig> config)
+        /// <returns><see cref="IControlBrowserSelect"/></returns>
+        public static IControlBrowserSelect Browser(string prompt, Action<IPromptConfig> config)
         {
-            var opt = new BrowserOptions(_styleschema,_configcontrols,_consoledrive, true)
+            var opt = new BrowserOptions(_styleschema, _configcontrols, _consoledrive, true)
             {
                 OptPrompt = prompt,
                 Spinner = new Spinners(SpinnersType.Ascii, _consoledrive.IsUnicodeSupported)
             };
             config?.Invoke(opt);
-            opt.ApplyStyle(StyleControls.Answer, opt.OptStyleSchema.Answer().Overflow(Overflow.Ellipsis));
-            return new MultiSelectBrowserControl(_consoledrive, opt);
+            return new BrowserSelectControl(_consoledrive, opt);
         }
     }
 }

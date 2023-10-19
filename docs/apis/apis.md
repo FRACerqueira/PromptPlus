@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -94,6 +94,10 @@
 
 - [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
+- [IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
+
+- [IControlBrowserSelect](./pplus.controls.icontrolbrowserselect.md)
+
 - [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
 - [IControlChartBar](./pplus.controls.icontrolchartbar.md)
@@ -110,15 +114,11 @@
 
 - [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-- [IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
-
 - [IControlPipeline&lt;T&gt;](./pplus.controls.icontrolpipeline-1.md)
 
 - [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
 - [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
-
-- [IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
 
 - [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 

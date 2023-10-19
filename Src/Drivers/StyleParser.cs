@@ -38,6 +38,11 @@ namespace PPlus.Drivers
             var effectiveBackground = (Color?)null;
 
             var parts = text.Split(new[] { ' ' });
+            if (parts.Length == 1 && parts[0].Contains(':'))
+            {
+                var index = parts[0].IndexOf(':');
+                parts = new string[] { parts[0][..index], "on", parts[0][(index + 1)..] };
+            }
             var foreground = true;
             foreach (var part in parts)
             {

@@ -415,11 +415,11 @@ namespace PPlus.Controls
             screenBuffer.WriteLineDescriptionMaskEdit(_options, _inputBuffer.ToMasked());
             if (_options.ShowingHistory)
             {
-                var subset = _localpaginator.ToSubset();
+                var subset = _localpaginator.GetPageData();
                 foreach (var item in subset)
                 {
                     var value = item.History;
-                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemHistory>.Default.Equals(item, selectedItem))
+                    if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<ItemHistory>.Default.Equals(item, selectedItem))
                     {
                         screenBuffer.WriteLineSelector(_options, value);
                     }

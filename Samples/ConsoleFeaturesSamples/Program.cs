@@ -30,6 +30,8 @@ namespace ConsoleFeaturesSamples
             });
 
             PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+            PromptPlus.WriteLine("[RGB(255,0,0):WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+            PromptPlus.WriteLine("[RED:WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
 
             PromptPlus.Join()
                 .DoubleDash($"PromptPlus Join")

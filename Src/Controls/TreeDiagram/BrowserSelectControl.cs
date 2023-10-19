@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PPlus.Controls
 {
-    internal class MultiSelectBrowserControl : BaseControl<ItemBrowser[]>, IControlMultiSelectBrowser, IDisposable
+    internal class BrowserSelectControl : BaseControl<ItemBrowser>, IControlBrowserSelect, IDisposable
     {
         private readonly EmacsBuffer _filterBuffer = new(CaseOptions.Uppercase, modefilter: true);
         private readonly List<ItemTreeViewFlatNode<ItemBrowser>> _flatnodes;
@@ -28,14 +28,12 @@ namespace PPlus.Controls
         private Task _taskspinner;
         private bool _disposed;
         private bool _loadFolderFinish = true;
-        private List<(string UniqueId, ItemBrowser value)> _selectedItems;
         private bool _rootExpand = true;
 
-        public MultiSelectBrowserControl(IConsoleControl console, BrowserOptions options) : base(console, options)
+        public BrowserSelectControl(IConsoleControl console, BrowserOptions options) : base(console, options)
         {
             _options = options;
             _flatnodes = new();
-            _selectedItems = new();
         }
 
 
@@ -61,7 +59,7 @@ namespace PPlus.Controls
                             _taskspinner?.Wait(CancellationToken.None);
                         }
                     }
-                    _taskspinner?.Dispose();
+                    _taskspinner.Dispose();
                     _lnkcts?.Dispose();
                     _ctsesc?.Dispose();
                 }
@@ -73,33 +71,7 @@ namespace PPlus.Controls
 
         #region IControlSelectBrowser
 
-        public IControlMultiSelectBrowser AddFixedSelect(params string[] values)
-        {
-            foreach (var item in values)
-            {
-                _options.FixedSelected.Add(item);
-            }
-            return this;
-        }
-
-        public IControlMultiSelectBrowser FilterType(FilterMode value)
-        {
-            _options.FilterType = value;
-            return this;
-        }
-
-        public IControlMultiSelectBrowser DisabledRecursiveExpand(bool value = true)
-        {
-            if (_options.ExpandAll)
-            {
-                throw new PromptPlusException("DisabledRecursiveExpand cannot be used when Root setted with expandall = true");
-            }
-            _options.DisabledRecursiveExpand = value;
-            _options.ExpandAll = false;
-            return this;
-        }
-
-        public IControlMultiSelectBrowser NoSpinner(bool value = true)
+        public IControlBrowserSelect NoSpinner(bool value = true)
         {
             if (value)
             {
@@ -112,79 +84,65 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelectBrowser SelectAll(Func<ItemBrowser, bool> selectAllExpression = null)
+        public IControlBrowserSelect DisabledRecursiveExpand(bool value = true)
         {
-            _options.SelectAll = true;
-            _options.SelectAllExpression = selectAllExpression;
+            if (_options.ExpandAll)
+            {
+                throw new PromptPlusException("DisabledRecursiveExpand cannot be used when Root setted with expandall = true");
+            }
+            _options.DisabledRecursiveExpand = value;
+            _options.ExpandAll = false;
             return this;
         }
 
-        public IControlMultiSelectBrowser Range(int minvalue, int? maxvalue = null)
-        {
-            if (!maxvalue.HasValue)
-            {
-                maxvalue = _options.Maximum;
-            }
-            if (minvalue < 0)
-            {
-                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue})");
-            }
-            if (maxvalue < 0)
-            {
-                throw new PromptPlusException($"Ranger invalid. maxvalue({maxvalue})");
-            }
-            if (minvalue > maxvalue)
-            {
-                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue}) > maxvalue({maxvalue})");
-            }
-            _options.Minimum = minvalue;
-            _options.Maximum = maxvalue.Value;
-            return this;
-        }
-
-        public IControlMultiSelectBrowser AcceptHiddenAttributes(bool value = true)
+        public IControlBrowserSelect AcceptHiddenAttributes(bool value = true)
         {
             _options.AcceptHiddenAttributes = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser AcceptSystemAttributes(bool value = true)
+        public IControlBrowserSelect FilterType(FilterMode value)
+        {
+            _options.FilterType = value;
+            return this;
+        }
+        public IControlBrowserSelect AcceptSystemAttributes(bool value = true)
         {
             _options.AcceptSystemAttributes = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser AfterCollapsed(Action<ItemBrowser> value)
+        public IControlBrowserSelect AfterCollapsed(Action<ItemBrowser> value)
         {
             _options.AfterCollapsed = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser AfterExpanded(Action<ItemBrowser> value)
+        public IControlBrowserSelect AfterExpanded(Action<ItemBrowser> value)
         {
             _options.AfterExpanded = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser BeforeCollapsed(Action<ItemBrowser> value)
+        public IControlBrowserSelect BeforeCollapsed(Action<ItemBrowser> value)
         {
             _options.BeforeCollapsed = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser BeforeExpanded(Action<ItemBrowser> value)
+        public IControlBrowserSelect BeforeExpanded(Action<ItemBrowser> value)
         {
             _options.BeforeExpanded = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser Config(Action<IPromptConfig> context)
+        public IControlBrowserSelect Config(Action<IPromptConfig> context)
         {
             context?.Invoke(_options);
             return this;
         }
 
-        public IControlMultiSelectBrowser Default(string value)
+        public IControlBrowserSelect Default(string value)
         {
             if (!string.IsNullOrEmpty(_options.DefautPath))
             {
@@ -197,31 +155,30 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelectBrowser HotKeyToggleExpand(HotKey value)
+        public IControlBrowserSelect HotKeyToggleExpand(HotKey value)
         {
             _options.HotKeyToggleExpandPress = value;
             return this;
         }
-
-        public IControlMultiSelectBrowser HotKeyToggleExpandAll(HotKey value)
+        public IControlBrowserSelect HotKeyToggleExpandAll(HotKey value)
         {
             _options.HotKeyToggleExpandAllPress = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser HotKeyFullPath(HotKey value)
+        public IControlBrowserSelect HotKeyFullPath(HotKey value)
         {
             _options.HotKeyTooltipFullPath = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser OnlyFolders(bool value = true)
+        public IControlBrowserSelect OnlyFolders(bool value = true)
         {
             _options.OnlyFolders = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser PageSize(int value)
+        public IControlBrowserSelect PageSize(int value)
         {
             if (value < 1)
             {
@@ -231,7 +188,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelectBrowser Root(string value,bool expandall, Func<ItemBrowser, bool>? validselect = null, Func<ItemBrowser, bool>? setdisabled = null)
+        public IControlBrowserSelect Root(string value, bool expandall = true, Func<ItemBrowser, bool>? validselect = null, Func<ItemBrowser, bool>? setdisabled = null)
         {
             if (string.IsNullOrEmpty(value))
             {
@@ -249,49 +206,49 @@ namespace PPlus.Controls
                 }
             }
             _options.RootFolder = value;
-            _options.ExpandAll = expandall;
             _options.ExpressionSelected = validselect;
             _options.ExpressionDisabled = setdisabled;
+            _options.ExpandAll = expandall;
             return this;
         }
 
-        public IControlMultiSelectBrowser SearchFilePattern(string value)
+        public IControlBrowserSelect SearchFilePattern(string value)
         {
             _options.SearchFilePattern = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser SearchFolderPattern(string value)
+        public IControlBrowserSelect SearchFolderPattern(string value)
         {
             _options.SearchFolderPattern = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser ShowCurrentFolder(bool value = true)
+        public IControlBrowserSelect ShowCurrentFolder(bool value = true)
         {
             _options.ShowCurrentFolder = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser ShowExpand(bool value = true)
+        public IControlBrowserSelect ShowExpand(bool value = true)
         {
             _options.ShowExpand = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser ShowLines(bool value = true)
+        public IControlBrowserSelect ShowLines(bool value = true)
         {
             _options.ShowLines = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser ShowSize(bool value = true)
+        public IControlBrowserSelect ShowSize(bool value = true)
         {
             _options.ShowSize = value;
             return this;
         }
 
-        public IControlMultiSelectBrowser Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
+        public IControlBrowserSelect Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
         {
             if (spinnersType == SpinnersType.Custom && customspinner.Any())
             {
@@ -312,7 +269,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelectBrowser Styles(StyleBrowser styletype, Style value)
+        public IControlBrowserSelect Styles(StyleBrowser styletype, Style value)
         {
             value = value.Overflow(Overflow.Crop);
             switch (styletype)
@@ -357,7 +314,9 @@ namespace PPlus.Controls
                     throw new PromptPlusException($"StyleBrowser: {styletype} Not Implemented");
             }
             return this;
-       }
+
+        }
+
 
         #endregion
 
@@ -381,6 +340,7 @@ namespace PPlus.Controls
 
             FinishResult = string.Empty;
             return FinishResult;
+
         }
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
@@ -457,10 +417,7 @@ namespace PPlus.Controls
                 ConsolePlus.SetCursorPosition(CursorLeft, CursorTop);
                 ConsolePlus.Write("", _options.OptStyleSchema.Prompt(), true);
                 ConsolePlus.CursorVisible = oldcur;
-                if (_localpaginator.Count > 0)
-                {
-                    FinishResult = _localpaginator.SelectedItem.MessagesNodes.TextItem;
-                }
+                FinishResult = _localpaginator.SelectedItem.MessagesNodes.TextItem;
             }
             screenBuffer.WritePrompt(_options, "");
             var hasprompt = (_options.OptPrompt ?? string.Empty).Length > 0 && !_options.OptMinimalRender;
@@ -468,10 +425,9 @@ namespace PPlus.Controls
             if (_filterBuffer.Length > 0)
             {
                 hasprompt = true;
-                if (_localpaginator.TryGetSelectedItem(out var showItem))
+                if (_localpaginator.TryGetSelected(out var showItem))
                 {
-                    var item = showItem.Value.Name;
-                    screenBuffer.WriteFilterBrowserMultiSelect(_options, item,_filterBuffer);
+                    screenBuffer.WriteFilterBrowserSelect(_options, FinishResult, _filterBuffer);
                     if (!_options.OptMinimalRender)
                     {
                         screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
@@ -492,6 +448,7 @@ namespace PPlus.Controls
                     {
                         screenBuffer.SaveCursor();
                     }
+                    hasprompt = true;
                     screenBuffer.WriteAnswer(_options, FinishResult);
                     //try save cursor
                     screenBuffer.SaveCursor();
@@ -505,11 +462,13 @@ namespace PPlus.Controls
                 }
                 hasprompt = true;
                 screenBuffer.AddBuffer(_options.OptDescription, _options.OptStyleSchema.Description());
+                //try save cursor
+                screenBuffer.SaveCursor();
             }
-            var subset = _localpaginator.ToSubset();
+            var subset = _localpaginator.GetPageData();
             if (_options.ShowCurrentFolder)
             {
-                if (_localpaginator.TryGetSelectedItem(out var showItem))
+                if (_localpaginator.TryGetSelected(out var showItem))
                 {
                     if (hasprompt)
                     {
@@ -528,57 +487,58 @@ namespace PPlus.Controls
                     screenBuffer.SaveCursor();
                 }
             }
-            _localpaginator.TryGetSelectedItem(out var selectedItem);
+            _localpaginator.TryGetSelected(out var selectedItem);
             foreach (var item in subset)
             {
+                if (!hasprompt)
+                {
+                    screenBuffer.SaveCursor();
+                }
+
                 if (EqualityComparer<ItemTreeViewFlatNode<ItemBrowser>>.Default.Equals(item, selectedItem))
                 {
                     if (item.IsDisabled)
                     {
-                        screenBuffer.WriteLineNotDisabledMultiSelectorBrowser(_options, item);
+                        screenBuffer.WriteLineDisabledSelectorBrowser(_options, item, hasprompt);
                     }
                     else
                     {
-                        screenBuffer.WriteLineMultiSelectorBrowser(_options, item);
+                        screenBuffer.WriteLineSelectorBrowser(_options, item, hasprompt);
                     }
                 }
                 else
                 {
                     if (item.IsDisabled)
                     {
-                        screenBuffer.WriteLineDisabledNotMultiSelectorBrowser(_options, item);
+                        screenBuffer.WriteLineDisabledNotSelectorBrowser(_options, item, hasprompt);
                     }
                     else
                     {
-                        screenBuffer.WriteLineNotMultiSelectorBrowser(_options, item);
+                        screenBuffer.WriteLineNotSelectorBrowser(_options, item,hasprompt);
                     }
                 }
+                hasprompt = true;
             }
             screenBuffer.WriteLineValidate(ValidateError, _options);
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
-                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate), _selectedItems.Count);
+                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
             }
-            else
+            if (_localpaginator.TryGetSelected(out var selitem))
             {
-                screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.OptStyleSchema.TaggedInfo(), true);
-            }
-            if (_localpaginator.TryGetSelectedItem(out var selitem))
-            {
-                screenBuffer.WriteLineTooltipsMultiSelectBrowser(_options, selitem);
+                screenBuffer.WriteLineTooltipsBrowser(_options, selitem);
             }
         }
 
-        public override ResultPrompt<ItemBrowser[]> TryResult(CancellationToken cancellationToken)
+        public override ResultPrompt<ItemBrowser> TryResult(CancellationToken cancellationToken)
         {
             if (_lnkcts.IsCancellationRequested && _options.OptEnabledAbortKey)
             {
-                return new ResultPrompt<ItemBrowser[]>(Array.Empty<ItemBrowser>(), true,false);
+                return new ResultPrompt<ItemBrowser>(null, true, false);
             }
             if (ConsolePlus.CursorLeft + FinishResult.Length + 1 > ConsolePlus.BufferWidth)
             {
-                _cusorSpinner = (ConsolePlus.BufferWidth - 2, ConsolePlus.CursorTop);
+                _cusorSpinner = (ConsolePlus.BufferWidth - 1, ConsolePlus.CursorTop);
             }
             else
             {
@@ -597,7 +557,7 @@ namespace PPlus.Controls
                 {
                     cancellationToken.WaitHandle.WaitOne(10);
                 }
-                return new ResultPrompt<ItemBrowser[]>(_selectedItems.Select(x => x.value).ToArray(), _lnkcts.Token.IsCancellationRequested, true, true, false);
+                return new ResultPrompt<ItemBrowser>(_browserTreeView.CurrentNode?.Value, _lnkcts.Token.IsCancellationRequested, true, true, false);
             }
             do
             {
@@ -630,65 +590,38 @@ namespace PPlus.Controls
                     _localpaginator.Home();
                     break;
                 }
-                else if (keyInfo.Value.IsPressSpaceKey())
-                {
-                    _filterBuffer.Clear();
-                    ItemTreeViewFlatNode<ItemBrowser> currentItem = null;
-                    if (_localpaginator.SelectedIndex >= 0)
-                    {
-                        currentItem = _localpaginator.SelectedItem;
-                    }
-                    if (currentItem != null)
-                    {
-                        var fnode = _browserTreeView.FindNode(currentItem.UniqueId);
-                        if (fnode.IsMarked)
-                        {
-                            _browserTreeView.UnSelectectAll(fnode);
-                            RemoveSelectAll(fnode);
-                        }
-                        else
-                        {
-                            var aux = _selectedItems.ToArray();
-                            _browserTreeView.SelectAll(fnode);
-                            AddSelectAll(fnode);
-                            if (_selectedItems.Count > _options.Maximum)
-                            {
-                                _browserTreeView.UnSelectectAll(fnode);
-                                _selectedItems = aux.ToList();
-                                if (_filterBuffer.Length > 0)
-                                {
-                                    _filterBuffer.Clear();
-                                    _localpaginator.UpdateFilter(_filterBuffer.ToString());
-                                }
-                                SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
-                            }
-                        }
-                        LoadFlatNodes(fnode, true);
-                        break;
-                    }
-                    if (!tryagain)
-                    {
-                        break;
-                    }
-                }
-                else if (keyInfo.Value.IsPressEnterKey())
-                {
-                    if (_selectedItems.Count < _options.Minimum)
-                    {
-                        _filterBuffer.Clear();
-                        endinput = false;
-                        SetError(string.Format(Messages.MultiSelectMinSelection, _options.Minimum));
-                    }
-                    else
-                    {
-                        endinput = true;
-                    }
-                    break;
-                }
                 else if (_options.FilterType != FilterMode.Disabled && _filterBuffer.TryAcceptedReadlineConsoleKey(keyInfo.Value))
                 {
                     _localpaginator.UpdateFilter(_filterBuffer.ToString());
                     break;
+                }
+                else if (keyInfo.Value.IsPressEnterKey())
+                {
+                    if (_localpaginator.SelectedIndex >= 0)
+                    {
+                        var fnode = _browserTreeView.FindNode(_localpaginator.SelectedItem.UniqueId);
+                        if (fnode.IsDisabled)
+                        {
+                            SetError(Messages.SelectionDisabled);
+                        }
+                        else
+                        {
+                            if (!_options.ExpressionSelected?.Invoke(_localpaginator.SelectedItem.Value) ?? false)
+                            {
+                                SetError(Messages.SelectionInvalid);
+                            }
+                            else
+                            {
+                                endinput = true;
+                            }
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        SetError(string.Format(Messages.MultiSelectMinSelection, 1));
+                        break;
+                    }
                 }
                 else if (_options.HotKeyTooltipFullPath.Equals(keyInfo.Value))
                 {
@@ -697,9 +630,8 @@ namespace PPlus.Controls
                 }
                 else if (_options.HotKeyToggleExpandPress.Equals(keyInfo.Value) && _localpaginator.SelectedItem.Value.IsFolder)
                 {
-                    _filterBuffer.Clear();
                     var fnode = _browserTreeView.FindNode(_localpaginator.SelectedItem.UniqueId);
-                    if (fnode.IsExpanded && !fnode.IsRoot)
+                    if (fnode.IsExpanded && !_localpaginator.SelectedItem.IsRoot)
                     {
                         var oldcur = ConsolePlus.CursorVisible;
                         if (_options.Spinner != null)
@@ -744,7 +676,6 @@ namespace PPlus.Controls
                 }
                 else if (_options.HotKeyToggleExpandAllPress.Equals(keyInfo.Value) && _localpaginator.SelectedItem.Value.IsFolder)
                 {
-                    _filterBuffer.Clear();
                     var fnode = _browserTreeView.FindNode(_localpaginator.SelectedItem.UniqueId);
                     var IsExpand = fnode.IsExpanded;
                     if (fnode.IsRoot)
@@ -832,12 +763,6 @@ namespace PPlus.Controls
                 endinput = true;
                 abort = true;
             }
-            else if (_selectedItems.Count > _options.Maximum)
-            {
-                _filterBuffer.Clear();
-                endinput = false;
-                SetError(string.Format(Messages.MultiSelectMaxSelection, _options.Maximum));
-            }
             FinishResult = string.Empty;
             if (!string.IsNullOrEmpty(ValidateError) || endinput)
             {
@@ -848,24 +773,28 @@ namespace PPlus.Controls
             {
                 notrender = true;
             }
-            if (_selectedItems.Any())
+            if (_localpaginator.SelectedIndex >= 0)
             {
-                FinishResult = string.Join(", ", _selectedItems.Select(x => x.value.Name));
-                return new ResultPrompt<ItemBrowser[]>(_selectedItems.Select(x => x.value).ToArray(), abort, !endinput, notrender);
+                FinishResult = _localpaginator.SelectedItem.MessagesNodes.TextItem;
+                return new ResultPrompt<ItemBrowser>(_localpaginator.SelectedItem.Value, abort, !endinput, notrender);
             }
-            return new ResultPrompt<ItemBrowser[]>(Array.Empty<ItemBrowser>(), abort, !endinput, notrender);
+            return new ResultPrompt<ItemBrowser>(null, abort, !endinput,notrender);
         }
 
-        public override void FinishTemplate(ScreenBuffer screenBuffer, ItemBrowser[] result, bool aborted)
+        public override void FinishTemplate(ScreenBuffer screenBuffer, ItemBrowser result, bool aborted)
         {
             if (_options.OptMinimalRender)
             {
                 return;
             }
-            string answer = string.Join(", ", result.Select(x => x.FullPath));
+            string answer;
             if (aborted)
             {
                 answer = Messages.CanceledKey;
+            }
+            else
+            {
+                answer = result.FullPath;
             }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();
@@ -876,63 +805,17 @@ namespace PPlus.Controls
             Dispose();
         }
 
-        private void RemoveSelectAll(TreeNode<ItemBrowser> node)
-        {
-            var index = _selectedItems.FindIndex(x => x.UniqueId == node.UniqueId);
-            if (index >= 0)
-            {
-                if (!IsFixedSelect(node))
-                {
-                    _selectedItems.RemoveAt(index);
-                }
-            }
-            if (node.Childrens != null)
-            {
-                foreach (var child in node.Childrens)
-                {
-                    RemoveSelectAll(child);
-                }
-            }
-        }
-
-        private void AddSelectAll(TreeNode<ItemBrowser> node)
-        {
-            if (node == null)
-            {
-                return;
-            }
-            var index = _selectedItems.FindIndex(x => x.UniqueId == node.UniqueId);
-            if (index < 0)
-            {
-                if (node.IsSelected)
-                {
-                    _selectedItems.Add(new(node.UniqueId, node.Value));
-                }
-            }
-            if (node.Childrens != null)
-            {
-                foreach (var child in node.Childrens)
-                {
-                    AddSelectAll(child);
-                }
-            }
-        }
-
         private void LoadFlatNodes(TreeNode<ItemBrowser> defaultnodeselected, bool updatePaginator)
         {
             _flatnodes.Clear();
-            if (_browserTreeView.Root == null)
-            {
-                return;
-            }
             var nodeselect = _browserTreeView.Root;
             _flatnodes.Add(new ItemTreeViewFlatNode<ItemBrowser>
             {
                 UniqueId = nodeselect.UniqueId,
-                IsDisabled = nodeselect.IsDisabled,
                 Value = nodeselect.Value,
                 MessagesNodes = ShowItem(nodeselect),
-                IsRoot = true
+                IsRoot = true,
+                IsDisabled = nodeselect.IsDisabled
             });
             nodeselect = nodeselect.NextNode;
 
@@ -943,10 +826,10 @@ namespace PPlus.Controls
                     _flatnodes.Add(new ItemTreeViewFlatNode<ItemBrowser>
                     {
                         UniqueId = nodeselect.UniqueId,
-                        IsDisabled = nodeselect.IsDisabled,
                         Value = nodeselect.Value,
                         MessagesNodes = ShowItem(nodeselect),
-                        IsRoot = false
+                        IsRoot = false,
+                        IsDisabled = nodeselect.IsDisabled
                     });
                 }
                 nodeselect = nodeselect.NextNode;
@@ -962,15 +845,14 @@ namespace PPlus.Controls
                     IsDisabled = nodeselect.IsDisabled
                 });
             }
-
             if (updatePaginator)
             {
                 _localpaginator = new Paginator<ItemTreeViewFlatNode<ItemBrowser>>(
                     _options.FilterType,
                     _flatnodes,
                     _options.PageSize,
-                    Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(new ItemTreeViewFlatNode<ItemBrowser> { UniqueId = defaultnodeselected.UniqueId, IsDisabled = defaultnodeselected.IsDisabled,  IsRoot = defaultnodeselected.IsRoot, Value = defaultnodeselected.Value, MessagesNodes = ShowItem(defaultnodeselected) }),
-                    (item1,item2) => item1.UniqueId == item2.UniqueId,
+                    Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(new ItemTreeViewFlatNode<ItemBrowser> { UniqueId = defaultnodeselected.UniqueId, IsDisabled = defaultnodeselected.IsDisabled, IsRoot = defaultnodeselected.IsRoot, Value = defaultnodeselected.Value, MessagesNodes = ShowItem(defaultnodeselected) }),
+                    (item1, item2) => item1.UniqueId == item2.UniqueId,
                     (item) => item.Value.Name);
             }
             _browserTreeView.SetCurrentNode(nodeselect);
@@ -978,31 +860,48 @@ namespace PPlus.Controls
 
         private void FistLoadRoot(CancellationToken cancellationToken)
         {
+            Optional<ItemTreeViewFlatNode<ItemBrowser>> defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.s_empty;
             TryLoadFolder(true, null, _options.RootFolder, _options.ExpandAll, cancellationToken);
-            if (cancellationToken.IsCancellationRequested)
+            _browserTreeView.SetCurrentNode(_browserTreeView.Root);
+            if (_options.ExpandAll)
             {
-                _browserTreeView = new TreeView<ItemBrowser>(_options.ExpressionSelected)
-                {
-                    TextTree = (item) => item.Name
-                };
+                _browserTreeView.ExpandAll(_browserTreeView.Root);
             }
             else
             {
-                _browserTreeView.SetCurrentNode(_browserTreeView.Root);
-                if (_options.SelectAll)
+                _browserTreeView.Expand(_browserTreeView.Root);
+            }
+
+            LoadFlatNodes(_browserTreeView.CurrentNode, false);
+
+            var defopt = _options.DefautPath;
+
+            if (!string.IsNullOrEmpty(defopt))
+            {
+                foreach (var item in _flatnodes.Where(x => x.Value.FullPath.Equals(defopt)))
                 {
-                    _browserTreeView.SelectAll(_browserTreeView.Root, _options.SelectAllExpression);
-                }
-                if (_options.ExpandAll)
-                {
-                    _browserTreeView.ExpandAll(_browserTreeView.Root);
-                }
-                else
-                {
-                    _browserTreeView.Expand(_browserTreeView.Root);
+                    defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(item);
                 }
             }
-            InitSelectedNodes();
+            else
+            {
+                var node = _browserTreeView.Root;
+                defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(new ItemTreeViewFlatNode<ItemBrowser> { UniqueId = node.UniqueId, IsDisabled = node.IsDisabled, IsRoot = node.IsRoot, Value = node.Value, MessagesNodes = ShowItem(node) });
+            }
+
+            _localpaginator = new Paginator<ItemTreeViewFlatNode<ItemBrowser>>(
+                _options.FilterType,
+                _flatnodes,
+                _options.PageSize,
+                defvalue,
+                (item1, item2) => item1.UniqueId == item2.UniqueId,
+                (item) => item.Value.Name);
+
+            FinishResult = string.Empty;
+            if (_localpaginator.SelectedIndex >= 0)
+            {
+                FinishResult = _localpaginator.SelectedItem.MessagesNodes.TextItem;
+            }
         }
 
         private ItemShowTreeView ShowItem(TreeNode<ItemBrowser> item)
@@ -1013,7 +912,6 @@ namespace PPlus.Controls
             };
             if (item.Level == 0)
             {
-                result.TextSelected = item.IsSelected ? $" {_options.Symbol(SymbolType.Selected)} " : $" {_options.Symbol(SymbolType.NotSelect)} ";
                 return result;
             }
 
@@ -1053,11 +951,11 @@ namespace PPlus.Controls
                 {
                     if (islast)
                     {
-                        auxline[level - 1] = _options.Symbol(SymbolType.TreeLinespace); 
+                        auxline[level - 1] = _options.Symbol(SymbolType.TreeLinespace);
                     }
                     else
                     {
-                        auxline[level - 1] = _options.Symbol(SymbolType.TreeLinevertical); 
+                        auxline[level - 1] = _options.Symbol(SymbolType.TreeLinevertical);
                     }
                 }
                 else
@@ -1075,7 +973,7 @@ namespace PPlus.Controls
             {
                 result.TextLines += itemaux;
             }
-            result.TextSelected = item.IsSelected ? $" {_options.Symbol(SymbolType.Selected)} " : $" {_options.Symbol(SymbolType.NotSelect)} ";
+
             if (item.Value.IsFolder)
             {
                 if (_options.ShowSize)
@@ -1124,7 +1022,7 @@ namespace PPlus.Controls
                                     {
                                         _ = WaitKeypress(_lnkcts.Token);
                                     }
-                                    _ctsesc.Cancel();
+                                    _lnkcts.Cancel();
                                     break;
                                 }
                             }
@@ -1134,17 +1032,22 @@ namespace PPlus.Controls
                     {
                         break;
                     }
-                    if (_options.Spinner != null)
+                    var (CursorLeft, CursorTop) = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
+                    if (CursorLeft != cursor.CursorLeft || CursorTop != cursor.CursorTop)
                     {
                         ConsolePlus.SetCursorPosition(cursor.CursorLeft, cursor.CursorTop);
+                    }
+                    if (_options.Spinner != null)
+                    {
                         var spn = _options.Spinner.NextFrame(cancellationToken);
                         ConsolePlus.Write($"{spn}", _options.SpinnerStyle.Overflow(Overflow.Ellipsis), true);
                     }
+                    ConsolePlus.SetCursorPosition(CursorLeft, CursorTop);
                 }
             }
         }
 
-        private TreeNode<ItemBrowser> TryLoadFolder(bool refresh, TreeNode<ItemBrowser> node, string pathroot,bool allnodes, CancellationToken cancellationToken)
+        private TreeNode<ItemBrowser> TryLoadFolder(bool refresh, TreeNode<ItemBrowser> node, string pathroot, bool allnodes, CancellationToken cancellationToken)
         {
             if (pathroot == null)
             {
@@ -1160,7 +1063,7 @@ namespace PPlus.Controls
             else
             {
                 var rootdi = new DirectoryInfo(pathroot);
- 
+
                 node = _browserTreeView.AddRootNode(new ItemBrowser
                 {
                     CurrentFolder = rootdi.Name,
@@ -1169,18 +1072,6 @@ namespace PPlus.Controls
                     Name = rootdi.Name
                 });
                 node.IsDisabled = _options.ExpressionDisabled?.Invoke(node.Value) ?? false;
-                if (!node.IsDisabled)
-                {
-                    node.IsSelected = _options.ExpressionSelected?.Invoke(node.Value) ?? false;
-                }
-                if (!node.IsSelected)
-                {
-                    if (IsFixedSelect(node))
-                    {
-                        node.IsSelected = true;
-                        node.IsDisabled = true;
-                    }
-                }
             }
             var loadfiles = false;
             if (node.Childrens == null || refresh)
@@ -1208,7 +1099,7 @@ namespace PPlus.Controls
                         infobrowser = infobrowser.Concat(di.EnumerateFiles(_options.SearchFilePattern, SearchOption.TopDirectoryOnly));
                     }
                 }
-                catch (UnauthorizedAccessException)
+                catch  (UnauthorizedAccessException)
                 {
                     //Access error
                 }
@@ -1240,20 +1131,7 @@ namespace PPlus.Controls
                 if (item != null)
                 {
                     index++;
-                    var newnode = _browserTreeView.AddNode(node, item);
-                    newnode.IsDisabled = _options.ExpressionDisabled?.Invoke(newnode.Value) ?? false;
-                    if (!newnode.IsDisabled)
-                    {
-                        newnode.IsSelected = _options.ExpressionSelected?.Invoke(newnode.Value) ?? false;
-                    }
-                    if (!newnode.IsSelected)
-                    {
-                        if (IsFixedSelect(newnode))
-                        {
-                            newnode.IsSelected = true;
-                            newnode.IsDisabled = true;
-                        }
-                    }
+                    _browserTreeView.AddNode(node, item, _options.ExpressionDisabled?.Invoke(item) ?? false);
                 }
             }
             if (index >= 0)
@@ -1266,64 +1144,12 @@ namespace PPlus.Controls
                 {
                     foreach (var item in node.Childrens.Where(x => x.Value.IsFolder))
                     {
-                        TryLoadFolder(false, item, null, allnodes, cancellationToken);
+                        TryLoadFolder(refresh, item, null, allnodes, cancellationToken);
                     }
                 }
             }
             node.UpdateTreeLength<ItemBrowser>();
             return node;
         }
-
-        private bool IsFixedSelect(TreeNode<ItemBrowser> item)
-        {
-            if (_options.ExpressionSelected?.Invoke(item.Value) ?? true)
-            {
-                return _options.FixedSelected.Any(x => x.Equals(item.Value.FullPath, StringComparison.InvariantCultureIgnoreCase));
-            }
-            return false;
-        }
-
-        private void InitSelectedNodes()
-        {
-            Optional<ItemTreeViewFlatNode<ItemBrowser>> defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.s_empty;
-            var nodeselect = _browserTreeView.Root;
-            _selectedItems.Clear();
-            AddSelectAll(nodeselect);
-            LoadFlatNodes(_browserTreeView.CurrentNode, false);
-
-            var defopt = _options.DefautPath;
-
-            if (!string.IsNullOrEmpty(defopt))
-            {
-                foreach (var item in _flatnodes.Where(x => x.Value.FullPath.Equals(defopt)))
-                {
-                    defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(item);
-                }
-            }
-            else
-            {
-                var node = _browserTreeView.Root;
-                if (node != null)
-                {
-                    defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(new ItemTreeViewFlatNode<ItemBrowser> { UniqueId = node.UniqueId, IsDisabled = node.IsDisabled, IsRoot = node.IsRoot, Value = node.Value, MessagesNodes = ShowItem(node) });
-                }
-            }
-
-
-            _localpaginator = new Paginator<ItemTreeViewFlatNode<ItemBrowser>>(
-                _options.FilterType,
-                _flatnodes,
-                _options.PageSize,
-                defvalue,
-                (item1,item2) => item1.UniqueId == item2.UniqueId,
-                (item) => item.Value.Name);
-
-            FinishResult = string.Empty;
-            if (_localpaginator.Count > 0 &&  _localpaginator.SelectedIndex >= 0)
-            {
-                FinishResult = _localpaginator.SelectedItem.MessagesNodes.TextItem;
-            }
-        }
-
     }
 }

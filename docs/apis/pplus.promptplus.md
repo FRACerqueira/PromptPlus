@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -609,7 +609,7 @@ public static void Beep()
 Create Browser Control.
 
 ```csharp
-public static IControlSelectBrowser Browser(string prompt, string description)
+public static IControlBrowserSelect Browser(string prompt, string description)
 ```
 
 #### Parameters
@@ -622,14 +622,14 @@ The description text to write
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+[IControlBrowserSelect](./pplus.controls.icontrolbrowserselect.md)
 
 ### <a id="methods-browser"/>**Browser(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Browser Control.
 
 ```csharp
-public static IControlSelectBrowser Browser(string prompt, string description, Action<IPromptConfig> config)
+public static IControlBrowserSelect Browser(string prompt, string description, Action<IPromptConfig> config)
 ```
 
 #### Parameters
@@ -645,14 +645,14 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+[IControlBrowserSelect](./pplus.controls.icontrolbrowserselect.md)
 
 ### <a id="methods-browser"/>**Browser(String, Action&lt;IPromptConfig&gt;)**
 
 Create Browser Control.
 
 ```csharp
-public static IControlSelectBrowser Browser(string prompt, Action<IPromptConfig> config)
+public static IControlBrowserSelect Browser(string prompt, Action<IPromptConfig> config)
 ```
 
 #### Parameters
@@ -665,14 +665,14 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+[IControlBrowserSelect](./pplus.controls.icontrolbrowserselect.md)
 
 ### <a id="methods-browsermultiselect"/>**BrowserMultiSelect(String, String)**
 
 Create MultiSelect Browser Control.
 
 ```csharp
-public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, string description)
+public static IControlBrowserMultiSelect BrowserMultiSelect(string prompt, string description)
 ```
 
 #### Parameters
@@ -685,14 +685,14 @@ The description text to write
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-browsermultiselect"/>**BrowserMultiSelect(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create MultiSelect Browser Control.
 
 ```csharp
-public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, string description, Action<IPromptConfig> config)
+public static IControlBrowserMultiSelect BrowserMultiSelect(string prompt, string description, Action<IPromptConfig> config)
 ```
 
 #### Parameters
@@ -708,14 +708,14 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-browsermultiselect"/>**BrowserMultiSelect(String, Action&lt;IPromptConfig&gt;)**
 
 Create MultiSelect Browser Control.
 
 ```csharp
-public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, Action<IPromptConfig> config)
+public static IControlBrowserMultiSelect BrowserMultiSelect(string prompt, Action<IPromptConfig> config)
 ```
 
 #### Parameters
@@ -728,7 +728,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-calendar"/>**Calendar(String, Action&lt;IPromptConfig&gt;)**
 

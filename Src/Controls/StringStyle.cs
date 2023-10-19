@@ -32,7 +32,7 @@ namespace PPlus.Controls
         {
             Text = text.NormalizeNewLines();
             Style = Style.Default;
-            Width = text.GetWidth();
+            Width = text.GetLengthWidthEastAsian();
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace PPlus.Controls
         {
             Text = text.NormalizeNewLines();
             Style = style;
-            Width = text.GetWidth();
+            Width = text.GetLengthWidthEastAsian();
             SkipMarkup = false;
             ClearRestOfLine = true;
         }
@@ -64,7 +64,7 @@ namespace PPlus.Controls
         {
             Text = text.NormalizeNewLines();
             Style = style;
-            Width = text.GetWidth();
+            Width = text.GetLengthWidthEastAsian();
             SkipMarkup = skipmarkupparse;
             ClearRestOfLine = clearrestofline;
         }
