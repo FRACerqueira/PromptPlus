@@ -43,28 +43,28 @@ namespace PPlus
             }
             else
             {
-                OriginalCodePageEncode = System.Console.OutputEncoding;
+                OriginalCodePageEncode = Console.OutputEncoding;
                 var (codepagefrom, codepageto) = ConvertCodePage;
 
-                if (System.Console.OutputEncoding.CodePage.ToString() == codepageto)
+                if (Console.OutputEncoding.CodePage.ToString() == codepageto)
                 {
                     unicodesupported = true;
                 }
 
-                else if (System.Console.OutputEncoding.CodePage.ToString() == codepagefrom)
+                else if (Console.OutputEncoding.CodePage.ToString() == codepagefrom)
                 {
-                    System.Console.OutputEncoding = Encoding.GetEncoding(int.Parse(codepageto));
+                    Console.OutputEncoding = Encoding.GetEncoding(int.Parse(codepageto));
                     unicodesupported = true;
                 }
-                else if (System.Console.OutputEncoding.Equals(Encoding.Unicode))
-                {
-                    unicodesupported = true;
-                }
-                else if (System.Console.OutputEncoding.Equals(Encoding.BigEndianUnicode))
+                else if (Console.OutputEncoding.Equals(Encoding.Unicode))
                 {
                     unicodesupported = true;
                 }
-                else if (System.Console.OutputEncoding.Equals(Encoding.UTF32))
+                else if (Console.OutputEncoding.Equals(Encoding.BigEndianUnicode))
+                {
+                    unicodesupported = true;
+                }
+                else if (Console.OutputEncoding.Equals(Encoding.UTF32))
                 {
                     unicodesupported = true;
                 }
@@ -91,9 +91,19 @@ namespace PPlus
             Thread.CurrentThread.CurrentCulture = AppConsoleCulture;
             if (!IsRunningInUnitTest)
             {
-                System.Console.OutputEncoding = OriginalCodePageEncode;
+                Console.OutputEncoding = OriginalCodePageEncode;
             }
             ResetColor();
+        }
+
+        /// <summary>
+        /// Start Join Commands
+        /// </summary>
+        /// <returns><see cref="IJointConsole"/></returns>
+        public static IJointConsole Join()
+        {
+            var ctrl = new JoinConsoleControl();
+            return ctrl;
         }
 
         /// <summary>
@@ -190,7 +200,11 @@ namespace PPlus
         /// </summary>
         public static bool RunOnBuffer(TargetBuffer value, Action<CancellationToken> customaction, ConsoleColor? defaultforecolor = null, ConsoleColor? defaultbackcolor = null, CancellationToken? cancellationToken = null)
         {
-            return _consoledrive.OnBuffer(value,customaction,defaultforecolor,defaultbackcolor,cancellationToken);
+            var curbackcolor = BackgroundColor;
+            _styleschema.UpdateBackgoundColor(Color.FromConsoleColor(defaultbackcolor ?? curbackcolor));
+            var aux =  _consoledrive.OnBuffer(value,customaction,defaultforecolor,defaultbackcolor,cancellationToken);
+            _styleschema.UpdateBackgoundColor(Color.FromConsoleColor(curbackcolor));
+            return aux;
         }
 
         internal static bool IsControlText
@@ -204,7 +218,7 @@ namespace PPlus
         /// </summary>
         /// <param name="forecorlor">The <see cref="Color"/> ForegroundColor</param>
         /// <param name="background">The <see cref="Color"/> BackgroundColor</param>
-        public static void ConsoleDefaultColor(Color forecorlor, Color background)
+        public static void DefaultColor(Color forecorlor, Color background)
         {
             _consoledrive.ForegroundColor = forecorlor;
             _consoledrive.BackgroundColor = background;

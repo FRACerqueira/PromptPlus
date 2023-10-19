@@ -11,7 +11,11 @@ namespace PPlus.Controls
     {
         public static void WriteLineDescriptionInput(this ScreenBuffer screenBuffer, InputOptions options, string input)
         {
-            var result = options.OptDescription;
+            string result = string.Empty;
+            if (!options.OptMinimalRender)
+            {
+                result = options.OptDescription;
+            }
             if (options.ChangeDescription != null)
             {
                 result = options.ChangeDescription.Invoke(input);

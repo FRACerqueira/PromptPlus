@@ -4,39 +4,26 @@
 // ***************************************************************************************
 
 using PPlus.Controls.Objects;
-using System;
-using System.Globalization;
 
 namespace PPlus.Controls
 {
     internal static class ScreenBufferMaskEditList
     {
-        public static void WriteLineDescriptionMaskEditList(this ScreenBuffer screenBuffer, MaskEditListOptions options, string input, string tooltips)
+        public static void WriteLineDescriptionMaskEditList(this ScreenBuffer screenBuffer, MaskEditListOptions options, string input)
         {
-            var result = options.OptDescription;
+            string result = string.Empty;
+            if (!options.OptMinimalRender)
+            {
+                result = options.OptDescription;
+            }
             if (options.ChangeDescription != null)
             {
                 result = options.ChangeDescription.Invoke(input);
             }
-            var extradesc = GetExtraDescriptionMaskEdit(options, input, tooltips);
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
-                if (!string.IsNullOrEmpty(extradesc))
-                {
-                    screenBuffer.AddBuffer(", ", options.OptStyleSchema.Description(), true, false);
-                    screenBuffer.AddBuffer($"Tip: {extradesc}", options.TypeTipStyle, true,false);
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(extradesc))
-                {
-                    screenBuffer.NewLine();
-                    screenBuffer.AddBuffer($"Tip: {extradesc}", options.TypeTipStyle, true);
-                }
-
             }
         }
 
@@ -57,33 +44,6 @@ namespace PPlus.Controls
                     screenBuffer.AddBuffer(tp, options.OptStyleSchema.Tooltips(), smk);
                 }
             }
-        }
-
-        private static string GetExtraDescriptionMaskEdit(MaskEditOptions value, string input, string tooltips)
-        {
-            if (!value.DescriptionWithInputType)
-            {
-                return string.Empty;
-            }
-            var wd = string.Empty;
-            if (value.ShowDayWeek != FormatWeek.None && (value.Type == ControlMaskedType.DateOnly || value.Type == ControlMaskedType.DateTime))
-            {
-                if (DateTime.TryParse(input, value.CurrentCulture, DateTimeStyles.None, out var dtaux))
-                {
-                    var fmt = "ddd";
-                    if (value.ShowDayWeek == FormatWeek.Long)
-                    {
-                        fmt = "dddd";
-                    }
-                    wd = $"({dtaux.ToString(fmt, value.CurrentCulture)})";
-                }
-            }
-            if (!string.IsNullOrEmpty(wd) || !string.IsNullOrEmpty(tooltips))
-            {
-                var aux = $"{tooltips ?? string.Empty} {wd}".Trim();
-                return aux;
-            }
-            return string.Empty;
         }
 
         private static string DefaultToolTipMaskEditList(MaskEditListOptions baseOptions, bool isInAutoCompleteMode, bool isEditMode, bool hasselected)

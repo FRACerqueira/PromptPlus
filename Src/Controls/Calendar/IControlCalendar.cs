@@ -99,7 +99,8 @@ namespace PPlus.Controls
         IControlCalendar HotKeySwitchNotes(HotKey value);
 
         /// <summary>
-        /// Set max.item view per page on notes.Default value for this control is 5.
+        /// Set max.item notes view per page.
+        /// <br>Default value : 5.The value must be greater than or equal to 1</br>
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlCalendar"/></returns>

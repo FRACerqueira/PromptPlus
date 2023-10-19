@@ -90,6 +90,12 @@ namespace PPlus.Controls
 
         #region IControlList
 
+        public IControlList ChangeDescription(Func<string, string> value)
+        {
+            _options.ChangeDescription = value;
+            return this;
+        }
+
         public IControlList Interaction<T>(IEnumerable<T> values, Action<IControlList, T> action)
         {
             foreach (var item in values)
@@ -136,6 +142,10 @@ namespace PPlus.Controls
 
         public IControlList MaxLength(ushort value)
         {
+            if (value < 1)
+            {
+                throw new PromptPlusException("MaxLength must be greater than 0");
+            }
             _options.MaxLength = value;
             return this;
         }
@@ -165,7 +175,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -185,15 +195,15 @@ namespace PPlus.Controls
             }
             if (minvalue < 0)
             {
-                minvalue = 0;
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue})");
             }
             if (maxvalue < 0)
             {
-                maxvalue = minvalue;
+                throw new PromptPlusException($"Ranger invalid. maxvalue({maxvalue})");
             }
             if (minvalue > maxvalue)
             {
-                throw new PromptPlusException($"RangerSelect invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue}) > maxvalue({maxvalue})");
             }
             _options.Minimum = minvalue;
             _options.Maximum = maxvalue.Value;
@@ -217,6 +227,10 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<string> result, bool aborted)
         {
+            if (_options.OptMinimalRender)
+            {
+                return;
+            }
             string answer = string.Join(", ", result);
             if (aborted)
             {
@@ -237,7 +251,7 @@ namespace PPlus.Controls
             }
             else
             {
-                if (_editingItem >= 0)
+                if (_editingItem >= 0 && !_options.OptMinimalRender)
                 {
                     screenBuffer.WriteTaggedInfo(_options, $"({Messages.EditMode}) ");
                 }
@@ -246,19 +260,12 @@ namespace PPlus.Controls
                 screenBuffer.WriteAnswer(_options, _inputBuffer.ToForward());
             }
             screenBuffer.WriteLineDescriptionList(_options, FinishResult);
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            screenBuffer.WriteLineTooltipsList(_options, _isInAutoCompleteMode, _editingItem >=0, _localpaginator.SelectedIndex >=0);
-            var subset = _localpaginator.ToSubset();
-            if (subset.Count > 0)
-            {
-                screenBuffer.NewLine();
-                screenBuffer.AddBuffer(Messages.AddedItems, _options.OptStyleSchema.TaggedInfo());
-            }
+            var subset = _localpaginator.GetPageData();
             var pos = -1;
             foreach (var item in subset)
             {
                 pos++;
-                if (!item.Immutable && _localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<string>.Default.Equals(item.Text, selectedItem.Text) && pos == _localpaginator.SelectedIndex)
+                if (!item.Immutable && _localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<string>.Default.Equals(item.Text, selectedItem.Text) && pos == _localpaginator.SelectedIndex)
                 {
                     screenBuffer.WriteLineSelector(_options, item.Text);
                 }
@@ -278,9 +285,11 @@ namespace PPlus.Controls
             {
                 if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
                 }
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
+            screenBuffer.WriteLineTooltipsList(_options, _isInAutoCompleteMode, _editingItem >= 0, _localpaginator.SelectedIndex >= 0);
         }
 
         public override ResultPrompt<IEnumerable<string>> TryResult(CancellationToken cancellationToken)
@@ -340,7 +349,7 @@ namespace PPlus.Controls
                     _editingItem = -1;
                 }
                 //edit Item selected
-                else if (_options.EditItemPress.Equals(keyInfo.Value) && _editingItem < 0 && _localpaginator.SelectedIndex >= 0)
+                else if (_options.EditItemPress.Equals(keyInfo.Value) && _editingItem < 0 && _localpaginator.SelectedIndex >= 0 && !_localpaginator.SelectedItem.Immutable)
                 {
                     _inputBuffer.Clear().LoadPrintable(_localpaginator.SelectedItem.Text);
                     _editingItem = _localpaginator.SelectedIndex;
@@ -359,27 +368,30 @@ namespace PPlus.Controls
                     {
                         _localpaginator = new Paginator<ItemListControl>(
                             FilterMode.StartsWith,
-                            _options.Items, 
-                            _options.PageSize, 
+                            _options.Items,
+                            _options.PageSize,
                             Optional<ItemListControl>.s_empty,
                             (item1, item2) => item1.UniqueId == item2.UniqueId,
                             (item) => item.Text,
                             (item) => !item.Immutable);
-                        _inputBuffer.Clear();
+                        _localpaginator.UnSelected();
                     }
-                    if (pos > _options.Items.Count - 1)
+                    else
                     {
-                        pos = _options.Items.Count - 1;
+                        if (pos > _options.Items.Count - 1)
+                        {
+                            pos = _options.Items.Count - 1;
+                        }
+                        var item = _options.Items[pos];
+                        _localpaginator = new Paginator<ItemListControl>(
+                            FilterMode.StartsWith,
+                            _options.Items,
+                            _options.PageSize,
+                            Optional<ItemListControl>.Create(item),
+                            (item1, item2) => item1.UniqueId == item2.UniqueId,
+                            (item) => item.Text,
+                            (item) => !item.Immutable);
                     }
-                    var item = _options.Items[pos];
-                    _localpaginator = new Paginator<ItemListControl>(
-                        FilterMode.StartsWith,
-                        _options.Items, 
-                        _options.PageSize, 
-                        Optional<ItemListControl>.Create(item),
-                        (item1, item2) => item1.UniqueId == item2.UniqueId,
-                        (item) => item.Text,
-                        (item) => !item.Immutable);
                     _inputBuffer.Clear();
                     _editingItem = -1;
                 }
@@ -504,7 +516,10 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));

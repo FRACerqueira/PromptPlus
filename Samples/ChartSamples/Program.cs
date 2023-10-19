@@ -75,7 +75,6 @@ PromptPlus
     .AddItem("Label1", 10)
     .AddItem("Label2", 20)
     .AddItem("Label3", 30)
-    .PadLeft(2)
     .HideValue()
     .ShowLegends(true,false)
     .Styles(StyleChart.Title, Style.Default.Foreground(Color.Turquoise4))
@@ -109,7 +108,7 @@ PromptPlus
         index++;
     })
     .ShowLegends()
-    .EnabledInteractionUser(true,true,true)
+    .EnabledInteractionUser(true, true, true)
     .PageSize(3)
     .Run();
 
@@ -135,7 +134,6 @@ foreach (var item in auxc)
         .AddItem("Label1", 10)
         .AddItem("Label2", 20)
         .AddItem("Label3", 30)
-        .PadLeft(2)
         .HideOrdination()
         .HideValue()
         .ShowLegends(true, false)
@@ -143,6 +141,7 @@ foreach (var item in auxc)
         .Styles(StyleChart.Percent, Style.Default.Foreground(Color.IndianRed))
         .Styles(StyleChart.Value, Style.Default.Foreground(Color.Aqua))
         .Run();
+
     PromptPlus
         .KeyPress()
         .Config(cfg =>

@@ -122,7 +122,7 @@ namespace PPlus.Tests.Controls.TaskProgressBar
                 {
                     cfg.Tooltips("CustomTooltip");
                 })
-                .UpdateHandler((prgbar, _) => { prgbar.Finish = true; });
+                .UpdateHandler((prgbar, _) => { Thread.Sleep(500); prgbar.Finish = true; });
 
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
 
@@ -389,7 +389,7 @@ namespace PPlus.Tests.Controls.TaskProgressBar
                 .Culture("en-US")
                 .Default(20.2)
                 .FracionalDig(2)
-                .UpdateHandler((prgbar, cts) => { prgbar.Finish = true; });
+                .UpdateHandler((prgbar, cts) => { Thread.Sleep(500); prgbar.Finish = true; });
 
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
 
@@ -415,7 +415,7 @@ namespace PPlus.Tests.Controls.TaskProgressBar
                 .Culture("pt-BR")
                 .Default(20.2)
                 .FracionalDig(2)
-                .UpdateHandler((prgbar, cts) => { prgbar.Finish = true; });
+                .UpdateHandler((prgbar, cts) => { Thread.Sleep(500); prgbar.Finish = true; });
 
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
 

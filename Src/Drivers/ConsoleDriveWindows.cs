@@ -39,7 +39,9 @@ namespace PPlus.Drivers
         {
             get
             {
+                #pragma warning disable CA1416
                 return Console.CursorVisible;
+                #pragma warning restore CA1416
             }
             set
             {
@@ -327,7 +329,7 @@ namespace PPlus.Drivers
                     }
                     if (part != null)
                     {
-                        pos += part.GetWidth();
+                        pos += part.GetLengthWidthEastAsian();
                         switch (overflow)
                         {
                             case Overflow.None:

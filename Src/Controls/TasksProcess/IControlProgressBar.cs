@@ -74,7 +74,7 @@ namespace PPlus.Controls
         IControlProgressBar<T> Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
         /// <summary>
-        /// Define Width to ProgressBar. Default value is 80.
+        /// Define Width to ProgressBar. Default value is 80.The value must be greater than or equal to 10.
         /// </summary>
         /// <param name="value">Width</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>

@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -247,7 +247,8 @@ The timeout for valid items saved. Default value is 365 days
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page on notes.Default value for this control is 5.
+Set max.item notes view per page.
+ <br>Default value : 5.The value must be greater than or equal to 1
 
 ```csharp
 IControlCalendar PageSize(int value)

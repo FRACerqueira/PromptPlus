@@ -24,6 +24,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Default value when stated.
+        /// <br>Default cannot be used with IsSecret</br>
         /// </summary>
         /// <param name="value">Value default</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -31,6 +32,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Overwrite default start value with last result saved on history.
+        /// <br>OverwriteDefaultFrom cannot be used with IsSecret</br>
         /// </summary>
         /// <param name="value">name of file to save history</param>
         /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
@@ -53,7 +55,8 @@ namespace PPlus.Controls
         IControlInput AcceptInput(Func<char, bool> value);
 
         /// <summary>
-        /// MaxLength of input text.
+        /// MaxLength of input text.The value must be greater than or equal to 1
+        /// <br>Default value is 0 (no limit)</br>
         /// </summary>
         /// <param name="value">Length</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -61,6 +64,11 @@ namespace PPlus.Controls
 
         /// <summary>
         /// The input is a secret. the input text is masked to '#' (default value)
+        /// <br>Input secret cannot be used with suggestionhandler</br>
+        /// <br>Input secret cannot be used with DefaultEmptyValue</br>
+        /// <br>Input secret cannot be used with DefaultValue</br>
+        /// <br>Input secret cannot be used with OverwriteDefaultFrom</br>
+        /// <br>Input secret cannot be used with HistoryEnabled</br>
         /// </summary>
         /// <param name="value">char secret</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -104,6 +112,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add Suggestion Handler feature
+        /// <br>SuggestionHandler cannot be used with IsSecret</br>
         /// </summary>
         /// <param name="value">function to apply suggestions. <see cref="SuggestionInput"/> and <seealso cref="SuggestionOutput"/></param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -112,6 +121,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Minimum chars to enabled history feature. Default value is 0.
         /// <br>History items are filtered by the starts with entry.</br>
+        /// <br>When command FilterType set to <see cref="FilterMode"/> Disabled History items the value must be zero</br>
         /// </summary>
         /// <param name="value">Minimum chars number</param>
         /// <returns><see cref="IControlInput"/></returns>
@@ -119,6 +129,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Enabled saved history inputs.
+        /// <br>HistoryEnabled cannot be used with IsSecret</br>
         /// <br>The history file is saved in <see cref="Environment.SpecialFolder.UserProfile"/> in the 'PromptPlus.History' folder.</br> 
         /// </summary>
         /// <param name="value">name of file to saved history</param>
@@ -150,9 +161,11 @@ namespace PPlus.Controls
         /// <summary>
         /// Filter strategy for filter items in History colletion
         /// <br>Default value is FilterMode.StartsWith</br>
+        /// <br>When <see cref="FilterMode"/> is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>
         /// <returns><see cref="IControlInput"/></returns>
         IControlInput FilterType(FilterMode value);
+
     }
 }

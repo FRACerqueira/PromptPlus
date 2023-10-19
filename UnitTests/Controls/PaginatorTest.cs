@@ -1,7 +1,5 @@
 ﻿// ***************************************************************************************
 // MIT LICENCE
-// Copyright (c) 2019 shibayan.
-// https://github.com/shibayan/Sharprompt
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
@@ -60,7 +58,7 @@ namespace PPlus.Tests.Controls
             }
             // When
             var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 3, Optional<string>.s_empty, null);
-            pg.ToSubset();
+            pg.GetPageData();
             // Then
             Assert.Equal(0, pg.SelectedPage);
             Assert.Equal(3, pg.Count);
@@ -293,7 +291,7 @@ namespace PPlus.Tests.Controls
             var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.s_empty, null);
             // When
             pg.UpdateFilter("10");
-            var ok = pg.TryGetSelectedItem(out var result);
+            var ok = pg.TryGetSelected(out var result);
             // Then
             Assert.Equal(0, pg.SelectedIndex);
             Assert.Equal(0, pg.SelectedPage);

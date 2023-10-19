@@ -60,7 +60,7 @@ namespace PPlus.Controls
         /// <param name="value">text of masked.</param>
         /// <param name="promptmask">Prompt mask overwriter. Default value is '■'/'_'</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
-        IControlMaskEdit Mask(string value = null, char? promptmask = null);
+        IControlMaskEdit Mask(string value, char? promptmask = null);
 
         /// <summary>
         /// Defines type of mask control.
@@ -140,11 +140,11 @@ namespace PPlus.Controls
         IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal);
 
         /// <summary>
-        /// Append to description the tip of type input. 
+        /// Show the tip of type input. 
         /// </summary>
         /// <param name="week">show name of week for type date. <see cref="FormatWeek"/></param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
-        IControlMaskEdit DescriptionWithInputType(FormatWeek week = FormatWeek.None);
+        IControlMaskEdit ShowTipInputType(FormatWeek week = FormatWeek.None);
 
         /// <summary>
         /// Default value (with mask!) when stated.
@@ -205,8 +205,9 @@ namespace PPlus.Controls
         IControlMaskEdit SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value);
 
         /// <summary>
-        /// Minimum chars (without mask!) to enabled history feature.
+        /// Minimum chars to enabled history feature. Default value is 0.
         /// <br>History items are filtered by the starts with entry.</br>
+        /// <br>When command FilterType set to <see cref="FilterMode"/> Disabled History items the value must be zero</br>
         /// </summary>
         /// <param name="value">Minimum chars number</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
@@ -245,6 +246,7 @@ namespace PPlus.Controls
         /// <summary>
         /// Filter strategy for filter items in History colletion
         /// <br>Default value is FilterMode.StartsWith</br>
+        /// <br>When <see cref="FilterMode"/> is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero</br>
         /// </summary>
         /// <param name="value">Filter Mode</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>

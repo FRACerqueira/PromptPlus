@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -189,23 +189,6 @@ Valid only for type MaskedType.Number or MaskedType.Currency, otherwise this set
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-descriptionwithinputtype"/>**DescriptionWithInputType(FormatWeek)**
-
-Append to description the tip of type input.
-
-```csharp
-IControlMaskEdit DescriptionWithInputType(FormatWeek week)
-```
-
-#### Parameters
-
-`week` [FormatWeek](./pplus.controls.formatweek.md)<br>
-show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
 ### <a id="methods-fillzeros"/>**FillZeros(Boolean)**
 
 Fill zeros mask.Default false.
@@ -227,7 +210,7 @@ Fill zeros mask
 ### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
 Filter strategy for filter items in History colletion
- <br>Default value is FilterMode.StartsWith
+ <br>Default value is FilterMode.StartsWith<br>When  is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero
 
 ```csharp
 IControlMaskEdit FilterType(FilterMode value)
@@ -315,8 +298,8 @@ maximum items saved
 
 ### <a id="methods-historyminimumprefixlength"/>**HistoryMinimumPrefixLength(Int32)**
 
-Minimum chars (without mask!) to enabled history feature.
- <br>History items are filtered by the starts with entry.
+Minimum chars to enabled history feature. Default value is 0.
+ <br>History items are filtered by the starts with entry.<br>When command FilterType set to  Disabled History items the value must be zero
 
 ```csharp
 IControlMaskEdit HistoryMinimumPrefixLength(int value)
@@ -474,6 +457,23 @@ IControlMaskEdit PositiveStyle(Style value)
 
 `value` [Style](./pplus.style.md)<br>
 Style
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
+### <a id="methods-showtipinputtype"/>**ShowTipInputType(FormatWeek)**
+
+Show the tip of type input.
+
+```csharp
+IControlMaskEdit ShowTipInputType(FormatWeek week)
+```
+
+#### Parameters
+
+`week` [FormatWeek](./pplus.controls.formatweek.md)<br>
+show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 #### Returns
 

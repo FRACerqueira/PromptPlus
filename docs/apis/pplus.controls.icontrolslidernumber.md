@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -217,6 +217,7 @@ The [LayoutSliderNumber](./pplus.controls.layoutslidernumber.md)
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
+ <br>OverwriteDefaultFrom cannot be used with IsSecret
 
 ```csharp
 IControlSliderNumber OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
@@ -232,7 +233,7 @@ The timeout for valid items saved. Default value is 365 days
 
 #### Returns
 
-[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
+[IControlInput](./pplus.controls.icontrolinput.md)
 
 ### <a id="methods-range"/>**Range(Double, Double)**
 
@@ -273,7 +274,7 @@ short step to change
 
 ### <a id="methods-width"/>**Width(Int32)**
 
-Define Width to Widgets. Default value is 40.
+Define Width to Widgets. Default value is 40.The value must be greater than or equal to 10.
 
 ```csharp
 IControlSliderNumber Width(int value)

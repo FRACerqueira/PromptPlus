@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -110,6 +110,23 @@ IControlList AllowDuplicate(bool value)
 
 `value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 Allow duplicate items
+
+#### Returns
+
+[IControlList](./pplus.controls.icontrollist.md)
+
+### <a id="methods-changedescription"/>**ChangeDescription(Func&lt;String, String&gt;)**
+
+Dynamically change the description using a user role
+
+```csharp
+IControlList ChangeDescription(Func<String, String> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;String, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
+function to apply change
 
 #### Returns
 
@@ -227,7 +244,8 @@ Action to execute
 
 ### <a id="methods-maxlength"/>**MaxLength(UInt16)**
 
-MaxLength of input text.
+MaxLength of input text.The value must be greater than or equal to 1
+ <br>Default value is 0 (no limit)
 
 ```csharp
 IControlList MaxLength(ushort value)
@@ -244,7 +262,8 @@ Length
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page.Default value for this control is 10.
+Set max.item view per page.
+ <br>Default value : 10.The value must be greater than or equal to 1
 
 ```csharp
 IControlList PageSize(int value)

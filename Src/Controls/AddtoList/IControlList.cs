@@ -48,7 +48,8 @@ namespace PPlus.Controls
         IControlList AcceptInput(Func<char, bool> value);
 
         /// <summary>
-        /// MaxLength of input text.
+        /// MaxLength of input text.The value must be greater than or equal to 1
+        /// <br>Default value is 0 (no limit)</br>
         /// </summary>
         /// <param name="value">Length</param>
         /// <returns><see cref="IControlList"/></returns>
@@ -93,7 +94,8 @@ namespace PPlus.Controls
         IControlList AddItems(IEnumerable<string> values, bool immutable = false);
 
         /// <summary>
-        /// Set max.item view per page.Default value for this control is 10.
+        /// Set max.item view per page.
+        /// <br>Default value : 10.The value must be greater than or equal to 1</br>
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlList"/></returns>
@@ -127,6 +129,13 @@ namespace PPlus.Controls
         /// <param name="value">The <see cref="HotKey"/> to remove item</param>
         /// <returns><see cref="IControlList"/></returns>
         IControlList HotKeyRemoveItem(HotKey value);
+
+        /// <summary>
+        /// Dynamically change the description using a user role
+        /// </summary>
+        /// <param name="value">function to apply change</param>
+        /// <returns><see cref="IControlList"/></returns>
+        IControlList ChangeDescription(Func<string, string> value);
 
     }
 }

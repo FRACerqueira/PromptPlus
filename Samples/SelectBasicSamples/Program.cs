@@ -111,8 +111,8 @@ namespace SelectSamples
 
             PromptPlus.DoubleDash("Control:Select - Using Interaction");
             PromptPlus.Select<string>("Select")
-                .Interaction(MyCities(),(ctrl,item) => 
-                { 
+                .Interaction(MyCities(), (ctrl, item) =>
+                {
                     ctrl.AddItem(item.City);
                 })
                 .Run();
@@ -131,16 +131,14 @@ namespace SelectSamples
                  .AddItem("Other city")
                  .Run();
 
-
             PromptPlus.DoubleDash("Control:Select - basic usage with group and AppendGroupOnDescription");
             PromptPlus.Select<string>("Which cities would you like to visit?")
                  .AddItemsGrouped("North America", new[] { "Seattle", "Boston", "New York" })
                  .AddItemsGrouped("Asia", new[] { "Tokyo", "Singapore", "Shanghai" })
                  .AddItem("South America (Any)")
                  .AddItem("Europe (Any)")
-                 .AppendGroupOnDescription()
+                 .ShowTipGroup()
                  .Run();
-
 
             PromptPlus.DoubleDash("For other basic features below see - input samples (same behavior)");
             PromptPlus.WriteLine(". [yellow]ChangeDescription[/] - InputBasicSamples");

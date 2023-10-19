@@ -47,7 +47,15 @@ internal class Program
 
         var instmyclass = new Myclass() { Qtd = 1, Text = "" };
 
-        PromptPlus.DoubleDash("CControl:Input - with import validator");
+        using (PromptPlus.EscapeColorTokens())
+        {
+            PromptPlus.DoubleDash("Control:Input - with import validator");
+            PromptPlus.WriteLine("[MinLength(4)]");
+            PromptPlus.WriteLine("[MaxLength(6)]");
+            PromptPlus.WriteLine("public string? Text { get; set; }");
+            PromptPlus.WriteLine("");
+        }
+
         PromptPlus
             .Input("Input sample2", "import validator from decorate")
             .Default(instmyclass.Text)

@@ -19,7 +19,6 @@ namespace PPlus.Controls.Objects
             MoveYear  = PromptPlusResources.MoveYear;
             TooltipToggleNotes = PromptPlusResources.TooltipToggleNotes;
             TooltipPagesNotes = PromptPlusResources.TooltipPagesNotes;
-            ShowingNotes = PromptPlusResources.ShowingNotes;
             TooltipOrder = PromptPlusResources.TooltipOrder;
             OrderHighest = PromptPlusResources.OrderHighest;
             OrderLabelAsc = PromptPlusResources.OrderLabelAsc;
@@ -32,9 +31,6 @@ namespace PPlus.Controls.Objects
             TooltipChart = PromptPlusResources.TooltipChart;
             ValidAnyKey = PromptPlusResources.ValidAnyKey;
             PaginatorHome = PromptPlusResources.PaginatorHome;
-            AddedItems = PromptPlusResources.AddedItems;
-            Done = PromptPlusResources.Done;
-            Wait = PromptPlusResources.Wait;
             SelectionInvalid = PromptPlusResources.SelectionInvalid;
             SelectionDisabled = PromptPlusResources.SelectionDisabled;
             TooltipFullPath = PromptPlusResources.TooltipFullPath;
@@ -42,8 +38,6 @@ namespace PPlus.Controls.Objects
             TooltipToggleExpandAllPress = PromptPlusResources.TooltipToggleExpandAllPress;
             TooltipToggleExpandPress = PromptPlusResources.TooltipToggleExpandPress;
             CurrentFolder = PromptPlusResources.CurrentFolder;
-            Loading = PromptPlusResources.Loading;
-            Task = PromptPlusResources.Task;
             InputFinishEnter = PromptPlusResources.InputFinishEnter;
             ListMaxSelection = PromptPlusResources.ListMaxSelection;
             ListMinSelection = PromptPlusResources.ListMinSelection;
@@ -63,9 +57,7 @@ namespace PPlus.Controls.Objects
             TooltipInvertSelectAll = PromptPlusResources.TooltipInvertSelectAll;
             TooltipPressSpace = PromptPlusResources.TooltipPressSpace;
             Group = PromptPlusResources.Group;
-            Answers = PromptPlusResources.Answers;
             Filter = PromptPlusResources.Filter;
-            Tagged = PromptPlusResources.Checked;
             MultiSelectMaxSelection = PromptPlusResources.MultiSelectMaxSelection;
             MultiSelectMinSelection = PromptPlusResources.MultiSelectMinSelection;
             YesChar = PromptPlusResources.YesChar;
@@ -114,7 +106,6 @@ namespace PPlus.Controls.Objects
         public static string MoveYear { get; private set; } = PromptPlusResources.MoveYear;
         public static string TooltipToggleNotes { get; private set; } = PromptPlusResources.TooltipToggleNotes;
         public static string TooltipPagesNotes { get; private set; } = PromptPlusResources.TooltipPagesNotes;
-        public static string ShowingNotes { get; private set; } = PromptPlusResources.ShowingNotes;
         public static string OrderHighest { get; private set; } = PromptPlusResources.OrderHighest;
         public static string OrderLabelAsc { get; private set; } = PromptPlusResources.OrderLabelAsc;
         public static string OrderLabelDec { get; private set; } = PromptPlusResources.OrderLabelDec;
@@ -127,9 +118,6 @@ namespace PPlus.Controls.Objects
         public static string TooltipChart { get; private set; } = PromptPlusResources.TooltipChart;
         public static string ValidAnyKey { get; private set; } = PromptPlusResources.ValidAnyKey;
         public static string PaginatorHome { get; private set; } = PromptPlusResources.PaginatorHome;
-        public static string AddedItems { get; private set; } = PromptPlusResources.AddedItems;
-        public static string Done { get; private set; } = PromptPlusResources.Done;
-        public static string Wait { get; private set; } = PromptPlusResources.Wait;
         public static string SelectionInvalid { get; private set; } = PromptPlusResources.SelectionInvalid;
         public static string SelectionDisabled { get; private set; } = PromptPlusResources.SelectionDisabled;
         public static string TooltipFullPath { get; private set; } = PromptPlusResources.TooltipFullPath;
@@ -137,8 +125,6 @@ namespace PPlus.Controls.Objects
         public static string TooltipToggleExpandAllPress { get; private set; } = PromptPlusResources.TooltipToggleExpandAllPress;
         public static string TooltipToggleExpandPress { get; private set; } = PromptPlusResources.TooltipToggleExpandPress;
         public static string CurrentFolder { get; private set; } = PromptPlusResources.CurrentFolder;
-        public static string Loading { get; private set; } = PromptPlusResources.Loading;
-        public static string Task { get; private set; } = PromptPlusResources.Task;
         public static string InputFinishEnter { get; private set; } = PromptPlusResources.InputFinishEnter;
         public static string ListMaxSelection { get; private set; } = PromptPlusResources.ListMaxSelection;
         public static string ListMinSelection { get; private set; } = PromptPlusResources.ListMinSelection;
@@ -158,9 +144,7 @@ namespace PPlus.Controls.Objects
         public static string TooltipInvertSelectAll { get; private set; } = PromptPlusResources.TooltipInvertSelectAll;
         public static string TooltipPressSpace { get; private set; } = PromptPlusResources.TooltipPressSpace;
         public static string Group { get; private set; } = PromptPlusResources.Group;
-        public static string Answers { get; private set; } = PromptPlusResources.Answers;
         public static string Filter { get; private set; } = PromptPlusResources.Filter;
-        public static string Tagged { get; private set; } = PromptPlusResources.Checked;
         public static string MultiSelectMaxSelection { get; private set; } = PromptPlusResources.MultiSelectMaxSelection;
         public static string MultiSelectMinSelection { get; private set; } = PromptPlusResources.MultiSelectMinSelection;
         public static string YesChar { get; private set; } = PromptPlusResources.YesChar;

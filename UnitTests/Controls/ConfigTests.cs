@@ -153,7 +153,7 @@ namespace PPlus.Tests.Controls
         {
             Assert.Equal(3, PromptPlus.Config.CompletionMinimumPrefixLength);
             PromptPlus.Config.CompletionMinimumPrefixLength = -1;
-            Assert.Equal(0, PromptPlus.Config.CompletionMinimumPrefixLength);
+            Assert.Equal(1, PromptPlus.Config.CompletionMinimumPrefixLength);
         }
 
         [Fact]
@@ -161,7 +161,7 @@ namespace PPlus.Tests.Controls
         {
             Assert.Equal(1000, PromptPlus.Config.CompletionWaitToStart);
             PromptPlus.Config.CompletionWaitToStart = 9;
-            Assert.Equal(10, PromptPlus.Config.CompletionWaitToStart);
+            Assert.Equal(100, PromptPlus.Config.CompletionWaitToStart);
         }
 
         [Fact]

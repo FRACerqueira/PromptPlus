@@ -17,6 +17,31 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Reset();
             PromptPlus.Clear();
 
+            //global
+            PromptPlus.Config.EnabledAbortKey = false;
+            PromptPlus.Config.PageSize = 5;
+            PromptPlus.StyleSchema.ApplyStyle(StyleControls.Prompt, new Style(Color.Aqua));
+            //by instance
+            PromptPlus.Input("").Config(cfg =>
+            {
+                cfg
+                 .ApplyStyle(StyleControls.Prompt, new Style(Color.Yellow))
+                 .EnabledAbortKey(true);
+            });
+
+            PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+            PromptPlus.WriteLine("[RGB(255,0,0):WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+            PromptPlus.WriteLine("[RED:WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+
+            PromptPlus.Join()
+                .DoubleDash($"PromptPlus Join")
+                .Write("[RGB(255,0,0) ON WHITE]Test[/]")
+                .Write(" COLOR ",Style.Default.Foreground(Color.Yellow))
+                .Write(" BACK COLOR ",new Style(Color.Red,Color.White))
+                .Write("other text")
+                .WriteLine()
+                .CountLines();
+
             //standard 
             PromptPlus.DoubleDash($"PromptPlus IgnoreColorTokens = false - Default value and usage" );
             PromptPlus.WriteLine("Valid[[]]formedColor_TokenAny[[RED ON WHITE]]Text[[/]]_[[YELLOW]]Othertext[[/]]");
@@ -55,6 +80,7 @@ namespace ConsoleFeaturesSamples
             PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
 
+            PromptPlus.WriteLine("Test", new Style(ConsoleColor.Red, ConsoleColor.White, Overflow.None));
             PromptPlus.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
             PromptPlus.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
             PromptPlus.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
@@ -109,7 +135,6 @@ namespace ConsoleFeaturesSamples
                 .Run();
 
             PromptPlus.Clear();
-
 
             PromptPlus.DoubleDash($"[yellow]Sample Colors capacities [/]", DashOptions.HeavyBorder, 1);
             PromptPlus.Write("|");

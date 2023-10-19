@@ -1,7 +1,7 @@
 # <img align="left" width="100" height="100" src="./docs/images/icon.png">Welcome to PromptPlus
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -33,14 +33,20 @@
 - [License](#license)
 - [API Reference](https://fracerqueira.github.io/PromptPlus/apis/apis.html)
 
-## What's new in the latest version
-### V4.1.0
+## What's new in the latest version 
+### V4.2.0 
+
 [**Top**](#table-of-contents)
 
-- New Control : Table<T> ([see in action - Snapshot](https://github.com/FRACerqueira/PromptPlus#table)) :  Display/Select data in a grid/table
-    - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
+- Split feature Control Table:
+    - PromptPlus.TableSelect\<T> to Select item in table : Select row, column and data in a grid/table 
+        - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
+    - PromptPlus.Table\<T> to write table in console : Show data in a grid/table 
+        - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
+- New Control : TableMultSelect\<T> :  Select multi-data in a grid/table 
+    - Samples in project [Table MultiSelect Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableMultiSelectSamples)
     - Main features :
-        - More than 100 layout combinations
+        - More than 80 layout combinations
         - Navigation by row and columns
         - Scroll the table when it is larger than the screen
         - Split text when it is larger than the column size
@@ -48,30 +54,53 @@
         - Color customization of each element
         - Search for data filtered by columns
         - Formatting by column or by data type definition
+- New feature: 
+    - MinimalRender the prompt and control description are not rendered, showing only the minimum necessary without using resources.
+        - Global property : MinimalRender
+        - Instance control(By config command): MinimalRender(bool value = true)
+- New feature: 
+    - Pagination Template to customize pagination information
+        - Global property : PaginationTemplate
+        - Instance control(By config command) : PaginationTemplate(Func<int, int, int, string>? value)
+- New feature: 
+    - PromptPlus.Join() 
+    - Fluent-Interface to write text (less code typed) 
+- Changed feature:
+    - Moved tooltips and validation message to the end of render to all control
+- Improvement : 
+    - Color Token now accepts ':' to separate foreground color from background color
+    - eg: [RED:BLUE] = [RED ON BLUE]
+- Improvement : 
+    - Optimized the Calendar control to have symbols when selecting elements
+- Improvement :
+    - Optimize Render of ProgressBar (less lines)
+- Improvement : 
+    - Optimize Render of SliderNumber (less lines)
+- Improvement : 
+    - Optimize resource usage in rendering (less cultural dependency)
+- Improvement : 
+    - Reinforce the validation of invalid or optional parameters in all controls
+- Renamed command: 
+    - 'DescriptionWithInputType' to 'ShowTipInputType'.
+    - Now extra-line to tip InputType
+- Renamed command: 
+    - 'AppendGroupOnDescription' to 'ShowTipGroup'.
+    - Now extra-line to tip group
+- Fixed bug : 
+    - The Slide Switch Control does not show on/off values ​​when they are not customized
+- Fixed bug : 
+    - Alternate screen doesn't update background style when changing color
+- Fixed bug : 
+    - Exception when try delete[F3] in empty colletion in AddTolist/AddtoMaskEditList control
+- Fixed bug : 
+    - Edit[F2] Immutable item in AddTolist/AddtoMaskEditList control
+- Fixed bug : 
+    - CTRL-V (paste data) does not show input in some controls
 
-- Improvement commands with default values ​​(all controls)
-- Bug fixed: grouped item ordering. The sort option will be ignored
-    - Affeted Controls : Select/MultiSelect
-- Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
-    - Affeted Controls : AddtoList/Input
-- Improvement : Direct writes to standard error output stream
-    - New Commands : OutputError()
-    - Samples with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
-- New feature: Escaping format characters color 
-    - Global property : IgnoreColorTokens
-    - New Commands : EscapeColorTokens()/AcceptColorTokens()
-    - Samples with commemts in project [ConsoleFeatures Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
-- New feature: Group items in the select control
-    - Samples with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
-- New feature: Add separator line in the select control
-    - Samples with commemts in project [SelectBasic Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
-  
-**Special thanks to [ividyon](https://github.com/ividyon) for suggesting improvements and actively participating in this release**
-     
 ## Features
 [**Top**](#table-of-contents)
 
-**All features have IntelliSense. PromptPlus has more than 20 controls with many features like: filters, validators, history, suggestions, spinner(19 embedding type and plus custom yours!), colors and styles for control-elements** :
+**All features have IntelliSense. PromptPlus has more than 25 controls with many features like: filters, validators, history, suggestions, spinner(19 embedding type and plus custom yours!), colors and styles for control-elements** :
 - Banner Ascii
 - Input text / Secret / AutoComplete with spinner
 - MaskEdit Generic / Only Date / Only Time / DateTime / Number /  Currency
@@ -90,7 +119,7 @@
 - Treeview hierarchical structures with multi-select and colors
 - Switch Alternate screen
 - Execution pipeline with conditions
-- Table with multiple layouts (Display/Select data in a grid/table)
+- Table, TableSelect and TableMultSelct with multiple layouts
 
 **All controls** have the same organization (see in action: [**Controls Snapshot**](#controls-snapshot)):
 - input/filter (except Masked input) using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
@@ -158,200 +187,191 @@ dotnet run --project [name of sample]
 
 For each snapshot, the title is **name of project** sample in folder **samples**
 
-### Table
+### AddToList
 
-[**Top**](#table-of-contents)  | [TableSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddToListSamples)
 
-![](./docs/images/Table1.gif)
+![](./docs/images/AddtoList.gif)
 
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddtoMaskEditListSamples)
 
-### Pipeline
+![](./docs/images/AddtoMaskEditList.gif)
 
-[**Top**](#table-of-contents)  | [PipelineSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/PipelineSamples)
+### AlternateScreen
 
-**Not have snapshot**
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AlternateScreenSamples)
 
-### Alternate screen
-
-[**Top**](#table-of-contents) | [AlternateScreenSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AlternateScreenSamples)
-
-![](./docs/images/alternatescreen1.gif)
-
-### Input
-
-[**Top**](#table-of-contents) | [InputBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputBasicSamples)
-
-![](./docs/images/inputsample1.gif)
-
-[**Top**](#table-of-contents) | [InputSecretSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputSecretSamples)
-
-![](./docs/images/inputsample2.gif)
-
-[**Top**](#table-of-contents) | [InputWithHistorySamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithHistorySamples)
-
-![](./docs/images/inputsample3.gif)
-
-[**Top**](#table-of-contents) | [InputWithSuggestionSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithSuggestionSamples)
-
-![](./docs/images/inputsample4.gif)
-
-[**Top**](#table-of-contents) | [InputWithValidatorSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithValidatorSamples)
-
-![](./docs/images/inputsample5.gif)
-
-**Other samples input**
-
-[**Top**](#table-of-contents) | [InputOverwriteDefaultFromSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputOverwriteDefaultFromSamples)
-
-### Calendar
-
-[**Top**](#table-of-contents) | [CalendarSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/CalendarSamples)
-
-![](./docs/images/calendar1.gif)
+![](./docs/images/AlternateScreen.gif)
 
 ### AutoComplete
 
-[**Top**](#table-of-contents) | [AutoCompleteSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AutoCompleteSamples)
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AutoCompleteSamples)
 
-![](./docs/images/autocompletesample1.gif)
-
-### MaskEdit
-
-[**Top**](#table-of-contents) | [MaskEditGenericSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditGenericSamples)
-
-![](./docs/images/maskedit1.gif)
-
-[**Top**](#table-of-contents) | [MaskEditDateTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditDateTypeSamples)
-
-![](./docs/images/maskedit2.gif)
-
-[**Top**](#table-of-contents) | [MaskEditTimeTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditTimeTypeSamples)
-
-![](./docs/images/maskedit3.gif)
-
-[**Top**](#table-of-contents) | [MaskEditDateTimeTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditDateTimeTypeSamples)
-
-![](./docs/images/maskedit4.gif)
-
-[**Top**](#table-of-contents) | [MaskEditNumberTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditNumberTypeSamples)
-
-![](./docs/images/maskedit5.gif)
-
-[**Top**](#table-of-contents) | [MaskEditCurrencyTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditCurrencyTypeSamples)
-
-![](./docs/images/maskedit6.gif)
-
-### KeyPress
-
-[**Top**](#table-of-contents) | [KeyPressSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/KeyPressSamples)
-
-![](./docs/images/keypress1.gif)
-
-[**Top**](#table-of-contents) | [ConfirmSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConfirmSamples)
-
-![](./docs/images/confirm1.gif)
-
-### Select
-
-[**Top**](#table-of-contents) | [SelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
-
-![](./docs/images/select1.gif)
-
-**Other samples Select**
-
-[**Top**](#table-of-contents) | [SelectUserScopeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectUserScopeSamples) ,
-[SelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectUserTypeSamples)
-
-### Multi Select
-[**Top**](#table-of-contents)
-
-[MultiSelectBasicSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MultiSelectBasicSamples)
-
-![](./docs/images/multiselect1.gif)
-
-**Other samples Multi-Select**
-[MultiSelectUserScopeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MultiSelectUserScopeSamples) ,
-[MultiSelectUserTypeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MultiSelectUserTypeSamples)
-
-### Wait Process
-
-[**Top**](#table-of-contents) | [WaitTasksSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/WaitTasksSamples)
-
-![](./docs/images/waittask1.gif)
-
-### Wait Time
-
-[**Top**](#table-of-contents) | [WaitTimerSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/WaitTimerSamples)
-
-![](./docs/images/waittime1.gif)
-
-### Chart Bar
-
-[**Top**](#table-of-contents) | [ChartSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ChartSamples)
-
-![](./docs/images/chartbar1.gif)
-
-### Progress Bar
-
-[**Top**](#table-of-contents) | [ProgressBarSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ProgressBarSamples)
-
-![](./docs/images/progressbar1.gif)
-
-### Slider Switch
-
-[**Top**](#table-of-contents) | [SliderSwitchSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderSwitchSamples)
-
-![](./docs/images/sliderswitch1.gif)
-
-### Slider Number
-
-[**Top**](#table-of-contents) | [SliderNumberUpDownModeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderNumberUpDownModeSamples)
-
-![](./docs/images/slidernumber2.gif)
-
-[**Top**](#table-of-contents) | [SliderNumberLeftRightModeSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderNumberLeftRightModeSamples)
-
-![](./docs/images/slidernumber1.gif)
-
-### Add to List
-
-[**Top**](#table-of-contents) | [AddToListSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddToListSamples)
-
-![](./docs/images/addtolist1.gif)
-
-[**Top**](#table-of-contents) | [AddtoMaskEditListSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddtoMaskEditListSamples)
-
-![](./docs/images/addtolist2.gif)
-
-### Browser Select
-
-[**Top**](#table-of-contents) | [BrowserSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BrowserSamples)
-
-![](./docs/images/browser1.gif)
-
-### Browser Multi Select
-
-[**Top**](#table-of-contents) | [BrowserMultSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BrowserMultSelectSamples)
-
-![](./docs/images/multiselectbrowser1.gif)
-
-### TreeView Select
-
-[**Top**](#table-of-contents) | [TreeViewSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TreeViewSamples)
-
-![](./docs/images/treeview1.gif)
-
-### TreeView Multi Select
-
-[**Top**](#table-of-contents) | [TreeViewMultiSelectSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TreeViewMultiSelectSamples)
-
-![](./docs/images/treeview2.gif)
+![](./docs/images/AutoComplete.gif)
 
 ### Banner
 
-[**Top**](#table-of-contents) | [BannerSamples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BannerSamples)
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BannerSamples)
 
-![](./docs/images/banner1.gif)
+![](./docs/images/Banner.gif)
+
+### Browser
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BrowserMultSelectSamples)
+
+![](./docs/images/BrowserMultiSelect.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BrowserSamples)
+
+![](./docs/images/BrowserSelect.gif)
+
+### Calendar
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/CalendarSamples)
+
+![](./docs/images/Calendar.gif)
+
+### ChartBar
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ChartSamples)
+
+![](./docs/images/ChartBar.gif)
+
+### Confirm
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConfirmSamples)
+
+![](./docs/images/Confirm.gif)
+
+### Console Features
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
+
+![](./docs/images/ConsoleFeatures.gif)
+
+### Input
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputBasicSamples)
+
+![](./docs/images/InputBasic.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputSecretSamples)
+
+![](./docs/images/InputSecret.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithHistorySamples)
+
+![](./docs/images/InputWithHistory.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithSuggestionSamples)
+
+![](./docs/images/InputWithSuggestion.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithValidatorSamples)
+
+![](./docs/images/InputWithValidator.gif)
+
+### KeyPress
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/KeyPressSamples)
+
+![](./docs/images/KeyPress.gif)
+
+### MaskEdit
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditCurrencyTypeSamples)
+
+![](./docs/images/MaskEditCurrencyType.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditDateTimeTypeSamples)
+
+![](./docs/images/MaskEditDateTimeType.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditGenericSamples)
+
+![](./docs/images/MaskEditGenericType.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditNumberTypeSamples)
+
+![](./docs/images/MaskEditNumberType.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditDateTypeSamples)
+
+![](./docs/images/MaskEditOnlyDateType.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditTimeTypeSamples)
+
+![](./docs/images/MaskEditOnlyTimeType.gif)
+
+### MultSelect
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MultiSelectBasicSamples)
+
+![](./docs/images/MultiSelect.gif)
+
+### ProgressBar
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ProgressBarSamples)
+
+![](./docs/images/ProgressBar.gif)
+
+### Select
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
+
+![](./docs/images/Select.gif)
+
+### SliderNumber
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderNumberLeftRightModeSamples)
+
+![](./docs/images/SliderNumberLeftRight.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderNumberUpDownModeSamples)
+
+![](./docs/images/SliderNumberUpDown.gif)
+
+### SliderSwitch
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderSwitchSamples)
+
+![](./docs/images/SliderSwitch.gif)
+
+### Table
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableMultiSelectSamples)
+
+![](./docs/images/TableMultiSelect.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
+
+![](./docs/images/TableSelect.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
+
+![](./docs/images/TableWrite.gif)
+
+### TreeView
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TreeViewMultiSelectSamples)
+
+![](./docs/images/TreeViewMultiSelect.gif)
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TreeViewSamples)
+
+![](./docs/images/TreeViewSelect.gif)
+
+### Wait Tasks
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/WaitTasksSamples)
+
+![](./docs/images/WaitTasks.gif)
+
+### Wait Timer
+
+[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/WaitTimerSamples)
+
+![](./docs/images/WaitTime.gif)
 
 ## Usage
 [**Top**](#table-of-contents)
@@ -361,7 +381,7 @@ All controls use **fluent interface**; an object-oriented API whose design relie
 //MaskEdit Generic
 var mask = PromptPlus.MaskEdit("input", "MaskEdit Generic input")
     .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
-    .DescriptionWithInputType(FormatWeek.Short)
+    .ShowTipInputType(FormatWeek.Short)
     .Run();
 
 if (!mask.IsAborted)
@@ -412,10 +432,48 @@ To use a non-embedded language/culture:
 
 PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-color.org/). when there is the environment variable "no_color" the colors are disabled.
 
-PromptPlus also has commands for coloring parts of the text using **direct console, styles and Over elements of controls**.
+Prompt Plus also has commands for coloring parts of the text.
+
+#### Direct console
+```csharp
+PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+PromptPlus.WriteLine("[RGB(255,0,0):WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
+PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+PromptPlus.WriteLine("[RED:WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
+````
+
+### Using Style
+
+```csharp
+PromptPlus.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
+PromptPlus.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
+PromptPlus.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
+PromptPlus.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
+````
+
+### Over controls
+```csharp
+PromptPlus
+    .Input("Input [blue]sample2[/]", "with [yellow]description[/]")
+    .Run();
+````
+
+### Escaping format characters
+To output a [ you use [[, and to output a ] you use ]].
+```csharp
+PromptPlus.WriteLine("[[Test]]");
+
+using (PromptPlus.EscapeColorTokens())
+{
+   PromptPlus.DoubleDash($"PromptPlus with context IgnoreColorTokens = true");
+   //show text without color
+   PromptPlus.WriteLine("ValidformedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
+}
+````
 
 Promptplus uses the **same default colors and engine(softly modified)** as the third party project: spectreconsole.
-For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#colors) or see the samples in folder **Samples**
+For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#colors) or see the samples in folder **Samples/ConsoleFeaturesSamples**
 
 
 ## Hotkeys
@@ -484,12 +542,15 @@ See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 ## Credits
 [**Top**](#table-of-contents)
 
-PromptPlus **includes code** from other software released under the **MIT license**:
+PromptPlus **<u>includes code(Copy)</u>** from other software released under the **MIT license**:
 
 - [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
-- [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
-- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
+- [EastAsianWidth.NET](https://github.com/iodes/EastAsianWidth.NET), Copyright (c) 2020 Kevin So.
 - [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU
+
+**API documentation generated by**
+
+- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
 
 ## License
 [**Top**](#table-of-contents)
@@ -499,6 +560,6 @@ Copyright 2021 @ Fernando Cerqueira
 PromptPlus is licensed under the MIT license. For more information see [LICENSE](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE).
 
 * For Spectre.Console licensing information, see [LICENSE-SpectreConsole](Licenses/LICENSE-SpectreConsole.md).
-* For Sharprompt licensing information, see [LICENSE-Sharprompt](Licenses/LICENSE-Sharprompt.md).
-* For xmldoc2md licensing information, see [LICENSE-xmldoc2md](Licenses/LICENSE-xmldoc2md.md).
+* For EastAsianWidth.NET licensing information, see [LICENSE-EastAsianWidth.NET](Licenses/LICENSE-EastAsianWidth.md).
 * For FIGlet licensing information, see [LICENSE-FIGlet](Licenses/LICENSE-FIGlet.md).
+* For xmldoc2md licensing information, see [LICENSE-xmldoc2md](Licenses/LICENSE-xmldoc2md.md).

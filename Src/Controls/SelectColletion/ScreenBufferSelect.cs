@@ -55,9 +55,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineNotSelectorDisabled(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "")
+        public static void WriteLineNotSelectorDisabled(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "", bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             if (string.IsNullOrEmpty(indentgroup))
             {
                 screenBuffer.AddBuffer(' ', Style.Default, true);
@@ -70,9 +73,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "")
+        public static void WriteLineSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "", bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             if (string.IsNullOrEmpty(indentgroup))
             {
                 screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)} {message}", options.OptStyleSchema.Selected(), false);
@@ -85,9 +91,12 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineNotSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "")
+        public static void WriteLineNotSelector(this ScreenBuffer screenBuffer, BaseOptions options, string message, string indentgroup = "", bool newline = true)
         {
-            screenBuffer.NewLine();
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
             if (string.IsNullOrEmpty(indentgroup))
             {
                 screenBuffer.AddBuffer(' ', Style.Default, true);
@@ -109,29 +118,27 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineDescriptionSelect<T>(this ScreenBuffer screenBuffer, SelectOptions<T> options, ItemSelect<T> input)
+        public static bool WriteLineDescriptionSelect<T>(this ScreenBuffer screenBuffer, SelectOptions<T> options, ItemSelect<T> input)
         {
-            var result = options.OptDescription;
+            string result = string.Empty;
+            if (!options.OptMinimalRender)
+            {
+                result = options.OptDescription;
+            }
             if (input != null)
             {
                 if (options.DescriptionSelector != null)
                 {
                     result = options.DescriptionSelector.Invoke(input.Value);
                 }
-                if (options.ShowGroupOnDescription && !string.IsNullOrEmpty(input.Group ?? string.Empty))
-                {
-                    if (!string.IsNullOrEmpty(result))
-                    {
-                        result += ", ";
-                    }
-                    result = $"{Messages.Group}: {input.Group}{result ?? string.Empty}";
-                }
             }
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                return true;
             }
+            return false;
         }
 
         public static void WriteLineTooltipsSelect<T>(this ScreenBuffer screenBuffer, SelectOptions<T> options)

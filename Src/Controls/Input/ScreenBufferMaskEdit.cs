@@ -40,37 +40,37 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineDescriptionMaskEdit(this ScreenBuffer screenBuffer, MaskEditOptions options, string input, string tooltips)
+        public static void WriteLineDescriptionMaskEdit(this ScreenBuffer screenBuffer, MaskEditOptions options, string input)
         {
-            var result = options.OptDescription;
+            string result = string.Empty;
+            if (!options.OptMinimalRender)
+            {
+                result = options.OptDescription;
+            }
             if (options.ChangeDescription != null)
             {
                 result = options.ChangeDescription.Invoke(input);
             }
-            var extradesc = GetExtraDescriptionMaskEdit(options, input, tooltips);
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
-                if (!string.IsNullOrEmpty(extradesc))
-                {
-                    screenBuffer.AddBuffer($", ", options.OptStyleSchema.Description(), true, false);
-                    screenBuffer.AddBuffer($"Tip: {extradesc}", options.TypeTipStyle, true, false);
-                }
             }
-            else
+        }
+
+        public static void WriteLineTipCharMaskEdit(this ScreenBuffer screenBuffer, MaskEditOptions options, string input, string tooltips)
+        {
+            var extradesc = GetExtraDescriptionMaskEdit(options, input, tooltips);
+            if (!string.IsNullOrEmpty(extradesc))
             {
-                if (!string.IsNullOrEmpty(extradesc))
-                {
-                    screenBuffer.NewLine();
-                    screenBuffer.AddBuffer($"Tip: {extradesc}", options.TypeTipStyle, true);
-                }
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer($"Tip: {extradesc}", options.TypeTipStyle, true);
             }
         }
 
         private static string GetExtraDescriptionMaskEdit(MaskEditOptions value, string input, string tooltips)
         {
-            if (!value.DescriptionWithInputType)
+            if (!value.ShowTipInputType)
             {
                 return string.Empty;
             }

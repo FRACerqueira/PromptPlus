@@ -33,6 +33,10 @@ namespace PPlus.Controls
 
         public IControlSelect<T> Separator(SeparatorLine separatorLine = SeparatorLine.SingleLine, char? value = null)
         {
+            if (_options.OrderBy != null)
+            {
+                throw new PromptPlusException("Separator cannot be used OrderBy/OrderByDescending");
+            }
             switch (separatorLine)
             {
                 case SeparatorLine.DoubleLine:
@@ -65,14 +69,18 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlSelect<T> AppendGroupOnDescription(bool value = true)
+        public IControlSelect<T> ShowTipGroup(bool value = true)
         {
-            _options.ShowGroupOnDescription = value;
+            _options.ShowGroupTip = value;
             return this;
         }
 
         public IControlSelect<T> AddItemGrouped(string group, T value, bool disable = false)
         {
+            if (_options.OrderBy != null)
+            {
+                throw new PromptPlusException("AddItemGrouped cannot be used OrderBy/OrderByDescending");
+            }
             var found = false;
             var added = false;
             foreach (var item in _options.Items.Where(x => !x.IsGroupHeader && !string.IsNullOrEmpty(x.Group)))
@@ -102,6 +110,10 @@ namespace PPlus.Controls
 
         public IControlSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable = false)
         {
+            if (_options.OrderBy != null)
+            {
+                throw new PromptPlusException("AddItemsGrouped cannot be used OrderBy/OrderByDescending");
+            }
             foreach (var item in value)
             {
                 AddItemGrouped(group, item, disable);
@@ -111,6 +123,10 @@ namespace PPlus.Controls
 
         public IControlSelect<T> OrderBy(Expression<Func<T, object>> value)
         {
+            if (_options.Items.Any(x => x.IsGroupHeader))
+            {
+                throw new PromptPlusException("OrderBy cannot be used Separator or Grouped item");
+            }
             _options.IsOrderDescending = false;
             _options.OrderBy = value.Compile();
             return this;
@@ -118,6 +134,10 @@ namespace PPlus.Controls
 
         public IControlSelect<T> OrderByDescending(Expression<Func<T, object>> value)
         {
+            if (_options.Items.Any(x => x.IsGroupHeader))
+            {
+                throw new PromptPlusException("OrderByDescending cannot be used Separator or Grouped item");
+            }
             _options.IsOrderDescending = true;
             _options.OrderBy = value.Compile();
             return this;
@@ -136,6 +156,10 @@ namespace PPlus.Controls
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -163,7 +187,20 @@ namespace PPlus.Controls
             return this;
         }
 
+        public IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
+        {
+            InternalAdd(scope, values);
+            return this;
+        }
+
+
         public IControlSelect<T> AddItemsTo(AdderScope scope,params T[] values)
+        {
+            InternalAdd(scope,values);
+            return this;
+        }
+
+        private void InternalAdd(AdderScope scope, IEnumerable<T> values)
         {
             foreach (var item in values)
             {
@@ -183,7 +220,6 @@ namespace PPlus.Controls
                         throw new PromptPlusException($"AddItemsTo : {scope} Not Implemented");
                 }
             }
-            return this;
         }
 
         public IControlSelect<T> AutoSelect(bool value = true)
@@ -220,7 +256,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -327,12 +363,6 @@ namespace PPlus.Controls
                 }
             }
 
-            var hasgroup = _options.Items.Any(x => x.IsGroupHeader);
-            if (hasgroup)
-            {
-                _options.OrderBy = null;
-            }
-
             if (_options.OrderBy != null)
             {
                 if (_options.IsOrderDescending)
@@ -384,23 +414,43 @@ namespace PPlus.Controls
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options, "");
+            var first = !string.IsNullOrEmpty(_options.OptPrompt);
             if (ShowingFilter)
             {
+                first = false;
                 screenBuffer.WriteFilterSelect(_options, FinishResult, _filterBuffer);
-                screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                screenBuffer.SaveCursor();
+                if (!_options.OptMinimalRender)
+                {
+                    screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                }
+                _options.OptShowCursor = true;
             }
             else
             {
-                screenBuffer.WriteAnswer(_options, FinishResult);
-                screenBuffer.SaveCursor();
+                if (!_options.OptMinimalRender)
+                {
+                    first = false;
+                    screenBuffer.WriteAnswer(_options, FinishResult);
+                    screenBuffer.SaveCursor();
+                }
+                else
+                {
+                    _options.OptShowCursor = false;
+                }
             }
-            screenBuffer.WriteLineDescriptionSelect(_options,_localpaginator.SelectedItem);
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            screenBuffer.WriteLineTooltipsSelect(_options);
-
-            var subset = _localpaginator.ToSubset();
+            var hasdesc  = screenBuffer.WriteLineDescriptionSelect(_options,_localpaginator.SelectedItem);
+            if (first && hasdesc)
+            {
+                first = false;
+            }
+            var subset = _localpaginator.GetPageData();
             foreach (var item in subset)
             {
+                if (first)
+                {
+                    screenBuffer.SaveCursor();
+                }
                 string value;
                 var indentgroup = string.Empty;
                 if (item.IsGroupHeader)
@@ -441,26 +491,38 @@ namespace PPlus.Controls
                         }
                     }
                 }
-                if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemSelect<T>>.Default.Equals(item, selectedItem))
+                if (_options.OptMinimalRender)
                 {
-                    screenBuffer.WriteLineSelector(_options, value, indentgroup);
+                    screenBuffer.SaveCursor();
+                }
+                if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<ItemSelect<T>>.Default.Equals(item, selectedItem))
+                {
+                    screenBuffer.WriteLineSelector(_options, value, indentgroup,!first);
                 }
                 else
                 {
                     if (IsDisabled(item))
                     {
-                        screenBuffer.WriteLineNotSelectorDisabled(_options, value,indentgroup);
+                        screenBuffer.WriteLineNotSelectorDisabled(_options, value,indentgroup,!first);
                     }
                     else
                     {
-                        screenBuffer.WriteLineNotSelector(_options, value, indentgroup);
+                        screenBuffer.WriteLineNotSelector(_options, value, indentgroup, !first);
                     }
                 }
+                first =false;
             }
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
-                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
+            if (_options.ShowGroupTip && !string.IsNullOrEmpty(_localpaginator.SelectedItem?.Group ?? string.Empty))
+            {
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer(_localpaginator.SelectedItem.Group, _options.OptStyleSchema.Tooltips());
+            }
+            screenBuffer.WriteLineTooltipsSelect(_options);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, T result, bool aborted)
@@ -470,12 +532,16 @@ namespace PPlus.Controls
             {
                 answer = Messages.CanceledKey;
             }
-            screenBuffer.WriteDone(_options, answer);
-            screenBuffer.NewLine();
             if (!aborted)
             {
                 SaveHistory(result);
             }
+            if (_options.OptMinimalRender)
+            {
+                return;
+            }
+            screenBuffer.WriteDone(_options, answer);
+            screenBuffer.NewLine();
         }
 
         public override ResultPrompt<T> TryResult(CancellationToken cancellationToken)
@@ -544,7 +610,10 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));

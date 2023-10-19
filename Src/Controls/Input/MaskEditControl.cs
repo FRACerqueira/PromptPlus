@@ -38,10 +38,8 @@ namespace PPlus.Controls
                 throw new PromptPlusException("HistoryMinimumPrefixLength mustbe zero when FilterType is Disabled");
             }
 
-            if (_options.CurrentCulture == null)
-            {
-                _options.CurrentCulture = _options.Config.AppCulture;
-            }
+            _options.CurrentCulture ??= _options.Config.AppCulture;
+
             if (_options.HistoryEnabled)
             {
                 LoadHistory();
@@ -80,6 +78,10 @@ namespace PPlus.Controls
 
         public IControlMaskEdit FilterType(FilterMode value)
         {
+            if (value == FilterMode.Disabled)
+            {
+                _options.HistoryMinimumPrefixLength = 0;
+            }
             _options.FilterType = value;
             return this;
         }
@@ -89,6 +91,10 @@ namespace PPlus.Controls
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -167,6 +173,14 @@ namespace PPlus.Controls
 
         public IControlMaskEdit HistoryMinimumPrefixLength(int value)
         {
+            if (value < 0)
+            {
+                throw new PromptPlusException("HistoryMinimumPrefixLength must be greater than or equal to zero");
+            }
+            if (_options.FilterType == FilterMode.Disabled && value > 0)
+            {
+                throw new PromptPlusException("HistoryMinimumPrefixLength mustbe zero when FilterType is Disabled");
+            }
             _options.HistoryMinimumPrefixLength = value;
             return this;
         }
@@ -175,7 +189,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("HistoryPageSize must be greater than or equal to 1");
             }
             _options.HistoryPageSize = value;
             return this;
@@ -183,6 +197,10 @@ namespace PPlus.Controls
 
         public IControlMaskEdit HistoryTimeout(TimeSpan value)
         {
+            if (value.TotalMilliseconds == 0)
+            {
+                throw new PromptPlusException("HistoryTimeout must be greater than 0");
+            }
             _options.HistoryTimeout = value;
             return this;
         }
@@ -205,13 +223,14 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMaskEdit Mask(string value = null, char? promptmask = null)
+        public IControlMaskEdit Mask(string value, char? promptmask = null)
         {
             _options.Type = ControlMaskedType.Generic;
-            if (value != null)
+            if (string.IsNullOrEmpty(value))
             {
-                _options.MaskValue = value;
+                throw new PromptPlusException("Mask is Null Or Empty");
             }
+            _options.MaskValue = value;
             if (promptmask != null)
             {
                 _options.Symbols(SymbolType.MaskEmpty,promptmask.Value.ToString());
@@ -288,15 +307,27 @@ namespace PPlus.Controls
 
         public IControlMaskEdit AmmoutPositions(int intvalue, int decimalvalue, bool acceptSignal)
         {
+            if (intvalue < 0)
+            {
+                throw new PromptPlusException("intvalue must be greater than 0");
+            }
+            if (decimalvalue < 0)
+            {
+                throw new PromptPlusException("intvalue must be greater than 0");
+            }
+            if (intvalue + decimalvalue == 0)
+            {
+                throw new PromptPlusException("intvalue + decimalvalue must be greater than 0");
+            }
             _options.AmmountInteger = intvalue;
             _options.AmmountDecimal = decimalvalue;
             _options.AcceptSignal = acceptSignal;
             return this;
         }
 
-        public IControlMaskEdit DescriptionWithInputType(FormatWeek week = FormatWeek.None)
+        public IControlMaskEdit ShowTipInputType(FormatWeek week = FormatWeek.None)
         {
-            _options.DescriptionWithInputType = true;
+            _options.ShowTipInputType = true;
             _options.ShowDayWeek = week;
             return this;
         }
@@ -337,6 +368,10 @@ namespace PPlus.Controls
                     SaveDefaultHistory(answer);
                 }
             }
+            if (_options.OptMinimalRender)
+            {
+                return;
+            }
             if (aborted)
             {
                 answer = Messages.CanceledKey;
@@ -355,29 +390,36 @@ namespace PPlus.Controls
             }
             else
             {
-                if (_inputBuffer.NegativeNumberInput)
+                if (_options.Type == ControlMaskedType.Number || _options.Type == ControlMaskedType.Currency)
                 {
-                    screenBuffer.WriteNegativeAnswer(_options, _inputBuffer.ToBackwardString());
-                    screenBuffer.SaveCursor();
-                    screenBuffer.WriteNegativeAnswer(_options, _inputBuffer.ToForwardString());
+                    if (_inputBuffer.NegativeNumberInput)
+                    {
+                        screenBuffer.WriteNegativeAnswer(_options, _inputBuffer.ToBackwardString());
+                        screenBuffer.SaveCursor();
+                        screenBuffer.WriteNegativeAnswer(_options, _inputBuffer.ToForwardString());
+                    }
+                    else
+                    {
+                        screenBuffer.WritePositiveAnswer(_options, _inputBuffer.ToBackwardString());
+                        screenBuffer.SaveCursor();
+                        screenBuffer.WritePositiveAnswer(_options, _inputBuffer.ToForwardString());
+                    }
                 }
                 else
                 {
-                    screenBuffer.WritePositiveAnswer(_options, _inputBuffer.ToBackwardString());
+                    screenBuffer.WriteAnswer(_options, _inputBuffer.ToBackwardString());
                     screenBuffer.SaveCursor();
-                    screenBuffer.WritePositiveAnswer(_options, _inputBuffer.ToForwardString());
+                    screenBuffer.WriteAnswer(_options, _inputBuffer.ToForwardString());
                 }
             }
-            screenBuffer.WriteLineDescriptionMaskEdit(_options, _inputBuffer.ToMasked(), _inputBuffer.Tooltip);
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            screenBuffer.WriteLineTooltipsMaskEdit(_options, _isInAutoCompleteMode);
+            screenBuffer.WriteLineDescriptionMaskEdit(_options, _inputBuffer.ToMasked());
             if (_options.ShowingHistory)
             {
-                var subset = _localpaginator.ToSubset();
+                var subset = _localpaginator.GetPageData();
                 foreach (var item in subset)
                 {
                     var value = item.History;
-                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemHistory>.Default.Equals(item, selectedItem))
+                    if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<ItemHistory>.Default.Equals(item, selectedItem))
                     {
                         screenBuffer.WriteLineSelector(_options, value);
                     }
@@ -388,9 +430,12 @@ namespace PPlus.Controls
                 }
                 if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
                 {
-                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                    screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
                 }
             }
+            screenBuffer.WriteLineTipCharMaskEdit(_options, _inputBuffer.ToMasked(), _inputBuffer.Tooltip);
+            screenBuffer.WriteLineValidate(ValidateError, _options);
+            screenBuffer.WriteLineTooltipsMaskEdit(_options, _isInAutoCompleteMode);
         }
 
         public override ResultPrompt<ResultMasked> TryResult(CancellationToken cancellationToken)
@@ -601,7 +646,10 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));

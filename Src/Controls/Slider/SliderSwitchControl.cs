@@ -105,6 +105,10 @@ namespace PPlus.Controls
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -112,6 +116,10 @@ namespace PPlus.Controls
 
         public IControlSliderSwitch Width(int value)
         {
+            if (value< 6)
+            {
+                throw new PromptPlusException("Width must be greater than or equal to 6");
+            }
             _options.Witdth = value;
             return this;
         }
@@ -133,6 +141,14 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, bool result, bool aborted)
         {
+            if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
+            {
+                SaveDefaultHistory(result.ToString());
+            }
+            if (_options.OptMinimalRender)
+            {
+                return;
+            }
             if (aborted)
             {
                 screenBuffer.WritePrompt(_options, "");
@@ -140,10 +156,6 @@ namespace PPlus.Controls
             }
             else
             {
-                if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
-                {
-                    SaveDefaultHistory(result.ToString());
-                }
                 if (result)
                 {
                     if (string.IsNullOrEmpty(_options.OnValue))
@@ -180,14 +192,27 @@ namespace PPlus.Controls
         {
             var segments = Segment.Parse(FinishResult, _options.OptStyleSchema.Answer());
             screenBuffer.WritePrompt(_options, "");
-            foreach (var item in segments.Where(x => !x.IsAnsiControl))
+            var hasprompt = !string.IsNullOrEmpty(_options.OptPrompt);
+            if (!_options.OptMinimalRender)
             {
-                screenBuffer.WriteAnswer(_options, item.Text);
+                hasprompt = true;
+                foreach (var item in segments.Where(x => !x.IsAnsiControl))
+                {
+                    screenBuffer.WriteAnswer(_options, item.Text);
+                }
+                screenBuffer.SaveCursor();
             }
-            screenBuffer.SaveCursor();
-            screenBuffer.WriteLineDescriptionSliderSwitch(_options, _currentValue);
+            var hasdesc = screenBuffer.WriteLineDescriptionSliderSwitch(_options, _currentValue);
+            if (hasprompt || hasdesc)
+            {
+                screenBuffer.WriteLineWidgetsSliderSwitch(_options, _currentValue,true);
+            }
+            else
+            {
+                screenBuffer.WriteLineWidgetsSliderSwitch(_options, _currentValue,false);
+                screenBuffer.SaveCursor();
+            }
             screenBuffer.WriteLineTooltipsSliderSwitch(_options);
-            screenBuffer.WriteLineWidgetsSliderSwitch(_options, _currentValue);
         }
 
         public override ResultPrompt<bool> TryResult(CancellationToken cancellationToken)

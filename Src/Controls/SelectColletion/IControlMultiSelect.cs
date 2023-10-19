@@ -41,11 +41,11 @@ namespace PPlus.Controls
         IControlMultiSelect<T> OverflowAnswer(Overflow value);
 
         /// <summary>
-        /// Append group text on description. Default false
+        /// Show tip with text of group. Default false
         /// </summary>
-        /// <param name="value">Append group text on description</param>
+        /// <param name="value">If True, it shows the tip with the group text, otherwise nothing.</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
-        IControlMultiSelect<T> AppendGroupOnDescription(bool value = true);
+        IControlMultiSelect<T> ShowTipGroup(bool value = true);
 
         /// <summary>
         /// Add default value selected to initial list.
@@ -54,9 +54,17 @@ namespace PPlus.Controls
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> AddDefault(params T[] values);
 
+        /// <summary>
+        /// Add default value selected to initial list.
+        /// </summary>
+        /// <param name="values">Values default</param>
+        /// <returns><see cref="IControlMultiSelect{T}"/></returns>
+        IControlMultiSelect<T> AddDefault(IEnumerable<T> values);
+
 
         /// <summary>
         /// Sort list by expression
+        /// <br>OrderBy cannot be used with Grouped item</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -64,7 +72,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Sort Descending list by expression
-        /// <br>Sort options is ignored when has grouped items</br>
+        /// <br>OrderBy cannot be used with Grouped item</br>
         /// </summary>
         /// <param name="value">expresion to sort the colletion</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -72,7 +80,6 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Overwrite defaults start selected value with last result saved on history.
-        /// <br>Sort options is ignored when has grouped items</br>
         /// </summary>
         /// <param name="value">name of file to save history</param>
         /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
@@ -80,7 +87,8 @@ namespace PPlus.Controls
         IControlMultiSelect<T> OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 
         /// <summary>
-        /// Set max.item view per page.Default value for this control is 10.
+        /// Set max.item view per page.
+        /// <br>Default value : 10.The value must be greater than or equal to 1</br>
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
@@ -142,6 +150,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add Item in a group to list
+        /// <br>AddItemGrouped cannot be used with OrderBy/OrderByDescending</br>
         /// </summary>
         /// <param name="group">Group name</param>
         /// <param name="value">Item to add</param>
@@ -152,6 +161,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add Items colletion in a group to List
+        /// <br>AddItemsGrouped cannot be used with OrderBy/OrderByDescending</br>
         /// </summary>
         /// <param name="group">Group name</param>
         /// <param name="value">items colletion to add</param>
@@ -169,6 +179,16 @@ namespace PPlus.Controls
         /// <param name="values">items colletion</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> AddItemsTo(AdderScope scope, params T[] values);
+
+        /// <summary>
+        /// Add Items colletion to scope Disable/Remove <seealso cref="AdderScope"/>
+        /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
+        /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
+        /// </summary>
+        /// <param name="scope">scope Disable/Remove</param>
+        /// <param name="values">items colletion</param>
+        /// <returns><see cref="IControlMultiSelect{T}"/></returns>
+        IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values);
 
         /// <summary>
         /// Custom item comparator

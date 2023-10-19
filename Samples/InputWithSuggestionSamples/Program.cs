@@ -11,21 +11,19 @@ PromptPlus.WriteLine("Hello, World!");
 //Ensure ValueResult Culture for all controls
 PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
 
-SuggestionOutput SuggestionInputSample(SuggestionInput arg)
+static SuggestionOutput SuggestionInputSample(SuggestionInput arg)
 {
-    var result = new SuggestionOutput();
     if (arg.Text.StartsWith("s", StringComparison.CurrentCultureIgnoreCase))
     {
-        result.Add("suggestion 1");
-        result.Add("suggestion 2");
-        result.Add("suggestion 3");
+        return SuggestionOutput
+            .Create()
+            .AddRange(
+                new string[] { "Opc1", "Opc2", "Opc3" });
     }
-    else
-    {
-        result.Add("other suggestion 1");
-        result.Add("other suggestion 2");
-        result.Add("other suggestion 3");
-    }
+    var result = new SuggestionOutput();
+    result.Add("other suggestion 1");
+    result.Add("other suggestion 2");
+    result.Add("other suggestion 3");
     return result;
 }
 

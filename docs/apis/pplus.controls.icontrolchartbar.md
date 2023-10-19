@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -208,7 +208,7 @@ Hide value
 
 ### <a id="methods-hotkeyswitchlegend"/>**HotKeySwitchLegend(HotKey)**
 
-Overwrite a HotKey to Switch Legend Chart. Default value is 'F3'
+Overwrite a HotKey to Switch Legend Chart when EnabledInteractionUser is active. Default value is 'F3'
 
 ```csharp
 IControlChartBar HotKeySwitchLegend(HotKey value)
@@ -225,7 +225,7 @@ The [HotKey](./pplus.controls.hotkey.md) to Switch Legend Chart
 
 ### <a id="methods-hotkeyswitchorder"/>**HotKeySwitchOrder(HotKey)**
 
-Overwrite a HotKey to Switch ordination bar and label. Default value is 'F4'
+Overwrite a HotKey to Switch ordination bar and label when EnabledInteractionUser is active. Default value is 'F4'
 
 ```csharp
 IControlChartBar HotKeySwitchOrder(HotKey value)
@@ -242,7 +242,7 @@ The [HotKey](./pplus.controls.hotkey.md) to Switch ordination bar and label
 
 ### <a id="methods-hotkeyswitchtype"/>**HotKeySwitchType(HotKey)**
 
-Overwrite a HotKey to Switch Layout Chart. Default value is 'F2'
+Overwrite a HotKey to Switch Layout Chart when EnabledInteractionUser is active. Default value is 'F2'
 
 ```csharp
 IControlChartBar HotKeySwitchType(HotKey value)
@@ -316,26 +316,10 @@ The sort type
 
 [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
-### <a id="methods-padleft"/>**PadLeft(Byte)**
-
-Pad-Left to write ChartBar
-
-```csharp
-IControlChartBar PadLeft(byte value)
-```
-
-#### Parameters
-
-`value` [Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
-Number of spaces. Default value is 0.
-
-#### Returns
-
-[IControlChartBar](./pplus.controls.icontrolchartbar.md)
-
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page. Default value for this control is 10.
+Set max.item view per page when EnabledInteractionUser is active
+ <br>Default value : 10.The value must be greater than or equal to 1
 
 ```csharp
 IControlChartBar PageSize(int value)
@@ -409,7 +393,7 @@ The [Alignment](./pplus.controls.alignment.md) title
 
 ### <a id="methods-width"/>**Width(Int32)**
 
-Define Width to ChartBar. Default value is 80.
+Define Width to ChartBar. Default value is 80.The value must be greater than or equal to 10.
 
 ```csharp
 IControlChartBar Width(int value)

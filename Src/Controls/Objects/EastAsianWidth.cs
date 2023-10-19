@@ -1,369 +1,286 @@
 ﻿// ***************************************************************************************
 // MIT LICENCE
-// Copyright (c) 2019 shibayan.
-// https://github.com/shibayan/Sharprompt
+// Copyright (c) 2020 Kevin So
+// https://github.com/iodes/EastAsianWidth.NET
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using System.Collections.Generic;
 using System.Linq;
 
 namespace PPlus.Controls.Objects
 {
     internal static class EastAsianWidth
     {
-        public static int GetWidth(this IEnumerable<char> value) => (value??string.Empty).Sum(GetWidth);
-
-        private static int GetWidth(this char codePoint) => IsFullWidth(codePoint) ? 2 : 1;
-
-        private static bool IsFullWidth(int codePoint)
+        private enum EastAsianWidthKind
         {
-            var left = 0;
-            var right = s_eastAsianWidthRanges.Length - 1;
-
-            while (left <= right)
-            {
-                var center = left + (right - left) / 2;
-
-                ref var range = ref s_eastAsianWidthRanges[center];
-
-                if (codePoint < range.Start)
-                {
-                    right = center - 1;
-
-                    continue;
-                }
-
-                if (codePoint > range.Start + range.Count)
-                {
-                    left = center + 1;
-
-                    continue;
-                }
-
-                return !range.Ambiguous;
-            }
-
-            return false;
+            Full,
+            Half,
+            Wide,
+            Narrow,
+            Ambiguous,
+            Neutral
         }
 
-        private static readonly EastAsianWidthRange[] s_eastAsianWidthRanges =
+        private static EastAsianWidthKind GetKind(char value)
         {
-            new(161, 0, true),
-            new(164, 0, true),
-            new(167, 1, true),
-            new(170, 0, true),
-            new(173, 1, true),
-            new(176, 4, true),
-            new(182, 4, true),
-            new(188, 3, true),
-            new(198, 0, true),
-            new(208, 0, true),
-            new(215, 1, true),
-            new(222, 3, true),
-            new(230, 0, true),
-            new(232, 2, true),
-            new(236, 1, true),
-            new(240, 0, true),
-            new(242, 1, true),
-            new(247, 3, true),
-            new(252, 0, true),
-            new(254, 0, true),
-            new(257, 0, true),
-            new(273, 0, true),
-            new(275, 0, true),
-            new(283, 0, true),
-            new(294, 1, true),
-            new(299, 0, true),
-            new(305, 2, true),
-            new(312, 0, true),
-            new(319, 3, true),
-            new(324, 0, true),
-            new(328, 3, true),
-            new(333, 0, true),
-            new(338, 1, true),
-            new(358, 1, true),
-            new(363, 0, true),
-            new(462, 0, true),
-            new(464, 0, true),
-            new(466, 0, true),
-            new(468, 0, true),
-            new(470, 0, true),
-            new(472, 0, true),
-            new(474, 0, true),
-            new(476, 0, true),
-            new(593, 0, true),
-            new(609, 0, true),
-            new(708, 0, true),
-            new(711, 0, true),
-            new(713, 2, true),
-            new(717, 0, true),
-            new(720, 0, true),
-            new(728, 3, true),
-            new(733, 0, true),
-            new(735, 0, true),
-            new(768, 111, true),
-            new(913, 16, true),
-            new(931, 6, true),
-            new(945, 16, true),
-            new(963, 6, true),
-            new(1025, 0, true),
-            new(1040, 63, true),
-            new(1105, 0, true),
-            new(4352, 95, false),
-            new(8208, 0, true),
-            new(8211, 3, true),
-            new(8216, 1, true),
-            new(8220, 1, true),
-            new(8224, 2, true),
-            new(8228, 3, true),
-            new(8240, 0, true),
-            new(8242, 1, true),
-            new(8245, 0, true),
-            new(8251, 0, true),
-            new(8254, 0, true),
-            new(8308, 0, true),
-            new(8319, 0, true),
-            new(8321, 3, true),
-            new(8364, 0, true),
-            new(8451, 0, true),
-            new(8453, 0, true),
-            new(8457, 0, true),
-            new(8467, 0, true),
-            new(8470, 0, true),
-            new(8481, 1, true),
-            new(8486, 0, true),
-            new(8491, 0, true),
-            new(8531, 1, true),
-            new(8539, 3, true),
-            new(8544, 11, true),
-            new(8560, 9, true),
-            new(8585, 0, true),
-            new(8592, 9, true),
-            new(8632, 1, true),
-            new(8658, 0, true),
-            new(8660, 0, true),
-            new(8679, 0, true),
-            new(8704, 0, true),
-            new(8706, 1, true),
-            new(8711, 1, true),
-            new(8715, 0, true),
-            new(8719, 0, true),
-            new(8721, 0, true),
-            new(8725, 0, true),
-            new(8730, 0, true),
-            new(8733, 3, true),
-            new(8739, 0, true),
-            new(8741, 0, true),
-            new(8743, 5, true),
-            new(8750, 0, true),
-            new(8756, 3, true),
-            new(8764, 1, true),
-            new(8776, 0, true),
-            new(8780, 0, true),
-            new(8786, 0, true),
-            new(8800, 1, true),
-            new(8804, 3, true),
-            new(8810, 1, true),
-            new(8814, 1, true),
-            new(8834, 1, true),
-            new(8838, 1, true),
-            new(8853, 0, true),
-            new(8857, 0, true),
-            new(8869, 0, true),
-            new(8895, 0, true),
-            new(8978, 0, true),
-            new(8986, 1, false),
-            new(9001, 1, false),
-            new(9193, 3, false),
-            new(9200, 0, false),
-            new(9203, 0, false),
-            new(9312, 137, true),
-            new(9451, 96, true),
-            new(9552, 35, true),
-            new(9600, 15, true),
-            new(9618, 3, true),
-            new(9632, 1, true),
-            new(9635, 6, true),
-            new(9650, 1, true),
-            new(9654, 1, true),
-            new(9660, 1, true),
-            new(9664, 1, true),
-            new(9670, 2, true),
-            new(9675, 0, true),
-            new(9678, 3, true),
-            new(9698, 3, true),
-            new(9711, 0, true),
-            new(9725, 1, false),
-            new(9733, 1, true),
-            new(9737, 0, true),
-            new(9742, 1, true),
-            new(9748, 1, false),
-            new(9756, 0, true),
-            new(9758, 0, true),
-            new(9792, 0, true),
-            new(9794, 0, true),
-            new(9800, 11, false),
-            new(9824, 1, true),
-            new(9827, 2, true),
-            new(9831, 3, true),
-            new(9836, 1, true),
-            new(9839, 0, true),
-            new(9855, 0, false),
-            new(9875, 0, false),
-            new(9886, 1, true),
-            new(9889, 0, false),
-            new(9898, 1, false),
-            new(9917, 1, false),
-            new(9919, 0, true),
-            new(9924, 1, false),
-            new(9926, 7, true),
-            new(9934, 0, false),
-            new(9935, 4, true),
-            new(9940, 0, false),
-            new(9941, 12, true),
-            new(9955, 0, true),
-            new(9960, 1, true),
-            new(9962, 0, false),
-            new(9963, 6, true),
-            new(9970, 1, false),
-            new(9972, 0, true),
-            new(9973, 0, false),
-            new(9974, 3, true),
-            new(9978, 0, false),
-            new(9979, 1, true),
-            new(9981, 0, false),
-            new(9982, 1, true),
-            new(9989, 0, false),
-            new(9994, 1, false),
-            new(10024, 0, false),
-            new(10045, 0, true),
-            new(10060, 0, false),
-            new(10062, 0, false),
-            new(10067, 2, false),
-            new(10071, 0, false),
-            new(10102, 9, true),
-            new(10133, 2, false),
-            new(10160, 0, false),
-            new(10175, 0, false),
-            new(11035, 1, false),
-            new(11088, 0, false),
-            new(11093, 0, false),
-            new(11094, 3, true),
-            new(11904, 25, false),
-            new(11931, 88, false),
-            new(12032, 213, false),
-            new(12272, 11, false),
-            new(12288, 0, false),
-            new(12289, 61, false),
-            new(12353, 85, false),
-            new(12441, 102, false),
-            new(12549, 42, false),
-            new(12593, 93, false),
-            new(12688, 83, false),
-            new(12784, 46, false),
-            new(12832, 39, false),
-            new(12872, 7, true),
-            new(12880, 7023, false),
-            new(19968, 22156, false),
-            new(42128, 54, false),
-            new(43360, 28, false),
-            new(44032, 11171, false),
-            new(57344, 6399, true),
-            new(63744, 511, false),
-            new(65024, 15, true),
-            new(65040, 9, false),
-            new(65072, 34, false),
-            new(65108, 18, false),
-            new(65128, 3, false),
-            new(65281, 95, false),
-            new(65504, 6, false),
-            new(65533, 0, true),
-            new(94176, 4, false),
-            new(94192, 1, false),
-            new(94208, 6135, false),
-            new(100352, 1237, false),
-            new(101632, 8, false),
-            new(110576, 3, false),
-            new(110581, 6, false),
-            new(110589, 1, false),
-            new(110592, 290, false),
-            new(110928, 2, false),
-            new(110948, 3, false),
-            new(110960, 395, false),
-            new(126980, 0, false),
-            new(127183, 0, false),
-            new(127232, 10, true),
-            new(127248, 29, true),
-            new(127280, 57, true),
-            new(127344, 29, true),
-            new(127374, 0, false),
-            new(127375, 1, true),
-            new(127377, 9, false),
-            new(127387, 17, true),
-            new(127488, 2, false),
-            new(127504, 43, false),
-            new(127552, 8, false),
-            new(127568, 1, false),
-            new(127584, 5, false),
-            new(127744, 32, false),
-            new(127789, 8, false),
-            new(127799, 69, false),
-            new(127870, 21, false),
-            new(127904, 42, false),
-            new(127951, 4, false),
-            new(127968, 16, false),
-            new(127988, 0, false),
-            new(127992, 70, false),
-            new(128064, 0, false),
-            new(128066, 186, false),
-            new(128255, 62, false),
-            new(128331, 3, false),
-            new(128336, 23, false),
-            new(128378, 0, false),
-            new(128405, 1, false),
-            new(128420, 0, false),
-            new(128507, 84, false),
-            new(128640, 69, false),
-            new(128716, 0, false),
-            new(128720, 2, false),
-            new(128725, 2, false),
-            new(128733, 2, false),
-            new(128747, 1, false),
-            new(128756, 8, false),
-            new(128992, 11, false),
-            new(129008, 0, false),
-            new(129292, 46, false),
-            new(129340, 9, false),
-            new(129351, 184, false),
-            new(129648, 4, false),
-            new(129656, 4, false),
-            new(129664, 6, false),
-            new(129680, 28, false),
-            new(129712, 10, false),
-            new(129728, 5, false),
-            new(129744, 9, false),
-            new(129760, 7, false),
-            new(129776, 6, false),
-            new(131072, 65533, false),
-            new(196608, 65533, false),
-            new(917760, 239, true),
-            new(983040, 65533, true),
-            new(1048576, 65533, true)
-        };
 
-        private readonly struct EastAsianWidthRange
+            var codePoint = (int)value;
+
+            if (0x3000 == codePoint ||
+                0xFF01 <= codePoint && codePoint <= 0xFF60 ||
+                0xFFE0 <= codePoint && codePoint <= 0xFFE6)
+                return EastAsianWidthKind.Full;
+
+            if (0x20A9 == codePoint ||
+                0xFF61 <= codePoint && codePoint <= 0xFFBE ||
+                0xFFC2 <= codePoint && codePoint <= 0xFFC7 ||
+                0xFFCA <= codePoint && codePoint <= 0xFFCF ||
+                0xFFD2 <= codePoint && codePoint <= 0xFFD7 ||
+                0xFFDA <= codePoint && codePoint <= 0xFFDC ||
+                0xFFE8 <= codePoint && codePoint <= 0xFFEE)
+                return EastAsianWidthKind.Half;
+
+            if (0x1100 <= codePoint && codePoint <= 0x115F ||
+                0x11A3 <= codePoint && codePoint <= 0x11A7 ||
+                0x11FA <= codePoint && codePoint <= 0x11FF ||
+                0x2329 <= codePoint && codePoint <= 0x232A ||
+                0x2E80 <= codePoint && codePoint <= 0x2E99 ||
+                0x2E9B <= codePoint && codePoint <= 0x2EF3 ||
+                0x2F00 <= codePoint && codePoint <= 0x2FD5 ||
+                0x2FF0 <= codePoint && codePoint <= 0x2FFB ||
+                0x3001 <= codePoint && codePoint <= 0x303E ||
+                0x3041 <= codePoint && codePoint <= 0x3096 ||
+                0x3099 <= codePoint && codePoint <= 0x30FF ||
+                0x3105 <= codePoint && codePoint <= 0x312D ||
+                0x3131 <= codePoint && codePoint <= 0x318E ||
+                0x3190 <= codePoint && codePoint <= 0x31BA ||
+                0x31C0 <= codePoint && codePoint <= 0x31E3 ||
+                0x31F0 <= codePoint && codePoint <= 0x321E ||
+                0x3220 <= codePoint && codePoint <= 0x3247 ||
+                0x3250 <= codePoint && codePoint <= 0x32FE ||
+                0x3300 <= codePoint && codePoint <= 0x4DBF ||
+                0x4E00 <= codePoint && codePoint <= 0xA48C ||
+                0xA490 <= codePoint && codePoint <= 0xA4C6 ||
+                0xA960 <= codePoint && codePoint <= 0xA97C ||
+                0xAC00 <= codePoint && codePoint <= 0xD7A3 ||
+                0xD7B0 <= codePoint && codePoint <= 0xD7C6 ||
+                0xD7CB <= codePoint && codePoint <= 0xD7FB ||
+                0xF900 <= codePoint && codePoint <= 0xFAFF ||
+                0xFE10 <= codePoint && codePoint <= 0xFE19 ||
+                0xFE30 <= codePoint && codePoint <= 0xFE52 ||
+                0xFE54 <= codePoint && codePoint <= 0xFE66 ||
+                0xFE68 <= codePoint && codePoint <= 0xFE6B ||
+                0x1B000 <= codePoint && codePoint <= 0x1B001 ||
+                0x1F200 <= codePoint && codePoint <= 0x1F202 ||
+                0x1F210 <= codePoint && codePoint <= 0x1F23A ||
+                0x1F240 <= codePoint && codePoint <= 0x1F248 ||
+                0x1F250 <= codePoint && codePoint <= 0x1F251 ||
+                0x20000 <= codePoint && codePoint <= 0x2F73F ||
+                0x2B740 <= codePoint && codePoint <= 0x2FFFD ||
+                0x30000 <= codePoint && codePoint <= 0x3FFFD)
+                return EastAsianWidthKind.Wide;
+
+            if (0x0020 <= codePoint && codePoint <= 0x007E ||
+                0x00A2 <= codePoint && codePoint <= 0x00A3 ||
+                0x00A5 <= codePoint && codePoint <= 0x00A6 ||
+                0x00AC == codePoint ||
+                0x00AF == codePoint ||
+                0x27E6 <= codePoint && codePoint <= 0x27ED ||
+                0x2985 <= codePoint && codePoint <= 0x2986)
+                return EastAsianWidthKind.Narrow;
+
+            if (0x00A1 == codePoint ||
+                0x00A4 == codePoint ||
+                0x00A7 <= codePoint && codePoint <= 0x00A8 ||
+                0x00AA == codePoint ||
+                0x00AD <= codePoint && codePoint <= 0x00AE ||
+                0x00B0 <= codePoint && codePoint <= 0x00B4 ||
+                0x00B6 <= codePoint && codePoint <= 0x00BA ||
+                0x00BC <= codePoint && codePoint <= 0x00BF ||
+                0x00C6 == codePoint ||
+                0x00D0 == codePoint ||
+                0x00D7 <= codePoint && codePoint <= 0x00D8 ||
+                0x00DE <= codePoint && codePoint <= 0x00E1 ||
+                0x00E6 == codePoint ||
+                0x00E8 <= codePoint && codePoint <= 0x00EA ||
+                0x00EC <= codePoint && codePoint <= 0x00ED ||
+                0x00F0 == codePoint ||
+                0x00F2 <= codePoint && codePoint <= 0x00F3 ||
+                0x00F7 <= codePoint && codePoint <= 0x00FA ||
+                0x00FC == codePoint ||
+                0x00FE == codePoint ||
+                0x0101 == codePoint ||
+                0x0111 == codePoint ||
+                0x0113 == codePoint ||
+                0x011B == codePoint ||
+                0x0126 <= codePoint && codePoint <= 0x0127 ||
+                0x012B == codePoint ||
+                0x0131 <= codePoint && codePoint <= 0x0133 ||
+                0x0138 == codePoint ||
+                0x013F <= codePoint && codePoint <= 0x0142 ||
+                0x0144 == codePoint ||
+                0x0148 <= codePoint && codePoint <= 0x014B ||
+                0x014D == codePoint ||
+                0x0152 <= codePoint && codePoint <= 0x0153 ||
+                0x0166 <= codePoint && codePoint <= 0x0167 ||
+                0x016B == codePoint ||
+                0x01CE == codePoint ||
+                0x01D0 == codePoint ||
+                0x01D2 == codePoint ||
+                0x01D4 == codePoint ||
+                0x01D6 == codePoint ||
+                0x01D8 == codePoint ||
+                0x01DA == codePoint ||
+                0x01DC == codePoint ||
+                0x0251 == codePoint ||
+                0x0261 == codePoint ||
+                0x02C4 == codePoint ||
+                0x02C7 == codePoint ||
+                0x02C9 <= codePoint && codePoint <= 0x02CB ||
+                0x02CD == codePoint ||
+                0x02D0 == codePoint ||
+                0x02D8 <= codePoint && codePoint <= 0x02DB ||
+                0x02DD == codePoint ||
+                0x02DF == codePoint ||
+                0x0300 <= codePoint && codePoint <= 0x036F ||
+                0x0391 <= codePoint && codePoint <= 0x03A1 ||
+                0x03A3 <= codePoint && codePoint <= 0x03A9 ||
+                0x03B1 <= codePoint && codePoint <= 0x03C1 ||
+                0x03C3 <= codePoint && codePoint <= 0x03C9 ||
+                0x0401 == codePoint ||
+                0x0410 <= codePoint && codePoint <= 0x044F ||
+                0x0451 == codePoint ||
+                0x2010 == codePoint ||
+                0x2013 <= codePoint && codePoint <= 0x2016 ||
+                0x2018 <= codePoint && codePoint <= 0x2019 ||
+                0x201C <= codePoint && codePoint <= 0x201D ||
+                0x2020 <= codePoint && codePoint <= 0x2022 ||
+                0x2024 <= codePoint && codePoint <= 0x2027 ||
+                0x2030 == codePoint ||
+                0x2032 <= codePoint && codePoint <= 0x2033 ||
+                0x2035 == codePoint ||
+                0x203B == codePoint ||
+                0x203E == codePoint ||
+                0x2074 == codePoint ||
+                0x207F == codePoint ||
+                0x2081 <= codePoint && codePoint <= 0x2084 ||
+                0x20AC == codePoint ||
+                0x2103 == codePoint ||
+                0x2105 == codePoint ||
+                0x2109 == codePoint ||
+                0x2113 == codePoint ||
+                0x2116 == codePoint ||
+                0x2121 <= codePoint && codePoint <= 0x2122 ||
+                0x2126 == codePoint ||
+                0x212B == codePoint ||
+                0x2153 <= codePoint && codePoint <= 0x2154 ||
+                0x215B <= codePoint && codePoint <= 0x215E ||
+                0x2160 <= codePoint && codePoint <= 0x216B ||
+                0x2170 <= codePoint && codePoint <= 0x2179 ||
+                0x2189 == codePoint ||
+                0x2190 <= codePoint && codePoint <= 0x2199 ||
+                0x21B8 <= codePoint && codePoint <= 0x21B9 ||
+                0x21D2 == codePoint ||
+                0x21D4 == codePoint ||
+                0x21E7 == codePoint ||
+                0x2200 == codePoint ||
+                0x2202 <= codePoint && codePoint <= 0x2203 ||
+                0x2207 <= codePoint && codePoint <= 0x2208 ||
+                0x220B == codePoint ||
+                0x220F == codePoint ||
+                0x2211 == codePoint ||
+                0x2215 == codePoint ||
+                0x221A == codePoint ||
+                0x221D <= codePoint && codePoint <= 0x2220 ||
+                0x2223 == codePoint ||
+                0x2225 == codePoint ||
+                0x2227 <= codePoint && codePoint <= 0x222C ||
+                0x222E == codePoint ||
+                0x2234 <= codePoint && codePoint <= 0x2237 ||
+                0x223C <= codePoint && codePoint <= 0x223D ||
+                0x2248 == codePoint ||
+                0x224C == codePoint ||
+                0x2252 == codePoint ||
+                0x2260 <= codePoint && codePoint <= 0x2261 ||
+                0x2264 <= codePoint && codePoint <= 0x2267 ||
+                0x226A <= codePoint && codePoint <= 0x226B ||
+                0x226E <= codePoint && codePoint <= 0x226F ||
+                0x2282 <= codePoint && codePoint <= 0x2283 ||
+                0x2286 <= codePoint && codePoint <= 0x2287 ||
+                0x2295 == codePoint ||
+                0x2299 == codePoint ||
+                0x22A5 == codePoint ||
+                0x22BF == codePoint ||
+                0x2312 == codePoint ||
+                0x2460 <= codePoint && codePoint <= 0x24E9 ||
+                0x24EB <= codePoint && codePoint <= 0x254B ||
+                0x2550 <= codePoint && codePoint <= 0x2573 ||
+                0x2580 <= codePoint && codePoint <= 0x258F ||
+                0x2592 <= codePoint && codePoint <= 0x2595 ||
+                0x25A0 <= codePoint && codePoint <= 0x25A1 ||
+                0x25A3 <= codePoint && codePoint <= 0x25A9 ||
+                0x25B2 <= codePoint && codePoint <= 0x25B3 ||
+                0x25B6 <= codePoint && codePoint <= 0x25B7 ||
+                0x25BC <= codePoint && codePoint <= 0x25BD ||
+                0x25C0 <= codePoint && codePoint <= 0x25C1 ||
+                0x25C6 <= codePoint && codePoint <= 0x25C8 ||
+                0x25CB == codePoint ||
+                0x25CE <= codePoint && codePoint <= 0x25D1 ||
+                0x25E2 <= codePoint && codePoint <= 0x25E5 ||
+                0x25EF == codePoint ||
+                0x2605 <= codePoint && codePoint <= 0x2606 ||
+                0x2609 == codePoint ||
+                0x260E <= codePoint && codePoint <= 0x260F ||
+                0x2614 <= codePoint && codePoint <= 0x2615 ||
+                0x261C == codePoint ||
+                0x261E == codePoint ||
+                0x2640 == codePoint ||
+                0x2642 == codePoint ||
+                0x2660 <= codePoint && codePoint <= 0x2661 ||
+                0x2663 <= codePoint && codePoint <= 0x2665 ||
+                0x2667 <= codePoint && codePoint <= 0x266A ||
+                0x266C <= codePoint && codePoint <= 0x266D ||
+                0x266F == codePoint ||
+                0x269E <= codePoint && codePoint <= 0x269F ||
+                0x26BE <= codePoint && codePoint <= 0x26BF ||
+                0x26C4 <= codePoint && codePoint <= 0x26CD ||
+                0x26CF <= codePoint && codePoint <= 0x26E1 ||
+                0x26E3 == codePoint ||
+                0x26E8 <= codePoint && codePoint <= 0x26FF ||
+                0x273D == codePoint ||
+                0x2757 == codePoint ||
+                0x2776 <= codePoint && codePoint <= 0x277F ||
+                0x2B55 <= codePoint && codePoint <= 0x2B59 ||
+                0x3248 <= codePoint && codePoint <= 0x324F ||
+                0xE000 <= codePoint && codePoint <= 0xF8FF ||
+                0xFE00 <= codePoint && codePoint <= 0xFE0F ||
+                0xFFFD == codePoint ||
+                0x1F100 <= codePoint && codePoint <= 0x1F10A ||
+                0x1F110 <= codePoint && codePoint <= 0x1F12D ||
+                0x1F130 <= codePoint && codePoint <= 0x1F169 ||
+                0x1F170 <= codePoint && codePoint <= 0x1F19A ||
+                0xE0100 <= codePoint && codePoint <= 0xE01EF ||
+                0xF0000 <= codePoint && codePoint <= 0xFFFFD ||
+                0x100000 <= codePoint && codePoint <= 0x10FFFD)
+                return EastAsianWidthKind.Ambiguous;
+
+            return EastAsianWidthKind.Neutral;
+        }
+
+        private static int GetLength(this char value)
         {
-            public EastAsianWidthRange(int start, ushort count, bool ambiguous)
+            var kind = GetKind(value);
+
+            return kind switch
             {
-                Start = start;
-                Count = count;
-                Ambiguous = ambiguous;
-            }
+                EastAsianWidthKind.Full or EastAsianWidthKind.Wide => 2,
+                _ => 1,
+            };
+        }
 
-            public int Start { get; }
-            public ushort Count { get; }
-            public bool Ambiguous { get; }
+        public static int GetLengthWidthEastAsian(this string value)
+        {
+            return value.Sum(GetLength);
         }
     }
 }

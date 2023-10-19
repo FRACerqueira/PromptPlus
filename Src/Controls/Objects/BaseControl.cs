@@ -1,7 +1,5 @@
 ﻿// ***************************************************************************************
 // MIT LICENCE
-// Copyright (c) 2019 shibayan.
-// https://github.com/shibayan/Sharprompt
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
@@ -35,14 +33,11 @@ namespace PPlus.Controls.Objects
             _errorMessage = string.Empty;
             _screenBuffer = new();
             _lastBufferLines = null;
-            EnabledTooltip = options.OptShowTooltip;
             ConsolePlus = console;
             _maxlastline = null;
         }
 
         public IConsoleControl ConsolePlus { get; }
-
-        public bool EnabledTooltip { get; set; }
 
         public string FinishResult
         {
@@ -58,6 +53,10 @@ namespace PPlus.Controls.Objects
 
         public ResultPrompt<T> Run(CancellationToken? stoptoken)
         {
+            if (_options.OptMinimalRender && _options.OptPaginationTemplate == null)
+            {
+                _options.PaginationTemplate((TotalCount, SelectedPage, PageCount) => $"{SelectedPage}/{PageCount} : {TotalCount}");
+            }
             stoptoken ??= CancellationToken.None;
             if (ConsolePlus.Provider != "Memory")
             {
@@ -112,7 +111,7 @@ namespace PPlus.Controls.Objects
             {
                 if (item.SaveCursor)
                 {
-                    cursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
+                    cursor = (ConsolePlus.CursorLeft + item.Width, ConsolePlus.CursorTop);
                 }
                 else
                 {
@@ -168,7 +167,7 @@ namespace PPlus.Controls.Objects
                 ConsolePlus.SetCursorPosition(0, _lastBufferLines.Value.CursorTop);
                 if (clearall)
                 {
-                    for (int i = 0; i < _lastBufferLines.Value.QtdLines; i++)
+                    for (int i = 0; i <= _lastBufferLines.Value.QtdLines; i++)
                     {
                         ConsolePlus.SetCursorPosition(0, _lastBufferLines.Value.CursorTop+i);
                         ConsolePlus.Write("", null, true);

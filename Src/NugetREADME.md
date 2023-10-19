@@ -1,4 +1,4 @@
-﻿# **Welcome to PromptPlus**
+# **Welcome to PromptPlus**
 
 **Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
 
@@ -10,11 +10,17 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 **PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
 
-## What's new in V4.1.0
+## What's new in V4.2.0
 
-- New Control : Table<T> , Display/Select data in a grid/table 
+- Split feature Control Table:
+    - PromptPlus.TableSelect\<T> to Select item in table : Select row, column and data in a grid/table 
+        - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
+    - PromptPlus.Table\<T> to write table in console : Show data in a grid/table 
+        - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
+- New Control : TableMultSelect\<T> :  Select multi-data in a grid/table 
+    - Samples in project [Table MultiSelect Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableMultiSelectSamples)
     - Main features :
-        - More than 100 layout combinations
+        - More than 80 layout combinations
         - Navigation by row and columns
         - Scroll the table when it is larger than the screen
         - Split text when it is larger than the column size
@@ -22,20 +28,48 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
         - Color customization of each element
         - Search for data filtered by columns
         - Formatting by column or by data type definition
-- Improvement commands with default values ​​(all controls)
-- Bug fixed: grouped item ordering. The sort option will be ignored
-    - Affeted Controls : Select/MultiSelect
-- Bug fixed: 'AcceptInput' method causes failure by not allowing navigation keys to be selected.
-    - Affeted Controls : AddtoList/Input
-- Improvement : Direct writes to standard error output stream
-    - New Commands : OutputError()
-- New feature: Escaping format characters color 
-    - Global property : IgnoreColorTokens
-    - New Commands : EscapeColorTokens()/AcceptColorTokens()
-- New feature: Group items in the select control
-- New feature: Add separator line in the select control
- 
-**Special thanks to [ividyon](https://github.com/ividyon) for suggesting improvements and actively participating in this release**
+- New feature: 
+    - MinimalRender the prompt and control description are not rendered, showing only the minimum necessary without using resources.
+        - Global property : MinimalRender
+        - Instance control(By config command): MinimalRender(bool value = true)
+- New feature: 
+    - Pagination Template to customize pagination information
+        - Global property : PaginationTemplate
+        - Instance control(By config command) : PaginationTemplate(Func<int, int, int, string>? value)
+- New feature: 
+    - PromptPlus.Join() 
+    - Fluent-Interface to write text (less code typed) 
+- Changed feature:
+    - Moved tooltips and validation message to the end of render to all control
+- Improvement : 
+    - Color Token now accepts ':' to separate foreground color from background color
+    - eg: [RED:BLUE] = [RED ON BLUE]
+- Improvement : 
+    - Optimized the Calendar control to have symbols when selecting elements
+- Improvement :
+    - Optimize Render of ProgressBar (less lines)
+- Improvement : 
+    - Optimize Render of SliderNumber (less lines)
+- Improvement : 
+    - Optimize resource usage in rendering (less cultural dependency)
+- Improvement : 
+    - Reinforce the validation of invalid or optional parameters in all controls
+- Renamed command: 
+    - 'DescriptionWithInputType' to 'ShowTipInputType'.
+    - Now extra-line to tip InputType
+- Renamed command: 
+    - 'AppendGroupOnDescription' to 'ShowTipGroup'.
+    - Now extra-line to tip group
+- Fixed bug : 
+    - The Slide Switch Control does not show on/off values ​​when they are not customized
+- Fixed bug : 
+    - Alternate screen doesn't update background style when changing color
+- Fixed bug : 
+    - Exception when try delete[F3] in empty colletion in AddTolist/AddtoMaskEditList control
+- Fixed bug : 
+    - Edit[F2] Immutable item in AddTolist/AddtoMaskEditList control
+- Fixed bug : 
+    - CTRL-V (paste data) does not show input in some controls
 
 ## **PromptPlus Controls - Sample Usage**
 
@@ -96,9 +130,9 @@ This project is licensed under the [MIT License](https://github.com/FRACerqueira
 
 ## **Credits**
 
-PromptPlus **includes code** from other software released under the **MIT license**:
+
+PromptPlus **<u>includes code(copy)</u>** from other software released under the **MIT license**:
 
 - [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
-- [Sharprompt](https://github.com/shibayan/Sharprompt), Copyright (c) 2019 shibayan.
-- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière.
+- [EastAsianWidth.NET](https://github.com/iodes/EastAsianWidth.NET), Copyright (c) 2020 Kevin So.
 - [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU

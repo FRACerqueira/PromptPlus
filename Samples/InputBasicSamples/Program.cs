@@ -57,6 +57,7 @@ PromptPlus
 PromptPlus.DoubleDash("Control:Input - with default value when empty");
 PromptPlus
     .Input("Input sample7","Please press enter with no input")
+    .Default("initial value")
     .DefaultIfEmpty("empty value")
     .Run();
 

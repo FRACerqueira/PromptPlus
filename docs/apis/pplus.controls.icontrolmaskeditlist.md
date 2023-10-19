@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -211,23 +211,6 @@ IControlMaskEditList Default(string value)
 
 `value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 initial value
-
-#### Returns
-
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
-
-### <a id="methods-descriptionwithinputtype"/>**DescriptionWithInputType(FormatWeek)**
-
-Append to desription the tip of type input.
-
-```csharp
-IControlMaskEditList DescriptionWithInputType(FormatWeek week)
-```
-
-#### Parameters
-
-`week` [FormatWeek](./pplus.controls.formatweek.md)<br>
-show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 #### Returns
 
@@ -467,6 +450,23 @@ Minimum number of items
 
 `maxvalue` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Maximum number of items
+
+#### Returns
+
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
+
+### <a id="methods-showtipinputtype"/>**ShowTipInputType(FormatWeek)**
+
+Append to desription the tip of type input.
+
+```csharp
+IControlMaskEditList ShowTipInputType(FormatWeek week)
+```
+
+#### Parameters
+
+`week` [FormatWeek](./pplus.controls.formatweek.md)<br>
+show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 #### Returns
 

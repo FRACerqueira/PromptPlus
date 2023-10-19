@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -104,6 +104,22 @@ create a new [Style](./pplus.style.md) with default foreground/background colors
 ```csharp
 Style()
 ```
+
+### <a id="constructors-.ctor"/>**Style(Color, Overflow)**
+
+Create a new instance of [Style](./pplus.style.md) with foreground, default backgroundcolors and overflow strategy.
+
+```csharp
+Style(Color foreground, Overflow overflowStrategy)
+```
+
+#### Parameters
+
+`foreground` [Color](./pplus.color.md)<br>
+[Color](./pplus.color.md) foreground
+
+`overflowStrategy` [Overflow](./pplus.overflow.md)<br>
+[Overflow](./pplus.overflow.md) Strategy
 
 ### <a id="constructors-.ctor"/>**Style(Color, Color, Overflow)**
 

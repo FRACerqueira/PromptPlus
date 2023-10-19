@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -50,6 +50,7 @@ true item disabled, otherwise no
 ### <a id="methods-additemgrouped"/>**AddItemGrouped(String, T, Boolean)**
 
 Add Item in a group to list
+ <br>AddItemGrouped cannot be used with OrderBy/OrderByDescending
 
 ```csharp
 IControlSelect<T> AddItemGrouped(string group, T value, bool disable)
@@ -93,6 +94,7 @@ true item disabled, otherwise no
 ### <a id="methods-additemsgrouped"/>**AddItemsGrouped(String, IEnumerable&lt;T&gt;, Boolean)**
 
 Add Items colletion in a group to List
+ <br>AddItemsGrouped cannot be used with OrderBy/OrderByDescending
 
 ```csharp
 IControlSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable)
@@ -133,18 +135,21 @@ items colletion
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
-### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription(Boolean)**
+### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
 
-Append group text on description. Default false
+Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
 ```csharp
-IControlSelect<T> AppendGroupOnDescription(bool value)
+IControlSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
 ```
 
 #### Parameters
 
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Append group text on description
+`scope` [AdderScope](./pplus.controls.adderscope.md)<br>
+scope Disable/Remove
+
+`values` IEnumerable&lt;T&gt;<br>
+items colletion
 
 #### Returns
 
@@ -281,7 +286,7 @@ Action to execute
 ### <a id="methods-orderby"/>**OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort list by expression
- <br>Sort options remove all Separation line<br>Sort options is ignored when has grouped items
+ <br>OrderBy cannot be used Separator or Grouped item
 
 ```csharp
 IControlSelect<T> OrderBy(Expression<Func<T, Object>> value)
@@ -299,7 +304,7 @@ expresion to sort the colletion
 ### <a id="methods-orderbydescending"/>**OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort Descending list by expression
- <br>Sort options remove all Separation line<br>Sort options is ignored when has grouped items
+ <br>OrderByDescending cannot be used Separator or Grouped item
 
 ```csharp
 IControlSelect<T> OrderByDescending(Expression<Func<T, Object>> value)
@@ -336,7 +341,8 @@ The timeout for valid items saved. Default value is 365 days
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page.Default value for this control is 10.
+Set max.item view per page.
+ <br>Default value : 10.The value must be greater than or equal to 1
 
 ```csharp
 IControlSelect<T> PageSize(int value)
@@ -354,6 +360,7 @@ Number of Max.items
 ### <a id="methods-separator"/>**Separator(SeparatorLine, Nullable&lt;Char&gt;)**
 
 Add Separation line
+ <br>Separatorcannot be used with OrderBy/OrderByDescending
 
 ```csharp
 IControlSelect<T> Separator(SeparatorLine separatorLine, Nullable<Char> value)
@@ -366,6 +373,23 @@ Type Separation line.Default value is SeparatorLine.SingleLine [SeparatorLine](.
 
 `value` [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Char Separation line. Valid only SeparatorLine is SeparatorLine.Char
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
+### <a id="methods-showtipgroup"/>**ShowTipGroup(Boolean)**
+
+Show tip with text of group. Default false
+
+```csharp
+IControlSelect<T> ShowTipGroup(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+If True, it shows the tip with the group text, otherwise nothing.
 
 #### Returns
 

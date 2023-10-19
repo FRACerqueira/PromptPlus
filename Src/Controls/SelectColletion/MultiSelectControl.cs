@@ -137,12 +137,6 @@ namespace PPlus.Controls
                 _options.Maximum = _options.Items.Count;
             }
 
-            var hasgroup = _options.Items.Any(x => x.IsGroupHeader);
-            if (hasgroup)
-            {
-                _options.OrderBy = null;
-            }
-
             if (_options.OrderBy != null)
             {
                 if (_options.IsOrderDescending)
@@ -211,6 +205,10 @@ namespace PPlus.Controls
 
         public IControlMultiSelect<T> OrderBy(Expression<Func<T, object>> value)
         {
+            if (_options.Items.Any(x => x.IsGroupHeader))
+            {
+                throw new PromptPlusException("OrderBy cannot be used with Grouped item");
+            }
             _options.IsOrderDescending = false;
             _options.OrderBy = value.Compile();
             return this;
@@ -218,6 +216,10 @@ namespace PPlus.Controls
 
         public IControlMultiSelect<T> OrderByDescending(Expression<Func<T, object>> value)
         {
+            if (_options.Items.Any(x => x.IsGroupHeader))
+            {
+                throw new PromptPlusException("OrderByDescending cannot be used with Grouped item");
+            }
             _options.IsOrderDescending = true;
             _options.OrderBy = value.Compile();
             return this;
@@ -229,9 +231,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMultiSelect<T> AppendGroupOnDescription(bool value = true)
+        public IControlMultiSelect<T> ShowTipGroup(bool value = true)
         {
-            _options.ShowGroupOnDescription = value;
+            _options.ShowGroupTip = value;
             return this;
         }
         public IControlMultiSelect<T> HotKeySelectAll(HotKey value)
@@ -249,6 +251,19 @@ namespace PPlus.Controls
         public IControlMultiSelect<T> Config(Action<IPromptConfig> context)
         {
             context?.Invoke(_options);
+            return this;
+        }
+
+        public IControlMultiSelect<T> AddDefault(IEnumerable<T> value)
+        {
+            foreach (var item in value)
+            {
+                if (_options.DefaultValues.Value == null)
+                {
+                    _options.DefaultValues = Optional<IList<T>>.Create(new List<T>());
+                }
+                _options.DefaultValues.Value.Add(Optional<T>.Create(item));
+            }
             return this;
         }
 
@@ -270,6 +285,10 @@ namespace PPlus.Controls
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -279,7 +298,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -326,6 +345,10 @@ namespace PPlus.Controls
 
         public IControlMultiSelect<T> AddItemGrouped(string group, T value, bool disable = false, bool selected = false)
         {
+            if (_options.OrderBy != null)
+            {
+                throw new PromptPlusException("AddItemGrouped cannot be used OrderBy/OrderByDescending");
+            }
             var found = false;
             var added = false;
             foreach (var item in _options.Items.Where(x => !x.IsGroupHeader && !string.IsNullOrEmpty(x.Group)))
@@ -355,6 +378,10 @@ namespace PPlus.Controls
 
         public IControlMultiSelect<T> AddItemsGrouped(string group, IEnumerable<T> value,  bool disable = false, bool selected = false)
         {
+            if (_options.OrderBy != null)
+            {
+                throw new PromptPlusException("AddItemsGrouped cannot be used OrderBy/OrderByDescending");
+            }
             foreach (var item in value)
             {
                 AddItemGrouped(group, item, disable,selected);
@@ -363,6 +390,18 @@ namespace PPlus.Controls
         }
 
         public IControlMultiSelect<T> AddItemsTo(AdderScope scope,params T[] values)
+        {
+            InternalAdd(scope, values);
+            return this;
+        }
+
+        public IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
+        {
+            InternalAdd(scope, values);
+            return this;
+        }
+
+        private void InternalAdd(AdderScope scope, IEnumerable<T> values)
         {
             foreach (var item in values)
             {
@@ -382,7 +421,6 @@ namespace PPlus.Controls
                         throw new PromptPlusException($"AdderScope : {scope} Not Implemented");
                 }
             }
-            return this;
         }
 
         public IControlMultiSelect<T> OverflowAnswer(Overflow value)
@@ -399,15 +437,15 @@ namespace PPlus.Controls
             }
             if (minvalue < 0)
             {
-                minvalue = 0;
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue})");
             }
             if (maxvalue < 0)
             {
-                maxvalue = minvalue;
+                throw new PromptPlusException($"Ranger invalid. maxvalue({maxvalue})");
             }
             if (minvalue > maxvalue)
             {
-                throw new PromptPlusException($"RangerSelect invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue}) > maxvalue({maxvalue})");
             }
             _options.Minimum = minvalue;
             _options.Maximum = maxvalue.Value;
@@ -419,12 +457,15 @@ namespace PPlus.Controls
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
             screenBuffer.WritePrompt(_options, "");
+            var first = !string.IsNullOrEmpty(_options.OptPrompt);
             if (ShowingFilter)
             {
-                if (_localpaginator.TryGetSelectedItem(out var showItem))
+                _options.OptShowCursor = true;
+                if (_localpaginator.TryGetSelected(out var showItem))
                 {
                     var item = showItem.Text;
                     screenBuffer.WriteFilterMultiSelect(_options, item, _filterBuffer);
+                    screenBuffer.SaveCursor();
                 }
                 else
                 {
@@ -432,19 +473,37 @@ namespace PPlus.Controls
                     screenBuffer.SaveCursor();
                     screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToForward());
                 }
-                screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                if (!_options.OptMinimalRender)
+                {
+                    screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                }
+                first = false;
             }
             else
             {
-                screenBuffer.WriteAnswer(_options, FinishResult);
+                if (!_options.OptMinimalRender)
+                {
+                    screenBuffer.WriteAnswer(_options, FinishResult);
+                    first = false;
+                }
+                else
+                {
+                    _options.OptShowCursor = false;
+                }
                 screenBuffer.SaveCursor();
             }
-            screenBuffer.WriteLineDescriptionMultiSelect(_options, _localpaginator.SelectedItem);
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            screenBuffer.WriteLineTooltipsMultiSelect(_options);
-            var subset = _localpaginator.ToSubset();
+            var hasdesc = screenBuffer.WriteLineDescriptionMultiSelect(_options, _localpaginator.SelectedItem);
+            if (first && hasdesc)
+            {
+                first = false;
+            }
+            var subset = _localpaginator.GetPageData();
             foreach (var item in subset)
             {
+                if (first)
+                {
+                    screenBuffer.SaveCursor();
+                }
                 string value;
                 var indentgroup = string.Empty;
                 if (item.IsGroupHeader)
@@ -466,58 +525,67 @@ namespace PPlus.Controls
                         }
                     }
                 }
+ 
                 if (item.IsCheck)
                 {
-                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
+                    if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
                     {
-                        screenBuffer.WriteLineIndentCheckSelect(_options, indentgroup);
+                        screenBuffer.WriteLineIndentCheckSelect(_options, indentgroup,!first);
                         screenBuffer.WriteCheckValueSelect(_options, value);
                     }
                     else
                     {
                         if (item.Disabled)
                         {
-                            screenBuffer.WriteLineIndentCheckUnSelect(_options, indentgroup);
+                            screenBuffer.WriteLineIndentCheckUnSelect(_options, indentgroup, !first);
                             screenBuffer.WriteCheckedValueDisabled(_options, value);
                         }
                         else
                         {
-                            screenBuffer.WriteLineIndentCheckNotSelect(_options, indentgroup);
+                            screenBuffer.WriteLineIndentCheckNotSelect(_options, indentgroup,!first);
                             screenBuffer.WriteCheckValueNotSelect(_options, value);
                         }
                     }
                 }
                 else
                 {
-                    if (_localpaginator.TryGetSelectedItem(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
+                    if (_localpaginator.TryGetSelected(out var selectedItem) && EqualityComparer<ItemMultSelect<T>>.Default.Equals(item, selectedItem))
                     {
-                        screenBuffer.WriteLineIndentUncheckedSelect(_options, indentgroup);
+                        screenBuffer.WriteLineIndentUncheckedSelect(_options, indentgroup,!first);
                         screenBuffer.WriteUncheckedValueSelect(_options, value);
                     }
                     else
                     {
                         if (item.Disabled)
                         {
-                            screenBuffer.WriteLineIndentUncheckedDisabled(_options, indentgroup);
+                            screenBuffer.WriteLineIndentUncheckedDisabled(_options, indentgroup,!first);
                             screenBuffer.WriteUncheckedValueDisabled(_options, value);
                         }
                         else
                         {
-                            screenBuffer.WriteLineIndentUncheckedNotSelect(_options, indentgroup);
+                            screenBuffer.WriteLineIndentUncheckedNotSelect(_options, indentgroup,!first);
                             screenBuffer.WriteUncheckedValueNotSelect(_options, value);
                         }
                     }
                 }
+                first = false;
             }
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
-                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _selectedItems.Count);
+                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate), _selectedItems.Count);
             }
             else
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{Messages.Tagged}: {_selectedItems.Count}, ", _options.OptStyleSchema.TaggedInfo(), true);
+                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.OptStyleSchema.TaggedInfo(), true);
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
+            if (_options.ShowGroupTip && !string.IsNullOrEmpty(_localpaginator.SelectedItem?.Group ?? string.Empty))
+            {
+                screenBuffer.NewLine();
+                screenBuffer.AddBuffer(_localpaginator.SelectedItem.Group, _options.OptStyleSchema.Tooltips());
+            }
+            screenBuffer.WriteLineTooltipsMultiSelect(_options);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, IEnumerable<T> result, bool aborted)
@@ -530,6 +598,10 @@ namespace PPlus.Controls
             else
             {
                 SaveHistory(result);
+            }
+            if (_options.OptMinimalRender)
+            {
+                return;
             }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();
@@ -635,7 +707,7 @@ namespace PPlus.Controls
                 }
                 else if (keyInfo.Value.IsPressSpaceKey())
                 {
-                    _localpaginator.TryGetSelectedItem(out var currentItem);
+                    _localpaginator.TryGetSelected(out var currentItem);
                     _filterBuffer.Clear();
                     _localpaginator.UpdateFilter(_filterBuffer.ToString(), Optional<ItemMultSelect<T>>.Create(currentItem));
                     if (currentItem != null)
@@ -758,7 +830,10 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        tryagain = true;
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
                     }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));
@@ -785,7 +860,7 @@ namespace PPlus.Controls
                 notrender = true;
             }
 
-            return new ResultPrompt<IEnumerable<T>>(_selectedItems.Select(x => x.Value).ToArray(), abort, !endinput, notrender);
+            return new ResultPrompt<IEnumerable<T>>(_selectedItems.Select(x => x.Value), abort, !endinput, notrender);
         }
 
         private void AddEnum()

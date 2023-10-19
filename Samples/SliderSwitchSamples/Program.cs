@@ -18,11 +18,13 @@ namespace SliderSwitchSamples
 
             var cult = Thread.CurrentThread.CurrentCulture;
 
-            PromptPlus.Config.DefaultCulture = new CultureInfo("pt-br");
+            PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
+            PromptPlus.Config.MinimalRender = true;
+
             PromptPlus.DoubleDash($"Control:SliderSwitch (pt-br) - minimal usage");
             var sdl = PromptPlus
                .SliderSwitch("SliderSwitch")
-                .Run();
+               .Run();
             if (!sdl.IsAborted)
             {
                 PromptPlus.WriteLine($"You Pressed {sdl.Value}");
@@ -45,7 +47,7 @@ namespace SliderSwitchSamples
             PromptPlus
                .SliderSwitch("SliderSwitch")
                .OnValue("custom [green]on[/]")
-               .OffValue("custom [red]on[/]")
+               .OffValue("custom [red]off[/]")
                .Run();
 
             PromptPlus.DoubleDash($"Control:SliderSwitch ({cult.Name}) - ChangeColorOn/ChangeColorOff");

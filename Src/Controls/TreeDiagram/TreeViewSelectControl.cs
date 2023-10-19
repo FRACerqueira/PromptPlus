@@ -86,13 +86,13 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewSelect<T> ShowLines(bool value)
+        public IControlTreeViewSelect<T> ShowLines(bool value = true)
         {
             _options.ShowLines = value;
             return this;
         }
 
-        public IControlTreeViewSelect<T> ShowExpand(bool value)
+        public IControlTreeViewSelect<T> ShowExpand(bool value = true)
         {
             _options.ShowLines = value;
             return this;
@@ -102,7 +102,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -166,7 +166,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewSelect<T> ShowCurrentNode(bool value)
+        public IControlTreeViewSelect<T> ShowCurrentNode(bool value = true)
         {
             _options.ShowCurrentNode = value;
             return this;
@@ -273,13 +273,19 @@ namespace PPlus.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
+            var hasprompt = string.IsNullOrEmpty(_options.OptPrompt) && !_options.OptMinimalRender;
             screenBuffer.WritePrompt(_options, "");
             if (_filterBuffer.Length > 0)
             {
-                if (_localpaginator.TryGetSelectedItem(out var showItem))
+                hasprompt = true;
+                if (_localpaginator.TryGetSelected(out var showItem))
                 {
                     screenBuffer.WriteFilterTreeViewSelect(_options, showItem.MessagesNodes.TextItem, _filterBuffer);
-                    screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                    screenBuffer.SaveCursor();
+                    if (!_options.OptMinimalRender)
+                    {
+                        screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                    }
                 }
                 else
                 {
@@ -287,38 +293,44 @@ namespace PPlus.Controls
                     screenBuffer.SaveCursor();
                     screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToForward());
                 }
+                _options.OptShowCursor = true;
             }
             else
             {
-                screenBuffer.SaveCursor();
-                screenBuffer.WriteAnswer(_options, FinishResult);
+                if (!_options.OptMinimalRender)
+                {
+                    hasprompt = true;
+                    screenBuffer.SaveCursor();
+                    screenBuffer.WriteAnswer(_options, FinishResult);
+                }
+                else
+                {
+                    _options.OptShowCursor = false;
+                }
             }
-            if (!string.IsNullOrEmpty(_options.OptDescription))
+            if (!string.IsNullOrEmpty(_options.OptDescription) && !_options.OptMinimalRender)
             {
+                hasprompt = true;
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(_options.OptDescription, _options.OptStyleSchema.Description());
             }
-            var subset = _localpaginator.ToSubset();
-            if (_options.ShowCurrentNode)
+            var subset = _localpaginator.GetPageData();
+            var showitem = _localpaginator.TryGetSelected(out var selectedItem);
+            if (_options.ShowCurrentNode && !_options.OptMinimalRender)
             {
-                if (_localpaginator.TryGetSelectedItem(out var showItem))
+                if (showitem)
                 {
+                    hasprompt = true;
                     screenBuffer.NewLine();
                     if (_options.ShowCurrentFulPathNode)
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {showItem.MessagesNodes.TextFullpath}", _options.CurrentNodeStyle);
+                        screenBuffer.AddBuffer($"{selectedItem.MessagesNodes.TextFullpath}", _options.CurrentNodeStyle);
                     }
                     else
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentFolder}: {showItem.MessagesNodes.TextItem}", _options.CurrentNodeStyle);
+                        screenBuffer.AddBuffer($"{selectedItem.MessagesNodes.TextItem}", _options.CurrentNodeStyle);
                     }
                 }
-            }
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            if (_localpaginator.TryGetSelectedItem(out var selectedItem))
-            {
-                var fnode = _browserTreeView.Root.FindTreeByValue(selectedItem.Value, _options.UniqueNode);
-                screenBuffer.WriteLineTooltipsTreeViewSelect(_options, fnode.Childrens != null);
             }
             foreach (var item in subset)
             {
@@ -327,29 +339,37 @@ namespace PPlus.Controls
                 {
                     if (item.IsDisabled)
                     {
-                        screenBuffer.WriteLineDisabledSelectorTreeViewSelect(_options, item);
+                        screenBuffer.WriteLineDisabledSelectorTreeViewSelect(_options, item,hasprompt);
                     }
                     else
                     {
-                        screenBuffer.WriteLineSelectorTreeViewSelect(_options, item, fnode.Childrens != null);
+                        screenBuffer.WriteLineSelectorTreeViewSelect(_options, item, fnode.Childrens != null, hasprompt);
                     }
                 }
                 else
                 {
                     if (item.IsDisabled)
                     {
-                        screenBuffer.WriteLineDisabledNotSelectorTreeViewSelect(_options, item);
+                        screenBuffer.WriteLineDisabledNotSelectorTreeViewSelect(_options, item, hasprompt);
                     }
                     else
                     {
-                        screenBuffer.WriteLineNotSelectorTreeViewSelect(_options, item, fnode.Childrens != null);
+                        screenBuffer.WriteLineNotSelectorTreeViewSelect(_options, item, fnode.Childrens != null, hasprompt);
                     }
                 }
+                hasprompt = true;
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
-                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage());
+                screenBuffer.WriteLinePagination(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate));
             }
+            if (showitem)
+            {
+                var fnode = _browserTreeView.Root.FindTreeByValue(selectedItem.Value, _options.UniqueNode);
+                screenBuffer.WriteLineTooltipsTreeViewSelect(_options, fnode.Childrens != null);
+            }
+
         }
 
         public override ResultPrompt<T> TryResult(CancellationToken cancellationToken)
@@ -493,7 +513,20 @@ namespace PPlus.Controls
                 }
                 else
                 {
-                    tryagain = true;
+                    if (ConsolePlus.Provider == "Memory")
+                    {
+                        if (!KeyAvailable)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
+                    }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));
             if (cancellationToken.IsCancellationRequested)
@@ -523,6 +556,10 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, T result, bool aborted)
         {
+            if (_options.OptMinimalRender)
+            {
+                return;
+            }
             string answer;
             if (aborted)
             {
@@ -532,6 +569,7 @@ namespace PPlus.Controls
             {
                 answer = DefaultFullPath(result);
             }
+
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();
         }

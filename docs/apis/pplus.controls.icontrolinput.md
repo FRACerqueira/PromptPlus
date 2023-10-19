@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -95,6 +95,7 @@ action to apply changes. [IPromptConfig](./pplus.controls.ipromptconfig.md)
 ### <a id="methods-default"/>**Default(String)**
 
 Default value when stated.
+ <br>Default cannot be used with IsSecret
 
 ```csharp
 IControlInput Default(string value)
@@ -146,7 +147,7 @@ Overwrite a [HotKey](./pplus.controls.hotkey.md) to toggle view. Default value i
 ### <a id="methods-filtertype"/>**FilterType(FilterMode)**
 
 Filter strategy for filter items in History colletion
- <br>Default value is FilterMode.StartsWith
+ <br>Default value is FilterMode.StartsWith<br>When  is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero
 
 ```csharp
 IControlInput FilterType(FilterMode value)
@@ -164,7 +165,7 @@ Filter Mode
 ### <a id="methods-historyenabled"/>**HistoryEnabled(String)**
 
 Enabled saved history inputs.
- <br>The history file is saved in  in the 'PromptPlus.History' folder.
+ <br>HistoryEnabled cannot be used with IsSecret<br>The history file is saved in  in the 'PromptPlus.History' folder.
 
 ```csharp
 IControlInput HistoryEnabled(string value)
@@ -199,7 +200,7 @@ maximum items saved
 ### <a id="methods-historyminimumprefixlength"/>**HistoryMinimumPrefixLength(Int32)**
 
 Minimum chars to enabled history feature. Default value is 0.
- <br>History items are filtered by the starts with entry.
+ <br>History items are filtered by the starts with entry.<br>When command FilterType set to  Disabled History items the value must be zero
 
 ```csharp
 IControlInput HistoryMinimumPrefixLength(int value)
@@ -268,6 +269,7 @@ Transform option
 ### <a id="methods-issecret"/>**IsSecret(Nullable&lt;Char&gt;)**
 
 The input is a secret. the input text is masked to '#' (default value)
+ <br>Input secret cannot be used with suggestionhandler<br>Input secret cannot be used with DefaultEmptyValue<br>Input secret cannot be used with DefaultValue<br>Input secret cannot be used with OverwriteDefaultFrom<br>Input secret cannot be used with HistoryEnabled
 
 ```csharp
 IControlInput IsSecret(Nullable<Char> value)
@@ -284,7 +286,8 @@ char secret
 
 ### <a id="methods-maxlength"/>**MaxLength(UInt16)**
 
-MaxLength of input text.
+MaxLength of input text.The value must be greater than or equal to 1
+ <br>Default value is 0 (no limit)
 
 ```csharp
 IControlInput MaxLength(ushort value)
@@ -302,6 +305,7 @@ Length
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
+ <br>OverwriteDefaultFrom cannot be used with IsSecret
 
 ```csharp
 IControlInput OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
@@ -322,6 +326,7 @@ The timeout for valid items saved. Default value is 365 days
 ### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SuggestionInput, SuggestionOutput&gt;)**
 
 Add Suggestion Handler feature
+ <br>SuggestionHandler cannot be used with IsSecret
 
 ```csharp
 IControlInput SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value)

@@ -94,7 +94,7 @@ namespace TreeViewSamples
             var trv = PromptPlus.TreeView<MyOrg>("MyMorg")
                 .RootNode(MyOrg.LoadEmpresa(),
                     (item) => item.Name,
-                    expandall: false,
+                    expandall: true,
                     separatePath: '|',
                     validselect: (item) => item.TypeInfo == TypeMyOrg.Funcionario,
                     setdisabled: (item) => item.TypeInfo != TypeMyOrg.Funcionario,

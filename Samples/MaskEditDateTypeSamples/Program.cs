@@ -45,7 +45,7 @@ namespace MaskEditDateTypeSamples
             PromptPlus.MaskEdit("input", "MaskEdit [blue]DateOnly[/] [yellow]input[/]")
                 .Mask(MaskedType.DateOnly)
                 .AcceptEmptyValue()
-                .DescriptionWithInputType(FormatWeek.Long)
+                .ShowTipInputType(FormatWeek.Long)
                 .TypeTipStyle(Style.Default.Foreground(Color.IndianRed))
                 .Run();
 
@@ -53,18 +53,17 @@ namespace MaskEditDateTypeSamples
 
             PromptPlus.MaskEdit("input", "MaskEdit DateOnly input")
                 .Mask(MaskedType.DateOnly)
-                .DescriptionWithInputType(FormatWeek.Short)
+                .ShowTipInputType(FormatWeek.Short)
                 .Culture(new CultureInfo("pt-br"))
                 .AcceptEmptyValue()
                 .Run();
-
 
             PromptPlus.DoubleDash($"Control:MaskEdit DateOnly ({cult.Name}) - overwrite prompt mask char.");
 
             PromptPlus.MaskEdit("input", "MaskEdit DateOnly input")
                 .Mask(MaskedType.DateOnly, '_')
                 .AcceptEmptyValue()
-                .DescriptionWithInputType(FormatWeek.Short)
+                .ShowTipInputType(FormatWeek.Short)
                 .Run();
 
 

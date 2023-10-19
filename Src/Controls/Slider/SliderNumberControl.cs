@@ -63,6 +63,10 @@ namespace PPlus.Controls
 
         public IControlSliderNumber FracionalDig(int value)
         {
+            if (value < 0)
+            {
+                throw new PromptPlusException("FracionalDig must be greater than or equal to 0");
+            }
             _options.FracionalDig = value;
             return this;
         }
@@ -85,6 +89,10 @@ namespace PPlus.Controls
             _options.OverwriteDefaultFrom = value;
             if (timeout != null)
             {
+                if (timeout.Value.TotalMilliseconds == 0)
+                {
+                    throw new PromptPlusException("timeout must be greater than 0");
+                }
                 _options.TimeoutOverwriteDefault = timeout.Value;
             }
             return this;
@@ -110,6 +118,10 @@ namespace PPlus.Controls
 
         public IControlSliderNumber Width(int value)
         {
+            if (value < 10)
+            {
+                throw new PromptPlusException("Width must be greater than or equal to 10");
+            }
             _options.Witdth = value;
             return this;
         }
@@ -132,17 +144,14 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
-            if (_options.CurrentCulture == null)
-            {
-                _options.CurrentCulture = _options.Config.AppCulture;
-            }
+            _options.CurrentCulture ??= _options.Config.AppCulture;
 
-            var max = double.Parse(_options.Maxvalue.ToString());
-            var min = double.Parse(_options.Minvalue.ToString());
-            var val = double.Parse(_options.Value.ToString());
-            if (min > max)
+            var max = _options.Maxvalue;
+            var min = _options.Minvalue;
+            var val = _options.Value;
+            if (min == max)
             {
-                throw new PromptPlusException($"Minvalue({_options.Minvalue}) >  Maxvalue({_options.Minvalue})");
+                throw new PromptPlusException($"Range Minvalue to Maxvalue must be greater than 0");
             }
             if (val > max)
             {
@@ -222,15 +231,28 @@ namespace PPlus.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
-            screenBuffer.WritePromptSliderNumber(_options);
-            screenBuffer.WriteAnswer(_options, _options.ValueToString(_currentValue));
-            screenBuffer.SaveCursor();
-            screenBuffer.WriteLineDescriptionSliderNumber(_options, _currentValue);
-            screenBuffer.WriteLineTooltipsSliderNumber(_options);
+            var hasprompt = false;
+            screenBuffer.WritePrompt(_options, "");
+            if (_options.MoveKeyPress == LayoutSliderNumber.UpDown)
+            {
+                hasprompt = true;
+                screenBuffer.AddBuffer($"[{_options.Minvalue},{_options.Maxvalue}] ", _options.OptStyleSchema.Suggestion(), true, false);
+                screenBuffer.WriteAnswer(_options, _options.ValueToString(_currentValue));
+                screenBuffer.SaveCursor();
+            }
+            var hasdesc = screenBuffer.WriteLineDescriptionSliderNumber(_options, _currentValue);
+            if (hasdesc)
+            {
+                if (!hasprompt)
+                {
+                    hasprompt = true;
+                }
+            }
             if (_options.MoveKeyPress == LayoutSliderNumber.LeftRight)
             {
-                screenBuffer.WriteLineWidgetsSliderNumber(_options, CurrentValueStep(_currentValue), _currentValue,ConsolePlus.IsUnicodeSupported);
+                screenBuffer.WriteLineWidgetsSliderNumber(_options, CurrentValueStep(_currentValue), _currentValue,ConsolePlus.IsUnicodeSupported, hasprompt);
             }
+            screenBuffer.WriteLineTooltipsSliderNumber(_options);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, double result, bool aborted)
@@ -246,6 +268,10 @@ namespace PPlus.Controls
             else
             {
                 answer = Messages.CanceledKey;
+            }
+            if (_options.OptMinimalRender)
+            {
+                return;
             }
             screenBuffer.WriteDone(_options, answer);
             screenBuffer.NewLine();

@@ -82,14 +82,13 @@ namespace MultiSelectBasicSamples
                 }
             }
 
-
             PromptPlus.DoubleDash("Control:MultiSelect - basic usage with group and AppendGroupOnDescription");
             multsel = PromptPlus.MultiSelect<string>("Which cities would you like to visit?")
                  .AddItemsGrouped("North America", new[] { "Seattle", "Boston", "New York" })
                  .AddItemsGrouped("Asia", new[] { "Tokyo", "Singapore", "Shanghai" })
                  .AddItem("South America (Any)")
                  .AddItem("Europe (Any)")
-                 .AppendGroupOnDescription()
+                 .ShowTipGroup()
                  .Run();
 
 
@@ -117,11 +116,17 @@ namespace MultiSelectBasicSamples
                 .AddItem("Shanghai")
                 .Run();
 
-
             PromptPlus.DoubleDash("Control:MultiSelect - Using Enum");
             PromptPlus.MultiSelect<StyleControls>("MultiSelect", "Style regions/state of controls")
                 .Run();
 
+            PromptPlus.DoubleDash("Control:MultiSelect - Using Enum with display attributes");
+            using (PromptPlus.EscapeColorTokens())
+            {
+                PromptPlus.WriteLine("[Display(Name = \"option 1\")]");
+                PromptPlus.WriteLine("Opc1,");
+                PromptPlus.WriteLine("");
+            }
             PromptPlus.DoubleDash("Control:MultiSelect - Using Enum with display attributes");
             PromptPlus.MultiSelect<MyEnum>("SelMultiSelectect")
                 .Run();

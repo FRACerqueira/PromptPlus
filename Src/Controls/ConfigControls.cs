@@ -99,21 +99,35 @@ namespace PPlus.Controls
             } 
         }
 
+        private Func<int, int, int, string>? _paginationTemplate = null;
+
+        /// <summary>
+        /// Get/Set Custom PaginationTemplate
+        /// <br>string to show = Func(Total items,Current Page,Total pages)</br>
+        /// </summary>
+        public Func<int,int,int,string>? PaginationTemplate
+        {
+            get { return _paginationTemplate; }
+            set
+            {
+                _paginationTemplate = value;
+            }
+        }
 
         private int _completionMinimumPrefixLength = 3;
 
         /// <summary>
         /// Get/Set Minimum Prefix Length.
-        /// <br>Default value : 3.If value less than 0 internal set to 0.</br>
+        /// <br>Default value : 3.If value less than 1 internal set to 1.</br>
         /// </summary>
         public int CompletionMinimumPrefixLength 
         {
             get { return _completionMinimumPrefixLength; }
             set
             {
-                if (value < 0)
+                if (value < 1)
                 {
-                    value = 0;
+                    value = 1;
                 }
                 _completionMinimumPrefixLength = value;
             }
@@ -123,16 +137,16 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Get/Set Interval in mileseconds to wait start Completion funcion.
-        /// <br>Default value : 1000. If value less than 10 internal set to 10.</br>
+        /// <br>Default value : 1000. If value less than 100 internal set to 100.</br>
         /// </summary>
         public int CompletionWaitToStart
         {
             get { return _completionWaitToStart; }
             set
             {
-                if (value < 10)
+                if (value < 100)
                 {
-                    value = 10;
+                    value = 100;
                 }
                 _completionWaitToStart = value;
             }
@@ -188,6 +202,12 @@ namespace PPlus.Controls
         /// </summary>
         public bool EnabledAbortKey { get; set; } = true;
 
+        /// <summary>
+        /// Get/Set Minimal Render.
+        /// <br>Default value : false</br>
+        /// <br>When true, the prompt and control description are not rendered, showing only the minimum necessary without using resources (except the default tooltips when used)</br>
+        /// </summary>
+        public bool MinimalRender { get; set; } = false;
 
         /// <summary>
         /// Get/Set hide controls after finish for all controls.

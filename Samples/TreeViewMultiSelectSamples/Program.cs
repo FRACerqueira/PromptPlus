@@ -88,7 +88,6 @@ namespace TreeViewMultiSelectSamples
 
             //Ensure ValueResult Culture for all controls
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
-
             PromptPlus.WriteLine("Hello, World!");
             PromptPlus.DoubleDash("Control:TreeView - Common usage");
 
@@ -102,7 +101,7 @@ namespace TreeViewMultiSelectSamples
                     uniquenode: (item) => item.Id,
                     validselect: (item) => item.TypeInfo == TypeMyOrg.Funcionario)
                 .Styles(StyleTreeView.SelectedRoot, Style.Default.Foreground(Color.Yellow))
-                .PageSize(20)
+                .PageSize(5)
                 .Interaction(MyOrg.LoadAreas(), (ctrl, item) =>
                 {
                     ctrl.AddNode(item);

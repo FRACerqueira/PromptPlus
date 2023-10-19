@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -609,7 +609,7 @@ public static void Beep()
 Create Browser Control.
 
 ```csharp
-public static IControlSelectBrowser Browser(string prompt, string description)
+public static IControlBrowserSelect Browser(string prompt, string description)
 ```
 
 #### Parameters
@@ -622,14 +622,14 @@ The description text to write
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+[IControlBrowserSelect](./pplus.controls.icontrolbrowserselect.md)
 
 ### <a id="methods-browser"/>**Browser(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create Browser Control.
 
 ```csharp
-public static IControlSelectBrowser Browser(string prompt, string description, Action<IPromptConfig> config)
+public static IControlBrowserSelect Browser(string prompt, string description, Action<IPromptConfig> config)
 ```
 
 #### Parameters
@@ -645,14 +645,14 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+[IControlBrowserSelect](./pplus.controls.icontrolbrowserselect.md)
 
 ### <a id="methods-browser"/>**Browser(String, Action&lt;IPromptConfig&gt;)**
 
 Create Browser Control.
 
 ```csharp
-public static IControlSelectBrowser Browser(string prompt, Action<IPromptConfig> config)
+public static IControlBrowserSelect Browser(string prompt, Action<IPromptConfig> config)
 ```
 
 #### Parameters
@@ -665,14 +665,14 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlSelectBrowser](./pplus.controls.icontrolselectbrowser.md)
+[IControlBrowserSelect](./pplus.controls.icontrolbrowserselect.md)
 
 ### <a id="methods-browsermultiselect"/>**BrowserMultiSelect(String, String)**
 
 Create MultiSelect Browser Control.
 
 ```csharp
-public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, string description)
+public static IControlBrowserMultiSelect BrowserMultiSelect(string prompt, string description)
 ```
 
 #### Parameters
@@ -685,14 +685,14 @@ The description text to write
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-browsermultiselect"/>**BrowserMultiSelect(String, String, Action&lt;IPromptConfig&gt;)**
 
 Create MultiSelect Browser Control.
 
 ```csharp
-public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, string description, Action<IPromptConfig> config)
+public static IControlBrowserMultiSelect BrowserMultiSelect(string prompt, string description, Action<IPromptConfig> config)
 ```
 
 #### Parameters
@@ -708,14 +708,14 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-browsermultiselect"/>**BrowserMultiSelect(String, Action&lt;IPromptConfig&gt;)**
 
 Create MultiSelect Browser Control.
 
 ```csharp
-public static IControlMultiSelectBrowser BrowserMultiSelect(string prompt, Action<IPromptConfig> config)
+public static IControlBrowserMultiSelect BrowserMultiSelect(string prompt, Action<IPromptConfig> config)
 ```
 
 #### Parameters
@@ -728,7 +728,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-[IControlMultiSelectBrowser](./pplus.controls.icontrolmultiselectbrowser.md)
+[IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
 ### <a id="methods-calendar"/>**Calendar(String, Action&lt;IPromptConfig&gt;)**
 
@@ -973,12 +973,12 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlKeyPress](./pplus.controls.icontrolkeypress.md)
 
-### <a id="methods-consoledefaultcolor"/>**ConsoleDefaultColor(Color, Color)**
+### <a id="methods-defaultcolor"/>**DefaultColor(Color, Color)**
 
 Set ForegroundColor/BackgroundColor Console
 
 ```csharp
-public static void ConsoleDefaultColor(Color forecorlor, Color background)
+public static void DefaultColor(Color forecorlor, Color background)
 ```
 
 #### Parameters
@@ -994,7 +994,7 @@ The [Color](./pplus.color.md) BackgroundColor
 Writes text line representation whie colors in a pair of lines of dashes.
 
 ```csharp
-public static void DoubleDash(string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
+public static int DoubleDash(string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
 ```
 
 #### Parameters
@@ -1010,6 +1010,10 @@ Number lines to write after write value
 
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Style](./pplus.style.md) to write.
+
+#### Returns
+
+Number of lines write on console
 
 ### <a id="methods-escapecolortokens"/>**EscapeColorTokens()**
 
@@ -1078,6 +1082,18 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 #### Returns
 
 [IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-join"/>**Join()**
+
+Start Join Commands
+
+```csharp
+public static IJointConsole Join()
+```
+
+#### Returns
+
+[IJointConsole](./pplus.drivers.ijointconsole.md)
 
 ### <a id="methods-keypress"/>**KeyPress()**
 
@@ -1655,7 +1671,7 @@ Action with [ProfileSetup](./pplus.profilesetup.md) to configuration
 Writes text line representation whie colors and Write single dash after.
 
 ```csharp
-public static void SingleDash(string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
+public static int SingleDash(string value, DashOptions dashOptions, int extralines, Nullable<Style> style)
 ```
 
 #### Parameters
@@ -1671,6 +1687,10 @@ Number lines to write after write value
 
 `style` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The [Style](./pplus.style.md) to write.
+
+#### Returns
+
+Number of lines write on console
 
 ### <a id="methods-slidernumber"/>**SliderNumber(String, Action&lt;IPromptConfig&gt;)**
 
@@ -1776,7 +1796,7 @@ public static bool SwapBuffer(TargetBuffer value)
 
 ### <a id="methods-table"/>**Table&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
 
-Create Table Control to Write to console.
+Write Table in console.
 
 ```csharp
 public static IControlTable<T> Table<T>(string prompt, Action<IPromptConfig> config)
@@ -1801,7 +1821,7 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 ### <a id="methods-table"/>**Table&lt;T&gt;(String, String)**
 
-
+Write Table in console.
 
 ```csharp
 public static IControlTable<T> Table<T>(string prompt, string description)
@@ -1822,11 +1842,11 @@ The description text to write
 
 #### Returns
 
-IControlTable&lt;T&gt;
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
 ### <a id="methods-table"/>**Table&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
 
-
+Write Table in console.
 
 ```csharp
 public static IControlTable<T> Table<T>(string prompt, string description, Action<IPromptConfig> config)
@@ -1850,7 +1870,163 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 #### Returns
 
-IControlTable&lt;T&gt;
+[IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
+
+### <a id="methods-tablemultiselect"/>**TableMultiSelect&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
+
+Create Table MultiSelect Control.
+
+```csharp
+public static IControlTableMultiSelect<T> TableMultiSelect<T>(string prompt, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlTableMultiSelect&lt;T&gt;](./pplus.controls.icontroltablemultiselect-1.md)
+
+### <a id="methods-tablemultiselect"/>**TableMultiSelect&lt;T&gt;(String, String)**
+
+Create Table MultiSelect Control.
+
+```csharp
+public static IControlTableMultiSelect<T> TableMultiSelect<T>(string prompt, string description)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+#### Returns
+
+[IControlTableMultiSelect&lt;T&gt;](./pplus.controls.icontroltablemultiselect-1.md)
+
+### <a id="methods-tablemultiselect"/>**TableMultiSelect&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+
+Create Table MultiSelect Control to Write to console.
+
+```csharp
+public static IControlTableMultiSelect<T> TableMultiSelect<T>(string prompt, string description, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlTableMultiSelect&lt;T&gt;](./pplus.controls.icontroltablemultiselect-1.md)
+
+### <a id="methods-tableselect"/>**TableSelect&lt;T&gt;(String, Action&lt;IPromptConfig&gt;)**
+
+Create Table Select Control.
+
+```csharp
+public static IControlTableSelect<T> TableSelect<T>(string prompt, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlTableSelect&lt;T&gt;](./pplus.controls.icontroltableselect-1.md)
+
+### <a id="methods-tableselect"/>**TableSelect&lt;T&gt;(String, String)**
+
+Create Table Select Control.
+
+```csharp
+public static IControlTableSelect<T> TableSelect<T>(string prompt, string description)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+#### Returns
+
+[IControlTableSelect&lt;T&gt;](./pplus.controls.icontroltableselect-1.md)
+
+### <a id="methods-tableselect"/>**TableSelect&lt;T&gt;(String, String, Action&lt;IPromptConfig&gt;)**
+
+Create Table Select Control.
+
+```csharp
+public static IControlTableSelect<T> TableSelect<T>(string prompt, string description, Action<IPromptConfig> config)
+```
+
+#### Type Parameters
+
+`T`<br>
+type of data to table
+
+#### Parameters
+
+`prompt` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The prompt text to write
+
+`description` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+The description text to write
+
+`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
+The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+#### Returns
+
+[IControlTableSelect&lt;T&gt;](./pplus.controls.icontroltableselect-1.md)
 
 ### <a id="methods-treeview"/>**TreeView&lt;T&gt;(String, String)**
 

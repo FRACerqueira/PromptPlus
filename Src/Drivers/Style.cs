@@ -28,6 +28,18 @@ namespace PPlus
         }
 
         /// <summary>
+        /// Create a new instance of <see cref="Style"/> with foreground, default backgroundcolors and overflow strategy.
+        /// </summary>
+        /// <param name="foreground"><see cref="Color"/> foreground</param>
+        /// <param name="overflowStrategy"><see cref="Overflow"/> Strategy</param>
+        public Style(Color foreground, Overflow overflowStrategy = Overflow.None)
+        {
+            Foreground = foreground;
+            Background = Default.Background;
+            OverflowStrategy = overflowStrategy;
+        }
+
+        /// <summary>
         /// Create a new instance of <see cref="Style"/> with foreground/background colors and overflow strategy.
         /// </summary>
         /// <param name="foreground"><see cref="Color"/> foreground</param>

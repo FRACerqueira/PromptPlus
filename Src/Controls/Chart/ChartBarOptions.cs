@@ -52,7 +52,6 @@ namespace PPlus.Controls
         public bool HideInfoOrder { get; set; }
         public bool HidePercentBar { get; set; }
         public bool HideValueBar { get; set; }
-        public byte PadLeft { get; set; } = 0;
         public bool CurrentShowLegend { get; set; }
         public bool ShowLegend { get; set; }
         public bool ShowLegendPercent { get; set; } = true;

@@ -52,15 +52,15 @@ namespace PPlus.Controls
             }
             if (minvalue < 0)
             {
-                minvalue = 0;
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue})");
             }
             if (maxvalue < 0)
             {
-                maxvalue = minvalue;
+                throw new PromptPlusException($"Ranger invalid. maxvalue({maxvalue})");
             }
             if (minvalue > maxvalue)
             {
-                throw new PromptPlusException($"RangerSelect invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
+                throw new PromptPlusException($"Ranger invalid. minvalue({minvalue}) > maxvalue({maxvalue})");
             }
             _options.Minimum = minvalue;
             _options.Maximum = maxvalue.Value;
@@ -129,13 +129,13 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewMultiSelect<T> ShowLines(bool value)
+        public IControlTreeViewMultiSelect<T> ShowLines(bool value = true)
         {
             _options.ShowLines = value;
             return this;
         }
 
-        public IControlTreeViewMultiSelect<T> ShowExpand(bool value)
+        public IControlTreeViewMultiSelect<T> ShowExpand(bool value = true)
         {
             _options.ShowLines = value;
             return this;
@@ -145,7 +145,7 @@ namespace PPlus.Controls
         {
             if (value < 1)
             {
-                value = 1;
+                throw new PromptPlusException("PageSize must be greater than or equal to 1");
             }
             _options.PageSize = value;
             return this;
@@ -216,7 +216,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewMultiSelect<T> ShowCurrentNode(bool value)
+        public IControlTreeViewMultiSelect<T> ShowCurrentNode(bool value = true)
         {
             _options.ShowCurrentNode = value;
             return this;
@@ -336,14 +336,20 @@ namespace PPlus.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
+            var hasprompt = string.IsNullOrEmpty(_options.OptPrompt) && !_options.OptMinimalRender;
             screenBuffer.WritePrompt(_options, "");
             if (_filterBuffer.Length > 0)
             {
-                if (_localpaginator.TryGetSelectedItem(out var showItem))
+                hasprompt = true;
+                if (_localpaginator.TryGetSelected(out var showItem))
                 {
                     var item = showItem.MessagesNodes.TextItem;
                     screenBuffer.WriteFilterTreeViewMultiSelect(_options, item, _filterBuffer);
-                    screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                    screenBuffer.SaveCursor();
+                    if (!_options.OptMinimalRender)
+                    {
+                        screenBuffer.WriteTaggedInfo(_options, $" ({Messages.Filter})");
+                    }
                 }
                 else
                 {
@@ -351,43 +357,49 @@ namespace PPlus.Controls
                     screenBuffer.SaveCursor();
                     screenBuffer.WriteEmptyFilter(_options, _filterBuffer.ToForward());
                 }
+                _options.OptShowCursor = true;
             }
             else
             {
-                screenBuffer.SaveCursor();
-                string answer = FinishResult;
-                if (_selectedItems.Any())
+                if (!_options.OptMinimalRender)
                 {
-                    answer = string.Join(", ", _selectedItems.Select(x => _options.TextNode(x.value)));
+                    hasprompt = true;
+                    screenBuffer.SaveCursor();
+                    string answer = FinishResult;
+                    if (_selectedItems.Any())
+                    {
+                        answer = string.Join(", ", _selectedItems.Select(x => _options.TextNode(x.value)));
+                    }
+                    screenBuffer.WriteAnswer(_options, answer);
                 }
-                screenBuffer.WriteAnswer(_options, answer);
+                else
+                {
+                    _options.OptShowCursor = false;
+                }
+
             }
-            if (!string.IsNullOrEmpty(_options.OptDescription))
+            if (!string.IsNullOrEmpty(_options.OptDescription) && !_options.OptMinimalRender)
             {
+                hasprompt = true;
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(_options.OptDescription, _options.OptStyleSchema.Description());
             }
-            var subset = _localpaginator.ToSubset();
-            if (_options.ShowCurrentNode)
+            var subset = _localpaginator.GetPageData();
+            var showitem = _localpaginator.TryGetSelected(out var selectedItem);
+            if (_options.ShowCurrentNode && !_options.OptMinimalRender)
             {
-                if (_localpaginator.TryGetSelectedItem(out var showItem))
+                if (showitem)
                 {
                     screenBuffer.NewLine();
                     if (_options.ShowCurrentFulPathNode)
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {showItem.MessagesNodes.TextFullpath}", _options.CurrentNodeStyle);
+                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {selectedItem.MessagesNodes.TextFullpath}", _options.CurrentNodeStyle);
                     }
                     else
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentFolder}: {showItem.MessagesNodes.TextItem}", _options.CurrentNodeStyle);
+                        screenBuffer.AddBuffer($"{Messages.CurrentFolder}: {selectedItem.MessagesNodes.TextItem}", _options.CurrentNodeStyle);
                     }
                 }
-            }
-            screenBuffer.WriteLineValidate(ValidateError, _options);
-            if (_localpaginator.TryGetSelectedItem(out var selectedItem))
-            {
-                var fnode = _browserTreeView.Root.FindTreeByValue(selectedItem.Value, _options.UniqueNode);
-                screenBuffer.WriteLineTooltipsTreeViewMultiSelect(_options, fnode.Childrens != null);
             }
             foreach (var item in subset)
             {
@@ -396,33 +408,40 @@ namespace PPlus.Controls
                 {
                     if (item.IsDisabled)
                     {
-                        screenBuffer.WriteLineDisabledSelectorTreeViewMultiSelect(_options, item);
+                        screenBuffer.WriteLineDisabledSelectorTreeViewMultiSelect(_options, item, hasprompt);
                     }
                     else
                     {
-                        screenBuffer.WriteLineSelectorTreeViewMultiSelect(_options, item, fnode.Childrens != null);
+                        screenBuffer.WriteLineSelectorTreeViewMultiSelect(_options, item, fnode.Childrens != null, hasprompt);
                     }
                 }
                 else
                 {
                     if (item.IsDisabled)
                     {
-                        screenBuffer.WriteLineDisabledNotSelectorTreeViewMultiSelect(_options, item);
+                        screenBuffer.WriteLineDisabledNotSelectorTreeViewMultiSelect(_options, item, hasprompt);
                     }
                     else
                     {
-                        screenBuffer.WriteLineNotSelectorTreeViewMultiSelect(_options, item, fnode.Childrens != null);
+                        screenBuffer.WriteLineNotSelectorTreeViewMultiSelect(_options, item, fnode.Childrens != null, hasprompt);
                     }
                 }
+                hasprompt = true;
             }
+            screenBuffer.WriteLineValidate(ValidateError, _options);
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
-                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(), _selectedItems.Count);
+                screenBuffer.WriteLinePaginationMultiSelect(_options, _localpaginator.PaginationMessage(_options.OptPaginationTemplate), _selectedItems.Count);
             }
             else
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{Messages.Tagged}: {_selectedItems.Count}, ", _options.OptStyleSchema.TaggedInfo(), true);
+                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.OptStyleSchema.TaggedInfo(), true);
+            }
+            if (showitem)
+            {
+                var fnode = _browserTreeView.Root.FindTreeByValue(selectedItem.Value, _options.UniqueNode);
+                screenBuffer.WriteLineTooltipsTreeViewMultiSelect(_options, fnode.Childrens != null);
             }
         }
 
@@ -596,7 +615,20 @@ namespace PPlus.Controls
                 }
                 else
                 {
-                    tryagain = true;
+                    if (ConsolePlus.Provider == "Memory")
+                    {
+                        if (!KeyAvailable)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (KeyAvailable)
+                        {
+                            tryagain = true;
+                        }
+                    }
                 }
             } while (!cancellationToken.IsCancellationRequested && (KeyAvailable || tryagain));
             if (cancellationToken.IsCancellationRequested)
@@ -632,6 +664,10 @@ namespace PPlus.Controls
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, T[] result, bool aborted)
         {
+            if (_options.OptMinimalRender)
+            {
+                return;
+            }
             string answer;
             if (aborted)
             {

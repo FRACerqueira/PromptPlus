@@ -61,24 +61,6 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Added items.
-        /// </summary>
-        internal static string AddedItems {
-            get {
-                return ResourceManager.GetString("AddedItems", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Answers.
-        /// </summary>
-        internal static string Answers {
-            get {
-                return ResourceManager.GetString("Answers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Press any key .
         /// </summary>
         internal static string AnyKey {
@@ -97,15 +79,6 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Checked.
-        /// </summary>
-        internal static string Checked {
-            get {
-                return ResourceManager.GetString("Checked", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Current folder.
         /// </summary>
         internal static string CurrentFolder {
@@ -120,15 +93,6 @@ namespace PPlus.Resources {
         internal static string CurrentSelected {
             get {
                 return ResourceManager.GetString("CurrentSelected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Done.
-        /// </summary>
-        internal static string Done {
-            get {
-                return ResourceManager.GetString("Done", resourceCulture);
             }
         }
         
@@ -201,15 +165,6 @@ namespace PPlus.Resources {
         internal static string ListMinSelection {
             get {
                 return ResourceManager.GetString("ListMinSelection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading.
-        /// </summary>
-        internal static string Loading {
-            get {
-                return ResourceManager.GetString("Loading", resourceCulture);
             }
         }
         
@@ -520,15 +475,6 @@ namespace PPlus.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Showing notes.
-        /// </summary>
-        internal static string ShowingNotes {
-            get {
-                return ResourceManager.GetString("ShowingNotes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Left/Right:Short change, Tab/Shift+Tab:Larger change, Enter:Finish.
         /// </summary>
         internal static string SliderNumberLeftRightKeyNavigator {
@@ -561,15 +507,6 @@ namespace PPlus.Resources {
         internal static string TableMoveCols {
             get {
                 return ResourceManager.GetString("TableMoveCols", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Task.
-        /// </summary>
-        internal static string Task {
-            get {
-                return ResourceManager.GetString("Task", resourceCulture);
             }
         }
         
@@ -876,15 +813,6 @@ namespace PPlus.Resources {
         internal static string Validkeys {
             get {
                 return ResourceManager.GetString("Validkeys", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Wait.
-        /// </summary>
-        internal static string Wait {
-            get {
-                return ResourceManager.GetString("Wait", resourceCulture);
             }
         }
         

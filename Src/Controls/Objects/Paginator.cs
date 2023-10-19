@@ -1,7 +1,5 @@
 ﻿// ***************************************************************************************
 // MIT LICENCE
-// Copyright (c) 2019 shibayan.
-// https://github.com/shibayan/Sharprompt
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
@@ -37,7 +35,7 @@ namespace PPlus.Controls.Objects
             }
             EnsurePage();
             _founddefault = founddefault;
-            InitializeDefaults(defaultValue, _founddefault);
+            Initialize(defaultValue, _founddefault);
         }
 
         private void EnsurePage()
@@ -120,7 +118,7 @@ namespace PPlus.Controls.Objects
 
         public string FilterTerm { get; private set; } = "";
 
-        public bool TryGetSelectedItem(out T selectedItem)
+        public bool TryGetSelected(out T selectedItem)
         {
             if (SelectedIndex == -1 || _filteredItems.Length == 0)
             {
@@ -246,8 +244,12 @@ namespace PPlus.Controls.Objects
             return (startindex, auxpage);
         }
 
-        public string PaginationMessage()
+        public string PaginationMessage(Func<int, int, int, string>? template)
         {
+            if (template != null)
+            {
+                return template(TotalCountValid, SelectedPage + 1, PageCount);
+            }
             return string.Format(Messages.PaginationTemplate, TotalCountValid, SelectedPage + 1, PageCount);
         }
 
@@ -304,6 +306,7 @@ namespace PPlus.Controls.Objects
             SelectedIndex = aux.Item1;
             return true;
         }
+
         public void Home(IndexOption selectedIndexOption = IndexOption.FirstItem)
         {
             SelectedPage = 0;
@@ -360,7 +363,7 @@ namespace PPlus.Controls.Objects
 
             if (selected.HasValue)
             {
-                InitializeDefaults(selected.Value, _founddefault);
+                Initialize(selected.Value, _founddefault);
                 return;
             }
 
@@ -371,7 +374,7 @@ namespace PPlus.Controls.Objects
             }
         }
 
-        public ArraySegment<T> ToSubset()
+        public ArraySegment<T> GetPageData()
         {
             EnsurePage();
             return new ArraySegment<T>(_filteredItems, _userpageSize * SelectedPage, Count);
@@ -441,7 +444,7 @@ namespace PPlus.Controls.Objects
             }
         }
 
-        private void InitializeDefaults(Optional<T> defaultValue, Func<T, T, bool>? founddefault)
+        private void Initialize(Optional<T> defaultValue, Func<T, T, bool>? founddefault)
         {
             InitializeCollection();
 

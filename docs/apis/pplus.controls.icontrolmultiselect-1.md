@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -44,6 +44,23 @@ Value default
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
+### <a id="methods-adddefault"/>**AddDefault(IEnumerable&lt;T&gt;)**
+
+Add default value selected to initial list.
+
+```csharp
+IControlMultiSelect<T> AddDefault(IEnumerable<T> values)
+```
+
+#### Parameters
+
+`values` IEnumerable&lt;T&gt;<br>
+Values default
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
 ### <a id="methods-additem"/>**AddItem(T, Boolean, Boolean)**
 
 Add item to list
@@ -70,6 +87,7 @@ true item selected, otherwise no
 ### <a id="methods-additemgrouped"/>**AddItemGrouped(String, T, Boolean, Boolean)**
 
 Add Item in a group to list
+ <br>AddItemGrouped cannot be used with OrderBy/OrderByDescending
 
 ```csharp
 IControlMultiSelect<T> AddItemGrouped(string group, T value, bool disable, bool selected)
@@ -119,6 +137,7 @@ true item selected, otherwise no
 ### <a id="methods-additemsgrouped"/>**AddItemsGrouped(String, IEnumerable&lt;T&gt;, Boolean, Boolean)**
 
 Add Items colletion in a group to List
+ <br>AddItemsGrouped cannot be used with OrderBy/OrderByDescending
 
 ```csharp
 IControlMultiSelect<T> AddItemsGrouped(string group, IEnumerable<T> value, bool disable, bool selected)
@@ -162,18 +181,21 @@ items colletion
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
-### <a id="methods-appendgroupondescription"/>**AppendGroupOnDescription(Boolean)**
+### <a id="methods-additemsto"/>**AddItemsTo(AdderScope, IEnumerable&lt;T&gt;)**
 
-Append group text on description. Default false
+Add Items colletion to scope Disable/Remove [AdderScope](./pplus.controls.adderscope.md)<br>At startup the list items will be compared and will be removed or disabled <br>Tip: Use  for custom comparer
 
 ```csharp
-IControlMultiSelect<T> AppendGroupOnDescription(bool value)
+IControlMultiSelect<T> AddItemsTo(AdderScope scope, IEnumerable<T> values)
 ```
 
 #### Parameters
 
-`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-Append group text on description
+`scope` [AdderScope](./pplus.controls.adderscope.md)<br>
+scope Disable/Remove
+
+`values` IEnumerable&lt;T&gt;<br>
+items colletion
 
 #### Returns
 
@@ -310,6 +332,7 @@ Action to execute
 ### <a id="methods-orderby"/>**OrderBy(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort list by expression
+ <br>OrderBy cannot be used with Grouped item
 
 ```csharp
 IControlMultiSelect<T> OrderBy(Expression<Func<T, Object>> value)
@@ -327,7 +350,7 @@ expresion to sort the colletion
 ### <a id="methods-orderbydescending"/>**OrderByDescending(Expression&lt;Func&lt;T, Object&gt;&gt;)**
 
 Sort Descending list by expression
- <br>Sort options is ignored when has grouped items
+ <br>OrderBy cannot be used with Grouped item
 
 ```csharp
 IControlMultiSelect<T> OrderByDescending(Expression<Func<T, Object>> value)
@@ -363,7 +386,6 @@ Overflow strategy
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite defaults start selected value with last result saved on history.
- <br>Sort options is ignored when has grouped items
 
 ```csharp
 IControlMultiSelect<T> OverwriteDefaultFrom(string value, Nullable<TimeSpan> timeout)
@@ -383,7 +405,8 @@ The timeout for valid items saved. Default value is 365 days
 
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
-Set max.item view per page.Default value for this control is 10.
+Set max.item view per page.
+ <br>Default value : 10.The value must be greater than or equal to 1
 
 ```csharp
 IControlMultiSelect<T> PageSize(int value)
@@ -413,6 +436,23 @@ Minimum number of items
 
 `maxvalue` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Maximum number of items
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
+### <a id="methods-showtipgroup"/>**ShowTipGroup(Boolean)**
+
+Show tip with text of group. Default false
+
+```csharp
+IControlMultiSelect<T> ShowTipGroup(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+If True, it shows the tip with the group text, otherwise nothing.
 
 #### Returns
 

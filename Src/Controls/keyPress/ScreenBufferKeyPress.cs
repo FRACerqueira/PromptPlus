@@ -26,7 +26,7 @@ namespace PPlus.Controls
 
         public static void WritePromptKeyPress(this ScreenBuffer screenBuffer, KeyPressOptions options, string input, bool modeconfirm)
         {
-            if (!string.IsNullOrEmpty(options.OptPrompt))
+            if (!string.IsNullOrEmpty(options.OptPrompt) && !options.OptMinimalRender)
             {
                 screenBuffer.AddBuffer(options.OptPrompt, options.OptStyleSchema.Prompt());
                 if (modeconfirm)
@@ -60,7 +60,10 @@ namespace PPlus.Controls
             }
             if (!string.IsNullOrEmpty(input))
             {
-                screenBuffer.AddBuffer(": ", options.OptStyleSchema.Prompt(), true, !string.IsNullOrEmpty(options.OptPrompt));
+                if (!options.OptMinimalRender)
+                {
+                    screenBuffer.AddBuffer(": ", options.OptStyleSchema.Prompt(), true, !string.IsNullOrEmpty(options.OptPrompt));
+                }
                 screenBuffer.AddBuffer(input, options.OptStyleSchema.Answer(), true, false);
             }
         }
@@ -86,6 +89,10 @@ namespace PPlus.Controls
 
         public static void WriteLineDescriptionKeyPress(this ScreenBuffer screenBuffer, KeyPressOptions options, bool showkeyvalids)
         {
+            if (options.OptMinimalRender)
+            {
+                return;
+            }
             if (!string.IsNullOrEmpty(options.OptDescription))
             {
                 screenBuffer.NewLine();
@@ -132,8 +139,7 @@ namespace PPlus.Controls
                 if (aux.Length > 0) 
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer($"{Messages.Validkeys}: ", options.OptStyleSchema.TaggedInfo());
-                    screenBuffer.AddBuffer(aux.ToString(), options.OptStyleSchema.TaggedInfo());
+                    screenBuffer.AddBuffer($"{Messages.Validkeys}: {aux}", options.OptStyleSchema.TaggedInfo());
                 }
             }
         }

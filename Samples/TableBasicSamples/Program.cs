@@ -29,43 +29,6 @@ namespace TableSamples
             public required MyComplexCol ComplexCol { get; set; }
         }
 
-        internal class MyTableManyCols
-        {
-            public int Id { get; set; }
-            public required string MyText { get; set; }
-            public string D01 { get; set; } = new string('x', 20);
-            public string D02 { get; set; } = new string('x', 20);
-            public string D03 { get; set; } = new string('x', 20);
-            public string D04 { get; set; } = new string('x', 20);
-            public string D05 { get; set; } = new string('x', 20);
-            public string D06 { get; set; } = new string('x', 20);
-            public string D07 { get; set; } = new string('x', 20);
-            public string D08 { get; set; } = new string('x', 20);
-            public string D09 { get; set; } = new string('x', 20);
-            public string D10 { get; set; } = new string('x', 20);
-            public string D11 { get; set; } = new string('x', 20);
-            public string D12 { get; set; } = new string('x', 20);
-            public string D13 { get; set; } = new string('x', 20);
-            public string D14 { get; set; } = new string('x', 20);
-            public string D15 { get; set; } = new string('x', 20);
-            public string D16 { get; set; } = new string('x', 20);
-            public string D17 { get; set; } = new string('x', 20);
-            public string D18 { get; set; } = new string('x', 20);
-            public string D19 { get; set; } = new string('x', 20);
-            public string D20 { get; set; } = new string('x', 20);
-            public string D21 { get; set; } = new string('x', 20);
-            public string D22 { get; set; } = new string('x', 20);
-            public string D23 { get; set; } = new string('x', 20);
-            public string D24 { get; set; } = new string('x', 20);
-            public string D25 { get; set; } = new string('x', 20);
-            public string D26 { get; set; } = new string('x', 20);
-            public string D27 { get; set; } = new string('x', 20);
-            public string D28 { get; set; } = new string('x', 20);
-            public string D29 { get; set; } = new string('x', 20);
-            public string D30 { get; set; } = new string('x', 20);
-            public string D31 { get; set; } = new string('x', 20);
-        }
-
         internal static MyTable[] CreateItems(int max)
         {
             var result = new List<MyTable>();
@@ -92,35 +55,23 @@ namespace TableSamples
             //Ensure ValueResult Culture for all controls
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
 
-            var data = CreateItems(20);
+            var data = CreateItems(5);
 
-            PromptPlus.DoubleDash("Control:Table - Autofill UserInteraction basic usage");
+            PromptPlus.DoubleDash("Control:Table - Autofill");
 
             var tbl = PromptPlus.Table<MyTable>("Your Prompt", "Descripion Table")
                 .AddItems(data)
                 .AutoFill(0,80)
                 .AddFormatType<DateTime>(FmtDate)
-                .UserInteraction(
-                    selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
-                    finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
                 .Run();
             if (!tbl.IsAborted)
             {
             }
 
-            PromptPlus.DoubleDash("Control:Table - Autofill UserInteraction HideSelectorRow");
+            PromptPlus.KeyPress("Press any key", cfg => cfg.ShowTooltip(false).HideAfterFinish(true)).Run();
 
-            PromptPlus.Table<MyTable>("Your Prompt", "Descripion Table")
-                .AddItems(data)
-                .HideSelectorRow()
-                .AutoFill(0, 80)
-                .AddFormatType<DateTime>(FmtDate)
-                .UserInteraction(
-                    selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
-                    finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
-                .Run();
 
-            PromptPlus.DoubleDash("Control:Table - Autofill UserInteraction custom colors");
+            PromptPlus.DoubleDash("Control:Table - Autofill custom colors");
 
             PromptPlus.Table<MyTable>("Your Prompt", "Descripion Table")
                 .AddItems(data)
@@ -133,67 +84,26 @@ namespace TableSamples
                 .Styles(TableStyle.Title, Style.Default.Foreground(Color.Cyan1))
                 .AutoFill(0, 80)
                 .AddFormatType<DateTime>(FmtDate)
-                .UserInteraction(
-                    selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
-                    finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
                 .Run();
 
+            PromptPlus.KeyPress("Press any key", cfg => cfg.ShowTooltip(false).HideAfterFinish(true)).Run();
 
-            PromptPlus.DoubleDash("Control:Table - Autofill UserInteraction with many columns and RowNavigation(Default)");
-            var newid = -1;
-            PromptPlus.Table<MyTableManyCols>("Your Prompt", "Descripion Table")
-                 .Interaction<object>(new Array[5], (ctrl, _) =>
-                 {
-                     newid++;
-                     ctrl.AddItem(new MyTableManyCols() { Id = newid, MyText = "x" });
-                 })
-                 .AutoFill(10)
-                 .FilterByColumns(FilterMode.Contains)
-                 .AddFormatType<DateTime>(FmtDate)
-                 .UserInteraction(
-                     selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
-                     finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
-                 .Run();
-
-            PromptPlus.DoubleDash("Control:Table - Autofill UserInteraction with many columns and ColumnsNavigation");
-            PromptPlus.Table<MyTableManyCols>("Your Prompt", "Descripion Table")
-                 .Interaction<object>(new Array[5], (ctrl, _) =>
-                 {
-                     ctrl.AddItem(new MyTableManyCols() { MyText = "x" });
-                 })
-                 .AutoFill(10)
-                 .AddFormatType<DateTime>(FmtDate)
-                 .ColumnsNavigation()
-                 .UserInteraction(
-                     selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
-                     finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
-                 .Run();
-
-            PromptPlus.DoubleDash("Control:Table - UserInteraction with with column definition");
+            PromptPlus.DoubleDash("Control:Table - with with column definition");
             PromptPlus.Table<MyTable>("Your Prompt", "Descripion Table")
                 .Title("Test", titleMode: TableTitleMode.InRow)
-                .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled", ComplexCol = new MyComplexCol($"C{data.Length}") }, true)
+                .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled", ComplexCol = new MyComplexCol($"C{data.Length}") })
                 .AddItems(data)
                 .AddColumn(field: (item) => item.Id, width: 10)
                 .AddColumn(field: (item) => item.MyDate!, width: 15/*,alignment: Alignment.Center*/)
                 .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text: {arg}", maxslidinglines: 2/*, textcrop:true*/)
                 .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text1: {arg}", title: $"Mytext1", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text2: {arg}", title: $"Mytext2", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text3: {arg}", title: $"Mytext3", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text4: {arg}", title: $"Mytext4", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text5: {arg}", title: $"Mytext5", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text8: {arg}", title: $"Mytext8", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text9: {arg}", title: $"Mytext9", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text10: {arg}", title: $"Mytext10", maxslidinglines: 2/*, textcrop:true*/)
                 .AddColumn(field: (item) => item.ComplexCol, width: 20, format: (arg) => $"{((MyComplexCol)arg).Id}:{((MyComplexCol)arg).Name}")
                 .AddColumn(field: (item) => item.ComplexCol.Name, width: 10)
                 .AddFormatType<DateTime>(FmtDate)
-                .UserInteraction(
-                    selectedTemplate: (item, row, col) => $"Current ID : {item.Id}. [yellow]Current row {row}, Current col {col}[/]",
-                    finishTemplate: (item, row, col) => $"[green]Selected ID : {item.Id}. Current row {row}, Current col {col}[/]")
                 .Run();
 
-            data = CreateItems(5);
+            PromptPlus.KeyPress("Press any key", cfg => cfg.ShowTooltip(false).HideAfterFinish(true)).Run();
+
 
             var typelayout = Enum.GetValues(typeof(TableLayout));
             var typetit = Enum.GetValues(typeof(TableTitleMode));
@@ -214,7 +124,7 @@ namespace TableSamples
                         for (int i = 0; i < 2; i++)
                         {
                             seprow = !seprow;
-                            PromptPlus.DoubleDash($"Autofill Layout({iteml}), Title({itemt}), sep.row({seprow}), hide headers({hideheaders})",style: Style.Default.Foreground(Color.Yellow));
+                            PromptPlus.DoubleDash($"Autofill Layout({iteml}), Title({itemt}), sep.row({seprow}), hide headers({hideheaders})", style: Style.Default.Foreground(Color.Yellow));
                             var lt = (TableLayout)Enum.Parse(typeof(TableLayout), iteml.ToString()!);
                             PromptPlus.Table<MyTable>("")
                                 .Title("Test", Alignment.Center, tm)
@@ -229,6 +139,8 @@ namespace TableSamples
                     }
                 }
             }
+
+            PromptPlus.KeyPress("End sample!, Press any key", cfg => cfg.ShowTooltip(false).HideAfterFinish(true)).Run();
 
         }
 

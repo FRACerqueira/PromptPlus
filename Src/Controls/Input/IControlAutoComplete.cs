@@ -18,7 +18,8 @@ namespace PPlus.Controls
     public interface IControlAutoComplete: IPromptControls<string>
     {
         /// <summary>
-        /// Set max.item view per page.Default value for this control is 10.
+        /// Set max.item view per page.
+        /// <br>Default value : 10.The value must be greater than or equal to 1</br>
         /// </summary>
         /// <param name="value">Number of Max.items</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
@@ -37,7 +38,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Number minimum of chars to accept autocomplete
-        /// <br>Default value : 3. If value less than 0 internal set to 0.</br>
+        /// <br>Default value : 3.The value must be greater than or equal to 1</br>
         /// </summary>
         /// <param name="value">Number of chars</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
@@ -45,14 +46,14 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Number of mileseconds to wait before to start function autocomplete
-        /// <br>Default value : 1000. If value less than 10 internal set to 10.</br>
+        /// <br>Default value : 1000. The value must be greater than or equal to 100.</br>
         /// </summary>
         /// <param name="value">Number of mileseconds</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
         IControlAutoComplete CompletionWaitToStart(int value);
 
         /// <summary>
-        /// The max.items to return from function autocomplete.
+        /// The max.items to return from function autocomplete.The value must be greater than or equal to 1
         /// </summary>
         /// <param name="value">Number of max.items</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
@@ -106,7 +107,8 @@ namespace PPlus.Controls
         IControlAutoComplete AcceptInput(Func<char, bool> value);
 
         /// <summary>
-        /// MaxLength of input text.
+        /// MaxLength of input text.The value must be greater than or equal to 1
+        /// <br>Default value is 0 (no limit)</br>
         /// </summary>
         /// <param name="value">Length</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>

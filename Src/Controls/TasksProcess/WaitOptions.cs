@@ -25,7 +25,7 @@ namespace PPlus.Controls
         }
         public T Context { get; set; } = default;
         public TimeSpan TimeDelay { get; set; }
-        public string OverWriteTitlekName { get; set; }
+        public string OverWriteTitleName { get; set; }
         public bool WaitTime { get; set; }
         public bool ShowCountdown { get; set; }
         public List<Action<EventWaitProcess<T>, CancellationToken>> Steps { get; set; }

@@ -18,6 +18,10 @@ namespace PPlus.Controls.Objects
 
         public static void WritePrompt(this ScreenBuffer screenBuffer, BaseOptions options, string input)
         {
+            if (options.OptMinimalRender)
+            {
+                return;
+            }
             var prompt = options.OptPrompt ?? string.Empty;
             if (!string.IsNullOrEmpty(prompt))
             {

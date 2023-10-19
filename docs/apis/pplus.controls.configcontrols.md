@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -90,7 +90,7 @@ public int CompletionMaxCount { get; set; }
 ### <a id="properties-completionminimumprefixlength"/>**CompletionMinimumPrefixLength**
 
 Get/Set Minimum Prefix Length.
- <br>Default value : 3.If value less than 0 internal set to 0.
+ <br>Default value : 3.If value less than 1 internal set to 1.
 
 ```csharp
 public int CompletionMinimumPrefixLength { get; set; }
@@ -103,7 +103,7 @@ public int CompletionMinimumPrefixLength { get; set; }
 ### <a id="properties-completionwaittostart"/>**CompletionWaitToStart**
 
 Get/Set Interval in mileseconds to wait start Completion funcion.
- <br>Default value : 1000. If value less than 10 internal set to 10.
+ <br>Default value : 1000. If value less than 100 internal set to 100.
 
 ```csharp
 public int CompletionWaitToStart { get; set; }
@@ -229,6 +229,19 @@ public HotKey InvertSelectedPress { get; set; }
 
 [HotKey](./pplus.controls.hotkey.md)<br>
 
+### <a id="properties-minimalrender"/>**MinimalRender**
+
+Get/Set Minimal Render.
+ <br>Default value : false<br>When true, the prompt and control description are not rendered, showing only the minimum necessary without using resources (except the default tooltips when used)
+
+```csharp
+public bool MinimalRender { get; set; }
+```
+
+#### Property Value
+
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
 ### <a id="properties-nochar"/>**NoChar**
 
 Get/Set value for NO answer
@@ -254,6 +267,19 @@ public int PageSize { get; set; }
 #### Property Value
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+
+### <a id="properties-paginationtemplate"/>**PaginationTemplate**
+
+Get/Set Custom PaginationTemplate
+ <br>string to show = Func(Total items,Current Page,Total pages)
+
+```csharp
+public Func<Int32, Int32, Int32, String> PaginationTemplate { get; set; }
+```
+
+#### Property Value
+
+[Func&lt;Int32, Int32, Int32, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-4)<br>
 
 ### <a id="properties-passwordviewpress"/>**PasswordViewPress**
 

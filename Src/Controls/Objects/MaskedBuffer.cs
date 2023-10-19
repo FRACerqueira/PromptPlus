@@ -115,10 +115,6 @@ namespace PPlus.Controls.Objects
             switch (_maskInputOptions.Type)
             {
                 case ControlMaskedType.Generic:
-                    if (string.IsNullOrEmpty(_maskInputOptions.MaskValue))
-                    {
-                        throw new PromptPlusException("MaskedBuffer.Mask Null Or Empty");
-                    }
                     break;
                 case ControlMaskedType.DateOnly:
                     _maskInputOptions.MaskValue = CreateMaskedOnlyDate();
@@ -138,18 +134,6 @@ namespace PPlus.Controls.Objects
                 case ControlMaskedType.Number:
                 case ControlMaskedType.Currency:
                     _maskInputOptions.FillNumber = Defaultfill;
-                    if (_maskInputOptions.AmmountInteger < 0)
-                    {
-                        throw new PromptPlusException("MaskedBuffer.AmmountInteger < 0");
-                    }
-                    if (_maskInputOptions.AmmountDecimal < 0)
-                    {
-                        throw new PromptPlusException("MaskedBuffer.AmmountDecimal < 0");
-                    }
-                    if (_maskInputOptions.AmmountInteger + _maskInputOptions.AmmountDecimal == 0)
-                    {
-                        throw new PromptPlusException("MaskedBuffer.AmmountInteger + MaskedBuffer.AmmountDecimal = 0");
-                    }
                     if (_maskInputOptions.Type == ControlMaskedType.Number)
                     {
                         _maskInputOptions.MaskValue = CreateMaskedNumber();

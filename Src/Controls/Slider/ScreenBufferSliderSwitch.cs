@@ -9,9 +9,13 @@ namespace PPlus.Controls
 {
     internal static class ScreenBufferSliderSwitch
     {
-        public static void WriteLineDescriptionSliderSwitch(this ScreenBuffer screenBuffer, SliderSwitchOptions options, bool input)
+        public static bool WriteLineDescriptionSliderSwitch(this ScreenBuffer screenBuffer, SliderSwitchOptions options, bool input)
         {
-            var result = options.OptDescription;
+            var result = string.Empty;
+            if (!options.OptMinimalRender)
+            {
+                result = options.OptDescription;
+            }
             if (options.ChangeDescription != null)
             {
                 result = options.ChangeDescription.Invoke(input);
@@ -20,13 +24,21 @@ namespace PPlus.Controls
             {
                 screenBuffer.NewLine();
                 screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                return true;
             }
+            return false;
         }
 
-        public static void WriteLineWidgetsSliderSwitch(this ScreenBuffer screenBuffer, SliderSwitchOptions options, bool input)
+        public static void WriteLineWidgetsSliderSwitch(this ScreenBuffer screenBuffer, SliderSwitchOptions options, bool input, bool newline)
         {
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer($"{options.OffValue} ", options.OptStyleSchema.UnSelected());
+            if (newline)
+            {
+                screenBuffer.NewLine();
+            }
+            if (!string.IsNullOrEmpty(options.OffValue))
+            {
+                screenBuffer.AddBuffer($"{options.OffValue} ", options.OptStyleSchema.UnSelected());
+            }
             if (input)
             {
                 screenBuffer.AddBuffer(new string(' ', options.Witdth / 2), Style.Default.Background(options.StyleStateOn.Background), true, false);
@@ -37,7 +49,10 @@ namespace PPlus.Controls
                 screenBuffer.AddBuffer(new string(' ', options.Witdth / 2), Style.Default.Background(options.StyleStateOff.Foreground), true, false);
                 screenBuffer.AddBuffer(new string(' ', options.Witdth / 2), Style.Default.Background(options.StyleStateOff.Background), true, false);
             }
-            screenBuffer.AddBuffer($" {options.OnValue}", options.OptStyleSchema.UnSelected(), false, false);
+            if (!string.IsNullOrEmpty(options.OnValue))
+            {
+                screenBuffer.AddBuffer($" {options.OnValue}", options.OptStyleSchema.UnSelected(), false, false);
+            }
         }
 
         public static void WriteLineTooltipsSliderSwitch(this ScreenBuffer screenBuffer, SliderSwitchOptions options)

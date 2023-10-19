@@ -13,7 +13,7 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents the interface with all Methods of the Table control
     /// </summary>
-    public interface IControlTable<T> : IPromptControls<ResultTable<T>> where T : class
+    public interface IControlTable<T> : IPromptControls<bool> where T : class
     {
         /// <summary>
         /// Custom config the control.
@@ -21,21 +21,6 @@ namespace PPlus.Controls
         /// <param name="context">action to apply changes. <see cref="IPromptConfig"/></param>
         /// <returns><see cref="IControlTable{T}"/></returns>
         IControlTable<T> Config(Action<IPromptConfig> context);
-
-        /// <summary>
-        /// Default value selected.
-        /// </summary>
-        /// <param name="value">Value default</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> Default(T value);
-
-        /// <summary>
-        /// Overwrite defaults start selected value with last result saved on history.
-        /// </summary>
-        /// <param name="value">name of file to save history</param>
-        /// <param name="timeout">The timeout for valid items saved. Default value is 365 days</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> OverwriteDefaultFrom(string value, TimeSpan? timeout = null);
 
         /// <summary>
         /// Execute a action foreach item of colletion passed as a parameter
@@ -47,66 +32,32 @@ namespace PPlus.Controls
         IControlTable<T> Interaction<T1>(IEnumerable<T1> values, Action<IControlTable<T>, T1> action);
 
         /// <summary>
-        /// Set max.item view per page.Default value for this control is 10.
-        /// </summary>
-        /// <param name="value">Number of Max.rows</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> PageSize(int value);
-
-        /// <summary>
-        /// Add item to row grid
+        /// Add item  to list
         /// </summary>
         /// <param name="value">Item to add</param>
-        /// <param name="disable">true item disabled, otherwise no</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> AddItem(T value, bool disable = false);
+        IControlTable<T> AddItem(T value);
 
         /// <summary>
-        /// Add items to rows grid
+        /// Add items to list
         /// </summary>
         /// <param name="values">items colletion to add</param>
-        /// <param name="disable">true item disabled, otherwise no</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> AddItems(IEnumerable<T> values, bool disable = false);
+        IControlTable<T> AddItems(IEnumerable<T> values);
 
         /// <summary>
-        /// Add Items to rows grid with scope Disable/Remove <seealso cref="AdderScope"/>
-        /// <br>At startup the list items will be compared and will be removed or disabled <see cref="AdderScope"/></br>
-        /// <br>Tip: Use <seealso cref="EqualItems"/> for custom comparer</br>
-        /// </summary>
-        /// <param name="scope">scope Disable/Remove</param>
-        /// <param name="values">items colletion</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> AddItemsTo(AdderScope scope, params T[] values);
-
-        /// <summary>
-        /// Custom item comparator
-        /// </summary>
-        /// <param name="comparer">function comparator</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> EqualItems(Func<T, T, bool> comparer);
-
-        /// <summary>
-        /// Sort rows by expression
+        /// Sort items by expression
         /// </summary>
         /// <param name="value">expresion to sort the rows</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
         IControlTable<T> OrderBy(Expression<Func<T, object>> value);
 
         /// <summary>
-        /// Sort Descending rows by expression
+        /// Sort Descending items by expression
         /// </summary>
         /// <param name="value">expresion to sort the rows</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
         IControlTable<T> OrderByDescending(Expression<Func<T, object>> value);
-
-        /// <summary>
-        /// Set Columns used by Filter strategy. 
-        /// </summary>
-        /// <param name="filter">Filter strategy for filter rows.Default value is FilterMode.Disabled</param>
-        /// <param name="indexColumn">list (cardinality) of columns</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> FilterByColumns(FilterMode filter,params ushort[] indexColumn);
 
         /// <summary>
         /// The Table layout. Default value is 'TableLayout.SingleGridFull'
@@ -114,16 +65,6 @@ namespace PPlus.Controls
         /// <param name="value">The <see cref="TableLayout"/></param>
         /// <returns><see cref="IControlTable{T}"/></returns>
         IControlTable<T> Layout(TableLayout value);
-
-        /// <summary>
-        /// Dynamically change the description using a user role
-        /// </summary>
-        /// <param name="value">
-        /// function to apply change
-        /// <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)</br>
-        /// </param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> ChangeDescription(Func<T, int, int, string> value);
 
         /// <summary>
         /// Styles for Table elements
@@ -144,7 +85,7 @@ namespace PPlus.Controls
 
         /// <summary>
         /// Add Column
-        /// <br>AddColumn cannot be run with AutoFill</br>
+        /// <br>AddColumn cannot be used with AutoFill</br>
         /// </summary>
         /// <param name="field">Expression that defines the field associated with the column</param>
         /// <param name="width">column size</param>
@@ -160,7 +101,7 @@ namespace PPlus.Controls
 
         /// <summary>
         ///  Auto generate Columns
-        ///  <br>AutoFill cannot be run with AddColumn and AutoFit</br>
+        ///  <br>AutoFill cannot be used with AddColumn and/or AutoFit</br>
         ///  <br>Header alignment will always be 'Center' </br>
         ///  <br>The content alignment will always be 'Left' and will always be with sliding lines</br>
         ///  <br>Columns are generated by the public properties of the data class recognized by <see cref="TypeCode"/>.</br>
@@ -186,15 +127,8 @@ namespace PPlus.Controls
         IControlTable<T> HideHeaders(bool value = true);
 
         /// <summary>
-        /// Hide selector row. Default false.
-        /// </summary>
-        /// <param name="value">Hide selector row</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> HideSelectorRow(bool value = true);
-
-        /// <summary>
         /// Set the grid to auto-resize to current console width
-        /// <br>AutoFit cannot be run with AutoFill</br>
+        /// <br>AutoFit cannot be used with AutoFill</br>
         /// </summary>
         /// <param name="indexColumn">
         /// List (cardinality) of columns that will be affected.
@@ -204,48 +138,12 @@ namespace PPlus.Controls
         IControlTable<T> AutoFit(params ushort[] indexColumn);
 
         /// <summary>
-        /// Global function to format columns by field type when not specified by 'AddColumn'.
+        /// Function to format columns by field type when not specified by 'AddColumn'.
         /// </summary>
         /// <typeparam name="T1">Type to convert</typeparam>
         /// <param name="funcfomatType">The function</param>
         /// <returns><see cref="IControlTable{T}"/></returns>
         IControlTable<T> AddFormatType<T1>(Func<object,string> funcfomatType);
-
-        /// <summary>
-        /// Wait Select row with [enter].Default not wait (only display all rows)
-        /// </summary>
-        /// <param name="selectedTemplate">
-        /// message template function when selected item. 
-        /// <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)</br>
-        /// </param>
-        /// <param name="finishTemplate">
-        /// message template function when finish control with seleted item
-        /// <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)</br>
-        /// </param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> UserInteraction(Func<T, int, int, string> selectedTemplate = null, Func<T, int, int, string> finishTemplate = null);
-
-        /// <summary>
-        /// Preserve table at end (user interaction). Default is false.
-        /// </summary>
-        /// <param name="value">Preserve table at end</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> PreserveTable(bool value = true);
-
-        /// <summary>
-        /// Enable Columns Navigation. Default false.
-        /// <br>When the column size is greater than the screen size, the content will be truncated</br>
-        /// </summary>
-        /// <param name="value">Enable Columns Navigation</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> ColumnsNavigation(bool value = true);
-
-        /// <summary>
-        /// Automatically select and finalize item when only one item is in the list . Default false.
-        /// </summary>
-        /// <param name="value">Automatically select</param>
-        /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> AutoSelect(bool value = true);
 
     }
 }

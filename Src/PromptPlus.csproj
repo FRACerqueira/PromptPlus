@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>.net7;.net6; netstandard2.1</TargetFrameworks>
+		<TargetFrameworks>net7.0;net6.0; netstandard2.1</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<NeutralLanguage>en</NeutralLanguage>
 		<AssemblyName>PromptPlus</AssemblyName>
@@ -30,7 +30,7 @@
 		<PackageId>PromptPlus</PackageId>
 		<PackageReadmeFile>NugetREADME.md</PackageReadmeFile>
 		<PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
-		<Version>4.1.0</Version>
+		<Version>4.2.0</Version>
 		<PackageIcon>icon.png</PackageIcon>
 		<Copyright>© 2021 - Fernando Cerqueira </Copyright>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
@@ -48,85 +48,16 @@
 		</AssemblyAttribute>
 	</ItemGroup>
 	
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|.net6|AnyCPU'">
-		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-		<Deterministic>True</Deterministic>
-		<CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-	</PropertyGroup>
-	
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='local|.net6|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-	  <Deterministic>True</Deterministic>
-	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|.net6|AnyCPU'">
+	<PropertyGroup>
 		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
 		<Deterministic>True</Deterministic>
 		<CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
-		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-		<Deterministic>True</Deterministic>
-		<CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='local|netstandard2.1|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-	  <Deterministic>True</Deterministic>
-	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.1|AnyCPU'">
-		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-		<Deterministic>True</Deterministic>
-		<CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|.net5|AnyCPU'">
-		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='local|.net5|AnyCPU'">
-	  <DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|.net5|AnyCPU'">
-		<DefineConstants>$(DefineConstants)TRACE</DefineConstants>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|.net7|AnyCPU'">
-	  <Deterministic>True</Deterministic>
-	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|.net7|AnyCPU'">
-	  <Deterministic>True</Deterministic>
-	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='local|.net7|AnyCPU'">
-	  <Deterministic>True</Deterministic>
-	  <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-	</PropertyGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)'=='.net7'">
+	<ItemGroup>
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 		<PackageReference Include="System.IO" Version="4.3.0" />
-		<PackageReference Include="System.Text.Json" Version="7.0.1" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)'=='.net6'">
-		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-		<PackageReference Include="System.IO" Version="4.3.0" />
-		<PackageReference Include="System.Text.Json" Version="6.0.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)'=='netstandard2.1'">
-		<PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
-		<PackageReference Include="System.IO" Version="4.3.0" />
-		<PackageReference Include="System.Text.Json" Version="4.7.2" />
+		<PackageReference Include="System.Text.Json" Version="7.0.3" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -158,7 +89,7 @@
 		</EmbeddedResource>
 	</ItemGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)|$(TargetFramework)'=='local|.net7'">
-		<Exec Command="xmldoc2md $(SolutionDir)Src\bin\local\.net7\PromptPlus.dll $(SolutionDir)docs\apis --templatefile $(SolutionDir)Src\docapitemplate.md  --excludeinternal --index-page-name apis --back-button &quot;Back to List Api&quot; --link-back-button &quot;./apis.md&quot; --back-index-button &quot;Main&quot; --link-backindex-button &quot;../index.md#table-of-contents&quot;" />
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)|$(TargetFramework)'=='local|net7.0'">
+		<Exec Command="xmldoc2md $(SolutionDir)Src\bin\local\net7.0\PromptPlus.dll $(SolutionDir)docs\apis --templatefile $(SolutionDir)Src\docapitemplate.md  --excludeinternal --index-page-name apis --back-button &quot;Back to List Api&quot; --link-back-button &quot;./apis.md&quot; --back-index-button &quot;Main&quot; --link-backindex-button &quot;../index.md#table-of-contents&quot;" />
 	</Target>
 </Project>

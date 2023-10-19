@@ -22,7 +22,7 @@ namespace AlternateScreenSamples
             .Run();
 
 
-            PromptPlus.RunOnBuffer(TargetBuffer.Secondary,
+            var hassecondscreen = PromptPlus.RunOnBuffer(TargetBuffer.Secondary,
                 (cts) =>
                 {
                     PromptPlus.WriteLine("This text run in secondary screen");
@@ -35,6 +35,8 @@ namespace AlternateScreenSamples
                 },
                 ConsoleColor.White,
                 ConsoleColor.Red);
+            if (!hassecondscreen)
+                //faça algo
 
             PromptPlus.WriteLines(2);
             PromptPlus.KeyPress("End Sample!, Press any key", cfg =>

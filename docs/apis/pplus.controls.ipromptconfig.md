@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -12,7 +12,7 @@
 
 Namespace: PPlus.Controls
 
-Interface for config controls and overwrite default values
+Interface for config controls to overwrite default values
 
 ```csharp
 public interface IPromptConfig
@@ -159,6 +159,42 @@ IPromptConfig HideOnAbort(bool value)
 
 `value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-minimalrender"/>**MinimalRender(Boolean)**
+
+Overwrite default Hide Answer
+ <br>When true, the prompt and control description are not rendered, showing only the minimum necessary without using resources (except the default tooltips when used)
+
+```csharp
+IPromptConfig MinimalRender(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+value
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-paginationtemplate"/>**PaginationTemplate(Func&lt;Int32, Int32, Int32, String&gt;)**
+
+Overwrite PaginationTemplate
+
+```csharp
+IPromptConfig PaginationTemplate(Func<Int32, Int32, Int32, String> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;Int32, Int32, Int32, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-4)<br>
+The function
+ <br>string to show = Func(Total items,Current Page,Total pages)
 
 #### Returns
 

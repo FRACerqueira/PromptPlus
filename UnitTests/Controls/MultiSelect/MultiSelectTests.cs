@@ -698,7 +698,7 @@ namespace PPlus.Tests.Controls.MultiSelect
                  .AddItemsGrouped("North America", new[] { "Seattle", "Boston", "New York" })
                  .AddItemsGrouped("Asia", new[] { "Tokyo", "Singapore", "Shanghai" })
                  .AddItem("South America (Any)")
-                 .AppendGroupOnDescription();
+                 .ShowTipGroup();
             ctrl.InitControl(CancellationToken.None);
 
             var sb = new ScreenBuffer();
@@ -721,7 +721,7 @@ namespace PPlus.Tests.Controls.MultiSelect
                  .AddItemsGrouped("North America", new[] { "Seattle", "Boston", "New York" })
                  .AddItemsGrouped("Asia", new[] { "Tokyo", "Singapore", "Shanghai" })
                  .AddItem("South America (Any)")
-                 .AppendGroupOnDescription();
+                 .ShowTipGroup();
             ctrl.InitControl(CancellationToken.None);
 
             CompletesIn(100, () =>
@@ -742,7 +742,7 @@ namespace PPlus.Tests.Controls.MultiSelect
                  .AddItemsGrouped("North America", new[] { "Seattle", "Boston", "New York" })
                  .AddItemsGrouped("Asia", new[] { "Tokyo", "Singapore", "Shanghai" })
                  .AddItem("South America (Any)")
-                 .AppendGroupOnDescription();
+                 .ShowTipGroup();
             ctrl.InitControl(CancellationToken.None);
 
             CompletesIn(100, () =>

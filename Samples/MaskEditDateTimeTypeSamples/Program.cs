@@ -46,7 +46,7 @@ namespace MaskEditDateTimeTypeSamples
             PromptPlus.MaskEdit("input", "MaskEdit DateTime input")
                 .Mask(MaskedType.DateTime)
                 .AcceptEmptyValue()
-                .DescriptionWithInputType(FormatWeek.Long)
+                .ShowTipInputType(FormatWeek.Long)
                 .TypeTipStyle(Style.Default.Foreground(Color.Aqua))
                 .Run();
 
@@ -54,20 +54,18 @@ namespace MaskEditDateTimeTypeSamples
 
             PromptPlus.MaskEdit("input", "MaskEdit DateTime input")
                 .Mask(MaskedType.DateTime)
-                .DescriptionWithInputType(FormatWeek.Long)
-                .Culture(new CultureInfo("pt-br"))
+                .ShowTipInputType(FormatWeek.Long)
+                .Culture("pt-br")
                 .AcceptEmptyValue()
                 .Run();
-
 
             PromptPlus.DoubleDash($"Control:MaskEdit DateTime ({cult.Name}) - overwrite prompt mask char.");
 
             PromptPlus.MaskEdit("input", "MaskEdit DateTime input")
                 .Mask(MaskedType.DateTime, '_')
                 .AcceptEmptyValue()
-                .DescriptionWithInputType(FormatWeek.Short)
+                .ShowTipInputType(FormatWeek.Short)
                 .Run();
-
 
             PromptPlus.DoubleDash($"Control:MaskEdit DateTime ({cult.Name}) - with format year/time.");
 
@@ -76,7 +74,7 @@ namespace MaskEditDateTimeTypeSamples
                 .AcceptEmptyValue()
                 .FormatYear(FormatYear.Short)
                 .FormatTime(FormatTime.OnlyHM)
-                .DescriptionWithInputType(FormatWeek.Short)
+                .ShowTipInputType(FormatWeek.Short)
                 .Run();
 
             PromptPlus.DoubleDash($"Control:MaskEdit DateTime ({cult.Name}) - with FillZeros.");
@@ -84,9 +82,8 @@ namespace MaskEditDateTimeTypeSamples
             PromptPlus.MaskEdit("input", "MaskEdit DateTime input")
                 .Mask(MaskedType.DateTime)
                 .FillZeros()
-                .DescriptionWithInputType(FormatWeek.Short)
+                .ShowTipInputType(FormatWeek.Short)
                 .Run();
-
 
             PromptPlus.DoubleDash($"Control:MaskEdit DateTime ({cult.Name}) - with FillZeros and AcceptEmptyValue.");
 

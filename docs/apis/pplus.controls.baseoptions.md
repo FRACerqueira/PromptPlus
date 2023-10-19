@@ -2,7 +2,7 @@
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
@@ -132,6 +132,34 @@ public IPromptConfig HideOnAbort(bool value)
 #### Parameters
 
 `value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-minimalrender"/>**MinimalRender(Boolean)**
+
+```csharp
+public IPromptConfig MinimalRender(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+
+#### Returns
+
+[IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+### <a id="methods-paginationtemplate"/>**PaginationTemplate(Func&lt;Int32, Int32, Int32, String&gt;)**
+
+```csharp
+public IPromptConfig PaginationTemplate(Func<Int32, Int32, Int32, String> value)
+```
+
+#### Parameters
+
+`value` [Func&lt;Int32, Int32, Int32, String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-4)<br>
 
 #### Returns
 

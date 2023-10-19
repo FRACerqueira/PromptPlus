@@ -8,7 +8,7 @@ using System;
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Interface for config controls and overwrite default values
+    /// Interface for config controls to overwrite default values
     /// </summary>
     public interface IPromptConfig
     {
@@ -17,14 +17,14 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig EnabledAbortKey(bool value);
+        IPromptConfig EnabledAbortKey(bool value = true);
 
         /// <summary>
         /// Overwrite default Show/Hide Tooltip of control
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig ShowTooltip(bool value);
+        IPromptConfig ShowTooltip(bool value = true);
 
 
         /// <summary>
@@ -32,21 +32,21 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig ShowOnlyExistingPagination(bool value);
+        IPromptConfig ShowOnlyExistingPagination(bool value = true);
 
         /// <summary>
         /// Overwrite default DisableToggleTooltip of control
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig DisableToggleTooltip(bool value);
+        IPromptConfig DisableToggleTooltip(bool value = true);
 
         /// <summary>
         /// Overwrite default Clear render area of control after finished
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig HideAfterFinish(bool value);
+        IPromptConfig HideAfterFinish(bool value = true);
 
 
         /// <summary>
@@ -54,7 +54,25 @@ namespace PPlus.Controls
         /// </summary>
         /// <param name="value">value</param>
         /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig HideOnAbort(bool value);
+        IPromptConfig HideOnAbort(bool value = true);
+
+        /// <summary>
+        /// Overwrite default Hide Answer
+        /// <br>When true, the prompt and control description are not rendered, showing only the minimum necessary without using resources (except the default tooltips when used)</br>
+        /// </summary>
+        /// <param name="value">value</param>
+        /// <returns><see cref="IPromptConfig"/></returns>
+        IPromptConfig MinimalRender(bool value = true);
+
+        /// <summary>
+        /// Overwrite PaginationTemplate
+        /// </summary>
+        /// <param name="value">
+        /// The function
+        /// <br>string to show = Func(Total items,Current Page,Total pages)</br>
+        /// </param>
+        /// <returns><see cref="IPromptConfig"/></returns>
+        IPromptConfig PaginationTemplate(Func<int, int, int, string>? value);
 
         /// <summary>
         /// Add generic action for the control when change <see cref="StageControl"/> of control
