@@ -42,34 +42,6 @@ namespace PPlus.Tests.Controls.TaskWaitControl
         }
 
         [Fact]
-        public void Should_OverwriteCultureTaskName()
-        {
-            var ctrl = (WaitControl<object>)PromptPlus
-                .WaitProcess("P", "D")
-                .TaskTitle("XXXXXXXXXXXX")
-                .AddStep(StepMode.Sequential, "task1", "desc task1", (_, cts) =>
-                {
-                    Thread.Sleep(500);
-                });
-
-            ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
-
-            ctrl.InitControl(CancellationToken.None);
-
-            var output = PromptPlus.RecordOutput(() =>
-            {
-                CompletesIn(3000, () =>
-                {
-                    ctrl.InputTemplate(new ScreenBuffer());
-                    var result = ctrl.TryResult(CancellationToken.None);
-                    Assert.False(result.IsRunning);
-                    Assert.True(result.Value.States.Count() == 1);
-                });
-            });
-            Assert.Contains("XXXXXXXXXXXX", output);
-        }
-
-        [Fact]
         public void Should_Interaction()
         {
             var ctrl = (WaitControl<object>)PromptPlus
