@@ -358,20 +358,6 @@ namespace PPlus.Controls
                     break;
                 }
 
-                string desc;
-                var auxdesc = new List<string>();
-                foreach (var item in executelist)
-                {
-                    var dj = _options.States[item].Description;
-                    if (!string.IsNullOrEmpty(dj) && !auxdesc.Contains(dj))
-                    {
-                        auxdesc.Add(dj);
-                    }
-                }
-                if (auxdesc.Any())
-                {
-                    desc = string.Join(",", auxdesc.ToArray());
-                }
                 var qtdlines = 0;
                 ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
                 var top = ConsolePlus.CursorTop;
@@ -460,7 +446,7 @@ namespace PPlus.Controls
                         {
                             tasktitle = _options.OverWriteTitleName;
                         }
-                        desc = _options.States[executelist[pos]].Description;
+                        var desc = _options.States[executelist[pos]].Description;
                         if (string.IsNullOrEmpty(desc))
                         {
                             var index = (executelist[pos] + 1).ToString("000");

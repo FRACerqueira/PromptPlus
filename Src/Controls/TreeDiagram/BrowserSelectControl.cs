@@ -380,7 +380,7 @@ namespace PPlus.Controls
 
                 if (_options.Spinner != null)
                 {
-                    qtd = ConsolePlus.WriteLine();
+                    ConsolePlus.WriteLine();
                 }
 
                 if (!string.IsNullOrEmpty(_options.OptDescription) && !_options.OptMinimalRender)

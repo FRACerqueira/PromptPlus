@@ -111,9 +111,6 @@ namespace PPlus.Controls.Table
 
             _options.EqualItems ??= (item1, item2) => item1.Equals(item2);
 
-            Optional<T> defvalue = Optional<T>.s_empty;
-            Optional<ItemTableRow<T>> defvaluepage = Optional<ItemTableRow<T>>.s_empty;
-
             if (_options.OrderBy != null)
             {
                 if (_options.IsOrderDescending)

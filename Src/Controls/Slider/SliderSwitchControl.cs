@@ -202,10 +202,6 @@ namespace PPlus.Controls
                 }
                 screenBuffer.SaveCursor();
             }
-            else
-            {
-                hasprompt = false;
-            }
             var hasdesc = screenBuffer.WriteLineDescriptionSliderSwitch(_options, _currentValue);
             if (hasprompt || hasdesc)
             {

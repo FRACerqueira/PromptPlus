@@ -520,7 +520,6 @@ namespace PPlus.Controls
                     {
                         screenBuffer.AddBuffer($"{Messages.CurrentFolder}: {showItem.Value.CurrentFolder}", _options.CurrentFolderStyle, true);
                     }
-                    hasprompt = true;
                     //try save cursor
                     screenBuffer.SaveCursor();
                 }

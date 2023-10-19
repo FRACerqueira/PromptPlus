@@ -254,7 +254,6 @@ namespace PPlus.Controls
             if (!hasspinner && _options.Spinner != null)
             {
                 top = ConsolePlus.CursorTop;
-                qtd = 0;
                 if (hasprompt)
                 {
                     qtd = ConsolePlus.WriteLine();
