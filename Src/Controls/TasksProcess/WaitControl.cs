@@ -271,7 +271,6 @@ namespace PPlus.Controls
                 var tasks = new List<(int, Task)>();
                 var currentmode = _options.States[i].StepMode;
                 var executelist = new List<int>();
-                string firstdesc = _options.States[i].Description;
                 var detailsElapsedTime = new List<(int left, int top, Stopwatch sw)>();
                 var degreecount = 0;
                 do
