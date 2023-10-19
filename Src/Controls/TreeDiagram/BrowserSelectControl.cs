@@ -350,7 +350,6 @@ namespace PPlus.Controls
                 var oldcur = ConsolePlus.CursorVisible;
                 ConsolePlus.SetCursorPosition(0, ConsolePlus.CursorTop);
                 var (CursorLeft, CursorTop) = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
-                var scrool = 0;
 
                 _firstLoad = false;
                 ConsolePlus.CursorVisible = false;
@@ -362,7 +361,8 @@ namespace PPlus.Controls
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
-                        scrool += dif;
+                        (CursorLeft, CursorTop) = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
+
                     }
                 }
                 if (!_options.OptMinimalRender)
@@ -372,7 +372,7 @@ namespace PPlus.Controls
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
-                        scrool += dif;
+                        (CursorLeft, CursorTop) = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
                     }
                 }
 
@@ -390,7 +390,6 @@ namespace PPlus.Controls
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
-                        scrool += dif;
                         _cusorSpinner = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
                     }
                     top = ConsolePlus.CursorTop;
@@ -398,7 +397,6 @@ namespace PPlus.Controls
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
-                        scrool += dif;
                         _cusorSpinner = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
                     }
 

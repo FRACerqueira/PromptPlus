@@ -390,7 +390,6 @@ namespace PPlus.Controls
                 var oldcur = ConsolePlus.CursorVisible;
                 ConsolePlus.SetCursorPosition(0, ConsolePlus.CursorTop);
                 var (CursorLeft, CursorTop) = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
-                var scrool = 0;
 
                 _firstLoad = false;
                 ConsolePlus.CursorVisible = false;
@@ -402,7 +401,7 @@ namespace PPlus.Controls
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
-                        scrool += dif;
+                        (CursorLeft, CursorTop) = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
                     }
                 }
                 if (!_options.OptMinimalRender)
@@ -412,7 +411,7 @@ namespace PPlus.Controls
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
-                        scrool += dif;
+                        (CursorLeft, CursorTop) = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
                     }
                 }
 
@@ -420,7 +419,7 @@ namespace PPlus.Controls
 
                 if (_options.Spinner != null)
                 {
-                    qtd = ConsolePlus.WriteLine();
+                    ConsolePlus.WriteLine();
                 }
 
                 if (!string.IsNullOrEmpty(_options.OptDescription) && !_options.OptMinimalRender)
@@ -430,7 +429,6 @@ namespace PPlus.Controls
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
-                        scrool += dif;
                         _cusorSpinner = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
                     }
                     top = ConsolePlus.CursorTop;
@@ -438,7 +436,6 @@ namespace PPlus.Controls
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
-                        scrool += dif;
                         _cusorSpinner = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
                     }
 
@@ -879,12 +876,9 @@ namespace PPlus.Controls
         private void RemoveSelectAll(TreeNode<ItemBrowser> node)
         {
             var index = _selectedItems.FindIndex(x => x.UniqueId == node.UniqueId);
-            if (index >= 0)
+            if (index >= 0 && !IsFixedSelect(node))
             {
-                if (!IsFixedSelect(node))
-                {
-                    _selectedItems.RemoveAt(index);
-                }
+                _selectedItems.RemoveAt(index);
             }
             if (node.Childrens != null)
             {
@@ -902,12 +896,9 @@ namespace PPlus.Controls
                 return;
             }
             var index = _selectedItems.FindIndex(x => x.UniqueId == node.UniqueId);
-            if (index < 0)
+            if (index < 0 && node.IsSelected)
             {
-                if (node.IsSelected)
-                {
-                    _selectedItems.Add(new(node.UniqueId, node.Value));
-                }
+                _selectedItems.Add(new(node.UniqueId, node.Value));
             }
             if (node.Childrens != null)
             {
@@ -1114,19 +1105,16 @@ namespace PPlus.Controls
                     while (KeyAvailable)
                     {
                         var keypress = WaitKeypress(_lnkcts.Token);
-                        if (_options.OptEnabledAbortKey)
+                        if (_options.OptEnabledAbortKey && keypress != null)
                         {
-                            if (keypress != null)
+                            if (CheckAbortKey(keypress.Value))
                             {
-                                if (CheckAbortKey(keypress.Value))
+                                while (KeyAvailable)
                                 {
-                                    while (KeyAvailable)
-                                    {
-                                        _ = WaitKeypress(_lnkcts.Token);
-                                    }
-                                    _ctsesc.Cancel();
-                                    break;
+                                    _ = WaitKeypress(_lnkcts.Token);
                                 }
+                                _ctsesc.Cancel();
+                                break;
                             }
                         }
                     }
@@ -1173,13 +1161,10 @@ namespace PPlus.Controls
                 {
                     node.IsSelected = _options.ExpressionSelected?.Invoke(node.Value) ?? false;
                 }
-                if (!node.IsSelected)
+                if (!node.IsSelected && IsFixedSelect(node))
                 {
-                    if (IsFixedSelect(node))
-                    {
-                        node.IsSelected = true;
-                        node.IsDisabled = true;
-                    }
+                    node.IsSelected = true;
+                    node.IsDisabled = true;
                 }
             }
             var loadfiles = false;
@@ -1246,13 +1231,10 @@ namespace PPlus.Controls
                     {
                         newnode.IsSelected = _options.ExpressionSelected?.Invoke(newnode.Value) ?? false;
                     }
-                    if (!newnode.IsSelected)
+                    if (!newnode.IsSelected && IsFixedSelect(newnode))
                     {
-                        if (IsFixedSelect(newnode))
-                        {
-                            newnode.IsSelected = true;
-                            newnode.IsDisabled = true;
-                        }
+                        newnode.IsSelected = true;
+                        newnode.IsDisabled = true;
                     }
                 }
             }
@@ -1260,14 +1242,11 @@ namespace PPlus.Controls
             {
                 node.Childrens.Last().NextNode = lastnextnode;
             }
-            if (allnodes)
+            if (allnodes && node.IsHasChild)
             {
-                if (node.IsHasChild)
+                foreach (var item in node.Childrens.Where(x => x.Value.IsFolder))
                 {
-                    foreach (var item in node.Childrens.Where(x => x.Value.IsFolder))
-                    {
-                        TryLoadFolder(false, item, null, allnodes, cancellationToken);
-                    }
+                    TryLoadFolder(false, item, null, allnodes, cancellationToken);
                 }
             }
             node.UpdateTreeLength<ItemBrowser>();
