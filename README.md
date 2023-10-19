@@ -35,7 +35,7 @@
 
 ## What's new in the latest version 
 ### V4.2.0 
-#### _Expected release of Prompt Plus Nuget package on 11/2023 after official .Net8 release_
+
 [**Top**](#table-of-contents)
 
 - Split feature Control Table:
