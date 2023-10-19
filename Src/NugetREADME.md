@@ -1,4 +1,4 @@
-﻿# **Welcome to PromptPlus**
+# **Welcome to PromptPlus**
 
 **Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
 
