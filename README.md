@@ -563,3 +563,4 @@ PromptPlus is licensed under the MIT license. For more information see [LICENSE]
 * For EastAsianWidth.NET licensing information, see [LICENSE-EastAsianWidth.NET](Licenses/LICENSE-EastAsianWidth.md).
 * For FIGlet licensing information, see [LICENSE-FIGlet](Licenses/LICENSE-FIGlet.md).
 * For xmldoc2md licensing information, see [LICENSE-xmldoc2md](Licenses/LICENSE-xmldoc2md.md).
+*
