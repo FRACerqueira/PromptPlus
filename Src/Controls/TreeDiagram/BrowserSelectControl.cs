@@ -283,9 +283,6 @@ namespace PPlus.Controls
                 case StyleBrowser.SelectedRoot:
                     _options.SelectedRootStyle = value;
                     break;
-                case StyleBrowser.Lines:
-                    _options.LineStyle = value;
-                    break;
                 case StyleBrowser.UnselectedSize:
                     _options.SizeStyle = value;
                     break;

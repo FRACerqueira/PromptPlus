@@ -96,9 +96,6 @@ namespace PPlus.Controls
                 case StyleTreeView.CurrentNode:
                     _options.CurrentNodeStyle = value;
                     break;
-                case StyleTreeView.Lines:
-                    _options.LineStyle = value;
-                    break;
                 case StyleTreeView.UnselectedRoot:
                     _options.RootStyle = value;
                     break;

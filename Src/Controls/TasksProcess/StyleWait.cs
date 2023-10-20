@@ -6,29 +6,17 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents the Style of content Calendar
+    /// Represents The Style region of Wait
     /// </summary>
-    public enum StyleCalendar
+    public enum StyleWait
     {
         /// <summary>
-        /// Highlight content
+        /// Label Region
         /// </summary>
-        Highlight,
+        Label,
         /// <summary>
-        /// Day content
+        /// ElapsedTime Region
         /// </summary>
-        Day,
-        /// <summary>
-        /// Month content
-        /// </summary>
-        Month,
-        /// <summary>
-        /// Year content
-        /// </summary>
-        Year,
-        /// <summary>
-        /// Week Day content
-        /// </summary>
-        WeekDay
+        ElapsedTime
     }
 }

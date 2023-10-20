@@ -11,10 +11,6 @@ namespace PPlus.Controls
     public enum TableStyle
     {
         /// <summary>
-        /// Grid lines
-        /// </summary>
-        Grid,
-        /// <summary>
         /// Title content
         /// </summary>
         Title,
@@ -23,20 +19,8 @@ namespace PPlus.Controls
         /// </summary>
         Header,
         /// <summary>
-        /// Selected Header content
-        /// </summary>
-        SelectedHeader,
-        /// <summary>
         /// Data content
         /// </summary>
-        Content,
-        /// <summary>
-        /// Disabled content
-        /// </summary>
-        DisabledContent,
-        /// <summary>
-        /// Selected content
-        /// </summary>
-        SelectedContent
+        Content
     }
 }

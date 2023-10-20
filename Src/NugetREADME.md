@@ -51,6 +51,14 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 - Improvement : 
     - Optimize Render of SliderNumber (less lines)
 - Improvement : 
+    -  Added global StyleSchema Ranger/Lines for custom color 
+- Improvement : 
+    -  Added command Styles for custom color in the WaitProcess control 
+- Improvement : 
+    -  Added parameters spinnerStyle and elapsedTimeStyle for custom color in the WaitTimer control 
+- Improvement : 
+    - Added command HideRange to not show range (Min/Max values) in the SliderNumber control    
+- Improvement : 
     - Optimize resource usage in rendering (less cultural dependency)
 - Improvement : 
     - Reinforce the validation of invalid or optional parameters in all controls

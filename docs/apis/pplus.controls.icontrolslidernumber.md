@@ -179,6 +179,23 @@ Fracional Digits
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
+### <a id="methods-hiderange"/>**HideRange(Boolean)**
+
+Hide min./max elements in slider. Default is Show
+
+```csharp
+IControlSliderNumber HideRange(bool value)
+```
+
+#### Parameters
+
+`value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+True for hide,false for show
+
+#### Returns
+
+[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
+
 ### <a id="methods-largestep"/>**LargeStep(Double)**
 
 Define the large step to change. Default value is 1/10 of range

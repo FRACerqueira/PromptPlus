@@ -140,7 +140,7 @@ namespace PPlus.Controls
             }
             screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
             screenBuffer.AddBuffer(' ', Style.Default, true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.OptStyleSchema.Lines(), true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.SelectedExpandStyle, true, false) ;
             if (data.IsRoot)
             {
@@ -168,7 +168,7 @@ namespace PPlus.Controls
             }
             screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true,false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.OptStyleSchema.Lines(), true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.OptStyleSchema.Disabled(), true,false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.OptStyleSchema.Disabled(), true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextSize, options.OptStyleSchema.Disabled(), true,false);
@@ -182,7 +182,7 @@ namespace PPlus.Controls
             }
             screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.OptStyleSchema.Lines(), true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.ExpandStyle, true, false);
             if (data.IsRoot)
             {
@@ -211,7 +211,7 @@ namespace PPlus.Controls
             screenBuffer.NewLine();
             screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer(' ', Style.Default, true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.LineStyle, true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.OptStyleSchema.Lines(), true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.OptStyleSchema.Disabled(), true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.OptStyleSchema.Disabled(), true, false);
             screenBuffer.AddBuffer(data.MessagesNodes.TextSize, options.OptStyleSchema.Disabled(), true, false);

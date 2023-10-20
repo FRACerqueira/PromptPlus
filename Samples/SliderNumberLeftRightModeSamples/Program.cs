@@ -43,6 +43,17 @@ namespace SliderNumberLeftRightModeSamples
                .LargeStep(1)
                .Run();
 
+            PromptPlus.DoubleDash($"Control:SliderNumber {cult} - Hide Range");
+            PromptPlus
+               .SliderNumber("SliderNumber")
+               .Range(-100, 100)
+               .HideRange()
+               .Default(0)
+               .FracionalDig(1)
+               .Step(0.1)
+               .LargeStep(1)
+               .Run();
+
             PromptPlus.DoubleDash($"Control:SliderNumber with culture (pt-br) - normal usage");
             PromptPlus
                .SliderNumber("SliderNumber")

@@ -200,6 +200,8 @@
 
 - [StyleTreeView](./pplus.controls.styletreeview.md)
 
+- [StyleWait](./pplus.controls.stylewait.md)
+
 - [SuggestionInput](./pplus.controls.suggestioninput.md)
 
 - [SuggestionOutput](./pplus.controls.suggestionoutput.md)

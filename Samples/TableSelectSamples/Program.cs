@@ -124,12 +124,14 @@ namespace TableSelectSamples
 
             PromptPlus.TableSelect<MyTable>("Your Prompt", "Descripion Table")
                 .AddItems(data)
+                .Config(cfg =>
+                 {
+                    cfg.ApplyStyle(StyleControls.Lines, Style.Default.Foreground(Color.Red));
+                    cfg.ApplyStyle(StyleControls.Disabled, Style.Default.Foreground(Color.Magenta1));
+                    cfg.ApplyStyle(StyleControls.Selected, Style.Default.Foreground(Color.Aquamarine1));
+                 })
                 .Styles(TableStyle.Content, Style.Default.Foreground(Color.Yellow))
-                .Styles(TableStyle.DisabledContent, Style.Default.Foreground(Color.Magenta1))
-                .Styles(TableStyle.Grid, Style.Default.Foreground(Color.Red))
                 .Styles(TableStyle.Header, Style.Default.Foreground(Color.Blue))
-                .Styles(TableStyle.SelectedHeader, Style.Default.Foreground(Color.Aqua))
-                .Styles(TableStyle.SelectedContent, Style.Default.Foreground(Color.Aquamarine3))
                 .Styles(TableStyle.Title, Style.Default.Foreground(Color.Cyan1))
                 .AutoFill(0, 80)
                 .AddFormatType<DateTime>(FmtDate)

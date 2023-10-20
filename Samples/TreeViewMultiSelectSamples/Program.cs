@@ -88,6 +88,7 @@ namespace TreeViewMultiSelectSamples
 
             //Ensure ValueResult Culture for all controls
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
+
             PromptPlus.WriteLine("Hello, World!");
             PromptPlus.DoubleDash("Control:TreeView - Common usage");
 

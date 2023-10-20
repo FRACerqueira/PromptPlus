@@ -59,7 +59,10 @@ namespace PPlus.Controls
             {
                 screenBuffer.NewLine();
             }
-            screenBuffer.AddBuffer($"{options.ValueToString(options.Minvalue)} ", options.OptStyleSchema.UnSelected(),true);
+            if (!options.HideRanger)
+            {
+                screenBuffer.AddBuffer($"{options.ValueToString(options.Minvalue)} ", options.OptStyleSchema.Ranger(), true);
+            }
             if (options.ChangeColor != null)
             {
                 var color = options.ChangeColor(input);
@@ -110,8 +113,11 @@ namespace PPlus.Controls
             {
                 screenBuffer.AddBuffer(new string(bar, options.Witdth - valuestep), Style.Default.Foreground(options.OptStyleSchema.Slider().Background), true, false);
             }
-            screenBuffer.AddBuffer($" {options.ValueToString(options.Maxvalue)}", options.OptStyleSchema.UnSelected(),true,false);
-            screenBuffer.AddBuffer($" ({options.ValueToString(input)})", options.OptStyleSchema.TaggedInfo(), true, false);
+            if (!options.HideRanger)
+            {
+                screenBuffer.AddBuffer($" {options.ValueToString(options.Maxvalue)}", options.OptStyleSchema.Ranger(), true, false);
+            }
+            screenBuffer.AddBuffer($" ({options.ValueToString(input)})", options.OptStyleSchema.Answer(), true, false);
             screenBuffer.SaveCursor();
         }
 

@@ -2292,12 +2292,12 @@ The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
 [IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
 
-### <a id="methods-waittimer"/>**WaitTimer(String, TimeSpan, SpinnersType, Boolean, Action&lt;IPromptConfig&gt;, Nullable&lt;CancellationToken&gt;)**
+### <a id="methods-waittimer"/>**WaitTimer(String, TimeSpan, SpinnersType, Boolean, Action&lt;IPromptConfig&gt;, Nullable&lt;Style&gt;, Nullable&lt;Style&gt;, Nullable&lt;CancellationToken&gt;)**
 
 Create Wait Control with step [TimeSpan](https://docs.microsoft.com/en-us/dotnet/api/system.timespan) delay and run
 
 ```csharp
-public static void WaitTimer(string prompt, TimeSpan delay, SpinnersType spinnersType, bool showCountdown, Action<IPromptConfig> config, Nullable<CancellationToken> cancellationToken)
+public static void WaitTimer(string prompt, TimeSpan delay, SpinnersType spinnersType, bool showCountdown, Action<IPromptConfig> config, Nullable<Style> spinnerStyle, Nullable<Style> elapsedTimeStyle, Nullable<CancellationToken> cancellationToken)
 ```
 
 #### Parameters
@@ -2316,6 +2316,12 @@ True show Countdown, otherwise 'no'
 
 `config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
+
+`spinnerStyle` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+[Style](./pplus.style.md) Spinner
+
+`elapsedTimeStyle` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
+[Style](./pplus.style.md) Countdown
 
 `cancellationToken` [Nullable&lt;CancellationToken&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 [CancellationToken](https://docs.microsoft.com/en-us/dotnet/api/system.threading.cancellationtoken) for control
