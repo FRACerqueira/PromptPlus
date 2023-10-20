@@ -134,5 +134,4 @@ This project is licensed under the [MIT License](https://github.com/FRACerqueira
 PromptPlus **<u>includes code(copy)</u>** from other software released under the **MIT license**:
 
 - [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen.
-- [EastAsianWidth.NET](https://github.com/iodes/EastAsianWidth.NET), Copyright (c) 2020 Kevin So.
 - [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU
