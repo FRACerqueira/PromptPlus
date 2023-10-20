@@ -3,7 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using PPlus.Controls.Objects;
+using EastAsianWidthDotNet;
 using System;
 
 namespace PPlus.Controls
@@ -32,7 +32,7 @@ namespace PPlus.Controls
         {
             Text = text.NormalizeNewLines();
             Style = Style.Default;
-            Width = (text??string.Empty).Length;
+            Width = (text??string.Empty).GetWidth();
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace PPlus.Controls
         {
             Text = text.NormalizeNewLines();
             Style = style;
-            Width = (text ?? string.Empty).Length;
+            Width = (text ?? string.Empty).GetWidth();
             SkipMarkup = false;
             ClearRestOfLine = true;
         }
@@ -64,7 +64,7 @@ namespace PPlus.Controls
         {
             Text = text.NormalizeNewLines();
             Style = style;
-            Width = (text ?? string.Empty).Length;
+            Width = (text ?? string.Empty).GetWidth();
             SkipMarkup = skipmarkupparse;
             ClearRestOfLine = clearrestofline;
         }
