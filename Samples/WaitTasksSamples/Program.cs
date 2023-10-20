@@ -66,6 +66,25 @@ namespace WaitTasksSamples
                 1, 2, 3, 4, 5, 6, 7
             };
 
+            PromptPlus.DoubleDash($"Control:WaitProcess - Custom Color");
+            wt1 = PromptPlus.WaitProcess<object>("wait process", "main desc")
+                .Finish($"end wait all process")
+                .TaskTitle("MyProcess")
+                .MaxDegreeProcess(4)
+                .Interaction(steps2.Take(5), (ctrl, item) =>
+                {
+                    ctrl.AddStep(StepMode.Parallel, $"id{item}", null,
+                            (eventw, cts) =>
+                            {
+                                cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(item));
+                            });
+                })
+                .ShowElapsedTime()
+                .Config(cfg => cfg.ApplyStyle(StyleControls.Lines, Style.Default.Foreground(Color.Red)))
+                .Styles(StyleWait.Label, Style.Default.Foreground(Color.Blue))
+                .Styles(StyleWait.ElapsedTime, Style.Default.Foreground(Color.Green))
+                .Run();
+
 
             PromptPlus.DoubleDash($"Control:WaitProcess - normal usage Parallel mode");
             wt1 = PromptPlus.WaitProcess<object>("wait process", "main desc")

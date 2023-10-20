@@ -15,10 +15,6 @@ namespace PPlus.Controls
         /// </summary>
         CurrentNode,
         /// <summary>
-        /// Lines Region
-        /// </summary>
-        Lines,
-        /// <summary>
         /// Unselected Root Region/State
         /// </summary>
         UnselectedRoot,

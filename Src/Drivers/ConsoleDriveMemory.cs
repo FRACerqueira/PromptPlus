@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading;
 using System;
 using System.Collections.Generic;
-using PPlus.Controls.Objects;
 using EastAsianWidthDotNet;
 
 namespace PPlus.Drivers

@@ -95,5 +95,13 @@ namespace PPlus.Controls
         /// <param name="process">list of tasks</param>
         /// <returns><see cref="IControlWait{T}"/></returns>
         IControlWait<T> AddStep(StepMode stepMode, string? id, string? label, params Action<EventWaitProcess<T>,CancellationToken>[] process);
+
+        /// <summary>
+        /// Overwrite Styles Wait. <see cref="StyleWait"/>
+        /// </summary>
+        /// <param name="styletype">Styles Wait</param>
+        /// <param name="value"><see cref="Style"/></param>
+        /// <returns><see cref="IControlWait{T}"/></returns>
+        IControlWait<T> Styles(StyleWait styletype, Style value);
     }
 }

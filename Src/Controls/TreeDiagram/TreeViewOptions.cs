@@ -20,7 +20,6 @@ namespace PPlus.Controls
         internal TreeViewOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             CurrentNodeStyle = styleSchema.TaggedInfo().Overflow(Overflow.Crop);
-            LineStyle = styleSchema.Prompt().Overflow(Overflow.Crop);
             ExpandStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
             RootStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
             ParentStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
@@ -44,7 +43,6 @@ namespace PPlus.Controls
         public bool SelectAll { get; set; }
         public Func<T, bool> SelectAllExpression { get; set; }
         public Style CurrentNodeStyle { get; set; }
-        public Style LineStyle { get; set; }
         public Style ExpandStyle { get; set; }
         public Style RootStyle { get; set; }
         public Style ParentStyle { get; set; }

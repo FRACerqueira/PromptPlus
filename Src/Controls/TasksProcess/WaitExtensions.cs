@@ -80,8 +80,10 @@ namespace PPlus
         /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
         /// <param name="showCountdown">True show Countdown, otherwise 'no'</param>
         /// <param name="config">The config action <see cref="IPromptConfig"/></param>
+        /// <param name="spinnerStyle"><see cref="Style"/> Spinner</param>
+        /// <param name="elapsedTimeStyle"><see cref="Style"/> Countdown</param>
         /// <param name="cancellationToken"><see cref="CancellationToken"/> for control</param>
-        public static void WaitTimer(string prompt, TimeSpan delay, SpinnersType spinnersType = SpinnersType.Ascii, bool showCountdown = false, Action<IPromptConfig> config = null, CancellationToken? cancellationToken = null)
+        public static void WaitTimer(string prompt, TimeSpan delay, SpinnersType spinnersType = SpinnersType.Ascii, bool showCountdown = false, Action<IPromptConfig> config = null, Style? spinnerStyle = null, Style? elapsedTimeStyle = null, CancellationToken? cancellationToken = null)
         {
             var cts = cancellationToken ?? CancellationToken.None;
             var opt = new WaitOptions<object>(_styleschema, _configcontrols, _consoledrive, false)
@@ -91,6 +93,14 @@ namespace PPlus
                 ShowCountdown = showCountdown,
                 OptPrompt = prompt
             };
+            if (spinnerStyle != null)
+            {
+                opt.SpinnerStyle = spinnerStyle.Value;
+            }
+            if (spinnerStyle != null)
+            {
+                opt.ElapsedTimeStyle = elapsedTimeStyle.Value;
+            }
             opt.HideAfterFinish(true);
             opt.EnabledAbortKey(false);
             config?.Invoke(opt);

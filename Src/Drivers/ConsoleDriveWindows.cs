@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using EastAsianWidthDotNet;
-using PPlus.Controls.Objects;
 using PPlus.Drivers.Ansi;
 using System;
 using System.IO;

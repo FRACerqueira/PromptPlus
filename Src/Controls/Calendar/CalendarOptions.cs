@@ -23,9 +23,6 @@ namespace PPlus.Controls
             ItemsNotes = new();
             Itemshighlight = new();
             DescriptionStyle = styleSchema.Description();
-            LineStyle = styleSchema.Prompt();
-            DisabledStyle = styleSchema.Disabled();
-            SelectedStyle = styleSchema.Selected();
             HighlightStyle = styleSchema.TaggedInfo();
             DayStyle = styleSchema.Prompt();
             MonthStyle = styleSchema.Prompt();
@@ -38,9 +35,6 @@ namespace PPlus.Controls
         public CultureInfo CurrentCulture { get; set; } = null;
         public PolicyInvalidDate PolicyInvalidDate { get; set; } = PolicyInvalidDate.NextDate;
         public Style DescriptionStyle { get; set; }
-        public Style LineStyle { get; set; }
-        public Style DisabledStyle { get; set; }
-        public Style SelectedStyle { get; set; }
         public Style HighlightStyle { get; set; }
         public Style DayStyle { get; set; }
         public Style MonthStyle { get; set; }

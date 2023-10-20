@@ -109,11 +109,14 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Styles");
 
 PromptPlus
     .Calendar("Date", "Select date")
-    .Styles(StyleCalendar.Line, Style.Default.Foreground(Color.Red))
+    .Config(cfg =>
+    {
+        cfg.ApplyStyle(StyleControls.Lines, Style.Default.Foreground(Color.Red));
+        cfg.ApplyStyle(StyleControls.Selected, Style.Default.Foreground(Color.Maroon));
+    })
     .Styles(StyleCalendar.Day, Style.Default.Foreground(Color.Yellow))
     .Styles(StyleCalendar.Highlight, Style.Default.Foreground(Color.Blue))
     .Styles(StyleCalendar.Month, Style.Default.Foreground(Color.Green))
-    .Styles(StyleCalendar.Selected, Style.Default.Foreground(Color.Maroon))
     .Styles(StyleCalendar.WeekDay, Style.Default.Foreground(Color.Aqua))
     .Styles(StyleCalendar.Year, Style.Default.Foreground(Color.Violet))
     .AddItems(CalendarScope.Highlight,

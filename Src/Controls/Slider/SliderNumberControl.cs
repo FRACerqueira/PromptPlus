@@ -25,6 +25,12 @@ namespace PPlus.Controls
 
         #region IControlSliderNumber
 
+        public IControlSliderNumber HideRange(bool value = true)
+        {
+            _options.HideRanger = value;
+            return this;
+        }
+
         public IControlSliderNumber BarType(SliderBarType value)
         {
             _options.BarType = value;
@@ -236,7 +242,10 @@ namespace PPlus.Controls
             if (_options.MoveKeyPress == LayoutSliderNumber.UpDown)
             {
                 hasprompt = true;
-                screenBuffer.AddBuffer($"[{_options.Minvalue},{_options.Maxvalue}] ", _options.OptStyleSchema.Suggestion(), true, false);
+                if (!_options.HideRanger)
+                {
+                    screenBuffer.AddBuffer($"[{_options.Minvalue},{_options.Maxvalue}] ", _options.OptStyleSchema.Ranger(), true, false);
+                }
                 screenBuffer.WriteAnswer(_options, _options.ValueToString(_currentValue));
                 screenBuffer.SaveCursor();
             }

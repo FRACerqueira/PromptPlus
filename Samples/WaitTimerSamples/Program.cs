@@ -26,6 +26,14 @@ namespace WaitTimerSamples
             PromptPlus.DoubleDash($"Control:WaitTimer - Countdown usage ");
             PromptPlus.WaitTimer($"wait time", TimeSpan.FromSeconds(2),showCountdown: true);
 
+            PromptPlus.DoubleDash($"Control:WaitTimer - Custom Color usage ");
+            PromptPlus.WaitTimer($"wait time", 
+                TimeSpan.FromSeconds(2), 
+                spinnerStyle: Style.Default.Foreground(Color.Red), 
+                elapsedTimeStyle: Style.Default.Foreground(Color.Green),  
+                showCountdown: true);
+
+
             PromptPlus.DoubleDash($"Control:WaitTimer - with no hide after");
             PromptPlus.WaitTimer($"wait time", TimeSpan.FromSeconds(3), SpinnersType.Ascii, true, (cfg) =>
             {

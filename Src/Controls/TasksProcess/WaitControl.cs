@@ -84,6 +84,22 @@ namespace PPlus.Controls
 
         #region IControlWait
 
+        public IControlWait<T> Styles(StyleWait styletype, Style value)
+        {
+            switch (styletype)
+            {
+                case StyleWait.Label:
+                    _options.LabelStyle = value;
+                    break;
+                case StyleWait.ElapsedTime:
+                    _options.ElapsedTimeStyle = value;
+                    break;
+                default:
+                    throw new PromptPlusException($"StyleWait: {styletype} Not Implemented");
+            }
+            return this;
+        }
+
         public IControlWait<T> Interaction<T1>(IEnumerable<T1> values, Action<IControlWait<T>, T1> action)
         {
             foreach (var item in values)
@@ -459,7 +475,9 @@ namespace PPlus.Controls
                             }
                         }
                         top = ConsolePlus.CursorTop;
-                        qtd = ConsolePlus.Write($"{symb} {desc}", _options.OptStyleSchema.Description(), false);
+                        qtd = ConsolePlus.Write($"{symb}", _options.OptStyleSchema.Lines(), false);
+                        qtd += ConsolePlus.Write($" ", _options.OptStyleSchema.Prompt(), false);
+                        qtd += ConsolePlus.Write($"{desc}", _options.LabelStyle, false);
                         if (!_options.ShowCountdown)
                         {
                             qtd += ConsolePlus.Write("               ", _options.OptStyleSchema.Prompt(), true);
@@ -599,15 +617,15 @@ namespace PPlus.Controls
                         ConsolePlus.Write("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", _options.OptStyleSchema.Prompt(), false);
                         if (_options.ShowElapsedTime)
                         {
-                            ConsolePlus.Write($" ({item.sw.Elapsed:hh\\:mm\\:ss\\:ff})", _options.OptStyleSchema.Description(), false);
+                            ConsolePlus.Write($" ({item.sw.Elapsed:hh\\:mm\\:ss\\:ff})", _options.ElapsedTimeStyle, false);
                         }
                         if (!item.sw.IsRunning)
                         {
-                            ConsolePlus.Write($" {_options.Symbol(SymbolType.Done)}", _options.OptStyleSchema.Description(), true);
+                            ConsolePlus.Write($" {_options.Symbol(SymbolType.Done)}", _options.ElapsedTimeStyle, true);
                         }
                         else
                         {
-                            ConsolePlus.Write($"  ", _options.OptStyleSchema.Description(), true);
+                            ConsolePlus.Write($"  ", _options.OptStyleSchema.Prompt(), true);
                         }
                     }
                 }
@@ -615,7 +633,7 @@ namespace PPlus.Controls
                 {
                     var countdown = _options.TimeDelay - elapsetm[0].sw.Elapsed;
                     ConsolePlus.Write("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", _options.OptStyleSchema.Prompt(), false);
-                    ConsolePlus.Write($"({countdown:hh\\:mm\\:ss\\:ff})", _options.OptStyleSchema.Description(), true);
+                    ConsolePlus.Write($"({countdown:hh\\:mm\\:ss\\:ff})", _options.ElapsedTimeStyle, true);
                 }
                 if (_promptlines < _promptlines+qtdlines)
                 {

@@ -25,13 +25,9 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 
 | Name | Value | Description |
 | --- | --: | --- |
-| Grid | 0 | Grid lines |
-| Title | 1 | Title content |
-| Header | 2 | Header content |
-| SelectedHeader | 3 | Selected Header content |
-| Content | 4 | Data content |
-| DisabledContent | 5 | Disabled content |
-| SelectedContent | 6 | Selected content |
+| Title | 0 | Title content |
+| Header | 1 | Header content |
+| Content | 2 | Data content |
 
 
 - - -

@@ -45,7 +45,6 @@ namespace SelectSamples
 
             //Ensure ValueResult Culture for all controls
             PromptPlus.Config.DefaultCulture = new CultureInfo("en-us");
-
             PromptPlus.DoubleDash("Control:Select - basic usage");
 
             var sel = PromptPlus.Select<string>("Select")

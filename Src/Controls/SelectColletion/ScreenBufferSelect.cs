@@ -68,7 +68,7 @@ namespace PPlus.Controls
             }
             else
             {
-                screenBuffer.AddBuffer($" {indentgroup}", Style.Default, true);
+                screenBuffer.AddBuffer($" {indentgroup}", options.OptStyleSchema.Lines(), true);
                 screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.Disabled(), false, false);
             }
         }
@@ -86,7 +86,7 @@ namespace PPlus.Controls
             else 
             {
                 screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)}", options.OptStyleSchema.Selected(), false);
-                screenBuffer.AddBuffer($"{indentgroup}", Style.Default, true);
+                screenBuffer.AddBuffer($"{indentgroup}", options.OptStyleSchema.Lines(), true);
                 screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.Selected(), false);
             }
         }
@@ -104,7 +104,7 @@ namespace PPlus.Controls
             }
             else
             {
-                screenBuffer.AddBuffer($" {indentgroup}", Style.Default, true);
+                screenBuffer.AddBuffer($" {indentgroup}", options.OptStyleSchema.Lines(), true);
                 screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.UnSelected(), false, false);
             }
         }

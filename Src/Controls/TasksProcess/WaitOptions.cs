@@ -22,6 +22,9 @@ namespace PPlus.Controls
             Steps = new();
             States = new();
             SpinnerStyle = styleSchema.Prompt();
+            LabelStyle = styleSchema.TaggedInfo();
+            ElapsedTimeStyle = styleSchema.TaggedInfo();
+
         }
         public T Context { get; set; } = default;
         public TimeSpan TimeDelay { get; set; }
@@ -35,5 +38,7 @@ namespace PPlus.Controls
         public Spinners Spinner { get; set; } = new Spinners(SpinnersType.Ascii, false);
         public int MaxDegreeProcess { get; set; } = Environment.ProcessorCount;
         public bool ShowElapsedTime { get; set; }
+        public Style LabelStyle { get; set; }
+        public Style ElapsedTimeStyle { get; set; }
     }
 }

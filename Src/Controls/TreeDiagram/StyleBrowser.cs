@@ -15,10 +15,6 @@ namespace PPlus.Controls
         /// </summary>
         CurrentFolder,
         /// <summary>
-        /// Lines Region
-        /// </summary>
-        Lines,
-        /// <summary>
         /// Unselected Size region/state
         /// </summary>
         UnselectedSize,

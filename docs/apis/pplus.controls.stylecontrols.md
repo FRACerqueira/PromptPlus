@@ -38,6 +38,8 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | Tooltips | 10 | Tooltips Region |
 | Slider | 11 | Slider Region |
 | Chart | 12 | Chart Region |
+| Ranger | 13 | Ranger Region |
+| Lines | 14 | Lines Region |
 
 
 - - -

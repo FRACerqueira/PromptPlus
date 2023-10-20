@@ -25,6 +25,7 @@ namespace PPlus.Controls
         public Color[] Gradient { get; set; } 
         public Func<double, Color> ChangeColor { get; set; }
         public CultureInfo CurrentCulture { get; set; } = null;
+        public bool HideRanger { get; set; }
         public double DefaultValue { get; set; }
         public int Witdth { get; set; } = _defaultSliderWitdth;
         public LayoutSliderNumber MoveKeyPress { get; set; } = LayoutSliderNumber.LeftRight;

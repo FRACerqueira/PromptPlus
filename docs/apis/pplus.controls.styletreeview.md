@@ -26,15 +26,14 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | Name | Value | Description |
 | --- | --: | --- |
 | CurrentNode | 0 | CurrentNode Region |
-| Lines | 1 | Lines Region |
-| UnselectedRoot | 2 | Unselected Root Region/State |
-| UnselectedExpand | 3 | Unselected Expand Region/State |
-| UnselectedParent | 4 | Unselected Parent Region/State |
-| UnselectedChild | 5 | Unselected Child Region/State |
-| SelectedExpand | 6 | Selected Expand Region/State |
-| SelectedRoot | 7 | Selected Root Region/State |
-| SelectedParent | 8 | Selected Parent Region/State |
-| SelectedChild | 9 | Selected Child Region/State |
+| UnselectedRoot | 1 | Unselected Root Region/State |
+| UnselectedExpand | 2 | Unselected Expand Region/State |
+| UnselectedParent | 3 | Unselected Parent Region/State |
+| UnselectedChild | 4 | Unselected Child Region/State |
+| SelectedExpand | 5 | Selected Expand Region/State |
+| SelectedRoot | 6 | Selected Root Region/State |
+| SelectedParent | 7 | Selected Parent Region/State |
+| SelectedChild | 8 | Selected Child Region/State |
 
 
 - - -

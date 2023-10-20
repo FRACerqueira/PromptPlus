@@ -81,7 +81,7 @@ namespace BrowserSamples
                 .Root(root, true)
                 .Styles(StyleBrowser.UnselectedFolder, Style.Default.Foreground(Color.Blue))
                 .Styles(StyleBrowser.SelectedFolder, Style.Default.Foreground(Color.Yellow))
-                .Styles(StyleBrowser.Lines, Style.Default.Foreground(Color.Red))
+                .Config(cfg => cfg.ApplyStyle(StyleControls.Lines, Style.Default.Foreground(Color.Red)))
                 .Run();
 
             PromptPlus.WriteLines(2);

@@ -209,6 +209,26 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
 
+### <a id="methods-styles"/>**Styles(StyleWait, Style)**
+
+Overwrite Styles Wait. [StyleWait](./pplus.controls.stylewait.md)
+
+```csharp
+IControlWait<T> Styles(StyleWait styletype, Style value)
+```
+
+#### Parameters
+
+`styletype` [StyleWait](./pplus.controls.stylewait.md)<br>
+Styles Wait
+
+`value` [Style](./pplus.style.md)<br>
+[Style](./pplus.style.md)
+
+#### Returns
+
+[IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
+
 ### <a id="methods-tasktitle"/>**TaskTitle(String)**
 
 Overwrite Task Title . Default task title comes from the embedded resource.

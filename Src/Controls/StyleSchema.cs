@@ -18,7 +18,7 @@ namespace PPlus.Controls
 
         internal StyleSchema()
         {
-            _Styles = StyleSchema.Init();
+            _Styles = Init();
         }
 
         private StyleSchema(Dictionary<StyleControls, Style> newtyles)
@@ -90,6 +90,12 @@ namespace PPlus.Controls
                     case StyleControls.Chart:
                         auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
                         break;
+                    case StyleControls.Ranger:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
+                        break;
+                    case StyleControls.Lines:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
                     default:
                         throw new PromptPlusException($"{item} Not Implemented");
                 }
@@ -154,6 +160,12 @@ namespace PPlus.Controls
                         break;
                     case StyleControls.Chart:
                         auxdic.Add(item, source.Chart());
+                        break;
+                    case StyleControls.Ranger:
+                        auxdic.Add(item, source.Ranger());
+                        break;
+                    case StyleControls.Lines:
+                        auxdic.Add(item, source.Lines());
                         break;
                     default:
                         throw new PromptPlusException($"{item} Not Implemented");

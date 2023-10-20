@@ -24,7 +24,6 @@ namespace PPlus.Controls
             CurrentFolderStyle = styleSchema.TaggedInfo().Overflow(Overflow.Crop);
             RootStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
             SelectedRootStyle = styleSchema.Selected().Overflow(Overflow.Crop);
-            LineStyle = styleSchema.Prompt().Overflow(Overflow.Crop);
             SizeStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
             ExpandStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
             FolderStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
@@ -51,7 +50,6 @@ namespace PPlus.Controls
         public Style CurrentFolderStyle { get; set; } 
         public Style RootStyle { get; set; }
         public Style SelectedRootStyle { get; set; }
-        public Style LineStyle { get; set; } 
         public Style SizeStyle { get; set; } 
         public Style ExpandStyle { get; set; }
         public Style FolderStyle { get; set; }

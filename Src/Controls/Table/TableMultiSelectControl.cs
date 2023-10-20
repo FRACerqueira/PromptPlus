@@ -1096,26 +1096,14 @@ namespace PPlus.Controls.Table
         {
             switch (styletype)
             {
-                case TableStyle.Grid:
-                    _options.GridStyle = value;
-                    break;
                 case TableStyle.Title:
                     _options.TitleStyle = value;
                     break;
                 case TableStyle.Header:
                     _options.HeaderStyle = value;
                     break;
-                case TableStyle.SelectedHeader:
-                    _options.SelectedHeaderStyle = value;
-                    break;
                 case TableStyle.Content:
                     _options.ContentStyle = value;
-                    break;
-                case TableStyle.DisabledContent:
-                    _options.DisabledContentStyle = value;
-                    break;
-                case TableStyle.SelectedContent:
-                    _options.SelectedContentStyle = value;
                     break;
                 default:
                     throw new PromptPlusException($"TableStyle: {styletype} Not Implemented");
@@ -1198,7 +1186,7 @@ namespace PPlus.Controls.Table
 
         private void BuildLineColumn(ScreenBuffer screenBuffer,char startln,char sepln, char endln, char contentln)
         {
-            var stl = _options.GridStyle;
+            var stl = _options.OptStyleSchema.Lines();
             if ( _options.Layout == TableLayout.HideGrid)
             {
                 stl = Style.Default;
@@ -1209,15 +1197,6 @@ namespace PPlus.Controls.Table
                 screenBuffer.AddBuffer($"{sepln}{new string(contentln, item.Width)}", stl);
             }
             screenBuffer.AddBuffer(endln, stl);
-        }
-
-        private object GetValueColumn(int column, ItemTableRow<T> item)
-        {
-            if (column < 0 || column > _options.Columns.Count)
-            {
-                return null;
-            }
-            return _options.Columns[column].Field.Invoke(item.Value);
         }
 
         private List<string[]> GetTextColumns(T value, out int lines)
@@ -1523,9 +1502,9 @@ namespace PPlus.Controls.Table
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
             }
-            screenBuffer.AddBuffer(sep, _options.GridStyle);
+            screenBuffer.AddBuffer(sep, _options.OptStyleSchema.Lines());
             screenBuffer.AddBuffer(tit, _options.TitleStyle);
-            screenBuffer.AddBuffer(sep, _options.GridStyle);
+            screenBuffer.AddBuffer(sep, _options.OptStyleSchema.Lines());
 
             screenBuffer.NewLine();
             switch (_options.Layout)
@@ -1734,7 +1713,7 @@ namespace PPlus.Controls.Table
             var col = -1;
             var sepstart = " ";
             var sepend = " ";
-            var stl = _options.GridStyle;
+            var stl = _options.OptStyleSchema.Lines();
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
@@ -1765,7 +1744,7 @@ namespace PPlus.Controls.Table
                 if (_options.IsColumnsNavigation && col == _currentcol)
                 {
                     var h = AlignmentText($"{_options.Symbol(SymbolType.Selector)} {item.Title.Trim()}", item.AlignTitle, item.Width);
-                    screenBuffer.AddBuffer(h, _options.SelectedHeaderStyle);
+                    screenBuffer.AddBuffer(h, _options.OptStyleSchema.Selected());
                 }
                 else
                 {
@@ -1830,7 +1809,7 @@ namespace PPlus.Controls.Table
                 var sep = " ";
                 var sepcol = " ";
                 var sepend = " ";
-                var stl = _options.GridStyle;
+                var stl = _options.OptStyleSchema.Lines();
                 switch (_options.Layout)
                 {
                     case TableLayout.HideGrid:
@@ -1933,7 +1912,7 @@ namespace PPlus.Controls.Table
                             {
                                 if (itemcol == _currentcol || itemcol == 0)
                                 {
-                                    screenBuffer.AddBuffer(col, _options.SelectedContentStyle, true);
+                                    screenBuffer.AddBuffer(col, _options.OptStyleSchema.Selected(), true);
                                 }
                                 else
                                 {
@@ -1942,7 +1921,7 @@ namespace PPlus.Controls.Table
                             }
                             else
                             {
-                                screenBuffer.AddBuffer(col, _options.SelectedContentStyle, true);
+                                screenBuffer.AddBuffer(col, _options.OptStyleSchema.Selected(), true);
                             }
                         }
                         else
@@ -1950,7 +1929,7 @@ namespace PPlus.Controls.Table
                             var stld = _options.ContentStyle;
                             if (isdisabled)
                             {
-                                stld = _options.DisabledContentStyle;
+                                stld = _options.OptStyleSchema.Disabled();
                             }
                             screenBuffer.AddBuffer(col, stld, true);
                         }

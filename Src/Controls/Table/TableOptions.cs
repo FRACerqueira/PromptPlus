@@ -20,13 +20,9 @@ namespace PPlus.Controls
         {
             TimeoutOverwriteDefault = config.HistoryTimeout;
             PageSize = config.PageSize;
-            GridStyle = styleSchema.Prompt();
             HeaderStyle = styleSchema.Prompt();
-            SelectedHeaderStyle = styleSchema.Selected();
             TitleStyle = styleSchema.Prompt();
             ContentStyle = styleSchema.Prompt();
-            DisabledContentStyle = styleSchema.Disabled();
-            SelectedContentStyle = styleSchema.Selected();
             SelectAllPress = config.SelectAllPress;
             InvertSelectedPress = config.InvertSelectedPress;
         }
@@ -61,19 +57,11 @@ namespace PPlus.Controls
 
         public TableLayout Layout { get; set; } = TableLayout.SingleGridFull;
 
-        public Style GridStyle { get; set; }
-
         public Style TitleStyle { get; set; }
 
         public Style HeaderStyle { get; set; }
 
-        public Style SelectedHeaderStyle { get; set; }
-
         public Style ContentStyle { get; set; }
-
-        public Style DisabledContentStyle { get; set; }
-
-        public Style SelectedContentStyle { get; set; }
 
         public string Title { get; set; } = string.Empty;
 

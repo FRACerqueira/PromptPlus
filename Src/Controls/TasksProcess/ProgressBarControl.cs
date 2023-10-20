@@ -439,7 +439,7 @@ namespace PPlus.Controls
                 if (_options.ShowRanger)
                 {
                     var top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write($"{ValueToString(_options.Minvalue)} ", _options.OptStyleSchema.Prompt());
+                    qtd = ConsolePlus.Write($"{ValueToString(_options.Minvalue)} ", _options.OptStyleSchema.Ranger());
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -611,7 +611,7 @@ namespace PPlus.Controls
                 if (_options.ShowRanger)
                 {
                     var top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write($" {ValueToString(_options.Maxvalue)}", _options.OptStyleSchema.Prompt());
+                    qtd = ConsolePlus.Write($" {ValueToString(_options.Maxvalue)}", _options.OptStyleSchema.Ranger());
                     if (_options.ShowPercent)
                     {
                         qtd += ConsolePlus.WriteLine($" ({ValueToString(value)}%)", _options.OptStyleSchema.Answer());

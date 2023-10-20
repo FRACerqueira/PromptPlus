@@ -61,6 +61,14 @@ namespace PPlus.Controls
         /// <summary>
         /// Chart Region
         /// </summary>
-        Chart
+        Chart,
+        /// <summary>
+        /// Ranger Region
+        /// </summary>
+        Ranger,
+        /// <summary>
+        /// Lines Region
+        /// </summary>
+        Lines,
     }
 }

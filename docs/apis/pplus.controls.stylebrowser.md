@@ -26,17 +26,16 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | Name | Value | Description |
 | --- | --: | --- |
 | CurrentFolder | 0 | CurrentFolder Region |
-| Lines | 1 | Lines Region |
-| UnselectedSize | 2 | Unselected Size region/state |
-| UnselectedExpand | 3 | Unselected Expand region/state |
-| UnselectedRoot | 4 | Unselected Root region/state |
-| UnselectedFolder | 5 | Unselected Folder region/state |
-| UnselectedFile | 6 | Unselected File region/state |
-| SelectedSize | 7 | Selected Size region/state |
-| SelectedExpand | 8 | Selected Expand region/state |
-| SelectedRoot | 9 | Selected Root region/state |
-| SelectedFile | 10 | Selected File region/state |
-| SelectedFolder | 11 | Selected Folder region/state |
+| UnselectedSize | 1 | Unselected Size region/state |
+| UnselectedExpand | 2 | Unselected Expand region/state |
+| UnselectedRoot | 3 | Unselected Root region/state |
+| UnselectedFolder | 4 | Unselected Folder region/state |
+| UnselectedFile | 5 | Unselected File region/state |
+| SelectedSize | 6 | Selected Size region/state |
+| SelectedExpand | 7 | Selected Expand region/state |
+| SelectedRoot | 8 | Selected Root region/state |
+| SelectedFile | 9 | Selected File region/state |
+| SelectedFolder | 10 | Selected Folder region/state |
 
 
 - - -

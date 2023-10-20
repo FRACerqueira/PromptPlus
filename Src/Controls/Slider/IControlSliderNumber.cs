@@ -77,6 +77,13 @@ namespace PPlus.Controls
         IControlSliderNumber Range(double minvalue, double maxvalue);
 
         /// <summary>
+        /// Hide min./max elements in slider. Default is Show
+        /// </summary>
+        /// <param name="value">True for hide,false for show</param>
+        /// <returns><see cref="IControlSliderNumber"/></returns>
+        IControlSliderNumber HideRange(bool value = true);
+
+        /// <summary>
         /// Define the short step to change. Default value is 1/100 of range
         /// </summary>
         /// <param name="value">short step to change</param>
