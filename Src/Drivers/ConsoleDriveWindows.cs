@@ -329,7 +329,7 @@ namespace PPlus.Drivers
                     }
                     if (part != null)
                     {
-                        pos += part.GetLengthWidthEastAsian();
+                        pos += part.Length;
                         switch (overflow)
                         {
                             case Overflow.None:

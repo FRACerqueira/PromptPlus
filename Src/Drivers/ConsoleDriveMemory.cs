@@ -303,10 +303,10 @@ namespace PPlus.Drivers
                     var itemaux = item;
                     do
                     {
-                        max = _profile.BufferWidth - CursorLeft - itemaux.GetLengthWidthEastAsian();
+                        max = _profile.BufferWidth - CursorLeft - itemaux.Length;
                         if (max >= 0)
                         {
-                            SetCursorPosition(CursorLeft + itemaux.GetLengthWidthEastAsian(), CursorTop);
+                            SetCursorPosition(CursorLeft + itemaux.Length, CursorTop);
                             itemaux = string.Empty;
                         }
                         else
@@ -316,7 +316,7 @@ namespace PPlus.Drivers
                             itemaux = itemaux[..(max * -1)];
                         }
                     }
-                    while (itemaux.GetLengthWidthEastAsian() != 0);
+                    while (itemaux.Length != 0);
                     if (pos < lines.Length)
                     {
                         SetCursorPosition(CursorLeft, CursorTop + 1);
@@ -350,7 +350,7 @@ namespace PPlus.Drivers
                 {
                     if (part != null)
                     {
-                        pos += part.GetLengthWidthEastAsian();
+                        pos += part.Length;
                         switch (overflow)
                         {
                             case Overflow.None:
