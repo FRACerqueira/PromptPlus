@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using EastAsianWidthDotNet;
 using PPlus.Controls.Objects;
 using PPlus.Drivers.Ansi;
 using System;
@@ -329,7 +330,7 @@ namespace PPlus.Drivers
                     }
                     if (part != null)
                     {
-                        pos += part.Length;
+                        pos += part.GetWidth();
                         switch (overflow)
                         {
                             case Overflow.None:

@@ -55,6 +55,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="EastAsianWidthDotNet" Version="1.0.1" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 		<PackageReference Include="System.IO" Version="4.3.0" />
 		<PackageReference Include="System.Text.Json" Version="7.0.3" />

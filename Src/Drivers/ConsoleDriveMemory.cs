@@ -11,6 +11,7 @@ using System.Threading;
 using System;
 using System.Collections.Generic;
 using PPlus.Controls.Objects;
+using EastAsianWidthDotNet;
 
 namespace PPlus.Drivers
 {
@@ -303,10 +304,10 @@ namespace PPlus.Drivers
                     var itemaux = item;
                     do
                     {
-                        max = _profile.BufferWidth - CursorLeft - itemaux.Length;
+                        max = _profile.BufferWidth - CursorLeft - itemaux.GetWidth();
                         if (max >= 0)
                         {
-                            SetCursorPosition(CursorLeft + itemaux.Length, CursorTop);
+                            SetCursorPosition(CursorLeft + itemaux.GetWidth(), CursorTop);
                             itemaux = string.Empty;
                         }
                         else
@@ -316,7 +317,7 @@ namespace PPlus.Drivers
                             itemaux = itemaux[..(max * -1)];
                         }
                     }
-                    while (itemaux.Length != 0);
+                    while (itemaux.GetWidth() != 0);
                     if (pos < lines.Length)
                     {
                         SetCursorPosition(CursorLeft, CursorTop + 1);
@@ -350,7 +351,7 @@ namespace PPlus.Drivers
                 {
                     if (part != null)
                     {
-                        pos += part.Length;
+                        pos += part.GetWidth();
                         switch (overflow)
                         {
                             case Overflow.None:

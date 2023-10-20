@@ -107,6 +107,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlternateScreenSamples", "S
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Licenses", "Licenses", "{ADBB4294-4DC0-43FC-A57A-4C2F9BDB68A8}"
 	ProjectSection(SolutionItems) = preProject
+		Licenses\LICENSE-EastAsianWidthDotNet.md = Licenses\LICENSE-EastAsianWidthDotNet.md
 		Licenses\LICENSE-FIGlet.md = Licenses\LICENSE-FIGlet.md
 		Licenses\LICENSE-SpectreConsole.md = Licenses\LICENSE-SpectreConsole.md
 		Licenses\LICENSE-xmldoc2md.md = Licenses\LICENSE-xmldoc2md.md
