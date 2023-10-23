@@ -144,24 +144,6 @@ Overwrite a [HotKey](./pplus.controls.hotkey.md) to toggle view. Default value i
 
 [IControlInput](./pplus.controls.icontrolinput.md)
 
-### <a id="methods-filtertype"/>**FilterType(FilterMode)**
-
-Filter strategy for filter items in History colletion
- <br>Default value is FilterMode.StartsWith<br>When  is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero
-
-```csharp
-IControlInput FilterType(FilterMode value)
-```
-
-#### Parameters
-
-`value` [FilterMode](./pplus.controls.filtermode.md)<br>
-Filter Mode
-
-#### Returns
-
-[IControlInput](./pplus.controls.icontrolinput.md)
-
 ### <a id="methods-historyenabled"/>**HistoryEnabled(String)**
 
 Enabled saved history inputs.
@@ -318,6 +300,26 @@ name of file to save history
 
 `timeout` [Nullable&lt;TimeSpan&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The timeout for valid items saved. Default value is 365 days
+
+#### Returns
+
+[IControlInput](./pplus.controls.icontrolinput.md)
+
+### <a id="methods-styles"/>**Styles(InputStyles, Style)**
+
+Overwrite Styles
+
+```csharp
+IControlInput Styles(InputStyles styletype, Style value)
+```
+
+#### Parameters
+
+`styletype` [InputStyles](./pplus.controls.inputstyles.md)<br>
+[InputStyles](./pplus.controls.inputstyles.md) of content
+
+`value` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md)
 
 #### Returns
 

@@ -90,6 +90,12 @@ namespace PPlus.Controls
 
         #region IControlList
 
+        public IControlList Styles(ListStyles content, Style value)
+        {
+            _options.StyleControl(content,value);
+            return this;
+        }
+
         public IControlList ChangeDescription(Func<string, string> value)
         {
             _options.ChangeDescription = value;

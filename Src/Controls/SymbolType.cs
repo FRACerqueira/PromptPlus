@@ -8,7 +8,7 @@ namespace PPlus.Controls
     /// <summary>
     /// Represents The Symbol and visual elements for all controls
     /// </summary>
-    public enum SymbolType
+    internal enum SymbolType
     {
         /// <summary>
         /// Mask Symbol

@@ -31,7 +31,7 @@
 
 ## What's new in V4.2.0
 
-- Split feature Control Table:
+- Split feature:
     - PromptPlus.TableSelect\<T> to Select item in table : Select row, column and data in a grid/table 
         - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
     - PromptPlus.Table\<T> to write table in console : Show data in a grid/table 
@@ -70,11 +70,9 @@
 - Improvement : 
     - Optimize Render of SliderNumber (less lines)
 - Improvement : 
-    -  Added global StyleSchema Ranger/Lines for custom color 
-- Improvement : 
-    -  Added command Styles for custom color in the WaitProcess control 
-- Improvement : 
-    -  Added parameters spinnerStyle and elapsedTimeStyle for custom color in the WaitTimer control 
+    - Added Styles command for custom colors on all controls
+        - Removed the ApplyStyle command from the Config interface (now use the Styles command)
+        - Added ToStyle() extension for Color Class (less code typed)
 - Improvement : 
     - Added command HideRange to not show range (Min/Max values) in the SliderNumber control    
 - Improvement : 
@@ -177,7 +175,7 @@ dotnet add package PromptPlus [--prerelease]
 ## Examples
 [**Top**](#table-of-contents)
 
-The folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples) contains more **30** samples!.
+The folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples) contains more **40** samples!.
 
 ```
 dotnet run --project [name of sample]

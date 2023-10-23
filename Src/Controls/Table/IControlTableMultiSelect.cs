@@ -145,12 +145,12 @@ namespace PPlus.Controls
         IControlTableMultiSelect<T> ChangeDescription(Func<T, int, int, string> value);
 
         /// <summary>
-        /// Styles for Table elements
+        /// Overwrite Styles
         /// </summary>
-        /// <param name="styletype"><see cref="TableStyle"/> of content</param>
+        /// <param name="content"><see cref="TableSelectStyle"/> of content</param>
         /// <param name="value">The <see cref="Style"/></param>
         /// <returns><see cref="IControlTableMultiSelect{T}"/></returns>
-        IControlTableMultiSelect<T> Styles(TableStyle styletype, Style value);
+        IControlTableMultiSelect<T> Styles(TableSelectStyle content, Style value);
 
         /// <summary>
         /// Set Title Table

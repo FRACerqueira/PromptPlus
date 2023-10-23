@@ -376,7 +376,7 @@ namespace PPlus.Controls
         /// <param name="value">Text symbol when not unicode support</param>
         /// <param name="unicode">Text symbol when has unicode support</param>
         /// <returns>(string value, string unicode) value</returns>
-        public (string value, string unicode) Symbols(SymbolType schema, string? value = null, string? unicode = null)
+        internal (string value, string unicode) Symbols(SymbolType schema, string? value = null, string? unicode = null)
         {
             if (value == null && unicode == null)
             {

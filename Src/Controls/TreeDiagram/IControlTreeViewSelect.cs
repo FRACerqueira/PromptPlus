@@ -32,12 +32,12 @@ namespace PPlus.Controls
         IControlTreeViewSelect<T> Config(Action<IPromptConfig> context);
 
         /// <summary>
-        /// Overwrite Styles treeview. <see cref="StyleTreeView"/>
+        /// Overwrite Style
         /// </summary>
-        /// <param name="styletype">Styles treeview</param>
+        /// <param name="content">content Styles. <see cref="TreeViewStyles"/></param>
         /// <param name="value"><see cref="Style"/></param>
         /// <returns><see cref="IControlTreeViewSelect{T}"/></returns>
-        IControlTreeViewSelect<T> Styles(StyleTreeView styletype, Style value);
+        IControlTreeViewSelect<T> Styles(TreeViewStyles content, Style value);
 
         /// <summary>
         /// Show lines of level. Default is true

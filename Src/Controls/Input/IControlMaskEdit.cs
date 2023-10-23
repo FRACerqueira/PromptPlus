@@ -16,34 +16,6 @@ namespace PPlus.Controls
     public interface IControlMaskEdit : IPromptControls<ResultMasked>
     {
         /// <summary>
-        /// Overwrite <see cref="Style"/> to region tip type input.
-        /// <br>Default Foreground : 'ConsoleColor.Yellow'</br>
-        /// <br>Default Background : same Console Background when set</br>
-        /// </summary>
-        /// <param name="value">Style</param>
-        /// <returns><see cref="IControlMaskEdit"/></returns>
-        IControlMaskEdit TypeTipStyle(Style value);
-
-
-        /// <summary>
-        /// Overwrite <see cref="Style"/> to region neggative input.
-        /// <br>Default Foreground : 'StyleControls.Answer'</br>
-        /// <br>Default Background : Same Console Background when set</br>
-        /// </summary>
-        /// <param name="value">Style</param>
-        /// <returns><see cref="IControlMaskEdit"/></returns>
-        IControlMaskEdit NegativeStyle(Style value);
-
-        /// <summary>
-        /// Overwrite <see cref="Style"/> to region positive input.
-        /// <br>Default Foreground : 'StyleControls.Answer'</br>
-        /// <br>Default Background : Same Console Background when set</br>
-        /// </summary>
-        /// <param name="value">Style</param>
-        /// <returns><see cref="IControlMaskEdit"/></returns>
-        IControlMaskEdit PositiveStyle(Style value);
-
-        /// <summary>
         /// Defines mask input. Rules for Generic type:
         /// <br>9 - Only a numeric character</br> 
         /// <br>L - Only a letter</br> 
@@ -244,12 +216,11 @@ namespace PPlus.Controls
         IControlMaskEdit HistoryPageSize(int value);
 
         /// <summary>
-        /// Filter strategy for filter items in History colletion
-        /// <br>Default value is FilterMode.StartsWith</br>
-        /// <br>When <see cref="FilterMode"/> is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero</br>
+        /// Overwrite Styles
         /// </summary>
-        /// <param name="value">Filter Mode</param>
+        /// <param name="content">The <see cref="MaskEditStyles"/> content</param>
+        /// <param name="value">The <see cref="Style"/> to apply</param>
         /// <returns><see cref="IControlMaskEdit"/></returns>
-        IControlMaskEdit FilterType(FilterMode value);
+        IControlMaskEdit Styles(MaskEditStyles content, Style value);
     }
 }

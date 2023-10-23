@@ -16,9 +16,9 @@ namespace PPlus.Controls
             {
                 if (input.StartsWith(filter.ToString(), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    screenBuffer.WriteAnswer(options, input.Substring(0, filter.Length));
+                    screenBuffer.WriteFilterMatch(options, input.Substring(0, filter.Length));
                     screenBuffer.SaveCursor();
-                    screenBuffer.WriteSuggestion(options, input.Substring(filter.Length));
+                    screenBuffer.WriteFilterUnMatch(options, input.Substring(filter.Length));
                 }
                 else
                 {
@@ -35,7 +35,7 @@ namespace PPlus.Controls
                 foreach (var itempart in parts)
                 {
                     pos++;
-                    screenBuffer.WriteSuggestion(options, itempart);
+                    screenBuffer.WriteFilterMatch(options, itempart);
                     if (first)
                     {
                         first = false;
@@ -43,7 +43,7 @@ namespace PPlus.Controls
                     }
                     if (pos < parts.Length)
                     {
-                        screenBuffer.WriteAnswer(options, filter.ToString());
+                        screenBuffer.WriteFilterUnMatch(options, filter.ToString());
                     }
                 }
             }
@@ -63,7 +63,7 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(tp))
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer(tp, options.OptStyleSchema.Tooltips(),swm);
+                    screenBuffer.AddBuffer(tp, options.StyleContent(StyleControls.Tooltips),swm);
                 }
             }
         }
@@ -115,32 +115,18 @@ namespace PPlus.Controls
             }
         }
 
-        public static void WriteLineSelectorTreeViewMultiSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data, bool isparent, bool newline)
+        public static void WriteLineSelectorTreeViewMultiSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data, bool newline)
         {
             if (newline)
             {
                 screenBuffer.NewLine();
             }
-            screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
+            screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.StyleContent(StyleControls.Selected), true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.OptStyleSchema.Lines(), true,false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.SelectedExpandStyle, true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.SelectedExpandStyle, true, false);
-            if (data.IsRoot)
-            {
-                screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.SelectedRootStyle, true,false);
-            }
-            else
-            {
-                if (isparent)
-                {
-                    screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.SelectedParentStyle, true, false);
-                }
-                else
-                {
-                    screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.SelectedChildStyle, true, false);
-                }
-            }
+            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.StyleContent(StyleControls.Lines), true,false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.StyleContent(StyleControls.Selected), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.StyleContent(StyleControls.Selected), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.StyleContent(StyleControls.Selected).Overflow(Overflow.Crop), true, false);
         }
 
         public static void WriteLineDisabledSelectorTreeViewMultiSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data, bool newline)
@@ -149,12 +135,12 @@ namespace PPlus.Controls
             {
                 screenBuffer.NewLine();
             }
-            screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.OptStyleSchema.Selected(), true);
+            screenBuffer.AddBuffer(options.Symbol(SymbolType.Selector), options.StyleContent(StyleControls.Selected), true);
             screenBuffer.AddBuffer(' ', Style.Default, true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.OptStyleSchema.Lines(), true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.OptStyleSchema.Disabled(), true,false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.OptStyleSchema.Disabled(), true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.OptStyleSchema.Disabled(), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.StyleContent(StyleControls.Lines), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.StyleContent(StyleControls.Disabled), true,false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.StyleContent(StyleControls.Disabled), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.StyleContent(StyleControls.Disabled).Overflow(Overflow.Crop), true, false);
         }
 
         public static void WriteLineNotSelectorTreeViewMultiSelect<T>(this ScreenBuffer screenBuffer, TreeViewOptions<T> options, ItemTreeViewFlatNode<T> data, bool isparent, bool newline)
@@ -165,22 +151,22 @@ namespace PPlus.Controls
             }
             screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer(' ', Style.Default, true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.OptStyleSchema.Lines(), true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.ExpandStyle, true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.ExpandStyle, true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.StyleContent(StyleControls.Lines), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.StyleContent(StyleControls.UnSelected), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.StyleContent(StyleControls.TreeViewExpand), true, false);
             if (data.IsRoot)
             {
-                screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.RootStyle, true, false);
+                screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.StyleContent(StyleControls.TreeViewRoot).Overflow(Overflow.Crop), true, false);
             }
             else
             {
                 if (isparent)
                 {
-                    screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.ParentStyle, true, false);
+                    screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.StyleContent(StyleControls.TreeViewParent).Overflow(Overflow.Crop), true, false);
                 }
                 else
                 {
-                    screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.ChildStyle, true, false);
+                    screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.StyleContent(StyleControls.TreeViewChild).Overflow(Overflow.Crop), true, false);
                 }
             }
         }
@@ -193,10 +179,10 @@ namespace PPlus.Controls
             }
             screenBuffer.AddBuffer(' ', Style.Default, true);
             screenBuffer.AddBuffer(' ', Style.Default, true,false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.OptStyleSchema.Lines(), true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.OptStyleSchema.Disabled(), true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.OptStyleSchema.Disabled(), true, false);
-            screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.OptStyleSchema.Disabled(), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextLines, options.StyleContent(StyleControls.Lines), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextSelected, options.StyleContent(StyleControls.Disabled), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextExpand, options.StyleContent(StyleControls.Disabled), true, false);
+            screenBuffer.AddBuffer(data.MessagesNodes.TextItem, options.StyleContent(StyleControls.Disabled).Overflow(Overflow.Crop), true, false);
         }
     }
 }

@@ -12,7 +12,7 @@ namespace PPlus.Controls.Objects
             if (!string.IsNullOrEmpty(message))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(message, options.OptStyleSchema.Pagination(), true);
+                screenBuffer.AddBuffer(message, options.StyleContent(StyleControls.Pagination), true);
             }
         }
 
@@ -25,12 +25,12 @@ namespace PPlus.Controls.Objects
             var prompt = options.OptPrompt ?? string.Empty;
             if (!string.IsNullOrEmpty(prompt))
             {
-                screenBuffer.AddBuffer(prompt, options.OptStyleSchema.Prompt());
-                screenBuffer.AddBuffer(": ", options.OptStyleSchema.Prompt());
+                screenBuffer.AddBuffer(prompt, options.StyleContent(StyleControls.Prompt),false,false);
+                screenBuffer.AddBuffer(": ", options.StyleContent(StyleControls.Prompt));
             }
             if (!string.IsNullOrEmpty(input))
             {
-                screenBuffer.AddBuffer(input, options.OptStyleSchema.Answer(), true);
+                screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.Answer), true);
             }
         }
 
@@ -38,7 +38,7 @@ namespace PPlus.Controls.Objects
         {
             if (!string.IsNullOrEmpty(input))
             {
-                screenBuffer.AddBuffer(input, options.OptStyleSchema.Answer(), true);
+                screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.Answer), true);
             }
         }
 
@@ -46,7 +46,23 @@ namespace PPlus.Controls.Objects
         {
             if (!string.IsNullOrEmpty(input))
             {
-                screenBuffer.AddBuffer(input, options.OptStyleSchema.Suggestion(), true);
+                screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.Suggestion), true);
+            }
+        }
+
+        public static void WriteFilterMatch(this ScreenBuffer screenBuffer, BaseOptions options, string input)
+        {
+            if (!string.IsNullOrEmpty(input))
+            {
+                screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.FilterMatch).Overflow(Overflow.Crop), true);
+            }
+        }
+
+        public static void WriteFilterUnMatch(this ScreenBuffer screenBuffer, BaseOptions options, string input)
+        {
+            if (!string.IsNullOrEmpty(input))
+            {
+                screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.FilterUnMatch).Overflow(Overflow.Crop), true);
             }
         }
 
@@ -54,19 +70,22 @@ namespace PPlus.Controls.Objects
         {
             if (!string.IsNullOrEmpty(input))
             {
-                screenBuffer.AddBuffer(input, options.OptStyleSchema.TaggedInfo(), true);
+                screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.TaggedInfo), true);
             }
         }
         public static void WriteDone(this ScreenBuffer screenBuffer, BaseOptions options, string input)
         {
             if (!string.IsNullOrEmpty(options.OptPrompt))
             {
-                screenBuffer.AddBuffer(options.OptPrompt, options.OptStyleSchema.Prompt());
-                screenBuffer.AddBuffer(": ", options.OptStyleSchema.Prompt(), true);
+                screenBuffer.AddBuffer(options.OptPrompt, options.StyleContent(StyleControls.Prompt));
+                if (!string.IsNullOrEmpty(input))
+                {
+                    screenBuffer.AddBuffer(": ", options.StyleContent(StyleControls.Prompt), true);
+                }
             }
             if (!string.IsNullOrEmpty(input))
             {
-                screenBuffer.AddBuffer(input, options.OptStyleSchema.Answer(), true);
+                screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.Answer).Overflow(Overflow.Crop), true);
             }
         }
 
@@ -87,8 +106,8 @@ namespace PPlus.Controls.Objects
             if (!string.IsNullOrEmpty(error))
             {
                screenBuffer.NewLine();
-               screenBuffer.AddBuffer(error, options.OptStyleSchema.Error(),true);
-               return true;
+                screenBuffer.AddBuffer(error, options.StyleContent(StyleControls.Error), true);
+                return true;
             }
             return false;
         }

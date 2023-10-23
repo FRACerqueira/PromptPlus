@@ -25,7 +25,6 @@ namespace PPlus.Controls
             HistoryTimeout = config.HistoryTimeout;
         }
 
-        public FilterMode FilterType { get; set; } = FilterMode.StartsWith;
         public string? OverwriteDefaultFrom { get; set; }
         public TimeSpan TimeoutOverwriteDefault { get; set; }
         public bool EnabledViewSecret { get; set; }

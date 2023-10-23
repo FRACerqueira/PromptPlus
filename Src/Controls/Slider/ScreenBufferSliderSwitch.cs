@@ -23,7 +23,7 @@ namespace PPlus.Controls
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(result, options.StyleContent(StyleControls.Description));
                 return true;
             }
             return false;
@@ -37,7 +37,7 @@ namespace PPlus.Controls
             }
             if (!string.IsNullOrEmpty(options.OffValue))
             {
-                screenBuffer.AddBuffer($"{options.OffValue} ", options.OptStyleSchema.UnSelected());
+                screenBuffer.AddBuffer($"{options.OffValue} ", options.StyleContent(StyleControls.OnOff));
             }
             if (input)
             {
@@ -51,7 +51,7 @@ namespace PPlus.Controls
             }
             if (!string.IsNullOrEmpty(options.OnValue))
             {
-                screenBuffer.AddBuffer($" {options.OnValue}", options.OptStyleSchema.UnSelected(), false, false);
+                screenBuffer.AddBuffer($" {options.OnValue}", options.StyleContent(StyleControls.OnOff), false, false);
             }
         }
 
@@ -69,7 +69,7 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(tp))
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer(tp, options.OptStyleSchema.Tooltips(),swm);
+                    screenBuffer.AddBuffer(tp, options.StyleContent(StyleControls.Tooltips),swm);
                 }
             }
         }

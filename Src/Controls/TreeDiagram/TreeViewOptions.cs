@@ -19,15 +19,6 @@ namespace PPlus.Controls
 
         internal TreeViewOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
-            CurrentNodeStyle = styleSchema.TaggedInfo().Overflow(Overflow.Crop);
-            ExpandStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
-            RootStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
-            ParentStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
-            ChildStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
-            SelectedRootStyle = styleSchema.Selected().Overflow(Overflow.Crop);
-            SelectedParentStyle = styleSchema.Selected().Overflow(Overflow.Crop);
-            SelectedChildStyle = styleSchema.Selected().Overflow(Overflow.Crop);
-            SelectedExpandStyle = styleSchema.Selected().Overflow(Overflow.Crop);
             PageSize = config.PageSize;
             HotKeyFullPathNodePress = config.FullPathPress;
             HotKeyToggleExpandPress = config.ToggleExpandPress;
@@ -42,15 +33,6 @@ namespace PPlus.Controls
         public Func<T, bool>? ExpressionDisabled { get; set; }
         public bool SelectAll { get; set; }
         public Func<T, bool> SelectAllExpression { get; set; }
-        public Style CurrentNodeStyle { get; set; }
-        public Style ExpandStyle { get; set; }
-        public Style RootStyle { get; set; }
-        public Style ParentStyle { get; set; }
-        public Style ChildStyle { get; set; }
-        public Style SelectedRootStyle { get; set; }
-        public Style SelectedParentStyle { get; set; }
-        public Style SelectedChildStyle { get; set; }
-        public Style SelectedExpandStyle { get; set; }
         public bool ShowLines { get; set; } = true;
         public bool ShowExpand { get; set; } = true;
         public int PageSize { get; set; }

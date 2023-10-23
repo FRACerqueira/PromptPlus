@@ -426,18 +426,18 @@ true Show lines, otherwise 'no'
 
 [IControlTreeViewMultiSelect&lt;T&gt;](./pplus.controls.icontroltreeviewmultiselect-1.md)
 
-### <a id="methods-styles"/>**Styles(StyleTreeView, Style)**
+### <a id="methods-styles"/>**Styles(TreeViewStyles, Style)**
 
-Overwrite Styles treeview. [StyleTreeView](./pplus.controls.styletreeview.md)
+Overwrite Style
 
 ```csharp
-IControlTreeViewMultiSelect<T> Styles(StyleTreeView styletype, Style value)
+IControlTreeViewMultiSelect<T> Styles(TreeViewStyles content, Style value)
 ```
 
 #### Parameters
 
-`styletype` [StyleTreeView](./pplus.controls.styletreeview.md)<br>
-Styles treeview
+`content` [TreeViewStyles](./pplus.controls.treeviewstyles.md)<br>
+content Styles. [TreeViewStyles](./pplus.controls.treeviewstyles.md)
 
 `value` [Style](./pplus.style.md)<br>
 [Style](./pplus.style.md)

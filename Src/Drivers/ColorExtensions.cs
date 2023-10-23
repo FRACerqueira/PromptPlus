@@ -28,5 +28,16 @@ namespace PPlus
         {
             return (float)(0.2126 * color.R + 0.7152 * color.G + 0.0722 * color.B);
         }
+
+        /// <summary>
+        /// Convert Color to Style with default background color
+        /// </summary>
+        /// <param name="color">The color</param>
+        /// <param name="overflow">The <see cref="Overflow"/></param>
+        /// <returns><see cref="Style"/></returns>
+        public static Style ToStyle(this Color color, Overflow overflow = Overflow.None)
+        {
+            return new Style(color,overflow);
+        }
     }
 }

@@ -6,53 +6,61 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents The Style region/state of browser
+    /// Represents the Styles MaskEdit Control
     /// </summary>
-    public enum StyleBrowser
+    public enum MaskEditStyles
     {
         /// <summary>
-        /// CurrentFolder Region
+        /// Prompt Region
         /// </summary>
-        CurrentFolder,
+        Prompt,
         /// <summary>
-        /// Unselected Size region/state
+        /// Answer Region
         /// </summary>
-        UnselectedSize,
+        Answer,
         /// <summary>
-        /// Unselected Expand region/state
+        /// Description Region
         /// </summary>
-        UnselectedExpand,
+        Description,
         /// <summary>
-        /// Unselected Root region/state
+        /// Suggestion Region
         /// </summary>
-        UnselectedRoot,
+        Suggestion,
         /// <summary>
-        /// Unselected Folder region/state
+        /// Selected state
         /// </summary>
-        UnselectedFolder,
+        Selected,
         /// <summary>
-        /// Unselected File region/state
+        /// UnSelected state
         /// </summary>
-        UnselectedFile,
+        UnSelected,
         /// <summary>
-        /// Selected Size region/state
+        /// Error Region
         /// </summary>
-        SelectedSize,
+        Error,
         /// <summary>
-        /// Selected Expand region/state
+        /// Pagination Region
         /// </summary>
-        SelectedExpand,
+        Pagination,
         /// <summary>
-        /// Selected Root region/state
+        /// TaggedInfo Region
         /// </summary>
-        SelectedRoot,
+        TaggedInfo,
         /// <summary>
-        /// Selected File region/state
+        /// Tooltips Region
         /// </summary>
-        SelectedFile,
+        Tooltips,
         /// <summary>
-        /// Selected Folder region/state
+        /// Mask TypeTip Region
         /// </summary>
-        SelectedFolder
+        MaskTypeTip,
+        /// <summary>
+        /// Mask Negative Region
+        /// </summary>
+        MaskNegative,
+        /// <summary>
+        /// Mask Positive Region
+        /// </summary>
+        MaskPositive
     }
 }

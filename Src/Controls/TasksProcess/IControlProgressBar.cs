@@ -67,11 +67,10 @@ namespace PPlus.Controls
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
-        /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
-        IControlProgressBar<T> Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
+        IControlProgressBar<T> Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
         /// <summary>
         /// Define Width to ProgressBar. Default value is 80.The value must be greater than or equal to 10.
@@ -115,5 +114,12 @@ namespace PPlus.Controls
         /// <returns><see cref="IControlProgressBar{T}"/></returns>
         IControlProgressBar<T> UpdateHandler(Action<UpdateProgressBar<T>, CancellationToken> value);
 
+        /// <summary>
+        /// Overwrite Styles
+        /// </summary>
+        /// <param name="content"><see cref="ProgressBarStyles"/> of content</param>
+        /// <param name="value">The <see cref="Style"/></param>
+        /// <returns><see cref="IControlProgressBar{T}"/></returns>
+        IControlProgressBar<T> Styles(ProgressBarStyles content, Style value);
     }
 }

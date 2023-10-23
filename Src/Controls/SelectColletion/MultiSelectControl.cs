@@ -193,6 +193,12 @@ namespace PPlus.Controls
 
         #region IControlMultiSelect
 
+        public IControlMultiSelect<T> Styles(MultiSelectStyles content, Style value)
+        {
+            _options.StyleControl(content, value);
+            return this;
+        }
+
         public IControlMultiSelect<T> Interaction<T1>(IEnumerable<T1> values, Action<IControlMultiSelect<T>, T1> action)
         {
             foreach (var item in values)
@@ -425,7 +431,7 @@ namespace PPlus.Controls
 
         public IControlMultiSelect<T> OverflowAnswer(Overflow value)
         {
-            _options.OptStyleSchema.ApplyStyle(StyleControls.Answer, _options.OptStyleSchema.Answer().Overflow(value));
+            _options.StyleControl(StyleControls.Answer, _options.StyleContent(StyleControls.Answer).Overflow(value));
             return this;
         }
 
@@ -577,13 +583,13 @@ namespace PPlus.Controls
             else
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.OptStyleSchema.TaggedInfo(), true);
+                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.StyleContent(StyleControls.TaggedInfo), true);
             }
             screenBuffer.WriteLineValidate(ValidateError, _options);
             if (_options.ShowGroupTip && !string.IsNullOrEmpty(_localpaginator.SelectedItem?.Group ?? string.Empty))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(_localpaginator.SelectedItem.Group, _options.OptStyleSchema.Tooltips());
+                screenBuffer.AddBuffer(_localpaginator.SelectedItem.Group, _options.StyleContent(StyleControls.GroupTip));
             }
             screenBuffer.WriteLineTooltipsMultiSelect(_options);
         }

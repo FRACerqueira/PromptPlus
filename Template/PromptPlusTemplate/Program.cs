@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PPlus;
+using PPlus.Controls;
 
 namespace PromptPlusTemplate
 {
@@ -83,6 +84,11 @@ namespace PromptPlusTemplate
 
             //Note: Show pagination only if exists. Default value : false 
             PromptPlus.Config.ShowOnlyExistingPagination = true;
+
+
+            //Note: Set default color for Prompt content . Default value : White 
+            PromptPlus.StyleSchema.ApplyStyle(StyleControls.Prompt,Color.White.ToStyle());
+
         }
     }
 }

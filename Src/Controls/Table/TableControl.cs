@@ -223,7 +223,6 @@ namespace PPlus.Controls.Table
 
         #region IControlTable
 
-
         public IControlTable<T> AutoFill(params ushort?[] minmaxwidth)
         {
             //AutoFill cannot be used with AddColumn and/or AutoFit
@@ -443,22 +442,9 @@ namespace PPlus.Controls.Table
             return this;
         }
 
-        public IControlTable<T> Styles(TableStyle styletype, Style value)
+        public IControlTable<T> Styles(TableStyles content, Style value)
         {
-            switch (styletype)
-            {
-                case TableStyle.Title:
-                    _options.TitleStyle = value;
-                    break;
-                case TableStyle.Header:
-                    _options.HeaderStyle = value;
-                    break;
-                case TableStyle.Content:
-                    _options.ContentStyle = value;
-                    break;
-                default:
-                    throw new PromptPlusException($"TableStyle: {styletype} Not Implemented");
-            }
+            _options.StyleControl(content, value);
             return this;
         }
 
@@ -521,7 +507,7 @@ namespace PPlus.Controls.Table
 
         private void BuildLineColumn(ScreenBuffer screenBuffer,char startln,char sepln, char endln, char contentln)
         {
-            var stl = _options.OptStyleSchema.Lines();
+            var stl = _options.StyleContent(StyleControls.Lines);
             if ( _options.Layout == TableLayout.HideGrid)
             {
                 stl = Style.Default;
@@ -772,7 +758,7 @@ namespace PPlus.Controls.Table
                 }
                 screenBuffer.NewLine();
                 tit = TableControl<T>.AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth);
-                screenBuffer.AddBuffer(tit, _options.TitleStyle);
+                screenBuffer.AddBuffer(tit, _options.StyleContent(StyleControls.TableTitle));
                 tit = string.Empty;
                 startnewline = true;
             }
@@ -809,9 +795,9 @@ namespace PPlus.Controls.Table
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
             }
-            screenBuffer.AddBuffer(sep, _options.OptStyleSchema.Lines());
-            screenBuffer.AddBuffer(tit, _options.TitleStyle);
-            screenBuffer.AddBuffer(sep, _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer(sep, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(tit, _options.StyleContent(StyleControls.TableTitle));
+            screenBuffer.AddBuffer(sep, _options.StyleContent(StyleControls.Lines));
 
             screenBuffer.NewLine();
             switch (_options.Layout)
@@ -1020,7 +1006,7 @@ namespace PPlus.Controls.Table
             var col = -1;
             var sepstart = " ";
             var sepend = " ";
-            var stl = _options.OptStyleSchema.Lines();
+            var stl = _options.StyleContent(StyleControls.Lines);
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
@@ -1049,7 +1035,7 @@ namespace PPlus.Controls.Table
                 col++;
                 screenBuffer.AddBuffer(sepstart, stl);
                 var h = TableControl<T>.AlignmentText(item.Title.Trim(), item.AlignTitle, item.Width);
-                screenBuffer.AddBuffer(h, _options.HeaderStyle);
+                screenBuffer.AddBuffer(h, _options.StyleContent(StyleControls.TableHeader));
             }
             screenBuffer.AddBuffer(sepend, stl);
             screenBuffer.NewLine();
@@ -1091,15 +1077,13 @@ namespace PPlus.Controls.Table
             {
                 pos++;
                 screenBuffer.NewLine();
-                var isseleted = false;
-                var isdisabled = false;
 
                 var cols = GetTextColumns(item.Value, out var lines);
 
                 var sep = " ";
                 var sepcol = " ";
                 var sepend = " ";
-                var stl = _options.OptStyleSchema.Lines();
+                var stl = _options.StyleContent(StyleControls.Lines);
                 switch (_options.Layout)
                 {
                     case TableLayout.HideGrid:
@@ -1139,6 +1123,8 @@ namespace PPlus.Controls.Table
                         break;
                 }
 
+                var stld = _options.StyleContent(StyleControls.TableContent);
+
                 for (int i = 0; i < lines; i++)
                 {
                     for (int itemcol = 0; itemcol < cols.Count; itemcol++)
@@ -1160,33 +1146,7 @@ namespace PPlus.Controls.Table
                         {
                             col = new string(' ', _options.Columns[itemcol].Width);
                         }
-                        if (isseleted)
-                        {
-                            if (_options.IsColumnsNavigation)
-                            {
-                                if (itemcol == 0)
-                                {
-                                    screenBuffer.AddBuffer(col, _options.OptStyleSchema.Selected(), true);
-                                }
-                                else
-                                {
-                                    screenBuffer.AddBuffer(col, _options.ContentStyle, true);
-                                }
-                            }
-                            else
-                            {
-                                screenBuffer.AddBuffer(col, _options.OptStyleSchema.Selected(), true);
-                            }
-                        }
-                        else
-                        {
-                            var stld = _options.ContentStyle;
-                            if (isdisabled)
-                            {
-                                stld = _options.OptStyleSchema.Disabled();
-                            }
-                            screenBuffer.AddBuffer(col, stld, true);
-                        }
+                        screenBuffer.AddBuffer(col, stld, true);
                     }
                     screenBuffer.AddBuffer(sepend, stl);
                     if (lines > 1 && i != lines - 1)

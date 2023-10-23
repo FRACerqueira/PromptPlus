@@ -20,18 +20,6 @@ namespace PPlus.Controls
         internal BrowserOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             FixedSelected = new();
-            SpinnerStyle = styleSchema.Prompt().Overflow(Overflow.Crop);
-            CurrentFolderStyle = styleSchema.TaggedInfo().Overflow(Overflow.Crop);
-            RootStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
-            SelectedRootStyle = styleSchema.Selected().Overflow(Overflow.Crop);
-            SizeStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
-            ExpandStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
-            FolderStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
-            FileStyle = styleSchema.UnSelected().Overflow(Overflow.Crop);
-            SelectedFolderStyle = styleSchema.Selected().Overflow(Overflow.Crop);
-            SelectedFileStyle = styleSchema.Selected().Overflow(Overflow.Crop);
-            SelectedSizeStyle = styleSchema.Selected().Overflow(Overflow.Crop);
-            SelectedExpandStyle = styleSchema.Selected().Overflow(Overflow.Crop);
             PageSize = config.PageSize;
             HotKeyTooltipFullPath = config.FullPathPress;
             HotKeyToggleExpandPress = config.ToggleExpandPress;
@@ -46,18 +34,6 @@ namespace PPlus.Controls
         public Func<ItemBrowser, bool> ExpressionSelected { get; set; }
         public Func<ItemBrowser, bool> ExpressionDisabled { get; set; }
         public Spinners? Spinner { get; set; }
-        public Style SpinnerStyle { get; set; }
-        public Style CurrentFolderStyle { get; set; } 
-        public Style RootStyle { get; set; }
-        public Style SelectedRootStyle { get; set; }
-        public Style SizeStyle { get; set; } 
-        public Style ExpandStyle { get; set; }
-        public Style FolderStyle { get; set; }
-        public Style FileStyle { get; set; } 
-        public Style SelectedFolderStyle { get; set; }
-        public Style SelectedFileStyle { get; set; } 
-        public Style SelectedSizeStyle { get; set; }
-        public Style SelectedExpandStyle { get; set; }
         public bool ExpandAll { get; set; }
         public bool SelectAll { get; set; }
         public Func<ItemBrowser, bool> SelectAllExpression { get; set; }

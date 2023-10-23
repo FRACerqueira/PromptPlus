@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:StyleTreeView 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:MaskEditStyles 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,32 +8,36 @@
 
 [**Back to List Api**](./apis.md)
 
-# StyleTreeView
+# MaskEditStyles
 
 Namespace: PPlus.Controls
 
-Represents The region/state of TreeView
+Represents the Styles MaskEdit Control
 
 ```csharp
-public enum StyleTreeView
+public enum MaskEditStyles
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [StyleTreeView](./pplus.controls.styletreeview.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [MaskEditStyles](./pplus.controls.maskeditstyles.md)<br>
 Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icomparable), [IFormattable](https://docs.microsoft.com/en-us/dotnet/api/system.iformattable), [IConvertible](https://docs.microsoft.com/en-us/dotnet/api/system.iconvertible)
 
 ## Fields
 
 | Name | Value | Description |
 | --- | --: | --- |
-| CurrentNode | 0 | CurrentNode Region |
-| UnselectedRoot | 1 | Unselected Root Region/State |
-| UnselectedExpand | 2 | Unselected Expand Region/State |
-| UnselectedParent | 3 | Unselected Parent Region/State |
-| UnselectedChild | 4 | Unselected Child Region/State |
-| SelectedExpand | 5 | Selected Expand Region/State |
-| SelectedRoot | 6 | Selected Root Region/State |
-| SelectedParent | 7 | Selected Parent Region/State |
-| SelectedChild | 8 | Selected Child Region/State |
+| Prompt | 0 | Prompt Region |
+| Answer | 1 | Answer Region |
+| Description | 2 | Description Region |
+| Suggestion | 3 | Suggestion Region |
+| Selected | 4 | Selected state |
+| UnSelected | 5 | UnSelected state |
+| Error | 6 | Error Region |
+| Pagination | 7 | Pagination Region |
+| TaggedInfo | 8 | TaggedInfo Region |
+| Tooltips | 9 | Tooltips Region |
+| MaskTypeTip | 10 | Mask TypeTip Region |
+| MaskNegative | 11 | Mask Negative Region |
+| MaskPositive | 12 | Mask Positive Region |
 
 
 - - -

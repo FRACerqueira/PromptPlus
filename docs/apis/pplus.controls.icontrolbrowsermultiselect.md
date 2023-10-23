@@ -479,22 +479,19 @@ true Show size, otherwise 'no'
 
 [IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
-### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlBrowserMultiSelect Spinner(SpinnersType spinnersType, Nullable<Style> spinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
+IControlBrowserMultiSelect Spinner(SpinnersType spinnersType, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters
 
 `spinnersType` [SpinnersType](./pplus.controls.spinnerstype.md)<br>
 The [SpinnersType](./pplus.controls.spinnerstype.md)
-
-`spinnerStyle` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Style of spinner. [Style](./pplus.style.md)
 
 `speedAnimation` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored
@@ -506,18 +503,18 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlBrowserMultiSelect](./pplus.controls.icontrolbrowsermultiselect.md)
 
-### <a id="methods-styles"/>**Styles(StyleBrowser, Style)**
+### <a id="methods-styles"/>**Styles(BrowserStyles, Style)**
 
-Overwrite Styles Browser. [StyleBrowser](./pplus.controls.stylebrowser.md)
+Overwrite Styles
 
 ```csharp
-IControlBrowserMultiSelect Styles(StyleBrowser styletype, Style value)
+IControlBrowserMultiSelect Styles(BrowserStyles content, Style value)
 ```
 
 #### Parameters
 
-`styletype` [StyleBrowser](./pplus.controls.stylebrowser.md)<br>
-Styles Browser
+`content` [BrowserStyles](./pplus.controls.browserstyles.md)<br>
+content Browser. [BrowserStyles](./pplus.controls.browserstyles.md)
 
 `value` [Style](./pplus.style.md)<br>
 [Style](./pplus.style.md)

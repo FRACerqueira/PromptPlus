@@ -67,12 +67,12 @@ namespace PPlus.Controls
         IControlTable<T> Layout(TableLayout value);
 
         /// <summary>
-        /// Styles for Table elements
+        /// Overwrite Styles
         /// </summary>
-        /// <param name="styletype"><see cref="TableStyle"/> of content</param>
+        /// <param name="content"><see cref="TableStyles"/> of content</param>
         /// <param name="value">The <see cref="Style"/></param>
         /// <returns><see cref="IControlTable{T}"/></returns>
-        IControlTable<T> Styles(TableStyle styletype, Style value);
+        IControlTable<T> Styles(TableStyles content, Style value);
 
         /// <summary>
         /// Set Title Table

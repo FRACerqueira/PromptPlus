@@ -55,13 +55,13 @@ namespace PPlus.Controls
         /// </summary>
         Tooltips,
         /// <summary>
+        /// Spinner Region
+        /// </summary>
+        Spinner,
+        /// <summary>
         /// Slider Region
         /// </summary>
         Slider,
-        /// <summary>
-        /// Chart Region
-        /// </summary>
-        Chart,
         /// <summary>
         /// Ranger Region
         /// </summary>
@@ -70,5 +70,121 @@ namespace PPlus.Controls
         /// Lines Region
         /// </summary>
         Lines,
+        /// <summary>
+        /// Filter Match Region
+        /// </summary>
+        FilterMatch,
+        /// <summary>
+        /// Filter UnMatch Region
+        /// </summary>
+        FilterUnMatch,
+        /// <summary>
+        /// Mask TypeTip Region
+        /// </summary>
+        MaskTypeTip,
+        /// <summary>
+        /// Mask Negative Region
+        /// </summary>
+        MaskNegative,
+        /// <summary>
+        /// Mask Positive Region
+        /// </summary>
+        MaskPositive,
+        /// <summary>
+        /// Calendar Highlight content
+        /// </summary>
+        CalendarHighlight,
+        /// <summary>
+        /// Calendar Day content
+        /// </summary>
+        CalendarDay,
+        /// <summary>
+        /// Calendar Month content
+        /// </summary>
+        CalendarMonth,
+        /// <summary>
+        /// Calendar Year content
+        /// </summary>
+        CalendarYear,
+        /// <summary>
+        /// Calendar Week Day content
+        /// </summary>
+        CalendarWeekDay,
+        /// <summary>
+        /// Chart Title content
+        /// </summary>
+        ChartTitle,
+        /// <summary>
+        /// Chart Label content
+        /// </summary>
+        ChartLabel,
+        /// <summary>
+        /// Chart Label content
+        /// </summary>
+        ChartValue,
+        /// <summary>
+        /// Chart Perent content
+        /// </summary>
+        ChartPercent,
+        /// <summary>
+        ///Chart Order content
+        /// </summary>
+        ChartOrder,
+        /// <summary>
+        ///Group tip content
+        /// </summary>
+        GroupTip,
+        /// <summary>
+        ///On/Off content
+        /// </summary>
+        OnOff,
+        /// <summary>
+        /// Table Title content
+        /// </summary>
+        TableTitle,
+        /// <summary>
+        /// Table Header content
+        /// </summary>
+        TableHeader,
+        /// <summary>
+        /// Table Data content
+        /// </summary>
+        TableContent,
+        /// <summary>
+        /// Task Title Region
+        /// </summary>
+        TaskTitle,
+        /// <summary>
+        /// Task ElapsedTime Region
+        /// </summary>
+        TaskElapsedTime,
+        /// <summary>
+        /// Browser Size region/state
+        /// </summary>
+        BrowserSize,
+        /// <summary>
+        /// Browser File region/state
+        /// </summary>
+        BrowserFile,
+        /// <summary>
+        /// Browser Folder region/state
+        /// </summary>
+        BrowserFolder,
+        /// <summary>
+        /// TreeView Expand region/state
+        /// </summary>
+        TreeViewExpand,
+        /// <summary>
+        /// TreeView Root region/state
+        /// </summary>
+        TreeViewRoot,
+        /// <summary>
+        /// TreeView Parent region/state
+        /// </summary>
+        TreeViewParent,
+        /// <summary>
+        /// TreeView Child region/state
+        /// </summary>
+        TreeViewChild
     }
 }

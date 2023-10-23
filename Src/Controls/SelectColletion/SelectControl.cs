@@ -31,6 +31,12 @@ namespace PPlus.Controls
 
         #region IControlSelect
 
+        public IControlSelect<T> Styles(SelectStyles content, Style value)
+        {
+            _options.StyleControl(content, value);
+            return this;
+        }
+
         public IControlSelect<T> Separator(SeparatorLine separatorLine = SeparatorLine.SingleLine, char? value = null)
         {
             if (_options.OrderBy != null)
@@ -520,7 +526,7 @@ namespace PPlus.Controls
             if (_options.ShowGroupTip && !string.IsNullOrEmpty(_localpaginator.SelectedItem?.Group ?? string.Empty))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(_localpaginator.SelectedItem.Group, _options.OptStyleSchema.Tooltips());
+                screenBuffer.AddBuffer(_localpaginator.SelectedItem.Group, _options.StyleContent(StyleControls.GroupTip));
             }
             screenBuffer.WriteLineTooltipsSelect(_options);
         }

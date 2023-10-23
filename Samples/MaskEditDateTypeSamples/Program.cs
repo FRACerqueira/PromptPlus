@@ -46,7 +46,7 @@ namespace MaskEditDateTypeSamples
                 .Mask(MaskedType.DateOnly)
                 .AcceptEmptyValue()
                 .ShowTipInputType(FormatWeek.Long)
-                .TypeTipStyle(Style.Default.Foreground(Color.IndianRed))
+                .Styles(MaskEditStyles.MaskTypeTip, Style.Default.Foreground(Color.Blue))
                 .Run();
 
             PromptPlus.DoubleDash($"Control:MaskEdit DateOnly - with overwrite culture:pt-br.");

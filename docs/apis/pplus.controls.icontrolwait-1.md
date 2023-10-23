@@ -182,22 +182,19 @@ show Elapsed Time
 
 [IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
 
-### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlWait<T> Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
+IControlWait<T> Spinner(SpinnersType spinnersType, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters
 
 `spinnersType` [SpinnersType](./pplus.controls.spinnerstype.md)<br>
 The [SpinnersType](./pplus.controls.spinnerstype.md)
-
-`SpinnerStyle` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Style of spinner. [Style](./pplus.style.md)
 
 `speedAnimation` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored
@@ -209,18 +206,18 @@ IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherw
 
 [IControlWait&lt;T&gt;](./pplus.controls.icontrolwait-1.md)
 
-### <a id="methods-styles"/>**Styles(StyleWait, Style)**
+### <a id="methods-styles"/>**Styles(WaitStyles, Style)**
 
-Overwrite Styles Wait. [StyleWait](./pplus.controls.stylewait.md)
+Overwrite Styles
 
 ```csharp
-IControlWait<T> Styles(StyleWait styletype, Style value)
+IControlWait<T> Styles(WaitStyles content, Style value)
 ```
 
 #### Parameters
 
-`styletype` [StyleWait](./pplus.controls.stylewait.md)<br>
-Styles Wait
+`content` [WaitStyles](./pplus.controls.waitstyles.md)<br>
+[WaitStyles](./pplus.controls.waitstyles.md) of content
 
 `value` [Style](./pplus.style.md)<br>
 [Style](./pplus.style.md)

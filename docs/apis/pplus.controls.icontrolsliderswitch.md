@@ -163,6 +163,26 @@ The timeout for valid items saved. Default value is 365 days
 
 [IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
 
+### <a id="methods-styles"/>**Styles(SliderSwitchStyles, Style)**
+
+Overwrite Styles
+
+```csharp
+IControlSliderSwitch Styles(SliderSwitchStyles styletype, Style value)
+```
+
+#### Parameters
+
+`styletype` [SliderSwitchStyles](./pplus.controls.sliderswitchstyles.md)<br>
+[SliderSwitchStyles](./pplus.controls.sliderswitchstyles.md) of content
+
+`value` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md)
+
+#### Returns
+
+[IControlSliderSwitch](./pplus.controls.icontrolsliderswitch.md)
+
 ### <a id="methods-width"/>**Width(Int32)**
 
 Define Width to Widgets. Default value is 6.The value must be greater than or equal to 6.

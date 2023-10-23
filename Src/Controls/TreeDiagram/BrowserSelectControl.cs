@@ -248,7 +248,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlBrowserSelect Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
+        public IControlBrowserSelect Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
         {
             if (spinnersType == SpinnersType.Custom && customspinner.Any())
             {
@@ -262,58 +262,14 @@ namespace PPlus.Controls
             {
                 _options.Spinner = new Spinners(spinnersType, ConsolePlus.IsUnicodeSupported);
             }
-            if (spinnerStyle.HasValue)
-            {
-                _options.SpinnerStyle = spinnerStyle.Value;
-            }
             return this;
         }
 
-        public IControlBrowserSelect Styles(StyleBrowser styletype, Style value)
+        public IControlBrowserSelect Styles(BrowserStyles content, Style value)
         {
-            value = value.Overflow(Overflow.Crop);
-            switch (styletype)
-            {
-                case StyleBrowser.CurrentFolder:
-                    _options.CurrentFolderStyle = value;
-                    break;
-                case StyleBrowser.UnselectedRoot:
-                    _options.RootStyle = value;
-                    break;
-                case StyleBrowser.SelectedRoot:
-                    _options.SelectedRootStyle = value;
-                    break;
-                case StyleBrowser.UnselectedSize:
-                    _options.SizeStyle = value;
-                    break;
-                case StyleBrowser.UnselectedExpand:
-                    _options.ExpandStyle = value;
-                    break;
-                case StyleBrowser.UnselectedFolder:
-                    _options.FolderStyle = value;
-                    break;
-                case StyleBrowser.UnselectedFile:
-                    _options.FileStyle = value;
-                    break;
-                case StyleBrowser.SelectedFolder:
-                    _options.SelectedFolderStyle = value;
-                    break;
-                case StyleBrowser.SelectedFile:
-                    _options.SelectedFileStyle = value;
-                    break;
-                case StyleBrowser.SelectedSize:
-                    _options.SelectedSizeStyle = value;
-                    break;
-                case StyleBrowser.SelectedExpand:
-                    _options.SelectedExpandStyle = value;
-                    break;
-                default:
-                    throw new PromptPlusException($"StyleBrowser: {styletype} Not Implemented");
-            }
+            _options.StyleControl(content, value);
             return this;
-
         }
-
 
         #endregion
 
@@ -354,7 +310,7 @@ namespace PPlus.Controls
                 var qtd = 0;
                 if (!string.IsNullOrEmpty(_options.OptPrompt) && !_options.OptMinimalRender)
                 {
-                    qtd = ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), true);
+                    qtd = ConsolePlus.Write($"{_options.OptPrompt}: ", _options.StyleContent(StyleControls.Prompt), true);
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -365,7 +321,7 @@ namespace PPlus.Controls
                 if (!_options.OptMinimalRender)
                 {
                     top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write($"... ", _options.OptStyleSchema.Answer(), false);
+                    qtd = ConsolePlus.Write($"... ", _options.StyleContent(StyleControls.Answer), false);
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -390,7 +346,7 @@ namespace PPlus.Controls
                         _cusorSpinner = (_cusorSpinner.CursorLeft, _cusorSpinner.CursorTop - dif);
                     }
                     top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write(_options.OptDescription, _options.OptStyleSchema.Description());
+                    qtd = ConsolePlus.Write(_options.OptDescription, _options.StyleContent(StyleControls.Description));
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -410,7 +366,7 @@ namespace PPlus.Controls
                 _loadFolderFinish = true;
                 _taskspinner.Wait(CancellationToken.None);
                 ConsolePlus.SetCursorPosition(CursorLeft, CursorTop);
-                ConsolePlus.Write("", _options.OptStyleSchema.Prompt(), true);
+                ConsolePlus.Write("", _options.StyleContent(StyleControls.Prompt), true);
                 ConsolePlus.CursorVisible = oldcur;
                 FinishResult = _localpaginator.SelectedItem.MessagesNodes.TextItem;
             }
@@ -456,7 +412,7 @@ namespace PPlus.Controls
                     screenBuffer.NewLine();
                 }
                 hasprompt = true;
-                screenBuffer.AddBuffer(_options.OptDescription, _options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(_options.OptDescription, _options.StyleContent(StyleControls.Description));
                 //try save cursor
                 screenBuffer.SaveCursor();
             }
@@ -471,11 +427,11 @@ namespace PPlus.Controls
                     }
                     if (_options.ShowCurrentFullPath)
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {showItem.Value.FullPath}", _options.CurrentFolderStyle, true);
+                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {showItem.Value.FullPath}", _options.StyleContent(StyleControls.TaggedInfo).Overflow(Overflow.Crop), true);
                     }
                     else
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentFolder}: {showItem.Value.CurrentFolder}", _options.CurrentFolderStyle, true);
+                        screenBuffer.AddBuffer($"{Messages.CurrentFolder}: {showItem.Value.CurrentFolder}", _options.StyleContent(StyleControls.TaggedInfo).Overflow(Overflow.Crop), true);
                     }
                     hasprompt = true;
                     //try save cursor
@@ -1035,7 +991,7 @@ namespace PPlus.Controls
                     if (_options.Spinner != null)
                     {
                         var spn = _options.Spinner.NextFrame(cancellationToken);
-                        ConsolePlus.Write($"{spn}", _options.SpinnerStyle.Overflow(Overflow.Ellipsis), true);
+                        ConsolePlus.Write($"{spn}", _options.StyleContent(StyleControls.Spinner).Overflow(Overflow.Crop), true);
                     }
                     ConsolePlus.SetCursorPosition(CursorLeft, CursorTop);
                 }

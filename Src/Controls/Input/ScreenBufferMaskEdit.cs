@@ -13,12 +13,12 @@ namespace PPlus.Controls
     {
         public static void WriteNegativeAnswer(this ScreenBuffer screenBuffer, MaskEditOptions options, string input)
         {
-            screenBuffer.AddBuffer(input, options.NegativeStyle, true);
+            screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.MaskNegative), true);
         }
 
         public static void WritePositiveAnswer(this ScreenBuffer screenBuffer, MaskEditOptions options, string input)
         {
-            screenBuffer.AddBuffer(input, options.PositiveStyle, true);
+            screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.MaskPositive), true);
         }
 
         public static void WriteLineTooltipsMaskEdit(this ScreenBuffer screenBuffer, MaskEditOptions options, bool isInAutoCompleteMode)
@@ -35,7 +35,7 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(tp))
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer(tp, options.OptStyleSchema.Tooltips(),smk);
+                    screenBuffer.AddBuffer(tp, options.StyleContent(StyleControls.Tooltips),smk);
                 }
             }
         }
@@ -54,7 +54,7 @@ namespace PPlus.Controls
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(result, options.StyleContent(StyleControls.Description));
             }
         }
 
@@ -64,7 +64,7 @@ namespace PPlus.Controls
             if (!string.IsNullOrEmpty(extradesc))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"Tip: {extradesc}", options.TypeTipStyle, true);
+                screenBuffer.AddBuffer($"Tip: {extradesc}", options.StyleContent(StyleControls.MaskTypeTip), true);
             }
         }
 

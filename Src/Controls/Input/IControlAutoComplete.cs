@@ -30,11 +30,10 @@ namespace PPlus.Controls
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
-        /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
-        IControlAutoComplete Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
+        IControlAutoComplete Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
         /// <summary>
         /// Number minimum of chars to accept autocomplete
@@ -142,5 +141,13 @@ namespace PPlus.Controls
         /// <param name="context">action to apply changes. <see cref="IPromptConfig"/></param>
         /// <returns><see cref="IControlAutoComplete"/></returns>
         IControlAutoComplete Config(Action<IPromptConfig> context);
+
+        /// <summary>
+        /// Overwrite Styles
+        /// </summary>
+        /// <param name="styletype"><see cref="AutoCompleteStyles"/> of content</param>
+        /// <param name="value">The <see cref="Style"/></param>
+        /// <returns><see cref="IControlAutoComplete"/></returns>
+        IControlAutoComplete Styles(AutoCompleteStyles styletype, Style value);
     }
 }

@@ -35,7 +35,7 @@ namespace PPlus
                 OptPrompt = prompt,
                 OptDescription = description,
             };
-            opt.ApplyStyle(StyleControls.Answer, opt.OptStyleSchema.Answer().Overflow(Overflow.Ellipsis));
+            opt.ApplyStyle(StyleControls.Answer, opt.StyleContent(StyleControls.Answer).Overflow(Overflow.Crop));
             config?.Invoke(opt);
             return new ListControl(_consoledrive, opt);
         }
@@ -52,7 +52,7 @@ namespace PPlus
             {
                 OptPrompt = prompt
             };
-            opt.ApplyStyle(StyleControls.Answer, opt.OptStyleSchema.Answer().Overflow(Overflow.Ellipsis));
+            opt.ApplyStyle(StyleControls.Answer, opt.StyleContent(StyleControls.Answer).Overflow(Overflow.Crop));
             config?.Invoke(opt);
             return new ListControl(_consoledrive, opt);
         }

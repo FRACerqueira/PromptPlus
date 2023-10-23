@@ -298,6 +298,26 @@ Maximum number of items
 
 [IControlList](./pplus.controls.icontrollist.md)
 
+### <a id="methods-styles"/>**Styles(ListStyles, Style)**
+
+Overwrite Styles
+
+```csharp
+IControlList Styles(ListStyles content, Style value)
+```
+
+#### Parameters
+
+`content` [ListStyles](./pplus.controls.liststyles.md)<br>
+The [ListStyles](./pplus.controls.liststyles.md) content
+
+`value` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md) to apply
+
+#### Returns
+
+[IControlList](./pplus.controls.icontrollist.md)
+
 ### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SuggestionInput, SuggestionOutput&gt;)**
 
 Add Suggestion Handler feature

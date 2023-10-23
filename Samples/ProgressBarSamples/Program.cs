@@ -42,6 +42,7 @@ namespace ProgressBarSamples
 
             var result = PromptPlus.ProgressBar(ProgressBarType.Fill, "ProgressBar", new object(), "My Description")
                 .UpdateHandler(MyPrgBarHandler)
+                .Styles(ProgressBarStyles.Ranger,Style.Default.Foreground(Color.Red))
                 .Run();
 
             if (!result.IsAborted)

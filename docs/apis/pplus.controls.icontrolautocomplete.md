@@ -270,13 +270,13 @@ Number of Max.items
 
 [IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
 
-### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlAutoComplete Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
+IControlAutoComplete Spinner(SpinnersType spinnersType, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters
@@ -284,14 +284,31 @@ IControlAutoComplete Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerS
 `spinnersType` [SpinnersType](./pplus.controls.spinnerstype.md)<br>
 The [SpinnersType](./pplus.controls.spinnerstype.md)
 
-`SpinnerStyle` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Style of spinner. [Style](./pplus.style.md)
-
 `speedAnimation` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored
 
 `customspinner` [IEnumerable&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored
+
+#### Returns
+
+[IControlAutoComplete](./pplus.controls.icontrolautocomplete.md)
+
+### <a id="methods-styles"/>**Styles(AutoCompleteStyles, Style)**
+
+Overwrite Styles
+
+```csharp
+IControlAutoComplete Styles(AutoCompleteStyles styletype, Style value)
+```
+
+#### Parameters
+
+`styletype` [AutoCompleteStyles](./pplus.controls.autocompletestyles.md)<br>
+[AutoCompleteStyles](./pplus.controls.autocompletestyles.md) of content
+
+`value` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md)
 
 #### Returns
 

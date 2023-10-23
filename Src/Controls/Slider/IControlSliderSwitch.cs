@@ -82,5 +82,13 @@ namespace PPlus.Controls
         /// <param name="value"><see cref="Style"/></param>
         /// <returns><see cref="IControlSliderSwitch"/></returns>
         IControlSliderSwitch ChangeColorOff(Style value);
+
+        /// <summary>
+        /// Overwrite Styles
+        /// </summary>
+        /// <param name="styletype"><see cref="SliderSwitchStyles"/> of content</param>
+        /// <param name="value">The <see cref="Style"/></param>
+        /// <returns><see cref="IControlSliderSwitch"/></returns>
+        IControlSliderSwitch Styles(SliderSwitchStyles styletype, Style value);
     }
 }

@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:StyleBrowser 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:TableSelectStyle 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,34 +8,38 @@
 
 [**Back to List Api**](./apis.md)
 
-# StyleBrowser
+# TableSelectStyle
 
 Namespace: PPlus.Controls
 
-Represents The Style region/state of browser
+Represents The Styles Table control
 
 ```csharp
-public enum StyleBrowser
+public enum TableSelectStyle
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [StyleBrowser](./pplus.controls.stylebrowser.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [TableSelectStyle](./pplus.controls.tableselectstyle.md)<br>
 Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icomparable), [IFormattable](https://docs.microsoft.com/en-us/dotnet/api/system.iformattable), [IConvertible](https://docs.microsoft.com/en-us/dotnet/api/system.iconvertible)
 
 ## Fields
 
 | Name | Value | Description |
 | --- | --: | --- |
-| CurrentFolder | 0 | CurrentFolder Region |
-| UnselectedSize | 1 | Unselected Size region/state |
-| UnselectedExpand | 2 | Unselected Expand region/state |
-| UnselectedRoot | 3 | Unselected Root region/state |
-| UnselectedFolder | 4 | Unselected Folder region/state |
-| UnselectedFile | 5 | Unselected File region/state |
-| SelectedSize | 6 | Selected Size region/state |
-| SelectedExpand | 7 | Selected Expand region/state |
-| SelectedRoot | 8 | Selected Root region/state |
-| SelectedFile | 9 | Selected File region/state |
-| SelectedFolder | 10 | Selected Folder region/state |
+| Prompt | 0 | Prompt Region |
+| Answer | 1 | Answer Region |
+| Description | 2 | Description Region |
+| Selected | 3 | Selected state |
+| UnSelected | 4 | UnSelected state |
+| Disabled | 5 | Disabled state |
+| Pagination | 6 | Pagination Region |
+| TaggedInfo | 7 | TaggedInfo Region |
+| Tooltips | 8 | Tooltips Region |
+| Lines | 9 | Lines Region |
+| FilterMatch | 10 | Filter Match Region |
+| FilterUnMatch | 11 | Filter UnMatch Region |
+| TableTitle | 12 | Table Title content |
+| TableHeader | 13 | Table Header content |
+| TableContent | 14 | Table Data content |
 
 
 - - -

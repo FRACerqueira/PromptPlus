@@ -85,16 +85,6 @@ namespace PPlus.Tests.Controls
             Assert.Equal(expected, kp.OptDescription);
         }
 
-        [Fact]
-        public void Should_InitDescriptionStyle()
-        {
-            var kp = new OptBaseTest(false);
-            kp.Description(new StringStyle("",new Style(Color.Black,Color.Blue,Overflow.Ellipsis)));
-            Assert.Equal(Color.Black,kp.OptStyleSchema.Description().Foreground);
-            Assert.Equal(Color.Blue,kp.OptStyleSchema.Description().Background);
-            Assert.Equal(Overflow.Ellipsis,kp.OptStyleSchema.Description().OverflowStrategy);
-        }
-
         [Theory]
         [InlineData(true, true)]
         [InlineData(false, false)]
@@ -130,16 +120,6 @@ namespace PPlus.Tests.Controls
             Assert.Equal(expected, kp.OptToolTip);
         }
 
-        [Fact]
-        public void Should_InitTooltipsStyle()
-        {
-            var kp = new OptBaseTest(false);
-            kp.Tooltips(new StringStyle("", new Style(Color.Black, Color.Blue, Overflow.Ellipsis)));
-            Assert.Equal(Color.Black, kp.OptStyleSchema.Tooltips().Foreground);
-            Assert.Equal(Color.Blue, kp.OptStyleSchema.Tooltips().Background);
-            Assert.Equal(Overflow.Ellipsis, kp.OptStyleSchema.Tooltips().OverflowStrategy);
-        }
-
         [Theory]
         [InlineData(null, null)]
         [InlineData("", "")]
@@ -151,25 +131,6 @@ namespace PPlus.Tests.Controls
             Assert.Equal(expected, kp.OptPrompt);
         }
 
-        [Fact]
-        public void Should_InitPromptStyle()
-        {
-            var kp = new OptBaseTest(false);
-            kp.Prompt(new StringStyle("", new Style(Color.Black, Color.Blue, Overflow.Ellipsis)));
-            Assert.Equal(Color.Black, kp.OptStyleSchema.Prompt().Foreground);
-            Assert.Equal(Color.Blue, kp.OptStyleSchema.Prompt().Background);
-            Assert.Equal(Overflow.Ellipsis, kp.OptStyleSchema.Prompt().OverflowStrategy);
-        }
-
-        [Fact]
-        public void Should_InitApplyStyle()
-        {
-            var kp = new OptBaseTest(false);
-            kp.ApplyStyle(StyleControls.Pagination, new Style(Color.Black, Color.Blue, Overflow.Ellipsis));
-            Assert.Equal(Color.Black, kp.OptStyleSchema.Pagination().Foreground);
-            Assert.Equal(Color.Blue, kp.OptStyleSchema.Pagination().Background);
-            Assert.Equal(Overflow.Ellipsis, kp.OptStyleSchema.Pagination().OverflowStrategy);
-        }
 
         [Fact]
         public void Should_DefaultSymbolsUnicodeSupported()

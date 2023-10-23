@@ -458,6 +458,26 @@ If True, it shows the tip with the group text, otherwise nothing.
 
 [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
 
+### <a id="methods-styles"/>**Styles(MultiSelectStyles, Style)**
+
+Overwrite Styles
+
+```csharp
+IControlMultiSelect<T> Styles(MultiSelectStyles styletype, Style value)
+```
+
+#### Parameters
+
+`styletype` [MultiSelectStyles](./pplus.controls.multiselectstyles.md)<br>
+[MultiSelectStyles](./pplus.controls.multiselectstyles.md) of content
+
+`value` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md)
+
+#### Returns
+
+[IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
+
 ### <a id="methods-textselector"/>**TextSelector(Func&lt;T, String&gt;)**
 
 Function to show text Item in list.Default value is Item.ToString()

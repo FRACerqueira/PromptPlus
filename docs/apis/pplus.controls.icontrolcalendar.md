@@ -283,18 +283,18 @@ Maximum date
 
 [IControlCalendar](./pplus.controls.icontrolcalendar.md)
 
-### <a id="methods-styles"/>**Styles(StyleCalendar, Style)**
+### <a id="methods-styles"/>**Styles(CalendarStyles, Style)**
 
-Styles for Calendar content
+Overwrite Styles
 
 ```csharp
-IControlCalendar Styles(StyleCalendar styletype, Style value)
+IControlCalendar Styles(CalendarStyles styletype, Style value)
 ```
 
 #### Parameters
 
-`styletype` [StyleCalendar](./pplus.controls.stylecalendar.md)<br>
-[StyleCalendar](./pplus.controls.stylecalendar.md) of content
+`styletype` [CalendarStyles](./pplus.controls.calendarstyles.md)<br>
+[CalendarStyles](./pplus.controls.calendarstyles.md) of content
 
 `value` [Style](./pplus.style.md)<br>
 The [Style](./pplus.style.md)

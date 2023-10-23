@@ -70,6 +70,12 @@ namespace PPlus.Controls
 
         #region IControlSliderSwitch
 
+        public IControlSliderSwitch Styles(SliderSwitchStyles content, Style value)
+        {
+            _options.StyleControl(content, value);
+            return this;
+        }
+
         public IControlSliderSwitch ChangeDescription(Func<bool, string> value)
         {
             _options.ChangeDescription = value;
@@ -178,7 +184,7 @@ namespace PPlus.Controls
                         FinishResult = _options.OffValue;
                     }
                 }
-                var segments = Segment.Parse(FinishResult, _options.OptStyleSchema.Answer());
+                var segments = Segment.Parse(FinishResult, _options.StyleContent(StyleControls.Answer));
                 screenBuffer.WritePrompt(_options, "");
                 foreach (var item in segments.Where(x => !x.IsAnsiControl))
                 {
@@ -190,7 +196,7 @@ namespace PPlus.Controls
 
         public override void InputTemplate(ScreenBuffer screenBuffer)
         {
-            var segments = Segment.Parse(FinishResult, _options.OptStyleSchema.Answer());
+            var segments = Segment.Parse(FinishResult, _options.StyleContent(StyleControls.Answer));
             screenBuffer.WritePrompt(_options, "");
             var hasprompt = !string.IsNullOrEmpty(_options.OptPrompt);
             if (!_options.OptMinimalRender)

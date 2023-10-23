@@ -77,11 +77,11 @@ namespace BrowserSamples
                 .Run();
 
             PromptPlus.DoubleDash("Control:Browser - Change Style");
-            PromptPlus.Browser("Browser", "Folder Color.Blue / Color.Yellow ")
+            PromptPlus.Browser("Browser", "Folder Color.Blue / File Color.Yellow ")
                 .Root(root, true)
-                .Styles(StyleBrowser.UnselectedFolder, Style.Default.Foreground(Color.Blue))
-                .Styles(StyleBrowser.SelectedFolder, Style.Default.Foreground(Color.Yellow))
-                .Config(cfg => cfg.ApplyStyle(StyleControls.Lines, Style.Default.Foreground(Color.Red)))
+                .Styles(BrowserStyles.BrowserFolder, Color.Blue.ToStyle())
+                .Styles(BrowserStyles.BrowserFile, Color.Yellow.ToStyle())
+                .Styles(BrowserStyles.Lines, Color.Red.ToStyle())
                 .Run();
 
             PromptPlus.WriteLines(2);

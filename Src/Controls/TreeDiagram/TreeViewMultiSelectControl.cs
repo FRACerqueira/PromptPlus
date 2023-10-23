@@ -88,41 +88,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewMultiSelect<T> Styles(StyleTreeView styletype, Style value)
+        public IControlTreeViewMultiSelect<T> Styles(TreeViewStyles content, Style value)
         {
-            value = value.Overflow(Overflow.Crop);
-            switch (styletype)
-            {
-                case StyleTreeView.CurrentNode:
-                    _options.CurrentNodeStyle = value;
-                    break;
-                case StyleTreeView.UnselectedRoot:
-                    _options.RootStyle = value;
-                    break;
-                case StyleTreeView.UnselectedExpand:
-                    _options.ExpandStyle = value;
-                    break;
-                case StyleTreeView.UnselectedParent:
-                    _options.ParentStyle = value;
-                    break;
-                case StyleTreeView.UnselectedChild:
-                    _options.ChildStyle = value;
-                    break;
-                case StyleTreeView.SelectedExpand:
-                    _options.SelectedExpandStyle = value;
-                    break;
-                case StyleTreeView.SelectedRoot:
-                    _options.SelectedRootStyle = value;
-                    break;
-                case StyleTreeView.SelectedParent:
-                    _options.SelectedParentStyle = value;
-                    break;
-                case StyleTreeView.SelectedChild:
-                    _options.SelectedChildStyle = value;
-                    break;
-                default:
-                    throw new PromptPlusException($"StyleTreeView: {styletype} Not Implemented");
-            }
+            _options.StyleControl(content, value);
             return this;
         }
 
@@ -379,7 +347,7 @@ namespace PPlus.Controls
             {
                 hasprompt = true;
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(_options.OptDescription, _options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(_options.OptDescription, _options.StyleContent(StyleControls.Description));
             }
             var subset = _localpaginator.GetPageData();
             var showitem = _localpaginator.TryGetSelected(out var selectedItem);
@@ -390,11 +358,11 @@ namespace PPlus.Controls
                     screenBuffer.NewLine();
                     if (_options.ShowCurrentFulPathNode)
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {selectedItem.MessagesNodes.TextFullpath}", _options.CurrentNodeStyle);
+                        screenBuffer.AddBuffer($"{Messages.CurrentSelected}: {selectedItem.MessagesNodes.TextFullpath}", _options.StyleContent(StyleControls.TaggedInfo));
                     }
                     else
                     {
-                        screenBuffer.AddBuffer($"{Messages.CurrentFolder}: {selectedItem.MessagesNodes.TextItem}", _options.CurrentNodeStyle);
+                        screenBuffer.AddBuffer($"{Messages.CurrentFolder}: {selectedItem.MessagesNodes.TextItem}", _options.StyleContent(StyleControls.TaggedInfo));
                     }
                 }
             }
@@ -409,7 +377,7 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        screenBuffer.WriteLineSelectorTreeViewMultiSelect(_options, item, fnode.Childrens != null, hasprompt);
+                        screenBuffer.WriteLineSelectorTreeViewMultiSelect(_options, item, hasprompt);
                     }
                 }
                 else
@@ -433,7 +401,7 @@ namespace PPlus.Controls
             else
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.OptStyleSchema.TaggedInfo(), true);
+                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.StyleContent(StyleControls.TaggedInfo), true);
             }
             if (showitem)
             {

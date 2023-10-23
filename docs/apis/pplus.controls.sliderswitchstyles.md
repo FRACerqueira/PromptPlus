@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:TableStyle 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:SliderSwitchStyles 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,26 +8,30 @@
 
 [**Back to List Api**](./apis.md)
 
-# TableStyle
+# SliderSwitchStyles
 
 Namespace: PPlus.Controls
 
-Represents the Style of content Table
+Represents The Styles SliderSwitch controls
 
 ```csharp
-public enum TableStyle
+public enum SliderSwitchStyles
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [TableStyle](./pplus.controls.tablestyle.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [SliderSwitchStyles](./pplus.controls.sliderswitchstyles.md)<br>
 Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icomparable), [IFormattable](https://docs.microsoft.com/en-us/dotnet/api/system.iformattable), [IConvertible](https://docs.microsoft.com/en-us/dotnet/api/system.iconvertible)
 
 ## Fields
 
 | Name | Value | Description |
 | --- | --: | --- |
-| Title | 0 | Title content |
-| Header | 1 | Header content |
-| Content | 2 | Data content |
+| Prompt | 0 | Prompt Region |
+| Answer | 1 | Answer Region |
+| Description | 2 | Description Region |
+| TaggedInfo | 3 | TaggedInfo Region |
+| Tooltips | 4 | Tooltips Region |
+| Slider | 5 | Slider Region |
+| OnOff | 6 | OnOff Region |
 
 
 - - -

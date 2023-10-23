@@ -21,7 +21,6 @@ namespace PPlus.Controls
 
         internal ProgressBarOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
-            SpinnerStyle = styleSchema.Prompt();
         }
 
         public bool ShowPercent { get; set; } = true;
@@ -29,7 +28,6 @@ namespace PPlus.Controls
         public bool ShowRanger { get; set; } = true;
         public char CharBar { get; set; } = '#';
         public string Finish { get; set; }
-        public Style SpinnerStyle { get; set; }
         public Spinners? Spinner { get; set; }
         public Color[] Gradient { get; set; }
         public Func<double, Style> ChangeColor { get; set; }

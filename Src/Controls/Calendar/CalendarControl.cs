@@ -154,31 +154,12 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlCalendar Styles(StyleCalendar styletype, Style value)
+        public IControlCalendar Styles(CalendarStyles content, Style value)
         {
-            switch (styletype)
-            {
-                case StyleCalendar.Highlight:
-                    _options.HighlightStyle = value;
-                    break;
-                case StyleCalendar.Day:
-                    _options.DayStyle = value;
-                    break;
-                case StyleCalendar.Month:
-                    _options.MonthStyle = value;
-                    break;
-                case StyleCalendar.Year:
-                    _options.YearStyle = value;
-                    break;
-                case StyleCalendar.WeekDay:
-                    _options.WeekDayStyle = value;
-                    break;
-                default:
-                    throw new PromptPlusException($"StyleChart: {styletype} Not Implemented");
-            }
+            _options.StyleControl(content, value);
             return this;
         }
-
+ 
         #endregion
 
         public override string InitControl(CancellationToken cancellationToken)
@@ -243,7 +224,7 @@ namespace PPlus.Controls
             if (!string.IsNullOrEmpty(ValidateError))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(ValidateError, _options.OptStyleSchema.Error(), true);
+                screenBuffer.AddBuffer(ValidateError, _options.StyleContent(StyleControls.Error), true);
             }
             WriteTooltip(screenBuffer);
         }
@@ -896,7 +877,7 @@ namespace PPlus.Controls
                         string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
                         Messages.SelectFinishEnter,
                         Messages.TooltipPagesNotes,
-                        string.Format(Messages.TooltipToggleNotes,_options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
+                        string.Format(Messages.TooltipToggleNotes,_options.SwitchNotes)), _options.StyleContent(StyleControls.Tooltips));
                 }
                 else
                 {
@@ -904,7 +885,7 @@ namespace PPlus.Controls
                         string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                         Messages.SelectFinishEnter,
                         Messages.TooltipPagesNotes,
-                        string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
+                        string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.StyleContent(StyleControls.Tooltips));
                 }
                 return;
             }
@@ -924,7 +905,7 @@ namespace PPlus.Controls
                         string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
                         Messages.SelectFinishEnter,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes),
-                        $"{linedays}, {lineweek}"), _options.OptStyleSchema.Tooltips());
+                        $"{linedays}, {lineweek}"), _options.StyleContent(StyleControls.Tooltips));
                 }
                 else
                 {
@@ -932,7 +913,7 @@ namespace PPlus.Controls
                         string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                         string.Format(Messages.TooltipCancelEsc, _options.Config.AbortKeyPress),
                         Messages.SelectFinishEnter,
-                        string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
+                        string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.StyleContent(StyleControls.Tooltips));
                 }
             }
             else
@@ -943,35 +924,35 @@ namespace PPlus.Controls
                         string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                         Messages.SelectFinishEnter,
                         string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes),
-                        $"{linedays}, {lineweek}"), _options.OptStyleSchema.Tooltips());
+                        $"{linedays}, {lineweek}"), _options.StyleContent(StyleControls.Tooltips));
                 }
                 else
                 {
                     screenBuffer.AddBuffer(string.Format("{0}, {1}, {2}",
                         string.Format(Messages.TooltipToggle, _options.Config.TooltipKeyPress),
                         Messages.SelectFinishEnter,
-                        string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.OptStyleSchema.Tooltips());
+                        string.Format(Messages.TooltipToggleNotes, _options.SwitchNotes)), _options.StyleContent(StyleControls.Tooltips));
                 }
             }
             if (!string.IsNullOrEmpty(linemonth) && !string.IsNullOrEmpty(lineyear))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{linemonth}, {lineyear}{linetoday}", _options.OptStyleSchema.Tooltips());
+                screenBuffer.AddBuffer($"{linemonth}, {lineyear}{linetoday}", _options.StyleContent(StyleControls.Tooltips));
             }
             else if (!string.IsNullOrEmpty(linemonth) && string.IsNullOrEmpty(lineyear))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{linemonth}{linetoday}", _options.OptStyleSchema.Tooltips());
+                screenBuffer.AddBuffer($"{linemonth}{linetoday}", _options.StyleContent(StyleControls.Tooltips));
             }
             else if (string.IsNullOrEmpty(linemonth) && !string.IsNullOrEmpty(lineyear))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{lineyear}{linetoday}", _options.OptStyleSchema.Tooltips());
+                screenBuffer.AddBuffer($"{lineyear}{linetoday}", _options.StyleContent(StyleControls.Tooltips));
             }
             else
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(linetoday.Replace(",","").Trim(), _options.OptStyleSchema.Tooltips());
+                screenBuffer.AddBuffer(linetoday.Replace(",","").Trim(), _options.StyleContent(StyleControls.Tooltips));
             }
         }
 
@@ -1001,20 +982,20 @@ namespace PPlus.Controls
 
             if (!string.IsNullOrEmpty(_options.OptPrompt) && !_options.OptMinimalRender)
             {
-                screenBuffer.AddBuffer(_options.OptPrompt, _options.OptStyleSchema.Prompt());
-                screenBuffer.AddBuffer(": ", _options.OptStyleSchema.Prompt());
+                screenBuffer.AddBuffer(_options.OptPrompt, _options.StyleContent(StyleControls.Prompt));
+                screenBuffer.AddBuffer(": ", _options.StyleContent(StyleControls.Prompt));
             }
-            var stl = _options.OptStyleSchema.Answer();
+            var stl = _options.StyleContent(StyleControls.Answer);
             if (_options.ShowingNotes && !_options.OptMinimalRender)
             {
-                stl = _options.OptStyleSchema.TaggedInfo();
+                stl = _options.StyleContent(StyleControls.TaggedInfo);
             }
             screenBuffer.AddBuffer(_currentdate.ToString("d"), stl);
             screenBuffer.SaveCursor();
             screenBuffer.NewLine();
             if (!string.IsNullOrEmpty(desc))
             {
-                screenBuffer.AddBuffer(desc, _options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(desc, _options.StyleContent(StyleControls.Description));
                 screenBuffer.NewLine();
             }
         }
@@ -1066,16 +1047,16 @@ namespace PPlus.Controls
             curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
-            screenBuffer.AddBuffer("+-----------------------------------+", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("+-----------------------------------+", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
-            screenBuffer.AddBuffer($" {curmonth}", _options.MonthStyle);
-            screenBuffer.AddBuffer($" {curyear} ", _options.YearStyle);
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer($" {curmonth}", _options.StyleContent(StyleControls.CalendarMonth));
+            screenBuffer.AddBuffer($" {curyear} ", _options.StyleContent(StyleControls.CalendarYear));
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("|-----------------------------------|", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("|-----------------------------------|", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             foreach (var item in _Weekdays)
             {
                 var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
@@ -1091,27 +1072,27 @@ namespace PPlus.Controls
                 if (item == _currentdate.DayOfWeek)
                 {
                     abr = $"<{abr}>";
-                    screenBuffer.AddBuffer(abr, _options.OptStyleSchema.Selected());
+                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.Selected));
                 }
                 else
                 {
                     abr = $" {abr} ";
-                    screenBuffer.AddBuffer(abr, _options.WeekDayStyle);
+                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.CalendarWeekDay));
                 }
             }
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("|-----------------------------------|", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("|-----------------------------------|", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
 
             var auxdate = new DateTime(_currentdate.Year, _currentdate.Month, 1);
             var weekdays = MonthWeekDays(DateTime.DaysInMonth(_currentdate.Year, _currentdate.Month));
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             foreach (var item in _Weekdays)
             {
                 if (item != weekdays[auxdate.Day - 1])
                 {
-                    screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                    screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                 }
                 else
                 {
@@ -1119,12 +1100,12 @@ namespace PPlus.Controls
                     auxdate = auxdate.AddDays(1);
                 }
             }
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+                screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
                 for (int i = 0; i < 7; i++)
                 {
                     if (auxdate.Month == _currentdate.Month)
@@ -1138,7 +1119,7 @@ namespace PPlus.Controls
                             }
                             else
                             {
-                                screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                                screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                             }
                         }
                         else
@@ -1149,13 +1130,13 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                        screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                     }
                 }
-                screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+                screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             }
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("+-----------------------------------+", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("+-----------------------------------+", _options.StyleContent(StyleControls.Lines));
         }
 
         private void WriteCalendarAsciiDoubleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
@@ -1164,16 +1145,16 @@ namespace PPlus.Controls
             curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
-            screenBuffer.AddBuffer("+===================================+", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("+===================================+", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
-            screenBuffer.AddBuffer($" {curmonth}", _options.MonthStyle);
-            screenBuffer.AddBuffer($" {curyear} ", _options.YearStyle);
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer($" {curmonth}", _options.StyleContent(StyleControls.CalendarMonth));
+            screenBuffer.AddBuffer($" {curyear} ", _options.StyleContent(StyleControls.CalendarYear));
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("|===================================|", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("|===================================|", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             foreach (var item in _Weekdays)
             {
                 var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
@@ -1189,27 +1170,27 @@ namespace PPlus.Controls
                 if (item == _currentdate.DayOfWeek)
                 {
                     abr = $"<{abr}>";
-                    screenBuffer.AddBuffer(abr, _options.OptStyleSchema.Selected());
+                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.Selected));
                 }
                 else
                 {
                     abr = $" {abr} ";
-                    screenBuffer.AddBuffer(abr, _options.WeekDayStyle);
+                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.CalendarWeekDay));
                 }
             }
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("|===================================|", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("|===================================|", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
 
             var auxdate = new DateTime(_currentdate.Year, _currentdate.Month, 1);
             var weekdays = MonthWeekDays(DateTime.DaysInMonth(_currentdate.Year, _currentdate.Month));
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             foreach (var item in _Weekdays)
             {
                 if (item != weekdays[auxdate.Day - 1])
                 {
-                    screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                    screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                 }
                 else
                 {
@@ -1217,12 +1198,12 @@ namespace PPlus.Controls
                     auxdate = auxdate.AddDays(1);
                 }
             }
-            screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+                screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
                 for (int i = 0; i < 7; i++)
                 {
                     if (auxdate.Month == _currentdate.Month)
@@ -1236,7 +1217,7 @@ namespace PPlus.Controls
                             }
                             else
                             {
-                                screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                                screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                             }
                         }
                         else
@@ -1247,13 +1228,13 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                        screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                     }
                 }
-                screenBuffer.AddBuffer('|', _options.OptStyleSchema.Lines());
+                screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
             }
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("+===================================+", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("+===================================+", _options.StyleContent(StyleControls.Lines));
         }
 
         private void WriteCalendarSingleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
@@ -1262,16 +1243,16 @@ namespace PPlus.Controls
             curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
-            screenBuffer.AddBuffer("┌───────────────────────────────────┐", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("┌───────────────────────────────────┐", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('│', _options.OptStyleSchema.Lines());
-            screenBuffer.AddBuffer($" {curmonth}", _options.MonthStyle);
-            screenBuffer.AddBuffer($" {curyear} ", _options.YearStyle);
-            screenBuffer.AddBuffer('│', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer($" {curmonth}", _options.StyleContent(StyleControls.CalendarMonth));
+            screenBuffer.AddBuffer($" {curyear} ", _options.StyleContent(StyleControls.CalendarYear));
+            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("├───────────────────────────────────┤", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("├───────────────────────────────────┤", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('│', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
 
 
             foreach (var item in _Weekdays)
@@ -1289,27 +1270,27 @@ namespace PPlus.Controls
                 if (item == _currentdate.DayOfWeek)
                 {
                     abr = $"<{abr}>";
-                    screenBuffer.AddBuffer(abr, _options.OptStyleSchema.Selected());
+                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.Selected));
                 }
                 else
                 {
                     abr = $" {abr} ";
-                    screenBuffer.AddBuffer(abr, _options.WeekDayStyle);
+                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.CalendarWeekDay));
                 }
             }
-            screenBuffer.AddBuffer('│', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("├───────────────────────────────────┤", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("├───────────────────────────────────┤", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
 
             var auxdate = new DateTime(_currentdate.Year, _currentdate.Month, 1);
             var weekdays = MonthWeekDays(DateTime.DaysInMonth(_currentdate.Year, _currentdate.Month));
-            screenBuffer.AddBuffer('│', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
             foreach (var item in _Weekdays)
             {
                 if (item != weekdays[auxdate.Day - 1])
                 {
-                    screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                    screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                 }
                 else
                 {
@@ -1317,12 +1298,12 @@ namespace PPlus.Controls
                     auxdate = auxdate.AddDays(1);
                 }
             }
-            screenBuffer.AddBuffer('│', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
             var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer('│', _options.OptStyleSchema.Lines());
+                screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
                 for (int i = 0; i < 7; i++)
                 {
                     if (auxdate.Month == _currentdate.Month)
@@ -1336,7 +1317,7 @@ namespace PPlus.Controls
                             }
                             else
                             {
-                                screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                                screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                             }
                         }
                         else
@@ -1347,17 +1328,17 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                        screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                     }
                 }
-                screenBuffer.AddBuffer('│', _options.OptStyleSchema.Lines());
+                screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
                 if (auxdate.Date == DateTime.MaxValue.Date)
                 {
                     break;
                 }
             }
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("└───────────────────────────────────┘", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("└───────────────────────────────────┘", _options.StyleContent(StyleControls.Lines));
         }
 
         private void WriteCalendarDoubleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
@@ -1366,16 +1347,16 @@ namespace PPlus.Controls
             curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
-            screenBuffer.AddBuffer("╔═══════════════════════════════════╗", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("╔═══════════════════════════════════╗", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('║', _options.OptStyleSchema.Lines());
-            screenBuffer.AddBuffer($" {curmonth}", _options.MonthStyle);
-            screenBuffer.AddBuffer($" {curyear} ", _options.YearStyle);
-            screenBuffer.AddBuffer('║', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer($" {curmonth}", _options.StyleContent(StyleControls.CalendarMonth));
+            screenBuffer.AddBuffer($" {curyear} ", _options.StyleContent(StyleControls.CalendarYear));
+            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("╠═══════════════════════════════════╣", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("╠═══════════════════════════════════╣", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('║', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
 
 
             foreach (var item in _Weekdays)
@@ -1393,27 +1374,27 @@ namespace PPlus.Controls
                 if (item == _currentdate.DayOfWeek)
                 {
                     abr = $"<{abr}>";
-                    screenBuffer.AddBuffer(abr, _options.OptStyleSchema.Selected());
+                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.Selected));
                 }
                 else
                 {
                     abr = $" {abr} ";
-                    screenBuffer.AddBuffer(abr, _options.WeekDayStyle);
+                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.CalendarWeekDay));
                 }
             }
-            screenBuffer.AddBuffer('║', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("╠═══════════════════════════════════╣", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("╠═══════════════════════════════════╣", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
 
             var auxdate = new DateTime(_currentdate.Year, _currentdate.Month, 1);
             var weekdays = MonthWeekDays(DateTime.DaysInMonth(_currentdate.Year, _currentdate.Month));
-            screenBuffer.AddBuffer('║', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
             foreach (var item in _Weekdays)
             {
                 if (item != weekdays[auxdate.Day - 1])
                 {
-                    screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                    screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                 }
                 else
                 {
@@ -1421,12 +1402,12 @@ namespace PPlus.Controls
                     auxdate = auxdate.AddDays(1);
                 }
             }
-            screenBuffer.AddBuffer('║', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
             var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer('║', _options.OptStyleSchema.Lines());
+                screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
                 for (int i = 0; i < 7; i++)
                 {
                     if (auxdate.Month == _currentdate.Month)
@@ -1440,7 +1421,7 @@ namespace PPlus.Controls
                             }
                             else
                             {
-                                screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                                screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                             }
                         }
                         else
@@ -1451,13 +1432,13 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                        screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                     }
                 }
-                screenBuffer.AddBuffer('║', _options.OptStyleSchema.Lines());
+                screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
             }
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("╚═══════════════════════════════════╝", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("╚═══════════════════════════════════╝", _options.StyleContent(StyleControls.Lines));
         }
 
         private void WriteCalendarHeavyGrid(ScreenBuffer screenBuffer, DateTime currentdate)
@@ -1466,16 +1447,16 @@ namespace PPlus.Controls
             curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
-            screenBuffer.AddBuffer("▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('▐', _options.OptStyleSchema.Lines());
-            screenBuffer.AddBuffer($" {curmonth}", _options.MonthStyle);
-            screenBuffer.AddBuffer($" {curyear} ", _options.YearStyle);
-            screenBuffer.AddBuffer('▌', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('▐', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer($" {curmonth}", _options.StyleContent(StyleControls.CalendarMonth));
+            screenBuffer.AddBuffer($" {curyear} ", _options.StyleContent(StyleControls.CalendarYear));
+            screenBuffer.AddBuffer('▌', _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('▐', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('▐', _options.StyleContent(StyleControls.Lines));
             foreach (var item in _Weekdays)
             {
                 var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
@@ -1491,27 +1472,27 @@ namespace PPlus.Controls
                 if (item == _currentdate.DayOfWeek)
                 {
                     abr = $"<{abr}>";
-                    screenBuffer.AddBuffer(abr, _options.OptStyleSchema.Selected());
+                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.Selected));
                 }
                 else
                 {
                     abr = $" {abr} ";
-                    screenBuffer.AddBuffer(abr, _options.WeekDayStyle);
+                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.CalendarWeekDay));
                 }
             }
-            screenBuffer.AddBuffer('▌', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('▌', _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌", _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
 
             var auxdate = new DateTime(_currentdate.Year, _currentdate.Month, 1);
             var weekdays = MonthWeekDays(DateTime.DaysInMonth(_currentdate.Year, _currentdate.Month));
-            screenBuffer.AddBuffer('▐', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('▐', _options.StyleContent(StyleControls.Lines));
             foreach (var item in _Weekdays)
             {
                 if (item != weekdays[auxdate.Day - 1])
                 {
-                    screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                    screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                 }
                 else
                 {
@@ -1519,12 +1500,12 @@ namespace PPlus.Controls
                     auxdate = auxdate.AddDays(1);
                 }
             }
-            screenBuffer.AddBuffer('▌', _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer('▌', _options.StyleContent(StyleControls.Lines));
             var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer('▐', _options.OptStyleSchema.Lines());
+                screenBuffer.AddBuffer('▐', _options.StyleContent(StyleControls.Lines));
                 for (int i = 0; i < 7; i++)
                 {
                     if (auxdate.Month == _currentdate.Month)
@@ -1538,7 +1519,7 @@ namespace PPlus.Controls
                             }
                             else
                             {
-                                screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                                screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                             }
                         }
                         else
@@ -1549,13 +1530,13 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        screenBuffer.AddBuffer("     ", _options.OptStyleSchema.Lines());
+                        screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                     }
                 }
-                screenBuffer.AddBuffer('▌', _options.OptStyleSchema.Lines());
+                screenBuffer.AddBuffer('▌', _options.StyleContent(StyleControls.Lines));
             }
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("▐▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌", _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer("▐▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌", _options.StyleContent(StyleControls.Lines));
         }
 
         private void WriteNotes(ScreenBuffer screenBuffer)
@@ -1591,7 +1572,7 @@ namespace PPlus.Controls
             }
             if (IsDateDisable(auxdate))
             {
-                screenBuffer.AddBuffer($" {strnote}{cday} ", _options.OptStyleSchema.Disabled());
+                screenBuffer.AddBuffer($" {strnote}{cday} ", _options.StyleContent(StyleControls.Disabled));
             }
             else if (auxdate == _currentdate)
             {
@@ -1599,22 +1580,22 @@ namespace PPlus.Controls
                 {
                     if (strnote == "*")
                     {
-                        screenBuffer.AddBuffer($"#{strnote}{cday}#", _options.OptStyleSchema.Selected());
+                        screenBuffer.AddBuffer($"#{strnote}{cday}#", _options.StyleContent(StyleControls.Selected));
                     }
                     else
                     {
-                        screenBuffer.AddBuffer($" #{cday}#", _options.OptStyleSchema.Selected());
+                        screenBuffer.AddBuffer($" #{cday}#", _options.StyleContent(StyleControls.Selected));
                     }
                 }
                 else
                 {
                     if (strnote == "*")
                     {
-                        screenBuffer.AddBuffer($"<{strnote}{cday}>", _options.OptStyleSchema.Selected());
+                        screenBuffer.AddBuffer($"<{strnote}{cday}>", _options.StyleContent(StyleControls.Selected));
                     }
                     else
                     {
-                        screenBuffer.AddBuffer($" <{cday}>", _options.OptStyleSchema.Selected());
+                        screenBuffer.AddBuffer($" <{cday}>", _options.StyleContent(StyleControls.Selected));
                     }
                 }
             }
@@ -1622,11 +1603,11 @@ namespace PPlus.Controls
             {
                 if (IsHighlight(auxdate))
                 {
-                    screenBuffer.AddBuffer($" {strnote}{cday}#", _options.HighlightStyle);
+                    screenBuffer.AddBuffer($" {strnote}{cday}#", _options.StyleContent(StyleControls.CalendarHighlight));
                 }
                 else
                 {
-                    screenBuffer.AddBuffer($" {strnote}{cday} ", _options.DayStyle);
+                    screenBuffer.AddBuffer($" {strnote}{cday} ", _options.StyleContent(StyleControls.CalendarDay));
                 }
             }
         }

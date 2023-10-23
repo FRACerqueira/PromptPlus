@@ -288,18 +288,18 @@ separator between rows
 
 [IControlTable&lt;T&gt;](./pplus.controls.icontroltable-1.md)
 
-### <a id="methods-styles"/>**Styles(TableStyle, Style)**
+### <a id="methods-styles"/>**Styles(TableStyles, Style)**
 
-Styles for Table elements
+Overwrite Styles
 
 ```csharp
-IControlTable<T> Styles(TableStyle styletype, Style value)
+IControlTable<T> Styles(TableStyles content, Style value)
 ```
 
 #### Parameters
 
-`styletype` [TableStyle](./pplus.controls.tablestyle.md)<br>
-[TableStyle](./pplus.controls.tablestyle.md) of content
+`content` [TableStyles](./pplus.controls.tablestyles.md)<br>
+[TableStyles](./pplus.controls.tablestyles.md) of content
 
 `value` [Style](./pplus.style.md)<br>
 The [Style](./pplus.style.md)

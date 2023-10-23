@@ -382,24 +382,6 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
-### <a id="methods-negativestyle"/>**NegativeStyle(Style)**
-
-Overwrite [Style](./pplus.style.md) to region neggative input.
- <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : same Console Background when set
-
-```csharp
-IControlMaskEditList NegativeStyle(Style value)
-```
-
-#### Parameters
-
-`value` [Style](./pplus.style.md)<br>
-Style
-
-#### Returns
-
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
-
 ### <a id="methods-pagesize"/>**PageSize(Int32)**
 
 Set max.item view per page.Default value for this control is 10.
@@ -412,24 +394,6 @@ IControlMaskEditList PageSize(int value)
 
 `value` [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 Number of Max.items
-
-#### Returns
-
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
-
-### <a id="methods-positivestyle"/>**PositiveStyle(Style)**
-
-Overwrite [Style](./pplus.style.md) to region positive input.
- <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when set
-
-```csharp
-IControlMaskEditList PositiveStyle(Style value)
-```
-
-#### Parameters
-
-`value` [Style](./pplus.style.md)<br>
-Style
 
 #### Returns
 
@@ -472,6 +436,26 @@ show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
+### <a id="methods-styles"/>**Styles(MaskEditListStyles, Style)**
+
+Overwrite Styles
+
+```csharp
+IControlMaskEditList Styles(MaskEditListStyles content, Style value)
+```
+
+#### Parameters
+
+`content` [MaskEditListStyles](./pplus.controls.maskeditliststyles.md)<br>
+The [MaskEditListStyles](./pplus.controls.maskeditliststyles.md) content
+
+`value` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md) to apply
+
+#### Returns
+
+[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
+
 ### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SuggestionInput, SuggestionOutput&gt;)**
 
 Add Suggestion Handler feature
@@ -484,24 +468,6 @@ IControlMaskEditList SuggestionHandler(Func<SuggestionInput, SuggestionOutput> v
 
 `value` [Func&lt;SuggestionInput, SuggestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 function to apply suggestions. [SuggestionInput](./pplus.controls.suggestioninput.md) and [SuggestionOutput](./pplus.controls.suggestionoutput.md)
-
-#### Returns
-
-[IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
-
-### <a id="methods-typetipstyle"/>**TypeTipStyle(Style)**
-
-Overwrite [Style](./pplus.style.md) to region tip type input.
- <br>Default Foreground : 'ConsoleColor.Yellow'<br>Default Background : same Console Background when set
-
-```csharp
-IControlMaskEditList TypeTipStyle(Style value)
-```
-
-#### Parameters
-
-`value` [Style](./pplus.style.md)<br>
-Style
 
 #### Returns
 

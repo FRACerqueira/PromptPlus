@@ -39,8 +39,8 @@ namespace MaskEditCurrencyTypeSamples
             PromptPlus.MaskEdit("input", "MaskEdit Currency input")
                 .Mask(MaskedType.Currency)
                 .AmmoutPositions(10, 2, true)
-                .PositiveStyle(Style.Default.Foreground(Color.Green))
-                .NegativeStyle(Style.Default.Foreground(Color.IndianRed))
+                .Styles(MaskEditStyles.MaskPositive, Style.Default.Foreground(Color.Green))
+                .Styles(MaskEditStyles.MaskNegative, Style.Default.Foreground(Color.IndianRed))
                 .Run();
 
             PromptPlus.DoubleDash($"Control:Currency - with overwrite culture:pt-br.");

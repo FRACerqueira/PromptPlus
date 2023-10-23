@@ -77,10 +77,10 @@ PromptPlus
     .AddItem("Label3", 30)
     .HideValue()
     .ShowLegends(true,false)
-    .Styles(StyleChart.Title, Style.Default.Foreground(Color.Turquoise4))
-    .Styles(StyleChart.Label, Style.Default.Foreground(Color.Yellow))
-    .Styles(StyleChart.Percent, Style.Default.Foreground(Color.IndianRed))
-    .Styles(StyleChart.Value, Style.Default.Foreground(Color.Aqua))
+    .Styles(ChartStyles.ChartTitle, Color.Turquoise4.ToStyle())
+    .Styles(ChartStyles.ChartTitle, Color.Yellow.ToStyle())
+    .Styles(ChartStyles.ChartPercent, Color.IndianRed.ToStyle())
+    .Styles(ChartStyles.ChartValue, Color.Aqua.ToStyle())
     .Run();
 
 PromptPlus
@@ -137,9 +137,9 @@ foreach (var item in auxc)
         .HideOrdination()
         .HideValue()
         .ShowLegends(true, false)
-        .Styles(StyleChart.Label, Style.Default.Foreground(Color.Yellow))
-        .Styles(StyleChart.Percent, Style.Default.Foreground(Color.IndianRed))
-        .Styles(StyleChart.Value, Style.Default.Foreground(Color.Aqua))
+        .Styles(ChartStyles.ChartLabel, Color.Yellow.ToStyle())
+        .Styles(ChartStyles.ChartPercent, Color.IndianRed.ToStyle())
+        .Styles(ChartStyles.ChartValue, Style.Default.Foreground(Color.Aqua))
         .Run();
 
     PromptPlus

@@ -72,11 +72,10 @@ namespace PPlus.Controls
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
-        /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlWait{T}"/></returns>
-        IControlWait<T> Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
+        IControlWait<T> Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
         /// <summary>
         /// Add list of tasks to execute.
@@ -97,11 +96,11 @@ namespace PPlus.Controls
         IControlWait<T> AddStep(StepMode stepMode, string? id, string? label, params Action<EventWaitProcess<T>,CancellationToken>[] process);
 
         /// <summary>
-        /// Overwrite Styles Wait. <see cref="StyleWait"/>
+        /// Overwrite Styles
         /// </summary>
-        /// <param name="styletype">Styles Wait</param>
+        /// <param name="content"><see cref="WaitStyles"/> of content</param>
         /// <param name="value"><see cref="Style"/></param>
         /// <returns><see cref="IControlWait{T}"/></returns>
-        IControlWait<T> Styles(StyleWait styletype, Style value);
+        IControlWait<T> Styles(WaitStyles content, Style value);
     }
 }

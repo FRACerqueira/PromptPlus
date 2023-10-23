@@ -34,33 +34,6 @@ namespace PPlus.Controls
         IControlMaskEditList Default(string value);
 
         /// <summary>
-        /// Overwrite <see cref="Style"/> to region tip type input.
-        /// <br>Default Foreground : 'ConsoleColor.Yellow'</br>
-        /// <br>Default Background : same Console Background when set</br>
-        /// </summary>
-        /// <param name="value">Style</param>
-        /// <returns><see cref="IControlMaskEditList"/></returns>
-        IControlMaskEditList TypeTipStyle(Style value);
-
-        /// <summary>
-        /// Overwrite <see cref="Style"/> to region neggative input.
-        /// <br>Default Foreground : 'StyleControls.Answer'</br>
-        /// <br>Default Background : same Console Background when set</br>
-        /// </summary>
-        /// <param name="value">Style</param>
-        /// <returns><see cref="IControlMaskEditList"/></returns>
-        IControlMaskEditList NegativeStyle(Style value);
-
-        /// <summary>
-        /// Overwrite <see cref="Style"/> to region positive input.
-        /// <br>Default Foreground : 'StyleControls.Answer'</br>
-        /// <br>Default Background : Same Console Background when set</br>
-        /// </summary>
-        /// <param name="value">Style</param>
-        /// <returns><see cref="IControlMaskEditList"/></returns>
-        IControlMaskEditList PositiveStyle(Style value);
-
-        /// <summary>
         /// Defines mask input. Rules for Generic type:
         /// <br>9 - Only a numeric character</br> 
         /// <br>L - Only a letter</br> 
@@ -240,6 +213,15 @@ namespace PPlus.Controls
         /// <param name="value">The <see cref="HotKey"/> to remove item</param>
         /// <returns><see cref="IControlMaskEditList"/></returns>
         IControlMaskEditList HotKeyRemoveItem(HotKey value);
+
+        /// <summary>
+        /// Overwrite Styles
+        /// </summary>
+        /// <param name="content">The <see cref="MaskEditListStyles"/> content</param>
+        /// <param name="value">The <see cref="Style"/> to apply</param>
+        /// <returns><see cref="IControlMaskEditList"/></returns>
+        IControlMaskEditList Styles(MaskEditListStyles content, Style value);
+
 
     }
 }

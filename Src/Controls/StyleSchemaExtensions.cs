@@ -46,15 +46,94 @@ namespace PPlus.Controls
             return schema.GetStyle(StyleControls.Prompt);
         }
 
-
         /// <summary>
-        /// Get <see cref="Style"/> text Chart.
+        /// Get <see cref="Style"/> text TreeView Root.
         /// <br>Foreground : 'ConsoleColor.White'</br>
         /// <br>Background : same Console Background when not set</br>
         /// </summary>
-        public static Style Chart(this StyleSchema schema)
+        public static Style TreeViewRoot(this StyleSchema schema)
         {
-            return schema.GetStyle(StyleControls.Chart);
+            return schema.GetStyle(StyleControls.TreeViewRoot);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> text TreeView Parent.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style TreeViewParent(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.TreeViewParent);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> text TreeView Child.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style TreeViewChild(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.TreeViewChild);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> text Browser File.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style BrowserFile(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.BrowserFile);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> text Browser Folder.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style BrowserFolder(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.BrowserFolder);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> text Browser Size.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style BrowserSize(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.BrowserSize);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> text TreeView Expand.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style TreeViewExpand(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.TreeViewExpand);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> text TaskTitle.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style TaskTitle(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.TaskTitle);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> text TaskElapsedTime.
+        /// <br>Foreground : 'ConsoleColor.DarkYellow'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style TaskElapsedTime(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.TaskElapsedTime);
         }
 
         /// <summary>
@@ -67,6 +146,217 @@ namespace PPlus.Controls
             return schema.GetStyle(StyleControls.Slider);
         }
 
+        /// <summary>
+        /// Get <see cref="Style"/> Spinner.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style Spinner(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.Spinner);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> TableTitle.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style TableTitle(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.TableTitle);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> TableContent.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style TableContent(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.TableContent);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> TableHeader.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style TableHeader(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.TableHeader);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> GroupTip.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style OnOff(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.OnOff);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> GroupTip.
+        /// <br>Foreground : 'ConsoleColor.DarkGray'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style GroupTip(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.GroupTip);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> ChartLabel.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style ChartLabel(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.ChartLabel);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> ChartOrder.
+        /// <br>Foreground : 'ConsoleColor.DarkGray'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style ChartOrder(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.ChartOrder);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> ChartPercent.
+        /// <br>Foreground : 'ConsoleColor.DarkYellow'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style ChartPercent(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.ChartPercent);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> ChartTitle.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style ChartTitle(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.ChartTitle);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> ChartValue.
+        /// <br>Foreground : 'ConsoleColor.Cyan'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style ChartValue(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.ChartValue);
+        }
+
+
+        /// <summary>
+        /// Get <see cref="Style"/> CalendarDay.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style CalendarDay(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.CalendarDay);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> CalendarHighlight.
+        /// <br>Foreground : 'ConsoleColor.DarkYellow'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style CalendarHighlight(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.CalendarHighlight);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> CalendarMonth.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style CalendarMonth(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.CalendarMonth);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> CalendarWeekDay.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style CalendarWeekDay(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.CalendarWeekDay);
+        }
+
+
+        /// <summary>
+        /// Get <see cref="Style"/> CalendarYear.
+        /// <br>Foreground : 'ConsoleColor.White'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style CalendarYear(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.CalendarYear);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> FilterMatch.
+        /// <br>Foreground : 'ConsoleColor.Yellow'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style FilterMatch(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.FilterMatch);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> MaskPositive.
+        /// <br>Foreground : 'ConsoleColor.Cyan'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style MaskPositive(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.MaskPositive);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> MaskNegative.
+        /// <br>Foreground : 'ConsoleColor.Cyan'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style MaskNegative(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.MaskNegative);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> MaskTypeTip.
+        /// <br>Foreground : 'ConsoleColor.Yellow'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style MaskTypeTip(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.MaskTypeTip);
+        }
+
+        /// <summary>
+        /// Get <see cref="Style"/> FilterUnMatch.
+        /// <br>Foreground : 'ConsoleColor.Cyan'</br>
+        /// <br>Background : same Console Background when not set</br>
+        /// </summary>
+        public static Style FilterUnMatch(this StyleSchema schema)
+        {
+            return schema.GetStyle(StyleControls.FilterUnMatch);
+        }
 
         /// <summary>
         /// Get <see cref="Style"/> Range.

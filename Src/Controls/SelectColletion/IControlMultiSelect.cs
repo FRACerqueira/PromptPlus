@@ -204,5 +204,13 @@ namespace PPlus.Controls
         /// <param name="maxvalue">Maximum number of items</param>
         /// <returns><see cref="IControlMultiSelect{T}"/></returns>
         IControlMultiSelect<T> Range(int minvalue, int? maxvalue = null);
+
+        /// <summary>
+        /// Overwrite Styles
+        /// </summary>
+        /// <param name="styletype"><see cref="MultiSelectStyles"/> of content</param>
+        /// <param name="value">The <see cref="Style"/></param>
+        /// <returns><see cref="IControlMultiSelect{T}"/></returns>
+        IControlMultiSelect<T> Styles(MultiSelectStyles styletype, Style value);
     }
 }

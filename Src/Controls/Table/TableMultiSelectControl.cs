@@ -433,7 +433,7 @@ namespace PPlus.Controls.Table
             }
             if (!string.IsNullOrEmpty(answer))
             {
-                screenBuffer.AddBuffer(answer, _options.OptStyleSchema.Answer());
+                screenBuffer.AddBuffer(answer, _options.StyleContent(StyleControls.Answer));
                 _hasprompt = true;
                 screenBuffer.SaveCursor();
             }
@@ -498,7 +498,7 @@ namespace PPlus.Controls.Table
                         break;
                     }
                 }
-                screenBuffer.AddBuffer($"{spc}Cols: {viewstartcol}~{viewendcol} of {tot}", _options.OptStyleSchema.Pagination(), true);
+                screenBuffer.AddBuffer($"{spc}Cols: {viewstartcol}~{viewendcol} of {tot}", _options.StyleContent(StyleControls.Pagination), true);
             }
             if (!_options.OptShowOnlyExistingPagination || _localpaginator.PageCount > 1)
             {
@@ -507,7 +507,7 @@ namespace PPlus.Controls.Table
             else
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.OptStyleSchema.TaggedInfo(), true);
+                screenBuffer.AddBuffer($"{_options.Symbol(SymbolType.Selected)}: {_selectedItems.Count}", _options.StyleContent(StyleControls.TaggedInfo), true);
             }
         }
 
@@ -525,12 +525,12 @@ namespace PPlus.Controls.Table
             }
             if (aborted && !_options.OptMinimalRender)
             {
-                screenBuffer.AddBuffer(Messages.CanceledKey, _options.OptStyleSchema.Answer(), true);
+                screenBuffer.AddBuffer(Messages.CanceledKey, _options.StyleContent(StyleControls.Answer), true);
                 screenBuffer.NewLine();
             }
             else if (!string.IsNullOrEmpty(answer))
             {
-                screenBuffer.AddBuffer(answer, _options.OptStyleSchema.Answer(), false);
+                screenBuffer.AddBuffer(answer, _options.StyleContent(StyleControls.Answer), false);
                 screenBuffer.NewLine();
             }
         }
@@ -1092,22 +1092,9 @@ namespace PPlus.Controls.Table
             return this;
         }
 
-        public IControlTableMultiSelect<T> Styles(TableStyle styletype, Style value)
+        public IControlTableMultiSelect<T> Styles(TableSelectStyle content, Style value)
         {
-            switch (styletype)
-            {
-                case TableStyle.Title:
-                    _options.TitleStyle = value;
-                    break;
-                case TableStyle.Header:
-                    _options.HeaderStyle = value;
-                    break;
-                case TableStyle.Content:
-                    _options.ContentStyle = value;
-                    break;
-                default:
-                    throw new PromptPlusException($"TableStyle: {styletype} Not Implemented");
-            }
+            _options.StyleControl(content, value);
             return this;
         }
 
@@ -1186,7 +1173,7 @@ namespace PPlus.Controls.Table
 
         private void BuildLineColumn(ScreenBuffer screenBuffer,char startln,char sepln, char endln, char contentln)
         {
-            var stl = _options.OptStyleSchema.Lines();
+            var stl = _options.StyleContent(StyleControls.Lines);
             if ( _options.Layout == TableLayout.HideGrid)
             {
                 stl = Style.Default;
@@ -1465,7 +1452,7 @@ namespace PPlus.Controls.Table
                 }
                 screenBuffer.NewLine();
                 tit = AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth);
-                screenBuffer.AddBuffer(tit, _options.TitleStyle);
+                screenBuffer.AddBuffer(tit, _options.StyleContent(StyleControls.TableTitle));
                 tit = string.Empty;
                 startnewline = true;
             }
@@ -1502,9 +1489,9 @@ namespace PPlus.Controls.Table
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
             }
-            screenBuffer.AddBuffer(sep, _options.OptStyleSchema.Lines());
-            screenBuffer.AddBuffer(tit, _options.TitleStyle);
-            screenBuffer.AddBuffer(sep, _options.OptStyleSchema.Lines());
+            screenBuffer.AddBuffer(sep, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(tit, _options.StyleContent(StyleControls.TableTitle));
+            screenBuffer.AddBuffer(sep, _options.StyleContent(StyleControls.Lines));
 
             screenBuffer.NewLine();
             switch (_options.Layout)
@@ -1713,7 +1700,7 @@ namespace PPlus.Controls.Table
             var col = -1;
             var sepstart = " ";
             var sepend = " ";
-            var stl = _options.OptStyleSchema.Lines();
+            var stl = _options.StyleContent(StyleControls.Lines);
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
@@ -1744,12 +1731,12 @@ namespace PPlus.Controls.Table
                 if (_options.IsColumnsNavigation && col == _currentcol)
                 {
                     var h = AlignmentText($"{_options.Symbol(SymbolType.Selector)} {item.Title.Trim()}", item.AlignTitle, item.Width);
-                    screenBuffer.AddBuffer(h, _options.OptStyleSchema.Selected());
+                    screenBuffer.AddBuffer(h, _options.StyleContent(StyleControls.Selected));
                 }
                 else
                 {
                     var h = AlignmentText(item.Title.Trim(), item.AlignTitle, item.Width);
-                    screenBuffer.AddBuffer(h, _options.HeaderStyle);
+                    screenBuffer.AddBuffer(h, _options.StyleContent(StyleControls.TableHeader));
                 }
             }
             screenBuffer.AddBuffer(sepend, stl);
@@ -1809,7 +1796,7 @@ namespace PPlus.Controls.Table
                 var sep = " ";
                 var sepcol = " ";
                 var sepend = " ";
-                var stl = _options.OptStyleSchema.Lines();
+                var stl = _options.StyleContent(StyleControls.Lines);
                 switch (_options.Layout)
                 {
                     case TableLayout.HideGrid:
@@ -1912,24 +1899,24 @@ namespace PPlus.Controls.Table
                             {
                                 if (itemcol == _currentcol || itemcol == 0)
                                 {
-                                    screenBuffer.AddBuffer(col, _options.OptStyleSchema.Selected(), true);
+                                    screenBuffer.AddBuffer(col, _options.StyleContent(StyleControls.Selected), true);
                                 }
                                 else
                                 {
-                                    screenBuffer.AddBuffer(col, _options.ContentStyle, true);
+                                    screenBuffer.AddBuffer(col, _options.StyleContent(StyleControls.TableContent), true);
                                 }
                             }
                             else
                             {
-                                screenBuffer.AddBuffer(col, _options.OptStyleSchema.Selected(), true);
+                                screenBuffer.AddBuffer(col, _options.StyleContent(StyleControls.Selected), true);
                             }
                         }
                         else
                         {
-                            var stld = _options.ContentStyle;
+                            var stld = _options.StyleContent(StyleControls.TableContent);
                             if (isdisabled)
                             {
-                                stld = _options.OptStyleSchema.Disabled();
+                                stld = _options.StyleContent(StyleControls.Disabled);
                             }
                             screenBuffer.AddBuffer(col, stld, true);
                         }

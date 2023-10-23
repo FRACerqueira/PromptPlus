@@ -24,7 +24,7 @@ namespace PPlus.Controls
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(result, options.StyleContent(StyleControls.Description));
             }
         }
 
@@ -42,7 +42,7 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(tp))
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer(tp, options.OptStyleSchema.Tooltips(), smk);
+                    screenBuffer.AddBuffer(tp, options.StyleContent(StyleControls.Tooltips), smk);
                 }
             }
         }

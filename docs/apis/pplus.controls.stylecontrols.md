@@ -36,10 +36,39 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | Pagination | 8 | Pagination Region |
 | TaggedInfo | 9 | TaggedInfo Region |
 | Tooltips | 10 | Tooltips Region |
-| Slider | 11 | Slider Region |
-| Chart | 12 | Chart Region |
+| Spinner | 11 | Spinner Region |
+| Slider | 12 | Slider Region |
 | Ranger | 13 | Ranger Region |
 | Lines | 14 | Lines Region |
+| FilterMatch | 15 | Filter Match Region |
+| FilterUnMatch | 16 | Filter UnMatch Region |
+| MaskTypeTip | 17 | Mask TypeTip Region |
+| MaskNegative | 18 | Mask Negative Region |
+| MaskPositive | 19 | Mask Positive Region |
+| CalendarHighlight | 20 | Calendar Highlight content |
+| CalendarDay | 21 | Calendar Day content |
+| CalendarMonth | 22 | Calendar Month content |
+| CalendarYear | 23 | Calendar Year content |
+| CalendarWeekDay | 24 | Calendar Week Day content |
+| ChartTitle | 25 | Chart Title content |
+| ChartLabel | 26 | Chart Label content |
+| ChartValue | 27 | Chart Label content |
+| ChartPercent | 28 | Chart Perent content |
+| ChartOrder | 29 | Chart Order content |
+| GroupTip | 30 | Group tip content |
+| OnOff | 31 | On/Off content |
+| TableTitle | 32 | Table Title content |
+| TableHeader | 33 | Table Header content |
+| TableContent | 34 | Table Data content |
+| TaskTitle | 35 | Task Title Region |
+| TaskElapsedTime | 36 | Task ElapsedTime Region |
+| BrowserSize | 37 | Browser Size region/state |
+| BrowserFile | 38 | Browser File region/state |
+| BrowserFolder | 39 | Browser Folder region/state |
+| TreeViewExpand | 40 | TreeView Expand region/state |
+| TreeViewRoot | 41 | TreeView Root region/state |
+| TreeViewParent | 42 | TreeView Parent region/state |
+| TreeViewChild | 43 | TreeView Child region/state |
 
 
 - - -

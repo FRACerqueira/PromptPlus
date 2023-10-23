@@ -22,24 +22,12 @@ namespace PPlus.Controls
             ItemsDisabled = new();
             ItemsNotes = new();
             Itemshighlight = new();
-            DescriptionStyle = styleSchema.Description();
-            HighlightStyle = styleSchema.TaggedInfo();
-            DayStyle = styleSchema.Prompt();
-            MonthStyle = styleSchema.Prompt();
-            YearStyle = styleSchema.Prompt();
-            WeekDayStyle = styleSchema.Prompt();
             SwitchNotes = config.CalendarSwitchNotesPress;
             TimeoutOverwriteDefault = config.HistoryTimeout;
         }
         public CalendarLayout Layout { get; set; } =  CalendarLayout.SingleGrid;
         public CultureInfo CurrentCulture { get; set; } = null;
         public PolicyInvalidDate PolicyInvalidDate { get; set; } = PolicyInvalidDate.NextDate;
-        public Style DescriptionStyle { get; set; }
-        public Style HighlightStyle { get; set; }
-        public Style DayStyle { get; set; }
-        public Style MonthStyle { get; set; }
-        public Style YearStyle { get; set; }
-        public Style WeekDayStyle { get; set; }
         public DateTime StartDate { get; set; } = DateTime.Now.Date;
         public bool DisabledWeekend { get; set; }
         public HotKey SwitchNotes { get; set; }

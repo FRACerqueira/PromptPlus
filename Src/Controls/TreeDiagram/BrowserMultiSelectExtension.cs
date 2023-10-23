@@ -38,7 +38,7 @@ namespace PPlus
                 Spinner = new Spinners(SpinnersType.Ascii, _consoledrive.IsUnicodeSupported)
             };
             config?.Invoke(opt);
-            opt.ApplyStyle(StyleControls.Answer, opt.OptStyleSchema.Answer().Overflow(Overflow.Ellipsis));
+            opt.ApplyStyle(StyleControls.Answer, opt.StyleContent(StyleControls.Answer).Overflow(Overflow.Crop));
             return new BrowserMultiSelectControl(_consoledrive, opt);
         }
 
@@ -56,7 +56,7 @@ namespace PPlus
                 Spinner = new Spinners(SpinnersType.Ascii, _consoledrive.IsUnicodeSupported)
             };
             config?.Invoke(opt);
-            opt.ApplyStyle(StyleControls.Answer, opt.OptStyleSchema.Answer().Overflow(Overflow.Ellipsis));
+            opt.ApplyStyle(StyleControls.Answer, opt.StyleContent(StyleControls.Answer).Overflow(Overflow.Crop));
             return new BrowserMultiSelectControl(_consoledrive, opt);
         }
     }

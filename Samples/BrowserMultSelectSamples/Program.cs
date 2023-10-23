@@ -82,11 +82,11 @@ namespace BrowserMultSelectSamples
                 .Run();
 
             PromptPlus.DoubleDash("Control:BrowserMultiSelect - Change Style");
-            PromptPlus.BrowserMultiSelect("Browser", "Folder Color.Blue / Color.Yellow ")
+            PromptPlus.BrowserMultiSelect("Browser", "Folder Color.Blue / File Color.Yellow ")
                 .Root(root, true)
-                .Styles(StyleBrowser.UnselectedFolder, Style.Default.Foreground(Color.Blue))
-                .Styles(StyleBrowser.SelectedFolder, Style.Default.Foreground(Color.Yellow))
-                .Config(cfg => cfg.ApplyStyle(StyleControls.Lines, Style.Default.Foreground(Color.Red)))
+                .Styles(BrowserStyles.BrowserFolder, Color.Blue.ToStyle())
+                .Styles(BrowserStyles.BrowserFile, Color.Yellow.ToStyle())
+                .Styles(BrowserStyles.Lines, Color.Red.ToStyle())
                 .Run();
 
             PromptPlus.WriteLines(2);

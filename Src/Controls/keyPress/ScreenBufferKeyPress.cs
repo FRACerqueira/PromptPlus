@@ -15,12 +15,12 @@ namespace PPlus.Controls
         {
             if (!string.IsNullOrEmpty(options.OptPrompt))
             {
-                screenBuffer.AddBuffer(options.OptPrompt, options.OptStyleSchema.Prompt());
+                screenBuffer.AddBuffer(options.OptPrompt, options.StyleContent(StyleControls.Prompt));
             }
             if (!string.IsNullOrEmpty(input))
             {
-                screenBuffer.AddBuffer(": ", options.OptStyleSchema.Prompt(), true, !string.IsNullOrEmpty(options.OptPrompt));
-                screenBuffer.AddBuffer(input, options.OptStyleSchema.Answer(), true, false);
+                screenBuffer.AddBuffer(": ", options.StyleContent(StyleControls.Prompt), true, !string.IsNullOrEmpty(options.OptPrompt));
+                screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.Answer), true, false);
             }
         }
 
@@ -28,7 +28,7 @@ namespace PPlus.Controls
         {
             if (!string.IsNullOrEmpty(options.OptPrompt) && !options.OptMinimalRender)
             {
-                screenBuffer.AddBuffer(options.OptPrompt, options.OptStyleSchema.Prompt());
+                screenBuffer.AddBuffer(options.OptPrompt, options.StyleContent(StyleControls.Prompt));
                 if (modeconfirm)
                 {
                     var aux = new StringBuilder();
@@ -54,7 +54,7 @@ namespace PPlus.Controls
                     }
                     if (aux.Length > 0)
                     {
-                        screenBuffer.AddBuffer($" ({aux})", options.OptStyleSchema.TaggedInfo(), true, false);
+                        screenBuffer.AddBuffer($" ({aux})", options.StyleContent(StyleControls.TaggedInfo), true, false);
                     }
                 }
             }
@@ -62,9 +62,9 @@ namespace PPlus.Controls
             {
                 if (!options.OptMinimalRender)
                 {
-                    screenBuffer.AddBuffer(": ", options.OptStyleSchema.Prompt(), true, !string.IsNullOrEmpty(options.OptPrompt));
+                    screenBuffer.AddBuffer(": ", options.StyleContent(StyleControls.Prompt), true, !string.IsNullOrEmpty(options.OptPrompt));
                 }
-                screenBuffer.AddBuffer(input, options.OptStyleSchema.Answer(), true, false);
+                screenBuffer.AddBuffer(input, options.StyleContent(StyleControls.Answer), true, false);
             }
         }
 
@@ -82,7 +82,7 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(tp))
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer(tp, options.OptStyleSchema.Tooltips(), smk);
+                    screenBuffer.AddBuffer(tp, options.StyleContent(StyleControls.Tooltips), smk);
                 }
             }
         }
@@ -96,7 +96,7 @@ namespace PPlus.Controls
             if (!string.IsNullOrEmpty(options.OptDescription))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(options.OptDescription, options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(options.OptDescription, options.StyleContent(StyleControls.Description));
             }
             if (showkeyvalids)
             {
@@ -139,7 +139,7 @@ namespace PPlus.Controls
                 if (aux.Length > 0) 
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer($"{Messages.Validkeys}: {aux}", options.OptStyleSchema.TaggedInfo());
+                    screenBuffer.AddBuffer($"{Messages.Validkeys}: {aux}", options.StyleContent(StyleControls.TaggedInfo));
                 }
             }
         }

@@ -6,29 +6,34 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents the Style of content Calendar
+    /// Represents the Styles KeyPress Control
     /// </summary>
-    public enum StyleCalendar
+    public enum KeyPressStyles
     {
         /// <summary>
-        /// Highlight content
+        /// Prompt Region
         /// </summary>
-        Highlight,
+        Prompt,
         /// <summary>
-        /// Day content
+        /// Answer Region
         /// </summary>
-        Day,
+        Answer,
         /// <summary>
-        /// Month content
+        /// Description Region
         /// </summary>
-        Month,
+        Description,
         /// <summary>
-        /// Year content
+        /// TaggedInfo Region
         /// </summary>
-        Year,
+        TaggedInfo,
         /// <summary>
-        /// Week Day content
+        /// Tooltips Region
         /// </summary>
-        WeekDay
+        Tooltips,
+        /// <summary>
+        /// Spinner Region
+        /// </summary>
+        Spinner
     }
 }
+

@@ -47,7 +47,7 @@ namespace PPlus
                 OptDescription = description    
             };
             config?.Invoke(opt);
-            opt.ApplyStyle(StyleControls.Answer, opt.OptStyleSchema.Answer().Overflow(Overflow.Ellipsis));
+            opt.ApplyStyle(StyleControls.Answer, opt.StyleContent(StyleControls.Answer).Overflow(Overflow.Crop));
             return new MultiSelectControl<T>(_consoledrive, opt);
         }
 

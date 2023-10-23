@@ -42,26 +42,6 @@ Action to execute.
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-applystyle"/>**ApplyStyle(StyleControls, Style)**
-
-Overwrite default style for [StyleControls](./pplus.controls.stylecontrols.md) of control
-
-```csharp
-IPromptConfig ApplyStyle(StyleControls styleControl, Style value)
-```
-
-#### Parameters
-
-`styleControl` [StyleControls](./pplus.controls.stylecontrols.md)<br>
-Style overwriter
-
-`value` [Style](./pplus.style.md)<br>
-value
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
 ### <a id="methods-description"/>**Description(String)**
 
 Set description for the control
@@ -280,29 +260,6 @@ IPromptConfig ShowTooltip(bool value)
 
 `value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 value
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-symbols"/>**Symbols(SymbolType, String, String)**
-
-Overwrite default Symbols for [SymbolType](./pplus.controls.symboltype.md) of control
-
-```csharp
-IPromptConfig Symbols(SymbolType schema, string value, string unicode)
-```
-
-#### Parameters
-
-`schema` [SymbolType](./pplus.controls.symboltype.md)<br>
-Symbol overwriter
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Text when **not** is-unicode supported
-
-`unicode` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Text when has is-unicode supported
 
 #### Returns
 

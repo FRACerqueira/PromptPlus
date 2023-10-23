@@ -178,5 +178,13 @@ namespace PPlus.Controls
         /// <param name="value">Automatically select</param>
         /// <returns><see cref="IControlSelect{T}"/></returns>
         IControlSelect<T> AutoSelect(bool value = true);
+
+        /// <summary>
+        /// Overwrite Styles
+        /// </summary>
+        /// <param name="styletype"><see cref="SelectStyles"/> of content</param>
+        /// <param name="value">The <see cref="Style"/></param>
+        /// <returns><see cref="IControlSelect{T}"/></returns>
+        IControlSelect<T> Styles(SelectStyles styletype, Style value);
     }
 }

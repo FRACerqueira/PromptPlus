@@ -47,7 +47,7 @@ namespace MaskEditTimeTypeSamples
                 .Mask(MaskedType.TimeOnly)
                 .AcceptEmptyValue()
                 .ShowTipInputType()
-                .TypeTipStyle(Style.Default.Foreground(Color.IndianRed))
+                .Styles(MaskEditStyles.MaskTypeTip, Style.Default.Foreground(Color.Blue))
                 .Run();
 
             PromptPlus.DoubleDash($"Control:MaskEdit TimeOnly - with overwrite culture:pt-br.");
