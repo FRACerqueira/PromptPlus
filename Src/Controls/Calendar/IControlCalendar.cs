@@ -48,12 +48,12 @@ namespace PPlus.Controls
         IControlCalendar Interaction<T1>(IEnumerable<T1> values, Action<IControlCalendar, T1> action);
 
         /// <summary>
-        /// Styles for Calendar content
+        /// Overwrite Styles
         /// </summary>
-        /// <param name="styletype"><see cref="StyleCalendar"/> of content</param>
+        /// <param name="styletype"><see cref="CalendarStyles"/> of content</param>
         /// <param name="value">The <see cref="Style"/></param>
         /// <returns><see cref="IControlCalendar"/></returns>
-        IControlCalendar Styles(StyleCalendar styletype, Style value);
+        IControlCalendar Styles(CalendarStyles styletype, Style value);
 
         /// <summary>
         /// Initial date.Default value is current date.

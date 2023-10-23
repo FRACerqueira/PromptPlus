@@ -24,10 +24,9 @@ namespace ConsoleFeaturesSamples
             //by instance
             PromptPlus.Input("").Config(cfg =>
             {
-                cfg
-                 .ApplyStyle(StyleControls.Prompt, new Style(Color.Yellow))
-                 .EnabledAbortKey(true);
-            });
+                cfg.EnabledAbortKey(true);
+            })
+            .Styles(InputStyles.Prompt, new Style(Color.Yellow));
 
             PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
             PromptPlus.WriteLine("[RGB(255,0,0):WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
@@ -128,9 +127,9 @@ namespace ConsoleFeaturesSamples
                 .Config(cfg =>
                 {
                     cfg.HideAfterFinish(true)
-                      .ShowTooltip(false)
-                      .ApplyStyle(StyleControls.Tooltips, Style.Default.Foreground(Color.Grey100));
+                      .ShowTooltip(false);
                 })
+                .Styles(KeyPressStyles.Tooltips, Style.Default.Foreground(Color.Grey100))
                 .Spinner(SpinnersType.Balloon)
                 .Run();
 
@@ -210,10 +209,10 @@ namespace ConsoleFeaturesSamples
             }
             PromptPlus.WriteLines(2);
             PromptPlus.KeyPress("End Sample!, Press any key", cfg =>
-            {
-                cfg.ShowTooltip(false);
-                cfg.ApplyStyle(StyleControls.Tooltips, Style.Default.Foreground(Style.Default.Background.GetInvertedColor()));
-            })
+                {
+                    cfg.ShowTooltip(false);
+                })
+                .Styles(KeyPressStyles.Tooltips, Style.Default.Foreground(Style.Default.Background.GetInvertedColor()))
                 .Run();
 
 

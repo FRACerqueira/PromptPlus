@@ -42,8 +42,8 @@ namespace AlternateScreenSamples
             PromptPlus.KeyPress("End Sample!, Press any key", cfg =>
             {
                 cfg.ShowTooltip(false);
-                cfg.ApplyStyle(StyleControls.Tooltips, Style.Default.Foreground(Style.Default.Background.GetInvertedColor()));
             })
+            .Styles(KeyPressStyles.Tooltips, Style.Default.Foreground(Style.Default.Background.GetInvertedColor()))
             .Run();
 
         }

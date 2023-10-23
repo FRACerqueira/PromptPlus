@@ -39,6 +39,26 @@ The value to write.
 
 [Color](./pplus.color.md) White or Black
 
+### <a id="methods-tostyle"/>**ToStyle(Color, Overflow)**
+
+Convert Color to Style with default background color
+
+```csharp
+public static Style ToStyle(Color color, Overflow overflow)
+```
+
+#### Parameters
+
+`color` [Color](./pplus.color.md)<br>
+The color
+
+`overflow` [Overflow](./pplus.overflow.md)<br>
+The [Overflow](./pplus.overflow.md)
+
+#### Returns
+
+[Style](./pplus.style.md)
+
 
 - - -
 [**Back to List Api**](./apis.md)

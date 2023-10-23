@@ -41,8 +41,8 @@ namespace MaskEditNumberTypeSamples
                 .Mask(MaskedType.Number)
                 .Culture("pt-br")
                 .AmmoutPositions(10, 2, true)
-                .PositiveStyle(Style.Default.Foreground(Color.Green))
-                .NegativeStyle(Style.Default.Foreground(Color.IndianRed))
+                .Styles(MaskEditStyles.MaskPositive, Style.Default.Foreground(Color.Green))
+                .Styles(MaskEditStyles.MaskNegative, Style.Default.Foreground(Color.IndianRed))
                 .Run();
 
             PromptPlus.DoubleDash($"Control:Number - with overwrite culture:pt-br.");

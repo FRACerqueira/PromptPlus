@@ -12,7 +12,12 @@ namespace PPlus.Controls
     public abstract class BaseOptions : IPromptConfig
     {
         private readonly Dictionary<SymbolType, (string value, string unicode)> _optSymbols = new();
+
+        private readonly Dictionary<string, Style> _optStyles = new();
+
         private readonly IConsoleControl _console;
+
+        private readonly StyleSchema _optStyleSchema;
 
         private BaseOptions()
         {
@@ -23,7 +28,7 @@ namespace PPlus.Controls
         {
             _console = console;
             Config = config;
-            OptStyleSchema = StyleSchema.Clone(styleSchema);
+            _optStyleSchema = StyleSchema.Clone(styleSchema);
             foreach (var item in config._globalSymbols.Keys)
             {
                 _optSymbols.Add(item, config._globalSymbols[item]);
@@ -36,9 +41,12 @@ namespace PPlus.Controls
             OptEnabledAbortKey = config.EnabledAbortKey;
             OptDisableChangeTooltip = config.DisableToggleTooltip;
             OptShowOnlyExistingPagination = config.ShowOnlyExistingPagination;
+            foreach (var item in Enum.GetNames(typeof(StyleControls)))
+            {
+                _optStyles.Add(item, _optStyleSchema.GetStyle(Enum.Parse<StyleControls>(item)));
+            }
         }
 
-        internal StyleSchema OptStyleSchema { get; }
         internal ConfigControls Config { get; }
         internal bool OptShowCursor { get; set; } = false;
         internal string OptPrompt { get; set; } = string.Empty;
@@ -56,6 +64,23 @@ namespace PPlus.Controls
         internal bool OptMinimalRender { get; private set; }
         internal Func<int, int, int, string>? OptPaginationTemplate { get; private set; }
 
+        internal void StyleControl(Enum key, Style value)
+        {
+            if (!_optStyles.TryGetValue(key.ToString(), out _))
+            {
+                throw new PromptPlusException($"Style({key}) not implemented.");
+            }
+            _optStyles[key.ToString()] = value;
+        }
+
+        internal Style StyleContent(Enum key)
+        {
+            if (_optStyles.TryGetValue(key.ToString(), out Style result))
+            {
+                return result;
+            }
+            throw new PromptPlusException($"Style({key}) not implemented.");
+        }
 
         #region IPromptConfig
 
@@ -134,7 +159,7 @@ namespace PPlus.Controls
         public IPromptConfig Description(StringStyle value)
         {
             OptDescription = value.Text;
-            OptStyleSchema.ApplyStyle(StyleControls.Description, value.Style);
+            _optStyleSchema.ApplyStyle(StyleControls.Description, value.Style);
             return this;
         }
 
@@ -142,7 +167,7 @@ namespace PPlus.Controls
         public IPromptConfig Prompt(StringStyle value)
         {
             OptPrompt = value.Text;
-            OptStyleSchema.ApplyStyle(StyleControls.Prompt, value.Style);
+            _optStyleSchema.ApplyStyle(StyleControls.Prompt, value.Style);
             return this;
         }
 
@@ -150,7 +175,7 @@ namespace PPlus.Controls
         public IPromptConfig Tooltips(StringStyle value)
         {   
             OptToolTip = value.Text;
-            OptStyleSchema.ApplyStyle(StyleControls.Tooltips, value.Style);
+            _optStyleSchema.ApplyStyle(StyleControls.Tooltips, value.Style);
             return this;
         }
 
@@ -176,14 +201,14 @@ namespace PPlus.Controls
         }
 
         /// <inheritdoc/>
-        public IPromptConfig ApplyStyle(StyleControls styleControl, Style value)
+        internal IPromptConfig ApplyStyle(StyleControls styleControl, Style value)
         {
-            OptStyleSchema.ApplyStyle(styleControl, value);
+            _optStyleSchema.ApplyStyle(styleControl, value);
             return this;
         }
 
         /// <inheritdoc/>
-        public IPromptConfig Symbols(SymbolType schema, string value, string? unicode = null)
+        internal IPromptConfig Symbols(SymbolType schema, string value, string? unicode = null)
         {
             _optSymbols[schema] = (value,unicode??value);
             return this;

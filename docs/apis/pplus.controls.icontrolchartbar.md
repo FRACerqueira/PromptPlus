@@ -354,18 +354,18 @@ Show Percent in legend
 
 [IControlChartBar](./pplus.controls.icontrolchartbar.md)
 
-### <a id="methods-styles"/>**Styles(StyleChart, Style)**
+### <a id="methods-styles"/>**Styles(ChartStyles, Style)**
 
-Styles for ChartBar content
+Overwrite Styles
 
 ```csharp
-IControlChartBar Styles(StyleChart styletype, Style value)
+IControlChartBar Styles(ChartStyles styletype, Style value)
 ```
 
 #### Parameters
 
-`styletype` [StyleChart](./pplus.controls.stylechart.md)<br>
-[StyleChart](./pplus.controls.stylechart.md) of content
+`styletype` [ChartStyles](./pplus.controls.chartstyles.md)<br>
+[ChartStyles](./pplus.controls.chartstyles.md) of content
 
 `value` [Style](./pplus.style.md)<br>
 The [Style](./pplus.style.md)

@@ -61,13 +61,19 @@ namespace PPlus.Controls
 
         #region IControlKeyPress
 
+        public IControlKeyPress Styles(KeyPressStyles content, Style value)
+        {
+            _options.StyleControl(content, value);
+            return this;
+        }
+
         public IControlKeyPress TextKeyValid(Func<ConsoleKeyInfo, string?> value)
         {
             _options.TextKey = value;
             return this;
         }
 
-        public IControlKeyPress Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
+        public IControlKeyPress Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
         {
             if (spinnersType == SpinnersType.Custom && customspinner.Any())
             {
@@ -80,10 +86,6 @@ namespace PPlus.Controls
             else
             {
                 _options.Spinner = new Spinners(spinnersType, ConsolePlus.IsUnicodeSupported);
-            }
-            if (spinnerStyle.HasValue)
-            {
-                _options.SpinnerStyle = spinnerStyle.Value;
             }
             return this;
         }
@@ -323,7 +325,7 @@ namespace PPlus.Controls
                 if (_options.Spinner != null)
                 {
                     var spn = _options.Spinner.NextFrame(cancellationToken);
-                    ConsolePlus.Write($"{spn}", _options.SpinnerStyle);
+                    ConsolePlus.Write($"{spn}", _options.StyleContent(StyleControls.Spinner));
                 }
                 ConsolePlus.SetCursorPosition(CursorLeft, CursorTop);
             }

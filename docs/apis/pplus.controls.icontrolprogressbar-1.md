@@ -200,13 +200,13 @@ element to hide. [HideProgressBar](./pplus.controls.hideprogressbar.md)
 
 [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
-### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Style&gt;, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
+### <a id="methods-spinner"/>**Spinner(SpinnersType, Nullable&lt;Int32&gt;, IEnumerable&lt;String&gt;)**
 
 Overwrite [SpinnersType](./pplus.controls.spinnerstype.md). Default value is SpinnersType.Ascii
  <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected
 
 ```csharp
-IControlProgressBar<T> Spinner(SpinnersType spinnersType, Nullable<Style> SpinnerStyle, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
+IControlProgressBar<T> Spinner(SpinnersType spinnersType, Nullable<Int32> speedAnimation, IEnumerable<String> customspinner)
 ```
 
 #### Parameters
@@ -214,14 +214,31 @@ IControlProgressBar<T> Spinner(SpinnersType spinnersType, Nullable<Style> Spinne
 `spinnersType` [SpinnersType](./pplus.controls.spinnerstype.md)<br>
 The [SpinnersType](./pplus.controls.spinnerstype.md)
 
-`SpinnerStyle` [Nullable&lt;Style&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
-Style of spinner. [Style](./pplus.style.md)
-
 `speedAnimation` [Nullable&lt;Int32&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored
 
 `customspinner` [IEnumerable&lt;String&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored
+
+#### Returns
+
+[IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
+
+### <a id="methods-styles"/>**Styles(ProgressBarStyles, Style)**
+
+Overwrite Styles
+
+```csharp
+IControlProgressBar<T> Styles(ProgressBarStyles content, Style value)
+```
+
+#### Parameters
+
+`content` [ProgressBarStyles](./pplus.controls.progressbarstyles.md)<br>
+[ProgressBarStyles](./pplus.controls.progressbarstyles.md) of content
+
+`value` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md)
 
 #### Returns
 

@@ -42,11 +42,17 @@ namespace PPlus.Controls
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected.</br>
         /// </summary>
         /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
-        /// <param name="SpinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <param name="customspinner">IEnumerable value for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlKeyPress"/></returns>
-        IControlKeyPress Spinner(SpinnersType spinnersType, Style? SpinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
+        IControlKeyPress Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
+        /// <summary>
+        /// Overwrite Styles
+        /// </summary>
+        /// <param name="styletype"><see cref="KeyPressStyles"/> of content</param>
+        /// <param name="value">The <see cref="Style"/></param>
+        /// <returns><see cref="IControlKeyPress"/></returns>
+        IControlKeyPress Styles(KeyPressStyles styletype, Style value);
     }
 }

@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:StyleChart 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:SliderNumberStyles 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,28 +8,30 @@
 
 [**Back to List Api**](./apis.md)
 
-# StyleChart
+# SliderNumberStyles
 
 Namespace: PPlus.Controls
 
-Represents the Style of content Chart
+Represents The Styles SliderNumber control
 
 ```csharp
-public enum StyleChart
+public enum SliderNumberStyles
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [StyleChart](./pplus.controls.stylechart.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [SliderNumberStyles](./pplus.controls.slidernumberstyles.md)<br>
 Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icomparable), [IFormattable](https://docs.microsoft.com/en-us/dotnet/api/system.iformattable), [IConvertible](https://docs.microsoft.com/en-us/dotnet/api/system.iconvertible)
 
 ## Fields
 
 | Name | Value | Description |
 | --- | --: | --- |
-| Title | 0 | Title content |
-| Label | 1 | Label content |
-| Value | 2 | Label content |
-| Percent | 3 | Perent content |
-| Order | 4 | Order content |
+| Prompt | 0 | Prompt Region |
+| Answer | 1 | Answer Region |
+| Description | 2 | Description Region |
+| TaggedInfo | 3 | TaggedInfo Region |
+| Tooltips | 4 | Tooltips Region |
+| Slider | 5 | Slider Region |
+| Ranger | 6 | Ranger Region |
 
 
 - - -

@@ -69,12 +69,12 @@ namespace PPlus.Controls
         IControlChartBar Interaction<T1>(IEnumerable<T1> values, Action<IControlChartBar, T1> action);
 
         /// <summary>
-        /// Styles for ChartBar content
+        /// Overwrite Styles
         /// </summary>
-        /// <param name="styletype"><see cref="StyleChart"/> of content</param>
+        /// <param name="styletype"><see cref="ChartStyles"/> of content</param>
         /// <param name="value">The <see cref="Style"/></param>
         /// <returns><see cref="IControlChartBar"/></returns>
-        IControlChartBar Styles(StyleChart styletype, Style value);
+        IControlChartBar Styles(ChartStyles styletype, Style value);
 
         /// <summary>
         /// Add item to ChartBar

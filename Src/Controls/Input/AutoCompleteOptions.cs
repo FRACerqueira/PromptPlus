@@ -25,7 +25,6 @@ namespace PPlus.Controls
             MinimumPrefixLength = config.CompletionMinimumPrefixLength;
             CompletionWaitToStart = config.CompletionWaitToStart;
             CompletionMaxCount = config.CompletionMaxCount;
-            SpinnerStyle = styleSchema.Prompt();
             TimeoutOverwriteDefault = config.HistoryTimeout;
         }
 
@@ -35,7 +34,6 @@ namespace PPlus.Controls
         public int CompletionMaxCount { get; set; }
         public Func<string, int, CancellationToken, Task<string[]>> CompletionAsyncService { get; set; }
         public Spinners Spinner { get; set; } = new Spinners(SpinnersType.Ascii, PromptPlus.IsUnicodeSupported);
-        public Style SpinnerStyle { get; set; }
         public string? OverwriteDefaultFrom { get; set; } = null;
         public TimeSpan TimeoutOverwriteDefault { get; set; }
         public CaseOptions InputToCase { get; set; } = CaseOptions.Any;

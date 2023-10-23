@@ -16,9 +16,9 @@ namespace PPlus.Controls
             {
                 if (input.StartsWith(filter.ToString(), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    screenBuffer.WriteAnswer(options, input[..filter.Length]);
+                    screenBuffer.WriteFilterMatch(options, input[..filter.Length]);
                     screenBuffer.SaveCursor();
-                    screenBuffer.WriteSuggestion(options, input[filter.Length..]);
+                    screenBuffer.WriteFilterUnMatch(options, input[filter.Length..]);
                 }
                 else
                 {
@@ -41,10 +41,10 @@ namespace PPlus.Controls
                 foreach (var itempart in parts)
                 {
                     pos++;
-                    screenBuffer.WriteSuggestion(options, itempart);
+                    screenBuffer.WriteFilterMatch(options, itempart);
                     if (pos < parts.Length)
                     {
-                        screenBuffer.WriteAnswer(options, filter.ToString());
+                        screenBuffer.WriteFilterUnMatch(options, filter.ToString());
                     }
                     if (first)
                     {
@@ -72,7 +72,7 @@ namespace PPlus.Controls
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(result, options.StyleContent(StyleControls.Description));
                 return true;
             }
             return false;
@@ -92,7 +92,7 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(tp))
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer(tp, options.OptStyleSchema.Tooltips(), swm);
+                    screenBuffer.AddBuffer(tp, options.StyleContent(StyleControls.Tooltips), swm);
                 }
             }
         }
@@ -111,8 +111,8 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(tp))
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selected)}: {tagged}, ", options.OptStyleSchema.TaggedInfo(), true);
-                    screenBuffer.AddBuffer(tp, options.OptStyleSchema.Tooltips(), swm);
+                    screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selected)}: {tagged}, ", options.StyleContent(StyleControls.TaggedInfo), true);
+                    screenBuffer.AddBuffer(tp, options.StyleContent(StyleControls.Tooltips), swm);
                 }
             }
         }

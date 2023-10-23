@@ -6,45 +6,45 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents The region/state of TreeView
+    /// Represents The Style Wait Control
     /// </summary>
-    public enum StyleTreeView
+    public enum WaitStyles
     {
         /// <summary>
-        /// CurrentNode Region
+        /// Prompt Region
         /// </summary>
-        CurrentNode,
+        Prompt,
         /// <summary>
-        /// Unselected Root Region/State
+        /// Answer Region
         /// </summary>
-        UnselectedRoot,
+        Answer,
         /// <summary>
-        /// Unselected Expand Region/State
+        /// Description Region
         /// </summary>
-        UnselectedExpand,
+        Description,
         /// <summary>
-        /// Unselected Parent Region/State
+        /// TaggedInfo Region
         /// </summary>
-        UnselectedParent,
+        TaggedInfo,
         /// <summary>
-        /// Unselected Child Region/State
+        /// Tooltips Region
         /// </summary>
-        UnselectedChild,
+        Tooltips,
         /// <summary>
-        /// Selected Expand Region/State
+        /// Spinner Region
         /// </summary>
-        SelectedExpand,
+        Spinner,
         /// <summary>
-        /// Selected Root Region/State
+        /// Lines Region
         /// </summary>
-        SelectedRoot,
+        Lines,
         /// <summary>
-        /// Selected Parent Region/State
+        /// Task Title Region
         /// </summary>
-        SelectedParent,
+        TaskTitle,
         /// <summary>
-        /// Selected Child Region/State
+        /// Task ElapsedTime Region
         /// </summary>
-        SelectedChild
+        TaskElapsedTime
     }
 }

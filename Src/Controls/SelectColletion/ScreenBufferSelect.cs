@@ -16,9 +16,9 @@ namespace PPlus.Controls
             {
                 if (input.StartsWith(filter.ToString(), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    screenBuffer.WriteAnswer(options, input[..filter.Length]);
+                    screenBuffer.WriteFilterMatch(options, input[..filter.Length]);
                     screenBuffer.SaveCursor();
-                    screenBuffer.WriteSuggestion(options, input[filter.Length..]);
+                    screenBuffer.WriteFilterUnMatch(options, input[filter.Length..]);
                 }
                 else
                 {
@@ -41,10 +41,10 @@ namespace PPlus.Controls
                 foreach (var itempart in parts)
                 {
                     pos++;
-                    screenBuffer.WriteSuggestion(options, itempart);
+                    screenBuffer.WriteFilterMatch(options, itempart);
                     if (pos < parts.Length)
                     {
-                        screenBuffer.WriteAnswer(options, filter.ToString());
+                        screenBuffer.WriteFilterUnMatch(options, filter.ToString());
                     }
                     if (first)
                     {
@@ -63,13 +63,13 @@ namespace PPlus.Controls
             }
             if (string.IsNullOrEmpty(indentgroup))
             {
-                screenBuffer.AddBuffer(' ', Style.Default, true);
-                screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.Disabled(), false, false);
+                screenBuffer.AddBuffer(' ', options.StyleContent(StyleControls.Disabled), true);
+                screenBuffer.AddBuffer($" {message}", options.StyleContent(StyleControls.Disabled), false, false);
             }
             else
             {
-                screenBuffer.AddBuffer($" {indentgroup}", options.OptStyleSchema.Lines(), true);
-                screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.Disabled(), false, false);
+                screenBuffer.AddBuffer($" {indentgroup}", options.StyleContent(StyleControls.Lines), true);
+                screenBuffer.AddBuffer($" {message}", options.StyleContent(StyleControls.Disabled), false, false);
             }
         }
 
@@ -81,13 +81,13 @@ namespace PPlus.Controls
             }
             if (string.IsNullOrEmpty(indentgroup))
             {
-                screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)} {message}", options.OptStyleSchema.Selected(), false);
+                screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)} {message}", options.StyleContent(StyleControls.Selected), false);
             }
             else 
             {
-                screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)}", options.OptStyleSchema.Selected(), false);
-                screenBuffer.AddBuffer($"{indentgroup}", options.OptStyleSchema.Lines(), true);
-                screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.Selected(), false);
+                screenBuffer.AddBuffer($"{options.Symbol(SymbolType.Selector)}", options.StyleContent(StyleControls.Selected), false);
+                screenBuffer.AddBuffer($"{indentgroup}", options.StyleContent(StyleControls.Lines), true);
+                screenBuffer.AddBuffer($" {message}", options.StyleContent(StyleControls.Selected), false);
             }
         }
 
@@ -99,13 +99,13 @@ namespace PPlus.Controls
             }
             if (string.IsNullOrEmpty(indentgroup))
             {
-                screenBuffer.AddBuffer(' ', Style.Default, true);
-                screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.UnSelected(), false, false);
+                screenBuffer.AddBuffer(' ', options.StyleContent(StyleControls.UnSelected), true);
+                screenBuffer.AddBuffer($" {message}", options.StyleContent(StyleControls.UnSelected), false, false);
             }
             else
             {
-                screenBuffer.AddBuffer($" {indentgroup}", options.OptStyleSchema.Lines(), true);
-                screenBuffer.AddBuffer($" {message}", options.OptStyleSchema.UnSelected(), false, false);
+                screenBuffer.AddBuffer($" {indentgroup}", options.StyleContent(StyleControls.Lines), true);
+                screenBuffer.AddBuffer($" {message}", options.StyleContent(StyleControls.UnSelected), false, false);
             }
         }
 
@@ -114,7 +114,7 @@ namespace PPlus.Controls
         {
             if (!string.IsNullOrEmpty(filter))
             {
-                screenBuffer.AddBuffer(filter, options.OptStyleSchema.Error(), true);
+                screenBuffer.AddBuffer(filter, options.StyleContent(StyleControls.Error), true);
             }
         }
 
@@ -135,7 +135,7 @@ namespace PPlus.Controls
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(result, options.StyleContent(StyleControls.Description));
                 return true;
             }
             return false;
@@ -155,7 +155,7 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(tp))
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer(tp, options.OptStyleSchema.Tooltips(), swm);
+                    screenBuffer.AddBuffer(tp, options.StyleContent(StyleControls.Tooltips), swm);
                 }
             }
         }

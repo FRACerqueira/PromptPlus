@@ -98,6 +98,12 @@ namespace PPlus.Controls
 
         #region IControlMaskEditList
 
+        public IControlMaskEditList Styles(MaskEditListStyles content, Style value)
+        {
+            _options.StyleControl(content, value);
+            return this;
+        }
+
         public IControlMaskEditList Interaction<T>(IEnumerable<T> values, Action<IControlMaskEditList, T> action)
         {
             foreach (var item in values)
@@ -267,18 +273,6 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlMaskEditList NegativeStyle(Style value)
-        {
-            _options.NegativeStyle = value;
-            return this;
-        }
-
-        public IControlMaskEditList PositiveStyle(Style value)
-        {
-            _options.PositiveStyle = value;
-            return this;
-        }
-
         public IControlMaskEditList PageSize(int value)
         {
             if (value < 1)
@@ -315,12 +309,6 @@ namespace PPlus.Controls
         public IControlMaskEditList SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value)
         {
             _options.SuggestionHandler = value;
-            return this;
-        }
-
-        public IControlMaskEditList TypeTipStyle(Style value)
-        {
-            _options.TypeTipStyle = value;
             return this;
         }
 

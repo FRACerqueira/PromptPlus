@@ -26,6 +26,7 @@ namespace AutoCompleteSamples
             PromptPlus.AutoComplete("Input value", "Sample autocomplete (minimal 3 chars)")
                 .CompletionAsyncService(MYServiceCompleteAsync)
                 .Spinner(SpinnersType.Balloon)
+                .Styles(AutoCompleteStyles.Spinner, Color.Red.ToStyle())
                 .Run();
 
             PromptPlus.DoubleDash("Control:AutoComplete - with CompletionMaxCount and CompletionWaitToStart");

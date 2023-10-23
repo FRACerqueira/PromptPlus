@@ -95,11 +95,11 @@ namespace PPlus
             };
             if (spinnerStyle != null)
             {
-                opt.SpinnerStyle = spinnerStyle.Value;
+                opt.StyleControl(StyleControls.Spinner,spinnerStyle.Value);
             }
-            if (spinnerStyle != null)
+            if (elapsedTimeStyle != null)
             {
-                opt.ElapsedTimeStyle = elapsedTimeStyle.Value;
+                opt.StyleControl(StyleControls.TaskElapsedTime, elapsedTimeStyle.Value);
             }
             opt.HideAfterFinish(true);
             opt.EnabledAbortKey(false);

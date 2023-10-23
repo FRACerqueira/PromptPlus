@@ -45,41 +45,9 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlTreeViewSelect<T> Styles(StyleTreeView styletype, Style value)
+        public IControlTreeViewSelect<T> Styles(TreeViewStyles content, Style value)
         {
-            value = value.Overflow(Overflow.Crop);
-            switch (styletype)
-            {
-                case StyleTreeView.CurrentNode:
-                    _options.CurrentNodeStyle = value;
-                    break;
-                case StyleTreeView.UnselectedRoot:
-                    _options.RootStyle = value;
-                    break;
-                case StyleTreeView.UnselectedExpand:
-                    _options.ExpandStyle = value;
-                    break;
-                case StyleTreeView.UnselectedParent:
-                    _options.ParentStyle = value;
-                    break;
-                case StyleTreeView.UnselectedChild:
-                    _options.ChildStyle = value;
-                    break;
-                case StyleTreeView.SelectedExpand:
-                    _options.SelectedExpandStyle = value;
-                    break;
-                case StyleTreeView.SelectedRoot:
-                    _options.SelectedRootStyle = value;
-                    break;
-                case StyleTreeView.SelectedParent:
-                    _options.SelectedParentStyle = value;
-                    break;
-                case StyleTreeView.SelectedChild:
-                    _options.SelectedChildStyle = value;
-                    break;
-                default:
-                    throw new PromptPlusException($"StyleTreeView: {styletype} Not Implemented");
-            }
+            _options.StyleControl(content, value);
             return this;
         }
 
@@ -309,7 +277,7 @@ namespace PPlus.Controls
             {
                 hasprompt = true;
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(_options.OptDescription, _options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(_options.OptDescription, _options.StyleContent(StyleControls.Description));
             }
             var subset = _localpaginator.GetPageData();
             var showitem = _localpaginator.TryGetSelected(out var selectedItem);
@@ -321,11 +289,11 @@ namespace PPlus.Controls
                     screenBuffer.NewLine();
                     if (_options.ShowCurrentFulPathNode)
                     {
-                        screenBuffer.AddBuffer($"{selectedItem.MessagesNodes.TextFullpath}", _options.CurrentNodeStyle);
+                        screenBuffer.AddBuffer($"{selectedItem.MessagesNodes.TextFullpath}", _options.StyleContent(StyleControls.TaggedInfo));
                     }
                     else
                     {
-                        screenBuffer.AddBuffer($"{selectedItem.MessagesNodes.TextItem}", _options.CurrentNodeStyle);
+                        screenBuffer.AddBuffer($"{selectedItem.MessagesNodes.TextItem}", _options.StyleContent(StyleControls.TaggedInfo));
                     }
                 }
             }
@@ -340,7 +308,7 @@ namespace PPlus.Controls
                     }
                     else
                     {
-                        screenBuffer.WriteLineSelectorTreeViewSelect(_options, item, fnode.Childrens != null, hasprompt);
+                        screenBuffer.WriteLineSelectorTreeViewSelect(_options, item, hasprompt);
                     }
                 }
                 else

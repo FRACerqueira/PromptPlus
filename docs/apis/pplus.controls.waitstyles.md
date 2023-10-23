@@ -1,4 +1,4 @@
-# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:StyleCalendar 
+# <img align="left" width="100" height="100" src="../images/icon.png">PromptPlus API:WaitStyles 
 
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
@@ -8,28 +8,32 @@
 
 [**Back to List Api**](./apis.md)
 
-# StyleCalendar
+# WaitStyles
 
 Namespace: PPlus.Controls
 
-Represents the Style of content Calendar
+Represents The Style Wait Control
 
 ```csharp
-public enum StyleCalendar
+public enum WaitStyles
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [StyleCalendar](./pplus.controls.stylecalendar.md)<br>
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Enum](https://docs.microsoft.com/en-us/dotnet/api/system.enum) → [WaitStyles](./pplus.controls.waitstyles.md)<br>
 Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icomparable), [IFormattable](https://docs.microsoft.com/en-us/dotnet/api/system.iformattable), [IConvertible](https://docs.microsoft.com/en-us/dotnet/api/system.iconvertible)
 
 ## Fields
 
 | Name | Value | Description |
 | --- | --: | --- |
-| Highlight | 0 | Highlight content |
-| Day | 1 | Day content |
-| Month | 2 | Month content |
-| Year | 3 | Year content |
-| WeekDay | 4 | Week Day content |
+| Prompt | 0 | Prompt Region |
+| Answer | 1 | Answer Region |
+| Description | 2 | Description Region |
+| TaggedInfo | 3 | TaggedInfo Region |
+| Tooltips | 4 | Tooltips Region |
+| Spinner | 5 | Spinner Region |
+| Lines | 6 | Lines Region |
+| TaskTitle | 7 | Task Title Region |
+| TaskElapsedTime | 8 | Task ElapsedTime Region |
 
 
 - - -

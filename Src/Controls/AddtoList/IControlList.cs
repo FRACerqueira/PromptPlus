@@ -137,5 +137,13 @@ namespace PPlus.Controls
         /// <returns><see cref="IControlList"/></returns>
         IControlList ChangeDescription(Func<string, string> value);
 
+        /// <summary>
+        /// Overwrite Styles
+        /// </summary>
+        /// <param name="content">The <see cref="ListStyles"/> content</param>
+        /// <param name="value">The <see cref="Style"/> to apply</param>
+        /// <returns><see cref="IControlList"/></returns>
+        IControlList Styles(ListStyles content,Style value);
+
     }
 }

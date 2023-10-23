@@ -485,18 +485,18 @@ separator between rows
 
 [IControlTableMultiSelect&lt;T&gt;](./pplus.controls.icontroltablemultiselect-1.md)
 
-### <a id="methods-styles"/>**Styles(TableStyle, Style)**
+### <a id="methods-styles"/>**Styles(TableSelectStyle, Style)**
 
-Styles for Table elements
+Overwrite Styles
 
 ```csharp
-IControlTableMultiSelect<T> Styles(TableStyle styletype, Style value)
+IControlTableMultiSelect<T> Styles(TableSelectStyle content, Style value)
 ```
 
 #### Parameters
 
-`styletype` [TableStyle](./pplus.controls.tablestyle.md)<br>
-[TableStyle](./pplus.controls.tablestyle.md) of content
+`content` [TableSelectStyle](./pplus.controls.tableselectstyle.md)<br>
+[TableSelectStyle](./pplus.controls.tableselectstyle.md) of content
 
 `value` [Style](./pplus.style.md)<br>
 The [Style](./pplus.style.md)

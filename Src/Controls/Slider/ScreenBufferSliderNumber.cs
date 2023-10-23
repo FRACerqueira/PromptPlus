@@ -61,7 +61,7 @@ namespace PPlus.Controls
             }
             if (!options.HideRanger)
             {
-                screenBuffer.AddBuffer($"{options.ValueToString(options.Minvalue)} ", options.OptStyleSchema.Ranger(), true);
+                screenBuffer.AddBuffer($"{options.ValueToString(options.Minvalue)} ", options.StyleContent(StyleControls.Ranger), true);
             }
             if (options.ChangeColor != null)
             {
@@ -98,26 +98,26 @@ namespace PPlus.Controls
             {
                 if (options.BarType == SliderBarType.Fill)
                 {
-                    screenBuffer.AddBuffer(new string(bar, valuestep), options.OptStyleSchema.Slider().Background(options.OptStyleSchema.Slider().Foreground), true, false);
+                    screenBuffer.AddBuffer(new string(bar, valuestep), options.StyleContent(StyleControls.Slider).Background(options.StyleContent(StyleControls.Slider).Foreground), true, false);
                 }
                 else
                 {
-                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Default.Foreground(options.OptStyleSchema.Slider().Foreground), true, false);
+                    screenBuffer.AddBuffer(new string(bar, valuestep), Style.Default.Foreground(options.StyleContent(StyleControls.Slider).Foreground), true, false);
                 }
             }
             if (options.BarType == SliderBarType.Fill)
             {
-                screenBuffer.AddBuffer(new string(' ', options.Witdth - valuestep), options.OptStyleSchema.Slider(), true, false);
+                screenBuffer.AddBuffer(new string(' ', options.Witdth - valuestep), options.StyleContent(StyleControls.Slider), true, false);
             }
             else
             {
-                screenBuffer.AddBuffer(new string(bar, options.Witdth - valuestep), Style.Default.Foreground(options.OptStyleSchema.Slider().Background), true, false);
+                screenBuffer.AddBuffer(new string(bar, options.Witdth - valuestep), Style.Default.Foreground(options.StyleContent(StyleControls.Slider).Background), true, false);
             }
             if (!options.HideRanger)
             {
-                screenBuffer.AddBuffer($" {options.ValueToString(options.Maxvalue)}", options.OptStyleSchema.Ranger(), true, false);
+                screenBuffer.AddBuffer($" {options.ValueToString(options.Maxvalue)}", options.StyleContent(StyleControls.Ranger), true, false);
             }
-            screenBuffer.AddBuffer($" ({options.ValueToString(input)})", options.OptStyleSchema.Answer(), true, false);
+            screenBuffer.AddBuffer($" ({options.ValueToString(input)})", options.StyleContent(StyleControls.Answer), true, false);
             screenBuffer.SaveCursor();
         }
 
@@ -135,7 +135,7 @@ namespace PPlus.Controls
             if (!string.IsNullOrEmpty(result))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer(result, options.OptStyleSchema.Description());
+                screenBuffer.AddBuffer(result, options.StyleContent(StyleControls.Description));
                 return true;
             }
             return false;
@@ -155,7 +155,7 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(tp))
                 {
                     screenBuffer.NewLine();
-                    screenBuffer.AddBuffer(tp, options.OptStyleSchema.Tooltips(), swm);
+                    screenBuffer.AddBuffer(tp, options.StyleContent(StyleControls.Tooltips), swm);
                 }
             }
         }

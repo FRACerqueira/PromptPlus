@@ -159,13 +159,11 @@ namespace PPlus.Controls
         IControlInput HistoryPageSize(int value);
 
         /// <summary>
-        /// Filter strategy for filter items in History colletion
-        /// <br>Default value is FilterMode.StartsWith</br>
-        /// <br>When <see cref="FilterMode"/> is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero</br>
+        /// Overwrite Styles
         /// </summary>
-        /// <param name="value">Filter Mode</param>
+        /// <param name="styletype"><see cref="InputStyles"/> of content</param>
+        /// <param name="value">The <see cref="Style"/></param>
         /// <returns><see cref="IControlInput"/></returns>
-        IControlInput FilterType(FilterMode value);
-
+        IControlInput Styles(InputStyles styletype, Style value);
     }
 }

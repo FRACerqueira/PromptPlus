@@ -25,6 +25,12 @@ namespace PPlus.Controls
 
         #region IControlSliderNumber
 
+        public IControlSliderNumber Styles(SliderNumberStyles content, Style value)
+        {
+            _options.StyleControl(content, value);
+            return this;
+        }
+
         public IControlSliderNumber HideRange(bool value = true)
         {
             _options.HideRanger = value;
@@ -244,7 +250,7 @@ namespace PPlus.Controls
                 hasprompt = true;
                 if (!_options.HideRanger)
                 {
-                    screenBuffer.AddBuffer($"[{_options.Minvalue},{_options.Maxvalue}] ", _options.OptStyleSchema.Ranger(), true, false);
+                    screenBuffer.AddBuffer($"[{_options.Minvalue},{_options.Maxvalue}] ", _options.StyleContent(StyleControls.Ranger), true, false);
                 }
                 screenBuffer.WriteAnswer(_options, _options.ValueToString(_currentValue));
                 screenBuffer.SaveCursor();

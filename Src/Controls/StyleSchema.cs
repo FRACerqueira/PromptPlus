@@ -84,16 +84,103 @@ namespace PPlus.Controls
                     case StyleControls.Tooltips:
                         auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
                         break;
+                    case StyleControls.Spinner:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
                     case StyleControls.Slider:
                         auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Cyan).Background(ConsoleColor.DarkGray));
-                        break;
-                    case StyleControls.Chart:
-                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
                         break;
                     case StyleControls.Ranger:
                         auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
                         break;
                     case StyleControls.Lines:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.FilterMatch:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Yellow));
+                        break;
+                    case StyleControls.FilterUnMatch:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Cyan));
+                        break;
+                    case StyleControls.MaskTypeTip:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Yellow));
+                        break;
+                    case StyleControls.MaskNegative:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Cyan));
+                        break;
+                    case StyleControls.MaskPositive:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Cyan));
+                        break;
+                    case StyleControls.CalendarDay:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.CalendarHighlight:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
+                        break;
+                    case StyleControls.CalendarMonth:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.CalendarWeekDay:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.CalendarYear:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.ChartLabel:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.ChartOrder:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
+                        break;
+                    case StyleControls.ChartPercent:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
+                        break;
+                    case StyleControls.ChartTitle:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.ChartValue:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.Cyan));
+                        break;
+                    case StyleControls.GroupTip:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkGray));
+                        break;
+                    case StyleControls.OnOff:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.TableTitle:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.TableHeader:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.TableContent:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.TaskTitle:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.TaskElapsedTime:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.DarkYellow));
+                        break;
+                    case StyleControls.BrowserFile:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.BrowserFolder:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.BrowserSize:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.TreeViewExpand:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.TreeViewRoot:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.TreeViewParent:
+                        auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
+                        break;
+                    case StyleControls.TreeViewChild:
                         auxdic.Add(item, Style.Default.Foreground(ConsoleColor.White));
                         break;
                     default:
@@ -155,17 +242,104 @@ namespace PPlus.Controls
                     case StyleControls.Tooltips:
                         auxdic.Add(item, source.Tooltips());
                         break;
+                    case StyleControls.Spinner:
+                        auxdic.Add(item, source.Spinner());
+                        break;
                     case StyleControls.Slider:
                         auxdic.Add(item, source.Slider());
-                        break;
-                    case StyleControls.Chart:
-                        auxdic.Add(item, source.Chart());
                         break;
                     case StyleControls.Ranger:
                         auxdic.Add(item, source.Ranger());
                         break;
                     case StyleControls.Lines:
                         auxdic.Add(item, source.Lines());
+                        break;
+                    case StyleControls.FilterMatch:
+                        auxdic.Add(item, source.FilterMatch());
+                        break;
+                    case StyleControls.FilterUnMatch:
+                        auxdic.Add(item, source.FilterUnMatch());
+                        break;
+                    case StyleControls.MaskTypeTip:
+                        auxdic.Add(item, source.MaskTypeTip());
+                        break;
+                    case StyleControls.MaskNegative:
+                        auxdic.Add(item, source.MaskNegative());
+                        break;
+                    case StyleControls.MaskPositive:
+                        auxdic.Add(item, source.MaskPositive());
+                        break;
+                    case StyleControls.CalendarDay:
+                        auxdic.Add(item, source.CalendarDay());
+                        break;
+                    case StyleControls.CalendarHighlight:
+                        auxdic.Add(item, source.CalendarHighlight());
+                        break;
+                    case StyleControls.CalendarMonth:
+                        auxdic.Add(item, source.CalendarMonth());
+                        break;
+                    case StyleControls.CalendarWeekDay:
+                        auxdic.Add(item, source.CalendarWeekDay());
+                        break;
+                    case StyleControls.CalendarYear:
+                        auxdic.Add(item, source.CalendarYear());
+                        break;
+                    case StyleControls.ChartLabel:
+                        auxdic.Add(item, source.ChartLabel());
+                        break;
+                    case StyleControls.ChartOrder:
+                        auxdic.Add(item, source.ChartOrder());
+                        break;
+                    case StyleControls.ChartPercent:
+                        auxdic.Add(item, source.ChartPercent());
+                        break;
+                    case StyleControls.ChartTitle:
+                        auxdic.Add(item, source.ChartTitle());
+                        break;
+                    case StyleControls.ChartValue:
+                        auxdic.Add(item, source.ChartValue());
+                        break;
+                    case StyleControls.GroupTip:
+                        auxdic.Add(item, source.GroupTip());
+                        break;
+                    case StyleControls.OnOff:
+                        auxdic.Add(item, source.OnOff());
+                        break;
+                    case StyleControls.TableTitle:
+                        auxdic.Add(item, source.TableTitle());
+                        break;
+                    case StyleControls.TableHeader:
+                        auxdic.Add(item, source.TableHeader());
+                        break;
+                    case StyleControls.TableContent:
+                        auxdic.Add(item, source.TableContent());
+                        break;
+                    case StyleControls.TaskTitle:
+                        auxdic.Add(item, source.TaskTitle());
+                        break;
+                    case StyleControls.TaskElapsedTime:
+                        auxdic.Add(item, source.TaskElapsedTime());
+                        break;
+                    case StyleControls.BrowserFile:
+                        auxdic.Add(item, source.BrowserFile());
+                        break;
+                    case StyleControls.BrowserFolder:
+                        auxdic.Add(item, source.BrowserFolder());
+                        break;
+                    case StyleControls.BrowserSize:
+                        auxdic.Add(item, source.BrowserSize());
+                        break;
+                    case StyleControls.TreeViewExpand:
+                        auxdic.Add(item, source.TreeViewExpand());
+                        break;
+                    case StyleControls.TreeViewRoot:
+                        auxdic.Add(item, source.TreeViewRoot());
+                        break;
+                    case StyleControls.TreeViewParent:
+                        auxdic.Add(item, source.TreeViewParent());
+                        break;
+                    case StyleControls.TreeViewChild:
+                        auxdic.Add(item, source.TreeViewChild());
                         break;
                     default:
                         throw new PromptPlusException($"{item} Not Implemented");

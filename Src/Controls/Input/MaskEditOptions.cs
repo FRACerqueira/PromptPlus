@@ -21,23 +21,16 @@ namespace PPlus.Controls
         internal MaskEditOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
             TimeoutOverwriteDefault = config.HistoryTimeout;
-            TypeTipStyle = styleSchema.Tooltips();
-            PositiveStyle = styleSchema.Answer();
-            NegativeStyle = styleSchema.Answer();
             HistoryPageSize = config.PageSize;
             HistoryTimeout = config.HistoryTimeout;
         }
 
-        public FilterMode FilterType { get; set; } = FilterMode.StartsWith;
         public bool ZeroIsEmpty { get; set; } = true;
         public bool AcceptEmptyValue { get; set; }
         public string? OverwriteDefaultFrom { get; set; }
         public TimeSpan TimeoutOverwriteDefault { get; set; }
         public string MaskValue { get; set; }
         public string DateFmt { get; set; }
-        public Style TypeTipStyle { get; set; }
-        public Style PositiveStyle { get; set; }
-        public Style NegativeStyle { get; set; }
         public ControlMaskedType Type { get; set; } = ControlMaskedType.Generic;
         public FormatYear FmtYear { get; set; } = FormatYear.Long;
         public FormatTime FmtTime { get; set; } = FormatTime.HMS;

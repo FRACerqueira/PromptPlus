@@ -289,6 +289,26 @@ short step to change
 
 [IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
 
+### <a id="methods-styles"/>**Styles(SliderNumberStyles, Style)**
+
+Overwrite Styles
+
+```csharp
+IControlSliderNumber Styles(SliderNumberStyles styletype, Style value)
+```
+
+#### Parameters
+
+`styletype` [SliderNumberStyles](./pplus.controls.slidernumberstyles.md)<br>
+[SliderNumberStyles](./pplus.controls.slidernumberstyles.md) of content
+
+`value` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md)
+
+#### Returns
+
+[IControlSliderNumber](./pplus.controls.icontrolslidernumber.md)
+
 ### <a id="methods-width"/>**Width(Int32)**
 
 Define Width to Widgets. Default value is 40.The value must be greater than or equal to 10.

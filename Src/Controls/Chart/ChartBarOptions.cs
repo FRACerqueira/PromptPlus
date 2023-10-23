@@ -20,12 +20,6 @@ namespace PPlus.Controls
         internal ChartBarOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         { 
             Labels = new();
-            DescriptionStyle = styleSchema.Description();
-            TitleStyle = styleSchema.Chart();
-            LabelStyle = styleSchema.Chart();
-            PercentStyle = styleSchema.Chart();
-            ValueStyle = styleSchema.Chart();
-            OrderStyle = styleSchema.Tooltips();
             PageSize = config.PageSize;
             SwitchType = config.ChartBarSwitchTypePress;
             SwitchLegend = config.ChartBarSwitchLegendPress;
@@ -40,12 +34,6 @@ namespace PPlus.Controls
         public int FracionalDig { get; set; }
         public CultureInfo CurrentCulture { get; set; } = null;
         public Alignment TitleAligment { get; set; } = Alignment.Left;
-        public Style DescriptionStyle { get; set; }
-        public Style TitleStyle { get; set; }
-        public Style LabelStyle { get; set; }
-        public Style PercentStyle { get; set; }
-        public Style ValueStyle { get; set; }
-        public Style OrderStyle { get; set; }
         public List<ItemChartBar> Labels { get; set; }
         public ChartOrder CurrentOrder { get; set; } = ChartOrder.None;
         public ChartOrder Order { get; set; } = ChartOrder.None;

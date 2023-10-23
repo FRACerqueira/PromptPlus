@@ -85,13 +85,217 @@ Foreground [Color](./pplus.color.md)
 
 [Style](./pplus.style.md)
 
-### <a id="methods-chart"/>**Chart(StyleSchema)**
+### <a id="methods-browserfile"/>**BrowserFile(StyleSchema)**
 
-Get [Style](./pplus.style.md) text Chart.
+Get [Style](./pplus.style.md) text Browser File.
  <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
 
 ```csharp
-public static Style Chart(StyleSchema schema)
+public static Style BrowserFile(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-browserfolder"/>**BrowserFolder(StyleSchema)**
+
+Get [Style](./pplus.style.md) text Browser Folder.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style BrowserFolder(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-browsersize"/>**BrowserSize(StyleSchema)**
+
+Get [Style](./pplus.style.md) text Browser Size.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style BrowserSize(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-calendarday"/>**CalendarDay(StyleSchema)**
+
+Get [Style](./pplus.style.md) CalendarDay.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style CalendarDay(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-calendarhighlight"/>**CalendarHighlight(StyleSchema)**
+
+Get [Style](./pplus.style.md) CalendarHighlight.
+ <br>Foreground : 'ConsoleColor.DarkYellow'<br>Background : same Console Background when not set
+
+```csharp
+public static Style CalendarHighlight(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-calendarmonth"/>**CalendarMonth(StyleSchema)**
+
+Get [Style](./pplus.style.md) CalendarMonth.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style CalendarMonth(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-calendarweekday"/>**CalendarWeekDay(StyleSchema)**
+
+Get [Style](./pplus.style.md) CalendarWeekDay.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style CalendarWeekDay(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-calendaryear"/>**CalendarYear(StyleSchema)**
+
+Get [Style](./pplus.style.md) CalendarYear.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style CalendarYear(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-chartlabel"/>**ChartLabel(StyleSchema)**
+
+Get [Style](./pplus.style.md) ChartLabel.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style ChartLabel(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-chartorder"/>**ChartOrder(StyleSchema)**
+
+Get [Style](./pplus.style.md) ChartOrder.
+ <br>Foreground : 'ConsoleColor.DarkGray'<br>Background : same Console Background when not set
+
+```csharp
+public static Style ChartOrder(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-chartpercent"/>**ChartPercent(StyleSchema)**
+
+Get [Style](./pplus.style.md) ChartPercent.
+ <br>Foreground : 'ConsoleColor.DarkYellow'<br>Background : same Console Background when not set
+
+```csharp
+public static Style ChartPercent(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-charttitle"/>**ChartTitle(StyleSchema)**
+
+Get [Style](./pplus.style.md) ChartTitle.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style ChartTitle(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-chartvalue"/>**ChartValue(StyleSchema)**
+
+Get [Style](./pplus.style.md) ChartValue.
+ <br>Foreground : 'ConsoleColor.Cyan'<br>Background : same Console Background when not set
+
+```csharp
+public static Style ChartValue(StyleSchema schema)
 ```
 
 #### Parameters
@@ -153,6 +357,57 @@ public static Style Error(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
+### <a id="methods-filtermatch"/>**FilterMatch(StyleSchema)**
+
+Get [Style](./pplus.style.md) FilterMatch.
+ <br>Foreground : 'ConsoleColor.Yellow'<br>Background : same Console Background when not set
+
+```csharp
+public static Style FilterMatch(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-filterunmatch"/>**FilterUnMatch(StyleSchema)**
+
+Get [Style](./pplus.style.md) FilterUnMatch.
+ <br>Foreground : 'ConsoleColor.Cyan'<br>Background : same Console Background when not set
+
+```csharp
+public static Style FilterUnMatch(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-grouptip"/>**GroupTip(StyleSchema)**
+
+Get [Style](./pplus.style.md) GroupTip.
+ <br>Foreground : 'ConsoleColor.DarkGray'<br>Background : same Console Background when not set
+
+```csharp
+public static Style GroupTip(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
 ### <a id="methods-lines"/>**Lines(StyleSchema)**
 
 Get [Style](./pplus.style.md) Lines.
@@ -160,6 +415,74 @@ Get [Style](./pplus.style.md) Lines.
 
 ```csharp
 public static Style Lines(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-masknegative"/>**MaskNegative(StyleSchema)**
+
+Get [Style](./pplus.style.md) MaskNegative.
+ <br>Foreground : 'ConsoleColor.Cyan'<br>Background : same Console Background when not set
+
+```csharp
+public static Style MaskNegative(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-maskpositive"/>**MaskPositive(StyleSchema)**
+
+Get [Style](./pplus.style.md) MaskPositive.
+ <br>Foreground : 'ConsoleColor.Cyan'<br>Background : same Console Background when not set
+
+```csharp
+public static Style MaskPositive(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-masktypetip"/>**MaskTypeTip(StyleSchema)**
+
+Get [Style](./pplus.style.md) MaskTypeTip.
+ <br>Foreground : 'ConsoleColor.Yellow'<br>Background : same Console Background when not set
+
+```csharp
+public static Style MaskTypeTip(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-onoff"/>**OnOff(StyleSchema)**
+
+Get [Style](./pplus.style.md) GroupTip.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style OnOff(StyleSchema schema)
 ```
 
 #### Parameters
@@ -255,6 +578,23 @@ public static Style Slider(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
+### <a id="methods-spinner"/>**Spinner(StyleSchema)**
+
+Get [Style](./pplus.style.md) Spinner.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style Spinner(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
 ### <a id="methods-suggestion"/>**Suggestion(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Suggestion.
@@ -262,6 +602,57 @@ Get [Style](./pplus.style.md) text Suggestion.
 
 ```csharp
 public static Style Suggestion(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-tablecontent"/>**TableContent(StyleSchema)**
+
+Get [Style](./pplus.style.md) TableContent.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style TableContent(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-tableheader"/>**TableHeader(StyleSchema)**
+
+Get [Style](./pplus.style.md) TableHeader.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style TableHeader(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-tabletitle"/>**TableTitle(StyleSchema)**
+
+Get [Style](./pplus.style.md) TableTitle.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style TableTitle(StyleSchema schema)
 ```
 
 #### Parameters
@@ -289,6 +680,40 @@ public static Style TaggedInfo(StyleSchema schema)
 
 [Style](./pplus.style.md)
 
+### <a id="methods-taskelapsedtime"/>**TaskElapsedTime(StyleSchema)**
+
+Get [Style](./pplus.style.md) text TaskElapsedTime.
+ <br>Foreground : 'ConsoleColor.DarkYellow'<br>Background : same Console Background when not set
+
+```csharp
+public static Style TaskElapsedTime(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-tasktitle"/>**TaskTitle(StyleSchema)**
+
+Get [Style](./pplus.style.md) text TaskTitle.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style TaskTitle(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
 ### <a id="methods-tooltips"/>**Tooltips(StyleSchema)**
 
 Get [Style](./pplus.style.md) text Tooltips.
@@ -296,6 +721,74 @@ Get [Style](./pplus.style.md) text Tooltips.
 
 ```csharp
 public static Style Tooltips(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-treeviewchild"/>**TreeViewChild(StyleSchema)**
+
+Get [Style](./pplus.style.md) text TreeView Child.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style TreeViewChild(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-treeviewexpand"/>**TreeViewExpand(StyleSchema)**
+
+Get [Style](./pplus.style.md) text TreeView Expand.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style TreeViewExpand(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-treeviewparent"/>**TreeViewParent(StyleSchema)**
+
+Get [Style](./pplus.style.md) text TreeView Parent.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style TreeViewParent(StyleSchema schema)
+```
+
+#### Parameters
+
+`schema` [StyleSchema](./pplus.controls.styleschema.md)<br>
+
+#### Returns
+
+[Style](./pplus.style.md)
+
+### <a id="methods-treeviewroot"/>**TreeViewRoot(StyleSchema)**
+
+Get [Style](./pplus.style.md) text TreeView Root.
+ <br>Foreground : 'ConsoleColor.White'<br>Background : same Console Background when not set
+
+```csharp
+public static Style TreeViewRoot(StyleSchema schema)
 ```
 
 #### Parameters

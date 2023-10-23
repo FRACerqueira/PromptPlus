@@ -207,24 +207,6 @@ Fill zeros mask
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-filtertype"/>**FilterType(FilterMode)**
-
-Filter strategy for filter items in History colletion
- <br>Default value is FilterMode.StartsWith<br>When  is set to Disabled, the HistoryMinimumPrefixLength value is automatically set to zero
-
-```csharp
-IControlMaskEdit FilterType(FilterMode value)
-```
-
-#### Parameters
-
-`value` [FilterMode](./pplus.controls.filtermode.md)<br>
-Filter Mode
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
 ### <a id="methods-formattime"/>**FormatTime(FormatTime)**
 
 Defines time parts input.
@@ -406,24 +388,6 @@ Prompt mask overwriter. Default value is '■'/'_'
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
-### <a id="methods-negativestyle"/>**NegativeStyle(Style)**
-
-Overwrite [Style](./pplus.style.md) to region neggative input.
- <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when set
-
-```csharp
-IControlMaskEdit NegativeStyle(Style value)
-```
-
-#### Parameters
-
-`value` [Style](./pplus.style.md)<br>
-Style
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
 ### <a id="methods-overwritedefaultfrom"/>**OverwriteDefaultFrom(String, Nullable&lt;TimeSpan&gt;)**
 
 Overwrite default start value with last result saved on history.
@@ -439,24 +403,6 @@ name of file to save history
 
 `timeout` [Nullable&lt;TimeSpan&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 The timeout for valid items saved. Default value is 365 days
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-positivestyle"/>**PositiveStyle(Style)**
-
-Overwrite [Style](./pplus.style.md) to region positive input.
- <br>Default Foreground : 'StyleControls.Answer'<br>Default Background : Same Console Background when set
-
-```csharp
-IControlMaskEdit PositiveStyle(Style value)
-```
-
-#### Parameters
-
-`value` [Style](./pplus.style.md)<br>
-Style
 
 #### Returns
 
@@ -479,6 +425,26 @@ show name of week for type date. [FormatWeek](./pplus.controls.formatweek.md)
 
 [IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
 
+### <a id="methods-styles"/>**Styles(MaskEditStyles, Style)**
+
+Overwrite Styles
+
+```csharp
+IControlMaskEdit Styles(MaskEditStyles content, Style value)
+```
+
+#### Parameters
+
+`content` [MaskEditStyles](./pplus.controls.maskeditstyles.md)<br>
+The [MaskEditStyles](./pplus.controls.maskeditstyles.md) content
+
+`value` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md) to apply
+
+#### Returns
+
+[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
+
 ### <a id="methods-suggestionhandler"/>**SuggestionHandler(Func&lt;SuggestionInput, SuggestionOutput&gt;)**
 
 Add Suggestion (with mask!) Handler feature
@@ -491,24 +457,6 @@ IControlMaskEdit SuggestionHandler(Func<SuggestionInput, SuggestionOutput> value
 
 `value` [Func&lt;SuggestionInput, SuggestionOutput&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 function to apply suggestions. [SuggestionInput](./pplus.controls.suggestioninput.md) and [SuggestionOutput](./pplus.controls.suggestionoutput.md)
-
-#### Returns
-
-[IControlMaskEdit](./pplus.controls.icontrolmaskedit.md)
-
-### <a id="methods-typetipstyle"/>**TypeTipStyle(Style)**
-
-Overwrite [Style](./pplus.style.md) to region tip type input.
- <br>Default Foreground : 'ConsoleColor.Yellow'<br>Default Background : same Console Background when set
-
-```csharp
-IControlMaskEdit TypeTipStyle(Style value)
-```
-
-#### Parameters
-
-`value` [Style](./pplus.style.md)<br>
-Style
 
 #### Returns
 

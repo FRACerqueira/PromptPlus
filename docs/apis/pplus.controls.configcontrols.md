@@ -411,31 +411,6 @@ public Nullable<Char> YesChar { get; set; }
 
 [Nullable&lt;Char&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.nullable-1)<br>
 
-## Methods
-
-### <a id="methods-symbols"/>**Symbols(SymbolType, String, String)**
-
-Get/Set the Symbols for all controls.If empty params return current set.
-
-```csharp
-public ValueTuple<String, String> Symbols(SymbolType schema, string value, string unicode)
-```
-
-#### Parameters
-
-`schema` [SymbolType](./pplus.controls.symboltype.md)<br>
-[SymbolType](./pplus.controls.symboltype.md) to set
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Text symbol when not unicode support
-
-`unicode` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-Text symbol when has unicode support
-
-#### Returns
-
-(string value, string unicode) value
-
 
 - - -
 [**Back to List Api**](./apis.md)

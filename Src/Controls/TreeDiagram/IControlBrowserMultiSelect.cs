@@ -57,19 +57,18 @@ namespace PPlus.Controls
         /// <br>When use custom spinner, if has unicode values console does not support it, the rendering may not be as expected</br>
         /// </summary>
         /// <param name="spinnersType">The <see cref="SpinnersType"/></param>
-        /// <param name="spinnerStyle">Style of spinner. <see cref="Style"/></param>
         /// <param name="speedAnimation">Number of mileseconds foreach iteration of spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <param name="customspinner">IEnumerable values for custom spinner. Valid only to SpinnersType.custom, otherwise will be ignored</param>
         /// <returns><see cref="IControlBrowserMultiSelect"/></returns>
-        IControlBrowserMultiSelect Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
+        IControlBrowserMultiSelect Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable<string>? customspinner = null);
 
         /// <summary>
-        /// Overwrite Styles Browser. <see cref="StyleBrowser"/>
+        /// Overwrite Styles
         /// </summary>
-        /// <param name="styletype">Styles Browser</param>
+        /// <param name="content">content Browser. <see cref="BrowserStyles"/></param>
         /// <param name="value"><see cref="Style"/></param>
         /// <returns><see cref="IControlBrowserMultiSelect"/></returns>
-        IControlBrowserMultiSelect Styles(StyleBrowser styletype, Style value);
+        IControlBrowserMultiSelect Styles(BrowserStyles content, Style value);
 
         /// <summary>
         /// Show lines of level. Default is true

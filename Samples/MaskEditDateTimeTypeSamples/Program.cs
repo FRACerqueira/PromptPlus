@@ -47,7 +47,7 @@ namespace MaskEditDateTimeTypeSamples
                 .Mask(MaskedType.DateTime)
                 .AcceptEmptyValue()
                 .ShowTipInputType(FormatWeek.Long)
-                .TypeTipStyle(Style.Default.Foreground(Color.Aqua))
+                .Styles(MaskEditStyles.MaskTypeTip, Style.Default.Foreground(Color.Blue))
                 .Run();
 
             PromptPlus.DoubleDash($"Control:MaskEdit DateTime - with overwrite culture:pt-br.");

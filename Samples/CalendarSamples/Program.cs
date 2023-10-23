@@ -15,7 +15,7 @@ PromptPlus.Config.DefaultCulture = cult;
 
 PromptPlus.Clear();
 
-PromptPlus.DoubleDash($"Your default Culture is {cult.Name}", DashOptions.HeavyBorder, style: Style.Default.Foreground(Color.Yellow));
+PromptPlus.DoubleDash($"Your default Culture is {cult.Name}", DashOptions.HeavyBorder, style: Color.Yellow.ToStyle());
 
 PromptPlus.DoubleDash($"Control:Calendar ({cult.Name}) - minimal usage");
 
@@ -109,16 +109,13 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Styles");
 
 PromptPlus
     .Calendar("Date", "Select date")
-    .Config(cfg =>
-    {
-        cfg.ApplyStyle(StyleControls.Lines, Style.Default.Foreground(Color.Red));
-        cfg.ApplyStyle(StyleControls.Selected, Style.Default.Foreground(Color.Maroon));
-    })
-    .Styles(StyleCalendar.Day, Style.Default.Foreground(Color.Yellow))
-    .Styles(StyleCalendar.Highlight, Style.Default.Foreground(Color.Blue))
-    .Styles(StyleCalendar.Month, Style.Default.Foreground(Color.Green))
-    .Styles(StyleCalendar.WeekDay, Style.Default.Foreground(Color.Aqua))
-    .Styles(StyleCalendar.Year, Style.Default.Foreground(Color.Violet))
+    .Styles(CalendarStyles.Lines, Color.Blue.ToStyle())
+    .Styles(CalendarStyles.Selected, Color.Green.ToStyle())
+    .Styles(CalendarStyles.CalendarDay, Color.Yellow.ToStyle())
+    .Styles(CalendarStyles.CalendarHighlight, Color.Blue.ToStyle())
+    .Styles(CalendarStyles.CalendarMonth, Color.Green.ToStyle())
+    .Styles(CalendarStyles.CalendarWeekDay, Color.Aqua.ToStyle())
+    .Styles(CalendarStyles.CalendarYear, Color.Violet.ToStyle())
     .AddItems(CalendarScope.Highlight,
         new ItemCalendar(DateTime.Now.AddDays(1), "Note1"),
        new ItemCalendar(DateTime.Now.AddDays(2)))

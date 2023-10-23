@@ -75,15 +75,10 @@ namespace TableSamples
 
             PromptPlus.Table<MyTable>("Your Prompt", "Descripion Table")
                 .AddItems(data)
-                .Config(cfg =>
-                 {
-                    cfg.ApplyStyle(StyleControls.Lines, Style.Default.Foreground(Color.Red));
-                    cfg.ApplyStyle(StyleControls.Disabled, Style.Default.Foreground(Color.Magenta1));
-                    cfg.ApplyStyle(StyleControls.Selected, Style.Default.Foreground(Color.Aquamarine1));
-                 })
-                .Styles(TableStyle.Content, Style.Default.Foreground(Color.Yellow))
-                .Styles(TableStyle.Header, Style.Default.Foreground(Color.Blue))
-                .Styles(TableStyle.Title, Style.Default.Foreground(Color.Cyan1))
+                .Styles(TableStyles.Lines, Color.Red.ToStyle())
+                .Styles(TableStyles.TableContent, Color.Yellow.ToStyle())
+                .Styles(TableStyles.TableHeader, Color.Blue.ToStyle())
+                .Styles(TableStyles.TableTitle, Color.Cyan1.ToStyle())
                 .AutoFill(0, 80)
                 .AddFormatType<DateTime>(FmtDate)
                 .Run();

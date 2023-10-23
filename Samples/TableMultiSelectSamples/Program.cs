@@ -112,15 +112,12 @@ namespace TableMultiSelectSamples
 
             PromptPlus.TableMultiSelect<MyTable>("Your Prompt", "Descripion Table")
                 .AddItems(data)
-                .Config(cfg => 
-                 {
-                     cfg.ApplyStyle(StyleControls.Lines, Style.Default.Foreground(Color.Red));
-                     cfg.ApplyStyle(StyleControls.Disabled, Style.Default.Foreground(Color.Magenta1));
-                     cfg.ApplyStyle(StyleControls.Selected, Style.Default.Foreground(Color.Aquamarine1));
-                 })
-                .Styles(TableStyle.Content, Style.Default.Foreground(Color.Yellow))
-                .Styles(TableStyle.Header, Style.Default.Foreground(Color.Blue))
-                .Styles(TableStyle.Title, Style.Default.Foreground(Color.Cyan1))
+                .Styles(TableSelectStyle.Lines, Style.Default.Foreground(Color.Red))
+                .Styles(TableSelectStyle.Disabled, Style.Default.Foreground(Color.Magenta1))
+                .Styles(TableSelectStyle.Selected, Style.Default.Foreground(Color.Aquamarine1))
+                .Styles(TableSelectStyle.TableContent, Style.Default.Foreground(Color.Yellow))
+                .Styles(TableSelectStyle.TableHeader, Style.Default.Foreground(Color.Blue))
+                .Styles(TableSelectStyle.TableTitle, Style.Default.Foreground(Color.Cyan1))
                 .AutoFill(0, 80)
                 .AddFormatType<DateTime>(FmtDate)
                 .Templates(

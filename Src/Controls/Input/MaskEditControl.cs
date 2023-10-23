@@ -33,11 +33,6 @@ namespace PPlus.Controls
 
         public override string InitControl(CancellationToken cancellationToken)
         {
-            if (_options.FilterType == FilterMode.Disabled && _options.HistoryMinimumPrefixLength > 0)
-            {
-                throw new PromptPlusException("HistoryMinimumPrefixLength mustbe zero when FilterType is Disabled");
-            }
-
             _options.CurrentCulture ??= _options.Config.AppCulture;
 
             if (_options.HistoryEnabled)
@@ -76,13 +71,9 @@ namespace PPlus.Controls
 
         #region IControlMaskEdit
 
-        public IControlMaskEdit FilterType(FilterMode value)
+        public IControlMaskEdit Styles(MaskEditStyles content, Style value)
         {
-            if (value == FilterMode.Disabled)
-            {
-                _options.HistoryMinimumPrefixLength = 0;
-            }
-            _options.FilterType = value;
+            _options.StyleControl(content, value);
             return this;
         }
 
@@ -103,24 +94,6 @@ namespace PPlus.Controls
         public IControlMaskEdit AcceptEmptyValue(bool value = true)
         {
             _options.AcceptEmptyValue = value;
-            return this;
-        }
-
-        public IControlMaskEdit TypeTipStyle(Style value)
-        {
-            _options.TypeTipStyle = value;
-            return this;
-        }
-
-        public IControlMaskEdit NegativeStyle(Style value)
-        {
-            _options.NegativeStyle = value;
-            return this;
-        }
-
-        public IControlMaskEdit PositiveStyle(Style value)
-        {
-            _options.PositiveStyle = value;
             return this;
         }
 
@@ -176,10 +149,6 @@ namespace PPlus.Controls
             if (value < 0)
             {
                 throw new PromptPlusException("HistoryMinimumPrefixLength must be greater than or equal to zero");
-            }
-            if (_options.FilterType == FilterMode.Disabled && value > 0)
-            {
-                throw new PromptPlusException("HistoryMinimumPrefixLength mustbe zero when FilterType is Disabled");
             }
             _options.HistoryMinimumPrefixLength = value;
             return this;
@@ -501,8 +470,8 @@ namespace PPlus.Controls
                 else if (_options.HistoryEnabled && !_options.ShowingHistory && (keyInfo.Value.IsPressDownArrowKey() || keyInfo.Value.IsPressPageDownKey()) && _itemsHistory.Count > 0 && _inputBuffer.Length >= _options.HistoryMinimumPrefixLength)
                 {
                     _localpaginator = new Paginator<ItemHistory>(
-                        _options.FilterType,
-                        GetItemHistory(_options.FilterType),
+                        FilterMode.StartsWith,
+                        GetItemHistory(FilterMode.StartsWith),
                         _options.HistoryPageSize, Optional<ItemHistory>.s_empty, 
                         (item1,item2) => item1.History == item2.History,
                         (item) => item.History);

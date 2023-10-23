@@ -84,19 +84,9 @@ namespace PPlus.Controls
 
         #region IControlWait
 
-        public IControlWait<T> Styles(StyleWait styletype, Style value)
+        public IControlWait<T> Styles(WaitStyles content, Style value)
         {
-            switch (styletype)
-            {
-                case StyleWait.Label:
-                    _options.LabelStyle = value;
-                    break;
-                case StyleWait.ElapsedTime:
-                    _options.ElapsedTimeStyle = value;
-                    break;
-                default:
-                    throw new PromptPlusException($"StyleWait: {styletype} Not Implemented");
-            }
+            _options.StyleControl(content, value);
             return this;
         }
 
@@ -138,7 +128,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlWait<T> Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
+        public IControlWait<T> Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
         {
             if (spinnersType == SpinnersType.Custom && customspinner.Any())
             {
@@ -148,10 +138,6 @@ namespace PPlus.Controls
             if (spinnersType == SpinnersType.Custom)
             {
                 _options.Spinner = new Spinners(SpinnersType.Custom, ConsolePlus.IsUnicodeSupported, speedAnimation ?? 80, customspinner);
-            }
-            if (spinnerStyle.HasValue)
-            {
-                _options.SpinnerStyle = spinnerStyle.Value;
             }
             return this;
         }
@@ -247,12 +233,12 @@ namespace PPlus.Controls
                     var aux = Messages.CanceledKey.Replace("[", "[[").Replace("]", "]]");
                     if (!string.IsNullOrEmpty(_options.OptPrompt))
                     {
-                        ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), false);
+                        ConsolePlus.Write($"{_options.OptPrompt}: ", _options.StyleContent(StyleControls.Prompt), false);
                     }
-                    ConsolePlus.WriteLine(aux, _options.OptStyleSchema.Answer(), true);
+                    ConsolePlus.WriteLine(aux, _options.StyleContent(StyleControls.Answer), true);
                     if (!string.IsNullOrEmpty(_options.OptDescription))
                     {
-                        ConsolePlus.WriteLine(_options.OptDescription, _options.OptStyleSchema.Description(), true);
+                        ConsolePlus.WriteLine(_options.OptDescription, _options.StyleContent(StyleControls.Description), true);
                     }
                 }
             }
@@ -266,9 +252,9 @@ namespace PPlus.Controls
                     }
                     if (!_options.OptMinimalRender && !string.IsNullOrEmpty(_options.OptPrompt) && !string.IsNullOrEmpty(_options.Finish))
                     {
-                        ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), false);
-                        ConsolePlus.Write(_options.Finish, _options.OptStyleSchema.Answer(), true);
-                        ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
+                        ConsolePlus.Write($"{_options.OptPrompt}: ", _options.StyleContent(StyleControls.Prompt), false);
+                        ConsolePlus.Write(_options.Finish, _options.StyleContent(StyleControls.Answer), true);
+                        ConsolePlus.WriteLine("", _options.StyleContent(StyleControls.Prompt), true);
                     }
                 }
             }
@@ -381,7 +367,7 @@ namespace PPlus.Controls
                 if (!_options.OptMinimalRender && !string.IsNullOrEmpty(_options.OptPrompt))
                 {
                     haspmt = true;
-                    qtd = ConsolePlus.Write($"{_options.OptPrompt}: ", _options.OptStyleSchema.Prompt(), false);
+                    qtd = ConsolePlus.Write($"{_options.OptPrompt}: ", _options.StyleContent(StyleControls.Prompt), false);
                     _spinnerCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
@@ -397,7 +383,7 @@ namespace PPlus.Controls
 
 
                 top = ConsolePlus.CursorTop;
-                qtd = ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
+                qtd = ConsolePlus.WriteLine("", _options.StyleContent(StyleControls.Prompt), true);
                 if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                 {
                     var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -409,7 +395,7 @@ namespace PPlus.Controls
                 if (!string.IsNullOrEmpty(_options.OptDescription) && !_options.OptMinimalRender)
                 {
                     top = ConsolePlus.CursorTop;
-                    qtd += ConsolePlus.WriteLine(_options.OptDescription, _options.OptStyleSchema.Description(), true);
+                    qtd += ConsolePlus.WriteLine(_options.OptDescription, _options.StyleContent(StyleControls.Description), true);
                     if (!haspmt)
                     {
                         _spinnerCursor = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop);
@@ -475,12 +461,12 @@ namespace PPlus.Controls
                             }
                         }
                         top = ConsolePlus.CursorTop;
-                        qtd = ConsolePlus.Write($"{symb}", _options.OptStyleSchema.Lines(), false);
-                        qtd += ConsolePlus.Write($" ", _options.OptStyleSchema.Prompt(), false);
-                        qtd += ConsolePlus.Write($"{desc}", _options.LabelStyle, false);
+                        qtd = ConsolePlus.Write($"{symb}", _options.StyleContent(StyleControls.Lines), false);
+                        qtd += ConsolePlus.Write($" ", _options.StyleContent(StyleControls.Prompt), false);
+                        qtd += ConsolePlus.Write($"{desc}", _options.StyleContent(StyleControls.TaskTitle), false);
                         if (!_options.ShowCountdown)
                         {
-                            qtd += ConsolePlus.Write("               ", _options.OptStyleSchema.Prompt(), true);
+                            qtd += ConsolePlus.Write("               ", Style.Default, true);
                         }
                         if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                         {
@@ -501,7 +487,7 @@ namespace PPlus.Controls
                         if (pos != max - 1)
                         {
                             top = ConsolePlus.CursorTop;
-                            qtd = ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
+                            qtd = ConsolePlus.WriteLine("", _options.StyleContent(StyleControls.Prompt), true);
                             if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                             {
                                 var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -534,9 +520,9 @@ namespace PPlus.Controls
                         qtd = 0;
                         if (!_options.WaitTime)
                         {
-                            qtd = ConsolePlus.WriteLine("", _options.OptStyleSchema.Prompt(), true);
+                            qtd = ConsolePlus.WriteLine("", _options.StyleContent(StyleControls.Prompt), true);
                         }
-                        qtd += ConsolePlus.Write(tp, _options.OptStyleSchema.Tooltips(), true);
+                        qtd += ConsolePlus.Write(tp, _options.StyleContent(StyleControls.Tooltips), true);
                         if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                         {
                             var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -595,9 +581,9 @@ namespace PPlus.Controls
                 ConsolePlus.SetCursorPosition(_spinnerCursor.CursorLeft,_spinnerCursor.CursorTop);
                 var spn = _options.Spinner.NextFrame(cancellationtoken);
                 var top = ConsolePlus.CursorTop;
-                var qtd = ConsolePlus.Write($"{spn}", _options.SpinnerStyle, false);
+                var qtd = ConsolePlus.Write($"{spn}", _options.StyleContent(StyleControls.Spinner), false);
                 //space for ShowElapsedTime
-                qtd += ConsolePlus.Write("               ", _options.OptStyleSchema.Prompt(), true);
+                qtd += ConsolePlus.Write("               ", _options.StyleContent(StyleControls.Prompt), true);
                 if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                 {
                     var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -614,26 +600,26 @@ namespace PPlus.Controls
                     foreach (var item in elapsetm)
                     {
                         ConsolePlus.SetCursorPosition(item.left, item.top);
-                        ConsolePlus.Write("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", _options.OptStyleSchema.Prompt(), false);
+                        ConsolePlus.Write("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b",Style.Default, false);
                         if (_options.ShowElapsedTime)
                         {
-                            ConsolePlus.Write($" ({item.sw.Elapsed:hh\\:mm\\:ss\\:ff})", _options.ElapsedTimeStyle, false);
+                            ConsolePlus.Write($" ({item.sw.Elapsed:hh\\:mm\\:ss\\:ff})", _options.StyleContent(StyleControls.TaskElapsedTime), false);
                         }
                         if (!item.sw.IsRunning)
                         {
-                            ConsolePlus.Write($" {_options.Symbol(SymbolType.Done)}", _options.ElapsedTimeStyle, true);
+                            ConsolePlus.Write($" {_options.Symbol(SymbolType.Done)}", _options.StyleContent(StyleControls.TaskElapsedTime), true);
                         }
                         else
                         {
-                            ConsolePlus.Write($"  ", _options.OptStyleSchema.Prompt(), true);
+                            ConsolePlus.Write($"  ", _options.StyleContent(StyleControls.Prompt), true);
                         }
                     }
                 }
                 else if(_options.ShowCountdown)
                 {
                     var countdown = _options.TimeDelay - elapsetm[0].sw.Elapsed;
-                    ConsolePlus.Write("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", _options.OptStyleSchema.Prompt(), false);
-                    ConsolePlus.Write($"({countdown:hh\\:mm\\:ss\\:ff})", _options.ElapsedTimeStyle, true);
+                    ConsolePlus.Write("\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", Style.Default, false);
+                    ConsolePlus.Write($"({countdown:hh\\:mm\\:ss\\:ff})", _options.StyleContent(StyleControls.TaskElapsedTime), true);
                 }
                 if (_promptlines < _promptlines+qtdlines)
                 {

@@ -122,6 +122,11 @@ namespace PPlus.Controls
 
         #region IControlAutoComplete
 
+        public IControlAutoComplete Styles(AutoCompleteStyles content, Style value)
+        {
+            _options.StyleControl(content, value);
+            return this;
+        }
         public IControlAutoComplete PageSize(int value)
         {
             if (value < 1)
@@ -132,7 +137,7 @@ namespace PPlus.Controls
             return this;
         }
 
-        public IControlAutoComplete Spinner(SpinnersType spinnersType, Style? spinnerStyle = null, int? speedAnimation = null, IEnumerable<string>? customspinner = null)
+        public IControlAutoComplete Spinner(SpinnersType spinnersType,int? speedAnimation = null, IEnumerable<string>? customspinner = null)
         {
             if (spinnersType == SpinnersType.Custom && customspinner.Any())
             {
@@ -145,10 +150,6 @@ namespace PPlus.Controls
             else
             {
                 _options.Spinner = new Spinners(spinnersType, ConsolePlus.IsUnicodeSupported);
-            }
-            if (spinnerStyle.HasValue)
-            {
-                _options.SpinnerStyle = spinnerStyle.Value;
             }
             return this;
         }
@@ -276,7 +277,7 @@ namespace PPlus.Controls
             if (_autoCompleteRunning)
             {
                 var spn = _options.Spinner.NextFrame(CancellationToken);
-                screenBuffer.AddBuffer($" {spn}",_options.SpinnerStyle,true);
+                screenBuffer.AddBuffer($" {spn}",_options.StyleContent(StyleControls.Spinner),true);
             }
             screenBuffer.WriteLineDescriptionAutoComplete(_options, FinishResult);
             if (!_autoCompleteRunning && _inputBuffer.ToString().Length >= _options.MinimumPrefixLength && _localpaginator.TotalCount > 0)

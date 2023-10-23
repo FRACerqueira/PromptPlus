@@ -80,9 +80,9 @@ namespace WaitTasksSamples
                             });
                 })
                 .ShowElapsedTime()
-                .Config(cfg => cfg.ApplyStyle(StyleControls.Lines, Style.Default.Foreground(Color.Red)))
-                .Styles(StyleWait.Label, Style.Default.Foreground(Color.Blue))
-                .Styles(StyleWait.ElapsedTime, Style.Default.Foreground(Color.Green))
+                .Styles(WaitStyles.Lines, Style.Default.Foreground(Color.Red))
+                .Styles(WaitStyles.TaskTitle, Style.Default.Foreground(Color.Blue))
+                .Styles(WaitStyles.TaskElapsedTime, Style.Default.Foreground(Color.Green))
                 .Run();
 
 

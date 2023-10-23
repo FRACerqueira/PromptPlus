@@ -93,14 +93,6 @@ namespace PPlus.Controls
         IPromptConfig SetContext(object value);
 
         /// <summary>
-        /// Overwrite default style for <see cref="StyleControls"/> of control
-        /// </summary>
-        /// <param name="styleControl">Style overwriter</param>
-        /// <param name="value">value</param>
-        /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig ApplyStyle(StyleControls styleControl, Style value);
-
-        /// <summary>
         /// Set description for the control
         /// </summary>
         /// <param name="value">Text description. Accept markup color</param>
@@ -146,13 +138,5 @@ namespace PPlus.Controls
         /// <returns><see cref="IPromptConfig"/></returns>
         IPromptConfig Tooltips(StringStyle value);
 
-        /// <summary>
-        /// Overwrite default Symbols for <see cref="SymbolType"/> of control
-        /// </summary>
-        /// <param name="schema">Symbol overwriter</param>
-        /// <param name="value">Text when **not** is-unicode supported</param>
-        /// <param name="unicode">Text when has is-unicode supported</param>
-        /// <returns><see cref="IPromptConfig"/></returns>
-        IPromptConfig Symbols(SymbolType schema, string value, string? unicode = null);
     }
 }

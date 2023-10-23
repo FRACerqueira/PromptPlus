@@ -24,7 +24,7 @@ namespace SliderSwitchSamples
             PromptPlus.DoubleDash($"Control:SliderSwitch (pt-br) - minimal usage");
             var sdl = PromptPlus
                .SliderSwitch("SliderSwitch")
-               .Run();
+              .Run();
             if (!sdl.IsAborted)
             {
                 PromptPlus.WriteLine($"You Pressed {sdl.Value}");

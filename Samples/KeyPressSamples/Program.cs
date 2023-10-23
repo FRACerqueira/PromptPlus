@@ -47,6 +47,8 @@ PromptPlus
 PromptPlus.DoubleDash("Control:Keypress - with color");
 PromptPlus
     .KeyPress("Custom [Blue]Prompt[/] and [yellow]description[/]","[Red]My[/] Description")
+    .Spinner(SpinnersType.DotsScrolling)
+    .Styles(KeyPressStyles.Spinner,Style.Default.Foreground(Color.Red))
     .Run();
 
 PromptPlus.DoubleDash("Control:Keypress - valid keys");

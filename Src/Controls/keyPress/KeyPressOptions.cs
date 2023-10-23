@@ -18,11 +18,9 @@ namespace PPlus.Controls
 
         internal KeyPressOptions(StyleSchema styleSchema, ConfigControls config, IConsoleControl console, bool showcursor) : base(styleSchema, config, console, showcursor)
         {
-            SpinnerStyle = styleSchema.Prompt().Overflow(Overflow.Crop);
         }
 
         public Spinners? Spinner { get; set; }
-        public Style SpinnerStyle { get; set; }
         public IList<ConsoleKeyInfo> KeyValids { get; set; } = new List<ConsoleKeyInfo>();
         public Func<ConsoleKeyInfo, string> TextKey { get; set; }
         public bool HotkeysIsKeypress { get; set; }

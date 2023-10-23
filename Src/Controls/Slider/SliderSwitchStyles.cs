@@ -6,30 +6,37 @@
 namespace PPlus.Controls
 {
     /// <summary>
-    /// Represents the Style of content Chart
+    /// Represents The Styles SliderSwitch controls
     /// </summary>
-    public enum StyleChart
+    public enum SliderSwitchStyles
     {
         /// <summary>
-        /// Title content
+        /// Prompt Region
         /// </summary>
-        Title,
+        Prompt,
         /// <summary>
-        /// Label content
+        /// Answer Region
         /// </summary>
-        Label,
+        Answer,
         /// <summary>
-        /// Label content
+        /// Description Region
         /// </summary>
-        Value,
+        Description,
         /// <summary>
-        /// Perent content
+        /// TaggedInfo Region
         /// </summary>
-        Percent,
+        TaggedInfo,
         /// <summary>
-        /// Order content
+        /// Tooltips Region
         /// </summary>
-        Order
-
+        Tooltips,
+        /// <summary>
+        /// Slider Region
+        /// </summary>
+        Slider,
+        /// <summary>
+        /// OnOff Region
+        /// </summary>
+        OnOff
     }
 }

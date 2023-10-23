@@ -37,22 +37,6 @@ public IPromptConfig AddExtraAction(StageControl stage, Action<Object, Object> u
 
 [IPromptConfig](./pplus.controls.ipromptconfig.md)
 
-### <a id="methods-applystyle"/>**ApplyStyle(StyleControls, Style)**
-
-```csharp
-public IPromptConfig ApplyStyle(StyleControls styleControl, Style value)
-```
-
-#### Parameters
-
-`styleControl` [StyleControls](./pplus.controls.stylecontrols.md)<br>
-
-`value` [Style](./pplus.style.md)<br>
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
 ### <a id="methods-description"/>**Description(StringStyle)**
 
 ```csharp
@@ -230,24 +214,6 @@ public IPromptConfig ShowTooltip(bool value)
 #### Parameters
 
 `value` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
-
-#### Returns
-
-[IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-### <a id="methods-symbols"/>**Symbols(SymbolType, String, String)**
-
-```csharp
-public IPromptConfig Symbols(SymbolType schema, string value, string unicode)
-```
-
-#### Parameters
-
-`schema` [SymbolType](./pplus.controls.symboltype.md)<br>
-
-`value` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
-
-`unicode` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 #### Returns
 

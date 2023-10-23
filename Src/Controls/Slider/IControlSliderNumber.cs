@@ -134,5 +134,13 @@ namespace PPlus.Controls
         /// <returns><see cref="IControlSliderNumber"/></returns>
         IControlSliderNumber ChangeGradient(params Color[] colors);
 
+        /// <summary>
+        /// Overwrite Styles
+        /// </summary>
+        /// <param name="styletype"><see cref="SliderNumberStyles"/> of content</param>
+        /// <param name="value">The <see cref="Style"/></param>
+        /// <returns><see cref="IControlSliderNumber"/></returns>
+        IControlSliderNumber Styles(SliderNumberStyles styletype, Style value);
+
     }
 }

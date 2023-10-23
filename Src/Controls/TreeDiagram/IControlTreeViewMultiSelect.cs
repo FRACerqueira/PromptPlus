@@ -39,14 +39,13 @@ namespace PPlus.Controls
         /// <returns><see cref="IControlTreeViewMultiSelect{T}"/></returns>
         IControlTreeViewMultiSelect<T> Config(Action<IPromptConfig> context);
 
-
         /// <summary>
-        /// Overwrite Styles treeview. <see cref="StyleTreeView"/>
+        /// Overwrite Style
         /// </summary>
-        /// <param name="styletype">Styles treeview</param>
+        /// <param name="content">content Styles. <see cref="TreeViewStyles"/></param>
         /// <param name="value"><see cref="Style"/></param>
         /// <returns><see cref="IControlTreeViewMultiSelect{T}"/></returns>
-        IControlTreeViewMultiSelect<T> Styles(StyleTreeView styletype, Style value);
+        IControlTreeViewMultiSelect<T> Styles(TreeViewStyles content, Style value);
 
         /// <summary>
         /// Show lines of level. Default is true

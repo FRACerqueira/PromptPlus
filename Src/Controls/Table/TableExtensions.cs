@@ -134,7 +134,7 @@ namespace PPlus
                 IsInteraction = true
             };
             config?.Invoke(opt);
-            opt.ApplyStyle(StyleControls.Answer, opt.OptStyleSchema.Answer().Overflow(Overflow.Ellipsis));
+            opt.ApplyStyle(StyleControls.Answer, opt.StyleContent(StyleControls.Answer).Overflow(Overflow.Crop));
             return new TableMultiSelectControl<T>(_consoledrive, opt);
         }
     }

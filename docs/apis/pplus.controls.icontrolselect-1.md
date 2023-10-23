@@ -395,6 +395,26 @@ If True, it shows the tip with the group text, otherwise nothing.
 
 [IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
 
+### <a id="methods-styles"/>**Styles(SelectStyles, Style)**
+
+Overwrite Styles
+
+```csharp
+IControlSelect<T> Styles(SelectStyles styletype, Style value)
+```
+
+#### Parameters
+
+`styletype` [SelectStyles](./pplus.controls.selectstyles.md)<br>
+[SelectStyles](./pplus.controls.selectstyles.md) of content
+
+`value` [Style](./pplus.style.md)<br>
+The [Style](./pplus.style.md)
+
+#### Returns
+
+[IControlSelect&lt;T&gt;](./pplus.controls.icontrolselect-1.md)
+
 ### <a id="methods-textselector"/>**TextSelector(Func&lt;T, String&gt;)**
 
 Function to show text Item in list.Default value is Item.ToString()
