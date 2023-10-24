@@ -32,7 +32,7 @@ PromptPlus was developed in C# with target frameworks:
 *** What's new in V4.2.0 ***
 ----------------------------
 
-- Split feature:
+- Split of feature:
     - PromptPlus.TableSelect<T> to Select item in table : Select row, column and data in a grid/table 
         - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
     - PromptPlus.Table<T> to write table in console : Show data in a grid/table 
