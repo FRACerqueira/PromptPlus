@@ -8,7 +8,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using PPlus.Drivers.Colors;
 
 namespace PPlus
@@ -83,6 +82,22 @@ namespace PPlus
                 (byte)(R + (other.R - R) * factor),
                 (byte)(G + (other.G - G) * factor),
                 (byte)(B + (other.B - B) * factor));
+        }
+
+        /// <summary>
+        /// Get Inverted color by Luminance for best contrast 
+        /// </summary>
+        /// <returns>
+        /// <see cref="Color"/> White or Black
+        /// </returns>
+        public readonly Color GetInvertedColor()
+        {
+            return GetLuminance(this) < 140 ? White : Black;
+        }
+
+        private static float GetLuminance(Color color)
+        {
+            return (float)(0.2126 * color.R + 0.7152 * color.G + 0.0722 * color.B);
         }
 
         /// <summary>
@@ -189,11 +204,11 @@ namespace PPlus
             {
                 throw new PromptPlusException("Invalid Html Color. Length must be equal 7 and start with #");
             }
-            int RGBint = Convert.ToInt32(value.Substring(1,6), 16);
+            int RGBint = Convert.ToInt32(value.Substring(1, 6), 16);
             byte localRed = (byte)((RGBint >> 16) & 255);
             byte localGreen = (byte)((RGBint >> 8) & 255);
             byte localBlue = (byte)(RGBint & 255);
-            return new Color(localRed,localGreen, localBlue);
+            return new Color(localRed, localGreen, localBlue);
         }
 
         /// <summary>
@@ -278,7 +293,7 @@ namespace PPlus
 
             if (Number != null)
             {
-                var name = ColorTable.GetName(Number.Value);
+                string name = ColorTable.GetName(Number.Value);
                 if (!string.IsNullOrWhiteSpace(name))
                 {
                     return name;

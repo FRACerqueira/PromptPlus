@@ -54,5 +54,16 @@ namespace PPlus
                 background: color,
                 overflowStrategy: style.OverflowStrategy);
         }
+
+
+        /// <summary>
+        /// Convert Color to Style with default background color
+        /// </summary>
+        /// <param name="color">The <see cref="Overflow"/></param>
+        /// <returns><see cref="Style"/></returns>
+        public static Style ToStyle(this Color color)
+        {
+            return new Style(color);
+        }
     }
 }

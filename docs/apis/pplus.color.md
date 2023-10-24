@@ -3310,6 +3310,18 @@ int GetHashCode()
 
 [Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)
 
+### <a id="methods-getinvertedcolor"/>**GetInvertedColor()**
+
+Get Inverted color by Luminance for best contrast
+
+```csharp
+Color GetInvertedColor()
+```
+
+#### Returns
+
+[Color](./pplus.color.md) White or Black
+
 ### <a id="methods-toconsolecolor"/>**ToConsoleColor(Color)**
 
 Converts a [Color](./pplus.color.md) to a .

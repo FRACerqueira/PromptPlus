@@ -14,8 +14,6 @@
 
 - [Color](./pplus.color.md)
 
-- [ColorExtensions](./pplus.colorextensions.md)
-
 - [ColorSystem](./pplus.colorsystem.md)
 
 - [CursorDirection](./pplus.cursordirection.md)
