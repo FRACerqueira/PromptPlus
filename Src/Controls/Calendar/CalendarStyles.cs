@@ -51,7 +51,7 @@ namespace PPlus.Controls
         /// </summary>
         Tooltips,
         /// <summary>
-        /// Slider Region
+        /// Lines Region
         /// </summary>
         Lines,
         /// <summary>
