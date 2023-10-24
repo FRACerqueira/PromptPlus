@@ -83,6 +83,23 @@ The [Overflow](./pplus.overflow.md) overflow strategy
 
 The new [Style](./pplus.style.md)
 
+### <a id="methods-tostyle"/>**ToStyle(Color)**
+
+Convert Color to Style with default background color
+
+```csharp
+public static Style ToStyle(Color color)
+```
+
+#### Parameters
+
+`color` [Color](./pplus.color.md)<br>
+The [StyleExtensions.Overflow(Style, Overflow)](./pplus.styleextensions.md#overflowstyle-overflow)
+
+#### Returns
+
+[Style](./pplus.style.md)
+
 
 - - -
 [**Back to List Api**](./apis.md)

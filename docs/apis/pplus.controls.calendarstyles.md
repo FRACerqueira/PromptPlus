@@ -35,7 +35,7 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | Pagination | 7 | Pagination Region |
 | TaggedInfo | 8 | TaggedInfo Region |
 | Tooltips | 9 | Tooltips Region |
-| Lines | 10 | Slider Region |
+| Lines | 10 | Lines Region |
 | CalendarHighlight | 11 | Calendar Highlight content |
 | CalendarDay | 12 | Calendar Day content |
 | CalendarMonth | 13 | Calendar Month content |
