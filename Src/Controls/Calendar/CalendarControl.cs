@@ -1576,39 +1576,28 @@ namespace PPlus.Controls
             }
             else if (auxdate == _currentdate)
             {
-                if (IsHighlight(auxdate))
+                if (IsHighlight(auxdate) && strnote != "*")
                 {
-                    if (strnote == "*")
-                    {
-                        screenBuffer.AddBuffer($"#{strnote}{cday}#", _options.StyleContent(StyleControls.Selected));
-                    }
-                    else
-                    {
-                        screenBuffer.AddBuffer($" #{cday}#", _options.StyleContent(StyleControls.Selected));
-                    }
+                    strnote = "#";
+                }
+                if (strnote.Trim().Length != 0)
+                {
+                    screenBuffer.AddBuffer($"<{strnote}{cday}>", _options.StyleContent(StyleControls.Selected));
                 }
                 else
                 {
-                    if (strnote == "*")
-                    {
-                        screenBuffer.AddBuffer($"<{strnote}{cday}>", _options.StyleContent(StyleControls.Selected));
-                    }
-                    else
-                    {
-                        screenBuffer.AddBuffer($" <{cday}>", _options.StyleContent(StyleControls.Selected));
-                    }
+                    screenBuffer.AddBuffer($" <{cday}>", _options.StyleContent(StyleControls.Selected));
                 }
             }
             else
             {
+                var stl = StyleControls.CalendarDay;
                 if (IsHighlight(auxdate))
                 {
-                    screenBuffer.AddBuffer($" {strnote}{cday}#", _options.StyleContent(StyleControls.CalendarHighlight));
+                    strnote = "#";
+                    stl = StyleControls.CalendarHighlight;
                 }
-                else
-                {
-                    screenBuffer.AddBuffer($" {strnote}{cday} ", _options.StyleContent(StyleControls.CalendarDay));
-                }
+                screenBuffer.AddBuffer($" {strnote}{cday} ", _options.StyleContent(stl));
             }
         }
 
