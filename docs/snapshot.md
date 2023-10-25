@@ -10,8 +10,6 @@
 
 ## Table of Contents
 
-For each snapshot, the title is **name of project** in folder at github [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples).
-
 ### AddToList
 
 [**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddToListSamples)

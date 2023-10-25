@@ -52,8 +52,8 @@ namespace PPlus.Controls.Table
                 throw new PromptPlusException("Not found columns definition");
             }
 
-            //Validate layout SupportsAnsi
-            if (!ConsolePlus.SupportsAnsi)
+            //Validate layout UnicodeSupported
+            if (!ConsolePlus.IsUnicodeSupported)
             {
                 switch (_options.Layout)
                 {

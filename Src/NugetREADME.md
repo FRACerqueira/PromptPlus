@@ -72,6 +72,8 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
     - 'AppendGroupOnDescription' to 'ShowTipGroup'.
     - Now extra-line to tip group
 - Fixed bug : 
+    - Table control does not render correctly when it does not support Unicode
+- Fixed bug : 
     - The Slide Switch Control does not show on/off values ​​when they are not customized
 - Fixed bug : 
     - Alternate screen doesn't update background style when changing color
