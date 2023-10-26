@@ -28,6 +28,17 @@ if (!cld.IsAborted)
     PromptPlus.WriteLine($"You input is {cld.Value}");
 }
 
+var typelayout = Enum.GetValues(typeof(CalendarLayout));
+foreach (var type in typelayout)
+{
+    PromptPlus.DoubleDash($"Control:Calendar ({cult.Name}) - layout {type}");
+    PromptPlus
+    .Calendar("Date", "Select date")
+    .Layout((CalendarLayout)Enum.Parse(typeof(CalendarLayout), type.ToString()!))
+    .Run();
+}
+
+
 PromptPlus.DoubleDash($"Control:Calendar DateTime - with overwrite culture:pt-br.");
 
 cld = PromptPlus
@@ -44,7 +55,7 @@ PromptPlus.DoubleDash($"Control:Calendar DateTime - with Disabled Weekends");
 
 PromptPlus
     .Calendar("Date", "Select date")
-    .Layout(CalendarLayout.HeavyGrid)
+    .Layout(CalendarLayout.SingleGrid)
     .DisabledWeekends()
     .Run();
 

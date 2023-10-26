@@ -28,12 +28,13 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | Fill | 0 | Fill |
 | Square | 1 | square |
 | Light | 2 | Light |
-| Heavy | 3 | Heavy |
-| Bar | 4 | Bar |
-| Dot | 5 | Dot |
-| AsciiSingle | 6 | AsciiSingle |
-| AsciiDouble | 7 | AsciiDouble |
-| Char | 8 | Char |
+| DoubleLight | 3 | Double Light |
+| Heavy | 4 | Heavy |
+| Bar | 5 | Bar |
+| Dot | 6 | Dot |
+| AsciiSingle | 7 | AsciiSingle |
+| AsciiDouble | 8 | AsciiDouble |
+| Char | 9 | Char |
 
 
 - - -

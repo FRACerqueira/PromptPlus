@@ -220,6 +220,11 @@ namespace PPlus.Controls
             {
                 return _optSymbols[schema].unicode;
             }
+            return SymbolUnSupported(schema);
+        }
+
+        internal string SymbolUnSupported(SymbolType schema)
+        {
             return _optSymbols[schema].value;
         }
 

@@ -27,8 +27,9 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | --- | --: | --- |
 | Fill | 0 | Fill |
 | Light | 1 | Light |
-| Heavy | 2 | Heavy |
-| Square | 3 | square |
+| DoubleLight | 2 | Double Light |
+| Heavy | 3 | Heavy |
+| Square | 4 | square |
 
 
 - - -

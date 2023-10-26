@@ -102,6 +102,8 @@
     - Edit[F2] Immutable item in AddTolist/AddtoMaskEditList control
 - Fixed bug : 
     - CTRL-V (paste data) does not show input in some controls
+- Fixed bug : 
+    - Refinement of Unicode symbol rendering in all controls (Corret render)
 
 ## Features
 [**Top**](#table-of-contents)
@@ -144,7 +146,7 @@ All controls use **fluent interface**; an object-oriented API whose design relie
 //MaskEdit Generic
 var mask = PromptPlus.MaskEdit("input", "MaskEdit Generic input")
     .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
-    .DescriptionWithInputType(FormatWeek.Short)
+    .ShowTipInputType(FormatWeek.Short)
     .Run();
 ```
 
@@ -240,16 +242,17 @@ PromptPlus.Setup((cfg) =>
     cfg.Culture = new CultureInfo("en-us");
     cfg.BackgroundColor = ConsoleColor.Blue;
 });
-PromptPlus.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
-PromptPlus.WriteLine($"IsTerminal: {PromptPlus.IsTerminal}");
-PromptPlus.WriteLine($"IsUnicodeSupported: {PromptPlus.IsUnicodeSupported}");
-PromptPlus.WriteLine($"OutputEncoding: {PromptPlus.OutputEncoding.EncodingName}");
-PromptPlus.WriteLine($"ColorDepth: {PromptPlus.ColorDepth}");
-PromptPlus.WriteLine($"BackgroundColor: {PromptPlus.BackgroundColor}");
-PromptPlus.WriteLine($"ForegroundColor: {PromptPlus.ForegroundColor}");
-PromptPlus.WriteLine($"SupportsAnsi: {PromptPlus.SupportsAnsi}");
-PromptPlus.WriteLine($"Buffers(Width/Height): {PromptPlus.BufferWidth}/{PromptPlus.BufferHeight}");
-PromptPlus.WriteLine($"PadScreen(Left/Right): {PromptPlus.PadLeft}/{PromptPlus.PadRight}\n");
+PromptPlus.Join()
+    .SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
+    .WriteLine($"IsTerminal: {PromptPlus.IsTerminal}");
+    .WriteLine($"IsUnicodeSupported: {PromptPlus.IsUnicodeSupported}");
+    .WriteLine($"OutputEncoding: {PromptPlus.OutputEncoding.EncodingName}");
+    .WriteLine($"ColorDepth: {PromptPlus.ColorDepth}");
+    .WriteLine($"BackgroundColor: {PromptPlus.BackgroundColor}");
+    .WriteLine($"ForegroundColor: {PromptPlus.ForegroundColor}");
+    .WriteLine($"SupportsAnsi: {PromptPlus.SupportsAnsi}");
+    .WriteLine($"Buffers(Width/Height): {PromptPlus.BufferWidth}/{PromptPlus.BufferHeight}");
+    .WriteLine($"PadScreen(Left/Right): {PromptPlus.PadLeft}/{PromptPlus.PadRight}\n");
 
 PromptPlus
     .KeyPress()
@@ -322,14 +325,14 @@ PromptPlus.DefaultCulture = new CultureInfo("en-US");
 //sample only control
 PromptPlus.MaskEdit("input", "MaskEdit DateOnly input")
     .Mask(MaskedType.DateOnly)
-    .DescriptionWithInputType(FormatWeek.Short)
+    .ShowTipInputType(FormatWeek.Short)
     .Culture(new CultureInfo("en-us")) //overwrite culture
     .AcceptEmptyValue()
     .Run();
 
 PromptPlus.MaskEdit("input", "MaskEdit DateOnly input")
     .Mask(MaskedType.DateOnly)
-    .DescriptionWithInputType(FormatWeek.Short)
+    .ShowTipInputType(FormatWeek.Short)
     .Culture("pt-br") //overwrite culture
     .AcceptEmptyValue()
     .Run();

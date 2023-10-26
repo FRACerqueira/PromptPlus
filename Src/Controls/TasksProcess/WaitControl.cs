@@ -420,27 +420,23 @@ namespace PPlus.Controls
                         {
                             if (max == 1 && !haspmt)
                             {
-                                symb = "─";
+                                symb = _options.Symbol(SymbolType.TaskSingle);
                             }
                             else
                             {
-                                symb = "└─";
+                                symb = _options.Symbol(SymbolType.TaskFist);
                             }
                         }
                         else
                         {
-                            symb = "├─";
+                            symb = _options.Symbol(SymbolType.TaskMiddle);
                             if (max == 1)
                             {
                                 if (haspmt)
                                 {
-                                    symb = "└─";
+                                    symb = _options.Symbol(SymbolType.TaskFist);
                                 }
                             }
-                        }
-                        if (!ConsolePlus.IsUnicodeSupported)
-                        {
-                            symb = ">>";
                         }
                         var tasktitle = string.Empty;
                         if (!string.IsNullOrEmpty(_options.OverWriteTitleName))

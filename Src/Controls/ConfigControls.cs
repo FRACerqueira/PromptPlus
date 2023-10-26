@@ -405,52 +405,199 @@ namespace PPlus.Controls
                 switch (item)
                 {
                     case SymbolType.MaskEmpty:
-                        _globalSymbols.Add(SymbolType.MaskEmpty, ("_", "■"));
+                        _globalSymbols.Add(item, ("_", "■"));
                         break;
                     case SymbolType.Done:
-                        _globalSymbols.Add(SymbolType.Done, ("V", "√"));
+                        _globalSymbols.Add(item, ("V", "√"));
                         break;
                     case SymbolType.Selector:
-                        _globalSymbols.Add(SymbolType.Selector, (">", "›"));
+                        _globalSymbols.Add(item, (">", "›"));
                         break;
                     case SymbolType.Selected:
-                        _globalSymbols.Add(SymbolType.Selected, ("*", "♦"));
+                        _globalSymbols.Add(item, ("*", "♦"));
                         break;
                     case SymbolType.NotSelect:
-                        _globalSymbols.Add(SymbolType.NotSelect, ("o", "○"));
+                        _globalSymbols.Add(item, ("o", "○"));
                         break;
                     case SymbolType.Expanded:
-                        _globalSymbols.Add(SymbolType.Expanded, ("[-]", "[-]"));
+                        _globalSymbols.Add(item, ("[-]", "[-]"));
                         break;
                     case SymbolType.Collapsed:
-                        _globalSymbols.Add(SymbolType.Collapsed, ("[+]", "[+]"));
+                        _globalSymbols.Add(item, ("[+]", "[+]"));
                         break;
                     case SymbolType.IndentGroup:
-                        _globalSymbols.Add(SymbolType.IndentGroup, ("|-", "├─"));
+                        _globalSymbols.Add(item, ("|-", "├─"));
                         break;
                     case SymbolType.IndentEndGroup:
-                        _globalSymbols.Add(SymbolType.IndentEndGroup, ("|_", "└─"));
+                        _globalSymbols.Add(item, ("|_", "└─"));
                         break;
                     case SymbolType.TreeLinecross:
-                        _globalSymbols.Add(SymbolType.TreeLinecross, (" |-", " ├─"));
+                        _globalSymbols.Add(item, (" |-", " ├─"));
                         break;
                     case SymbolType.TreeLinecorner:
-                        _globalSymbols.Add(SymbolType.TreeLinecorner, (" |_", " └─"));
+                        _globalSymbols.Add(item, (" |_", " └─"));
                         break;
                     case SymbolType.TreeLinevertical:
-                        _globalSymbols.Add(SymbolType.TreeLinevertical, (" | ", " │ "));
+                        _globalSymbols.Add(item, (" | ", " │ "));
                         break;
                     case SymbolType.TreeLinespace:
-                        _globalSymbols.Add(SymbolType.TreeLinespace, ("   ", "   "));
+                        _globalSymbols.Add(item, ("   ", "   "));
                         break;
                     case SymbolType.DoubleBorder:
-                        _globalSymbols.Add(SymbolType.DoubleBorder, ("=", "═"));
+                        _globalSymbols.Add(item, ("=", "═"));
                         break;
                     case SymbolType.SingleBorder:
-                        _globalSymbols.Add(SymbolType.SingleBorder, ("-", "─"));
+                        _globalSymbols.Add(item, ("-", "─"));
                         break;
                     case SymbolType.HeavyBorder:
-                        _globalSymbols.Add(SymbolType.HeavyBorder, ("*", "━"));
+                        _globalSymbols.Add(item, ("*", "━"));
+                        break;
+                    case SymbolType.TaskSingle:
+                        _globalSymbols.Add(item, ("-", "─"));
+                        break;
+                    case SymbolType.TaskFist:
+                        _globalSymbols.Add(item, ("|_", "└─"));
+                        break;
+                    case SymbolType.TaskMiddle:
+                        _globalSymbols.Add(item, ("|-", "├─"));
+                        break;
+                    case SymbolType.ProgressBarLight:
+                        _globalSymbols.Add(item, ("-", "─"));
+                        break;
+                    case SymbolType.ProgressBarDoubleLight:
+                        _globalSymbols.Add(item, ("=", "═"));
+                        break;
+                    case SymbolType.ProgressBarHeavy:
+                        _globalSymbols.Add(item, ("=", "━"));
+                        break;
+                    case SymbolType.ProgressBarSquare:
+                        _globalSymbols.Add(item, ("#", "■"));
+                        break;
+                    case SymbolType.ProgressBarBar:
+                        _globalSymbols.Add(item, ("|", "▐"));
+                        break;
+                    case SymbolType.ProgressBarAsciiSingle:
+                        _globalSymbols.Add(item, ("-", "-"));
+                        break;
+                    case SymbolType.ProgressBarAsciiDouble:
+                        _globalSymbols.Add(item, ("=", "="));
+                        break;
+                    case SymbolType.ProgressBarDot:
+                        _globalSymbols.Add(item, (".", "."));
+                        break;
+                    case SymbolType.SliderBarLight:
+                        _globalSymbols.Add(item, ("-", "─"));
+                        break;
+                    case SymbolType.SliderBarDoubleLight:
+                        _globalSymbols.Add(item, ("=", "═"));
+                        break;
+                    case SymbolType.SliderBarHeavy:
+                        _globalSymbols.Add(item, ("=", "━"));
+                        break;
+                    case SymbolType.SliderBarSquare:
+                        _globalSymbols.Add(item, ("#", "■"));
+                        break;
+                    case SymbolType.ChartLabel:
+                        _globalSymbols.Add(item, ("#", "■"));
+                        break;
+                    case SymbolType.ChartLight:
+                        _globalSymbols.Add(item, ("-", "─"));
+                        break;
+                    case SymbolType.ChartHeavy:
+                        _globalSymbols.Add(item, ("=", "━"));
+                        break;
+                    case SymbolType.ChartSquare:
+                        _globalSymbols.Add(item, ("#", "■"));
+                        break;
+                    case SymbolType.GridSingleTopLeft:
+                        _globalSymbols.Add(item, ("+", "┌"));
+                        break;
+                    case SymbolType.GridSingleTopCenter:
+                        _globalSymbols.Add(item, ("+", "┬"));
+                        break;
+                    case SymbolType.GridSingleTopRight:
+                        _globalSymbols.Add(item, ("+", "┐"));
+                        break;
+                    case SymbolType.GridSingleMiddleLeft:
+                        _globalSymbols.Add(item, ("|", "├"));
+                        break;
+                    case SymbolType.GridSingleMiddleCenter:
+                        _globalSymbols.Add(item, ("+", "┼"));
+                        break;
+                    case SymbolType.GridSingleMiddleRight:
+                        _globalSymbols.Add(item, ("|", "┤"));
+                        break;
+                    case SymbolType.GridSingleBottomLeft:
+                        _globalSymbols.Add(item, ("+", "└"));
+                        break;
+                    case SymbolType.GridSingleBottomCenter:
+                        _globalSymbols.Add(item, ("+", "┴"));
+                        break;
+                    case SymbolType.GridSingleBottomRight:
+                        _globalSymbols.Add(item, ("+", "┘"));
+                        break;
+                    case SymbolType.GridSingleBorderLeft:
+                        _globalSymbols.Add(item, ("|", "│"));
+                        break;
+                    case SymbolType.GridSingleBorderRight:
+                        _globalSymbols.Add(item, ("|", "│"));
+                        break;
+                    case SymbolType.GridSingleBorderTop:
+                        _globalSymbols.Add(item, ("-", "─"));
+                        break;
+                    case SymbolType.GridSingleBorderBottom:
+                        _globalSymbols.Add(item, ("-", "─"));
+                        break;
+                    case SymbolType.GridSingleDividerY:
+                        _globalSymbols.Add(item, ("|", "│"));
+                        break;
+                    case SymbolType.GridSingleDividerX:
+                        _globalSymbols.Add(item, ("-", "─"));
+                        break;
+                    case SymbolType.GridDoubleTopLeft:
+                        _globalSymbols.Add(item, ("+", "╔"));
+                        break;
+                    case SymbolType.GridDoubleTopCenter:
+                        _globalSymbols.Add(item, ("+", "╦"));
+                        break;
+                    case SymbolType.GridDoubleTopRight:
+                        _globalSymbols.Add(item, ("+", "╗"));
+                        break;
+                    case SymbolType.GridDoubleMiddleLeft:
+                        _globalSymbols.Add(item, ("|", "╠"));
+                        break;
+                    case SymbolType.GridDoubleMiddleCenter:
+                        _globalSymbols.Add(item, ("+", "╬"));
+                        break;
+                    case SymbolType.GridDoubleMiddleRight:
+                        _globalSymbols.Add(item, ("|", "╣"));
+                        break;
+                    case SymbolType.GridDoubleBottomLeft:
+                        _globalSymbols.Add(item, ("+", "╚"));
+                        break;
+                    case SymbolType.GridDoubleBottomCenter:
+                        _globalSymbols.Add(item, ("+", "╩"));
+                        break;
+                    case SymbolType.GridDoubleBottomRight:
+                        _globalSymbols.Add(item, ("+", "╝"));
+                        break;
+                    case SymbolType.GridDoubleBorderLeft:
+                        _globalSymbols.Add(item, ("|", "║"));
+                        break;
+                    case SymbolType.GridDoubleBorderRight:
+                        _globalSymbols.Add(item, ("|", "║"));
+                        break;
+                    case SymbolType.GridDoubleBorderTop:
+                        _globalSymbols.Add(item, ("=", "═"));
+                        break;
+                    case SymbolType.GridDoubleBorderBottom:
+                        _globalSymbols.Add(item, ("=", "═"));
+                        break;
+                    case SymbolType.GridDoubleDividerY:
+                        _globalSymbols.Add(item, ("|", "║"));
+                        break;
+                    case SymbolType.GridDoubleDividerX:
+                        _globalSymbols.Add(item, ("=", "═"));
                         break;
                     default:
                         throw new PromptPlusException($"Symbol {item} Not Implemented");
@@ -462,12 +609,12 @@ namespace PPlus.Controls
         private static bool ImplementedResource(CultureInfo cultureInfo)
         {
 
-            var code = cultureInfo.Name;
-            if (code == "en-US")
+            var code = cultureInfo.Name.ToLowerInvariant();
+            if (code == "en-us")
             {
                 return true;
             }
-            else if (code == "pt-BR")
+            else if (code == "pt-br")
             {
                 return true;
             }

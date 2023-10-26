@@ -18,39 +18,18 @@ namespace PPlus.Controls
             switch (options.BarType)
             {
                 case SliderBarType.Fill:
-                    {
-                        if (!isunicode)
-                        {
-                            bar ='#';
-                        }
-                    }
                     break;
                 case SliderBarType.Light:
-                    {
-                        bar = '─';
-                        if (!isunicode)
-                        {
-                            bar = '-';
-                        }
-                    }
+                    bar = options.Symbol(SymbolType.SliderBarLight)[0];
+                    break;
+                case SliderBarType.DoubleLight:
+                    bar = options.Symbol(SymbolType.SliderBarDoubleLight)[0];
                     break;
                 case SliderBarType.Heavy:
-                    {
-                        bar = '━';
-                        if (!isunicode)
-                        {
-                            bar = '=';
-                        }
-                    }
+                    bar = options.Symbol(SymbolType.SliderBarHeavy)[0];
                     break;
                 case SliderBarType.Square:
-                    {
-                        bar = '■';
-                        if (!isunicode)
-                        {
-                            bar = '#';
-                        }
-                    }
+                    bar = options.Symbol(SymbolType.SliderBarSquare)[0];
                     break;
                 default:
                     throw new PromptPlusException($"Not implemented {options.BarType}");
