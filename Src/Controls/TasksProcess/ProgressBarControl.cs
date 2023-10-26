@@ -452,8 +452,8 @@ namespace PPlus.Controls
                     }
 
                 }
-                char charbarOn = ' ';
-                char charbarOff = ' ';
+                char barOn = ' ';
+                char barOff = ' ';
                 string delimitbar = "│";
                 Style OnStyle = Style.Default.Foreground(_options.StyleContent(StyleControls.Slider).Foreground);
                 if (_options.ChangeColor != null)
@@ -467,63 +467,35 @@ namespace PPlus.Controls
                 switch (_options.BarType)
                 {
                     case ProgressBarType.Fill:
-                        {
-                            charbarOff = charbarOn;
-                            OnStyle = OnStyle.Background(OnStyle.Foreground);
-                            if (!ConsolePlus.IsUnicodeSupported)
-                            {
-                                charbarOn = _options.CharBar;
-                                charbarOff = _options.CharBar;
-                            }
-                        }
+                        barOff = barOn;
+                        OnStyle = OnStyle.Background(OnStyle.Foreground);
                         break;
                     case ProgressBarType.Light:
-                        {
-                            charbarOn = '─';
-                            if (!ConsolePlus.IsUnicodeSupported)
-                            {
-                                charbarOn = '-';
-                            }
-                        }
+                        barOn = _options.Symbol(SymbolType.ProgressBarLight)[0];
+                        break;
+                    case ProgressBarType.DoubleLight:
+                        barOn = _options.Symbol(SymbolType.ProgressBarDoubleLight)[0];
                         break;
                     case ProgressBarType.Heavy:
-                        {
-                            charbarOn = '━';
-                            if (!ConsolePlus.IsUnicodeSupported)
-                            {
-                                charbarOn = '=';
-                            }
-                        }
+                        barOn = _options.Symbol(SymbolType.ProgressBarHeavy)[0];
                         break;
                     case ProgressBarType.Square:
-                        {
-                            charbarOn = '■';
-                            if (!ConsolePlus.IsUnicodeSupported)
-                            {
-                                charbarOn = '#';
-                            }
-                        }
+                        barOn = _options.Symbol(SymbolType.ProgressBarSquare)[0];
                         break;
                     case ProgressBarType.Bar:
-                        {
-                            charbarOn = '▐';
-                            if (!ConsolePlus.IsUnicodeSupported)
-                            {
-                                charbarOn = '|';
-                            }
-                        }
+                        barOn = _options.Symbol(SymbolType.ProgressBarBar)[0];
                         break;
                     case ProgressBarType.AsciiSingle:
-                        charbarOn = '-';
+                        barOn = _options.Symbol(SymbolType.ProgressBarAsciiSingle)[0];
                         break;
                     case ProgressBarType.AsciiDouble:
-                        charbarOn = '=';
+                        barOn = _options.Symbol(SymbolType.ProgressBarAsciiDouble)[0];
                         break;
                     case ProgressBarType.Dot:
-                        charbarOn = '.';
+                        barOn = _options.Symbol(SymbolType.ProgressBarDot)[0];
                         break;
                     case ProgressBarType.Char:
-                        charbarOn = _options.CharBar;
+                        barOn = _options.CharBar;
                         break;
                     default:
                         throw new PromptPlusException($"BarType: {_options.BarType} Not Implemented");
@@ -543,7 +515,7 @@ namespace PPlus.Controls
                 }
                 if (_options.Gradient != null)
                 {
-                    var txt = new string(charbarOn, _options.Witdth);
+                    var txt = new string(barOn, _options.Witdth);
                     var aux = Gradient(txt, _options.Gradient);
                     var valuestep = CurrentValueStep(value);
                     for (int i = 0; i < aux.Length; i++)
@@ -573,7 +545,7 @@ namespace PPlus.Controls
                 else
                 {
                     var top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write(new string(charbarOn, CurrentValueStep(value)), OnStyle);
+                    qtd = ConsolePlus.Write(new string(barOn, CurrentValueStep(value)), OnStyle);
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;
@@ -587,7 +559,7 @@ namespace PPlus.Controls
                 if (offlength > 0)
                 {
                     var top = ConsolePlus.CursorTop;
-                    qtd = ConsolePlus.Write(new string(charbarOff, offlength), Style.Default.Foreground(_options.StyleContent(StyleControls.Slider).Background));
+                    qtd = ConsolePlus.Write(new string(barOff, offlength), Style.Default.Foreground(_options.StyleContent(StyleControls.Slider).Background));
                     if (ConsolePlus.IsTerminal && top + qtd >= ConsolePlus.BufferHeight)
                     {
                         var dif = top + qtd - ConsolePlus.BufferHeight;

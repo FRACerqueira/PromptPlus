@@ -25,10 +25,6 @@ namespace PPlus.Controls
         /// <summary>
         /// Acsii double grid
         /// </summary>
-        AsciiDoubleGrid,
-        /// <summary>
-        /// Heavy line grid
-        /// </summary>
-        HeavyGrid
+        AsciiDoubleGrid
     }
 }

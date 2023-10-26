@@ -29,7 +29,6 @@ Implements [IComparable](https://docs.microsoft.com/en-us/dotnet/api/system.icom
 | DoubleGrid | 1 | Double line grid |
 | AsciiSingleGrid | 2 | Acsii single grid |
 | AsciiDoubleGrid | 3 | Acsii double grid |
-| HeavyGrid | 4 | Heavy line grid |
 
 
 - - -

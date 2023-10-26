@@ -19,6 +19,10 @@ namespace PPlus.Controls
         /// </summary>
         Light,
         /// <summary>
+        /// Double Light
+        /// </summary>
+        DoubleLight,
+        /// <summary>
         /// Heavy
         /// </summary>
         Heavy,

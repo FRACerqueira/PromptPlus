@@ -1001,62 +1001,76 @@ namespace PPlus.Controls
         }
         private void WriteCalendar(ScreenBuffer screenBuffer, DateTime currentdate)
         {
-            if (!ConsolePlus.IsUnicodeSupported)
-            {
-                switch (_options.Layout)
-                {
-                    case CalendarLayout.SingleGrid:
-                    case CalendarLayout.AsciiSingleGrid:
-                        WriteCalendarAsciiSingleGrid(screenBuffer, currentdate);
-                        break;
-                    case CalendarLayout.HeavyGrid:
-                    case CalendarLayout.DoubleGrid:
-                    case CalendarLayout.AsciiDoubleGrid:
-                        WriteCalendarAsciiDoubleGrid(screenBuffer, currentdate);
-                        break;
-                    default:
-                        throw new PromptPlusException($"Layout: {_options.Layout} Not Implemented");
-                }
-                return;
-            }
             switch (_options.Layout)
             {
-                case CalendarLayout.HeavyGrid:
-                    WriteCalendarHeavyGrid(screenBuffer, currentdate);
+                case CalendarLayout.AsciiSingleGrid:
+                    RenderCalendar(screenBuffer, currentdate,
+                        _options.SymbolUnSupported(SymbolType.GridSingleDividerX)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleTopLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleTopRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBorderLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBorderRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBottomLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBottomRight)[0]);
                     break;
                 case CalendarLayout.SingleGrid:
-                    WriteCalendarSingleGrid(screenBuffer, currentdate);
+                    RenderCalendar(screenBuffer, currentdate,
+                        _options.Symbol(SymbolType.GridSingleDividerX)[0],
+                        _options.Symbol(SymbolType.GridSingleTopLeft)[0],
+                        _options.Symbol(SymbolType.GridSingleTopRight)[0],
+                        _options.Symbol(SymbolType.GridSingleBorderLeft)[0],
+                        _options.Symbol(SymbolType.GridSingleBorderRight)[0],
+                        _options.Symbol(SymbolType.GridSingleBottomLeft)[0],
+                        _options.Symbol(SymbolType.GridSingleBottomRight)[0]);
                     break;
                 case CalendarLayout.DoubleGrid:
-                    WriteCalendarDoubleGrid(screenBuffer, currentdate);
-                    break;
-                case CalendarLayout.AsciiSingleGrid:
-                    WriteCalendarAsciiSingleGrid(screenBuffer, currentdate);
+                    RenderCalendar(screenBuffer, currentdate,
+                        _options.Symbol(SymbolType.GridDoubleDividerX)[0],
+                        _options.Symbol(SymbolType.GridDoubleTopLeft)[0],
+                        _options.Symbol(SymbolType.GridDoubleTopRight)[0],
+                        _options.Symbol(SymbolType.GridDoubleBorderLeft)[0],
+                        _options.Symbol(SymbolType.GridDoubleBorderRight)[0],
+                        _options.Symbol(SymbolType.GridDoubleBottomLeft)[0],
+                        _options.Symbol(SymbolType.GridDoubleBottomRight)[0]);
                     break;
                 case CalendarLayout.AsciiDoubleGrid:
-                    WriteCalendarAsciiDoubleGrid(screenBuffer, currentdate);
+                    RenderCalendar(screenBuffer, currentdate,
+                        _options.SymbolUnSupported(SymbolType.GridDoubleDividerX)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleTopLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleTopRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBorderLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBorderRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBottomLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBottomRight)[0]);
                     break;
                 default:
                     throw new PromptPlusException($"Layout: {_options.Layout} Not Implemented");
             }
         }
 
-        private void WriteCalendarAsciiSingleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
+        private void RenderCalendar(ScreenBuffer screenBuffer, DateTime currentdate,char dividerx, char topleft,char topright, char borderleft,char borderright, char bottomleft, char bottomright)
         {
             var curmonth = currentdate.Date.ToString("MMMM", _options.CurrentCulture).PadRight(28);
             curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
+            var line = new string(dividerx, 35);
+
+
             var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
-            screenBuffer.AddBuffer("+-----------------------------------+", _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(topleft, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(line, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(topright, _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(borderleft, _options.StyleContent(StyleControls.Lines));
             screenBuffer.AddBuffer($" {curmonth}", _options.StyleContent(StyleControls.CalendarMonth));
             screenBuffer.AddBuffer($" {curyear} ", _options.StyleContent(StyleControls.CalendarYear));
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(borderright, _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("|-----------------------------------|", _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(borderleft, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(line, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(borderright, _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(borderleft, _options.StyleContent(StyleControls.Lines));
             foreach (var item in _Weekdays)
             {
                 var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
@@ -1080,14 +1094,16 @@ namespace PPlus.Controls
                     screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.CalendarWeekDay));
                 }
             }
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(borderright, _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("|-----------------------------------|", _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(borderleft, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(line, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(borderright, _options.StyleContent(StyleControls.Lines));
             screenBuffer.NewLine();
 
             var auxdate = new DateTime(_currentdate.Year, _currentdate.Month, 1);
             var weekdays = MonthWeekDays(DateTime.DaysInMonth(_currentdate.Year, _currentdate.Month));
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(borderleft, _options.StyleContent(StyleControls.Lines));
             foreach (var item in _Weekdays)
             {
                 if (item != weekdays[auxdate.Day - 1])
@@ -1100,12 +1116,12 @@ namespace PPlus.Controls
                     auxdate = auxdate.AddDays(1);
                 }
             }
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(borderright, _options.StyleContent(StyleControls.Lines));
             var maxdate = false;
             while (auxdate.Month == _currentdate.Month)
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
+                screenBuffer.AddBuffer(borderleft, _options.StyleContent(StyleControls.Lines));
                 for (int i = 0; i < 7; i++)
                 {
                     if (auxdate.Month == _currentdate.Month)
@@ -1133,410 +1149,12 @@ namespace PPlus.Controls
                         screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
                     }
                 }
-                screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
+                screenBuffer.AddBuffer(borderright, _options.StyleContent(StyleControls.Lines));
             }
             screenBuffer.NewLine();
-            screenBuffer.AddBuffer("+-----------------------------------+", _options.StyleContent(StyleControls.Lines));
-        }
-
-        private void WriteCalendarAsciiDoubleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
-        {
-            var curmonth = currentdate.Date.ToString("MMMM", _options.CurrentCulture).PadRight(28);
-            curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
-
-            var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
-            screenBuffer.AddBuffer("+===================================+", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.AddBuffer($" {curmonth}", _options.StyleContent(StyleControls.CalendarMonth));
-            screenBuffer.AddBuffer($" {curyear} ", _options.StyleContent(StyleControls.CalendarYear));
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("|===================================|", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
-            foreach (var item in _Weekdays)
-            {
-                var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
-                abr = $"{abr[..1].ToUpperInvariant()}{abr[1..]}";
-                if (abr.Length < 3)
-                {
-                    abr = abr.PadLeft(3, ' ');
-                }
-                if (abr.Length > 3)
-                {
-                    abr = abr[..3];
-                }
-                if (item == _currentdate.DayOfWeek)
-                {
-                    abr = $"<{abr}>";
-                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.Selected));
-                }
-                else
-                {
-                    abr = $" {abr} ";
-                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.CalendarWeekDay));
-                }
-            }
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("|===================================|", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-
-            var auxdate = new DateTime(_currentdate.Year, _currentdate.Month, 1);
-            var weekdays = MonthWeekDays(DateTime.DaysInMonth(_currentdate.Year, _currentdate.Month));
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
-            foreach (var item in _Weekdays)
-            {
-                if (item != weekdays[auxdate.Day - 1])
-                {
-                    screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                }
-                else
-                {
-                    WriteDay(screenBuffer, auxdate);
-                    auxdate = auxdate.AddDays(1);
-                }
-            }
-            screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
-            var maxdate = false;
-            while (auxdate.Month == _currentdate.Month)
-            {
-                screenBuffer.NewLine();
-                screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
-                for (int i = 0; i < 7; i++)
-                {
-                    if (auxdate.Month == _currentdate.Month)
-                    {
-                        if (auxdate.Date == DateTime.MaxValue.Date)
-                        {
-                            if (!maxdate)
-                            {
-                                WriteDay(screenBuffer, auxdate);
-                                maxdate = true;
-                            }
-                            else
-                            {
-                                screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                            }
-                        }
-                        else
-                        {
-                            WriteDay(screenBuffer, auxdate);
-                            auxdate = auxdate.AddDays(1);
-                        }
-                    }
-                    else
-                    {
-                        screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                    }
-                }
-                screenBuffer.AddBuffer('|', _options.StyleContent(StyleControls.Lines));
-            }
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("+===================================+", _options.StyleContent(StyleControls.Lines));
-        }
-
-        private void WriteCalendarSingleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
-        {
-            var curmonth = currentdate.Date.ToString("MMMM", _options.CurrentCulture).PadRight(28);
-            curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
-
-            var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
-            screenBuffer.AddBuffer("┌───────────────────────────────────┐", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.AddBuffer($" {curmonth}", _options.StyleContent(StyleControls.CalendarMonth));
-            screenBuffer.AddBuffer($" {curyear} ", _options.StyleContent(StyleControls.CalendarYear));
-            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("├───────────────────────────────────┤", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
-
-
-            foreach (var item in _Weekdays)
-            {
-                var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
-                abr = $"{abr[..1].ToUpperInvariant()}{abr[1..]}";
-                if (abr.Length < 3)
-                { 
-                    abr = abr.PadLeft(3, ' ');
-                }
-                if (abr.Length > 3)
-                {
-                    abr = abr[..3];
-                }
-                if (item == _currentdate.DayOfWeek)
-                {
-                    abr = $"<{abr}>";
-                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.Selected));
-                }
-                else
-                {
-                    abr = $" {abr} ";
-                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.CalendarWeekDay));
-                }
-            }
-            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("├───────────────────────────────────┤", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-
-            var auxdate = new DateTime(_currentdate.Year, _currentdate.Month, 1);
-            var weekdays = MonthWeekDays(DateTime.DaysInMonth(_currentdate.Year, _currentdate.Month));
-            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
-            foreach (var item in _Weekdays)
-            {
-                if (item != weekdays[auxdate.Day - 1])
-                {
-                    screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                }
-                else
-                {
-                    WriteDay(screenBuffer, auxdate);
-                    auxdate = auxdate.AddDays(1);
-                }
-            }
-            screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
-            var maxdate = false;
-            while (auxdate.Month == _currentdate.Month)
-            {
-                screenBuffer.NewLine();
-                screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
-                for (int i = 0; i < 7; i++)
-                {
-                    if (auxdate.Month == _currentdate.Month)
-                    {
-                        if (auxdate.Date == DateTime.MaxValue.Date)
-                        {
-                            if (!maxdate)
-                            {
-                                WriteDay(screenBuffer, auxdate);
-                                maxdate = true;
-                            }
-                            else
-                            {
-                                screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                            }
-                        }
-                        else
-                        {
-                            WriteDay(screenBuffer, auxdate);
-                            auxdate = auxdate.AddDays(1);
-                        }
-                    }
-                    else
-                    {
-                        screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                    }
-                }
-                screenBuffer.AddBuffer('│', _options.StyleContent(StyleControls.Lines));
-                if (auxdate.Date == DateTime.MaxValue.Date)
-                {
-                    break;
-                }
-            }
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("└───────────────────────────────────┘", _options.StyleContent(StyleControls.Lines));
-        }
-
-        private void WriteCalendarDoubleGrid(ScreenBuffer screenBuffer, DateTime currentdate)
-        {
-            var curmonth = currentdate.Date.ToString("MMMM", _options.CurrentCulture).PadRight(28);
-            curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
-
-            var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
-            screenBuffer.AddBuffer("╔═══════════════════════════════════╗", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.AddBuffer($" {curmonth}", _options.StyleContent(StyleControls.CalendarMonth));
-            screenBuffer.AddBuffer($" {curyear} ", _options.StyleContent(StyleControls.CalendarYear));
-            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("╠═══════════════════════════════════╣", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
-
-
-            foreach (var item in _Weekdays)
-            {
-                var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
-                abr = $"{abr[..1].ToUpperInvariant()}{abr[1..]}";
-                if (abr.Length < 3)
-                {
-                    abr = abr.PadLeft(3, ' ');
-                }
-                if (abr.Length > 3)
-                {
-                    abr = abr[..3];
-                }
-                if (item == _currentdate.DayOfWeek)
-                {
-                    abr = $"<{abr}>";
-                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.Selected));
-                }
-                else
-                {
-                    abr = $" {abr} ";
-                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.CalendarWeekDay));
-                }
-            }
-            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("╠═══════════════════════════════════╣", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-
-            var auxdate = new DateTime(_currentdate.Year, _currentdate.Month, 1);
-            var weekdays = MonthWeekDays(DateTime.DaysInMonth(_currentdate.Year, _currentdate.Month));
-            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
-            foreach (var item in _Weekdays)
-            {
-                if (item != weekdays[auxdate.Day - 1])
-                {
-                    screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                }
-                else
-                {
-                    WriteDay(screenBuffer, auxdate);
-                    auxdate = auxdate.AddDays(1);
-                }
-            }
-            screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
-            var maxdate = false;
-            while (auxdate.Month == _currentdate.Month)
-            {
-                screenBuffer.NewLine();
-                screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
-                for (int i = 0; i < 7; i++)
-                {
-                    if (auxdate.Month == _currentdate.Month)
-                    {
-                        if (auxdate.Date == DateTime.MaxValue.Date)
-                        {
-                            if (!maxdate)
-                            {
-                                WriteDay(screenBuffer, auxdate);
-                                maxdate = true;
-                            }
-                            else
-                            {
-                                screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                            }
-                        }
-                        else
-                        {
-                            WriteDay(screenBuffer, auxdate);
-                            auxdate = auxdate.AddDays(1);
-                        }
-                    }
-                    else
-                    {
-                        screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                    }
-                }
-                screenBuffer.AddBuffer('║', _options.StyleContent(StyleControls.Lines));
-            }
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("╚═══════════════════════════════════╝", _options.StyleContent(StyleControls.Lines));
-        }
-
-        private void WriteCalendarHeavyGrid(ScreenBuffer screenBuffer, DateTime currentdate)
-        {
-            var curmonth = currentdate.Date.ToString("MMMM", _options.CurrentCulture).PadRight(28);
-            curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
-
-            var curyear = currentdate.Date.ToString("yyyy", _options.CurrentCulture);
-            screenBuffer.AddBuffer("▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer('▐', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.AddBuffer($" {curmonth}", _options.StyleContent(StyleControls.CalendarMonth));
-            screenBuffer.AddBuffer($" {curyear} ", _options.StyleContent(StyleControls.CalendarYear));
-            screenBuffer.AddBuffer('▌', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer('▐', _options.StyleContent(StyleControls.Lines));
-            foreach (var item in _Weekdays)
-            {
-                var abr = _options.CurrentCulture.DateTimeFormat.AbbreviatedDayNames[(int)item];
-                abr = $"{abr[..1].ToUpperInvariant()}{abr[1..]}";
-                if (abr.Length < 3)
-                {
-                    abr = abr.PadLeft(3, ' ');
-                }
-                if (abr.Length > 3)
-                {
-                    abr = abr[..3];
-                }
-                if (item == _currentdate.DayOfWeek)
-                {
-                    abr = $"<{abr}>";
-                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.Selected));
-                }
-                else
-                {
-                    abr = $" {abr} ";
-                    screenBuffer.AddBuffer(abr, _options.StyleContent(StyleControls.CalendarWeekDay));
-                }
-            }
-            screenBuffer.AddBuffer('▌', _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("▐▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▌", _options.StyleContent(StyleControls.Lines));
-            screenBuffer.NewLine();
-
-            var auxdate = new DateTime(_currentdate.Year, _currentdate.Month, 1);
-            var weekdays = MonthWeekDays(DateTime.DaysInMonth(_currentdate.Year, _currentdate.Month));
-            screenBuffer.AddBuffer('▐', _options.StyleContent(StyleControls.Lines));
-            foreach (var item in _Weekdays)
-            {
-                if (item != weekdays[auxdate.Day - 1])
-                {
-                    screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                }
-                else
-                {
-                    WriteDay(screenBuffer, auxdate);
-                    auxdate = auxdate.AddDays(1);
-                }
-            }
-            screenBuffer.AddBuffer('▌', _options.StyleContent(StyleControls.Lines));
-            var maxdate = false;
-            while (auxdate.Month == _currentdate.Month)
-            {
-                screenBuffer.NewLine();
-                screenBuffer.AddBuffer('▐', _options.StyleContent(StyleControls.Lines));
-                for (int i = 0; i < 7; i++)
-                {
-                    if (auxdate.Month == _currentdate.Month)
-                    {
-                        if (auxdate.Date == DateTime.MaxValue.Date)
-                        {
-                            if (!maxdate)
-                            {
-                                WriteDay(screenBuffer, auxdate);
-                                maxdate = true;
-                            }
-                            else
-                            {
-                                screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                            }
-                        }
-                        else
-                        {
-                            WriteDay(screenBuffer, auxdate);
-                            auxdate = auxdate.AddDays(1);
-                        }
-                    }
-                    else
-                    {
-                        screenBuffer.AddBuffer("     ", _options.StyleContent(StyleControls.Lines));
-                    }
-                }
-                screenBuffer.AddBuffer('▌', _options.StyleContent(StyleControls.Lines));
-            }
-            screenBuffer.NewLine();
-            screenBuffer.AddBuffer("▐▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▌", _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(bottomleft, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(line, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(bottomright, _options.StyleContent(StyleControls.Lines));
         }
 
         private void WriteNotes(ScreenBuffer screenBuffer)

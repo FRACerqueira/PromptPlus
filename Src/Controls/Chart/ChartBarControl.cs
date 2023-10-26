@@ -564,43 +564,19 @@ namespace PPlus.Controls
                 }
             }
             var maxlengthlabel = _options.Labels.Max(x => x.Label.Length);
-            char charbarOn = ' ';
+            char barOn = ' ';
             switch (barType)
             {
                 case ChartBarType.Fill:
-                    {
-                        if (!ConsolePlus.IsUnicodeSupported)
-                        {
-                            charbarOn = _options.CharBar;
-                        }
-                    }
                     break;
                 case ChartBarType.Light:
-                    {
-                        charbarOn = '─';
-                        if (!ConsolePlus.IsUnicodeSupported)
-                        {
-                            charbarOn = '-';
-                        }
-                    }
+                    barOn = _options.Symbol(SymbolType.ChartLight)[0];
                     break;
                 case ChartBarType.Heavy:
-                    {
-                        charbarOn = '━';
-                        if (!ConsolePlus.IsUnicodeSupported)
-                        {
-                            charbarOn = '=';
-                        }
-                    }
+                    barOn = _options.Symbol(SymbolType.ChartHeavy)[0];
                     break;
                 case ChartBarType.Square:
-                    {
-                        charbarOn = '■';
-                        if (!ConsolePlus.IsUnicodeSupported)
-                        {
-                            charbarOn = _options.CharBar;
-                        }
-                    }
+                    barOn = _options.Symbol(SymbolType.ChartSquare)[0];
                     break;
                 default:
                     throw new PromptPlusException($"Not implemented {barType}");
@@ -638,13 +614,13 @@ namespace PPlus.Controls
                 }
                 if (_options.CurrentShowLegend)
                 {
-                    screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle, false, true);
+                    screenBuffer.AddBuffer(new string(barOn, tkt), OnStyle, false, true);
                 }
                 else
                 {
                     screenBuffer.AddBuffer(item.Label.PadRight(maxlengthlabel) , _options.StyleContent(ChartStyles.ChartLabel));
                     screenBuffer.AddBuffer(": ",Style.Default, false, false);
-                    screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle, false, true);
+                    screenBuffer.AddBuffer(new string(barOn, tkt), OnStyle, false, true);
                 }
                 if (!_options.HideValueBar)
                 {
@@ -668,7 +644,7 @@ namespace PPlus.Controls
 
         private void WriteStackBar(ScreenBuffer screenBuffer, ChartBarType barType, double ticketStep)
         {
-            char charbarOn = ' ';
+            char barOn = ' ';
             if (!_options.OptMinimalRender)
             {
                 if (!(string.IsNullOrEmpty(_options.OptPrompt) && string.IsNullOrEmpty(_options.OptDescription)))
@@ -683,39 +659,15 @@ namespace PPlus.Controls
             switch (barType)
             {
                 case ChartBarType.Fill:
-                    {
-                        if (!ConsolePlus.IsUnicodeSupported)
-                        {
-                            charbarOn = _options.CharBar;
-                        }
-                    }
                     break;
                 case ChartBarType.Light:
-                    {
-                        charbarOn = '─';
-                        if (!ConsolePlus.IsUnicodeSupported)
-                        {
-                            charbarOn = '-';
-                        }
-                    }
+                    barOn = _options.Symbol(SymbolType.ChartLight)[0];
                     break;
                 case ChartBarType.Heavy:
-                    {
-                        charbarOn = '━';
-                        if (!ConsolePlus.IsUnicodeSupported)
-                        {
-                            charbarOn = '=';
-                        }
-                    }
+                    barOn = _options.Symbol(SymbolType.ChartHeavy)[0];
                     break;
                 case ChartBarType.Square:
-                    {
-                        charbarOn = '■';
-                        if (!ConsolePlus.IsUnicodeSupported)
-                        {
-                            charbarOn = _options.CharBar;
-                        }
-                    }
+                    barOn = _options.Symbol(SymbolType.ChartSquare)[0];
                     break;
                 default:
                     throw new PromptPlusException($"Not implemented {barType}");
@@ -741,7 +693,7 @@ namespace PPlus.Controls
                         tkt = 1;
                     }
                 }
-                screenBuffer.AddBuffer(new string(charbarOn, tkt), OnStyle, false, true);
+                screenBuffer.AddBuffer(new string(barOn, tkt), OnStyle, false, true);
             }
         }
 
@@ -766,7 +718,7 @@ namespace PPlus.Controls
             foreach (var item in _options.Labels.Skip(inipos).Take(pagesize))
             {
                 screenBuffer.NewLine();
-                screenBuffer.AddBuffer("■", _options.StyleContent(StyleControls.ChartLabel).Foreground(item.ColorBar.Value), false, false);
+                screenBuffer.AddBuffer(_options.Symbol(SymbolType.ChartLabel), _options.StyleContent(StyleControls.ChartLabel).Foreground(item.ColorBar.Value), false, false);
                 screenBuffer.AddBuffer(" ", _options.StyleContent(StyleControls.ChartLabel), false, false);
                 screenBuffer.AddBuffer($"{item.Label.PadRight(maxlengthlabel)}", _options.StyleContent(StyleControls.ChartLabel));
                 if (_options.ShowLegendValue || _options.ShowLegendPercent)

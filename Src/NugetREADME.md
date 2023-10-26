@@ -83,6 +83,8 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
     - Edit[F2] Immutable item in AddTolist/AddtoMaskEditList control
 - Fixed bug : 
     - CTRL-V (paste data) does not show input in some controls
+- Fixed bug : 
+    - Refinement of Unicode symbol rendering in all controls (Corret render)
 
 ## **PromptPlus Controls - Sample Usage**
 

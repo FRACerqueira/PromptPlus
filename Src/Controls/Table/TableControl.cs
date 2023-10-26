@@ -685,16 +685,28 @@ namespace PPlus.Controls.Table
                             {
                                 if (_options.Layout == TableLayout.SingleGridFull)
                                 {
-                                    BuildLineColumn(screenBuffer, '┌', '┬', '┐', '─');
+                                    BuildLineColumn(screenBuffer,
+                                        _options.Symbol(SymbolType.GridSingleTopLeft)[0],
+                                        _options.Symbol(SymbolType.GridSingleTopCenter)[0],
+                                        _options.Symbol(SymbolType.GridSingleTopRight)[0],
+                                        _options.Symbol(SymbolType.GridSingleBorderTop)[0]);
                                 }
                                 else
                                 {
-                                    BuildLineColumn(screenBuffer, '┌', '─', '┐', '─');
+                                    BuildLineColumn(screenBuffer,
+                                        _options.Symbol(SymbolType.GridSingleTopLeft)[0],
+                                        _options.Symbol(SymbolType.GridSingleBorderTop)[0],
+                                        _options.Symbol(SymbolType.GridSingleTopRight)[0],
+                                        _options.Symbol(SymbolType.GridSingleBorderTop)[0]);
                                 }
                             }
                             else
                             {
-                                BuildLineColumn(screenBuffer, '┌', '┬', '┐', '─');
+                                BuildLineColumn(screenBuffer,
+                                    _options.Symbol(SymbolType.GridSingleTopLeft)[0],
+                                    _options.Symbol(SymbolType.GridSingleTopCenter)[0],
+                                    _options.Symbol(SymbolType.GridSingleTopRight)[0],
+                                    _options.Symbol(SymbolType.GridSingleBorderTop)[0]);
                             }
                             break;
                         case TableLayout.DoubleGridFull:
@@ -703,16 +715,28 @@ namespace PPlus.Controls.Table
                             {
                                 if (_options.Layout == TableLayout.DoubleGridFull)
                                 {
-                                    BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                                    BuildLineColumn(screenBuffer,
+                                        _options.Symbol(SymbolType.GridDoubleTopLeft)[0],
+                                        _options.Symbol(SymbolType.GridDoubleTopCenter)[0],
+                                        _options.Symbol(SymbolType.GridDoubleTopRight)[0],
+                                        _options.Symbol(SymbolType.GridDoubleBorderTop)[0]);
                                 }
                                 else
                                 {
-                                    BuildLineColumn(screenBuffer, '╔', '═', '╗', '═');
+                                    BuildLineColumn(screenBuffer,
+                                        _options.Symbol(SymbolType.GridDoubleTopLeft)[0],
+                                        _options.Symbol(SymbolType.GridDoubleBorderTop)[0],
+                                        _options.Symbol(SymbolType.GridDoubleTopRight)[0],
+                                        _options.Symbol(SymbolType.GridDoubleBorderTop)[0]);
                                 }
                             }
                             else
                             {
-                                BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                                BuildLineColumn(screenBuffer,
+                                    _options.Symbol(SymbolType.GridDoubleTopLeft)[0],
+                                    _options.Symbol(SymbolType.GridDoubleTopCenter)[0],
+                                    _options.Symbol(SymbolType.GridDoubleTopRight)[0],
+                                    _options.Symbol(SymbolType.GridDoubleBorderTop)[0]);
                             }
                             break;
                         case TableLayout.AsciiSingleGridFull:
@@ -721,16 +745,28 @@ namespace PPlus.Controls.Table
                             {
                                 if (_options.Layout == TableLayout.AsciiSingleGridFull)
                                 {
-                                    BuildLineColumn(screenBuffer, '+', '+', '+', '-');
-                                }
-                                else
-                                {
-                                    BuildLineColumn(screenBuffer, '+', '-', '+', '-');
+                                    BuildLineColumn(screenBuffer,
+                                        _options.SymbolUnSupported(SymbolType.GridSingleTopLeft)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridSingleTopCenter)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridSingleTopRight)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0]);
+                                }                                                 
+                                else                                              
+                                {                                                 
+                                    BuildLineColumn(screenBuffer,                 
+                                        _options.SymbolUnSupported(SymbolType.GridSingleTopLeft)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridSingleTopRight)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0]);
                                 }
                             }
                             else
                             {
-                                BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                                BuildLineColumn(screenBuffer,
+                                    _options.SymbolUnSupported(SymbolType.GridSingleTopLeft)[0],
+                                    _options.SymbolUnSupported(SymbolType.GridSingleTopCenter)[0],
+                                    _options.SymbolUnSupported(SymbolType.GridSingleTopRight)[0],
+                                    _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0]);
                             }
                             break;
                         case TableLayout.AsciiDoubleGridFull:
@@ -739,16 +775,28 @@ namespace PPlus.Controls.Table
                             {
                                 if (_options.Layout == TableLayout.AsciiDoubleGridFull)
                                 {
-                                    BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                                    BuildLineColumn(screenBuffer,
+                                        _options.SymbolUnSupported(SymbolType.GridDoubleTopLeft)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridDoubleTopCenter)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridDoubleTopRight)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0]);
                                 }
                                 else
                                 {
-                                    BuildLineColumn(screenBuffer, '+', '=', '+', '=');
+                                    BuildLineColumn(screenBuffer,
+                                        _options.SymbolUnSupported(SymbolType.GridDoubleTopLeft)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridDoubleTopRight)[0],
+                                        _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0]);
                                 }
                             }
                             else
                             {
-                                BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                                BuildLineColumn(screenBuffer,
+                                    _options.SymbolUnSupported(SymbolType.GridDoubleTopLeft)[0],
+                                    _options.SymbolUnSupported(SymbolType.GridDoubleTopCenter)[0],
+                                    _options.SymbolUnSupported(SymbolType.GridDoubleTopRight)[0],
+                                    _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0]);
                             }
                             break;
                         default:
@@ -773,31 +821,38 @@ namespace PPlus.Controls.Table
         {
             screenBuffer.NewLine();
             tit = TableControl<T>.AlignmentText(tit, _options.TitleAlignment, _totalTableLenWidth - 2);
-            var sep = ' ';
+            var sepleft = ' ';
+            var sepright = ' ';
             switch (_options.Layout)
             {
                 case TableLayout.HideGrid:
                     break;
                 case TableLayout.SingleGridSoft:
                 case TableLayout.SingleGridFull:
-                    sep = '│';
+                    sepleft = _options.Symbol(SymbolType.GridSingleBorderLeft)[0];
+                    sepright = _options.Symbol(SymbolType.GridSingleBorderRight)[0];
                     break;
                 case TableLayout.DoubleGridFull:
                 case TableLayout.DoubleGridSoft:
-                    sep = '║';
+                    sepleft = _options.Symbol(SymbolType.GridDoubleBorderLeft)[0];
+                    sepright = _options.Symbol(SymbolType.GridDoubleBorderRight)[0];
                     break;
                 case TableLayout.AsciiSingleGridFull:
                 case TableLayout.AsciiSingleGridSoft:
+                    sepleft = _options.SymbolUnSupported(SymbolType.GridSingleBorderLeft)[0];
+                    sepright = _options.SymbolUnSupported(SymbolType.GridSingleBorderRight)[0];
+                    break;
                 case TableLayout.AsciiDoubleGridFull:
                 case TableLayout.AsciiDoubleGridSoft:
-                    sep = '|';
+                    sepleft = _options.SymbolUnSupported(SymbolType.GridDoubleBorderLeft)[0];
+                    sepright = _options.SymbolUnSupported(SymbolType.GridDoubleBorderRight)[0];
                     break;
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
             }
-            screenBuffer.AddBuffer(sep, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(sepleft, _options.StyleContent(StyleControls.Lines));
             screenBuffer.AddBuffer(tit, _options.StyleContent(StyleControls.TableTitle));
-            screenBuffer.AddBuffer(sep, _options.StyleContent(StyleControls.Lines));
+            screenBuffer.AddBuffer(sepright, _options.StyleContent(StyleControls.Lines));
 
             screenBuffer.NewLine();
             switch (_options.Layout)
@@ -811,16 +866,28 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.SingleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '├', '┬', '┤', '─');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridSingleMiddleLeft)[0],
+                                _options.Symbol(SymbolType.GridSingleTopCenter)[0],
+                                _options.Symbol(SymbolType.GridSingleMiddleRight)[0],
+                                _options.Symbol(SymbolType.GridSingleBorderTop)[0]);
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '├', '─', '┤', '─');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridSingleMiddleLeft)[0],
+                                _options.Symbol(SymbolType.GridSingleBorderTop)[0],
+                                _options.Symbol(SymbolType.GridSingleMiddleRight)[0],
+                                _options.Symbol(SymbolType.GridSingleBorderTop)[0]);
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '├', '┬', '┤', '─');
+                        BuildLineColumn(screenBuffer,
+                            _options.Symbol(SymbolType.GridSingleMiddleLeft)[0],
+                            _options.Symbol(SymbolType.GridSingleTopCenter)[0],
+                            _options.Symbol(SymbolType.GridSingleMiddleRight)[0],
+                            _options.Symbol(SymbolType.GridSingleBorderTop)[0]);
                     }
                     break;
                 case TableLayout.DoubleGridFull:
@@ -829,16 +896,28 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.DoubleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '╠', '╦', '╣', '═');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridDoubleMiddleLeft)[0],
+                                _options.Symbol(SymbolType.GridDoubleTopCenter)[0],
+                                _options.Symbol(SymbolType.GridDoubleMiddleRight)[0],
+                                _options.Symbol(SymbolType.GridDoubleBorderTop)[0]);
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '╠', '═', '╣', '═');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridDoubleMiddleLeft)[0],
+                                _options.Symbol(SymbolType.GridDoubleBorderTop)[0],
+                                _options.Symbol(SymbolType.GridDoubleMiddleRight)[0],
+                                _options.Symbol(SymbolType.GridDoubleBorderTop)[0]);
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '╠', '╦', '╣', '═');
+                        BuildLineColumn(screenBuffer,
+                            _options.Symbol(SymbolType.GridDoubleMiddleLeft)[0],
+                            _options.Symbol(SymbolType.GridDoubleTopCenter)[0],
+                            _options.Symbol(SymbolType.GridDoubleMiddleRight)[0],
+                            _options.Symbol(SymbolType.GridDoubleBorderTop)[0]);
                     }
                     break;
                 case TableLayout.AsciiSingleGridFull:
@@ -847,16 +926,28 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.AsciiSingleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '|', '+', '|', '-');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridSingleMiddleLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleTopCenter)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleMiddleRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0]);
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '|', '-', '|', '-');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridSingleMiddleLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleMiddleRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0]);
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '|', '+', '|', '-');
+                        BuildLineColumn(screenBuffer,
+                            _options.SymbolUnSupported(SymbolType.GridSingleMiddleLeft)[0],
+                            _options.SymbolUnSupported(SymbolType.GridSingleTopCenter)[0],
+                            _options.SymbolUnSupported(SymbolType.GridSingleMiddleRight)[0],
+                            _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0]);
                     }
                     break;
                 case TableLayout.AsciiDoubleGridFull:
@@ -865,16 +956,28 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.AsciiDoubleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '|', '+', '|', '=');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridDoubleMiddleLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleTopCenter)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleMiddleRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0]);
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '|', '=', '|', '=');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridDoubleMiddleLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleMiddleRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0]);
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '|', '+', '|', '=');
+                        BuildLineColumn(screenBuffer,
+                            _options.SymbolUnSupported(SymbolType.GridDoubleMiddleLeft)[0],
+                            _options.SymbolUnSupported(SymbolType.GridDoubleTopCenter)[0],
+                            _options.SymbolUnSupported(SymbolType.GridDoubleMiddleRight)[0],
+                            _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0]);
                     }
                     break;
             }
@@ -895,19 +998,35 @@ namespace PPlus.Controls.Table
                         break;
                     case TableLayout.SingleGridFull:
                     case TableLayout.SingleGridSoft:
-                        BuildLineColumn(screenBuffer, '┌', '─', '┐', '─');
+                        BuildLineColumn(screenBuffer,
+                            _options.Symbol(SymbolType.GridSingleTopLeft)[0],
+                            _options.Symbol(SymbolType.GridSingleBorderTop)[0],
+                            _options.Symbol(SymbolType.GridSingleTopRight)[0],
+                            _options.Symbol(SymbolType.GridSingleBorderTop)[0]);
                         break;
                     case TableLayout.DoubleGridFull:
                     case TableLayout.DoubleGridSoft:
-                        BuildLineColumn(screenBuffer, '╔', '═', '╗', '═');
+                        BuildLineColumn(screenBuffer,
+                            _options.Symbol(SymbolType.GridDoubleTopLeft)[0],
+                            _options.Symbol(SymbolType.GridDoubleBorderTop)[0],
+                            _options.Symbol(SymbolType.GridDoubleTopRight)[0],
+                            _options.Symbol(SymbolType.GridDoubleBorderTop)[0]);
                         break;
                     case TableLayout.AsciiSingleGridFull:
                     case TableLayout.AsciiSingleGridSoft:
-                        BuildLineColumn(screenBuffer, '+', '-', '+', '-');
+                        BuildLineColumn(screenBuffer,
+                            _options.SymbolUnSupported(SymbolType.GridSingleTopLeft)[0],
+                            _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0],
+                            _options.SymbolUnSupported(SymbolType.GridSingleTopRight)[0],
+                            _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0]); 
                         break;
                     case TableLayout.AsciiDoubleGridFull:
                     case TableLayout.AsciiDoubleGridSoft:
-                        BuildLineColumn(screenBuffer, '+', '=', '+', '=');
+                        BuildLineColumn(screenBuffer,
+                            _options.SymbolUnSupported(SymbolType.GridDoubleTopLeft)[0],
+                            _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0],
+                            _options.SymbolUnSupported(SymbolType.GridDoubleTopRight)[0],
+                            _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0]); 
                         break;
                     default:
                         throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
@@ -925,16 +1044,28 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.SingleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '┌', '┬', '┐', '─');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridSingleTopLeft)[0],
+                                _options.Symbol(SymbolType.GridSingleTopCenter)[0],
+                                _options.Symbol(SymbolType.GridSingleTopRight)[0],
+                                _options.Symbol(SymbolType.GridSingleBorderTop)[0]);
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '┌', '─', '┐', '─');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridSingleTopLeft)[0],
+                                _options.Symbol(SymbolType.GridSingleBorderTop)[0],
+                                _options.Symbol(SymbolType.GridSingleTopRight)[0],
+                                _options.Symbol(SymbolType.GridSingleBorderTop)[0]);
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '┌', '┬', '┐', '─');
+                        BuildLineColumn(screenBuffer,
+                            _options.Symbol(SymbolType.GridSingleTopLeft)[0],
+                            _options.Symbol(SymbolType.GridSingleTopCenter)[0],
+                            _options.Symbol(SymbolType.GridSingleTopRight)[0],
+                            _options.Symbol(SymbolType.GridSingleBorderTop)[0]);
                     }
                     break;
                 case TableLayout.DoubleGridFull:
@@ -943,16 +1074,28 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.DoubleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridDoubleTopLeft)[0],
+                                _options.Symbol(SymbolType.GridDoubleTopCenter)[0],
+                                _options.Symbol(SymbolType.GridDoubleTopRight)[0],
+                                _options.Symbol(SymbolType.GridDoubleBorderTop)[0]);
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '╔', '═', '╗', '═');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridDoubleTopLeft)[0],
+                                _options.Symbol(SymbolType.GridDoubleBorderTop)[0],
+                                _options.Symbol(SymbolType.GridDoubleTopRight)[0],
+                                _options.Symbol(SymbolType.GridDoubleBorderTop)[0]);
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '╔', '╦', '╗', '═');
+                        BuildLineColumn(screenBuffer,
+                            _options.Symbol(SymbolType.GridDoubleTopLeft)[0],
+                            _options.Symbol(SymbolType.GridDoubleTopCenter)[0],
+                            _options.Symbol(SymbolType.GridDoubleTopRight)[0],
+                            _options.Symbol(SymbolType.GridDoubleBorderTop)[0]);
                     }
                     break;
                 case TableLayout.AsciiSingleGridFull:
@@ -961,16 +1104,28 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.AsciiSingleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridSingleTopLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleTopCenter)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleTopRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0]);
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '+', '-', '+', '-');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridSingleTopLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleTopRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0]);
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                        BuildLineColumn(screenBuffer,
+                            _options.SymbolUnSupported(SymbolType.GridSingleTopLeft)[0],
+                            _options.SymbolUnSupported(SymbolType.GridSingleTopCenter)[0],
+                            _options.SymbolUnSupported(SymbolType.GridSingleTopRight)[0],
+                            _options.SymbolUnSupported(SymbolType.GridSingleBorderTop)[0]);
                     }
                     break;
                 case TableLayout.AsciiDoubleGridFull:
@@ -979,16 +1134,28 @@ namespace PPlus.Controls.Table
                     {
                         if (_options.Layout == TableLayout.AsciiDoubleGridFull)
                         {
-                            BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridDoubleTopLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleTopCenter)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleTopRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0]);
                         }
                         else
                         {
-                            BuildLineColumn(screenBuffer, '+', '=', '+', '=');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridDoubleTopLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleTopRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0]);
                         }
                     }
                     else
                     {
-                        BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                        BuildLineColumn(screenBuffer,
+                            _options.SymbolUnSupported(SymbolType.GridDoubleTopLeft)[0],
+                            _options.SymbolUnSupported(SymbolType.GridDoubleTopCenter)[0],
+                            _options.SymbolUnSupported(SymbolType.GridDoubleTopRight)[0],
+                            _options.SymbolUnSupported(SymbolType.GridDoubleBorderTop)[0]);
                     }
                     break;
                 default:
@@ -1004,8 +1171,8 @@ namespace PPlus.Controls.Table
             }
             screenBuffer.NewLine();
             var col = -1;
-            var sepstart = " ";
-            var sepend = " ";
+            var sepstart = ' ';
+            var sepend = ' ';
             var stl = _options.StyleContent(StyleControls.Lines);
             switch (_options.Layout)
             {
@@ -1014,20 +1181,23 @@ namespace PPlus.Controls.Table
                     break;
                 case TableLayout.SingleGridFull:
                 case TableLayout.SingleGridSoft:
-                    sepstart = "│";
-                    sepend = "│";
+                    sepstart = _options.Symbol(SymbolType.GridSingleBorderLeft)[0];
+                    sepend = _options.Symbol(SymbolType.GridSingleBorderRight)[0];
                     break;
                 case TableLayout.DoubleGridFull:
                 case TableLayout.DoubleGridSoft:
-                    sepstart = "║";
-                    sepend = "║";
+                    sepstart = _options.Symbol(SymbolType.GridDoubleBorderLeft)[0];
+                    sepend = _options.Symbol(SymbolType.GridDoubleBorderRight)[0];
                     break;
                 case TableLayout.AsciiSingleGridFull:
                 case TableLayout.AsciiSingleGridSoft:
+                    sepstart = _options.SymbolUnSupported(SymbolType.GridSingleBorderLeft)[0];
+                    sepend = _options.SymbolUnSupported(SymbolType.GridSingleBorderRight)[0];
+                    break;
                 case TableLayout.AsciiDoubleGridFull:
                 case TableLayout.AsciiDoubleGridSoft:
-                    sepstart = "|";
-                    sepend = "|";
+                    sepstart = _options.SymbolUnSupported(SymbolType.GridDoubleBorderLeft)[0];
+                    sepend = _options.SymbolUnSupported(SymbolType.GridDoubleBorderRight)[0];
                     break;
             }
             foreach (var item in _options.Columns)
@@ -1045,24 +1215,60 @@ namespace PPlus.Controls.Table
                     BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
                     break;
                 case TableLayout.SingleGridFull:
-                    BuildLineColumn(screenBuffer, '├', '┼', '┤', '─');
+                    BuildLineColumn(screenBuffer,
+                        _options.Symbol(SymbolType.GridSingleMiddleLeft)[0],
+                        _options.Symbol(SymbolType.GridSingleMiddleCenter)[0],
+                        _options.Symbol(SymbolType.GridSingleMiddleRight)[0],
+                        _options.Symbol(SymbolType.GridSingleDividerX)[0]); 
                     break;
                 case TableLayout.SingleGridSoft:
-                    BuildLineColumn(screenBuffer, '├', '┴', '┤', '─');
+                    BuildLineColumn(screenBuffer,
+                        _options.Symbol(SymbolType.GridSingleMiddleLeft)[0],
+                        _options.Symbol(SymbolType.GridSingleBottomCenter)[0],
+                        _options.Symbol(SymbolType.GridSingleMiddleRight)[0],
+                        _options.Symbol(SymbolType.GridSingleDividerX)[0]);
                     break;
                 case TableLayout.DoubleGridFull:
-                    BuildLineColumn(screenBuffer, '╠', '╬', '╣', '═');
+                    BuildLineColumn(screenBuffer,
+                        _options.Symbol(SymbolType.GridDoubleMiddleLeft)[0],
+                        _options.Symbol(SymbolType.GridDoubleMiddleCenter)[0],
+                        _options.Symbol(SymbolType.GridDoubleMiddleRight)[0],
+                        _options.Symbol(SymbolType.GridDoubleDividerX)[0]); 
                     break;
                 case TableLayout.DoubleGridSoft:
-                    BuildLineColumn(screenBuffer, '╠', '╩', '╣', '═');
+                    BuildLineColumn(screenBuffer,
+                        _options.Symbol(SymbolType.GridDoubleMiddleLeft)[0],
+                        _options.Symbol(SymbolType.GridDoubleBottomCenter)[0],
+                        _options.Symbol(SymbolType.GridDoubleMiddleRight)[0],
+                        _options.Symbol(SymbolType.GridDoubleDividerX)[0]);
                     break;
                 case TableLayout.AsciiSingleGridFull:
+                    BuildLineColumn(screenBuffer,
+                        _options.SymbolUnSupported(SymbolType.GridSingleMiddleLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleMiddleCenter)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleMiddleRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleDividerX)[0]);
+                    break;
                 case TableLayout.AsciiSingleGridSoft:
-                    BuildLineColumn(screenBuffer, '|', '+', '|', '-');
+                    BuildLineColumn(screenBuffer,
+                        _options.SymbolUnSupported(SymbolType.GridSingleMiddleLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBottomCenter)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleMiddleRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleDividerX)[0]);
                     break;
                 case TableLayout.AsciiDoubleGridFull:
+                    BuildLineColumn(screenBuffer,
+                        _options.SymbolUnSupported(SymbolType.GridDoubleMiddleLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleMiddleCenter)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleMiddleRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleDividerX)[0]);
+                    break;
                 case TableLayout.AsciiDoubleGridSoft:
-                    BuildLineColumn(screenBuffer, '|', '+', '|', '=');
+                    BuildLineColumn(screenBuffer,
+                       _options.SymbolUnSupported(SymbolType.GridDoubleMiddleLeft)[0],
+                       _options.SymbolUnSupported(SymbolType.GridDoubleBottomCenter)[0],
+                       _options.SymbolUnSupported(SymbolType.GridDoubleMiddleRight)[0],
+                       _options.SymbolUnSupported(SymbolType.GridDoubleDividerX)[0]);
                     break;
             }
         }
@@ -1080,9 +1286,9 @@ namespace PPlus.Controls.Table
 
                 var cols = GetTextColumns(item.Value, out var lines);
 
-                var sep = " ";
-                var sepcol = " ";
-                var sepend = " ";
+                var sepleft = ' ';
+                var sepcol = ' ';
+                var sepright = ' ';
                 var stl = _options.StyleContent(StyleControls.Lines);
                 switch (_options.Layout)
                 {
@@ -1090,36 +1296,40 @@ namespace PPlus.Controls.Table
                         stl = Style.Default;
                         break;
                     case TableLayout.SingleGridFull:
-                        sep = "│";
-                        sepend = "│";
-                        sepcol = "│";
+                        sepleft = _options.Symbol(SymbolType.GridSingleBorderLeft)[0];
+                        sepright = _options.Symbol(SymbolType.GridSingleBorderRight)[0];
+                        sepcol = _options.Symbol(SymbolType.GridSingleDividerY)[0]; 
                         break;
                     case TableLayout.SingleGridSoft:
-                        sep = "│";
-                        sepend = "│";
-                        sepcol = " ";
+                        sepleft = _options.Symbol(SymbolType.GridSingleBorderLeft)[0];
+                        sepright = _options.Symbol(SymbolType.GridSingleBorderRight)[0];
                         break;
                     case TableLayout.DoubleGridFull:
-                        sep = "║";
-                        sepend = "║";
-                        sepcol = "║";
+                        sepleft = _options.Symbol(SymbolType.GridDoubleBorderLeft)[0];
+                        sepright = _options.Symbol(SymbolType.GridDoubleBorderRight)[0];
+                        sepcol = _options.Symbol(SymbolType.GridDoubleDividerY)[0];
                         break;
                     case TableLayout.DoubleGridSoft:
-                        sep = "║";
-                        sepend = "║";
-                        sepcol = " ";
+                        sepleft = _options.Symbol(SymbolType.GridDoubleBorderLeft)[0];
+                        sepright = _options.Symbol(SymbolType.GridDoubleBorderRight)[0];
                         break;
                     case TableLayout.AsciiSingleGridFull:
+                        sepleft = _options.SymbolUnSupported(SymbolType.GridSingleBorderLeft)[0];
+                        sepright = _options.SymbolUnSupported(SymbolType.GridSingleBorderRight)[0];
+                        sepcol = _options.SymbolUnSupported(SymbolType.GridSingleDividerY)[0];
+                        break;
                     case TableLayout.AsciiSingleGridSoft:
+                        sepleft = _options.SymbolUnSupported(SymbolType.GridSingleBorderLeft)[0];
+                        sepright = _options.SymbolUnSupported(SymbolType.GridSingleBorderRight)[0];
+                        break;
                     case TableLayout.AsciiDoubleGridFull:
-                        sep = "|";
-                        sepend = "|";
-                        sepcol = "|";
+                        sepleft = _options.SymbolUnSupported(SymbolType.GridDoubleBorderLeft)[0];
+                        sepright = _options.SymbolUnSupported(SymbolType.GridDoubleBorderRight)[0];
+                        sepcol = _options.SymbolUnSupported(SymbolType.GridDoubleDividerY)[0];
                         break;
                     case TableLayout.AsciiDoubleGridSoft:
-                        sep = "|";
-                        sepend = "|";
-                        sepcol = " ";
+                        sepleft = _options.SymbolUnSupported(SymbolType.GridDoubleBorderLeft)[0];
+                        sepright = _options.SymbolUnSupported(SymbolType.GridDoubleBorderRight)[0];
                         break;
                 }
 
@@ -1131,7 +1341,7 @@ namespace PPlus.Controls.Table
                     {
                         if (itemcol == 0)
                         {
-                            screenBuffer.AddBuffer(sep, stl);
+                            screenBuffer.AddBuffer(sepleft, stl);
                         }
                         else
                         { 
@@ -1148,7 +1358,7 @@ namespace PPlus.Controls.Table
                         }
                         screenBuffer.AddBuffer(col, stld, true);
                     }
-                    screenBuffer.AddBuffer(sepend, stl);
+                    screenBuffer.AddBuffer(sepright, stl);
                     if (lines > 1 && i != lines - 1)
                     {
                         screenBuffer.NewLine();
@@ -1164,28 +1374,60 @@ namespace PPlus.Controls.Table
                             BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
                             break;
                         case TableLayout.SingleGridFull:
-                            BuildLineColumn(screenBuffer, '├', '┼', '┤', '─');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridSingleMiddleLeft)[0],
+                                _options.Symbol(SymbolType.GridSingleMiddleCenter)[0],
+                                _options.Symbol(SymbolType.GridSingleMiddleRight)[0],
+                                _options.Symbol(SymbolType.GridSingleDividerX)[0]);
                             break;
                         case TableLayout.SingleGridSoft:
-                            BuildLineColumn(screenBuffer, '├', '─', '┤', '─');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridSingleMiddleLeft)[0],
+                                _options.Symbol(SymbolType.GridSingleDividerX)[0],
+                                _options.Symbol(SymbolType.GridSingleMiddleRight)[0],
+                                _options.Symbol(SymbolType.GridSingleDividerX)[0]);
                             break;
                         case TableLayout.DoubleGridFull:
-                            BuildLineColumn(screenBuffer, '╠', '╬', '╣', '═');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridDoubleMiddleLeft)[0],
+                                _options.Symbol(SymbolType.GridDoubleMiddleCenter)[0],
+                                _options.Symbol(SymbolType.GridDoubleMiddleRight)[0],
+                                _options.Symbol(SymbolType.GridDoubleDividerX)[0]);
                             break;
                         case TableLayout.DoubleGridSoft:
-                            BuildLineColumn(screenBuffer, '╠', '═', '╣', '═');
+                            BuildLineColumn(screenBuffer,
+                                _options.Symbol(SymbolType.GridDoubleMiddleLeft)[0],
+                                _options.Symbol(SymbolType.GridDoubleDividerX)[0],
+                                _options.Symbol(SymbolType.GridDoubleMiddleRight)[0],
+                                _options.Symbol(SymbolType.GridDoubleDividerX)[0]);
                             break;
                         case TableLayout.AsciiSingleGridFull:
-                            BuildLineColumn(screenBuffer, '|', '+', '|', '-');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridSingleMiddleLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleMiddleCenter)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleMiddleRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleDividerX)[0]);
                             break;
                         case TableLayout.AsciiSingleGridSoft:
-                            BuildLineColumn(screenBuffer, '|', '-', '|', '-');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridSingleMiddleLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleDividerX)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleMiddleRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridSingleDividerX)[0]);
                             break;
                         case TableLayout.AsciiDoubleGridFull:
-                            BuildLineColumn(screenBuffer, '|', '+', '|', '=');
+                            BuildLineColumn(screenBuffer,
+                                _options.SymbolUnSupported(SymbolType.GridDoubleMiddleLeft)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleMiddleCenter)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleMiddleRight)[0],
+                                _options.SymbolUnSupported(SymbolType.GridDoubleDividerX)[0]);
                             break;
                         case TableLayout.AsciiDoubleGridSoft:
-                            BuildLineColumn(screenBuffer, '|', '=', '|', '=');
+                            BuildLineColumn(screenBuffer,
+                                       _options.SymbolUnSupported(SymbolType.GridDoubleMiddleLeft)[0],
+                                       _options.SymbolUnSupported(SymbolType.GridDoubleDividerX)[0],
+                                       _options.SymbolUnSupported(SymbolType.GridDoubleMiddleRight)[0],
+                                       _options.SymbolUnSupported(SymbolType.GridDoubleDividerX)[0]); 
                             break;
                     }
                 }
@@ -1201,28 +1443,59 @@ namespace PPlus.Controls.Table
                     BuildLineColumn(screenBuffer, ' ', ' ', ' ', ' ');
                     break;
                 case TableLayout.SingleGridFull:
-                    BuildLineColumn(screenBuffer, '└', '┴', '┘', '─');
+                    BuildLineColumn(screenBuffer,
+                        _options.Symbol(SymbolType.GridSingleBottomLeft)[0],
+                        _options.Symbol(SymbolType.GridSingleBottomCenter)[0],
+                        _options.Symbol(SymbolType.GridSingleBottomRight)[0],
+                        _options.Symbol(SymbolType.GridSingleBorderBottom)[0]);
                     break;
                 case TableLayout.SingleGridSoft:
-                    BuildLineColumn(screenBuffer, '└', '─', '┘', '─');
+                    BuildLineColumn(screenBuffer,
+                        _options.Symbol(SymbolType.GridSingleBottomLeft)[0],
+                        _options.Symbol(SymbolType.GridSingleBorderBottom)[0],
+                        _options.Symbol(SymbolType.GridSingleBottomRight)[0],
+                        _options.Symbol(SymbolType.GridSingleBorderBottom)[0]);
                     break;
                 case TableLayout.DoubleGridFull:
-                    BuildLineColumn(screenBuffer, '╚', '╩', '╝', '═');
+                    BuildLineColumn(screenBuffer,
+                        _options.Symbol(SymbolType.GridDoubleBottomLeft)[0],
+                        _options.Symbol(SymbolType.GridDoubleBottomCenter)[0],
+                        _options.Symbol(SymbolType.GridDoubleBottomRight)[0],
+                        _options.Symbol(SymbolType.GridDoubleBorderBottom)[0]);
                     break;
                 case TableLayout.DoubleGridSoft:
-                    BuildLineColumn(screenBuffer, '╚', '═', '╝', '═');
+                    BuildLineColumn(screenBuffer,
+                        _options.Symbol(SymbolType.GridDoubleBottomLeft)[0],
+                        _options.Symbol(SymbolType.GridDoubleBorderBottom)[0],
+                        _options.Symbol(SymbolType.GridDoubleBottomRight)[0],
+                        _options.Symbol(SymbolType.GridDoubleBorderBottom)[0]);
                     break;
                 case TableLayout.AsciiSingleGridFull:
-                    BuildLineColumn(screenBuffer, '+', '+', '+', '-');
+                    BuildLineColumn(screenBuffer,
+                        _options.SymbolUnSupported(SymbolType.GridSingleBottomLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBottomCenter)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBottomRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBorderBottom)[0]);
                     break;
                 case TableLayout.AsciiSingleGridSoft:
-                    BuildLineColumn(screenBuffer, '+', '-', '+', '-');
-                    break;
+                    BuildLineColumn(screenBuffer,
+                        _options.SymbolUnSupported(SymbolType.GridSingleBottomLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBorderBottom)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBottomRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridSingleBorderBottom)[0]); break;
                 case TableLayout.AsciiDoubleGridFull:
-                    BuildLineColumn(screenBuffer, '+', '+', '+', '=');
+                    BuildLineColumn(screenBuffer,
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBottomLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBottomCenter)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBottomRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBorderBottom)[0]);
                     break;
                 case TableLayout.AsciiDoubleGridSoft:
-                    BuildLineColumn(screenBuffer, '+', '=', '+', '=');
+                    BuildLineColumn(screenBuffer,
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBottomLeft)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBorderBottom)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBottomRight)[0],
+                        _options.SymbolUnSupported(SymbolType.GridDoubleBorderBottom)[0]);
                     break;
                 default:
                     throw new PromptPlusException($"Layout {_options.Layout} Not implemented");
