@@ -40,7 +40,7 @@ namespace PPlus.Controls
 
         public Func<T, T, bool> EqualItems { get; set; }
 
-        public Optional<T> DefaultValue { get; set; } = Optional<T>.Create(null);
+        public Optional<T> DefaultValue { get; set; } = Optional<T>.Empty();
 
         public Func<T, string> TextSelector { get; set; }
 

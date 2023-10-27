@@ -802,7 +802,7 @@ namespace PPlus.Controls
                     _options.FilterType,
                     _flatnodes,
                     _options.PageSize,
-                    Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(new ItemTreeViewFlatNode<ItemBrowser> { UniqueId = defaultnodeselected.UniqueId, IsDisabled = defaultnodeselected.IsDisabled, IsRoot = defaultnodeselected.IsRoot, Value = defaultnodeselected.Value, MessagesNodes = ShowItem(defaultnodeselected) }),
+                    Optional<ItemTreeViewFlatNode<ItemBrowser>>.Set(new ItemTreeViewFlatNode<ItemBrowser> { UniqueId = defaultnodeselected.UniqueId, IsDisabled = defaultnodeselected.IsDisabled, IsRoot = defaultnodeselected.IsRoot, Value = defaultnodeselected.Value, MessagesNodes = ShowItem(defaultnodeselected) }),
                     (item1, item2) => item1.UniqueId == item2.UniqueId,
                     (item) => item.Value.Name);
             }
@@ -811,7 +811,7 @@ namespace PPlus.Controls
 
         private void FistLoadRoot(CancellationToken cancellationToken)
         {
-            Optional<ItemTreeViewFlatNode<ItemBrowser>> defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.s_empty;
+            Optional<ItemTreeViewFlatNode<ItemBrowser>> defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Empty();
             TryLoadFolder(true, null, _options.RootFolder, _options.ExpandAll, cancellationToken);
             _browserTreeView.SetCurrentNode(_browserTreeView.Root);
             if (_options.ExpandAll)
@@ -831,13 +831,13 @@ namespace PPlus.Controls
             {
                 foreach (var item in _flatnodes.Where(x => x.Value.FullPath.Equals(defopt)))
                 {
-                    defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(item);
+                    defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Set(item);
                 }
             }
             else
             {
                 var node = _browserTreeView.Root;
-                defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Create(new ItemTreeViewFlatNode<ItemBrowser> { UniqueId = node.UniqueId, IsDisabled = node.IsDisabled, IsRoot = node.IsRoot, Value = node.Value, MessagesNodes = ShowItem(node) });
+                defvalue = Optional<ItemTreeViewFlatNode<ItemBrowser>>.Set(new ItemTreeViewFlatNode<ItemBrowser> { UniqueId = node.UniqueId, IsDisabled = node.IsDisabled, IsRoot = node.IsRoot, Value = node.Value, MessagesNodes = ShowItem(node) });
             }
 
             _localpaginator = new Paginator<ItemTreeViewFlatNode<ItemBrowser>>(

@@ -22,7 +22,7 @@ namespace PPlus.Tests.Controls
                 items.Add(i.ToString());
             }
             // When
-            var pg = new Paginator<string>( PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.s_empty,null);
+            var pg = new Paginator<string>( PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Empty(),null);
             // Then
             Assert.Equal(50, pg.TotalCount);
             Assert.Equal(5, pg.PageCount);
@@ -38,7 +38,7 @@ namespace PPlus.Tests.Controls
                 items.Add(i.ToString());
             }
             // When
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 3, Optional<string>.s_empty, null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 3, Optional<string>.Empty(), null);
             pg.EnsureVisibleIndex(6);
             // Then
             Assert.Equal(2, pg.SelectedPage);
@@ -57,7 +57,7 @@ namespace PPlus.Tests.Controls
                 items.Add(i.ToString());
             }
             // When
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 3, Optional<string>.s_empty, null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 3, Optional<string>.Empty(), null);
             pg.GetPageData();
             // Then
             Assert.Equal(0, pg.SelectedPage);
@@ -74,7 +74,7 @@ namespace PPlus.Tests.Controls
                 items.Add(i.ToString());
             }
             // When
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Create("3"),null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Set("3"),null);
             // Then
             Assert.Equal(3, pg.SelectedIndex);
             Assert.Equal("3", pg.SelectedItem);
@@ -89,7 +89,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Create("3"), null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Set("3"), null);
             // When
             pg.UnSelected();
             // Then
@@ -109,7 +109,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Create("3"), null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Set("3"), null);
             // When
             pg.FirstItem();
             // Then
@@ -126,7 +126,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Create("0"), null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Set("0"), null);
             // When
             pg.LastItem();
             // Then
@@ -143,7 +143,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.s_empty,null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.Empty(),null);
             // When
             pg.NextPage(IndexOption.None);
             // Then
@@ -162,7 +162,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.s_empty, null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.Empty(), null);
             // When
             pg.NextPage(opc);
             // Then
@@ -181,7 +181,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.s_empty, null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.Empty(), null);
             // When
             pg.NextPage(opc);
             // Then
@@ -198,7 +198,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 3, Optional<string>.Create("0"), null,null, (x) => x != "0");
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 3, Optional<string>.Set("0"), null,null, (x) => x != "0");
             // When
             pg.FirstItem();
             // Then
@@ -214,7 +214,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Create("0"), null, null, (x) => x != "4");
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 10, Optional<string>.Set("0"), null, null, (x) => x != "4");
             // When
             pg.LastItem();
             // Then
@@ -233,7 +233,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.Create("0"), null, null, (x) => x != "5");
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.Set("0"), null, null, (x) => x != "5");
             // When
             pg.NextPage(opc);
             // Then
@@ -252,7 +252,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.s_empty, null, null, (x) => x != "9");
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.Empty(), null, null, (x) => x != "9");
             // When
             pg.NextPage(opc);
             // Then
@@ -269,7 +269,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.s_empty, null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.Empty(), null);
             // When
             pg.UpdateFilter("10");
             // Then
@@ -288,7 +288,7 @@ namespace PPlus.Tests.Controls
             {
                 items.Add(i.ToString());
             }
-            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.s_empty, null);
+            var pg = new Paginator<string>(PPlus.Controls.FilterMode.Contains, items, 5, Optional<string>.Empty(), null);
             // When
             pg.UpdateFilter("10");
             var ok = pg.TryGetSelected(out var result);

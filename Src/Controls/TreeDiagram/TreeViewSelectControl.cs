@@ -127,7 +127,7 @@ namespace PPlus.Controls
 
         public IControlTreeViewSelect<T> Default(T value)
         {
-            _options.DefautNode = Optional<T>.Create(value);
+            _options.DefautNode = Optional<T>.Set(value);
             return this;
         }
 
@@ -622,7 +622,7 @@ namespace PPlus.Controls
                     _options.FilterType,
                     _flatnodes,
                     _options.PageSize,
-                    Optional<ItemTreeViewFlatNode<T>>.Create(new ItemTreeViewFlatNode<T> { UniqueId = defaultnodeselected.UniqueId, IsDisabled = defaultnodeselected.IsDisabled, IsRoot = defaultnodeselected.IsRoot, Value = defaultnodeselected.Value, MessagesNodes = ShowItem(defaultnodeselected) }),
+                    Optional<ItemTreeViewFlatNode<T>>.Set(new ItemTreeViewFlatNode<T> { UniqueId = defaultnodeselected.UniqueId, IsDisabled = defaultnodeselected.IsDisabled, IsRoot = defaultnodeselected.IsRoot, Value = defaultnodeselected.Value, MessagesNodes = ShowItem(defaultnodeselected) }),
                     (item1,item2) => item1.UniqueId == item2.UniqueId,
                     (item) => item.MessagesNodes.TextItem);
             }

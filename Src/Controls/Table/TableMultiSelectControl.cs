@@ -20,7 +20,7 @@ namespace PPlus.Controls.Table
     {
         private readonly TableOptions<T> _options;
         private readonly List<ItemTableRow<T>> _selectedItems = new();
-        private Optional<IList<T>> _defaultHistoric = Optional<IList<T>>.Create(null);
+        private Optional<IList<T>> _defaultHistoric = Optional<IList<T>>.Empty();
         private Paginator<ItemTableRow<T>> _localpaginator;
         private readonly EmacsBuffer _filterBuffer = new(CaseOptions.Uppercase, modefilter: true);
         private bool ShowingFilter => _filterBuffer.Length > 0;
@@ -184,7 +184,7 @@ namespace PPlus.Controls.Table
                 }
             }
 
-            Optional<ItemTableRow<T>> defvaluepage = Optional<ItemTableRow<T>>.s_empty;
+            Optional<ItemTableRow<T>> defvaluepage = Optional<ItemTableRow<T>>.Empty();
             Optional<IList<T>> defvalue = _options.DefaultValues;
             if (_defaultHistoric.HasValue)
             {
@@ -194,7 +194,7 @@ namespace PPlus.Controls.Table
             {
                 if (!defvalue.HasValue)
                 {
-                    defvalue = Optional<IList<T>>.Create(null);
+                    defvalue = Optional<IList<T>>.Empty();
                 }
             }
 
@@ -628,7 +628,7 @@ namespace PPlus.Controls.Table
                 {
                     _localpaginator.TryGetSelected(out var currentItem);
                     _filterBuffer.Clear();
-                    _localpaginator.UpdateFilter(_filterBuffer.ToString(), Optional<ItemTableRow<T>>.Create(currentItem));
+                    _localpaginator.UpdateFilter(_filterBuffer.ToString(), Optional<ItemTableRow<T>>.Set(currentItem));
                     if (currentItem != null)
                     {
                         var index = _selectedItems.FindIndex(x => x.Value.Equals(currentItem.Value));
@@ -769,9 +769,9 @@ namespace PPlus.Controls.Table
             {
                 if (_options.DefaultValues.Value == null)
                 {
-                    _options.DefaultValues = Optional<IList<T>>.Create(new List<T>());
+                    _options.DefaultValues = Optional<IList<T>>.Set(new List<T>());
                 }
-                _options.DefaultValues.Value.Add(Optional<T>.Create(item));
+                _options.DefaultValues.Value.Add(item);
             }
             return this;
         }
@@ -782,9 +782,9 @@ namespace PPlus.Controls.Table
             {
                 if (_options.DefaultValues.Value == null)
                 {
-                    _options.DefaultValues = Optional<IList<T>>.Create(new List<T>());
+                    _options.DefaultValues = Optional<IList<T>>.Set(new List<T>());
                 }
-                _options.DefaultValues.Value.Add(Optional<T>.Create(item));
+                _options.DefaultValues.Value.Add(item);
             }
             return this;
         }
@@ -2287,7 +2287,7 @@ namespace PPlus.Controls.Table
 
         private void LoadHistory()
         {
-            _defaultHistoric = Optional<IList<T>>.Create(null);
+            _defaultHistoric = Optional<IList<T>>.Empty();
             if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
             {
                 var aux = FileHistory.LoadHistory(_options.OverwriteDefaultFrom, 1);
@@ -2295,7 +2295,7 @@ namespace PPlus.Controls.Table
                 {
                     try
                     {
-                        _defaultHistoric = Optional<IList<T>>.Create(JsonSerializer.Deserialize<IList<T>>(aux[0].History));
+                        _defaultHistoric = Optional<IList<T>>.Set(JsonSerializer.Deserialize<IList<T>>(aux[0].History));
                     }
                     catch
                     {

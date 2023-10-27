@@ -118,7 +118,7 @@ namespace PPlus
         /// <inheritdoc/>
         public override readonly int GetHashCode()
         {
-            return HashCode.Combine(R, G, B);
+                return HashCode.Combine(R, G, B);
         }
 
         /// <summary>

@@ -77,7 +77,7 @@ namespace PPlus.Controls
                 FilterMode.StartsWith,
                 _options.Items, 
                 _options.PageSize, 
-                Optional<ItemListControl>.s_empty, 
+                Optional<ItemListControl>.Empty(), 
                 (item1,item2) => item1.UniqueId == item2.UniqueId,
                 (item) => item.Text, 
                 (item) => !item.Immutable);
@@ -516,7 +516,7 @@ namespace PPlus.Controls
                             FilterMode.StartsWith,
                             _options.Items,
                             _options.PageSize,
-                            Optional<ItemListControl>.s_empty,
+                            Optional<ItemListControl>.Empty(),
                             (item1, item2) => item1.UniqueId == item2.UniqueId,
                             (item) => item.Text,
                             (item) => !item.Immutable);
@@ -533,7 +533,7 @@ namespace PPlus.Controls
                             FilterMode.StartsWith,
                             _options.Items,
                             _options.PageSize,
-                            Optional<ItemListControl>.Create(item),
+                            Optional<ItemListControl>.Set(item),
                             (item1, item2) => item1.UniqueId == item2.UniqueId,
                             (item) => item.Text,
                             (item) => !item.Immutable);
@@ -580,7 +580,7 @@ namespace PPlus.Controls
                         FilterMode.StartsWith,
                         _options.Items, 
                         _options.PageSize, 
-                        Optional<ItemListControl>.Create(new ItemListControl(_inputBuffer.ToMasked())),
+                        Optional<ItemListControl>.Set(new ItemListControl(_inputBuffer.ToMasked())),
                         (item1, item2) => item1.UniqueId == item2.UniqueId,
                         (item) => item.Text,
                         (item) => !item.Immutable);
@@ -638,7 +638,7 @@ namespace PPlus.Controls
                         FilterMode.StartsWith,
                         _options.Items, 
                         _options.PageSize, 
-                        Optional<ItemListControl>.Create(new ItemListControl(_inputBuffer.ToMasked())),
+                        Optional<ItemListControl>.Set(new ItemListControl(_inputBuffer.ToMasked())),
                         (item1, item2) => item1.UniqueId == item2.UniqueId,
                         (item) => item.Text,
                         (item) => !item.Immutable);
