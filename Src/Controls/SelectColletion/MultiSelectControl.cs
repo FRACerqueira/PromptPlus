@@ -21,7 +21,7 @@ namespace PPlus.Controls
         private readonly List<ItemMultSelect<T>> _selectedItems = new();
         private Paginator<ItemMultSelect<T>> _localpaginator;
         private readonly EmacsBuffer _filterBuffer = new(CaseOptions.Uppercase, modefilter: true);
-        private Optional<IList<T>> _defaultHistoric = Optional<IList<T>>.Create(null);
+        private Optional<IList<T>> _defaultHistoric = Optional<IList<T>>.Empty();
         private bool ShowingFilter => _filterBuffer.Length > 0;
 
 
@@ -90,7 +90,7 @@ namespace PPlus.Controls
             {
                 if (!defvalue.HasValue)
                 {
-                    defvalue = Optional<IList<T>>.Create(null);
+                    defvalue = Optional<IList<T>>.Empty();
                 }
             }
 
@@ -159,7 +159,7 @@ namespace PPlus.Controls
                 _options.FilterType,
                 _options.Items, 
                 _options.PageSize, 
-                Optional<ItemMultSelect<T>>.s_empty,
+                Optional<ItemMultSelect<T>>.Empty(),
                 (item1,item2) => item1.UniqueId == item2.UniqueId,
                 (item) => item.Text??string.Empty,
                 (item) => !item.Disabled,
@@ -266,9 +266,9 @@ namespace PPlus.Controls
             {
                 if (_options.DefaultValues.Value == null)
                 {
-                    _options.DefaultValues = Optional<IList<T>>.Create(new List<T>());
+                    _options.DefaultValues = Optional<IList<T>>.Set(new List<T>());
                 }
-                _options.DefaultValues.Value.Add(Optional<T>.Create(item));
+                _options.DefaultValues.Value.Add(item);
             }
             return this;
         }
@@ -279,9 +279,9 @@ namespace PPlus.Controls
             {
                 if (_options.DefaultValues.Value == null)
                 {
-                    _options.DefaultValues = Optional<IList<T>>.Create(new List<T>());
+                    _options.DefaultValues = Optional<IList<T>>.Set(new List<T>());
                 }
-                _options.DefaultValues.Value.Add(Optional<T>.Create(item));
+                _options.DefaultValues.Value.Add(item);
             }
             return this;
         }
@@ -715,7 +715,7 @@ namespace PPlus.Controls
                 {
                     _localpaginator.TryGetSelected(out var currentItem);
                     _filterBuffer.Clear();
-                    _localpaginator.UpdateFilter(_filterBuffer.ToString(), Optional<ItemMultSelect<T>>.Create(currentItem));
+                    _localpaginator.UpdateFilter(_filterBuffer.ToString(), Optional<ItemMultSelect<T>>.Set(currentItem));
                     if (currentItem != null)
                     {
                         if (currentItem.IsGroupHeader)
@@ -896,7 +896,7 @@ namespace PPlus.Controls
 
         private void LoadHistory()
         {
-            _defaultHistoric = Optional<IList<T>>.Create(null);
+            _defaultHistoric = Optional<IList<T>>.Empty();
             if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
             {
                 var aux = FileHistory.LoadHistory(_options.OverwriteDefaultFrom, 1);
@@ -904,7 +904,7 @@ namespace PPlus.Controls
                 {
                     try
                     {
-                        _defaultHistoric = Optional<IList<T>>.Create(JsonSerializer.Deserialize<IList<T>>(aux[0].History));
+                        _defaultHistoric = Optional<IList<T>>.Set(JsonSerializer.Deserialize<IList<T>>(aux[0].History));
                     }
                     catch
                     {

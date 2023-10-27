@@ -47,7 +47,7 @@ namespace PPlus.Controls
                 FilterMode.Contains,
                 _inputItems,
                 Math.Min(_options.PageSize, _options.CompletionMaxCount),
-                Optional<string>.s_empty,
+                Optional<string>.Empty(),
                 (item1, item2) => item1 == item2,
                 (item) => item);
 
@@ -456,7 +456,7 @@ namespace PPlus.Controls
                     FilterMode.Contains,
                     _inputItems, 
                     Math.Min(_options.PageSize, _options.CompletionMaxCount), 
-                    Optional<string>.s_empty,
+                    Optional<string>.Empty(),
                     (item1, item2) => item1 == item2,
                     (item) => item);
                 _localpaginator.UnSelected();
@@ -531,7 +531,7 @@ namespace PPlus.Controls
                                         FilterMode.Contains,
                                         _inputItems,
                                         Math.Min(_options.PageSize, _options.CompletionMaxCount),
-                                        Optional<string>.s_empty,
+                                        Optional<string>.Empty(),
                                         (item1, item2) => item1 == item2,
                                         (item) => item);
                                     _localpaginator.UnSelected();

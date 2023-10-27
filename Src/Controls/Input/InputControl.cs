@@ -437,7 +437,7 @@ namespace PPlus.Controls
                     _localpaginator = new Paginator<ItemHistory>(
                         FilterMode.StartsWith,
                         GetItemHistory(FilterMode.StartsWith),
-                        _options.HistoryPageSize, Optional<ItemHistory>.s_empty, 
+                        _options.HistoryPageSize, Optional<ItemHistory>.Empty(), 
                         (item1,item2) => item1.History == item2.History,
                         (item) => item.History);
 

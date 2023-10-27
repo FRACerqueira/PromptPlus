@@ -36,7 +36,7 @@ namespace PPlus.Controls
         public bool ShowLines { get; set; } = true;
         public bool ShowExpand { get; set; } = true;
         public int PageSize { get; set; }
-        public Optional<T> DefautNode { get; set; } = Optional<T>.s_empty;
+        public Optional<T> DefautNode { get; set; } = Optional<T>.Empty();
         public Func<T, string>? TextNode { get; set; }
         public char SeparatePath { get; set; } = '/';
         public bool ShowCurrentNode { get; set; } = true;

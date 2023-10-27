@@ -44,9 +44,9 @@ namespace PPlus.Controls
 
         public Func<T, T, bool> EqualItems { get; set; }
 
-        public Optional<T> DefaultValue { get; set; } = Optional<T>.Create(null);
+        public Optional<T> DefaultValue { get; set; } = Optional<T>.Empty();
 
-        public Optional<IList<T>> DefaultValues { get; set; } = Optional<IList<T>>.Create(null);
+        public Optional<IList<T>> DefaultValues { get; set; } = Optional<IList<T>>.Empty();
 
         public int PageSize { get; set; }
 

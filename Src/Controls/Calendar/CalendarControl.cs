@@ -663,7 +663,7 @@ namespace PPlus.Controls
                     _localpaginator = new Paginator<string>(
                         FilterMode.StartsWith,
                         GetNotes(_currentdate),
-                        _options.PageSize, Optional<string>.s_empty,
+                        _options.PageSize, Optional<string>.Empty(),
                         (item1, item2) => item1 == item2,
                         (item) => item);
 

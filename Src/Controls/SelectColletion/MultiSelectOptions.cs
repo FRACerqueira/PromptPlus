@@ -34,7 +34,7 @@ namespace PPlus.Controls
 
         public List<T> DisableItems { get; set; } = new List<T>();
 
-        public Optional<IList<T>> DefaultValues { get; set; } = Optional<IList<T>>.Create(null);
+        public Optional<IList<T>> DefaultValues { get; set; } = Optional<IList<T>>.Empty();
 
         public Func<T, T, bool> EqualItems { get; set; }
 

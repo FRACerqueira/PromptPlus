@@ -20,7 +20,7 @@ namespace PPlus.Controls
         private readonly SelectOptions<T> _options;
         private Paginator<ItemSelect<T>> _localpaginator;
         private readonly EmacsBuffer _filterBuffer = new(CaseOptions.Uppercase,modefilter:true);
-        private Optional<T> _defaultHistoric = Optional<T>.Create(null);
+        private Optional<T> _defaultHistoric = Optional<T>.Empty();
         private bool ShowingFilter => _filterBuffer.Length > 0;
         private int _lengthSeparationline;
 
@@ -242,7 +242,7 @@ namespace PPlus.Controls
 
         public IControlSelect<T> Default(T value)
         {
-            _options.DefaultValue = Optional<T>.Create(value);
+            _options.DefaultValue = Optional<T>.Set(value);
             return this;
         }
 
@@ -347,17 +347,17 @@ namespace PPlus.Controls
             }
             _lengthSeparationline = maxlensep;
 
-            Optional<T> defvalue = Optional<T>.s_empty;
+            Optional<T> defvalue = Optional<T>.Empty();
 
-            Optional<ItemSelect<T>> defvaluepage = Optional<ItemSelect<T>>.s_empty;
+            Optional<ItemSelect<T>> defvaluepage = Optional<ItemSelect<T>>.Empty();
 
             if (_options.DefaultValue.HasValue)
             { 
-                defvalue = Optional<T>.Create(_options.DefaultValue.Value);
+                defvalue = Optional<T>.Set(_options.DefaultValue.Value);
             }
             if (_defaultHistoric.HasValue)
             {
-                defvalue = Optional<T>.Create(_defaultHistoric.Value);
+                defvalue = Optional<T>.Set(_defaultHistoric.Value);
             }
 
             if (defvalue.HasValue)
@@ -365,7 +365,7 @@ namespace PPlus.Controls
                 var found = _options.Items.FirstOrDefault(x => !x.IsGroupHeader && _options.EqualItems(x.Value, defvalue.Value));
                 if (found != null && !found.Disabled)
                 {
-                    defvaluepage = Optional<ItemSelect<T>>.Create(found);
+                    defvaluepage = Optional<ItemSelect<T>>.Set(found);
                 }
             }
 
@@ -666,7 +666,7 @@ namespace PPlus.Controls
 
         private void LoadHistory()
         {
-            _defaultHistoric = Optional<T>.Create(null);
+            _defaultHistoric = Optional<T>.Empty();
             if (!string.IsNullOrEmpty(_options.OverwriteDefaultFrom))
             {
                 var aux = FileHistory.LoadHistory(_options.OverwriteDefaultFrom, 1);
@@ -674,7 +674,7 @@ namespace PPlus.Controls
                 {
                     try
                     {
-                        _defaultHistoric = Optional<T>.Create(JsonSerializer.Deserialize<T>(aux[0].History));
+                        _defaultHistoric = Optional<T>.Set(JsonSerializer.Deserialize<T>(aux[0].History));
                     }
                     catch
                     {
