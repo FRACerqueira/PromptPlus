@@ -14,7 +14,7 @@ namespace PPlus.Controls
     /// <typeparam name="T">Typeof Input</typeparam>
     public class EventWaitProcess<T> : IDisposable
     {
-        private T _value = default;
+        private readonly Action<Action<T?>> _value;
         private readonly SemaphoreSlim semaphore = new(1, 1);
         private bool _disposed;
 
@@ -23,38 +23,30 @@ namespace PPlus.Controls
             throw new PromptPlusException("EventWaitProcess CTOR NotImplemented");
         }
 
-        internal EventWaitProcess(ref T value, bool cancelnextalltasks)
+        internal EventWaitProcess(Action<Action<T?>> changecontext, bool cancelalltasks)
         {
-            _value = value;
-            CancelAllNextTasks = cancelnextalltasks;
+            _value = changecontext;
+            CancelAllTasks = cancelalltasks;
         }
 
 
         /// <summary>
-        /// Get/set Context value
+        /// Change value Context.
+        /// <br>The change will only be executed if the Context exists(not null).</br>
         /// </summary>
-        public T Context 
-        { 
-            get 
-            {
-                T aux;
-                semaphore.Wait();
-                aux = _value;
-                semaphore.Release();
-                return aux;
-            }
-            set
-            {
-                semaphore.Wait();
-                _value = value;
-                semaphore.Release();
-            }
+        /// <param name="action">
+        /// The action to change value.
+        /// <br>The action will only be executed if the Context exists(not null).</br>
+        /// </param>
+        public void ChangeContext(Action<T> action)
+        {
+            _value(action!);
         }
 
         /// <summary>
-        /// Get/Set Cancel all next tasks.
+        /// Get/Set Cancel all ran tasks.
         /// </summary>
-        public bool CancelAllNextTasks { get; set; }
+        public bool CancelAllTasks { get; set; }
 
 
         #region IDisposable

@@ -11,6 +11,11 @@ namespace WaitTasksSamples
 {
     internal class Program
     {
+        private class MyClass
+        {
+            public int MyProperty { get; set; }
+        }
+
         static void Main(string[] args)
         {
             PromptPlus.WriteLine("Hello, World!");
@@ -28,34 +33,33 @@ namespace WaitTasksSamples
                 .Run();
 
             PromptPlus.DoubleDash($"Control:WaitProcess - normal usage sequencial mode");
+            var seq = 0;
             var wt1 = PromptPlus.WaitProcess<object>("wait process", "main desc")
                 .Finish($"end wait all process")
                 .Interaction(steps1, (ctrl, item) =>
                 {
-                    ctrl.AddStep(StepMode.Sequential, $"id{item}",null,
+                    ctrl.AddStep(StepMode.Sequential, $"id{item}_{seq}",null,
                             (eventw, cts) =>
                             {
-                                cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(item));
+                                Task.Delay(TimeSpan.FromSeconds(2), cts).Wait(cts);
                             });
+                    seq++;
                 })
                 .ShowElapsedTime()
                 .AddStep(StepMode.Sequential, "id2-4", "Desc 4 and 2",
                     (eventw, cts) =>
                     {
-                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(2));
+                        Task.Delay(TimeSpan.FromSeconds(2), cts).Wait(cts);
                     },
                     (eventw, cts) =>
                     {
-                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(4));
+                        Task.Delay(TimeSpan.FromSeconds(4), cts).Wait(cts);
                     })
                 .Run();
 
-            if (!wt1.IsAborted)
+            foreach (var item in wt1.Value.States)
             {
-                foreach (var item in wt1.Value.States)
-                {
-                    PromptPlus.WriteLine($"You task {item.Id} - {item.Description}, {item.Status}, {item.ElapsedTime}, {item.StepMode}");
-                }
+                PromptPlus.WriteLine($"You task {item.Id} - {item.Description}, {item.Status}, {item.ElapsedTime}, {item.StepMode}");
             }
 
             PromptPlus.KeyPress("Press any key to continue", cfg => cfg.ShowTooltip(false))
@@ -67,7 +71,10 @@ namespace WaitTasksSamples
             };
 
             PromptPlus.DoubleDash($"Control:WaitProcess - Custom Color");
-            wt1 = PromptPlus.WaitProcess<object>("wait process", "main desc")
+
+            var mycontext = new MyClass();
+            var wt2 = PromptPlus.WaitProcess<MyClass>("wait process", "main desc")
+                .Context(mycontext)
                 .Finish($"end wait all process")
                 .TaskTitle("MyProcess")
                 .MaxDegreeProcess(4)
@@ -76,7 +83,11 @@ namespace WaitTasksSamples
                     ctrl.AddStep(StepMode.Parallel, $"id{item}", null,
                             (eventw, cts) =>
                             {
-                                cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(item));
+                                eventw.ChangeContext((context) => 
+                                {
+                                    context.MyProperty++;
+                                });
+                                Task.Delay(TimeSpan.FromSeconds(item), cts).Wait(cts);
                             });
                 })
                 .ShowElapsedTime()
@@ -84,6 +95,13 @@ namespace WaitTasksSamples
                 .Styles(WaitStyles.TaskTitle, Style.Default.Foreground(Color.Blue))
                 .Styles(WaitStyles.TaskElapsedTime, Style.Default.Foreground(Color.Green))
                 .Run();
+
+
+            PromptPlus.WriteLine($"You context values is {mycontext.MyProperty}");
+            foreach (var item in wt2.Value.States)
+            {
+                PromptPlus.WriteLine($"You task {item.Id} - {item.Description}, {item.Status}, {item.ElapsedTime}, {item.StepMode}");
+            }
 
 
             PromptPlus.DoubleDash($"Control:WaitProcess - normal usage Parallel mode");
@@ -96,18 +114,18 @@ namespace WaitTasksSamples
                     ctrl.AddStep(StepMode.Parallel, $"id{item}",null,
                             (eventw, cts) =>
                             {
-                                cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(item));
+                                Task.Delay(TimeSpan.FromSeconds(item), cts).Wait(cts);
                             });
                 })
                 .ShowElapsedTime()
                 .AddStep(StepMode.Parallel, "id2-5", "Desc 2 and 5",
                     (eventw, cts) =>
                     {
-                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(2));
+                        Task.Delay(TimeSpan.FromSeconds(2), cts).Wait(cts);
                     },
                     (eventw, cts) =>
                     {
-                        cts.WaitHandle.WaitOne(TimeSpan.FromSeconds(4));
+                        Task.Delay(TimeSpan.FromSeconds(5), cts).Wait(cts);
                     })
                 .Run();
 

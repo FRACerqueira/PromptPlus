@@ -82,6 +82,11 @@ PromptPlus was developed in C# with target frameworks:
     - Reinforce the validation of invalid or optional parameters in all controls
 - Improvement : 
     - Remove code copy (MIT license) from other project and applied package (for lower maintenance)
+- Improvement : 
+    - Optimized the WaitControl control (for cancel correctly tasks)
+    - Removed property Context (EventWaitProcess) 
+    - Added Method ChangeContext(Action<T> action) in EventWaitProcess (for change context over thread safe)
+    - Renamed command 'CancelAllNextTasks' to 'CancelAllTasks' (WaitControl)
 - Documentation: 
     - Examples of snapshot controls updated to reflect layout changes and reduced image size (faster page loading)
     - Reviewed credit references and licenses
@@ -105,6 +110,9 @@ PromptPlus was developed in C# with target frameworks:
     - CTRL-V (paste data) does not show input in some controls
 - Fixed bug : 
     - Refinement of Unicode symbol rendering in all controls (Corret render)
+- Removed Control Pipeline :
+    - Now use PipeAndFilter component (https://github.com/FRACerqueira/PipeAndFilter)
+    - See sample (https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/PipelineSamples)
 
 **PromptPlus Controls - Sample Usage**
 --------------------------------------

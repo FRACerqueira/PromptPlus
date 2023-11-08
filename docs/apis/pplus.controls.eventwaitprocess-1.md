@@ -28,31 +28,34 @@ Implements [IDisposable](https://docs.microsoft.com/en-us/dotnet/api/system.idis
 
 ## Properties
 
-### <a id="properties-cancelallnexttasks"/>**CancelAllNextTasks**
+### <a id="properties-cancelalltasks"/>**CancelAllTasks**
 
-Get/Set Cancel all next tasks.
+Get/Set Cancel all ran tasks.
 
 ```csharp
-public bool CancelAllNextTasks { get; set; }
+public bool CancelAllTasks { get; set; }
 ```
 
 #### Property Value
 
 [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-### <a id="properties-context"/>**Context**
+## Methods
 
-Get/set Context value
+### <a id="methods-changecontext"/>**ChangeContext(Action&lt;T&gt;)**
+
+Change value Context.
+ <br>The change will only be executed if the Context exists(not null).
 
 ```csharp
-public T Context { get; set; }
+public void ChangeContext(Action<T> action)
 ```
 
-#### Property Value
+#### Parameters
 
-T<br>
-
-## Methods
+`action` Action&lt;T&gt;<br>
+The action to change value.
+ <br>The action will only be executed if the Context exists(not null).
 
 ### <a id="methods-dispose"/>**Dispose()**
 

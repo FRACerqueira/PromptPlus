@@ -17,7 +17,7 @@ namespace PPlus
         /// <param name="prompt">The prompt text to write</param>
         /// <param name="description">The description text to write</param>
         /// <returns><see cref="IControlWait{T}"/></returns>
-        public static IControlWait<T> WaitProcess<T>(string prompt, string description = null)
+        public static IControlWait<T> WaitProcess<T>(string prompt, string description = null) where T : class
         {
             return WaitProcess<T>(prompt, description, null);
         }
@@ -40,7 +40,7 @@ namespace PPlus
         /// <param name="description">The description text to write</param>
         /// <param name="config">The config action <see cref="IPromptConfig"/></param>
         /// <returns><see cref="IControlWait{T}"/></returns>
-        public static IControlWait<T> WaitProcess<T>(string prompt, string description, Action<IPromptConfig> config = null)
+        public static IControlWait<T> WaitProcess<T>(string prompt, string description, Action<IPromptConfig> config = null) where T : class
         {
             var opt = new WaitOptions<T>(_styleschema,_configcontrols,_consoledrive, false)
             {
