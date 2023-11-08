@@ -1296,53 +1296,6 @@ public static IDisposable OutputError()
 
 IDisposable
 
-### <a id="methods-pipeline"/>**Pipeline&lt;T&gt;(T)**
-
-Create Pipeline Control
-
-```csharp
-public static IControlPipeline<T> Pipeline<T>(T startvalue)
-```
-
-#### Type Parameters
-
-`T`<br>
-type of return
-
-#### Parameters
-
-`startvalue` T<br>
-Initial value
-
-#### Returns
-
-[PipelineControl&lt;T&gt;](./pplus.controls.pipelinecontrol-1.md)
-
-### <a id="methods-pipeline"/>**Pipeline&lt;T&gt;(T, Action&lt;IPromptConfig&gt;)**
-
-Create Pipeline Control
-
-```csharp
-public static IControlPipeline<T> Pipeline<T>(T startvalue, Action<IPromptConfig> config)
-```
-
-#### Type Parameters
-
-`T`<br>
-type of return
-
-#### Parameters
-
-`startvalue` T<br>
-Initial value
-
-`config` [Action&lt;IPromptConfig&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
-The config action [IPromptConfig](./pplus.controls.ipromptconfig.md)
-
-#### Returns
-
-[PipelineControl&lt;T&gt;](./pplus.controls.pipelinecontrol-1.md)
-
 ### <a id="methods-progressbar"/>**ProgressBar(String, String)**
 
 Create Progress Bar Control

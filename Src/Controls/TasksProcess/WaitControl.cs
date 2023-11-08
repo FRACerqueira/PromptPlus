@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace PPlus.Controls
 {
-    internal class WaitControl<T> : BaseControl<ResultWaitProcess<T>>, IControlWait<T>, IDisposable
+    internal class WaitControl<T> : BaseControl<ResultWaitProcess<T>>, IControlWait<T>, IDisposable where T : class
     {
         private readonly WaitOptions<T> _options;
         private CancellationTokenSource _lnkcts;
@@ -25,6 +25,8 @@ namespace PPlus.Controls
         private (int CursorLeft, int CursorTop) _spinnerCursor;
         private int _promptlines;
         private EventWaitProcess<T> _event;
+        private readonly List<Task> _tasks = new();
+        private readonly object _lockObj = new();
         private T _context;
 
 
@@ -40,7 +42,7 @@ namespace PPlus.Controls
                 throw new PromptPlusException("Not have process to run");
             }
             _context = _options.Context;
-            _event = new EventWaitProcess<T>(ref _context, false);
+            _event = new EventWaitProcess<T>(ChangeContext!, false);
             _ctsesc = new CancellationTokenSource();
             _lnkcts = CancellationTokenSource.CreateLinkedTokenSource(_ctsesc.Token, cancellationToken);
             return string.Empty;
@@ -70,6 +72,11 @@ namespace PPlus.Controls
                     {
                         _process.Wait(CancellationToken.None);
                     }
+                    foreach (var item in _tasks.Where(x => x.IsCompleted))
+                    {
+                        item.Dispose();
+                    }
+                    _tasks.Clear();
                     _process?.Dispose();
                     _lnkcts?.Dispose();
                     _ctsesc?.Dispose();
@@ -218,7 +225,7 @@ namespace PPlus.Controls
                 abort = true;
                 _ctsesc.Cancel();
             }
-            return new ResultPrompt<ResultWaitProcess<T>>(new ResultWaitProcess<T>(_event.Context,_options.States.ToArray()), abort);
+            return new ResultPrompt<ResultWaitProcess<T>>(new ResultWaitProcess<T>(_context, _options.States.ToArray()), abort);
         }
 
         public override void FinishTemplate(ScreenBuffer screenBuffer, ResultWaitProcess<T> result, bool aborted)
@@ -260,105 +267,103 @@ namespace PPlus.Controls
             }
         }
 
+        private void ChangeContext(Action<T> eventchange)
+        {
+            lock (_lockObj)
+            {
+                if (_context == null)
+                {
+                    return;
+                }
+                eventchange(_context);
+            }
+        }
+
         private void RunAllTasks(CancellationToken cancellationtoken)
         {
             var i = 0;
             var timerSpinner = new Stopwatch();
             do
             {
-                if (i > 0)
-                {
-                    ClearLast();
-                }
-                var tasks = new List<(int, Task)>();
                 var currentmode = _options.States[i].StepMode;
+                var degreecount = 0;
                 var executelist = new List<int>();
                 var detailsElapsedTime = new List<(int left, int top, Stopwatch sw)>();
-                var degreecount = 0;
                 do
                 {
-                    executelist.Add(i);
-                    if (!cancellationtoken.IsCancellationRequested && !_event.CancelAllNextTasks)
+                    if (!cancellationtoken.IsCancellationRequested && !_event.CancelAllTasks)
                     {
-                        var act = _options.Steps[i];
-                        using var waitHandle = new AutoResetEvent(false);
-                        tasks.Add((i, Task.Run(() =>
+                        executelist.Add(i);
+
+                        _tasks.Add(new Task((param) =>
                         {
-                            var localpos = i;
+                            var localpos = (int)param!;
+                            Action<EventWaitProcess<T>, CancellationToken> handler;
                             TaskStatus actsta;
                             Exception actex = null;
-                            var tm = new Stopwatch();
-                            detailsElapsedTime.Add((-1, -1, tm));
-                            waitHandle.Set();
-                            tm.Start();
+                            var posdet = 0;
+                            lock (_lockObj)
+                            {
+                                handler = _options.Steps[localpos];
+                                detailsElapsedTime.Add((-1, -1, Stopwatch.StartNew()));
+                                posdet = detailsElapsedTime.Count - 1;
+                            }
                             try
                             {
-                                act.Invoke(_event,cancellationtoken);
-                                actsta = cancellationtoken.IsCancellationRequested? TaskStatus.Canceled: TaskStatus.RanToCompletion;
+                                handler.Invoke(_event, cancellationtoken);
+                                actsta = TaskStatus.RanToCompletion;
+                            }
+                            catch (OperationCanceledException)
+                            {
+                                actsta = TaskStatus.Canceled;
                             }
                             catch (Exception ex)
                             {
                                 actex = ex;
                                 actsta = TaskStatus.Faulted;
                             }
-                            tm.Stop();
-
-                            var aux = _options.States[localpos];
-                            _options.States[localpos] = new StateProcess(
-                                aux.Id,
-                                aux.Description,
-                                actsta,
-                                actex,
-                                tm.Elapsed,
-                                aux.StepMode);
-                        }, CancellationToken.None)));
-                        waitHandle.WaitOne();
+                            lock (_lockObj)
+                            {
+                                detailsElapsedTime[posdet].sw?.Stop();
+                                _options.States[localpos] = new StateProcess(
+                                    _options.States[localpos].Id,
+                                    _options.States[localpos].Description,
+                                    actsta,
+                                    actex,
+                                    detailsElapsedTime[posdet].sw.Elapsed,
+                                    _options.States[localpos].StepMode);
+                            }
+                        }, i, cancellationtoken));
+                        degreecount++;
+                        i++;
                     }
                     else
                     {
-                        using var waitHandlecanc = new AutoResetEvent(false);
-                        tasks.Add((i, Task.Run(() =>
+                        for (int pos = i; pos < _options.Steps.Count; pos++)
                         {
-                            var localpos = i;
-                            var tm = new Stopwatch();
-                            tm.Start();
-                            detailsElapsedTime.Add((-1, -1, new Stopwatch()));
-                            waitHandlecanc.Set();
-                            var aux = _options.States[localpos];
-                            tm.Stop();
-                            _options.States[localpos] = new StateProcess(
-                                  aux.Id,
-                                  aux.Description,
+                            _options.States[i] = new StateProcess(
+                                  _options.States[i].Id,
+                                  _options.States[i].Description,
                                   TaskStatus.Canceled,
                                   null,
-                                  tm.Elapsed,
-                                  aux.StepMode);
-                        }, CancellationToken.None)));
-                        waitHandlecanc.WaitOne();
+                                  TimeSpan.Zero,
+                                  _options.States[i].StepMode);
+                        }
+                        i = _options.Steps.Count;
+                        break;
                     }
-                    i++;
-                    degreecount++;
-                    if (degreecount >= Math.Min(_options.MaxDegreeProcess, 10))
+                    if (currentmode == StepMode.Sequential || degreecount >= _options.MaxDegreeProcess)
                     {
                         break;
                     }
-                }
-                while (!cancellationtoken.IsCancellationRequested && currentmode == StepMode.Parallel && i < _options.Steps.Count && _options.States[i].StepMode == StepMode.Parallel);
-                if (cancellationtoken.IsCancellationRequested)
+                } while (!cancellationtoken.IsCancellationRequested && !_event.CancelAllTasks  && i < _options.Steps.Count);
+                var taskwait = _tasks
+                    .Where(x => x.Status == TaskStatus.Created)
+                    .ToArray();
+                for (int pos = 0; pos < taskwait.Length; pos++)
                 {
-                    for (int pos = 0; i < tasks.Count; i++)
-                    {
-                        (int, Task) aux = tasks[pos];
-                        if (!aux.Item2.IsCompleted)
-                        {
-                            aux.Item2.Wait(CancellationToken.None);
-                        }
-                        aux.Item2.Dispose();
-                    }
-                    tasks.Clear();
-                    break;
+                    taskwait[pos].Start();
                 }
-
                 var qtdlines = 0;
                 ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
                 var top = ConsolePlus.CursorTop;
@@ -472,7 +477,7 @@ namespace PPlus.Controls
                         }
                         qtdlines += qtd;
 
-                        detailsElapsedTime[pos] = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop-qtd, detailsElapsedTime[pos].sw);
+                        detailsElapsedTime[pos] = (ConsolePlus.CursorLeft, ConsolePlus.CursorTop - qtd, detailsElapsedTime[pos].sw);
                         if (qtd > 0)
                         {
                             for (int iold = 0; iold < pos; iold++)
@@ -535,7 +540,14 @@ namespace PPlus.Controls
                 }
                 timerSpinner.Start();
                 var tkspinner = Task.Run(() => ShowSpinner(detailsElapsedTime, timerSpinner, cancellationtoken), CancellationToken.None);
-                Task.WaitAll(tasks.Select(x => x.Item2).Where(x => !x.IsCompleted).ToArray(), CancellationToken.None);
+                try
+                {
+                    Task.WaitAll(_tasks.ToArray(), cancellationtoken);
+                }
+                catch (OperationCanceledException)
+                {
+                    //none
+                }
                 timerSpinner.Stop();
                 if (!tkspinner.IsCanceled && !tkspinner.IsCompleted)
                 {
@@ -546,16 +558,10 @@ namespace PPlus.Controls
                 ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
 
                 timerSpinner.Reset();
-                foreach (var task in tasks)
-                {
-                    task.Item2.Dispose();
-                }
-                tasks.Clear();
+
                 ClearLast();
-            }
-            while (i < _options.Steps.Count);
-            ClearLast();
-            ConsolePlus.SetCursorPosition(_initialCursor.CursorLeft, _initialCursor.CursorTop);
+
+            } while (!cancellationtoken.IsCancellationRequested && i < _options.Steps.Count);
         }
 
         private void ClearLast()

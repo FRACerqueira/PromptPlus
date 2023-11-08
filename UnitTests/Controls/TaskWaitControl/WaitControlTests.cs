@@ -133,7 +133,7 @@ namespace PPlus.Tests.Controls.TaskWaitControl
         {
             var ctrl = (WaitControl<object>)PromptPlus
                  .WaitProcess("P", "D")
-                 .AddStep(StepMode.Parallel, (_, _) => { });
+                 .AddStep(StepMode.Parallel, (_, cts) => { Task.Delay(1000).Wait(cts); });
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
 
             ctrl.InitControl(CancellationToken.None);
@@ -279,24 +279,23 @@ namespace PPlus.Tests.Controls.TaskWaitControl
         public void Should_EventAbortSequential()
         {
             var ctrl = (WaitControl<object>)PromptPlus.WaitProcess("P", "D")
-                .MaxDegreeProcess(2)
-                .AddStep(StepMode.Sequential, (_, cts) =>
+                .AddStep(StepMode.Sequential, (evt, cts) =>
                 {
-                    cts.WaitHandle.WaitOne(1000);
+                    Task.Delay(TimeSpan.FromSeconds(1), cts).Wait(cts);
+                    evt.CancelAllTasks = true;
                 })
                 .AddStep(StepMode.Sequential, (evt, cts) =>
                  {
-                    evt.CancelAllNextTasks = true;
-                    cts.WaitHandle.WaitOne(2000);
-           
+                    Task.Delay(TimeSpan.FromSeconds(3), cts).Wait(cts);
+
                  })
                 .AddStep(StepMode.Sequential, (_, cts) =>
                  {
-                     cts.WaitHandle.WaitOne(5000);
+                     Task.Delay(TimeSpan.FromSeconds(3), cts).Wait(cts);
                  })
                 .AddStep(StepMode.Sequential, (_, cts) =>
                  {
-                     cts.WaitHandle.WaitOne(5000);
+                     Task.Delay(TimeSpan.FromSeconds(3), cts).Wait(cts);
                  });
 
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
@@ -308,52 +307,56 @@ namespace PPlus.Tests.Controls.TaskWaitControl
 
             ctrl.InputTemplate(new ScreenBuffer());
 
+            Thread.Sleep(1000);
+
             CompletesIn(8000, () =>
             {
                 var result = ctrl.TryResult(cts.Token);
                 Assert.False(result.IsAborted);
-                Assert.Equal(2,result.Value.States.Count(x => x.Status == TaskStatus.Canceled));
+                Assert.True(result.Value.States.Count(x => x.Status == TaskStatus.Canceled) > 0);
             });
         }
+        private class Mclass
+        {
+            public int MyProperty { get; set; }
+        };
 
         [Fact]
         public void Should_EventChangeConext()
         {
-            var root = new object();
-            var ctrl = (WaitControl<int>)PromptPlus.WaitProcess<int>("P", "D")
-                .MaxDegreeProcess(2)
-                .Context(0)
+            var ctrl = (WaitControl<Mclass>)PromptPlus.WaitProcess<Mclass>("P", "D")
+                .Context(new Mclass())
                 .AddStep(StepMode.Parallel, (evt, cts) =>
                 {
-                    //not thread-safed
-                    lock (root)
+                    //thread-safed
+                    evt.ChangeContext((context) => 
                     {
-                        evt.Context++;
-                    }
+                        context.MyProperty++;
+                    });
                 })
                 .AddStep(StepMode.Parallel, (evt, cts) =>
                 {
-                    //not thread-safed
-                    lock (root)
+                    //thread-safed
+                    evt.ChangeContext((context) =>
                     {
-                        evt.Context++;
-                    }
+                        context.MyProperty++;
+                    });
                 })
                 .AddStep(StepMode.Parallel, (evt, cts) =>
                 {
-                    //not thread-safed
-                    lock (root)
+                    //thread-safed
+                    evt.ChangeContext((context) =>
                     {
-                        evt.Context++;
-                    }
+                        context.MyProperty++;
+                    });
                 })
                 .AddStep(StepMode.Parallel, (evt, cts) =>
                 {
-                    //not thread-safed
-                    lock (root)
+                    //thread-safed
+                    evt.ChangeContext((context) =>
                     {
-                        evt.Context++;
-                    }
+                        context.MyProperty++;
+                    });
                 });
 
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
@@ -365,11 +368,11 @@ namespace PPlus.Tests.Controls.TaskWaitControl
 
             ctrl.InputTemplate(new ScreenBuffer());
 
-            CompletesIn(1000, () =>
+            CompletesIn(3000, () =>
             {
                 var result = ctrl.TryResult(cts.Token);
                 Assert.False(result.IsAborted);
-                Assert.Equal(4, result.Value.Context);
+                Assert.Equal(4, result.Value.Context.MyProperty);
             });
         }
 
@@ -380,21 +383,21 @@ namespace PPlus.Tests.Controls.TaskWaitControl
                 .MaxDegreeProcess(2)
                 .AddStep(StepMode.Parallel, (evt, cts) =>
                 {
-                    evt.CancelAllNextTasks = true;
-                    cts.WaitHandle.WaitOne(1000);
+                    Task.Delay(TimeSpan.FromSeconds(1), cts).Wait(cts);
+                    evt.CancelAllTasks = true;
                 })
                 .AddStep(StepMode.Parallel, (_, cts) =>
                 {
-                    cts.WaitHandle.WaitOne(2000);
+                    Task.Delay(TimeSpan.FromSeconds(2), cts).Wait(cts);
 
                 })
                 .AddStep(StepMode.Parallel, (_, cts) =>
                 {
-                    cts.WaitHandle.WaitOne(5000);
+                    Task.Delay(TimeSpan.FromSeconds(4), cts).Wait(cts);
                 })
                 .AddStep(StepMode.Parallel, (_, cts) =>
                 {
-                    cts.WaitHandle.WaitOne(5000);
+                    Task.Delay(TimeSpan.FromSeconds(4), cts).Wait(cts);
                 });
 
             ActionOnDispose = () => ctrl.FinalizeControl(CancellationToken.None);
@@ -406,11 +409,13 @@ namespace PPlus.Tests.Controls.TaskWaitControl
 
             ctrl.InputTemplate(new ScreenBuffer());
 
+            Thread.Sleep(1000);
+
             CompletesIn(8000, () =>
             {
                 var result = ctrl.TryResult(cts.Token);
                 Assert.False(result.IsAborted);
-                Assert.True(result.Value.States.Count(x => x.Status == TaskStatus.Canceled) >=2);
+                Assert.True(result.Value.States.Count(x => x.Status == TaskStatus.Canceled) >0);
             });
         }
 

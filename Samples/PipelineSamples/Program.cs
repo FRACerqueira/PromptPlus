@@ -4,6 +4,8 @@
 // ***************************************************************************************
 
 using System.Globalization;
+using System.Text.Json;
+using PipeFilterCore;
 using PPlus;
 
 namespace PipelineSamples
@@ -31,171 +33,147 @@ namespace PipelineSamples
 
             PromptPlus.DoubleDash("Control Pipeline");
 
-            var pl = PromptPlus.Pipeline(new MyClassPipeline())
-                .AddPipe("First Name",
-                    (eventpipe, stoptoken) =>
-                    {
-                        var result = PromptPlus.Input(eventpipe.CurrentPipe,"If first name is empty not get lastname and not confim inputs")
-                            .Default(eventpipe.Input.FirtName ?? string.Empty)
-                            .Run();
-                        if (result.IsAborted)
-                        {
-                            eventpipe.AbortPipeline();
-                        }
-                        else
-                        {
-                            eventpipe.Input.FirtName = result.Value;
-                        }
-                    })
-                .AddPipe("Last Name",
-                    (eventpipe, stoptoken) =>
-                    {
-                        var result = PromptPlus.Input(eventpipe.CurrentPipe)
-                            .Default(eventpipe.Input.LastName ?? string.Empty)
-                            .Run();
-                        if (result.IsAborted)
-                        {
-                            eventpipe.AbortPipeline();
-                        }
-                        else
-                        {
-                            eventpipe.Input.LastName = result.Value;
-                        }
-                    },
-                    (eventpipe, stoptoken) =>
-                    {
-                        if (eventpipe.Input.FirtName?.Length > 0)
-                        {
-                            return true;
-                        }
-                        return false;
-                    })
-                .AddPipe("Confirm",
-                    (eventpipe, stoptoken) =>
-                    {
-                        var result = PromptPlus.Confirm(eventpipe.CurrentPipe)
-                            .Run();
-                        if (result.IsAborted)
-                        {
-                            eventpipe.AbortPipeline();
-                        }
-                        else
-                        {
-                            if (!result.Value.IsYesResponseKey())
-                            {
-                                eventpipe.NextPipe("First Name");
-                            }
-                        }
-                    })
-                .Run();
+            var context = new MyClassPipeline();
+            var pipeline = PipeAndFilter.New<MyClassPipeline>()
+                .AddPipe(FistName, "FistName")
+                .AddPipe(LastName, "LastName")
+                    .WithCondition(ExistFirstName)
+                .AddPipe(Confirm,"Confirm")
+                    .WithCondition(ExistFirstName)
+                .AddPipe(WriteResult)
+                    .WithGotoCondition(TryAgain, "FistName")
+                .BuildAndCreate()
+                .Init(context)
+                .Run().Result;
 
             
-            if (!pl.IsAborted)
+            if (!pipeline.Aborted)
             {
-                if ((pl.Value.Context.FirtName!.Trim() + pl.Value.Context.LastName!.Trim()).Length > 0)
-                {
-                    var last = pl.Value.Context.LastName!.Trim();
-                    if (last.Length > 0)
-                    {
-                        last = $", {last}";
-                    }
-                    PromptPlus.WriteLine($"You input is {pl.Value.Context.FirtName!}{last}");
-                }
-                else
-                {
-                    PromptPlus.WriteLine($"You input is empty");
-                }
+                PromptPlus.WriteLine($"You input is {pipeline.Value!.FirtName} {pipeline.Value!.LastName}");
             }
-
-            PromptPlus.DoubleDash("Control Pipeline by enum");
-
-            var pl1 = PromptPlus.Pipeline(new MyClassPipeline())
-                .AddPipe(Mypipes.FirstName,
-                    (eventpipe, stoptoken) =>
-                    {
-                        var result = PromptPlus.Input("Your First Name", "If first name is empty not get lastname and not confim inputs")
-                            .Default(eventpipe.Input.FirtName ?? string.Empty)
-                            .Run();
-                        if (result.IsAborted)
-                        {
-                            eventpipe.AbortPipeline();
-                        }
-                        else
-                        {
-                            eventpipe.Input.FirtName = result.Value;
-                        }
-                    })
-                .AddPipe(Mypipes.LastName,
-                    (eventpipe, stoptoken) =>
-                    {
-                        var result = PromptPlus.Input("Your Last Name")
-                            .Default(eventpipe.Input.LastName ?? string.Empty)
-                            .Run();
-                        if (result.IsAborted)
-                        {
-                            eventpipe.AbortPipeline();
-                        }
-                        else
-                        {
-                            eventpipe.Input.LastName = result.Value;
-                        }
-                    },
-                    (eventpipe, stoptoken) =>
-                    {
-                        if (eventpipe.Input.FirtName?.Length > 0)
-                        {
-                            return true;
-                        }
-                        return false;
-                    })
-                .AddPipe(Mypipes.Confirm,
-                    (eventpipe, stoptoken) =>
-                    {
-                        var result = PromptPlus.Confirm("Confirm all inputs")
-                            .Run();
-                        if (result.IsAborted)
-                        {
-                            eventpipe.AbortPipeline();
-                        }
-                        else
-                        {
-                            if (!result.Value.IsYesResponseKey())
-                            {
-                                eventpipe.NextPipe(Mypipes.FirstName);
-                            }
-                        }
-                    },
-                    (eventpipe, stoptoken) =>
-                    {
-                        if (eventpipe.Input.FirtName?.Length > 0)
-                        {
-                            return true;
-                        }
-                        return false;
-                    })
-                .Run();
-
-            if (!pl1.IsAborted)
-            {
-                if ((pl1.Value.Context.FirtName!.Trim() + pl1.Value.Context.LastName!.Trim()).Length > 0)
-                {
-                    var last = pl1.Value.Context.LastName!.Trim();
-                    if (last.Length > 0)
-                    {
-                        last = $", {last}";
-                    }
-                    PromptPlus.WriteLine($"You input is {pl1.Value.Context.FirtName!}{last}");
-                }
-                else
-                {
-                    PromptPlus.WriteLine($"You input is empty");
-                }
-            }
-
             PromptPlus.WriteLines(2);
             PromptPlus.KeyPress("End Sample!, Press any key", cfg => cfg.ShowTooltip(false))
                 .Run();
 
         }
+
+        private static ValueTask<bool> TryAgain(EventPipe<MyClassPipeline> pipe, CancellationToken token)
+        {
+            string? value = pipe.SavedPipes
+                .Where(X => X.Alias == "Confirm")
+                .Select(X => X.Result)
+                .FirstOrDefault();
+            var confirm = false;
+            if (!string.IsNullOrEmpty(value))
+            {
+                confirm = JsonSerializer.Deserialize<bool>(value);
+            }
+            return new ValueTask<bool>(!confirm);    
+        }
+
+        private static Task WriteResult(EventPipe<MyClassPipeline> pipe, CancellationToken token)
+        {
+            string? firstname = pipe.SavedPipes
+                .Where(X => X.Alias == "FistName")
+                .Select(X => X.Result)
+                .FirstOrDefault();
+            if (!string.IsNullOrEmpty(firstname))
+            {
+                firstname = JsonSerializer.Deserialize<string>(firstname);
+            }
+            string? lastname = pipe.SavedPipes
+                    .Where(X => X.Alias == "LastName")
+                    .Select(X => X.Result)
+                    .FirstOrDefault();
+            if (!string.IsNullOrEmpty(lastname))
+            {
+                lastname = JsonSerializer.Deserialize<string>(lastname);
+            }
+            pipe.ThreadSafeAccess((Contract) => 
+            {
+                Contract.FirtName = firstname ??string.Empty;
+                Contract.LastName = lastname ?? string.Empty;
+            });
+            return Task.CompletedTask;
+        }
+
+        private static Task Confirm(EventPipe<MyClassPipeline> pipe, CancellationToken token)
+        {
+            var result = PromptPlus.Confirm("Confirm all input")
+                .Run();
+            if (!result.IsAborted)
+            {
+                pipe.SaveValue(result.Value.IsYesResponseKey());
+            }
+            else
+            {
+                pipe.EndPipeAndFilter();
+            }
+            return Task.CompletedTask;
+        }
+
+        private static Task FistName(EventPipe<MyClassPipeline> pipe, CancellationToken token)
+        {
+            string? value = pipe.SavedPipes
+                .Where(X => X.Alias == "FistName")
+                .Select(X => X.Result)
+                .FirstOrDefault();
+            if (!string.IsNullOrEmpty(value))
+            {
+                value = JsonSerializer.Deserialize<string>(value);
+            }
+
+            var result = PromptPlus.Input("Your First Name", "If first name is empty not get lastname and not confim inputs")
+                 .Default(value ?? string.Empty)
+                 .Run();
+            if (!result.IsAborted)
+            {
+                pipe.SaveValue(result.Value);
+            }
+            else
+            {
+                pipe.EndPipeAndFilter();
+            }
+            return Task.CompletedTask;
+        }
+
+        private static Task LastName(EventPipe<MyClassPipeline> pipe, CancellationToken token)
+        {
+            string? value = pipe.SavedPipes
+                .Where(X => X.Alias == "LastName")
+                .Select(X => X.Result)
+                .FirstOrDefault();
+            if (!string.IsNullOrEmpty(value))
+            {
+                value = JsonSerializer.Deserialize<string>(value);
+            }
+
+            var result = PromptPlus.Input("Your Last Name")
+                 .Default(value ?? string.Empty)
+                 .Run();
+            if (!result.IsAborted)
+            {
+                pipe.SaveValue(result.Value);
+            }
+            else
+            {
+                pipe.EndPipeAndFilter();
+            }
+            return Task.CompletedTask;
+        }
+
+        private static ValueTask<bool> ExistFirstName(EventPipe<MyClassPipeline> pipe, CancellationToken token)
+        {
+            string? value = pipe.SavedPipes
+                .Where(X => X.Alias == "FistName")
+                .Select(X => X.Result)
+                .FirstOrDefault();
+            if (!string.IsNullOrEmpty(value))
+            {
+                value = JsonSerializer.Deserialize<string>(value);
+            }
+            return ValueTask.FromResult(!string.IsNullOrEmpty(value));
+        }
+
     }
 }

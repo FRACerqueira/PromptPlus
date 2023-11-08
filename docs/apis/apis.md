@@ -80,8 +80,6 @@
 
 - [ConfigControls](./pplus.controls.configcontrols.md)
 
-- [EventPipe&lt;T&gt;](./pplus.controls.eventpipe-1.md)
-
 - [EventWaitProcess&lt;T&gt;](./pplus.controls.eventwaitprocess-1.md)
 
 - [FilterMode](./pplus.controls.filtermode.md)
@@ -119,8 +117,6 @@
 - [IControlMaskEditList](./pplus.controls.icontrolmaskeditlist.md)
 
 - [IControlMultiSelect&lt;T&gt;](./pplus.controls.icontrolmultiselect-1.md)
-
-- [IControlPipeline&lt;T&gt;](./pplus.controls.icontrolpipeline-1.md)
 
 - [IControlProgressBar&lt;T&gt;](./pplus.controls.icontrolprogressbar-1.md)
 
@@ -168,10 +164,6 @@
 
 - [MultiSelectStyles](./pplus.controls.multiselectstyles.md)
 
-- [PipeRunningStatus](./pplus.controls.piperunningstatus.md)
-
-- [PipeStatus](./pplus.controls.pipestatus.md)
-
 - [PolicyInvalidDate](./pplus.controls.policyinvaliddate.md)
 
 - [ProgressBarStyles](./pplus.controls.progressbarstyles.md)
@@ -181,8 +173,6 @@
 - [PromptValidators](./pplus.controls.promptvalidators.md)
 
 - [ResultMasked](./pplus.controls.resultmasked.md)
-
-- [ResultPipeline&lt;T&gt;](./pplus.controls.resultpipeline-1.md)
 
 - [ResultProgessBar&lt;T&gt;](./pplus.controls.resultprogessbar-1.md)
 
