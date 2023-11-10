@@ -59,41 +59,39 @@ namespace PipelineSamples
 
         private static ValueTask<bool> TryAgain(EventPipe<MyClassPipeline> pipe, CancellationToken token)
         {
-            string? value = pipe.SavedPipes
-                .Where(X => X.Alias == "Confirm")
-                .Select(X => X.Result)
-                .FirstOrDefault();
             var confirm = false;
-            if (!string.IsNullOrEmpty(value))
+            if (pipe.TrySavedValue("Confirm", out var value))
             {
-                confirm = JsonSerializer.Deserialize<bool>(value);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    confirm = JsonSerializer.Deserialize<bool>(value);
+                }
             }
             return new ValueTask<bool>(!confirm);    
         }
 
         private static Task WriteResult(EventPipe<MyClassPipeline> pipe, CancellationToken token)
         {
-            string? firstname = pipe.SavedPipes
-                .Where(X => X.Alias == "FistName")
-                .Select(X => X.Result)
-                .FirstOrDefault();
-            if (!string.IsNullOrEmpty(firstname))
+            if (pipe.TrySavedValue("FistName", out string? value))
             {
-                firstname = JsonSerializer.Deserialize<string>(firstname);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    pipe.ThreadSafeAccess((Contract) =>
+                    {
+                        Contract.FirtName = JsonSerializer.Deserialize<string>(value) ?? string.Empty;
+                    });
+                }
             }
-            string? lastname = pipe.SavedPipes
-                    .Where(X => X.Alias == "LastName")
-                    .Select(X => X.Result)
-                    .FirstOrDefault();
-            if (!string.IsNullOrEmpty(lastname))
+            if (pipe.TrySavedValue("LastName", out value))
             {
-                lastname = JsonSerializer.Deserialize<string>(lastname);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    pipe.ThreadSafeAccess((Contract) =>
+                    {
+                        Contract.LastName = JsonSerializer.Deserialize<string>(value) ?? string.Empty;
+                    });
+                }
             }
-            pipe.ThreadSafeAccess((Contract) => 
-            {
-                Contract.FirtName = firstname ??string.Empty;
-                Contract.LastName = lastname ?? string.Empty;
-            });
             return Task.CompletedTask;
         }
 
@@ -103,7 +101,7 @@ namespace PipelineSamples
                 .Run();
             if (!result.IsAborted)
             {
-                pipe.SaveValue(result.Value.IsYesResponseKey());
+                pipe.SaveValueAtEnd("Confirm", result.Value.IsYesResponseKey());
             }
             else
             {
@@ -114,13 +112,12 @@ namespace PipelineSamples
 
         private static Task FistName(EventPipe<MyClassPipeline> pipe, CancellationToken token)
         {
-            string? value = pipe.SavedPipes
-                .Where(X => X.Alias == "FistName")
-                .Select(X => X.Result)
-                .FirstOrDefault();
-            if (!string.IsNullOrEmpty(value))
+            if (pipe.TrySavedValue("FistName", out string? value))
             {
-                value = JsonSerializer.Deserialize<string>(value);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    value = JsonSerializer.Deserialize<string>(value) ?? string.Empty;
+                }
             }
 
             var result = PromptPlus.Input("Your First Name", "If first name is empty not get lastname and not confim inputs")
@@ -128,7 +125,7 @@ namespace PipelineSamples
                  .Run();
             if (!result.IsAborted)
             {
-                pipe.SaveValue(result.Value);
+                pipe.SaveValueAtEnd("FistName", result.Value);
             }
             else
             {
@@ -139,21 +136,19 @@ namespace PipelineSamples
 
         private static Task LastName(EventPipe<MyClassPipeline> pipe, CancellationToken token)
         {
-            string? value = pipe.SavedPipes
-                .Where(X => X.Alias == "LastName")
-                .Select(X => X.Result)
-                .FirstOrDefault();
-            if (!string.IsNullOrEmpty(value))
+            if (pipe.TrySavedValue("LastName", out string? value))
             {
-                value = JsonSerializer.Deserialize<string>(value);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    value = JsonSerializer.Deserialize<string>(value) ?? string.Empty;
+                }
             }
-
             var result = PromptPlus.Input("Your Last Name")
                  .Default(value ?? string.Empty)
                  .Run();
             if (!result.IsAborted)
             {
-                pipe.SaveValue(result.Value);
+                pipe.SaveValueAtEnd("LastName", result.Value);
             }
             else
             {
@@ -164,13 +159,12 @@ namespace PipelineSamples
 
         private static ValueTask<bool> ExistFirstName(EventPipe<MyClassPipeline> pipe, CancellationToken token)
         {
-            string? value = pipe.SavedPipes
-                .Where(X => X.Alias == "FistName")
-                .Select(X => X.Result)
-                .FirstOrDefault();
-            if (!string.IsNullOrEmpty(value))
+            if (pipe.TrySavedValue("FistName", out string? value))
             {
-                value = JsonSerializer.Deserialize<string>(value);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    value = JsonSerializer.Deserialize<string>(value) ?? string.Empty;
+                }
             }
             return ValueTask.FromResult(!string.IsNullOrEmpty(value));
         }
