@@ -6,8 +6,7 @@
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
-**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
-
+**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** , **.NET 7** and **.NET 8** target frameworks.
 
 ## Table of Contents
 
@@ -31,6 +30,7 @@
 
 ## What's new in V4.2.0
 
+- Added .NET8 target frameworks.
 - Split of feature:
     - PromptPlus.TableSelect\<T> to Select item in table : Select row, column and data in a grid/table 
         - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
