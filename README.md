@@ -8,7 +8,8 @@
 
 **Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
 
-**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
+**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** , **.NET 7** and **.NET 8** target frameworks.
+
 **[Visit the official page for more documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
 
 ## Table of Contents
@@ -38,6 +39,7 @@
 
 [**Top**](#table-of-contents)
 
+- Added .NET8 target frameworks.
 - Split of feature:
     - PromptPlus.TableSelect\<T> to Select item in table : Select row, column and data in a grid/table 
         - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)

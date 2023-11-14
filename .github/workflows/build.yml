@@ -2,19 +2,16 @@ name: Build
 
 on: [push, pull_request]
 
-env:
-  DOTNET_VERSION: 7.0.x
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Use .NET ${{ env.DOTNET_VERSION }}
-      uses: actions/setup-dotnet@v2
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+        dotnet-version: '8.0.x' # SDK Version to use.
 
     - name: Build project
       run: dotnet build PromptPlus.sln -c Release

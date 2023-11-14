@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0;net6.0; netstandard2.1</TargetFrameworks>
+		<TargetFrameworks>net8.0;net7.0;net6.0; netstandard2.1</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
 		<NeutralLanguage>en</NeutralLanguage>
 		<AssemblyName>PromptPlus</AssemblyName>
@@ -25,7 +25,7 @@
 		<Description>Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.</Description>
 		<PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
 		<PackageTags>cli;console;chart;terminal;csharp;command;command-line;dotnet;prompt;table;tableview;readline;datagridview;grid;autocomplete;maskedit;</PackageTags>
-		<RepositoryUrl>https://fracerqueira.github.io/PromptPlus</RepositoryUrl>
+		<RepositoryUrl>https://github.com/FRACerqueira/PromptPlus</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageId>PromptPlus</PackageId>
 		<PackageReadmeFile>NugetREADME.md</PackageReadmeFile>

@@ -8,10 +8,11 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 #### [Visit the official page for complete documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)
 
-**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** and **.NET 7** target frameworks.
+**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** , **.NET 7** and **.NET 8** target frameworks.
 
 ## What's new in V4.2.0
 
+- Added .NET8 target frameworks.
 - Split of feature:
     - PromptPlus.TableSelect\<T> to Select item in table : Select row, column and data in a grid/table 
         - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)

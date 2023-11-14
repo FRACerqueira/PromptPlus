@@ -28,10 +28,11 @@ PromptPlus was developed in C# with target frameworks:
 - netstandard2.1
 - .NET 6
 - .NET 7
+- .NET 8
 
 *** What's new in V4.2.0 ***
 ----------------------------
-
+- Added .NET8 target frameworks.
 - Split of feature:
     - PromptPlus.TableSelect<T> to Select item in table : Select row, column and data in a grid/table 
         - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
