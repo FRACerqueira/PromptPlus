@@ -86,11 +86,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readme", "Readme", "{C914AC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{191C90E6-4BB3-49A1-8F1A-B241F2F5094F}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
 		docs\colors.md = docs\colors.md
 		docs\globalsettings.md = docs\globalsettings.md
 		docs\hotkeys.md = docs\hotkeys.md
 		docs\index.md = docs\index.md
 		docs\migrateversion.md = docs\migrateversion.md
+		.github\workflows\publish.yml = .github\workflows\publish.yml
 		docs\snapshot.md = docs\snapshot.md
 		whatsnewprev.md = whatsnewprev.md
 	EndProjectSection
