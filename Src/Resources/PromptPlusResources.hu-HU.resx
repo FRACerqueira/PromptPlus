@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnyKey" xml:space="preserve">
+    <value>Nyomj meg egy billentyűt</value>
+  </data>
+  <data name="CanceledKey" xml:space="preserve">
+    <value>Megszakítva</value>
+  </data>
+  <data name="CurrentFolder" xml:space="preserve">
+    <value>Aktuális könyvtár</value>
+  </data>
+  <data name="CurrentSelected" xml:space="preserve">
+    <value>Kiválasztva</value>
+  </data>
+  <data name="EditMode" xml:space="preserve">
+    <value>Szerkesztési mód</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Szűrő</value>
+  </data>
+  <data name="Group" xml:space="preserve">
+    <value>Csoport</value>
+  </data>
+  <data name="InputFinishEnter" xml:space="preserve">
+    <value>Enter:Kész</value>
+  </data>
+  <data name="InvalidMask" xml:space="preserve">
+    <value>Érvénytelen maszk</value>
+  </data>
+  <data name="ListItemAlreadyexists" xml:space="preserve">
+    <value>Már szerepel a listában</value>
+  </data>
+  <data name="ListMaxSelection" xml:space="preserve">
+    <value>Legfeljebb {0} elemet lehet kiválasztani</value>
+  </data>
+  <data name="ListMinSelection" xml:space="preserve">
+    <value>Legalább {0} elemet ki kell választani</value>
+  </data>
+  <data name="MaskEditErase" xml:space="preserve">
+    <value>Ctrl+Del/Ctrl+L:Mind törlése,Home/End:Ugrás</value>
+  </data>
+  <data name="MaskEditJump" xml:space="preserve">
+    <value>{0}:Következő szekció </value>
+  </data>
+  <data name="MaskEditPosAnyChar" xml:space="preserve">
+    <value>Bármilyen karakter</value>
+  </data>
+  <data name="MaskEditPosCustom" xml:space="preserve">
+    <value>Csak({0})</value>
+  </data>
+  <data name="MaskEditPosDay" xml:space="preserve">
+    <value>Nap</value>
+  </data>
+  <data name="MaskEditPosHour" xml:space="preserve">
+    <value>Óra</value>
+  </data>
+  <data name="MaskEditPosLetter" xml:space="preserve">
+    <value>Karakter</value>
+  </data>
+  <data name="MaskEditPosMinute" xml:space="preserve">
+    <value>Perc</value>
+  </data>
+  <data name="MaskEditPosMonth" xml:space="preserve">
+    <value>Hónap</value>
+  </data>
+  <data name="MaskEditPosNumeric" xml:space="preserve">
+    <value>Szám</value>
+  </data>
+  <data name="MaskEditPosSecond" xml:space="preserve">
+    <value>Másodperc</value>
+  </data>
+  <data name="MaskEditPosYear" xml:space="preserve">
+    <value>Év</value>
+  </data>
+  <data name="MoveDays" xml:space="preserve">
+    <value>Balra/Jobbra:Napok közti váltás</value>
+  </data>
+  <data name="MoveDayWeek" xml:space="preserve">
+    <value>Fel/Le:Hetek közti váltás</value>
+  </data>
+  <data name="MoveMonth" xml:space="preserve">
+    <value>Tab/Shift+Tab:Hónapok közti váltás</value>
+  </data>
+  <data name="MoveToday" xml:space="preserve">
+    <value>Home:Mai nap</value>
+  </data>
+  <data name="MoveYear" xml:space="preserve">
+    <value>PgUp/PgDown:Évek közti váltás</value>
+  </data>
+  <data name="MultiSelectFinishEnter" xml:space="preserve">
+    <value>Enter:Kész,Space:Kiválasztás be/ki</value>
+  </data>
+  <data name="MultiSelectMaxSelection" xml:space="preserve">
+    <value>Legfeljebb {0} elemet lehet kiválasztani</value>
+  </data>
+  <data name="MultiSelectMinSelection" xml:space="preserve">
+    <value>Legalább {0} elemet ki kell választani</value>
+  </data>
+  <data name="NoChar" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="OffValue" xml:space="preserve">
+    <value>Ki</value>
+  </data>
+  <data name="OnValue" xml:space="preserve">
+    <value>Be</value>
+  </data>
+  <data name="OrderHighest" xml:space="preserve">
+    <value>Legnagyobb érték</value>
+  </data>
+  <data name="OrderLabelAsc" xml:space="preserve">
+    <value>Név szerint növekvő</value>
+  </data>
+  <data name="OrderLabelDec" xml:space="preserve">
+    <value>Név szerint csökkenő</value>
+  </data>
+  <data name="OrderSmallest" xml:space="preserve">
+    <value>Legkisebb érték</value>
+  </data>
+  <data name="OrderStandard" xml:space="preserve">
+    <value>Alapértelmezett</value>
+  </data>
+  <data name="PaginationTemplate" xml:space="preserve">
+    <value>{0} elem, {1}/{2} oldal</value>
+  </data>
+  <data name="PaginatorHome" xml:space="preserve">
+    <value>Home:Első oldal</value>
+  </data>
+  <data name="PressedKey" xml:space="preserve">
+    <value>Megnyomva</value>
+  </data>
+  <data name="SelectFinishEnter" xml:space="preserve">
+    <value>Enter:Kész</value>
+  </data>
+  <data name="SelectionDisabled" xml:space="preserve">
+    <value>Kiválasztott elem inaktív</value>
+  </data>
+  <data name="SelectionInvalid" xml:space="preserve">
+    <value>Kiválasztott elem érvénytelen</value>
+  </data>
+  <data name="SliderNumberLeftRightKeyNavigator" xml:space="preserve">
+    <value>Balra/Jobbra:Mozgatás,Tab/Shift+Tab:Ugrás,Enter:Kész</value>
+  </data>
+  <data name="SliderNumberUpDownKeyNavigator" xml:space="preserve">
+    <value>Fel/Le:Mozgatás,Tab/Shift+Tab:Ugrás,Enter:Kész</value>
+  </data>
+  <data name="SliderSwitchKeyNavigator" xml:space="preserve">
+    <value>Balra/Jobbra:Változtatás,Enter:Kész</value>
+  </data>
+  <data name="TableMoveCols" xml:space="preserve">
+    <value>Balra/Jobbra:Cella mozgatása</value>
+  </data>
+  <data name="TooltipAbortEdit" xml:space="preserve">
+    <value>Esc:Szerkesztés megszakítása</value>
+  </data>
+  <data name="TooltipCancelEsc" xml:space="preserve">
+    <value>{0}:Megszakítás</value>
+  </data>
+  <data name="TooltipChart" xml:space="preserve">
+    <value>Fel/Le/PgUp/PgDown:Mozgás</value>
+  </data>
+  <data name="TooltipChartSwitchLegend" xml:space="preserve">
+    <value>{0}:Jelmagyarázat mutat/elrejt</value>
+  </data>
+  <data name="TooltipChartSwitchOrder" xml:space="preserve">
+    <value>{0}:Sorrend mutat/elrejt</value>
+  </data>
+  <data name="TooltipChartSwitchType" xml:space="preserve">
+    <value>{0}:Diagram típus váltása</value>
+  </data>
+  <data name="TooltipEditItem" xml:space="preserve">
+    <value>{0}:Szerkesztés</value>
+  </data>
+  <data name="TooltipEnterPressList" xml:space="preserve">
+    <value>Enter:Hozzáadás,Ctrl+Enter:Kész</value>
+  </data>
+  <data name="TooltipFullPath" xml:space="preserve">
+    <value>{0}:Teljes elérési út mutat/elrejt</value>
+  </data>
+  <data name="TooltipHistoryClear" xml:space="preserve">
+    <value>Ctrl+Del:Előzmények törlése</value>
+  </data>
+  <data name="TooltipHistoryEsc" xml:space="preserve">
+    <value>Esc:Kilépés az előzményekből</value>
+  </data>
+  <data name="TooltipHistoryToggle" xml:space="preserve">
+    <value>Le/PgDown:Előzmények (Min. {0} karakter)</value>
+  </data>
+  <data name="TooltipInvertSelectAll" xml:space="preserve">
+    <value>{0}:Kijelölés megfordítása</value>
+  </data>
+  <data name="TooltipOrder" xml:space="preserve">
+    <value>Rendezés:{0}</value>
+  </data>
+  <data name="TooltipPages" xml:space="preserve">
+    <value>Fel/Le/PgUp/PgDown:Mozgás</value>
+  </data>
+  <data name="TooltipPagesNotes" xml:space="preserve">
+    <value>Fel/Le/PgUp/PgDown:Jegyzetek mozgatása</value>
+  </data>
+  <data name="TooltipPressSpace" xml:space="preserve">
+    <value>Shift+Szóköz:Szóköz</value>
+  </data>
+  <data name="TooltipRemoveItem" xml:space="preserve">
+    <value>{0}:Elem eltávolítása</value>
+  </data>
+  <data name="TooltipSelectAll" xml:space="preserve">
+    <value>{0}:Mind kijelölése</value>
+  </data>
+  <data name="TooltipSelectFilter" xml:space="preserve">
+    <value>Szűrés: Add meg a keresőkifejezést</value>
+  </data>
+  <data name="TooltipSuggestionEsc" xml:space="preserve">
+    <value>Esc:Javaslat elvetése</value>
+  </data>
+  <data name="TooltipSuggestionToggle" xml:space="preserve">
+    <value>Tab/Shift Tab:Javaslatok</value>
+  </data>
+  <data name="TooltipToggle" xml:space="preserve">
+    <value>{0}:Súgó ki/be</value>
+  </data>
+  <data name="TooltipToggleExpandAllPress" xml:space="preserve">
+    <value>{0}:Mindent kibont/becsuk</value>
+  </data>
+  <data name="TooltipToggleExpandPress" xml:space="preserve">
+    <value>{0}:Kibont/becsuk</value>
+  </data>
+  <data name="TooltipToggleNotes" xml:space="preserve">
+    <value>{0}:Jegyzetek ki/be</value>
+  </data>
+  <data name="TooltipViewPassword" xml:space="preserve">
+    <value>{0}:Jelszó elrejt/mutat</value>
+  </data>
+  <data name="ValidAnyKey" xml:space="preserve">
+    <value>Nyomj meg egy érvényes billentyűt</value>
+  </data>
+  <data name="ValidateInvalid" xml:space="preserve">
+    <value>Érvénytelen érték!</value>
+  </data>
+  <data name="ValidateMaxLength" xml:space="preserve">
+    <value>Túl hosszú. Max({0})</value>
+  </data>
+  <data name="ValidateMinLength" xml:space="preserve">
+    <value>Túl rövid. Min({0})</value>
+  </data>
+  <data name="ValidateNoMatchRegex" xml:space="preserve">
+    <value>Nem megfelelő formátum</value>
+  </data>
+  <data name="ValidateRequired" xml:space="preserve">
+    <value>Kötelező mező!</value>
+  </data>
+  <data name="Validkeys" xml:space="preserve">
+    <value>Lehetőségek</value>
+  </data>
+  <data name="YesChar" xml:space="preserve">
+    <value>I</value>
+  </data>
+</root>
