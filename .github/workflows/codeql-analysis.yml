@@ -26,7 +26,7 @@ jobs:
         dotnet-version: '10.0.x' # SDK Version to use.
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
         queries: +security-and-quality
@@ -36,4 +36,4 @@ jobs:
       run: dotnet build ./src/PromptPlus.csproj -c Release
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
