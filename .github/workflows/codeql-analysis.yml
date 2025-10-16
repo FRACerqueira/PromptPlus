@@ -14,8 +14,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'csharp' ]
-
+          include:
+            # Analyzes C# code by automatically detecting a build
+            - language: csharp
+              build-mode: autobuild
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
