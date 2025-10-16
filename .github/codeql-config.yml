@@ -1,9 +1,0 @@
-name: "My CodeQL config"
-
-disable-default-queries: false
-
-paths:
-  - Src
-
-paths-ignore:
-  - Samples/**
