@@ -1,0 +1,20 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '10.0.x' # SDK Version to use.
+
+    - name: Build project
+      run: dotnet build PromptPlus.sln -c Release
+
+    - name: Run test cases
+      run: dotnet test -c Release --no-build

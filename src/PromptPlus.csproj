@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<AssemblyName>PromptPlus</AssemblyName>
+		<RootNamespace>PromptPlusLibrary</RootNamespace>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<Nullable>enable</Nullable>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<AnalysisLevel>latest-recommended</AnalysisLevel>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Widgets\Banner\FIGlet\standard.flf" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Widgets\Banner\FIGlet\standard.flf" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\PromptPlusResources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="EastAsianWidthDotNet" Version="1.0.1" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Compile Update="Resources\PromptPlusResources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>PromptPlusResources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <None Include="C:\Sources\PromptPlus\src\.editorconfig" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,87 @@
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+namespace PromptPlusLibrary.Core
+{
+    internal sealed class JointOutput : IJointOutput
+    {
+        private readonly IConsole _console;
+        private readonly bool _exclusive;
+
+        public JointOutput(IConsole console)
+        {
+            _console = console;
+            if (((IConsoleExtend)_console).ExclusiveContext.CurrentCount == 1)
+            {
+                ((IConsoleExtend)_console).ExclusiveContext.Wait();
+                _exclusive = true;
+            }
+        }
+
+        public IJointOutput Clear()
+        {
+            _console.Clear();
+            return this;
+        }
+
+        public IJointOutput DefaultColors(Color foreground, Color background)
+        {
+            _console.DefaultColors(foreground, background);
+            return this;
+        }
+
+        public (int Left, int Top) Done()
+        {
+            (int Left, int Top) result = _console.GetCursorPosition();
+            if (_exclusive)
+            {
+                ((IConsoleExtend)_console).ExclusiveContext.Release();
+            }
+            return result;
+        }
+
+        public IJointOutput ResetColor()
+        {
+            _console.ResetColor();
+            return this;
+        }
+
+        public IJointOutput Write(char[] buffer, Style? style = null, bool clearrestofline = false)
+        {
+            _console.Write(buffer, style, clearrestofline);
+            return this;
+        }
+
+        public IJointOutput Write(string value, Style? style = null, bool clearrestofline = false)
+        {
+            _console.Write(value, style, clearrestofline);
+            return this;
+        }
+
+        public IJointOutput WriteColor(string value, Overflow overflow = Overflow.None, bool clearrestofline = false)
+        {
+            _console.WriteColor(value, overflow, clearrestofline);
+            return this;
+        }
+
+        public IJointOutput WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true)
+        {
+            _console.WriteLine(buffer, style, clearrestofline);
+            return this;
+        }
+
+        public IJointOutput WriteLine(string value, Style? style = null, bool clearrestofline = true)
+        {
+            _console.WriteLine(value, style, clearrestofline);
+            return this;
+        }
+
+        public IJointOutput WriteLineColor(string value, Overflow overflow = Overflow.None, bool clearrestofline = true)
+        {
+            _console.WriteLineColor(value, overflow, clearrestofline);
+            return this;
+        }
+    }
+}

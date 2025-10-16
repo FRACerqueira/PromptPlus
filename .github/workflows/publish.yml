@@ -1,0 +1,26 @@
+name: Publish
+
+on:
+  push:
+    tags: [ v* ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '10.0.x' # SDK Version to use.
+
+    - name: Setup Version
+      id: setup_version
+      run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_OUTPUT
+
+    - name: Pack NuGet Package
+      run: dotnet pack src/PromptPlus.csproj -c Release -o ./dist -p:Version=${{ steps.setup_version.outputs.VERSION }}
+
+    - name: Publish
+      run: dotnet nuget push dist/*.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
