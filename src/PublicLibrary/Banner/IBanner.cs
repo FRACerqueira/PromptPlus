@@ -20,18 +20,18 @@ namespace PromptPlusLibrary
         IBanner FromFont(string filepathFont);
 
         /// <summary>
-        /// Set border options for the banner.
-        /// </summary>
-        /// <param name="dashOptions">The <see cref="BannerDashOptions"/> to apply.</param>
-        /// <returns>The current <see cref="IBanner"/> instance for method chaining.</returns>
-        IBanner Border(BannerDashOptions dashOptions);
-
-        /// <summary>
         /// Load a font from a stream.
         /// </summary>
         /// <param name="streamFont">The stream containing the font data.</param>
         /// <returns>The current <see cref="IBanner"/> instance for method chaining.</returns>
         IBanner FromFont(Stream streamFont);
+
+        /// <summary>
+        /// Set border options for the banner.
+        /// </summary>
+        /// <param name="dashOptions">The <see cref="BannerDashOptions"/> to apply.</param>
+        /// <returns>The current <see cref="IBanner"/> instance for method chaining.</returns>
+        IBanner Border(BannerDashOptions dashOptions);
 
         /// <summary>
         /// Displays the Banner widget.

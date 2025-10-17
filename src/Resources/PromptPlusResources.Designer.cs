@@ -997,7 +997,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Home:Previus level, End : Last Item of level.
+        ///   Looks up a localized string similar to Ctrl+Home:Previus level, Ctrl+End : Last Item of level.
         /// </summary>
         internal static string TooltipLevelHomeEnd {
             get {
@@ -1015,7 +1015,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move Selector.
+        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move Selector, Ctrl+Home/End : First/Last item.
         /// </summary>
         internal static string TooltipPages {
             get {

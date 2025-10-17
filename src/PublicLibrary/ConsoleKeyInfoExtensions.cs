@@ -248,7 +248,7 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is End Key
+        /// Check ConsoleKeyInfo is Home Key
         /// </summary>
         /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
         /// <param name="emacskeys">if <c>true</c> accept 'CTRL+A' </param>
@@ -256,6 +256,25 @@ namespace PromptPlusLibrary
         public static bool IsPressHomeKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
             return (keyinfo.Key == ConsoleKey.Home && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.A && keyinfo.Modifiers == ConsoleModifiers.Control);
+        }
+
+        /// <summary>
+        /// Check ConsoleKeyInfo is Ctrl+Home Key
+        /// </summary>
+        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
+        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        public static bool IsPressCtrlHomeKey(this ConsoleKeyInfo keyinfo)
+        {
+            return (keyinfo.Key == ConsoleKey.Home && keyinfo.Modifiers == ConsoleModifiers.Control);
+        }
+        /// <summary>
+        /// Check ConsoleKeyInfo is Ctrl+End Key
+        /// </summary>
+        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
+        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        public static bool IsPressCtrlEndKey(this ConsoleKeyInfo keyinfo)
+        {
+            return (keyinfo.Key == ConsoleKey.End && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
         /// <summary>

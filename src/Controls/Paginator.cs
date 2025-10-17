@@ -80,7 +80,6 @@ namespace PromptPlusLibrary.Controls
                 selectedItem = default!;
                 return false;
             }
-
             return true;
         }
 
@@ -91,15 +90,15 @@ namespace PromptPlusLibrary.Controls
                 UnSelect();
                 return false;
             }
-
+            var oldindex = SelectedIndex;
+            var oldpage = SelectedPage;
             (int index, int page) = FindValidItem(0, forward: true);
             if (index >= 0)
             {
                 SelectedPage = page;
                 SelectedIndex = index;
-                return true;
+                return (oldindex != SelectedIndex || oldpage != SelectedPage);
             }
-
             return false;
         }
 
@@ -107,17 +106,18 @@ namespace PromptPlusLibrary.Controls
         {
             if (Count <= 0)
             {
+                UnSelect();
                 return false;
             }
-
+            var oldindex = SelectedIndex;
+            var oldpage = SelectedPage;
             (int index, int page) = FindValidItem(Count - 1, forward: false);
             if (index >= 0)
             {
                 SelectedPage = page;
                 SelectedIndex = index;
-                return true;
+                return (oldindex != SelectedIndex || oldpage != SelectedPage);
             }
-
             return false;
         }
 
@@ -125,17 +125,18 @@ namespace PromptPlusLibrary.Controls
         {
             if (Count <= 0)
             {
+                UnSelect();
                 return false;
             }
-
+            var oldindex = SelectedIndex;
+            var oldpage = SelectedPage;
             (int index, int page) = FindValidItem(SelectedIndex + 1, forward: true);
             if (index >= 0)
             {
                 SelectedPage = page;
                 SelectedIndex = index;
-                return true;
+                return (oldindex != SelectedIndex || oldpage != SelectedPage);
             }
-
             return false;
         }
 
@@ -143,50 +144,93 @@ namespace PromptPlusLibrary.Controls
         {
             if (Count <= 0)
             {
+                UnSelect();
                 return false;
             }
-
+            var oldindex = SelectedIndex;
+            var oldpage = SelectedPage;
             (int index, int page) = FindValidItem(SelectedIndex - 1, forward: false);
             if (index >= 0)
             {
                 SelectedPage = page;
                 SelectedIndex = index;
-                return true;
+                return (oldindex != SelectedIndex || oldpage != SelectedPage);
             }
-
             return false;
         }
 
-        public void Home(IndexOption selectedIndexOption = IndexOption.FirstItem)
+        public bool End(IndexOption selectedIndexOption = IndexOption.LastItem)
         {
+            if (Count <= 0)
+            {
+                UnSelect();
+                return false;
+            }
+
+            var oldindex = SelectedIndex;
+            var oldpage = SelectedPage;
+            (int index, int page) = FindValidItem(TotalCount - 1, forward: false);
+            if (index >= 0)
+            {
+                SelectedPage = page;
+                SelectedIndex = index;
+                MoveToSelectIndex(selectedIndexOption);
+                return (oldindex != SelectedIndex || oldpage != SelectedPage);
+            }
+            return false;
+
+        }
+
+        public bool Home(IndexOption selectedIndexOption = IndexOption.FirstItem)
+        {
+            if (Count <= 0)
+            {
+                UnSelect();
+                return false;
+            }
+            var oldindex = SelectedIndex;
+            var oldpage = SelectedPage; 
             SelectedPage = 0;
             MoveToSelectIndex(selectedIndexOption);
+            return (oldindex != SelectedIndex || oldpage != SelectedPage);
         }
 
         public bool NextPage(IndexOption selectedIndexOption = IndexOption.None)
         {
+            if (Count <= 0)
+            {
+                UnSelect();
+                return false;
+            }
             if (PageCount <= 1)
             {
                 MoveToSelectIndex(selectedIndexOption);
                 return false;
             }
-
+            var oldindex = SelectedIndex;
+            var oldpage = SelectedPage;
             SelectedPage = (SelectedPage + 1) % PageCount;
             MoveToSelectIndex(selectedIndexOption);
-            return true;
+            return (oldindex != SelectedIndex || oldpage != SelectedPage);
         }
 
         public bool PreviousPage(IndexOption selectedIndexOption = IndexOption.None)
         {
+            if (Count <= 0)
+            {
+                UnSelect();
+                return false;
+            }
             if (PageCount <= 1)
             {
                 MoveToSelectIndex(selectedIndexOption);
                 return false;
             }
-
+            var oldindex = SelectedIndex;
+            var oldpage = SelectedPage;
             SelectedPage = (SelectedPage - 1 + PageCount) % PageCount;
             MoveToSelectIndex(selectedIndexOption);
-            return true;
+            return (oldindex != SelectedIndex || oldpage != SelectedPage);
         }
 
         public void UpdatColletion(IEnumerable<T> items, Optional<T>? selected = null)

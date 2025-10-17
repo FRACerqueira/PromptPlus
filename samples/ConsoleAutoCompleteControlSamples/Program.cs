@@ -13,8 +13,9 @@ namespace ConsoleAutoCompleteControlSamples
     {
         static void Main()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
             var cult = Thread.CurrentThread.CurrentCulture;
+
             PromptPlus.Config.DefaultCulture = cult;
 
             PromptPlus.Console.ResetColor();
@@ -113,27 +114,6 @@ namespace ConsoleAutoCompleteControlSamples
 
             PromptPlus.Console.WriteLine($"IsAborted : {result.IsAborted}, Value: {result.Content}");
             PromptPlus.Console.WriteLine("");
-        }
-
-        private static Func<object, ValidationResult> MyValidator()
-        {
-            return input =>
-            {
-                if (input is not string strValue)
-                {
-                    return new ValidationResult("Invalid type");
-                }
-                strValue ??= string.Empty;
-                if (strValue.Length < 6)
-                {
-                    return new ValidationResult("Invalid code");
-                }
-                if (MyCities().Any(x => x.code == strValue))
-                {
-                    return ValidationResult.Success!;
-                }
-                return new ValidationResult("Invalid code");
-            };
         }
 
         private static async Task<string[]> MYServiceCityCompleteAsync(string prefixText, CancellationToken token)

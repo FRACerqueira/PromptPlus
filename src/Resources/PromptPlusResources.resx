@@ -265,7 +265,7 @@
     <value>Ordination: {0}</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Up/Down/PgUp/PgDown:Move Selector</value>
+    <value>Up/Down/PgUp/PgDown:Move Selector, Ctrl+Home/End : First/Last item</value>
   </data>
   <data name="TooltipSelectAll" xml:space="preserve">
     <value>{0}:Toggle Mark All</value>
@@ -469,7 +469,7 @@
     <value>Unloading...</value>
   </data>
   <data name="TooltipLevelHomeEnd" xml:space="preserve">
-    <value>Home:Previus level, End : Last Item of level</value>
+    <value>Ctrl+Home:Previus level, Ctrl+End : Last Item of level</value>
   </data>
   <data name="SearchFilter" xml:space="preserve">
     <value>Search Filter :</value>

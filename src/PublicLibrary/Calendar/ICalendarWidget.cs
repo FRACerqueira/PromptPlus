@@ -54,17 +54,6 @@ namespace PromptPlusLibrary
         ICalendarWidget Styles(CalendarStyles styleType, Style style);
 
         /// <summary>
-        /// Performs an interaction with each item in the collection.
-        /// </summary>
-        /// <typeparam name="T">Type of collection.</typeparam>
-        /// <param name="items">The collection.</param>
-        /// <param name="interactionaction">The interaction action.</param>
-        /// <returns>The current <see cref="ICalendarWidget"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="interactionaction"/> is <c>null</c>.</exception>
-        ICalendarWidget Interaction<T>(IEnumerable<T> items, Action<T, ICalendarWidget> interactionaction);
-
-        /// <summary>
         /// Display the Calendar widget.
         /// </summary>
         void Show();

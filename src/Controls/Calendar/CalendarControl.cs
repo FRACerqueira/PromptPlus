@@ -218,18 +218,6 @@ namespace PromptPlusLibrary.Controls.Calendar
             return this;
         }
 
-        ICalendarWidget ICalendarWidget.Interaction<T>(IEnumerable<T> items, Action<T, ICalendarWidget> interactionaction)
-        {
-            ArgumentNullException.ThrowIfNull(items);
-            ArgumentNullException.ThrowIfNull(interactionaction);
-
-            foreach (T? item in items)
-            {
-                interactionaction.Invoke(item, this);
-            }
-            return this;
-        }
-
         #endregion
 
         public override void InitControl(CancellationToken _)
@@ -289,37 +277,46 @@ namespace PromptPlusLibrary.Controls.Calendar
 
                     if (cancellationToken.IsCancellationRequested)
                     {
+                        _indexTooptip = 0;
                         if (_modeView == ModeView.ShowNotes)
                         {
                             _localpaginator = null;
                             _modeView = ModeView.Input;
                         }
-                        ResultCtrl = new ResultPrompt<DateTime?>(_selectedDate, true);
+                        ResultCtrl = new ResultPrompt<DateTime?>(null, true);
                         break;
                     }
                     else if (IsAbortKeyPress(keyinfo))
                     {
+                        _indexTooptip = 0;
                         if (_modeView == ModeView.ShowNotes)
                         {
                             _localpaginator = null;
                             _modeView = ModeView.Input;
                         }
-                        ResultCtrl = new ResultPrompt<DateTime?>(_selectedDate, true);
+                        ResultCtrl = new ResultPrompt<DateTime?>(null, true);
                         break;
                     }
                     else if (keyinfo.IsPressEnterKey())
                     {
+                        _indexTooptip = 0;
                         if (_modeView == ModeView.ShowNotes)
                         {
                             _localpaginator = null;
                             _modeView = ModeView.Input;
                         }
-                        if (!_predicatevalidselect?.Invoke(_selectedDate) ?? false)
+                        if (!_selectedDate.HasValue)
+                        {
+                            SetError(Messages.ValidateInvalid);
+                        }
+                        else if (!_predicatevalidselect?.Invoke(_selectedDate) ?? false)
                         {
                             SetError(Messages.PredicateSelectInvalid);
-                            break;
                         }
-                        ResultCtrl = new ResultPrompt<DateTime?>(_selectedDate, false);
+                        else 
+                        {
+                            ResultCtrl = new ResultPrompt<DateTime?>(_selectedDate, false);
+                        }
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
@@ -338,12 +335,11 @@ namespace PromptPlusLibrary.Controls.Calendar
                     }
                     #endregion
 
-                    DateOnly localdateref = DateOnly.FromDateTime(_currentDate);
-
                     #region ShowNotes
 
-                    if (_modeView == ModeView.Input && _isAnyEvent && ConfigPlus.HotKeySwitchNotes.Equals(keyinfo))
+                    else if (_modeView == ModeView.Input && _isAnyEvent && ConfigPlus.HotKeySwitchNotes.Equals(keyinfo))
                     {
+                        DateOnly localdateref = DateOnly.FromDateTime(_currentDate);
                         _indexTooptip = 0;
                         if (!IsNote(localdateref))
                         {
@@ -371,29 +367,39 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         else if (keyinfo.IsPressDownArrowKey())
                         {
-                            _indexTooptip = 0;
+                            bool ok = false;
                             if (_localpaginator!.IsLastPageItem)
                             {
-                                _localpaginator.NextPage(IndexOption.FirstItem);
+                                ok = _localpaginator.NextPage(IndexOption.FirstItem);
                             }
                             else
                             {
-                                _localpaginator.NextItem();
+                                ok = _localpaginator.NextItem();
                             }
-                            break;
+                            if (ok)
+                            {
+                                _indexTooptip = 0;
+                                break;
+                            }
+                            continue;
                         }
                         else if (keyinfo.IsPressUpArrowKey())
                         {
-                            _indexTooptip = 0;
+                            bool ok = false;
                             if (_localpaginator!.IsFirstPageItem)
                             {
-                                _localpaginator!.PreviousPage(IndexOption.LastItem);
+                                ok = _localpaginator!.PreviousPage(IndexOption.LastItem);
                             }
                             else
                             {
-                                _localpaginator!.PreviousItem();
+                                ok = _localpaginator!.PreviousItem();
                             }
-                            break;
+                            if (ok)
+                            {
+                                _indexTooptip = 0;
+                                break;
+                            }
+                            continue;
                         }
                         else if (keyinfo.IsPressPageDownKey())
                         {
@@ -418,10 +424,16 @@ namespace PromptPlusLibrary.Controls.Calendar
                     #endregion
 
                     //Today
-                    if (keyinfo.IsPressHomeKey(false) && IsValidToday())
+                    else if (keyinfo.IsPressHomeKey() && IsValidToday())
                     {
+                        if (_selectedDate.HasValue)
+                        {
+                            if (DateOnly.FromDateTime(_selectedDate.Value) == DateOnly.FromDateTime(DateTime.Today))
+                            { 
+                                continue;
+                            }
+                        }
                         _indexTooptip = 0;
-                        DateOnly aux = DateOnly.FromDateTime(DateTime.Today);
                         _currentDate = DateTime.Today;
                         _selectedDate = null;
                         if (IsValidSelect(DateOnly.FromDateTime(_currentDate)))
@@ -551,7 +563,7 @@ namespace PromptPlusLibrary.Controls.Calendar
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
             string answer = string.Empty;
-            if (_selectedDate.HasValue)
+            if (_selectedDate.HasValue && !ResultCtrl!.Value.IsAborted)
             {
                 answer = ResultCtrl!.Value.Content!.Value.ToString("d");
             }

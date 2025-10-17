@@ -274,10 +274,10 @@ namespace PromptPlusLibrary.Controls.AutoComplete
                     if (keyinfo!.Value.Key == ConsoleKey.None && keyinfo.Value.Modifiers == ConsoleModifiers.None)
                     {
                         //spinner animation or autocomplete
+                        _indexTooptip = 0;
                         break;
                     }
-
-                    if (IsAbortKeyPress(keyinfo!.Value))
+                    else if (IsAbortKeyPress(keyinfo!.Value))
                     {
                         _cancellationTokenSource?.Cancel();
                         _indexTooptip = 0;
@@ -317,9 +317,10 @@ namespace PromptPlusLibrary.Controls.AutoComplete
                         _indexTooptip = 0;
                         break;
                     }
+
                     #endregion
 
-                    if (keyinfo!.Value.IsPressDownArrowKey())
+                    else if (keyinfo!.Value.IsPressDownArrowKey())
                     {
                         bool ok = false;
                         if (_localpaginator!.IsLastPageItem)
@@ -332,7 +333,9 @@ namespace PromptPlusLibrary.Controls.AutoComplete
                         }
                         if (ok)
                         {
-                            _inputdata!.LoadPrintable(_autocompleteTextSelector!(_localpaginator.SelectedItem!));
+                            _indexTooptip = 0;
+                            _inputdata!.LoadPrintable(_autocompleteTextSelector!(_localpaginator.SelectedItem));
+                            _lastinput = _inputdata.ToString();
                             break;
                         }
                     }
@@ -349,7 +352,9 @@ namespace PromptPlusLibrary.Controls.AutoComplete
                         }
                         if (ok)
                         {
-                            _inputdata!.LoadPrintable(_autocompleteTextSelector!(_localpaginator.SelectedItem!));
+                            _indexTooptip = 0;
+                            _inputdata!.LoadPrintable(_autocompleteTextSelector!(_localpaginator.SelectedItem));
+                            _lastinput = _inputdata.ToString();
                             break;
                         }
                     }
@@ -357,7 +362,9 @@ namespace PromptPlusLibrary.Controls.AutoComplete
                     {
                         if (_localpaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
                         {
-                            _inputdata!.LoadPrintable(_autocompleteTextSelector!(_localpaginator.SelectedItem!));
+                            _indexTooptip = 0;
+                            _inputdata!.LoadPrintable(_autocompleteTextSelector!(_localpaginator.SelectedItem));
+                            _lastinput = _inputdata.ToString();
                             break;
                         }
                     }
@@ -365,12 +372,33 @@ namespace PromptPlusLibrary.Controls.AutoComplete
                     {
                         if (_localpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
                         {
-                            _inputdata!.LoadPrintable(_autocompleteTextSelector!(_localpaginator.SelectedItem!));
+                            _indexTooptip = 0;
+                            _inputdata!.LoadPrintable(_autocompleteTextSelector!(_localpaginator.SelectedItem));
+                            _lastinput = _inputdata.ToString();
                             break;
                         }
                     }
-
-                    if (_inputdata!.TryAcceptedReadlineConsoleKey(keyinfo.Value))
+                    else if (keyinfo!.Value.IsPressCtrlHomeKey())
+                    {
+                        if (_localpaginator!.Home())
+                        {
+                            _indexTooptip = 0;
+                            _inputdata!.LoadPrintable(_autocompleteTextSelector!(_localpaginator.SelectedItem));
+                            _lastinput = _inputdata.ToString();
+                            break;
+                        }
+                    }
+                    else if (keyinfo!.Value.IsPressCtrlEndKey())
+                    {
+                        if (_localpaginator!.End())
+                        {
+                            _indexTooptip = 0;
+                            _inputdata!.LoadPrintable(_autocompleteTextSelector!(_localpaginator.SelectedItem));
+                            _lastinput = _inputdata.ToString();
+                            break;
+                        }
+                    }
+                    else if (_inputdata!.TryAcceptedReadlineConsoleKey(keyinfo.Value))
                     {
                         _cancellationTokenSource?.Cancel();
                         _observerAutoComplete?.Wait(cancellationToken);

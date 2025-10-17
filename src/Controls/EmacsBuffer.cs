@@ -247,8 +247,12 @@ namespace PromptPlusLibrary.Controls
             return isvalid;
         }
 
-        public EmacsBuffer LoadPrintable(string value)
+        public EmacsBuffer LoadPrintable(string? value)
         {
+            if (value == null)
+            {
+                return this;
+            }
             InternalClear(false);
             InternalLoadPrintable(value);
             EnsureVirtualLimit();
