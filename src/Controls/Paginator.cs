@@ -351,16 +351,18 @@ namespace PromptPlusLibrary.Controls
                 }
 
                 int globalIndex = (_userPageSize * page) + index;
-                if (globalIndex >= _filteredItems.Length || globalIndex < 0)
+                if (globalIndex > _filteredItems.Length || globalIndex < 0)
                 {
                     break;
                 }
-
+                if (globalIndex == _filteredItems.Length)
+                {
+                    globalIndex = _filteredItems.Length - 1;
+                }
                 if (_validatorAction(_filteredItems[globalIndex]))
                 {
                     return (index, page);
                 }
-
                 index += forward ? 1 : -1;
             }
 

@@ -488,12 +488,15 @@ namespace PromptPlusLibrary.Controls.AutoComplete
         {
             List<string> lsttooltips =
             [
-                    $"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {Messages.InputFinishEnter}"
-                ];
-
+                Messages.TooltipPages
+            ];
             if (GeneralOptions.EnabledAbortKeyValue)
             {
-                lsttooltips[0] += $", {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}";
+                lsttooltips.Add($"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}");
+            }
+            else
+            {
+                lsttooltips.Add($"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}");
             }
             lsttooltips.AddRange(EmacsBuffer.GetEmacsTooltips());
             _toggerTooptips = [.. lsttooltips];
@@ -504,7 +507,7 @@ namespace PromptPlusLibrary.Controls.AutoComplete
             StringBuilder tooltip = new();
             tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
             tooltip.Append(", ");
-            tooltip.Append(Messages.TooltipPages);
+            tooltip.Append(Messages.InputFinishEnter);
             return tooltip.ToString();
         }
 

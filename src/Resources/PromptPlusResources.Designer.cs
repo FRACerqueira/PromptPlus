@@ -1006,6 +1006,15 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move Selector.
+        /// </summary>
+        internal static string TooltipMoveCalendar {
+            get {
+                return ResourceManager.GetString("TooltipMoveCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ordination: {0}.
         /// </summary>
         internal static string TooltipOrder {
@@ -1015,7 +1024,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move Selector, Ctrl+Home/End : First/Last item.
+        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move Selector, Ctrl+Home/End: First/Last item.
         /// </summary>
         internal static string TooltipPages {
             get {

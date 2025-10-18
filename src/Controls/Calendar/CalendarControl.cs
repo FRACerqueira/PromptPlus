@@ -419,6 +419,22 @@ namespace PromptPlusLibrary.Controls.Calendar
                             }
                             continue;
                         }
+                        else if (keyinfo.IsPressCtrlHomeKey())
+                        {
+                            if (_localpaginator!.Home())
+                            {
+                                _indexTooptip = 0;
+                                break;
+                            }
+                        }
+                        else if (keyinfo.IsPressCtrlEndKey())
+                        {
+                            if (_localpaginator!.End())
+                            {
+                                _indexTooptip = 0;
+                                break;
+                            }
+                        }
                         continue;
                     }
                     #endregion
@@ -617,35 +633,6 @@ namespace PromptPlusLibrary.Controls.Calendar
             return [.. _itemscope
                 .Where(x => x.Scope == CalendarItem.Note &&  x.Date == currentDate  && !string.IsNullOrWhiteSpace(x.scopetext))
                 .Select(x => x.scopetext!)];
-        }
-
-        private void LoadTooltipToggle()
-        {
-            if (IsWidgetControl)
-            {
-                return;
-            }
-
-            foreach (ModeView mode in Enum.GetValues<ModeView>())
-            {
-                List<string> lsttooltips =
-                [
-                    $"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {Messages.InputFinishEnter}"
-                ];
-                if (GeneralOptions.EnabledAbortKeyValue)
-                {
-                    lsttooltips[0] += $", {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}";
-                }
-                if (mode == ModeView.Input)
-                {
-                    lsttooltips.Add(Messages.MoveDays);
-                    lsttooltips.Add(Messages.MoveDayWeek);
-                    lsttooltips.Add(Messages.MoveMonth);
-                    lsttooltips.Add(Messages.MoveYear);
-                    lsttooltips.Add(Messages.MoveToday);
-                }
-                _toggerTooptips[mode] = [.. lsttooltips];
-            }
         }
 
         private void WriteNotes(BufferScreen screenBuffer)
@@ -895,12 +882,46 @@ namespace PromptPlusLibrary.Controls.Calendar
             screenBuffer.Write(tooltip!, _optStyles[CalendarStyles.Tooltips]);
         }
 
+        private void LoadTooltipToggle()
+        {
+            if (IsWidgetControl)
+            {
+                return;
+            }
+
+            foreach (ModeView mode in Enum.GetValues<ModeView>())
+            {
+                List<string> lsttooltips = [];
+                if (IAnyEvent())
+                {
+                    lsttooltips.Add(Messages.TooltipPages);
+                }
+                if (GeneralOptions.EnabledAbortKeyValue)
+                {
+                    lsttooltips.Add($"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}");
+                }
+                else
+                {
+                    lsttooltips.Add($"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}");
+                }
+                if (mode == ModeView.Input)
+                {
+                    lsttooltips.Add(Messages.MoveDays);
+                    lsttooltips.Add(Messages.MoveDayWeek);
+                    lsttooltips.Add(Messages.MoveMonth);
+                    lsttooltips.Add(Messages.MoveYear);
+                    lsttooltips.Add(Messages.MoveToday);
+                }
+                _toggerTooptips[mode] = [.. lsttooltips];
+            }
+        }
+
         private string GetTooltipModeShowNotes()
         {
             StringBuilder tooltip = new();
             tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
             tooltip.Append(", ");
-            tooltip.Append(Messages.TooltipPages);
+            tooltip.Append(string.Format(Messages.TooltipToggleNotes, _hotKeySwitchNotes!.Value));
             return tooltip.ToString();
         }
 
@@ -908,6 +929,8 @@ namespace PromptPlusLibrary.Controls.Calendar
         {
             StringBuilder tooltip = new();
             tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
+            tooltip.Append(", ");
+            tooltip.Append(Messages.InputFinishEnter);
             if (IAnyEvent())
             {
                 tooltip.Append(", ");

@@ -13,7 +13,7 @@ namespace ConsoleAutoCompleteControlSamples
     {
         static void Main()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("pt-BR");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             var cult = Thread.CurrentThread.CurrentCulture;
 
             PromptPlus.Config.DefaultCulture = cult;

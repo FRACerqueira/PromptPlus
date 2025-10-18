@@ -99,7 +99,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="order">The sort type.</param>
         /// <returns>The current <see cref="IChartBarWidget"/> instance.</returns>
-        IChartBarWidget Order(ChartBarOrder order);
+        IChartBarWidget OrderBy(ChartBarOrder order);
 
         /// <summary>
         /// Hides specific elements of the chart bar. Default is to show all elements.

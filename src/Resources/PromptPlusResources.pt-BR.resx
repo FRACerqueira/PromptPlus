@@ -265,7 +265,7 @@
     <value>Ordenação:{0} </value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Up/Down/PgUp/PgDown:Mover seletor, Ctrl+Home/End : Primeiro/Último item</value>
+    <value>Up/Down/PgUp/PgDown:Mover seletor, Ctrl+Home/End: Primeiro/Último item</value>
   </data>
   <data name="TooltipSelectAll" xml:space="preserve">
     <value>{0}:Alternar Marcar  todos</value>
@@ -491,5 +491,8 @@
   </data>
   <data name="TooltipExpandAllPress" xml:space="preserve">
     <value>Alt+:Expandir todos</value>
+  </data>
+  <data name="TooltipMoveCalendar" xml:space="preserve">
+    <value>Up/Down/PgUp/PgDown:Mover seletor</value>
   </data>
 </root>

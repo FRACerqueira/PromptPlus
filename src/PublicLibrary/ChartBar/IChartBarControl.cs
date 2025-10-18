@@ -117,7 +117,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="order">The sort type.</param>
         /// <returns>The current <see cref="IChartBarControl"/> instance.</returns>
-        IChartBarControl Order(ChartBarOrder order);
+        IChartBarControl OrderBy(ChartBarOrder order);
 
 
         /// <summary>

@@ -133,7 +133,9 @@ namespace PromptPlusLibrary.Resources
             NotCollapse = PromptPlusResources.NotCollapse;
             NodePath = PromptPlusResources.NodePath;
             TooltipExpandAllPress = PromptPlusResources.TooltipExpandAllPress;
+            TooltipMoveCalendar = PromptPlusResources.TooltipMoveCalendar;
         }
+        public static string TooltipMoveCalendar { get; private set; } = PromptPlusResources.TooltipMoveCalendar;
         public static string TooltipExpandAllPress { get; private set; } = PromptPlusResources.TooltipExpandAllPress;
         public static string NodePath { get; private set; } = PromptPlusResources.NodePath;
         public static string NotCollapse { get; private set; } = PromptPlusResources.NotCollapse;

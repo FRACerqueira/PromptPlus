@@ -136,8 +136,54 @@ Due to the significant modifications, version 5 introduced **significant changes
     - FirstDayOfWeek(DayOfWeek firstDayOfWeek).
     - Styles(CalendarStyles styleType, Style style).
     - Show().
+
 ### Chart Bar Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
+- Renamed interface : IControlChartBar -> IChartBarControl.
+- Command initialization: PromptPlus.ChartBar -> PromptPlus.Controls.ChartBar.
+    - Fixed Standard: ChartBar(string prompt = "", string? description = null).
+    - Removed : ChartBar(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : ChartBar(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - Title(string title, TextAlignment alignment = TextAlignment.Center).
+    - ChangeDescription(Func<ChartItem, string> value).
+    - HideElements(HideChart value).
+    - Options(Action\<IControlOptions\> options).
+- Changed: 
+    - Layout(LayoutChart value) ->  Layout(ChartBarLayout layout = ChartBarLayout.Standard).
+    - BarType(ChartBarType value) -> BarType(ChartBarType type = ChartBarType.Fill).
+    - Width(int value) -> Width(byte value).
+    - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlChartBar, T1\> action) -> Interaction\<T\>(IEnumerable\<T\> items, Action\<T, IChartBarControl\> interactionaction).
+    - AddItem(string label, double value, Color? colorbar = null) -> AddItem(string label, double value, Color? colorBar = null, string? id = null).
+    - ShowLegends(bool withvalue = true, bool withPercent = true) -> ShowLegends(bool value = true).
+    - PageSize(int value) -> PageSize(byte value).
+- Removed: 
+    - TitleAlignment(Alignment value = Alignment.Left).
+    - HidePercent(bool value = true).
+    - HideValue(bool value = true).
+    - HideOrdination(bool value = true).
+    - EnabledInteractionUser(bool switchType = true, bool switchLegend = true, bool switchorder = true).
+    - Config(Action\<IPromptConfig\> context).
+    - HotKeySwitchType(HotKey value).
+    - HotKeySwitchLegend(HotKey value).
+    - HotKeySwitchOrder(HotKey value).
+
 ### Chart Bar Widget (NEW)
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Command initialization: PromptPlus.Widgets.ChartBar.
+    - Standard : ChartBar(string title, TextAlignment titleAlignment = TextAlignment.Center, bool showlegends = false)
+- Commands: 
+    - Layout(ChartBarLayout layout = ChartBarLayout.Standard).
+    - Culture(CultureInfo culture).
+    - Culture(string cultureName).
+    - BarType(ChartBarType type = ChartBarType.Fill).
+    - Width(byte value).
+    - Styles(ChartBarStyles styleType, Style style).
+    - AddItem(string label, double value, Color? colorBar = null, string? id = null).
+    - Interaction\<T\>(IEnumerable\<T\> items, Action\<T, IChartBarWidget\> interactionaction).
+    - FractionalDigits(byte value).
+    - OrderBy(ChartBarOrder order).
+    - HideElements(HideChart value).
+    - Show().

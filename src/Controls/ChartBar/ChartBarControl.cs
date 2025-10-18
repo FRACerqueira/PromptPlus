@@ -118,9 +118,9 @@ namespace PromptPlusLibrary.Controls.ChartBar
             return this;
         }
 
-        IChartBarWidget IChartBarWidget.Order(ChartBarOrder order)
+        IChartBarWidget IChartBarWidget.OrderBy(ChartBarOrder order)
         {
-            Order(order);
+            OrderBy(order);
             return this;
         }
 
@@ -212,7 +212,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
             return this;
         }
 
-        public IChartBarControl Order(ChartBarOrder order)
+        public IChartBarControl OrderBy(ChartBarOrder order)
         {
             _order = order;
             return this;
@@ -355,7 +355,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
             if (!IsWidgetControl)
             {
-                if (_pageSize < _items.Count && _showLegends)
+                if (_pageSize < _items.Count)
                 {
                     string template = ConfigPlus.PaginationTemplate.Invoke(
                         _items.Count,
@@ -383,16 +383,19 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
                     if (cancellationToken.IsCancellationRequested)
                     {
+                        _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<ChartItem?>(_currentitem, true);
                         break;
                     }
                     if (IsAbortKeyPress(keyinfo))
                     {
+                        _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<ChartItem?>(_currentitem, true);
                         break;
                     }
                     else if (keyinfo.IsPressEnterKey())
                     {
+                        _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<ChartItem?>(_currentitem, false);
                         break;
                     }
@@ -413,7 +416,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
                     #endregion
 
-                    if (ConfigPlus.HotKeyTooltipChartBarSwitchLayout.Equals(keyinfo) && !_hideChart.HasFlag(HideChart.Layout))
+                    else if (ConfigPlus.HotKeyTooltipChartBarSwitchLayout.Equals(keyinfo) && !_hideChart.HasFlag(HideChart.Layout))
                     {
                         if (_layout == ChartBarLayout.Standard)
                         {
@@ -447,31 +450,61 @@ namespace PromptPlusLibrary.Controls.ChartBar
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (keyinfo.IsPressPageUpKey(false))
+                    else if (keyinfo.IsPressCtrlHomeKey())
                     {
-                        _indexitem -= _pageSize;
-                        if (_indexitem < 0)
+                        _indexitem = 0;
+                        _currentitem = _items[_indexitem];
+                        _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (keyinfo.IsPressCtrlEndKey())
+                    {
+                        _indexitem = _items.Count - 1;
+                        _currentitem = _items[_indexitem];
+                        _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (keyinfo.IsPressPageUpKey())
+                    {
+                        if (_indexitem == 0)
                         {
-                            _indexitem = _pageSize + _indexitem;
+                            _indexitem = _items.Count-1;
+                        }
+                        else
+                        {
+                            _indexitem -= _pageSize;
+                            if (_indexitem < 0)
+                            {
+                                _indexitem = 0;
+                            }
                         }
                         _currentitem = _items[_indexitem];
                         _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (keyinfo.IsPressPageDownKey(false))
+                    else if (keyinfo.IsPressPageDownKey())
                     {
-                        _indexitem += _pageSize;
-                        if (_indexitem > _items.Count - 1)
+                        if (_indexitem == _items.Count - 1)
                         {
-                            _indexitem -= _items.Count - 1;
+                            _indexitem = 0;
+                        }
+                        else
+                        {
+                            _indexitem += _pageSize;
+                            if (_indexitem > _items.Count - 1)
+                            {
+                                _indexitem = _items.Count - 1;
+                            }
                         }
                         _currentitem = _items[_indexitem];
                         _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (keyinfo.IsPressUpArrowKey(false))
+                    else if (keyinfo.IsPressUpArrowKey())
                     {
                         if (_indexitem - 1 >= 0)
                         {
@@ -486,7 +519,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (keyinfo.IsPressDownArrowKey(false))
+                    else if (keyinfo.IsPressDownArrowKey())
                     {
                         if (_indexitem + 1 < _items.Count)
                         {
@@ -568,8 +601,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
             StringBuilder tooltip = new();
             tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
             tooltip.Append(", ");
-            tooltip.Append(Messages.TooltipChart);
-            tooltip.ToString();
+            tooltip.Append(Messages.InputFinishEnter);
             return tooltip.ToString();
         }
 
@@ -580,6 +612,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
                 return;
             }
             _toggerTooptips.Clear();
+            _toggerTooptips.Add(Messages.TooltipPages);
             if (GeneralOptions.EnabledAbortKeyValue)
             {
                 _toggerTooptips.Add($"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}");
