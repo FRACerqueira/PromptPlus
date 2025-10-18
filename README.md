@@ -103,16 +103,6 @@ dotnet run --project [name of sample]
 
 ## Screenshots
 
-- File Select | [**Top**](#table-of-contents)
- 
-     ![](./docs/images/fileselect.jpg)
-- Table Multi-Select | [**Top**](#table-of-contents)
- 
-    ![](./docs/images/tablemultselect.jpg)
-- Slider | [**Top**](#table-of-contents)
- 
-    ![](./docs/images/slider.jpg)
- 
 - Color capacity | [**Top**](#table-of-contents)
  
     ![](./docs/images/consolecolorcapacity.jpg)
