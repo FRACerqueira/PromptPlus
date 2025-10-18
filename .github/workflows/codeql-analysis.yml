@@ -1,41 +1,42 @@
-name: "CodeQL"
+name: "CodeQL Advanced"
 
 on: [push, pull_request]
 
 jobs:
   analyze:
-    name: Analyze
-    runs-on: ubuntu-latest
+    name: Analyze (${{ matrix.language }})
+    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
     permissions:
+      security-events: write
+      packages: read
       actions: read
       contents: read
-      security-events: write
 
     strategy:
       fail-fast: false
       matrix:
-          include:
-            # Analyzes C# code by automatically detecting a build
-            - language: csharp
-              build-mode: autobuild
+        language: [ 'csharp' ]
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Setup dotnet
+    - name: Setup .NET
+      if: matrix.language == 'csharp'
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '10.0.x' # SDK Version to use.
+        dotnet-version: '10.0.x'
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        queries: +security-and-quality
-        config-file: ./.github/codeql-config.yml
-
-    - name: Build NuGet Package
+        queries: +security-extended,security-and-quality
+        
+    - name: Build Project
       run: dotnet build ./src/PromptPlus.csproj -c Release
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:${{matrix.language}}"
