@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 
@@ -30,7 +31,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         private string _tooltipModeSelect = string.Empty;
         private bool _showInfoFullPath;
         private byte _pageSize = 10;
-        private Func<T, bool>? _predicatevalidselect;
+        private Func<T, (bool,string?)>? _predicatevalidselect;
         private Func<T, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<T>>? _localpaginator;
         private string _nodeseparator = "|";
@@ -162,10 +163,25 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             return this;
         }
 
-        public INodeTreeMultiSelectControl<T> PredicateSelected(Func<T, bool> validselect)
+        public INodeTreeMultiSelectControl<T> PredicateSelected(Func<T, (bool,string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
+            return this;
+        }
+
+        public INodeTreeMultiSelectControl<T> PredicateSelected(Func<T, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
             return this;
         }
 
@@ -283,19 +299,22 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                             break;
                         }
                     }
-                    else if (keyinfo.IsPressHomeKey())
+                    else if (keyinfo.IsPressCtrlHomeKey())
                     {
                         _indexTooptip = 0;
                         if (string.IsNullOrEmpty(_localpaginator!.SelectedItem!.ParentUniqueId))
                         {
-                            _localpaginator!.Home();
+                            if (!_localpaginator!.Home())
+                            {
+                                continue;
+                            }
                             break;
                         }
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator!.SelectedItem!.ParentUniqueId);
                         _localpaginator.EnsureVisibleIndex(index);
                         break;
                     }
-                    else if (keyinfo.IsPressEndKey())
+                    else if (keyinfo.IsPressCtrlEndKey())
                     {
                         _indexTooptip = 0;
                         string? parent = _localpaginator!.SelectedItem!.ParentUniqueId;
@@ -468,13 +487,21 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                         }
                         else
                         {
-                            if (_predicatevalidselect?.Invoke(_items[index].Value) ?? true)
+                            (bool ok, string? message) = _predicatevalidselect?.Invoke(_items[index].Value) ?? (true, null);
+                            if (!ok)
                             {
-                                _checkeditems.Add(_items[index]);
+                                if (string.IsNullOrEmpty(message))
+                                {
+                                    SetError(Messages.PredicateSelectInvalid);
+                                }
+                                else
+                                {
+                                    SetError(message);
+                                }
                             }
                             else
                             {
-                                SetError(Messages.PredicateSelectInvalid);
+                                _checkeditems.Add(_items[index]);
                             }
                         }
                         if (_checkeditems.Count == 0)
@@ -501,10 +528,6 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     {
                         _indexTooptip = 0;
                         break;
-                    }
-                    else
-                    {
-                        continue;
                     }
                 }
             }
@@ -570,13 +593,21 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             }
             else
             {
-                if (_predicatevalidselect?.Invoke(_items[index].Value) ?? true)
+                (bool ok, string? message) = _predicatevalidselect?.Invoke(_items[index].Value) ?? (true, null);
+                if (!ok)
                 {
-                    _checkeditems.Add(_items[index]);
+                    if (string.IsNullOrEmpty(message))
+                    {
+                        SetError(Messages.PredicateSelectInvalid);
+                    }
+                    else
+                    {
+                        SetError(message);
+                    }
                 }
                 else
                 {
-                    SetError(Messages.PredicateSelectInvalid);
+                    _checkeditems.Add(_items[index]);
                 }
             }
             var isvalid = true;
@@ -599,14 +630,22 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                 {
                     if (chkindex < 0)
                     {
-                        if (_predicatevalidselect?.Invoke(_items[index].Value) ?? true)
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_items[index].Value) ?? (true, null);
+                        if (!ok)
                         {
-                            _checkeditems.Add(_items[index]);
+                            isvalid = false;
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
                         }
                         else
                         {
-                            isvalid = false;
-                            SetError(Messages.PredicateSelectInvalid);
+                            _checkeditems.Add(_items[index]);
                         }
                     }
                     else
@@ -667,11 +706,12 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
 
             var rootnode = _nodestree!.Node;
             var textroot = _textSelector!(rootnode);
+            (bool okmark, _) = _predicatevalidselect?.Invoke(rootnode) ?? (true, null);
             _items.Add(new ItemNodeControl<T>(_nodestree.UniqueId)
             {
                 IsExpanded = true,
                 Status = NodeStatus.Done,
-                IsMarked = (_predicatevalidselect?.Invoke(rootnode) ?? _nodestree.Checked) && _nodestree.Checked,
+                IsMarked = okmark && _nodestree.Checked,
                 IsDisabled = _predicatevaliddisabled?.Invoke(rootnode) ?? false,
                 Level = 0,
                 ParentUniqueId = null,
@@ -695,13 +735,14 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     last = true;
                 }
                 var text = _textSelector!(item.Node);
+                (bool okmarkitem, _) = _predicatevalidselect?.Invoke(item.Node) ?? (true, null);
                 _items.Add(new ItemNodeControl<T>(item.UniqueId)
                 {
                     IsExpanded = false,
                     Status = item.Childrens.Count > 0 ? NodeStatus.NotLoad : NodeStatus.Done,
                     FirstItem = first,
                     LastItem = last,
-                    IsMarked = (_predicatevalidselect?.Invoke(item.Node) ?? item.Checked) && item.Checked,
+                    IsMarked = okmarkitem && item.Checked,
                     IsDisabled = _predicatevaliddisabled?.Invoke(item.Node) ?? false,
                     Level = 1,
                     ParentUniqueId = item.ParentiId,
@@ -1147,13 +1188,14 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     last = true;
                 }
                 var text = _textSelector!(item.Node);
+                (bool okmarkitem, _) = _predicatevalidselect?.Invoke(item.Node) ?? (true, null);
                 var newitem = new ItemNodeControl<T>(item.UniqueId)
                 {
                     IsExpanded = false,
                     Status = item.Childrens.Count > 0 ? NodeStatus.NotLoad : NodeStatus.Done,
                     FirstItem = first,
                     LastItem = last,
-                    IsMarked = (_predicatevalidselect?.Invoke(item.Node) ?? item.Checked) && item.Checked,
+                    IsMarked = okmarkitem && item.Checked,
                     IsDisabled = _predicatevaliddisabled?.Invoke(item.Node) ?? false,
                     Level = level,
                     ParentUniqueId = nodetree.UniqueId,

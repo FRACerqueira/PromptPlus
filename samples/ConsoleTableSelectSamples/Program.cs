@@ -5,30 +5,37 @@
 
 using PromptPlusLibrary;
 using System.Globalization;
+using System.Text.Json;
 
 namespace ConsoleTableSelectSamples
 {
     internal class Program
     {
-        internal class MyComplexCol(string value)
+        static MyTable? Fixeddata;
+
+        internal class MyComplexCol()
         {
-            public string Id { get; } = Guid.NewGuid().ToString()[..8];
-            public string Name { get; } = value;
+            public string Id { get; set; } = Guid.NewGuid().ToString()[..8];
+            public string Name { get; set; } = string.Empty;
         }
 
         internal class MyTable
         {
+            public MyTable()
+            {
+                ComplexCol = new MyComplexCol();
+            }
             public int Id { get; set; }
-            public required string MyText { get; set; }
+            public string MyText { get; set; } = string.Empty;
             public DateTime? MyDate { get; set; }
-            public required MyComplexCol ComplexCol { get; set; }
+            public MyComplexCol ComplexCol { get; set; }
         }
 
 
         internal class MyTableManyCols
         {
             public int Id { get; set; }
-            public required string MyText { get; set; }
+            public string MyText { get; set; } = string.Empty;
             public string D01 { get; set; } = new string('x', 20);
             public string D02 { get; set; } = new string('x', 20);
             public string D03 { get; set; } = new string('x', 20);
@@ -62,21 +69,26 @@ namespace ConsoleTableSelectSamples
             public string D31 { get; set; } = new string('x', 20);
         }
 
+        internal static void CreateFixedItems()
+        {
+            Fixeddata = new MyTable { Id = 0, MyDate = DateTime.Now, MyText = $"Test0 linha1{Environment.NewLine}Test0 linha2", ComplexCol = new MyComplexCol { Name = "C0" }};
+        }
+
         internal static MyTable[] CreateItems(int max)
         {
             var result = new List<MyTable>();
             var flag = false;
-            result.Add(new MyTable { Id = 0, MyDate = DateTime.Now, MyText = $"Test0 linha1{Environment.NewLine}Test0 linha2", ComplexCol = new MyComplexCol("C0") });
+            result.Add(Fixeddata);
             for (int i = 1; i < max; i++)
             {
                 flag = !flag;
                 if (flag)
                 {
-                    result.Add(new MyTable { Id = i, MyText = $"Test{i}", ComplexCol = new MyComplexCol($"C{i}") });
+                    result.Add(new MyTable { Id = i, MyText = $"Test{i}", ComplexCol = new MyComplexCol{ Name = $"C{i}" } });
                 }
                 else
                 {
-                    result.Add(new MyTable { Id = i, MyDate = DateTime.Now.AddDays(i), MyText = $"Test{i} very very very very very very very very very very very very very very very long", ComplexCol = new MyComplexCol($"C{i}") });
+                    result.Add(new MyTable { Id = i, MyDate = DateTime.Now.AddDays(i), MyText = $"Test{i} very very very very very very very very very very very very very very very long", ComplexCol = new MyComplexCol { Name = $"C{i}" } });
                 }
             }
             return [.. result];
@@ -87,6 +99,8 @@ namespace ConsoleTableSelectSamples
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             var cult = Thread.CurrentThread.CurrentCulture;
             PromptPlus.Config.DefaultCulture = cult;
+
+            CreateFixedItems();
 
             var data = CreateItems(5);
 
@@ -111,6 +125,33 @@ namespace ConsoleTableSelectSamples
                     .TextSelector(x => $"{x.Id}:{x.MyText.Replace(Environment.NewLine," ")}".Trim())
                     .AddFormatType<DateTime>(FmtDate)
                         .Run();
+            PromptPlus.Console.WriteLine($"IsAborted : {tbl.IsAborted}, Value({tbl.Content?.Id})");
+
+
+            PromptPlus.Widgets.DoubleDash("TableSelect - Autofill with default and history", extraLines: 1);
+
+            //this code for sample or pre-load History, the control internally carries out this management.
+            PromptPlus.Controls.History("SampleTableSelector")
+                .AddHistory(JsonSerializer.Serialize<MyTable>(data[3]))
+                .Save();
+
+            tbl = PromptPlus.Controls.TableSelect<MyTable>("Your Prompt : ", "Descripion Table")
+                        .AddItems(data)
+                        .AutoFill(0, 80)
+                        .AddFormatType<DateTime>(FmtDate)
+                        .EqualItems((item1,item2) => item1.Id == item2.Id)
+                        .TextSelector(x => $"{x.Id}:{x.MyText.Replace(Environment.NewLine, " ")}".Trim())
+                        .Default(Fixeddata!, true) //Default value but not selected because of history 
+                        .EnabledHistory("SampleTableSelector")
+                        .PageSize(5)
+                        .Run();
+            PromptPlus.Console.WriteLine($"IsAborted : {tbl.IsAborted}, Value({tbl.Content?.Id})");
+
+
+            //this code for sample. Remove history to persistent storage.
+            PromptPlus.Controls.History("SampleTableSelector")
+                .Remove();
+
 
             PromptPlus.Widgets.DoubleDash($"TableSelect - Autofill with custom colors", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
 
@@ -158,7 +199,7 @@ namespace ConsoleTableSelectSamples
             PromptPlus.Widgets.DoubleDash($"TableSelect - Column definition", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
 
             tbl = PromptPlus.Controls.TableSelect<MyTable>("Your Prompt : ", "Description Table")
-                .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled", ComplexCol = new MyComplexCol($"C{data.Length}") }, true)
+                .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled", ComplexCol = new MyComplexCol { Name = $"C{data.Length}" } }, true)
                 .AddItems(data)
                 .AddColumn(field: (item) => item.Id, width: 10)
                 .AddColumn(field: (item) => item.MyDate!, width: 15/*,alignment: Alignment.Center*/)

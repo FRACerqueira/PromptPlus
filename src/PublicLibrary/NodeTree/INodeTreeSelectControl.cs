@@ -92,6 +92,13 @@ namespace PromptPlusLibrary
         INodeTreeSelectControl<T> PredicateSelected(Func<T, bool> validselect);
 
         /// <summary>
+        /// Set validation predicate for selected item.
+        /// </summary>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <returns>The current <see cref="INodeTreeSelectControl{T}"/> instance for chaining.</returns>
+        INodeTreeSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
+
+        /// <summary>
         /// Set validation predicate for disabled item.
         /// </summary>
         /// <param name="validdisabled">A predicate function that determines whether an Item is considered disable.</param>

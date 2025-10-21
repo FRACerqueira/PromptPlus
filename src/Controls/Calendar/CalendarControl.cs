@@ -21,7 +21,7 @@ namespace PromptPlusLibrary.Controls.Calendar
         private DayOfWeek _firstdayOfWeek;
         private Paginator<string>? _localpaginator;
         private int _indexTooptip;
-        private Func<DateTime?, bool>? _predicatevalidselect;
+        private Func<DateTime?, (bool, string?)>? _predicatevalidselect;
         private Func<DateTime?, string>? _changeDescription;
         private DateTime? _defaultValue;
         private bool _disabledWeekend;
@@ -86,10 +86,24 @@ namespace PromptPlusLibrary.Controls.Calendar
         ICalendarControl ICalendarControl.PredicateSelected(Func<DateTime?, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
             return this;
         }
 
+        ICalendarControl ICalendarControl.PredicateSelected(Func<DateTime?, (bool, string?)> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = validselect;
+            return this;
+        }
 
         ICalendarControl ICalendarControl.ChangeDescription(Func<DateTime?, string> value)
         {
@@ -308,15 +322,22 @@ namespace PromptPlusLibrary.Controls.Calendar
                         if (!_selectedDate.HasValue)
                         {
                             SetError(Messages.ValidateInvalid);
+                            break;
                         }
-                        else if (!_predicatevalidselect?.Invoke(_selectedDate) ?? false)
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_selectedDate) ?? (true, null);
+                        if (!ok)
                         {
-                            SetError(Messages.PredicateSelectInvalid);
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
+                            break;
                         }
-                        else 
-                        {
-                            ResultCtrl = new ResultPrompt<DateTime?>(_selectedDate, false);
-                        }
+                        ResultCtrl = new ResultPrompt<DateTime?>(_selectedDate, false);
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
@@ -445,7 +466,7 @@ namespace PromptPlusLibrary.Controls.Calendar
                         if (_selectedDate.HasValue)
                         {
                             if (DateOnly.FromDateTime(_selectedDate.Value) == DateOnly.FromDateTime(DateTime.Today))
-                            { 
+                            {
                                 continue;
                             }
                         }

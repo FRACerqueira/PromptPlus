@@ -20,7 +20,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
         private CultureInfo _culture;
         private readonly Dictionary<MaskEditStyles, Style> _optStyles = BaseControlOptions.LoadStyle<MaskEditStyles>();
-        private Func<T, bool>? _predicatevalidselect;
+        private Func<T, (bool,string?)>? _predicatevalidselect;
         private MaskEditBuffer<T>? _inputdata;
         private Optional<T> _defaultValue = Optional<T>.Empty();
         private Optional<T> _defaultIfEmpty = Optional<T>.Empty();
@@ -212,7 +212,29 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             return this;
         }
 
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = validselect;
+            return this;
+        }
+
         IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PredicateSelected(Func<T, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
+            return this;
+        }
+
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -222,11 +244,41 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PredicateSelected(Func<T, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
+            return this;
+        }
+
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
             return this;
         }
 
         IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PredicateSelected(Func<T, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
+            return this;
+        }
+
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -236,7 +288,15 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         IMaskEditStringControl<T> IMaskEditStringControl<T>.PredicateSelected(Func<T, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
             return this;
         }
 
@@ -519,13 +579,13 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         ResultCtrl = new ResultPrompt<T>(default!, true);
                         break;
                     }
-                    if (IsAbortKeyPress(keyinfo))
+                   else  if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<T>(default!, true);
                         break;
                     }
-                    if (keyinfo.IsPressEnterKey())
+                    else if (keyinfo.IsPressEnterKey())
                     {
                         _indexTooptip = 0;
                         if (_defaultIfEmpty.HasValue && _inputdata!.AllInputEmpty)
@@ -541,9 +601,17 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         string stringreturn = _returnWithMask ? _inputdata!.MaskOut : _inputdata!.WithoutMask;
                         if (TryGetValue(stringreturn, _culture, out T finishedresult))
                         {
-                            if (!_predicatevalidselect?.Invoke(finishedresult) ?? false)
+                            (bool ok, string? message) = _predicatevalidselect?.Invoke(finishedresult) ?? (true, null);
+                            if (!ok)
                             {
-                                SetError(Messages.PredicateSelectInvalid);
+                                if (string.IsNullOrEmpty(message))
+                                {
+                                    SetError(Messages.PredicateSelectInvalid);
+                                }
+                                else
+                                {
+                                    SetError(message);
+                                }
                                 break;
                             }
                             ResultCtrl = new ResultPrompt<T>(finishedresult, false);
@@ -569,7 +637,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
                     #endregion
 
-                    if (_inputdata!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    else if (_inputdata!.TryAcceptedReadlineConsoleKey(keyinfo))
                     {
                         _indexTooptip = 0;
                         break;
@@ -1563,7 +1631,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         }
                         else if (maskHandle == 'X')
                         {
-                            desc = string.Format(Messages.MaskEditPosCustom, Messages.AnyKey, " ,", inner);
+                            desc = string.Format(Messages.MaskEditPosCustom, Messages.MaskEditPosAnyChar, " ,", inner);
                             innerForChar = CharAny;
                         }
                         else if (maskHandle == 'C')
@@ -1658,7 +1726,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 }
                 else if (c == 'X')
                 {
-                    chardesc = Messages.AnyKey;
+                    chardesc = Messages.MaskEditPosAnyChar;
                     charinner = CharAny;
                 }
                 else

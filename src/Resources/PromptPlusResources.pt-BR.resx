@@ -136,7 +136,7 @@
     <value>Enter:Concluir</value>
   </data>
   <data name="MaskEditPosAnyChar" xml:space="preserve">
-    <value>Qualquer texto ( (A-Z,a-z,0-9))</value>
+    <value>Qualquer texto (A-Z,a-z,0-9)</value>
   </data>
   <data name="MaskEditPosCustom" xml:space="preserve">
     <value>{0}{1}Somente({2})</value>
@@ -232,7 +232,7 @@
     <value>Left/Right:Mudar</value>
   </data>
   <data name="TableMoveCols" xml:space="preserve">
-    <value>{0}, Ctrl+Left/Right:Move colunas</value>
+    <value>Ctrl+Left/Right:Move colunas</value>
   </data>
   <data name="TooltipCancelEsc" xml:space="preserve">
     <value>{0}:Cancelar</value>

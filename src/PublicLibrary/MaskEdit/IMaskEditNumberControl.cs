@@ -75,6 +75,13 @@ namespace PromptPlusLibrary
         IMaskEditNumberControl<T> PredicateSelected(Func<T, bool> validselect);
 
         /// <summary>
+        /// Set validation predicate for selected item.
+        /// </summary>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <returns>The current <see cref="IMaskEditNumberControl{T}"/> instance for chaining.</returns>
+        IMaskEditNumberControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
+
+        /// <summary>
         /// Overrides the styles for the input control.
         /// </summary>
         /// <param name="styleType">The <see cref="InputStyles"/> to override.</param>

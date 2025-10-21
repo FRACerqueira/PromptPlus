@@ -152,6 +152,13 @@ namespace PromptPlusLibrary
         ICalendarControl PredicateSelected(Func<DateTime?, bool> validselect);
 
         /// <summary>
+        /// Set validation predicate for selected item.
+        /// </summary>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <returns>The current <see cref="ICalendarControl"/> instance for chaining.</returns>
+        ICalendarControl PredicateSelected(Func<DateTime?, (bool,string?)> validselect);
+
+        /// <summary>
         /// Runs the Calendar control and returns the result.
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>

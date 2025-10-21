@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 
@@ -33,7 +34,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
         private string _originalsearchPattern = "*";
         private byte _pageSize = 10;
         private string _root = AppDomain.CurrentDomain.BaseDirectory;
-        private Func<ItemFile, bool>? _predicatevalidselect;
+        private Func<ItemFile, (bool,string?)>? _predicatevalidselect;
         private Func<ItemFile, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<ItemFile>>? _localpaginator;
         private EmacsBuffer _filterBuffer;
@@ -153,6 +154,21 @@ namespace PromptPlusLibrary.Controls.FileSelect
         public IFileSelectControl PredicateSelected(Func<ItemFile, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
+            return this;
+        }
+
+        public IFileSelectControl PredicateSelected(Func<ItemFile, (bool,string?)> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
             return this;
         }
@@ -253,9 +269,17 @@ namespace PromptPlusLibrary.Controls.FileSelect
                             SetError(Messages.SelectionDisabled);
                             break;
                         }
-                        if (!_predicatevalidselect?.Invoke(_localpaginator!.SelectedItem.Value) ?? false)
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_localpaginator!.SelectedItem.Value) ?? (true, null);
+                        if (!ok)
                         {
-                            SetError(Messages.PredicateSelectInvalid);
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
                             break;
                         }
                         ResultCtrl = new ResultPrompt<ItemFile>(_localpaginator!.SelectedItem.Value, false);
@@ -319,19 +343,24 @@ namespace PromptPlusLibrary.Controls.FileSelect
                             break;
                         }
                     }
-                    else if (_modeView == ModeView.Select && keyinfo.IsPressHomeKey())
+                    else if (_modeView == ModeView.Select && keyinfo.IsPressCtrlHomeKey())
                     {
                         _indexTooptip = 0;
                         if (string.IsNullOrEmpty(_localpaginator!.SelectedItem!.ParentUniqueId))
                         {
-                            _localpaginator!.Home();
+                            if (!_localpaginator!.Home())
+                            {
+                                continue;
+                            }
+                            _indexTooptip = 0;
                             break;
                         }
+                        _indexTooptip = 0;
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator!.SelectedItem!.ParentUniqueId);
                         _localpaginator.EnsureVisibleIndex(index);
                         break;
                     }
-                    else if (_modeView == ModeView.Select && keyinfo.IsPressEndKey())
+                    else if (_modeView == ModeView.Select && keyinfo.IsPressCtrlEndKey())
                     {
                         _indexTooptip = 0;
                         string? parent = _localpaginator!.SelectedItem!.ParentUniqueId;
@@ -457,10 +486,6 @@ namespace PromptPlusLibrary.Controls.FileSelect
                             _resultTask.Enqueue((_localpaginator.SelectedItem.UniqueId, false, []));
                             break;
                         }
-                        continue;
-                    }
-                    else
-                    {
                         continue;
                     }
                 }
@@ -1143,7 +1168,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 }
                 if (mode == ModeView.Select)
                 {
-                    lsttooltips.Add(Messages.TooltipLevelHomeEnd);
+                    lsttooltips.Add(Messages.TooltipPages);
                 }
                 if (mode == ModeView.Filter)
                 {
@@ -1174,8 +1199,6 @@ namespace PromptPlusLibrary.Controls.FileSelect
         {
             StringBuilder tooltip = new();
             tooltip.Append($"{string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip)}, {Messages.InputFinishEnter}");
-            tooltip.Append(", ");
-            tooltip.Append(Messages.TooltipPages);
             tooltip.Append(", ");
             tooltip.Append(Messages.TooltipToggleExpandPress);
             return tooltip.ToString();

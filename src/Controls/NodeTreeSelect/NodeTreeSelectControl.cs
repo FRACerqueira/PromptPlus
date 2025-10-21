@@ -27,7 +27,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         private string _tooltipModeSelect = string.Empty;
         private bool _showInfoFullPath;
         private byte _pageSize = 10;
-        private Func<T, bool>? _predicatevalidselect;
+        private Func<T, (bool,string?)>? _predicatevalidselect;
         private Func<T, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<T>>? _localpaginator;
         private string _nodeseparator = "|";
@@ -120,10 +120,25 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
             return this;
         }
 
-        public INodeTreeSelectControl<T> PredicateSelected(Func<T, bool> validselect)
+        public INodeTreeSelectControl<T> PredicateSelected(Func<T, (bool,string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
+            return this;
+        }
+
+        public INodeTreeSelectControl<T> PredicateSelected(Func<T, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
             return this;
         }
 
@@ -200,9 +215,17 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                             SetError(Messages.SelectionDisabled);
                             break;
                         }
-                        if (!_predicatevalidselect?.Invoke(_localpaginator!.SelectedItem.Value) ?? false)
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_localpaginator!.SelectedItem.Value) ?? (true, null);
+                        if (!ok)
                         {
-                            SetError(Messages.PredicateSelectInvalid);
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
                             break;
                         }
                         ResultCtrl = new ResultPrompt<T>(_localpaginator!.SelectedItem.Value, false);
@@ -241,7 +264,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                             break;
                         }
                     }
-                    else if (keyinfo.IsPressHomeKey())
+                    else if (keyinfo.IsPressCtrlHomeKey())
                     {
                         _indexTooptip = 0;
                         if (string.IsNullOrEmpty(_localpaginator!.SelectedItem!.ParentUniqueId))
@@ -253,7 +276,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                         _localpaginator.EnsureVisibleIndex(index);
                         break;
                     }
-                    else if (keyinfo.IsPressEndKey())
+                    else if (keyinfo.IsPressCtrlEndKey())
                     {
                         _indexTooptip = 0;
                         string? parent = _localpaginator!.SelectedItem!.ParentUniqueId;
@@ -390,10 +413,6 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                             _resultTask.Enqueue((_localpaginator.SelectedItem.UniqueId, false, false, []));
                             break;
                         }
-                        continue;
-                    }
-                    else
-                    {
                         continue;
                     }
                 }

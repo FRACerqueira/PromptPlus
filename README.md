@@ -14,14 +14,11 @@
 - [Features](#features)
 - [Installing](#installing)
 - [Console Engine](./docs/console.md)
-- [General Config](./docs/config.md)
-- [Controls](./docs/controls.md)
-- [Widgets](./docs/widgets.md)
 - [Culture](./docs/culture.md)
 - [Colors](./docs/colors.md)
-- [Keypress Extensions Emacs](./docs/keypressemacs.md)
+- [General Config](./docs/config.md)
+- [Key navigation, hotkeys and Extensions Emacs](./docs/keypressemacs.md)
 - [Examples](#examples)
-- [Screenshots](#screenshots)
 - [Supported Platforms](#supported-platforms)
 - [Code of Conduct](#code-of-conduct)
 - [Contributing](#contributing)
@@ -60,24 +57,174 @@ Due to the significant modifications, version 5 introduced **significant changes
 [**Top**](#table-of-contents)
 
 **All features have IntelliSense. PromptPlus has more than 20 controls with many features like: filters, validators, history, suggestions, spinner(20 embedding type), colors(Supports 4/8/24-bit colors) and customizable element styles / region for each control** :
+
+- AutoComplete with spinner
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/autocomplete.jpg)
+
 - Banner Ascii
-- Input text / Secret / AutoComplete with spinner
-- MaskEdit Generic / Only Date / Only Time / DateTime / Number /  Currency
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/banner.jpg)
+
 - Calendar with multiple layouts
-- Select and Multi-Select for any type (with group select!) 
-- Wait Keypress with animate spinner
-- Slider numeric ranger with gradient colors
-- Up-Down numeric ranger 
-- Switch (style on/off)
-- Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
-- Wait Time with countdown and spinner
-- ChartBar with switch layout, Legend and order.
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/calendar.jpg)
+
+- ChartBar with switch layout, Legend and order
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/chartbar.jpg)
+
+- File and Folder multi-select
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/filemultiselect.jpg)
+
+- File and Folder select
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/fileselect.jpg)
+
+- Input text
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/input.jpg)
+
+- Input Secret 
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/inputsecret.jpg)
+
+- KeyPress
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/keypressandconfirm.jpg)
+
+- MaskEdit Generic (string)
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/maskeditstring.jpg)
+
+- MaskEdit Date (DateTime/DateOnly)
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/maskeditdate.jpg)
+
+- MaskEdit Time (DateTime/TimeOnly)
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/maskedittime.jpg)
+
+- MaskEdit DateTime 
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/maskeditdatetime.jpg)
+
+- MaskEdit Number (integer,long,double,decimal)
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/maskeditnumeric.jpg)
+
+- MaskEdit Currency (double,decimal)
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/maskeditcurrency.jpg)
+
+- Multi-Select for any type (with group!) 
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/multiselect.jpg)
+
+- Nodes hierarchical structures multi-select for any type
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/nodetreemultiselect.jpg)
+
+- Nodes hierarchical structures select for any type
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/nodetreeselect.jpg)
+
 - Progress bar with 6 types , gradient colors and spinner
-- Browser File and Folder with select/multi-select
-- Treeview hierarchical structures with select/multi-select for any type
-- Switch Alternate screen
-- Table structures with select/multi-select for any type and multiple layouts
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/progressbar.jpg)
+
+- ReadLine Emacs
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/readlineemacs.jpg)
+
+- Select for any type (with group!) 
+    
+    [**Top**](#table-of-contents)
+
+    ![](./docs/images/select.jpg)
+
+- Slider numeric ranger with gradient colors
+    
+    [**Top**](#table-of-contents)
+
+     ![](./docs/images/slider.jpg)
+
+- Switch (style on/off)
+    
+    [**Top**](#table-of-contents)
+
+     ![](./docs/images/switch.jpg)
+
+- Table structures multi-select for any type and multiple layouts
+    
+    [**Top**](#table-of-contents)
+
+     ![](./docs/images/tablemultiselect.jpg)
+
+- Table structures select for any type and multiple layouts
+    
+    [**Top**](#table-of-contents)
+
+     ![](./docs/images/tableselect.jpg)
+
+- Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
+    
+    [**Top**](#table-of-contents)
+
+     ![](./docs/images/waitprocess.jpg)
+
+- Wait Time with countdown and spinner
+    
+    [**Top**](#table-of-contents)
+
+     ![](./docs/images/waittimer.jpg)
+
 - Driver console **Supports 48/24-bit color** in the terminal with **automatic detection** of the current terminal capabilities, allowing you to fix the settings (Profile)
+    
+    [**Top**](#table-of-contents)
+
+     ![](./docs/images/consolecolorcapacity.jpg)
 
 ## Installing
 [**Top**](#table-of-contents)
@@ -100,12 +247,6 @@ The folder [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/sa
 ```
 dotnet run --project [name of sample]
 ```
-
-## Screenshots
-
-- Color capacity | [**Top**](#table-of-contents)
- 
-    ![](./docs/images/consolecolorcapacity.jpg)
 
 ## Supported platforms
 [**Top**](#table-of-contents)

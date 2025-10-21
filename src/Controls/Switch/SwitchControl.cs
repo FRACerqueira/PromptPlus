@@ -290,7 +290,7 @@ namespace PromptPlusLibrary.Controls.Switch
                         ResultCtrl = new ResultPrompt<bool?>(_currentValue, true);
                         break;
                     }
-                    if (IsAbortKeyPress(keyinfo))
+                    else if (IsAbortKeyPress(keyinfo))
                     {
                         ResultCtrl = new ResultPrompt<bool?>(_currentValue, true);
                         break;
@@ -316,7 +316,7 @@ namespace PromptPlusLibrary.Controls.Switch
                     }
                     #endregion
 
-                    if (keyinfo.IsPressLeftArrowKey() || keyinfo.IsPressRightArrowKey())
+                    else if (keyinfo.IsPressLeftArrowKey() || keyinfo.IsPressRightArrowKey())
                     {
                         _currentValue = !_currentValue;
                         _indexTooptip = 0;

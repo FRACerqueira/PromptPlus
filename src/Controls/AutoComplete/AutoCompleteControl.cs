@@ -6,6 +6,7 @@
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace PromptPlusLibrary.Controls.AutoComplete
         private readonly Dictionary<AutoComleteStyles, Style> _optStyles = BaseControlOptions.LoadStyle<AutoComleteStyles>();
         private string[] _toggerTooptips = [];
         private Func<char, bool> _acceptInput;
-        private Func<string, bool>? _predicatevalidselect;
+        private Func<string, (bool, string?)>? _predicatevalidselect;
         private Func<string, string>? _changeDescription;
         private string _defaultValue;
         private bool _useDefaultHistory;
@@ -182,10 +183,25 @@ namespace PromptPlusLibrary.Controls.AutoComplete
             return this;
         }
 
-        public IAutoCompleteControl PredicateSelected(Func<string, bool> validselect)
+        public IAutoCompleteControl PredicateSelected(Func<string, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
+            return this;
+        }
+
+        public IAutoCompleteControl PredicateSelected(Func<string, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
             return this;
         }
 
@@ -291,9 +307,17 @@ namespace PromptPlusLibrary.Controls.AutoComplete
                         _indexTooptip = 0;
                         EmptyPaginator();
                         string finishedresult = _inputdata!.ToString();
-                        if (!_predicatevalidselect?.Invoke(finishedresult) ?? false)
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(finishedresult) ?? (true, null);
+                        if (!ok)
                         {
-                            SetError(Messages.PredicateSelectInvalid);
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
                             break;
                         }
                         if (!string.IsNullOrEmpty(_defaultIfEmpty) && finishedresult.Length == 0)

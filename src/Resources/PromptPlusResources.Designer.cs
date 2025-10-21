@@ -385,7 +385,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Any char  (A-Z,a-z,0-9).
+        ///   Looks up a localized string similar to Any char (A-Z,a-z,0-9).
         /// </summary>
         internal static string MaskEditPosAnyChar {
             get {
@@ -853,7 +853,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}, Ctrl+Left/Right:Move column.
+        ///   Looks up a localized string similar to Ctrl+Left/Right:Move column.
         /// </summary>
         internal static string TableMoveCols {
             get {

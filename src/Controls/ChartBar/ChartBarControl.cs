@@ -23,6 +23,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
         private ChartBarLayout _layout = ChartBarLayout.Standard;
         private ChartBarOrder _order = ChartBarOrder.None;
         private Func<ChartItem, string>? _changeDescription;
+        private Func<ChartItem , (bool, string?)>? _predicatevalidselect;
         private bool _hasLegends;
         private bool _showLegends;
         private byte _width = 80;
@@ -231,6 +232,28 @@ namespace PromptPlusLibrary.Controls.ChartBar
             return this;
         }
 
+        public IChartBarControl PredicateSelected(Func<ChartItem, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
+            return this;
+        }
+
+        public IChartBarControl PredicateSelected(Func<ChartItem, (bool, string?)> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = validselect;
+            return this;
+        }
+
         public IChartBarControl Width(byte value)
         {
             if (value < 10)
@@ -387,7 +410,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
                         ResultCtrl = new ResultPrompt<ChartItem?>(_currentitem, true);
                         break;
                     }
-                    if (IsAbortKeyPress(keyinfo))
+                    else if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<ChartItem?>(_currentitem, true);
@@ -396,6 +419,19 @@ namespace PromptPlusLibrary.Controls.ChartBar
                     else if (keyinfo.IsPressEnterKey())
                     {
                         _indexTooptip = 0;
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_currentitem!) ?? (true, null);
+                        if (!ok)
+                        {
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
+                            break;
+                        }
                         ResultCtrl = new ResultPrompt<ChartItem?>(_currentitem, false);
                         break;
                     }

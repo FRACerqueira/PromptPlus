@@ -34,7 +34,7 @@ namespace PromptPlusLibrary.Controls
             _filterMode = filterMode;
             _items = [.. items];
             _userPageSize = pageSize;
-            _textSelector = textSelector ?? (x => x?.ToString() ?? string.Empty);
+            _textSelector = textSelector ?? (x => (x == null)?string.Empty:x.GetHashCode().ToString());
             _validatorAction = validatorAction ?? (_ => true);
             _countValidator = countValidator;
             _foundDefault = foundDefault;

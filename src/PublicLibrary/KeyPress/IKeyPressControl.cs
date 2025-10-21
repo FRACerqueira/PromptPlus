@@ -31,17 +31,6 @@ namespace PromptPlusLibrary
         IKeyPressControl ShowInvalidKey(bool value = true);
 
         /// <summary>
-        /// Performs an interaction with each item in the collection.
-        /// </summary>
-        /// <typeparam name="T">The type of the collection.</typeparam>
-        /// <param name="items">The collection of items.</param>
-        /// <param name="interactionaction">The interaction action to perform.</param>
-        /// <returns>The current <see cref="IKeyPressControl"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="interactionaction"/> is <c>null</c>.</exception>
-        IKeyPressControl Interaction<T>(IEnumerable<T> items, Action<T, IKeyPressControl> interactionaction);
-
-        /// <summary>
         /// Applies custom options to the control.
         /// </summary>
         /// <param name="options">An action to configure <see cref="IControlOptions"/>. Cannot be <c>null</c>.</param>

@@ -396,7 +396,7 @@ namespace PromptPlusLibrary.Controls.Slider
                         ResultCtrl = new ResultPrompt<double?>(_currentValue, true);
                         break;
                     }
-                    if (IsAbortKeyPress(keyinfo))
+                    else if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
                         if (_modeView != ModeView.Input)
@@ -440,7 +440,7 @@ namespace PromptPlusLibrary.Controls.Slider
                     #endregion
 
                     #region Histories
-                    if (_modeView == ModeView.Input && ConfigPlus.HotKeyShowHistory.Equals(keyinfo) && (_itemHistories?.Count ?? 0) > 0)
+                    else if (_modeView == ModeView.Input && ConfigPlus.HotKeyShowHistory.Equals(keyinfo) && (_itemHistories?.Count ?? 0) > 0)
                     {
                         IEnumerable<ItemHistory> subhist = _itemHistories!.Where(x =>
                              DateTime.Now < new DateTime(x.TimeOutTicks));
@@ -463,7 +463,7 @@ namespace PromptPlusLibrary.Controls.Slider
                         break;
                     }
 
-                    if (_modeView == ModeView.History)
+                    else if (_modeView == ModeView.History)
                     {
                         if (keyinfo.IsPressCtrlDeleteKey())
                         {
@@ -523,10 +523,28 @@ namespace PromptPlusLibrary.Controls.Slider
                                 break;
                             }
                         }
+                        else if (keyinfo.IsPressCtrlHomeKey())
+                        {
+                            if (!_localpaginator!.Home())
+                            {
+                                continue;
+                            }
+                            _indexTooptip = 0;
+                            break;
+                        }
+                        else if (keyinfo.IsPressCtrlEndKey())
+                        {
+                            if (!_localpaginator!.End())
+                            {
+                                continue;
+                            }
+                            _indexTooptip = 0;
+                            break;
+                        }
                     }
                     #endregion
 
-                    if ((keyinfo.IsPressDownArrowKey() && _sliderLayout == SliderLayout.UpDown) ||
+                    else if ((keyinfo.IsPressDownArrowKey() && _sliderLayout == SliderLayout.UpDown) ||
                         (keyinfo.IsPressLeftArrowKey() && _sliderLayout == SliderLayout.LeftRight))
                     {
                         if (_currentValue.CompareTo(_minValue) == 0)

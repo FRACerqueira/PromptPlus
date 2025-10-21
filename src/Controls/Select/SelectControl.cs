@@ -20,7 +20,7 @@ namespace PromptPlusLibrary.Controls.Select
         private readonly Dictionary<SelectStyles, Style> _optStyles = BaseControlOptions.LoadStyle<SelectStyles>();
         private readonly EmacsBuffer _filterBuffer;
         private readonly List<ItemSelect<T>> _items = [];
-        private Func<T, bool>? _predicatevalidselect;
+        private Func<T, (bool,string?)>? _predicatevalidselect;
         private int _sequence;
         private bool _autoSelect;
         private Func<T, string>? _changeDescription;
@@ -49,19 +49,37 @@ namespace PromptPlusLibrary.Controls.Select
         private int _indexTooptip;
         private string _tooltipModeSelect = string.Empty;
         private int _lengthSeparationline;
+        private string _lastinput;
+
 
         public SelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
+            _lastinput = string.Empty;
         }
 
 
         #region ISelectControl
 
-        public ISelectControl<T> PredicateSelected(Func<T, bool> validselect)
+        public ISelectControl<T> PredicateSelected(Func<T, (bool,string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
+            return this;
+        }
+
+        public ISelectControl<T> PredicateSelected(Func<T, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
             return this;
         }
 
@@ -361,7 +379,7 @@ namespace PromptPlusLibrary.Controls.Select
 #pragma warning restore CS8604 // Possible null reference argument.
                         break;
                     }
-                    if (IsAbortKeyPress(keyinfo))
+                    else if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
                         _modeView = ModeView.Select;
@@ -385,9 +403,17 @@ namespace PromptPlusLibrary.Controls.Select
                             SetError(Messages.SelectionDisabled);
                             break;
                         }
-                        if (!_predicatevalidselect?.Invoke(_localpaginator!.SelectedItem.Value) ?? false)
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_localpaginator!.SelectedItem.Value) ?? (true, null);
+                        if (!ok)
                         {
-                            SetError(Messages.PredicateSelectInvalid);
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
                             break;
                         }
                         _modeView = ModeView.Select;
@@ -411,7 +437,7 @@ namespace PromptPlusLibrary.Controls.Select
                     }
                     #endregion
 
-                    if (_filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
+                   else  if (_filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer.Clear();
@@ -427,7 +453,7 @@ namespace PromptPlusLibrary.Controls.Select
                         break;
                     }
 
-                    if (keyinfo.IsPressDownArrowKey())
+                    else if (keyinfo.IsPressDownArrowKey())
                     {
                         if (_localpaginator!.IsLastPageItem)
                         {
@@ -497,15 +523,37 @@ namespace PromptPlusLibrary.Controls.Select
                             break;
                         }
                     }
+                    else if (keyinfo.IsPressCtrlHomeKey())
+                    {
+                        if (!_localpaginator!.Home())
+                        {
+                            continue;
+                        }
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (keyinfo.IsPressCtrlEndKey())
+                    {
+                        if (!_localpaginator!.End())
+                        {
+                            continue;
+                        }
+                        _indexTooptip = 0;
+                        break;
+                    }
                     else if (_filterType != FilterMode.Disabled && _modeView == ModeView.Filter && _filterBuffer.TryAcceptedReadlineConsoleKey(keyinfo))
                     {
                         string filter = _filterBuffer.ToString();
                         if (_filterCaseinsensitive)
                         {
                             filter = filter.ToUpperInvariant();
+                            _lastinput  = _lastinput.ToUpperInvariant();
                         }
-                        _localpaginator!.UpdateFilter(filter);
-                        if (_localpaginator.Count == 1 && _autoSelect && !_localpaginator!.SelectedItem!.Disabled)
+                        if (filter! != _lastinput)
+                        {
+                            _localpaginator!.UpdateFilter(filter);
+                        }
+                        if (_localpaginator!.Count == 1 && _autoSelect && !_localpaginator!.SelectedItem!.Disabled)
                         {
                             _modeView = ModeView.Select;
                             ResultCtrl = new ResultPrompt<T>(_localpaginator!.SelectedItem!.Value, false);
@@ -521,6 +569,7 @@ namespace PromptPlusLibrary.Controls.Select
                         break;
                     }
                 }
+                _lastinput = _filterBuffer.ToString();
             }
             finally
             {

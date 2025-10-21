@@ -127,6 +127,13 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Set validation predicate for selected item.
         /// </summary>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable and custom error message.</param>
+        /// <returns>The current <see cref="IAutoCompleteControl"/> instance for chaining.</returns>
+        IAutoCompleteControl PredicateSelected(Func<string, (bool,string?)> validselect);
+
+        /// <summary>
+        /// Set validation predicate for selected item.
+        /// </summary>
         /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable.</param>
         /// <returns>The current <see cref="IAutoCompleteControl"/> instance for chaining.</returns>
         IAutoCompleteControl PredicateSelected(Func<string, bool> validselect);

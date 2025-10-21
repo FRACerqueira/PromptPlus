@@ -22,14 +22,14 @@ namespace ConsoleKeyPressControlSamples
 
             PromptPlus.Widgets.DoubleDash("Sample KeyPress", extraLines: 1);
 
-            var result = PromptPlus.Controls.KeyPress("Press any key: ")
+            var result = PromptPlus.Controls.KeyPress("Press any key")
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {result.IsAborted}, Value: {(result.Content.HasValue? result.Content.Value.Key.ToString():"")}");
             PromptPlus.Console.WriteLine("");
 
             PromptPlus.Widgets.DoubleDash("Sample KeyPress with spinner", extraLines: 1);
 
-            result = PromptPlus.Controls.KeyPress("Press any key: ")
+            result = PromptPlus.Controls.KeyPress("Press any key")
               .Spinner(SpinnersType.Bounce)
               .Run();
 
@@ -54,7 +54,7 @@ namespace ConsoleKeyPressControlSamples
 
             PromptPlus.Widgets.DoubleDash("Sample KeyPress with valid keys and not hide", extraLines: 1);
 
-            result = PromptPlus.Controls.KeyPress("Press any key: ")
+            result = PromptPlus.Controls.KeyPress("Press valid key: ")
                 .Options((opt) => opt.HideAfterFinish(false).HideOnAbort(false))
                 .AddKeyValid(ConsoleKey.A)
                 .AddKeyValid(ConsoleKey.B, ConsoleModifiers.Control)

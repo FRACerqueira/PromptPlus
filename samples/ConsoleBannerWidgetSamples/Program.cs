@@ -13,13 +13,13 @@ namespace ConsoleBannerWidgetSamples
         {
             //default Banner
             PromptPlus.Widgets
-                .Banner("PromptPlus Banner")
+                .Banner("PromptPlus")
                 .Show();
 
             //with Forecolor
             PromptPlus.Console.WriteLine("");
             PromptPlus.Widgets
-                .Banner("PromptPlus Banner", Style.Colors(Color.Black, Color.White))
+                .Banner("PromptPlus", Style.Colors(Color.Black, Color.White))
                 .Show();
 
             //Load external font
@@ -33,7 +33,7 @@ namespace ConsoleBannerWidgetSamples
             {
                 PromptPlus.Console.WriteLine("");
                 //with border
-                PromptPlus.Widgets.Banner("PromptPlus Banner", Color.Yellow)
+                PromptPlus.Widgets.Banner("PromptPlus", Color.Yellow)
                     .Border(item)
                     .Show();
             }

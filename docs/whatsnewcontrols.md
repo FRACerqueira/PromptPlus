@@ -10,18 +10,58 @@
 All controls and behaviors have been revisited and improved to ensure sustainable evolution. 
 Due to the significant modifications, version 5 introduced **significant changes and is incompatible with versions 4.x**, although the concepts and components are very similar, requiring a small learning curve and minor methodological adjustments.
 
+- Support for .Net10, .Net9 and .Net8
+- The tooltip mechanism shows all keys and hotkeys for each control by switching the view ('F1').
+- All interative controls start at : **PromptPlus.Controls**.\<name of control\>.
+- All no interative controls start at : **PromptPlus.Widgets**.\<name of Widget\>.
+- All commands for console start at : **PromptPlus.Console**.\<command\>.
+- All general config start at : **PromptPlus.Config**.\<config\>.
+
 ### Table of Contents
 
 - [General changes](#general-changes)
 - [PromptPlus Config](#config)
 - [Console Commands](#console-commands)
 - [Options(all Controls)](#options)
+- **AddtoList Control Discontinued!**
 - [AutoComplete Control](#autocomplete-control)
 - [Banner Widget](#banner-widget)
 - [Calendar Control](#calendar-control)
 - [Calendar Widget](#calendar-widget-new) **NEW!** 
 - [Chart Bar Control](#chart-bar-control)
 - [Chart Bar Widget](#chart-bar-widget-new) **NEW!** 
+- [File MultiSelect Control](#file-multiselect-control)
+- [File Select Control](#file-select-control)
+- [Input Control](#input-control)
+- [Keypress Control](#keypress-control)
+- **MaskEdit (Old Version) Control Discontinued!**
+- [MaskEdit Control](#maskedit-control) **NEW!**  
+- [MaskDateTime Control]() **NEW!** 
+- [MaskDate Control]() **NEW!** 
+- [MaskDateOnly Control]() **NEW!** 
+- [MaskTime Control]() **NEW!** 
+- [MaskTimeOnly Control]() **NEW!** 
+- [MaskDecimalCurrency  Control]() **NEW!** 
+- [MaskDoubleCurrency  Control]() **NEW!** 
+- [MaskDecimal Control]() **NEW!** 
+- [MaskDouble Control]() **NEW!** 
+- [MaskInteger Control]() **NEW!** 
+- [MaskLong Control]() **NEW!** 
+- [MultiSelect Control]()
+- [NodeTree MultiSelect Control]()
+- [NodeTree Select Control]()
+- [Progress Bar Control]()
+- [ReadLine Emacs Control]() **NEW!** 
+- [Select Control]()
+- [Slider Control]()
+- [Slider Widget]()  **NEW!** 
+- [Switch Control]()
+- [Switch Widget]()  **NEW!** 
+- [Table MultiSelect Control]()
+- [Table Select Control]()
+- [Table Widget]() **NEW!** 
+- [Wait Process Control]()
+- [Wait Timer Control]()
 
 ### General changes
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
@@ -38,7 +78,7 @@ Due to the significant modifications, version 5 introduced **significant changes
 - The **NEW tooltip mechanism** now shows all keys and hotkeys for each control by switching the view ('F1').
 - All interative controls start at : **PromptPlus.Controls**.\<name of control\>.
     - All initialization contracts have been standardized: PromptPlus.Controls.\<name of control\>(string prompt = "", string? description = null).
-- All no interative controls start at : **PromptPlus.Widgets**.\<name of control\>.
+- All no interative controls start at : **PromptPlus.Widgets**.\<name of Widget\>.
     - For each non-interactive control the initialization contract was customized.
 - All commands for console start at : **PromptPlus.Console**.\<command\>.
 - All general config start at : **PromptPlus.Config**.\<config\>.
@@ -54,6 +94,7 @@ Due to the significant modifications, version 5 introduced **significant changes
 
 
 ### AutoComplete Control
+
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
 - Renamed interface : IControlAutoComplete -> IAutoCompleteControl.
@@ -63,7 +104,8 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Removed : AutoComplete(string prompt, string? description, Action\<IPromptConfig\> config = null).
 - Added:
     - MaxWidth(byte maxWidth).
-    - PredicateSelected(Func<string, bool> validselect).
+    - PredicateSelected(Func<string, (bool,string?)> validselect).
+    - PredicateSelected(Func<string, bool)> validselect).
     - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
     - Options(Action\<IControlOptions\> options).
     - TextSelector(Func<string, string> value).
@@ -109,13 +151,13 @@ Due to the significant modifications, version 5 introduced **significant changes
     - DisableDates(params DateTime[] dates).
     - AddNote(DateTime value, string? note = null).
     - Highlights(params DateTime[] dates)
-    - PredicateSelected(Func<string, bool> validselect).
+    - PredicateSelected(Func<ChartItem, (bool,string?)> validselect).
+    - PredicateSelected(Func<ChartItem, bool)> validselect).
     - Options(Action\<IControlOptions\> options).
 - Changed: 
     - Layout(CalendarLayout value) -> Layout(CalendarLayout layout = CalendarLayout.SingleGrid)
     - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlCalendar, T1\> action) -> Interaction\<T\>(IEnumerable\<T\> items, Action\<T, ICalendarControl\> interactionaction)
     - PageSize(int value) -> PageSize(byte value).
-    - 
 - Removed: 
     - Default(DateTime value, PolicyInvalidDate policy = PolicyInvalidDate.NextDate)
     - AddItems(CalendarScope scope, params ItemCalendar[] values)
@@ -187,3 +229,146 @@ Due to the significant modifications, version 5 introduced **significant changes
     - OrderBy(ChartBarOrder order).
     - HideElements(HideChart value).
     - Show().
+
+### File MultiSelect Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlBrowserMultiSelect -> IFileMultiSelectControl.
+    - Changed : ResultPrompt\<ItemBrowser[]\> Run(CancellationToken? token = null)  -> ResultPrompt\<ItemFile[]\> Run(CancellationToken token = default).
+- Command initialization: PromptPlus.BrowserMultiSelect -> PromptPlus.Controls.FileMultiSelect.
+    - Fixed Standard: FileMultiSelect(string prompt = "", string? description = null). 
+    - Removed : BrowserMultiSelect(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : BrowserMultiSelect(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - HideZeroEntries(bool value = true).
+    - HideFilesBySize(long minvalue, long maxvalue = long.MaxValue).
+    - MaxWidth(byte maxWidth).
+    - EnabledSearchFilter(FilterMode filter = FilterMode.Contains)
+    - SearchPattern(string value)
+    - PredicateSelected(Func<string, (bool,string?)> validselect).
+    - PredicateSelected(Func<string, bool)> validselect).
+    - PredicateDisabled(Func<ItemFile, bool> validdisabled)
+    - Options(Action\<IControlOptions\> options).
+    - HideCountSelected(bool value = true)
+- Changed: 
+    - PageSize(int value) -> PageSize(byte value).
+    - ShowSize(bool value = true) -> HideSizeInfo(bool value = true).
+    - Root(string value,bool expandall,  Func\<ItemBrowser, bool\>? validselect = null, Func\<ItemBrowser, bool\>? setdisabled = null) -> Root(string value).
+- Removed: 
+    - OverwriteDefaultFrom(string value, TimeSpan? timeout = null).
+    - Default(string value).
+    - NoSpinner(bool value = true).
+    - DisabledRecursiveExpand(bool value = true).
+    - Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable\<string\>? customspinner = null).
+    - ShowLines(bool value = true).
+    - ShowExpand(bool value = true).
+    - ShowCurrentFolder(bool value = true).
+    - SearchFolderPattern(string value).
+    - SearchFilePattern(string value).
+    - FilterType(FilterMode value).
+    - SelectAll(Func<ItemBrowser, bool>? validselect = null).
+    - AddFixedSelect(params string[] values).
+    - HotKeyFullPath(HotKey value).
+    - HotKeyToggleExpand(HotKey value).
+    - HotKeyToggleExpandAll(HotKey value).
+    - AfterExpanded(Action\<ItemBrowser\> value).
+    - AfterCollapsed(Action\<ItemBrowser\> value).
+    - BeforeExpanded(Action\<ItemBrowser\> value).
+    - BeforeCollapsed(Action\<ItemBrowser\> value).
+    - Config(Action\<IPromptConfig\> context).
+
+### File Select Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlBrowserSelect -> IFileSelectControl.
+    - Changed : ResultPrompt\<ItemBrowser\> Run(CancellationToken? token = null)  -> ResultPrompt\<ItemFile\> Run(CancellationToken token = default).
+- Command initialization: PromptPlus.Browser -> PromptPlus.Controls.FileSelect.
+    - Fixed Standard: FileSelect(string prompt = "", string? description = null). 
+    - Removed : Browser(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : Browser(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - HideZeroEntries(bool value = true).
+    - HideFilesBySize(long minvalue, long maxvalue = long.MaxValue).
+    - EnabledSearchFilter(FilterMode filter = FilterMode.Contains)
+    - SearchPattern(string value)
+    - PredicateSelected(Func<string, (bool,string?)> validselect).
+    - PredicateSelected(Func<string, bool)> validselect).
+    - PredicateDisabled(Func<ItemFile, bool> validdisabled)
+    - Options(Action\<IControlOptions\> options).
+- Changed: 
+    - PageSize(int value) -> PageSize(byte value).
+    - ShowSize(bool value = true) -> HideSizeInfo(bool value = true).
+    - Root(string value,bool expandall,  Func\<ItemBrowser, bool\>? validselect = null, Func\<ItemBrowser, bool\>? setdisabled = null) -> Root(string value).
+- Removed: 
+    - OverwriteDefaultFrom(string value, TimeSpan? timeout = null).
+    - Default(string value).
+    - NoSpinner(bool value = true).
+    - DisabledRecursiveExpand(bool value = true).
+    - Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable\<string\>? customspinner = null).
+    - ShowLines(bool value = true).
+    - ShowExpand(bool value = true).
+    - ShowCurrentFolder(bool value = true).
+    - SearchFolderPattern(string value).
+    - SearchFilePattern(string value).
+    - FilterType(FilterMode value).
+    - SelectAll(Func<ItemBrowser, bool>? validselect = null).
+    - AddFixedSelect(params string[] values).
+    - HotKeyFullPath(HotKey value).
+    - HotKeyToggleExpand(HotKey value).
+    - HotKeyToggleExpandAll(HotKey value).
+    - AfterExpanded(Action\<ItemBrowser\> value).
+    - AfterCollapsed(Action\<ItemBrowser\> value).
+    - BeforeExpanded(Action\<ItemBrowser\> value).
+    - BeforeCollapsed(Action\<ItemBrowser\> value).
+    - Config(Action\<IPromptConfig\> context).
+
+### Input Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlInput -> IInputControl.
+- Command initialization: PromptPlus.Input -> PromptPlus.Controls.Input.
+    - Fixed Standard: Input(string prompt = "", string? description = null). 
+    - Removed : Input(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : Input(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - MaxWidth(byte maxWidth).
+    - PageSize(byte value).
+    - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
+    - PredicateSelected(Func<string, (bool,string?)> validselect).
+    - PredicateSelected(Func<string, bool)> validselect).
+    - Options(Action\<IControlOptions\> options).
+- Changed: 
+    - Default(string value) -> Default(string value, bool usedefaultHistory = true).
+    - MaxLength(ushort value) -> MaxLength(int maxLength, byte? maxWidth = null).
+    - IsSecret(char? value = '#') -> IsSecret(char? value = null, bool enabledView = true).
+    - SuggestionHandler(Func\<SuggestionInput, SuggestionOutput\> value) -> SuggestionHandler(Func\<string, string[]\> value).
+- Removed: 
+    - OverwriteDefaultFrom(string value, TimeSpan? timeout = null).
+    - EnabledViewSecret(HotKey? hotkeypress = null).
+    - AddValidators(params Func<object, ValidationResult>[] validators).
+    - Config(Action\<IPromptConfig\> context).
+    - ValidateOnDemand(bool value = true).
+    - HistoryMinimumPrefixLength(int value).
+    - HistoryEnabled(string value).
+    - HistoryTimeout(TimeSpan value).
+    - HistoryMaxItems(byte value).
+    - HistoryPageSize(int value).
+
+### Keypress Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlKeyPress -> IKeyPressControl.
+- Command initialization: PromptPlus.KeyPress -> PromptPlus.Controls.KeyPress.
+    - Fixed Standard: KeyPress(string prompt = "", string? description = null). 
+    - Removed : KeyPress(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : KeyPress(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - Options(Action\<IControlOptions\> options).
+    - ShowInvalidKey(bool value = true).
+- Changed: 
+    - Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable\<string\>? customspinner = null) -> Spinner(SpinnersType spinnersType).
+    - AddKeyValid(ConsoleKey key,ConsoleModifiers? modifiers = null) -> AddKeyValid(ConsoleKey key, ConsoleModifiers? modifiers = null, string? showtext = null).
+- Removed: 
+    - Config(Action\<IPromptConfig\> context).
+    - TextKeyValid(Func<ConsoleKeyInfo, string?> value).
+ 

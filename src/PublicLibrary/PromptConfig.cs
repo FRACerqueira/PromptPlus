@@ -262,7 +262,7 @@ namespace PromptPlusLibrary
                 { SymbolType.TreeLinespace, ("   ", "   ") },
                 { SymbolType.DoubleBorder, ("=", "═") },
                 { SymbolType.SingleBorder, ("-", "─") },
-                { SymbolType.HeavyBorder, ("*", "━") },
+                { SymbolType.HeavyBorder, ("*", "■") },
                 { SymbolType.ProgressBarLight, ("-", "─") },
                 { SymbolType.ProgressBarDoubleLight, ("=", "═") },
                 { SymbolType.ProgressBarSquare, ("#", "■") },

@@ -4,6 +4,7 @@
 // ***************************************************************************************
 
 using EastAsianWidthDotNet;
+using PromptPlusLibrary.Controls.Select;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
@@ -12,6 +13,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 
 namespace PromptPlusLibrary.Controls.TableSelect
@@ -21,7 +23,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
         private readonly Dictionary<TableStyles, Style> _optStyles = BaseControlOptions.LoadStyle<TableStyles>();
         private byte _pageSize = 10;
         private bool _autoSelect;
-        private Func<T, bool>? _predicatevalidselect;
+        private Func<T, (bool,string?)>? _predicatevalidselect;
         private readonly List<ItemTableRow<T>> _items = [];
         private Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
         private Func<T, string>? _textSelector;
@@ -41,6 +43,11 @@ namespace PromptPlusLibrary.Controls.TableSelect
         private Func<T, int, int, string>? _changeDescription;
         private Paginator<ItemTableRow<T>>? _localpaginator;
         private readonly EmacsBuffer _filterBuffer;
+        private string _lastinput;
+        private bool _useDefaultHistory;
+        private HistoryOptions? _historyOptions;
+        private IList<ItemHistory>? _itemHistories;
+
         private enum ModeView
         {
             Select,
@@ -73,6 +80,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
         {
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _hideSelectorRow = isWidget;
+            _lastinput = string.Empty;
         }
 #pragma warning restore IDE0290 // Use primary constructor
 #pragma warning restore IDE0079
@@ -149,10 +157,25 @@ namespace PromptPlusLibrary.Controls.TableSelect
             return this;
         }
 
-        ITableSelectControl<T> ITableSelectControl<T>.PredicateSelected(Func<T, bool> validselect)
+        ITableSelectControl<T> ITableSelectControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
+            return this;
+        }
+
+        ITableSelectControl<T> ITableSelectControl<T>.PredicateSelected(Func<T, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
             return this;
         }
 
@@ -163,10 +186,23 @@ namespace PromptPlusLibrary.Controls.TableSelect
             return this;
         }
 
-        ITableSelectControl<T> ITableSelectControl<T>.Default(T value)
+        ITableSelectControl<T> ITableSelectControl<T>.Default(T value, bool useDefaultHistory)
         {
             ArgumentNullException.ThrowIfNull(value, nameof(value));
             _defaultValue = Optional<T>.Set(value);
+            _useDefaultHistory = useDefaultHistory;
+            return this;
+        }
+
+        ITableSelectControl<T> ITableSelectControl<T>.EnabledHistory(string filename, Action<IHistoryOptions>? options)
+        {
+            ArgumentNullException.ThrowIfNull(filename);
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                throw new ArgumentException("Filename cannot be empty or whitespace.", nameof(filename));
+            }
+            _historyOptions = new HistoryOptions(filename);
+            options?.Invoke(_historyOptions);
             return this;
         }
 
@@ -424,6 +460,22 @@ namespace PromptPlusLibrary.Controls.TableSelect
             _tableviewport = (0, _totalTableLenWidth);
 
             //Set Default value
+            if (_historyOptions != null)
+            {
+                _itemHistories = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
+                if (_useDefaultHistory && _itemHistories.Count > 0)
+                {
+                    try
+                    {
+                        _defaultValue = Optional<T>.Set(JsonSerializer.Deserialize<T>(_itemHistories[0].History!)!);
+                    }
+                    catch (Exception)
+                    {
+                        //invalid Deserialize history 
+                    }
+                }
+            }
+
             Optional<T> defvalue = Optional<T>.Empty();
             Optional<ItemTableRow<T>> defvaluepage = Optional<ItemTableRow<T>>.Empty();
             if (_defaultValue.HasValue)
@@ -500,7 +552,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
 #pragma warning restore CS8604 // Possible null reference argument.
                         break;
                     }
-                    if (IsAbortKeyPress(keyinfo))
+                    else if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
                         _modeView = ModeView.Select;
@@ -512,9 +564,17 @@ namespace PromptPlusLibrary.Controls.TableSelect
                     else if (keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null)
                     {
                         _indexTooptip = 0;
-                        if (!_predicatevalidselect?.Invoke(_localpaginator.SelectedItem.Value) ?? false)
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_localpaginator.SelectedItem.Value) ?? (true, null);
+                        if (!ok)
                         {
-                            SetError(Messages.PredicateSelectInvalid);
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
                             break;
                         }
                         if (_localpaginator.SelectedItem.Disabled)
@@ -524,6 +584,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         }
                         _modeView = ModeView.Select;
                         ResultCtrl = new ResultPrompt<T>(_localpaginator!.SelectedItem.Value, false);
+                        SaveHistory(_localpaginator!.SelectedItem.Value);
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
@@ -542,7 +603,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                     }
                     #endregion
 
-                    if (_filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
+                    else if (_filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer.Clear();
@@ -558,7 +619,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         break;
                     }
 
-                    if (keyinfo.IsPressDownArrowKey())
+                    else if (keyinfo.IsPressDownArrowKey())
                     {
                         if (_localpaginator!.IsLastPageItem)
                         {
@@ -630,6 +691,24 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         }
                         continue;
                     }
+                    else if (keyinfo.IsPressCtrlHomeKey())
+                    {
+                        if (!_localpaginator!.Home())
+                        {
+                            continue;
+                        }
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (keyinfo.IsPressCtrlEndKey())
+                    {
+                        if (!_localpaginator!.End())
+                        {
+                            continue;
+                        }
+                        _indexTooptip = 0;
+                        break;
+                    }
                     else if (keyinfo.IsPressLeftArrowKey() && _modeView != ModeView.Filter)
                     {
                         _moveviewport = MoveViewport.Left;
@@ -678,9 +757,13 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         if (_filterCaseinsensitive)
                         {
                             filter = filter.ToUpperInvariant();
+                            _lastinput = _lastinput.ToUpperInvariant();
                         }
-                        _localpaginator!.UpdateFilter(filter);
-                        if (_localpaginator.Count == 1 && _autoSelect && !_localpaginator!.SelectedItem!.Disabled)
+                        if (_lastinput != filter)
+                        {
+                            _localpaginator!.UpdateFilter(filter);
+                        }
+                        if (_localpaginator!.Count == 1 && _autoSelect && !_localpaginator!.SelectedItem!.Disabled)
                         {
                             _modeView = ModeView.Select;
                             ResultCtrl = new ResultPrompt<T>(_localpaginator!.SelectedItem!.Value, false);
@@ -696,6 +779,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         break;
                     }
                 }
+                _lastinput = _filterBuffer.ToString();
             }
             finally
             {
@@ -817,6 +901,19 @@ namespace PromptPlusLibrary.Controls.TableSelect
         }
 
         #region private functions/methods
+
+        private void SaveHistory(T value)
+        {
+            if (_historyOptions == null)
+            {
+                return;
+            }
+            string aux = JsonSerializer.Serialize<T>(value);
+            FileHistory.ClearHistory(_historyOptions!.FileNameValue);
+            IList<ItemHistory> hist = FileHistory.AddHistory(aux, _historyOptions!.ExpirationTimeValue, null);
+            FileHistory.SaveHistory(_historyOptions!.FileNameValue, hist);
+
+        }
 
         private string GetTooltipModeSelect()
         {

@@ -23,7 +23,7 @@ namespace PromptPlusLibrary.Controls.Input
         };
 
         private Func<char, bool> _acceptInput = (_) => true;
-        private Func<string, bool>? _predicatevalidselect;
+        private Func<string, (bool,string?)>? _predicatevalidselect;
         private Func<string, string>? _changeDescription;
         private string _defaultValue = string.Empty;
         private bool _useDefaultHistory;
@@ -167,6 +167,21 @@ namespace PromptPlusLibrary.Controls.Input
         public IInputControl PredicateSelected(Func<string, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
+            return this;
+        }
+
+        public IInputControl PredicateSelected(Func<string, (bool,string?)> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
             return this;
         }
@@ -212,10 +227,10 @@ namespace PromptPlusLibrary.Controls.Input
                     #region default Press to Finish and tooltip
                     if (cancellationToken.IsCancellationRequested)
                     {
+                        _indexTooptip = 0;
                         if (_modeView != ModeView.Input)
                         {
                             _inputdata!.LoadPrintable(_savedinput!);
-                            _indexTooptip = 0;
                             _savedinput = null;
                             _localpaginator = null;
                             _curentSuggestion = -1;
@@ -226,12 +241,12 @@ namespace PromptPlusLibrary.Controls.Input
                         ResultCtrl = new ResultPrompt<string>(_inputdata!.ToString(), true);
                         break;
                     }
-                    if (IsAbortKeyPress(keyinfo))
+                    else if (IsAbortKeyPress(keyinfo))
                     {
+                        _indexTooptip = 0;
                         if (_modeView != ModeView.Input)
                         {
                             _inputdata!.LoadPrintable(_savedinput!);
-                            _indexTooptip = 0;
                             _savedinput = null;
                             _localpaginator = null;
                             _curentSuggestion = -1;
@@ -244,18 +259,26 @@ namespace PromptPlusLibrary.Controls.Input
                     }
                     else if (keyinfo.IsPressEnterKey())
                     {
+                        _indexTooptip = 0;
                         if (_modeView != ModeView.Input)
                         {
-                            _indexTooptip = 0;
                             _savedinput = null;
                             _localpaginator = null;
                             _curentSuggestion = -1;
                             _modeView = ModeView.Input;
                         }
                         string finishedresult = _inputdata!.ToString();
-                        if (!_predicatevalidselect?.Invoke(finishedresult) ?? false)
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(finishedresult) ?? (true, null);
+                        if (!ok)
                         {
-                            SetError(Messages.PredicateSelectInvalid);
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
                             break;
                         }
                         if (!_isinputsecret && !string.IsNullOrEmpty(_defaultIfEmpty) && finishedresult.Length == 0)
@@ -282,7 +305,7 @@ namespace PromptPlusLibrary.Controls.Input
                     #endregion
 
                     # region Suggestions
-                    if ((_modeView == ModeView.Input || _modeView == ModeView.History) && _suggestionHandler != null && (keyinfo.IsPressTabKey() || keyinfo.IsPressShiftTabKey()))
+                    else if ((_modeView == ModeView.Input || _modeView == ModeView.History) && _suggestionHandler != null && (keyinfo.IsPressTabKey() || keyinfo.IsPressShiftTabKey()))
                     {
                         _indexTooptip = 0;
                         _savedinput = _inputdata!.ToString();
@@ -291,36 +314,34 @@ namespace PromptPlusLibrary.Controls.Input
                         _localpaginator = null;
                         _modeView = ModeView.Suggestion;
                     }
-                    if (_modeView == ModeView.Suggestion)
+                    else if (_modeView == ModeView.Suggestion && (keyinfo.IsPressTabKey() || keyinfo.IsPressShiftTabKey()))
                     {
-                        if (keyinfo.IsPressTabKey() || keyinfo.IsPressShiftTabKey())
+                        _indexTooptip = 0;
+                        if (keyinfo.IsPressTabKey())
                         {
-                            _indexTooptip = 0;
-                            if (keyinfo.IsPressTabKey())
+                            _curentSuggestion++;
+                            if (_curentSuggestion > _suggestions.Length - 1)
                             {
-                                _curentSuggestion++;
-                                if (_curentSuggestion > _suggestions.Length - 1)
-                                {
-                                    _curentSuggestion = 0;
-                                }
+                                _curentSuggestion = 0;
                             }
-                            else
-                            {
-                                _curentSuggestion--;
-                                if (_curentSuggestion < 0)
-                                {
-                                    _curentSuggestion = _suggestions.Length - 1;
-                                }
-                            }
-                            _inputdata!.LoadPrintable(_suggestions[_curentSuggestion]);
-                            break;
                         }
+                        else
+                        {
+                            _curentSuggestion--;
+                            if (_curentSuggestion < 0)
+                            {
+                                _curentSuggestion = _suggestions.Length - 1;
+                            }
+                        }
+                        _inputdata!.LoadPrintable(_suggestions[_curentSuggestion]);
+                        break;
                     }
                     #endregion
 
                     #region Histories
-                    if ((_modeView == ModeView.Input || _modeView == ModeView.Suggestion) && ConfigPlus.HotKeyShowHistory.Equals(keyinfo) && (_itemHistories?.Count ?? 0) > 0 && _inputdata!.Length >= _historyOptions!.MinPrefixLengthValue)
+                    else if ((_modeView == ModeView.Input || _modeView == ModeView.Suggestion) && ConfigPlus.HotKeyShowHistory.Equals(keyinfo) && (_itemHistories?.Count ?? 0) > 0 && _inputdata!.Length >= _historyOptions!.MinPrefixLengthValue)
                     {
+                        _indexTooptip = 0;
                         IEnumerable<ItemHistory> subhist = GetItemHistory(FilterMode.StartsWith);
                         if (!subhist.Any())
                         {
@@ -342,7 +363,7 @@ namespace PromptPlusLibrary.Controls.Input
                         break;
 
                     }
-                    if (_modeView == ModeView.History)
+                    else if (_modeView == ModeView.History)
                     {
                         if (keyinfo.IsPressCtrlDeleteKey())
                         {
@@ -402,10 +423,28 @@ namespace PromptPlusLibrary.Controls.Input
                                 break;
                             }
                         }
+                        else if (keyinfo.IsPressCtrlHomeKey())
+                        {
+                            if (!_localpaginator!.Home())
+                            {
+                                continue;
+                            }
+                            _indexTooptip = 0;
+                             break;
+                        }
+                        else if (keyinfo.IsPressCtrlEndKey())
+                        {
+                            if (!_localpaginator!.End())
+                            {
+                                continue;
+                            }
+                            _indexTooptip = 0;
+                            break;
+                        }
                     }
                     #endregion
 
-                    if (_enabledViewSecret != null && ConfigPlus.HotKeyPasswordView.Equals(keyinfo))
+                    else if (_enabledViewSecret != null && ConfigPlus.HotKeyPasswordView.Equals(keyinfo))
                     {
                         _passwordvisible = !_passwordvisible;
                         _indexTooptip = 0;
@@ -417,7 +456,6 @@ namespace PromptPlusLibrary.Controls.Input
                         _indexTooptip = 0;
                         if (_modeView != ModeView.Input)
                         {
-                            _indexTooptip = 0;
                             _savedinput = null;
                             _localpaginator = null;
                             _curentSuggestion = -1;

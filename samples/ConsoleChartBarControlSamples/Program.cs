@@ -38,7 +38,7 @@ namespace ConsoleChartBarControlSamples
             result = PromptPlus.Controls.ChartBar("Select bar: ")
                 .Title("Sample Chart Bar")
                 .AddItem("Item 1", 10)
-                .AddItem("Item 2", 20)
+                .AddItem("Item 2", 10)
                 .AddItem("Item 3", 30)
                 .AddItem("Item 4", 40)
                 .AddItem("Item 5", 50)

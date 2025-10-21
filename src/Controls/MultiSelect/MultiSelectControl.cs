@@ -20,7 +20,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         private readonly Dictionary<MultiSelectStyles, Style> _optStyles = BaseControlOptions.LoadStyle<MultiSelectStyles>();
         private readonly List<ItemMultiSelect<T>> _items = [];
         private int _sequence;
-        private Func<T, bool>? _predicatevalidselect;
+        private Func<T, (bool,string?)>? _predicatevalidselect;
         private Func<T, string>? _changeDescription;
         private Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
         private IEnumerable<T>? _defaultValues;
@@ -50,6 +50,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         private bool _isShowAllSeleceted;
         private bool _hideCountSelected;
         private bool _hasGroup;
+        private string _lastinput;
 
 
 #pragma warning disable IDE0079 
@@ -63,10 +64,25 @@ namespace PromptPlusLibrary.Controls.MultiSelect
 
         #region IMultiSelect
 
-        public IMultiSelectControl<T> PredicateSelected(Func<T, bool> validselect)
+        public IMultiSelectControl<T> PredicateSelected(Func<T, (bool,string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
+            return this;
+        }
+
+        public IMultiSelectControl<T> PredicateSelected(Func<T, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
             return this;
         }
 
@@ -515,12 +531,38 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         }
                         continue;
                     }
+                    else if (keyinfo.IsPressCtrlHomeKey())
+                    {
+                        if (!_localpaginator!.Home())
+                        {
+                            continue;
+                        }
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (keyinfo.IsPressCtrlEndKey())
+                    {
+                        if (!_localpaginator!.End())
+                        {
+                            continue;
+                        }
+                        _indexTooptip = 0;
+                        break;
+                    }
                     else if (keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.Disabled)
                     {
                         int index = _items.FindIndex(x => _equalItems(x.Value!, _localpaginator.SelectedItem.Value));
-                        if (!_predicatevalidselect?.Invoke(_items[index].Value) ?? false)
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_items[index].Value) ?? (true, null);
+                        if (!ok)
                         {
-                            SetError(Messages.PredicateSelectInvalid);
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
                             break;
                         }
                         if (!_items[index].ValueChecked)
@@ -567,11 +609,17 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         else
                         {
                             var hasinvalidselect = false;
+                            string? customerr = null;
                             foreach (ItemMultiSelect<T>? item in toselect)
                             {
-                                if (!_predicatevalidselect?.Invoke(item.Value) ?? false)
+                                (bool ok, string? message) = _predicatevalidselect?.Invoke(item.Value) ?? (true, null);
+                                if (!ok)
                                 {
                                     hasinvalidselect = true;
+                                    if (string.IsNullOrEmpty(message))
+                                    {
+                                        customerr = message;
+                                    }
                                 }
                                 else
                                 {
@@ -581,11 +629,17 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                                         _checkeditems.Add(item);
                                     }
                                 }
-
                             }
                             if (hasinvalidselect)
                             {
-                                SetError(Messages.PredicateSelectInvalid);
+                                if (string.IsNullOrEmpty(customerr))
+                                {
+                                    SetError(Messages.PredicateSelectInvalid);
+                                }
+                                else
+                                {
+                                    SetError(customerr);
+                                }
                             }
                         }
                         if (_checkeditems.Count == 0)
@@ -622,8 +676,12 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         if (_filterCaseinsensitive)
                         {
                             filter = filter.ToUpperInvariant();
+                            _lastinput = _lastinput.ToUpperInvariant();
                         }
-                        _localpaginator!.UpdateFilter(filter);
+                        if (_lastinput != filter)
+                        {
+                            _localpaginator!.UpdateFilter(filter);
+                        }
                         if (_localpaginator.SelectedItem != null)
                         {
                             if (_localpaginator.SelectedItem.Disabled)
@@ -639,11 +697,8 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else
-                    {
-                        continue;
-                    }
                 }
+                _lastinput = _filterBuffer.ToString();
             }
             finally
             {

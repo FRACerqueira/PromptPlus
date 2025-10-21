@@ -72,9 +72,9 @@ namespace ConsoleAutoCompleteControlSamples
                 .Remove();
 
 
-            PromptPlus.Widgets.DoubleDash("Sample Autocomplete input control with validator", extraLines: 1);
+            PromptPlus.Widgets.DoubleDash("Sample Autocomplete input control with AcceptInput(only Letter are accepted) and PredicateSelected(minimum of 5 Letter)", extraLines: 1);
 
-            result = PromptPlus.Controls.AutoComplete("Input numbers: ", "only Letter are accepted and minimum of 5 Letter")
+            result = PromptPlus.Controls.AutoComplete("Input text: ")
                     .CompletionAsyncService(MYServiceCompleteAsync)
                     .AcceptInput((charinput) => char.IsLetter(charinput))
                     .PredicateSelected(x => 
@@ -91,7 +91,7 @@ namespace ConsoleAutoCompleteControlSamples
             PromptPlus.Console.WriteLine($"IsAborted : {result.IsAborted}, Value: {result.Content}");
             PromptPlus.Console.WriteLine("");
 
-            PromptPlus.Widgets.DoubleDash("Sample Autocomplete input control with custom class", extraLines: 1);
+            PromptPlus.Widgets.DoubleDash("Sample Autocomplete input control with custom class and PredicateSelected with custom message", extraLines: 1);
 
             result = PromptPlus.Controls.AutoComplete("Input code city: ", "Press 'CNA','CEU' or 'CAS' ")
                     .CompletionAsyncService(MYServiceCityCompleteAsync)
@@ -101,13 +101,13 @@ namespace ConsoleAutoCompleteControlSamples
                     {
                         if (x.Length < 6)
                         {
-                            return false;
+                            return (false, "Minimum of 6 chars for code city");
                         }
                         if (!MyCities().Any(c => c.code == x))
                         {
-                            return false;
+                            return (false, "City code not found");
                         }
-                        return true;
+                        return (true, null);
                     })
                     .MaxLength(6, 6)
                     .Run();

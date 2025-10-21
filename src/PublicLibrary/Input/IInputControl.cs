@@ -96,6 +96,13 @@ namespace PromptPlusLibrary
         IInputControl PredicateSelected(Func<string, bool> validselect);
 
         /// <summary>
+        /// Set validation predicate for selected item.
+        /// </summary>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <returns>The current <see cref="IInputControl"/> instance for chaining.</returns>
+        IInputControl PredicateSelected(Func<string, (bool, string?)> validselect);
+
+        /// <summary>
         /// Dynamically changes the description using a user-defined function.
         /// </summary>
         /// <param name="value">A function that takes the current description and returns the updated description. Cannot be <c>null</c>.</param>

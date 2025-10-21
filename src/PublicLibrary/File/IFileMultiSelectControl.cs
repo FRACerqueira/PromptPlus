@@ -118,6 +118,13 @@ namespace PromptPlusLibrary
         IFileMultiSelectControl PredicateSelected(Func<ItemFile, bool> validselect);
 
         /// <summary>
+        /// Set validation predicate for selected item.
+        /// </summary>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <returns>The current <see cref="IFileMultiSelectControl"/> instance for chaining.</returns>
+        IFileMultiSelectControl PredicateSelected(Func<ItemFile, (bool, string?)> validselect);
+
+        /// <summary>
         /// Set validation predicate for disabled item.
         /// </summary>
         /// <param name="validdisabled">A predicate function that determines whether an Item is considered disable.</param>

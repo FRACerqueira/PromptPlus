@@ -39,23 +39,12 @@ namespace PromptPlusLibrary.Controls.KeyPress
             _keyValids.Add((new ConsoleKeyInfo((char)key, key, modifiers.Value.HasFlag(ConsoleModifiers.Shift), modifiers.Value.HasFlag(ConsoleModifiers.Alt), modifiers.Value.HasFlag(ConsoleModifiers.Control)), showtext));
             return this;
         }
-        public IKeyPressControl Interaction<T>(IEnumerable<T> items, Action<T, IKeyPressControl> interactionaction)
-        {
-            ArgumentNullException.ThrowIfNull(items);
-            ArgumentNullException.ThrowIfNull(interactionaction);
-            foreach (T? item in items)
-            {
-                interactionaction.Invoke(item, this);
-            }
-            return this;
-        }
 
         public IKeyPressControl ShowInvalidKey(bool value = true)
         {
             _showInvalidkey = value;
             return this;
         }
-
 
         public IKeyPressControl Options(Action<IControlOptions> options)
         {
@@ -96,6 +85,7 @@ namespace PromptPlusLibrary.Controls.KeyPress
 
                     if (!keyinfo.HasValue)
                     {
+                        _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<ConsoleKeyInfo?>(null, true);
                         break;
                     }
@@ -105,6 +95,7 @@ namespace PromptPlusLibrary.Controls.KeyPress
                     }
                     else if (IsAbortKeyPress(keyinfo.Value) && !IsValidKeypress(keyinfo.Value))
                     {
+                        _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<ConsoleKeyInfo?>(keyinfo.Value, true);
                         break;
                     }
@@ -125,11 +116,13 @@ namespace PromptPlusLibrary.Controls.KeyPress
                     }
                     else if (_keyValids.Count == 0 || IsValidKeypress(keyinfo.Value))
                     {
+                        _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<ConsoleKeyInfo?>(keyinfo.Value, false);
                         break;
                     }
                     else
                     {
+                        _indexTooptip = 0;
                         SetError(string.Format(Messages.InvalidKey, ConsoleKeyInfoText(keyinfo.Value)));
                         break;
                     }

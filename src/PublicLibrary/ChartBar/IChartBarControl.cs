@@ -151,6 +151,21 @@ namespace PromptPlusLibrary
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> is <c>null</c>.</exception>
         IChartBarControl Options(Action<IControlOptions> options);
 
+
+        /// <summary>
+        /// Set validation predicate for selected item.
+        /// </summary>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable.</param>
+        /// <returns>The current <see cref="IChartBarControl"/> instance for chaining.</returns>
+        IChartBarControl PredicateSelected(Func<ChartItem, bool> validselect);
+
+        /// <summary>
+        /// Set validation predicate for selected item.
+        /// </summary>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <returns>The current <see cref="IChartBarControl"/> instance for chaining.</returns>
+        IChartBarControl PredicateSelected(Func<ChartItem, (bool, string?)> validselect);
+
         /// <summary>
         /// Runs the ChartBar control and returns the result.
         /// </summary>

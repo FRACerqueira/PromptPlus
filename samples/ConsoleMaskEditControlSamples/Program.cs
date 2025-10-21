@@ -19,7 +19,7 @@ namespace ConsoleMaskEditControlSamples
             PromptPlus.Console.ResetColor();
             PromptPlus.Console.Clear();
 
-            PromptPlus.Widgets.DoubleDash("MaskEdit('\\X\\#9\\:LUAX\\-C[AB1]\\#]\\X') and return widthout mask control", extraLines: 1);
+            PromptPlus.Widgets.DoubleDash("MaskEdit('\\X\\#9\\:LUAX\\-C[AB1]\\#]\\X') and return widthout mask", extraLines: 1);
 
             var resultmaskstring = PromptPlus.Controls.MaskEdit("Masked : ")
                 .Mask(@"\X\#9\:LUAX\-C[AB1]\#\X")
@@ -28,7 +28,7 @@ namespace ConsoleMaskEditControlSamples
             PromptPlus.Console.WriteLine($"IsAborted : {resultmaskstring.IsAborted}, Value: {resultmaskstring.Content}");
             PromptPlus.Console.WriteLine("");
 
-            PromptPlus.Widgets.DoubleDash("MaskEdit('\\#9\\:LUAX\\-C[AB1]\\#') and return with mask control", extraLines: 1);
+            PromptPlus.Widgets.DoubleDash("MaskEdit('\\#9\\:LUAX\\-C[AB1]\\#') and return with mask", extraLines: 1);
 
             resultmaskstring = PromptPlus.Controls.MaskEdit("Masked : ")
                 .Mask(@"\#9\:LUAX\-C[AB1]\#",true)
@@ -37,7 +37,7 @@ namespace ConsoleMaskEditControlSamples
             PromptPlus.Console.WriteLine($"IsAborted : {resultmaskstring.IsAborted}, Value: {resultmaskstring.Content}");
             PromptPlus.Console.WriteLine("");
 
-            PromptPlus.Widgets.DoubleDash("MaskEdit('\\#9\\:LUAX\\-C[AB1]\\#') and free navigation control", extraLines: 1);
+            PromptPlus.Widgets.DoubleDash("MaskEdit('\\#9\\:LUAX\\-C[AB1]\\#') and free navigation", extraLines: 1);
 
             resultmaskstring = PromptPlus.Controls.MaskEdit("Masked : ")
                 .Mask(@"\#9\:LUAX\-C[AB1]\#")

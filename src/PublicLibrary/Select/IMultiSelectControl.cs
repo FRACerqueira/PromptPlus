@@ -205,5 +205,12 @@ namespace PromptPlusLibrary
         /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable.</param>
         /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
         IMultiSelectControl<T> PredicateSelected(Func<T, bool> validselect);
+
+        /// <summary>
+        /// Set validation predicate for selected item.
+        /// </summary>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
+        IMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
     }
 }

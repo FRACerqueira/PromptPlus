@@ -25,12 +25,25 @@ namespace PromptPlusLibrary
         ITableSelectControl<T> Options(Action<IControlOptions> options);
 
         /// <summary>
-        /// Default value selected.
+        /// Enables history and applies custom options to the history feature.
         /// </summary>
-        /// <param name="value">Value default</param>
+        /// <remarks>
+        /// The default hotkey for history is <see cref="PromptConfig.HotKeyShowHistory"/>.
+        /// </remarks>
+        /// <param name="filename">The name of the file to store history.</param>
+        /// <param name="options">An action to configure <see cref="IHistoryOptions"/>. Optional.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="filename"/> is <c>null</c>.</exception>
+        ITableSelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+
+        /// <summary>
+        /// Sets the initial value of the Select. Default is the first item in the list.
+        /// </summary>
+        /// <param name="value">The initial value.</param>
+        /// <param name="useDefaultHistory">Indicates whether to use the default value from history (if enabled).</param>
         /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
-        ITableSelectControl<T> Default(T value);
+        ITableSelectControl<T> Default(T value, bool useDefaultHistory = true);
 
         /// <summary>
         /// Set validation predicate for selected item.
@@ -38,6 +51,13 @@ namespace PromptPlusLibrary
         /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable.</param>
         /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
         ITableSelectControl<T> PredicateSelected(Func<T, bool> validselect);
+
+        /// <summary>
+        /// Set validation predicate for selected item.
+        /// </summary>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        ITableSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
 
         /// <summary>
         /// Performs an interaction with each item in the collection.

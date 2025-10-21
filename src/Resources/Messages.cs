@@ -116,6 +116,7 @@ namespace PromptPlusLibrary.Resources
             MaskEditPosCurrencySymbol = PromptPlusResources.MaskEditPosCurrencySymbol;
             MaskeditInputPending = PromptPlusResources.MaskeditInputPending;
             MaskEditInvalidInput = PromptPlusResources.MaskEditInvalidInput;
+            MaskEditPosAnyChar = PromptPlusResources.MaskEditPosAnyChar;
             TableMoveCols = PromptPlusResources.TableMoveCols;
             TableAnswerRow = PromptPlusResources.TableAnswerRow;
             TableAnswerMultiRow = PromptPlusResources.TableAnswerMultiRow;
@@ -153,6 +154,7 @@ namespace PromptPlusLibrary.Resources
         public static string TableAnswerRow { get; private set; } = PromptPlusResources.TableAnswerRow;
         public static string TableAnswerMultiRow { get; private set; } = PromptPlusResources.TableAnswerMultiRow;
         public static string TableMoveCols { get; private set; } = PromptPlusResources.TableMoveCols;
+        public static string MaskEditPosAnyChar { get; private set; } = PromptPlusResources.MaskEditPosAnyChar;
         public static string MaskEditInvalidInput { get; private set; } = PromptPlusResources.MaskEditInvalidInput;
         public static string MaskeditInputPending { get; private set; } = PromptPlusResources.MaskeditInputPending;
         public static string MaskEditPosCurrencySymbol { get; private set; } = PromptPlusResources.MaskEditPosCurrencySymbol;

@@ -37,7 +37,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
         private string _originalsearchPattern = "*";
         private byte _pageSize = 10;
         private string _root = AppDomain.CurrentDomain.BaseDirectory;
-        private Func<ItemFile, bool>? _predicatevalidselect;
+        private Func<ItemFile, (bool, string?)>? _predicatevalidselect;
         private Func<ItemFile, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<ItemFile>>? _localpaginator;
         private EmacsBuffer _filterBuffer;
@@ -185,6 +185,21 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
         }
 
         public IFileMultiSelectControl PredicateSelected(Func<ItemFile, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) =>
+            {
+                var fn = validselect(input);
+                if (fn)
+                {
+                    return (true, null);
+                }
+                return (false, null);
+            };
+            return this;
+        }
+
+        public IFileMultiSelectControl PredicateSelected(Func<ItemFile, (bool,string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -359,19 +374,23 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                             break;
                         }
                     }
-                    else if (_modeView == ModeView.Select && keyinfo.IsPressHomeKey())
+                    else if (_modeView == ModeView.Select && keyinfo.IsPressCtrlHomeKey())
                     {
-                        _indexTooptip = 0;
                         if (string.IsNullOrEmpty(_localpaginator!.SelectedItem!.ParentUniqueId))
                         {
-                            _localpaginator!.Home();
+                            if (!_localpaginator!.Home())
+                            {
+                                continue;
+                            }
+                            _indexTooptip = 0;
                             break;
                         }
+                        _indexTooptip = 0;
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator!.SelectedItem!.ParentUniqueId);
                         _localpaginator.EnsureVisibleIndex(index);
                         break;
                     }
-                    else if (_modeView == ModeView.Select && keyinfo.IsPressEndKey())
+                    else if (_modeView == ModeView.Select && keyinfo.IsPressCtrlEndKey())
                     {
                         _indexTooptip = 0;
                         string? parent = _localpaginator!.SelectedItem!.ParentUniqueId;
@@ -523,7 +542,6 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                         _indexTooptip = 0;
                         break;
                     }
-
                     else if (_modeView == ModeView.Select && keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.IsDisabled)
                     {
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator.SelectedItem.UniqueId);
@@ -536,13 +554,22 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                         }
                         else
                         {
-                            if (_predicatevalidselect?.Invoke(_items[index].Value) ?? true)
+                            (bool ok, string? message) = _predicatevalidselect?.Invoke(_items[index].Value!) ?? (true, null);
+                            if (!ok)
                             {
-                                _checkeditems.Add(_items[index].Value);
+                                if (string.IsNullOrEmpty(message))
+                                {
+                                    SetError(Messages.PredicateSelectInvalid);
+                                }
+                                else
+                                {
+                                    SetError(message);
+                                }
+                                break;
                             }
                             else
                             {
-                                SetError(Messages.PredicateSelectInvalid);
+                                _checkeditems.Add(_items[index].Value);
                             }
                         }
                         if (_checkeditems.Count == 0)
@@ -569,10 +596,6 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                     {
                         _indexTooptip = 0;
                         break;
-                    }
-                    else
-                    {
-                        continue;
                     }
                 }
             }
@@ -625,13 +648,21 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
             }
             else
             {
-                if (_predicatevalidselect?.Invoke(_items[index].Value) ?? true)
+                (bool ok, string? message) = _predicatevalidselect?.Invoke(_items[index].Value!) ?? (true, null);
+                if (!ok)
                 {
-                    _checkeditems.Add(_items[index].Value);
+                    if (string.IsNullOrEmpty(message))
+                    {
+                        SetError(Messages.PredicateSelectInvalid);
+                    }
+                    else
+                    {
+                        SetError(message);
+                    }
                 }
                 else
                 {
-                    SetError(Messages.PredicateSelectInvalid);
+                    _checkeditems.Add(_items[index].Value);
                 }
             }
             var isvalid = true;
@@ -654,14 +685,22 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                 {
                     if (chkindex < 0)
                     {
-                        if (_predicatevalidselect?.Invoke(_items[index].Value) ?? true)
+                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_items[index].Value!) ?? (true, null);
+                        if (!ok)
                         {
-                            _checkeditems.Add(_items[index].Value);
+                            isvalid = false;
+                            if (string.IsNullOrEmpty(message))
+                            {
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(message);
+                            }
                         }
                         else
                         {
-                            isvalid = false;
-                            SetError(Messages.PredicateSelectInvalid);
+                            _checkeditems.Add(_items[index].Value);
                         }
                     }
                     else
@@ -1380,8 +1419,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                 }
                 if (mode == ModeView.Select)
                 {
-                    lsttooltips.Add(Messages.TooltipPages);
-                    lsttooltips.Add($"{Messages.TooltipLevelHomeEnd}, {Messages.InputFinishEnter}");
+                    lsttooltips.Add($"{Messages.TooltipPages}, {Messages.InputFinishEnter}");
                 }
                 if (mode == ModeView.Filter)
                 {

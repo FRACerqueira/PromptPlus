@@ -25,7 +25,7 @@ namespace ConsoleSwitchControlSamples
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {result.IsAborted}, Value: {result.Content}");
 
-            PromptPlus.Widgets.DoubleDash("Sample basic slider custom values", extraLines: 1);
+            PromptPlus.Widgets.DoubleDash("Sample basic Switch custom values", extraLines: 1);
 
             result = PromptPlus.Controls.Switch("Select value: ")
                        .OffValue("My Off")
@@ -34,7 +34,7 @@ namespace ConsoleSwitchControlSamples
 
             PromptPlus.Console.WriteLine($"IsAborted : {result.IsAborted}, Value: {result.Content}");
 
-            PromptPlus.Widgets.DoubleDash("Sample basic slider custom color, width and default", extraLines: 1);
+            PromptPlus.Widgets.DoubleDash("Sample basic Switch custom color, width and default", extraLines: 1);
 
             result = PromptPlus.Controls.Switch("Select value: ")
                        .Default(true)
