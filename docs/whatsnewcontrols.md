@@ -35,33 +35,25 @@ Due to the significant modifications, version 5 introduced **significant changes
 - [Input Control](#input-control)
 - [Keypress Control](#keypress-control)
 - **MaskEdit (Old Version) Control Discontinued!**
-- [MaskEdit Control](#maskedit-control) **NEW!**  
-- [MaskDateTime Control]() **NEW!** 
-- [MaskDate Control]() **NEW!** 
-- [MaskDateOnly Control]() **NEW!** 
-- [MaskTime Control]() **NEW!** 
-- [MaskTimeOnly Control]() **NEW!** 
-- [MaskDecimalCurrency  Control]() **NEW!** 
-- [MaskDoubleCurrency  Control]() **NEW!** 
-- [MaskDecimal Control]() **NEW!** 
-- [MaskDouble Control]() **NEW!** 
-- [MaskInteger Control]() **NEW!** 
-- [MaskLong Control]() **NEW!** 
-- [MultiSelect Control]()
-- [NodeTree MultiSelect Control]()
-- [NodeTree Select Control]()
-- [Progress Bar Control]()
-- [ReadLine Emacs Control]() **NEW!** 
-- [Select Control]()
-- [Slider Control]()
-- [Slider Widget]()  **NEW!** 
-- [Switch Control]()
-- [Switch Widget]()  **NEW!** 
-- [Table MultiSelect Control]()
-- [Table Select Control]()
-- [Table Widget]() **NEW!** 
-- [Wait Process Control]()
-- [Wait Timer Control]()
+- [MaskEdit Control](#maskedit-control-new) **NEW!**  
+- [MaskDateTime Control](#maskdatetime-control-new) **NEW!** 
+- [MaskCurrency Control](#maskcurrency-control-new) **NEW!** 
+- [MaskNumber Control](#masknumber-control-new) **NEW!** 
+- [MultiSelect Control](#multiselect-control)
+- [NodeTree MultiSelect Control](#nodetree-multiselect-control)
+- [NodeTree Select Control](#nodetree-select-control)
+- [Progress Bar Control](#progress-bar-control)
+- [ReadLine Emacs Control](#readline-emacs-control-new) **NEW!** 
+- [Select Control](#select-control)
+- [Slider Control](#slider-control)
+- [Slider Widget](#slider-widget-new)  **NEW!** 
+- [Switch Control](#switch-control)
+- [Switch Widget](#switch-widget-new)  **NEW!** 
+- [Table MultiSelect Control](#table-multiselect-control)
+- [Table Select Control](#table-select-control)
+- [Table Widget](#table-widget-new)  **NEW!** 
+- [Wait Process Control](#wait-process-control)
+- [Wait Timer Control](#Wait-timer-control)
 
 ### General changes
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
@@ -104,8 +96,8 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Removed : AutoComplete(string prompt, string? description, Action\<IPromptConfig\> config = null).
 - Added:
     - MaxWidth(byte maxWidth).
-    - PredicateSelected(Func<string, (bool,string?)> validselect).
-    - PredicateSelected(Func<string, bool)> validselect).
+    - PredicateSelected(Func\<string, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<string, bool)\> validselect).
     - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
     - Options(Action\<IControlOptions\> options).
     - TextSelector(Func<string, string> value).
@@ -151,8 +143,8 @@ Due to the significant modifications, version 5 introduced **significant changes
     - DisableDates(params DateTime[] dates).
     - AddNote(DateTime value, string? note = null).
     - Highlights(params DateTime[] dates)
-    - PredicateSelected(Func<ChartItem, (bool,string?)> validselect).
-    - PredicateSelected(Func<ChartItem, bool)> validselect).
+    - PredicateSelected(Func\<DateTime?, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<DateTime?, bool)\> validselect).
     - Options(Action\<IControlOptions\> options).
 - Changed: 
     - Layout(CalendarLayout value) -> Layout(CalendarLayout layout = CalendarLayout.SingleGrid)
@@ -191,6 +183,8 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Title(string title, TextAlignment alignment = TextAlignment.Center).
     - ChangeDescription(Func<ChartItem, string> value).
     - HideElements(HideChart value).
+    - PredicateSelected(Func\<ChartItem, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<ChartItem, bool)\> validselect).
     - Options(Action\<IControlOptions\> options).
 - Changed: 
     - Layout(LayoutChart value) ->  Layout(ChartBarLayout layout = ChartBarLayout.Standard).
@@ -234,7 +228,7 @@ Due to the significant modifications, version 5 introduced **significant changes
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
 - Renamed interface : IControlBrowserMultiSelect -> IFileMultiSelectControl.
-    - Changed : ResultPrompt\<ItemBrowser[]\> Run(CancellationToken? token = null)  -> ResultPrompt\<ItemFile[]\> Run(CancellationToken token = default).
+    - Changed : ResultPrompt\<ItemBrowser\[ \]\> Run(CancellationToken? token = null)  -> ResultPrompt\<ItemFile\[ \]\> Run(CancellationToken token = default).
 - Command initialization: PromptPlus.BrowserMultiSelect -> PromptPlus.Controls.FileMultiSelect.
     - Fixed Standard: FileMultiSelect(string prompt = "", string? description = null). 
     - Removed : BrowserMultiSelect(string prompt, Action\<IPromptConfig\> config = null).
@@ -245,9 +239,9 @@ Due to the significant modifications, version 5 introduced **significant changes
     - MaxWidth(byte maxWidth).
     - EnabledSearchFilter(FilterMode filter = FilterMode.Contains)
     - SearchPattern(string value)
-    - PredicateSelected(Func<string, (bool,string?)> validselect).
-    - PredicateSelected(Func<string, bool)> validselect).
-    - PredicateDisabled(Func<ItemFile, bool> validdisabled)
+    - PredicateSelected(Func<ItemFile, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<ItemFile, bool)\> validselect).
+    - PredicateDisabled(Func\<ItemFile, bool\> validdisabled)
     - Options(Action\<IControlOptions\> options).
     - HideCountSelected(bool value = true)
 - Changed: 
@@ -291,9 +285,9 @@ Due to the significant modifications, version 5 introduced **significant changes
     - HideFilesBySize(long minvalue, long maxvalue = long.MaxValue).
     - EnabledSearchFilter(FilterMode filter = FilterMode.Contains)
     - SearchPattern(string value)
-    - PredicateSelected(Func<string, (bool,string?)> validselect).
-    - PredicateSelected(Func<string, bool)> validselect).
-    - PredicateDisabled(Func<ItemFile, bool> validdisabled)
+    - PredicateSelected(Func\<ItemFile, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<ItemFile, bool)\> validselect).
+    - PredicateDisabled(Func\<ItemFile, bool\> validdisabled)
     - Options(Action\<IControlOptions\> options).
 - Changed: 
     - PageSize(int value) -> PageSize(byte value).
@@ -334,8 +328,8 @@ Due to the significant modifications, version 5 introduced **significant changes
     - MaxWidth(byte maxWidth).
     - PageSize(byte value).
     - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
-    - PredicateSelected(Func<string, (bool,string?)> validselect).
-    - PredicateSelected(Func<string, bool)> validselect).
+    - PredicateSelected(Func\<string, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<string, bool)\> validselect).
     - Options(Action\<IControlOptions\> options).
 - Changed: 
     - Default(string value) -> Default(string value, bool usedefaultHistory = true).
@@ -372,3 +366,323 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Config(Action\<IPromptConfig\> context).
     - TextKeyValid(Func<ConsoleKeyInfo, string?> value).
  
+### MaskEdit Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+The MaskEdit control has been completely redesigned and now returns and handles the type passed as an argument with special attention. 
+Navigation and comands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
+
+- Command initialization:
+    - Interface : IMaskEditStringControl\<T\>. 'T' It will always be of type string
+    - Fixed Standard: MaskEdit(string prompt = "", string? description = null). 
+    - Return type : string.
+    - Mask Pattern:
+        - 9 - Numeric character accepts delimiters for constant or custom.
+        - L - Lower Letter character accepts delimiters for constant or custom.
+        - U - Upper Letter character accepts delimiters for constant or custom.
+        - A - Lower and Upper Letter character accepts delimiters for constant or custom.
+        - X - Numeric, Lower and Upper Letter character accepts delimiters for constant or custom.
+        - C - Custom character accepts only delimiters for custom.
+        - \ - Escape character to use the next char as constant.
+        - { } - Delimiters group to apply custom list or constant value valid only a single mask type insede the group.
+        - \[ \] - Delimiters for custom value.
+        - ( ) - Delimiters for constant value inside the group.
+- Commands: 
+    - Mask(string mask, bool returnWithMask = false). **Required!**
+    - PromptMask(char value = '_').
+    - InputMode(InputBehavior inputBehavior = InputBehavior.EditSkipToInput).
+    - HideTipInputType(bool value = true).
+    - Default(T value).
+    - DefaultIfEmpty(T value).
+    - PredicateSelected(Func\<T, bool\> validselect).
+    - PredicateSelected(Func\<T, (bool, string?)\> validselect).
+    - Styles(MaskEditStyles styleType, Style style).
+    - Options(Action\<IControlOptions\> options).
+    - ResultPrompt\<T\> Run(CancellationToken token = default).
+
+### MaskDateTime Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+The MaskEdit control has been completely redesigned and now returns and handles the type passed as an argument with special attention. 
+Navigation and comands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
+
+- Command initialization: 
+    - Interface : IMaskEditDateTimeControl\<T\>. 'T' It will always be of the types: DateTime, DateOnly or TimeOnly.
+    - Fixed Standard: 
+        - MaskDateTime(string prompt = "", string? description = null). 
+            - Return type : DateTime.
+        - MaskDate(string prompt = "", string? description = null). 
+            - Return type : DateTime.
+        - MaskDateOnly(string prompt = "", string? description = null). 
+            - Return type : DateOnly.
+        - MaskTime(string prompt = "", string? description = null). 
+            - Return type : DateTime.
+        - MaskTimeOnly(string prompt = "", string? description = null). 
+            - Return type : TimeOnly.
+- Commands: 
+    - PromptMask(char value = '_').
+    - InputMode(InputBehavior inputBehavior = InputBehavior.EditSkipToInput).
+    - FixedValues(DateTimePart partdetetime, int value).
+    - HideTipInputType(bool value = true).
+    - WeekTypeMode(WeekType value = WeekType.WeekShort).
+    - Default(T value).
+    - DefaultIfEmpty(T value).
+    - Culture(CultureInfo culture).
+    - Culture(string cultureName).
+    - PredicateSelected(Func\<T, bool\> validselect).
+    - PredicateSelected(Func\<T, (bool, string?)\> validselect).
+    - Styles(MaskEditStyles styleType, Style style).
+    - Options(Action\<IControlOptions\> options).
+    - ResultPrompt\<T\> Run(CancellationToken token = default).
+
+### MaskCurrency Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+The MaskEdit control has been completely redesigned and now returns and handles the type passed as an argument with special attention. 
+Navigation and comands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
+
+- Command initialization: PromptPlus.Controls.MaskEdit.
+    - Interface : IMaskEditCurrencyControl\<T\>. 'T' It will always be of the types: double or decimal.
+    - Fixed Standard: 
+        - MaskDecimalCurrency(string prompt = "", string? description = null). 
+            - Return type : decimal.
+        - MaskDoubleCurrency(string prompt = "", string? description = null). 
+            - Return type : double.
+- Commands: 
+    - PromptMask(char value = '_').
+    - NumberFormat(byte integerpart, byte decimalpart = 2, bool withsignal = false, bool withseparatorgroup = true).
+    - HideTipInputType(bool value = true).
+    - Default(T value).
+    - DefaultIfEmpty(T value).
+    - Culture(CultureInfo culture).
+    - Culture(string cultureName).
+    - PredicateSelected(Func\<T, bool\> validselect).
+    - PredicateSelected(Func\<T, (bool, string?)\> validselect).
+    - Styles(MaskEditStyles styleType, Style style).
+    - Options(Action\<IControlOptions\> options).
+    - ResultPrompt\<T\> Run(CancellationToken token = default).
+
+### MaskNumber Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+The MaskEdit control has been completely redesigned and now returns and handles the type passed as an argument with special attention. 
+Navigation and comands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
+
+- Command initialization: PromptPlus.Controls.MaskEdit.
+    - Interface : IMaskEditNumberControl\<T\>. 'T' It will always be of the types: integer, long, double or decimal.
+    - Fixed Standard: 
+        - MaskDecimal(string prompt = "", string? description = null). 
+            - Return type : decimal.
+        - MaskDouble(string prompt = "", string? description = null). 
+            - Return type : double.
+        - MaskDouble(string prompt = "", string? description = null). 
+            - Return type : double.
+        - MaskInteger(string prompt = "", string? description = null). 
+            - Return type : integer.
+        - MaskLong(string prompt = "", string? description = null). 
+            - Return type : long.
+- Commands: 
+    - PromptMask(char value = '_').
+    - NumberFormat(byte integerpart, bool withsignal = false, bool withseparatorgroup = true).
+    - HideTipInputType(bool value = true).
+    - Default(T value).
+    - DefaultIfEmpty(T value).
+    - Culture(CultureInfo culture).
+    - Culture(string cultureName).
+    - PredicateSelected(Func\<T, bool\> validselect).
+    - PredicateSelected(Func\<T, (bool, string?)\> validselect).
+    - Styles(MaskEditStyles styleType, Style style).
+    - Options(Action\<IControlOptions\> options).
+    - ResultPrompt\<T\> Run(CancellationToken token = default).
+
+### MultiSelect Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlMultiSelect\<T\[ \]\> -> IMultiSelectControl\<T \[ \]\>.
+- Command initialization: PromptPlus.MultiSelect -> PromptPlus.Controls.MultiSelect.
+    - Fixed Standard: MultiSelect\<T\>(string prompt = "", string? description = null). 
+    - Removed : MultiSelect\<T\>(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : MultiSelect\<T\>(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - MaxWidth(byte maxWidth).
+    - PredicateSelected(Func\<T, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<T, bool)\> validselect).
+    - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
+    - Options(Action\<IControlOptions\> options).
+    - AddSeparator(SeparatorLine separatorLine = SeparatorLine.SingleLine, char? value = null).
+    - HideCountSelected(bool value = true).
+    - ShowAllSelected(bool value).
+    - Default(IEnumerable\<T\> values, bool usedefaultHistory = true).
+- Changed: 
+    - PageSize(int value) -> PageSize(byte value).
+    - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlMultiSelect\<T\>, T1\> action) -> Interaction(IEnumerable\<T\> items, Action\<T, IMultiSelectControl\<T\>\> interactionAction)
+    - ShowTipGroup(bool value = true) -> HideTipGroup(bool value = true).
+    - FilterType(FilterMode value) -> Filter(FilterMode value, bool caseinsensitive = true).
+    - AddItem(T value, bool disable = false, bool selected = false) -> AddItem(T value, bool valuechecked = false, bool disable = false).
+    - AddItems(IEnumerable\<T\> values, bool disable = false, bool selected = false) -> AddItems(IEnumerable\<T\> values, bool valuechecked = false, bool disable = false).
+    - AddItemGrouped(string group, T value, bool disable = false, bool selected = false) -> AddGroupedItem(string group, T value, bool valuechecked = false, bool disable = false).
+    - AddItemsGrouped(string group, IEnumerable\<T\> value, bool disable = false, bool selected = false) -> AddGroupedItems(string group, IEnumerable\<T\> values, bool valuechecked = false, bool disable = false).
+- Removed: 
+    - OverflowAnswer(Overflow value).
+    - AddDefault(params T[] values).
+    - AddDefault(IEnumerable\<T\> values).
+    - OrderBy(Expression\<Func\<T, object\>\> value).
+    - OrderByDescending(Expression\<Func\<T, object\>\> value).
+    - OverwriteDefaultFrom(string value, TimeSpan? timeout = null).
+    - HotKeySelectAll(HotKey value).
+    - HotKeyInvertSelected(HotKey value).
+    - AddItemsTo(AdderScope scope, params T[] values).
+    - AddItemsTo(AdderScope scope, IEnumerable\<T\> values).
+    - Config(Action\<IPromptConfig\> context).
+
+### NodeTree MultiSelect Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlTreeViewMultiSelect\<T\[ \]\> -> INodeTreeMultiSelectControl\<T\[ \]\>.
+- Command initialization: PromptPlus.TreeViewMultiSelect -> PromptPlus.Controls.NodeTreeMultiSelect.
+    - Fixed Standard: NodeTreeMultiSelect\<T\>(string prompt = "", string? description = null). 
+    - Removed : TreeViewMultiSelect\<T\>(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : TreeViewMultiSelect\<T\>(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - MaxWidth(byte maxWidth).
+    - Options(Action\<IControlOptions\> options).
+    - TextSelector(Func<T, string> value).
+    - PredicateSelected(Func\<T, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<T, bool)\> validselect).
+    - PredicateDisabled(Func<T, bool> validdisabled).
+    - AddRootNode(T value, bool valuechecked = false, string nodeseparator = "|").
+    - AddChildNode(T parent, T value, bool valuechecked = false).
+    - HideCountSelected(bool value = true).
+    - HideSize(bool value = true).
+- Changed: 
+    - PageSize(int value) -> PageSize(byte value).
+    - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlTreeViewMultiSelect\<T\>, T1\> action) -> Interaction(IEnumerable\<T\> items, Action\<T, INodeTreeMultiSelectControl\<T\>\> interactionAction)
+    - Styles(TreeViewStyles content, Style value) -> Styles(NodeTreeStyles styleType, Style style).
+    - FilterType(FilterMode value) -> Filter(FilterMode value, bool caseinsensitive = true).
+- Removed: 
+    - Config(Action\<IPromptConfig\> context).
+    - ShowLines(bool value = true).
+    - ShowExpand(bool value = true).
+    - ExpandAll(bool value = true).
+    - AddFixedSelect(params T[] values).
+    - SelectAll(Func\<T, bool\>? validselect = null).
+    - Default(T value).
+    - ShowCurrentNode(bool value = true).
+    - HotKeyFullPath(HotKey value).
+    - HotKeyToggleExpand(HotKey value).
+    - HotKeyToggleExpandAll(HotKey value).
+    - AfterExpanded(Action\<T\> value).
+    - AfterCollapsed(Action\<T\> value).
+    - BeforeExpanded(Action\<T\> value).
+    - BeforeCollapsed(Action\<T\> value).
+    - RootNode(T value, Func\<T, string\> textnode, Func\<T, bool\>? validselect = null, Func\<T, bool\>? setdisabled = null, char? separatePath = null, Func\<T, string\> uniquenode = null).
+    - AddNode(T value).
+    - AddNode(T Parent, T value).
+
+### NodeTree Select Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlTreeViewSelect\<T\> -> INodeTreeSelectControl\<T\>.
+- Command initialization: PromptPlus.TreeView -> PromptPlus.Controls.NodeTreeSelect.
+    - Fixed Standard: NodeTreeSelect\<T\>(string prompt = "", string? description = null). 
+    - Removed : TreeView\<T\>(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : TreeView\<T\>(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - Options(Action\<IControlOptions\> options).
+    - TextSelector(Func<T, string> value).
+    - PredicateSelected(Func\<T, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<T, bool)\> validselect).
+    - PredicateDisabled(Func<T, bool> validdisabled).
+    - AddRootNode(T value, bool valuechecked = false, string nodeseparator = "|").
+    - AddChildNode(T parent, T value, bool valuechecked = false).
+    - HideSize(bool value = true).
+- Changed: 
+    - PageSize(int value) -> PageSize(byte value).
+    - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlTreeViewSelect\<T\>, T1\> action) -> Interaction(IEnumerable\<T\> items, Action\<T, INodeTreeSelectControl\<T\>\> interactionAction)
+    - Styles(TreeViewStyles content, Style value) -> Styles(NodeTreeStyles styleType, Style style).
+    - FilterType(FilterMode value) -> Filter(FilterMode value, bool caseinsensitive = true).
+- Removed: 
+    - Config(Action\<IPromptConfig\> context).
+    - ShowLines(bool value = true).
+    - ShowExpand(bool value = true).
+    - ExpandAll(bool value = true).
+    - Default(T value).
+    - ShowCurrentNode(bool value = true).
+    - HotKeyFullPath(HotKey value).
+    - HotKeyToggleExpand(HotKey value).
+    - HotKeyToggleExpandAll(HotKey value).
+    - AfterExpanded(Action\<T\> value).
+    - AfterCollapsed(Action\<T\> value).
+    - BeforeExpanded(Action\<T\> value).
+    - BeforeCollapsed(Action\<T\> value).
+    - RootNode(T value, Func\<T, string\> textnode, Func\<T, bool\>? validselect = null, Func\<T, bool\>? setdisabled = null, char? separatePath = null, Func\<T, string\> uniquenode = null).
+    - AddNode(T value).
+    - AddNode(T Parent, T value).
+
+### Progress Bar Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlProgressBar\<T\> -> IProgressBarControl.
+- Command initialization: PromptPlus.ProgressBar -> PromptPlus.Controls.ProgressBar.
+    - Fixed Standard: ProgressBar(string prompt = "", string? description = null). 
+    - Removed : ProgressBar\<T\>(ProgressBarType barType, string prompt, T defaultresult, string description = null);
+    - Removed : ProgressBar\<T\>(ProgressBarType barType, string prompt, T defaultresult, string description, Action\<IPromptConfig\> config = null).
+- Added:
+    - Options(Action\<IControlOptions\> options).
+    - Fill(ProgressBarType type).
+    - Range(double minvalue, double maxvalue).
+    - IntervalUpdate(int mileseconds = 100).
+- Changed: 
+    - ResultPrompt\<ResultProgessBar\<T\>\> Run(CancellationToken? value = null) -> ResultPrompt\<StateProgress\> Run(CancellationToken token = default).
+    - PageSize(int value) -> PageSize(byte value).
+    - Spinner(SpinnersType spinnersType, int? speedAnimation = null, IEnumerable\<string\>? customspinner = null) -> Spinner(SpinnersType spinnersType).
+    - Width(int value) -> Width(byte value).
+    - FracionalDig(int value) -> FracionalDig(byte value).
+    - UpdateHandler(Action<UpdateProgressBar\<T\>, CancellationToken> value) -> UpdateHandler(Action<HandlerProgressBar, CancellationToken> value).
+- Removed: 
+    - Config(Action\<IPromptConfig\> context).
+    - CharBar(char value).
+
+### ReadLine Emacs Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Command initialization: PromptPlus.Control.InputEmacs.
+    - Standard : InputEmacs(string initialvalue = "")
+- Commands: 
+    - ValidateKey(Func<char, bool> validateKeyFunc).
+    - MaxLength(int maxLength).
+    - ReadOnly(bool value = true).
+    - MaxWidth(int maxWidth).
+    - CaseOptions(CaseOptions caseOptions).
+    - EscAbort(bool escAbort = true).
+    - string? ReadLine().
+
+### Select Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlSelect\<T\> -> ISelectControl\<T\>.
+- Command initialization: PromptPlus.Select -> PromptPlus.Controls.Select.
+    - Fixed Standard: Select\<T\>(string prompt = "", string? description = null). 
+    - Removed : Select\<T\>(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : Select\<T\>(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - PredicateSelected(Func\<T, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<T, bool)\> validselect).
+    - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
+    - Options(Action\<IControlOptions\> options).
+- Changed: 
+    - PageSize(int value) -> PageSize(byte value).
+    - FilterType(FilterMode value) -> Filter(FilterMode value, bool caseinsensitive = true).
+    - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlSelect\<T\>, T1\> action) -> Interaction(IEnumerable\<T\> items, Action\<T, ISelectControl\<T\>\> interactionAction)
+    - Default(T value) -> Default(T value, bool usedefaultHistory = true).
+    - ShowTipGroup(bool value = true) -> HideTipGroup(bool value = true).
+    - AddItemGrouped(string group, T value, bool disable = false) -> AddGroupedItem(string group, T value, bool disable = false)
+    - AddItemsGrouped(string group, IEnumerable\<T\> value, bool disable = false) -> AddGroupedItems(string group, IEnumerable\<T\> values, bool disable = false).
+    - Separator(SeparatorLine separatorLine  = SeparatorLine.SingleLine, char? value = null) -> AddSeparator(SeparatorLine separatorLine = SeparatorLine.SingleLine, char? value = null).
+- Removed: 
+    - OrderBy(Expression\<Func\<T, object\>\> value).
+    - OrderByDescending(Expression\<Func\<T, object\>\> value).
+    - OverwriteDefaultFrom(string value, TimeSpan? timeout = null).
+    - Config(Action\<IPromptConfig\> context).
+    - AddItemsTo(AdderScope scope, params T[] values).
+    - AddItemsTo(AdderScope scope, IEnumerable<T> values).

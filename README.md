@@ -31,7 +31,7 @@
 ### V5.0.0 
 [**Top**](#table-of-contents)
 
-We're very excited about the release of this new version. **Version 5 has been completely redesigned** and optimized for better stability, consistency, and performance. 
+We're very excited about the **big release** of this new version. **Version 5 has been completely redesigned** and optimized for better stability, consistency, and performance. 
 All controls and behaviors have been revisited and improved to ensure sustainable evolution. 
 Due to the significant modifications, version 5 introduced **significant changes and is incompatible with versions 4.x**, although the concepts and components are very similar, requiring a small learning curve and minor methodological adjustments.
 

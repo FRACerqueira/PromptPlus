@@ -21,6 +21,13 @@ namespace PromptPlusLibrary
     public interface IMaskEditCurrencyControl<T>
     {
         /// <summary>
+        /// Prompt mask character.
+        /// </summary>
+        /// <param name="value">Prompt mask character. Default is '_'.</param>
+        /// <returns>The current <see cref="IMaskEditCurrencyControl{T}"/> instance for chaining.</returns>
+        IMaskEditCurrencyControl<T> PromptMask(char value = '_');
+
+        /// <summary>
         /// Configures the number format for the input.
         /// </summary>
         /// <param name="integerpart">The number of digits allowed in the integer part.</param>

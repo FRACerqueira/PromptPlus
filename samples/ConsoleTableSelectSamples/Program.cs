@@ -78,7 +78,7 @@ namespace ConsoleTableSelectSamples
         {
             var result = new List<MyTable>();
             var flag = false;
-            result.Add(Fixeddata);
+            result.Add(Fixeddata!);
             for (int i = 1; i < max; i++)
             {
                 flag = !flag;

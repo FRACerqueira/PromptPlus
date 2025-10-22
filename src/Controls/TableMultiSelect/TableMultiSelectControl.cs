@@ -413,7 +413,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             if (_filterType == FilterMode.Disabled)
             {
                 _localpaginator = new Paginator<ItemTableRow<T>>(
-                    _filterType,
+                    FilterMode.Disabled,
                     _items,
                     _pageSize,
                     defvaluepage,

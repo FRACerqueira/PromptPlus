@@ -58,6 +58,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         public MultiSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
+            _lastinput = string.Empty;
         }
 #pragma warning restore IDE0290 // Use primary constructor
 #pragma warning restore IDE0079

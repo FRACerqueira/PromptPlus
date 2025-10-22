@@ -468,6 +468,18 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             return this;
         }
 
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PromptMask(char value)
+        {
+            _promptmask = value;
+            return this;
+        }
+
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PromptMask(char value)
+        {
+            _promptmask = value;
+            return this;
+        }
+
         IMaskEditStringControl<T> IMaskEditStringControl<T>.Styles(MaskEditStyles styleType, Style style)
         {
             _optStyles[styleType] = style;

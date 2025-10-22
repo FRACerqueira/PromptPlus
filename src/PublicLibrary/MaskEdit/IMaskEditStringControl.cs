@@ -31,11 +31,11 @@ namespace PromptPlusLibrary
         /// <item><description>U - Upper Letter character accepts delimiters for constant or custom.</description></item>
         /// <item><description>A - Lower and Upper Letter character accepts delimiters for constant or custom.</description></item>
         /// <item><description>X - Numeric, Lower and Upper Letter character accepts delimiters for constant or custom.</description></item>
-        /// <item><description>C - Custom characteraccepts only delimiters for custom.</description></item>
+        /// <item><description>C - Custom character accepts only delimiters for custom.</description></item>
         /// <item><description>\ - Escape character to use the next char as constant.</description></item>
         /// <item><description>{ } - Delimiters group to apply custom list or constant value valid only a single mask type insede the group.</description></item>
         /// <item><description>[ ] - Delimiters for custom value.</description></item>
-        /// <item><description>( ) - Delimiters for constant value insede the group.</description></item>
+        /// <item><description>( ) - Delimiters for constant value inside the group.</description></item>
         /// </list>
         /// </param>
         /// <param name="returnWithMask">If <c>true</c>, the result includes the mask. Default value is <c>false</c>.</param>

@@ -499,13 +499,17 @@ namespace PromptPlusLibrary.Controls.AutoComplete
 
         private void EmptyPaginator()
         {
+            if (_localpaginator != null && _localpaginator!.TotalCount == 0)
+            {
+                return;
+            }
             _localpaginator = new Paginator<string>(
             FilterMode.Disabled,
             [],
             _pageSize,
             Optional<string>.Empty(),
             (item1, item2) => item1 == item2,
-            (item) => item);
+            null);
         }
 
         private void LoadTooltipToggle()

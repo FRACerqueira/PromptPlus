@@ -30,7 +30,7 @@ PromptPlus was developed in C# with target frameworks:
 *** What's new in V5.0.0 ***
 ----------------------------
 
-We're very excited about the release of this new version. **Version 5 has been completely redesigned** and optimized for better stability, consistency, and performance. 
+We're very excited about the big release of this new version. **Version 5 has been completely redesigned** and optimized for better stability, consistency, and performance. 
 
 All controls and behaviors have been revisited and improved to ensure sustainable evolution. 
 

@@ -13,32 +13,36 @@ namespace PromptPlusLibrary.Controls
     internal sealed class Paginator<T>
     {
         private T[] _filteredItems = [];
-        private T[] _items;
+        private T[]? _items;
         private readonly int _userPageSize;
-        private readonly Func<T, string> _textSelector;
+        private readonly Func<T, string>? _textSelector;
         private readonly Func<T, bool> _validatorAction;
         private readonly FilterMode _filterMode;
-        private readonly Func<T, T, bool>? _foundDefault;
+        private readonly Func<T, T, bool> _foundDefault;
         private readonly Func<T, bool>? _countValidator;
+        private bool _firstDisabled;
 
         public Paginator(
             FilterMode filterMode,
             IEnumerable<T> items,
             int pageSize,
             Optional<T> defaultValue,
-            Func<T, T, bool>? foundDefault,
+            Func<T, T, bool> foundDefault,
             Func<T, string>? textSelector = null,
             Func<T, bool>? validatorAction = null,
             Func<T, bool>? countValidator = null)
         {
+
+            ArgumentNullException.ThrowIfNull(foundDefault);
+
             _filterMode = filterMode;
             _items = [.. items];
             _userPageSize = pageSize;
-            _textSelector = textSelector ?? (x => (x == null)?string.Empty:x.GetHashCode().ToString());
+            _textSelector = textSelector;
             _validatorAction = validatorAction ?? (_ => true);
             _countValidator = countValidator;
             _foundDefault = foundDefault;
-
+            _firstDisabled = true;
             InitializeCollection();
             Initialize(defaultValue, _foundDefault);
         }
@@ -236,6 +240,7 @@ namespace PromptPlusLibrary.Controls
         public void UpdatColletion(IEnumerable<T> items, Optional<T>? selected = null)
         {
             _items = [.. items];
+            _firstDisabled = true;
             InitializeCollection();
             if (selected.HasValue)
             {
@@ -267,7 +272,6 @@ namespace PromptPlusLibrary.Controls
 
         public ArraySegment<T> GetPageData()
         {
-            //EnsurePage();
             return new ArraySegment<T>(_filteredItems, _userPageSize * SelectedPage, Count);
         }
 
@@ -289,28 +293,39 @@ namespace PromptPlusLibrary.Controls
 
         private void InitializeCollection()
         {
-            _filteredItems = _filterMode switch
+            if (_filterMode != FilterMode.Disabled && _textSelector != null && !string.IsNullOrEmpty(FilterTerm))
             {
-                FilterMode.StartsWith => [.. _items.Where(x => _textSelector(x).StartsWith(FilterTerm, StringComparison.InvariantCultureIgnoreCase))],
-                FilterMode.Contains => [.. _items.Where(x => _textSelector(x).Contains(FilterTerm, StringComparison.InvariantCultureIgnoreCase))],
-                FilterMode.Disabled => [.. _items],
-                _ => throw new NotImplementedException($"FilterMode: {_filterMode} Not Implemented")
-            };
+                if (_filterMode == FilterMode.StartsWith)
+                {
+                    _filteredItems = [.. _items!.Where(x => _textSelector(x).StartsWith(FilterTerm, StringComparison.InvariantCultureIgnoreCase))];
 
+                }
+                else if (_filterMode == FilterMode.Contains)
+                {
+                    _filteredItems = [.. _items!.Where(x => _textSelector(x).Contains(FilterTerm, StringComparison.InvariantCultureIgnoreCase))];
+                }
+            }
+            else 
+            {
+                if (_firstDisabled)
+                {
+                    _filteredItems = [.. _items!];
+                    _items = null;
+                    _firstDisabled = false;
+                }
+            }
             PageCount = _filteredItems.Length == 0 ? 0 : (_filteredItems.Length - 1) / _userPageSize + 1;
         }
 
         private void Initialize(Optional<T> defaultValue, Func<T, T, bool>? foundDefault)
         {
-            if (!defaultValue.HasValue)
+            if (!defaultValue.HasValue || foundDefault == null)
             {
                 return;
             }
-
             for (int i = 0; i < _filteredItems.Length; i++)
             {
-                if (foundDefault?.Invoke(_filteredItems[i], defaultValue.Value) == true ||
-                    EqualityComparer<string>.Default.Equals(_textSelector(_filteredItems[i]), _textSelector(defaultValue.Value)))
+                if (foundDefault.Invoke(_filteredItems[i], defaultValue.Value) == true)
                 {
                     SelectedIndex = i % _userPageSize;
                     SelectedPage = i / _userPageSize;

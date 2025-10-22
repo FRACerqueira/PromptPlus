@@ -451,7 +451,7 @@ namespace PromptPlusLibrary.Controls.Slider
                         }
                         _savedinput = _currentValue;
                         _localpaginator = new Paginator<ItemHistory>(
-                            FilterMode.StartsWith,
+                            FilterMode.Disabled,
                             subhist,
                             _historyOptions!.PageSizeValue,
                             Optional<ItemHistory>.Empty(),

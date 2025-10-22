@@ -368,7 +368,7 @@ namespace PromptPlusLibrary.Controls.Calendar
                             break;
                         }
                         _localpaginator = new Paginator<string>(
-                            FilterMode.StartsWith,
+                            FilterMode.Disabled,
                             GetNotes(localdateref),
                             _pageSize,
                             Optional<string>.Empty(),
