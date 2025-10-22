@@ -277,7 +277,7 @@ namespace PromptPlusLibrary.Controls
 
         public void EnsureVisibleIndex(int index)
         {
-            if (index >= 0 && index < _items.Length)
+            if (index >= 0 && index < _filteredItems.Length)
             {
                 SelectedIndex = index % _userPageSize;
                 SelectedPage = index / _userPageSize;
