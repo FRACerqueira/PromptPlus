@@ -139,7 +139,6 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Removed : Calendar(string prompt, Action\<IPromptConfig\> config = null).
     - Removed : Calendar(string prompt, string? description, Action\<IPromptConfig\> config = null).
 - Added:
-    - Default(DateTime value).
     - DisableDates(params DateTime[] dates).
     - AddNote(DateTime value, string? note = null).
     - Highlights(params DateTime[] dates)
@@ -147,11 +146,11 @@ Due to the significant modifications, version 5 introduced **significant changes
     - PredicateSelected(Func\<DateTime?, bool)\> validselect).
     - Options(Action\<IControlOptions\> options).
 - Changed: 
+    - Default(DateTime value, PolicyInvalidDate policy = PolicyInvalidDate.NextDate) -> Default(DateTime value).
     - Layout(CalendarLayout value) -> Layout(CalendarLayout layout = CalendarLayout.SingleGrid)
     - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlCalendar, T1\> action) -> Interaction\<T\>(IEnumerable\<T\> items, Action\<T, ICalendarControl\> interactionaction)
     - PageSize(int value) -> PageSize(byte value).
 - Removed: 
-    - Default(DateTime value, PolicyInvalidDate policy = PolicyInvalidDate.NextDate)
     - AddItems(CalendarScope scope, params ItemCalendar[] values)
     - HotKeySwitchNotes(HotKey value)
     - OverwriteDefaultFrom(string value, TimeSpan? timeout = null)
@@ -377,16 +376,16 @@ Navigation and comands has been optimized for each supported type: string, date/
     - Fixed Standard: MaskEdit(string prompt = "", string? description = null). 
     - Return type : string.
     - Mask Pattern:
-        - 9 - Numeric character accepts delimiters for constant or custom.
-        - L - Lower Letter character accepts delimiters for constant or custom.
-        - U - Upper Letter character accepts delimiters for constant or custom.
-        - A - Lower and Upper Letter character accepts delimiters for constant or custom.
-        - X - Numeric, Lower and Upper Letter character accepts delimiters for constant or custom.
-        - C - Custom character accepts only delimiters for custom.
-        - \ - Escape character to use the next char as constant.
-        - { } - Delimiters group to apply custom list or constant value valid only a single mask type insede the group.
-        - \[ \] - Delimiters for custom value.
-        - ( ) - Delimiters for constant value inside the group.
+        - 9 : Numeric character accepts delimiters for constant or custom.
+        - L : Lower Letter character accepts delimiters for constant or custom.
+        - U : Upper Letter character accepts delimiters for constant or custom.
+        - A : Lower and Upper Letter character accepts delimiters for constant or custom.
+        - X : Numeric, Lower and Upper Letter character accepts delimiters for constant or custom.
+        - C : Custom character accepts only delimiters for custom.
+        - \ : Escape character to use the next char as constant.
+        - { } : Delimiters group to apply custom list or constant value valid only a single mask type insede the group.
+        - [  ] : Delimiters for custom value.
+        - ( ) : Delimiters for constant value inside the group.
 - Commands: 
     - Mask(string mask, bool returnWithMask = false). **Required!**
     - PromptMask(char value = '_').
