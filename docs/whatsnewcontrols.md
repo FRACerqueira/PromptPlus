@@ -4,25 +4,31 @@
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
-## V.5.0.0
+----
+## Concepts (version 5.x or higher)
+- All general config start at : **PromptPlus.Config**.\<config\>.
+- All commands for console start at : **PromptPlus.Console**.\<command\>.
+- All interative controls start at : **PromptPlus.Controls**.\<name of control\>.
+    - The tooltip mechanism shows all keys and hotkeys for each control by switching the view ('F1'/'Ctrl+F1').
+- All no interative controls start at : **PromptPlus.Widgets**.\<name of Widget\>.
+
+- [PromptPlus Config](#config)
+- [Options(all Controls)](#options)
+- [Console Commands](#console-commands)
+ 
+----
+## Latest version
 
 **The version 5 has been completely redesigned** and optimized for better stability, consistency, and performance. 
 All controls and behaviors have been revisited and improved to ensure sustainable evolution. 
 Due to the significant modifications, version 5 introduced **significant changes and is incompatible with versions 4.x**, although the concepts and components are very similar, requiring a small learning curve and minor methodological adjustments.
 
-- Support for .Net10, .Net9 and .Net8
-- The tooltip mechanism shows all keys and hotkeys for each control by switching the view ('F1').
-- All interative controls start at : **PromptPlus.Controls**.\<name of control\>.
-- All no interative controls start at : **PromptPlus.Widgets**.\<name of Widget\>.
-- All commands for console start at : **PromptPlus.Console**.\<command\>.
-- All general config start at : **PromptPlus.Config**.\<config\>.
+### Table of Contents (Changelog Latest version)
 
-### Table of Contents
-
+- PromptPlus Config **(see concepts above)**
+- Options all Controls **(see concepts above)**
+- Console Commands **(see concepts above)**
 - [General changes](#general-changes)
-- [PromptPlus Config](#config)
-- [Console Commands](#console-commands)
-- [Options(all Controls)](#options)
 - **AddtoList Control Discontinued!**
 - [AutoComplete Control](#autocomplete-control)
 - [Banner Widget](#banner-widget)
@@ -51,10 +57,179 @@ Due to the significant modifications, version 5 introduced **significant changes
 - [Switch Widget](#switch-widget-new)  **NEW!** 
 - [Table MultiSelect Control](#table-multiselect-control)
 - [Table Select Control](#table-select-control)
+- **Table (Old Version) Widget Discontinued!**
 - [Table Widget](#table-widget-new)  **NEW!** 
-- [Wait Process Control](#wait-process-control)
-- [Wait Timer Control](#Wait-timer-control)
+- **Wait Process Control (Old Version) Control Discontinued!**
+- [Wait Process Control](#wait-process-control-new)  **NEW!** 
+- [Wait Timer Control](#wait-timer-control-new)  **NEW!** 
 
+----
+### Config
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+All global settings for Prompt Plus controls/widgets can be customized to fit user needs or special character feature limitations.
+
+Properties:  **PromptPlus.Config**.\<Property\> = \<newvalue\>.
+
+- YesChar
+- NoChar
+- MaxLenghtFilterText
+- EnabledAbortKey
+- ShowMesssageAbortKey
+- ShowTooltip
+- HideAfterFinish
+- HideOnAbort
+- DefaultCulture
+- FirstDayOfWeek
+- HotKeyAbortKeyPress
+- HotKeyTooltip
+- HotKeyTooltipShowHide
+- HotKeyTooltipChartBarSwitchLayout
+- HotKeyTooltipChartBarSwitchLegend
+- HotKeyTooltipChartBarSwitchOrder
+- HotKeyTooltipToggleAll
+- HotKeyToggleFullPath
+- HotKeyPasswordView
+- HotKeySwitchNotes
+- HotKeyShowHistory
+- HotKeyFilterMode
+- PaginationTemplate
+
+To change the pattern of symbols, the method below was made available:
+
+- **PromptPlus.Config**.ChangeSymbol(SymbolType symbolType, string ascivalue, string unicodevalue)
+
+----
+### Options
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+All controls and widgets inherit from a base (internal) control that exposes the command: Options(Action\<IControlOptions\> options).
+This command allows you to control/change some common behaviors and properties and overwrite Promptplus Config (when applicable).
+
+- EnabledAbortKey(bool isEnabled = true).
+- ShowMesssageAbortKey(bool isshow = true).
+- ShowTooltip(bool isVisible = true).
+- HideAfterFinish(bool shouldHide = true).
+- HideOnAbort(bool shouldHide = true).
+- Prompt(string prompt) : overwrite prompt initialization.
+- Description(string description : overwrite description initialization.
+
+All controls that use the history feature always have the EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null) command available, which allows you to control/change some common behaviors and properties (when applicable).
+
+- MinPrefixLength(byte value).
+- MaxItems(byte value).
+- ExpirationTime(TimeSpan value).
+- PageSize(byte value).
+
+----
+### Console Commands
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+
+All console commands are in: **Prompt Plus.Console**.\<command/Properties\>. The commands are the same as those provided by the Console class with possible additional returns and/or extra functionality.
+
+A separation was made in the writing methods for common texts (default console behavior): **Write/WriteLine** and texts with syntax for text colors: **WriteColor/WriteLineColor**.
+
+**Properties** (All setters use Exclusive Context blocking the main thread during their execution)
+- ForegroundColor.
+    - Set/Get Color(RGB) class.
+- BackgroundColor.
+    - Set/Get Color(RGB) class.
+- CursorVisible.
+- CursorLeft.
+- CursorTop.
+- KeyAvailable.
+- IsInputRedirected.
+- InputEncoding.
+- In.
+- CodePage.
+- IsOutputRedirected.
+- IsErrorRedirected.
+- OutputEncoding.
+- Out.
+- Error.
+- CurrentBuffer.
+    - Return TargetScreen (1 - Primary buffer, 2 - Secondary buffer).
+- IsEnabledSwapScreen.
+    - Gets a value indicating whether the console supports swapping screens.
+
+**Properties from profile** (read only)
+- DefaultConsoleForegroundColor
+- DefaultConsoleBackgroundColor
+- ProfileName
+- IsTerminal
+- IsLegacy
+- IsUnicodeSupported
+- SupportsAnsi
+- ColorDepth
+- PadLeft
+- PadRight
+- BufferWidth
+- BufferHeight
+- OverflowStrategy
+
+**Methods/Commands** (All Methods/Commands use Exclusive Context blocking the main thread during their execution)
+
+- DefaultColors(Color foreground, Color background).
+- ResetColor().
+    - Reset Color t default profile.
+- SetCursorPosition(int left, int top).
+- (int Left, int Top) GetCursorPosition().
+- HideCursor().
+- ShowCursor().
+- ConsoleKeyInfo ReadKey(bool intercept = false)
+- string? ReadLine().
+- SetIn(TextReader value).
+- SetOut(TextWriter value).
+- SetError(TextWriter value).
+- Clear().
+- Beep().
+- (int Left, int Top) Write(char[] buffer, Style? style = null, bool clearrestofline = false).
+- (int Left, int Top) Write(char buffer, Style? style = null, bool clearrestofline = false).
+- (int Left, int Top) Write(string value, Style? style = null, bool clearrestofline = false).
+- (int Left, int Top) WriteColor(string value, Overflow overflow = Overflow.Crop, bool clearrestofline = false).
+    -  Accept color syntax over text
+- (int Left, int Top) WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true).
+- (int Left, int Top) WriteLine(char buffer, Style? style = null, bool clearrestofline = true).
+- (int Left, int Top) WriteLine(string value, Style? style = null, bool clearrestofline = true).
+- (int Left, int Top) WriteLineColor(string value, Overflow overflow = Overflow.Crop, bool clearrestofline = true).
+    -  Accept color syntax over text.
+- SwapBuffer(TargetScreen value).
+    - Swap Screen Buffer (Primary/Secundary) .
+- OnBuffer(TargetScreen target, Action\<CancellationToken\> value, ConsoleColor? defaultforecolor = null, ConsoleColor? defaultbackcolor = null, CancellationToken? cancellationToken = null). 
+    - Run an action on target screen buffer and return to original screen buffer.
+- ProfileConfig(string name, Action\<IProfileSetup\> config)
+    - Set profile Console/terminal 
+        - DefaultConsoleForegroundColor
+        - DefaultConsoleBackgroundColor
+        - PadLeft
+        - PadRight
+        - OverflowStrategy
+
+**Extension Commands** 
+
+- ExclusiveContext(this IConsole console)
+    - Creates an exclusive context in the main thread, blocking other threads from writing to the UI  until the 'dispose' is done.
+- OutputError(this IConsole console)
+    - Create context to write on standard error output stream for any output included until the 'dispose' is done.
+- (int Left, int Top) WriteLines(this IConsole console, int steps = 1, bool clearrestofline = true)
+    - Write lines with line terminator
+- IJointOutput Join(this IConsole console)
+    - Wait all output using exclusive buffer to console.
+    - IJointOutput commands
+        - Clear()
+        - ResetColor()
+        - DefaultColors(Color foreground, Color background)
+        - Write(char[] buffer, Style? style = null, bool clearRestOfLine = false)
+        - Write(string value, Style? style = null, bool clearRestOfLine = false)
+        - WriteColor(string value, Overflow overflow = Overflow.None, bool clearRestOfLine = false)
+        - WriteLine(char[] buffer, Style? style = null, bool clearRestOfLine = true)
+        - WriteLine(string value, Style? style = null, bool clearRestOfLine = true)
+        - WriteLineColor(string value, Overflow overflow = Overflow.None, bool clearRestOfLine = true)
+        - (int Left, int Top) Done()
+            - Releases the console exclusive buffer. 
+
+----
 ### General changes
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -75,16 +250,7 @@ Due to the significant modifications, version 5 introduced **significant changes
 - All commands for console start at : **PromptPlus.Console**.\<command\>.
 - All general config start at : **PromptPlus.Config**.\<config\>.
 
-### Config
-[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
-
-### Console Commands
-[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
-
-### Options
-[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
-
-
+----
 ### AutoComplete Control
 
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
@@ -114,6 +280,7 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Config(Action\<IPromptConfig\> context).
     - ValidateOnDemand(bool value = true).
 
+----
 ###  Banner Widget
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -130,6 +297,7 @@ Due to the significant modifications, version 5 introduced **significant changes
 - Removed: 
     - Run(Color? color = null,BannerDashOptions bannerDash = BannerDashOptions.None).
 
+----
 ### Calendar Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -157,6 +325,7 @@ Due to the significant modifications, version 5 introduced **significant changes
     - AddValidators(params Func<object, ValidationResult>[] validators)
     - Config(Action\<IPromptConfig\> context).
 
+----
 ### Calendar Widget (NEW)
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -170,6 +339,7 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Styles(CalendarStyles styleType, Style style).
     - Show().
 
+----
 ### Chart Bar Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -204,6 +374,7 @@ Due to the significant modifications, version 5 introduced **significant changes
     - HotKeySwitchLegend(HotKey value).
     - HotKeySwitchOrder(HotKey value).
 
+----
 ### Chart Bar Widget (NEW)
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -223,6 +394,7 @@ Due to the significant modifications, version 5 introduced **significant changes
     - HideElements(HideChart value).
     - Show().
 
+----
 ### File MultiSelect Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -270,6 +442,7 @@ Due to the significant modifications, version 5 introduced **significant changes
     - BeforeCollapsed(Action\<ItemBrowser\> value).
     - Config(Action\<IPromptConfig\> context).
 
+----
 ### File Select Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -315,6 +488,7 @@ Due to the significant modifications, version 5 introduced **significant changes
     - BeforeCollapsed(Action\<ItemBrowser\> value).
     - Config(Action\<IPromptConfig\> context).
 
+----
 ### Input Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -347,6 +521,7 @@ Due to the significant modifications, version 5 introduced **significant changes
     - HistoryMaxItems(byte value).
     - HistoryPageSize(int value).
 
+----
 ### Keypress Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -365,6 +540,7 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Config(Action\<IPromptConfig\> context).
     - TextKeyValid(Func<ConsoleKeyInfo, string?> value).
  
+----
 ### MaskEdit Control (NEW)
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -399,6 +575,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - Options(Action\<IControlOptions\> options).
     - ResultPrompt\<T\> Run(CancellationToken token = default).
 
+----
 ### MaskDateTime Control (NEW)
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -434,6 +611,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - Options(Action\<IControlOptions\> options).
     - ResultPrompt\<T\> Run(CancellationToken token = default).
 
+----
 ### MaskCurrency Control (NEW)
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -461,6 +639,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - Options(Action\<IControlOptions\> options).
     - ResultPrompt\<T\> Run(CancellationToken token = default).
 
+----
 ### MaskNumber Control (NEW)
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -494,6 +673,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - Options(Action\<IControlOptions\> options).
     - ResultPrompt\<T\> Run(CancellationToken token = default).
 
+----
 ### MultiSelect Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -534,6 +714,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - AddItemsTo(AdderScope scope, IEnumerable\<T\> values).
     - Config(Action\<IPromptConfig\> context).
 
+----
 ### NodeTree MultiSelect Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -578,6 +759,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - AddNode(T value).
     - AddNode(T Parent, T value).
 
+----
 ### NodeTree Select Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -618,13 +800,14 @@ Navigation and comands has been optimized for each supported type: string, date/
     - AddNode(T value).
     - AddNode(T Parent, T value).
 
+----
 ### Progress Bar Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
 - Renamed interface : IControlProgressBar\<T\> -> IProgressBarControl.
 - Command initialization: PromptPlus.ProgressBar -> PromptPlus.Controls.ProgressBar.
     - Fixed Standard: ProgressBar(string prompt = "", string? description = null). 
-    - Removed : ProgressBar\<T\>(ProgressBarType barType, string prompt, T defaultresult, string description = null);
+    - Removed : ProgressBar\<T\>(ProgressBarType barType, string prompt, T defaultresult, string description = null).
     - Removed : ProgressBar\<T\>(ProgressBarType barType, string prompt, T defaultresult, string description, Action\<IPromptConfig\> config = null).
 - Added:
     - Options(Action\<IControlOptions\> options).
@@ -642,6 +825,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - Config(Action\<IPromptConfig\> context).
     - CharBar(char value).
 
+----
 ### ReadLine Emacs Control (NEW)
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -656,6 +840,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - EscAbort(bool escAbort = true).
     - string? ReadLine().
 
+----
 ### Select Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -685,3 +870,222 @@ Navigation and comands has been optimized for each supported type: string, date/
     - Config(Action\<IPromptConfig\> context).
     - AddItemsTo(AdderScope scope, params T[] values).
     - AddItemsTo(AdderScope scope, IEnumerable<T> values).
+
+----
+### Slider Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlSliderNumber -> ISliderControl.
+- Command initialization: PromptPlus.SliderNumber -> PromptPlus.Controls.Slider.
+    - Fixed Standard: Slider(string prompt = "", string? description = null). 
+    - Removed : SliderNumber(string prompt, string description = null).
+    - Removed : SliderNumber(string prompt, string description, Action\<IPromptConfig\> config = null).
+- Added:
+    - Options(Action\<IControlOptions\> options).
+    - HideElements(HideSlider value).
+    - EnabledHistory(string filename, Action<\IHistoryOptions\>? options = null).
+- Changed: 
+    - ResultPrompt\<double\> Run(CancellationToken? value = null) -> ResultPrompt\<double?> Run(CancellationToken token = default).
+    - PageSize(int value) -> PageSize(byte value).
+    - Width(int value) -> Width(byte value).
+    - FracionalDig(int value) -> FracionalDig(byte value).
+    - Styles(SliderNumberStyles content, Style value) -> Styles(SliderStyles styleType, Style style).
+    - BarType(SliderBarType value) -> Fill(SliderBarType type).
+    - Layout(LayoutSliderNumber value) -> Layout(SliderLayout value).
+    - Width(int value) -> Width(byte value).
+    - Default(double value) -> Default(double value, bool usedefaultHistory = true).
+- Removed: 
+    - Config(Action\<IPromptConfig\> context).
+    - OverwriteDefaultFrom(string value, TimeSpan? timeout = null).
+    - HideRange(bool value = true)
+
+----
+### Slider Widget (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Interface : ISliderWidget.
+- Command initialization: PromptPlus.Widget.Slider.
+    - Standard : Slider(double value, double minvalue = 0, double maxvalue = 100, byte fracionaldig = 2).
+- Commands: 
+    - Fill(SliderBarType type).
+    - Styles(SliderStyles styleType, Style style).
+    - Culture(CultureInfo culture).
+    - Culture(string cultureName).
+    - Width(byte value).
+    - ChangeColor(Func<double, Style> value).
+    - ChangeGradient(params Color[] colors).
+    - HideElements(HideSlider value).
+    - Show().
+
+----
+### Switch Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlSliderSwitch -> ISwitchControl.
+- Command initialization: PromptPlus.SliderSwitch -> PromptPlus.Controls.Switch.
+    - Fixed Standard: Switch(string prompt = "", string? description = null). 
+    - Removed : SliderSwitch(string prompt, string description = null).
+    - Removed : SliderSwitch(string prompt, string description, Action\<IPromptConfig\> config = null).
+- Added:
+    - Options(Action\<IControlOptions\> options).
+    - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
+- Changed: 
+    - ResultPrompt\<bool\> Run(CancellationToken? value = null) -> ResultPrompt\<bool?> Run(CancellationToken token = default).
+    - Width(int value) -> Width(byte value).
+    - Styles(SliderSwitchStyles content, Style value) -> Styles(SwitchStyles styleType, Style style).
+    - Width(int value) -> Width(byte value).
+    - Default(bool value) -> Default(bool value, bool usedefaultHistory = true).
+- Removed: 
+    - Config(Action\<IPromptConfig\> context).
+    - OverwriteDefaultFrom(string value, TimeSpan? timeout = null).
+    - ChangeColorOn(Style value).
+    - ChangeColorOff(Style value).
+    
+----
+### Switch Widget (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Interface : ISwitchWidget.
+- Command initialization: PromptPlus.Widget.Switch.
+    - Standard : Switch(bool value, string? onValue = null, string? offValue = null).
+- Commands: 
+    - Styles(SwitchStyles styleType, Style style).
+    - Width(byte value).
+    - Show().
+
+----
+### Table MultiSelect Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlTableMultiSelect\<T\[ \]\> -> ITableMultiSelectControl\<T \[ \]\>.
+- Command initialization: PromptPlus.TableMultiSelect -> PromptPlus.Controls.TableMultiSelect.
+    - Fixed Standard: TableMultiSelect\<T\>(string prompt = "", string? description = null). 
+    - Removed : TableMultiSelect\<T\>(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : TableMultiSelect\<T\>(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - MaxWidth(byte maxWidth).
+    - PredicateSelected(Func\<T, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<T, bool)\> validselect).
+    - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
+    - Options(Action\<IControlOptions\> options).
+    - HideCountSelected(bool value = true).
+    - ShowAllSelected(bool value).
+    - Default(IEnumerable\<T\> values, bool usedefaultHistory = true).
+    - TextSelector(Func<T, string> value).
+- Changed: 
+    - PageSize(int value) -> PageSize(byte value).
+    - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlTableMultiSelect\<T\>, T1\> action) -> Interaction(IEnumerable\<T\> items, Action\<T, ITableMultiSelectControl\<T\>\> interactionAction)
+    - AddItem(T value, bool disable = false, bool selected = false) -> AddItem(T value,bool disable = false).
+    - AddItems(IEnumerable\<T\> values, bool disable = false, bool selected = false) -> AddItems(IEnumerable\<T\> values, bool disable = false).
+    - FilterByColumns(FilterMode filter,params ushort[] indexColumn) -> FilterByColumns(FilterMode filter, bool caseinsensitive, params int[] indexColumn).
+    - Styles(TableSelectStyle content, Style value) -> Styles(TableStyles styleType, Style style).
+    - AddColumn(Expression\<Func\<T, object\>\> field, ushort width, Func\<object, string\> format = null,Alignment alignment = Alignment.Left, string? title = null, Alignment titlealignment = Alignment.Center,bool titlereplaceswidth = true, bool textcrop = false, ushort? maxslidinglines = null) -> AddColumn(Expression\<Func\<T, object\>\> field, int width, Func\<object, string\>? format = null, TextAlignment alignment = TextAlignment.Left, string? title = null, TextAlignment titlealignment = TextAlignment.Center, bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null).
+    - AutoFill(params ushort?[] minmaxwidth) -> AutoFill(int? minwidth, int? maxwidth = null).
+- Removed: 
+    - AddDefault(params T[] values).
+    - AddDefault(IEnumerable\<T\> values).
+    - OverwriteDefaultFrom(string value, TimeSpan? timeout = null).
+    - AddItemsTo(AdderScope scope, params T[] values).
+    - OrderBy(Expression\<Func\<T, object\>\> value).
+    - OrderByDescending(Expression\<Func\<T, object\>\> value).
+    - Title(string value, Alignment alignment = Alignment.Center, TableTitleMode titleMode = TableTitleMode.InLine).
+    - AutoFit(params ushort[] indexColumn).
+    - Templates(Func\<IEnumerable\<T\>, string\> selectedTemplate = null, Func\<IEnumerable\<T\>, string\> finishTemplate = null).
+    - ColumnsNavigation(bool value = true).
+    - Config(Action\<IPromptConfig\> context).
+
+----
+### Table Select Control
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Renamed interface : IControlTableSelect\<T\> -> ITableSelectControl\<T\>.
+- Command initialization: PromptPlus.TableSelect -> PromptPlus.Controls.TableSelect.
+    - Fixed Standard: TableSelect\<T\>(string prompt = "", string? description = null). 
+    - Removed : TableSelect\<T\>(string prompt, Action\<IPromptConfig\> config = null).
+    - Removed : TableSelect\<T\>(string prompt, string? description, Action\<IPromptConfig\> config = null).
+- Added:
+    - MaxWidth(byte maxWidth).
+    - PredicateSelected(Func\<T, (bool,string?)\> validselect).
+    - PredicateSelected(Func\<T, bool)\> validselect).
+    - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
+    - Options(Action\<IControlOptions\> options).
+    - TextSelector(Func<T, string> value).
+- Changed: 
+    - PageSize(int value) -> PageSize(byte value).
+    - Default(T values) -> Default(T values, bool usedefaultHistory = true).
+    - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlTableMultiSelect\<T\>, T1\> action) -> Interaction(IEnumerable\<T\> items, Action\<T, ITableMultiSelectControl\<T\>\> interactionAction)
+    - AddItem(T value, bool disable = false, bool selected = false) -> AddItem(T value,bool disable = false).
+    - AddItems(IEnumerable\<T\> values, bool disable = false, bool selected = false) -> AddItems(IEnumerable\<T\> values, bool disable = false).
+    - FilterByColumns(FilterMode filter,params ushort[] indexColumn) -> FilterByColumns(FilterMode filter, bool caseinsensitive, params int[] indexColumn).
+    - Styles(TableSelectStyle content, Style value) -> Styles(TableStyles styleType, Style style).
+    - AddColumn(Expression\<Func\<T, object\>\> field, ushort width, Func\<object, string\> format = null,Alignment alignment = Alignment.Left, string? title = null, Alignment titlealignment = Alignment.Center,bool titlereplaceswidth = true, bool textcrop = false, ushort? maxslidinglines = null) -> AddColumn(Expression\<Func\<T, object\>\> field, int width, Func\<object, string\>? format = null, TextAlignment alignment = TextAlignment.Left, string? title = null, TextAlignment titlealignment = TextAlignment.Center, bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null).
+    - AutoFill(params ushort?[] minmaxwidth) -> AutoFill(int? minwidth, int? maxwidth = null).
+- Removed: 
+    - OverwriteDefaultFrom(string value, TimeSpan? timeout = null).
+    - AddItemsTo(AdderScope scope, params T[] values).
+    - OrderBy(Expression\<Func\<T, object\>\> value).
+    - OrderByDescending(Expression\<Func\<T, object\>\> value).
+    - Title(string value, Alignment alignment = Alignment.Center, TableTitleMode titleMode = TableTitleMode.InLine).
+    - Templates(Func\<T, int, int, string\> selectedTemplate = null, Func\<T, int, int, string\> finishTemplate = null).
+    - AutoFit(params ushort[] indexColumn).
+    - ColumnsNavigation(bool value = true).
+    - Config(Action\<IPromptConfig\> context).
+    - HideSelectorRow(bool value = true).
+
+----
+### Table Widget (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Interface : ITableWidget\<T\>.
+- Command initialization: PromptPlus.Widget.Table.
+    - Standard : Table().
+- Commands: 
+    - Interaction(IEnumerable\<T\> items, Action<T, ITableWidget\<T\>> interactionAction).
+    - AddItem(T value, bool disable = false).
+    - AddItems(IEnumerable\<T\> values, bool disable = false).
+    - Layout(TableLayout value).
+    - Styles(TableStyles styleType, Style style).
+    - AddColumn(Expression\<Func\<T, object\>\> field, int width, Func<object, string>? format = null, TextAlignment alignment = TextAlignment.Left, string? title = null, TextAlignment titlealignment = TextAlignment.Center, bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null).
+    - AutoFill(int? minwidth, int? maxwidth).
+    - SeparatorRows(bool value = true).
+    - HideHeaders(bool value = true).
+    - AddFormatType\<T1\>(Func<object, string> funcfomatType).
+    - Show().
+
+----
+### Wait Process Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Interface : IWaitProcessControl
+- Command initialization: PromptPlus.Control.WaitProcess.
+    - Fixed Standard: WaitProcess(string prompt = "", string? description = null). 
+- Commands: 
+    - Options(Action\<IControlOptions\> options).
+    - Styles(WaitProcessStyles styleType, Style style).
+    - Spinner(SpinnersType spinnersType).
+    - Finish(Func<IEnumerable\<StateProcess\>, string> finishtext).
+    - ShowElapsedTime(bool value = true).
+    - IntervalUpdate(int mileseconds = 100).
+    - MaxDegreeProcess(byte value).
+    - Interaction\<T\>(IEnumerable\<T\> items, Action<T, IWaitProcessControl> interactionaction).
+    - ChangeDescription(Func<IEnumerable\<StateProcess\>, string> value).
+    - AddTask(TaskMode mode, string id, Action\<object?, CancellationToken\> process, string? label = null, object? parameter = null)
+    - ResultPrompt\<StateProcess[]\> Run(CancellationToken token = default).
+
+----
+### Wait Timer Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Interface : IWaitTimerControl
+- Command initialization: PromptPlus.Control.WaitTimer.
+    - Fixed Standard: 
+        - WaitTimer(TimeSpan time, string prompt = "", string? description = null, bool showresult = false). 
+        - WaitTimer(int mileseconds, string prompt = "", string? description = null, bool showresult = false)
+- Commands: 
+    - Options(Action\<IControlOptions\> options).
+    - Styles(WaitTimerStyles styleType, Style style).
+    - Spinner(SpinnersType spinnersType).
+    - Finish(string text).
+    - ShowElapsedTime(int mileseconds = 500, bool value = true).
+    - IsCountDown(bool value = true).
+    - ResultPrompt\<TimeSpan?\> Run(CancellationToken token = default).

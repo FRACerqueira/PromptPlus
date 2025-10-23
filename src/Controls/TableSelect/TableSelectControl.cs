@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using EastAsianWidthDotNet;
-using PromptPlusLibrary.Controls.Select;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
@@ -18,7 +17,9 @@ using System.Threading;
 
 namespace PromptPlusLibrary.Controls.TableSelect
 {
-    internal sealed class TableSelectControl<T> : BaseControlPrompt<T>, ITableWidget<T>, ITableSelectControl<T>
+#pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
+    internal sealed class TableSelectControl<T> : BaseControlPrompt<T>, ITableWidget<T>, ITableSelectControl<T> where T : class
+#pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
     {
         private readonly Dictionary<TableStyles, Style> _optStyles = BaseControlOptions.LoadStyle<TableStyles>();
         private byte _pageSize = 10;
@@ -547,18 +548,18 @@ namespace PromptPlusLibrary.Controls.TableSelect
                     {
                         _indexTooptip = 0;
                         _modeView = ModeView.Select;
-#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                         ResultCtrl = new ResultPrompt<T>(default, true);
-#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
                         break;
                     }
                     else if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
                         _modeView = ModeView.Select;
-#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
                         ResultCtrl = new ResultPrompt<T>(default, true);
-#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
                         break;
                     }
                     else if (keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null)

@@ -22,7 +22,7 @@ namespace PromptPlusLibrary.Drivers
         private bool _disposed;
 
         internal IProfileDrive ProfilePlus => profile;
-        public void CheckExclusive(Action action)
+        public void UniqueContext(Action action)
         {
             bool exclusive = false;
             if (_exclusiveContext.CurrentCount == 1)
@@ -51,7 +51,7 @@ namespace PromptPlusLibrary.Drivers
             }
             set
             {
-                CheckExclusive(() =>
+                UniqueContext(() =>
                 {
                     _consoleForegroundColor = value;
                     if (profile.SupportsAnsi)
@@ -74,7 +74,7 @@ namespace PromptPlusLibrary.Drivers
             }
             set
             {
-                CheckExclusive(() =>
+                UniqueContext(() =>
                 {
                     _consoleBackgroundColor = value;
                     if (profile.SupportsAnsi)
@@ -101,13 +101,13 @@ namespace PromptPlusLibrary.Drivers
             }
             set
             {
-                CheckExclusive(() => ShowCusor(value));
+                UniqueContext(() => ShowCusor(value));
             }
         }
 
         private void ShowCusor(bool value)
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 if (profile.SupportsAnsi)
                 {
@@ -138,7 +138,7 @@ namespace PromptPlusLibrary.Drivers
         public Encoding InputEncoding
         {
             get => Console.InputEncoding;
-            set => CheckExclusive(() => Console.InputEncoding = value);
+            set => UniqueContext(() => Console.InputEncoding = value);
         }
 
         public TextReader In => Console.In;
@@ -152,7 +152,7 @@ namespace PromptPlusLibrary.Drivers
         public Encoding OutputEncoding
         {
             get => Console.OutputEncoding;
-            set => CheckExclusive(() => Console.OutputEncoding = value);
+            set => UniqueContext(() => Console.OutputEncoding = value);
         }
 
         public TextWriter Out => Console.Out;
@@ -200,7 +200,7 @@ namespace PromptPlusLibrary.Drivers
 
         public void Clear()
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 if (profile.SupportsAnsi)
                 {
@@ -218,7 +218,7 @@ namespace PromptPlusLibrary.Drivers
         public (int Left, int Top) GetCursorPosition()
         {
             (int Left, int Top) result = (0, 0);
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 result = (CursorLeft, CursorTop);
             });
@@ -227,13 +227,13 @@ namespace PromptPlusLibrary.Drivers
 
         public virtual void HideCursor()
         {
-            CheckExclusive(() => ShowCusor(false));
+            UniqueContext(() => ShowCusor(false));
         }
 
         public bool OnBuffer(TargetScreen target, Action<CancellationToken> value, ConsoleColor? defaultforecolor = null, ConsoleColor? defaultbackcolor = null, CancellationToken? cancellationToken = null)
         {
             bool result = false;
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 // Switch to TargetBuffer screen
                 if (_currentBuffer == target)
@@ -294,7 +294,7 @@ namespace PromptPlusLibrary.Drivers
         public ConsoleKeyInfo ReadKey(bool intercept = false)
         {
             ConsoleKeyInfo result = new();
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 result = Console.ReadKey(intercept);
             });
@@ -304,7 +304,7 @@ namespace PromptPlusLibrary.Drivers
         public string? ReadLine()
         {
             string? result = null;
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 result = Console.ReadLine();
             });
@@ -313,7 +313,7 @@ namespace PromptPlusLibrary.Drivers
 
         public void DefaultColors(Color foreground, Color background)
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 ForegroundColor = foreground;
                 BackgroundColor = background;
@@ -322,7 +322,7 @@ namespace PromptPlusLibrary.Drivers
 
         public void ResetColor()
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 Console.ResetColor();
                 ForegroundColor = profile.DefaultConsoleForegroundColor;
@@ -353,7 +353,7 @@ namespace PromptPlusLibrary.Drivers
 
         public void SetCursorPosition(int left, int top)
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 Console.SetCursorPosition(left, top);
             });
@@ -361,7 +361,7 @@ namespace PromptPlusLibrary.Drivers
 
         public void SetError(TextWriter value)
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 Console.SetError(value);
             });
@@ -369,7 +369,7 @@ namespace PromptPlusLibrary.Drivers
 
         public void SetIn(TextReader value)
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 Console.SetIn(value);
             });
@@ -377,7 +377,7 @@ namespace PromptPlusLibrary.Drivers
 
         public void SetOut(TextWriter value)
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 Console.SetOut(value);
             });
@@ -385,7 +385,7 @@ namespace PromptPlusLibrary.Drivers
 
         public virtual void ShowCursor()
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 ShowCusor(true);
             });
@@ -394,7 +394,7 @@ namespace PromptPlusLibrary.Drivers
         public bool SwapBuffer(TargetScreen value)
         {
             bool result = false;
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 if (_currentBuffer == value)
                 {
@@ -430,7 +430,7 @@ namespace PromptPlusLibrary.Drivers
         public (int Left, int Top) Write(char[] buffer, Style? style = null, bool clearrestofline = false)
         {
             (int Left, int Top) result = (0, 0);
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 if (buffer is null)
                 {
@@ -447,7 +447,7 @@ namespace PromptPlusLibrary.Drivers
         public (int Left, int Top) Write(string value, Style? style = null, bool clearrestofline = false)
         {
             (int Left, int Top) result = (0, 0);
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 InternalWrite(value, style, clearrestofline);
                 result = GetCursorPosition();
@@ -458,7 +458,7 @@ namespace PromptPlusLibrary.Drivers
         public (int Left, int Top) WriteColor(string value, Overflow overflow = Overflow.None, bool clearrestofline = false)
         {
             (int Left, int Top) result = (0, 0);
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 if (value is null)
                 {
@@ -479,7 +479,7 @@ namespace PromptPlusLibrary.Drivers
         public (int Left, int Top) WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true)
         {
             (int Left, int Top) result = (0, 0);
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 string value = new(buffer);
                 InternalWrite(value, style, clearrestofline);
@@ -496,7 +496,7 @@ namespace PromptPlusLibrary.Drivers
         public (int Left, int Top) WriteLine(string value, Style? style = null, bool clearrestofline = true)
         {
             (int Left, int Top) result = (0, 0);
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 InternalWrite(value, style, clearrestofline);
                 Console.Write(Environment.NewLine);
@@ -512,7 +512,7 @@ namespace PromptPlusLibrary.Drivers
         public (int Left, int Top) WriteLineColor(string value, Overflow overflow = Overflow.None, bool clearrestofline = true)
         {
             (int Left, int Top) result = (0, 0);
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 if (value is null)
                 {

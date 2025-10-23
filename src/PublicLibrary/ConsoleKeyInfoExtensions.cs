@@ -59,11 +59,7 @@ namespace PromptPlusLibrary
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsYesResponseKey(this ConsoleKeyInfo keyinfo)
         {
-            if (!PromptPlus.Config.YesChar.HasValue)
-            {
-                return false;
-            }
-            return keyinfo.IsEqualChar(PromptPlus.Config.YesChar.Value);
+            return keyinfo.IsEqualChar(PromptPlus.Config.YesChar);
         }
 
         /// <summary>
@@ -73,11 +69,7 @@ namespace PromptPlusLibrary
         /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
         public static bool IsNoResponseKey(this ConsoleKeyInfo keyinfo)
         {
-            if (!PromptPlus.Config.NoChar.HasValue)
-            {
-                return false;
-            }
-            return keyinfo.IsEqualChar(PromptPlus.Config.NoChar.Value);
+            return keyinfo.IsEqualChar(PromptPlus.Config.NoChar);
         }
 
         /// <summary>

@@ -15,6 +15,7 @@
 * [Other general information](#other-general-information)
 * [Acknowledgement](#acknowledgement)
 
+----
 ## Prerequisites
 
 By contributing to **Promptplus**, you assert that:
@@ -25,6 +26,7 @@ By contributing to **Promptplus**, you assert that:
 * You [license](LICENSE.md) the contribution under the terms applied to the rest of the Promptplus project.
 * You agree to follow the [code of conduct](CODE_OF_CONDUCT.md).
 
+----
 ## Definition of trivial contributions
 It's hard to define what is a trivial contribution. Sometimes even a 1 character change can be considered significant.
 Unfortunately because it can be subjective, the decision on what is trivial comes from the maintainers of the project
@@ -35,6 +37,7 @@ What is generally considered trivial:
 * Fixing a typo.
 * Documentation changes.
 
+----
 ## Code
 ### Code style
 
@@ -50,6 +53,7 @@ The assembly `PromptPlus` should have no dependencies except the .NET BCL librar
 Make sure to run all unit tests before creating a pull request.
 Any new code should also have reasonable unit test coverage.
 
+----
 ## Contributing process
 ### Get buyoff or find open community issues or features
 
@@ -145,6 +149,7 @@ The only reasons a pull request should be closed and resubmitted are as follows:
  * When there are updates made to the original by someone other than the original contributor.
    Then the old branch is closed with a note on the newer branch this supersedes #github_number.
 
+----
 ## Other general information
 If you reformat code or hit core functionality without an approval from a person on the PromptPlus Team,
 it's likely that no matter how awesome it looks afterwards, it will probably not get accepted.
@@ -155,6 +160,7 @@ Now if you stray outside of the guidelines we have above, it doesn't mean we are
 your pull request. It will just make things harder for us.
 Harder for us roughly translates to a longer SLA for your pull request.
 
+----
 ## Acknowledgement
 
 This contribution guide was taken from the [Chocolatey project](https://chocolatey.org/)

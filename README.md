@@ -8,6 +8,7 @@
 **The best tool to Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
  **PromptPlus** was developed in C# with the **.NET 8**, **.NET 9**, **.NET 10** target frameworks.
 
+----
 ## Table of Contents
 
 - [What's new in the latest version](#whats-new-in-the-latest-version)
@@ -27,6 +28,7 @@
 - [Previous versions](./docs/whatsnewprev.md)
 - [API Reference](https://fracerqueira.github.io/PromptPlus/docs/apis/apis.html)
 
+----
 ## What's new in the latest version
 ### V5.0.0 
 [**Top**](#table-of-contents)
@@ -51,8 +53,9 @@ Due to the significant modifications, version 5 introduced **significant changes
     - For each non-interactive control the initialization contract was customized.
 - All commands for console start at : **PromptPlus.Console**.\<command\>.
 - All general config start at : **PromptPlus.Config**.\<config\>.
-- A more detailed list of changes **[for each of the controls can be seen here](./docs/whatsnewcontrols.md)**. 
+- A more detailed list of changes and basic Concepts **[for each of the controls can be seen here](./docs/whatsnewcontrols.md)**. 
 
+----
 ## Features
 [**Top**](#table-of-contents)
 
@@ -226,6 +229,7 @@ Due to the significant modifications, version 5 introduced **significant changes
 
      ![](./docs/images/consolecolorcapacity.jpg)
 
+----
 ## Installing
 [**Top**](#table-of-contents)
 
@@ -239,6 +243,7 @@ dotnet add package PromptPlus [--prerelease]
 
 **_Note:  [-pre]/[--prerelease] usage for pre-release versions_**
 
+----
 ## Examples
 [**Top**](#table-of-contents)
 
@@ -248,6 +253,7 @@ The folder [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/sa
 dotnet run --project [name of sample]
 ```
 
+----
 ## Supported platforms
 [**Top**](#table-of-contents)
 
@@ -258,16 +264,19 @@ dotnet run --project [name of sample]
 - macOS
     - Terminal.app
 
+----
 ## Code of Conduct
 [**Top**](#table-of-contents)
 
 This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community.
 For more information see the [Code of Conduct](CODE_OF_CONDUCT.md).
 
+----
 ## Contributing
 
 See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 
+----
 ## Credits
 [**Top**](#table-of-contents)
 
@@ -279,6 +288,7 @@ Prompt Plus may **include pieces of code (copy)** from other software released u
 
 - East Asian caracters -  [EastAsianWidthDotNet](https://github.com/nuitsjp/EastAsianWidthDotNet), Copyright (c) 2020 Atsushi Nakamura. See [LICENSE](Licenses/LICENSE-EastAsianWidthDotNet.md).
 
+----
 ## License
 [**Top**](#table-of-contents)
 

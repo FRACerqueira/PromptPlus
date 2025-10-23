@@ -41,7 +41,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <typeparam name="T">The type of the data items to be displayed in the table.</typeparam>
         /// <returns>An <see cref="ITableWidget{T}"/> instance for further customization.</returns>
-        ITableWidget<T> Table<T>();
+        ITableWidget<T> Table<T>() where T : class;
 
         /// <summary>
         /// Creates a Chart Bar.

@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using PromptPlusLibrary;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
 namespace ConsoleAutoCompleteControlSamples

@@ -34,6 +34,6 @@ namespace PromptPlusLibrary
         /// Get/Set the display text overflow strategy.
         /// </summary>
         Overflow OverflowStrategy { get; set; }
-    }
 
+    }
 }

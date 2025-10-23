@@ -19,7 +19,7 @@ namespace PromptPlusLibrary.Drivers
             }
             set
             {
-                CheckExclusive(() =>
+                UniqueContext(() =>
                 {
                     _cursorvisible = value;
                 });
@@ -28,7 +28,7 @@ namespace PromptPlusLibrary.Drivers
 
         public override void HideCursor()
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 _cursorvisible = false;
                 if (ProfilePlus.SupportsAnsi)
@@ -40,7 +40,7 @@ namespace PromptPlusLibrary.Drivers
 
         public override void ShowCursor()
         {
-            CheckExclusive(() =>
+            UniqueContext(() =>
             {
                 _cursorvisible = true;
                 if (ProfilePlus.SupportsAnsi)

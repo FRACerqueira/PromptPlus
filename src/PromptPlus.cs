@@ -7,6 +7,7 @@ using PromptPlusLibrary.Controls;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Core.Ansi;
 using PromptPlusLibrary.Drivers;
+using PromptPlusLibrary.PublicLibrary;
 using PromptPlusLibrary.Widgets;
 using System;
 using System.Globalization;
@@ -86,9 +87,9 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Get global properties config for PromptPlus
+        /// Get global properties config for controls/widgets
         /// </summary>
-        public static PromptConfig Config => _promptConfig;
+        public static IPromptPlusConfig Config => _promptConfig;
 
         /// <summary>
         /// Represents all Widgets for PromptPlus
@@ -102,7 +103,7 @@ namespace PromptPlusLibrary
         public static IControls Controls => new PromptPlusControls(_consoledrive, _promptConfig);
 
         /// <summary>
-        /// 
+        /// Set profile Console/terminal 
         /// </summary>
         public static void ProfileConfig(string name, Action<IProfileSetup> config)
         {

@@ -255,7 +255,7 @@ namespace PromptPlusLibrary
         /// <param name="description">The description for input</param>
         /// <typeparam name="T">type of item</typeparam>
         /// <returns>An <see cref="ITableSelectControl{T}"/> instance for further configuration and reading input.</returns>
-        ITableSelectControl<T> TableSelect<T>(string prompt = "", string? description = null);
+        ITableSelectControl<T> TableSelect<T>(string prompt = "", string? description = null) where T : class;
 
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace PromptPlusLibrary
         /// <param name="description">The description for input</param>
         /// <returns>An <see cref="ITableMultiSelectControl{T}"/> instance for further configuration and reading input.</returns>
         /// <typeparam name="T">type of item</typeparam>
-        ITableMultiSelectControl<T> TableMultiSelect<T>(string prompt = "", string? description = null);
+        ITableMultiSelectControl<T> TableMultiSelect<T>(string prompt = "", string? description = null) where T : class;
 
         /// <summary>
         /// Creates an File Select control with the specified prompt.

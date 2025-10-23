@@ -12,11 +12,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 
 namespace PromptPlusLibrary.Controls.TableMultiSelect
 {
-    internal sealed class TableMultiSelectControl<T> : BaseControlPrompt<T[]>, ITableMultiSelectControl<T>
+    internal sealed class TableMultiSelectControl<T> : BaseControlPrompt<T[]>, ITableMultiSelectControl<T> where T : class
     {
         private readonly Dictionary<TableStyles, Style> _optStyles = BaseControlOptions.LoadStyle<TableStyles>();
         private byte _pageSize = 10;
@@ -36,7 +37,9 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
         private byte _maxWidth = 30;
         private bool _isShowAllSeleceted;
         private bool _hideCountSelected;
-
+        private bool _useDefaultHistory;
+        private HistoryOptions? _historyOptions;
+        private IList<ItemHistory>? _itemHistories;
         private bool _hideHeaders;
         private bool _separatorRows;
         private bool _autoFill;
@@ -224,10 +227,23 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             return this;
         }
 
-        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.Default(IEnumerable<T> values)
+        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.Default(IEnumerable<T> values, bool useDefaultHistory)
         {
             ArgumentNullException.ThrowIfNull(values, nameof(values));
-            _defaultValues = default;
+            _defaultValues = values;
+            _useDefaultHistory = useDefaultHistory;
+            return this;
+        }
+
+        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.EnabledHistory(string filename, Action<IHistoryOptions>? options)
+        {
+            ArgumentNullException.ThrowIfNull(filename);
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                throw new ArgumentException("Filename cannot be empty or whitespace.", nameof(filename));
+            }
+            _historyOptions = new HistoryOptions(filename);
+            options?.Invoke(_historyOptions);
             return this;
         }
 
@@ -388,6 +404,22 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             _totalTableLenWidth = _columns.Count + 1 + _columns.Sum(x => x.OriginalWidth);
             _tableviewport = (0, _totalTableLenWidth);
 
+            if (_historyOptions != null)
+            {
+                _itemHistories = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
+                if (_useDefaultHistory && _itemHistories.Count > 0)
+                {
+                    try
+                    {
+                        _defaultValues = JsonSerializer.Deserialize<T[]>(_itemHistories[0].History!)!;
+                    }
+                    catch (Exception)
+                    {
+                        //invalid Deserialize history 
+                    }
+                }
+            }
+
             //Set Default value
             Optional<T> defvalue = Optional<T>.Empty();
             Optional<ItemTableRow<T>> defvaluepage = Optional<ItemTableRow<T>>.Empty();
@@ -489,6 +521,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                         _modeView = ModeView.MultiSelect;
                         T[] result = [.. _checkeditems.Select(x => x.Value)];
                         ResultCtrl = new ResultPrompt<T[]>(result, false);
+                        SaveHistory(result);
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
@@ -1892,6 +1925,19 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                 Value = value,
                 Disabled = disable
             });
+        }
+
+        private void SaveHistory(T[] value)
+        {
+            if (_historyOptions == null)
+            {
+                return;
+            }
+            string aux = JsonSerializer.Serialize<T[]>(value);
+            FileHistory.ClearHistory(_historyOptions!.FileNameValue);
+            IList<ItemHistory> hist = FileHistory.AddHistory(aux, _historyOptions!.ExpirationTimeValue, null);
+            FileHistory.SaveHistory(_historyOptions!.FileNameValue, hist);
+
         }
 
         #endregion

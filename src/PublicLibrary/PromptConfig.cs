@@ -4,6 +4,7 @@
 // ***************************************************************************************
 
 using PromptPlusLibrary.Core;
+using PromptPlusLibrary.PublicLibrary;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Frozen;
@@ -19,15 +20,26 @@ namespace PromptPlusLibrary
     /// <summary>
     /// Represents the common config properties for all controls.
     /// </summary>
-    public sealed class PromptConfig
+    internal sealed class PromptConfig : IPromptPlusConfig
     {
-        private static readonly Dictionary<SymbolType, bool> _symbolSupport = [];
-        private static readonly FrozenDictionary<SymbolType, (string value, string unicode)> _globalSymbols = InitSymbols();
+        private readonly Dictionary<SymbolType, bool> _symbolSupport = [];
+        private readonly Dictionary<SymbolType, (string value, string unicode)> _globalSymbols = InitSymbols();
         private readonly bool _isunicode;
         private char? _yesChar;
         private char? _noChar;
         private CultureInfo? _defaultCulture;
         private byte _maxLenghtFilterText = 15;
+        private Func<int, int, int, string> _paginationTemplate = (totalCount, selectedpage, pagecount) => string.Format(Messages.PaginationTemplate, totalCount, selectedpage, pagecount);
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public PromptConfig()
+        {
+            _isunicode = true;
+            AppCulture = Thread.CurrentThread.CurrentCulture;
+            DefaultCulture = AppCulture;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PromptConfig"/> class with the specified culture.
@@ -44,7 +56,7 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets or sets the character used for "Yes" input.
         /// </summary>
-        public char? YesChar
+        public char YesChar
         {
             get => _yesChar ?? Messages.YesChar.AsSpan()[0];
             set => _yesChar = value;
@@ -53,11 +65,12 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets or sets the character used for "No" input.
         /// </summary>
-        public char? NoChar
+        public char NoChar
         {
             get => _noChar ?? Messages.NoChar.AsSpan()[0];
             set => _noChar = value;
         }
+
         /// <summary>
         /// Gets or sets Max.Lenght Filter Text for control.Default valis is 15. The range is from 5 to 30, if the input is outside the range it will be automatically adjusted to the valid range.;
         /// </summary>
@@ -165,7 +178,6 @@ namespace PromptPlusLibrary
         /// </summary>
         public HotKey HotKeyTooltipChartBarSwitchLegend { get; set; } = HotKey.ChartBarSwitchLegend;
 
-        //ChartBarSwitchOrder
         /// <summary>
         /// Gets or sets <see cref="HotKey"/> default for toggler ChartBar Switch Order. Default value is 'F4'.
         /// </summary>
@@ -204,14 +216,40 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets or sets pagination template for Controls
         /// </summary>
-        public Func<int, int, int, string> PaginationTemplate { get; set; } = ShowPageTemplate;
+        public Func<int, int, int, string> PaginationTemplate 
+        {
+            get
+            {
+                return _paginationTemplate;
+            }
+            set
+            {
+                if (value == null)
+                {
+                    _paginationTemplate = (totalCount, selectedpage, pagecount) => string.Format(Messages.PaginationTemplate, totalCount, selectedpage, pagecount);
+                }
+                else
+                {
+                    _paginationTemplate = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Change global Symbols for PromptPLus
+        /// </summary>
+        /// <param name="symbolType">The symbol type</param>
+        /// <param name="ascivalue">string when it does not have unicode capability</param>
+        /// <param name="unicodevalue">string when it has unicode capability</param>
+        public void ChangeSymbol(SymbolType symbolType, string ascivalue, string unicodevalue)
+        {
+            ArgumentNullException.ThrowIfNullOrEmpty(nameof(ascivalue));
+            ArgumentNullException.ThrowIfNullOrEmpty(nameof(unicodevalue));
+            _globalSymbols[symbolType] = (ascivalue, unicodevalue);
+        }
 
         #region internal / private
 
-        private static string ShowPageTemplate(int totalCount, int selectedpage, int pagecount)
-        {
-            return string.Format(Messages.PaginationTemplate, totalCount, selectedpage, pagecount);
-        }
 
         internal CultureInfo AppCulture { get; init; }
 
@@ -242,7 +280,7 @@ namespace PromptPlusLibrary
             return isSupported ? unicode : value;
         }
 
-        private static FrozenDictionary<SymbolType, (string value, string unicode)> InitSymbols()
+        private static Dictionary<SymbolType, (string value, string unicode)> InitSymbols()
         {
             return new Dictionary<SymbolType, (string value, string unicode)>
             {
@@ -313,7 +351,7 @@ namespace PromptPlusLibrary
                 { SymbolType.InputDelimiterRight, ("]", "]") },
                 { SymbolType.InputDelimiterLeftMost, ("{", "{") },
                 { SymbolType.InputDelimiterRightMost, ("}", "}") }
-            }.ToFrozenDictionary();
+            };
         }
 
         private static readonly HashSet<string> SupportedCultures = ["en-us", "pt-br"];

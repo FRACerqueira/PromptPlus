@@ -376,7 +376,7 @@ namespace PromptPlusLibrary.Controls
             return ctrl;
         }
 
-        public ITableSelectControl<T> TableSelect<T>(string prompt = "", string? description = null)
+        public ITableSelectControl<T> TableSelect<T>(string prompt = "", string? description = null) where T : class
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);
@@ -387,7 +387,7 @@ namespace PromptPlusLibrary.Controls
             return new TableSelectControl<T>(false, console, promptConfig, opt);
         }
 
-        public ITableMultiSelectControl<T> TableMultiSelect<T>(string prompt = "", string? description = null)
+        public ITableMultiSelectControl<T> TableMultiSelect<T>(string prompt = "", string? description = null) where T : class
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);

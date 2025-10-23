@@ -14,7 +14,7 @@ namespace PromptPlusLibrary
     /// Represents the interface with all Methods of the Table MultiSelect Control
     /// </summary>
     /// <typeparam name="T">The type of items in the collection.</typeparam>
-    public interface ITableMultiSelectControl<T>
+    public interface ITableMultiSelectControl<T> where T : class
     {
         /// <summary>
         /// Applies custom options to the control.
@@ -28,9 +28,21 @@ namespace PromptPlusLibrary
         /// Sets the initial selected values.
         /// </summary>
         /// <param name="values">The initial values selected.</param>
+        /// <param name="usedefaultHistory">Indicates whether to use the default value from history (if enabled).</param>
         /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="values"/> is <c>null</c>.</exception>
-        ITableMultiSelectControl<T> Default(IEnumerable<T> values);
+        ITableMultiSelectControl<T> Default(IEnumerable<T> values, bool usedefaultHistory = true);
+
+
+        /// <summary>
+        /// Enables history and applies custom options to the history feature.
+        /// </summary>
+        /// <param name="filename">The name of the file to store history.</param>
+        /// <param name="options">An action to configure <see cref="IHistoryOptions"/>. Optional.</param>
+        /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="filename"/> is <c>null</c>.</exception>
+        ITableMultiSelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+
 
         /// <summary>
         /// Set validation predicate for selected item.

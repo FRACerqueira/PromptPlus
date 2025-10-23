@@ -4,6 +4,7 @@
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
+----
 ### V.4.2.0
 [**Main**](../README.md) | [**Top**](#promptplus-previous-versions)
 
@@ -85,6 +86,7 @@
     - Refinement of Unicode symbol rendering in all controls (Corret render)
 - Removed Control Pipeline
 
+----
 ### V4.1.0
 [**Main**](../README.md) | [**Top**](#promptplus-previous-versions)
 
@@ -115,6 +117,7 @@
 **Special thanks to [ividyon](https://github.com/ividyon) for suggesting improvements and actively participating in this release**
 
 
+----
 ### V4.0.5
 [**Main**](../README.md) | [**Top**](#promptplus-previous-versions)
 
@@ -142,6 +145,7 @@
 
 **Special thanks to [ividyon](https://github.com/ividyon) for spell checking corrections, all documentation, fixed credits (MIT License Copyright) and wrong method/property names**
 
+----
 ### V4.0.4
 [**Main**](../README.md) | [**Top**](#promptplus-previous-versions)
 
@@ -154,6 +158,7 @@
 - Added auto create Environment 'PromptPlusConvertCodePage' to custom automate convert codepage to unicode-codepage
     - Default value is = '850;65001'
 
+----
 ### V4.0.3
 [**Main**](../README.md) | [**Top**](#promptplus-previous-versions)
 
@@ -163,6 +168,7 @@
     - Not show gradient when set ProgressBarType.Fill
 - Improve testability of result classes/struct (Internal to public)
 
+----
 ### V4.0.2
 [**Main**](../README.md) | [**Top**](#promptplus-previous-versions)
 
@@ -174,6 +180,7 @@
     - IsYesResponseKey(this ConsoleKeyInfo keyinfo)
     - IsNoResponseKey(this ConsoleKeyInfo keyinfo)
 
+----
 ### V4.0.0
 [**Main**](../README.md) | [**Top**](#promptplus-previous-versions)
 

@@ -14,7 +14,7 @@ namespace PromptPlusLibrary
     /// Represents the interface with all Methods of the Table Select Control
     /// </summary>
     /// <typeparam name="T">The type of items in the collection.</typeparam>
-    public interface ITableSelectControl<T>
+    public interface ITableSelectControl<T> where T : class
     {
         /// <summary>
         /// Applies custom options to the control.
@@ -218,6 +218,6 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
         /// <returns>The result of the Table Select Control execution.</returns>
-        ResultPrompt<T> Run(CancellationToken token = default);
+        ResultPrompt<T?> Run(CancellationToken token = default);
     }
 }
