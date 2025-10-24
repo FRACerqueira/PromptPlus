@@ -89,6 +89,7 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Sets the file search pattern for filtering displayed items.
         /// Default is '*'.
+        /// </summary>
         /// <param name="value">The search pattern (e.g., "*.txt", "*.cs").</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         IFileSelectControl SearchPattern(string value);
@@ -108,6 +109,13 @@ namespace PromptPlusLibrary
         /// <param name="value">The full path to the root directory.</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         IFileSelectControl Root(string value);
+
+        /// <summary>
+        /// Sets a validation rule for file and folder selection.
+        /// </summary>
+        /// <param name="validselect">Function that evaluates if an item can be selected.</param>
+        /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
+        IFileSelectControl PredicateSelected(Func<ItemFile, bool> validselect);
 
         /// <summary>
         /// Sets a validation rule with custom error messaging for file and folder selection.
