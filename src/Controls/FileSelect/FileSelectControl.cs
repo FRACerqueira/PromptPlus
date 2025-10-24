@@ -33,7 +33,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
         private string _originalsearchPattern = "*";
         private byte _pageSize = 10;
         private string _root = AppDomain.CurrentDomain.BaseDirectory;
-        private Func<ItemFile, (bool,string?)>? _predicatevalidselect;
+        private Func<ItemFile, (bool, string?)>? _predicatevalidselect;
         private Func<ItemFile, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<ItemFile>>? _localpaginator;
         private EmacsBuffer _filterBuffer;
@@ -155,7 +155,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -165,7 +165,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
             return this;
         }
 
-        public IFileSelectControl PredicateSelected(Func<ItemFile, (bool,string?)> validselect)
+        public IFileSelectControl PredicateSelected(Func<ItemFile, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -467,7 +467,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                             _indexTooptip = 0;
                             _localpaginator.SelectedItem.IsExpanded = true;
                             _localpaginator.SelectedItem.Status = NodeStatus.Loading;
-                            var newitems = EnqueueNewitems(_localpaginator.SelectedItem.UniqueId,
+                            (string, bool, List<ItemNodeControl<ItemFile>>) newitems = EnqueueNewitems(_localpaginator.SelectedItem.UniqueId,
                                 _localpaginator.SelectedItem.Level,
                                 _localpaginator.SelectedItem.Value.FullPath);
                             _resultTask.Enqueue(newitems);
@@ -919,14 +919,14 @@ namespace PromptPlusLibrary.Controls.FileSelect
             {
                 return string.Empty;
             }
-            var parent = item.ParentUniqueId;
+            string? parent = item.ParentUniqueId;
             var aux = new Stack<string>();
             for (int i = 0; i < item.Level - 1; i++)
             {
-                var syb = ConfigPlus.GetSymbol(SymbolType.TreeLinevertical);
+                string syb = ConfigPlus.GetSymbol(SymbolType.TreeLinevertical);
                 if (!string.IsNullOrEmpty(parent))
                 {
-                    var index = _items.FindIndex(x => x.UniqueId == parent);
+                    int index = _items.FindIndex(x => x.UniqueId == parent);
                     if (_items[index].LastItem)
                     {
                         syb = new string(' ', ConfigPlus.GetSymbol(SymbolType.TreeLinevertical).Length);
@@ -935,7 +935,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 }
                 aux.Push(syb);
             }
-            while (aux.TryPop(out var indentation))
+            while (aux.TryPop(out string? indentation))
             {
                 result.Append(indentation);
             }
@@ -983,13 +983,13 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 {
                     filter = _searchPattern;
                 }
-                var qtd = di.GetDirectories(filter, GetEnumerationOptions()).Length;
+                int qtd = di.GetDirectories(filter, GetEnumerationOptions()).Length;
                 if (!_onlyFolders)
                 {
                     qtd += di.GetFiles(_searchPattern, GetEnumerationOptions()).Length;
                 }
                 if (_hideZeroEntries && qtd == 0)
-                { 
+                {
                     return null;
                 }
                 if (_hideSize)

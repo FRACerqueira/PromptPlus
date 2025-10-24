@@ -12,13 +12,13 @@ namespace PromptPlusLibrary
     /// <summary>
     /// Provides functionality for configuring and interacting with a Node MultiSelect Control.
     /// </summary>
-    /// <typeparam name="T">type of Node</typeparam>
+    /// <typeparam name="T">The type of node in the tree structure.</typeparam>
     public interface INodeTreeMultiSelectControl<T>
     {
         /// <summary>
         /// Dynamically changes the description of the Select based on its value.
         /// </summary>
-        /// <param name="value">A function to determine the description based on the current value.</param>
+        /// <param name="value">A function to determine the description based on the current value. Must not be <c>null</c>.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
         INodeTreeMultiSelectControl<T> ChangeDescription(Func<T, string> value);
@@ -26,123 +26,126 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Performs an interaction with each item in the collection.
         /// </summary>
-        /// <param name="items">The collection.</param>
-        /// <param name="interactionAction">The interaction action.</param>
+        /// <param name="items">The collection of items to interact with.</param>
+        /// <param name="interactionAction">The action to perform on each item. Must not be <c>null</c>.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="interactionAction"/> is <c>null</c>.</exception>
         INodeTreeMultiSelectControl<T> Interaction(IEnumerable<T> items, Action<T, INodeTreeMultiSelectControl<T>> interactionAction);
 
         /// <summary>
-        /// Applies custom options to the control.
+        /// Applies custom options to configure the control's behavior.
         /// </summary>
-        /// <param name="options">An action to configure <see cref="IControlOptions"/>. Cannot be <c>null</c>.</param>
+        /// <param name="options">An action to configure <see cref="IControlOptions"/>. Must not be <c>null</c>.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> is <c>null</c>.</exception>
         INodeTreeMultiSelectControl<T> Options(Action<IControlOptions> options);
 
         /// <summary>
-        /// Overwrites styles for the Node MultiSelect control.
+        /// Overwrites the visual styles for specific elements of the Node MultiSelect control.
         /// </summary>
-        /// <param name="styleType">The <see cref="FileStyles"/> to apply.</param>
-        /// <param name="style">The <see cref="Style"/> to use. Cannot be <c>null</c>.</param>
+        /// <param name="styleType">The <see cref="NodeTreeStyles"/> element to style.</param>
+        /// <param name="style">The <see cref="Style"/> to apply. Must not be <c>null</c>.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="style"/> is <c>null</c>.</exception>
         INodeTreeMultiSelectControl<T> Styles(NodeTreeStyles styleType, Style style);
 
         /// <summary>
-        /// Sets the function to display text for items in the list. Default is <c>Item.ToString()</c>.
+        /// Sets the function to display text for items in the list.
         /// </summary>
-        /// <param name="value">Function to display item text.</param>
+        /// <param name="value">Function to convert an item to its display text. Must not be <c>null</c>.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
+        /// <remarks>If not set, defaults to using <c>Item.ToString()</c>.</remarks>
         INodeTreeMultiSelectControl<T> TextSelector(Func<T, string> value);
 
         /// <summary>
-        /// Add a node 
+        /// Adds a root node to the tree structure.
         /// </summary>
-        /// <param name="value">value node</param>
-        /// <param name="valuechecked">If <c>true</c>, the item is initial value checked. Default is false</param>
-        /// <param name="nodeseparator">The separator character used to build the node path. Defaults to "|".</param>
+        /// <param name="value">The value for the root node. Must be unique.</param>
+        /// <param name="valuechecked">If <c>true</c>, the node is initially checked. Default is <c>false</c>.</param>
+        /// <param name="nodeseparator">The separator character for the node path. Must not be empty. Default is "|".</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="InvalidOperationException">Thrown if <paramref name="value"/> already exists.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if <paramref name="value"/> already exists in the tree.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="nodeseparator"/> is empty or null.</exception>
         INodeTreeMultiSelectControl<T> AddRootNode(T value, bool valuechecked = false, string nodeseparator = "|");
 
         /// <summary>
-        /// Add a Child node
+        /// Adds a child node to an existing parent node in the tree.
         /// </summary>
-        /// <param name="parent">value parent</param>
-        /// <param name="value">value node</param>
-        /// <param name="valuechecked">If <c>true</c>, the item is initial value checked. Default is false</param>
+        /// <param name="parent">The parent node to add the child to. Must exist in the tree.</param>
+        /// <param name="value">The value for the child node.</param>
+        /// <param name="valuechecked">If <c>true</c>, the node is initially checked. Default is <c>false</c>.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="InvalidOperationException">Thrown if <paramref name="parent"/> not found.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if <paramref name="parent"/> is not found in the tree.</exception>
         INodeTreeMultiSelectControl<T> AddChildNode(T parent, T value, bool valuechecked = false);
 
         /// <summary>
-        /// Sets the maximum number of items to view per page. Default value is 10.
+        /// Sets the maximum number of items displayed per page in the control.
         /// </summary>
-        /// <param name="value">Number of maximum items.</param>
+        /// <param name="value">Number of items per page. Must be greater than 0.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
+        /// <remarks>Default value is 10 items per page.</remarks>
         INodeTreeMultiSelectControl<T> PageSize(byte value);
 
         /// <summary>
-        /// Set validation predicate for selected item.
+        /// Sets a validation predicate to determine if an item can be selected.
         /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable.</param>
+        /// <param name="validselect">A function that evaluates if an item is valid for selection.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         INodeTreeMultiSelectControl<T> PredicateSelected(Func<T, bool> validselect);
 
         /// <summary>
-        /// Set validation predicate for selected item.
+        /// Sets a validation predicate with custom message for item selection.
         /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <param name="validselect">A function returning a tuple of (isValid, errorMessage) for selection validation.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         INodeTreeMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
 
         /// <summary>
-        /// Set validation predicate for disabled item.
+        /// Sets a predicate to determine if an item should be disabled.
         /// </summary>
-        /// <param name="validdisabled">A predicate function that determines whether an Item is considered disable.</param>
+        /// <param name="validdisabled">A function that evaluates if an item should be disabled.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         INodeTreeMultiSelectControl<T> PredicateDisabled(Func<T, bool> validdisabled);
 
         /// <summary>
-        /// Defines a minimum and maximum (optional) range of items selected in the list
+        /// Defines the allowed range for the number of selected items.
         /// </summary>
-        /// <param name="minvalue">Minimum number of items</param>
-        /// <param name="maxvalue">Maximum number of items</param>
+        /// <param name="minvalue">Minimum number of items that must be selected.</param>
+        /// <param name="maxvalue">Optional maximum number of items that can be selected.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="minvalue"/> is greater than or equal to <paramref name="maxvalue"/>.</exception>
         INodeTreeMultiSelectControl<T> Range(int minvalue, int? maxvalue = null);
 
         /// <summary>
-        /// Hide tip count selected. Default false.
+        /// Controls the visibility of the selected items count tip.
         /// </summary>
-        /// <param name="value">If True, it shows the tip with count selected, otherwise nothing.</param>
+        /// <param name="value">If <c>true</c>, hides the selected items count. Default is <c>true</c>.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         INodeTreeMultiSelectControl<T> HideCountSelected(bool value = true);
 
         /// <summary>
-        /// Sets the maximum width for the seleted items.Default value is 30 characters.
+        /// Sets the maximum width for displaying selected items.
         /// </summary>
-        /// <param name="maxWidth">The maximum width of the input in characters.</param>
+        /// <param name="maxWidth">Maximum number of characters to display. Must be at least 10.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxWidth"/> is less than 10.</exception>
+        /// <remarks>Default value is 30 characters.</remarks>
         INodeTreeMultiSelectControl<T> MaxWidth(byte maxWidth);
 
         /// <summary>
-        /// Hide count children. Default is false
+        /// Controls the visibility of the children count display.
         /// </summary>
-        /// <param name="value">true Show size, otherwise 'no'</param>
+        /// <param name="value">If <c>true</c>, hides the children count. Default is <c>true</c>.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
         INodeTreeMultiSelectControl<T> HideSize(bool value = true);
 
         /// <summary>
-        /// Runs the Node MultiSelect Control and returns the result.
+        /// Executes the Node MultiSelect Control operation.
         /// </summary>
-        /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
-        /// <returns>The result of the Node MultiSelect Control execution.</returns>
+        /// <param name="token">Optional cancellation token to cancel the operation.</param>
+        /// <returns>A <see cref="ResultPrompt{T}"/> containing an array of selected items.</returns>
         ResultPrompt<T[]> Run(CancellationToken token = default);
     }
 }

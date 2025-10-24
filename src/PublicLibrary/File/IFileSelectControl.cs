@@ -9,8 +9,11 @@ using System.Threading;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Provides functionality for configuring and interacting with a File Select Control.
+    /// Provides functionality for configuring and managing a file system-based selection control.
     /// </summary>
+    /// <remarks>
+    /// Supports file and folder navigation, filtering, and single item selection with customizable display options.
+    /// </remarks>
     public interface IFileSelectControl
     {
         /// <summary>
@@ -31,16 +34,18 @@ namespace PromptPlusLibrary
         IFileSelectControl Styles(FileStyles styleType, Style style);
 
         /// <summary>
-        /// Load only Folders on File Select Control. Default is false
+        /// Restricts selection to folders only.
+        /// Default is false (shows both files and folders).
         /// </summary>
-        /// <param name="value">true only Folders, otherwise Folders and files</param>
+        /// <param name="value">When true, displays only folders; when false, shows both files and folders.</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         IFileSelectControl OnlyFolders(bool value = true);
 
         /// <summary>
-        /// Hide folder and file size in File Select Control. Default is false
+        /// Controls the visibility of size information for files and folders.
+        /// Default is false.
         /// </summary>
-        /// <param name="value">true Show size, otherwise 'no'</param>
+        /// <param name="value">When true, hides size information; when false, displays it.</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         IFileSelectControl HideSizeInfo(bool value = true);
 
@@ -52,10 +57,10 @@ namespace PromptPlusLibrary
         IFileSelectControl HideZeroEntries(bool value = true);
 
         /// <summary>
-        /// Defines a minimum and maximum (optional) range of size to discovery file
+        /// Filters files based on their size in bytes.
         /// </summary>
-        /// <param name="minvalue">Minimum number of bytes</param>
-        /// <param name="maxvalue">Maximum number of bytes</param>
+        /// <param name="minvalue">Minimum file size in bytes to include.</param>
+        /// <param name="maxvalue">Maximum file size in bytes to include. Defaults to <see cref="long.MaxValue"/>.</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         IFileSelectControl HideFilesBySize(long minvalue, long maxvalue = long.MaxValue);
 
@@ -74,52 +79,47 @@ namespace PromptPlusLibrary
         IFileSelectControl AcceptSystemAttributes(bool value = true);
 
         /// <summary>
-        /// Accept Search Filter strategy. Default valu is <see cref="FilterMode.Disabled"/>
+        /// Configures the search filter functionality.
+        /// Default value is <see cref="FilterMode.Disabled"/>.
         /// </summary>
-        /// <param name="filter">Filter strategy for filter items.Default value is <see cref="FilterMode.Contains"/>.For the 'Contains' filter.</param>
+        /// <param name="filter">The filtering strategy to apply. Defaults to <see cref="FilterMode.Contains"/>.</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         IFileSelectControl EnabledSearchFilter(FilterMode filter = FilterMode.Contains);
 
         /// <summary>
-        /// Search pattern. Default is '*'
-        /// </summary>
-        /// <param name="value">Search pattern</param>
+        /// Sets the file search pattern for filtering displayed items.
+        /// Default is '*'.
+        /// <param name="value">The search pattern (e.g., "*.txt", "*.cs").</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         IFileSelectControl SearchPattern(string value);
 
         /// <summary>
-        /// Sets the maximum number of items to view per page. Default value is 10.
+        /// Sets the maximum number of items to display per page.
         /// </summary>
-        /// <param name="value">Number of maximum items.</param>
+        /// <param name="value">Number of items per page (minimum 1).</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
         IFileSelectControl PageSize(byte value);
 
         /// <summary>
-        /// Set folder root to File Select Control. Default value is Current folder of execution.
+        /// Sets the root directory for file browsing.
+        /// Default is current execution directory.
         /// </summary>
-        /// <param name="value">full path folder root</param>
+        /// <param name="value">The full path to the root directory.</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         IFileSelectControl Root(string value);
 
         /// <summary>
-        /// Set validation predicate for selected item.
+        /// Sets a validation rule with custom error messaging for file and folder selection.
         /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable.</param>
-        /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
-        IFileSelectControl PredicateSelected(Func<ItemFile, bool> validselect);
-
-        /// <summary>
-        /// Set validation predicate for selected item.
-        /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <param name="validselect">Function that returns validation result and optional error message.</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         IFileSelectControl PredicateSelected(Func<ItemFile, (bool, string?)> validselect);
 
         /// <summary>
-        /// Set validation predicate for disabled item.
+        /// Sets a validation rule for determining which items should be disabled.
         /// </summary>
-        /// <param name="validdisabled">A predicate function that determines whether an Item is considered disable.</param>
+        /// <param name="validdisabled">Function that evaluates if an item should be disabled.</param>
         /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
         IFileSelectControl PredicateDisabled(Func<ItemFile, bool> validdisabled);
 
@@ -127,7 +127,7 @@ namespace PromptPlusLibrary
         /// Runs the File Select Control and returns the result.
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
-        /// <returns>The result of the File Select Control execution.</returns>
+        /// <returns>A <see cref="ResultPrompt{T}"/> containing the selected <see cref="ItemFile"/>.</returns>
         ResultPrompt<ItemFile> Run(CancellationToken token = default);
 
     }

@@ -94,8 +94,8 @@ namespace PromptPlusLibrary.Controls
                 UnSelect();
                 return false;
             }
-            var oldindex = SelectedIndex;
-            var oldpage = SelectedPage;
+            int oldindex = SelectedIndex;
+            int oldpage = SelectedPage;
             (int index, int page) = FindValidItem(0, forward: true);
             if (index >= 0)
             {
@@ -113,8 +113,8 @@ namespace PromptPlusLibrary.Controls
                 UnSelect();
                 return false;
             }
-            var oldindex = SelectedIndex;
-            var oldpage = SelectedPage;
+            int oldindex = SelectedIndex;
+            int oldpage = SelectedPage;
             (int index, int page) = FindValidItem(Count - 1, forward: false);
             if (index >= 0)
             {
@@ -132,8 +132,8 @@ namespace PromptPlusLibrary.Controls
                 UnSelect();
                 return false;
             }
-            var oldindex = SelectedIndex;
-            var oldpage = SelectedPage;
+            int oldindex = SelectedIndex;
+            int oldpage = SelectedPage;
             (int index, int page) = FindValidItem(SelectedIndex + 1, forward: true);
             if (index >= 0)
             {
@@ -151,8 +151,8 @@ namespace PromptPlusLibrary.Controls
                 UnSelect();
                 return false;
             }
-            var oldindex = SelectedIndex;
-            var oldpage = SelectedPage;
+            int oldindex = SelectedIndex;
+            int oldpage = SelectedPage;
             (int index, int page) = FindValidItem(SelectedIndex - 1, forward: false);
             if (index >= 0)
             {
@@ -171,8 +171,8 @@ namespace PromptPlusLibrary.Controls
                 return false;
             }
 
-            var oldindex = SelectedIndex;
-            var oldpage = SelectedPage;
+            int oldindex = SelectedIndex;
+            int oldpage = SelectedPage;
             (int index, int page) = FindValidItem(TotalCount - 1, forward: false);
             if (index >= 0)
             {
@@ -192,8 +192,8 @@ namespace PromptPlusLibrary.Controls
                 UnSelect();
                 return false;
             }
-            var oldindex = SelectedIndex;
-            var oldpage = SelectedPage; 
+            int oldindex = SelectedIndex;
+            int oldpage = SelectedPage;
             SelectedPage = 0;
             MoveToSelectIndex(selectedIndexOption);
             return (oldindex != SelectedIndex || oldpage != SelectedPage);
@@ -211,8 +211,8 @@ namespace PromptPlusLibrary.Controls
                 MoveToSelectIndex(selectedIndexOption);
                 return false;
             }
-            var oldindex = SelectedIndex;
-            var oldpage = SelectedPage;
+            int oldindex = SelectedIndex;
+            int oldpage = SelectedPage;
             SelectedPage = (SelectedPage + 1) % PageCount;
             MoveToSelectIndex(selectedIndexOption);
             return (oldindex != SelectedIndex || oldpage != SelectedPage);
@@ -230,8 +230,8 @@ namespace PromptPlusLibrary.Controls
                 MoveToSelectIndex(selectedIndexOption);
                 return false;
             }
-            var oldindex = SelectedIndex;
-            var oldpage = SelectedPage;
+            int oldindex = SelectedIndex;
+            int oldpage = SelectedPage;
             SelectedPage = (SelectedPage - 1 + PageCount) % PageCount;
             MoveToSelectIndex(selectedIndexOption);
             return (oldindex != SelectedIndex || oldpage != SelectedPage);
@@ -293,7 +293,7 @@ namespace PromptPlusLibrary.Controls
 
         private void InitializeCollection()
         {
-            if (_filterMode != FilterMode.Disabled && _textSelector != null && !string.IsNullOrEmpty(FilterTerm))
+            if (_filterMode != FilterMode.Disabled && _textSelector != null)
             {
                 if (_filterMode == FilterMode.StartsWith)
                 {
@@ -305,12 +305,15 @@ namespace PromptPlusLibrary.Controls
                     _filteredItems = [.. _items!.Where(x => _textSelector(x).Contains(FilterTerm, StringComparison.InvariantCultureIgnoreCase))];
                 }
             }
-            else 
+            else
             {
                 if (_firstDisabled)
                 {
                     _filteredItems = [.. _items!];
-                    _items = null;
+                    if (_filterMode == FilterMode.Disabled)
+                    {
+                        _items = null;
+                    }
                     _firstDisabled = false;
                 }
             }

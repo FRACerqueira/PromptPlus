@@ -21,7 +21,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
     {
         private readonly Dictionary<TableStyles, Style> _optStyles = BaseControlOptions.LoadStyle<TableStyles>();
         private byte _pageSize = 10;
-        private Func<T, (bool,string?)>? _predicatevalidselect;
+        private Func<T, (bool, string?)>? _predicatevalidselect;
         private readonly List<ItemTableRow<T>> _items = [];
         private readonly List<ItemTableRow<T>> _checkeditems = [];
         private Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
@@ -93,7 +93,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
 
         #region  ITable...
 
-        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
+        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -105,7 +105,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);

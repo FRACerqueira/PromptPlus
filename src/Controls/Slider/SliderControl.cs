@@ -676,7 +676,7 @@ namespace PromptPlusLibrary.Controls.Slider
             return tooltip.ToString();
         }
 
-         private void LoadTooltipToggle()
+        private void LoadTooltipToggle()
         {
             foreach (ModeView mode in Enum.GetValues<ModeView>())
             {

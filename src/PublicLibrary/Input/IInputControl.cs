@@ -53,7 +53,7 @@ namespace PromptPlusLibrary
         /// The value of <paramref name="maxWidth"/> must be less than <paramref name="maxLength"/> otherwise, it will be set to equal.
         /// </remarks>
         /// <param name="maxLength">The maximum number of characters allowed for the input.</param>
-        /// <param name="maxWidth">>The maximum width of the input in characters.The value must be less than <paramref name="maxLength"/> otherwise, it will be equal.</param>
+        /// <param name="maxWidth">The maximum width of the input in characters. The value must be less than <paramref name="maxLength"/> otherwise, it will be equal.</param>
         /// <returns>The current <see cref="IInputControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxLength"/> is less than 1.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxWidth"/> is less than 1.</exception>
@@ -84,7 +84,6 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="value">The character to use as the mask. Defaults is '#'.</param>
         /// <param name="enabledView">Enables the user to toggle the visibility of the masked input. Default value is true.</param>
-
         /// <returns>The current <see cref="IInputControl"/> instance for chaining.</returns>
         IInputControl IsSecret(char? value = null, bool enabledView = true);
 
@@ -131,7 +130,7 @@ namespace PromptPlusLibrary
         /// Enabled History and applies custom options to History feature. 
         /// </summary>
         /// <remarks>
-        ///  The Defaults hotkey to Hisyory is <see cref="PromptConfig.HotKeyShowHistory"/>.
+        ///  The Default hotkey to History is <see cref="PromptConfig.HotKeyShowHistory"/>.
         /// </remarks>
         /// <param name="filename">The name of the file to store history.</param>
         /// <param name="options">An action to configure the <see cref="IHistoryOptions"/>. Cannot be <c>null</c>.</param>

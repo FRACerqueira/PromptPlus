@@ -47,31 +47,6 @@ namespace PromptPlusLibrary
             return (keyinfo.KeyChar == 13 && keyinfo.Modifiers == 0) || (keyinfo.KeyChar == 10 && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.J && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
-        private static bool IsEqualChar(this ConsoleKeyInfo consoleKeyInfo, char charB)
-        {
-            return char.ToLower(consoleKeyInfo.KeyChar) == char.ToLower(charB) && !consoleKeyInfo.Modifiers.HasFlag(ConsoleModifiers.Alt | ConsoleModifiers.Control);
-        }
-
-        /// <summary>
-        /// Check ConsoleKeyInfo is Yes key
-        /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
-        public static bool IsYesResponseKey(this ConsoleKeyInfo keyinfo)
-        {
-            return keyinfo.IsEqualChar(PromptPlus.Config.YesChar);
-        }
-
-        /// <summary>
-        /// Check ConsoleKeyInfo is Yes key
-        /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
-        public static bool IsNoResponseKey(this ConsoleKeyInfo keyinfo)
-        {
-            return keyinfo.IsEqualChar(PromptPlus.Config.NoChar);
-        }
-
         /// <summary>
         /// Check ConsoleKeyInfo is Abort key Control
         /// </summary>
@@ -81,8 +56,6 @@ namespace PromptPlusLibrary
         {
             return keyinfo.Equals(PromptPlus.Config.HotKeyAbortKeyPress.KeyInfo);
         }
-
-
 
         /// <summary>
         /// Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
@@ -390,27 +363,6 @@ namespace PromptPlusLibrary
         public static bool IsPressEscKey(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.Escape && keyinfo.Modifiers == 0;
-        }
-
-        internal static bool IsPressCtrlCKey(this ConsoleKeyInfo keyinfo)
-        {
-            return keyinfo.Key == ConsoleKey.C && keyinfo.Modifiers == ConsoleModifiers.Control;
-        }
-
-        /// <summary>
-        /// Convert <see cref="ConsoleKeyInfo"/> KeyChar to Uppercase / Lowercase
-        /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to convert</param>
-        /// <param name="value">The <see cref="CaseOptions"/></param>
-        /// <returns><see cref="ConsoleKeyInfo"/> converted</returns>
-        public static ConsoleKeyInfo ToCase(this ConsoleKeyInfo keyinfo, CaseOptions value)
-        {
-            return value switch
-            {
-                CaseOptions.Uppercase => new ConsoleKeyInfo(char.ToUpper(keyinfo.KeyChar), keyinfo.Key, keyinfo.Modifiers.HasFlag(ConsoleModifiers.Shift), keyinfo.Modifiers.HasFlag(ConsoleModifiers.Alt), keyinfo.Modifiers.HasFlag(ConsoleModifiers.Control)),
-                CaseOptions.Lowercase => new ConsoleKeyInfo(char.ToLower(keyinfo.KeyChar), keyinfo.Key, keyinfo.Modifiers.HasFlag(ConsoleModifiers.Shift), keyinfo.Modifiers.HasFlag(ConsoleModifiers.Alt), keyinfo.Modifiers.HasFlag(ConsoleModifiers.Control)),
-                _ => keyinfo,
-            };
         }
 
     }

@@ -21,18 +21,6 @@ namespace PromptPlusLibrary.Core
             _Styles = Init();
         }
 
-        /// <summary>
-        /// Apply style current instance of control
-        /// </summary>
-        /// <param name="styleControl"><see cref="ComponentStyles"/> to apply</param>
-        /// <param name="value"><see cref="Style"/> value to apply</param>
-        /// <returns><see cref="Style"/></returns>
-        public static Style ApplyStyle(ComponentStyles styleControl, Style value)
-        {
-            _Styles[styleControl] = value;
-            return _Styles[styleControl];
-        }
-
         public static Style GetStyle(ComponentStyles ComponentStyles)
         {
             return _Styles[ComponentStyles];
@@ -179,15 +167,5 @@ namespace PromptPlusLibrary.Core
             return auxdic;
         }
 
-        public static void UpdateBackgoundColor(Color backgoundcolor)
-        {
-            IEnumerable<ComponentStyles> aux = Enum.GetValues<ComponentStyles>().Cast<ComponentStyles>();
-            foreach (ComponentStyles item in aux)
-            {
-                Style stl = _Styles[item];
-                stl = stl.Background(backgoundcolor);
-                _Styles[item] = stl;
-            }
-        }
     }
 }

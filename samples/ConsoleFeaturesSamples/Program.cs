@@ -97,7 +97,6 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Console.WriteLine($"Profile Name : {PromptPlus.Console.ProfileName}");
             PromptPlus.Console.WriteLine($"Current Buffer: {PromptPlus.Console.CurrentBuffer}");
             PromptPlus.Console.WriteLine($"IsTerminal: {PromptPlus.Console.IsTerminal}");
-            PromptPlus.Console.WriteLine($"CodePage : {PromptPlus.Console.CodePage}");
             PromptPlus.Console.WriteLine($"IsUnicodeSupported: {PromptPlus.Console.IsUnicodeSupported}");
             PromptPlus.Console.WriteLine($"OutputEncoding: {PromptPlus.Console.OutputEncoding.EncodingName}");
             PromptPlus.Console.WriteLine($"ColorDepth: {PromptPlus.Console.ColorDepth}");

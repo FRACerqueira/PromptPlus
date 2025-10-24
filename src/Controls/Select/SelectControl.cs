@@ -20,7 +20,7 @@ namespace PromptPlusLibrary.Controls.Select
         private readonly Dictionary<SelectStyles, Style> _optStyles = BaseControlOptions.LoadStyle<SelectStyles>();
         private readonly EmacsBuffer _filterBuffer;
         private readonly List<ItemSelect<T>> _items = [];
-        private Func<T, (bool,string?)>? _predicatevalidselect;
+        private Func<T, (bool, string?)>? _predicatevalidselect;
         private int _sequence;
         private bool _autoSelect;
         private Func<T, string>? _changeDescription;
@@ -61,7 +61,7 @@ namespace PromptPlusLibrary.Controls.Select
 
         #region ISelectControl
 
-        public ISelectControl<T> PredicateSelected(Func<T, (bool,string?)> validselect)
+        public ISelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -73,7 +73,7 @@ namespace PromptPlusLibrary.Controls.Select
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -437,7 +437,7 @@ namespace PromptPlusLibrary.Controls.Select
                     }
                     #endregion
 
-                   else  if (_filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
+                    else if (_filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer.Clear();
@@ -547,7 +547,7 @@ namespace PromptPlusLibrary.Controls.Select
                         if (_filterCaseinsensitive)
                         {
                             filter = filter.ToUpperInvariant();
-                            _lastinput  = _lastinput.ToUpperInvariant();
+                            _lastinput = _lastinput.ToUpperInvariant();
                         }
                         if (filter! != _lastinput)
                         {

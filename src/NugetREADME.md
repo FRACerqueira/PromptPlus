@@ -1,6 +1,6 @@
-# **Welcome to PromptPlus**
+![HtmlPdfPLus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
-### <img align="left" width="100" height="100" src="https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png">
+# **Welcome to PromptPlus**
 
 **The best tool to Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
  **PromptPlus** was developed in C# with the **.NET 8**, **.NET 9**, **.NET 10** target frameworks.
@@ -42,7 +42,6 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Windows Terminal (WSL 2)
 - macOS
     - Terminal.app
-
 
 ## License
 

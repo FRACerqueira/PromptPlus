@@ -7,12 +7,12 @@ using PromptPlusLibrary.Core;
 using PromptPlusLibrary.PublicLibrary;
 using PromptPlusLibrary.Resources;
 using System;
-using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Text.Json.Serialization;
 using System.Threading;
 
 namespace PromptPlusLibrary
@@ -20,7 +20,7 @@ namespace PromptPlusLibrary
     /// <summary>
     /// Represents the common config properties for all controls.
     /// </summary>
-    internal sealed class PromptConfig : IPromptPlusConfig
+    public sealed class PromptConfig : IPromptPlusConfig
     {
         private readonly Dictionary<SymbolType, bool> _symbolSupport = [];
         private readonly Dictionary<SymbolType, (string value, string unicode)> _globalSymbols = InitSymbols();
@@ -121,6 +121,7 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets or sets the default culture to use for displaying values control.
         /// </summary>
+        [JsonIgnore]
         public CultureInfo DefaultCulture
         {
             get => _defaultCulture ?? Thread.CurrentThread.CurrentCulture;
@@ -156,16 +157,19 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets the <see cref="HotKey"/> for abort control. 'ESC'
         /// </summary>
+        [JsonIgnore]
         public HotKey HotKeyAbortKeyPress { get; } = HotKey.AbortKeyPress;
 
         /// <summary>
         /// Gets <see cref="HotKey"/> for toggler Tooltips. Value is 'F1'.
         /// </summary>
+        [JsonIgnore]
         public HotKey HotKeyTooltip { get; } = HotKey.TooltipToggle;
 
         /// <summary>
         /// Gets <see cref="HotKey"/> for toggler Tooltips. Value is 'Ctrl+F1'.
         /// </summary>
+        [JsonIgnore]
         public HotKey HotKeyTooltipShowHide { get; } = HotKey.TooltipShowHide;
 
         /// <summary>
@@ -216,7 +220,8 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets or sets pagination template for Controls
         /// </summary>
-        public Func<int, int, int, string> PaginationTemplate 
+        [JsonIgnore]
+        public Func<int, int, int, string> PaginationTemplate
         {
             get
             {

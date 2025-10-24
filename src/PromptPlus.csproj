@@ -9,7 +9,6 @@
 		<Nullable>enable</Nullable>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<AnalysisLevel>latest-recommended</AnalysisLevel>
-		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -25,7 +24,7 @@
 		<Version>5.0.0</Version>
 		<PackageIcon>icon.png</PackageIcon>
 		<Copyright>© 2025 - Fernando Cerqueira </Copyright>
-		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<Title>PromptPlus</Title>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -33,7 +32,7 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
-	
+
 	<ItemGroup>
 	  <None Remove="Widgets\Banner\FIGlet\standard.flf" />
 	</ItemGroup>

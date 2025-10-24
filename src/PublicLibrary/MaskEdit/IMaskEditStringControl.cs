@@ -25,7 +25,7 @@ namespace PromptPlusLibrary
         /// <param name="mask">The mask pattern
         /// The mask pattern. Mask rules:
         /// <list type="bullet">
-        /// <item><description></description></item>
+        /// <item><description>Any character not defined in the rules will be treated as a literal character</description></item>
         /// <item><description>9 - Numeric character accepts delimiters for constant or custom.</description></item>
         /// <item><description>L - Lower Letter character accepts delimiters for constant or custom.</description></item>
         /// <item><description>U - Upper Letter character accepts delimiters for constant or custom.</description></item>
@@ -40,6 +40,9 @@ namespace PromptPlusLibrary
         /// </param>
         /// <param name="returnWithMask">If <c>true</c>, the result includes the mask. Default value is <c>false</c>.</param>
         /// <returns>The current <see cref="IMaskEditStringControl{T}"/> instance for chaining.</returns>
+        /// <remarks>
+        /// The mask can include literal characters and special pattern characters to define the input format.
+        /// </remarks>
         IMaskEditStringControl<T> Mask(string mask, bool returnWithMask = false);
 
         /// <summary>
@@ -47,10 +50,13 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="value">Prompt mask character. Default is '_'.</param>
         /// <returns>The current <see cref="IMaskEditStringControl{T}"/> instance for chaining.</returns>
+        /// <remarks>
+        /// The prompt character is displayed in place of empty input positions in the mask.
+        /// </remarks>
         IMaskEditStringControl<T> PromptMask(char value = '_');
 
         /// <summary>
-        /// The input behavior. Defaul value is <see cref="InputBehavior.EditSkipToInput"/>.
+        /// The input behavior. Default value is <see cref="InputBehavior.EditSkipToInput"/>.
         /// </summary>
         /// <param name="inputBehavior">The input behavior</param>
         /// <returns>The current <see cref="IMaskEditStringControl{T}"/> instance for chaining.</returns>
@@ -82,6 +88,9 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable.</param>
         /// <returns>The current <see cref="IMaskEditStringControl{T}"/> instance for chaining.</returns>
+        /// <remarks>
+        /// The predicate should return true for valid items and false for invalid items.
+        /// </remarks>
         IMaskEditStringControl<T> PredicateSelected(Func<T, bool> validselect);
 
         /// <summary>
@@ -89,6 +98,9 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
         /// <returns>The current <see cref="IMaskEditStringControl{T}"/> instance for chaining.</returns>
+        /// <remarks>
+        /// The predicate returns a tuple with a boolean indicating validity and an optional error message.
+        /// </remarks>
         IMaskEditStringControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
 
         /// <summary>
@@ -112,8 +124,7 @@ namespace PromptPlusLibrary
         /// Runs the MaskEdit input control and returns the result.
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
-        /// <returns>The result of the input control execution.</returns>
+        /// <returns>A <see cref="ResultPrompt{T}"/> containing the the input control execution.</returns>
         ResultPrompt<T> Run(CancellationToken token = default);
-
     }
 }

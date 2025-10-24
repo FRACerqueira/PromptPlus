@@ -23,7 +23,7 @@ namespace PromptPlusLibrary.Controls.Input
         };
 
         private Func<char, bool> _acceptInput = (_) => true;
-        private Func<string, (bool,string?)>? _predicatevalidselect;
+        private Func<string, (bool, string?)>? _predicatevalidselect;
         private Func<string, string>? _changeDescription;
         private string _defaultValue = string.Empty;
         private bool _useDefaultHistory;
@@ -169,7 +169,7 @@ namespace PromptPlusLibrary.Controls.Input
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -179,7 +179,7 @@ namespace PromptPlusLibrary.Controls.Input
             return this;
         }
 
-        public IInputControl PredicateSelected(Func<string, (bool,string?)> validselect)
+        public IInputControl PredicateSelected(Func<string, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -430,7 +430,7 @@ namespace PromptPlusLibrary.Controls.Input
                                 continue;
                             }
                             _indexTooptip = 0;
-                             break;
+                            break;
                         }
                         else if (keyinfo.IsPressCtrlEndKey())
                         {

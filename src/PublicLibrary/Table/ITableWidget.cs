@@ -13,7 +13,7 @@ namespace PromptPlusLibrary
     /// Represents the interface with all Methods of the Table Widget
     /// </summary>
     /// <typeparam name="T">The type of items in the collection.</typeparam>
-    public interface ITableWidget<T> where T : class 
+    public interface ITableWidget<T> where T : class
     {
         /// <summary>
         /// Performs an interaction with each item in the collection.

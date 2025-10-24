@@ -11,7 +11,7 @@ using System.Threading;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Interface for ChartBar Control functionality.
+    /// Provides interactive chart bar control functionality with customizable visualization and data manipulation features .
     /// </summary>
     public interface IChartBarControl
     {
@@ -50,8 +50,8 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Sets the title of the chart bar.
         /// </summary>
-        /// <param name="title">The title chart</param>
-        /// <param name="alignment">The <see cref="TextAlignment"/> of title.</param>
+        /// <param name="title">The text to display as the chart title.</param>
+        /// <param name="alignment">The <see cref="TextAlignment"/> for positioning the title text.</param>
         /// <returns>The current <see cref="IChartBarControl"/> instance.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="title"/> is <c>null</c> or empty.</exception>
         IChartBarControl Title(string title, TextAlignment alignment = TextAlignment.Center);
@@ -74,21 +74,21 @@ namespace PromptPlusLibrary
         IChartBarControl Styles(ChartBarStyles styleType, Style style);
 
         /// <summary>
-        /// Adds an item to the chart bar.
+        /// Adds a data item to be displayed in the chart bar visualization.
         /// </summary>
-        /// <param name="label">The label of the item to add.</param>
-        /// <param name="value">The value of the item.</param>
-        /// <param name="colorBar">
-        /// The <see cref="Color"/> of the bar. 
-        /// If not specified, the color will be chosen in descending sequence from 15 to 0 and then back to 15.
-        /// </param>
-        /// <param name="id">The id for item.</param>
+        /// <param name="label">The display label for the chart item. Cannot be null or empty.</param>
+        /// <param name="value">The numeric value associated with the item.</param>
+        /// <param name="colorBar">Optional color for the bar. If not specified, colors are automatically assigned in a rotating sequence.</param>
+        /// <param name="id">Optional unique identifier for the item.</param>
         /// <returns>The current <see cref="IChartBarControl"/> instance.</returns>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="label"/> is <c>null</c> or empty.</exception>
+        /// <exception cref="ArgumentException">Thrown when label is null or empty.</exception>
+        /// <remarks>
+        /// Colors are automatically assigned in descending sequence from 15 to 0 and then back to 15 if not explicitly specified.
+        /// </remarks>
         IChartBarControl AddItem(string label, double value, Color? colorBar = null, string? id = null);
 
         /// <summary>
-        /// Dynamically changes the description using a user-defined function.
+        /// Configures dynamic description generation for chart items.
         /// </summary>
         /// <param name="value">A function that takes the current description and returns the updated description. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="IChartBarControl"/> instance for chaining.</returns>
@@ -113,9 +113,9 @@ namespace PromptPlusLibrary
         IChartBarControl FractionalDigits(byte value);
 
         /// <summary>
-        /// Sorts bars and labels.
+        /// Defines the display order of chart items based on specified criteria.
         /// </summary>
-        /// <param name="order">The sort type.</param>
+        /// <param name="order">The <see cref="ChartBarOrder"/> criteria for sorting items.</param>
         /// <returns>The current <see cref="IChartBarControl"/> instance.</returns>
         IChartBarControl OrderBy(ChartBarOrder order);
 
@@ -133,12 +133,17 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="value">The elements to hide.</param>
         /// <returns>The current <see cref="IChartBarControl"/> instance for chaining.</returns>
+        /// <remarks>
+        /// By default, all chart elements are visible. Use this method to selectively hide specific components
+        /// of the visualization for a cleaner or more focused display.
+        /// </remarks>
         IChartBarControl HideElements(HideChart value);
 
         /// <summary>
-        /// Set max.item view per page.Default value is 5.
+        /// Sets the maximum number of items to display per page in the chart visualization.
+        /// Default value is 5.
         /// </summary>
-        /// <param name="value">Number of Max.items</param>
+        /// <param name="value">Maximum number of items to show per page (minimum 1).</param>
         /// <returns>The current <see cref="IChartBarControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
         IChartBarControl PageSize(byte value);
@@ -153,16 +158,16 @@ namespace PromptPlusLibrary
 
 
         /// <summary>
-        /// Set validation predicate for selected item.
+        /// Sets a validation rule for determining which items can be selected.
         /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable.</param>
+        /// <param name="validselect">A function that evaluates whether a chart item should be selectable.</param>
         /// <returns>The current <see cref="IChartBarControl"/> instance for chaining.</returns>
         IChartBarControl PredicateSelected(Func<ChartItem, bool> validselect);
 
         /// <summary>
         /// Set validation predicate for selected item.
         /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable and custom error message.</param>
         /// <returns>The current <see cref="IChartBarControl"/> instance for chaining.</returns>
         IChartBarControl PredicateSelected(Func<ChartItem, (bool, string?)> validselect);
 
@@ -170,7 +175,7 @@ namespace PromptPlusLibrary
         /// Runs the ChartBar control and returns the result.
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
-        /// <returns>The result with type <see cref="ResultPrompt{T}"/> of the input control execution. </returns>
+        /// <returns>A <see cref="ResultPrompt{T}"/> containing the selected <see cref="ChartItem"/>.</returns>
         ResultPrompt<ChartItem?> Run(CancellationToken token = default);
     }
 }

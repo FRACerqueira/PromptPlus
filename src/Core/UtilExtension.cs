@@ -23,29 +23,6 @@ namespace PromptPlusLibrary.Core
     internal static class UtilExtension
     {
         /// <summary>
-        /// Represents different categories of Unicode glyphs
-        /// </summary>
-        public enum GlyphCategory
-        {
-            /// <summary>
-            /// Box Drawing Characters (U+2500 to U+257F)
-            /// </summary>
-            BoxDrawing,
-            /// <summary>
-            /// Block Elements (U+2580 to U+259F)
-            /// </summary>
-            BlockElements,
-            /// <summary>
-            /// Geometric Shapes (U+25A0 to U+25FF)
-            /// </summary>
-            GeometricShapes,
-            /// <summary>
-            /// Mathematical Symbols (U+2200 to U+22FF)
-            /// </summary>
-            MathSymbols
-        }
-
-        /// <summary>
         /// Tests if the terminal supports a specific Unicode glyph
         /// </summary>
         /// <param name="glyph">The Unicode character to test</param>

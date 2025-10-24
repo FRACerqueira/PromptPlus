@@ -194,7 +194,7 @@ namespace PromptPlusLibrary.Controls.AutoComplete
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);

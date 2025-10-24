@@ -41,7 +41,7 @@ namespace PromptPlusLibrary.Widgets
             return ctrl;
         }
 
-        public ITableWidget<T> Table<T>() where T : class 
+        public ITableWidget<T> Table<T>() where T : class
         {
             return new TableSelectControl<T>(true, console, promptConfig, new BaseControlOptions(promptConfig));
         }

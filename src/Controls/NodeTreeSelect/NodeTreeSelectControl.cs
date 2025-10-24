@@ -17,7 +17,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         private readonly Dictionary<NodeTreeStyles, Style> _optStyles = BaseControlOptions.LoadStyle<NodeTreeStyles>();
         private readonly List<ItemNodeControl<T>> _items = [];
         private readonly Func<ItemNodeControl<T>, bool> IsRoot;
-        private readonly ConcurrentQueue<(string, bool,bool, List<ItemNodeControl<T>>)> _resultTask = [];
+        private readonly ConcurrentQueue<(string, bool, bool, List<ItemNodeControl<T>>)> _resultTask = [];
         private readonly Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
         private Func<T, string>? _changeDescription;
         private Func<T, string>? _textSelector;
@@ -27,7 +27,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         private string _tooltipModeSelect = string.Empty;
         private bool _showInfoFullPath;
         private byte _pageSize = 10;
-        private Func<T, (bool,string?)>? _predicatevalidselect;
+        private Func<T, (bool, string?)>? _predicatevalidselect;
         private Func<T, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<T>>? _localpaginator;
         private string _nodeseparator = "|";
@@ -105,7 +105,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
             {
                 throw new InvalidOperationException("Not have Root node. Execute AddRootNode first!");
             }
-            var nodeparent = FindNode(_nodestree, parent) ?? throw new ArgumentException("Not found parent node!. Add parent node first!");
+            NodeTree<T> nodeparent = FindNode(_nodestree, parent) ?? throw new ArgumentException("Not found parent node!. Add parent node first!");
             nodeparent.Childrens.Add(new NodeTree<T> { Node = value, ParentiId = nodeparent.UniqueId });
             return this;
         }
@@ -120,7 +120,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
             return this;
         }
 
-        public INodeTreeSelectControl<T> PredicateSelected(Func<T, (bool,string?)> validselect)
+        public INodeTreeSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -132,7 +132,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -382,7 +382,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                         _indexTooptip = 0;
                         _localpaginator.SelectedItem.IsExpanded = true;
                         _localpaginator.SelectedItem.Status = NodeStatus.Loading;
-                        var newitems = CreateLoadNode(_localpaginator.SelectedItem, true);
+                        (string, bool, bool, List<ItemNodeControl<T>>) newitems = CreateLoadNode(_localpaginator.SelectedItem, true);
                         _resultTask.Enqueue(newitems);
                         break;
                     }
@@ -397,7 +397,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                             _indexTooptip = 0;
                             _localpaginator.SelectedItem.IsExpanded = true;
                             _localpaginator.SelectedItem.Status = NodeStatus.Loading;
-                            var newitems = CreateLoadNode(_localpaginator.SelectedItem, false);
+                            (string, bool, bool, List<ItemNodeControl<T>>) newitems = CreateLoadNode(_localpaginator.SelectedItem, false);
                             _resultTask.Enqueue(newitems);
                             break;
                         }
@@ -481,8 +481,8 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         {
             List<string> entries = [];
 
-            var rootnode = _nodestree!.Node;
-            var textroot = _textSelector!(rootnode);
+            T? rootnode = _nodestree!.Node;
+            string textroot = _textSelector!(rootnode);
             _items.Add(new ItemNodeControl<T>(_nodestree.UniqueId)
             {
                 IsExpanded = true,
@@ -497,7 +497,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 Value = rootnode
             });
             int pos = -1;
-            foreach (var item in _nodestree.Childrens)
+            foreach (NodeTree<T> item in _nodestree.Childrens)
             {
                 pos++;
                 bool first = false;
@@ -510,7 +510,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 {
                     last = true;
                 }
-                var text = _textSelector!(item.Node);
+                string text = _textSelector!(item.Node);
                 _items.Add(new ItemNodeControl<T>(item.UniqueId)
                 {
                     IsExpanded = false,
@@ -529,21 +529,21 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
             }
         }
 
-        private string CreateFullPath(string? parentid,string textnode)
+        private string CreateFullPath(string? parentid, string textnode)
         {
             var parents = new Stack<string>();
             if (string.IsNullOrEmpty(parentid))
-            { 
+            {
                 return textnode;
             }
             while (!string.IsNullOrEmpty(parentid))
             {
-                var index = _items.FindIndex(x => x.UniqueId == parentid);
+                int index = _items.FindIndex(x => x.UniqueId == parentid);
                 parents.Push(_items[index].Text!);
                 parentid = _items[index].ParentUniqueId;
             }
             var result = new StringBuilder();
-            while (parents.TryPop(out var item))
+            while (parents.TryPop(out string? item))
             {
                 result.Append(item);
                 result.Append(_nodeseparator);
@@ -588,9 +588,9 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
             }
             if (currentnode.Childrens.Count > 0)
             {
-                foreach (var child in currentnode.Childrens)
+                foreach (NodeTree<T> child in currentnode.Childrens)
                 {
-                    var aux = FindNode(child, value);
+                    NodeTree<T>? aux = FindNode(child, value);
                     if (aux != null)
                     {
                         return aux;
@@ -637,7 +637,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         {
             if (_showInfoFullPath)
             {
-                var pos = _localpaginator!.SelectedItem!.FullPath!.LastIndexOf($"{_nodeseparator}{_localpaginator!.SelectedItem!.Text!}", StringComparison.Ordinal);
+                int pos = _localpaginator!.SelectedItem!.FullPath!.LastIndexOf($"{_nodeseparator}{_localpaginator!.SelectedItem!.Text!}", StringComparison.Ordinal);
                 string info;
                 if (pos < 0)
                 {
@@ -657,7 +657,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
 
         private string GetAnswerText()
         {
-            var textnode = _localpaginator!.SelectedItem.Text!;
+            string textnode = _localpaginator!.SelectedItem.Text!;
             if (_localpaginator!.SelectedIndex < 0)
             {
                 return string.Empty;
@@ -774,14 +774,14 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
             {
                 return string.Empty;
             }
-            var parent = item.ParentUniqueId;
+            string? parent = item.ParentUniqueId;
             var aux = new Stack<string>();
             for (int i = 0; i < item.Level - 1; i++)
             {
-                var syb = ConfigPlus.GetSymbol(SymbolType.TreeLinevertical);
+                string syb = ConfigPlus.GetSymbol(SymbolType.TreeLinevertical);
                 if (!string.IsNullOrEmpty(parent))
                 {
-                    var index = _items.FindIndex(x => x.UniqueId == parent);
+                    int index = _items.FindIndex(x => x.UniqueId == parent);
                     if (_items[index].LastItem)
                     {
                         syb = new string(' ', ConfigPlus.GetSymbol(SymbolType.TreeLinevertical).Length);
@@ -790,7 +790,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 }
                 aux.Push(syb);
             }
-            while (aux.TryPop(out var indentation))
+            while (aux.TryPop(out string? indentation))
             {
                 result.Append(indentation);
             }
@@ -841,7 +841,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                     item.IsExpanded = true;
                     item.Status = NodeStatus.Loading;
                     _items.Insert(posindex, item);
-                    var newitems = CreateLoadNode(item, true);
+                    (string, bool, bool, List<ItemNodeControl<T>>) newitems = CreateLoadNode(item, true);
                     _resultTask.Enqueue(newitems);
                 }
                 else
@@ -904,10 +904,10 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         private (string, bool, bool, List<ItemNodeControl<T>>) CreateLoadNode(ItemNodeControl<T> currentnode, bool isrecursive)
         {
             int pos = 0;
-            var nodetree = FindNode(_nodestree!, currentnode.Value);
+            NodeTree<T>? nodetree = FindNode(_nodestree!, currentnode.Value);
             List<ItemNodeControl<T>> newitems = [];
-            var level = currentnode.Level + 1;
-            foreach (var item in nodetree!.Childrens)
+            int level = currentnode.Level + 1;
+            foreach (NodeTree<T> item in nodetree!.Childrens)
             {
                 bool first = false;
                 bool last = false;
@@ -919,7 +919,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 {
                     last = true;
                 }
-                var text = _textSelector!(item.Node);
+                string text = _textSelector!(item.Node);
                 var newitem = new ItemNodeControl<T>(item.UniqueId)
                 {
                     IsExpanded = false,

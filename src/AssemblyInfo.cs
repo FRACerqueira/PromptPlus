@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices;
-
 // In SDK-style projects such as this one, several assembly attributes that were historically
 // defined in this file are now automatically added during build and populated with
 // values defined in project properties. For details of which attributes are included
@@ -10,6 +8,7 @@ using System.Runtime.InteropServices;
 // components.  If you need to access a type in this assembly from COM, set the ComVisible
 // attribute to true on that type.
 using System.Resources;
+using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 

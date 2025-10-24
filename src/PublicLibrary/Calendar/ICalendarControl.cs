@@ -16,7 +16,7 @@ namespace PromptPlusLibrary
     public interface ICalendarControl
     {
         /// <summary>
-        /// Sets the layout of the calendar.
+        /// Sets the visual layout style of the calendar display. Controls how dates and grid lines are rendered.
         /// </summary>
         /// <param name="layout">The <see cref="CalendarLayout"/> to set. Default is <see cref="CalendarLayout.SingleGrid"/>.</param>
         /// <returns>The current <see cref="ICalendarControl"/> instance for chaining.</returns>
@@ -25,6 +25,10 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Sets the culture for displaying calendar values. Default value is current PromptPlus culture.
         /// </summary>
+        /// <remarks>
+        /// The culture affects the display of month names, day names, and date formatting.
+        /// Changes to culture will be reflected immediately in the calendar display.
+        /// </remarks>
         /// <param name="culture">The <see cref="CultureInfo"/> to use. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="ICalendarControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="culture"/> is <c>null</c>.</exception>
@@ -89,8 +93,7 @@ namespace PromptPlusLibrary
         ICalendarControl Styles(CalendarStyles styleType, Style style);
 
         /// <summary>
-        /// Defines a minimum and maximum valid range of dates for the calendar.
-        /// Will be ignored for Widget.
+        /// Defines an inclusive range of valid dates that can be selected in the calendar.
         /// </summary>
         /// <param name="minValue">The minimum date. Must be less than or equal to <paramref name="maxValue"/>.</param>
         /// <param name="maxValue">The maximum date. Must be greater than or equal to <paramref name="minValue"/>.</param>
@@ -100,7 +103,6 @@ namespace PromptPlusLibrary
 
         /// <summary>
         /// Dynamically changes the description using a user-defined function.
-        /// Will be ignored for Widget.
         /// </summary>
         /// <param name="value">A function that takes a <see cref="DateTime"/> and returns a description string. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="ICalendarControl"/> instance for chaining.</returns>
@@ -109,7 +111,6 @@ namespace PromptPlusLibrary
 
         /// <summary>
         /// Applies custom options to the control.
-        /// Will be ignored for Widget.
         /// </summary>
         /// <param name="options">An action to configure <see cref="IControlOptions"/>. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="ICalendarControl"/> instance for chaining.</returns>
@@ -134,11 +135,11 @@ namespace PromptPlusLibrary
         ICalendarControl PageSize(byte value);
 
         /// <summary>
-        /// Performs an interaction with each item in the collection.
+        /// Performs an interaction with each item in the collection, allowing custom configuration for each item.
         /// </summary>
-        /// <typeparam name="T">Type of collection.</typeparam>
-        /// <param name="items">The collection.</param>
-        /// <param name="interactionaction">The interaction action.</param>
+        /// <typeparam name="T">The type of items in the collection.</typeparam>
+        /// <param name="items">The collection of items to process.</param>
+        /// <param name="interactionaction">The action to perform on each item, allowing configuration of the calendar control.</param>
         /// <returns>The current <see cref="ICalendarControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="items"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="interactionaction"/> is <c>null</c>.</exception>
@@ -152,17 +153,19 @@ namespace PromptPlusLibrary
         ICalendarControl PredicateSelected(Func<DateTime?, bool> validselect);
 
         /// <summary>
-        /// Set validation predicate for selected item.
+        /// Sets a validation predicate to determine if a date can be selected.
         /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <param name="validselect">A function that takes a nullable DateTime and returns a tuple containing 
+        /// a boolean indicating validity and an optional error message.
+        /// </param>
         /// <returns>The current <see cref="ICalendarControl"/> instance for chaining.</returns>
-        ICalendarControl PredicateSelected(Func<DateTime?, (bool,string?)> validselect);
+        ICalendarControl PredicateSelected(Func<DateTime?, (bool, string?)> validselect);
 
         /// <summary>
         /// Runs the Calendar control and returns the result.
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
-        /// <returns>The result with type <see cref="ResultPrompt{T}"/> of the Calendar control execution. </returns>
+        /// <returns>A <see cref="ResultPrompt{T}"/> containing the selected <see cref="DateTime"/>.</returns>
         ResultPrompt<DateTime?> Run(CancellationToken token = default);
     }
 }

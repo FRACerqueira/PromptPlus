@@ -18,7 +18,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         private readonly Dictionary<NodeTreeStyles, Style> _optStyles = BaseControlOptions.LoadStyle<NodeTreeStyles>();
         private readonly List<ItemNodeControl<T>> _items = [];
         private readonly Func<ItemNodeControl<T>, bool> IsRoot;
-        private readonly ConcurrentQueue<(string, bool,bool, List<ItemNodeControl<T>>)> _resultTask = [];
+        private readonly ConcurrentQueue<(string, bool, bool, List<ItemNodeControl<T>>)> _resultTask = [];
         private readonly Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
         private readonly List<ItemNodeControl<T>> _checkeditems = [];
         private Func<T, string>? _changeDescription;
@@ -29,7 +29,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         private string _tooltipModeSelect = string.Empty;
         private bool _showInfoFullPath;
         private byte _pageSize = 10;
-        private Func<T, (bool,string?)>? _predicatevalidselect;
+        private Func<T, (bool, string?)>? _predicatevalidselect;
         private Func<T, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<T>>? _localpaginator;
         private string _nodeseparator = "|";
@@ -141,11 +141,11 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             {
                 throw new InvalidOperationException("Not have Root node. Execute AddRootNode first!");
             }
-            var nodeparent = FindNode(_nodestree, parent) ?? throw new ArgumentException("Not found parent node!. Add parent node first!");
-            nodeparent.Childrens.Add(new NodeTree<T> 
-            { 
-                Node = value, 
-                ParentiId = nodeparent.UniqueId ,
+            NodeTree<T> nodeparent = FindNode(_nodestree, parent) ?? throw new ArgumentException("Not found parent node!. Add parent node first!");
+            nodeparent.Childrens.Add(new NodeTree<T>
+            {
+                Node = value,
+                ParentiId = nodeparent.UniqueId,
                 Checked = valuechecked
             });
             return this;
@@ -161,7 +161,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             return this;
         }
 
-        public INodeTreeMultiSelectControl<T> PredicateSelected(Func<T, (bool,string?)> validselect)
+        public INodeTreeMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -173,7 +173,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -418,7 +418,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                         _indexTooptip = 0;
                         _localpaginator.SelectedItem.IsExpanded = true;
                         _localpaginator.SelectedItem.Status = NodeStatus.Loading;
-                        var newitems = CreateLoadNode(_localpaginator.SelectedItem, true);
+                        (string, bool, bool, List<ItemNodeControl<T>>) newitems = CreateLoadNode(_localpaginator.SelectedItem, true);
                         _resultTask.Enqueue(newitems);
                         break;
                     }
@@ -433,7 +433,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                             _indexTooptip = 0;
                             _localpaginator.SelectedItem.IsExpanded = true;
                             _localpaginator.SelectedItem.Status = NodeStatus.Loading;
-                            var newitems = CreateLoadNode(_localpaginator.SelectedItem, false);
+                            (string, bool, bool, List<ItemNodeControl<T>>) newitems = CreateLoadNode(_localpaginator.SelectedItem, false);
                             _resultTask.Enqueue(newitems);
                             break;
                         }
@@ -459,7 +459,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     else if (keyinfo.IsPressCtrlSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.IsDisabled)
                     {
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator.SelectedItem.UniqueId);
-                        var mark = !_items[index].IsMarked;
+                        bool mark = !_items[index].IsMarked;
                         MarkAllNodes(index);
                         int countselect = _checkeditems.Count;
                         if (countselect < _minSelect)
@@ -476,11 +476,11 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     else if (keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.IsDisabled)
                     {
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator.SelectedItem.UniqueId);
-                        var mark = !_items[index].IsMarked;
+                        bool mark = !_items[index].IsMarked;
                         _items[index].IsMarked = mark;
                         if (!mark)
                         {
-                            var chkindex = _checkeditems.FindIndex(x => x.UniqueId == _items[index].UniqueId);
+                            int chkindex = _checkeditems.FindIndex(x => x.UniqueId == _items[index].UniqueId);
                             _checkeditems.RemoveAt(chkindex);
                         }
                         else
@@ -567,9 +567,9 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
 
         private void MarkAllNodes(int index)
         {
-            var mark = !_items[index].IsMarked;
+            bool mark = !_items[index].IsMarked;
             _items[index].IsMarked = mark;
-            var level = _items[index].Level;
+            int level = _items[index].Level;
             string? parent;
             int chkindex;
             if (!mark)
@@ -581,7 +581,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                 {
                     chkindex = _items.FindIndex(x => x.UniqueId == parent);
                     _items[chkindex].IsMarked = false;
-                    var uid = _items[chkindex].UniqueId;
+                    string uid = _items[chkindex].UniqueId;
                     chkindex = _checkeditems.FindIndex(x => x.UniqueId == uid);
                     if (chkindex >= 0)
                     {
@@ -608,7 +608,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     _checkeditems.Add(_items[index]);
                 }
             }
-            var isvalid = true;
+            bool isvalid = true;
             index++;
             while (index < _items.Count)
             {
@@ -702,8 +702,8 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         {
             List<string> entries = [];
 
-            var rootnode = _nodestree!.Node;
-            var textroot = _textSelector!(rootnode);
+            T? rootnode = _nodestree!.Node;
+            string textroot = _textSelector!(rootnode);
             (bool okmark, _) = _predicatevalidselect?.Invoke(rootnode) ?? (true, null);
             _items.Add(new ItemNodeControl<T>(_nodestree.UniqueId)
             {
@@ -719,7 +719,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                 Value = rootnode
             });
             int pos = -1;
-            foreach (var item in _nodestree.Childrens)
+            foreach (NodeTree<T> item in _nodestree.Childrens)
             {
                 pos++;
                 bool first = false;
@@ -732,7 +732,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                 {
                     last = true;
                 }
-                var text = _textSelector!(item.Node);
+                string text = _textSelector!(item.Node);
                 (bool okmarkitem, _) = _predicatevalidselect?.Invoke(item.Node) ?? (true, null);
                 _items.Add(new ItemNodeControl<T>(item.UniqueId)
                 {
@@ -752,21 +752,21 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             }
         }
 
-        private string CreateFullPath(string? parentid,string textnode)
+        private string CreateFullPath(string? parentid, string textnode)
         {
             var parents = new Stack<string>();
             if (string.IsNullOrEmpty(parentid))
-            { 
+            {
                 return textnode;
             }
             while (!string.IsNullOrEmpty(parentid))
             {
-                var index = _items.FindIndex(x => x.UniqueId == parentid);
+                int index = _items.FindIndex(x => x.UniqueId == parentid);
                 parents.Push(_items[index].Text!);
                 parentid = _items[index].ParentUniqueId;
             }
             var result = new StringBuilder();
-            while (parents.TryPop(out var item))
+            while (parents.TryPop(out string? item))
             {
                 result.Append(item);
                 result.Append(_nodeseparator);
@@ -783,7 +783,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             StringBuilder tooltip = new();
             tooltip.Append($"{string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip)}, {Messages.MultiSelectCheck}");
             tooltip.Append(", ");
-            tooltip.Append(string.Format(Messages.TooltipSelectAll,"Ctrl+Space"));
+            tooltip.Append(string.Format(Messages.TooltipSelectAll, "Ctrl+Space"));
             tooltip.Append(", ");
             tooltip.Append(Messages.TooltipToggleExpandPress);
             return tooltip.ToString();
@@ -812,9 +812,9 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             }
             if (currentnode.Childrens.Count > 0)
             {
-                foreach (var child in currentnode.Childrens)
+                foreach (NodeTree<T> child in currentnode.Childrens)
                 {
-                    var aux = FindNode(child, value);
+                    NodeTree<T>? aux = FindNode(child, value);
                     if (aux != null)
                     {
                         return aux;
@@ -872,7 +872,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         {
             if (_showInfoFullPath)
             {
-                var pos = _localpaginator!.SelectedItem!.FullPath!.LastIndexOf($"{_nodeseparator}{_localpaginator!.SelectedItem!.Text!}", StringComparison.Ordinal);
+                int pos = _localpaginator!.SelectedItem!.FullPath!.LastIndexOf($"{_nodeseparator}{_localpaginator!.SelectedItem!.Text!}", StringComparison.Ordinal);
                 string info;
                 if (pos < 0)
                 {
@@ -1019,14 +1019,14 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             {
                 return string.Empty;
             }
-            var parent = item.ParentUniqueId;
+            string? parent = item.ParentUniqueId;
             var aux = new Stack<string>();
             for (int i = 0; i < item.Level - 1; i++)
             {
-                var syb = ConfigPlus.GetSymbol(SymbolType.TreeLinevertical);
+                string syb = ConfigPlus.GetSymbol(SymbolType.TreeLinevertical);
                 if (!string.IsNullOrEmpty(parent))
                 {
-                    var index = _items.FindIndex(x => x.UniqueId == parent);
+                    int index = _items.FindIndex(x => x.UniqueId == parent);
                     if (_items[index].LastItem)
                     {
                         syb = new string(' ', ConfigPlus.GetSymbol(SymbolType.TreeLinevertical).Length);
@@ -1035,7 +1035,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                 }
                 aux.Push(syb);
             }
-            while (aux.TryPop(out var indentation))
+            while (aux.TryPop(out string? indentation))
             {
                 result.Append(indentation);
             }
@@ -1086,7 +1086,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     item.IsExpanded = true;
                     item.Status = NodeStatus.Loading;
                     _items.Insert(posindex, item);
-                    var newitems = CreateLoadNode(item, true);
+                    (string, bool, bool, List<ItemNodeControl<T>>) newitems = CreateLoadNode(item, true);
                     _resultTask.Enqueue(newitems);
                 }
                 else
@@ -1170,10 +1170,10 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         private (string, bool, bool, List<ItemNodeControl<T>>) CreateLoadNode(ItemNodeControl<T> currentnode, bool isrecursive)
         {
             int pos = 0;
-            var nodetree = FindNode(_nodestree!, currentnode.Value);
+            NodeTree<T>? nodetree = FindNode(_nodestree!, currentnode.Value);
             List<ItemNodeControl<T>> newitems = [];
-            var level = currentnode.Level + 1;
-            foreach (var item in nodetree!.Childrens)
+            int level = currentnode.Level + 1;
+            foreach (NodeTree<T> item in nodetree!.Childrens)
             {
                 bool first = false;
                 bool last = false;
@@ -1185,7 +1185,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                 {
                     last = true;
                 }
-                var text = _textSelector!(item.Node);
+                string text = _textSelector!(item.Node);
                 (bool okmarkitem, _) = _predicatevalidselect?.Invoke(item.Node) ?? (true, null);
                 var newitem = new ItemNodeControl<T>(item.UniqueId)
                 {
@@ -1211,7 +1211,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         private bool HasSeletedItems()
         {
             int index = _items.FindIndex(x => x.UniqueId == _localpaginator!.SelectedItem.UniqueId);
-            var parent = _items[index].UniqueId;
+            string parent = _items[index].UniqueId;
             index++;
             while (index < _items.Count - 1)
             {

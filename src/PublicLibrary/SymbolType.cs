@@ -327,7 +327,7 @@ namespace PromptPlusLibrary
         CalendarHighlight,
 
         /// <summary>
-        /// Left portion of today's calendar highlight. Default value : ASCII="<" Unicode="<"
+        /// Left portion of today's calendar highlight. Default value : ASCII="&lt;" Unicode="&lt;"
         /// </summary>
         CalendarTodayLeft,
 

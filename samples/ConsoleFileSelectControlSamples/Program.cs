@@ -30,7 +30,7 @@ namespace ConsoleFileSelectControlSamples
             PromptPlus.Widgets.DoubleDash("Sample File Select with Search Filter('F4')", extraLines: 1);
 
             result = PromptPlus.Controls.FileSelect("Select File/Folder: ", "My description")
-                .Root("C:/")
+                .Root("/")
                 .EnabledSearchFilter(FilterMode.Contains)
                 .Run();
 
@@ -40,7 +40,7 @@ namespace ConsoleFileSelectControlSamples
             PromptPlus.Widgets.DoubleDash("Sample File Select with SearchPattern('*.LOG')", extraLines: 1);
 
             result = PromptPlus.Controls.FileSelect("Select File/Folder: ", "My description")
-                .Root("C:/")
+                .Root("/")
                 .SearchPattern("*.LOG")
                 .EnabledSearchFilter(FilterMode.Contains)
                 .Run();
@@ -50,7 +50,7 @@ namespace ConsoleFileSelectControlSamples
             PromptPlus.Widgets.DoubleDash("Sample File Select with Only Folders", extraLines: 1);
 
             result = PromptPlus.Controls.FileSelect("Select Folder: ", "My description")
-                .Root("C:/")
+                .Root("/")
                 .OnlyFolders()
                 .EnabledSearchFilter(FilterMode.Contains)
                 .Run();
@@ -61,7 +61,7 @@ namespace ConsoleFileSelectControlSamples
             PromptPlus.Widgets.DoubleDash("Sample File Select with Predicate Disabled", extraLines: 1);
 
             result = PromptPlus.Controls.FileSelect("Select File: ", "My description")
-                .Root("C:/")
+                .Root("/")
                 .PredicateDisabled((x) => x.IsFolder)
                 .Run();
 
@@ -71,7 +71,7 @@ namespace ConsoleFileSelectControlSamples
             PromptPlus.Widgets.DoubleDash("Sample File Select with Predicate seleted", extraLines: 1);
 
             result = PromptPlus.Controls.FileSelect("Select File: ", "My description")
-                .Root("C:/")
+                .Root("/")
                 .PredicateSelected((x) => !x.IsFolder)
                 .Run();
 
@@ -81,7 +81,7 @@ namespace ConsoleFileSelectControlSamples
             PromptPlus.Widgets.DoubleDash("Sample File Select with Accept System and Hidden files", extraLines: 1);
 
             result = PromptPlus.Controls.FileSelect("Select File/Folder: ", "My description")
-                .Root("C:/")
+                .Root("/")
                 .AcceptSystemAttributes()
                 .AcceptHiddenAttributes()
                 .Run();
@@ -91,7 +91,7 @@ namespace ConsoleFileSelectControlSamples
             PromptPlus.Widgets.DoubleDash("Sample File Select with Hide Size", extraLines: 1);
 
             result = PromptPlus.Controls.FileSelect("Select File/Folder: ", "My description")
-                .Root("C:/")
+                .Root("/")
                 .HideSizeInfo()
                 .Run();
 
@@ -101,7 +101,7 @@ namespace ConsoleFileSelectControlSamples
             PromptPlus.Widgets.DoubleDash("Sample File Select with HideZeroEntries and FileSize > 1000000 (1MB)", extraLines: 1);
 
             result = PromptPlus.Controls.FileSelect("Select File/Folder: ", "My description")
-                .Root("C:/")
+                .Root("/")
                 .HideZeroEntries()
                 .HideFilesBySize(1000000)
                 .Run();
@@ -112,7 +112,7 @@ namespace ConsoleFileSelectControlSamples
             PromptPlus.Widgets.DoubleDash("Sample File Select with Custom colors", extraLines: 1);
 
             result = PromptPlus.Controls.FileSelect("Select File/Folder: ", "My description")
-                .Root("C:/")
+                .Root("/")
                 .Styles(FileStyles.Lines, Color.Red)
                 .Styles(FileStyles.FileSize, Color.LightCoral)
                 .Styles(FileStyles.FileRoot, Color.Cyan1)

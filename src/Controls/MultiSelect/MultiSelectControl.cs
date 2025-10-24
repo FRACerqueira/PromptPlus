@@ -20,7 +20,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         private readonly Dictionary<MultiSelectStyles, Style> _optStyles = BaseControlOptions.LoadStyle<MultiSelectStyles>();
         private readonly List<ItemMultiSelect<T>> _items = [];
         private int _sequence;
-        private Func<T, (bool,string?)>? _predicatevalidselect;
+        private Func<T, (bool, string?)>? _predicatevalidselect;
         private Func<T, string>? _changeDescription;
         private Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
         private IEnumerable<T>? _defaultValues;
@@ -65,7 +65,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
 
         #region IMultiSelect
 
-        public IMultiSelectControl<T> PredicateSelected(Func<T, (bool,string?)> validselect)
+        public IMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -77,7 +77,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -410,7 +410,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             WriteTooltip(screenBuffer);
         }
 
- 
+
         public override bool TryResult(CancellationToken cancellationToken)
         {
             bool oldcursor = ConsolePlus.CursorVisible;
@@ -609,7 +609,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         }
                         else
                         {
-                            var hasinvalidselect = false;
+                            bool hasinvalidselect = false;
                             string? customerr = null;
                             foreach (ItemMultiSelect<T>? item in toselect)
                             {
@@ -693,7 +693,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (_modeView == ModeView.MultiSelect && !_resultbuffer!.IsPrintable(keyinfo.KeyChar)  && _resultbuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    else if (_modeView == ModeView.MultiSelect && !_resultbuffer!.IsPrintable(keyinfo.KeyChar) && _resultbuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
                     {
                         _indexTooptip = 0;
                         break;

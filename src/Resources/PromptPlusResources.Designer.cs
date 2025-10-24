@@ -1006,15 +1006,6 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move Selector.
-        /// </summary>
-        internal static string TooltipMoveCalendar {
-            get {
-                return ResourceManager.GetString("TooltipMoveCalendar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Ordination: {0}.
         /// </summary>
         internal static string TooltipOrder {
@@ -1137,42 +1128,6 @@ namespace PromptPlusLibrary.Resources {
         internal static string ValidateInvalid {
             get {
                 return ResourceManager.GetString("ValidateInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value is too long. Max({0}).
-        /// </summary>
-        internal static string ValidateMaxLength {
-            get {
-                return ResourceManager.GetString("ValidateMaxLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value is too short. Min({0}).
-        /// </summary>
-        internal static string ValidateMinLength {
-            get {
-                return ResourceManager.GetString("ValidateMinLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Value is not match pattern.
-        /// </summary>
-        internal static string ValidateNoMatchRegex {
-            get {
-                return ResourceManager.GetString("ValidateNoMatchRegex", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Required Value!.
-        /// </summary>
-        internal static string ValidateRequired {
-            get {
-                return ResourceManager.GetString("ValidateRequired", resourceCulture);
             }
         }
         

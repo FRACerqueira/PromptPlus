@@ -1,4 +1,7 @@
-# <img align="left" width="100" height="100" src="./icon.png">Welcome to PromptPlus
+![HtmlPdfPLus Logo](icon.png)
+
+# Welcome to PromptPlus
+
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
@@ -14,19 +17,18 @@
 - [What's new in the latest version](#whats-new-in-the-latest-version)
 - [Features](#features)
 - [Installing](#installing)
-- [Console Engine](./docs/console.md)
-- [Culture](./docs/culture.md)
-- [Colors](./docs/colors.md)
-- [General Config](./docs/config.md)
-- [Key navigation, hotkeys and Extensions Emacs](./docs/keypressemacs.md)
+- [Console Engine](#console-engine)
+- [Culture](#culture)
+- [Keys navigation, hotkeys and Extensions Emacs](#keys-navigation)
+- [Colors](#colors)
 - [Examples](#examples)
+- [Documentation](#documentation)
 - [Supported Platforms](#supported-platforms)
 - [Code of Conduct](#code-of-conduct)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
 - [Previous versions](./docs/whatsnewprev.md)
-- [API Reference](https://fracerqueira.github.io/PromptPlus/docs/apis/apis.html)
 
 ----
 ## What's new in the latest version
@@ -62,172 +64,43 @@ Due to the significant modifications, version 5 introduced **significant changes
 **All features have IntelliSense. PromptPlus has more than 20 controls with many features like: filters, validators, history, suggestions, spinner(20 embedding type), colors(Supports 4/8/24-bit colors) and customizable element styles / region for each control** :
 
 - AutoComplete with spinner
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/autocomplete.jpg)
-
 - Banner Ascii
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/banner.jpg)
-
 - Calendar with multiple layouts
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/calendar.jpg)
-
 - ChartBar with switch layout, Legend and order
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/chartbar.jpg)
-
 - File and Folder multi-select
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/filemultiselect.jpg)
-
 - File and Folder select
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/fileselect.jpg)
-
 - Input text
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/input.jpg)
-
 - Input Secret 
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/inputsecret.jpg)
-
 - KeyPress
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/keypressandconfirm.jpg)
-
 - MaskEdit Generic (string)
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/maskeditstring.jpg)
-
 - MaskEdit Date (DateTime/DateOnly)
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/maskeditdate.jpg)
-
 - MaskEdit Time (DateTime/TimeOnly)
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/maskedittime.jpg)
-
 - MaskEdit DateTime 
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/maskeditdatetime.jpg)
-
 - MaskEdit Number (integer,long,double,decimal)
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/maskeditnumeric.jpg)
-
 - MaskEdit Currency (double,decimal)
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/maskeditcurrency.jpg)
-
 - Multi-Select for any type (with group!) 
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/multiselect.jpg)
-
 - Nodes hierarchical structures multi-select for any type
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/nodetreemultiselect.jpg)
-
 - Nodes hierarchical structures select for any type
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/nodetreeselect.jpg)
-
 - Progress bar with 6 types , gradient colors and spinner
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/progressbar.jpg)
-
 - ReadLine Emacs
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/readlineemacs.jpg)
-
 - Select for any type (with group!) 
-    
-    [**Top**](#table-of-contents)
-
-    ![](./docs/images/select.jpg)
-
 - Slider numeric ranger with gradient colors
-    
-    [**Top**](#table-of-contents)
-
-     ![](./docs/images/slider.jpg)
-
 - Switch (style on/off)
-    
-    [**Top**](#table-of-contents)
-
-     ![](./docs/images/switch.jpg)
-
 - Table structures multi-select for any type and multiple layouts
-    
-    [**Top**](#table-of-contents)
-
-     ![](./docs/images/tablemultiselect.jpg)
-
 - Table structures select for any type and multiple layouts
-    
-    [**Top**](#table-of-contents)
-
-     ![](./docs/images/tableselect.jpg)
-
 - Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
-    
-    [**Top**](#table-of-contents)
-
-     ![](./docs/images/waitprocess.jpg)
-
 - Wait Time with countdown and spinner
-    
-    [**Top**](#table-of-contents)
 
-     ![](./docs/images/waittimer.jpg)
+A **complete list of all controls and widgets [snapshots can be seen here](./docs/snapshots.md)**
 
-- Driver console **Supports 48/24-bit color** in the terminal with **automatic detection** of the current terminal capabilities, allowing you to fix the settings (Profile)
-    
-    [**Top**](#table-of-contents)
+### snapshots (small sample)
+![](./docs/images/fileselect.jpg)
 
-     ![](./docs/images/consolecolorcapacity.jpg)
+![](./docs/images/progressbar.jpg)
+
+![](./docs/images/chartbar.jpg)
+
+![](./docs/images/consolecolorcapacity.jpg)
 
 ----
 ## Installing
@@ -244,14 +117,159 @@ dotnet add package PromptPlus [--prerelease]
 **_Note:  [-pre]/[--prerelease] usage for pre-release versions_**
 
 ----
+## Console Engine
+[**Top**](#table-of-contents)
+
+The console driver has the ability to detect terminal capabilities and allow for 24-bit color and text overflow strategies based on terminal size, and left and right margins for a nicer layout and automatic color conversion. 
+
+The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. 
+
+This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
+
+A separation was made in the writing methods for common texts (default console behavior): **Write/WriteLine** and texts with syntax for text colors: **WriteColor/WriteLineColor**.
+
+```csharp
+
+PromptPlus.Console.WriteLine("Test", new Style(ConsoleColor.Red, ConsoleColor.White, Overflow.None));
+PromptPlus.Console.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
+PromptPlus.Console.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
+PromptPlus.Console.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
+PromptPlus.Console.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
+PromptPlus.Console.WriteLine("Test", new Style(Color.FromHtml("#ffffff"), Color.Red, Overflow.None));
+
+PromptPlus.Console.WriteLineColor("[RGB(255,0,0):WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
+PromptPlus.Console.WriteLineColor("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
+
+PromptPlus.Widgets.SingleDash("Test SingleDash", DashOptions.DoubleBorder, 1, Style.Default().ForeGround(ConsoleColor.Red).Background(ConsoleColor.Yellow));
+PromptPlus.Widgets.SingleDashColor("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", DashOptions.AsciiSingleBorder, 1);
+PromptPlus.Widgets.DoubleDash("Test SingleDash", DashOptions.DoubleBorder, 1, Style.Default().ForeGround(ConsoleColor.Red).Background(ConsoleColor.Yellow));
+PromptPlus.Widgets.DoubleDashColor("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", DashOptions.AsciiSingleBorder, 1);
+
+```
+
+----
+## Culture
+[**Top**](#table-of-contents)
+
+PromptPlus applies the language/culture **only when running controls**. The language/culture of the application is **not affected**. If language/culture is not informed, the application's language/culture will be used with fallback to en-US.
+
+All messages are affected when changed language/culture. PromptPlus has languages embedded:
+- en-US (Default)
+- pt-BR
+
+To use a non-embedded language/culture:
+
+- Copy the **PromptPlusResources.resx** file in folder PromptPlus/Resources
+- Translate messages with same format to your language/culture
+- Convert .resx files to binary .resources files ([**reference link here**](https://docs.microsoft.com/en-us/dotnet/core/extensions/work-with-resx-files-programmatically))
+- Publish the compiled file (**PromptPlus.[Language].resources**) in the same folder as the binaries.
+
+----
+## Keys navigation
+[**Top**](#table-of-contents)
+
+### For text navigation
+
+PromptPlus adopts the keyboard **arrows, Home, End, PageUp and PageDown** keys for navigation, extending its functionality with the emacs combinations below:
+
+- CTRL+SHIFT+T : To transpose the previous two characters.
+- CTRL+SHIFT+L : To clears the content.
+- CTRL+SHIFT+H : To deletes the previous character (equivalent to the backspace key).
+- CTRL+SHIFT+E : To moves the cursor to the line end (equivalent to the end key).
+- CTRL+SHIFT+A : To moves the cursor to the line start (equivalent to the home key).
+- CTRL+SHIFT+B : To moves the cursor back one character (equivalent to the left arrow key).
+- CTRL+SHIFT+F : To Moves the cursor forward one character (equivalent to the right arrow key).
+- CTRL+SHIFT+D : To delete the current character (equivalent to the delete key).
+- CTRL+SHIFT+U : To clears the line content before the cursor.
+- CTRL+SHIFT+K : To clears the line content after the cursor.
+- CTRL+SHIFT+W : To clear the word before the cursor.
+- ALT+L : To lowers the case of every character from the cursor's position to the end of the current word.
+- ALT+U : To upper the case of every character from the cursor's position to the end of the current word.
+- ALT+C : To capitalizes the character under the cursor and moves to the end of the word.
+- ALT+D : To clear the word after the cursor.
+- ALT+F : To moves the cursor forward one word.
+- ALT+B : To moves the cursor backward one word.
+- INSER : To toggle input replacement mode (default/started in insert mode).
+- ESC : (feature optional) to abort input and return null.
+
+### Console KeyInfo Extensions
+
+- IsPressSpecialKey(this ConsoleKeyInfo keyinfo, ConsoleKey key, ConsoleModifiers modifier)
+- IsPressEnterKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsAbortKeyPress(this ConsoleKeyInfo keyinfo)
+- IsLowersCurrentWord(this ConsoleKeyInfo keyinfo)
+- IsClearBeforeCursor(this ConsoleKeyInfo keyinfo)
+- IsClearAfterCursor(this ConsoleKeyInfo keyinfo)
+- IsClearWordBeforeCursor(this ConsoleKeyInfo keyinfo)
+- IsClearWordAfterCursor(this ConsoleKeyInfo keyinfo)
+- IsCapitalizeOverCursor(this ConsoleKeyInfo keyinfo)
+- IsForwardWord(this ConsoleKeyInfo keyinfo)
+- IsBackwardWord(this ConsoleKeyInfo keyinfo)
+- IsUppersCurrentWord(this ConsoleKeyInfo keyinfo)
+- IsTransposePrevious(this ConsoleKeyInfo keyinfo)
+- IsClearContent(this ConsoleKeyInfo keyinfo)
+- IsPressTabKey(this ConsoleKeyInfo keyinfo)
+- IsPressShiftTabKey(this ConsoleKeyInfo keyinfo)
+- IsPressEndKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressHomeKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressCtrlHomeKey(this ConsoleKeyInfo keyinfo)
+- IsPressCtrlEndKey(this ConsoleKeyInfo keyinfo)
+- IsPressBackspaceKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressDeleteKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressLeftArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressSpaceKey(this ConsoleKeyInfo keyinfo)
+- IsPressCtrlSpaceKey(this ConsoleKeyInfo keyinfo)
+- IsPressRightArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressUpArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressDownArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressPageUpKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressPageDownKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressEscKey(this ConsoleKeyInfo keyinfo)
+
+### For list/colletion
+
+PromptPlus adopts the keyboard **arrows, Ctrl+Home, Ctrl+End, PageUp and PageDown** keys items navigation.
+
+For multiple-selection lists, a space is used to indicate a check mark. The Shift-space combination is used in text input to differentiate it from a check mark, when applicable.
+
+### For expand/collapse
+
+PromptPlus adopts the keyboard **'+', Alt '+'** to expand/expand all and **'-'** to collapse.
+
+----
+## Colors
+[**Top**](#table-of-contents)
+
+The color class has implicit conversion to ConsoleColor. There are conversion methods to facilitate compatibility with other common color representations:
+
+- Html
+	-	Converts string color Html format (#RRGGBB).
+- Int32
+	-	Converts a standard color number (0 ~ 255).
+- Console Color
+	-	Converts a System.Console.ConsoleColor
+- RGB
+	-	Converts a RGB format (R,G,B)
+- Name
+	-	Converts a name standard color
+      
+The standard color table (0 - 255) can be [**viewed here**](./docs/colors.md).
+
+    
+----
 ## Examples
 [**Top**](#table-of-contents)
 
-The folder [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/samples) contains more **25** projects samples!.
+The folder [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/samples) contains more **20** projects samples!.
 
 ```
 dotnet run --project [name of sample]
 ```
+----
+## Documentation
+[**Top**](#table-of-contents)
+
+The library is well documented. The documentation is available in the [Docs directory](./docs/api/docindex.md).
 
 ----
 ## Supported platforms
@@ -286,7 +304,11 @@ Prompt Plus may **include pieces of code (copy)** from other software released u
 
 - Banner Ascii - [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU. See [LICENSE](Licenses/LICENSE-FIGlet.md).  
 
-- East Asian caracters -  [EastAsianWidthDotNet](https://github.com/nuitsjp/EastAsianWidthDotNet), Copyright (c) 2020 Atsushi Nakamura. See [LICENSE](Licenses/LICENSE-EastAsianWidthDotNet.md).
+
+**API documentation generated by**
+
+- [XmlDocMarkdown](https://github.com/ejball/XmlDocMarkdown), Copyright (c) 2024 [Ed Ball](https://github.com/ejball)
+    - See an unrefined customization to contain header and other adjustments in project [XmlDocMarkdownGenerator](https://github.com/FRACerqueira/HtmlPdfPLus/tree/main/src/XmlDocMarkdownGenerator)  
 
 ----
 ## License

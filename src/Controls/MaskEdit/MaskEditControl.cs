@@ -20,7 +20,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
         private CultureInfo _culture;
         private readonly Dictionary<MaskEditStyles, Style> _optStyles = BaseControlOptions.LoadStyle<MaskEditStyles>();
-        private Func<T, (bool,string?)>? _predicatevalidselect;
+        private Func<T, (bool, string?)>? _predicatevalidselect;
         private MaskEditBuffer<T>? _inputdata;
         private Optional<T> _defaultValue = Optional<T>.Empty();
         private Optional<T> _defaultIfEmpty = Optional<T>.Empty();
@@ -212,7 +212,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             return this;
         }
 
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -224,7 +224,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -234,7 +234,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             return this;
         }
 
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -246,7 +246,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -256,7 +256,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             return this;
         }
 
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -268,7 +268,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -278,7 +278,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             return this;
         }
 
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -290,7 +290,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -591,7 +591,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         ResultCtrl = new ResultPrompt<T>(default!, true);
                         break;
                     }
-                   else  if (IsAbortKeyPress(keyinfo))
+                    else if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<T>(default!, true);

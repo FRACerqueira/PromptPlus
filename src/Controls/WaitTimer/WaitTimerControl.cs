@@ -85,7 +85,7 @@ namespace PromptPlusLibrary.Controls.WaitTimer
 
         #endregion
 
-         public override void InitControl(CancellationToken _)
+        public override void InitControl(CancellationToken _)
         {
             string message = $"{string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip)}, {Messages.TooltipWaitTimer} {_timeoutcount:hh\\:mm\\:ss\\:ff}";
             _tooltipModeInput = message;
@@ -230,7 +230,7 @@ namespace PromptPlusLibrary.Controls.WaitTimer
             _hasupdateanswer = true;
         }
 
-         private void LoadTooltipToggle()
+        private void LoadTooltipToggle()
         {
             List<string> lsttooltips =
             [

@@ -24,7 +24,7 @@ namespace PromptPlusLibrary.Controls.Switch
         private int _indexTooptip;
         private string _tooltipModeInput = string.Empty;
         private bool _currentValue;
-        private string? _onValue ;
+        private string? _onValue;
         private string? _offValue;
 
         public void InternalDefault(bool value)

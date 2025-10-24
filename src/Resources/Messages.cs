@@ -13,10 +13,6 @@ namespace PromptPlusLibrary.Resources
             YesChar = PromptPlusResources.YesChar;
             NoChar = PromptPlusResources.NoChar;
             TooltipPages = PromptPlusResources.TooltipPages;
-            ValidateNoMatchRegex = PromptPlusResources.ValidateNoMatchRegex;
-            ValidateMaxLength = PromptPlusResources.ValidateMaxLength;
-            ValidateMinLength = PromptPlusResources.ValidateMinLength;
-            ValidateRequired = PromptPlusResources.ValidateRequired;
             ValidateInvalid = PromptPlusResources.ValidateInvalid;
             TooltipToggle = PromptPlusResources.TooltipToggle;
             TooltipCancelEsc = PromptPlusResources.TooltipCancelEsc;
@@ -74,7 +70,6 @@ namespace PromptPlusLibrary.Resources
             SwitchKeyNavigator = PromptPlusResources.SwitchKeyNavigator;
             OnValue = PromptPlusResources.OnValue;
             OffValue = PromptPlusResources.OffValue;
-            TooltipChart = PromptPlusResources.TooltipChart;
             TooltipChartSwitchOrder = PromptPlusResources.TooltipChartSwitchOrder;
             TooltipChartSwitchLegend = PromptPlusResources.TooltipChartSwitchLegend;
             TooltipChartSwitchType = PromptPlusResources.TooltipChartSwitchType;
@@ -134,9 +129,7 @@ namespace PromptPlusLibrary.Resources
             NotCollapse = PromptPlusResources.NotCollapse;
             NodePath = PromptPlusResources.NodePath;
             TooltipExpandAllPress = PromptPlusResources.TooltipExpandAllPress;
-            TooltipMoveCalendar = PromptPlusResources.TooltipMoveCalendar;
         }
-        public static string TooltipMoveCalendar { get; private set; } = PromptPlusResources.TooltipMoveCalendar;
         public static string TooltipExpandAllPress { get; private set; } = PromptPlusResources.TooltipExpandAllPress;
         public static string NodePath { get; private set; } = PromptPlusResources.NodePath;
         public static string NotCollapse { get; private set; } = PromptPlusResources.NotCollapse;
@@ -196,7 +189,6 @@ namespace PromptPlusLibrary.Resources
         public static string TooltipChartSwitchOrder { get; private set; } = PromptPlusResources.TooltipChartSwitchOrder;
         public static string TooltipChartSwitchLegend { get; private set; } = PromptPlusResources.TooltipChartSwitchLegend;
         public static string TooltipChartSwitchType { get; private set; } = PromptPlusResources.TooltipChartSwitchType;
-        public static string TooltipChart { get; private set; } = PromptPlusResources.TooltipChart;
         public static string OnValue { get; private set; } = PromptPlusResources.OnValue;
         public static string OffValue { get; private set; } = PromptPlusResources.OffValue;
         public static string SwitchKeyNavigator { get; private set; } = PromptPlusResources.SwitchKeyNavigator;
@@ -248,10 +240,6 @@ namespace PromptPlusLibrary.Resources
         public static string YesChar { get; private set; } = PromptPlusResources.YesChar;
         public static string NoChar { get; private set; } = PromptPlusResources.NoChar;
         public static string TooltipPages { get; private set; } = PromptPlusResources.TooltipPages;
-        public static string ValidateNoMatchRegex { get; private set; } = PromptPlusResources.ValidateNoMatchRegex;
-        public static string ValidateMaxLength { get; private set; } = PromptPlusResources.ValidateMaxLength;
-        public static string ValidateMinLength { get; private set; } = PromptPlusResources.ValidateMinLength;
-        public static string ValidateRequired { get; private set; } = PromptPlusResources.ValidateRequired;
         public static string ValidateInvalid { get; private set; } = PromptPlusResources.ValidateInvalid;
         public static string TooltipToggle { get; private set; } = PromptPlusResources.TooltipToggle;
         public static string TooltipCancelEsc { get; private set; } = PromptPlusResources.TooltipCancelEsc;

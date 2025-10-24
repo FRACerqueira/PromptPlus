@@ -59,6 +59,7 @@ namespace PromptPlusLibrary
         /// <param name="cultureName">The name of the <see cref="CultureInfo"/> to use. Cannot be <c>null</c> or empty.</param>
         /// <returns>The current <see cref="IProgressBarControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="cultureName"/> is <c>null</c> or empty.</exception>
+        /// <exception cref="CultureNotFoundException">Thrown when the specified culture name is not valid.</exception>
         IProgressBarControl Culture(string cultureName) => Culture(new CultureInfo(cultureName));
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace PromptPlusLibrary
         /// <param name="minvalue">Minimum number</param>
         /// <param name="maxvalue">Maximum number</param>
         /// <returns>The current <see cref="IProgressBarControl"/> instance for chaining.</returns>
-        /// /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="minvalue"/> is greater than or equal to <paramref name="maxvalue"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="minvalue"/> is greater than or equal to <paramref name="maxvalue"/>.</exception>
         IProgressBarControl Range(double minvalue, double maxvalue);
 
         /// <summary>
@@ -128,8 +129,9 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Sets a handler to update the ProgressBar values dynamically.
         /// </summary>
-        /// <param name="value">The handler to update values.</param>
+        /// <param name="value">The handler to update values. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="IProgressBarControl"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
         IProgressBarControl UpdateHandler(Action<HandlerProgressBar, CancellationToken> value);
 
         /// <summary>
@@ -142,17 +144,17 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Define the interval to update Progressbar status and Spinner. Default 100ms.
         /// </summary>
-        /// <param name="mileseconds">The interval to show ElapsedTime.</param>
+        /// <param name="milliseconds">The interval in milliseconds to update the ProgressBar status and Spinner.</param>
         /// <returns>The current <see cref="IProgressBarControl"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="mileseconds"/> for less than 100 or greater than 1000.</exception>
-        IProgressBarControl IntervalUpdate(int mileseconds = 100);
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="milliseconds"/> is less than 100 or greater than 1000.</exception>
+        IProgressBarControl IntervalUpdate(int milliseconds = 100);
 
 
         /// <summary>
         /// Runs the ProgressBar control and returns the result.
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
-        /// <returns>The result with type <see cref="ResultPrompt{T}"/> of the ProgressBar control execution. </returns>
+        /// <returns>The result with type <see cref="ResultPrompt{T}"/> containing the final state <see cref="StateProgress"/> of the ProgressBar control.</returns>
         ResultPrompt<StateProgress> Run(CancellationToken token = default);
     }
 }

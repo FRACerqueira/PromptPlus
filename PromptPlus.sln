@@ -75,12 +75,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{0F329F1B-9B18-4469-807B-714EC37CB2DF}"
 	ProjectSection(SolutionItems) = preProject
 		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		docs\colors.md = docs\colors.md
 		CONTRIBUTING.md = CONTRIBUTING.md
+		docs\api\docindex.md = docs\api\docindex.md
 		README.md = README.md
 		SECURITY.md = SECURITY.md
+		docs\snapshots.md = docs\snapshots.md
 		docs\whatsnewcontrols.md = docs\whatsnewcontrols.md
 		docs\whatsnewprev.md = docs\whatsnewprev.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XmlDocMarkdownGenerator", "docs\XmlDocMarkdownGenerator\XmlDocMarkdownGenerator.csproj", "{978EEC0D-37A4-3609-79B0-27EB1A9C2CD9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -200,6 +205,10 @@ Global
 		{69E05622-0DF6-B6F3-AB93-0831ABFD435F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69E05622-0DF6-B6F3-AB93-0831ABFD435F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69E05622-0DF6-B6F3-AB93-0831ABFD435F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{978EEC0D-37A4-3609-79B0-27EB1A9C2CD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{978EEC0D-37A4-3609-79B0-27EB1A9C2CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{978EEC0D-37A4-3609-79B0-27EB1A9C2CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{978EEC0D-37A4-3609-79B0-27EB1A9C2CD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

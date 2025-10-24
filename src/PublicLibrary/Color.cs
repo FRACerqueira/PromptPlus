@@ -20,19 +20,9 @@ namespace PromptPlusLibrary
     /// <param name="red">The red component.</param>
     /// <param name="green">The green component.</param>
     /// <param name="blue">The blue component.</param>
-    #pragma warning disable CA1707 // Identifiers should not contain underscores
+#pragma warning disable CA1707 // Identifiers should not contain underscores
     public readonly struct Color(byte red, byte green, byte blue) : IEquatable<Color>
     {
-        /// <summary>
-        /// Gets the default Color.
-        /// </summary>
-        public static Color DefaultBackColor => Console.BackgroundColor;
-
-        /// <summary>
-        /// Gets the default Color.
-        /// </summary>
-        public static Color DefaulForeColor => Console.ForegroundColor;
-
         /// <summary>
         /// Gets the red component.
         /// </summary>
@@ -1692,5 +1682,5 @@ namespace PromptPlusLibrary
         public static Color Grey93 { get; } = new Color(255, 238, 238, 238);
 
     }
-    #pragma warning restore CA1707 // Identifiers should not contain underscores
+#pragma warning restore CA1707 // Identifiers should not contain underscores
 }

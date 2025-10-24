@@ -5,6 +5,7 @@
 
 using System;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace PromptPlusLibrary
 {
@@ -23,6 +24,7 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Get <see cref="ConsoleKeyInfo"/> to HotKey
         /// </summary>
+        [JsonIgnore]
         public readonly ConsoleKeyInfo KeyInfo => new((char)Key, Key, Shift, Alt, Ctrl);
 
         /// <summary>

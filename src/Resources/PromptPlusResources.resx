@@ -261,9 +261,6 @@
   <data name="TooltipHistoryShow" xml:space="preserve">
     <value>{0}:Show Historic(Min. {1} chars)</value>
   </data>
-  <data name="TooltipOrder" xml:space="preserve">
-    <value>Ordination: {0}</value>
-  </data>
   <data name="TooltipPages" xml:space="preserve">
     <value>Up/Down/PgUp/PgDown:Move Selector, Ctrl+Home/End: First/Last item</value>
   </data>
@@ -293,18 +290,6 @@
   </data>
   <data name="ValidateInvalid" xml:space="preserve">
     <value>Invalid value!</value>
-  </data>
-  <data name="ValidateMaxLength" xml:space="preserve">
-    <value>Value is too long. Max({0})</value>
-  </data>
-  <data name="ValidateMinLength" xml:space="preserve">
-    <value>Value is too short. Min({0})</value>
-  </data>
-  <data name="ValidateNoMatchRegex" xml:space="preserve">
-    <value>Value is not match pattern</value>
-  </data>
-  <data name="ValidateRequired" xml:space="preserve">
-    <value>Required Value!</value>
   </data>
   <data name="YesChar" xml:space="preserve">
     <value>Y</value>
@@ -492,7 +477,7 @@
   <data name="TooltipExpandAllPress" xml:space="preserve">
     <value>Alt+:Expand All</value>
   </data>
-  <data name="TooltipMoveCalendar" xml:space="preserve">
-    <value>Up/Down/PgUp/PgDown:Move Selector</value>
+  <data name="TooltipOrder" xml:space="preserve">
+    <value>Ordination: {0}</value>
   </data>
 </root>

@@ -12,7 +12,7 @@ namespace PromptPlusLibrary
     /// <summary>
     /// Provides functionality for configuring and interacting with a MaskEdit currency control.
     /// </summary>
-    /// <typeparam name="T">The type of input.</typeparam>
+    /// <typeparam name="T">The type of input. Valid only for <see cref="decimal"/> type.</typeparam>
     /// <remarks>Valid only types:
     /// <list type="bullet">
     /// <item><description><see cref="decimal"/></description></item>
@@ -30,8 +30,8 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Configures the number format for the input.
         /// </summary>
-        /// <param name="integerpart">The number of digits allowed in the integer part.</param>
-        /// <param name="decimalpart">The number of decimal digits allowed after the decimal point.Default value is 2.</param>
+        /// <param name="integerpart">The maximum number of digits allowed in the integer part.</param>
+        /// <param name="decimalpart">The number of decimal digits allowed after the decimal point. Default value is 2.</param>
         /// <param name="withsignal">If <c>true</c>, allows a sign (+/-) in the input. Default is <c>false</c>.</param>
         /// <param name="withseparatorgroup">If <c>true</c>, allows group separators (e.g., thousands separator). Default is <c>true</c>.</param>
         /// <returns>The current <see cref="IMaskEditCurrencyControl{T}"/> instance for chaining.</returns>
@@ -56,6 +56,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="value">The default value for empty input.</param>
         /// <returns>The current <see cref="IMaskEditCurrencyControl{T}"/> instance for chaining.</returns>
+        /// <remarks>This value is used only when the input field is left empty by the user.</remarks>
         IMaskEditCurrencyControl<T> DefaultIfEmpty(T value);
 
         /// <summary>
@@ -74,17 +75,16 @@ namespace PromptPlusLibrary
         IMaskEditCurrencyControl<T> Culture(string cultureName) => Culture(new CultureInfo(cultureName));
 
         /// <summary>
-        /// Set validation predicate for selected item.
+        /// Validates input using a custom predicate.
         /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable.</param>
+        /// <param name="validselect">A predicate function that determines whether an input value is valid.</param>
         /// <returns>The current <see cref="IMaskEditCurrencyControl{T}"/> instance for chaining.</returns>
         IMaskEditCurrencyControl<T> PredicateSelected(Func<T, bool> validselect);
 
-
         /// <summary>
-        /// Set validation predicate for selected item.
+        /// Validates input using a custom predicate with custom error message support.
         /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
+        /// <param name="validselect">A predicate function that returns a tuple containing a boolean validation result and an optional error message.</param>
         /// <returns>The current <see cref="IMaskEditCurrencyControl{T}"/> instance for chaining.</returns>
         IMaskEditCurrencyControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
 
@@ -109,7 +109,7 @@ namespace PromptPlusLibrary
         /// Runs the MaskEdit input control and returns the result.
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
-        /// <returns>The result of the input control execution.</returns>
+        /// <returns>A <see cref="ResultPrompt{T}"/> containing the the input control execution.</returns>
         ResultPrompt<T> Run(CancellationToken token = default);
 
     }

@@ -127,11 +127,6 @@ namespace PromptPlusLibrary
         void SetIn(TextReader value);
 
         /// <summary>
-        /// Gets the output CodePage.
-        /// </summary>
-        int CodePage { get; }
-
-        /// <summary>
         /// Gets a value that indicates whether output has been redirected from the standard output stream.
         /// </summary>
         bool IsOutputRedirected { get; }

@@ -143,8 +143,6 @@ namespace PromptPlusLibrary.Drivers
 
         public TextReader In => Console.In;
 
-        public int CodePage => Console.OutputEncoding.CodePage;
-
         public bool IsOutputRedirected => Console.IsOutputRedirected;
 
         public bool IsErrorRedirected => Console.IsErrorRedirected;

@@ -461,7 +461,7 @@ namespace PromptPlusLibrary.Controls.WaitProcess
             }
         }
 
-         private void WriteTasks(BufferScreen screenBuffer)
+        private void WriteTasks(BufferScreen screenBuffer)
         {
             if (_currenttasks.Count == 0)
             {

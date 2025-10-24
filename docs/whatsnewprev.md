@@ -1,4 +1,7 @@
-﻿# <img align="left" width="100" height="100" src="../icon.png">PromptPlus Previous versions
+﻿![HtmlPdfPLus Logo](../icon.png)
+
+# PromptPlus Previous versions
+
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)

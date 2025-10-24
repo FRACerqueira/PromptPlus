@@ -1,4 +1,7 @@
-﻿# <img align="left" width="100" height="100" src="../icon.png">PromptPlus What's new
+﻿![HtmlPdfPLus Logo](../icon.png)
+
+# PromptPlus What's new
+
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
 [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
@@ -29,6 +32,7 @@ Due to the significant modifications, version 5 introduced **significant changes
 - Options all Controls **(see concepts above)**
 - Console Commands **(see concepts above)**
 - [General changes](#general-changes)
+- [History](#history-new) **NEW!** 
 - **AddtoList Control Discontinued!**
 - [AutoComplete Control](#autocomplete-control)
 - [Banner Widget](#banner-widget)
@@ -131,6 +135,7 @@ All console commands are in: **Prompt Plus.Console**.\<command/Properties\>. The
 A separation was made in the writing methods for common texts (default console behavior): **Write/WriteLine** and texts with syntax for text colors: **WriteColor/WriteLineColor**.
 
 **Properties** (All setters use Exclusive Context blocking the main thread during their execution)
+
 - ForegroundColor.
     - Set/Get Color(RGB) class.
 - BackgroundColor.
@@ -142,7 +147,6 @@ A separation was made in the writing methods for common texts (default console b
 - IsInputRedirected.
 - InputEncoding.
 - In.
-- CodePage.
 - IsOutputRedirected.
 - IsErrorRedirected.
 - OutputEncoding.
@@ -154,8 +158,11 @@ A separation was made in the writing methods for common texts (default console b
     - Gets a value indicating whether the console supports swapping screens.
 
 **Properties from profile** (read only)
+
 - DefaultConsoleForegroundColor
+    - Get Color(RGB) class.
 - DefaultConsoleBackgroundColor
+    - Get Color(RGB) class.
 - ProfileName
 - IsTerminal
 - IsLegacy
@@ -185,15 +192,23 @@ A separation was made in the writing methods for common texts (default console b
 - Clear().
 - Beep().
 - (int Left, int Top) Write(char[] buffer, Style? style = null, bool clearrestofline = false).
+    - Returns the current cursor coordinate.
 - (int Left, int Top) Write(char buffer, Style? style = null, bool clearrestofline = false).
+    - Returns the current cursor coordinate.
 - (int Left, int Top) Write(string value, Style? style = null, bool clearrestofline = false).
+    - Returns the current cursor coordinate.
 - (int Left, int Top) WriteColor(string value, Overflow overflow = Overflow.Crop, bool clearrestofline = false).
     -  Accept color syntax over text
+    - Returns the current cursor coordinate.
 - (int Left, int Top) WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true).
+    - Returns the current cursor coordinate.
 - (int Left, int Top) WriteLine(char buffer, Style? style = null, bool clearrestofline = true).
+    - Returns the current cursor coordinate.
 - (int Left, int Top) WriteLine(string value, Style? style = null, bool clearrestofline = true).
+    - Returns the current cursor coordinate.
 - (int Left, int Top) WriteLineColor(string value, Overflow overflow = Overflow.Crop, bool clearrestofline = true).
     -  Accept color syntax over text.
+    - Returns the current cursor coordinate.
 - SwapBuffer(TargetScreen value).
     - Swap Screen Buffer (Primary/Secundary) .
 - OnBuffer(TargetScreen target, Action\<CancellationToken\> value, ConsoleColor? defaultforecolor = null, ConsoleColor? defaultbackcolor = null, CancellationToken? cancellationToken = null). 
@@ -251,6 +266,18 @@ A separation was made in the writing methods for common texts (default console b
 - All general config start at : **PromptPlus.Config**.\<config\>.
 
 ----
+### History (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+Allows you to create, remove, and add items to the history repository.
+
+- Command initialization: PromptPlus.Control.History.
+    - Standard : History(string filename). 
+- Commands: 
+    - AddHistory(string value, TimeSpan? timeout = null).
+    - Save().
+    - Remove().
+
 ### AutoComplete Control
 
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)

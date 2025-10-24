@@ -23,7 +23,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
         private ChartBarLayout _layout = ChartBarLayout.Standard;
         private ChartBarOrder _order = ChartBarOrder.None;
         private Func<ChartItem, string>? _changeDescription;
-        private Func<ChartItem , (bool, string?)>? _predicatevalidselect;
+        private Func<ChartItem, (bool, string?)>? _predicatevalidselect;
         private bool _hasLegends;
         private bool _showLegends;
         private byte _width = 80;
@@ -237,7 +237,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -506,7 +506,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
                     {
                         if (_indexitem == 0)
                         {
-                            _indexitem = _items.Count-1;
+                            _indexitem = _items.Count - 1;
                         }
                         else
                         {

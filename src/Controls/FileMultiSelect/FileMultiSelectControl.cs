@@ -189,7 +189,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
@@ -199,7 +199,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
             return this;
         }
 
-        public IFileMultiSelectControl PredicateSelected(Func<ItemFile, (bool,string?)> validselect)
+        public IFileMultiSelectControl PredicateSelected(Func<ItemFile, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -498,7 +498,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                             _indexTooptip = 0;
                             _localpaginator.SelectedItem.IsExpanded = true;
                             _localpaginator.SelectedItem.Status = NodeStatus.Loading;
-                            var newitems = EnqueueNewitems(
+                            (string, bool, List<ItemNodeControl<ItemFile>>) newitems = EnqueueNewitems(
                                 _localpaginator.SelectedItem.UniqueId,
                                 _localpaginator.SelectedItem.Level,
                                 _localpaginator.SelectedItem.Value.FullPath);
@@ -528,7 +528,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                     else if (keyinfo.IsPressCtrlSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.IsDisabled)
                     {
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator.SelectedItem.UniqueId);
-                        var mark = !_items[index].IsMarked;
+                        bool mark = !_items[index].IsMarked;
                         MarkAllItems(index);
                         int countselect = _checkeditems.Count;
                         if (countselect < _minSelect)
@@ -545,11 +545,11 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                     else if (_modeView == ModeView.Select && keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.IsDisabled)
                     {
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator.SelectedItem.UniqueId);
-                        var mark = !_items[index].IsMarked;
+                        bool mark = !_items[index].IsMarked;
                         _items[index].IsMarked = mark;
                         if (!mark)
                         {
-                            var chkindex = _checkeditems.FindIndex(x => x.FullPath == _items[index].Value.FullPath);
+                            int chkindex = _checkeditems.FindIndex(x => x.FullPath == _items[index].Value.FullPath);
                             _checkeditems.RemoveAt(chkindex);
                         }
                         else
@@ -592,7 +592,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (_modeView == ModeView.Select && !_resultbuffer!.IsPrintable(keyinfo.KeyChar)  && _resultbuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    else if (_modeView == ModeView.Select && !_resultbuffer!.IsPrintable(keyinfo.KeyChar) && _resultbuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
                     {
                         _indexTooptip = 0;
                         break;
@@ -637,9 +637,9 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
 
         private void MarkAllItems(int index)
         {
-            var mark = !_items[index].IsMarked;
+            bool mark = !_items[index].IsMarked;
             _items[index].IsMarked = mark;
-            var level = _items[index].Level;
+            int level = _items[index].Level;
             int chkindex;
             if (!mark)
             {
@@ -665,7 +665,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                     _checkeditems.Add(_items[index].Value);
                 }
             }
-            var isvalid = true;
+            bool isvalid = true;
             index++;
             while (index < _items.Count)
             {
@@ -720,15 +720,15 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
         {
             int index = _items.FindIndex(x => x.UniqueId == _localpaginator!.SelectedItem.UniqueId);
             if (!_items[index].Value.IsFolder)
-            { 
+            {
                 return false;
             }
-            var parent = _items[index].UniqueId;
-            index ++;
+            string parent = _items[index].UniqueId;
+            index++;
             while (index < _items.Count - 1)
             {
                 if (_items[index].IsMarked)
-                { 
+                {
                     return true;
                 }
                 if (_items[index].ParentUniqueId == parent && _items[index].LastItem)
@@ -773,7 +773,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
             {
                 throw new InvalidOperationException("Internal error");
             }
-            int posindex = index+1;
+            int posindex = index + 1;
             while (posindex < _items.Count)
             {
                 if (_items[posindex].ParentUniqueId != key || cancellationToken.IsCancellationRequested)
@@ -1170,14 +1170,14 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
             {
                 return string.Empty;
             }
-            var parent = item.ParentUniqueId;
+            string? parent = item.ParentUniqueId;
             var aux = new Stack<string>();
             for (int i = 0; i < item.Level - 1; i++)
             {
-                var syb = ConfigPlus.GetSymbol(SymbolType.TreeLinevertical);
+                string syb = ConfigPlus.GetSymbol(SymbolType.TreeLinevertical);
                 if (!string.IsNullOrEmpty(parent))
                 {
-                    var index = _items.FindIndex(x => x.UniqueId == parent);
+                    int index = _items.FindIndex(x => x.UniqueId == parent);
                     if (_items[index].LastItem)
                     {
                         syb = new string(' ', ConfigPlus.GetSymbol(SymbolType.TreeLinevertical).Length);
@@ -1186,7 +1186,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                 }
                 aux.Push(syb);
             }
-            while (aux.TryPop(out var indentation))
+            while (aux.TryPop(out string? indentation))
             {
                 result.Append(indentation);
             }
@@ -1234,7 +1234,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                 {
                     filter = _searchPattern;
                 }
-                var qtd = di.GetDirectories(filter, GetEnumerationOptions()).Length;
+                int qtd = di.GetDirectories(filter, GetEnumerationOptions()).Length;
                 if (!_onlyFolders)
                 {
                     qtd += di.GetFiles(_searchPattern, GetEnumerationOptions()).Length;

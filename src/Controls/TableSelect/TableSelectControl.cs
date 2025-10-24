@@ -24,7 +24,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
         private readonly Dictionary<TableStyles, Style> _optStyles = BaseControlOptions.LoadStyle<TableStyles>();
         private byte _pageSize = 10;
         private bool _autoSelect;
-        private Func<T, (bool,string?)>? _predicatevalidselect;
+        private Func<T, (bool, string?)>? _predicatevalidselect;
         private readonly List<ItemTableRow<T>> _items = [];
         private Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
         private Func<T, string>? _textSelector;
@@ -158,7 +158,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
             return this;
         }
 
-        ITableSelectControl<T> ITableSelectControl<T>.PredicateSelected(Func<T, (bool,string?)> validselect)
+        ITableSelectControl<T> ITableSelectControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
@@ -170,7 +170,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
             {
-                var fn = validselect(input);
+                bool fn = validselect(input);
                 if (fn)
                 {
                     return (true, null);
