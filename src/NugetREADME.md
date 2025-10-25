@@ -1,4 +1,4 @@
-![HtmlPdfPLus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
+![Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
 # **Welcome to PromptPlus**
 

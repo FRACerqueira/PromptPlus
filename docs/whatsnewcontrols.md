@@ -1,4 +1,4 @@
-﻿![HtmlPdfPLus Logo](../icon.png)
+﻿![Logo](../icon.png)
 
 # PromptPlus What's new
 
@@ -11,9 +11,9 @@
 ## Concepts (version 5.x or higher)
 - All general config start at : **PromptPlus.Config**.\<config\>.
 - All commands for console start at : **PromptPlus.Console**.\<command\>.
-- All interative controls start at : **PromptPlus.Controls**.\<name of control\>.
+- All interactive controls start at : **PromptPlus.Controls**.\<name of control\>.
     - The tooltip mechanism shows all keys and hotkeys for each control by switching the view ('F1'/'Ctrl+F1').
-- All no interative controls start at : **PromptPlus.Widgets**.\<name of Widget\>.
+- All non interactive controls start at : **PromptPlus.Widgets**.\<name of Widget\>.
 
 - [PromptPlus Config](#config)
 - [Options(all Controls)](#options)
@@ -33,7 +33,7 @@ Due to the significant modifications, version 5 introduced **significant changes
 - Console Commands **(see concepts above)**
 - [General changes](#general-changes)
 - [History](#history-new) **NEW!** 
-- **AddtoList Control Discontinued!**
+- **AddToList Control Discontinued!**
 - [AutoComplete Control](#autocomplete-control)
 - [Banner Widget](#banner-widget)
 - [Calendar Control](#calendar-control)
@@ -77,9 +77,9 @@ Properties:  **PromptPlus.Config**.\<Property\> = \<newvalue\>.
 
 - YesChar
 - NoChar
-- MaxLenghtFilterText
+- MaxLengthFilterText
 - EnabledAbortKey
-- ShowMesssageAbortKey
+- ShowMessageAbortKey
 - ShowTooltip
 - HideAfterFinish
 - HideOnAbort
@@ -101,17 +101,17 @@ Properties:  **PromptPlus.Config**.\<Property\> = \<newvalue\>.
 
 To change the pattern of symbols, the method below was made available:
 
-- **PromptPlus.Config**.ChangeSymbol(SymbolType symbolType, string ascivalue, string unicodevalue)
+- **PromptPlus.Config**.ChangeSymbol(SymbolType symbolType, string asciiValue, string unicodeValue)
 
 ----
 ### Options
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
 All controls and widgets inherit from a base (internal) control that exposes the command: Options(Action\<IControlOptions\> options).
-This command allows you to control/change some common behaviors and properties and overwrite Promptplus Config (when applicable).
+This command allows you to control/change some common behaviors and properties and overwrite PromptPlus Config (when applicable).
 
 - EnabledAbortKey(bool isEnabled = true).
-- ShowMesssageAbortKey(bool isshow = true).
+- ShowMessageAbortKey(bool isshow = true).
 - ShowTooltip(bool isVisible = true).
 - HideAfterFinish(bool shouldHide = true).
 - HideOnAbort(bool shouldHide = true).
@@ -128,7 +128,6 @@ All controls that use the history feature always have the EnabledHistory(string 
 ----
 ### Console Commands
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
-
 
 All console commands are in: **Prompt Plus.Console**.\<command/Properties\>. The commands are the same as those provided by the Console class with possible additional returns and/or extra functionality.
 
@@ -179,7 +178,7 @@ A separation was made in the writing methods for common texts (default console b
 
 - DefaultColors(Color foreground, Color background).
 - ResetColor().
-    - Reset Color t default profile.
+    - Reset Color to default profile.
 - SetCursorPosition(int left, int top).
 - (int Left, int Top) GetCursorPosition().
 - HideCursor().
@@ -210,7 +209,7 @@ A separation was made in the writing methods for common texts (default console b
     -  Accept color syntax over text.
     - Returns the current cursor coordinate.
 - SwapBuffer(TargetScreen value).
-    - Swap Screen Buffer (Primary/Secundary) .
+    - Swap Screen Buffer (Primary/Secondary) .
 - OnBuffer(TargetScreen target, Action\<CancellationToken\> value, ConsoleColor? defaultforecolor = null, ConsoleColor? defaultbackcolor = null, CancellationToken? cancellationToken = null). 
     - Run an action on target screen buffer and return to original screen buffer.
 - ProfileConfig(string name, Action\<IProfileSetup\> config)
@@ -258,9 +257,9 @@ A separation was made in the writing methods for common texts (default console b
 - Created the concept of an editing window for controls that require a significant input/response size, ensuring visual consistency and adequate navigability.
 - A slice architecture was adopted for each component, allowing individual evolution of each one with low interference to the others.
 - The **NEW tooltip mechanism** now shows all keys and hotkeys for each control by switching the view ('F1').
-- All interative controls start at : **PromptPlus.Controls**.\<name of control\>.
+- All interactive controls start at : **PromptPlus.Controls**.\<name of control\>.
     - All initialization contracts have been standardized: PromptPlus.Controls.\<name of control\>(string prompt = "", string? description = null).
-- All no interative controls start at : **PromptPlus.Widgets**.\<name of Widget\>.
+- All non interactive controls start at : **PromptPlus.Widgets**.\<name of Widget\>.
     - For each non-interactive control the initialization contract was customized.
 - All commands for console start at : **PromptPlus.Console**.\<command\>.
 - All general config start at : **PromptPlus.Config**.\<config\>.
@@ -458,7 +457,7 @@ Allows you to create, remove, and add items to the history repository.
     - SearchFolderPattern(string value).
     - SearchFilePattern(string value).
     - FilterType(FilterMode value).
-    - SelectAll(Func<ItemBrowser, bool>? validselect = null).
+    - SelectAll(Func<ItemBrowser, bool)? validselect = null).
     - AddFixedSelect(params string[] values).
     - HotKeyFullPath(HotKey value).
     - HotKeyToggleExpand(HotKey value).
@@ -504,7 +503,7 @@ Allows you to create, remove, and add items to the history repository.
     - SearchFolderPattern(string value).
     - SearchFilePattern(string value).
     - FilterType(FilterMode value).
-    - SelectAll(Func<ItemBrowser, bool>? validselect = null).
+    - SelectAll(Func<ItemBrowser, bool)? validselect = null).
     - AddFixedSelect(params string[] values).
     - HotKeyFullPath(HotKey value).
     - HotKeyToggleExpand(HotKey value).
@@ -572,7 +571,7 @@ Allows you to create, remove, and add items to the history repository.
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
 The MaskEdit control has been completely redesigned and now returns and handles the type passed as an argument with special attention. 
-Navigation and comands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
+Navigation and commands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
 
 - Command initialization:
     - Interface : IMaskEditStringControl\<T\>. 'T' It will always be of type string
@@ -586,7 +585,7 @@ Navigation and comands has been optimized for each supported type: string, date/
         - X : Numeric, Lower and Upper Letter character accepts delimiters for constant or custom.
         - C : Custom character accepts only delimiters for custom.
         - \ : Escape character to use the next char as constant.
-        - { } : Delimiters group to apply custom list or constant value valid only a single mask type insede the group.
+        - { } : Delimiters group to apply custom list or constant value valid only a single mask type inside the group.
         - [  ] : Delimiters for custom value.
         - ( ) : Delimiters for constant value inside the group.
 - Commands: 
@@ -607,7 +606,7 @@ Navigation and comands has been optimized for each supported type: string, date/
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
 The MaskEdit control has been completely redesigned and now returns and handles the type passed as an argument with special attention. 
-Navigation and comands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
+Navigation and commands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
 
 - Command initialization: 
     - Interface : IMaskEditDateTimeControl\<T\>. 'T' It will always be of the types: DateTime, DateOnly or TimeOnly.
@@ -643,7 +642,7 @@ Navigation and comands has been optimized for each supported type: string, date/
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
 The MaskEdit control has been completely redesigned and now returns and handles the type passed as an argument with special attention. 
-Navigation and comands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
+Navigation and commands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
 
 - Command initialization: PromptPlus.Controls.MaskEdit.
     - Interface : IMaskEditCurrencyControl\<T\>. 'T' It will always be of the types: double or decimal.
@@ -671,7 +670,7 @@ Navigation and comands has been optimized for each supported type: string, date/
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
 The MaskEdit control has been completely redesigned and now returns and handles the type passed as an argument with special attention. 
-Navigation and comands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
+Navigation and commands has been optimized for each supported type: string, date/time, numeric, and currency (string, DateTime, DateOnly, TimeOnly, integer, long, double, and decimal).
 
 - Command initialization: PromptPlus.Controls.MaskEdit.
     - Interface : IMaskEditNumberControl\<T\>. 'T' It will always be of the types: integer, long, double or decimal.
@@ -840,7 +839,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - Options(Action\<IControlOptions\> options).
     - Fill(ProgressBarType type).
     - Range(double minvalue, double maxvalue).
-    - IntervalUpdate(int mileseconds = 100).
+    - IntervalUpdate(int milliseconds = 100).
 - Changed: 
     - ResultPrompt\<ResultProgessBar\<T\>\> Run(CancellationToken? value = null) -> ResultPrompt\<StateProgress\> Run(CancellationToken token = default).
     - PageSize(int value) -> PageSize(byte value).
@@ -1076,7 +1075,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - AutoFill(int? minwidth, int? maxwidth).
     - SeparatorRows(bool value = true).
     - HideHeaders(bool value = true).
-    - AddFormatType\<T1\>(Func<object, string> funcfomatType).
+    - AddFormatType\<T1\>(Func<object, string> funcformatType).
     - Show().
 
 ----
@@ -1092,7 +1091,7 @@ Navigation and comands has been optimized for each supported type: string, date/
     - Spinner(SpinnersType spinnersType).
     - Finish(Func<IEnumerable\<StateProcess\>, string> finishtext).
     - ShowElapsedTime(bool value = true).
-    - IntervalUpdate(int mileseconds = 100).
+    - IntervalUpdate(int milliseconds = 100).
     - MaxDegreeProcess(byte value).
     - Interaction\<T\>(IEnumerable\<T\> items, Action<T, IWaitProcessControl> interactionaction).
     - ChangeDescription(Func<IEnumerable\<StateProcess\>, string> value).
@@ -1107,12 +1106,12 @@ Navigation and comands has been optimized for each supported type: string, date/
 - Command initialization: PromptPlus.Control.WaitTimer.
     - Fixed Standard: 
         - WaitTimer(TimeSpan time, string prompt = "", string? description = null, bool showresult = false). 
-        - WaitTimer(int mileseconds, string prompt = "", string? description = null, bool showresult = false)
+        - WaitTimer(int milliseconds, string prompt = "", string? description = null, bool showresult = false)
 - Commands: 
     - Options(Action\<IControlOptions\> options).
     - Styles(WaitTimerStyles styleType, Style style).
     - Spinner(SpinnersType spinnersType).
     - Finish(string text).
-    - ShowElapsedTime(int mileseconds = 500, bool value = true).
+    - ShowElapsedTime(int milliseconds = 500, bool value = true).
     - IsCountDown(bool value = true).
     - ResultPrompt\<TimeSpan?\> Run(CancellationToken token = default).

@@ -1,4 +1,4 @@
-﻿![HtmlPdfPLus Logo](../icon.png)
+﻿![Logo](../icon.png)
 
 # PromptPlus Previous versions
 
