@@ -1,190 +1,108 @@
-# <img align="left" width="100" height="100" src="./docs/images/icon.png">Welcome to PromptPlus
+![Logo](icon.png)
+
+# Welcome to PromptPlus
+
 [![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
-[![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
+[![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
-[![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
 
-**Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
+**The best tool to Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
+ **PromptPlus** was developed in C# with the **.NET 8**, **.NET 9**, **.NET 10** target frameworks.
 
-**PromptPlus** was developed in C# with the **netstandard2.1**, **.NET 6** , **.NET 7** and **.NET 8** target frameworks.
-
-**[Visit the official page for more documentation of PromptPlus](https://fracerqueira.github.io/PromptPlus)**
-
+----
 ## Table of Contents
 
-- [What's new - previous versions](whatsnewprev.md)
+- [What's new in the latest version](#whats-new-in-the-latest-version)
 - [Features](#features)
-- [Migrate Version V3.3 to V4.0](#migrate-version)
-- [Console Engine](#console-engine)
 - [Installing](#installing)
-- [Examples](#examples)
-- [Controls Snapshot](#controls-snapshot)
-- [Usage](#usage)
+- [Console Engine](#console-engine)
 - [Culture](#culture)
+- [Keys navigation, hotkeys and Extensions Emacs](#keys-navigation)
 - [Colors](#colors)
-- [Hotkeys](#hotkeys)
-- [Keypress Extensions Emacs](#keypress-extensions-emacs)
-- [Validators](#validators)
+- [Examples](#examples)
+- [Documentation](#documentation)
 - [Supported Platforms](#supported-platforms)
 - [Code of Conduct](#code-of-conduct)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
-- [API Reference](https://fracerqueira.github.io/PromptPlus/apis/apis.html)
+- [Previous versions](./docs/whatsnewprev.md)
 
-## What's new in the latest version 
-### V4.2.0 
-
+----
+## What's new in the latest version
+### V5.0.0 
 [**Top**](#table-of-contents)
 
-- Added .NET8 target frameworks.
-- Split of feature:
-    - PromptPlus.TableSelect\<T> to Select item in table : Select row, column and data in a grid/table 
-        - Samples in project [Table Select Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
-    - PromptPlus.Table\<T> to write table in console : Show data in a grid/table 
-        - Samples in project [Table Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
-- New Control : TableMultSelect\<T> :  Select multi-data in a grid/table 
-    - Samples in project [Table MultiSelect Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableMultiSelectSamples)
-    - Main features :
-        - More than 80 layout combinations
-        - Navigation by row and columns
-        - Scroll the table when it is larger than the screen
-        - Split text when it is larger than the column size
-        - Automatic header and column completion
-        - Color customization of each element
-        - Search for data filtered by columns
-        - Formatting by column or by data type definition
-- New feature: 
-    - MinimalRender the prompt and control description are not rendered, showing only the minimum necessary without using resources.
-        - Global property : MinimalRender
-        - Instance control(By config command): MinimalRender(bool value = true)
-- New feature: 
-    - Pagination Template to customize pagination information
-        - Global property : PaginationTemplate
-        - Instance control(By config command) : PaginationTemplate(Func<int, int, int, string>? value)
-- New feature: 
-    - PromptPlus.Join() 
-    - Fluent-Interface to write text (less code typed) 
-- Changed feature:
-    - Moved tooltips and validation message to the end of render to all control
-- Improvement : 
-    - Color Token now accepts ':' to separate foreground color from background color
-    - eg: [RED:BLUE] = [RED ON BLUE]
-- Improvement : 
-    - Optimized the Calendar control to have symbols when selecting elements
-- Improvement :
-    - Optimize Render of ProgressBar (less lines)
-- Improvement : 
-    - Optimize Render of SliderNumber (less lines)
-- Improvement : 
-    - Added Styles command for custom colors on all controls
-        - Removed the ApplyStyle command from the Config interface (now use the Styles command)
-        - Added ToStyle() extension for Color Class (less code typed)
-- Improvement : 
-    - Added command HideRange to not show range (Min/Max values) in the SliderNumber control    
-- Improvement : 
-    - Optimize resource usage in rendering (less cultural dependency)
-- Improvement : 
-    - Reinforce the validation of invalid or optional parameters in all controls
-- Improvement : 
-    - Remove code copy (MIT license) from other project and applied package (for lower maintenance)
-- Improvement : 
-    - Optimized the WaitControl control (for cancel correctly tasks)
-    - Removed property Context (EventWaitProcess) 
-    - Added Method ChangeContext(Action<T> action) in EventWaitProcess (for change context over thread safe)
-    - Renamed command 'CancelAllNextTasks' to 'CancelAllTasks' (WaitControl)
-- Documentation: 
-    - Examples of snapshot controls updated to reflect layout changes and reduced image size (faster page loading)
-    - Reviewed credit references and licenses
-- Renamed command: 
-    - 'DescriptionWithInputType' to 'ShowTipInputType'.
-    - Now extra-line to tip InputType
-- Renamed command: 
-    - 'AppendGroupOnDescription' to 'ShowTipGroup'.
-    - Now extra-line to tip group
-- Fixed bug : 
-    - Table control does not render correctly when it does not support Unicode
-- Fixed bug : 
-    - The Slide Switch Control does not show on/off values ​​when they are not customized
-- Fixed bug : 
-    - Alternate screen doesn't update background style when changing color
-- Fixed bug : 
-    - Exception when try delete[F3] in empty colletion in AddTolist/AddtoMaskEditList control
-- Fixed bug : 
-    - Edit[F2] Immutable item in AddTolist/AddtoMaskEditList control
-- Fixed bug : 
-    - CTRL-V (paste data) does not show input in some controls
-- Fixed bug : 
-    - Refinement of Unicode symbol rendering in all controls (Corret render)
-- Removed Control Pipeline :
-    - Now use [PipeAndFilter component](https://github.com/FRACerqueira/PipeAndFilter)
-    - See [Pipeline Sample](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/PipelineSamples)
+We're very excited about the **big release** of this new version. **Version 5 has been completely redesigned** and optimized for better stability, consistency, and performance. 
+All controls and behaviors have been revisited and improved to ensure sustainable evolution. 
+Due to the significant modifications, version 5 introduced **significant changes and is incompatible with versions 4.x**, although the concepts and components are very similar, requiring a small learning curve and minor methodological adjustments.
+
+- Support for .Net10,.Net9 and .Net8
+- External references were reviewed and only those necessary for size treatment for East Asian characters were used.
+- New control rendering engine adjusts more fluidly to the screen size and avoids flickering by redrawing only the changed lines.
+- Revised control of hotkeys and special characters ensuring consistency according to the console's capabilities.
+- Created the separation of interactive controls and added several non-interactive controls (widgets)
+- Introduced **NEW multi-threaded operation** for controls and commands. Now each command and control block the main thread during printing/interaction execution.
+- Renaming several control methods for better clarity and reduced scope, aiming at the unique responsibility that each component intends to perform, allowing for sustainable evolution.
+- Created the concept of an editing window for controls that require a significant input/response size, ensuring visual consistency and adequate navigability.
+- A slice architecture was adopted for each component, allowing individual evolution of each one with low interference to the others.
+- The **NEW tooltip mechanism** now shows all keys and hotkeys for each control by switching the view ('F1').
+- All interative controls start at : **PromptPlus.Controls**.\<name of control\>.
+    - All initialization contracts have been standardized: PromptPlus.Controls.\<name of control\>(string prompt = "", string? description = null).
+- All no interative controls start at : **PromptPlus.Widgets**.\<name of control\>.
+    - For each non-interactive control the initialization contract was customized.
+- All commands for console start at : **PromptPlus.Console**.\<command\>.
+- All general config start at : **PromptPlus.Config**.\<config\>.
+- A more detailed list of changes and basic Concepts **[for each of the controls can be seen here](./docs/whatsnewcontrols.md)**. 
+
+----
 ## Features
 [**Top**](#table-of-contents)
 
-**All features have IntelliSense. PromptPlus has more than 25 controls with many features like: filters, validators, history, suggestions, spinner(19 embedding type and plus custom yours!), colors and styles for control-elements** :
+**All features have IntelliSense. PromptPlus has more than 20 controls with many features like: filters, validators, history, suggestions, spinner(20 embedding type), colors(Supports 4/8/24-bit colors) and customizable element styles / region for each control** :
+
+- AutoComplete with spinner
 - Banner Ascii
-- Input text / Secret / AutoComplete with spinner
-- MaskEdit Generic / Only Date / Only Time / DateTime / Number /  Currency
 - Calendar with multiple layouts
-- Select and Multi-Select(with group select!) 
-- AddTo(Add/Remove) items for text and masked text
-- Wait Keypress with animate spinner
+- ChartBar with switch layout, Legend and order
+- File and Folder multi-select
+- File and Folder select
+- Input text
+- Input Secret 
+- KeyPress
+- MaskEdit Generic (string)
+- MaskEdit Date (DateTime/DateOnly)
+- MaskEdit Time (DateTime/TimeOnly)
+- MaskEdit DateTime 
+- MaskEdit Number (integer,long,double,decimal)
+- MaskEdit Currency (double,decimal)
+- Multi-Select for any type (with group!) 
+- Nodes hierarchical structures multi-select for any type
+- Nodes hierarchical structures select for any type
+- Progress bar with 6 types , gradient colors and spinner
+- ReadLine Emacs
+- Select for any type (with group!) 
 - Slider numeric ranger with gradient colors
-- Up-Down numeric ranger 
 - Switch (style on/off)
+- Table structures multi-select for any type and multiple layouts
+- Table structures select for any type and multiple layouts
 - Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
 - Wait Time with countdown and spinner
-- ChartBar with enabled Interaction to switch layout, Legend and order when browse the charts / Legends.
-- Progress bar with 8 types , gradient colors and spinner
-- Browser File and Folder with multi-select, colors and spinner
-- Treeview hierarchical structures with multi-select and colors
-- Switch Alternate screen
-- Execution pipeline with conditions
-- Table, TableSelect and TableMultSelct with multiple layouts
 
-**All controls** have the same organization (see in action: [**Controls Snapshot**](#controls-snapshot)):
-- input/filter (except Masked input) using **[GNU Readline](https://en.wikipedia.org/wiki/GNU_Readline) Emacs keyboard shortcuts**.  
-- Prompt, description and data entry (ever)
-- Extra actions per stage: OnStartControl/OnInputRender/OnTryAcceptInput/OnFinishControl (ever)
-- Tooltips (ever and configurable) 
-- Filter by Contains / StartsWith (configurable) (depends on the control)
-- Collection subset items and iterations (depends on the control)
-- Page information and page-size(depends on the control)
-- Spinner animation (depends on the control)
-- Error message (depends on the control and validators)
- 
-PromptPlus driver console  **Supports 4/8/24-bit colors** in the terminal with **auto-detection** of the current terminal's capabilities.
+A **complete list of all controls and widgets [snapshots can be seen here](./docs/snapshots.md)**
 
-## Migrate Version
-[**Top**](#table-of-contents)
+### snapshots (small sample)
+![](./docs/images/fileselect.jpg)
 
-Until version 3 the console engine was based on a model from another project. **PromptPlus v4** has been **completely rebuilt** for a better experience, with significant improvements with new controls and more developer power. The console driver now supports better rendering, with the ability to detect terminal capabilities and allow for 24-bit color, text overflow strategies based on terminal size, and left and right margins for a nicer layout.
-**The Controls have been revised to be more responsive, allow color styles in many of their elements**, and adapt to the terminal size even with resizing.
+![](./docs/images/progressbar.jpg)
 
-For migrate V3.3 to V4.0 [**see this link**](https://fracerqueira.github.io/PromptPlus/migrateversion.html).
+![](./docs/images/chartbar.jpg)
 
-## Console Engine
-[**Top**](#table-of-contents)
+![](./docs/images/consolecolorcapacity.jpg)
 
-The console driver has the ability to detect terminal capabilities and allow for **24-bit color and text overflow strategies**  based on terminal size, and left and right margins for a nicer layout and automatic color conversion.
-The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
-
-### Sample Output detect (ConsoleFeaturesSamples)
-![](./docs/images/consoleinfo.gif)
-
-### Sample Output Overflow Capacity (ConsoleFeaturesSamples)
-
-![](./docs/images/consoleoverflowcapacity.gif)
-
-### Sample color capacity (ConsoleFeaturesSamples)
-
-**_Note: This layout and code were based (code copy and adaptation) on the excellent project: spectrum console, having the same color palette_**
-
-![](./docs/images/consolecolorcapacity.gif)
-
+----
 ## Installing
 [**Top**](#table-of-contents)
 
@@ -198,241 +116,38 @@ dotnet add package PromptPlus [--prerelease]
 
 **_Note:  [-pre]/[--prerelease] usage for pre-release versions_**
 
-## Examples
+----
+## Console Engine
 [**Top**](#table-of-contents)
 
-The folder [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples) contains more **40** samples!.
+The console driver has the ability to detect terminal capabilities and allow for 24-bit color and text overflow strategies based on terminal size, and left and right margins for a nicer layout and automatic color conversion. 
 
-```
-dotnet run --project [name of sample]
-```
+The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. 
 
-## Controls Snapshot
+This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
 
-### AddToList
+A separation was made in the writing methods for common texts (default console behavior): **Write/WriteLine** and texts with syntax for text colors: **WriteColor/WriteLineColor**.
 
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddToListSamples)
-
-![](./docs/images/AddtoList.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AddtoMaskEditListSamples)
-
-![](./docs/images/AddtoMaskEditList.gif)
-
-### AlternateScreen
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AlternateScreenSamples)
-
-![](./docs/images/AlternateScreen.gif)
-
-### AutoComplete
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/AutoCompleteSamples)
-
-![](./docs/images/AutoComplete.gif)
-
-### Banner
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BannerSamples)
-
-![](./docs/images/Banner.gif)
-
-### Browser
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BrowserMultSelectSamples)
-
-![](./docs/images/BrowserMultiSelect.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/BrowserSamples)
-
-![](./docs/images/BrowserSelect.gif)
-
-### Calendar
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/CalendarSamples)
-
-![](./docs/images/Calendar.gif)
-
-### ChartBar
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ChartSamples)
-
-![](./docs/images/ChartBar.gif)
-
-### Confirm
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConfirmSamples)
-
-![](./docs/images/Confirm.gif)
-
-### Console Features
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ConsoleFeaturesSamples)
-
-![](./docs/images/ConsoleFeatures.gif)
-
-### Input
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputBasicSamples)
-
-![](./docs/images/InputBasic.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputSecretSamples)
-
-![](./docs/images/InputSecret.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithHistorySamples)
-
-![](./docs/images/InputWithHistory.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithSuggestionSamples)
-
-![](./docs/images/InputWithSuggestion.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/InputWithValidatorSamples)
-
-![](./docs/images/InputWithValidator.gif)
-
-### KeyPress
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/KeyPressSamples)
-
-![](./docs/images/KeyPress.gif)
-
-### MaskEdit
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditCurrencyTypeSamples)
-
-![](./docs/images/MaskEditCurrencyType.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditDateTimeTypeSamples)
-
-![](./docs/images/MaskEditDateTimeType.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditGenericSamples)
-
-![](./docs/images/MaskEditGenericType.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditNumberTypeSamples)
-
-![](./docs/images/MaskEditNumberType.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditDateTypeSamples)
-
-![](./docs/images/MaskEditOnlyDateType.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MaskEditTimeTypeSamples)
-
-![](./docs/images/MaskEditOnlyTimeType.gif)
-
-### MultSelect
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/MultiSelectBasicSamples)
-
-![](./docs/images/MultiSelect.gif)
-
-### ProgressBar
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/ProgressBarSamples)
-
-![](./docs/images/ProgressBar.gif)
-
-### Select
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SelectBasicSamples)
-
-![](./docs/images/Select.gif)
-
-### SliderNumber
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderNumberLeftRightModeSamples)
-
-![](./docs/images/SliderNumberLeftRight.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderNumberUpDownModeSamples)
-
-![](./docs/images/SliderNumberUpDown.gif)
-
-### SliderSwitch
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/SliderSwitchSamples)
-
-![](./docs/images/SliderSwitch.gif)
-
-### Table
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableMultiSelectSamples)
-
-![](./docs/images/TableMultiSelect.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableSelectSamples)
-
-![](./docs/images/TableSelect.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TableBasicSamples)
-
-![](./docs/images/TableWrite.gif)
-
-### TreeView
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TreeViewMultiSelectSamples)
-
-![](./docs/images/TreeViewMultiSelect.gif)
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/TreeViewSamples)
-
-![](./docs/images/TreeViewSelect.gif)
-
-### Wait Tasks
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/WaitTasksSamples)
-
-![](./docs/images/WaitTasks.gif)
-
-### Wait Timer
-
-[**Top**](#table-of-contents)  | [Samples](https://github.com/FRACerqueira/PromptPlus/tree/main/Samples/WaitTimerSamples)
-
-![](./docs/images/WaitTime.gif)
-
-## Usage
-[**Top**](#table-of-contents)
-
-All controls use **fluent interface**; an object-oriented API whose design relies extensively on method chaining. Its goal is to increase code legibility. The term was coined in 2005 by Eric Evans and Martin Fowler.
 ```csharp
-//MaskEdit Generic
-var mask = PromptPlus.MaskEdit("input", "MaskEdit Generic input")
-    .Mask(@"\XYZ 9{3}-L{3}-C[ABC]N{1}[XYZ]-A{3}")
-    .ShowTipInputType(FormatWeek.Short)
-    .Run();
 
-if (!mask.IsAborted)
-{
-    PromptPlus.WriteLine($"You input with mask is {mask.Value.Masked}");
-    PromptPlus.WriteLine($"You input without mask is {mask.Value.Input}");
-}
+PromptPlus.Console.WriteLine("Test", new Style(ConsoleColor.Red, ConsoleColor.White, Overflow.None));
+PromptPlus.Console.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
+PromptPlus.Console.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
+PromptPlus.Console.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
+PromptPlus.Console.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
+PromptPlus.Console.WriteLine("Test", new Style(Color.FromHtml("#ffffff"), Color.Red, Overflow.None));
 
-//AnyKey
-var kp1 = PromptPlus
-    .KeyPress()
-    .Run();
+PromptPlus.Console.WriteLineColor("[RGB(255,0,0):WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
+PromptPlus.Console.WriteLineColor("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
 
-if (!kp1.IsAborted)
-{
-    PromptPlus.WriteLine($"You Pressed {kp1.Value.Key}");
-}
+PromptPlus.Widgets.SingleDash("Test SingleDash", DashOptions.DoubleBorder, 1, Style.Default().ForeGround(ConsoleColor.Red).Background(ConsoleColor.Yellow));
+PromptPlus.Widgets.SingleDashColor("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", DashOptions.AsciiSingleBorder, 1);
+PromptPlus.Widgets.DoubleDash("Test SingleDash", DashOptions.DoubleBorder, 1, Style.Default().ForeGround(ConsoleColor.Red).Background(ConsoleColor.Yellow));
+PromptPlus.Widgets.DoubleDashColor("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", DashOptions.AsciiSingleBorder, 1);
 
-//input
-var in1 = PromptPlus
-    .Input("Input sample1")
-    .Run();
-
-if (!in1.IsAborted)
-{
-    PromptPlus.WriteLine($"You input is {in1.Value}");
-}
 ```
 
+----
 ## Culture
 [**Top**](#table-of-contents)
 
@@ -449,98 +164,114 @@ To use a non-embedded language/culture:
 - Convert .resx files to binary .resources files ([**reference link here**](https://docs.microsoft.com/en-us/dotnet/core/extensions/work-with-resx-files-programmatically))
 - Publish the compiled file (**PromptPlus.[Language].resources**) in the same folder as the binaries.
 
+----
+## Keys navigation
+[**Top**](#table-of-contents)
+
+### For text navigation
+
+PromptPlus adopts the keyboard **arrows, Home, End, PageUp and PageDown** keys for navigation, extending its functionality with the emacs combinations below:
+
+- CTRL+SHIFT+T : To transpose the previous two characters.
+- CTRL+SHIFT+L : To clears the content.
+- CTRL+SHIFT+H : To deletes the previous character (equivalent to the backspace key).
+- CTRL+SHIFT+E : To moves the cursor to the line end (equivalent to the end key).
+- CTRL+SHIFT+A : To moves the cursor to the line start (equivalent to the home key).
+- CTRL+SHIFT+B : To moves the cursor back one character (equivalent to the left arrow key).
+- CTRL+SHIFT+F : To Moves the cursor forward one character (equivalent to the right arrow key).
+- CTRL+SHIFT+D : To delete the current character (equivalent to the delete key).
+- CTRL+SHIFT+U : To clears the line content before the cursor.
+- CTRL+SHIFT+K : To clears the line content after the cursor.
+- CTRL+SHIFT+W : To clear the word before the cursor.
+- ALT+L : To lowers the case of every character from the cursor's position to the end of the current word.
+- ALT+U : To upper the case of every character from the cursor's position to the end of the current word.
+- ALT+C : To capitalizes the character under the cursor and moves to the end of the word.
+- ALT+D : To clear the word after the cursor.
+- ALT+F : To moves the cursor forward one word.
+- ALT+B : To moves the cursor backward one word.
+- INSER : To toggle input replacement mode (default/started in insert mode).
+- ESC : (feature optional) to abort input and return null.
+
+### Console KeyInfo Extensions
+
+- IsPressSpecialKey(this ConsoleKeyInfo keyinfo, ConsoleKey key, ConsoleModifiers modifier)
+- IsPressEnterKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsAbortKeyPress(this ConsoleKeyInfo keyinfo)
+- IsLowersCurrentWord(this ConsoleKeyInfo keyinfo)
+- IsClearBeforeCursor(this ConsoleKeyInfo keyinfo)
+- IsClearAfterCursor(this ConsoleKeyInfo keyinfo)
+- IsClearWordBeforeCursor(this ConsoleKeyInfo keyinfo)
+- IsClearWordAfterCursor(this ConsoleKeyInfo keyinfo)
+- IsCapitalizeOverCursor(this ConsoleKeyInfo keyinfo)
+- IsForwardWord(this ConsoleKeyInfo keyinfo)
+- IsBackwardWord(this ConsoleKeyInfo keyinfo)
+- IsUppersCurrentWord(this ConsoleKeyInfo keyinfo)
+- IsTransposePrevious(this ConsoleKeyInfo keyinfo)
+- IsClearContent(this ConsoleKeyInfo keyinfo)
+- IsPressTabKey(this ConsoleKeyInfo keyinfo)
+- IsPressShiftTabKey(this ConsoleKeyInfo keyinfo)
+- IsPressEndKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressHomeKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressCtrlHomeKey(this ConsoleKeyInfo keyinfo)
+- IsPressCtrlEndKey(this ConsoleKeyInfo keyinfo)
+- IsPressBackspaceKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressDeleteKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressLeftArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressSpaceKey(this ConsoleKeyInfo keyinfo)
+- IsPressCtrlSpaceKey(this ConsoleKeyInfo keyinfo)
+- IsPressRightArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressUpArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressDownArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressPageUpKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressPageDownKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
+- IsPressEscKey(this ConsoleKeyInfo keyinfo)
+
+### For list/colletion
+
+PromptPlus adopts the keyboard **arrows, Ctrl+Home, Ctrl+End, PageUp and PageDown** keys items navigation.
+
+For multiple-selection lists, a space is used to indicate a check mark. The Shift-space combination is used in text input to differentiate it from a check mark, when applicable.
+
+### For expand/collapse
+
+PromptPlus adopts the keyboard **'+', Alt '+'** to expand/expand all and **'-'** to collapse.
+
+----
 ## Colors
 [**Top**](#table-of-contents)
 
-PromptPlus is in accordance with informal standard [**NO COLOR**](https://no-color.org/). when there is the environment variable "no_color" the colors are disabled.
+The color class has implicit conversion to ConsoleColor. There are conversion methods to facilitate compatibility with other common color representations:
 
-Prompt Plus also has commands for coloring parts of the text.
+- Html
+	-	Converts string color Html format (#RRGGBB).
+- Int32
+	-	Converts a standard color number (0 ~ 255).
+- Console Color
+	-	Converts a System.Console.ConsoleColor
+- RGB
+	-	Converts a RGB format (R,G,B)
+- Name
+	-	Converts a name standard color
+      
+The standard color table (0 - 255) can be [**viewed here**](./docs/colors.md).
 
-#### Direct console
-```csharp
-PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
-PromptPlus.WriteLine("[RGB(255,0,0):WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
-PromptPlus.WriteLine("[#ff0000 ON WHITE]Test [YELLOW] COLOR [/] BACK COLOR [/] other text");
-PromptPlus.WriteLine("[RED ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
-PromptPlus.WriteLine("[RED:WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
-````
-
-### Using Style
-
-```csharp
-PromptPlus.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
-PromptPlus.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
-PromptPlus.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
-PromptPlus.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
-````
-
-### Over controls
-```csharp
-PromptPlus
-    .Input("Input [blue]sample2[/]", "with [yellow]description[/]")
-    .Run();
-````
-
-### Escaping format characters
-To output a [ you use [[, and to output a ] you use ]].
-```csharp
-PromptPlus.WriteLine("[[Test]]");
-
-using (PromptPlus.EscapeColorTokens())
-{
-   PromptPlus.DoubleDash($"PromptPlus with context IgnoreColorTokens = true");
-   //show text without color
-   PromptPlus.WriteLine("ValidformedColor_TokenAny[RED ON WHITE]Text[/]_[YELLOW]Othertext[/]");
-}
-````
-
-Promptplus uses the **same default colors and engine(softly modified)** as the third party project: spectreconsole.
-For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#colors) or see the samples in folder **Samples/ConsoleFeaturesSamples**
-
-
-## Hotkeys
+    
+----
+## Examples
 [**Top**](#table-of-contents)
 
-Hotkeys (global and control-specific) are configurable. Some hotkeys are internal and reserved.
-For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#hotkeys)
+The folder [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/samples) contains more **20** projects samples!.
 
-## Keypress Extensions Emacs
+```
+dotnet run --project [name of sample]
+```
+----
+## Documentation
 [**Top**](#table-of-contents)
 
-PromptPlus have a lot extensions to check Key-press with GNU Readline Emacs keyboard shortcuts.
-For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#keypress-extensions-emacs)
+The library is well documented. The documentation is available in the [Docs directory](./docs/api/docindex.md).
 
-## Validators
-
-PromptPlus have a lot extensions to **commons validator** and **validator import**(No duplicate code!) 
-For more details [visit the **official page**](https://fracerqueira.github.io/PromptPlus/#validators) or see the samples in folder **Samples**
-
-```csharp
-private class MylCass
-{
-    [Required(ErrorMessage = "{0} is required!")]
-    [MinLength(3, ErrorMessage = "Min. Length = 3.")]
-    [MaxLength(5, ErrorMessage = "Max. Length = 5.")]
-    [Display(Prompt ="My Input")]
-    public string MyInput { get; set; }
-}
-```
-```csharp
-var inst = new MylCass();
-
-PromptPlus
-    .Input("Input sample2", "import validator from decorate")
-    .Default(inst.Text)
-    .AddValidators(PromptValidators.ImportValidators(inst,x => x!.Text!))
-    .Run();
-
-if (name.IsAborted)
-{
-   return;
-}
-PromptPlus.WriteLine($"Your input: {name.Value}!");
-```
-
+----
 ## Supported platforms
 [**Top**](#table-of-contents)
 
@@ -551,37 +282,39 @@ PromptPlus.WriteLine($"Your input: {name.Value}!");
 - macOS
     - Terminal.app
 
+----
 ## Code of Conduct
 [**Top**](#table-of-contents)
 
 This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community.
 For more information see the [Code of Conduct](CODE_OF_CONDUCT.md).
 
+----
 ## Contributing
 
 See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 
+----
 ## Credits
 [**Top**](#table-of-contents)
 
-PromptPlus **<u>includes code(Copy)</u>** from other software released under the **MIT license**:
+Prompt Plus may **include pieces of code (copy)** from other software released under the MIT License:
 
-- [Spectre.Console](https://spectreconsole.net/), Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen. See [LICENSE](Licenses/LICENSE-SpectreConsole.md).
+- Color/Engine Console - [Spectre.Console](https://spectreconsole.net/),  Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen. See [LICENSE](Licenses/LICENSE-SpectreConsole.md).
 
-- [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU. See [LICENSE](Licenses/LICENSE-FIGlet.md).  
+- Banner Ascii - [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU. See [LICENSE](Licenses/LICENSE-FIGlet.md).  
 
-**EastAsian width generated by package**
-
-- [EastAsianWidthDotNet](https://github.com/nuitsjp/EastAsianWidthDotNet), Copyright (c) 2020 Atsushi Nakamura. See [LICENSE](Licenses/LICENSE-EastAsianWidthDotNet.md).
 
 **API documentation generated by**
 
-- [xmldoc2md](https://github.com/FRACerqueira/xmldoc2md), Copyright (c) 2022 Charles de Vandière. See [LICENSE](Licenses/LICENSE-xmldoc2md.md).
+- [XmlDocMarkdown](https://github.com/ejball/XmlDocMarkdown), Copyright (c) 2024 [Ed Ball](https://github.com/ejball)
+    - See an unrefined customization to contain header and other adjustments in project [XmlDocMarkdownGenerator](https://github.com/FRACerqueira/PromptPlus/tree/main/src/XmlDocMarkdownGenerator)  
 
+----
 ## License
 [**Top**](#table-of-contents)
 
-Copyright 2021 @ Fernando Cerqueira
+Copyright 2025 @ Fernando Cerqueira
 
 PromptPlus is licensed under the MIT license. See [LICENSE](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE).
 

@@ -1,44 +1,8 @@
-# <img align="left" width="100" height="100" src="./images/icon.png">PromptPlus Colors
+![Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
-[![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
-[![Publish](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/publish.yml)
-[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
-[![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
-[![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
+# PromptPlus Colors
 
-[**Main**](index.md#table-of-contents)  
-The color class has implicit conversion to ConsoleColor. There are conversion methods to facilitate compatibility with other common color representations:
-
-- Html
-	-	Converts string color Html format (#RRGGBB).
-- Int32
-	-	Converts a standard color number (0 ~ 255).
-- Console Color
-	-	Converts a System.Console.ConsoleColor
-- RGB
-	-	Converts a RGB format (R,G,B)
-- Name
-	-	Converts a name standard color
-
-### Samples
-```csharp
-PromptPlus.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
-PromptPlus.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
-PromptPlus.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
-PromptPlus.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
-
-PromptPlus.WriteLine("[RGB(255,0,0) ON WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
-PromptPlus.WriteLine("[RGB(255,0,0):WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
-PromptPlus.WriteLine("[RED:WHITE]Test[YELLOW] COLOR [/] BACK COLOR [/] other text");
-```
-
-## Table of Contents
-
-- [Standard colors](#standard-colors)
-- [Color API Reference](./apis/pplus.color.md)
-
-## Standard Colors
-[**Top**](#promptplus-colors)
+[**Main**](../README.md)
 
 Color | # | Name | RGB | HEX | ConsoleColor
 | :---: | :---: | :--- | :--- | :---: | :--- |

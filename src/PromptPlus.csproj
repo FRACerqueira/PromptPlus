@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<AssemblyName>PromptPlus</AssemblyName>
+		<RootNamespace>PromptPlusLibrary</RootNamespace>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<Nullable>enable</Nullable>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<AnalysisLevel>latest-recommended</AnalysisLevel>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Authors>Fernando Cerqueira</Authors>
+		<Description>Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.</Description>
+		<PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
+		<PackageTags>cli;console;chart;terminal;csharp;command;command-line;dotnet;prompt;table;tableview;readline;treeview;grid;autocomplete;maskedit;</PackageTags>
+		<RepositoryUrl>https://github.com/FRACerqueira/PromptPlus</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageId>PromptPlus</PackageId>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
+		<Version>5.0.0</Version>
+		<PackageIcon>icon.png</PackageIcon>
+		<Copyright>© 2025 - Fernando Cerqueira </Copyright>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<Title>PromptPlus</Title>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="Widgets\Banner\FIGlet\standard.flf" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Widgets\Banner\FIGlet\standard.flf" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\PromptPlusResources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="EastAsianWidthDotNet" Version="1.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="README.txt">
+			<Pack>true</Pack>
+			<PackagePath>README.txt</PackagePath>
+		</Content>
+		<Content Include="NugetREADME.md">
+			<Pack>true</Pack>
+			<PackagePath>README.md</PackagePath>
+		</Content>
+		<Content Include="..\icon.png">
+			<Pack>true</Pack>
+			<PackagePath>\</PackagePath>
+		</Content>
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Compile Update="Resources\PromptPlusResources.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>PromptPlusResources.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <None Include="C:\Sources\PromptPlus\src\.editorconfig" />
+	</ItemGroup>
+</Project>
