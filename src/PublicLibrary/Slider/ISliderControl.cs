@@ -23,9 +23,9 @@ namespace PromptPlusLibrary
         ISliderControl Options(Action<IControlOptions> options);
 
         /// <summary>
-        /// Sets the Graphical-based of slider Bar. Default is <see cref="SliderBarType.Fill"/>.
+        /// Sets the graphical representation of the slider bar. Default is <see cref="SliderBarType.Fill"/>.
         /// </summary>
-        /// <param name="type">The Graphical-based fill type, <see cref="SliderBarType"/>.</param>
+        /// <param name="type">The graphical fill type, <see cref="SliderBarType"/>.</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
         ISliderControl Fill(SliderBarType type);
 
@@ -55,45 +55,45 @@ namespace PromptPlusLibrary
         ISliderControl Culture(string cultureName) => Culture(new CultureInfo(cultureName));
 
         /// <summary>
-        /// Defines a minimum and maximum range values. Default value is 100 for <paramref name="maxvalue"/> and 0 for <paramref name="minvalue"/>.
+        /// Defines the minimum and maximum range values. Default value is 100 for <paramref name="maxvalue"/> and 0 for <paramref name="minvalue"/>.
         /// </summary>
-        /// <param name="minvalue">Minimum number</param>
-        /// <param name="maxvalue">Maximum number</param>
+        /// <param name="minvalue">The minimum number.</param>
+        /// <param name="maxvalue">The maximum number.</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
-        /// /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="minvalue"/> is greater than or equal to <paramref name="maxvalue"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="minvalue"/> is greater than or equal to <paramref name="maxvalue"/>.</exception>
         ISliderControl Range(double minvalue, double maxvalue);
 
         /// <summary>
-        /// Sets the width of the SliderBar. Default value is 40. Must be >= 10.
+        /// Sets the width of the slider bar. Default value is 40. Must be >= 10.
         /// </summary>
-        /// <param name="value">The width of the SliderBar.</param>
+        /// <param name="value">The width of the slider bar.</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 10.</exception>
         ISliderControl Width(byte value);
 
         /// <summary>
-        /// Sets the initial value of the Slider. Default is 0.
+        /// Sets the initial value of the slider. Default is 0.
         /// </summary>
         /// <param name="value">The initial value.</param>
-        /// <param name="usedefaultHistory">Indicates whether to use the default value from history (if enabled <see cref="EnabledHistory(string, Action{IHistoryOptions}?)"/>).</param>
+        /// <param name="usedefaultHistory">Indicates whether to use the default value from history (if enabled via <see cref="EnabledHistory(string, Action{IHistoryOptions}?)"/>).</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is greater than maximum value or <paramref name="value"/> is less than minimum value.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is greater than the maximum value or less than the minimum value.</exception>
         ISliderControl Default(double value, bool usedefaultHistory = true);
 
         /// <summary>
-        /// Enabled History and applies custom options to History feature. 
+        /// Enables history and applies custom options to the history feature.
         /// </summary>
         /// <remarks>
-        ///  The Defaults hotkey to Hisyory is <see cref="PromptConfig.HotKeyShowHistory"/>.
+        /// The default hotkey for history is <see cref="PromptConfig.HotKeyShowHistory"/>.
         /// </remarks>
-        /// <param name="filename">The name of the file to store history.</param>
-        /// <param name="options">An action to configure the <see cref="IHistoryOptions"/>. Cannot be <c>null</c>.</param>
+        /// <param name="filename">The name of the file to store history. Cannot be <c>null</c>.</param>
+        /// <param name="options">An action to configure the <see cref="IHistoryOptions"/>.</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="filename"/> is <c>null</c>.</exception>
         ISliderControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
-        /// Sets the fractional digits for the Slider value. Default is 0.
+        /// Sets the number of fractional digits for the slider value. Default is 0.
         /// </summary>
         /// <param name="value">The number of fractional digits.</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
@@ -101,31 +101,31 @@ namespace PromptPlusLibrary
         ISliderControl FracionalDig(byte value);
 
         /// <summary>
-        /// Define the layout to change value. Default value is 'SliderLayout.LeftRight'.
+        /// Defines the layout for changing values. Default value is <see cref="SliderLayout.LeftRight"/>.
         /// </summary>
         /// <remarks>
-        /// When Layout equal UpDown , slider control not show Widgets.
+        /// When layout equals <see cref="SliderLayout.UpDown"/>, the slider control does not show widgets.
         /// </remarks>
-        /// <param name="value">The <see cref="SliderLayout"/></param>
+        /// <param name="value">The <see cref="SliderLayout"/>.</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
         ISliderControl Layout(SliderLayout value);
 
         /// <summary>
-        /// Define the short step to change. Default value is 1/100 of range
+        /// Defines the step value for incremental changes. Default value is 1/100 of the range.
         /// </summary>
-        /// <param name="value">short step to change</param>
+        /// <param name="value">The step value.</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
         ISliderControl Step(double value);
 
         /// <summary>
-        /// Define the large step to change. Default value is 1/10 of range
+        /// Defines the large step value for incremental changes. Default value is 1/10 of the range.
         /// </summary>
-        /// <param name="value">short step to change</param>
+        /// <param name="value">The large step value.</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
         ISliderControl LargeStep(double value);
 
         /// <summary>
-        /// Dynamically changes the style color of the SliderBar based on its value.
+        /// Dynamically changes the style color of the slider bar based on its value.
         /// </summary>
         /// <param name="value">A function to determine the style based on the current value.</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
@@ -133,7 +133,7 @@ namespace PromptPlusLibrary
         ISliderControl ChangeColor(Func<double, Style> value);
 
         /// <summary>
-        /// Dynamically changes the gradient colors of the SliderBar.
+        /// Dynamically changes the gradient colors of the slider bar.
         /// </summary>
         /// <param name="colors">The gradient colors to apply.</param>
         /// <returns>The current <see cref="ISliderControl"/> instance for chaining.</returns>
@@ -159,7 +159,7 @@ namespace PromptPlusLibrary
         /// Runs the slider control and returns the result.
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
-        /// <returns>The result with type <see cref="ResultPrompt{T}"/> of the slider control execution. </returns>
+        /// <returns>The result with type <see cref="ResultPrompt{T}"/> of the slider control execution.</returns>
         ResultPrompt<double?> Run(CancellationToken token = default);
     }
 }

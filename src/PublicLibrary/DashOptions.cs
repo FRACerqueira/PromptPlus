@@ -19,13 +19,13 @@ namespace PromptPlusLibrary
         /// </summary>
         AsciiDoubleBorder,
         /// <summary>
-        /// Single Border unicode '─'
-        /// <br>When not supported unicode : '-'</br>
+        /// Single Border unicode '─' 
+        /// When not supported unicode : '-'
         /// </summary>
         SingleBorder,
         /// <summary>
-        /// Double Border unicode '═'
-        /// <br>When not supported unicode : '='</br>
+        /// Double Border unicode '═' 
+        /// When not supported unicode : '='
         /// </summary>
         DoubleBorder
     }

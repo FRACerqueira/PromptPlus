@@ -6,8 +6,8 @@
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents the Styles Chart Control
-    /// This enum defines various regions or components of the Chart Control.
+    /// Represents the Styles Chart control/widget
+    /// This enum defines various regions or components of the Chart control/widget.
     /// </summary>
     public enum ChartBarStyles
     {

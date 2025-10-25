@@ -8,104 +8,105 @@ using System;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents all Widgets for PromptPlus
+    /// Provides factory methods for creating and writing PromptPlus visual widgets (switch, slider, table, chart bar, calendar, banner and dash lines).
     /// </summary>
     public interface IWidgets
     {
         /// <summary>
-        /// Creates a switch widget with the specified state and optional display values for the on and off positions.
+        /// Creates a switch widget with an initial state and optional custom labels.
         /// </summary>
-        /// <param name="value">A value indicating whether the switch is in the on (<see langword="true"/>) or off (<see langword="false"/>)
-        /// position.</param>
-        /// <param name="onValue">The display value to show when the switch is in the on position. If <c>null</c>, a default label is used.</param>
-        /// <param name="offValue">The display value to show when the switch is in the off position. If <c>null</c>, a default label is used.</param>
-        /// <returns>An <see cref="ISwitchWidget"/> representing the configured switch widget.</returns>
+        /// <param name="value">Initial state: <see langword="true"/> for ON, <see langword="false"/> for OFF.</param>
+        /// <param name="onValue">Display label for the ON state. If <c>null</c>, a default label is used.</param>
+        /// <param name="offValue">Display label for the OFF state. If <c>null</c>, a default label is used.</param>
+        /// <returns>An <see cref="ISwitchWidget"/> for further customization.</returns>
         ISwitchWidget Switch(bool value, string? onValue = null, string? offValue = null);
 
         /// <summary>
-        /// Creates a new Slider for displaying number value.
+        /// Creates a slider widget for displaying a numeric value within a range.
         /// </summary>
-        /// <param name="value">The show value.</param>
-        /// <param name="minvalue">Minimum number. Default value is 0</param>
-        /// <param name="maxvalue">Maximum number. Default value is 1002</param>
-        /// <param name="fracionaldig">The number of fractional digits. Default value is 2</param>
-        /// <returns>An <see cref="ISliderWidget"/> instance for further customization.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is greater than maximum value or <paramref name="value"/> is less than minimum value.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="minvalue"/> is greater than or equal to <paramref name="maxvalue"/>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="fracionaldig"/> is greater than 5.</exception>
-        ISliderWidget Slider(Double value, double minvalue = 0, double maxvalue = 100, byte fracionaldig = 2);
-
+        /// <param name="value">Initial value to display.</param>
+        /// <param name="minvalue">Minimum permitted value (default: 0).</param>
+        /// <param name="maxvalue">Maximum permitted value (default: 100).</param>
+        /// <param name="fracionaldig">Number of fractional digits to show (default: 2, maximum: 5).</param>
+        /// <returns>An <see cref="ISliderWidget"/> for further customization.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown when:
+        /// <br/>• <paramref name="value"/> is less than <paramref name="minvalue"/> or greater than <paramref name="maxvalue"/>.</br>
+        /// <br/>• <paramref name="minvalue"/> is greater than or equal to <paramref name="maxvalue"/>.</br>
+        /// <br/>• <paramref name="fracionaldig"/> is greater than 5.</br>
+        /// </exception>
+        ISliderWidget Slider(double value, double minvalue = 0, double maxvalue = 100, byte fracionaldig = 2);
 
         /// <summary>
-        /// Creates a new table widget for displaying tabular data of the specified type.
+        /// Creates a table widget for tabular display of items of type <typeparamref name="T"/>.
         /// </summary>
-        /// <typeparam name="T">The type of the data items to be displayed in the table.</typeparam>
-        /// <returns>An <see cref="ITableWidget{T}"/> instance for further customization.</returns>
+        /// <typeparam name="T">Reference type of the items to show.</typeparam>
+        /// <returns>An <see cref="ITableWidget{T}"/> for further customization.</returns>
         ITableWidget<T> Table<T>() where T : class;
 
         /// <summary>
-        /// Creates a Chart Bar.
+        /// Creates a bar chart widget with an optional title and layout options.
         /// </summary>
-        /// <param name="title">The tile to chart</param>
-        /// <param name="alignment">The <see cref="TextAlignment"/> of title.</param>
-        /// <param name="showlegends">If true show legends.</param>
-        /// <returns>An <see cref="IChartBarControl"/> instance for further customization.</returns>
+        /// <param name="title">Chart title text (must not be <c>null</c> or empty).</param>
+        /// <param name="alignment">Title alignment (default: <see cref="TextAlignment.Center"/>).</param>
+        /// <param name="showlegends">If <c>true</c>, shows the legend panel; otherwise hides it (default: <c>false</c>).</param>
+        /// <returns>An <see cref="IChartBarWidget"/> for further customization.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="title"/> is <c>null</c> or empty.</exception>
         IChartBarWidget ChartBar(string title, TextAlignment alignment = TextAlignment.Center, bool showlegends = false);
 
         /// <summary>
-        /// Creates a calendar widget for the specified month and year.
+        /// Creates a calendar widget for the month and year referenced by <paramref name="dateref"/>.
         /// </summary>
-        /// <param name="dateref">The  date reference to show month and year calendar.</param>
-        /// <returns>An <see cref="ICalendarWidget"/> instance for further customization.</returns>
+        /// <param name="dateref">Date whose month/year will be rendered (day component is ignored).</param>
+        /// <returns>An <see cref="ICalendarWidget"/> for further customization.</returns>
         ICalendarWidget Calendar(DateTime dateref);
 
         /// <summary>
-        /// Write Banner AsciiArt(FIGlet) to console. 
+        /// Creates a banner widget rendered as FIGlet (ASCII art) text.
         /// </summary>
-        /// <param name="value">The text to write in ASCII art format</param>
-        /// <param name="style">The <see cref="Style"/> to overwrite the current output style. Default is null.</param>
-        /// <returns>An <see cref="IBanner"/> instance for further customization.</returns>
+        /// <param name="value">Text to render (must not be <c>null</c> or empty).</param>
+        /// <param name="style">Optional style override; if <c>null</c>, current console style is used.</param>
+        /// <returns>An <see cref="IBanner"/> for further customization (e.g., font/border).</returns>
         IBanner Banner(string value, Style? style = null);
 
         /// <summary>
-        /// Writes text line representation with colors and writes a single dash after.
+        /// Writes a colored text line followed by a single dash border line.
         /// </summary>
-        /// <param name="value">The value to write.</param>
-        /// <param name="dashOptions">The <see cref="DashOptions"/> character. Default is <see cref="DashOptions.AsciiSingleBorder"/>.</param>
-        /// <param name="extraLines">Number of lines to write after the value. Default is 0.</param>
-        /// <param name="style">The <see cref="Style"/> to write. Default is null.</param>
-        /// <param name="applyColorBackground">Indicates whether to apply color background of the line. Default is false.</param>
+        /// <param name="value">Text to write.</param>
+        /// <param name="dashOptions">Dash style (default: <see cref="DashOptions.AsciiSingleBorder"/>).</param>
+        /// <param name="extraLines">Extra blank lines appended after the dash line (default: 0).</param>
+        /// <param name="style">Optional style for the text/dash; if <c>null</c>, defaults are used.</param>
+        /// <param name="applyColorBackground">If <c>true</c>, applies background color across the full line (default: <c>false</c>).</param>
         void SingleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extraLines = 0, Style? style = null, bool applyColorBackground = false);
 
         /// <summary>
-        /// Writes text with token colors and line representation with colors and writes a single dash after.
+        /// Writes token-colored text followed by a single dash border line.
         /// </summary>
-        /// <param name="value">The value to write.</param>
-        /// <param name="dashOptions">The <see cref="DashOptions"/> character. Default is <see cref="DashOptions.AsciiSingleBorder"/>.</param>
-        /// <param name="extraLines">Number of lines to write after the value. Default is 0.</param>
-        /// <param name="style">The <see cref="Style"/> to write. Default is null.</param>
-        /// <param name="applyColorBackground">Indicates whether to apply color background of the line. Default is false.</param>
+        /// <param name="value">Token-colored text to write (implementation-specific token syntax).</param>
+        /// <param name="dashOptions">Dash style (default: <see cref="DashOptions.AsciiSingleBorder"/>).</param>
+        /// <param name="extraLines">Extra blank lines appended after the dash line (default: 0).</param>
+        /// <param name="style">Optional style for non-token regions; if <c>null</c>, defaults are used.</param>
+        /// <param name="applyColorBackground">If <c>true</c>, applies background color across the full line (default: <c>false</c>).</param>
         void SingleDashColor(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extraLines = 0, Style? style = null, bool applyColorBackground = false);
 
         /// <summary>
-        /// Writes text line representation with colors in a pair of lines of dashes.
+        /// Writes a colored text line framed by two dash border lines (above and below).
         /// </summary>
-        /// <param name="value">The value to write.</param>
-        /// <param name="dashOptions">The <see cref="DashOptions"/> character. Default is <see cref="DashOptions.AsciiSingleBorder"/>.</param>
-        /// <param name="extraLines">Number of lines to write after the value. Default is 0.</param>
-        /// <param name="style">The <see cref="Style"/> to write. Default is null.</param>
-        /// <param name="applyColorBackground">Indicates whether to apply color background of the line. Default is false.</param>
+        /// <param name="value">Text to write.</param>
+        /// <param name="dashOptions">Dash style (default: <see cref="DashOptions.AsciiSingleBorder"/>).</param>
+        /// <param name="extraLines">Extra blank lines appended after the bottom dash line (default: 0).</param>
+        /// <param name="style">Optional style for the text/dash; if <c>null</c>, defaults are used.</param>
+        /// <param name="applyColorBackground">If <c>true</c>, applies background color across each full line (default: <c>false</c>).</param>
         void DoubleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extraLines = 0, Style? style = null, bool applyColorBackground = false);
 
         /// <summary>
-        /// Writes text with token colors and line representation with colors in a pair of lines of dashes.
+        /// Writes token-colored text framed by two dash border lines (above and below).
         /// </summary>
-        /// <param name="value">The value to write.</param>
-        /// <param name="dashOptions">The <see cref="DashOptions"/> character. Default is <see cref="DashOptions.AsciiSingleBorder"/>.</param>
-        /// <param name="extraLines">Number of lines to write after the value. Default is 0.</param>
-        /// <param name="style">The <see cref="Style"/> to write. Default is null.</param>
-        /// <param name="applyColorBackground">Indicates whether to apply color background of the line. Default is false.</param>
+        /// <param name="value">Token-colored text to write.</param>
+        /// <param name="dashOptions">Dash style (default: <see cref="DashOptions.AsciiSingleBorder"/>).</param>
+        /// <param name="extraLines">Extra blank lines appended after the bottom dash line (default: 0).</param>
+        /// <param name="style">Optional style for non-token segments; if <c>null</c>, defaults are used.</param>
+        /// <param name="applyColorBackground">If <c>true</c>, applies background color across each full line (default: <c>false</c>).</param>
         void DoubleDashColor(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extraLines = 0, Style? style = null, bool applyColorBackground = false);
     }
 }

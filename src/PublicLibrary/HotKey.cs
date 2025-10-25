@@ -10,40 +10,41 @@ using System.Text.Json.Serialization;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents the HotKey to control
+    /// Represents a configurable hotkey composed of a base <see cref="ConsoleKey"/> and optional modifier flags.
     /// </summary>
     /// <remarks>
-    /// Create a HotKey
+    /// This struct is lightweight and immutable after construction (properties are init via the primary constructor).
+    /// Use the static members for common built‑in hotkeys.
     /// </remarks>
-    /// <param name="key"><see cref="ConsoleKey"/> to create </param>
-    /// <param name="alt">With Alt key</param>
-    /// <param name="ctrl">With Ctrl key</param>
-    /// <param name="shift">With Shift key</param>
+    /// <param name="key">The primary <see cref="ConsoleKey"/>.</param>
+    /// <param name="alt">Indicates whether Alt is part of the hotkey.</param>
+    /// <param name="ctrl">Indicates whether Ctrl is part of the hotkey.</param>
+    /// <param name="shift">Indicates whether Shift is part of the hotkey.</param>
     public struct HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false) : IEquatable<ConsoleKeyInfo>
     {
         /// <summary>
-        /// Get <see cref="ConsoleKeyInfo"/> to HotKey
+        /// Gets the <see cref="ConsoleKeyInfo"/> representation of this hotkey.
         /// </summary>
         [JsonIgnore]
         public readonly ConsoleKeyInfo KeyInfo => new((char)Key, Key, Shift, Alt, Ctrl);
 
         /// <summary>
-        /// Get <see cref="ConsoleKey"/> to HotKey
+        /// Gets the base <see cref="ConsoleKey"/> of this hotkey.
         /// </summary>
         public ConsoleKey Key { get; private set; } = key;
 
         /// <summary>
-        /// Get <see cref="ConsoleModifiers"/> Alt to HotKey
+        /// Gets a value indicating whether Alt is included.
         /// </summary>
         public bool Alt { get; private set; } = alt;
 
         /// <summary>
-        /// Get <see cref="ConsoleModifiers"/> Ctrl to HotKey
+        /// Gets a value indicating whether Ctrl is included.
         /// </summary>
         public bool Ctrl { get; private set; } = ctrl;
 
         /// <summary>
-        /// Get <see cref="ConsoleModifiers"/> Shift to HotKey
+        /// Gets a value indicating whether Shift is included.
         /// </summary>
         public bool Shift { get; private set; } = shift;
 
@@ -71,70 +72,69 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Checks Hotkey instances are equal the <see cref="ConsoleKeyInfo"/>.
+        /// Determines whether this hotkey matches the provided <see cref="ConsoleKeyInfo"/>.
         /// </summary>
-        /// <param name="other">The ConsoleKeyInfo to compare.</param>
-        /// <returns><c>true</c> if the Hotkey are equal, otherwise <c>false</c>.</returns>
+        /// <param name="other">The key info to compare.</param>
+        /// <returns><c>true</c> if both the key and modifier set are equal; otherwise, <c>false</c>.</returns>
         public readonly bool Equals(ConsoleKeyInfo other) => Key == other.Key && KeyInfo.Modifiers == other.Modifiers;
 
         /// <summary>
-        /// Get HotKey abort control 'Esc'
+        /// Gets the default abort hotkey (Esc).
         /// </summary>
         internal static HotKey AbortKeyPress => new(ConsoleKey.Escape);
 
         /// <summary>
-        /// Get HotKey default for Togger tooltip 'F1'
+        /// Gets the default tooltip toggle hotkey (F1).
         /// </summary>
         internal static HotKey TooltipToggle => new(ConsoleKey.F1);
 
         /// <summary>
-        /// Get HotKey default for show/hide tooltip 'Ctrl+F1'
+        /// Gets the default show/hide tooltip hotkey (Ctrl+F1).
         /// </summary>
-        internal static HotKey TooltipShowHide => new(ConsoleKey.F1, false, true, false);
+        internal static HotKey TooltipShowHide => new(ConsoleKey.F1, alt: false, ctrl: true, shift: false);
 
         /// <summary>
-        /// Get HotKey default for show/hide calendar note 'F2'
+        /// Gets the default calendar notes toggle hotkey (F2).
         /// </summary>
         internal static HotKey CalendarSwitchNotes => new(ConsoleKey.F2);
 
         /// <summary>
-        /// Get HotKey default for show/hide Input Password View 'F2'
+        /// Gets the default input password visibility toggle hotkey (F2).
         /// </summary>
         internal static HotKey InputPasswordView => new(ConsoleKey.F2);
 
         /// <summary>
-        /// Get HotKey default for switch show History entries 'F3'
+        /// Gets the default history view toggle hotkey (F3).
         /// </summary>
         internal static HotKey InputHistoryView => new(ConsoleKey.F3);
 
         /// <summary>
-        /// Get HotKey default for Toggle FullPath 'F2'
+        /// Gets the default full path toggle hotkey (F2).
         /// </summary>
         internal static HotKey ToggleFullPath => new(ConsoleKey.F2);
 
-
         /// <summary>
-        /// Get HotKey default for Select All 'F4'
+        /// Gets the default filter mode toggle hotkey (F4).
         /// </summary>
         internal static HotKey ToggleFilterMode => new(ConsoleKey.F4);
 
         /// <summary>
-        /// Get HotKey default for Select All 'F2'
+        /// Gets the default select all toggle hotkey (F2).
         /// </summary>
         internal static HotKey ToggleAll => new(ConsoleKey.F2);
 
         /// <summary>
-        /// Get HotKey default for ChartBar Switch Layout 'F2'
+        /// Gets the default chart bar layout switch hotkey (F2).
         /// </summary>
         internal static HotKey ChartBarSwitchLayout => new(ConsoleKey.F2);
 
         /// <summary>
-        /// Get HotKey default for ChartBar Switch Legend 'F3'
+        /// Gets the default chart bar legend switch hotkey (F3).
         /// </summary>
         internal static HotKey ChartBarSwitchLegend => new(ConsoleKey.F3);
 
         /// <summary>
-        /// Get HotKey default for ChartBar Switch Order 'F4'
+        /// Gets the default chart bar order switch hotkey (F4).
         /// </summary>
         internal static HotKey ChartBarSwitchOrder => new(ConsoleKey.F4);
     }

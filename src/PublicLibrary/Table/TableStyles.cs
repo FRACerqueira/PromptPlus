@@ -7,6 +7,7 @@ namespace PromptPlusLibrary
 {
     /// <summary>
     /// Represents The Styles Table control/widget
+    /// This enum defines various regions or components of the Table control/widget.  
     /// </summary>
     public enum TableStyles
     {

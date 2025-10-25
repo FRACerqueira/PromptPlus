@@ -19,9 +19,9 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Applies custom options to the control.
         /// </summary>
-        /// <param name="options">An action to configure <see cref="IControlOptions"/>. Cannot be <c>null</c>.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> is <c>null</c>.</exception>
+        /// <param name="options">An action to configure <see cref="IControlOptions"/>.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="options"/> is null.</exception>
         ITableSelectControl<T> Options(Action<IControlOptions> options);
 
         /// <summary>
@@ -31,193 +31,189 @@ namespace PromptPlusLibrary
         /// The default hotkey for history is <see cref="PromptConfig.HotKeyShowHistory"/>.
         /// </remarks>
         /// <param name="filename">The name of the file to store history.</param>
-        /// <param name="options">An action to configure <see cref="IHistoryOptions"/>. Optional.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="filename"/> is <c>null</c>.</exception>
+        /// <param name="options">An optional action to configure <see cref="IHistoryOptions"/>.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="filename"/> is null.</exception>
         ITableSelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
-        /// Sets the initial value of the Select. Default is the first item in the list.
+        /// Sets the initial value of the selection. The default is the first item in the list.
         /// </summary>
-        /// <param name="value">The initial value.</param>
-        /// <param name="useDefaultHistory">Indicates whether to use the default value from history (if enabled).</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
+        /// <param name="value">The initial value to select.</param>
+        /// <param name="useDefaultHistory">When true and history is enabled, uses the default value from history; otherwise uses the specified value.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is null.</exception>
         ITableSelectControl<T> Default(T value, bool useDefaultHistory = true);
 
         /// <summary>
-        /// Set validation predicate for selected item.
+        /// Sets a validation predicate to determine if an item can be selected.
         /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        /// <param name="validselect">A predicate function that returns true if the item is valid for selection; otherwise false.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
         ITableSelectControl<T> PredicateSelected(Func<T, bool> validselect);
 
         /// <summary>
-        /// Set validation predicate for selected item.
+        /// Sets a validation predicate to determine if an item can be selected with a custom validation message.
         /// </summary>
-        /// <param name="validselect">A predicate function that determines whether an Item is considered valid and should be selectable with custom message.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        /// <param name="validselect">A predicate function that returns a tuple containing a boolean indicating validity and an optional custom validation message.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
         ITableSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
 
         /// <summary>
-        /// Performs an interaction with each item in the collection.
+        /// Performs a custom interaction action on each item in the collection.
         /// </summary>
-        /// <param name="items">The collection.</param>
-        /// <param name="interactionAction">The interaction action.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="interactionAction"/> is <c>null</c>.</exception>
+        /// <param name="items">The collection of items to interact with.</param>
+        /// <param name="interactionAction">The action to perform on each item, receiving the item and the control instance as parameters.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="interactionAction"/> is null.</exception>
         ITableSelectControl<T> Interaction(IEnumerable<T> items, Action<T, ITableSelectControl<T>> interactionAction);
 
         /// <summary>
-        /// Sets the maximum number of items to view per page. Default value is 10.
+        /// Sets the maximum number of items to display per page. The default value is 10.
         /// </summary>
-        /// <param name="value">Number of maximum items.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
+        /// <param name="value">The maximum number of items per page.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> is less than 1.</exception>
         ITableSelectControl<T> PageSize(byte value);
 
         /// <summary>
-        /// Adds an item to the list.
+        /// Adds a single item to the list.
         /// </summary>
-        /// <param name="value">Item to add.</param>
-        /// <param name="disable">If <c>true</c>, the item is disabled.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
+        /// <param name="value">The item to add.</param>
+        /// <param name="disable">When true, the item is added in a disabled state and cannot be selected.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is null.</exception>
         ITableSelectControl<T> AddItem(T value, bool disable = false);
 
         /// <summary>
-        /// Adds a collection of items to the list.
+        /// Adds multiple items to the list.
         /// </summary>
-        /// <param name="values">Items to add.</param>
-        /// <param name="disable">If <c>true</c>, the items are disabled.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="values"/> is <c>null</c>.</exception>
+        /// <param name="values">The collection of items to add.</param>
+        /// <param name="disable">When true, all items are added in a disabled state and cannot be selected.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is null.</exception>
         ITableSelectControl<T> AddItems(IEnumerable<T> values, bool disable = false);
 
         /// <summary>
-        /// Custom item comparator
+        /// Sets a custom equality comparer function for comparing items.
         /// </summary>
-        /// <param name="value">function comparator</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
+        /// <param name="value">A function that takes two items and returns true if they are considered equal; otherwise false.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is null.</exception>
         ITableSelectControl<T> EqualItems(Func<T, T, bool> value);
 
         /// <summary>
-        /// Sets the function to display item text for answer. Default is current line : row.
+        /// Sets the function to display item text for the answer. The default is the current line and row number.
         /// </summary>
-        /// <param name="value">Function to display item text.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
+        /// <param name="value">A function that takes an item and returns its text representation.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is null.</exception>
         ITableSelectControl<T> TextSelector(Func<T, string> value);
 
         /// <summary>
-        /// Set Columns used by Filter strategy. 
+        /// Configures the columns used by the filter strategy.
         /// </summary>
-        /// <param name="filter">Filter strategy for filter rows.Default value is FilterMode.Disabled.For the 'StartsWith' filter, only 1 column can be entered.</param>
-        /// <param name="caseinsensitive">If true, performs case-insensitive string comparison when filtering; otherwise case-sensitive comparison is used.</param>
-        /// <param name="indexColumn">list (cardinality) of columns</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="indexColumn"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="indexColumn"/> quantity greater than 1 for filter 'StartsWith'.</exception>
+        /// <param name="filter">The filter strategy for filtering rows. The default value is FilterMode.Disabled. For the StartsWith filter, only one column can be specified.</param>
+        /// <param name="caseinsensitive">When true, performs case-insensitive string comparison when filtering; otherwise performs case-sensitive comparison.</param>
+        /// <param name="indexColumn">The zero-based indices of the columns to include in the filter.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexColumn"/> is null.</exception>
+        /// <exception cref="ArgumentException">Thrown when more than one column is specified for the StartsWith filter.</exception>
         ITableSelectControl<T> FilterByColumns(FilterMode filter, bool caseinsensitive, params int[] indexColumn);
 
         /// <summary>
-        /// The Table layout. Default value is 'TableLayout.SingleGridFull'
+        /// Sets the table layout style. The default value is TableLayout.SingleGridFull.
         /// </summary>
-        /// <param name="value">The <see cref="TableLayout"/></param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        /// <param name="value">The <see cref="TableLayout"/> style to apply.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
         ITableSelectControl<T> Layout(TableLayout value);
 
         /// <summary>
-        /// Dynamically change the description using a user role
+        /// Dynamically changes the description based on the current row and column position.
         /// </summary>
-        /// <param name="value">
-        /// function to apply change
-        /// <br>Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0)</br>
-        /// </param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
+        /// <param name="value">A function that receives the item, current row (zero-based), and current column (zero-based), and returns the description string.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is null.</exception>
         ITableSelectControl<T> ChangeDescription(Func<T, int, int, string> value);
 
         /// <summary>
-        /// Overwrites styles for the Table select control.
+        /// Overwrites the style for a specific table element type.
         /// </summary>
-        /// <param name="styleType">The <see cref="TableStyles"/> to apply.</param>
-        /// <param name="style">The <see cref="Style"/> to use. Cannot be <c>null</c>.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="style"/> is <c>null</c>.</exception>
+        /// <param name="styleType">The <see cref="TableStyles"/> element type to style.</param>
+        /// <param name="style">The <see cref="Style"/> to apply.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="style"/> is null.</exception>
         ITableSelectControl<T> Styles(TableStyles styleType, Style style);
 
         /// <summary>
-        /// Add Column
-        /// <br>AddColumn cannot be used with AutoFill</br>
+        /// Adds a column to the table with custom formatting and alignment options.
         /// </summary>
-        /// <param name="field">Expression that defines the field associated with the column</param>
-        /// <param name="width">column size</param>
-        /// <param name="format">Function to format the field.If not informed, it will be ToString()</param>
-        /// <param name="alignment">alignment content</param>
-        /// <param name="title">The Column title</param>
-        /// <param name="titlealignment">alignment title</param>
-        /// <param name="titlereplaceswidth">title width overrides column width when greater</param>
-        /// <param name="textcrop">If true the value will be truncated by the column size, otherwise, the content will be written in several lines</param>
-        /// <param name="maxslidinglines">Maximum Sliding Lines when the content length is greater than the column size and textcrop = false.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="field"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="width"/> is less than 1 or if <paramref name="maxslidinglines"/> is specified and less than 1.</exception>
-        /// <exception cref="InvalidOperationException">Thrown if AutoFill has already been configured.</exception>
+        /// <remarks>
+        /// AddColumn cannot be used when AutoFill has already been configured.
+        /// </remarks>
+        /// <param name="field">An expression that defines the field associated with the column.</param>
+        /// <param name="width">The width of the column in characters.</param>
+        /// <param name="format">An optional function to format the field value. If not specified, ToString() is used.</param>
+        /// <param name="alignment">The content alignment within the column. The default is TextAlignment.Left.</param>
+        /// <param name="title">The optional title for the column header. If not specified, the field name is used.</param>
+        /// <param name="titlealignment">The alignment for the column title. The default is TextAlignment.Center.</param>
+        /// <param name="titlereplaceswidth">When true, the title width overrides the column width if the title is longer. The default is true.</param>
+        /// <param name="textcrop">When true, the value is truncated to fit the column width; when false, the content wraps to multiple lines. The default is false.</param>
+        /// <param name="maxslidinglines">The maximum number of sliding lines when content exceeds the column width and textcrop is false. When null, no limit is applied.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="field"/> is null.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="width"/> is less than 1, or when <paramref name="maxslidinglines"/> is specified and less than 1.</exception>
+        /// <exception cref="InvalidOperationException">Thrown when AutoFill has already been configured.</exception>
         ITableSelectControl<T> AddColumn(Expression<Func<T, object>> field, int width, Func<object, string>? format = null, TextAlignment alignment = TextAlignment.Left, string? title = null, TextAlignment titlealignment = TextAlignment.Center, bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null);
 
         /// <summary>
-        ///  Auto generate Columns
-        ///  <br>AutoFill cannot be used with AddColumn and/or AutoFit</br>
-        ///  <br>Header alignment will always be 'Center' </br>
-        ///  <br>The content alignment will always be 'Left' and will always be with sliding lines</br>
-        ///  <br>Columns are generated by the public properties of the data class recognized by <see cref="TypeCode"/>.</br>
-        ///  <br>TypeCode.DBNull and TypeCode.Object will be ignored.</br>
-        ///  <br>The column size will be automatically adjusted by the title size (Name property) and the minmaxwidth parameter or content width when min/max width is null</br>
+        /// Automatically generates columns based on the public properties of the data class recognized by <see cref="TypeCode"/>.
         /// </summary>
-        /// <param name="minwidth">minimum width</param>
-        /// <param name="maxwidth">maximum width</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="InvalidOperationException">Thrown if AddColumn or AutoFit has already been configured.</exception>
-        /// <exception cref="ArgumentException">Thrown if <paramref name="minwidth"/>/<paramref name="maxwidth"/> contains invalid minimum/maximum width combinations.</exception>
+        /// <remarks>
+        /// AutoFill cannot be used when AddColumn or AutoFit has already been configured. Properties with TypeCode.DBNull and TypeCode.Object are ignored. The column width is automatically adjusted based on the title size (property name) and the minwidth/maxwidth parameters, or content width when min/max width is null. Header alignment is always Center, and content alignment is always Left with sliding lines enabled.
+        /// </remarks>
+        /// <param name="minwidth">The minimum width for auto-generated columns. When null, no minimum width is enforced.</param>
+        /// <param name="maxwidth">The maximum width for auto-generated columns. When null, no maximum width is enforced.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="InvalidOperationException">Thrown when AddColumn or AutoFit has already been configured.</exception>
+        /// <exception cref="ArgumentException">Thrown when <paramref name="minwidth"/> and <paramref name="maxwidth"/> contain invalid minimum/maximum width combinations.</exception>
         ITableSelectControl<T> AutoFill(int? minwidth, int? maxwidth = null);
 
         /// <summary>
-        /// Set separator between rows. Default false.
+        /// Sets whether to display separators between rows. The default is false.
         /// </summary>
-        /// <param name="value">separator between rows</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        /// <param name="value">When true, displays separators between rows; when false, no separators are shown.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
         ITableSelectControl<T> SeparatorRows(bool value = true);
 
         /// <summary>
-        /// Hide columns headers. Default false.
+        /// Sets whether to hide the column headers. The default is false.
         /// </summary>
-        /// <param name="value">Hide headers</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        /// <param name="value">When true, column headers are hidden; when false, headers are displayed.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
         ITableSelectControl<T> HideHeaders(bool value = true);
 
         /// <summary>
-        /// Function to format columns by field type when not specified by 'AddColumn'.
+        /// Registers a custom formatting function for a specific field type when not explicitly specified by AddColumn.
         /// </summary>
-        /// <typeparam name="T1">Type to convert</typeparam>
-        /// <param name="funcfomatType">The function</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="funcfomatType"/> is <c>null</c>.</exception>
+        /// <typeparam name="T1">The type to format.</typeparam>
+        /// <param name="funcfomatType">The function that formats values of the specified type.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="funcfomatType"/> is null.</exception>
         ITableSelectControl<T> AddFormatType<T1>(Func<object, string> funcfomatType);
 
         /// <summary>
-        /// Automatically select and finalize item when only one item is in the list . Default false.
+        /// Sets whether to automatically select and finalize the item when only one item exists in the list. The default is false.
         /// </summary>
-        /// <param name="value">Automatically select</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        /// <param name="value">When true, automatically selects the single item; when false, user interaction is required.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
         ITableSelectControl<T> AutoSelect(bool value = true);
 
         /// <summary>
-        /// Runs the Table Select Control and returns the result.
+        /// Executes the Table Select Control and returns the selected result.
         /// </summary>
-        /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
-        /// <returns>The result of the Table Select Control execution.</returns>
-        ResultPrompt<T?> Run(CancellationToken token = default);
+        /// <param name="token">The <see cref="CancellationToken"/> to monitor for cancellation requests. The default is CancellationToken.None.</param>
+        /// <returns>A <see cref="ResultPrompt{T}"/> containing the selected item.</returns>
+        ResultPrompt<T> Run(CancellationToken token = default);
     }
 }

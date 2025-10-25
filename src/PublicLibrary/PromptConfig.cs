@@ -18,8 +18,12 @@ using System.Threading;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents the common config properties for all controls.
+    /// Provides the global/default configuration applied to all PromptPlus controls (culture, hotkeys, symbols, pagination and general behavior).
     /// </summary>
+    /// <remarks>
+    /// Use <see cref="IPromptPlusConfig"/> for consuming configuration settings. This sealed implementation handles
+    /// culture resource switching and Unicode symbol capability detection.
+    /// </remarks>
     public sealed class PromptConfig : IPromptPlusConfig
     {
         private readonly Dictionary<SymbolType, bool> _symbolSupport = [];
@@ -32,7 +36,7 @@ namespace PromptPlusLibrary
         private Func<int, int, int, string> _paginationTemplate = (totalCount, selectedpage, pagecount) => string.Format(Messages.PaginationTemplate, totalCount, selectedpage, pagecount);
 
         /// <summary>
-        /// Default constructor
+        /// Initializes a new instance of the <see cref="PromptConfig"/> class using the current thread culture and Unicode symbols enabled.
         /// </summary>
         public PromptConfig()
         {
@@ -42,10 +46,12 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PromptConfig"/> class with the specified culture.
+        /// Initializes a new instance of the <see cref="PromptConfig"/> class with explicit Unicode capability and culture.
         /// </summary>
-        /// <param name="isunicode"></param>
-        /// <param name="culture">The culture to be used for the configuration.</param>
+        /// <param name="isunicode">
+        /// If <c>true</c>, attempts to use Unicode symbols; otherwise ASCII fallbacks are used.
+        /// </param>
+        /// <param name="culture">The base culture for resources, formatting and defaults.</param>
         public PromptConfig(bool isunicode, CultureInfo culture)
         {
             _isunicode = isunicode;
@@ -54,7 +60,7 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Gets or sets the character used for "Yes" input.
+        /// Gets or sets the character representing a logical "Yes" input. Defaults to the localized resource value.
         /// </summary>
         public char YesChar
         {
@@ -63,7 +69,7 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Gets or sets the character used for "No" input.
+        /// Gets or sets the character representing a logical "No" input. Defaults to the localized resource value.
         /// </summary>
         public char NoChar
         {
@@ -72,7 +78,8 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Gets or sets Max.Lenght Filter Text for control.Default valis is 15. The range is from 5 to 30, if the input is outside the range it will be automatically adjusted to the valid range.;
+        /// Gets or sets the maximum length used when filtering text. Default is 15.
+        /// Valid range is 5–30; values outside the range are coerced to the nearest boundary.
         /// </summary>
         public byte MaxLenghtFilterText
         {
@@ -94,32 +101,33 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Gets or sets enabled Abort Key Press for control. If <c>true</c>, the abort key is enabled; otherwise, it is disabled.
+        /// Gets or sets whether the abort (Esc) hotkey is enabled globally.
         /// </summary>
         public bool EnabledAbortKey { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets show Abort Key message. If <c>true</c>, the show message; otherwise no.
+        /// Gets or sets whether a message is displayed after an abort (Esc) action.
         /// </summary>
         public bool ShowMesssageAbortKey { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets enabled show tooltip for control. If <c>true</c>, the show tooltip; otherwise, it is hide.
+        /// Gets or sets whether tooltips are shown by default.
         /// </summary>
         public bool ShowTooltip { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets hide render area after finish control. If <c>true</c>,  hide render area control; otherwise, it is show.
+        /// Gets or sets whether the control render area is cleared after successful completion.
         /// </summary>
         public bool HideAfterFinish { get; set; }
 
         /// <summary>
-        /// Gets or sets hide render area if control aborted. If <c>true</c>,  hide render area control; otherwise, it is show.
+        /// Gets or sets whether the control render area is cleared after abort.
         /// </summary>
         public bool HideOnAbort { get; set; }
 
         /// <summary>
-        /// Gets or sets the default culture to use for displaying values control.
+        /// Gets or sets the default culture used for formatting, parsing and localization.
+        /// Updates internal resource manager when changed.
         /// </summary>
         [JsonIgnore]
         public CultureInfo DefaultCulture
@@ -149,76 +157,77 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Gets or sets the first day of the week.Default value is <see cref="DayOfWeek.Sunday"/>
+        /// Gets or sets the first day of the week for calendar rendering. Default is <see cref="DayOfWeek.Sunday"/>.
         /// </summary>
         public DayOfWeek FirstDayOfWeek { get; set; } = DayOfWeek.Sunday;
 
-
         /// <summary>
-        /// Gets the <see cref="HotKey"/> for abort control. 'ESC'
+        /// Gets the global abort hotkey (Esc).
         /// </summary>
         [JsonIgnore]
         public HotKey HotKeyAbortKeyPress { get; } = HotKey.AbortKeyPress;
 
         /// <summary>
-        /// Gets <see cref="HotKey"/> for toggler Tooltips. Value is 'F1'.
+        /// Gets the hotkey that cycles through tooltip variants (F1).
         /// </summary>
         [JsonIgnore]
         public HotKey HotKeyTooltip { get; } = HotKey.TooltipToggle;
 
         /// <summary>
-        /// Gets <see cref="HotKey"/> for toggler Tooltips. Value is 'Ctrl+F1'.
+        /// Gets the hotkey that shows/hides the tooltip area (Ctrl+F1).
         /// </summary>
         [JsonIgnore]
         public HotKey HotKeyTooltipShowHide { get; } = HotKey.TooltipShowHide;
 
         /// <summary>
-        /// Gets or sets <see cref="HotKey"/> default for toggler ChartBar Switch Layout. Default value is 'F2'.
+        /// Gets or sets the hotkey for chart bar layout switching (F2).
         /// </summary>
         public HotKey HotKeyTooltipChartBarSwitchLayout { get; set; } = HotKey.ChartBarSwitchLayout;
 
         /// <summary>
-        /// Gets or sets <see cref="HotKey"/> default for toggler ChartBar Switch Legend. Default value is 'F3'.
+        /// Gets or sets the hotkey for chart bar legend switching (F3).
         /// </summary>
         public HotKey HotKeyTooltipChartBarSwitchLegend { get; set; } = HotKey.ChartBarSwitchLegend;
 
         /// <summary>
-        /// Gets or sets <see cref="HotKey"/> default for toggler ChartBar Switch Order. Default value is 'F4'.
+        /// Gets or sets the hotkey for chart bar order switching (F4).
         /// </summary>
         public HotKey HotKeyTooltipChartBarSwitchOrder { get; set; } = HotKey.ChartBarSwitchOrder;
 
         /// <summary>
-        /// Gets or sets <see cref="HotKey"/> default for toggler select all items. Default value is 'F2'.
+        /// Gets or sets the hotkey for toggling selection of all items (F2).
         /// </summary>
         public HotKey HotKeyTooltipToggleAll { get; set; } = HotKey.ToggleAll;
 
         /// <summary>
-        /// Gets or sets <see cref="HotKey"/> default for toggler FullPath file . Default value is 'F2'.
+        /// Gets or sets the hotkey for toggling full file path display (F2).
         /// </summary>
         public HotKey HotKeyToggleFullPath { get; set; } = HotKey.ToggleFullPath;
 
         /// <summary>
-        /// Get/Set <see cref="HotKey"/> to toggle password view.  Default value is 'F2'.
+        /// Gets or sets the hotkey for toggling password visibility (F2).
         /// </summary>
         public HotKey HotKeyPasswordView { get; set; } = HotKey.InputPasswordView;
 
         /// <summary>
-        /// Get/Set <see cref="HotKey"/> to toggle Calendar Switch Notes.  Default value is 'F2'.
+        /// Gets or sets the hotkey for toggling calendar note visibility (F2).
         /// </summary>
         public HotKey HotKeySwitchNotes { get; set; } = HotKey.CalendarSwitchNotes;
 
         /// <summary>
-        /// Get/Set <see cref="HotKey"/> to show History entries.  Default value is 'F3'.
+        /// Gets or sets the hotkey for showing input history entries (F3).
         /// </summary>
         public HotKey HotKeyShowHistory { get; set; } = HotKey.InputHistoryView;
 
         /// <summary>
-        /// Get/Set <see cref="HotKey"/> to toggle Filter mode.  Default value is 'F4'.
+        /// Gets or sets the hotkey for toggling filter mode (F4).
         /// </summary>
         public HotKey HotKeyFilterMode { get; set; } = HotKey.ToggleFilterMode;
 
         /// <summary>
-        /// Gets or sets pagination template for Controls
+        /// Gets or sets the pagination template function.
+        /// Parameters: total items, current page (1-based), total pages.
+        /// Returns a formatted display string.
         /// </summary>
         [JsonIgnore]
         public Func<int, int, int, string> PaginationTemplate
@@ -241,11 +250,11 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Change global Symbols for PromptPLus
+        /// Replaces a global symbol mapping providing both ASCII and Unicode variants.
         /// </summary>
-        /// <param name="symbolType">The symbol type</param>
-        /// <param name="ascivalue">string when it does not have unicode capability</param>
-        /// <param name="unicodevalue">string when it has unicode capability</param>
+        /// <param name="symbolType">The symbol category to change.</param>
+        /// <param name="ascivalue">ASCII fallback value (used if Unicode is disabled or unsupported).</param>
+        /// <param name="unicodevalue">Unicode variant used when supported.</param>
         public void ChangeSymbol(SymbolType symbolType, string ascivalue, string unicodevalue)
         {
             ArgumentNullException.ThrowIfNullOrEmpty(nameof(ascivalue));
@@ -255,7 +264,9 @@ namespace PromptPlusLibrary
 
         #region internal / private
 
-
+        /// <summary>
+        /// Gets the application startup culture captured at configuration creation.
+        /// </summary>
         internal CultureInfo AppCulture { get; init; }
 
         internal string GetSymbol(SymbolType type, bool useUnicode = true)

@@ -8,42 +8,44 @@ using System;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Defines a set of options for managing history in the PromptPlus library.
+    /// Provides a fluent API for configuring persisted input history behavior (size, filtering, expiration and paging).
     /// </summary>
     public interface IHistoryOptions
     {
         /// <summary>
-        /// Sets the minimum prefix length required for history matching. Defaut value is 3.
-        /// Default value is 1.
+        /// Sets the minimum number of input characters required before history suggestions are eligible.
+        /// Default value is 3.
         /// </summary>
-        /// <param name="value">The minimum prefix length.</param>
-        /// <returns>The current <see cref="IHistoryOptions"/> instance for method chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
-
+        /// <param name="value">The minimum prefix length (must be &gt;= 1).</param>
+        /// <returns>The same <see cref="IHistoryOptions"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> &lt; 1.</exception>
         IHistoryOptions MinPrefixLength(byte value);
 
         /// <summary>
-        /// Sets the maximum number of items to retain in the history. Default value is 255 items.
+        /// Sets the maximum number of entries retained in the history store.
+        /// Default value is 255.
         /// </summary>
-        /// <param name="value">The maximum number of history items.</param>
-        /// <returns>The current <see cref="IHistoryOptions"/> instance for method chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
+        /// <param name="value">The maximum item count (must be &gt;= 1).</param>
+        /// <returns>The same <see cref="IHistoryOptions"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> &lt; 1.</exception>
         IHistoryOptions MaxItems(byte value);
 
         /// <summary>
-        /// Sets the expiration time for history items.Default value is 365 days.
+        /// Sets the expiration duration applied to newly added history entries.
+        /// Default value is 365 days.
         /// </summary>
-        /// <param name="value">The duration after which history items expire.</param>
-        /// <returns>The current <see cref="IHistoryOptions"/> instance for method chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1 second.</exception>
+        /// <param name="value">A positive <see cref="TimeSpan"/> after which items expire.</param>
+        /// <returns>The same <see cref="IHistoryOptions"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> is less than one second.</exception>
         IHistoryOptions ExpirationTime(TimeSpan value);
 
         /// <summary>
-        /// Sets the number of items to display per page when viewing history.Default value is 5.
+        /// Sets the number of history entries displayed per page in history navigation.
+        /// Default value is 5.
         /// </summary>
-        /// <param name="value">The number of items per page.</param>
-        /// <returns>The current <see cref="IHistoryOptions"/> instance for method chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
+        /// <param name="value">The page size (must be &gt;= 1).</param>
+        /// <returns>The same <see cref="IHistoryOptions"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> &lt; 1.</exception>
         IHistoryOptions PageSize(byte value);
     }
 }

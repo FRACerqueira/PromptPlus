@@ -6,7 +6,7 @@
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents The slider Layout
+    /// Represents the layout and navigation behavior of the slider.
     /// </summary>
     public enum SliderLayout
     {

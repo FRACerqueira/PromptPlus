@@ -11,59 +11,72 @@ using System.Threading;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents the interface for console.
+    /// Defines console interaction and rendering capabilities combined with a profile (<see cref="IProfileDrive"/>).
     /// </summary>
+    /// <remarks>
+    /// This interface abstracts terminal features (cursor control, colors, encoding, buffering, input/output streams,
+    /// and multi‑screen support). Implementations should adapt behavior based on the underlying environment
+    /// (ANSI support, Unicode capability, color depth, etc.).
+    /// </remarks>
+    /// <seealso cref="IProfileDrive"/>
     public interface IConsole : IProfileDrive
     {
         /// <summary>
-        /// Get/set console ForegroundColor
+        /// Gets or sets the current foreground <see cref="Color"/>.
         /// </summary>
+        /// <value>The active foreground color.</value>
         Color ForegroundColor { get; set; }
 
         /// <summary>
-        /// Get/set console BackgroundColor
+        /// Gets or sets the current background <see cref="Color"/>.
         /// </summary>
+        /// <value>The active background color.</value>
         Color BackgroundColor { get; set; }
 
         /// <summary>
-        /// Set the default foreground and background console colors.
+        /// Sets the default foreground and background console colors used when resetting.
         /// </summary>
-        /// <param name="foreground">The default console ForegroundColor</param>
-        /// <param name="background">The default console BackgroundColor</param>
+        /// <param name="foreground">The default foreground <see cref="Color"/>.</param>
+        /// <param name="background">The default background <see cref="Color"/>.</param>
         void DefaultColors(Color foreground, Color background);
 
         /// <summary>
-        /// Reset colors to default values.
+        /// Resets the current colors to the configured defaults.
         /// </summary>
         void ResetColor();
 
         /// <summary>
         /// Gets or sets a value indicating whether the cursor is visible.
         /// </summary>
+        /// <value><c>true</c> if the cursor is visible; otherwise <c>false</c>.</value>
         bool CursorVisible { get; set; }
 
         /// <summary>
-        /// Gets the column position of the cursor within the buffer area.
+        /// Gets the column (left) position of the cursor within the buffer.
         /// </summary>
+        /// <value>The zero-based cursor column.</value>
         int CursorLeft { get; }
 
         /// <summary>
-        /// Gets the row position of the cursor within the buffer area.
+        /// Gets the row (top) position of the cursor within the buffer.
         /// </summary>
+        /// <value>The zero-based cursor row.</value>
         int CursorTop { get; }
 
         /// <summary>
-        /// Sets the position of the cursor.
+        /// Sets the cursor position.
         /// </summary>
-        /// <param name="left">The column position of the cursor. Columns are numbered from left to right starting at 0.</param>
-        /// <param name="top">The row position of the cursor. Rows are numbered from top to bottom starting at 0.</param>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="left"/> or  <paramref name="top"/> is out of range screen.</exception>
+        /// <param name="left">Zero-based column (0 is the leftmost).</param>
+        /// <param name="top">Zero-based row (0 is the topmost).</param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown when <paramref name="left"/> or <paramref name="top"/> is outside the valid buffer range.
+        /// </exception>
         void SetCursorPosition(int left, int top);
 
         /// <summary>
-        /// Gets the current position of the cursor in the buffer area.
+        /// Gets the current cursor position.
         /// </summary>
-        /// <returns>The column and row of the cursor.</returns>
+        /// <returns>A tuple with <c>Left</c> (column) and <c>Top</c> (row).</returns>
         (int Left, int Top) GetCursorPosition();
 
         /// <summary>
@@ -77,201 +90,211 @@ namespace PromptPlusLibrary
         void ShowCursor();
 
         /// <summary>
-        /// Obtains the next character or function key pressed by the user.
+        /// Reads the next key press.
         /// </summary>
-        /// <param name="intercept">Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false.</param>
+        /// <param name="intercept">
+        /// <c>true</c> to suppress echoing the key; <c>false</c> to display it.
+        /// </param>
         /// <returns>
-        /// An object that describes the System.ConsoleKey constant and Unicode character,
-        /// if any, that correspond to the pressed console key. The System.ConsoleKeyInfo
-        /// also describes, in a bitwise combination of System.ConsoleModifiers values,
-        /// whether one or more Shift, Alt, or Ctrl modifier keys were pressed simultaneously
-        /// with the console key.
+        /// A <see cref="ConsoleKeyInfo"/> containing the key, character (if any), and modifier state.
         /// </returns>
         ConsoleKeyInfo ReadKey(bool intercept = false);
 
         /// <summary>
-        /// Gets a value indicating whether a key press is available in the input stream.
+        /// Gets a value indicating whether a key press is available.
         /// </summary>
+        /// <value><c>true</c> if a key is pending; otherwise <c>false</c>.</value>
         bool KeyAvailable { get; }
 
         /// <summary>
-        /// Reads a line from the input stream. A line is defined as a sequence of characters followed by
-        /// a carriage return ('\r'), a line feed ('\n'), or a carriage return
-        /// immediately followed by a line feed. The resulting string does not
-        /// contain the terminating carriage return and/or line feed.
+        /// Reads a line of text from the input stream.
         /// </summary>
         /// <returns>
-        /// The returned value is null if the end of the input stream has been reached.
+        /// The line without the line terminator; <c>null</c> if end of stream is reached.
         /// </returns>
         string? ReadLine();
 
         /// <summary>
-        /// Gets a value that indicates whether input has been redirected from the standard input stream.
+        /// Gets a value indicating whether standard input is redirected.
         /// </summary>
+        /// <value><c>true</c> if input is redirected; otherwise <c>false</c>.</value>
         bool IsInputRedirected { get; }
 
         /// <summary>
-        /// Gets or sets the encoding for the standard input stream.
+        /// Gets or sets the encoding for standard input.
         /// </summary>
+        /// <value>The input <see cref="Encoding"/>.</value>
         Encoding InputEncoding { get; set; }
 
         /// <summary>
-        /// Gets the standard input stream.
+        /// Gets the standard input reader.
         /// </summary>
+        /// <value>The <see cref="TextReader"/> for input.</value>
         TextReader In { get; }
 
         /// <summary>
-        /// Sets the standard input stream.
+        /// Sets the standard input source.
         /// </summary>
-        /// <param name="value">A stream that is the new standard input.</param>
+        /// <param name="value">The new input <see cref="TextReader"/>.</param>
         void SetIn(TextReader value);
 
         /// <summary>
-        /// Gets a value that indicates whether output has been redirected from the standard output stream.
+        /// Gets a value indicating whether standard output is redirected.
         /// </summary>
+        /// <value><c>true</c> if output is redirected; otherwise <c>false</c>.</value>
         bool IsOutputRedirected { get; }
 
         /// <summary>
-        /// Gets a value that indicates whether error has been redirected from the standard error stream.
+        /// Gets a value indicating whether standard error is redirected.
         /// </summary>
+        /// <value><c>true</c> if error is redirected; otherwise <c>false</c>.</value>
         bool IsErrorRedirected { get; }
 
         /// <summary>
-        /// Gets or sets an encoding for the standard output stream.
+        /// Gets or sets the encoding for standard output.
         /// </summary>
+        /// <value>The output <see cref="Encoding"/>.</value>
         Encoding OutputEncoding { get; set; }
 
         /// <summary>
-        /// Gets the standard output stream.
+        /// Gets the standard output writer.
         /// </summary>
+        /// <value>The <see cref="TextWriter"/> for output.</value>
         TextWriter Out { get; }
 
         /// <summary>
-        /// Gets the standard error stream.
+        /// Gets the standard error writer.
         /// </summary>
+        /// <value>The <see cref="TextWriter"/> for error output.</value>
         TextWriter Error { get; }
 
         /// <summary>
-        /// Sets the standard output stream.
+        /// Sets the standard output writer.
         /// </summary>
-        /// <param name="value">A stream that is the new standard output.</param>
+        /// <param name="value">The new output <see cref="TextWriter"/>.</param>
         void SetOut(TextWriter value);
 
         /// <summary>
-        /// Sets the standard error stream.
+        /// Sets the standard error writer.
         /// </summary>
-        /// <param name="value">A stream that is the new standard error.</param>
+        /// <param name="value">The new error <see cref="TextWriter"/>.</param>
         void SetError(TextWriter value);
 
         /// <summary>
-        /// Clears the console buffer and corresponding console window of display information.
-        /// Moves cursor to the top of the console.
+        /// Clears the buffer (and visible window) and resets cursor to (0,0).
         /// </summary>
         void Clear();
 
         /// <summary>
-        /// Plays the sound of a beep through the console speaker.
+        /// Emits an audible beep if supported.
         /// </summary>
         void Beep();
 
         /// <summary>
-        /// Writes the text representation of a character array to the standard output stream.
+        /// Writes a character array.
         /// </summary>
-        /// <param name="buffer">A character array to write.</param>
-        /// <param name="style">The <see cref="Style"/> overwrite style current output</param>
-        /// <param name="clearrestofline">Indicates whether to clear the rest of the line.</param>
-        /// <returns>The column and row position of the cursor.</returns>
+        /// <param name="buffer">Characters to write.</param>
+        /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
+        /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line.</param>
+        /// <returns>The cursor position after write.</returns>
         (int Left, int Top) Write(char[] buffer, Style? style = null, bool clearrestofline = false);
 
         /// <summary>
-        /// Writes the text representation of a character to the standard output stream.
+        /// Writes a single character.
         /// </summary>
-        /// <param name="buffer">A character array to write.</param>
-        /// <param name="style">The <see cref="Style"/> overwrite style current output</param>
-        /// <param name="clearrestofline">Indicates whether to clear the rest of the line.</param>
-        /// <returns>The column and row position of the cursor.</returns>
+        /// <param name="buffer">Character to write.</param>
+        /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
+        /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line.</param>
+        /// <returns>The cursor position after write.</returns>
         (int Left, int Top) Write(char buffer, Style? style = null, bool clearrestofline = false);
 
         /// <summary>
-        /// Writes the text representation of a string value to the standard output stream.
+        /// Writes a string.
         /// </summary>
-        /// <param name="value">A string value to write.</param>
-        /// <param name="style">The <see cref="Style"/> overwrite style current output</param>
-        /// <param name="clearrestofline">Indicates whether to clear the rest of the line.</param>
-        /// <returns>The column and row position of the cursor.</returns>
+        /// <param name="value">The string to write.</param>
+        /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
+        /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line.</param>
+        /// <returns>The cursor position after write.</returns>
         (int Left, int Top) Write(string value, Style? style = null, bool clearrestofline = false);
 
         /// <summary>
-        /// Writes the text representation of a string value with token Colors to the standard output stream.
+        /// Writes a string containing color tokens parsed and rendered with color support.
         /// </summary>
-        /// <param name="value">A string value with token Colors to write.</param>
-        /// <param name="overflow">The <see cref="Overflow"/> Strategy</param>
-        /// <param name="clearrestofline">Indicates whether to clear the rest of the line.</param>
-        /// <returns>The column and row position of the cursor.</returns>
+        /// <param name="value">String with embedded color tokens.</param>
+        /// <param name="overflow">Overflow handling <see cref="Overflow"/> strategy.</param>
+        /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line.</param>
+        /// <returns>The cursor position after write.</returns>
         (int Left, int Top) WriteColor(string value, Overflow overflow = Overflow.Crop, bool clearrestofline = false);
 
         /// <summary>
-        /// Writes the text representation of a character array to the standard output stream with line terminator.
+        /// Writes a character array followed by a line terminator.
         /// </summary>
-        /// <param name="buffer">A character array to write.</param>
-        /// <param name="style">The <see cref="Style"/> overwrite style current output</param>
-        /// <param name="clearrestofline">Indicates whether to clear the rest of the line.</param>
-        /// <returns>The column and row position of the cursor.</returns>
+        /// <param name="buffer">Characters to write.</param>
+        /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
+        /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line before newline.</param>
+        /// <returns>The cursor position after write.</returns>
         (int Left, int Top) WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true);
 
         /// <summary>
-        /// Writes the text representation of a character to the standard output stream with line terminator.
+        /// Writes a single character followed by a line terminator.
         /// </summary>
-        /// <param name="buffer">A character array to write.</param>
-        /// <param name="style">The <see cref="Style"/> overwrite style current output</param>
-        /// <param name="clearrestofline">Indicates whether to clear the rest of the line.</param>
-        /// <returns>The column and row position of the cursor.</returns>
+        /// <param name="buffer">Character to write.</param>
+        /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
+        /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line before newline.</param>
+        /// <returns>The cursor position after write.</returns>
         (int Left, int Top) WriteLine(char buffer, Style? style = null, bool clearrestofline = true);
 
         /// <summary>
-        /// Writes the text representation of a string value to the standard output stream with line terminator.
+        /// Writes a string followed by a line terminator.
         /// </summary>
-        /// <param name="value">A string value to write.</param>
-        /// <param name="style">The <see cref="Style"/> overwrite style current output</param>
-        /// <param name="clearrestofline">Indicates whether to clear the rest of the line.</param>
-        /// <returns>The column and row position of the cursor.</returns>
+        /// <param name="value">String to write.</param>
+        /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
+        /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line before newline.</param>
+        /// <returns>The cursor position after write.</returns>
         (int Left, int Top) WriteLine(string value, Style? style = null, bool clearrestofline = true);
 
         /// <summary>
-        /// Writes the text representation of a string value with token Colors to the standard output stream with line terminator.
+        /// Writes a color-tokenized string followed by a line terminator.
         /// </summary>
-        /// <param name="value">A string value with token Colors to write.</param>
-        /// <param name="overflow">The <see cref="Overflow"/> Strategy</param>
-        /// <param name="clearrestofline">Indicates whether to clear the rest of the line.</param>
-        /// <returns>The column and row position of the cursor.</returns>
+        /// <param name="value">String with embedded color tokens.</param>
+        /// <param name="overflow">Overflow handling <see cref="Overflow"/> strategy.</param>
+        /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line before newline.</param>
+        /// <returns>The cursor position after write.</returns>
         (int Left, int Top) WriteLineColor(string value, Overflow overflow = Overflow.Crop, bool clearrestofline = true);
 
         /// <summary>
-        /// Get Current Screen Buffer
+        /// Gets the currently active screen buffer.
         /// </summary>
+        /// <value>The active <see cref="TargetScreen"/>.</value>
         TargetScreen CurrentBuffer { get; }
 
         /// <summary>
-        /// Swap Screen Buffer
+        /// Attempts to switch to a target screen buffer.
         /// </summary>
-        /// <param name="value">The target buffer</param>
-        /// <returns>True when console has capacity to swap to target buffer, otherwise false</returns>
+        /// <param name="value">Target buffer.</param>
+        /// <returns><c>true</c> if the switch succeeded; otherwise <c>false</c>.</returns>
         bool SwapBuffer(TargetScreen value);
 
         /// <summary>
-        /// Run an action on target screen buffer and return to original screen buffer
+        /// Executes an action on a target buffer and then restores the original buffer.
         /// </summary>
-        /// <param name="target">The target buffer</param>
-        /// <param name="value">The action</param>        
-        /// <param name="defaultforecolor">The default fore color</param>        
-        /// <param name="defaultbackcolor">The default back color</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/></param> 
-        /// <returns>True when console has capacity to run on target buffer, otherwise false</returns>
-        bool OnBuffer(TargetScreen target, Action<CancellationToken> value, ConsoleColor? defaultforecolor = null, ConsoleColor? defaultbackcolor = null, CancellationToken? cancellationToken = null);
+        /// <param name="target">The target buffer.</param>
+        /// <param name="value">Action to execute while the buffer is active.</param>
+        /// <param name="defaultforecolor">Optional temporary default foreground <see cref="ConsoleColor"/>.</param>
+        /// <param name="defaultbackcolor">Optional temporary default background <see cref="ConsoleColor"/>.</param>
+        /// <param name="cancellationToken">Cancellation token for the action.</param>
+        /// <returns><c>true</c> if executed on the requested buffer; otherwise <c>false</c>.</returns>
+        bool OnBuffer(
+            TargetScreen target,
+            Action<CancellationToken> value,
+            ConsoleColor? defaultforecolor = null,
+            ConsoleColor? defaultbackcolor = null,
+            CancellationToken? cancellationToken = null);
 
         /// <summary>
-        /// Gets a value indicating whether the console supports swapping screens.
+        /// Gets a value indicating whether screen swapping is supported.
         /// </summary>
+        /// <value><c>true</c> if buffer swapping is enabled; otherwise <c>false</c>.</value>
         bool IsEnabledSwapScreen { get; }
     }
 }

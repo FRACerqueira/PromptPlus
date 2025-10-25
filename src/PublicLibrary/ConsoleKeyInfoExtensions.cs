@@ -9,17 +9,18 @@ using System.Runtime.InteropServices;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents KeyInfo Extensions
+    /// Provides extension methods for <see cref="ConsoleKeyInfo"/> to evaluate specific key combinations,
+    /// including standard keys and Emacs-style shortcuts.
     /// </summary>
     public static class ConsoleKeyInfoExtensions
     {
         /// <summary>
-        /// Check ConsoleKeyInfo is Special Key
+        /// Determines whether the pressed key matches the specified <paramref name="key"/> and <paramref name="modifier"/>.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="key"><see cref="ConsoleKey"/> to compare</param>
-        /// <param name="modifier"><see cref="ConsoleModifiers"/> to compare</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="key">The expected <see cref="ConsoleKey"/>.</param>
+        /// <param name="modifier">The expected <see cref="ConsoleModifiers"/>.</param>
+        /// <returns><c>true</c> if both key and modifier match; otherwise, <c>false</c>.</returns>
         public static bool IsPressSpecialKey(this ConsoleKeyInfo keyinfo, ConsoleKey key, ConsoleModifiers modifier)
         {
             if (keyinfo.Key == key)
@@ -33,337 +34,344 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Enter Key
+        /// Determines whether the pressed key represents an Enter action.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">If <c>true</c> accept 'CTRL+J' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Control+J as Enter (Emacs style).</param>
+        /// <returns><c>true</c> if Enter (or accepted Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
+        /// <remarks>
+        /// On non-Windows platforms both CR (13) and LF (10) may be emitted. This method normalizes those cases.
+        /// </remarks>
         public static bool IsPressEnterKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return keyinfo.Key == ConsoleKey.Enter || (emacskeys && keyinfo.Key == ConsoleKey.J && keyinfo.Modifiers == ConsoleModifiers.Control);
             }
-            return (keyinfo.KeyChar == 13 && keyinfo.Modifiers == 0) || (keyinfo.KeyChar == 10 && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.J && keyinfo.Modifiers == ConsoleModifiers.Control);
+            return (keyinfo.KeyChar == 13 && keyinfo.Modifiers == 0)
+                   || (keyinfo.KeyChar == 10 && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.J && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Abort key Control
+        /// Determines whether the configured global abort hotkey was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if the abort hotkey matches; otherwise, <c>false</c>.</returns>
+        /// <remarks>Uses the value defined in <c>PromptPlus.Config.HotKeyAbortKeyPress.KeyInfo</c>.</remarks>
         public static bool IsAbortKeyPress(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Equals(PromptPlus.Config.HotKeyAbortKeyPress.KeyInfo);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
-        /// <br>Alt+L = Lowers the case of every character from the cursor's position to the end of the current words</br>
+        /// Determines whether the Alt+L (lower-case word) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Alt+L was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsLowersCurrentWord(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.L && keyinfo.Modifiers == ConsoleModifiers.Alt;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Clear Before Cursor Emacs Key 
-        /// <br>Ctrl+U = Clears the line content before the cursor</br>
+        /// Determines whether the Control+U (clear before cursor) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Control+U was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsClearBeforeCursor(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.U && keyinfo.Modifiers == ConsoleModifiers.Control;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Clear After Cursor Emacs Key 
-        /// <br>Ctrl+K = Clears the line content after the cursor</br>
+        /// Determines whether the Control+K (clear after cursor) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Control+K was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsClearAfterCursor(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.K && keyinfo.Modifiers == ConsoleModifiers.Control;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Clear Word Before Cursor Emacs Key 
-        /// <br>Ctrl+W = Clears the word before the cursor</br>
+        /// Determines whether the Control+W (clear word before cursor) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Control+W was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsClearWordBeforeCursor(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.W && keyinfo.Modifiers == ConsoleModifiers.Control;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Clear Word After Cursor Emacs Key 
-        /// <br>Ctrl+D = Clears the word after the cursor</br>
+        /// Determines whether the Control+D (clear word after cursor) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Control+D was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsClearWordAfterCursor(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.D && keyinfo.Modifiers == ConsoleModifiers.Control;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Capitalize Over Cursor Emacs Key 
-        /// <br>Alt+C = Capitalizes the character under the cursor and moves to the end of the word</br>
+        /// Determines whether the Alt+C (capitalize over cursor) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Alt+C was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsCapitalizeOverCursor(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.C && keyinfo.Modifiers == ConsoleModifiers.Alt;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Forward Word Emacs Key 
-        /// <br>Alt+F = Moves the cursor forward one word.</br>
+        /// Determines whether the Alt+F (forward word) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Alt+F was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsForwardWord(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.F && keyinfo.Modifiers == ConsoleModifiers.Alt;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Backward Word Emacs Key 
-        /// <br>Alt+B = Moves the cursor backward one word.</br>
+        /// Determines whether the Alt+B (backward word) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Alt+B was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsBackwardWord(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.B && keyinfo.Modifiers == ConsoleModifiers.Alt;
         }
 
-
         /// <summary>
-        /// Check ConsoleKeyInfo is Lowers Current Word Emacs Key 
-        /// <br>Alt+U = Upper the case of every character from the cursor's position to the end of the current word</br>
+        /// Determines whether the Alt+U (upper-case word) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Alt+U was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsUppersCurrentWord(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.U && keyinfo.Modifiers == ConsoleModifiers.Alt;
         }
 
-
         /// <summary>
-        /// Check ConsoleKeyInfo is Transpose Previous Emacs Key 
-        /// <br>Ctrl+T = Transpose the previous two characters</br>
+        /// Determines whether the Control+T (transpose previous characters) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Control+T was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsTransposePrevious(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.T && keyinfo.Modifiers == ConsoleModifiers.Control;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Clear Emacs Key 
-        /// <br>Ctrl+L = Clears the content</br>
+        /// Determines whether the Control+L (clear content) Emacs shortcut was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Control+L was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsClearContent(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.L && keyinfo.Modifiers == ConsoleModifiers.Control;
         }
 
-
         /// <summary>
-        /// Check ConsoleKeyInfo is Tab Key
+        /// Determines whether the Tab key (without modifiers) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Tab was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressTabKey(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.Tab && keyinfo.Modifiers == 0;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Shift + Tab Key
+        /// Determines whether Shift+Tab was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Shift+Tab was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressShiftTabKey(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.Tab && keyinfo.Modifiers == ConsoleModifiers.Shift;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is End Key
+        /// Determines whether End or (optionally) Control+E (Emacs end-of-line) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+E' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Control+E.</param>
+        /// <returns><c>true</c> if End (or Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressEndKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
-            return (keyinfo.Key == ConsoleKey.End && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.E && keyinfo.Modifiers == ConsoleModifiers.Control);
+            return (keyinfo.Key == ConsoleKey.End && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.E && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Home Key
+        /// Determines whether Home or (optionally) Control+A (Emacs beginning-of-line) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+A' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Control+A.</param>
+        /// <returns><c>true</c> if Home (or Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressHomeKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
-            return (keyinfo.Key == ConsoleKey.Home && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.A && keyinfo.Modifiers == ConsoleModifiers.Control);
+            return (keyinfo.Key == ConsoleKey.Home && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.A && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Ctrl+Home Key
+        /// Determines whether Control+Home was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Control+Home was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressCtrlHomeKey(this ConsoleKeyInfo keyinfo)
         {
             return (keyinfo.Key == ConsoleKey.Home && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
+
         /// <summary>
-        /// Check ConsoleKeyInfo is Ctrl+End Key
+        /// Determines whether Control+End was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Control+End was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressCtrlEndKey(this ConsoleKeyInfo keyinfo)
         {
             return (keyinfo.Key == ConsoleKey.End && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is End Key
+        /// Determines whether Backspace or (optionally) Control+H (Emacs delete previous character) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+H' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Control+H.</param>
+        /// <returns><c>true</c> if Backspace (or Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressBackspaceKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
-            return (keyinfo.Key == ConsoleKey.Backspace && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.H && keyinfo.Modifiers == ConsoleModifiers.Control);
+            return (keyinfo.Key == ConsoleKey.Backspace && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.H && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Delete Key
+        /// Determines whether Delete or (optionally) Control+D (Emacs delete forward) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+D' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Control+D.</param>
+        /// <returns><c>true</c> if Delete (or Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressDeleteKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
-            return (keyinfo.Key == ConsoleKey.Delete && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.D && keyinfo.Modifiers == ConsoleModifiers.Control);
+            return (keyinfo.Key == ConsoleKey.Delete && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.D && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
+        /// <summary>
+        /// Determines whether Control+Delete (clear word after cursor) was pressed.
+        /// </summary>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Control+Delete was pressed; otherwise, <c>false</c>.</returns>
         internal static bool IsPressCtrlDeleteKey(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.Delete && keyinfo.Modifiers == ConsoleModifiers.Control;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Left Arrow Key
+        /// Determines whether LeftArrow or (optionally) Control+B (Emacs move backward) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+B' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Control+B.</param>
+        /// <returns><c>true</c> if LeftArrow (or Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressLeftArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
-            return (keyinfo.Key == ConsoleKey.LeftArrow && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.B && keyinfo.Modifiers == ConsoleModifiers.Control);
+            return (keyinfo.Key == ConsoleKey.LeftArrow && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.B && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Space Key
+        /// Determines whether Spacebar (without modifiers) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Spacebar was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressSpaceKey(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.Spacebar && keyinfo.Modifiers == 0;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Space Key + Ctrl Modifier
+        /// Determines whether Control+Spacebar was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Control+Spacebar was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressCtrlSpaceKey(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.Spacebar && keyinfo.Modifiers == ConsoleModifiers.Control;
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Right Arrow Key
+        /// Determines whether RightArrow or (optionally) Control+F (Emacs move forward) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+F' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Control+F.</param>
+        /// <returns><c>true</c> if RightArrow (or Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressRightArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
-            return (keyinfo.Key == ConsoleKey.RightArrow && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.F && keyinfo.Modifiers == ConsoleModifiers.Control);
+            return (keyinfo.Key == ConsoleKey.RightArrow && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.F && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Up Arrow Key
+        /// Determines whether UpArrow or (optionally) Control+P (Emacs previous line/history) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+P' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Control+P.</param>
+        /// <returns><c>true</c> if UpArrow (or Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressUpArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
-            return (keyinfo.Key == ConsoleKey.UpArrow && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.P && keyinfo.Modifiers == ConsoleModifiers.Control);
+            return (keyinfo.Key == ConsoleKey.UpArrow && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.P && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Down Arrow Key
+        /// Determines whether DownArrow or (optionally) Control+N (Emacs next line/history) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">if <c>true</c> accept 'CTRL+N' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Control+N.</param>
+        /// <returns><c>true</c> if DownArrow (or Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressDownArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
-            return (keyinfo.Key == ConsoleKey.DownArrow && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.N && keyinfo.Modifiers == ConsoleModifiers.Control);
+            return (keyinfo.Key == ConsoleKey.DownArrow && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.N && keyinfo.Modifiers == ConsoleModifiers.Control);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is PageUp Key
+        /// Determines whether PageUp or (optionally) Alt+P (Emacs previous extended navigation) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">if <c>true</c> accept 'Alt+P' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Alt+P.</param>
+        /// <returns><c>true</c> if PageUp (or Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressPageUpKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
-            return (keyinfo.Key == ConsoleKey.PageUp && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.P && keyinfo.Modifiers == ConsoleModifiers.Alt);
+            return (keyinfo.Key == ConsoleKey.PageUp && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.P && keyinfo.Modifiers == ConsoleModifiers.Alt);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is PageDown Key
+        /// Determines whether PageDown or (optionally) Alt+N (Emacs next extended navigation) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <param name="emacskeys">if <c>true</c> accept 'Alt+N' </param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <param name="emacskeys">If <c>true</c>, also accepts Alt+N.</param>
+        /// <returns><c>true</c> if PageDown (or Emacs equivalent) was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressPageDownKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
         {
-            return (keyinfo.Key == ConsoleKey.PageDown && keyinfo.Modifiers == 0) || (emacskeys && keyinfo.Key == ConsoleKey.N && keyinfo.Modifiers == ConsoleModifiers.Alt);
+            return (keyinfo.Key == ConsoleKey.PageDown && keyinfo.Modifiers == 0)
+                   || (emacskeys && keyinfo.Key == ConsoleKey.N && keyinfo.Modifiers == ConsoleModifiers.Alt);
         }
 
         /// <summary>
-        /// Check ConsoleKeyInfo is Esc Key
+        /// Determines whether Escape (without modifiers) was pressed.
         /// </summary>
-        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
-        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>
+        /// <returns><c>true</c> if Escape was pressed; otherwise, <c>false</c>.</returns>
         public static bool IsPressEscKey(this ConsoleKeyInfo keyinfo)
         {
             return keyinfo.Key == ConsoleKey.Escape && keyinfo.Modifiers == 0;
         }
-
     }
 }

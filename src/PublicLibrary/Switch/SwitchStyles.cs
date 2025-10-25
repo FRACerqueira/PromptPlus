@@ -6,7 +6,8 @@
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents The Styles Switch control
+    /// Represents The Styles Switch control.
+    /// This enum defines various regions or components of the Switch Control.  
     /// </summary>
     public enum SwitchStyles
     {

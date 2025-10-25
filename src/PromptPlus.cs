@@ -19,8 +19,13 @@ using System.Threading;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents all controls, methods, properties and extensions for <see cref="PromptPlus"/>.
+    /// Provides the global entry point for all PromptPlus controls, widgets, configuration access and console services.
     /// </summary>
+    /// <remarks>
+    /// The static initialization sequence detects terminal capabilities (ANSI, Unicode, color depth, legacy mode),
+    /// captures the original console state (culture, encoding, colors) and prepares an internal profile.
+    /// Resources are restored automatically on process exit.
+    /// </remarks>
     public static partial class PromptPlus
     {
         private static readonly CultureInfo _appConsoleCulture;
@@ -30,13 +35,13 @@ namespace PromptPlusLibrary
         private static readonly ConsoleColor _originalForecolor;
         private static readonly ConsoleColor _originalBackcolor;
 #if NET9_0_OR_GREATER
-        private static readonly Lock _lockprofile = new();
+            private static readonly Lock _lockprofile = new();
 #else
         private static readonly object _lockprofile = new();
 #endif
 
         /// <summary>
-        /// The console drive init.
+        /// Static constructor. Detects environment capabilities and initializes the internal console driver.
         /// </summary>
         static PromptPlus()
         {
@@ -49,7 +54,7 @@ namespace PromptPlusLibrary
 
             ConsoleColor forecolor = System.Console.ForegroundColor;
             ConsoleColor backcolor = System.Console.BackgroundColor;
-            if ((int)forecolor < 0 || (int)forecolor > 14 || (int)backcolor < 0 || (int)backcolor > 14) //wsl Linux terminal
+            if ((int)forecolor < 0 || (int)forecolor > 14 || (int)backcolor < 0 || (int)backcolor > 14) // WSL / Linux terminal fallback
             {
                 forecolor = ConsoleColor.White;
                 backcolor = ConsoleColor.Black;
@@ -87,24 +92,26 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Get global properties config for controls/widgets
+        /// Gets the global configuration instance applied to newly created controls and widgets.
         /// </summary>
         public static IPromptPlusConfig Config => _promptConfig;
 
         /// <summary>
-        /// Represents all Widgets for PromptPlus
+        /// Gets a factory for creating and emitting visual widgets (banner, dash lines, chart bar, slider, etc.).
         /// </summary>
         public static IWidgets Widgets => new PromptPlusWidgets(_consoledrive, _promptConfig);
 
-
         /// <summary>
-        /// Represents all controls for PromptPlus
+        /// Gets a factory for interactive controls (input, select, file select, progress, masking, etc.).
+        /// Each method returns a fluent configuration object.
         /// </summary>
         public static IControls Controls => new PromptPlusControls(_consoledrive, _promptConfig);
 
         /// <summary>
-        /// Set profile Console/terminal 
+        /// Reconfigures the active console profile (colors, padding, overflow). Thread-safe.
         /// </summary>
+        /// <param name="name">Logical profile name.</param>
+        /// <param name="config">Delegate used to mutate an <see cref="IProfileSetup"/> prior to applying.</param>
         public static void ProfileConfig(string name, Action<IProfileSetup> config)
         {
             lock (_lockprofile)
@@ -153,12 +160,15 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Gets the Console drive.
+        /// Gets the current console driver abstraction providing low-level I/O, color and buffer operations.
         /// </summary>
         public static IConsole Console => _consoledrive;
 
         #region private methods
 
+        /// <summary>
+        /// Restores original console state (culture, encoding, colors) on process exit.
+        /// </summary>
         private static void CurrentDomain_ProcessExit(object? sender, EventArgs e)
         {
             ((IConsoleExtend)_consoledrive).Dispose();
@@ -169,37 +179,29 @@ namespace PromptPlusLibrary
             System.Console.ResetColor();
         }
 
-
         // Adapted from https://github.com/willmcgugan/rich/blob/f0c29052c22d1e49579956a9207324d9072beed7/rich/console.py#L391
+        /// <summary>
+        /// Detects the best color system supported by the current terminal/console environment.
+        /// </summary>
+        /// <param name="supportsAnsi">Indicates if ANSI sequences are supported.</param>
+        /// <returns>The detected <see cref="ColorSystem"/>.</returns>
         private static ColorSystem ColorSystemDetector(bool supportsAnsi)
         {
-            // No colors?
             if (Environment.GetEnvironmentVariables().Contains("NO_COLOR"))
             {
                 return ColorSystem.NoColors;
             }
 
-            // Windows?
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 if (!supportsAnsi)
                 {
-                    // Figure out what we should do here.
-                    // Does really all Windows terminals support
-                    // eight-bit colors? Probably not...
                     return ColorSystem.EightBit;
                 }
 
-                // Windows 10.0.15063 and above support true color,
-                // and we can probably assume that the next major
-                // version of Windows will support true color as well.
                 if (GetWindowsVersionInformation(out int major, out int build))
                 {
-                    if (major == 10 && build >= 15063)
-                    {
-                        return ColorSystem.TrueColor;
-                    }
-                    else if (major > 10)
+                    if ((major == 10 && build >= 15063) || major > 10)
                     {
                         return ColorSystem.TrueColor;
                     }
@@ -218,10 +220,15 @@ namespace PromptPlusLibrary
                 }
             }
 
-            // Should we default to eight-bit colors?
             return ColorSystem.EightBit;
         }
 
+        /// <summary>
+        /// Attempts to extract Windows version information (major, build) from OS description.
+        /// </summary>
+        /// <param name="major">Outputs Windows major version.</param>
+        /// <param name="build">Outputs Windows build number.</param>
+        /// <returns><c>true</c> if parsing succeeded; otherwise <c>false</c>.</returns>
         private static bool GetWindowsVersionInformation(out int major, out int build)
         {
             major = 0;

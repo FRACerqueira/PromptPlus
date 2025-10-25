@@ -12,47 +12,54 @@ using System.Globalization;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents a Color RGB.
+    /// Represents an RGB color (optionally mapped to an indexed palette entry).
     /// </summary>
     /// <remarks>
-    /// Initializes a new instance of the <see cref="Color"/> struct.
+    /// The optional internal <c>Number</c> corresponds to a color index in a known palette
+    /// (e.g. standard/extended console colors). When present it enables efficient conversion
+    /// to <see cref="ConsoleColor"/> or palette lookups. When absent the color is treated
+    /// as a raw 24-bit RGB value.
     /// </remarks>
-    /// <param name="red">The red component.</param>
-    /// <param name="green">The green component.</param>
-    /// <param name="blue">The blue component.</param>
+    /// <param name="red">The red component (0-255).</param>
+    /// <param name="green">The green component (0-255).</param>
+    /// <param name="blue">The blue component (0-255).</param>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
     public readonly struct Color(byte red, byte green, byte blue) : IEquatable<Color>
     {
         /// <summary>
         /// Gets the red component.
         /// </summary>
+        /// <value>The red byte (0-255).</value>
 
         public byte R { get; } = red;
 
         /// <summary>
         /// Gets the green component.
         /// </summary>
+        /// <value>The green byte (0-255).</value>
 
         public byte G { get; } = green;
 
         /// <summary>
         /// Gets the blue component.
         /// </summary>
+        /// <value>The blue byte (0-255).</value>
 
         public byte B { get; } = blue;
 
         /// <summary>
-        /// Gets the number of the Color, if any.
+        /// Gets the palette index for this color, if any.
         /// </summary>
+        /// <value>The palette index (0-255) or <c>null</c> if not palette-bound.</value>
 
         internal byte? Number { get; } = null;
 
         /// <summary>
-        /// Blends two ColorRGBs.
+        /// Blends (interpolates) this color with another color.
         /// </summary>
-        /// <param name="other">The other Color.</param>
-        /// <param name="factor">The blend factor.</param>
-        /// <returns>The resulting Color.</returns>
+        /// <param name="other">The other color.</param>
+        /// <param name="factor">Interpolation factor in [0,1]. 0 = this color, 1 = <paramref name="other"/>.</param>
+        /// <returns>The blended <see cref="Color"/>.</returns>
         public readonly Color Blend(Color other, float factor)
         {
             // https://github.com/willmcgugan/rich/blob/f092b1d04252e6f6812021c0f415dd1d7be6a16a/rich/Color.py#L494
@@ -63,11 +70,9 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Get Inverted Color by Luminance for best contrast 
+        /// Gets a contrasting color (black or white) based on luminance for readability.
         /// </summary>
-        /// <returns>
-        /// <see cref="Color"/> White or Black
-        /// </returns>
+        /// <returns><see cref="White"/> or <see cref="Black"/> depending on brightness.</returns>
         public readonly Color GetInvertedColor()
         {
             return GetLuminance(this) < 140 ? White : Black;
@@ -79,10 +84,10 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Gets the hexadecimal representation of the Color.
+        /// Gets the hexadecimal (RRGGBB) representation of a color.
         /// </summary>
-        /// <param name="value">The <see cref="Color"/></param>
-        /// <returns>The hexadecimal representation of the Color.</returns>
+        /// <param name="value">The color to convert.</param>
+        /// <returns>Hexadecimal string without leading '#'.</returns>
         public static string FromHex(Color value)
         {
             return string.Format(
@@ -100,10 +105,10 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Checks if <see cref="Color"/> are equal the instance.
+        /// Determines whether this instance equals another object.
         /// </summary>
-        /// <param name="obj">The object to compare</param>
-        /// <returns><c>true</c> if the two ColorRGBs are equal, otherwise <c>false</c>.</returns>
+        /// <param name="obj">Object to compare.</param>
+        /// <returns><c>true</c> if equal; otherwise <c>false</c>.</returns>
         public override readonly bool Equals(object? obj)
         {
             return obj is Color ColorRGB && Equals(ColorRGB);
@@ -111,32 +116,32 @@ namespace PromptPlusLibrary
 
 
         /// <summary>
-        /// Checks if <see cref="Color"/> are equal the instance.
+        /// Determines whether this instance equals another <see cref="Color"/>.
         /// </summary>
-        /// <param name="other">The <see cref="Color"/></param>
-        /// <returns><c>true</c> if the two ColorRGBs are equal, otherwise <c>false</c>.</returns>
+        /// <param name="other">Color to compare.</param>
+        /// <returns><c>true</c> if equal; otherwise <c>false</c>.</returns>
         public readonly bool Equals(Color other)
         {
             return R == other.R && G == other.G && B == other.B;
         }
 
         /// <summary>
-        /// Checks if two <see cref="Color"/> instances are equal.
+        /// Determines whether two colors are equal.
         /// </summary>
-        /// <param name="left">The first Color instance to compare.</param>
-        /// <param name="right">The second Color instance to compare.</param>
-        /// <returns><c>true</c> if the two ColorRGBs are equal, otherwise <c>false</c>.</returns>
+        /// <param name="left">First color.</param>
+        /// <param name="right">Second color.</param>
+        /// <returns><c>true</c> if equal; otherwise <c>false</c>.</returns>
         public static bool operator ==(Color left, Color right)
         {
             return left.Equals(right);
         }
 
         /// <summary>
-        /// Checks if two <see cref="Color"/> instances are different.
+        /// Determines whether two colors are different.
         /// </summary>
-        /// <param name="left">The first Color instance to compare.</param>
-        /// <param name="right">The second Color instance to compare.</param>
-        /// <returns><c>true</c> if the two ColorRGBs are different, otherwise <c>false</c>.</returns>
+        /// <param name="left">First color.</param>
+        /// <param name="right">Second color.</param>
+        /// <returns><c>true</c> if not equal; otherwise <c>false</c>.</returns>
         public static bool operator !=(Color left, Color right)
         {
             return !(left == right);
@@ -152,9 +157,10 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Converts a <see cref="ConsoleColor"/> to a <see cref="Color"/>.
+        /// Implicitly converts a <see cref="ConsoleColor"/> to a <see cref="Color"/>.
         /// </summary>
-        /// <param name="color">The <see cref="ConsoleColor"/> to convert.</param>
+        /// <param name="color">Console color.</param>
+        /// <returns>The corresponding <see cref="Color"/>.</returns>
 
         public static implicit operator Color(ConsoleColor color)
         {
@@ -162,9 +168,10 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Converts a <see cref="Color"/> to a <see cref="ConsoleColor"/>.
+        /// Implicitly converts a <see cref="Color"/> to a <see cref="ConsoleColor"/>.
         /// </summary>
         /// <param name="ColorRGB">The console Color to convert.</param>
+        /// <returns>The nearest <see cref="ConsoleColor"/>.</returns>
 
         public static implicit operator ConsoleColor(Color ColorRGB)
         {
@@ -172,10 +179,11 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Converts string Color Html format (#RRGGBB) into <see cref="Color"/>.
+        /// Parses a HTML hex color string (#RRGGBB) into a <see cref="Color"/>.
         /// </summary>
-        /// <param name="value">The html Color to convert.</param>
-        /// <returns>A <see cref="Color"/>.</returns>
+        /// <param name="value">String in the form <c>#RRGGBB</c>.</param>
+        /// <returns>The parsed <see cref="Color"/>.</returns>
+        /// <exception cref="ArgumentException">Thrown if format is invalid.</exception>
         public static Color FromHtml(string value)
         {
             if (value == null || value.Length != 7 || !value.StartsWith('#'))
@@ -190,10 +198,11 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Converts a <see cref="Color"/> to a <see cref="ConsoleColor"/>.
+        /// Converts a <see cref="Color"/> to a <see cref="ConsoleColor"/>, approximating if necessary.
         /// </summary>
-        /// <param name="ColorRGB">The Color to convert.</param>
-        /// <returns>A <see cref="ConsoleColor"/> representing the <see cref="Color"/>.</returns>
+        /// <param name="ColorRGB">The console Color to convert.</param>
+        /// <returns>A console color representing the input.</returns>
+        /// <exception cref="ArgumentException">Thrown if conversion fails.</exception>
         public static ConsoleColor ToConsoleColor(Color ColorRGB)
         {
             if (ColorRGB.Number == null || ColorRGB.Number.Value >= 16)
@@ -224,10 +233,10 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Converts a Color number into a <see cref="Color"/>.
+        /// Creates a color from a palette index.
         /// </summary>
-        /// <param name="number">The Color number.</param>
-        /// <returns>The Color representing the specified Color number.</returns>
+        /// <param name="number">Palette index.</param>
+        /// <returns>The color for the given index.</returns>
         public static Color FromInt32(int number)
         {
             return ColorTable.GetColorRGB(number);
@@ -236,8 +245,9 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Converts a <see cref="ConsoleColor"/> to a <see cref="Color"/>.
         /// </summary>
-        /// <param name="color">The Color to convert.</param>
-        /// <returns>A <see cref="Color"/> representing the <see cref="ConsoleColor"/>.</returns>
+        /// <param name="color">Console color.</param>
+        /// <returns>The corresponding <see cref="Color"/>.</returns>
+        /// <exception cref="ArgumentException">Thrown if conversion fails.</exception>
         public static Color FromConsoleColor(ConsoleColor color)
         {
             return color switch
@@ -263,9 +273,10 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
-        /// Convert to string 
+        /// Returns a textual representation, using the palette name if available,
+        /// otherwise formatted as <c>#RRGGBB (RGB=R,G,B)</c>.
         /// </summary>
-        /// <returns>The <see cref="string"/></returns>
+        /// <returns>The string representation.</returns>
         public override readonly string ToString()
         {
 

@@ -34,7 +34,7 @@ namespace PromptPlusLibrary
         /// Creates a history object for managing file history operations.
         /// </summary>
         /// <param name="filename">The file name</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="IHistory"/> instance for managing file history operations.</returns>
         IHistory History(string filename);
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace PromptPlusLibrary
 
 
         /// <summary>
-        /// Creates an MaskEdit(Date) control with the specified prompt.
+        /// Creates an MaskEdit(DateOnly) control with the specified prompt.
         /// </summary>
         /// <param name="prompt">The text prompt.</param>
         /// <param name="description">The description for input</param>
@@ -272,7 +272,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="prompt">The text prompt.</param>
         /// <param name="description">The description for input</param>
-        /// <returns>An <see cref="ITableSelectControl{T}"/> instance for further configuration and reading input.</returns>
+        /// <returns>An <see cref="IFileSelectControl"/> instance for further configuration and reading input.</returns>
         IFileSelectControl FileSelect(string prompt = "", string? description = null);
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="prompt">The text prompt.</param>
         /// <param name="description">The description for input</param>
-        /// <returns>An <see cref="ITableSelectControl{T}"/> instance for further configuration and reading input.</returns>
+        /// <returns>An <see cref="IFileMultiSelectControl"/> instance for further configuration and reading input.</returns>
         IFileMultiSelectControl FileMultiSelect(string prompt = "", string? description = null);
 
         /// <summary>

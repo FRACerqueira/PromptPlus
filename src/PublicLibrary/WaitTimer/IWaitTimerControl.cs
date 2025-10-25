@@ -39,26 +39,25 @@ namespace PromptPlusLibrary
         IWaitTimerControl Spinner(SpinnersType spinnersType);
 
         /// <summary>
-        /// Finish answer to show when Wait timer is completed.
+        /// Finish answer to show when the wait timer is completed.
         /// </summary>
-        /// <param name="text">Text Finish answer</param>
+        /// <param name="text">The text to display when the wait timer completes.</param>
         /// <returns>The current <see cref="IWaitTimerControl"/> instance for chaining.</returns>
         IWaitTimerControl Finish(string text);
 
         /// <summary>
-        /// Define if show Elapsed Time .Default 500ms and true.
+        /// Defines whether to show elapsed time. Default is 500ms and true.
         /// </summary>
-        /// <param name="mileseconds">The interval to show ElapsedTime.</param>
-        /// <param name="value">If show Elapsed Time.</param>
+        /// <param name="milliseconds">The interval in milliseconds to update the elapsed time display.</param>
+        /// <param name="value">If true, shows elapsed time.</param>
         /// <returns>The current <see cref="IWaitTimerControl"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="mileseconds"/> for less than 100 or greater than 1000.</exception>
-        IWaitTimerControl ShowElapsedTime(int mileseconds = 500, bool value = true);
-
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="milliseconds"/> is less than 100 or greater than 1000.</exception>
+        IWaitTimerControl ShowElapsedTime(int milliseconds = 500, bool value = true);
 
         /// <summary>
-        /// Define if show the remaining time .Default true.
+        /// Defines whether to show the remaining time. Default is true.
         /// </summary>
-        /// <param name="value">IF true shows the remaining time</param>
+        /// <param name="value">If true, shows the remaining time.</param>
         /// <returns>The current <see cref="IWaitTimerControl"/> instance for chaining.</returns>
         IWaitTimerControl IsCountDown(bool value = true);
 

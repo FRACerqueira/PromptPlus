@@ -135,7 +135,7 @@ namespace PromptPlusLibrary
         /// Runs the File Select Control and returns the result.
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
-        /// <returns>A <see cref="ResultPrompt{T}"/> containing the selected <see cref="ItemFile"/>.</returns>
+        /// <returns>A <see cref="ResultPrompt{T}"/> containing the selected item, <see cref="ItemFile"/>.</returns>
         ResultPrompt<ItemFile> Run(CancellationToken token = default);
 
     }

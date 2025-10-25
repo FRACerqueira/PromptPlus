@@ -6,7 +6,8 @@
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents The Styles Slider control
+    /// Represents The Styles Slider control.
+    /// This enum defines various regions or components of the Slider Control.  
     /// </summary>
     public enum SliderStyles
     {

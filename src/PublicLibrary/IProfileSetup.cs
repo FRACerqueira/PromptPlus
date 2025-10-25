@@ -6,34 +6,43 @@
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents the interface for profile setup for console.
+    /// Defines mutable setup values used to configure a console profile before it is materialized.
     /// </summary>
+    /// <remarks>
+    /// An implementation collects environment and user preferences (colors, margins and overflow behavior)
+    /// that will later be applied to create an immutable runtime profile (<see cref="IProfileDrive"/>).
+    /// </remarks>
+    /// <seealso cref="IProfileDrive"/>
     public interface IProfileSetup
     {
         /// <summary>
-        /// Get/Set the default console foreground color.
+        /// Gets or sets the default foreground <see cref="Color"/> applied when no explicit color is specified.
         /// </summary>
+        /// <value>The default foreground color.</value>
         Color DefaultConsoleForegroundColor { get; set; }
 
         /// <summary>
-        /// Get/Set the default console background color.
+        /// Gets or sets the default background <see cref="Color"/> applied when no explicit color is specified.
         /// </summary>
+        /// <value>The default background color.</value>
         Color DefaultConsoleBackgroundColor { get; set; }
 
         /// <summary>
-        /// Get/Set the screen margin left.
+        /// Gets or sets the left screen margin (number of leading spaces reserved).
         /// </summary>
+        /// <value>The left padding in character cells.</value>
         byte PadLeft { get; set; }
 
         /// <summary>
-        /// Get/Set the screen margin right.
+        /// Gets or sets the right screen margin (number of trailing spaces reserved).
         /// </summary>
+        /// <value>The right padding in character cells.</value>
         byte PadRight { get; set; }
 
         /// <summary>
-        /// Get/Set the display text overflow strategy.
+        /// Gets or sets the strategy to apply when rendered text exceeds the available width.
         /// </summary>
+        /// <value>The overflow handling strategy.</value>
         Overflow OverflowStrategy { get; set; }
-
     }
 }

@@ -6,7 +6,8 @@
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents The Styles Select controls
+    /// Represents the styles for the Select Control.
+    /// This enum defines various regions or components of the Select Control.  
     /// </summary>
     public enum SelectStyles
     {

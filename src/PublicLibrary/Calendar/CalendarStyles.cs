@@ -6,8 +6,8 @@
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Represents the styles for the Calendar Control.
-    /// This enum defines various regions or components of the Calendar Control.
+    /// Represents the styles for the Calendar control/widget.
+    /// This enum defines various regions or components of the Calendar control/widget.
     /// </summary>
     public enum CalendarStyles
     {
