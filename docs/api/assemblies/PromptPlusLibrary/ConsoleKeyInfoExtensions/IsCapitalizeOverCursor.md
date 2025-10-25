@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Capitalize Over Cursor Emacs Key Alt+C = Capitalizes the character under the cursor and moves to the end of the word
+#### Determines whether the Alt+C (capitalize over cursor) Emacs shortcut was pressed.
 
 ```csharp
 public static bool IsCapitalizeOverCursor(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsCapitalizeOverCursor(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Alt+C was pressed; otherwise, `false`.
 
 ### See Also
 

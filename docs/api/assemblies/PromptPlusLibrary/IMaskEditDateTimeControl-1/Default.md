@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the default value for the input.
+#### Sets the initial default value for the input control.
 
 ```csharp
 public IMaskEditDateTimeControl Default(T value)
@@ -12,7 +12,7 @@ public IMaskEditDateTimeControl Default(T value)
 
 | parameter | description |
 | --- | --- |
-| value | The default value. |
+| value | The default value to use. |
 
 ### Return Value
 

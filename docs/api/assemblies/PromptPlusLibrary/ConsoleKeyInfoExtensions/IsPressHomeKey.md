@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Home Key
+#### Determines whether Home or (optionally) Control+A (Emacs beginning-of-line) was pressed.
 
 ```csharp
 public static bool IsPressHomeKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
@@ -12,12 +12,12 @@ public static bool IsPressHomeKey(this ConsoleKeyInfo keyinfo, bool emacskeys = 
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
-| emacskeys | if `true` accept 'CTRL+A' |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
+| emacskeys | If `true`, also accepts Control+A. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Home (or Emacs equivalent) was pressed; otherwise, `false`.
 
 ### See Also
 

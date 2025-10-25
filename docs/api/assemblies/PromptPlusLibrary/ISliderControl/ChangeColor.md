@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically changes the style color of the SliderBar based on its value.
+#### Dynamically changes the style color of the slider bar based on its value.
 
 ```csharp
 public ISliderControl ChangeColor(Func<double, Style> value)

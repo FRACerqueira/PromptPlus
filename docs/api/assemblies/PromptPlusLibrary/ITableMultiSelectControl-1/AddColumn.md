@@ -4,7 +4,7 @@
 </br>
 
 
-#### Add Column AddColumn cannot be used with AutoFill
+#### Adds a column to the table. Cannot be used with [`AutoFill`](./AutoFill.md).
 
 ```csharp
 public ITableMultiSelectControl AddColumn(Expression<Func<T, object>> field, int width, 
@@ -15,27 +15,19 @@ public ITableMultiSelectControl AddColumn(Expression<Func<T, object>> field, int
 
 | parameter | description |
 | --- | --- |
-| field | Expression that defines the field associated with the column |
-| width | column size |
-| format | Function to format the field.If not informed, it will be ToString() |
-| alignment | alignment content |
-| title | The Column title |
-| titlealignment | alignment title |
-| titlereplaceswidth | title width overrides column width when greater |
-| textcrop | If true the value will be truncated by the column size, otherwise, the content will be written in several lines |
-| maxslidinglines | Maximum Sliding Lines when the content length is greater than the column size and textcrop = false. |
+| field | The expression that defines the field associated with the column. |
+| width | The column width in characters. |
+| format | The function to format the field value. If not specified, uses ToString. |
+| alignment | The content alignment. Default is Left. |
+| title | The column title. If not specified, uses the property name. |
+| titlealignment | The title alignment. Default is Center. |
+| titlereplaceswidth | If `true`, the title width overrides column width when greater; otherwise, the title is truncated to fit the column width. Default is `true`. |
+| textcrop | If `true`, the value will be truncated to the column size; otherwise, the content will be wrapped to multiple lines. Default is `false`. |
+| maxslidinglines | The maximum number of sliding lines when the content length exceeds the column size and *textcrop* is `false`. |
 
 ### Return Value
 
 The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentNullException | Thrown if *field* is `null`. |
-| ArgumentOutOfRangeException | Thrown if *width* is less than 1 or if *maxslidinglines* is specified and less than 1. |
-| InvalidOperationException | Thrown if AutoFill has already been configured. |
 
 ### See Also
 

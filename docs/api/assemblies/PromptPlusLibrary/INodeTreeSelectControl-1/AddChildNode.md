@@ -4,7 +4,7 @@
 </br>
 
 
-#### Add a Child node
+#### Adds a child node to an existing parent node in the tree. Enables building the hierarchical structure of the tree.
 
 ```csharp
 public INodeTreeSelectControl AddChildNode(T parent, T value)
@@ -12,8 +12,8 @@ public INodeTreeSelectControl AddChildNode(T parent, T value)
 
 | parameter | description |
 | --- | --- |
-| parent | value parent |
-| value | value node |
+| parent | The parent node to attach the child to. |
+| value | The node value to be added as a child. |
 
 ### Return Value
 

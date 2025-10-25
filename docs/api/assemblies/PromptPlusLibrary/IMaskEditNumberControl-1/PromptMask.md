@@ -4,7 +4,7 @@
 </br>
 
 
-#### Prompt mask character.
+#### Sets the prompt mask character used to indicate input positions.
 
 ```csharp
 public IMaskEditNumberControl PromptMask(char value = '_')

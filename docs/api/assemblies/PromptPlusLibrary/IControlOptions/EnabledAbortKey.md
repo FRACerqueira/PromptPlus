@@ -4,7 +4,7 @@
 </br>
 
 
-#### Enables or disables the abort key for the control.
+#### Enables or disables the abort (escape) hotkey for the control.
 
 ```csharp
 public IControlOptions EnabledAbortKey(bool isEnabled = true)
@@ -12,11 +12,11 @@ public IControlOptions EnabledAbortKey(bool isEnabled = true)
 
 | parameter | description |
 | --- | --- |
-| isEnabled | If `true`, the abort key is enabled; otherwise, it is disabled. |
+| isEnabled | If `true`, the abort key is enabled; otherwise, it is disabled. Default is `true`. |
 
 ### Return Value
 
-The current [`IControlOptions`](../IControlOptions.md) instance for chaining.
+The same [`IControlOptions`](../IControlOptions.md) instance for chaining.
 
 ### See Also
 

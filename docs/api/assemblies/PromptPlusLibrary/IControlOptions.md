@@ -4,7 +4,7 @@
 </br>
 
 
-#### Defines options for configuring control behavior.
+#### Provides a fluent API for configuring runtime behavior and presentation aspects of a control.
 
 ```csharp
 public interface IControlOptions
@@ -14,13 +14,13 @@ public interface IControlOptions
 
 | name | description |
 | --- | --- |
-| [Description](IControlOptions/Description.md)(…) | Sets a description for the control with an optional style. |
-| [EnabledAbortKey](IControlOptions/EnabledAbortKey.md)(…) | Enables or disables the abort key for the control. |
-| [HideAfterFinish](IControlOptions/HideAfterFinish.md)(…) | Hides the control's render area after it finishes execution. |
-| [HideOnAbort](IControlOptions/HideOnAbort.md)(…) | Hides the control's render area after an abort key press. |
-| [Prompt](IControlOptions/Prompt.md)(…) | Sets a Prompt for the control with an optional style. |
-| [ShowMesssageAbortKey](IControlOptions/ShowMesssageAbortKey.md)(…) | Show/hide message of abort key. |
-| [ShowTooltip](IControlOptions/ShowTooltip.md)(…) | Shows or hides the tooltip for the control. |
+| [Description](IControlOptions/Description.md)(…) | Sets a descriptive text displayed with the control. |
+| [EnabledAbortKey](IControlOptions/EnabledAbortKey.md)(…) | Enables or disables the abort (escape) hotkey for the control. |
+| [HideAfterFinish](IControlOptions/HideAfterFinish.md)(…) | Clears the control's render area after successful completion. |
+| [HideOnAbort](IControlOptions/HideOnAbort.md)(…) | Clears the control's render area after an abort (escape) action. |
+| [Prompt](IControlOptions/Prompt.md)(…) | Sets the prompt text displayed to the user. |
+| [ShowMesssageAbortKey](IControlOptions/ShowMesssageAbortKey.md)(…) | Shows or hides the abort key help message (localized from resources if available). |
+| [ShowTooltip](IControlOptions/ShowTooltip.md)(…) | Shows or hides the tooltip associated with the control. |
 
 ### See Also
 

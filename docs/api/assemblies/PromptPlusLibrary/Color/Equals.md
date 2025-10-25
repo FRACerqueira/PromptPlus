@@ -4,7 +4,7 @@
 </br>
 
 
-#### Checks if [`Color`](../Color.md) are equal the instance.
+#### Determines whether this instance equals another [`Color`](../Color.md).
 
 ```csharp
 public bool Equals(Color other)
@@ -12,11 +12,11 @@ public bool Equals(Color other)
 
 | parameter | description |
 | --- | --- |
-| other | The [`Color`](../Color.md) |
+| other | Color to compare. |
 
 ### Return Value
 
-`true` if the two ColorRGBs are equal, otherwise `false`.
+`true` if equal; otherwise `false`.
 
 ### See Also
 
@@ -27,7 +27,7 @@ public bool Equals(Color other)
 
 ### Color.Equals method (2 of 2)
 
-#### Checks if [`Color`](../Color.md) are equal the instance.
+#### Determines whether this instance equals another object.
 
 ```csharp
 public override bool Equals(object? obj)
@@ -35,11 +35,11 @@ public override bool Equals(object? obj)
 
 | parameter | description |
 | --- | --- |
-| obj | The object to compare |
+| obj | Object to compare. |
 
 ### Return Value
 
-`true` if the two ColorRGBs are equal, otherwise `false`.
+`true` if equal; otherwise `false`.
 
 ### See Also
 

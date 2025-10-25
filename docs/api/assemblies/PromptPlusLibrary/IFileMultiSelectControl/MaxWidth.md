@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum width for the seleted items.Default value is 30 characters.
+#### Sets the maximum display width for selected items in characters.
 
 ```csharp
 public IFileMultiSelectControl MaxWidth(byte maxWidth)
@@ -12,7 +12,7 @@ public IFileMultiSelectControl MaxWidth(byte maxWidth)
 
 | parameter | description |
 | --- | --- |
-| maxWidth | The maximum width of the input in characters. |
+| maxWidth | The maximum width in characters (minimum 10). |
 
 ### Return Value
 

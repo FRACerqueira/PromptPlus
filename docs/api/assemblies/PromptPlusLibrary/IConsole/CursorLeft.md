@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the column position of the cursor within the buffer area.
+#### Gets the column (left) position of the cursor within the buffer.
 
 ```csharp
 public int CursorLeft { get; }
 ```
+
+### Property Value
+
+The zero-based cursor column.
 
 ### See Also
 

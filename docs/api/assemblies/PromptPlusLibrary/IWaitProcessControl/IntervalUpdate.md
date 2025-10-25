@@ -4,7 +4,7 @@
 </br>
 
 
-#### Define the interval to update Tasks status and Spinner. Default 100ms.
+#### Defines the interval to update task status and spinner. Default is 100ms.
 
 ```csharp
 public IWaitProcessControl IntervalUpdate(int mileseconds = 100)
@@ -12,7 +12,7 @@ public IWaitProcessControl IntervalUpdate(int mileseconds = 100)
 
 | parameter | description |
 | --- | --- |
-| mileseconds | The interval to show ElapsedTime. |
+| mileseconds | The interval in milliseconds. Must be between 100 and 1000. |
 
 ### Return Value
 
@@ -22,7 +22,7 @@ The current [`IWaitProcessControl`](../IWaitProcessControl.md) instance for chai
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *mileseconds* for less than 100 or greater than 1000. |
+| ArgumentOutOfRangeException | Thrown if *mileseconds* is less than 100 or greater than 1000. |
 
 ### See Also
 

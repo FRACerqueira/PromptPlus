@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents the HotKey to control
+#### Represents a configurable hotkey composed of a base ConsoleKey and optional modifier flags.
 
 ```csharp
 public struct HotKey : IEquatable<ConsoleKeyInfo>
@@ -12,27 +12,27 @@ public struct HotKey : IEquatable<ConsoleKeyInfo>
 
 | parameter | description |
 | --- | --- |
-| key | ConsoleKey to create |
-| alt | With Alt key |
-| ctrl | With Ctrl key |
-| shift | With Shift key |
+| key | The primary ConsoleKey. |
+| alt | Indicates whether Alt is part of the hotkey. |
+| ctrl | Indicates whether Ctrl is part of the hotkey. |
+| shift | Indicates whether Shift is part of the hotkey. |
 
 ### Public Members
 
 | name | description |
 | --- | --- |
-| [HotKey](HotKey/HotKey.md)(…) | Represents the HotKey to control |
-| [Alt](HotKey/Alt.md) { get; } | Get ConsoleModifiers Alt to HotKey |
-| [Ctrl](HotKey/Ctrl.md) { get; } | Get ConsoleModifiers Ctrl to HotKey |
-| [Key](HotKey/Key.md) { get; } | Get ConsoleKey to HotKey |
-| [KeyInfo](HotKey/KeyInfo.md) { get; } | Get ConsoleKeyInfo to HotKey |
-| [Shift](HotKey/Shift.md) { get; } | Get ConsoleModifiers Shift to HotKey |
-| [Equals](HotKey/Equals.md)(…) | Checks Hotkey instances are equal the ConsoleKeyInfo. |
+| [HotKey](HotKey/HotKey.md)(…) | Represents a configurable hotkey composed of a base ConsoleKey and optional modifier flags. |
+| [Alt](HotKey/Alt.md) { get; } | Gets a value indicating whether Alt is included. |
+| [Ctrl](HotKey/Ctrl.md) { get; } | Gets a value indicating whether Ctrl is included. |
+| [Key](HotKey/Key.md) { get; } | Gets the base ConsoleKey of this hotkey. |
+| [KeyInfo](HotKey/KeyInfo.md) { get; } | Gets the ConsoleKeyInfo representation of this hotkey. |
+| [Shift](HotKey/Shift.md) { get; } | Gets a value indicating whether Shift is included. |
+| [Equals](HotKey/Equals.md)(…) | Determines whether this hotkey matches the provided ConsoleKeyInfo. |
 | override [ToString](HotKey/ToString.md)() |  |
 
 ### Remarks
 
-Create a HotKey
+This struct is lightweight and immutable after construction (properties are init via the primary constructor). Use the static members for common built‑in hotkeys.
 
 ### See Also
 

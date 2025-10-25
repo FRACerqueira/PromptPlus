@@ -4,7 +4,7 @@
 </br>
 
 
-#### Add sequential task with parameter to execute
+#### Adds a task with a parameter to execute.
 
 ```csharp
 public IWaitProcessControl AddTask(TaskMode mode, string id, 
@@ -13,11 +13,11 @@ public IWaitProcessControl AddTask(TaskMode mode, string id,
 
 | parameter | description |
 | --- | --- |
-| mode | Task execution mode |
-| id | Id of tasks |
-| label | Label of tasks |
-| parameter | The parameter to task |
-| process | Action to execute task |
+| mode | The task execution mode. |
+| id | The unique identifier of the task. Cannot be `null`. |
+| process | The action to execute for the task. Cannot be `null`. |
+| label | The optional label for the task. |
+| parameter | The optional parameter to pass to the task. |
 
 ### Return Value
 

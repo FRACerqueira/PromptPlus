@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the position of the cursor.
+#### Sets the cursor position.
 
 ```csharp
 public void SetCursorPosition(int left, int top)
@@ -12,14 +12,14 @@ public void SetCursorPosition(int left, int top)
 
 | parameter | description |
 | --- | --- |
-| left | The column position of the cursor. Columns are numbered from left to right starting at 0. |
-| top | The row position of the cursor. Rows are numbered from top to bottom starting at 0. |
+| left | Zero-based column (0 is the leftmost). |
+| top | Zero-based row (0 is the topmost). |
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *left* or *top* is out of range screen. |
+| ArgumentOutOfRangeException | Thrown when *left* or *top* is outside the valid buffer range. |
 
 ### See Also
 

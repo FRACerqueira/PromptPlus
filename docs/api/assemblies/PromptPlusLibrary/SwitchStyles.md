@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents The Styles Switch control
+#### Represents The Styles Switch control. This enum defines various regions or components of the Switch Control.
 
 ```csharp
 public enum SwitchStyles

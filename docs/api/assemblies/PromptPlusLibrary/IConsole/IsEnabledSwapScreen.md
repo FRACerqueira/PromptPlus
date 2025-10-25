@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets a value indicating whether the console supports swapping screens.
+#### Gets a value indicating whether screen swapping is supported.
 
 ```csharp
 public bool IsEnabledSwapScreen { get; }
 ```
+
+### Property Value
+
+`true` if buffer swapping is enabled; otherwise `false`.
 
 ### See Also
 

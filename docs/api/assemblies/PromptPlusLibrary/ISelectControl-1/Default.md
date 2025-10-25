@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the initial value of the Select. Default is the first item in the list.
+#### Sets the initial value of the Select control. Default is the first item in the list.
 
 ```csharp
 public ISelectControl Default(T value, bool useDefaultHistory = true)
@@ -12,8 +12,8 @@ public ISelectControl Default(T value, bool useDefaultHistory = true)
 
 | parameter | description |
 | --- | --- |
-| value | The initial value. |
-| useDefaultHistory | Indicates whether to use the default value from history (if enabled). |
+| value | The initial value. Cannot be `null`. |
+| useDefaultHistory | If `true`, uses the default value from history (if enabled); otherwise uses the specified value. |
 
 ### Return Value
 

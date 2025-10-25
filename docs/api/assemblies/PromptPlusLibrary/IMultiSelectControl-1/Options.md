@@ -4,7 +4,7 @@
 </br>
 
 
-#### Applies custom options to the control.
+#### Applies custom options to configure control behavior.
 
 ```csharp
 public IMultiSelectControl Options(Action<IControlOptions> options)
@@ -12,17 +12,17 @@ public IMultiSelectControl Options(Action<IControlOptions> options)
 
 | parameter | description |
 | --- | --- |
-| options | An action to configure [`IControlOptions`](../IControlOptions.md). Cannot be `null`. |
+| options | An action delegate to configure [`IControlOptions`](../IControlOptions.md). |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *options* is `null`. |
+| ArgumentNullException | Thrown when *options* is `null`. |
 
 ### See Also
 

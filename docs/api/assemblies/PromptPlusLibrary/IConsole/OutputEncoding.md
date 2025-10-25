@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets or sets an encoding for the standard output stream.
+#### Gets or sets the encoding for standard output.
 
 ```csharp
 public Encoding OutputEncoding { get; set; }
 ```
+
+### Property Value
+
+The output Encoding.
 
 ### See Also
 

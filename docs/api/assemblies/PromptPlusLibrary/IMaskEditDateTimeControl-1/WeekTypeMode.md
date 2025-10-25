@@ -4,7 +4,7 @@
 </br>
 
 
-#### Show the week for date.
+#### Configures the display of week information for dates.
 
 ```csharp
 public IMaskEditDateTimeControl WeekTypeMode(WeekType value = WeekType.WeekShort)
@@ -12,7 +12,7 @@ public IMaskEditDateTimeControl WeekTypeMode(WeekType value = WeekType.WeekShort
 
 | parameter | description |
 | --- | --- |
-| value | The week format for date types. Default is None. |
+| value | The week format to display. Default is WeekShort. |
 
 ### Return Value
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate to determine if a date can be selected.
 
 ```csharp
 public ICalendarControl PredicateSelected(Func<DateTime?, (bool, string?)> validselect)
@@ -12,7 +12,7 @@ public ICalendarControl PredicateSelected(Func<DateTime?, (bool, string?)> valid
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | A function that takes a nullable DateTime and returns a tuple containing a boolean indicating validity and an optional error message. |
 
 ### Return Value
 

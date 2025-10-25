@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Backward Word Emacs Key Alt+B = Moves the cursor backward one word.
+#### Determines whether the Alt+B (backward word) Emacs shortcut was pressed.
 
 ```csharp
 public static bool IsBackwardWord(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsBackwardWord(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Alt+B was pressed; otherwise, `false`.
 
 ### See Also
 

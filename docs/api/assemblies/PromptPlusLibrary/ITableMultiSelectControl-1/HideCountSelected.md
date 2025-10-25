@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide tip count selected. Default false.
+#### Hides the tip count of selected items. Default is `false`.
 
 ```csharp
 public ITableMultiSelectControl HideCountSelected(bool value = true)
@@ -12,7 +12,7 @@ public ITableMultiSelectControl HideCountSelected(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | If True, it shows the tip with count selected, otherwise nothing. |
+| value | If `true`, hides the tip with count selected; otherwise, shows it. |
 
 ### Return Value
 

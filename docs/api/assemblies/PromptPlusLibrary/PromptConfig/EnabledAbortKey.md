@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets enabled Abort Key Press for control. If `true`, the abort key is enabled; otherwise, it is disabled.
+#### Gets or sets whether the abort (Esc) hotkey is enabled globally.
 
 ```csharp
 public bool EnabledAbortKey { get; set; }

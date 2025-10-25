@@ -7,12 +7,12 @@
 #### Define the interval to update Progressbar status and Spinner. Default 100ms.
 
 ```csharp
-public IProgressBarControl IntervalUpdate(int mileseconds = 100)
+public IProgressBarControl IntervalUpdate(int milliseconds = 100)
 ```
 
 | parameter | description |
 | --- | --- |
-| mileseconds | The interval to show ElapsedTime. |
+| milliseconds | The interval in milliseconds to update the ProgressBar status and Spinner. |
 
 ### Return Value
 
@@ -22,7 +22,7 @@ The current [`IProgressBarControl`](../IProgressBarControl.md) instance for chai
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *mileseconds* for less than 100 or greater than 1000. |
+| ArgumentOutOfRangeException | Thrown if *milliseconds* is less than 100 or greater than 1000. |
 
 ### See Also
 

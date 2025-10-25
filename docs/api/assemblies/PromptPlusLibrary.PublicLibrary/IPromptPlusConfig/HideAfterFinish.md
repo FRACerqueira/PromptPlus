@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets hide render area after finish control. If `true`, hide render area control; otherwise, it is show.
+#### Gets or sets whether a control’s render area is cleared after successful completion. If `true`, the area is cleared.
 
 ```csharp
 public bool HideAfterFinish { get; set; }

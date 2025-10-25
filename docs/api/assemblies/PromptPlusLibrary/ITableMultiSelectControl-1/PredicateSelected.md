@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for selected item.
+#### Sets validation predicate for selected items with custom error message.
 
 ```csharp
 public ITableMultiSelectControl PredicateSelected(Func<T, (bool, string?)> validselect)
@@ -12,7 +12,7 @@ public ITableMultiSelectControl PredicateSelected(Func<T, (bool, string?)> valid
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | A predicate function that determines whether an item is considered valid and should be selectable, returning a validation result and optional error message. |
 
 ### Return Value
 
@@ -27,7 +27,7 @@ The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) insta
 
 ### ITableMultiSelectControl&lt;T&gt;.PredicateSelected method (2 of 2)
 
-#### Set validation predicate for selected item.
+#### Sets validation predicate for selected items.
 
 ```csharp
 public ITableMultiSelectControl PredicateSelected(Func<T, bool> validselect)
@@ -35,7 +35,7 @@ public ITableMultiSelectControl PredicateSelected(Func<T, bool> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable. |
+| validselect | A predicate function that determines whether an item is considered valid and should be selectable. |
 
 ### Return Value
 

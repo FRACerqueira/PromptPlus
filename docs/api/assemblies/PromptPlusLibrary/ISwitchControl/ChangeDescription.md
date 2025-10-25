@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically changes the description of the Switch based on its value.
+#### Dynamically changes the description of the Switch based on its current value.
 
 ```csharp
 public ISwitchControl ChangeDescription(Func<bool, string> value)

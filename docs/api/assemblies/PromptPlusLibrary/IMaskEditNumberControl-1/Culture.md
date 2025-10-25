@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the culture for format validation. Default value is current PromptPlus culture.
+#### Sets the culture for number formatting and validation.
 
 ```csharp
 public IMaskEditNumberControl Culture(CultureInfo culture)
@@ -12,7 +12,7 @@ public IMaskEditNumberControl Culture(CultureInfo culture)
 
 | parameter | description |
 | --- | --- |
-| culture | The CultureInfo to use for validation and format date. |
+| culture | The CultureInfo to use for validation and number formatting. |
 
 ### Return Value
 
@@ -27,7 +27,7 @@ The current [`IMaskEditNumberControl`](../IMaskEditNumberControl-1.md) instance 
 
 ### IMaskEditNumberControl&lt;T&gt;.Culture method (2 of 2)
 
-#### Sets the culture for format validation. Default value is current PromptPlus culture.
+#### Sets the culture for number formatting and validation using a culture name.
 
 ```csharp
 public IMaskEditNumberControl Culture(string cultureName)
@@ -35,7 +35,7 @@ public IMaskEditNumberControl Culture(string cultureName)
 
 | parameter | description |
 | --- | --- |
-| cultureName | The culture name to use for validation and format date. Cannot be `null` or empty. |
+| cultureName | The culture name to use for validation and number formatting. Cannot be `null` or empty. |
 
 ### Return Value
 

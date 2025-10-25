@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds a collection of items to the list.
+#### Adds a collection of items to the table.
 
 ```csharp
 public ITableWidget AddItems(IEnumerable<T> values, bool disable = false)
@@ -12,8 +12,8 @@ public ITableWidget AddItems(IEnumerable<T> values, bool disable = false)
 
 | parameter | description |
 | --- | --- |
-| values | Items to add. |
-| disable | If `true`, the items are disabled. |
+| values | The items to add. |
+| disable | If `true`, all items are disabled. Default is `false`. |
 
 ### Return Value
 

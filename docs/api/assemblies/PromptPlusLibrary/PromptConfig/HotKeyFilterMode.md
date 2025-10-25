@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get/Set [`HotKey`](../HotKey.md) to toggle Filter mode. Default value is 'F4'.
+#### Gets or sets the hotkey for toggling filter mode (F4).
 
 ```csharp
 public HotKey HotKeyFilterMode { get; set; }

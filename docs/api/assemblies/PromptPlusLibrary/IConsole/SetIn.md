@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the standard input stream.
+#### Sets the standard input source.
 
 ```csharp
 public void SetIn(TextReader value)
@@ -12,7 +12,7 @@ public void SetIn(TextReader value)
 
 | parameter | description |
 | --- | --- |
-| value | A stream that is the new standard input. |
+| value | The new input TextReader. |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get/Set [`HotKey`](../HotKey.md) to toggle password view. Default value is 'F2'.
+#### Gets or sets the hotkey for toggling password visibility (F2).
 
 ```csharp
 public HotKey HotKeyPasswordView { get; set; }

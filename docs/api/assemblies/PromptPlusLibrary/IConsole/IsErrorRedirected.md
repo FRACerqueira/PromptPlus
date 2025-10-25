@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets a value that indicates whether error has been redirected from the standard error stream.
+#### Gets a value indicating whether standard error is redirected.
 
 ```csharp
 public bool IsErrorRedirected { get; }
 ```
+
+### Property Value
+
+`true` if error is redirected; otherwise `false`.
 
 ### See Also
 

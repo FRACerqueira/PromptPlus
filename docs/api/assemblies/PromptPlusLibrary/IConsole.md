@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents the interface for console.
+#### Defines console interaction and rendering capabilities combined with a profile ([`IProfileDrive`](./IProfileDrive.md)).
 
 ```csharp
 public interface IConsole : IProfileDrive
@@ -14,41 +14,45 @@ public interface IConsole : IProfileDrive
 
 | name | description |
 | --- | --- |
-| [BackgroundColor](IConsole/BackgroundColor.md) { get; set; } | Get/set console BackgroundColor |
-| [CurrentBuffer](IConsole/CurrentBuffer.md) { get; } | Get Current Screen Buffer |
-| [CursorLeft](IConsole/CursorLeft.md) { get; } | Gets the column position of the cursor within the buffer area. |
-| [CursorTop](IConsole/CursorTop.md) { get; } | Gets the row position of the cursor within the buffer area. |
+| [BackgroundColor](IConsole/BackgroundColor.md) { get; set; } | Gets or sets the current background [`Color`](./Color.md). |
+| [CurrentBuffer](IConsole/CurrentBuffer.md) { get; } | Gets the currently active screen buffer. |
+| [CursorLeft](IConsole/CursorLeft.md) { get; } | Gets the column (left) position of the cursor within the buffer. |
+| [CursorTop](IConsole/CursorTop.md) { get; } | Gets the row (top) position of the cursor within the buffer. |
 | [CursorVisible](IConsole/CursorVisible.md) { get; set; } | Gets or sets a value indicating whether the cursor is visible. |
-| [Error](IConsole/Error.md) { get; } | Gets the standard error stream. |
-| [ForegroundColor](IConsole/ForegroundColor.md) { get; set; } | Get/set console ForegroundColor |
-| [In](IConsole/In.md) { get; } | Gets the standard input stream. |
-| [InputEncoding](IConsole/InputEncoding.md) { get; set; } | Gets or sets the encoding for the standard input stream. |
-| [IsEnabledSwapScreen](IConsole/IsEnabledSwapScreen.md) { get; } | Gets a value indicating whether the console supports swapping screens. |
-| [IsErrorRedirected](IConsole/IsErrorRedirected.md) { get; } | Gets a value that indicates whether error has been redirected from the standard error stream. |
-| [IsInputRedirected](IConsole/IsInputRedirected.md) { get; } | Gets a value that indicates whether input has been redirected from the standard input stream. |
-| [IsOutputRedirected](IConsole/IsOutputRedirected.md) { get; } | Gets a value that indicates whether output has been redirected from the standard output stream. |
-| [KeyAvailable](IConsole/KeyAvailable.md) { get; } | Gets a value indicating whether a key press is available in the input stream. |
-| [Out](IConsole/Out.md) { get; } | Gets the standard output stream. |
-| [OutputEncoding](IConsole/OutputEncoding.md) { get; set; } | Gets or sets an encoding for the standard output stream. |
-| [Beep](IConsole/Beep.md)() | Plays the sound of a beep through the console speaker. |
-| [Clear](IConsole/Clear.md)() | Clears the console buffer and corresponding console window of display information. Moves cursor to the top of the console. |
-| [DefaultColors](IConsole/DefaultColors.md)(…) | Set the default foreground and background console colors. |
-| [GetCursorPosition](IConsole/GetCursorPosition.md)() | Gets the current position of the cursor in the buffer area. |
+| [Error](IConsole/Error.md) { get; } | Gets the standard error writer. |
+| [ForegroundColor](IConsole/ForegroundColor.md) { get; set; } | Gets or sets the current foreground [`Color`](./Color.md). |
+| [In](IConsole/In.md) { get; } | Gets the standard input reader. |
+| [InputEncoding](IConsole/InputEncoding.md) { get; set; } | Gets or sets the encoding for standard input. |
+| [IsEnabledSwapScreen](IConsole/IsEnabledSwapScreen.md) { get; } | Gets a value indicating whether screen swapping is supported. |
+| [IsErrorRedirected](IConsole/IsErrorRedirected.md) { get; } | Gets a value indicating whether standard error is redirected. |
+| [IsInputRedirected](IConsole/IsInputRedirected.md) { get; } | Gets a value indicating whether standard input is redirected. |
+| [IsOutputRedirected](IConsole/IsOutputRedirected.md) { get; } | Gets a value indicating whether standard output is redirected. |
+| [KeyAvailable](IConsole/KeyAvailable.md) { get; } | Gets a value indicating whether a key press is available. |
+| [Out](IConsole/Out.md) { get; } | Gets the standard output writer. |
+| [OutputEncoding](IConsole/OutputEncoding.md) { get; set; } | Gets or sets the encoding for standard output. |
+| [Beep](IConsole/Beep.md)() | Emits an audible beep if supported. |
+| [Clear](IConsole/Clear.md)() | Clears the buffer (and visible window) and resets cursor to (0,0). |
+| [DefaultColors](IConsole/DefaultColors.md)(…) | Sets the default foreground and background console colors used when resetting. |
+| [GetCursorPosition](IConsole/GetCursorPosition.md)() | Gets the current cursor position. |
 | [HideCursor](IConsole/HideCursor.md)() | Hides the cursor. |
-| [OnBuffer](IConsole/OnBuffer.md)(…) | Run an action on target screen buffer and return to original screen buffer |
-| [ReadKey](IConsole/ReadKey.md)(…) | Obtains the next character or function key pressed by the user. |
-| [ReadLine](IConsole/ReadLine.md)() | Reads a line from the input stream. A line is defined as a sequence of characters followed by a carriage return ('\r'), a line feed ('\n'), or a carriage return immediately followed by a line feed. The resulting string does not contain the terminating carriage return and/or line feed. |
-| [ResetColor](IConsole/ResetColor.md)() | Reset colors to default values. |
-| [SetCursorPosition](IConsole/SetCursorPosition.md)(…) | Sets the position of the cursor. |
-| [SetError](IConsole/SetError.md)(…) | Sets the standard error stream. |
-| [SetIn](IConsole/SetIn.md)(…) | Sets the standard input stream. |
-| [SetOut](IConsole/SetOut.md)(…) | Sets the standard output stream. |
+| [OnBuffer](IConsole/OnBuffer.md)(…) | Executes an action on a target buffer and then restores the original buffer. |
+| [ReadKey](IConsole/ReadKey.md)(…) | Reads the next key press. |
+| [ReadLine](IConsole/ReadLine.md)() | Reads a line of text from the input stream. |
+| [ResetColor](IConsole/ResetColor.md)() | Resets the current colors to the configured defaults. |
+| [SetCursorPosition](IConsole/SetCursorPosition.md)(…) | Sets the cursor position. |
+| [SetError](IConsole/SetError.md)(…) | Sets the standard error writer. |
+| [SetIn](IConsole/SetIn.md)(…) | Sets the standard input source. |
+| [SetOut](IConsole/SetOut.md)(…) | Sets the standard output writer. |
 | [ShowCursor](IConsole/ShowCursor.md)() | Shows the cursor. |
-| [SwapBuffer](IConsole/SwapBuffer.md)(…) | Swap Screen Buffer |
-| [Write](IConsole/Write.md)(…) | Writes the text representation of a character array to the standard output stream. (3 methods) |
-| [WriteColor](IConsole/WriteColor.md)(…) | Writes the text representation of a string value with token Colors to the standard output stream. |
-| [WriteLine](IConsole/WriteLine.md)(…) | Writes the text representation of a character array to the standard output stream with line terminator. (3 methods) |
-| [WriteLineColor](IConsole/WriteLineColor.md)(…) | Writes the text representation of a string value with token Colors to the standard output stream with line terminator. |
+| [SwapBuffer](IConsole/SwapBuffer.md)(…) | Attempts to switch to a target screen buffer. |
+| [Write](IConsole/Write.md)(…) | Writes a character array. (3 methods) |
+| [WriteColor](IConsole/WriteColor.md)(…) | Writes a string containing color tokens parsed and rendered with color support. |
+| [WriteLine](IConsole/WriteLine.md)(…) | Writes a character array followed by a line terminator. (3 methods) |
+| [WriteLineColor](IConsole/WriteLineColor.md)(…) | Writes a color-tokenized string followed by a line terminator. |
+
+### Remarks
+
+This interface abstracts terminal features (cursor control, colors, encoding, buffering, input/output streams, and multi‑screen support). Implementations should adapt behavior based on the underlying environment (ANSI support, Unicode capability, color depth, etc.).
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Interface for managing file history operations.
+#### Provides a fluent API for recording and managing persisted history entries.
 
 ```csharp
 public interface IHistory
@@ -14,9 +14,9 @@ public interface IHistory
 
 | name | description |
 | --- | --- |
-| [AddHistory](IHistory/AddHistory.md)(…) | Adds a new entry to the file history. |
-| [Remove](IHistory/Remove.md)() | Remove history to persistent storage. |
-| [Save](IHistory/Save.md)() | Saves the current history to persistent storage. |
+| [AddHistory](IHistory/AddHistory.md)(…) | Adds a value to the history. |
+| [Remove](IHistory/Remove.md)() | Removes the persisted history (e.g. deletes the backing store or clears all entries). |
+| [Save](IHistory/Save.md)() | Persists the in‑memory history set to durable storage. |
 
 ### See Also
 

@@ -12,7 +12,7 @@ public ISelectControl EnabledHistory(string filename, Action<IHistoryOptions>? o
 
 | parameter | description |
 | --- | --- |
-| filename | The name of the file to store history. |
+| filename | The name of the file to store history. Cannot be `null`. |
 | options | An action to configure [`IHistoryOptions`](../IHistoryOptions.md). Optional. |
 
 ### Return Value

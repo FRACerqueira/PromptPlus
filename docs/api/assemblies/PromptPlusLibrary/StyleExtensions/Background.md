@@ -4,7 +4,7 @@
 </br>
 
 
-#### Create a new style from the specified one with the specified background color.
+#### Creates a new [`Style`](../Style.md) based on *style* with a replaced background color. Foreground color and overflow strategy are preserved.
 
 ```csharp
 public static Style Background(this Style style, Color color)
@@ -12,12 +12,12 @@ public static Style Background(this Style style, Color color)
 
 | parameter | description |
 | --- | --- |
-| style | The style. |
-| color | The background color. |
+| style | The original style. |
+| color | The new background [`Color`](../Color.md). |
 
 ### Return Value
 
-The new [`Style`](../Style.md)
+A new [`Style`](../Style.md) with the updated background color.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds a separation line.
+#### Adds a visual separator line between items.
 
 ```csharp
 public IMultiSelectControl AddSeparator(SeparatorLine separatorLine = SeparatorLine.SingleLine, 
@@ -13,12 +13,12 @@ public IMultiSelectControl AddSeparator(SeparatorLine separatorLine = SeparatorL
 
 | parameter | description |
 | --- | --- |
-| separatorLine | Type of separation line. Default is SingleLine. |
-| value | Character for separation line. Valid only if *separatorLine* is UserChar. |
+| separatorLine | The type of separator line. Default is SingleLine. |
+| value | The custom character to use when *separatorLine* is UserChar. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

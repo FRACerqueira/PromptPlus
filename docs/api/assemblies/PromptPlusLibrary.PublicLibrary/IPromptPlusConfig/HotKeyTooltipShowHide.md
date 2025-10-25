@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets [`HotKey`](../../PromptPlusLibrary/HotKey.md) for toggler Tooltips. Value is 'Ctrl+F1'.
+#### Gets the hotkey that shows/hides tooltips (default: Ctrl+F1).
 
 ```csharp
 public HotKey HotKeyTooltipShowHide { get; }

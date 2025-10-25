@@ -4,7 +4,7 @@
 </br>
 
 
-#### Remove history to persistent storage.
+#### Removes the persisted history (e.g. deletes the backing store or clears all entries).
 
 ```csharp
 public void Remove()

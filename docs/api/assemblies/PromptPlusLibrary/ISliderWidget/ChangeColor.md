@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically changes the style color of the SliderBar based on its value.
+#### Dynamically changes the style color of the slider bar based on its value.
 
 ```csharp
 public ISliderWidget ChangeColor(Func<double, Style> value)
@@ -12,11 +12,11 @@ public ISliderWidget ChangeColor(Func<double, Style> value)
 
 | parameter | description |
 | --- | --- |
-| value | A function to ISliderWidget the style based on the current value. |
+| value | A function that determines the [`Style`](../Style.md) based on the current slider value. |
 
 ### Return Value
 
-The current [`ISliderControl`](../ISliderControl.md) instance for chaining.
+The current [`ISliderWidget`](../ISliderWidget.md) instance for chaining.
 
 ### Exceptions
 

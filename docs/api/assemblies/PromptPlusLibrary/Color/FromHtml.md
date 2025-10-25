@@ -4,7 +4,7 @@
 </br>
 
 
-#### Converts string Color Html format (#RRGGBB) into [`Color`](../Color.md).
+#### Parses a HTML hex color string (#RRGGBB) into a [`Color`](../Color.md).
 
 ```csharp
 public static Color FromHtml(string value)
@@ -12,11 +12,17 @@ public static Color FromHtml(string value)
 
 | parameter | description |
 | --- | --- |
-| value | The html Color to convert. |
+| value | String in the form `#RRGGBB`. |
 
 ### Return Value
 
-A [`Color`](../Color.md).
+The parsed [`Color`](../Color.md).
+
+### Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentException | Thrown if format is invalid. |
 
 ### See Also
 

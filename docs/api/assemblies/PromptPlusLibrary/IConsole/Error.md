@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the standard error stream.
+#### Gets the standard error writer.
 
 ```csharp
 public TextWriter Error { get; }
 ```
+
+### Property Value
+
+The TextWriter for error output.
 
 ### See Also
 

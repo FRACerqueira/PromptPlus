@@ -17,7 +17,7 @@ public override bool Equals(object? obj)
 
 ### Style.Equals method (2 of 2)
 
-#### Checks if two [`Style`](../Style.md) instances are equal.
+#### Determines whether this instance is equal to another [`Style`](../Style.md).
 
 ```csharp
 public bool Equals(Style other)
@@ -25,11 +25,11 @@ public bool Equals(Style other)
 
 | parameter | description |
 | --- | --- |
-| other | The Style instance to compare. |
+| other | The style to compare. |
 
 ### Return Value
 
-`true` if the two Style are equal, otherwise `false`.
+`true` if all components match; otherwise, `false`.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide the input type tip. Default `false`.
+#### Controls the visibility of the input type tip.
 
 ```csharp
 public IMaskEditDateTimeControl HideTipInputType(bool value = true)
@@ -12,7 +12,7 @@ public IMaskEditDateTimeControl HideTipInputType(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | If `true`, hide type input. |
+| value | When `true`, hides the input type tip. Default is `false`. |
 
 ### Return Value
 

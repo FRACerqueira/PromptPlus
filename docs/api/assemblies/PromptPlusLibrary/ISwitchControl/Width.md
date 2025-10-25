@@ -12,7 +12,7 @@ public ISwitchControl Width(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | The width of the SliderBar. |
+| value | The width of the Switch. |
 
 ### Return Value
 

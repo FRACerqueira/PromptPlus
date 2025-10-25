@@ -4,19 +4,19 @@
 </br>
 
 
-#### Runs the Table Select Control and returns the result.
+#### Executes the Table Select Control and returns the selected result.
 
 ```csharp
-public ResultPrompt<T?> Run(CancellationToken token = default)
+public ResultPrompt<T> Run(CancellationToken token = default)
 ```
 
 | parameter | description |
 | --- | --- |
-| token | The CancellationToken to observe while waiting for the task to complete. Defaults to None. |
+| token | The CancellationToken to monitor for cancellation requests. The default is CancellationToken.None. |
 
 ### Return Value
 
-The result of the Table Select Control execution.
+A [`ResultPrompt`](../ResultPrompt-1.md) containing the selected item.
 
 ### See Also
 

@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets a value indicating whether the console supports ANSI.
+#### Gets a value indicating whether ANSI escape sequences are supported for styling/output.
 
 ```csharp
 public bool SupportsAnsi { get; }
 ```
+
+### Property Value
+
+`true` if ANSI sequences are supported; otherwise `false`.
 
 ### See Also
 

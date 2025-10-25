@@ -4,15 +4,20 @@
 </br>
 
 
-#### Create a new style with default value from Console.
+#### Creates a style with an explicit foreground color and an optional background color. If no background color is provided, the current console background color is used.
 
 ```csharp
 public static Style Colors(Color forecolor, Color? backcolor = default)
 ```
 
+| parameter | description |
+| --- | --- |
+| forecolor | The foreground [`Color`](../Color.md). |
+| backcolor | Optional background [`Color`](../Color.md); if `null`, console background is used. |
+
 ### Return Value
 
-The new [`Style`](../Style.md)
+A new [`Style`](../Style.md) with the specified colors.
 
 ### See Also
 

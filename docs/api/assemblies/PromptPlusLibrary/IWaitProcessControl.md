@@ -14,15 +14,15 @@ public interface IWaitProcessControl
 
 | name | description |
 | --- | --- |
-| [AddTask](IWaitProcessControl/AddTask.md)(…) | Add sequential task with parameter to execute |
+| [AddTask](IWaitProcessControl/AddTask.md)(…) | Adds a task with a parameter to execute. |
 | [ChangeDescription](IWaitProcessControl/ChangeDescription.md)(…) | Dynamically changes the description using a user-defined function. |
-| [Finish](IWaitProcessControl/Finish.md)(…) | Finish answer to show when Wait process is completed. |
+| [Finish](IWaitProcessControl/Finish.md)(…) | Defines the finish answer to display when the Wait process is completed. |
 | [Interaction&lt;T&gt;](IWaitProcessControl/Interaction.md)(…) | Performs an interaction with each item in the collection. |
-| [IntervalUpdate](IWaitProcessControl/IntervalUpdate.md)(…) | Define the interval to update Tasks status and Spinner. Default 100ms. |
-| [MaxDegreeProcess](IWaitProcessControl/MaxDegreeProcess.md)(…) | Maximum number of concurrent tasks enable. The default value is the smaller number between number of processors and 5. |
+| [IntervalUpdate](IWaitProcessControl/IntervalUpdate.md)(…) | Defines the interval to update task status and spinner. Default is 100ms. |
+| [MaxDegreeProcess](IWaitProcessControl/MaxDegreeProcess.md)(…) | Defines the maximum number of concurrent tasks enabled. The default value is the smaller number between the number of processors and 5. |
 | [Options](IWaitProcessControl/Options.md)(…) | Applies custom options to the control. |
 | [Run](IWaitProcessControl/Run.md)(…) | Runs the Wait process control and returns the result. |
-| [ShowElapsedTime](IWaitProcessControl/ShowElapsedTime.md)(…) | Define if show Elapsed Time .Default true. |
+| [ShowElapsedTime](IWaitProcessControl/ShowElapsedTime.md)(…) | Defines whether to show the elapsed time. Default is `true`. |
 | [Spinner](IWaitProcessControl/Spinner.md)(…) | Shows a [`SpinnersType`](./SpinnersType.md) animation at the end of the prompt. |
 | [Styles](IWaitProcessControl/Styles.md)(…) | Overwrites styles for the Wait Process. |
 

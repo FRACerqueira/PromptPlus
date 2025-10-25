@@ -4,7 +4,7 @@
 </br>
 
 
-#### Custom item comparator
+#### Sets a custom item comparator for determining item equality.
 
 ```csharp
 public ISelectControl EqualItems(Func<T, T, bool> value)
@@ -12,7 +12,7 @@ public ISelectControl EqualItems(Func<T, T, bool> value)
 
 | parameter | description |
 | --- | --- |
-| value | function comparator |
+| value | A function that compares two items and returns `true` if they are equal. Cannot be `null`. |
 
 ### Return Value
 

@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets a value indicating whether the console is a legacy console.
+#### Gets a value indicating whether the console is a legacy console lacking modern features (e.g. full ANSI or extended color support).
 
 ```csharp
 public bool IsLegacy { get; }
 ```
+
+### Property Value
+
+`true` if the console is considered legacy; otherwise `false`.
 
 ### See Also
 

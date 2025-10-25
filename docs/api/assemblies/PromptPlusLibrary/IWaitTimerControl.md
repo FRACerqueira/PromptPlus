@@ -14,11 +14,11 @@ public interface IWaitTimerControl
 
 | name | description |
 | --- | --- |
-| [Finish](IWaitTimerControl/Finish.md)(…) | Finish answer to show when Wait timer is completed. |
-| [IsCountDown](IWaitTimerControl/IsCountDown.md)(…) | Define if show the remaining time .Default true. |
+| [Finish](IWaitTimerControl/Finish.md)(…) | Finish answer to show when the wait timer is completed. |
+| [IsCountDown](IWaitTimerControl/IsCountDown.md)(…) | Defines whether to show the remaining time. Default is true. |
 | [Options](IWaitTimerControl/Options.md)(…) | Applies custom options to the control. |
 | [Run](IWaitTimerControl/Run.md)(…) | Runs the WaitTimer control and returns the result. |
-| [ShowElapsedTime](IWaitTimerControl/ShowElapsedTime.md)(…) | Define if show Elapsed Time .Default 500ms and true. |
+| [ShowElapsedTime](IWaitTimerControl/ShowElapsedTime.md)(…) | Defines whether to show elapsed time. Default is 500ms and true. |
 | [Spinner](IWaitTimerControl/Spinner.md)(…) | Shows a [`SpinnersType`](./SpinnersType.md) animation at the end of the prompt. |
 | [Styles](IWaitTimerControl/Styles.md)(…) | Overwrites styles for the WaitTimer. |
 

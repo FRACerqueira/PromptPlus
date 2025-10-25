@@ -14,17 +14,11 @@ public ITableMultiSelectControl EnabledHistory(string filename,
 | parameter | description |
 | --- | --- |
 | filename | The name of the file to store history. |
-| options | An action to configure [`IHistoryOptions`](../IHistoryOptions.md). Optional. |
+| options | An action to configure [`IHistoryOptions`](../IHistoryOptions.md). |
 
 ### Return Value
 
 The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentNullException | Thrown if *filename* is `null`. |
 
 ### See Also
 

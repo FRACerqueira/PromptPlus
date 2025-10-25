@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the default value for the input.
+#### Sets the initial default value for the input control.
 
 ```csharp
 public IMaskEditNumberControl Default(T value)
@@ -12,7 +12,7 @@ public IMaskEditNumberControl Default(T value)
 
 | parameter | description |
 | --- | --- |
-| value | The default value. |
+| value | The default value to initialize the control with. |
 
 ### Return Value
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Defines a minimum and maximum valid range of dates for the calendar. Will be ignored for Widget.
+#### Defines an inclusive range of valid dates that can be selected in the calendar.
 
 ```csharp
 public ICalendarControl Range(DateTime minValue, DateTime maxValue)

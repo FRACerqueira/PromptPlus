@@ -4,7 +4,7 @@
 </br>
 
 
-#### Add Column AddColumn cannot be used with AutoFill
+#### Adds a column to the table. Cannot be used with [`AutoFill`](./AutoFill.md).
 
 ```csharp
 public ITableWidget AddColumn(Expression<Func<T, object>> field, int width, 
@@ -15,15 +15,15 @@ public ITableWidget AddColumn(Expression<Func<T, object>> field, int width,
 
 | parameter | description |
 | --- | --- |
-| field | Expression that defines the field associated with the column |
-| width | column size |
-| format | Function to format the field.If not informed, it will be ToString() |
-| alignment | alignment content |
-| title | The Column title |
-| titlealignment | alignment title |
-| titlereplaceswidth | title width overrides column width when greater |
-| textcrop | If true the value will be truncated by the column size, otherwise, the content will be written in several lines |
-| maxslidinglines | Maximum Sliding Lines when the content length is greater than the column size and textcrop = false. |
+| field | Expression that defines the field associated with the column. |
+| width | The column width in characters. Must be at least 1. |
+| format | Function to format the field value. If `null`, ToString() will be used. Default is `null`. |
+| alignment | The content alignment. Default is Left. |
+| title | The column title. If `null`, the property name will be used. Default is `null`. |
+| titlealignment | The title alignment. Default is Center. |
+| titlereplaceswidth | If `true`, title width overrides column width when greater. Default is `true`. |
+| textcrop | If `true`, content will be truncated to column size; otherwise, content wraps to multiple lines. Default is `false`. |
+| maxslidinglines | Maximum number of lines when content exceeds column width and *textcrop* is `false`. If `null`, unlimited lines are allowed. Default is `null`. |
 
 ### Return Value
 
@@ -35,7 +35,7 @@ The current [`ITableWidget`](../ITableWidget-1.md) instance for chaining.
 | --- | --- |
 | ArgumentNullException | Thrown if *field* is `null`. |
 | ArgumentOutOfRangeException | Thrown if *width* is less than 1 or if *maxslidinglines* is specified and less than 1. |
-| InvalidOperationException | Thrown if AutoFill has already been configured. |
+| InvalidOperationException | Thrown if [`AutoFill`](./AutoFill.md) has already been configured. |
 
 ### See Also
 

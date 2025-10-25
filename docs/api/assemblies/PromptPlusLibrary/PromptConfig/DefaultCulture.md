@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets the default culture to use for displaying values control.
+#### Gets or sets the default culture used for formatting, parsing and localization. Updates internal resource manager when changed.
 
 ```csharp
 public CultureInfo DefaultCulture { get; set; }

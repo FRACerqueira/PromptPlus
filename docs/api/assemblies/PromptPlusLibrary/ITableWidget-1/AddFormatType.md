@@ -4,7 +4,7 @@
 </br>
 
 
-#### Function to format columns by field type when not specified by 'AddColumn'.
+#### Registers a custom format function for a specific field type. Used when format is not specified in [`AddColumn`](./AddColumn.md).
 
 ```csharp
 public ITableWidget AddFormatType<T1>(Func<object, string> funcfomatType)
@@ -12,8 +12,8 @@ public ITableWidget AddFormatType<T1>(Func<object, string> funcfomatType)
 
 | parameter | description |
 | --- | --- |
-| T1 | Type to convert |
-| funcfomatType | The function |
+| T1 | The type to format. |
+| funcfomatType | The formatting function. |
 
 ### Return Value
 

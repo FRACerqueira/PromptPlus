@@ -4,7 +4,7 @@
 </br>
 
 
-#### Runs the MaskEdit input control and returns the result.
+#### Executes the input control and returns the result.
 
 ```csharp
 public ResultPrompt<T> Run(CancellationToken token = default)
@@ -12,11 +12,11 @@ public ResultPrompt<T> Run(CancellationToken token = default)
 
 | parameter | description |
 | --- | --- |
-| token | The CancellationToken to observe while waiting for the task to complete. Defaults to None. |
+| token | Optional cancellation token to cancel the operation. Defaults to None. |
 
 ### Return Value
 
-The result of the input control execution.
+A [`ResultPrompt`](../ResultPrompt-1.md) containing the the input control execution.
 
 ### See Also
 

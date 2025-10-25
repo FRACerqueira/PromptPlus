@@ -16,7 +16,7 @@ public ResultPrompt<DateTime?> Run(CancellationToken token = default)
 
 ### Return Value
 
-The result with type [`ResultPrompt`](../ResultPrompt-1.md) of the Calendar control execution.
+A [`ResultPrompt`](../ResultPrompt-1.md) containing the selected DateTime.
 
 ### See Also
 

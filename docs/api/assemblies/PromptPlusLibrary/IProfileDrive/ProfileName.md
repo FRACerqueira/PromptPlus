@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the profile name.
+#### Gets the profile name (e.g. an identifier for the terminal type or configuration).
 
 ```csharp
 public string ProfileName { get; }
 ```
+
+### Property Value
+
+The logical name of this profile.
 
 ### See Also
 

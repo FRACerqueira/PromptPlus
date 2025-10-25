@@ -12,7 +12,7 @@ public interface IMaskEditCurrencyControl<T>
 
 | parameter | description |
 | --- | --- |
-| T | The type of input. |
+| T | The type of input. Valid only for Decimal type. |
 
 ### Members
 
@@ -24,7 +24,7 @@ public interface IMaskEditCurrencyControl<T>
 | [HideTipInputType](IMaskEditCurrencyControl-1/HideTipInputType.md)(…) | Hide the input type tip. Default `false`. |
 | [NumberFormat](IMaskEditCurrencyControl-1/NumberFormat.md)(…) | Configures the number format for the input. |
 | [Options](IMaskEditCurrencyControl-1/Options.md)(…) | Applies custom options to the MaskEdit input control. |
-| [PredicateSelected](IMaskEditCurrencyControl-1/PredicateSelected.md)(…) | Set validation predicate for selected item. (2 methods) |
+| [PredicateSelected](IMaskEditCurrencyControl-1/PredicateSelected.md)(…) | Validates input using a custom predicate. (2 methods) |
 | [PromptMask](IMaskEditCurrencyControl-1/PromptMask.md)(…) | Prompt mask character. |
 | [Run](IMaskEditCurrencyControl-1/Run.md)(…) | Runs the MaskEdit input control and returns the result. |
 | [Styles](IMaskEditCurrencyControl-1/Styles.md)(…) | Overrides the styles for the input control. |

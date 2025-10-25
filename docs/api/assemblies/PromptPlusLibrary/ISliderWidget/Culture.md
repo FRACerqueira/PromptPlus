@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the culture for displaying numeric values. Default value is current PromptPlus culture.
+#### Sets the culture for displaying numeric values. Default value is the current PromptPlus culture.
 
 ```csharp
 public ISliderWidget Culture(CultureInfo culture)
@@ -33,7 +33,7 @@ The current [`ISliderWidget`](../ISliderWidget.md) instance for chaining.
 
 ### ISliderWidget.Culture method (2 of 2)
 
-#### Sets the culture for displaying numeric values using a culture name. Default value is current PromptPlus culture.
+#### Sets the culture for displaying numeric values using a culture name. Default value is the current PromptPlus culture.
 
 ```csharp
 public ISliderWidget Culture(string cultureName)

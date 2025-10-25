@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overwrites styles for the slider Widget.
+#### Overwrites styles for the slider widget.
 
 ```csharp
 public ISliderWidget Styles(SliderStyles styleType, Style style)

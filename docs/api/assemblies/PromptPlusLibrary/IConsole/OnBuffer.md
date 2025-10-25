@@ -4,7 +4,7 @@
 </br>
 
 
-#### Run an action on target screen buffer and return to original screen buffer
+#### Executes an action on a target buffer and then restores the original buffer.
 
 ```csharp
 public bool OnBuffer(TargetScreen target, Action<CancellationToken> value, 
@@ -14,15 +14,15 @@ public bool OnBuffer(TargetScreen target, Action<CancellationToken> value,
 
 | parameter | description |
 | --- | --- |
-| target | The target buffer |
-| value | The action |
-| defaultforecolor | The default fore color |
-| defaultbackcolor | The default back color |
-| cancellationToken | The CancellationToken |
+| target | The target buffer. |
+| value | Action to execute while the buffer is active. |
+| defaultforecolor | Optional temporary default foreground ConsoleColor. |
+| defaultbackcolor | Optional temporary default background ConsoleColor. |
+| cancellationToken | Cancellation token for the action. |
 
 ### Return Value
 
-True when console has capacity to run on target buffer, otherwise false
+`true` if executed on the requested buffer; otherwise `false`.
 
 ### See Also
 

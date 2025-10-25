@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents the Style of color and overflow strategy.
+#### Represents a text rendering style consisting of a foreground color, background color and an overflow strategy.
 
 ```csharp
 public struct Style : IEquatable<Style>
@@ -12,31 +12,31 @@ public struct Style : IEquatable<Style>
 
 | parameter | description |
 | --- | --- |
-| foreground | [`Color`](./Color.md) foreground |
-| background | [`Color`](./Color.md) background |
-| overflowStrategy | [`Overflow`](./Overflow.md) Strategy |
+| foreground | Foreground [`Color`](./Color.md) used when writing content. |
+| background | Background [`Color`](./Color.md) used behind the content. |
+| overflowStrategy | Overflow handling strategy applied when content exceeds the target width. |
 
 ### Public Members
 
 | name | description |
 | --- | --- |
-| [Style](Style/Style.md)(…) | Represents the Style of color and overflow strategy. |
-| static [Colors](Style/Colors.md)(…) | Create a new style with default value from Console. |
-| static [Default](Style/Default.md)() | Create a new style with default value from Console. |
-| [Background](Style/Background.md) { get; } | Gets the background Color. |
-| [Foreground](Style/Foreground.md) { get; } | Gets the foreground Color. |
-| [OverflowStrategy](Style/OverflowStrategy.md) { get; } | Gets the Overflow strategy. |
-| [Combine](Style/Combine.md)(…) | Combines this style with another one. |
+| [Style](Style/Style.md)(…) | Represents a text rendering style consisting of a foreground color, background color and an overflow strategy. |
+| static [Colors](Style/Colors.md)(…) | Creates a style with an explicit foreground color and an optional background color. If no background color is provided, the current console background color is used. |
+| static [Default](Style/Default.md)() | Creates a style using the current console foreground and background colors. |
+| [Background](Style/Background.md) { get; } | Gets the background [`Color`](./Color.md). |
+| [Foreground](Style/Foreground.md) { get; } | Gets the foreground [`Color`](./Color.md). |
+| [OverflowStrategy](Style/OverflowStrategy.md) { get; } | Gets the [`Overflow`](./Overflow.md) strategy applied when content exceeds the available width. |
+| [Combine](Style/Combine.md)(…) | Combines this style with another style, taking the other style's colors and (if not None) its overflow strategy. |
 | override [Equals](Style/Equals.md)(…) |  |
-| [Equals](Style/Equals.md)(…) | Checks if two [`Style`](./Style.md) instances are equal. |
+| [Equals](Style/Equals.md)(…) | Determines whether this instance is equal to another [`Style`](./Style.md). |
 | override [GetHashCode](Style/GetHashCode.md)() |  |
-| [operator ==](Style/op_Equality.md) | Checks if two [`Style`](./Style.md) instances are equal. |
-| [implicit operator](Style/op_Implicit.md) | Converts a ConsoleColor to a [`Color`](./Color.md). |
-| [operator !=](Style/op_Inequality.md) | Checks if two [`Style`](./Style.md) instances are not equal. |
+| [operator ==](Style/op_Equality.md) | Determines whether two [`Style`](./Style.md) instances are equal. |
+| [implicit operator](Style/op_Implicit.md) | Creates a new [`Style`](./Style.md) from the default console colors replacing only the foreground with the specified color. |
+| [operator !=](Style/op_Inequality.md) | Determines whether two [`Style`](./Style.md) instances are not equal. |
 
 ### Remarks
 
-Create a new instance of [`Style`](./Style.md) with foreground/background color and overflow strategy.
+Use the primary constructor to specify explicit colors and an [`Overflow`](./Overflow.md) strategy, or the helper factory methods ([`Default`](./Style/Default.md) / [`Colors`](./Style/Colors.md)) to derive styles from current console settings.
 
 ### See Also
 

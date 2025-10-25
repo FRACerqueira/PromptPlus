@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is PageUp Key
+#### Determines whether PageUp or (optionally) Alt+P (Emacs previous extended navigation) was pressed.
 
 ```csharp
 public static bool IsPressPageUpKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
@@ -12,12 +12,12 @@ public static bool IsPressPageUpKey(this ConsoleKeyInfo keyinfo, bool emacskeys 
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
-| emacskeys | if `true` accept 'Alt+P' |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
+| emacskeys | If `true`, also accepts Alt+P. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if PageUp (or Emacs equivalent) was pressed; otherwise, `false`.
 
 ### See Also
 

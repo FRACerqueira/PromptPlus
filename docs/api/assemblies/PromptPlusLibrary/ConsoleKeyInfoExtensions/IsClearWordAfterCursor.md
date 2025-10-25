@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Clear Word After Cursor Emacs Key Ctrl+D = Clears the word after the cursor
+#### Determines whether the Control+D (clear word after cursor) Emacs shortcut was pressed.
 
 ```csharp
 public static bool IsClearWordAfterCursor(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsClearWordAfterCursor(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Control+D was pressed; otherwise, `false`.
 
 ### See Also
 

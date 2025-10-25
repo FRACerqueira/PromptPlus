@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets [`HotKey`](../HotKey.md) default for toggler ChartBar Switch Order. Default value is 'F4'.
+#### Gets or sets the hotkey for chart bar order switching (F4).
 
 ```csharp
 public HotKey HotKeyTooltipChartBarSwitchOrder { get; set; }

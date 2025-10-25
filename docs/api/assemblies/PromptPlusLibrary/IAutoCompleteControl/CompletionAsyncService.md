@@ -4,7 +4,7 @@
 </br>
 
 
-#### The function to execute AutoComplete. This function is requeried to run!
+#### The function to execute AutoComplete. This function is required for operation.
 
 ```csharp
 public IAutoCompleteControl CompletionAsyncService(
@@ -13,7 +13,7 @@ public IAutoCompleteControl CompletionAsyncService(
 
 | parameter | description |
 | --- | --- |
-| value | function to autocomplete |
+| value | The async function that performs the autocomplete operation. It takes a string input and returns an array of completion suggestions. |
 
 ### Return Value
 

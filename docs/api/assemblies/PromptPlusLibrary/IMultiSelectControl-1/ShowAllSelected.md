@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets shows all selected items at finish. Default is `false`.
+#### Controls whether all selected items are displayed at completion. Default is `false`.
 
 ```csharp
 public IMultiSelectControl ShowAllSelected(bool value)
@@ -12,11 +12,11 @@ public IMultiSelectControl ShowAllSelected(bool value)
 
 | parameter | description |
 | --- | --- |
-| value | If True, it shows all selected items at finish, otherwise show only at [`MaxWidth`](./MaxWidth.md). |
+| value | Indicates whether to show all selected items at completion, ignoring [`MaxWidth`](./MaxWidth.md) constraints. Default is `true`. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

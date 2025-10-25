@@ -4,7 +4,7 @@
 </br>
 
 
-#### Defines a minimum and maximum range values. Default value is 100 for *maxvalue* and 0 for *minvalue*.
+#### Defines the minimum and maximum range values. Default value is 100 for *maxvalue* and 0 for *minvalue*.
 
 ```csharp
 public ISliderControl Range(double minvalue, double maxvalue)
@@ -12,8 +12,8 @@ public ISliderControl Range(double minvalue, double maxvalue)
 
 | parameter | description |
 | --- | --- |
-| minvalue | Minimum number |
-| maxvalue | Maximum number |
+| minvalue | The minimum number. |
+| maxvalue | The maximum number. |
 
 ### Return Value
 

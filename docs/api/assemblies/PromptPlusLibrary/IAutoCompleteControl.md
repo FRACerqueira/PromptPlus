@@ -16,9 +16,9 @@ public interface IAutoCompleteControl
 | --- | --- |
 | [AcceptInput](IAutoCompleteControl/AcceptInput.md)(…) | Executes a function to determine whether to accept a character input. If the function returns `true`, the character is accepted; otherwise, it is ignored. |
 | [ChangeDescription](IAutoCompleteControl/ChangeDescription.md)(…) | Dynamically changes the description using a user-defined function. |
-| [CompletionAsyncService](IAutoCompleteControl/CompletionAsyncService.md)(…) | The function to execute AutoComplete. This function is requeried to run! |
+| [CompletionAsyncService](IAutoCompleteControl/CompletionAsyncService.md)(…) | The function to execute AutoComplete. This function is required for operation. |
 | [CompletionMaxCount](IAutoCompleteControl/CompletionMaxCount.md)(…) | The max.items to return from function autocomplete.Default value is . |
-| [CompletionWaitToStart](IAutoCompleteControl/CompletionWaitToStart.md)(…) | Number of mileseconds to wait before to start function autocomplete. Default value is 500 |
+| [CompletionWaitToStart](IAutoCompleteControl/CompletionWaitToStart.md)(…) | Number of milliseconds to wait before to start function autocomplete. Default value is 500 |
 | [Default](IAutoCompleteControl/Default.md)(…) | Sets the default value for the input when specified. |
 | [DefaultIfEmpty](IAutoCompleteControl/DefaultIfEmpty.md)(…) | Sets the default value to use when the AutoComplete input is empty. |
 | [EnabledHistory](IAutoCompleteControl/EnabledHistory.md)(…) | Enabled History and applies custom options to History feature. |

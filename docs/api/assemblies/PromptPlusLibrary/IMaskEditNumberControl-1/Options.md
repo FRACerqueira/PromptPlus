@@ -4,7 +4,7 @@
 </br>
 
 
-#### Applies custom options to the MaskEdit input control.
+#### Configures general control behavior options.
 
 ```csharp
 public IMaskEditNumberControl Options(Action<IControlOptions> options)
@@ -12,7 +12,7 @@ public IMaskEditNumberControl Options(Action<IControlOptions> options)
 
 | parameter | description |
 | --- | --- |
-| options | An action to configure the [`IControlOptions`](../IControlOptions.md). Cannot be `null`. |
+| options | An action to configure the control options. Cannot be `null`. |
 
 ### Return Value
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets the character used for "No" input.
+#### Gets or sets the character representing a logical "No" input. Defaults to the localized resource value.
 
 ```csharp
 public char NoChar { get; set; }

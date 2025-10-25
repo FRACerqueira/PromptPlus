@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overwrites styles for the Switch Control.
+#### Overwrites styles for the Switch control.
 
 ```csharp
 public ISwitchControl Styles(SwitchStyles styleType, Style style)

@@ -4,31 +4,10 @@
 </br>
 
 
-#### Creates a new Slider for displaying number value.
-
-```csharp
+#### ```csharp
 public ISliderWidget Slider(double value, double minvalue = 0m, double maxvalue = 100m, 
     byte fracionaldig = 2)
 ```
-
-| parameter | description |
-| --- | --- |
-| value | The show value. |
-| minvalue | Minimum number. Default value is 0 |
-| maxvalue | Maximum number. Default value is 1002 |
-| fracionaldig | The number of fractional digits. Default value is 2 |
-
-### Return Value
-
-An [`ISliderWidget`](../ISliderWidget.md) instance for further customization.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentOutOfRangeException | Thrown if *value* is greater than maximum value or *value* is less than minimum value. |
-| ArgumentOutOfRangeException | Thrown if *minvalue* is greater than or equal to *maxvalue*. |
-| ArgumentOutOfRangeException | Thrown if *fracionaldig* is greater than 5. |
 
 ### See Also
 

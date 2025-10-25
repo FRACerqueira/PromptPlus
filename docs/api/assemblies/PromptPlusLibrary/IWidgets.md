@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents all Widgets for PromptPlus
+#### Provides factory methods for creating and writing PromptPlus visual widgets (switch, slider, table, chart bar, calendar, banner and dash lines).
 
 ```csharp
 public interface IWidgets
@@ -14,16 +14,16 @@ public interface IWidgets
 
 | name | description |
 | --- | --- |
-| [Banner](IWidgets/Banner.md)(…) | Write Banner AsciiArt(FIGlet) to console. |
-| [Calendar](IWidgets/Calendar.md)(…) | Creates a calendar widget for the specified month and year. |
-| [ChartBar](IWidgets/ChartBar.md)(…) | Creates a Chart Bar. |
-| [DoubleDash](IWidgets/DoubleDash.md)(…) | Writes text line representation with colors in a pair of lines of dashes. |
-| [DoubleDashColor](IWidgets/DoubleDashColor.md)(…) | Writes text with token colors and line representation with colors in a pair of lines of dashes. |
-| [SingleDash](IWidgets/SingleDash.md)(…) | Writes text line representation with colors and writes a single dash after. |
-| [SingleDashColor](IWidgets/SingleDashColor.md)(…) | Writes text with token colors and line representation with colors and writes a single dash after. |
-| [Slider](IWidgets/Slider.md)(…) | Creates a new Slider for displaying number value. |
-| [Switch](IWidgets/Switch.md)(…) | Creates a switch widget with the specified state and optional display values for the on and off positions. |
-| [Table&lt;T&gt;](IWidgets/Table.md)() | Creates a new table widget for displaying tabular data of the specified type. |
+| [Banner](IWidgets/Banner.md)(…) | Creates a banner widget rendered as FIGlet (ASCII art) text. |
+| [Calendar](IWidgets/Calendar.md)(…) | Creates a calendar widget for the month and year referenced by *dateref*. |
+| [ChartBar](IWidgets/ChartBar.md)(…) | Creates a bar chart widget with an optional title and layout options. |
+| [DoubleDash](IWidgets/DoubleDash.md)(…) | Writes a colored text line framed by two dash border lines (above and below). |
+| [DoubleDashColor](IWidgets/DoubleDashColor.md)(…) | Writes token-colored text framed by two dash border lines (above and below). |
+| [SingleDash](IWidgets/SingleDash.md)(…) | Writes a colored text line followed by a single dash border line. |
+| [SingleDashColor](IWidgets/SingleDashColor.md)(…) | Writes token-colored text followed by a single dash border line. |
+| [Slider](IWidgets/Slider.md)(…) |  |
+| [Switch](IWidgets/Switch.md)(…) | Creates a switch widget with an initial state and optional custom labels. |
+| [Table&lt;T&gt;](IWidgets/Table.md)() | Creates a table widget for tabular display of items of type *T*. |
 
 ### See Also
 

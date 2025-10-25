@@ -4,7 +4,7 @@
 </br>
 
 
-#### Defines a set of options for managing history in the PromptPlus library.
+#### Provides a fluent API for configuring persisted input history behavior (size, filtering, expiration and paging).
 
 ```csharp
 public interface IHistoryOptions
@@ -14,10 +14,10 @@ public interface IHistoryOptions
 
 | name | description |
 | --- | --- |
-| [ExpirationTime](IHistoryOptions/ExpirationTime.md)(…) | Sets the expiration time for history items.Default value is 365 days. |
-| [MaxItems](IHistoryOptions/MaxItems.md)(…) | Sets the maximum number of items to retain in the history. Default value is 255 items. |
-| [MinPrefixLength](IHistoryOptions/MinPrefixLength.md)(…) | Sets the minimum prefix length required for history matching. Defaut value is 3. Default value is 1. |
-| [PageSize](IHistoryOptions/PageSize.md)(…) | Sets the number of items to display per page when viewing history.Default value is 5. |
+| [ExpirationTime](IHistoryOptions/ExpirationTime.md)(…) | Sets the expiration duration applied to newly added history entries. Default value is 365 days. |
+| [MaxItems](IHistoryOptions/MaxItems.md)(…) | Sets the maximum number of entries retained in the history store. Default value is 255. |
+| [MinPrefixLength](IHistoryOptions/MinPrefixLength.md)(…) | Sets the minimum number of input characters required before history suggestions are eligible. Default value is 3. |
+| [PageSize](IHistoryOptions/PageSize.md)(…) | Sets the number of history entries displayed per page in history navigation. Default value is 5. |
 
 ### See Also
 

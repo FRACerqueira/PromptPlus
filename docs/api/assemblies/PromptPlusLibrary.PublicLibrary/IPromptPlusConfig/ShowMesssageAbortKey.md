@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets show Abort Key message. If `true`, the show message; otherwise no.
+#### Gets or sets whether an abort message is shown after an abort occurs. If `true`, a localized message is displayed.
 
 ```csharp
 public bool ShowMesssageAbortKey { get; set; }

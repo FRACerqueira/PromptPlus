@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hides the control's render area after an abort key press.
+#### Clears the control's render area after an abort (escape) action.
 
 ```csharp
 public IControlOptions HideOnAbort(bool shouldHide = true)
@@ -12,11 +12,11 @@ public IControlOptions HideOnAbort(bool shouldHide = true)
 
 | parameter | description |
 | --- | --- |
-| shouldHide | If `true`, the render area is cleared after abort; otherwise, it remains visible. |
+| shouldHide | If `true`, the render area is cleared on abort; otherwise, it remains. Default is `true`. |
 
 ### Return Value
 
-The current [`IControlOptions`](../IControlOptions.md) instance for chaining.
+The same [`IControlOptions`](../IControlOptions.md) instance for chaining.
 
 ### See Also
 

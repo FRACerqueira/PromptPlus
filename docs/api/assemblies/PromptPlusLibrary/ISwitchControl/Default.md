@@ -13,7 +13,7 @@ public ISwitchControl Default(bool value, bool usedefaultHistory = true)
 | parameter | description |
 | --- | --- |
 | value | The initial value. |
-| usedefaultHistory | Indicates whether to use the default value from history (if enabled [`EnabledHistory`](./EnabledHistory.md)). |
+| usedefaultHistory | Indicates whether to use the default value from history (if enabled with [`EnabledHistory`](./EnabledHistory.md)). |
 
 ### Return Value
 

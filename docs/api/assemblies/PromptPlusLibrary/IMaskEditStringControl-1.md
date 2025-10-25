@@ -21,7 +21,7 @@ public interface IMaskEditStringControl<T>
 | [Default](IMaskEditStringControl-1/Default.md)(…) | Sets the default value for the input. |
 | [DefaultIfEmpty](IMaskEditStringControl-1/DefaultIfEmpty.md)(…) | Sets the default value to use when the input is empty. |
 | [HideTipInputType](IMaskEditStringControl-1/HideTipInputType.md)(…) | Hide the input type tip. Default `false`. |
-| [InputMode](IMaskEditStringControl-1/InputMode.md)(…) | The input behavior. Defaul value is EditSkipToInput. |
+| [InputMode](IMaskEditStringControl-1/InputMode.md)(…) | The input behavior. Default value is EditSkipToInput. |
 | [Mask](IMaskEditStringControl-1/Mask.md)(…) | Sets the input mask pattern, Required!. |
 | [Options](IMaskEditStringControl-1/Options.md)(…) | Applies custom options to the MaskEdit input control. |
 | [PredicateSelected](IMaskEditStringControl-1/PredicateSelected.md)(…) | Set validation predicate for selected item. (2 methods) |

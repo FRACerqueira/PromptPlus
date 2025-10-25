@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set folder root to File Select Control. Default value is Current folder of execution.
+#### Sets the root directory for file browsing. Default is current execution directory.
 
 ```csharp
 public IFileSelectControl Root(string value)
@@ -12,7 +12,7 @@ public IFileSelectControl Root(string value)
 
 | parameter | description |
 | --- | --- |
-| value | full path folder root |
+| value | The full path to the root directory. |
 
 ### Return Value
 

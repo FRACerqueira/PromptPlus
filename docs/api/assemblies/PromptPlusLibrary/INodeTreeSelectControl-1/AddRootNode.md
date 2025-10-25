@@ -4,7 +4,7 @@
 </br>
 
 
-#### Add a node
+#### Adds a root node to the tree structure. The root node serves as the top-level entry point for the tree hierarchy.
 
 ```csharp
 public INodeTreeSelectControl AddRootNode(T value, string nodeseparator = "|")
@@ -12,7 +12,7 @@ public INodeTreeSelectControl AddRootNode(T value, string nodeseparator = "|")
 
 | parameter | description |
 | --- | --- |
-| value | value node |
+| value | The node value to be added as root. |
 | nodeseparator | The separator character used to build the node path. Defaults to "&#x7C;". |
 
 ### Return Value

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Finish answer to show when Wait timer is completed.
+#### Finish answer to show when the wait timer is completed.
 
 ```csharp
 public IWaitTimerControl Finish(string text)
@@ -12,7 +12,7 @@ public IWaitTimerControl Finish(string text)
 
 | parameter | description |
 | --- | --- |
-| text | Text Finish answer |
+| text | The text to display when the wait timer completes. |
 
 ### Return Value
 

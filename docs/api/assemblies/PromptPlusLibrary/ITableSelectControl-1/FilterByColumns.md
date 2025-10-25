@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set Columns used by Filter strategy.
+#### Configures the columns used by the filter strategy.
 
 ```csharp
 public ITableSelectControl FilterByColumns(FilterMode filter, bool caseinsensitive, 
@@ -13,20 +13,20 @@ public ITableSelectControl FilterByColumns(FilterMode filter, bool caseinsensiti
 
 | parameter | description |
 | --- | --- |
-| filter | Filter strategy for filter rows.Default value is FilterMode.Disabled.For the 'StartsWith' filter, only 1 column can be entered. |
-| caseinsensitive | If true, performs case-insensitive string comparison when filtering; otherwise case-sensitive comparison is used. |
-| indexColumn | list (cardinality) of columns |
+| filter | The filter strategy for filtering rows. The default value is FilterMode.Disabled. For the StartsWith filter, only one column can be specified. |
+| caseinsensitive | When true, performs case-insensitive string comparison when filtering; otherwise performs case-sensitive comparison. |
+| indexColumn | The zero-based indices of the columns to include in the filter. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *indexColumn* is `null`. |
-| ArgumentException | Thrown if *indexColumn* quantity greater than 1 for filter 'StartsWith'. |
+| ArgumentNullException | Thrown when *indexColumn* is null. |
+| ArgumentException | Thrown when more than one column is specified for the StartsWith filter. |
 
 ### See Also
 

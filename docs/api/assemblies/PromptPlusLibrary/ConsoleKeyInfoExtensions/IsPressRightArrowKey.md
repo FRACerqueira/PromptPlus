@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Right Arrow Key
+#### Determines whether RightArrow or (optionally) Control+F (Emacs move forward) was pressed.
 
 ```csharp
 public static bool IsPressRightArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
@@ -12,12 +12,12 @@ public static bool IsPressRightArrowKey(this ConsoleKeyInfo keyinfo, bool emacsk
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
-| emacskeys | if `true` accept 'CTRL+F' |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
+| emacskeys | If `true`, also accepts Control+F. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if RightArrow (or Emacs equivalent) was pressed; otherwise, `false`.
 
 ### See Also
 

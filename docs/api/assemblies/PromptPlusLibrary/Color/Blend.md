@@ -4,7 +4,7 @@
 </br>
 
 
-#### Blends two ColorRGBs.
+#### Blends (interpolates) this color with another color.
 
 ```csharp
 public Color Blend(Color other, float factor)
@@ -12,12 +12,12 @@ public Color Blend(Color other, float factor)
 
 | parameter | description |
 | --- | --- |
-| other | The other Color. |
-| factor | The blend factor. |
+| other | The other color. |
+| factor | Interpolation factor in [0,1]. 0 = this color, 1 = *other*. |
 
 ### Return Value
 
-The resulting Color.
+The blended [`Color`](../Color.md).
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Runs the Node Select Control and returns the result.
+#### Executes the Node Select Control and provides the selection result. Handles user interaction and returns the final selected node.
 
 ```csharp
 public ResultPrompt<T> Run(CancellationToken token = default)
@@ -12,11 +12,11 @@ public ResultPrompt<T> Run(CancellationToken token = default)
 
 | parameter | description |
 | --- | --- |
-| token | The CancellationToken to observe while waiting for the task to complete. Defaults to None. |
+| token | The cancellation token to observe while waiting for task completion. |
 
 ### Return Value
 
-The result of the Node Select Control execution.
+A [`ResultPrompt`](../ResultPrompt-1.md) containing the selected item.
 
 ### See Also
 

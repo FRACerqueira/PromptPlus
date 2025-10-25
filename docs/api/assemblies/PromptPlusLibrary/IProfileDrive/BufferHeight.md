@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the height of the buffer area.
+#### Gets the height of the console buffer (in rows).
 
 ```csharp
 public int BufferHeight { get; }
 ```
+
+### Property Value
+
+The buffer height.
 
 ### See Also
 

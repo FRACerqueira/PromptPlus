@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide tip count selected. Default false.
+#### Controls the visibility of the selected items count tip.
 
 ```csharp
 public INodeTreeMultiSelectControl HideCountSelected(bool value = true)
@@ -12,7 +12,7 @@ public INodeTreeMultiSelectControl HideCountSelected(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | If True, it shows the tip with count selected, otherwise nothing. |
+| value | If `true`, hides the selected items count. Default is `true`. |
 
 ### Return Value
 

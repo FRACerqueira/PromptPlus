@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets the [`HotKey`](../../PromptPlusLibrary/HotKey.md) for abort control. 'ESC'
+#### Gets the global abort hotkey (default: Esc).
 
 ```csharp
 public HotKey HotKeyAbortKeyPress { get; }

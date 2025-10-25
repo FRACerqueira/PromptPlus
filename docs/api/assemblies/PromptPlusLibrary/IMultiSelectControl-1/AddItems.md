@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds a collection of items to the list.
+#### Adds multiple items to the list.
 
 ```csharp
 public IMultiSelectControl AddItems(IEnumerable<T> values, bool valuechecked = false, 
@@ -13,19 +13,19 @@ public IMultiSelectControl AddItems(IEnumerable<T> values, bool valuechecked = f
 
 | parameter | description |
 | --- | --- |
-| values | Items to add. |
-| valuechecked | If `true`, the item is initial value checked. Default is false |
-| disable | If `true`, the items are disabled. |
+| values | The collection of items to add. |
+| valuechecked | Indicates whether the items should be initially checked. Default is `false`. |
+| disable | Indicates whether the items should be disabled. Default is `false`. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *values* is `null`. |
+| ArgumentNullException | Thrown when *values* is `null`. |
 
 ### See Also
 

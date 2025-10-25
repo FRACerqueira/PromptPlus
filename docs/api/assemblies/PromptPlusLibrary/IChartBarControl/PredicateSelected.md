@@ -12,7 +12,7 @@ public IChartBarControl PredicateSelected(Func<ChartItem, (bool, string?)> valid
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | A predicate function that determines whether an Item is considered valid and should be selectable and custom error message. |
 
 ### Return Value
 
@@ -28,7 +28,7 @@ The current [`IChartBarControl`](../IChartBarControl.md) instance for chaining.
 
 ### IChartBarControl.PredicateSelected method (2 of 2)
 
-#### Set validation predicate for selected item.
+#### Sets a validation rule for determining which items can be selected.
 
 ```csharp
 public IChartBarControl PredicateSelected(Func<ChartItem, bool> validselect)
@@ -36,7 +36,7 @@ public IChartBarControl PredicateSelected(Func<ChartItem, bool> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable. |
+| validselect | A function that evaluates whether a chart item should be selectable. |
 
 ### Return Value
 

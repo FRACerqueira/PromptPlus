@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the color capacity.
+#### Gets the color depth (capability) of the console.
 
 ```csharp
 public ColorSystem ColorDepth { get; }
 ```
+
+### Property Value
+
+The supported [`ColorSystem`](../ColorSystem.md).
 
 ### See Also
 

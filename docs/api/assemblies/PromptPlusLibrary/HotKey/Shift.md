@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get ConsoleModifiers Shift to HotKey
+#### Gets a value indicating whether Shift is included.
 
 ```csharp
 public bool Shift { get; }

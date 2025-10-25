@@ -4,7 +4,7 @@
 </br>
 
 
-#### Provides functionality for configuring and interacting with a calendar widget.
+#### Provides methods for configuring and displaying a lightweight calendar widget, including layout customization, culture settings, and visual styling options.
 
 ```csharp
 public interface ICalendarWidget
@@ -14,9 +14,9 @@ public interface ICalendarWidget
 
 | name | description |
 | --- | --- |
-| [Culture](ICalendarWidget/Culture.md)(…) | Sets the culture for displaying calendar values. Default value is current PromptPlus culture. (2 methods) |
-| [FirstDayOfWeek](ICalendarWidget/FirstDayOfWeek.md)(…) | Sets the first day of the week for the calendar. |
-| [Layout](ICalendarWidget/Layout.md)(…) | Sets the layout of the calendar. |
+| [Culture](ICalendarWidget/Culture.md)(…) | Sets the culture used for displaying calendar values such as month names, weekday names, and number formats. (2 methods) |
+| [FirstDayOfWeek](ICalendarWidget/FirstDayOfWeek.md)(…) | Sets which day should appear as the first day of each week in the calendar display. |
+| [Layout](ICalendarWidget/Layout.md)(…) | Sets the visual layout style of the calendar widget. |
 | [Show](ICalendarWidget/Show.md)() | Display the Calendar widget. |
 | [Styles](ICalendarWidget/Styles.md)(…) | Overwrites styles for the calendar. |
 

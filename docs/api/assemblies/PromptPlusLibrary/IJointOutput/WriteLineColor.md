@@ -4,7 +4,7 @@
 </br>
 
 
-#### Writes the text representation of a string value with token colors to the standard output stream with a line terminator.
+#### Writes a tokenized string followed by a line terminator, applying the specified overflow strategy.
 
 ```csharp
 public IJointOutput WriteLineColor(string value, Overflow overflow = Overflow.None, 
@@ -13,13 +13,13 @@ public IJointOutput WriteLineColor(string value, Overflow overflow = Overflow.No
 
 | parameter | description |
 | --- | --- |
-| value | A string value with token colors to write. |
-| overflow | The [`Overflow`](../Overflow.md) Strategy |
-| clearRestOfLine | Indicates whether to clear the rest of the line. |
+| value | The tokenized text to write. |
+| overflow | How to handle content wider than the console buffer (see [`Overflow`](../Overflow.md)). |
+| clearRestOfLine | If `true`, clears the remainder of the current line before emitting the newline. |
 
 ### Return Value
 
-The current [`IJointOutput`](../IJointOutput.md) instance.
+The same [`IJointOutput`](../IJointOutput.md) instance for chaining.
 
 ### See Also
 

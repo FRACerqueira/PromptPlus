@@ -4,7 +4,7 @@
 </br>
 
 
-#### Performs an interaction with each item in the collection.
+#### Performs a custom action on each item in the provided collection.
 
 ```csharp
 public IChartBarWidget Interaction<T>(IEnumerable<T> items, 
@@ -13,9 +13,9 @@ public IChartBarWidget Interaction<T>(IEnumerable<T> items,
 
 | parameter | description |
 | --- | --- |
-| T | Type of collection. |
-| items | The collection. |
-| interactionaction | The interaction action. |
+| T | Type of items in the collection. |
+| items | The source collection to process. |
+| interactionaction | The action to perform on each item. |
 
 ### Return Value
 

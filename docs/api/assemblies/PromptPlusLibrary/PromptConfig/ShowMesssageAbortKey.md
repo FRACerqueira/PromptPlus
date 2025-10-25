@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets show Abort Key message. If `true`, the show message; otherwise no.
+#### Gets or sets whether a message is displayed after an abort (Esc) action.
 
 ```csharp
 public bool ShowMesssageAbortKey { get; set; }

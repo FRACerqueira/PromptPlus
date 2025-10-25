@@ -4,7 +4,7 @@
 </br>
 
 
-#### Creates an MaskEdit(Date) control with the specified prompt.
+#### Creates an MaskEdit(DateOnly) control with the specified prompt.
 
 ```csharp
 public IMaskEditDateTimeControl<DateOnly> MaskDateOnly(string prompt = "", 

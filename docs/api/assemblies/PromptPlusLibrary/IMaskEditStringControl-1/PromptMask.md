@@ -18,6 +18,10 @@ public IMaskEditStringControl PromptMask(char value = '_')
 
 The current [`IMaskEditStringControl`](../IMaskEditStringControl-1.md) instance for chaining.
 
+### Remarks
+
+The prompt character is displayed in place of empty input positions in the mask.
+
 ### See Also
 
 * interface [IMaskEditStringControl&lt;T&gt;](../IMaskEditStringControl-1.md)

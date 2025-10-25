@@ -4,7 +4,7 @@
 </br>
 
 
-#### Automatically select and finalize item when only one item is in the list. Default is `false`.
+#### Automatically selects and finalizes the item when only one item is in the list. Default is `false`.
 
 ```csharp
 public ISelectControl AutoSelect(bool value = true)
@@ -12,7 +12,7 @@ public ISelectControl AutoSelect(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | Whether to automatically select. |
+| value | If `true`, enables auto-selection; otherwise disabled. |
 
 ### Return Value
 

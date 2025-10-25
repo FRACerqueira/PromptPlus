@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Transpose Previous Emacs Key Ctrl+T = Transpose the previous two characters
+#### Determines whether the Control+T (transpose previous characters) Emacs shortcut was pressed.
 
 ```csharp
 public static bool IsTransposePrevious(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsTransposePrevious(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Control+T was pressed; otherwise, `false`.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set folder root to File MultiSelect Control. Default value is Current folder of execution.
+#### Sets the root directory for file browsing and selection.
 
 ```csharp
 public IFileMultiSelectControl Root(string value)
@@ -12,7 +12,7 @@ public IFileMultiSelectControl Root(string value)
 
 | parameter | description |
 | --- | --- |
-| value | full path folder root |
+| value | The full path to the root directory. Default is current execution directory. |
 
 ### Return Value
 

@@ -12,11 +12,11 @@ public ResultPrompt<T[]> Run(CancellationToken token = default)
 
 | parameter | description |
 | --- | --- |
-| token | The CancellationToken to observe while waiting for the task to complete. Defaults to None. |
+| token | The CancellationToken to observe while waiting for the task to complete. |
 
 ### Return Value
 
-The result of the Table MultiSelect Control execution.
+The result of the Table MultiSelect Control execution containing the selected items array.
 
 ### See Also
 

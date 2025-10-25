@@ -4,7 +4,7 @@
 </br>
 
 
-#### Provides functionality for configuring and interacting with a slider Widget.
+#### Provides functionality for configuring and interacting with a slider widget.
 
 ```csharp
 public interface ISliderWidget
@@ -14,14 +14,14 @@ public interface ISliderWidget
 
 | name | description |
 | --- | --- |
-| [ChangeColor](ISliderWidget/ChangeColor.md)(…) | Dynamically changes the style color of the SliderBar based on its value. |
-| [ChangeGradient](ISliderWidget/ChangeGradient.md)(…) | Dynamically changes the gradient colors of the SliderBar. |
-| [Culture](ISliderWidget/Culture.md)(…) | Sets the culture for displaying numeric values. Default value is current PromptPlus culture. (2 methods) |
-| [Fill](ISliderWidget/Fill.md)(…) | Sets the Graphical-based of slider Bar. Default is Fill. |
+| [ChangeColor](ISliderWidget/ChangeColor.md)(…) | Dynamically changes the style color of the slider bar based on its value. |
+| [ChangeGradient](ISliderWidget/ChangeGradient.md)(…) | Dynamically changes the gradient colors of the slider bar. |
+| [Culture](ISliderWidget/Culture.md)(…) | Sets the culture for displaying numeric values. Default value is the current PromptPlus culture. (2 methods) |
+| [Fill](ISliderWidget/Fill.md)(…) | Sets the graphical style of the slider bar. Default is Fill. |
 | [HideElements](ISliderWidget/HideElements.md)(…) | Hides specific elements of the slider. Default is to show all elements. |
-| [Show](ISliderWidget/Show.md)() | Display the slider widget. |
-| [Styles](ISliderWidget/Styles.md)(…) | Overwrites styles for the slider Widget. |
-| [Width](ISliderWidget/Width.md)(…) | Sets the width of the SliderBar. Default value is 40. Must be &gt;= 10. |
+| [Show](ISliderWidget/Show.md)() | Displays the slider widget. |
+| [Styles](ISliderWidget/Styles.md)(…) | Overwrites styles for the slider widget. |
+| [Width](ISliderWidget/Width.md)(…) | Sets the width of the slider bar. Default value is 40. Must be greater than or equal to 10. |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets [`HotKey`](../HotKey.md) default for toggler select all items. Default value is 'F2'.
+#### Gets or sets the hotkey for toggling selection of all items (F2).
 
 ```csharp
 public HotKey HotKeyTooltipToggleAll { get; set; }

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Combines this style with another one.
+#### Combines this style with another style, taking the other style's colors and (if not None) its overflow strategy.
 
 ```csharp
 public Style Combine(Style other)
@@ -12,11 +12,11 @@ public Style Combine(Style other)
 
 | parameter | description |
 | --- | --- |
-| other | The item to combine with this. |
+| other | The style to merge with this instance. |
 
 ### Return Value
 
-A new style representing a combination of this and the other one.
+A new [`Style`](../Style.md) representing the merged result.
 
 ### See Also
 

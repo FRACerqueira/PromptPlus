@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the function to display text for items in the list. Default is `Item.ToString()`.
+#### Sets the function to display text for items in the list.
 
 ```csharp
 public INodeTreeMultiSelectControl TextSelector(Func<T, string> value)
@@ -12,7 +12,7 @@ public INodeTreeMultiSelectControl TextSelector(Func<T, string> value)
 
 | parameter | description |
 | --- | --- |
-| value | Function to display item text. |
+| value | Function to convert an item to its display text. Must not be `null`. |
 
 ### Return Value
 
@@ -23,6 +23,10 @@ The current [`INodeTreeMultiSelectControl`](../INodeTreeMultiSelectControl-1.md)
 | exception | condition |
 | --- | --- |
 | ArgumentNullException | Thrown if *value* is `null`. |
+
+### Remarks
+
+If not set, defaults to using `Item.ToString()`.
 
 ### See Also
 

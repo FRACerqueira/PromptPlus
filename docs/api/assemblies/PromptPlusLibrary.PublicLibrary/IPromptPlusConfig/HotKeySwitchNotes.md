@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get/Set [`HotKey`](../../PromptPlusLibrary/HotKey.md) to toggle Calendar Switch Notes. Default value is 'F2'.
+#### Gets or sets the hotkey for toggling calendar notes display (default: F2).
 
 ```csharp
 public HotKey HotKeySwitchNotes { get; set; }

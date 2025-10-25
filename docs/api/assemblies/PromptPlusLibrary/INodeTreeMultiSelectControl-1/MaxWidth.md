@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum width for the seleted items.Default value is 30 characters.
+#### Sets the maximum width for displaying selected items.
 
 ```csharp
 public INodeTreeMultiSelectControl MaxWidth(byte maxWidth)
@@ -12,7 +12,7 @@ public INodeTreeMultiSelectControl MaxWidth(byte maxWidth)
 
 | parameter | description |
 | --- | --- |
-| maxWidth | The maximum width of the input in characters. |
+| maxWidth | Maximum number of characters to display. Must be at least 10. |
 
 ### Return Value
 
@@ -23,6 +23,10 @@ The current [`INodeTreeMultiSelectControl`](../INodeTreeMultiSelectControl-1.md)
 | exception | condition |
 | --- | --- |
 | ArgumentOutOfRangeException | Thrown if *maxWidth* is less than 10. |
+
+### Remarks
+
+Default value is 30 characters.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set max.item view per page.Default value is 5.
+#### Sets the maximum number of items to display per page in the chart visualization. Default value is 5.
 
 ```csharp
 public IChartBarControl PageSize(byte value)
@@ -12,7 +12,7 @@ public IChartBarControl PageSize(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | Number of Max.items |
+| value | Maximum number of items to show per page (minimum 1). |
 
 ### Return Value
 

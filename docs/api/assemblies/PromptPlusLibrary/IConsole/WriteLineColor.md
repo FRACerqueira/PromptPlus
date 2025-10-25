@@ -4,7 +4,7 @@
 </br>
 
 
-#### Writes the text representation of a string value with token Colors to the standard output stream with line terminator.
+#### Writes a color-tokenized string followed by a line terminator.
 
 ```csharp
 public (int Left, int Top) WriteLineColor(string value, Overflow overflow = Overflow.Crop, 
@@ -13,13 +13,13 @@ public (int Left, int Top) WriteLineColor(string value, Overflow overflow = Over
 
 | parameter | description |
 | --- | --- |
-| value | A string value with token Colors to write. |
-| overflow | The [`Overflow`](../Overflow.md) Strategy |
-| clearrestofline | Indicates whether to clear the rest of the line. |
+| value | String with embedded color tokens. |
+| overflow | Overflow handling [`Overflow`](../Overflow.md) strategy. |
+| clearrestofline | `true` to clear remaining characters on the line before newline. |
 
 ### Return Value
 
-The column and row position of the cursor.
+The cursor position after write.
 
 ### See Also
 

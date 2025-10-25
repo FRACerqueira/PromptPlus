@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the culture for displaying calendar values. Default value is current PromptPlus culture.
+#### Sets the culture used for displaying calendar values such as month names, weekday names, and number formats.
 
 ```csharp
 public ICalendarWidget Culture(CultureInfo culture)
@@ -12,7 +12,7 @@ public ICalendarWidget Culture(CultureInfo culture)
 
 | parameter | description |
 | --- | --- |
-| culture | The CultureInfo to use. Cannot be `null`. |
+| culture | The culture information to use for localization. Cannot be null. |
 
 ### Return Value
 
@@ -22,7 +22,11 @@ The current [`ICalendarWidget`](../ICalendarWidget.md) instance for chaining.
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *culture* is `null`. |
+| ArgumentNullException | Thrown when the culture parameter is null. |
+
+### Remarks
+
+If not set, the widget will use the current PromptPlus culture settings.
 
 ### See Also
 
@@ -45,7 +49,7 @@ public ICalendarWidget Culture(string cultureName)
 
 ### Return Value
 
-The current [`IMaskEditCurrencyControl`](../IMaskEditCurrencyControl-1.md) instance for chaining.
+The current [`ICalendarWidget`](../ICalendarWidget.md) instance for chaining.
 
 ### Exceptions
 

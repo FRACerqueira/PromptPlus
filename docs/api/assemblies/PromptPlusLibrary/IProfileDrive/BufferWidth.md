@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the width of the buffer area.
+#### Gets the width of the console buffer (in character cells).
 
 ```csharp
 public int BufferWidth { get; }
 ```
+
+### Property Value
+
+The buffer width.
 
 ### See Also
 

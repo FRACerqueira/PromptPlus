@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the default value to use when the input is empty.
+#### Sets the fallback value to use when the input is empty.
 
 ```csharp
 public IMaskEditNumberControl DefaultIfEmpty(T value)
@@ -12,7 +12,7 @@ public IMaskEditNumberControl DefaultIfEmpty(T value)
 
 | parameter | description |
 | --- | --- |
-| value | The default value for empty input. |
+| value | The value to use when no input is provided. |
 
 ### Return Value
 

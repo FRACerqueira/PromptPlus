@@ -13,7 +13,7 @@ public ISwitchWidget Styles(SwitchStyles styleType, Style style)
 | parameter | description |
 | --- | --- |
 | styleType | The [`SwitchStyles`](../SwitchStyles.md) to apply. |
-| style | The [`Style`](../Style.md) to use. Cannot be `null`. |
+| style | The [`Style`](../Style.md) to use. |
 
 ### Return Value
 
@@ -23,7 +23,7 @@ The current [`ISwitchWidget`](../ISwitchWidget.md) instance for chaining.
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *style* is `null`. |
+| ArgumentNullException | Thrown when *style* is `null`. |
 
 ### See Also
 

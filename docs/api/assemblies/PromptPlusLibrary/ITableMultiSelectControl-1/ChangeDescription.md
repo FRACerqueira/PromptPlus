@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically change the description using a user role
+#### Dynamically changes the description using a custom function.
 
 ```csharp
 public ITableMultiSelectControl ChangeDescription(Func<T, int, int, string> value)
@@ -12,17 +12,11 @@ public ITableMultiSelectControl ChangeDescription(Func<T, int, int, string> valu
 
 | parameter | description |
 | --- | --- |
-| value | function to apply change Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0) |
+| value | The function to apply changes. Parameters are: item, current row (zero-based), current column (zero-based). Returns the modified description string. |
 
 ### Return Value
 
 The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentNullException | Thrown if *value* is `null`. |
 
 ### See Also
 

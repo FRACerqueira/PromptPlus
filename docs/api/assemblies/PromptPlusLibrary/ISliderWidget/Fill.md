@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the Graphical-based of slider Bar. Default is Fill.
+#### Sets the graphical style of the slider bar. Default is Fill.
 
 ```csharp
 public ISliderWidget Fill(SliderBarType type)
@@ -12,7 +12,7 @@ public ISliderWidget Fill(SliderBarType type)
 
 | parameter | description |
 | --- | --- |
-| type | The Graphical-based fill type, [`SliderBarType`](../SliderBarType.md). |
+| type | The [`SliderBarType`](../SliderBarType.md) to apply. |
 
 ### Return Value
 

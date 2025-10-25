@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically changes the description of the Select based on its value.
+#### Dynamically changes the description of the Select control based on the current selected value.
 
 ```csharp
 public ISelectControl ChangeDescription(Func<T, string> value)
@@ -12,7 +12,7 @@ public ISelectControl ChangeDescription(Func<T, string> value)
 
 | parameter | description |
 | --- | --- |
-| value | A function to determine the description based on the current value. |
+| value | A function that returns the description based on the current value. Cannot be `null`. |
 
 ### Return Value
 

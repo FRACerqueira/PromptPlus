@@ -4,11 +4,15 @@
 </br>
 
 
-#### Get/Set the screen margin right.
+#### Gets or sets the right screen margin (number of trailing spaces reserved).
 
 ```csharp
 public byte PadRight { get; set; }
 ```
+
+### Property Value
+
+The right padding in character cells.
 
 ### See Also
 

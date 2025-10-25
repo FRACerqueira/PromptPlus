@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents all Widgets for PromptPlus
+#### Gets a factory for creating and emitting visual widgets (banner, dash lines, chart bar, slider, etc.).
 
 ```csharp
 public static IWidgets Widgets { get; }

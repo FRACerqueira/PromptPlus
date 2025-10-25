@@ -4,7 +4,7 @@
 </br>
 
 
-#### Interface for ChartBar widget functionality.
+#### Provides configuration and display functionality for a console-based chart bar widget.
 
 ```csharp
 public interface IChartBarWidget
@@ -14,17 +14,21 @@ public interface IChartBarWidget
 
 | name | description |
 | --- | --- |
-| [AddItem](IChartBarWidget/AddItem.md)(…) | Adds an item to the chart bar. |
-| [BarType](IChartBarWidget/BarType.md)(…) | Defines the type of bar to use in the chart. Default value is Fill. |
-| [Culture](IChartBarWidget/Culture.md)(…) | Sets the CultureInfo to use for displaying values. Default value is current PromptPlus culture. (2 methods) |
-| [FractionalDigits](IChartBarWidget/FractionalDigits.md)(…) | Defines the fractional digits of values to display. Default is 2. |
+| [AddItem](IChartBarWidget/AddItem.md)(…) | Adds a data point to the chart visualization. |
+| [BarType](IChartBarWidget/BarType.md)(…) | Defines the visual representation style of bars in the chart. Default value is Fill. |
+| [Culture](IChartBarWidget/Culture.md)(…) | Sets the CultureInfo to use for displaying values and formatting chart elements. Default value is current PromptPlus culture. (2 methods) |
+| [FractionalDigits](IChartBarWidget/FractionalDigits.md)(…) | Sets the number of decimal places to display in numeric values. Default is 2. Maximum value is 5. |
 | [HideElements](IChartBarWidget/HideElements.md)(…) | Hides specific elements of the chart bar. Default is to show all elements. |
-| [Interaction&lt;T&gt;](IChartBarWidget/Interaction.md)(…) | Performs an interaction with each item in the collection. |
+| [Interaction&lt;T&gt;](IChartBarWidget/Interaction.md)(…) | Performs a custom action on each item in the provided collection. |
 | [Layout](IChartBarWidget/Layout.md)(…) | Sets the layout of the chart bar. Default value is Standard. |
-| [OrderBy](IChartBarWidget/OrderBy.md)(…) | Sorts bars and labels. |
+| [OrderBy](IChartBarWidget/OrderBy.md)(…) | Defines the display order of chart items based on specified criteria. |
 | [Show](IChartBarWidget/Show.md)() | Display the ChartBar widget. |
-| [Styles](IChartBarWidget/Styles.md)(…) | Overwrites styles for the chart bar. |
-| [Width](IChartBarWidget/Width.md)(…) | Sets the width of the chart bar. Default value is 80. The value must be greater than or equal to 10. |
+| [Styles](IChartBarWidget/Styles.md)(…) | Overwrites visual styles for specific chart bar elements. |
+| [Width](IChartBarWidget/Width.md)(…) | Sets the horizontal width of the chart display in console characters. Default value is 80. The value must be greater than or equal to 10. |
+
+### Remarks
+
+Supports standard and stacked layouts, custom styling, localization, and flexible data visualization options.
 
 ### See Also
 

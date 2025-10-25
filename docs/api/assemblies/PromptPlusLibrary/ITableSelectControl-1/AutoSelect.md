@@ -4,7 +4,7 @@
 </br>
 
 
-#### Automatically select and finalize item when only one item is in the list . Default false.
+#### Sets whether to automatically select and finalize the item when only one item exists in the list. The default is false.
 
 ```csharp
 public ITableSelectControl AutoSelect(bool value = true)
@@ -12,11 +12,11 @@ public ITableSelectControl AutoSelect(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | Automatically select |
+| value | When true, automatically selects the single item; when false, user interaction is required. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

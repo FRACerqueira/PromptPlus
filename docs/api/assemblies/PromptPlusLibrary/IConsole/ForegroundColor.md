@@ -4,11 +4,15 @@
 </br>
 
 
-#### Get/set console ForegroundColor
+#### Gets or sets the current foreground [`Color`](../Color.md).
 
 ```csharp
 public Color ForegroundColor { get; set; }
 ```
+
+### Property Value
+
+The active foreground color.
 
 ### See Also
 

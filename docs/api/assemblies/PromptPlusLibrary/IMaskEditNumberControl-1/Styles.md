@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overrides the styles for the input control.
+#### Customizes the visual appearance of specific interface elements.
 
 ```csharp
 public IMaskEditNumberControl Styles(MaskEditStyles styleType, Style style)
@@ -12,8 +12,8 @@ public IMaskEditNumberControl Styles(MaskEditStyles styleType, Style style)
 
 | parameter | description |
 | --- | --- |
-| styleType | The [`InputStyles`](../InputStyles.md) to override. |
-| style | The [`Style`](../Style.md) to apply. Cannot be `null`. |
+| styleType | The interface element to style. |
+| style | The style configuration to apply. Cannot be `null`. |
 
 ### Return Value
 

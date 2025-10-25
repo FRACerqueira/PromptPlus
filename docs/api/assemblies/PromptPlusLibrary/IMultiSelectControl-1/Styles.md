@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overwrites styles for the MultiSelect Control.
+#### Configures the visual style for a specific element of the MultiSelect control.
 
 ```csharp
 public IMultiSelectControl Styles(MultiSelectStyles styleType, Style style)
@@ -12,18 +12,18 @@ public IMultiSelectControl Styles(MultiSelectStyles styleType, Style style)
 
 | parameter | description |
 | --- | --- |
-| styleType | The [`MultiSelectStyles`](../MultiSelectStyles.md) to apply. |
-| style | The [`Style`](../Style.md) to use. Cannot be `null`. |
+| styleType | The [`MultiSelectStyles`](../MultiSelectStyles.md) element to style. |
+| style | The [`Style`](../Style.md) to apply. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *style* is `null`. |
+| ArgumentNullException | Thrown when *style* is `null`. |
 
 ### See Also
 

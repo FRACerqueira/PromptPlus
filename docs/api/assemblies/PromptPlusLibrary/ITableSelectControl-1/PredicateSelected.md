@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate to determine if an item can be selected with a custom validation message.
 
 ```csharp
 public ITableSelectControl PredicateSelected(Func<T, (bool, string?)> validselect)
@@ -12,11 +12,11 @@ public ITableSelectControl PredicateSelected(Func<T, (bool, string?)> validselec
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | A predicate function that returns a tuple containing a boolean indicating validity and an optional custom validation message. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### See Also
 
@@ -27,7 +27,7 @@ The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for ch
 
 ### ITableSelectControl&lt;T&gt;.PredicateSelected method (2 of 2)
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate to determine if an item can be selected.
 
 ```csharp
 public ITableSelectControl PredicateSelected(Func<T, bool> validselect)
@@ -35,11 +35,11 @@ public ITableSelectControl PredicateSelected(Func<T, bool> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable. |
+| validselect | A predicate function that returns true if the item is valid for selection; otherwise false. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

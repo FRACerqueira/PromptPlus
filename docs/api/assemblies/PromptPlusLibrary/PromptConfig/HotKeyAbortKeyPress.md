@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets the [`HotKey`](../HotKey.md) for abort control. 'ESC'
+#### Gets the global abort hotkey (Esc).
 
 ```csharp
 public HotKey HotKeyAbortKeyPress { get; }

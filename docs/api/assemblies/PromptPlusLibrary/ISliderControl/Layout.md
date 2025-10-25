@@ -4,7 +4,7 @@
 </br>
 
 
-#### Define the layout to change value. Default value is 'SliderLayout.LeftRight'.
+#### Defines the layout for changing values. Default value is LeftRight.
 
 ```csharp
 public ISliderControl Layout(SliderLayout value)
@@ -12,7 +12,7 @@ public ISliderControl Layout(SliderLayout value)
 
 | parameter | description |
 | --- | --- |
-| value | The [`SliderLayout`](../SliderLayout.md) |
+| value | The [`SliderLayout`](../SliderLayout.md). |
 
 ### Return Value
 
@@ -20,7 +20,7 @@ The current [`ISliderControl`](../ISliderControl.md) instance for chaining.
 
 ### Remarks
 
-When Layout equal UpDown , slider control not show Widgets.
+When layout equals UpDown, the slider control does not show widgets.
 
 ### See Also
 

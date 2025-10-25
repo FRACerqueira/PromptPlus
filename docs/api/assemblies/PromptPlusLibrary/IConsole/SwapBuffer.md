@@ -4,7 +4,7 @@
 </br>
 
 
-#### Swap Screen Buffer
+#### Attempts to switch to a target screen buffer.
 
 ```csharp
 public bool SwapBuffer(TargetScreen value)
@@ -12,11 +12,11 @@ public bool SwapBuffer(TargetScreen value)
 
 | parameter | description |
 | --- | --- |
-| value | The target buffer |
+| value | Target buffer. |
 
 ### Return Value
 
-True when console has capacity to swap to target buffer, otherwise false
+`true` if the switch succeeded; otherwise `false`.
 
 ### See Also
 

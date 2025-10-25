@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for disabled item.
+#### Sets a validation predicate for determining if an item should be disabled. Disabled items cannot be selected or interacted with.
 
 ```csharp
 public INodeTreeSelectControl PredicateDisabled(Func<T, bool> validdisabled)
@@ -12,7 +12,7 @@ public INodeTreeSelectControl PredicateDisabled(Func<T, bool> validdisabled)
 
 | parameter | description |
 | --- | --- |
-| validdisabled | A predicate function that determines whether an Item is considered disable. |
+| validdisabled | A predicate function returning true if the item should be disabled. |
 
 ### Return Value
 

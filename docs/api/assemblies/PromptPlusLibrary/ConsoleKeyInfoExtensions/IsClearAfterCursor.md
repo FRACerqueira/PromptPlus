@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Clear After Cursor Emacs Key Ctrl+K = Clears the line content after the cursor
+#### Determines whether the Control+K (clear after cursor) Emacs shortcut was pressed.
 
 ```csharp
 public static bool IsClearAfterCursor(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsClearAfterCursor(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Control+K was pressed; otherwise, `false`.
 
 ### See Also
 

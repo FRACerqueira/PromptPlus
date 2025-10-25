@@ -12,11 +12,17 @@ public IProgressBarControl UpdateHandler(Action<HandlerProgressBar, Cancellation
 
 | parameter | description |
 | --- | --- |
-| value | The handler to update values. |
+| value | The handler to update values. Cannot be `null`. |
 
 ### Return Value
 
 The current [`IProgressBarControl`](../IProgressBarControl.md) instance for chaining.
+
+### Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentNullException | Thrown if *value* is `null`. |
 
 ### See Also
 

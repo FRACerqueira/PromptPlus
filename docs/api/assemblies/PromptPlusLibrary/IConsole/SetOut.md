@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the standard output stream.
+#### Sets the standard output writer.
 
 ```csharp
 public void SetOut(TextWriter value)
@@ -12,7 +12,7 @@ public void SetOut(TextWriter value)
 
 | parameter | description |
 | --- | --- |
-| value | A stream that is the new standard output. |
+| value | The new output TextWriter. |
 
 ### See Also
 

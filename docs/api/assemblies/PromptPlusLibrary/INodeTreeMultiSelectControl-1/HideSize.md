@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide count children. Default is false
+#### Controls the visibility of the children count display.
 
 ```csharp
 public INodeTreeMultiSelectControl HideSize(bool value = true)
@@ -12,7 +12,7 @@ public INodeTreeMultiSelectControl HideSize(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | true Show size, otherwise 'no' |
+| value | If `true`, hides the children count. Default is `true`. |
 
 ### Return Value
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for selected item.
+#### Sets a validation rule with custom error messaging for file and folder selection.
 
 ```csharp
 public IFileSelectControl PredicateSelected(Func<ItemFile, (bool, string?)> validselect)
@@ -12,7 +12,7 @@ public IFileSelectControl PredicateSelected(Func<ItemFile, (bool, string?)> vali
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | Function that returns validation result and optional error message. |
 
 ### Return Value
 
@@ -28,7 +28,7 @@ The current [`IFileSelectControl`](../IFileSelectControl.md) instance for chaini
 
 ### IFileSelectControl.PredicateSelected method (2 of 2)
 
-#### Set validation predicate for selected item.
+#### Sets a validation rule for file and folder selection.
 
 ```csharp
 public IFileSelectControl PredicateSelected(Func<ItemFile, bool> validselect)
@@ -36,7 +36,7 @@ public IFileSelectControl PredicateSelected(Func<ItemFile, bool> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable. |
+| validselect | Function that evaluates if an item can be selected. |
 
 ### Return Value
 

@@ -12,27 +12,27 @@ public interface INodeTreeMultiSelectControl<T>
 
 | parameter | description |
 | --- | --- |
-| T | type of Node |
+| T | The type of node in the tree structure. |
 
 ### Members
 
 | name | description |
 | --- | --- |
-| [AddChildNode](INodeTreeMultiSelectControl-1/AddChildNode.md)(…) | Add a Child node |
-| [AddRootNode](INodeTreeMultiSelectControl-1/AddRootNode.md)(…) | Add a node |
+| [AddChildNode](INodeTreeMultiSelectControl-1/AddChildNode.md)(…) | Adds a child node to an existing parent node in the tree. |
+| [AddRootNode](INodeTreeMultiSelectControl-1/AddRootNode.md)(…) | Adds a root node to the tree structure. |
 | [ChangeDescription](INodeTreeMultiSelectControl-1/ChangeDescription.md)(…) | Dynamically changes the description of the Select based on its value. |
-| [HideCountSelected](INodeTreeMultiSelectControl-1/HideCountSelected.md)(…) | Hide tip count selected. Default false. |
-| [HideSize](INodeTreeMultiSelectControl-1/HideSize.md)(…) | Hide count children. Default is false |
+| [HideCountSelected](INodeTreeMultiSelectControl-1/HideCountSelected.md)(…) | Controls the visibility of the selected items count tip. |
+| [HideSize](INodeTreeMultiSelectControl-1/HideSize.md)(…) | Controls the visibility of the children count display. |
 | [Interaction](INodeTreeMultiSelectControl-1/Interaction.md)(…) |  |
-| [MaxWidth](INodeTreeMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum width for the seleted items.Default value is 30 characters. |
-| [Options](INodeTreeMultiSelectControl-1/Options.md)(…) | Applies custom options to the control. |
-| [PageSize](INodeTreeMultiSelectControl-1/PageSize.md)(…) | Sets the maximum number of items to view per page. Default value is 10. |
-| [PredicateDisabled](INodeTreeMultiSelectControl-1/PredicateDisabled.md)(…) | Set validation predicate for disabled item. |
-| [PredicateSelected](INodeTreeMultiSelectControl-1/PredicateSelected.md)(…) | Set validation predicate for selected item. (2 methods) |
-| [Range](INodeTreeMultiSelectControl-1/Range.md)(…) | Defines a minimum and maximum (optional) range of items selected in the list |
-| [Run](INodeTreeMultiSelectControl-1/Run.md)(…) | Runs the Node MultiSelect Control and returns the result. |
-| [Styles](INodeTreeMultiSelectControl-1/Styles.md)(…) | Overwrites styles for the Node MultiSelect control. |
-| [TextSelector](INodeTreeMultiSelectControl-1/TextSelector.md)(…) | Sets the function to display text for items in the list. Default is `Item.ToString()`. |
+| [MaxWidth](INodeTreeMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum width for displaying selected items. |
+| [Options](INodeTreeMultiSelectControl-1/Options.md)(…) | Applies custom options to configure the control's behavior. |
+| [PageSize](INodeTreeMultiSelectControl-1/PageSize.md)(…) | Sets the maximum number of items displayed per page in the control. |
+| [PredicateDisabled](INodeTreeMultiSelectControl-1/PredicateDisabled.md)(…) | Sets a predicate to determine if an item should be disabled. |
+| [PredicateSelected](INodeTreeMultiSelectControl-1/PredicateSelected.md)(…) | Sets a validation predicate to determine if an item can be selected. (2 methods) |
+| [Range](INodeTreeMultiSelectControl-1/Range.md)(…) | Defines the allowed range for the number of selected items. |
+| [Run](INodeTreeMultiSelectControl-1/Run.md)(…) | Executes the Node MultiSelect Control operation. |
+| [Styles](INodeTreeMultiSelectControl-1/Styles.md)(…) | Overwrites the visual styles for specific elements of the Node MultiSelect control. |
+| [TextSelector](INodeTreeMultiSelectControl-1/TextSelector.md)(…) | Sets the function to display text for items in the list. |
 
 ### See Also
 

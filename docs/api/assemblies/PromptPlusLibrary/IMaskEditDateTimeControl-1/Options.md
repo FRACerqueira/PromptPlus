@@ -4,7 +4,7 @@
 </br>
 
 
-#### Applies custom options to the MaskEdit input control.
+#### Configures additional control options through an action delegate.
 
 ```csharp
 public IMaskEditDateTimeControl Options(Action<IControlOptions> options)
@@ -12,7 +12,7 @@ public IMaskEditDateTimeControl Options(Action<IControlOptions> options)
 
 | parameter | description |
 | --- | --- |
-| options | An action to configure the [`IControlOptions`](../IControlOptions.md). Cannot be `null`. |
+| options | The action to configure control options. |
 
 ### Return Value
 
@@ -22,7 +22,7 @@ The current [`IMaskEditDateTimeControl`](../IMaskEditDateTimeControl-1.md) insta
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *options* is `null`. |
+| ArgumentNullException | Thrown when *options* is `null`. |
 
 ### See Also
 

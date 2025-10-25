@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets a description for the control with an optional style.
+#### Sets a descriptive text displayed with the control.
 
 ```csharp
 public IControlOptions Description(string description)
@@ -12,11 +12,11 @@ public IControlOptions Description(string description)
 
 | parameter | description |
 | --- | --- |
-| description | The text description. |
+| description | The description text. If `null` or empty, any existing description may be cleared. |
 
 ### Return Value
 
-The current [`IControlOptions`](../IControlOptions.md) instance for chaining.
+The same [`IControlOptions`](../IControlOptions.md) instance for chaining.
 
 ### See Also
 

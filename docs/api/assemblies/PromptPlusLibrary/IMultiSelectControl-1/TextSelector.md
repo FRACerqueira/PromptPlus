@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the function to display text for items in the list. Default is `Item.ToString()`.
+#### Sets the function to convert items to display text. Default uses `Item.ToString()`.
 
 ```csharp
 public IMultiSelectControl TextSelector(Func<T, string> value)
@@ -12,17 +12,17 @@ public IMultiSelectControl TextSelector(Func<T, string> value)
 
 | parameter | description |
 | --- | --- |
-| value | Function to display item text. |
+| value | A function that takes an item and returns its display text. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *value* is `null`. |
+| ArgumentNullException | Thrown when *value* is `null`. |
 
 ### See Also
 

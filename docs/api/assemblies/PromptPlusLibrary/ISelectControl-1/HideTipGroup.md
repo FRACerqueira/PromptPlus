@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide tip with text of group. Default false.
+#### Hides the tip with the group name. Default is `false`.
 
 ```csharp
 public ISelectControl HideTipGroup(bool value = true)
@@ -12,7 +12,7 @@ public ISelectControl HideTipGroup(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | If True, it shows the tip with the group text, otherwise nothing. |
+| value | If `true`, hides the group name tip; otherwise shows it. |
 
 ### Return Value
 

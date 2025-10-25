@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets the default culture to use for displaying values for all controls/widgets.
+#### Gets or sets the default CultureInfo used for formatting and localization.
 
 ```csharp
 public CultureInfo DefaultCulture { get; set; }

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Clears the console buffer and corresponding console window of display information. Moves cursor to the top of the console.
+#### Clears the buffered content (and console surface) and moves the cursor to the top (0,0).
 
 ```csharp
 public IJointOutput Clear()
@@ -12,7 +12,7 @@ public IJointOutput Clear()
 
 ### Return Value
 
-The current [`IJointOutput`](../IJointOutput.md) instance.
+The same [`IJointOutput`](../IJointOutput.md) instance for chaining.
 
 ### See Also
 

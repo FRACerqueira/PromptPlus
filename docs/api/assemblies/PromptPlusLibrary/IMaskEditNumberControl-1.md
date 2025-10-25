@@ -12,22 +12,22 @@ public interface IMaskEditNumberControl<T>
 
 | parameter | description |
 | --- | --- |
-| T | The type of input. |
+| T | The numeric type for the input value, restricted to integer types. |
 
 ### Members
 
 | name | description |
 | --- | --- |
-| [Culture](IMaskEditNumberControl-1/Culture.md)(…) | Sets the culture for format validation. Default value is current PromptPlus culture. (2 methods) |
-| [Default](IMaskEditNumberControl-1/Default.md)(…) | Sets the default value for the input. |
-| [DefaultIfEmpty](IMaskEditNumberControl-1/DefaultIfEmpty.md)(…) | Sets the default value to use when the input is empty. |
-| [HideTipInputType](IMaskEditNumberControl-1/HideTipInputType.md)(…) | Hide the input type tip. Default `false`. |
-| [NumberFormat](IMaskEditNumberControl-1/NumberFormat.md)(…) | Configures the number format for the input. |
-| [Options](IMaskEditNumberControl-1/Options.md)(…) | Applies custom options to the MaskEdit input control. |
-| [PredicateSelected](IMaskEditNumberControl-1/PredicateSelected.md)(…) | Set validation predicate for selected item. (2 methods) |
-| [PromptMask](IMaskEditNumberControl-1/PromptMask.md)(…) | Prompt mask character. |
-| [Run](IMaskEditNumberControl-1/Run.md)(…) | Runs the MaskEdit input control and returns the result. |
-| [Styles](IMaskEditNumberControl-1/Styles.md)(…) | Overrides the styles for the input control. |
+| [Culture](IMaskEditNumberControl-1/Culture.md)(…) | Sets the culture for number formatting and validation. (2 methods) |
+| [Default](IMaskEditNumberControl-1/Default.md)(…) | Sets the initial default value for the input control. |
+| [DefaultIfEmpty](IMaskEditNumberControl-1/DefaultIfEmpty.md)(…) | Sets the fallback value to use when the input is empty. |
+| [HideTipInputType](IMaskEditNumberControl-1/HideTipInputType.md)(…) | Controls the visibility of the input type tip in the interface. |
+| [NumberFormat](IMaskEditNumberControl-1/NumberFormat.md)(…) | Configures the number format for the input with specified formatting options. |
+| [Options](IMaskEditNumberControl-1/Options.md)(…) | Configures general control behavior options. |
+| [PredicateSelected](IMaskEditNumberControl-1/PredicateSelected.md)(…) | Sets a validation predicate to determine if a selected value is valid. (2 methods) |
+| [PromptMask](IMaskEditNumberControl-1/PromptMask.md)(…) | Sets the prompt mask character used to indicate input positions. |
+| [Run](IMaskEditNumberControl-1/Run.md)(…) | Executes the input control and returns the result. |
+| [Styles](IMaskEditNumberControl-1/Styles.md)(…) | Customizes the visual appearance of specific interface elements. |
 
 ### Remarks
 

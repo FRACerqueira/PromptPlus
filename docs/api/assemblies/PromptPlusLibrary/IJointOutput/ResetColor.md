@@ -4,7 +4,7 @@
 </br>
 
 
-#### Resets colors to default values.
+#### Resets the current (active) foreground and background colors to their defaults.
 
 ```csharp
 public IJointOutput ResetColor()
@@ -12,7 +12,7 @@ public IJointOutput ResetColor()
 
 ### Return Value
 
-The current [`IJointOutput`](../IJointOutput.md) instance.
+The same [`IJointOutput`](../IJointOutput.md) instance for chaining.
 
 ### See Also
 

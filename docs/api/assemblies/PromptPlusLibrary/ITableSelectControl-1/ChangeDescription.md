@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically change the description using a user role
+#### Dynamically changes the description based on the current row and column position.
 
 ```csharp
 public ITableSelectControl ChangeDescription(Func<T, int, int, string> value)
@@ -12,17 +12,17 @@ public ITableSelectControl ChangeDescription(Func<T, int, int, string> value)
 
 | parameter | description |
 | --- | --- |
-| value | function to apply change Func(T, int, int, string) = T = item, int = current row (base0) , int = current col (base0) |
+| value | A function that receives the item, current row (zero-based), and current column (zero-based), and returns the description string. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *value* is `null`. |
+| ArgumentNullException | Thrown when *value* is null. |
 
 ### See Also
 

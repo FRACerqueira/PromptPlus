@@ -4,7 +4,7 @@
 </br>
 
 
-#### Creates a Chart Bar.
+#### Creates a bar chart widget with an optional title and layout options.
 
 ```csharp
 public IChartBarWidget ChartBar(string title, TextAlignment alignment = TextAlignment.Center, 
@@ -13,13 +13,13 @@ public IChartBarWidget ChartBar(string title, TextAlignment alignment = TextAlig
 
 | parameter | description |
 | --- | --- |
-| title | The tile to chart |
-| alignment | The [`TextAlignment`](../TextAlignment.md) of title. |
-| showlegends | If true show legends. |
+| title | Chart title text (must not be `null` or empty). |
+| alignment | Title alignment (default: Center). |
+| showlegends | If `true`, shows the legend panel; otherwise hides it (default: `false`). |
 
 ### Return Value
 
-An [`IChartBarControl`](../IChartBarControl.md) instance for further customization.
+An [`IChartBarWidget`](../IChartBarWidget.md) for further customization.
 
 ### Exceptions
 

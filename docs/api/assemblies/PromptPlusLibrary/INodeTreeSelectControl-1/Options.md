@@ -4,7 +4,7 @@
 </br>
 
 
-#### Applies custom options to the control.
+#### Applies custom options to the control to modify its behavior and appearance.
 
 ```csharp
 public INodeTreeSelectControl Options(Action<IControlOptions> options)

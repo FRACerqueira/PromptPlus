@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents the HotKey to control
+#### Represents a configurable hotkey composed of a base ConsoleKey and optional modifier flags.
 
 ```csharp
 public HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false)
@@ -12,14 +12,14 @@ public HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = 
 
 | parameter | description |
 | --- | --- |
-| key | ConsoleKey to create |
-| alt | With Alt key |
-| ctrl | With Ctrl key |
-| shift | With Shift key |
+| key | The primary ConsoleKey. |
+| alt | Indicates whether Alt is part of the hotkey. |
+| ctrl | Indicates whether Ctrl is part of the hotkey. |
+| shift | Indicates whether Shift is part of the hotkey. |
 
 ### Remarks
 
-Create a HotKey
+This struct is lightweight and immutable after construction (properties are init via the primary constructor). Use the static members for common built‑in hotkeys.
 
 ### See Also
 

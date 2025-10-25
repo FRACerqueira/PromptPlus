@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum number of items to view per page. Default value is 10.
+#### Sets the maximum number of items to display per page. The default value is 10.
 
 ```csharp
 public ITableSelectControl PageSize(byte value)
@@ -12,17 +12,17 @@ public ITableSelectControl PageSize(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | Number of maximum items. |
+| value | The maximum number of items per page. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *value* is less than 1. |
+| ArgumentOutOfRangeException | Thrown when *value* is less than 1. |
 
 ### See Also
 

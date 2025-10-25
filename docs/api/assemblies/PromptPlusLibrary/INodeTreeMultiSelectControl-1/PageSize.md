@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum number of items to view per page. Default value is 10.
+#### Sets the maximum number of items displayed per page in the control.
 
 ```csharp
 public INodeTreeMultiSelectControl PageSize(byte value)
@@ -12,7 +12,7 @@ public INodeTreeMultiSelectControl PageSize(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | Number of maximum items. |
+| value | Number of items per page. Must be greater than 0. |
 
 ### Return Value
 
@@ -23,6 +23,10 @@ The current [`INodeTreeMultiSelectControl`](../INodeTreeMultiSelectControl-1.md)
 | exception | condition |
 | --- | --- |
 | ArgumentOutOfRangeException | Thrown if *value* is less than 1. |
+
+### Remarks
+
+Default value is 10 items per page.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically changes the description of the MultiSelect based on its value.
+#### Dynamically changes the control description based on the current item value.
 
 ```csharp
 public IMultiSelectControl ChangeDescription(Func<T, string> value)
@@ -12,17 +12,17 @@ public IMultiSelectControl ChangeDescription(Func<T, string> value)
 
 | parameter | description |
 | --- | --- |
-| value | A function to determine the description based on the current value. |
+| value | A function that takes an item and returns its description text. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *value* is `null`. |
+| ArgumentNullException | Thrown when *value* is `null`. |
 
 ### See Also
 

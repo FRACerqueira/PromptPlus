@@ -12,8 +12,8 @@ public ISelectControl Filter(FilterMode value, bool caseinsensitive = true)
 
 | parameter | description |
 | --- | --- |
-| value | The filter mode. |
-| caseinsensitive | If true (Default), performs case-insensitive string comparison when filtering; otherwise case-sensitive comparison is used. |
+| value | The [`FilterMode`](../FilterMode.md) to apply. |
+| caseinsensitive | If `true` (default), performs case-insensitive string comparison when filtering; otherwise case-sensitive comparison is used. |
 
 ### Return Value
 

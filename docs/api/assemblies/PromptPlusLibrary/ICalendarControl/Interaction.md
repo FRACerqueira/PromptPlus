@@ -4,7 +4,7 @@
 </br>
 
 
-#### Performs an interaction with each item in the collection.
+#### Performs an interaction with each item in the collection, allowing custom configuration for each item.
 
 ```csharp
 public ICalendarControl Interaction<T>(IEnumerable<T> items, 
@@ -13,9 +13,9 @@ public ICalendarControl Interaction<T>(IEnumerable<T> items,
 
 | parameter | description |
 | --- | --- |
-| T | Type of collection. |
-| items | The collection. |
-| interactionaction | The interaction action. |
+| T | The type of items in the collection. |
+| items | The collection of items to process. |
+| interactionaction | The action to perform on each item, allowing configuration of the calendar control. |
 
 ### Return Value
 

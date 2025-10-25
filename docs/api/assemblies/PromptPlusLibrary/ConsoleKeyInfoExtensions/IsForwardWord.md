@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Forward Word Emacs Key Alt+F = Moves the cursor forward one word.
+#### Determines whether the Alt+F (forward word) Emacs shortcut was pressed.
 
 ```csharp
 public static bool IsForwardWord(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsForwardWord(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Alt+F was pressed; otherwise, `false`.
 
 ### See Also
 

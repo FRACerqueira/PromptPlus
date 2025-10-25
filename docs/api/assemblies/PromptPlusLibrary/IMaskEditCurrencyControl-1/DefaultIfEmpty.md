@@ -18,6 +18,10 @@ public IMaskEditCurrencyControl DefaultIfEmpty(T value)
 
 The current [`IMaskEditCurrencyControl`](../IMaskEditCurrencyControl-1.md) instance for chaining.
 
+### Remarks
+
+This value is used only when the input field is left empty by the user.
+
 ### See Also
 
 * interface [IMaskEditCurrencyControl&lt;T&gt;](../IMaskEditCurrencyControl-1.md)

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets [`HotKey`](../HotKey.md) for toggler Tooltips. Value is 'F1'.
+#### Gets the hotkey that cycles through tooltip variants (F1).
 
 ```csharp
 public HotKey HotKeyTooltip { get; }

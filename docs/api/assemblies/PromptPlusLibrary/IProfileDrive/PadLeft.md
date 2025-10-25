@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the screen margin left.
+#### Gets the left margin (number of spaces reserved at the left edge).
 
 ```csharp
 public byte PadLeft { get; }
 ```
+
+### Property Value
+
+The left padding (column offset).
 
 ### See Also
 

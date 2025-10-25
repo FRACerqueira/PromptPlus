@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets a value indicating whether the console is a terminal.
+#### Gets a value indicating whether the output device is a terminal (TTY) rather than redirected.
 
 ```csharp
 public bool IsTerminal { get; }
 ```
+
+### Property Value
+
+`true` if running on an interactive terminal; otherwise `false`.
 
 ### See Also
 

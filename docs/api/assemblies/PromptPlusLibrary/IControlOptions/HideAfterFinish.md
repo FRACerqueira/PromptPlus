@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hides the control's render area after it finishes execution.
+#### Clears the control's render area after successful completion.
 
 ```csharp
 public IControlOptions HideAfterFinish(bool shouldHide = true)
@@ -12,11 +12,11 @@ public IControlOptions HideAfterFinish(bool shouldHide = true)
 
 | parameter | description |
 | --- | --- |
-| shouldHide | If `true`, the render area is cleared; otherwise, it remains visible. |
+| shouldHide | If `true`, the render area is cleared; otherwise, it remains. Default is `true`. |
 
 ### Return Value
 
-The current [`IControlOptions`](../IControlOptions.md) instance for chaining.
+The same [`IControlOptions`](../IControlOptions.md) instance for chaining.
 
 ### See Also
 

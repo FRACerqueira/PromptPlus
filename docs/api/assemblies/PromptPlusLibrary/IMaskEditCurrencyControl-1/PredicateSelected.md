@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for selected item.
+#### Validates input using a custom predicate with custom error message support.
 
 ```csharp
 public IMaskEditCurrencyControl PredicateSelected(Func<T, (bool, string?)> validselect)
@@ -12,7 +12,7 @@ public IMaskEditCurrencyControl PredicateSelected(Func<T, (bool, string?)> valid
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | A predicate function that returns a tuple containing a boolean validation result and an optional error message. |
 
 ### Return Value
 
@@ -27,7 +27,7 @@ The current [`IMaskEditCurrencyControl`](../IMaskEditCurrencyControl-1.md) insta
 
 ### IMaskEditCurrencyControl&lt;T&gt;.PredicateSelected method (2 of 2)
 
-#### Set validation predicate for selected item.
+#### Validates input using a custom predicate.
 
 ```csharp
 public IMaskEditCurrencyControl PredicateSelected(Func<T, bool> validselect)
@@ -35,7 +35,7 @@ public IMaskEditCurrencyControl PredicateSelected(Func<T, bool> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable. |
+| validselect | A predicate function that determines whether an input value is valid. |
 
 ### Return Value
 

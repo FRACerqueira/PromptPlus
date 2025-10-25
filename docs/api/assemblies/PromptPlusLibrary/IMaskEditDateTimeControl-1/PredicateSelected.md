@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate that provides custom error messages for invalid selections.
 
 ```csharp
 public IMaskEditDateTimeControl PredicateSelected(Func<T, (bool, string?)> validselect)
@@ -12,11 +12,17 @@ public IMaskEditDateTimeControl PredicateSelected(Func<T, (bool, string?)> valid
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | The predicate function that returns a tuple of (bool, string?) for validation result and message. |
 
 ### Return Value
 
 The current [`IMaskEditDateTimeControl`](../IMaskEditDateTimeControl-1.md) instance for chaining.
+
+### Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentNullException | Thrown when *validselect* is `null`. |
 
 ### See Also
 
@@ -27,7 +33,7 @@ The current [`IMaskEditDateTimeControl`](../IMaskEditDateTimeControl-1.md) insta
 
 ### IMaskEditDateTimeControl&lt;T&gt;.PredicateSelected method (2 of 2)
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate for determining valid selected values.
 
 ```csharp
 public IMaskEditDateTimeControl PredicateSelected(Func<T, bool> validselect)
@@ -35,11 +41,17 @@ public IMaskEditDateTimeControl PredicateSelected(Func<T, bool> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable. |
+| validselect | The predicate function that validates selected values. |
 
 ### Return Value
 
 The current [`IMaskEditDateTimeControl`](../IMaskEditDateTimeControl-1.md) instance for chaining.
+
+### Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentNullException | Thrown when *validselect* is `null`. |
 
 ### See Also
 

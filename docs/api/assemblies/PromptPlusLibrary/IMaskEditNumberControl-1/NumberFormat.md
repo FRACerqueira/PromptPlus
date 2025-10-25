@@ -4,7 +4,7 @@
 </br>
 
 
-#### Configures the number format for the input.
+#### Configures the number format for the input with specified formatting options.
 
 ```csharp
 public IMaskEditNumberControl NumberFormat(byte integerpart, bool withsignal = false, 
@@ -13,7 +13,7 @@ public IMaskEditNumberControl NumberFormat(byte integerpart, bool withsignal = f
 
 | parameter | description |
 | --- | --- |
-| integerpart | The number of digits allowed in the integer part. |
+| integerpart | The maximum number of digits allowed in the integer part. |
 | withsignal | If `true`, allows a sign (+/-) in the input. Default is `false`. |
 | withseparatorgroup | If `true`, allows group separators (e.g., thousands separator). Default is `true`. |
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get ConsoleKey to HotKey
+#### Gets the base ConsoleKey of this hotkey.
 
 ```csharp
 public ConsoleKey Key { get; }

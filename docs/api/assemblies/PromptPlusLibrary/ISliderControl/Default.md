@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the initial value of the Slider. Default is 0.
+#### Sets the initial value of the slider. Default is 0.
 
 ```csharp
 public ISliderControl Default(double value, bool usedefaultHistory = true)
@@ -13,7 +13,7 @@ public ISliderControl Default(double value, bool usedefaultHistory = true)
 | parameter | description |
 | --- | --- |
 | value | The initial value. |
-| usedefaultHistory | Indicates whether to use the default value from history (if enabled [`EnabledHistory`](./EnabledHistory.md)). |
+| usedefaultHistory | Indicates whether to use the default value from history (if enabled via [`EnabledHistory`](./EnabledHistory.md)). |
 
 ### Return Value
 
@@ -23,7 +23,7 @@ The current [`ISliderControl`](../ISliderControl.md) instance for chaining.
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *value* is greater than maximum value or *value* is less than minimum value. |
+| ArgumentOutOfRangeException | Thrown if *value* is greater than the maximum value or less than the minimum value. |
 
 ### See Also
 

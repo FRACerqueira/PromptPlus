@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the function to display text for items in the list. Default is `Item.ToString()`.
+#### Sets the function to display text for items in the list. Determines how each node is displayed in the tree structure.
 
 ```csharp
 public INodeTreeSelectControl TextSelector(Func<T, string> value)
@@ -12,7 +12,7 @@ public INodeTreeSelectControl TextSelector(Func<T, string> value)
 
 | parameter | description |
 | --- | --- |
-| value | Function to display item text. |
+| value | Function to generate display text for each item. |
 
 ### Return Value
 

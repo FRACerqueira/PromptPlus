@@ -4,11 +4,15 @@
 </br>
 
 
-#### Get Current Screen Buffer
+#### Gets the currently active screen buffer.
 
 ```csharp
 public TargetScreen CurrentBuffer { get; }
 ```
+
+### Property Value
+
+The active [`TargetScreen`](../TargetScreen.md).
 
 ### See Also
 

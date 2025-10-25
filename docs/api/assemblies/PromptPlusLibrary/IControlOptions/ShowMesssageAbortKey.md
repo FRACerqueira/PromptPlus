@@ -4,7 +4,7 @@
 </br>
 
 
-#### Show/hide message of abort key.
+#### Shows or hides the abort key help message (localized from resources if available).
 
 ```csharp
 public IControlOptions ShowMesssageAbortKey(bool isshow = true)
@@ -12,11 +12,11 @@ public IControlOptions ShowMesssageAbortKey(bool isshow = true)
 
 | parameter | description |
 | --- | --- |
-| isshow | If `true`, show text message from resources; otherwise no. |
+| isshow | If `true`, the abort key message is displayed; otherwise, it is hidden. Default is `true`. |
 
 ### Return Value
 
-The current [`IControlOptions`](../IControlOptions.md) instance for chaining.
+The same [`IControlOptions`](../IControlOptions.md) instance for chaining.
 
 ### See Also
 

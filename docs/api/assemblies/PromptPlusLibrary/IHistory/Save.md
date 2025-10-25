@@ -4,7 +4,7 @@
 </br>
 
 
-#### Saves the current history to persistent storage.
+#### Persists the in‑memory history set to durable storage.
 
 ```csharp
 public void Save()

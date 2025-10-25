@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum width for the seleted items.Default value is 30 characters.
+#### Sets the maximum width for the selected items display. Default is 30 characters.
 
 ```csharp
 public ITableMultiSelectControl MaxWidth(byte maxWidth)
@@ -12,17 +12,11 @@ public ITableMultiSelectControl MaxWidth(byte maxWidth)
 
 | parameter | description |
 | --- | --- |
-| maxWidth | The maximum width of the input in characters. |
+| maxWidth | The maximum width in characters. |
 
 ### Return Value
 
 The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentOutOfRangeException | Thrown if *maxWidth* is less than 10. |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets hide render area if control aborted. If `true`, hide render area control; otherwise, it is show.
+#### Gets or sets whether the control render area is cleared after abort.
 
 ```csharp
 public bool HideOnAbort { get; set; }

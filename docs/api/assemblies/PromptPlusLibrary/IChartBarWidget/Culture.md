@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the CultureInfo to use for displaying values. Default value is current PromptPlus culture.
+#### Sets the CultureInfo to use for displaying values and formatting chart elements. Default value is current PromptPlus culture.
 
 ```csharp
 public IChartBarWidget Culture(CultureInfo culture)
@@ -12,7 +12,7 @@ public IChartBarWidget Culture(CultureInfo culture)
 
 | parameter | description |
 | --- | --- |
-| culture | The CultureInfo to use. |
+| culture | The CultureInfo to use for localization. |
 
 ### Return Value
 

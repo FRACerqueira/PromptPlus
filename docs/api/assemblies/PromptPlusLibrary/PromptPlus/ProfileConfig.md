@@ -4,11 +4,16 @@
 </br>
 
 
-#### Set profile Console/terminal
+#### Reconfigures the active console profile (colors, padding, overflow). Thread-safe.
 
 ```csharp
 public static void ProfileConfig(string name, Action<IProfileSetup> config)
 ```
+
+| parameter | description |
+| --- | --- |
+| name | Logical profile name. |
+| config | Delegate used to mutate an [`IProfileSetup`](../IProfileSetup.md) prior to applying. |
 
 ### See Also
 

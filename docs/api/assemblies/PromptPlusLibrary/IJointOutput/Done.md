@@ -4,7 +4,7 @@
 </br>
 
 
-#### Releases the console exclusive buffer.
+#### Flushes the staged buffer to the console, releases exclusive access, and returns the final cursor position.
 
 ```csharp
 public (int Left, int Top) Done()
@@ -12,7 +12,7 @@ public (int Left, int Top) Done()
 
 ### Return Value
 
-The number of lines written on the console.
+A tuple with the final cursor coordinates: `Left` = column position (0‑based), `Top` = row position (0‑based).
 
 ### See Also
 

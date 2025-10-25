@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overwrites styles for the Node MultiSelect control.
+#### Overwrites the visual styles for specific elements of the Node MultiSelect control.
 
 ```csharp
 public INodeTreeMultiSelectControl Styles(NodeTreeStyles styleType, Style style)
@@ -12,8 +12,8 @@ public INodeTreeMultiSelectControl Styles(NodeTreeStyles styleType, Style style)
 
 | parameter | description |
 | --- | --- |
-| styleType | The [`FileStyles`](../FileStyles.md) to apply. |
-| style | The [`Style`](../Style.md) to use. Cannot be `null`. |
+| styleType | The [`NodeTreeStyles`](../NodeTreeStyles.md) element to style. |
+| style | The [`Style`](../Style.md) to apply. Must not be `null`. |
 
 ### Return Value
 

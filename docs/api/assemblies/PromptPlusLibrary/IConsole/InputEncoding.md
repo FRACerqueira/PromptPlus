@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets or sets the encoding for the standard input stream.
+#### Gets or sets the encoding for standard input.
 
 ```csharp
 public Encoding InputEncoding { get; set; }
 ```
+
+### Property Value
+
+The input Encoding.
 
 ### See Also
 

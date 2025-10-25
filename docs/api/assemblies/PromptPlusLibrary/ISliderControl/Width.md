@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the width of the SliderBar. Default value is 40. Must be &gt;= 10.
+#### Sets the width of the slider bar. Default value is 40. Must be &gt;= 10.
 
 ```csharp
 public ISliderControl Width(byte value)
@@ -12,7 +12,7 @@ public ISliderControl Width(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | The width of the SliderBar. |
+| value | The width of the slider bar. |
 
 ### Return Value
 

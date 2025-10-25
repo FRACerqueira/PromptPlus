@@ -4,7 +4,7 @@
 </br>
 
 
-#### Converts a [`Color`](../Color.md) to a ConsoleColor.
+#### Implicitly converts a [`Color`](../Color.md) to a ConsoleColor.
 
 ```csharp
 public static implicit operator ConsoleColor(Color ColorRGB)
@@ -13,6 +13,10 @@ public static implicit operator ConsoleColor(Color ColorRGB)
 | parameter | description |
 | --- | --- |
 | ColorRGB | The console Color to convert. |
+
+### Return Value
+
+The nearest ConsoleColor.
 
 ### See Also
 
@@ -23,7 +27,7 @@ public static implicit operator ConsoleColor(Color ColorRGB)
 
 ### Color Implicit operator (2 of 3)
 
-#### Converts a ConsoleColor to a [`Color`](../Color.md).
+#### Implicitly converts a ConsoleColor to a [`Color`](../Color.md).
 
 ```csharp
 public static implicit operator Color(ConsoleColor color)
@@ -31,7 +35,11 @@ public static implicit operator Color(ConsoleColor color)
 
 | parameter | description |
 | --- | --- |
-| color | The ConsoleColor to convert. |
+| color | Console color. |
+
+### Return Value
+
+The corresponding [`Color`](../Color.md).
 
 ### See Also
 

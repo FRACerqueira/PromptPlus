@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents a Color RGB.
+#### Represents an RGB color (optionally mapped to an indexed palette entry).
 
 ```csharp
 public Color(byte red, byte green, byte blue)
@@ -12,13 +12,13 @@ public Color(byte red, byte green, byte blue)
 
 | parameter | description |
 | --- | --- |
-| red | The red component. |
-| green | The green component. |
-| blue | The blue component. |
+| red | The red component (0-255). |
+| green | The green component (0-255). |
+| blue | The blue component (0-255). |
 
 ### Remarks
 
-Initializes a new instance of the [`Color`](../Color.md) struct.
+The optional internal `Number` corresponds to a color index in a known palette (e.g. standard/extended console colors). When present it enables efficient conversion to ConsoleColor or palette lookups. When absent the color is treated as a raw 24-bit RGB value.
 
 ### See Also
 

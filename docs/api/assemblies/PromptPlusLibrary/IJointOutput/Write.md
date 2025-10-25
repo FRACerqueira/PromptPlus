@@ -4,7 +4,7 @@
 </br>
 
 
-#### Writes the text representation of a character array to the standard output stream.
+#### Writes a character array using an optional override [`Style`](../Style.md).
 
 ```csharp
 public IJointOutput Write(char[] buffer, Style? style = default, bool clearRestOfLine = false)
@@ -12,13 +12,13 @@ public IJointOutput Write(char[] buffer, Style? style = default, bool clearRestO
 
 | parameter | description |
 | --- | --- |
-| buffer | A character array to write. |
-| style | The [`Style`](../Style.md) to overwrite the current output style. |
-| clearRestOfLine | Indicates whether to clear the rest of the line. |
+| buffer | The characters to write. Ignored if empty. |
+| style | Optional style override. If `null`, the current output style/default colors are used. |
+| clearRestOfLine | If `true`, clears from the end of the written content to the end of the physical line. |
 
 ### Return Value
 
-The current [`IJointOutput`](../IJointOutput.md) instance.
+The same [`IJointOutput`](../IJointOutput.md) instance for chaining.
 
 ### See Also
 
@@ -30,7 +30,7 @@ The current [`IJointOutput`](../IJointOutput.md) instance.
 
 ### IJointOutput.Write method (2 of 2)
 
-#### Writes the text representation of a string value to the standard output stream.
+#### Writes a string using an optional override [`Style`](../Style.md).
 
 ```csharp
 public IJointOutput Write(string value, Style? style = default, bool clearRestOfLine = false)
@@ -38,13 +38,13 @@ public IJointOutput Write(string value, Style? style = default, bool clearRestOf
 
 | parameter | description |
 | --- | --- |
-| value | A string value to write. |
-| style | The [`Style`](../Style.md) to overwrite the current output style. |
-| clearRestOfLine | Indicates whether to clear the rest of the line. |
+| value | The text to write. If `null` or empty, nothing is written. |
+| style | Optional style override. If `null`, the current output style/default colors are used. |
+| clearRestOfLine | If `true`, clears from the end of the written content to the end of the physical line. |
 
 ### Return Value
 
-The current [`IJointOutput`](../IJointOutput.md) instance.
+The same [`IJointOutput`](../IJointOutput.md) instance for chaining.
 
 ### See Also
 

@@ -12,7 +12,7 @@ public IWaitProcessControl ChangeDescription(Func<IEnumerable<StateProcess>, str
 
 | parameter | description |
 | --- | --- |
-| value | A function that takes the current states and returns the updated description. Cannot be `null`. |
+| value | A function that takes the current process states and returns the updated description. Cannot be `null`. |
 
 ### Return Value
 

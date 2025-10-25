@@ -13,7 +13,7 @@ public IInputControl MaxLength(int maxLength, byte? maxWidth = null)
 | parameter | description |
 | --- | --- |
 | maxLength | The maximum number of characters allowed for the input. |
-| maxWidth | &gt;The maximum width of the input in characters.The value must be less than *maxLength* otherwise, it will be equal. |
+| maxWidth | The maximum width of the input in characters. The value must be less than *maxLength* otherwise, it will be equal. |
 
 ### Return Value
 

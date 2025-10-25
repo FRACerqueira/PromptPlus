@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the standard error stream.
+#### Sets the standard error writer.
 
 ```csharp
 public void SetError(TextWriter value)
@@ -12,7 +12,7 @@ public void SetError(TextWriter value)
 
 | parameter | description |
 | --- | --- |
-| value | A stream that is the new standard error. |
+| value | The new error TextWriter. |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Display the slider widget.
+#### Displays the slider widget.
 
 ```csharp
 public void Show()

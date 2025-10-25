@@ -14,23 +14,23 @@ public interface ISliderControl
 
 | name | description |
 | --- | --- |
-| [ChangeColor](ISliderControl/ChangeColor.md)(…) | Dynamically changes the style color of the SliderBar based on its value. |
+| [ChangeColor](ISliderControl/ChangeColor.md)(…) | Dynamically changes the style color of the slider bar based on its value. |
 | [ChangeDescription](ISliderControl/ChangeDescription.md)(…) | Dynamically changes the description of the slider based on its value. |
-| [ChangeGradient](ISliderControl/ChangeGradient.md)(…) | Dynamically changes the gradient colors of the SliderBar. |
+| [ChangeGradient](ISliderControl/ChangeGradient.md)(…) | Dynamically changes the gradient colors of the slider bar. |
 | [Culture](ISliderControl/Culture.md)(…) | Sets the culture for displaying numeric values. Default value is current PromptPlus culture. (2 methods) |
-| [Default](ISliderControl/Default.md)(…) | Sets the initial value of the Slider. Default is 0. |
-| [EnabledHistory](ISliderControl/EnabledHistory.md)(…) | Enabled History and applies custom options to History feature. |
-| [Fill](ISliderControl/Fill.md)(…) | Sets the Graphical-based of slider Bar. Default is Fill. |
-| [FracionalDig](ISliderControl/FracionalDig.md)(…) | Sets the fractional digits for the Slider value. Default is 0. |
+| [Default](ISliderControl/Default.md)(…) | Sets the initial value of the slider. Default is 0. |
+| [EnabledHistory](ISliderControl/EnabledHistory.md)(…) | Enables history and applies custom options to the history feature. |
+| [Fill](ISliderControl/Fill.md)(…) | Sets the graphical representation of the slider bar. Default is Fill. |
+| [FracionalDig](ISliderControl/FracionalDig.md)(…) | Sets the number of fractional digits for the slider value. Default is 0. |
 | [HideElements](ISliderControl/HideElements.md)(…) | Hides specific elements of the slider. Default is to show all elements. |
-| [LargeStep](ISliderControl/LargeStep.md)(…) | Define the large step to change. Default value is 1/10 of range |
-| [Layout](ISliderControl/Layout.md)(…) | Define the layout to change value. Default value is 'SliderLayout.LeftRight'. |
+| [LargeStep](ISliderControl/LargeStep.md)(…) | Defines the large step value for incremental changes. Default value is 1/10 of the range. |
+| [Layout](ISliderControl/Layout.md)(…) | Defines the layout for changing values. Default value is LeftRight. |
 | [Options](ISliderControl/Options.md)(…) | Applies custom options to the control. |
-| [Range](ISliderControl/Range.md)(…) | Defines a minimum and maximum range values. Default value is 100 for *maxvalue* and 0 for *minvalue*. |
+| [Range](ISliderControl/Range.md)(…) | Defines the minimum and maximum range values. Default value is 100 for *maxvalue* and 0 for *minvalue*. |
 | [Run](ISliderControl/Run.md)(…) | Runs the slider control and returns the result. |
-| [Step](ISliderControl/Step.md)(…) | Define the short step to change. Default value is 1/100 of range |
+| [Step](ISliderControl/Step.md)(…) | Defines the step value for incremental changes. Default value is 1/100 of the range. |
 | [Styles](ISliderControl/Styles.md)(…) | Overwrites styles for the slider control. |
-| [Width](ISliderControl/Width.md)(…) | Sets the width of the SliderBar. Default value is 40. Must be &gt;= 10. |
+| [Width](ISliderControl/Width.md)(…) | Sets the width of the slider bar. Default value is 40. Must be &gt;= 10. |
 
 ### See Also
 

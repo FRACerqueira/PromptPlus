@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets pagination template for Controls
+#### Gets or sets the pagination template function. Parameters: total items, current page (1-based), total pages. Returns a formatted string for display.
 
 ```csharp
 public Func<int, int, int, string> PaginationTemplate { get; set; }

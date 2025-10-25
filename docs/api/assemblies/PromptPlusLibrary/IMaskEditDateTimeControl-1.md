@@ -4,7 +4,7 @@
 </br>
 
 
-#### Provides functionality for configuring and interacting with a MaskEdit Date Time/Date Only control.
+#### Provides functionality for configuring and interacting with a MaskEdit Date Time/Date Only control. This control handles date and time input with mask-based editing capabilities.
 
 ```csharp
 public interface IMaskEditDateTimeControl<T>
@@ -12,24 +12,24 @@ public interface IMaskEditDateTimeControl<T>
 
 | parameter | description |
 | --- | --- |
-| T | The type of input. |
+| T | The type of input value to be handled by the control. |
 
 ### Members
 
 | name | description |
 | --- | --- |
-| [Culture](IMaskEditDateTimeControl-1/Culture.md)(…) | Sets the culture for format validation. Default value is current PromptPlus culture. (2 methods) |
-| [Default](IMaskEditDateTimeControl-1/Default.md)(…) | Sets the default value for the input. |
-| [DefaultIfEmpty](IMaskEditDateTimeControl-1/DefaultIfEmpty.md)(…) | Sets the default value to use when the input is empty. |
-| [FixedValues](IMaskEditDateTimeControl-1/FixedValues.md)(…) | Sets a fixed date value. |
-| [HideTipInputType](IMaskEditDateTimeControl-1/HideTipInputType.md)(…) | Hide the input type tip. Default `false`. |
-| [InputMode](IMaskEditDateTimeControl-1/InputMode.md)(…) | The input behavior. Defaul value is EditSkipToInput. |
-| [Options](IMaskEditDateTimeControl-1/Options.md)(…) | Applies custom options to the MaskEdit input control. |
-| [PredicateSelected](IMaskEditDateTimeControl-1/PredicateSelected.md)(…) | Set validation predicate for selected item. (2 methods) |
-| [PromptMask](IMaskEditDateTimeControl-1/PromptMask.md)(…) | Prompt mask character. |
-| [Run](IMaskEditDateTimeControl-1/Run.md)(…) | Runs the MaskEdit input control and returns the result. |
-| [Styles](IMaskEditDateTimeControl-1/Styles.md)(…) | Overrides the styles for the input control. |
-| [WeekTypeMode](IMaskEditDateTimeControl-1/WeekTypeMode.md)(…) | Show the week for date. |
+| [Culture](IMaskEditDateTimeControl-1/Culture.md)(…) | Sets the culture for date/time formatting and validation using a CultureInfo object. (2 methods) |
+| [Default](IMaskEditDateTimeControl-1/Default.md)(…) | Sets the initial default value for the input control. |
+| [DefaultIfEmpty](IMaskEditDateTimeControl-1/DefaultIfEmpty.md)(…) | Sets the fallback value to use when the input is empty. |
+| [FixedValues](IMaskEditDateTimeControl-1/FixedValues.md)(…) | Sets a fixed value for a specific date/time part that cannot be modified during input. |
+| [HideTipInputType](IMaskEditDateTimeControl-1/HideTipInputType.md)(…) | Controls the visibility of the input type tip. |
+| [InputMode](IMaskEditDateTimeControl-1/InputMode.md)(…) | Sets the input behavior mode for the control. |
+| [Options](IMaskEditDateTimeControl-1/Options.md)(…) | Configures additional control options through an action delegate. |
+| [PredicateSelected](IMaskEditDateTimeControl-1/PredicateSelected.md)(…) | Sets a validation predicate for determining valid selected values. (2 methods) |
+| [PromptMask](IMaskEditDateTimeControl-1/PromptMask.md)(…) | Sets the prompt mask character for unfilled positions in the input. |
+| [Run](IMaskEditDateTimeControl-1/Run.md)(…) | Executes the control and returns the input result. |
+| [Styles](IMaskEditDateTimeControl-1/Styles.md)(…) | Customizes the visual style for specific elements of the control. |
+| [WeekTypeMode](IMaskEditDateTimeControl-1/WeekTypeMode.md)(…) | Configures the display of week information for dates. |
 
 ### Remarks
 

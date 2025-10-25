@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents all controls for PromptPlus
+#### Gets a factory for interactive controls (input, select, file select, progress, masking, etc.). Each method returns a fluent configuration object.
 
 ```csharp
 public static IControls Controls { get; }

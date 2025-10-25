@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the standard input stream.
+#### Gets the standard input reader.
 
 ```csharp
 public TextReader In { get; }
 ```
+
+### Property Value
+
+The TextReader for input.
 
 ### See Also
 

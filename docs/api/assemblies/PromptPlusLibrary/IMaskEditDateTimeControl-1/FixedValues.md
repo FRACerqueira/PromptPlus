@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets a fixed date value.
+#### Sets a fixed value for a specific date/time part that cannot be modified during input.
 
 ```csharp
 public IMaskEditDateTimeControl FixedValues(DateTimePart partdetetime, int value)
@@ -12,8 +12,8 @@ public IMaskEditDateTimeControl FixedValues(DateTimePart partdetetime, int value
 
 | parameter | description |
 | --- | --- |
-| partdetetime | The [`DateTimePart`](../DateTimePart.md)representing the fixed datetime part to use. |
-| value | The value to fixed.If the value is equal to -1 it would be set to the current value of the part |
+| partdetetime | The datetime part to fix. |
+| value | The value to set. Use -1 to set to the current value of the part. |
 
 ### Return Value
 

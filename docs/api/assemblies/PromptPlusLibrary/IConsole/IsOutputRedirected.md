@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets a value that indicates whether output has been redirected from the standard output stream.
+#### Gets a value indicating whether standard output is redirected.
 
 ```csharp
 public bool IsOutputRedirected { get; }
 ```
+
+### Property Value
+
+`true` if output is redirected; otherwise `false`.
 
 ### See Also
 

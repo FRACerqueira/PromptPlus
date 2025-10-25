@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Ctrl+End Key
+#### Determines whether Control+End was pressed.
 
 ```csharp
 public static bool IsPressCtrlEndKey(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsPressCtrlEndKey(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Control+End was pressed; otherwise, `false`.
 
 ### See Also
 

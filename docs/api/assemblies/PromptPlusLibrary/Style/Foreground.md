@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets the foreground Color.
+#### Gets the foreground [`Color`](../Color.md).
 
 ```csharp
 public Color Foreground { get; }

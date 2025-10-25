@@ -4,7 +4,7 @@
 </br>
 
 
-#### Define the short step to change. Default value is 1/100 of range
+#### Defines the step value for incremental changes. Default value is 1/100 of the range.
 
 ```csharp
 public ISliderControl Step(double value)
@@ -12,7 +12,7 @@ public ISliderControl Step(double value)
 
 | parameter | description |
 | --- | --- |
-| value | short step to change |
+| value | The step value. |
 
 ### Return Value
 

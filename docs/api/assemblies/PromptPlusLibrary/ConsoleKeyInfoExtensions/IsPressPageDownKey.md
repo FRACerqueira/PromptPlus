@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is PageDown Key
+#### Determines whether PageDown or (optionally) Alt+N (Emacs next extended navigation) was pressed.
 
 ```csharp
 public static bool IsPressPageDownKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
@@ -12,12 +12,12 @@ public static bool IsPressPageDownKey(this ConsoleKeyInfo keyinfo, bool emacskey
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
-| emacskeys | if `true` accept 'Alt+N' |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
+| emacskeys | If `true`, also accepts Alt+N. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if PageDown (or Emacs equivalent) was pressed; otherwise, `false`.
 
 ### See Also
 

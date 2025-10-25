@@ -4,7 +4,7 @@
 </br>
 
 
-#### Convert to string
+#### Returns a textual representation, using the palette name if available, otherwise formatted as `#RRGGBB (RGB=R,G,B)`.
 
 ```csharp
 public override string ToString()
@@ -12,7 +12,7 @@ public override string ToString()
 
 ### Return Value
 
-The String
+The string representation.
 
 ### See Also
 

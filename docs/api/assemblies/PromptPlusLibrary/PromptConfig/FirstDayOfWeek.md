@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets the first day of the week.Default value is Sunday
+#### Gets or sets the first day of the week for calendar rendering. Default is Sunday.
 
 ```csharp
 public DayOfWeek FirstDayOfWeek { get; set; }

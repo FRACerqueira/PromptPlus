@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Enter Key
+#### Determines whether the pressed key represents an Enter action.
 
 ```csharp
 public static bool IsPressEnterKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
@@ -12,12 +12,16 @@ public static bool IsPressEnterKey(this ConsoleKeyInfo keyinfo, bool emacskeys =
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
-| emacskeys | If `true` accept 'CTRL+J' |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
+| emacskeys | If `true`, also accepts Control+J as Enter (Emacs style). |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Enter (or accepted Emacs equivalent) was pressed; otherwise, `false`.
+
+### Remarks
+
+On non-Windows platforms both CR (13) and LF (10) may be emitted. This method normalizes those cases.
 
 ### See Also
 

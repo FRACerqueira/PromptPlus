@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the culture for format validation. Default value is current PromptPlus culture.
+#### Sets the culture for date/time formatting and validation using a CultureInfo object.
 
 ```csharp
 public IMaskEditDateTimeControl Culture(CultureInfo culture)
@@ -12,11 +12,17 @@ public IMaskEditDateTimeControl Culture(CultureInfo culture)
 
 | parameter | description |
 | --- | --- |
-| culture | The CultureInfo to use for validation and format date. |
+| culture | The culture to use for validation and formatting. |
 
 ### Return Value
 
 The current [`IMaskEditDateTimeControl`](../IMaskEditDateTimeControl-1.md) instance for chaining.
+
+### Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentNullException | Thrown when *culture* is `null`. |
 
 ### See Also
 
@@ -27,7 +33,7 @@ The current [`IMaskEditDateTimeControl`](../IMaskEditDateTimeControl-1.md) insta
 
 ### IMaskEditDateTimeControl&lt;T&gt;.Culture method (2 of 2)
 
-#### Sets the culture for format validation. Default value is current PromptPlus culture.
+#### Sets the culture for date/time formatting and validation using a culture name.
 
 ```csharp
 public IMaskEditDateTimeControl Culture(string cultureName)
@@ -35,7 +41,7 @@ public IMaskEditDateTimeControl Culture(string cultureName)
 
 | parameter | description |
 | --- | --- |
-| cultureName | The culture name to use for validation and format date. Cannot be `null` or empty. |
+| cultureName | The name of the culture to use. |
 
 ### Return Value
 
@@ -45,7 +51,8 @@ The current [`IMaskEditDateTimeControl`](../IMaskEditDateTimeControl-1.md) insta
 
 | exception | condition |
 | --- | --- |
-| ArgumentException | Thrown if *cultureName* is `null` or empty. |
+| ArgumentException | Thrown when *cultureName* is `null` or empty. |
+| CultureNotFoundException | Thrown when the specified culture is not found. |
 
 ### See Also
 

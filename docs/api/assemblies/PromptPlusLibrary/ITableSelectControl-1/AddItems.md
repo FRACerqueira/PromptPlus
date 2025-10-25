@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds a collection of items to the list.
+#### Adds multiple items to the list.
 
 ```csharp
 public ITableSelectControl AddItems(IEnumerable<T> values, bool disable = false)
@@ -12,18 +12,18 @@ public ITableSelectControl AddItems(IEnumerable<T> values, bool disable = false)
 
 | parameter | description |
 | --- | --- |
-| values | Items to add. |
-| disable | If `true`, the items are disabled. |
+| values | The collection of items to add. |
+| disable | When true, all items are added in a disabled state and cannot be selected. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *values* is `null`. |
+| ArgumentNullException | Thrown when *values* is null. |
 
 ### See Also
 

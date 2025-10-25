@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets [`HotKey`](../HotKey.md) default for toggler ChartBar Switch Legend. Default value is 'F3'.
+#### Gets or sets the hotkey for chart bar legend switching (F3).
 
 ```csharp
 public HotKey HotKeyTooltipChartBarSwitchLegend { get; set; }

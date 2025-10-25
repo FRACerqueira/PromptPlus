@@ -14,6 +14,10 @@ public IHistory History(string filename)
 | --- | --- |
 | filename | The file name |
 
+### Return Value
+
+An [`IHistory`](../IHistory.md) instance for managing file history operations.
+
 ### See Also
 
 * interface [IHistory](../IHistory.md)

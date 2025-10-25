@@ -12,7 +12,7 @@ public INodeTreeMultiSelectControl ChangeDescription(Func<T, string> value)
 
 | parameter | description |
 | --- | --- |
-| value | A function to determine the description based on the current value. |
+| value | A function to determine the description based on the current value. Must not be `null`. |
 
 ### Return Value
 

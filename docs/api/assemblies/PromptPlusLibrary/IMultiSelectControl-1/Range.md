@@ -4,7 +4,7 @@
 </br>
 
 
-#### Defines a minimum and maximum (optional) range of items selected in the list
+#### Defines the valid range of items that must be selected.
 
 ```csharp
 public IMultiSelectControl Range(int minvalue, int? maxvalue = null)
@@ -12,18 +12,18 @@ public IMultiSelectControl Range(int minvalue, int? maxvalue = null)
 
 | parameter | description |
 | --- | --- |
-| minvalue | Minimum number of items |
-| maxvalue | Maximum number of items |
+| minvalue | The minimum number of items that must be selected. |
+| maxvalue | The optional maximum number of items that can be selected. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *minvalue* is greater than or equal to *maxvalue*. |
+| ArgumentOutOfRangeException | Thrown when *minvalue* is less than 0 or when *maxvalue* is specified and is less than *minvalue*. |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Define if show the remaining time .Default true.
+#### Defines whether to show the remaining time. Default is true.
 
 ```csharp
 public IWaitTimerControl IsCountDown(bool value = true)
@@ -12,7 +12,7 @@ public IWaitTimerControl IsCountDown(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | IF true shows the remaining time |
+| value | If true, shows the remaining time. |
 
 ### Return Value
 

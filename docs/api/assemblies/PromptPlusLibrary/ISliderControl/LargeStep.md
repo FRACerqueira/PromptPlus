@@ -4,7 +4,7 @@
 </br>
 
 
-#### Define the large step to change. Default value is 1/10 of range
+#### Defines the large step value for incremental changes. Default value is 1/10 of the range.
 
 ```csharp
 public ISliderControl LargeStep(double value)
@@ -12,7 +12,7 @@ public ISliderControl LargeStep(double value)
 
 | parameter | description |
 | --- | --- |
-| value | short step to change |
+| value | The large step value. |
 
 ### Return Value
 

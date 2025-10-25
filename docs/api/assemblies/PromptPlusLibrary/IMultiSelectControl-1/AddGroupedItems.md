@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds a collection of items to a group in the list.
+#### Adds multiple items to a named group.
 
 ```csharp
 public IMultiSelectControl AddGroupedItems(string group, IEnumerable<T> values, 
@@ -13,21 +13,21 @@ public IMultiSelectControl AddGroupedItems(string group, IEnumerable<T> values,
 
 | parameter | description |
 | --- | --- |
-| group | Group name. |
-| values | Items to add. |
-| valuechecked | If `true`, the item is initial value checked. Default is false |
-| disable | If `true`, the items are disabled. |
+| group | The group name. |
+| values | The collection of items to add. |
+| valuechecked | Indicates whether the items should be initially checked. Default is `false`. |
+| disable | Indicates whether the items should be disabled. Default is `false`. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *group* is `null`. |
-| ArgumentNullException | Thrown if *values* is `null`. |
+| ArgumentNullException | Thrown when *group* is `null`. |
+| ArgumentNullException | Thrown when *values* is `null`. |
 
 ### See Also
 

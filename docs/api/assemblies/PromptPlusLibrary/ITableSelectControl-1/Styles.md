@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overwrites styles for the Table select control.
+#### Overwrites the style for a specific table element type.
 
 ```csharp
 public ITableSelectControl Styles(TableStyles styleType, Style style)
@@ -12,18 +12,18 @@ public ITableSelectControl Styles(TableStyles styleType, Style style)
 
 | parameter | description |
 | --- | --- |
-| styleType | The [`TableStyles`](../TableStyles.md) to apply. |
-| style | The [`Style`](../Style.md) to use. Cannot be `null`. |
+| styleType | The [`TableStyles`](../TableStyles.md) element type to style. |
+| style | The [`Style`](../Style.md) to apply. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *style* is `null`. |
+| ArgumentNullException | Thrown when *style* is null. |
 
 ### See Also
 

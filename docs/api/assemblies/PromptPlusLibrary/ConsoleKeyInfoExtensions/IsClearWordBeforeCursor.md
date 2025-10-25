@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Clear Word Before Cursor Emacs Key Ctrl+W = Clears the word before the cursor
+#### Determines whether the Control+W (clear word before cursor) Emacs shortcut was pressed.
 
 ```csharp
 public static bool IsClearWordBeforeCursor(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsClearWordBeforeCursor(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Control+W was pressed; otherwise, `false`.
 
 ### See Also
 

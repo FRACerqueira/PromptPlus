@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set separator between rows. Default false.
+#### Sets whether to display separators between rows. The default is false.
 
 ```csharp
 public ITableSelectControl SeparatorRows(bool value = true)
@@ -12,11 +12,11 @@ public ITableSelectControl SeparatorRows(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | separator between rows |
+| value | When true, displays separators between rows; when false, no separators are shown. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

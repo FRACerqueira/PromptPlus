@@ -4,7 +4,7 @@
 </br>
 
 
-#### Defines a minimum and maximum (optional) range of size to discovery file
+#### Filters files based on their size in bytes.
 
 ```csharp
 public IFileMultiSelectControl HideFilesBySize(long minvalue, long maxvalue = 9223372036854775807)
@@ -12,8 +12,8 @@ public IFileMultiSelectControl HideFilesBySize(long minvalue, long maxvalue = 92
 
 | parameter | description |
 | --- | --- |
-| minvalue | Minimum number of bytes |
-| maxvalue | Maximum number of bytes |
+| minvalue | Minimum file size in bytes to include. |
+| maxvalue | Maximum file size in bytes to include. Defaults to long.MaxValue. |
 
 ### Return Value
 

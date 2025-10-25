@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overwrites styles for the Select Control.
+#### Overwrites styles for the Select control.
 
 ```csharp
 public ISelectControl Styles(SelectStyles styleType, Style style)

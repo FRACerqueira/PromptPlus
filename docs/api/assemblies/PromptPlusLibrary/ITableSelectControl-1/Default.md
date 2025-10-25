@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the initial value of the Select. Default is the first item in the list.
+#### Sets the initial value of the selection. The default is the first item in the list.
 
 ```csharp
 public ITableSelectControl Default(T value, bool useDefaultHistory = true)
@@ -12,18 +12,18 @@ public ITableSelectControl Default(T value, bool useDefaultHistory = true)
 
 | parameter | description |
 | --- | --- |
-| value | The initial value. |
-| useDefaultHistory | Indicates whether to use the default value from history (if enabled). |
+| value | The initial value to select. |
+| useDefaultHistory | When true and history is enabled, uses the default value from history; otherwise uses the specified value. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *value* is `null`. |
+| ArgumentNullException | Thrown when *value* is null. |
 
 ### See Also
 

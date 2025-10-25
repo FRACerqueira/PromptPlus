@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate with custom error messaging for item selection.
 
 ```csharp
 public IMultiSelectControl PredicateSelected(Func<T, (bool, string?)> validselect)
@@ -12,11 +12,11 @@ public IMultiSelectControl PredicateSelected(Func<T, (bool, string?)> validselec
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | A function that returns a tuple indicating validity and an optional error message. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### See Also
 
@@ -27,7 +27,7 @@ The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for ch
 
 ### IMultiSelectControl&lt;T&gt;.PredicateSelected method (2 of 2)
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate to determine whether an item can be selected.
 
 ```csharp
 public IMultiSelectControl PredicateSelected(Func<T, bool> validselect)
@@ -35,11 +35,11 @@ public IMultiSelectControl PredicateSelected(Func<T, bool> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable. |
+| validselect | A predicate function that returns `true` if the item is valid for selection. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

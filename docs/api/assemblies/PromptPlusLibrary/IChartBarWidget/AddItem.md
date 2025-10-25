@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds an item to the chart bar.
+#### Adds a data point to the chart visualization.
 
 ```csharp
 public IChartBarWidget AddItem(string label, double value, Color? colorBar = default, 
@@ -13,10 +13,10 @@ public IChartBarWidget AddItem(string label, double value, Color? colorBar = def
 
 | parameter | description |
 | --- | --- |
-| label | The label of the item to add. |
-| value | The value of the item. |
-| colorBar | The [`Color`](../Color.md) of the bar. If not specified, the color will be chosen in descending sequence from 15 to 0 and then back to 15. |
-| id | The id for item. |
+| label | The text label identifying this data point. |
+| value | The numeric value represented by the bar. |
+| colorBar | The [`Color`](../Color.md) of the bar. If not specified, colors rotate from 15 to 0. |
+| id | Optional unique identifier for the item. |
 
 ### Return Value
 

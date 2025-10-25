@@ -4,7 +4,7 @@
 </br>
 
 
-#### Enabled History and applies custom options to History feature.
+#### Enables history and applies custom options to the History feature.
 
 ```csharp
 public ISwitchControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
@@ -13,7 +13,7 @@ public ISwitchControl EnabledHistory(string filename, Action<IHistoryOptions>? o
 | parameter | description |
 | --- | --- |
 | filename | The name of the file to store history. |
-| options | An action to configure the [`IHistoryOptions`](../IHistoryOptions.md). Cannot be `null`. |
+| options | An action to configure the [`IHistoryOptions`](../IHistoryOptions.md). Can be `null`. |
 
 ### Return Value
 
@@ -27,7 +27,7 @@ The current [`ISwitchControl`](../ISwitchControl.md) instance for chaining.
 
 ### Remarks
 
-The Defaults hotkey to Hisyory is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
+The default hotkey for History is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
 
 ### See Also
 

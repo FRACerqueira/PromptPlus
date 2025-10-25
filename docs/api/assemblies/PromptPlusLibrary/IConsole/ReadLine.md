@@ -4,7 +4,7 @@
 </br>
 
 
-#### Reads a line from the input stream. A line is defined as a sequence of characters followed by a carriage return ('\r'), a line feed ('\n'), or a carriage return immediately followed by a line feed. The resulting string does not contain the terminating carriage return and/or line feed.
+#### Reads a line of text from the input stream.
 
 ```csharp
 public string? ReadLine()
@@ -12,7 +12,7 @@ public string? ReadLine()
 
 ### Return Value
 
-The returned value is null if the end of the input stream has been reached.
+The line without the line terminator; `null` if end of stream is reached.
 
 ### See Also
 

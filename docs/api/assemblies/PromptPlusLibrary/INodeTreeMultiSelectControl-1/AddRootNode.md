@@ -4,7 +4,7 @@
 </br>
 
 
-#### Add a node
+#### Adds a root node to the tree structure.
 
 ```csharp
 public INodeTreeMultiSelectControl AddRootNode(T value, bool valuechecked = false, 
@@ -13,9 +13,9 @@ public INodeTreeMultiSelectControl AddRootNode(T value, bool valuechecked = fals
 
 | parameter | description |
 | --- | --- |
-| value | value node |
-| valuechecked | If `true`, the item is initial value checked. Default is false |
-| nodeseparator | The separator character used to build the node path. Defaults to "&#x7C;". |
+| value | The value for the root node. Must be unique. |
+| valuechecked | If `true`, the node is initially checked. Default is `false`. |
+| nodeseparator | The separator character for the node path. Must not be empty. Default is "&#x7C;". |
 
 ### Return Value
 
@@ -25,7 +25,7 @@ The current [`INodeTreeMultiSelectControl`](../INodeTreeMultiSelectControl-1.md)
 
 | exception | condition |
 | --- | --- |
-| InvalidOperationException | Thrown if *value* already exists. |
+| InvalidOperationException | Thrown if *value* already exists in the tree. |
 | ArgumentException | Thrown if *nodeseparator* is empty or null. |
 
 ### See Also

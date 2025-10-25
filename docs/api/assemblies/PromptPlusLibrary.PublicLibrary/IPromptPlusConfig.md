@@ -4,7 +4,7 @@
 </br>
 
 
-#### Global properties config for PromptPlus
+#### Defines global configuration settings applied across all PromptPlus controls (defaults, culture, hotkeys, symbols and layout).
 
 ```csharp
 public interface IPromptPlusConfig
@@ -14,30 +14,30 @@ public interface IPromptPlusConfig
 
 | name | description |
 | --- | --- |
-| [DefaultCulture](IPromptPlusConfig/DefaultCulture.md) { get; set; } | Gets or sets the default culture to use for displaying values for all controls/widgets. |
-| [EnabledAbortKey](IPromptPlusConfig/EnabledAbortKey.md) { get; set; } | Gets or sets enabled Abort Key Press for control. If `true`, the abort key is enabled; otherwise, it is disabled. |
-| [FirstDayOfWeek](IPromptPlusConfig/FirstDayOfWeek.md) { get; set; } | Gets or sets the first day of the week.Default value is Sunday |
-| [HideAfterFinish](IPromptPlusConfig/HideAfterFinish.md) { get; set; } | Gets or sets hide render area after finish control. If `true`, hide render area control; otherwise, it is show. |
-| [HideOnAbort](IPromptPlusConfig/HideOnAbort.md) { get; set; } | Gets or sets hide render area if control aborted. If `true`, hide render area control; otherwise, it is show. |
-| [HotKeyAbortKeyPress](IPromptPlusConfig/HotKeyAbortKeyPress.md) { get; } | Gets the [`HotKey`](../PromptPlusLibrary/HotKey.md) for abort control. 'ESC' |
-| [HotKeyFilterMode](IPromptPlusConfig/HotKeyFilterMode.md) { get; set; } | Get/Set [`HotKey`](../PromptPlusLibrary/HotKey.md) to toggle Filter mode. Default value is 'F4'. |
-| [HotKeyPasswordView](IPromptPlusConfig/HotKeyPasswordView.md) { get; set; } | Get/Set [`HotKey`](../PromptPlusLibrary/HotKey.md) to toggle password view. Default value is 'F2'. |
-| [HotKeyShowHistory](IPromptPlusConfig/HotKeyShowHistory.md) { get; set; } | Get/Set [`HotKey`](../PromptPlusLibrary/HotKey.md) to show History entries. Default value is 'F3'. |
-| [HotKeySwitchNotes](IPromptPlusConfig/HotKeySwitchNotes.md) { get; set; } | Get/Set [`HotKey`](../PromptPlusLibrary/HotKey.md) to toggle Calendar Switch Notes. Default value is 'F2'. |
-| [HotKeyToggleFullPath](IPromptPlusConfig/HotKeyToggleFullPath.md) { get; set; } | Gets or sets [`HotKey`](../PromptPlusLibrary/HotKey.md) default for toggler FullPath file . Default value is 'F2'. |
-| [HotKeyTooltip](IPromptPlusConfig/HotKeyTooltip.md) { get; } | Gets [`HotKey`](../PromptPlusLibrary/HotKey.md) for toggler Tooltips. Value is 'F1'. |
-| [HotKeyTooltipChartBarSwitchLayout](IPromptPlusConfig/HotKeyTooltipChartBarSwitchLayout.md) { get; set; } | Gets or sets [`HotKey`](../PromptPlusLibrary/HotKey.md) default for toggler ChartBar Switch Layout. Default value is 'F2'. |
-| [HotKeyTooltipChartBarSwitchLegend](IPromptPlusConfig/HotKeyTooltipChartBarSwitchLegend.md) { get; set; } | Gets or sets [`HotKey`](../PromptPlusLibrary/HotKey.md) default for toggler ChartBar Switch Legend. Default value is 'F3'. |
-| [HotKeyTooltipChartBarSwitchOrder](IPromptPlusConfig/HotKeyTooltipChartBarSwitchOrder.md) { get; set; } | Gets or sets [`HotKey`](../PromptPlusLibrary/HotKey.md) default for toggler ChartBar Switch Order. Default value is 'F4'. |
-| [HotKeyTooltipShowHide](IPromptPlusConfig/HotKeyTooltipShowHide.md) { get; } | Gets [`HotKey`](../PromptPlusLibrary/HotKey.md) for toggler Tooltips. Value is 'Ctrl+F1'. |
-| [HotKeyTooltipToggleAll](IPromptPlusConfig/HotKeyTooltipToggleAll.md) { get; set; } | Gets or sets [`HotKey`](../PromptPlusLibrary/HotKey.md) default for toggler select all items. Default value is 'F2'. |
-| [MaxLenghtFilterText](IPromptPlusConfig/MaxLenghtFilterText.md) { get; set; } | Gets or sets Max.Lenght Filter Text for control.Default valis is 15. The range is from 5 to 30, if the input is outside the range it will be automatically adjusted to the valid range. |
-| [NoChar](IPromptPlusConfig/NoChar.md) { get; set; } | Gets or sets the character used for "No" input. |
-| [PaginationTemplate](IPromptPlusConfig/PaginationTemplate.md) { get; set; } | Gets or sets pagination template for Controls |
-| [ShowMesssageAbortKey](IPromptPlusConfig/ShowMesssageAbortKey.md) { get; set; } | Gets or sets show Abort Key message. If `true`, the show message; otherwise no. |
-| [ShowTooltip](IPromptPlusConfig/ShowTooltip.md) { get; set; } | Gets or sets enabled show tooltip for control. If `true`, the show tooltip; otherwise, it is hide. |
-| [YesChar](IPromptPlusConfig/YesChar.md) { get; set; } | Gets or sets the character used for "Yes" input. |
-| [ChangeSymbol](IPromptPlusConfig/ChangeSymbol.md)(…) | Change global Symbols for PromptPLus |
+| [DefaultCulture](IPromptPlusConfig/DefaultCulture.md) { get; set; } | Gets or sets the default CultureInfo used for formatting and localization. |
+| [EnabledAbortKey](IPromptPlusConfig/EnabledAbortKey.md) { get; set; } | Gets or sets whether the abort (Esc) hotkey is enabled globally. If `true`, Esc can abort controls. |
+| [FirstDayOfWeek](IPromptPlusConfig/FirstDayOfWeek.md) { get; set; } | Gets or sets the first day of the week for calendar-based controls (default: Sunday). |
+| [HideAfterFinish](IPromptPlusConfig/HideAfterFinish.md) { get; set; } | Gets or sets whether a control’s render area is cleared after successful completion. If `true`, the area is cleared. |
+| [HideOnAbort](IPromptPlusConfig/HideOnAbort.md) { get; set; } | Gets or sets whether a control’s render area is cleared after being aborted. If `true`, the area is cleared. |
+| [HotKeyAbortKeyPress](IPromptPlusConfig/HotKeyAbortKeyPress.md) { get; } | Gets the global abort hotkey (default: Esc). |
+| [HotKeyFilterMode](IPromptPlusConfig/HotKeyFilterMode.md) { get; set; } | Gets or sets the hotkey for toggling filter mode (default: F4). |
+| [HotKeyPasswordView](IPromptPlusConfig/HotKeyPasswordView.md) { get; set; } | Gets or sets the hotkey for toggling password visibility (default: F2). |
+| [HotKeyShowHistory](IPromptPlusConfig/HotKeyShowHistory.md) { get; set; } | Gets or sets the hotkey for showing input history entries (default: F3). |
+| [HotKeySwitchNotes](IPromptPlusConfig/HotKeySwitchNotes.md) { get; set; } | Gets or sets the hotkey for toggling calendar notes display (default: F2). |
+| [HotKeyToggleFullPath](IPromptPlusConfig/HotKeyToggleFullPath.md) { get; set; } | Gets or sets the hotkey for toggling full path display of files (default: F2). |
+| [HotKeyTooltip](IPromptPlusConfig/HotKeyTooltip.md) { get; } | Gets the hotkey that toggles tooltip cycling (default: F1). |
+| [HotKeyTooltipChartBarSwitchLayout](IPromptPlusConfig/HotKeyTooltipChartBarSwitchLayout.md) { get; set; } | Gets or sets the hotkey for chart bar layout switching (default: F2). |
+| [HotKeyTooltipChartBarSwitchLegend](IPromptPlusConfig/HotKeyTooltipChartBarSwitchLegend.md) { get; set; } | Gets or sets the hotkey for chart bar legend visibility switching (default: F3). |
+| [HotKeyTooltipChartBarSwitchOrder](IPromptPlusConfig/HotKeyTooltipChartBarSwitchOrder.md) { get; set; } | Gets or sets the hotkey for chart bar ordering switching (default: F4). |
+| [HotKeyTooltipShowHide](IPromptPlusConfig/HotKeyTooltipShowHide.md) { get; } | Gets the hotkey that shows/hides tooltips (default: Ctrl+F1). |
+| [HotKeyTooltipToggleAll](IPromptPlusConfig/HotKeyTooltipToggleAll.md) { get; set; } | Gets or sets the hotkey for toggling selection of all items (default: F2). |
+| [MaxLenghtFilterText](IPromptPlusConfig/MaxLenghtFilterText.md) { get; set; } | Gets or sets the maximum length used when filtering text in controls. Default value is 15. Valid range is 5–30; values outside the range are coerced to the nearest boundary. |
+| [NoChar](IPromptPlusConfig/NoChar.md) { get; set; } | Gets or sets the character representing a logical “No” response (default: 'n'). |
+| [PaginationTemplate](IPromptPlusConfig/PaginationTemplate.md) { get; set; } | Gets or sets the pagination template function. Parameters: total items, current page (1-based), total pages. Returns a formatted string for display. |
+| [ShowMesssageAbortKey](IPromptPlusConfig/ShowMesssageAbortKey.md) { get; set; } | Gets or sets whether an abort message is shown after an abort occurs. If `true`, a localized message is displayed. |
+| [ShowTooltip](IPromptPlusConfig/ShowTooltip.md) { get; set; } | Gets or sets whether tooltips are shown by default for controls. If `true`, tooltip rendering is enabled. |
+| [YesChar](IPromptPlusConfig/YesChar.md) { get; set; } | Gets or sets the character representing a logical “Yes” response (default: 'y'). |
+| [ChangeSymbol](IPromptPlusConfig/ChangeSymbol.md)(…) | Replaces a global symbol representation with ASCII and Unicode variants. |
 
 ### See Also
 

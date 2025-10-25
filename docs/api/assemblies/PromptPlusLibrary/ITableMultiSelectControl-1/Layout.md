@@ -4,7 +4,7 @@
 </br>
 
 
-#### The Table layout. Default value is 'TableLayout.SingleGridFull'
+#### Sets the table layout. Default is SingleGridFull.
 
 ```csharp
 public ITableMultiSelectControl Layout(TableLayout value)
@@ -12,7 +12,7 @@ public ITableMultiSelectControl Layout(TableLayout value)
 
 | parameter | description |
 | --- | --- |
-| value | The [`TableLayout`](../TableLayout.md) |
+| value | The [`TableLayout`](../TableLayout.md) to apply. |
 
 ### Return Value
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets Max.Lenght Filter Text for control.Default valis is 15. The range is from 5 to 30, if the input is outside the range it will be automatically adjusted to the valid range.
+#### Gets or sets the maximum length used when filtering text in controls. Default value is 15. Valid range is 5–30; values outside the range are coerced to the nearest boundary.
 
 ```csharp
 public byte MaxLenghtFilterText { get; set; }

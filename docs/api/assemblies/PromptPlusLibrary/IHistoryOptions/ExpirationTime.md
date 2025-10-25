@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the expiration time for history items.Default value is 365 days.
+#### Sets the expiration duration applied to newly added history entries. Default value is 365 days.
 
 ```csharp
 public IHistoryOptions ExpirationTime(TimeSpan value)
@@ -12,17 +12,17 @@ public IHistoryOptions ExpirationTime(TimeSpan value)
 
 | parameter | description |
 | --- | --- |
-| value | The duration after which history items expire. |
+| value | A positive TimeSpan after which items expire. |
 
 ### Return Value
 
-The current [`IHistoryOptions`](../IHistoryOptions.md) instance for method chaining.
+The same [`IHistoryOptions`](../IHistoryOptions.md) instance for chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *value* is less than 1 second. |
+| ArgumentOutOfRangeException | Thrown when *value* is less than one second. |
 
 ### See Also
 

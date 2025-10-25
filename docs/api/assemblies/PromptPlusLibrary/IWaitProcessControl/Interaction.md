@@ -13,9 +13,9 @@ public IWaitProcessControl Interaction<T>(IEnumerable<T> items,
 
 | parameter | description |
 | --- | --- |
-| T | Type of collection. |
-| items | The collection. |
-| interactionaction | The interaction action. |
+| T | The type of items in the collection. |
+| items | The collection of items. Cannot be `null`. |
+| interactionaction | The action to perform for each item. Cannot be `null`. |
 
 ### Return Value
 

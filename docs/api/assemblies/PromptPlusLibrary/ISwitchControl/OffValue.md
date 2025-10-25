@@ -4,7 +4,7 @@
 </br>
 
 
-#### Text to 'off' value. Default value comes from resource.
+#### Sets the text for the 'off' value. Default value comes from resource.
 
 ```csharp
 public ISwitchControl OffValue(string value)
@@ -12,7 +12,7 @@ public ISwitchControl OffValue(string value)
 
 | parameter | description |
 | --- | --- |
-| value | text off |
+| value | The text for the off state. |
 
 ### Return Value
 

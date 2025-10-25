@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overwrites styles for the chart bar.
+#### Overwrites visual styles for specific chart bar elements.
 
 ```csharp
 public IChartBarWidget Styles(ChartBarStyles styleType, Style style)
@@ -12,8 +12,8 @@ public IChartBarWidget Styles(ChartBarStyles styleType, Style style)
 
 | parameter | description |
 | --- | --- |
-| styleType | The [`ChartBarStyles`](../ChartBarStyles.md) of the content. |
-| style | The [`Style`](../Style.md) to apply. |
+| styleType | The chart element to style, defined by [`ChartBarStyles`](../ChartBarStyles.md). |
+| style | The visual style configuration to apply. |
 
 ### Return Value
 

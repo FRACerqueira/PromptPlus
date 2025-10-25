@@ -4,7 +4,7 @@
 </br>
 
 
-#### Change global Symbols for PromptPLus
+#### Replaces a global symbol representation with ASCII and Unicode variants.
 
 ```csharp
 public void ChangeSymbol(SymbolType symbolType, string ascivalue, string unicodevalue)
@@ -12,9 +12,9 @@ public void ChangeSymbol(SymbolType symbolType, string ascivalue, string unicode
 
 | parameter | description |
 | --- | --- |
-| symbolType | The symbol type |
-| ascivalue | string when it does not have unicode capability |
-| unicodevalue | string when it has unicode capability |
+| symbolType | The [`SymbolType`](../../PromptPlusLibrary/SymbolType.md) being changed. |
+| ascivalue | ASCII fallback string (used when Unicode is not supported). (Parameter name kept for compatibility.) |
+| unicodevalue | Unicode string used when Unicode output is supported. |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets [`HotKey`](../../PromptPlusLibrary/HotKey.md) default for toggler FullPath file . Default value is 'F2'.
+#### Gets or sets the hotkey for toggling full path display of files (default: F2).
 
 ```csharp
 public HotKey HotKeyToggleFullPath { get; set; }

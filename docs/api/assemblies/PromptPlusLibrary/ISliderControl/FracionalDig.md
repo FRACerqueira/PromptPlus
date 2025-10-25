@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the fractional digits for the Slider value. Default is 0.
+#### Sets the number of fractional digits for the slider value. Default is 0.
 
 ```csharp
 public ISliderControl FracionalDig(byte value)

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Shows or hides the tooltip for the control.
+#### Shows or hides the tooltip associated with the control.
 
 ```csharp
 public IControlOptions ShowTooltip(bool isVisible = true)
@@ -12,11 +12,11 @@ public IControlOptions ShowTooltip(bool isVisible = true)
 
 | parameter | description |
 | --- | --- |
-| isVisible | If `true`, the tooltip is shown; otherwise, it is hidden. |
+| isVisible | If `true`, the tooltip is shown; otherwise, it is hidden. Default is `true`. |
 
 ### Return Value
 
-The current [`IControlOptions`](../IControlOptions.md) instance for chaining.
+The same [`IControlOptions`](../IControlOptions.md) instance for chaining.
 
 ### See Also
 

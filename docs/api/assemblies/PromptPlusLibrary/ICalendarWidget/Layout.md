@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the layout of the calendar.
+#### Sets the visual layout style of the calendar widget.
 
 ```csharp
 public ICalendarWidget Layout(CalendarLayout layout = CalendarLayout.SingleGrid)
@@ -12,7 +12,7 @@ public ICalendarWidget Layout(CalendarLayout layout = CalendarLayout.SingleGrid)
 
 | parameter | description |
 | --- | --- |
-| layout | The [`CalendarLayout`](../CalendarLayout.md) to set. Default is SingleGrid. |
+| layout | The layout style to use. Defaults to SingleGrid. |
 
 ### Return Value
 

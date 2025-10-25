@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the first day of the week for the calendar.
+#### Sets which day should appear as the first day of each week in the calendar display.
 
 ```csharp
 public ICalendarWidget FirstDayOfWeek(DayOfWeek firstDayOfWeek)
@@ -12,11 +12,15 @@ public ICalendarWidget FirstDayOfWeek(DayOfWeek firstDayOfWeek)
 
 | parameter | description |
 | --- | --- |
-| firstDayOfWeek | The DayOfWeek to set as the first day of the week. |
+| firstDayOfWeek | The day to use as the start of each week. |
 
 ### Return Value
 
 The current [`ICalendarWidget`](../ICalendarWidget.md) instance for chaining.
+
+### Remarks
+
+This affects the layout of days in the calendar grid.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Number of mileseconds to wait before to start function autocomplete. Default value is 500
+#### Number of milliseconds to wait before to start function autocomplete. Default value is 500
 
 ```csharp
 public IAutoCompleteControl CompletionWaitToStart(int value)
@@ -12,7 +12,7 @@ public IAutoCompleteControl CompletionWaitToStart(int value)
 
 | parameter | description |
 | --- | --- |
-| value | Number of mileseconds.The value must be greater than or equal to 100. |
+| value | Number of milliseconds.The value must be greater than or equal to 100. |
 
 ### Return Value
 

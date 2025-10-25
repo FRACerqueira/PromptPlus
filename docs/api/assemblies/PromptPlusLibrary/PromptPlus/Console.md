@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets the Console drive.
+#### Gets the current console driver abstraction providing low-level I/O, color and buffer operations.
 
 ```csharp
 public static IConsole Console { get; }

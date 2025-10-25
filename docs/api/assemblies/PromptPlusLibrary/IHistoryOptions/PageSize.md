@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the number of items to display per page when viewing history.Default value is 5.
+#### Sets the number of history entries displayed per page in history navigation. Default value is 5.
 
 ```csharp
 public IHistoryOptions PageSize(byte value)
@@ -12,17 +12,17 @@ public IHistoryOptions PageSize(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | The number of items per page. |
+| value | The page size (must be &gt;= 1). |
 
 ### Return Value
 
-The current [`IHistoryOptions`](../IHistoryOptions.md) instance for method chaining.
+The same [`IHistoryOptions`](../IHistoryOptions.md) instance for chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *value* is less than 1. |
+| ArgumentOutOfRangeException | Thrown when *value* &lt; 1. |
 
 ### See Also
 

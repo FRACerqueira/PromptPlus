@@ -4,11 +4,15 @@
 </br>
 
 
-#### Get/Set the screen margin left.
+#### Gets or sets the left screen margin (number of leading spaces reserved).
 
 ```csharp
 public byte PadLeft { get; set; }
 ```
+
+### Property Value
+
+The left padding in character cells.
 
 ### See Also
 

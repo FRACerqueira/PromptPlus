@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide folder and file size in File MultiSelect Control. Default is false
+#### Controls the visibility of size information for files and folders. Default is false (shows sizes).
 
 ```csharp
 public IFileMultiSelectControl HideSizeInfo(bool value = true)
@@ -12,7 +12,7 @@ public IFileMultiSelectControl HideSizeInfo(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | true Show size, otherwise 'no' |
+| value | When true, hides size information; when false, displays it. |
 
 ### Return Value
 

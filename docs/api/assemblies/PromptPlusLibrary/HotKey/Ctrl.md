@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get ConsoleModifiers Ctrl to HotKey
+#### Gets a value indicating whether Ctrl is included.
 
 ```csharp
 public bool Ctrl { get; }

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set the default foreground and background console colors.
+#### Sets the default foreground and background console colors used when resetting.
 
 ```csharp
 public void DefaultColors(Color foreground, Color background)
@@ -12,8 +12,8 @@ public void DefaultColors(Color foreground, Color background)
 
 | parameter | description |
 | --- | --- |
-| foreground | The default console ForegroundColor |
-| background | The default console BackgroundColor |
+| foreground | The default foreground [`Color`](../Color.md). |
+| background | The default background [`Color`](../Color.md). |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the default foreground and background console colors.
+#### Sets the default foreground and background colors used for subsequent write operations when no explicit [`Style`](../Style.md) is supplied.
 
 ```csharp
 public IJointOutput DefaultColors(Color foreground, Color background)
@@ -12,12 +12,12 @@ public IJointOutput DefaultColors(Color foreground, Color background)
 
 | parameter | description |
 | --- | --- |
-| foreground | The default console foreground color. |
-| background | The default console background color. |
+| foreground | The default foreground [`Color`](../Color.md). |
+| background | The default background [`Color`](../Color.md). |
 
 ### Return Value
 
-The current [`IJointOutput`](../IJointOutput.md) instance.
+The same [`IJointOutput`](../IJointOutput.md) instance for chaining.
 
 ### See Also
 

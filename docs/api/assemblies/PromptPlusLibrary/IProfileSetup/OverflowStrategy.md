@@ -4,11 +4,15 @@
 </br>
 
 
-#### Get/Set the display text overflow strategy.
+#### Gets or sets the strategy to apply when rendered text exceeds the available width.
 
 ```csharp
 public Overflow OverflowStrategy { get; set; }
 ```
+
+### Property Value
+
+The overflow handling strategy.
 
 ### See Also
 

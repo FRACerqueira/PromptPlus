@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate with custom message for item selection.
 
 ```csharp
 public INodeTreeMultiSelectControl PredicateSelected(Func<T, (bool, string?)> validselect)
@@ -12,7 +12,7 @@ public INodeTreeMultiSelectControl PredicateSelected(Func<T, (bool, string?)> va
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | A function returning a tuple of (isValid, errorMessage) for selection validation. |
 
 ### Return Value
 
@@ -27,7 +27,7 @@ The current [`INodeTreeMultiSelectControl`](../INodeTreeMultiSelectControl-1.md)
 
 ### INodeTreeMultiSelectControl&lt;T&gt;.PredicateSelected method (2 of 2)
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate to determine if an item can be selected.
 
 ```csharp
 public INodeTreeMultiSelectControl PredicateSelected(Func<T, bool> validselect)
@@ -35,7 +35,7 @@ public INodeTreeMultiSelectControl PredicateSelected(Func<T, bool> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable. |
+| validselect | A function that evaluates if an item is valid for selection. |
 
 ### Return Value
 

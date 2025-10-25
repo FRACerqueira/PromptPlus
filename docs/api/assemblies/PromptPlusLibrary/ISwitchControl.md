@@ -14,14 +14,14 @@ public interface ISwitchControl
 
 | name | description |
 | --- | --- |
-| [ChangeDescription](ISwitchControl/ChangeDescription.md)(…) | Dynamically changes the description of the Switch based on its value. |
+| [ChangeDescription](ISwitchControl/ChangeDescription.md)(…) | Dynamically changes the description of the Switch based on its current value. |
 | [Default](ISwitchControl/Default.md)(…) | Sets the initial value of the Switch. Default is false (off). |
-| [EnabledHistory](ISwitchControl/EnabledHistory.md)(…) | Enabled History and applies custom options to History feature. |
-| [OffValue](ISwitchControl/OffValue.md)(…) | Text to 'off' value. Default value comes from resource. |
-| [OnValue](ISwitchControl/OnValue.md)(…) | Text to 'on' value. Default value comes from resource. |
+| [EnabledHistory](ISwitchControl/EnabledHistory.md)(…) | Enables history and applies custom options to the History feature. |
+| [OffValue](ISwitchControl/OffValue.md)(…) | Sets the text for the 'off' value. Default value comes from resource. |
+| [OnValue](ISwitchControl/OnValue.md)(…) | Sets the text for the 'on' value. Default value comes from resource. |
 | [Options](ISwitchControl/Options.md)(…) | Applies custom options to the control. |
-| [Run](ISwitchControl/Run.md)(…) | Runs the slider control and returns the result. |
-| [Styles](ISwitchControl/Styles.md)(…) | Overwrites styles for the Switch Control. |
+| [Run](ISwitchControl/Run.md)(…) | Runs the Switch control and returns the result. |
+| [Styles](ISwitchControl/Styles.md)(…) | Overwrites styles for the Switch control. |
 | [Width](ISwitchControl/Width.md)(…) | Sets the width of the Switch. Default value is 6. |
 
 ### See Also

@@ -17,7 +17,7 @@ public IFileMultiSelectControl FileMultiSelect(string prompt = "", string? descr
 
 ### Return Value
 
-An [`ITableSelectControl`](../ITableSelectControl-1.md) instance for further configuration and reading input.
+An [`IFileMultiSelectControl`](../IFileMultiSelectControl.md) instance for further configuration and reading input.
 
 ### See Also
 

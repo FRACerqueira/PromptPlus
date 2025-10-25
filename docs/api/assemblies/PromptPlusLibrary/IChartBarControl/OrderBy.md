@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sorts bars and labels.
+#### Defines the display order of chart items based on specified criteria.
 
 ```csharp
 public IChartBarControl OrderBy(ChartBarOrder order)
@@ -12,7 +12,7 @@ public IChartBarControl OrderBy(ChartBarOrder order)
 
 | parameter | description |
 | --- | --- |
-| order | The sort type. |
+| order | The [`ChartBarOrder`](../ChartBarOrder.md) criteria for sorting items. |
 
 ### Return Value
 

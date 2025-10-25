@@ -10,6 +10,10 @@
 public byte B { get; }
 ```
 
+### Property Value
+
+The blue byte (0-255).
+
 ### See Also
 
 * struct [Color](../Color.md)

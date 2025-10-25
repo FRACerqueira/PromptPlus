@@ -4,7 +4,7 @@
 </br>
 
 
-#### Add a Child node
+#### Adds a child node to an existing parent node in the tree.
 
 ```csharp
 public INodeTreeMultiSelectControl AddChildNode(T parent, T value, bool valuechecked = false)
@@ -12,9 +12,9 @@ public INodeTreeMultiSelectControl AddChildNode(T parent, T value, bool valueche
 
 | parameter | description |
 | --- | --- |
-| parent | value parent |
-| value | value node |
-| valuechecked | If `true`, the item is initial value checked. Default is false |
+| parent | The parent node to add the child to. Must exist in the tree. |
+| value | The value for the child node. |
+| valuechecked | If `true`, the node is initially checked. Default is `false`. |
 
 ### Return Value
 
@@ -24,7 +24,7 @@ The current [`INodeTreeMultiSelectControl`](../INodeTreeMultiSelectControl-1.md)
 
 | exception | condition |
 | --- | --- |
-| InvalidOperationException | Thrown if *parent* not found. |
+| InvalidOperationException | Thrown if *parent* is not found in the tree. |
 
 ### See Also
 

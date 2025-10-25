@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Lowers Current Word Emacs Key Alt+L = Lowers the case of every character from the cursor's position to the end of the current words
+#### Determines whether the Alt+L (lower-case word) Emacs shortcut was pressed.
 
 ```csharp
 public static bool IsLowersCurrentWord(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsLowersCurrentWord(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Alt+L was pressed; otherwise, `false`.
 
 ### See Also
 

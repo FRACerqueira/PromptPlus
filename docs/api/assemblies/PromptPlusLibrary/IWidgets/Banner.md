@@ -4,7 +4,7 @@
 </br>
 
 
-#### Write Banner AsciiArt(FIGlet) to console.
+#### Creates a banner widget rendered as FIGlet (ASCII art) text.
 
 ```csharp
 public IBanner Banner(string value, Style? style = default)
@@ -12,12 +12,12 @@ public IBanner Banner(string value, Style? style = default)
 
 | parameter | description |
 | --- | --- |
-| value | The text to write in ASCII art format |
-| style | The [`Style`](../Style.md) to overwrite the current output style. Default is null. |
+| value | Text to render (must not be `null` or empty). |
+| style | Optional style override; if `null`, current console style is used. |
 
 ### Return Value
 
-An [`IBanner`](../IBanner.md) instance for further customization.
+An [`IBanner`](../IBanner.md) for further customization (e.g., font/border).
 
 ### See Also
 

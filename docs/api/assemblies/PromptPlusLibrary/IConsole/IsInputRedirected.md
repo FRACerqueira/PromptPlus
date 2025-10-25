@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets a value that indicates whether input has been redirected from the standard input stream.
+#### Gets a value indicating whether standard input is redirected.
 
 ```csharp
 public bool IsInputRedirected { get; }
 ```
+
+### Property Value
+
+`true` if input is redirected; otherwise `false`.
 
 ### See Also
 

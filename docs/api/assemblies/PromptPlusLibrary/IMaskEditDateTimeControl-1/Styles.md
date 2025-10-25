@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overrides the styles for the input control.
+#### Customizes the visual style for specific elements of the control.
 
 ```csharp
 public IMaskEditDateTimeControl Styles(MaskEditStyles styleType, Style style)
@@ -12,8 +12,8 @@ public IMaskEditDateTimeControl Styles(MaskEditStyles styleType, Style style)
 
 | parameter | description |
 | --- | --- |
-| styleType | The [`InputStyles`](../InputStyles.md) to override. |
-| style | The [`Style`](../Style.md) to apply. Cannot be `null`. |
+| styleType | The element type to style. |
+| style | The style to apply. |
 
 ### Return Value
 
@@ -23,7 +23,7 @@ The current [`IMaskEditDateTimeControl`](../IMaskEditDateTimeControl-1.md) insta
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *style* is `null`. |
+| ArgumentNullException | Thrown when *style* is `null`. |
 
 ### See Also
 

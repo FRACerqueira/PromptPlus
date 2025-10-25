@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Up Arrow Key
+#### Determines whether UpArrow or (optionally) Control+P (Emacs previous line/history) was pressed.
 
 ```csharp
 public static bool IsPressUpArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
@@ -12,12 +12,12 @@ public static bool IsPressUpArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
-| emacskeys | if `true` accept 'CTRL+P' |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
+| emacskeys | If `true`, also accepts Control+P. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if UpArrow (or Emacs equivalent) was pressed; otherwise, `false`.
 
 ### See Also
 

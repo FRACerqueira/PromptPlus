@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically changes the gradient colors of the SliderBar.
+#### Dynamically changes the gradient colors of the slider bar.
 
 ```csharp
 public ISliderControl ChangeGradient(params Color[] colors)

@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets a value indicating whether the console supports Unicode.
+#### Gets a value indicating whether Unicode output is fully supported.
 
 ```csharp
 public bool IsUnicodeSupported { get; }
 ```
+
+### Property Value
+
+`true` if Unicode is supported; otherwise `false`.
 
 ### See Also
 

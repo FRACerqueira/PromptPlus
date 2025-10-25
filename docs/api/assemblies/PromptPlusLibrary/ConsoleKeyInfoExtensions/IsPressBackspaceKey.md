@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is End Key
+#### Determines whether Backspace or (optionally) Control+H (Emacs delete previous character) was pressed.
 
 ```csharp
 public static bool IsPressBackspaceKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
@@ -12,12 +12,12 @@ public static bool IsPressBackspaceKey(this ConsoleKeyInfo keyinfo, bool emacske
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
-| emacskeys | if `true` accept 'CTRL+H' |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
+| emacskeys | If `true`, also accepts Control+H. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Backspace (or Emacs equivalent) was pressed; otherwise, `false`.
 
 ### See Also
 

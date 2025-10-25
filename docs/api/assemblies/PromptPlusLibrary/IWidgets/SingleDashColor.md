@@ -4,7 +4,7 @@
 </br>
 
 
-#### Writes text with token colors and line representation with colors and writes a single dash after.
+#### Writes token-colored text followed by a single dash border line.
 
 ```csharp
 public void SingleDashColor(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, 
@@ -13,11 +13,11 @@ public void SingleDashColor(string value, DashOptions dashOptions = DashOptions.
 
 | parameter | description |
 | --- | --- |
-| value | The value to write. |
-| dashOptions | The [`DashOptions`](../DashOptions.md) character. Default is AsciiSingleBorder. |
-| extraLines | Number of lines to write after the value. Default is 0. |
-| style | The [`Style`](../Style.md) to write. Default is null. |
-| applyColorBackground | Indicates whether to apply color background of the line. Default is false. |
+| value | Token-colored text to write (implementation-specific token syntax). |
+| dashOptions | Dash style (default: AsciiSingleBorder). |
+| extraLines | Extra blank lines appended after the dash line (default: 0). |
+| style | Optional style for non-token regions; if `null`, defaults are used. |
+| applyColorBackground | If `true`, applies background color across the full line (default: `false`). |
 
 ### See Also
 

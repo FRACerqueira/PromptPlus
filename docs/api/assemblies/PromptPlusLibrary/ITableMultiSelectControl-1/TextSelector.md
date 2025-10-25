@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the function to display text for answer. Default is current line : row.
+#### Sets the function to display text for the answer. Default is the current line row text.
 
 ```csharp
 public ITableMultiSelectControl TextSelector(Func<T, string> value)
@@ -12,17 +12,11 @@ public ITableMultiSelectControl TextSelector(Func<T, string> value)
 
 | parameter | description |
 | --- | --- |
-| value | Function to display item text. |
+| value | The function to convert an item to its display text. |
 
 ### Return Value
 
 The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentNullException | Thrown if *value* is `null`. |
 
 ### See Also
 

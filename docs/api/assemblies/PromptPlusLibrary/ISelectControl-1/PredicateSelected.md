@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate to determine if a selected item is valid with a custom error message.
 
 ```csharp
 public ISelectControl PredicateSelected(Func<T, (bool, string?)> validselect)
@@ -12,7 +12,7 @@ public ISelectControl PredicateSelected(Func<T, (bool, string?)> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | A predicate function that returns a tuple where the first value indicates if the item is valid, and the second value is an optional error message. |
 
 ### Return Value
 
@@ -27,7 +27,7 @@ The current [`ISelectControl`](../ISelectControl-1.md) instance for chaining.
 
 ### ISelectControl&lt;T&gt;.PredicateSelected method (2 of 2)
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate to determine if a selected item is valid.
 
 ```csharp
 public ISelectControl PredicateSelected(Func<T, bool> validselect)
@@ -35,7 +35,7 @@ public ISelectControl PredicateSelected(Func<T, bool> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable. |
+| validselect | A predicate function that returns `true` if an item is valid and should be selectable. |
 
 ### Return Value
 

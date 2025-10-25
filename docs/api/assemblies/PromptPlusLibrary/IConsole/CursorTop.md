@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the row position of the cursor within the buffer area.
+#### Gets the row (top) position of the cursor within the buffer.
 
 ```csharp
 public int CursorTop { get; }
 ```
+
+### Property Value
+
+The zero-based cursor row.
 
 ### See Also
 

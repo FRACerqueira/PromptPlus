@@ -4,7 +4,7 @@
 </br>
 
 
-#### Function to format columns by field type when not specified by 'AddColumn'.
+#### Registers a custom formatting function for a specific field type when not explicitly specified by AddColumn.
 
 ```csharp
 public ITableSelectControl AddFormatType<T1>(Func<object, string> funcfomatType)
@@ -12,18 +12,18 @@ public ITableSelectControl AddFormatType<T1>(Func<object, string> funcfomatType)
 
 | parameter | description |
 | --- | --- |
-| T1 | Type to convert |
-| funcfomatType | The function |
+| T1 | The type to format. |
+| funcfomatType | The function that formats values of the specified type. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *funcfomatType* is `null`. |
+| ArgumentNullException | Thrown when *funcfomatType* is null. |
 
 ### See Also
 

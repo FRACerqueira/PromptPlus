@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets [`HotKey`](../HotKey.md) default for toggler ChartBar Switch Layout. Default value is 'F2'.
+#### Gets or sets the hotkey for chart bar layout switching (F2).
 
 ```csharp
 public HotKey HotKeyTooltipChartBarSwitchLayout { get; set; }

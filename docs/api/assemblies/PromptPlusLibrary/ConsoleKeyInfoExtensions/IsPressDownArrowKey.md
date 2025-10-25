@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Down Arrow Key
+#### Determines whether DownArrow or (optionally) Control+N (Emacs next line/history) was pressed.
 
 ```csharp
 public static bool IsPressDownArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
@@ -12,12 +12,12 @@ public static bool IsPressDownArrowKey(this ConsoleKeyInfo keyinfo, bool emacske
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
-| emacskeys | if `true` accept 'CTRL+N' |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
+| emacskeys | If `true`, also accepts Control+N. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if DownArrow (or Emacs equivalent) was pressed; otherwise, `false`.
 
 ### See Also
 

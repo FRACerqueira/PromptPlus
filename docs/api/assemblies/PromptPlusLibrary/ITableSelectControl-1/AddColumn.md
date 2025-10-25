@@ -4,7 +4,7 @@
 </br>
 
 
-#### Add Column AddColumn cannot be used with AutoFill
+#### Adds a column to the table with custom formatting and alignment options.
 
 ```csharp
 public ITableSelectControl AddColumn(Expression<Func<T, object>> field, int width, 
@@ -15,27 +15,31 @@ public ITableSelectControl AddColumn(Expression<Func<T, object>> field, int widt
 
 | parameter | description |
 | --- | --- |
-| field | Expression that defines the field associated with the column |
-| width | column size |
-| format | Function to format the field.If not informed, it will be ToString() |
-| alignment | alignment content |
-| title | The Column title |
-| titlealignment | alignment title |
-| titlereplaceswidth | title width overrides column width when greater |
-| textcrop | If true the value will be truncated by the column size, otherwise, the content will be written in several lines |
-| maxslidinglines | Maximum Sliding Lines when the content length is greater than the column size and textcrop = false. |
+| field | An expression that defines the field associated with the column. |
+| width | The width of the column in characters. |
+| format | An optional function to format the field value. If not specified, ToString() is used. |
+| alignment | The content alignment within the column. The default is TextAlignment.Left. |
+| title | The optional title for the column header. If not specified, the field name is used. |
+| titlealignment | The alignment for the column title. The default is TextAlignment.Center. |
+| titlereplaceswidth | When true, the title width overrides the column width if the title is longer. The default is true. |
+| textcrop | When true, the value is truncated to fit the column width; when false, the content wraps to multiple lines. The default is false. |
+| maxslidinglines | The maximum number of sliding lines when content exceeds the column width and textcrop is false. When null, no limit is applied. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *field* is `null`. |
-| ArgumentOutOfRangeException | Thrown if *width* is less than 1 or if *maxslidinglines* is specified and less than 1. |
-| InvalidOperationException | Thrown if AutoFill has already been configured. |
+| ArgumentNullException | Thrown when *field* is null. |
+| ArgumentOutOfRangeException | Thrown when *width* is less than 1, or when *maxslidinglines* is specified and less than 1. |
+| InvalidOperationException | Thrown when AutoFill has already been configured. |
+
+### Remarks
+
+AddColumn cannot be used when AutoFill has already been configured.
 
 ### See Also
 

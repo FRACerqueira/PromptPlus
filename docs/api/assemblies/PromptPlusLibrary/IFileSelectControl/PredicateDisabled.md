@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for disabled item.
+#### Sets a validation rule for determining which items should be disabled.
 
 ```csharp
 public IFileSelectControl PredicateDisabled(Func<ItemFile, bool> validdisabled)
@@ -12,7 +12,7 @@ public IFileSelectControl PredicateDisabled(Func<ItemFile, bool> validdisabled)
 
 | parameter | description |
 | --- | --- |
-| validdisabled | A predicate function that determines whether an Item is considered disable. |
+| validdisabled | Function that evaluates if an item should be disabled. |
 
 ### Return Value
 

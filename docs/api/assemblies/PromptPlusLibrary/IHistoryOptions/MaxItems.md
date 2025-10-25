@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum number of items to retain in the history. Default value is 255 items.
+#### Sets the maximum number of entries retained in the history store. Default value is 255.
 
 ```csharp
 public IHistoryOptions MaxItems(byte value)
@@ -12,17 +12,17 @@ public IHistoryOptions MaxItems(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | The maximum number of history items. |
+| value | The maximum item count (must be &gt;= 1). |
 
 ### Return Value
 
-The current [`IHistoryOptions`](../IHistoryOptions.md) instance for method chaining.
+The same [`IHistoryOptions`](../IHistoryOptions.md) instance for chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *value* is less than 1. |
+| ArgumentOutOfRangeException | Thrown when *value* &lt; 1. |
 
 ### See Also
 

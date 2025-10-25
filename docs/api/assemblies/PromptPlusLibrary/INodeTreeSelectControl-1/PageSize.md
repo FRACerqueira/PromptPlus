@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum number of items to view per page. Default value is 10.
+#### Sets the maximum number of items to display per page in the tree view. Controls the pagination of large tree structures.
 
 ```csharp
 public INodeTreeSelectControl PageSize(byte value)
@@ -12,7 +12,7 @@ public INodeTreeSelectControl PageSize(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | Number of maximum items. |
+| value | Number of maximum items per page. |
 
 ### Return Value
 

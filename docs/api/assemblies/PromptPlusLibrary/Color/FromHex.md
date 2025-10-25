@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets the hexadecimal representation of the Color.
+#### Gets the hexadecimal (RRGGBB) representation of a color.
 
 ```csharp
 public static string FromHex(Color value)
@@ -12,11 +12,11 @@ public static string FromHex(Color value)
 
 | parameter | description |
 | --- | --- |
-| value | The [`Color`](../Color.md) |
+| value | The color to convert. |
 
 ### Return Value
 
-The hexadecimal representation of the Color.
+Hexadecimal string without leading '#'.
 
 ### See Also
 

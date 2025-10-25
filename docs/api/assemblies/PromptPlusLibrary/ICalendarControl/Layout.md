@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the layout of the calendar.
+#### Sets the visual layout style of the calendar display. Controls how dates and grid lines are rendered.
 
 ```csharp
 public ICalendarControl Layout(CalendarLayout layout = CalendarLayout.SingleGrid)

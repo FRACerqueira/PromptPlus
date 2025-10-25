@@ -4,7 +4,7 @@
 </br>
 
 
-#### Writes text line representation with colors and writes a single dash after.
+#### Writes a colored text line followed by a single dash border line.
 
 ```csharp
 public void SingleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, 
@@ -13,11 +13,11 @@ public void SingleDash(string value, DashOptions dashOptions = DashOptions.Ascii
 
 | parameter | description |
 | --- | --- |
-| value | The value to write. |
-| dashOptions | The [`DashOptions`](../DashOptions.md) character. Default is AsciiSingleBorder. |
-| extraLines | Number of lines to write after the value. Default is 0. |
-| style | The [`Style`](../Style.md) to write. Default is null. |
-| applyColorBackground | Indicates whether to apply color background of the line. Default is false. |
+| value | Text to write. |
+| dashOptions | Dash style (default: AsciiSingleBorder). |
+| extraLines | Extra blank lines appended after the dash line (default: 0). |
+| style | Optional style for the text/dash; if `null`, defaults are used. |
+| applyColorBackground | If `true`, applies background color across the full line (default: `false`). |
 
 ### See Also
 

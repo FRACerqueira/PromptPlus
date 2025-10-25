@@ -13,17 +13,11 @@ public ITableMultiSelectControl Default(IEnumerable<T> values, bool usedefaultHi
 | parameter | description |
 | --- | --- |
 | values | The initial values selected. |
-| usedefaultHistory | Indicates whether to use the default value from history (if enabled). |
+| usedefaultHistory | If `true`, uses the default value from history when enabled; otherwise, uses only the specified values. |
 
 ### Return Value
 
 The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentNullException | Thrown if *values* is `null`. |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Display the Table widget.
+#### Displays the Table widget.
 
 ```csharp
 public void Show()

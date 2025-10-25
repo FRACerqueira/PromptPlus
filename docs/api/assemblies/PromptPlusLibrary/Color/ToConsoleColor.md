@@ -4,7 +4,7 @@
 </br>
 
 
-#### Converts a [`Color`](../Color.md) to a ConsoleColor.
+#### Converts a [`Color`](../Color.md) to a ConsoleColor, approximating if necessary.
 
 ```csharp
 public static ConsoleColor ToConsoleColor(Color ColorRGB)
@@ -12,11 +12,17 @@ public static ConsoleColor ToConsoleColor(Color ColorRGB)
 
 | parameter | description |
 | --- | --- |
-| ColorRGB | The Color to convert. |
+| ColorRGB | The console Color to convert. |
 
 ### Return Value
 
-A ConsoleColor representing the [`Color`](../Color.md).
+A console color representing the input.
+
+### Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentException | Thrown if conversion fails. |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overwrites styles for the Table select control.
+#### Overwrites styles for the Table widget.
 
 ```csharp
 public ITableWidget Styles(TableStyles styleType, Style style)
@@ -13,7 +13,7 @@ public ITableWidget Styles(TableStyles styleType, Style style)
 | parameter | description |
 | --- | --- |
 | styleType | The [`TableStyles`](../TableStyles.md) to apply. |
-| style | The [`Style`](../Style.md) to use. Cannot be `null`. |
+| style | The [`Style`](../Style.md) to use. |
 
 ### Return Value
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide columns headers. Default false.
+#### Hides column headers. Default is `false`.
 
 ```csharp
 public ITableMultiSelectControl HideHeaders(bool value = true)
@@ -12,7 +12,7 @@ public ITableMultiSelectControl HideHeaders(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | Hide headers |
+| value | If `true`, hides headers; otherwise, shows them. |
 
 ### Return Value
 

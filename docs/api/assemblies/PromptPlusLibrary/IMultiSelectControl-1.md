@@ -18,28 +18,28 @@ public interface IMultiSelectControl<T>
 
 | name | description |
 | --- | --- |
-| [AddGroupedItem](IMultiSelectControl-1/AddGroupedItem.md)(…) | Adds an item to a group in the list. |
-| [AddGroupedItems](IMultiSelectControl-1/AddGroupedItems.md)(…) | Adds a collection of items to a group in the list. |
-| [AddItem](IMultiSelectControl-1/AddItem.md)(…) | Adds an item to the list. |
-| [AddItems](IMultiSelectControl-1/AddItems.md)(…) | Adds a collection of items to the list. |
-| [AddSeparator](IMultiSelectControl-1/AddSeparator.md)(…) | Adds a separation line. |
-| [ChangeDescription](IMultiSelectControl-1/ChangeDescription.md)(…) | Dynamically changes the description of the MultiSelect based on its value. |
-| [Default](IMultiSelectControl-1/Default.md)(…) | Sets the initial selected values of the MultiSelect. |
-| [EnabledHistory](IMultiSelectControl-1/EnabledHistory.md)(…) | Enables history and applies custom options to the history feature. |
-| [EqualItems](IMultiSelectControl-1/EqualItems.md)(…) | Custom item comparator |
-| [Filter](IMultiSelectControl-1/Filter.md)(…) | Sets the filter strategy for filtering items in the collection. Default is Disabled. |
-| [HideCountSelected](IMultiSelectControl-1/HideCountSelected.md)(…) | Hide tip count selected. Default false. |
-| [HideTipGroup](IMultiSelectControl-1/HideTipGroup.md)(…) | Hide tip with text of group. Default false. |
+| [AddGroupedItem](IMultiSelectControl-1/AddGroupedItem.md)(…) | Adds a single item to a named group. |
+| [AddGroupedItems](IMultiSelectControl-1/AddGroupedItems.md)(…) | Adds multiple items to a named group. |
+| [AddItem](IMultiSelectControl-1/AddItem.md)(…) | Adds a single item to the list. |
+| [AddItems](IMultiSelectControl-1/AddItems.md)(…) | Adds multiple items to the list. |
+| [AddSeparator](IMultiSelectControl-1/AddSeparator.md)(…) | Adds a visual separator line between items. |
+| [ChangeDescription](IMultiSelectControl-1/ChangeDescription.md)(…) | Dynamically changes the control description based on the current item value. |
+| [Default](IMultiSelectControl-1/Default.md)(…) | Sets the initial selected values for the MultiSelect control. |
+| [EnabledHistory](IMultiSelectControl-1/EnabledHistory.md)(…) | Enables history persistence with optional custom configuration. |
+| [EqualItems](IMultiSelectControl-1/EqualItems.md)(…) | Sets a custom equality comparer function for items. |
+| [Filter](IMultiSelectControl-1/Filter.md)(…) | Configures the filter strategy for searching and filtering items. Default is Disabled. |
+| [HideCountSelected](IMultiSelectControl-1/HideCountSelected.md)(…) | Controls the visibility of the selected item count display. Default is `false`. |
+| [HideTipGroup](IMultiSelectControl-1/HideTipGroup.md)(…) | Controls the visibility of the group name tooltip. Default is `false`. |
 | [Interaction](IMultiSelectControl-1/Interaction.md)(…) |  |
-| [MaxWidth](IMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum width for the seleted items.Default value is 30 characters. |
-| [Options](IMultiSelectControl-1/Options.md)(…) | Applies custom options to the control. |
-| [PageSize](IMultiSelectControl-1/PageSize.md)(…) | Sets the maximum number of items to view per page. Default value is 10. |
-| [PredicateSelected](IMultiSelectControl-1/PredicateSelected.md)(…) | Set validation predicate for selected item. (2 methods) |
-| [Range](IMultiSelectControl-1/Range.md)(…) | Defines a minimum and maximum (optional) range of items selected in the list |
+| [MaxWidth](IMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum display width for selected items text. Default is 30 characters. |
+| [Options](IMultiSelectControl-1/Options.md)(…) | Applies custom options to configure control behavior. |
+| [PageSize](IMultiSelectControl-1/PageSize.md)(…) | Sets the maximum number of items displayed per page. Default is 10. |
+| [PredicateSelected](IMultiSelectControl-1/PredicateSelected.md)(…) | Sets a validation predicate to determine whether an item can be selected. (2 methods) |
+| [Range](IMultiSelectControl-1/Range.md)(…) | Defines the valid range of items that must be selected. |
 | [Run](IMultiSelectControl-1/Run.md)(…) | Runs the MultiSelect control and returns the result. |
-| [ShowAllSelected](IMultiSelectControl-1/ShowAllSelected.md)(…) | Sets shows all selected items at finish. Default is `false`. |
-| [Styles](IMultiSelectControl-1/Styles.md)(…) | Overwrites styles for the MultiSelect Control. |
-| [TextSelector](IMultiSelectControl-1/TextSelector.md)(…) | Sets the function to display text for items in the list. Default is `Item.ToString()`. |
+| [ShowAllSelected](IMultiSelectControl-1/ShowAllSelected.md)(…) | Controls whether all selected items are displayed at completion. Default is `false`. |
+| [Styles](IMultiSelectControl-1/Styles.md)(…) | Configures the visual style for a specific element of the MultiSelect control. |
+| [TextSelector](IMultiSelectControl-1/TextSelector.md)(…) | Sets the function to convert items to display text. Default uses `Item.ToString()`. |
 
 ### See Also
 

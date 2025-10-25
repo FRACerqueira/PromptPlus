@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the standard output stream.
+#### Gets the standard output writer.
 
 ```csharp
 public TextWriter Out { get; }
 ```
+
+### Property Value
+
+The TextWriter for output.
 
 ### See Also
 

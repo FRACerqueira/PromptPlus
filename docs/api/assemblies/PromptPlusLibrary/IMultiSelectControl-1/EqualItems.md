@@ -4,7 +4,7 @@
 </br>
 
 
-#### Custom item comparator
+#### Sets a custom equality comparer function for items.
 
 ```csharp
 public IMultiSelectControl EqualItems(Func<T, T, bool> value)
@@ -12,17 +12,17 @@ public IMultiSelectControl EqualItems(Func<T, T, bool> value)
 
 | parameter | description |
 | --- | --- |
-| value | function comparator |
+| value | A function that compares two items and returns `true` if they are equal. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *value* is `null`. |
+| ArgumentNullException | Thrown when *value* is `null`. |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Creates a calendar widget for the specified month and year.
+#### Creates a calendar widget for the month and year referenced by *dateref*.
 
 ```csharp
 public ICalendarWidget Calendar(DateTime dateref)
@@ -12,11 +12,11 @@ public ICalendarWidget Calendar(DateTime dateref)
 
 | parameter | description |
 | --- | --- |
-| dateref | The date reference to show month and year calendar. |
+| dateref | Date whose month/year will be rendered (day component is ignored). |
 
 ### Return Value
 
-An [`ICalendarWidget`](../ICalendarWidget.md) instance for further customization.
+An [`ICalendarWidget`](../ICalendarWidget.md) for further customization.
 
 ### See Also
 

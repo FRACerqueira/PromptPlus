@@ -12,11 +12,17 @@ public static Color FromConsoleColor(ConsoleColor color)
 
 | parameter | description |
 | --- | --- |
-| color | The Color to convert. |
+| color | Console color. |
 
 ### Return Value
 
-A [`Color`](../Color.md) representing the ConsoleColor.
+The corresponding [`Color`](../Color.md).
+
+### Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentException | Thrown if conversion fails. |
 
 ### See Also
 

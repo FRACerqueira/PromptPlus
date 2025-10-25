@@ -12,17 +12,11 @@ public ITableMultiSelectControl Options(Action<IControlOptions> options)
 
 | parameter | description |
 | --- | --- |
-| options | An action to configure [`IControlOptions`](../IControlOptions.md). Cannot be `null`. |
+| options | An action to configure [`IControlOptions`](../IControlOptions.md). |
 
 ### Return Value
 
 The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentNullException | Thrown if *options* is `null`. |
 
 ### See Also
 

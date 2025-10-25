@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds an item to a group in the list.
+#### Adds an item to a specified group in the list.
 
 ```csharp
 public ISelectControl AddGroupedItem(string group, T value, bool disable = false)
@@ -12,9 +12,9 @@ public ISelectControl AddGroupedItem(string group, T value, bool disable = false
 
 | parameter | description |
 | --- | --- |
-| group | Group name. |
-| value | Item to add. |
-| disable | If `true`, the item is disabled. |
+| group | The name of the group. Cannot be `null`. |
+| value | The item to add. Cannot be `null`. |
+| disable | If `true`, the item is disabled and cannot be selected. |
 
 ### Return Value
 

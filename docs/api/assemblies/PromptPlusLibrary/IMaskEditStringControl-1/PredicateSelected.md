@@ -18,6 +18,10 @@ public IMaskEditStringControl PredicateSelected(Func<T, (bool, string?)> validse
 
 The current [`IMaskEditStringControl`](../IMaskEditStringControl-1.md) instance for chaining.
 
+### Remarks
+
+The predicate returns a tuple with a boolean indicating validity and an optional error message.
+
 ### See Also
 
 * interface [IMaskEditStringControl&lt;T&gt;](../IMaskEditStringControl-1.md)
@@ -40,6 +44,10 @@ public IMaskEditStringControl PredicateSelected(Func<T, bool> validselect)
 ### Return Value
 
 The current [`IMaskEditStringControl`](../IMaskEditStringControl-1.md) instance for chaining.
+
+### Remarks
+
+The predicate should return true for valid items and false for invalid items.
 
 ### See Also
 

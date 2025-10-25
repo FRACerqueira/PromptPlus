@@ -4,7 +4,7 @@
 </br>
 
 
-#### Defines the fractional digits of values to display. Default is 2.
+#### Sets the number of decimal places to display in numeric values. Default is 2. Maximum value is 5.
 
 ```csharp
 public IChartBarWidget FractionalDigits(byte value)
@@ -12,7 +12,7 @@ public IChartBarWidget FractionalDigits(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | The number of fractional digits. |
+| value | The number of decimal places to show. |
 
 ### Return Value
 

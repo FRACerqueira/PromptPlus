@@ -10,6 +10,10 @@
 public bool CursorVisible { get; set; }
 ```
 
+### Property Value
+
+`true` if the cursor is visible; otherwise `false`.
+
 ### See Also
 
 * interface [IConsole](../IConsole.md)

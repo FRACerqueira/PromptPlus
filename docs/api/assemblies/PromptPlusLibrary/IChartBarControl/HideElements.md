@@ -18,6 +18,10 @@ public IChartBarControl HideElements(HideChart value)
 
 The current [`IChartBarControl`](../IChartBarControl.md) instance for chaining.
 
+### Remarks
+
+By default, all chart elements are visible. Use this method to selectively hide specific components of the visualization for a cleaner or more focused display.
+
 ### See Also
 
 * enum [HideChart](../HideChart.md)

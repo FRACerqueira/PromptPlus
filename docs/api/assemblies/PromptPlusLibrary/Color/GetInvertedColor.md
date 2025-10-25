@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get Inverted Color by Luminance for best contrast
+#### Gets a contrasting color (black or white) based on luminance for readability.
 
 ```csharp
 public Color GetInvertedColor()
@@ -12,7 +12,7 @@ public Color GetInvertedColor()
 
 ### Return Value
 
-[`Color`](../Color.md) White or Black
+[`White`](./White.md) or [`Black`](./Black.md) depending on brightness.
 
 ### See Also
 

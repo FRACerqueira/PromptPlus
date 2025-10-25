@@ -12,7 +12,7 @@ public ISwitchWidget Width(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | The width of the SliderBar. |
+| value | The width of the Switch. |
 
 ### Return Value
 
@@ -22,7 +22,7 @@ The current [`ISwitchWidget`](../ISwitchWidget.md) instance for chaining.
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *value* is less than 6. |
+| ArgumentOutOfRangeException | Thrown when *value* is less than 6. |
 
 ### See Also
 

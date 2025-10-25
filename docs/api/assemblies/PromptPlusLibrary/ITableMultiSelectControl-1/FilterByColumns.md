@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set Columns used by Filter strategy.
+#### Sets the columns used by the filter strategy.
 
 ```csharp
 public ITableMultiSelectControl FilterByColumns(FilterMode filter, bool caseinsensitive, 
@@ -13,19 +13,13 @@ public ITableMultiSelectControl FilterByColumns(FilterMode filter, bool caseinse
 
 | parameter | description |
 | --- | --- |
-| filter | Filter strategy for filter rows.Default value is FilterMode.Disabled |
-| caseinsensitive | If true, performs case-insensitive string comparison when filtering; otherwise case-sensitive comparison is used. |
-| indexColumn | list (cardinality) of columns |
+| filter | The filter strategy for filtering rows. Default is Disabled. |
+| caseinsensitive | If `true`, performs case-insensitive string comparison when filtering; otherwise, performs case-sensitive comparison. |
+| indexColumn | The zero-based indices of columns to include in the filter. |
 
 ### Return Value
 
 The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentNullException | Thrown if *indexColumn* is `null`. |
 
 ### See Also
 

@@ -18,25 +18,25 @@ public interface ISelectControl<T>
 
 | name | description |
 | --- | --- |
-| [AddGroupedItem](ISelectControl-1/AddGroupedItem.md)(…) | Adds an item to a group in the list. |
-| [AddGroupedItems](ISelectControl-1/AddGroupedItems.md)(…) | Adds a collection of items to a group in the list. |
+| [AddGroupedItem](ISelectControl-1/AddGroupedItem.md)(…) | Adds an item to a specified group in the list. |
+| [AddGroupedItems](ISelectControl-1/AddGroupedItems.md)(…) | Adds a collection of items to a specified group in the list. |
 | [AddItem](ISelectControl-1/AddItem.md)(…) | Adds an item to the list. |
 | [AddItems](ISelectControl-1/AddItems.md)(…) | Adds a collection of items to the list. |
-| [AddSeparator](ISelectControl-1/AddSeparator.md)(…) | Adds a separation line. |
-| [AutoSelect](ISelectControl-1/AutoSelect.md)(…) | Automatically select and finalize item when only one item is in the list. Default is `false`. |
-| [ChangeDescription](ISelectControl-1/ChangeDescription.md)(…) | Dynamically changes the description of the Select based on its value. |
-| [Default](ISelectControl-1/Default.md)(…) | Sets the initial value of the Select. Default is the first item in the list. |
+| [AddSeparator](ISelectControl-1/AddSeparator.md)(…) | Adds a visual separator line to the list. |
+| [AutoSelect](ISelectControl-1/AutoSelect.md)(…) | Automatically selects and finalizes the item when only one item is in the list. Default is `false`. |
+| [ChangeDescription](ISelectControl-1/ChangeDescription.md)(…) | Dynamically changes the description of the Select control based on the current selected value. |
+| [Default](ISelectControl-1/Default.md)(…) | Sets the initial value of the Select control. Default is the first item in the list. |
 | [EnabledHistory](ISelectControl-1/EnabledHistory.md)(…) | Enables history and applies custom options to the history feature. |
-| [EqualItems](ISelectControl-1/EqualItems.md)(…) | Custom item comparator |
+| [EqualItems](ISelectControl-1/EqualItems.md)(…) | Sets a custom item comparator for determining item equality. |
 | [Filter](ISelectControl-1/Filter.md)(…) | Sets the filter strategy for filtering items in the collection. Default is Disabled. |
-| [HideTipGroup](ISelectControl-1/HideTipGroup.md)(…) | Hide tip with text of group. Default false. |
+| [HideTipGroup](ISelectControl-1/HideTipGroup.md)(…) | Hides the tip with the group name. Default is `false`. |
 | [Interaction](ISelectControl-1/Interaction.md)(…) |  |
 | [Options](ISelectControl-1/Options.md)(…) | Applies custom options to the control. |
-| [PageSize](ISelectControl-1/PageSize.md)(…) | Sets the maximum number of items to view per page. Default value is 10. |
-| [PredicateSelected](ISelectControl-1/PredicateSelected.md)(…) | Set validation predicate for selected item. (2 methods) |
+| [PageSize](ISelectControl-1/PageSize.md)(…) | Sets the maximum number of items to display per page. Default value is 10. |
+| [PredicateSelected](ISelectControl-1/PredicateSelected.md)(…) | Sets a validation predicate to determine if a selected item is valid. (2 methods) |
 | [Run](ISelectControl-1/Run.md)(…) | Runs the Select control and returns the result. |
-| [Styles](ISelectControl-1/Styles.md)(…) | Overwrites styles for the Select Control. |
-| [TextSelector](ISelectControl-1/TextSelector.md)(…) | Sets the function to display text for items in the list. Default is `Item.ToString()`. |
+| [Styles](ISelectControl-1/Styles.md)(…) | Overwrites styles for the Select control. |
+| [TextSelector](ISelectControl-1/TextSelector.md)(…) | Sets the function to display text for items in the list. Default is the result of calling ToString on each item. |
 
 ### See Also
 

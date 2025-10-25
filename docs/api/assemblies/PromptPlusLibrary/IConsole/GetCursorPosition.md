@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets the current position of the cursor in the buffer area.
+#### Gets the current cursor position.
 
 ```csharp
 public (int Left, int Top) GetCursorPosition()
@@ -12,7 +12,7 @@ public (int Left, int Top) GetCursorPosition()
 
 ### Return Value
 
-The column and row of the cursor.
+A tuple with `Left` (column) and `Top` (row).
 
 ### See Also
 

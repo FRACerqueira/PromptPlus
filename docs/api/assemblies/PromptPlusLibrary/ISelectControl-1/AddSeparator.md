@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds a separation line.
+#### Adds a visual separator line to the list.
 
 ```csharp
 public ISelectControl AddSeparator(SeparatorLine separatorLine = SeparatorLine.SingleLine, 
@@ -13,8 +13,8 @@ public ISelectControl AddSeparator(SeparatorLine separatorLine = SeparatorLine.S
 
 | parameter | description |
 | --- | --- |
-| separatorLine | Type of separation line. Default is SingleLine. |
-| value | Character for separation line. Valid only if *separatorLine* is UserChar. |
+| separatorLine | The type of separator line. Default is SingleLine. |
+| value | The character to use for the separator line. Only used when *separatorLine* is UserChar. |
 
 ### Return Value
 

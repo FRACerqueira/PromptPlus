@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Ctrl+Home Key
+#### Determines whether Control+Home was pressed.
 
 ```csharp
 public static bool IsPressCtrlHomeKey(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsPressCtrlHomeKey(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Control+Home was pressed; otherwise, `false`.
 
 ### See Also
 

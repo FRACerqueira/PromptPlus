@@ -4,7 +4,7 @@
 </br>
 
 
-#### Checks if two [`Style`](../Style.md) instances are equal.
+#### Determines whether two [`Style`](../Style.md) instances are equal.
 
 ```csharp
 public static bool operator ==(Style left, Style right)
@@ -12,12 +12,12 @@ public static bool operator ==(Style left, Style right)
 
 | parameter | description |
 | --- | --- |
-| left | The first Style instance to compare. |
-| right | The second Style instance to compare. |
+| left | The first style. |
+| right | The second style. |
 
 ### Return Value
 
-`true` if the two Style are equal, otherwise `false`.
+`true` if equal; otherwise, `false`.
 
 ### See Also
 

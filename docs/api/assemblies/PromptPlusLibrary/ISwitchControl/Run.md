@@ -4,7 +4,7 @@
 </br>
 
 
-#### Runs the slider control and returns the result.
+#### Runs the Switch control and returns the result.
 
 ```csharp
 public ResultPrompt<bool?> Run(CancellationToken token = default)
@@ -16,7 +16,7 @@ public ResultPrompt<bool?> Run(CancellationToken token = default)
 
 ### Return Value
 
-The result with type [`ResultPrompt`](../ResultPrompt-1.md) of the slider control execution.
+The result with type [`ResultPrompt`](../ResultPrompt-1.md) of the Switch control execution.
 
 ### See Also
 

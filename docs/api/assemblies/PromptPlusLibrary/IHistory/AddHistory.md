@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds a new entry to the file history.
+#### Adds a value to the history.
 
 ```csharp
 public IHistory AddHistory(string value, TimeSpan? timeout = default)
@@ -12,8 +12,12 @@ public IHistory AddHistory(string value, TimeSpan? timeout = default)
 
 | parameter | description |
 | --- | --- |
-| value | The value to add to the history. |
-| timeout | Optional timeout for the history entry. |
+| value | The text/value to store. Ignored if null or empty (implementation dependent). |
+| timeout | Optional lifetime for the entry. After the timeout elapses the entry may be pruned (exact behavior depends on implementation). If `null`, the entry is durable. |
+
+### Return Value
+
+The same [`IHistory`](../IHistory.md) instance for fluent chaining.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide tip count selected. Default false.
+#### Controls the visibility of the selected item count display. Default is `false`.
 
 ```csharp
 public IMultiSelectControl HideCountSelected(bool value = true)
@@ -12,11 +12,11 @@ public IMultiSelectControl HideCountSelected(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | If True, it shows the tip with count selected, otherwise nothing. |
+| value | Indicates whether to hide the count of selected items. Default is `true`. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

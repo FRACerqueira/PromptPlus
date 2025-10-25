@@ -4,7 +4,7 @@
 </br>
 
 
-#### Clears the console buffer and corresponding console window of display information. Moves cursor to the top of the console.
+#### Clears the buffer (and visible window) and resets cursor to (0,0).
 
 ```csharp
 public void Clear()

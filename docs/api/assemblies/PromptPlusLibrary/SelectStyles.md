@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents The Styles Select controls
+#### Represents the styles for the Select Control. This enum defines various regions or components of the Select Control.
 
 ```csharp
 public enum SelectStyles

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Writes the text representation of a character to the standard output stream with line terminator.
+#### Writes a single character followed by a line terminator.
 
 ```csharp
 public (int Left, int Top) WriteLine(char buffer, Style? style = default, 
@@ -13,13 +13,13 @@ public (int Left, int Top) WriteLine(char buffer, Style? style = default,
 
 | parameter | description |
 | --- | --- |
-| buffer | A character array to write. |
-| style | The [`Style`](../Style.md) overwrite style current output |
-| clearrestofline | Indicates whether to clear the rest of the line. |
+| buffer | Character to write. |
+| style | Optional [`Style`](../Style.md) overriding current output style. |
+| clearrestofline | `true` to clear remaining characters on the line before newline. |
 
 ### Return Value
 
-The column and row position of the cursor.
+The cursor position after write.
 
 ### See Also
 
@@ -31,7 +31,7 @@ The column and row position of the cursor.
 
 ### IConsole.WriteLine method (2 of 3)
 
-#### Writes the text representation of a character array to the standard output stream with line terminator.
+#### Writes a character array followed by a line terminator.
 
 ```csharp
 public (int Left, int Top) WriteLine(char[] buffer, Style? style = default, 
@@ -40,13 +40,13 @@ public (int Left, int Top) WriteLine(char[] buffer, Style? style = default,
 
 | parameter | description |
 | --- | --- |
-| buffer | A character array to write. |
-| style | The [`Style`](../Style.md) overwrite style current output |
-| clearrestofline | Indicates whether to clear the rest of the line. |
+| buffer | Characters to write. |
+| style | Optional [`Style`](../Style.md) overriding current output style. |
+| clearrestofline | `true` to clear remaining characters on the line before newline. |
 
 ### Return Value
 
-The column and row position of the cursor.
+The cursor position after write.
 
 ### See Also
 
@@ -58,7 +58,7 @@ The column and row position of the cursor.
 
 ### IConsole.WriteLine method (3 of 3)
 
-#### Writes the text representation of a string value to the standard output stream with line terminator.
+#### Writes a string followed by a line terminator.
 
 ```csharp
 public (int Left, int Top) WriteLine(string value, Style? style = default, 
@@ -67,13 +67,13 @@ public (int Left, int Top) WriteLine(string value, Style? style = default,
 
 | parameter | description |
 | --- | --- |
-| value | A string value to write. |
-| style | The [`Style`](../Style.md) overwrite style current output |
-| clearrestofline | Indicates whether to clear the rest of the line. |
+| value | String to write. |
+| style | Optional [`Style`](../Style.md) overriding current output style. |
+| clearrestofline | `true` to clear remaining characters on the line before newline. |
 
 ### Return Value
 
-The column and row position of the cursor.
+The cursor position after write.
 
 ### See Also
 

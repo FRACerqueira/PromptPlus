@@ -4,16 +4,16 @@
 </br>
 
 
-#### Define if show Elapsed Time .Default 500ms and true.
+#### Defines whether to show elapsed time. Default is 500ms and true.
 
 ```csharp
-public IWaitTimerControl ShowElapsedTime(int mileseconds = 500, bool value = true)
+public IWaitTimerControl ShowElapsedTime(int milliseconds = 500, bool value = true)
 ```
 
 | parameter | description |
 | --- | --- |
-| mileseconds | The interval to show ElapsedTime. |
-| value | If show Elapsed Time. |
+| milliseconds | The interval in milliseconds to update the elapsed time display. |
+| value | If true, shows elapsed time. |
 
 ### Return Value
 
@@ -23,7 +23,7 @@ The current [`IWaitTimerControl`](../IWaitTimerControl.md) instance for chaining
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *mileseconds* for less than 100 or greater than 1000. |
+| ArgumentOutOfRangeException | Thrown if *milliseconds* is less than 100 or greater than 1000. |
 
 ### See Also
 

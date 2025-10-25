@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically changes the description using a user-defined function. Will be ignored for Widget.
+#### Dynamically changes the description using a user-defined function.
 
 ```csharp
 public ICalendarControl ChangeDescription(Func<DateTime?, string> value)

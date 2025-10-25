@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets a value indicating whether a key press is available in the input stream.
+#### Gets a value indicating whether a key press is available.
 
 ```csharp
 public bool KeyAvailable { get; }
 ```
+
+### Property Value
+
+`true` if a key is pending; otherwise `false`.
 
 ### See Also
 

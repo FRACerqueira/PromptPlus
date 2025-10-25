@@ -13,8 +13,8 @@ public IMaskEditCurrencyControl NumberFormat(byte integerpart, byte decimalpart 
 
 | parameter | description |
 | --- | --- |
-| integerpart | The number of digits allowed in the integer part. |
-| decimalpart | The number of decimal digits allowed after the decimal point.Default value is 2. |
+| integerpart | The maximum number of digits allowed in the integer part. |
+| decimalpart | The number of decimal digits allowed after the decimal point. Default value is 2. |
 | withsignal | If `true`, allows a sign (+/-) in the input. Default is `false`. |
 | withseparatorgroup | If `true`, allows group separators (e.g., thousands separator). Default is `true`. |
 

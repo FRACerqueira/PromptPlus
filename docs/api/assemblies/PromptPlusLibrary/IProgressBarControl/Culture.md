@@ -52,6 +52,7 @@ The current [`IProgressBarControl`](../IProgressBarControl.md) instance for chai
 | exception | condition |
 | --- | --- |
 | ArgumentException | Thrown if *cultureName* is `null` or empty. |
+| CultureNotFoundException | Thrown when the specified culture name is not valid. |
 
 ### See Also
 

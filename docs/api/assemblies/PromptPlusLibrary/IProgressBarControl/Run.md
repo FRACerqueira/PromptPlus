@@ -16,7 +16,7 @@ public ResultPrompt<StateProgress> Run(CancellationToken token = default)
 
 ### Return Value
 
-The result with type [`ResultPrompt`](../ResultPrompt-1.md) of the ProgressBar control execution.
+The result with type [`ResultPrompt`](../ResultPrompt-1.md) containing the final state [`StateProgress`](../StateProgress.md) of the ProgressBar control.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets a Prompt for the control with an optional style.
+#### Sets the prompt text displayed to the user.
 
 ```csharp
 public IControlOptions Prompt(string prompt)
@@ -12,11 +12,11 @@ public IControlOptions Prompt(string prompt)
 
 | parameter | description |
 | --- | --- |
-| prompt | The text of prompt. |
+| prompt | The prompt text. Should be concise and user‑facing. |
 
 ### Return Value
 
-The current [`IControlOptions`](../IControlOptions.md) instance for chaining.
+The same [`IControlOptions`](../IControlOptions.md) instance for chaining.
 
 ### See Also
 

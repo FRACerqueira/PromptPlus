@@ -4,7 +4,7 @@
 </br>
 
 
-#### Creates a switch widget with the specified state and optional display values for the on and off positions.
+#### Creates a switch widget with an initial state and optional custom labels.
 
 ```csharp
 public ISwitchWidget Switch(bool value, string? onValue = null, string? offValue = null)
@@ -12,13 +12,13 @@ public ISwitchWidget Switch(bool value, string? onValue = null, string? offValue
 
 | parameter | description |
 | --- | --- |
-| value | A value indicating whether the switch is in the on (`true`) or off (`false`) position. |
-| onValue | The display value to show when the switch is in the on position. If `null`, a default label is used. |
-| offValue | The display value to show when the switch is in the off position. If `null`, a default label is used. |
+| value | Initial state: `true` for ON, `false` for OFF. |
+| onValue | Display label for the ON state. If `null`, a default label is used. |
+| offValue | Display label for the OFF state. If `null`, a default label is used. |
 
 ### Return Value
 
-An [`ISwitchWidget`](../ISwitchWidget.md) representing the configured switch widget.
+An [`ISwitchWidget`](../ISwitchWidget.md) for further customization.
 
 ### See Also
 

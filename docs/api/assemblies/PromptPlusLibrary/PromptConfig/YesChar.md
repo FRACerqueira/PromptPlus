@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets the character used for "Yes" input.
+#### Gets or sets the character representing a logical "Yes" input. Defaults to the localized resource value.
 
 ```csharp
 public char YesChar { get; set; }

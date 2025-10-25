@@ -4,7 +4,7 @@
 </br>
 
 
-#### Provides functionality for configuring and interacting with a File MultiSelect Control.
+#### Provides functionality for configuring and managing a file system-based multi-selection control.
 
 ```csharp
 public interface IFileMultiSelectControl
@@ -16,22 +16,26 @@ public interface IFileMultiSelectControl
 | --- | --- |
 | [AcceptHiddenAttributes](IFileMultiSelectControl/AcceptHiddenAttributes.md)(…) | Accept hidden folder and files in File MultiSelect Control. Default is false |
 | [AcceptSystemAttributes](IFileMultiSelectControl/AcceptSystemAttributes.md)(…) | Accept system folder and files in File MultiSelect Control. Default is false |
-| [EnabledSearchFilter](IFileMultiSelectControl/EnabledSearchFilter.md)(…) | Accept Search Filter strategy. Default valu is Disabled |
+| [EnabledSearchFilter](IFileMultiSelectControl/EnabledSearchFilter.md)(…) | Enables and configures the search filter functionality. |
 | [HideCountSelected](IFileMultiSelectControl/HideCountSelected.md)(…) | Hide tip count selected. Default false. |
-| [HideFilesBySize](IFileMultiSelectControl/HideFilesBySize.md)(…) | Defines a minimum and maximum (optional) range of size to discovery file |
-| [HideSizeInfo](IFileMultiSelectControl/HideSizeInfo.md)(…) | Hide folder and file size in File MultiSelect Control. Default is false |
+| [HideFilesBySize](IFileMultiSelectControl/HideFilesBySize.md)(…) | Filters files based on their size in bytes. |
+| [HideSizeInfo](IFileMultiSelectControl/HideSizeInfo.md)(…) | Controls the visibility of size information for files and folders. Default is false (shows sizes). |
 | [HideZeroEntries](IFileMultiSelectControl/HideZeroEntries.md)(…) | Hide folder with Zero Entries in File MultiSelect Control. Default is false |
-| [MaxWidth](IFileMultiSelectControl/MaxWidth.md)(…) | Sets the maximum width for the seleted items.Default value is 30 characters. |
-| [OnlyFolders](IFileMultiSelectControl/OnlyFolders.md)(…) | Load only Folders on File MultiSelect Control. Default is false |
+| [MaxWidth](IFileMultiSelectControl/MaxWidth.md)(…) | Sets the maximum display width for selected items in characters. |
+| [OnlyFolders](IFileMultiSelectControl/OnlyFolders.md)(…) | Configures the control to display and select only folders. Default is false (shows both files and folders). |
 | [Options](IFileMultiSelectControl/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](IFileMultiSelectControl/PageSize.md)(…) | Sets the maximum number of items to view per page. Default value is 10. |
 | [PredicateDisabled](IFileMultiSelectControl/PredicateDisabled.md)(…) | Set validation predicate for disabled item. |
-| [PredicateSelected](IFileMultiSelectControl/PredicateSelected.md)(…) | Set validation predicate for selected item. (2 methods) |
-| [Range](IFileMultiSelectControl/Range.md)(…) | Defines a minimum and maximum (optional) range of items selected in the list |
-| [Root](IFileMultiSelectControl/Root.md)(…) | Set folder root to File MultiSelect Control. Default value is Current folder of execution. |
+| [PredicateSelected](IFileMultiSelectControl/PredicateSelected.md)(…) | Sets a validation rule for file and folder selection. (2 methods) |
+| [Range](IFileMultiSelectControl/Range.md)(…) | Sets the allowed range for the number of selected items. |
+| [Root](IFileMultiSelectControl/Root.md)(…) | Sets the root directory for file browsing and selection. |
 | [Run](IFileMultiSelectControl/Run.md)(…) | Runs the File MultiSelect Control and returns the result. |
-| [SearchPattern](IFileMultiSelectControl/SearchPattern.md)(…) | Search pattern. Default is '*' |
+| [SearchPattern](IFileMultiSelectControl/SearchPattern.md)(…) | Sets the file search pattern for filtering displayed items. |
 | [Styles](IFileMultiSelectControl/Styles.md)(…) | Overwrites styles for the File MultiSelect Control. |
+
+### Remarks
+
+Supports folder navigation, file filtering, custom styling, and multiple item selection.
 
 ### See Also
 

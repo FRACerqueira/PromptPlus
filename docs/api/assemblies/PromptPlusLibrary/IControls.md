@@ -25,7 +25,7 @@ public interface IControls
 | [InputEmacs](IControls/InputEmacs.md)(…) | Reads a line from the stream using Emacs keyboard shortcuts. A line is defined as a sequence of characters followed by a carriage return ('\r'), a line feed ('\n'), or a carriage return immediately followed by a line feed. The resulting string does not contain the terminating carriage return and/or line feed. |
 | [KeyPress](IControls/KeyPress.md)(…) | Creates an KeyPress control with the specified prompt. |
 | [MaskDate](IControls/MaskDate.md)(…) | Creates an MaskEdit(Date) control with the specified prompt. |
-| [MaskDateOnly](IControls/MaskDateOnly.md)(…) | Creates an MaskEdit(Date) control with the specified prompt. |
+| [MaskDateOnly](IControls/MaskDateOnly.md)(…) | Creates an MaskEdit(DateOnly) control with the specified prompt. |
 | [MaskDateTime](IControls/MaskDateTime.md)(…) | Creates an MaskEdit(Date and Time) control with the specified prompt. |
 | [MaskDecimal](IControls/MaskDecimal.md)(…) | Creates an MaskEdit simples decimal control with the specified prompt. |
 | [MaskDecimalCurrency](IControls/MaskDecimalCurrency.md)(…) | Creates an MaskEdit simples Currency(decimal) type control with the specified prompt. |

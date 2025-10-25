@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the width of the chart bar. Default value is 80. The value must be greater than or equal to 10.
+#### Sets the horizontal width of the chart display in console characters. Default value is 80. The value must be greater than or equal to 10.
 
 ```csharp
 public IChartBarWidget Width(byte value)
@@ -12,7 +12,7 @@ public IChartBarWidget Width(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | The width to set. |
+| value | The width in characters (minimum 10). |
 
 ### Return Value
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Clear Before Cursor Emacs Key Ctrl+U = Clears the line content before the cursor
+#### Determines whether the Control+U (clear before cursor) Emacs shortcut was pressed.
 
 ```csharp
 public static bool IsClearBeforeCursor(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsClearBeforeCursor(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Control+U was pressed; otherwise, `false`.
 
 ### See Also
 

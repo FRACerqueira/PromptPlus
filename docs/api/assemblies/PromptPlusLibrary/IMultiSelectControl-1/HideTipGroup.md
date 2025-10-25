@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide tip with text of group. Default false.
+#### Controls the visibility of the group name tooltip. Default is `false`.
 
 ```csharp
 public IMultiSelectControl HideTipGroup(bool value = true)
@@ -12,11 +12,11 @@ public IMultiSelectControl HideTipGroup(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | If True, it shows the tip with the group text, otherwise nothing. |
+| value | Indicates whether to hide the group name tooltip. Default is `true`. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

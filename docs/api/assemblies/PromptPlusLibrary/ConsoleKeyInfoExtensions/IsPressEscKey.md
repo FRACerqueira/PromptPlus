@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Esc Key
+#### Determines whether Escape (without modifiers) was pressed.
 
 ```csharp
 public static bool IsPressEscKey(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsPressEscKey(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Escape was pressed; otherwise, `false`.
 
 ### See Also
 

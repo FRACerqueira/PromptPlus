@@ -4,7 +4,7 @@
 </br>
 
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate with custom error messaging.
 
 ```csharp
 public IMaskEditNumberControl PredicateSelected(Func<T, (bool, string?)> validselect)
@@ -12,7 +12,7 @@ public IMaskEditNumberControl PredicateSelected(Func<T, (bool, string?)> validse
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable with custom message. |
+| validselect | A predicate function that returns a tuple of (isValid, errorMessage) for validation. |
 
 ### Return Value
 
@@ -27,7 +27,7 @@ The current [`IMaskEditNumberControl`](../IMaskEditNumberControl-1.md) instance 
 
 ### IMaskEditNumberControl&lt;T&gt;.PredicateSelected method (2 of 2)
 
-#### Set validation predicate for selected item.
+#### Sets a validation predicate to determine if a selected value is valid.
 
 ```csharp
 public IMaskEditNumberControl PredicateSelected(Func<T, bool> validselect)
@@ -35,7 +35,7 @@ public IMaskEditNumberControl PredicateSelected(Func<T, bool> validselect)
 
 | parameter | description |
 | --- | --- |
-| validselect | A predicate function that determines whether an Item is considered valid and should be selectable. |
+| validselect | A predicate function that determines whether a value is valid and selectable. |
 
 ### Return Value
 

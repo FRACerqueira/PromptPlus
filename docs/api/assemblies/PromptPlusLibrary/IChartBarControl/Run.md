@@ -16,7 +16,7 @@ public ResultPrompt<ChartItem?> Run(CancellationToken token = default)
 
 ### Return Value
 
-The result with type [`ResultPrompt`](../ResultPrompt-1.md) of the input control execution.
+A [`ResultPrompt`](../ResultPrompt-1.md) containing the selected [`ChartItem`](../ChartItem.md).
 
 ### See Also
 

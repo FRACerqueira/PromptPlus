@@ -4,7 +4,7 @@
 </br>
 
 
-#### Prompt mask character.
+#### Sets the prompt mask character for unfilled positions in the input.
 
 ```csharp
 public IMaskEditDateTimeControl PromptMask(char value = '_')
@@ -12,7 +12,7 @@ public IMaskEditDateTimeControl PromptMask(char value = '_')
 
 | parameter | description |
 | --- | --- |
-| value | Prompt mask character. Default is '_'. |
+| value | The character to use as the prompt mask. Default is '_'. |
 
 ### Return Value
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Space Key + Ctrl Modifier
+#### Determines whether Control+Spacebar was pressed.
 
 ```csharp
 public static bool IsPressCtrlSpaceKey(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsPressCtrlSpaceKey(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Control+Spacebar was pressed; otherwise, `false`.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Runs the Node MultiSelect Control and returns the result.
+#### Executes the Node MultiSelect Control operation.
 
 ```csharp
 public ResultPrompt<T[]> Run(CancellationToken token = default)
@@ -12,11 +12,11 @@ public ResultPrompt<T[]> Run(CancellationToken token = default)
 
 | parameter | description |
 | --- | --- |
-| token | The CancellationToken to observe while waiting for the task to complete. Defaults to None. |
+| token | Optional cancellation token to cancel the operation. |
 
 ### Return Value
 
-The result of the Node MultiSelect Control execution.
+A [`ResultPrompt`](../ResultPrompt-1.md) containing an array of selected items.
 
 ### See Also
 

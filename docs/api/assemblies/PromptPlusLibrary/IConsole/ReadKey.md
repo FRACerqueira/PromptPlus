@@ -4,7 +4,7 @@
 </br>
 
 
-#### Obtains the next character or function key pressed by the user.
+#### Reads the next key press.
 
 ```csharp
 public ConsoleKeyInfo ReadKey(bool intercept = false)
@@ -12,11 +12,11 @@ public ConsoleKeyInfo ReadKey(bool intercept = false)
 
 | parameter | description |
 | --- | --- |
-| intercept | Determines whether to display the pressed key in the console window. true to not display the pressed key; otherwise, false. |
+| intercept | `true` to suppress echoing the key; `false` to display it. |
 
 ### Return Value
 
-An object that describes the System.ConsoleKey constant and Unicode character, if any, that correspond to the pressed console key. The System.ConsoleKeyInfo also describes, in a bitwise combination of System.ConsoleModifiers values, whether one or more Shift, Alt, or Ctrl modifier keys were pressed simultaneously with the console key.
+A ConsoleKeyInfo containing the key, character (if any), and modifier state.
 
 ### See Also
 

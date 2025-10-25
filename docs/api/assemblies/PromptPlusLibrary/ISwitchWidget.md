@@ -14,7 +14,7 @@ public interface ISwitchWidget
 
 | name | description |
 | --- | --- |
-| [Show](ISwitchWidget/Show.md)() | Display the Switch. |
+| [Show](ISwitchWidget/Show.md)() | Displays the Switch. |
 | [Styles](ISwitchWidget/Styles.md)(…) | Overwrites styles for the Switch Control. |
 | [Width](ISwitchWidget/Width.md)(…) | Sets the width of the Switch. Default value is 6. |
 

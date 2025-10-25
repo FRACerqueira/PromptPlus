@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get ConsoleModifiers Alt to HotKey
+#### Gets a value indicating whether Alt is included.
 
 ```csharp
 public bool Alt { get; }

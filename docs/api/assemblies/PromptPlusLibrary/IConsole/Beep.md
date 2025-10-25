@@ -4,7 +4,7 @@
 </br>
 
 
-#### Plays the sound of a beep through the console speaker.
+#### Emits an audible beep if supported.
 
 ```csharp
 public void Beep()

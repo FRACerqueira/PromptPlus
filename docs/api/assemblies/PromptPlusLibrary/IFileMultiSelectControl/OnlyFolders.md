@@ -4,7 +4,7 @@
 </br>
 
 
-#### Load only Folders on File MultiSelect Control. Default is false
+#### Configures the control to display and select only folders. Default is false (shows both files and folders).
 
 ```csharp
 public IFileMultiSelectControl OnlyFolders(bool value = true)
@@ -12,7 +12,7 @@ public IFileMultiSelectControl OnlyFolders(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | true only Folders, otherwise Folders and files |
+| value | When true, displays only folders; when false, shows both files and folders. |
 
 ### Return Value
 

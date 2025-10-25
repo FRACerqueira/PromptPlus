@@ -4,7 +4,7 @@
 </br>
 
 
-#### Defines the type of bar to use in the chart. Default value is Fill.
+#### Defines the visual representation style of bars in the chart. Default value is Fill.
 
 ```csharp
 public IChartBarWidget BarType(ChartBarType type = ChartBarType.Fill)
@@ -12,7 +12,7 @@ public IChartBarWidget BarType(ChartBarType type = ChartBarType.Fill)
 
 | parameter | description |
 | --- | --- |
-| type | The [`ChartBarType`](../ChartBarType.md) to set. |
+| type | The [`ChartBarType`](../ChartBarType.md) to set the bar appearance. |
 
 ### Return Value
 

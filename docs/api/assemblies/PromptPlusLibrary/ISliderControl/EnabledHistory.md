@@ -4,7 +4,7 @@
 </br>
 
 
-#### Enabled History and applies custom options to History feature.
+#### Enables history and applies custom options to the history feature.
 
 ```csharp
 public ISliderControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
@@ -12,8 +12,8 @@ public ISliderControl EnabledHistory(string filename, Action<IHistoryOptions>? o
 
 | parameter | description |
 | --- | --- |
-| filename | The name of the file to store history. |
-| options | An action to configure the [`IHistoryOptions`](../IHistoryOptions.md). Cannot be `null`. |
+| filename | The name of the file to store history. Cannot be `null`. |
+| options | An action to configure the [`IHistoryOptions`](../IHistoryOptions.md). |
 
 ### Return Value
 
@@ -27,7 +27,7 @@ The current [`ISliderControl`](../ISliderControl.md) instance for chaining.
 
 ### Remarks
 
-The Defaults hotkey to Hisyory is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
+The default hotkey for history is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
 
 ### See Also
 

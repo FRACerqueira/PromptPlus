@@ -13,17 +13,17 @@ public ITableSelectControl EnabledHistory(string filename, Action<IHistoryOption
 | parameter | description |
 | --- | --- |
 | filename | The name of the file to store history. |
-| options | An action to configure [`IHistoryOptions`](../IHistoryOptions.md). Optional. |
+| options | An optional action to configure [`IHistoryOptions`](../IHistoryOptions.md). |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *filename* is `null`. |
+| ArgumentNullException | Thrown when *filename* is null. |
 
 ### Remarks
 

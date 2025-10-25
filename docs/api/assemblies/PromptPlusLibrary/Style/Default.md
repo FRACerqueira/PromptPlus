@@ -4,7 +4,7 @@
 </br>
 
 
-#### Create a new style with default value from Console.
+#### Creates a style using the current console foreground and background colors.
 
 ```csharp
 public static Style Default()
@@ -12,7 +12,7 @@ public static Style Default()
 
 ### Return Value
 
-The new [`Style`](../Style.md)
+A new [`Style`](../Style.md) reflecting current console colors.
 
 ### See Also
 

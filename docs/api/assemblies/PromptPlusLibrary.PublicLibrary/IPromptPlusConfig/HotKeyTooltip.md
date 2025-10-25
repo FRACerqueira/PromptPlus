@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets [`HotKey`](../../PromptPlusLibrary/HotKey.md) for toggler Tooltips. Value is 'F1'.
+#### Gets the hotkey that toggles tooltip cycling (default: F1).
 
 ```csharp
 public HotKey HotKeyTooltip { get; }

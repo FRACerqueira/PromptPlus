@@ -12,7 +12,7 @@ public ISliderWidget HideElements(HideSlider value)
 
 | parameter | description |
 | --- | --- |
-| value | The elements to hide. |
+| value | The [`HideSlider`](../HideSlider.md) elements to hide. |
 
 ### Return Value
 

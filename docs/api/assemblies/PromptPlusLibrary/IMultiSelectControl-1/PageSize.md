@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum number of items to view per page. Default value is 10.
+#### Sets the maximum number of items displayed per page. Default is 10.
 
 ```csharp
 public IMultiSelectControl PageSize(byte value)
@@ -12,17 +12,17 @@ public IMultiSelectControl PageSize(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | Number of maximum items. |
+| value | The maximum number of items to display per page. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *value* is less than 1. |
+| ArgumentOutOfRangeException | Thrown when *value* is less than 1. |
 
 ### See Also
 

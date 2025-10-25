@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Shift + Tab Key
+#### Determines whether Shift+Tab was pressed.
 
 ```csharp
 public static bool IsPressShiftTabKey(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,11 @@ public static bool IsPressShiftTabKey(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if Shift+Tab was pressed; otherwise, `false`.
 
 ### See Also
 

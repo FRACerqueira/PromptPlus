@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents The Styles Table control/widget
+#### Represents The Styles Table control/widget This enum defines various regions or components of the Table control/widget.
 
 ```csharp
 public enum TableStyles

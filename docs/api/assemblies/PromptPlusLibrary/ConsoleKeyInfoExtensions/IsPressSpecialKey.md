@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Special Key
+#### Determines whether the pressed key matches the specified *key* and *modifier*.
 
 ```csharp
 public static bool IsPressSpecialKey(this ConsoleKeyInfo keyinfo, ConsoleKey key, 
@@ -13,13 +13,13 @@ public static bool IsPressSpecialKey(this ConsoleKeyInfo keyinfo, ConsoleKey key
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
-| key | ConsoleKey to compare |
-| modifier | ConsoleModifiers to compare |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
+| key | The expected ConsoleKey. |
+| modifier | The expected ConsoleModifiers. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if both key and modifier match; otherwise, `false`.
 
 ### See Also
 

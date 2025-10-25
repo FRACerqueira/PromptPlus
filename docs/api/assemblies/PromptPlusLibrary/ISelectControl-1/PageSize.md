@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum number of items to view per page. Default value is 10.
+#### Sets the maximum number of items to display per page. Default value is 10.
 
 ```csharp
 public ISelectControl PageSize(byte value)
@@ -12,7 +12,7 @@ public ISelectControl PageSize(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | Number of maximum items. |
+| value | The maximum number of items per page. |
 
 ### Return Value
 

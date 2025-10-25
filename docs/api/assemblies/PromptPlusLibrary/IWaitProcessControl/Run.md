@@ -16,7 +16,7 @@ public ResultPrompt<StateProcess[]> Run(CancellationToken token = default)
 
 ### Return Value
 
-The result with type [`ResultPrompt`](../ResultPrompt-1.md) of the Wait process control execution.
+The result with type [`ResultPrompt`](../ResultPrompt-1.md) of the [`StateProcess`](../StateProcess.md) execution.
 
 ### See Also
 

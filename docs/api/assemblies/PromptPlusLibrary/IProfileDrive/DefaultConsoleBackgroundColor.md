@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the default console background color.
+#### Gets the default background [`Color`](../Color.md) used when no explicit color is specified.
 
 ```csharp
 public Color DefaultConsoleBackgroundColor { get; }
 ```
+
+### Property Value
+
+The default background color.
 
 ### See Also
 

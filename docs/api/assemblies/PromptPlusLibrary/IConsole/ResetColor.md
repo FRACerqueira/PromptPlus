@@ -4,7 +4,7 @@
 </br>
 
 
-#### Reset colors to default values.
+#### Resets the current colors to the configured defaults.
 
 ```csharp
 public void ResetColor()

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the filter strategy for filtering items in the collection. Default is Disabled.
+#### Configures the filter strategy for searching and filtering items. Default is Disabled.
 
 ```csharp
 public IMultiSelectControl Filter(FilterMode value, bool caseinsensitive = true)
@@ -12,12 +12,12 @@ public IMultiSelectControl Filter(FilterMode value, bool caseinsensitive = true)
 
 | parameter | description |
 | --- | --- |
-| value | The filter mode. |
-| caseinsensitive | If true (Default), performs case-insensitive string comparison when filtering; otherwise case-sensitive comparison is used. |
+| value | The [`FilterMode`](../FilterMode.md) to apply. |
+| caseinsensitive | Indicates whether filtering should be case-insensitive. Default is `true`. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

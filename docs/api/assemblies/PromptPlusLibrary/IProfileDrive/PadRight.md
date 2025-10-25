@@ -4,11 +4,15 @@
 </br>
 
 
-#### Gets the screen margin right.
+#### Gets the right margin (number of spaces reserved at the right edge).
 
 ```csharp
 public byte PadRight { get; }
 ```
+
+### Property Value
+
+The right padding.
 
 ### See Also
 

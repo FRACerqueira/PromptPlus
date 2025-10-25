@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide columns headers. Default false.
+#### Sets whether to hide the column headers. The default is false.
 
 ```csharp
 public ITableSelectControl HideHeaders(bool value = true)
@@ -12,11 +12,11 @@ public ITableSelectControl HideHeaders(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | Hide headers |
+| value | When true, column headers are hidden; when false, headers are displayed. |
 
 ### Return Value
 
-The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for chaining.
+The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

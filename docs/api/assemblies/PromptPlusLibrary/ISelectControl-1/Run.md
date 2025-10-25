@@ -16,7 +16,7 @@ public ResultPrompt<T> Run(CancellationToken token = default)
 
 ### Return Value
 
-The result of the select control execution.
+The [`ResultPrompt`](../ResultPrompt-1.md) containing the selected item and abort status.
 
 ### See Also
 

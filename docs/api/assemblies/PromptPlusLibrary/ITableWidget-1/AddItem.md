@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds an item to the list.
+#### Adds an item to the table.
 
 ```csharp
 public ITableWidget AddItem(T value, bool disable = false)
@@ -12,8 +12,8 @@ public ITableWidget AddItem(T value, bool disable = false)
 
 | parameter | description |
 | --- | --- |
-| value | Item to add. |
-| disable | If `true`, the item is disabled. |
+| value | The item to add. |
+| disable | If `true`, the item is disabled. Default is `false`. |
 
 ### Return Value
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Converts a ConsoleColor to a [`Color`](../Color.md).
+#### Creates a new [`Style`](../Style.md) from the default console colors replacing only the foreground with the specified color.
 
 ```csharp
 public static implicit operator Style(Color color)
@@ -12,7 +12,11 @@ public static implicit operator Style(Color color)
 
 | parameter | description |
 | --- | --- |
-| color | The ConsoleColor to convert. |
+| color | The foreground [`Color`](../Color.md) to apply. |
+
+### Return Value
+
+A new [`Style`](../Style.md) using the specified foreground and current console background.
 
 ### See Also
 

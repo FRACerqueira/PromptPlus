@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide the input type tip. Default `false`.
+#### Controls the visibility of the input type tip in the interface.
 
 ```csharp
 public IMaskEditNumberControl HideTipInputType(bool value = true)
@@ -12,7 +12,7 @@ public IMaskEditNumberControl HideTipInputType(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | If `true`, hide type input. |
+| value | If `true`, hides the input type tip. Default is `true`. |
 
 ### Return Value
 

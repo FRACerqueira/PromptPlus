@@ -4,7 +4,7 @@
 </br>
 
 
-#### Display the Switch.
+#### Displays the Switch.
 
 ```csharp
 public void Show()

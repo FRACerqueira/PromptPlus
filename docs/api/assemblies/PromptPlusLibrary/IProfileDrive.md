@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents the interface for profile for console.
+#### Defines a console profile describing capabilities, dimensions, colors and display behavior for the current console/terminal session.
 
 ```csharp
 public interface IProfileDrive
@@ -14,19 +14,23 @@ public interface IProfileDrive
 
 | name | description |
 | --- | --- |
-| [BufferHeight](IProfileDrive/BufferHeight.md) { get; } | Gets the height of the buffer area. |
-| [BufferWidth](IProfileDrive/BufferWidth.md) { get; } | Gets the width of the buffer area. |
-| [ColorDepth](IProfileDrive/ColorDepth.md) { get; } | Gets the color capacity. |
-| [DefaultConsoleBackgroundColor](IProfileDrive/DefaultConsoleBackgroundColor.md) { get; } | Gets the default console background color. |
-| [DefaultConsoleForegroundColor](IProfileDrive/DefaultConsoleForegroundColor.md) { get; } | Gets the default console foreground color. |
-| [IsLegacy](IProfileDrive/IsLegacy.md) { get; } | Gets a value indicating whether the console is a legacy console. |
-| [IsTerminal](IProfileDrive/IsTerminal.md) { get; } | Gets a value indicating whether the console is a terminal. |
-| [IsUnicodeSupported](IProfileDrive/IsUnicodeSupported.md) { get; } | Gets a value indicating whether the console supports Unicode. |
-| [OverflowStrategy](IProfileDrive/OverflowStrategy.md) { get; } | Gets the display text overflow strategy. |
-| [PadLeft](IProfileDrive/PadLeft.md) { get; } | Gets the screen margin left. |
-| [PadRight](IProfileDrive/PadRight.md) { get; } | Gets the screen margin right. |
-| [ProfileName](IProfileDrive/ProfileName.md) { get; } | Gets the profile name. |
-| [SupportsAnsi](IProfileDrive/SupportsAnsi.md) { get; } | Gets a value indicating whether the console supports ANSI. |
+| [BufferHeight](IProfileDrive/BufferHeight.md) { get; } | Gets the height of the console buffer (in rows). |
+| [BufferWidth](IProfileDrive/BufferWidth.md) { get; } | Gets the width of the console buffer (in character cells). |
+| [ColorDepth](IProfileDrive/ColorDepth.md) { get; } | Gets the color depth (capability) of the console. |
+| [DefaultConsoleBackgroundColor](IProfileDrive/DefaultConsoleBackgroundColor.md) { get; } | Gets the default background [`Color`](./Color.md) used when no explicit color is specified. |
+| [DefaultConsoleForegroundColor](IProfileDrive/DefaultConsoleForegroundColor.md) { get; } | Gets the default foreground [`Color`](./Color.md) used when no explicit color is specified. |
+| [IsLegacy](IProfileDrive/IsLegacy.md) { get; } | Gets a value indicating whether the console is a legacy console lacking modern features (e.g. full ANSI or extended color support). |
+| [IsTerminal](IProfileDrive/IsTerminal.md) { get; } | Gets a value indicating whether the output device is a terminal (TTY) rather than redirected. |
+| [IsUnicodeSupported](IProfileDrive/IsUnicodeSupported.md) { get; } | Gets a value indicating whether Unicode output is fully supported. |
+| [OverflowStrategy](IProfileDrive/OverflowStrategy.md) { get; } | Gets the strategy used when rendered text exceeds the available width. |
+| [PadLeft](IProfileDrive/PadLeft.md) { get; } | Gets the left margin (number of spaces reserved at the left edge). |
+| [PadRight](IProfileDrive/PadRight.md) { get; } | Gets the right margin (number of spaces reserved at the right edge). |
+| [ProfileName](IProfileDrive/ProfileName.md) { get; } | Gets the profile name (e.g. an identifier for the terminal type or configuration). |
+| [SupportsAnsi](IProfileDrive/SupportsAnsi.md) { get; } | Gets a value indicating whether ANSI escape sequences are supported for styling/output. |
+
+### Remarks
+
+An implementation should provide immutable (snapshot) values representing the environment at the time it was created. These values can be used to adapt rendering (color depth, ANSI/Unicode support, margins, buffer size and overflow strategy).
 
 ### See Also
 

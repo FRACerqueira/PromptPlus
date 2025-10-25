@@ -4,7 +4,7 @@
 </br>
 
 
-#### Checks if two [`Color`](../Color.md) instances are equal.
+#### Determines whether two colors are equal.
 
 ```csharp
 public static bool operator ==(Color left, Color right)
@@ -12,12 +12,12 @@ public static bool operator ==(Color left, Color right)
 
 | parameter | description |
 | --- | --- |
-| left | The first Color instance to compare. |
-| right | The second Color instance to compare. |
+| left | First color. |
+| right | Second color. |
 
 ### Return Value
 
-`true` if the two ColorRGBs are equal, otherwise `false`.
+`true` if equal; otherwise `false`.
 
 ### See Also
 

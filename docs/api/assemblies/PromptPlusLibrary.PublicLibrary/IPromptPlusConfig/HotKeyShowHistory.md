@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get/Set [`HotKey`](../../PromptPlusLibrary/HotKey.md) to show History entries. Default value is 'F3'.
+#### Gets or sets the hotkey for showing input history entries (default: F3).
 
 ```csharp
 public HotKey HotKeyShowHistory { get; set; }

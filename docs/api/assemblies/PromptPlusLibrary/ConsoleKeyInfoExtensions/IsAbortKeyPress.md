@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Abort key Control
+#### Determines whether the configured global abort hotkey was pressed.
 
 ```csharp
 public static bool IsAbortKeyPress(this ConsoleKeyInfo keyinfo)
@@ -12,11 +12,15 @@ public static bool IsAbortKeyPress(this ConsoleKeyInfo keyinfo)
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if the abort hotkey matches; otherwise, `false`.
+
+### Remarks
+
+Uses the value defined in `PromptPlus.Config.HotKeyAbortKeyPress.KeyInfo`.
 
 ### See Also
 

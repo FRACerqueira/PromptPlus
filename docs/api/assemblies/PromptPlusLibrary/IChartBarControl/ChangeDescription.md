@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically changes the description using a user-defined function.
+#### Configures dynamic description generation for chart items.
 
 ```csharp
 public IChartBarControl ChangeDescription(Func<ChartItem, string> value)

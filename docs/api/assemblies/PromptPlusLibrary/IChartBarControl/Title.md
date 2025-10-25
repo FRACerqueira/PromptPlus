@@ -12,8 +12,8 @@ public IChartBarControl Title(string title, TextAlignment alignment = TextAlignm
 
 | parameter | description |
 | --- | --- |
-| title | The title chart |
-| alignment | The [`TextAlignment`](../TextAlignment.md) of title. |
+| title | The text to display as the chart title. |
+| alignment | The [`TextAlignment`](../TextAlignment.md) for positioning the title text. |
 
 ### Return Value
 

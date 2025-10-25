@@ -4,11 +4,15 @@
 </br>
 
 
-#### Get/Set the default console foreground color.
+#### Gets or sets the default foreground [`Color`](../Color.md) applied when no explicit color is specified.
 
 ```csharp
 public Color DefaultConsoleForegroundColor { get; set; }
 ```
+
+### Property Value
+
+The default foreground color.
 
 ### See Also
 

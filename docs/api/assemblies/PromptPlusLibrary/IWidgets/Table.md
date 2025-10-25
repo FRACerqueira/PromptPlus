@@ -4,7 +4,7 @@
 </br>
 
 
-#### Creates a new table widget for displaying tabular data of the specified type.
+#### Creates a table widget for tabular display of items of type *T*.
 
 ```csharp
 public ITableWidget<T> Table<T>()
@@ -13,11 +13,11 @@ public ITableWidget<T> Table<T>()
 
 | parameter | description |
 | --- | --- |
-| T | The type of the data items to be displayed in the table. |
+| T | Reference type of the items to show. |
 
 ### Return Value
 
-An [`ITableWidget`](../ITableWidget-1.md) instance for further customization.
+An [`ITableWidget`](../ITableWidget-1.md) for further customization.
 
 ### See Also
 

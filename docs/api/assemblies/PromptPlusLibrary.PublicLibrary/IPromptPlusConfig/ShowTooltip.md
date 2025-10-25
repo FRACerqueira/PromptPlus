@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets enabled show tooltip for control. If `true`, the show tooltip; otherwise, it is hide.
+#### Gets or sets whether tooltips are shown by default for controls. If `true`, tooltip rendering is enabled.
 
 ```csharp
 public bool ShowTooltip { get; set; }

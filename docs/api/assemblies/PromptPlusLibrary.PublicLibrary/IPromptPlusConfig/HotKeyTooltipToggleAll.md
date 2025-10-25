@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets or sets [`HotKey`](../../PromptPlusLibrary/HotKey.md) default for toggler select all items. Default value is 'F2'.
+#### Gets or sets the hotkey for toggling selection of all items (default: F2).
 
 ```csharp
 public HotKey HotKeyTooltipToggleAll { get; set; }

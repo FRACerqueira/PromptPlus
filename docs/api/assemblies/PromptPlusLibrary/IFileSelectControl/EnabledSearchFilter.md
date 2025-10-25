@@ -4,7 +4,7 @@
 </br>
 
 
-#### Accept Search Filter strategy. Default valu is Disabled
+#### Configures the search filter functionality. Default value is Disabled.
 
 ```csharp
 public IFileSelectControl EnabledSearchFilter(FilterMode filter = FilterMode.Contains)
@@ -12,7 +12,7 @@ public IFileSelectControl EnabledSearchFilter(FilterMode filter = FilterMode.Con
 
 | parameter | description |
 | --- | --- |
-| filter | Filter strategy for filter items.Default value is Contains.For the 'Contains' filter. |
+| filter | The filtering strategy to apply. Defaults to Contains. |
 
 ### Return Value
 

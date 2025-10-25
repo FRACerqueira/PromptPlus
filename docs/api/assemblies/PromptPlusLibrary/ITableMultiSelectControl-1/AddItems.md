@@ -12,18 +12,12 @@ public ITableMultiSelectControl AddItems(IEnumerable<T> values, bool disable = f
 
 | parameter | description |
 | --- | --- |
-| values | Items to add. |
-| disable | If `true`, the items are disabled. |
+| values | The collection of items to add. |
+| disable | If `true`, all items are added as disabled; otherwise, they are enabled. |
 
 ### Return Value
 
 The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentNullException | Thrown if *values* is `null`. |
 
 ### See Also
 

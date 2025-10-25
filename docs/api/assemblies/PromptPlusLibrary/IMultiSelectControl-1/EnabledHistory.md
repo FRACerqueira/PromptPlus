@@ -4,7 +4,7 @@
 </br>
 
 
-#### Enables history and applies custom options to the history feature.
+#### Enables history persistence with optional custom configuration.
 
 ```csharp
 public IMultiSelectControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
@@ -12,18 +12,18 @@ public IMultiSelectControl EnabledHistory(string filename, Action<IHistoryOption
 
 | parameter | description |
 | --- | --- |
-| filename | The name of the file to store history. |
-| options | An action to configure [`IHistoryOptions`](../IHistoryOptions.md). Optional. |
+| filename | The name of the file to store history data. |
+| options | An optional action delegate to configure [`IHistoryOptions`](../IHistoryOptions.md). |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *filename* is `null`. |
+| ArgumentNullException | Thrown when *filename* is `null`. |
 
 ### See Also
 

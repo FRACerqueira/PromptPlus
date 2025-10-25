@@ -4,7 +4,7 @@
 </br>
 
 
-#### Interface for ChartBar Control functionality.
+#### Provides interactive chart bar control functionality with customizable visualization and data manipulation features .
 
 ```csharp
 public interface IChartBarControl
@@ -14,18 +14,18 @@ public interface IChartBarControl
 
 | name | description |
 | --- | --- |
-| [AddItem](IChartBarControl/AddItem.md)(…) | Adds an item to the chart bar. |
+| [AddItem](IChartBarControl/AddItem.md)(…) | Adds a data item to be displayed in the chart bar visualization. |
 | [BarType](IChartBarControl/BarType.md)(…) | Defines the type of bar to use in the chart. Default value is Fill. |
-| [ChangeDescription](IChartBarControl/ChangeDescription.md)(…) | Dynamically changes the description using a user-defined function. |
+| [ChangeDescription](IChartBarControl/ChangeDescription.md)(…) | Configures dynamic description generation for chart items. |
 | [Culture](IChartBarControl/Culture.md)(…) | Sets the CultureInfo to use for displaying values. Default value is current PromptPlus culture. (2 methods) |
 | [FractionalDigits](IChartBarControl/FractionalDigits.md)(…) | Defines the fractional digits of values to display. Default is 2. |
 | [HideElements](IChartBarControl/HideElements.md)(…) | Hides specific elements of the chart bar. Default is to show all elements. |
 | [Interaction&lt;T&gt;](IChartBarControl/Interaction.md)(…) | Performs an interaction with each item in the collection. |
 | [Layout](IChartBarControl/Layout.md)(…) | Sets the layout of the chart bar. Default value is Standard. |
 | [Options](IChartBarControl/Options.md)(…) | Applies custom options to the control. |
-| [OrderBy](IChartBarControl/OrderBy.md)(…) | Sorts bars and labels. |
-| [PageSize](IChartBarControl/PageSize.md)(…) | Set max.item view per page.Default value is 5. |
-| [PredicateSelected](IChartBarControl/PredicateSelected.md)(…) | Set validation predicate for selected item. (2 methods) |
+| [OrderBy](IChartBarControl/OrderBy.md)(…) | Defines the display order of chart items based on specified criteria. |
+| [PageSize](IChartBarControl/PageSize.md)(…) | Sets the maximum number of items to display per page in the chart visualization. Default value is 5. |
+| [PredicateSelected](IChartBarControl/PredicateSelected.md)(…) | Sets a validation rule for determining which items can be selected. (2 methods) |
 | [Run](IChartBarControl/Run.md)(…) | Runs the ChartBar control and returns the result. |
 | [ShowLegends](IChartBarControl/ShowLegends.md)(…) | Shows legends after the chart bar. Default is false. |
 | [Styles](IChartBarControl/Styles.md)(…) | Overwrites styles for the chart bar. |

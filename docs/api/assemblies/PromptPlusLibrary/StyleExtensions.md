@@ -4,7 +4,7 @@
 </br>
 
 
-#### Contains extension methods for [`Style`](./Style.md).
+#### Provides extension methods for creating modified [`Style`](./Style.md) instances by selectively changing foreground, background, or overflow strategy.
 
 ```csharp
 public static class StyleExtensions
@@ -14,9 +14,9 @@ public static class StyleExtensions
 
 | name | description |
 | --- | --- |
-| static [Background](StyleExtensions/Background.md)(…) | Create a new style from the specified one with the specified background color. |
-| static [ForeGround](StyleExtensions/ForeGround.md)(…) | Create a new style from the specified one with the specified foreground color. |
-| static [Overflow](StyleExtensions/Overflow.md)(…) | Create a new style from the specified one with the specified overfow strategy |
+| static [Background](StyleExtensions/Background.md)(…) | Creates a new [`Style`](./Style.md) based on *style* with a replaced background color. Foreground color and overflow strategy are preserved. |
+| static [ForeGround](StyleExtensions/ForeGround.md)(…) | Creates a new [`Style`](./Style.md) based on *style* with a replaced foreground color. Background and overflow strategy are preserved. |
+| static [Overflow](StyleExtensions/Overflow.md)(…) | Creates a new [`Style`](./Style.md) based on *style* with a replaced overflow strategy. Foreground and background colors are preserved. |
 
 ### See Also
 

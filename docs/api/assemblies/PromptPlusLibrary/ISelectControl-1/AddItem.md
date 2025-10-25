@@ -12,8 +12,8 @@ public ISelectControl AddItem(T value, bool disable = false)
 
 | parameter | description |
 | --- | --- |
-| value | Item to add. |
-| disable | If `true`, the item is disabled. |
+| value | The item to add. Cannot be `null`. |
+| disable | If `true`, the item is disabled and cannot be selected. |
 
 ### Return Value
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Defines a minimum and maximum (optional) range of items selected in the list
+#### Sets the allowed range for the number of selected items.
 
 ```csharp
 public IFileMultiSelectControl Range(int minvalue, int? maxvalue = null)
@@ -12,8 +12,8 @@ public IFileMultiSelectControl Range(int minvalue, int? maxvalue = null)
 
 | parameter | description |
 | --- | --- |
-| minvalue | Minimum number of items |
-| maxvalue | Maximum number of items |
+| minvalue | Minimum number of items that must be selected. |
+| maxvalue | Maximum number of items that can be selected. Null for unlimited. |
 
 ### Return Value
 

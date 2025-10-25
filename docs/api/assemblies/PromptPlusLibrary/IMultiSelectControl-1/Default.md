@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the initial selected values of the MultiSelect.
+#### Sets the initial selected values for the MultiSelect control.
 
 ```csharp
 public IMultiSelectControl Default(IEnumerable<T> values, bool useDefaultHistory = true)
@@ -12,18 +12,18 @@ public IMultiSelectControl Default(IEnumerable<T> values, bool useDefaultHistory
 
 | parameter | description |
 | --- | --- |
-| values | The initial values selected. |
-| useDefaultHistory | Indicates whether to use the default value from history (if enabled). |
+| values | The collection of items to be initially selected. |
+| useDefaultHistory | Indicates whether to override initial values with history data when history is enabled. Default is `true`. |
 
 ### Return Value
 
-The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for chaining.
+The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *values* is `null`. |
+| ArgumentNullException | Thrown when *values* is `null`. |
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Writes the text representation of a character array to the standard output stream with a line terminator.
+#### Writes a character array followed by a line terminator.
 
 ```csharp
 public IJointOutput WriteLine(char[] buffer, Style? style = default, bool clearRestOfLine = true)
@@ -12,13 +12,13 @@ public IJointOutput WriteLine(char[] buffer, Style? style = default, bool clearR
 
 | parameter | description |
 | --- | --- |
-| buffer | A character array to write. |
-| style | The [`Style`](../Style.md) to overwrite the current output style. |
-| clearRestOfLine | Indicates whether to clear the rest of the line. |
+| buffer | The characters to write. Ignored if empty. |
+| style | Optional style override. If `null`, the current output style/default colors are used. |
+| clearRestOfLine | If `true`, clears the remainder of the current line before emitting the newline. |
 
 ### Return Value
 
-The current [`IJointOutput`](../IJointOutput.md) instance.
+The same [`IJointOutput`](../IJointOutput.md) instance for chaining.
 
 ### See Also
 
@@ -30,7 +30,7 @@ The current [`IJointOutput`](../IJointOutput.md) instance.
 
 ### IJointOutput.WriteLine method (2 of 2)
 
-#### Writes the text representation of a string value to the standard output stream with a line terminator.
+#### Writes a string followed by a line terminator.
 
 ```csharp
 public IJointOutput WriteLine(string value, Style? style = default, bool clearRestOfLine = true)
@@ -38,13 +38,13 @@ public IJointOutput WriteLine(string value, Style? style = default, bool clearRe
 
 | parameter | description |
 | --- | --- |
-| value | A string value to write. |
-| style | The [`Style`](../Style.md) to overwrite the current output style. |
-| clearRestOfLine | Indicates whether to clear the rest of the line. |
+| value | The text to write. If `null` or empty, only the line terminator is emitted. |
+| style | Optional style override. If `null`, the current output style/default colors are used. |
+| clearRestOfLine | If `true`, clears the remainder of the current line before emitting the newline. |
 
 ### Return Value
 
-The current [`IJointOutput`](../IJointOutput.md) instance.
+The same [`IJointOutput`](../IJointOutput.md) instance for chaining.
 
 ### See Also
 

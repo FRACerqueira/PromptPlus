@@ -4,7 +4,7 @@
 </br>
 
 
-#### Default constructor
+#### Initializes a new instance of the [`PromptConfig`](../PromptConfig.md) class using the current thread culture and Unicode symbols enabled.
 
 ```csharp
 public PromptConfig()
@@ -19,7 +19,7 @@ public PromptConfig()
 
 ### PromptConfig constructor (2 of 2)
 
-#### Initializes a new instance of the [`PromptConfig`](../PromptConfig.md) class with the specified culture.
+#### Initializes a new instance of the [`PromptConfig`](../PromptConfig.md) class with explicit Unicode capability and culture.
 
 ```csharp
 public PromptConfig(bool isunicode, CultureInfo culture)
@@ -27,8 +27,8 @@ public PromptConfig(bool isunicode, CultureInfo culture)
 
 | parameter | description |
 | --- | --- |
-| isunicode |  |
-| culture | The culture to be used for the configuration. |
+| isunicode | If `true`, attempts to use Unicode symbols; otherwise ASCII fallbacks are used. |
+| culture | The base culture for resources, formatting and defaults. |
 
 ### See Also
 

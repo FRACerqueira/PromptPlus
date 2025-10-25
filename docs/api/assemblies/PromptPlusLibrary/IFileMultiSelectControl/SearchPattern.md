@@ -4,7 +4,7 @@
 </br>
 
 
-#### Search pattern. Default is '*'
+#### Sets the file search pattern for filtering displayed items.
 
 ```csharp
 public IFileMultiSelectControl SearchPattern(string value)
@@ -12,7 +12,7 @@ public IFileMultiSelectControl SearchPattern(string value)
 
 | parameter | description |
 | --- | --- |
-| value | Search pattern |
+| value | The search pattern (e.g., "*.txt", "*.cs"). Default is '*'. |
 
 ### Return Value
 

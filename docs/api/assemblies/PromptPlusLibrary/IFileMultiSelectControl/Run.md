@@ -16,7 +16,7 @@ public ResultPrompt<ItemFile[]> Run(CancellationToken token = default)
 
 ### Return Value
 
-The result of the File MultiSelect Control execution.
+A [`ResultPrompt`](../ResultPrompt-1.md) containing the array of selected [`ItemFile`](../ItemFile.md) instances.
 
 ### See Also
 

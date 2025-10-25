@@ -16,7 +16,7 @@ public ResultPrompt<T> Run(CancellationToken token = default)
 
 ### Return Value
 
-The result of the input control execution.
+A [`ResultPrompt`](../ResultPrompt-1.md) containing the the input control execution.
 
 ### See Also
 

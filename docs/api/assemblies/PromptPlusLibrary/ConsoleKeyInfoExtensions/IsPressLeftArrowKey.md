@@ -4,7 +4,7 @@
 </br>
 
 
-#### Check ConsoleKeyInfo is Left Arrow Key
+#### Determines whether LeftArrow or (optionally) Control+B (Emacs move backward) was pressed.
 
 ```csharp
 public static bool IsPressLeftArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
@@ -12,12 +12,12 @@ public static bool IsPressLeftArrowKey(this ConsoleKeyInfo keyinfo, bool emacske
 
 | parameter | description |
 | --- | --- |
-| keyinfo | ConsoleKeyInfo to check |
-| emacskeys | if `true` accept 'CTRL+B' |
+| keyinfo | The ConsoleKeyInfo to evaluate. |
+| emacskeys | If `true`, also accepts Control+B. |
 
 ### Return Value
 
-`true` if equal otherwise `false`.
+`true` if LeftArrow (or Emacs equivalent) was pressed; otherwise, `false`.
 
 ### See Also
 

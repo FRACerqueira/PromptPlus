@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hide count children. Default is false
+#### Controls the visibility of child node counts in the tree display. When enabled, hides the count indicator next to parent nodes.
 
 ```csharp
 public INodeTreeSelectControl HideSize(bool value = true)
@@ -12,7 +12,7 @@ public INodeTreeSelectControl HideSize(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | true Show size, otherwise 'no' |
+| value | True to hide child counts, false to show them. |
 
 ### Return Value
 

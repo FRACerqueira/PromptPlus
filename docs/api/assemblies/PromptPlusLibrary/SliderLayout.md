@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents The slider Layout
+#### Represents the layout and navigation behavior of the slider.
 
 ```csharp
 public enum SliderLayout

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Create a new style from the specified one with the specified overfow strategy
+#### Creates a new [`Style`](../Style.md) based on *style* with a replaced overflow strategy. Foreground and background colors are preserved.
 
 ```csharp
 public static Style Overflow(this Style style, Overflow overflow)
@@ -12,12 +12,12 @@ public static Style Overflow(this Style style, Overflow overflow)
 
 | parameter | description |
 | --- | --- |
-| style | The style. |
-| overflow | The `Overflow` overflow strategy |
+| style | The original style. |
+| overflow | The new `Overflow` strategy. |
 
 ### Return Value
 
-The new [`Style`](../Style.md)
+A new [`Style`](../Style.md) with the updated overflow strategy.
 
 ### See Also
 

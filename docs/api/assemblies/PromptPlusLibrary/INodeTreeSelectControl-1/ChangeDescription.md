@@ -4,7 +4,7 @@
 </br>
 
 
-#### Dynamically changes the description of the Select based on its value.
+#### Dynamically changes the description of the Select based on its value. The description updates whenever the selected value changes during interaction.
 
 ```csharp
 public INodeTreeSelectControl ChangeDescription(Func<T, string> value)

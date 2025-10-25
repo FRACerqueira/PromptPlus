@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets the Overflow strategy.
+#### Gets the [`Overflow`](../Overflow.md) strategy applied when content exceeds the available width.
 
 ```csharp
 public Overflow OverflowStrategy { get; }

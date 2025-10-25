@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the function to display text for items in the list. Default is `Item.ToString()`.
+#### Sets the function to display text for items in the list. Default is the result of calling ToString on each item.
 
 ```csharp
 public ISelectControl TextSelector(Func<T, string> value)
@@ -12,7 +12,7 @@ public ISelectControl TextSelector(Func<T, string> value)
 
 | parameter | description |
 | --- | --- |
-| value | Function to display item text. |
+| value | A function that returns the display text for each item. Cannot be `null`. |
 
 ### Return Value
 

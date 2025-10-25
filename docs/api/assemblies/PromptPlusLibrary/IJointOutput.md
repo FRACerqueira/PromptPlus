@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents the buffer of the Joint to output console
+#### Defines a fluent API for writing styled (and token‑colored) text to an exclusive console output buffer.
 
 ```csharp
 public interface IJointOutput
@@ -14,14 +14,18 @@ public interface IJointOutput
 
 | name | description |
 | --- | --- |
-| [Clear](IJointOutput/Clear.md)() | Clears the console buffer and corresponding console window of display information. Moves cursor to the top of the console. |
-| [DefaultColors](IJointOutput/DefaultColors.md)(…) | Sets the default foreground and background console colors. |
-| [Done](IJointOutput/Done.md)() | Releases the console exclusive buffer. |
-| [ResetColor](IJointOutput/ResetColor.md)() | Resets colors to default values. |
-| [Write](IJointOutput/Write.md)(…) | Writes the text representation of a character array to the standard output stream. (2 methods) |
-| [WriteColor](IJointOutput/WriteColor.md)(…) | Writes the text representation of a string value with token colors to the standard output stream. |
-| [WriteLine](IJointOutput/WriteLine.md)(…) | Writes the text representation of a character array to the standard output stream with a line terminator. (2 methods) |
-| [WriteLineColor](IJointOutput/WriteLineColor.md)(…) | Writes the text representation of a string value with token colors to the standard output stream with a line terminator. |
+| [Clear](IJointOutput/Clear.md)() | Clears the buffered content (and console surface) and moves the cursor to the top (0,0). |
+| [DefaultColors](IJointOutput/DefaultColors.md)(…) | Sets the default foreground and background colors used for subsequent write operations when no explicit [`Style`](./Style.md) is supplied. |
+| [Done](IJointOutput/Done.md)() | Flushes the staged buffer to the console, releases exclusive access, and returns the final cursor position. |
+| [ResetColor](IJointOutput/ResetColor.md)() | Resets the current (active) foreground and background colors to their defaults. |
+| [Write](IJointOutput/Write.md)(…) | Writes a character array using an optional override [`Style`](./Style.md). (2 methods) |
+| [WriteColor](IJointOutput/WriteColor.md)(…) | Writes a string whose content contains color tokens, applying the specified overflow strategy. |
+| [WriteLine](IJointOutput/WriteLine.md)(…) | Writes a character array followed by a line terminator. (2 methods) |
+| [WriteLineColor](IJointOutput/WriteLineColor.md)(…) | Writes a tokenized string followed by a line terminator, applying the specified overflow strategy. |
+
+### Remarks
+
+Implementations typically stage writes in an off‑screen buffer and flush them atomically via [`Done`](./IJointOutput/Done.md). Methods returning [`IJointOutput`](./IJointOutput.md) support chaining.
 
 ### See Also
 

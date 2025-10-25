@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents all controls, methods, properties and extensions for [`PromptPlus`](./PromptPlus.md).
+#### Provides the global entry point for all PromptPlus controls, widgets, configuration access and console services.
 
 ```csharp
 public static class PromptPlus
@@ -14,15 +14,19 @@ public static class PromptPlus
 
 | name | description |
 | --- | --- |
-| static [Config](PromptPlus/Config.md) { get; } | Get global properties config for controls/widgets |
-| static [Console](PromptPlus/Console.md) { get; } | Gets the Console drive. |
-| static [Controls](PromptPlus/Controls.md) { get; } | Represents all controls for PromptPlus |
-| static [Widgets](PromptPlus/Widgets.md) { get; } | Represents all Widgets for PromptPlus |
+| static [Config](PromptPlus/Config.md) { get; } | Gets the global configuration instance applied to newly created controls and widgets. |
+| static [Console](PromptPlus/Console.md) { get; } | Gets the current console driver abstraction providing low-level I/O, color and buffer operations. |
+| static [Controls](PromptPlus/Controls.md) { get; } | Gets a factory for interactive controls (input, select, file select, progress, masking, etc.). Each method returns a fluent configuration object. |
+| static [Widgets](PromptPlus/Widgets.md) { get; } | Gets a factory for creating and emitting visual widgets (banner, dash lines, chart bar, slider, etc.). |
 | static [ExclusiveContext](PromptPlus/ExclusiveContext.md)(…) | Create Exclusive context to write on standard output stream for any output included until the 'dispose' is done. |
 | static [Join](PromptPlus/Join.md)(…) | Wait all output using exclusive buffer to console |
 | static [OutputError](PromptPlus/OutputError.md)(…) | Create context to write on standard error output stream for any output included until the 'dispose' is done. |
-| static [ProfileConfig](PromptPlus/ProfileConfig.md)(…) | Set profile Console/terminal |
+| static [ProfileConfig](PromptPlus/ProfileConfig.md)(…) | Reconfigures the active console profile (colors, padding, overflow). Thread-safe. |
 | static [WriteLines](PromptPlus/WriteLines.md)(…) | Write lines with line terminator |
+
+### Remarks
+
+The static initialization sequence detects terminal capabilities (ANSI, Unicode, color depth, legacy mode), captures the original console state (culture, encoding, colors) and prepares an internal profile. Resources are restored automatically on process exit.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Converts a Color number into a [`Color`](../Color.md).
+#### Creates a color from a palette index.
 
 ```csharp
 public static Color FromInt32(int number)
@@ -12,11 +12,11 @@ public static Color FromInt32(int number)
 
 | parameter | description |
 | --- | --- |
-| number | The Color number. |
+| number | Palette index. |
 
 ### Return Value
 
-The Color representing the specified Color number.
+The color for the given index.
 
 ### See Also
 

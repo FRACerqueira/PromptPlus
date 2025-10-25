@@ -4,7 +4,7 @@
 </br>
 
 
-#### Applies custom options to the control.
+#### Applies custom options to configure the control's behavior.
 
 ```csharp
 public INodeTreeMultiSelectControl Options(Action<IControlOptions> options)
@@ -12,7 +12,7 @@ public INodeTreeMultiSelectControl Options(Action<IControlOptions> options)
 
 | parameter | description |
 | --- | --- |
-| options | An action to configure [`IControlOptions`](../IControlOptions.md). Cannot be `null`. |
+| options | An action to configure [`IControlOptions`](../IControlOptions.md). Must not be `null`. |
 
 ### Return Value
 

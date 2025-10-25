@@ -4,7 +4,7 @@
 </br>
 
 
-#### The input behavior. Defaul value is EditSkipToInput.
+#### The input behavior. Default value is EditSkipToInput.
 
 ```csharp
 public IMaskEditStringControl InputMode(InputBehavior inputBehavior = InputBehavior.EditSkipToInput)

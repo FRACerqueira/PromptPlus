@@ -16,7 +16,7 @@ public ResultPrompt<ItemFile> Run(CancellationToken token = default)
 
 ### Return Value
 
-The result of the File Select Control execution.
+A [`ResultPrompt`](../ResultPrompt-1.md) containing the selected item, [`ItemFile`](../ItemFile.md).
 
 ### See Also
 

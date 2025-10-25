@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get global properties config for controls/widgets
+#### Gets the global configuration instance applied to newly created controls and widgets.
 
 ```csharp
 public static IPromptPlusConfig Config { get; }

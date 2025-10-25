@@ -4,7 +4,7 @@
 </br>
 
 
-#### Get/Set [`HotKey`](../HotKey.md) to show History entries. Default value is 'F3'.
+#### Gets or sets the hotkey for showing input history entries (F3).
 
 ```csharp
 public HotKey HotKeyShowHistory { get; set; }

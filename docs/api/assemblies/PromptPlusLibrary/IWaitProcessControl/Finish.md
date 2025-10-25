@@ -4,7 +4,7 @@
 </br>
 
 
-#### Finish answer to show when Wait process is completed.
+#### Defines the finish answer to display when the Wait process is completed.
 
 ```csharp
 public IWaitProcessControl Finish(Func<IEnumerable<StateProcess>, string> finishtext)
@@ -12,7 +12,7 @@ public IWaitProcessControl Finish(Func<IEnumerable<StateProcess>, string> finish
 
 | parameter | description |
 | --- | --- |
-| finishtext | Function to Text Finish answer |
+| finishtext | A function that takes the process states and returns the finish answer text. Cannot be `null`. |
 
 ### Return Value
 

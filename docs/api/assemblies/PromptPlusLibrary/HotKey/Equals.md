@@ -4,7 +4,7 @@
 </br>
 
 
-#### Checks Hotkey instances are equal the ConsoleKeyInfo.
+#### Determines whether this hotkey matches the provided ConsoleKeyInfo.
 
 ```csharp
 public bool Equals(ConsoleKeyInfo other)
@@ -12,11 +12,11 @@ public bool Equals(ConsoleKeyInfo other)
 
 | parameter | description |
 | --- | --- |
-| other | The ConsoleKeyInfo to compare. |
+| other | The key info to compare. |
 
 ### Return Value
 
-`true` if the Hotkey are equal, otherwise `false`.
+`true` if both the key and modifier set are equal; otherwise, `false`.
 
 ### See Also
 

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents a Color RGB.
+#### Represents an RGB color (optionally mapped to an indexed palette entry).
 
 ```csharp
 public struct Color : IEquatable<Color>
@@ -12,15 +12,15 @@ public struct Color : IEquatable<Color>
 
 | parameter | description |
 | --- | --- |
-| red | The red component. |
-| green | The green component. |
-| blue | The blue component. |
+| red | The red component (0-255). |
+| green | The green component (0-255). |
+| blue | The blue component (0-255). |
 
 ### Public Members
 
 | name | description |
 | --- | --- |
-| [Color](Color/Color.md)(…) | Represents a Color RGB. |
+| [Color](Color/Color.md)(…) | Represents an RGB color (optionally mapped to an indexed palette entry). |
 | static [Aqua](Color/Aqua.md) { get; } | Gets the Color "Aqua" (RGB 0,255,255). |
 | static [Aquamarine1](Color/Aquamarine1.md) { get; } | Gets the Color "Aquamarine1" (RGB 95,255,215). |
 | static [Aquamarine1_1](Color/Aquamarine1_1.md) { get; } | Gets the Color "Aquamarine1_1" (RGB 135,255,215). |
@@ -278,26 +278,26 @@ public struct Color : IEquatable<Color>
 | static [Yellow4](Color/Yellow4.md) { get; } | Gets the Color "Yellow4" (RGB 135,135,0). |
 | static [Yellow4_1](Color/Yellow4_1.md) { get; } | Gets the Color "Yellow4_1" (RGB 135,175,0). |
 | static [FromConsoleColor](Color/FromConsoleColor.md)(…) | Converts a ConsoleColor to a [`Color`](./Color.md). |
-| static [FromHtml](Color/FromHtml.md)(…) | Converts string Color Html format (#RRGGBB) into [`Color`](./Color.md). |
-| static [FromInt32](Color/FromInt32.md)(…) | Converts a Color number into a [`Color`](./Color.md). |
+| static [FromHtml](Color/FromHtml.md)(…) | Parses a HTML hex color string (#RRGGBB) into a [`Color`](./Color.md). |
+| static [FromInt32](Color/FromInt32.md)(…) | Creates a color from a palette index. |
 | [B](Color/B.md) { get; } | Gets the blue component. |
 | [G](Color/G.md) { get; } | Gets the green component. |
 | [R](Color/R.md) { get; } | Gets the red component. |
-| [Blend](Color/Blend.md)(…) | Blends two ColorRGBs. |
-| [Equals](Color/Equals.md)(…) | Checks if [`Color`](./Color.md) are equal the instance. |
-| override [Equals](Color/Equals.md)(…) | Checks if [`Color`](./Color.md) are equal the instance. |
+| [Blend](Color/Blend.md)(…) | Blends (interpolates) this color with another color. |
+| [Equals](Color/Equals.md)(…) | Determines whether this instance equals another [`Color`](./Color.md). |
+| override [Equals](Color/Equals.md)(…) | Determines whether this instance equals another object. |
 | override [GetHashCode](Color/GetHashCode.md)() |  |
-| [GetInvertedColor](Color/GetInvertedColor.md)() | Get Inverted Color by Luminance for best contrast |
-| override [ToString](Color/ToString.md)() | Convert to string |
-| static [FromHex](Color/FromHex.md)(…) | Gets the hexadecimal representation of the Color. |
-| static [ToConsoleColor](Color/ToConsoleColor.md)(…) | Converts a [`Color`](./Color.md) to a ConsoleColor. |
-| [operator ==](Color/op_Equality.md) | Checks if two [`Color`](./Color.md) instances are equal. |
+| [GetInvertedColor](Color/GetInvertedColor.md)() | Gets a contrasting color (black or white) based on luminance for readability. |
+| override [ToString](Color/ToString.md)() | Returns a textual representation, using the palette name if available, otherwise formatted as `#RRGGBB (RGB=R,G,B)`. |
+| static [FromHex](Color/FromHex.md)(…) | Gets the hexadecimal (RRGGBB) representation of a color. |
+| static [ToConsoleColor](Color/ToConsoleColor.md)(…) | Converts a [`Color`](./Color.md) to a ConsoleColor, approximating if necessary. |
+| [operator ==](Color/op_Equality.md) | Determines whether two colors are equal. |
 | [implicit operator](Color/op_Implicit.md) | Converts a Int32 to a [`Color`](./Color.md). (3 operators) |
-| [operator !=](Color/op_Inequality.md) | Checks if two [`Color`](./Color.md) instances are different. |
+| [operator !=](Color/op_Inequality.md) | Determines whether two colors are different. |
 
 ### Remarks
 
-Initializes a new instance of the [`Color`](./Color.md) struct.
+The optional internal `Number` corresponds to a color index in a known palette (e.g. standard/extended console colors). When present it enables efficient conversion to ConsoleColor or palette lookups. When absent the color is treated as a raw 24-bit RGB value.
 
 ### See Also
 

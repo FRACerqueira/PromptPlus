@@ -17,7 +17,7 @@ public IFileSelectControl FileSelect(string prompt = "", string? description = n
 
 ### Return Value
 
-An [`ITableSelectControl`](../ITableSelectControl-1.md) instance for further configuration and reading input.
+An [`IFileSelectControl`](../IFileSelectControl.md) instance for further configuration and reading input.
 
 ### See Also
 

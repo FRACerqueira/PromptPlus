@@ -24,6 +24,10 @@ The current [`ICalendarControl`](../ICalendarControl.md) instance for chaining.
 | --- | --- |
 | ArgumentNullException | Thrown if *culture* is `null`. |
 
+### Remarks
+
+The culture affects the display of month names, day names, and date formatting. Changes to culture will be reflected immediately in the calendar display.
+
 ### See Also
 
 * interface [ICalendarControl](../ICalendarControl.md)

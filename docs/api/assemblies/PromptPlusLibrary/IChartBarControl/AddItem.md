@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds an item to the chart bar.
+#### Adds a data item to be displayed in the chart bar visualization.
 
 ```csharp
 public IChartBarControl AddItem(string label, double value, Color? colorBar = default, 
@@ -13,10 +13,10 @@ public IChartBarControl AddItem(string label, double value, Color? colorBar = de
 
 | parameter | description |
 | --- | --- |
-| label | The label of the item to add. |
-| value | The value of the item. |
-| colorBar | The [`Color`](../Color.md) of the bar. If not specified, the color will be chosen in descending sequence from 15 to 0 and then back to 15. |
-| id | The id for item. |
+| label | The display label for the chart item. Cannot be null or empty. |
+| value | The numeric value associated with the item. |
+| colorBar | Optional color for the bar. If not specified, colors are automatically assigned in a rotating sequence. |
+| id | Optional unique identifier for the item. |
 
 ### Return Value
 
@@ -26,7 +26,11 @@ The current [`IChartBarControl`](../IChartBarControl.md) instance.
 
 | exception | condition |
 | --- | --- |
-| ArgumentException | Thrown if *label* is `null` or empty. |
+| ArgumentException | Thrown when label is null or empty. |
+
+### Remarks
+
+Colors are automatically assigned in descending sequence from 15 to 0 and then back to 15 if not explicitly specified.
 
 ### See Also
 

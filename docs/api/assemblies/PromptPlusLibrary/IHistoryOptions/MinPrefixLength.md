@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the minimum prefix length required for history matching. Defaut value is 3. Default value is 1.
+#### Sets the minimum number of input characters required before history suggestions are eligible. Default value is 3.
 
 ```csharp
 public IHistoryOptions MinPrefixLength(byte value)
@@ -12,17 +12,17 @@ public IHistoryOptions MinPrefixLength(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | The minimum prefix length. |
+| value | The minimum prefix length (must be &gt;= 1). |
 
 ### Return Value
 
-The current [`IHistoryOptions`](../IHistoryOptions.md) instance for method chaining.
+The same [`IHistoryOptions`](../IHistoryOptions.md) instance for chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *value* is less than 1. |
+| ArgumentOutOfRangeException | Thrown when *value* &lt; 1. |
 
 ### See Also
 

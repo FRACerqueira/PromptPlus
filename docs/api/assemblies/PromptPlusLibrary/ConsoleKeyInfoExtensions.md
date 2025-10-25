@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents KeyInfo Extensions
+#### Provides extension methods for ConsoleKeyInfo to evaluate specific key combinations, including standard keys and Emacs-style shortcuts.
 
 ```csharp
 public static class ConsoleKeyInfoExtensions
@@ -14,37 +14,37 @@ public static class ConsoleKeyInfoExtensions
 
 | name | description |
 | --- | --- |
-| static [IsAbortKeyPress](ConsoleKeyInfoExtensions/IsAbortKeyPress.md)(…) | Check ConsoleKeyInfo is Abort key Control |
-| static [IsBackwardWord](ConsoleKeyInfoExtensions/IsBackwardWord.md)(…) | Check ConsoleKeyInfo is Backward Word Emacs Key Alt+B = Moves the cursor backward one word. |
-| static [IsCapitalizeOverCursor](ConsoleKeyInfoExtensions/IsCapitalizeOverCursor.md)(…) | Check ConsoleKeyInfo is Capitalize Over Cursor Emacs Key Alt+C = Capitalizes the character under the cursor and moves to the end of the word |
-| static [IsClearAfterCursor](ConsoleKeyInfoExtensions/IsClearAfterCursor.md)(…) | Check ConsoleKeyInfo is Clear After Cursor Emacs Key Ctrl+K = Clears the line content after the cursor |
-| static [IsClearBeforeCursor](ConsoleKeyInfoExtensions/IsClearBeforeCursor.md)(…) | Check ConsoleKeyInfo is Clear Before Cursor Emacs Key Ctrl+U = Clears the line content before the cursor |
-| static [IsClearContent](ConsoleKeyInfoExtensions/IsClearContent.md)(…) | Check ConsoleKeyInfo is Clear Emacs Key Ctrl+L = Clears the content |
-| static [IsClearWordAfterCursor](ConsoleKeyInfoExtensions/IsClearWordAfterCursor.md)(…) | Check ConsoleKeyInfo is Clear Word After Cursor Emacs Key Ctrl+D = Clears the word after the cursor |
-| static [IsClearWordBeforeCursor](ConsoleKeyInfoExtensions/IsClearWordBeforeCursor.md)(…) | Check ConsoleKeyInfo is Clear Word Before Cursor Emacs Key Ctrl+W = Clears the word before the cursor |
-| static [IsForwardWord](ConsoleKeyInfoExtensions/IsForwardWord.md)(…) | Check ConsoleKeyInfo is Forward Word Emacs Key Alt+F = Moves the cursor forward one word. |
-| static [IsLowersCurrentWord](ConsoleKeyInfoExtensions/IsLowersCurrentWord.md)(…) | Check ConsoleKeyInfo is Lowers Current Word Emacs Key Alt+L = Lowers the case of every character from the cursor's position to the end of the current words |
-| static [IsPressBackspaceKey](ConsoleKeyInfoExtensions/IsPressBackspaceKey.md)(…) | Check ConsoleKeyInfo is End Key |
-| static [IsPressCtrlEndKey](ConsoleKeyInfoExtensions/IsPressCtrlEndKey.md)(…) | Check ConsoleKeyInfo is Ctrl+End Key |
-| static [IsPressCtrlHomeKey](ConsoleKeyInfoExtensions/IsPressCtrlHomeKey.md)(…) | Check ConsoleKeyInfo is Ctrl+Home Key |
-| static [IsPressCtrlSpaceKey](ConsoleKeyInfoExtensions/IsPressCtrlSpaceKey.md)(…) | Check ConsoleKeyInfo is Space Key + Ctrl Modifier |
-| static [IsPressDeleteKey](ConsoleKeyInfoExtensions/IsPressDeleteKey.md)(…) | Check ConsoleKeyInfo is Delete Key |
-| static [IsPressDownArrowKey](ConsoleKeyInfoExtensions/IsPressDownArrowKey.md)(…) | Check ConsoleKeyInfo is Down Arrow Key |
-| static [IsPressEndKey](ConsoleKeyInfoExtensions/IsPressEndKey.md)(…) | Check ConsoleKeyInfo is End Key |
-| static [IsPressEnterKey](ConsoleKeyInfoExtensions/IsPressEnterKey.md)(…) | Check ConsoleKeyInfo is Enter Key |
-| static [IsPressEscKey](ConsoleKeyInfoExtensions/IsPressEscKey.md)(…) | Check ConsoleKeyInfo is Esc Key |
-| static [IsPressHomeKey](ConsoleKeyInfoExtensions/IsPressHomeKey.md)(…) | Check ConsoleKeyInfo is Home Key |
-| static [IsPressLeftArrowKey](ConsoleKeyInfoExtensions/IsPressLeftArrowKey.md)(…) | Check ConsoleKeyInfo is Left Arrow Key |
-| static [IsPressPageDownKey](ConsoleKeyInfoExtensions/IsPressPageDownKey.md)(…) | Check ConsoleKeyInfo is PageDown Key |
-| static [IsPressPageUpKey](ConsoleKeyInfoExtensions/IsPressPageUpKey.md)(…) | Check ConsoleKeyInfo is PageUp Key |
-| static [IsPressRightArrowKey](ConsoleKeyInfoExtensions/IsPressRightArrowKey.md)(…) | Check ConsoleKeyInfo is Right Arrow Key |
-| static [IsPressShiftTabKey](ConsoleKeyInfoExtensions/IsPressShiftTabKey.md)(…) | Check ConsoleKeyInfo is Shift + Tab Key |
-| static [IsPressSpaceKey](ConsoleKeyInfoExtensions/IsPressSpaceKey.md)(…) | Check ConsoleKeyInfo is Space Key |
-| static [IsPressSpecialKey](ConsoleKeyInfoExtensions/IsPressSpecialKey.md)(…) | Check ConsoleKeyInfo is Special Key |
-| static [IsPressTabKey](ConsoleKeyInfoExtensions/IsPressTabKey.md)(…) | Check ConsoleKeyInfo is Tab Key |
-| static [IsPressUpArrowKey](ConsoleKeyInfoExtensions/IsPressUpArrowKey.md)(…) | Check ConsoleKeyInfo is Up Arrow Key |
-| static [IsTransposePrevious](ConsoleKeyInfoExtensions/IsTransposePrevious.md)(…) | Check ConsoleKeyInfo is Transpose Previous Emacs Key Ctrl+T = Transpose the previous two characters |
-| static [IsUppersCurrentWord](ConsoleKeyInfoExtensions/IsUppersCurrentWord.md)(…) | Check ConsoleKeyInfo is Lowers Current Word Emacs Key Alt+U = Upper the case of every character from the cursor's position to the end of the current word |
+| static [IsAbortKeyPress](ConsoleKeyInfoExtensions/IsAbortKeyPress.md)(…) | Determines whether the configured global abort hotkey was pressed. |
+| static [IsBackwardWord](ConsoleKeyInfoExtensions/IsBackwardWord.md)(…) | Determines whether the Alt+B (backward word) Emacs shortcut was pressed. |
+| static [IsCapitalizeOverCursor](ConsoleKeyInfoExtensions/IsCapitalizeOverCursor.md)(…) | Determines whether the Alt+C (capitalize over cursor) Emacs shortcut was pressed. |
+| static [IsClearAfterCursor](ConsoleKeyInfoExtensions/IsClearAfterCursor.md)(…) | Determines whether the Control+K (clear after cursor) Emacs shortcut was pressed. |
+| static [IsClearBeforeCursor](ConsoleKeyInfoExtensions/IsClearBeforeCursor.md)(…) | Determines whether the Control+U (clear before cursor) Emacs shortcut was pressed. |
+| static [IsClearContent](ConsoleKeyInfoExtensions/IsClearContent.md)(…) | Determines whether the Control+L (clear content) Emacs shortcut was pressed. |
+| static [IsClearWordAfterCursor](ConsoleKeyInfoExtensions/IsClearWordAfterCursor.md)(…) | Determines whether the Control+D (clear word after cursor) Emacs shortcut was pressed. |
+| static [IsClearWordBeforeCursor](ConsoleKeyInfoExtensions/IsClearWordBeforeCursor.md)(…) | Determines whether the Control+W (clear word before cursor) Emacs shortcut was pressed. |
+| static [IsForwardWord](ConsoleKeyInfoExtensions/IsForwardWord.md)(…) | Determines whether the Alt+F (forward word) Emacs shortcut was pressed. |
+| static [IsLowersCurrentWord](ConsoleKeyInfoExtensions/IsLowersCurrentWord.md)(…) | Determines whether the Alt+L (lower-case word) Emacs shortcut was pressed. |
+| static [IsPressBackspaceKey](ConsoleKeyInfoExtensions/IsPressBackspaceKey.md)(…) | Determines whether Backspace or (optionally) Control+H (Emacs delete previous character) was pressed. |
+| static [IsPressCtrlEndKey](ConsoleKeyInfoExtensions/IsPressCtrlEndKey.md)(…) | Determines whether Control+End was pressed. |
+| static [IsPressCtrlHomeKey](ConsoleKeyInfoExtensions/IsPressCtrlHomeKey.md)(…) | Determines whether Control+Home was pressed. |
+| static [IsPressCtrlSpaceKey](ConsoleKeyInfoExtensions/IsPressCtrlSpaceKey.md)(…) | Determines whether Control+Spacebar was pressed. |
+| static [IsPressDeleteKey](ConsoleKeyInfoExtensions/IsPressDeleteKey.md)(…) | Determines whether Delete or (optionally) Control+D (Emacs delete forward) was pressed. |
+| static [IsPressDownArrowKey](ConsoleKeyInfoExtensions/IsPressDownArrowKey.md)(…) | Determines whether DownArrow or (optionally) Control+N (Emacs next line/history) was pressed. |
+| static [IsPressEndKey](ConsoleKeyInfoExtensions/IsPressEndKey.md)(…) | Determines whether End or (optionally) Control+E (Emacs end-of-line) was pressed. |
+| static [IsPressEnterKey](ConsoleKeyInfoExtensions/IsPressEnterKey.md)(…) | Determines whether the pressed key represents an Enter action. |
+| static [IsPressEscKey](ConsoleKeyInfoExtensions/IsPressEscKey.md)(…) | Determines whether Escape (without modifiers) was pressed. |
+| static [IsPressHomeKey](ConsoleKeyInfoExtensions/IsPressHomeKey.md)(…) | Determines whether Home or (optionally) Control+A (Emacs beginning-of-line) was pressed. |
+| static [IsPressLeftArrowKey](ConsoleKeyInfoExtensions/IsPressLeftArrowKey.md)(…) | Determines whether LeftArrow or (optionally) Control+B (Emacs move backward) was pressed. |
+| static [IsPressPageDownKey](ConsoleKeyInfoExtensions/IsPressPageDownKey.md)(…) | Determines whether PageDown or (optionally) Alt+N (Emacs next extended navigation) was pressed. |
+| static [IsPressPageUpKey](ConsoleKeyInfoExtensions/IsPressPageUpKey.md)(…) | Determines whether PageUp or (optionally) Alt+P (Emacs previous extended navigation) was pressed. |
+| static [IsPressRightArrowKey](ConsoleKeyInfoExtensions/IsPressRightArrowKey.md)(…) | Determines whether RightArrow or (optionally) Control+F (Emacs move forward) was pressed. |
+| static [IsPressShiftTabKey](ConsoleKeyInfoExtensions/IsPressShiftTabKey.md)(…) | Determines whether Shift+Tab was pressed. |
+| static [IsPressSpaceKey](ConsoleKeyInfoExtensions/IsPressSpaceKey.md)(…) | Determines whether Spacebar (without modifiers) was pressed. |
+| static [IsPressSpecialKey](ConsoleKeyInfoExtensions/IsPressSpecialKey.md)(…) | Determines whether the pressed key matches the specified *key* and *modifier*. |
+| static [IsPressTabKey](ConsoleKeyInfoExtensions/IsPressTabKey.md)(…) | Determines whether the Tab key (without modifiers) was pressed. |
+| static [IsPressUpArrowKey](ConsoleKeyInfoExtensions/IsPressUpArrowKey.md)(…) | Determines whether UpArrow or (optionally) Control+P (Emacs previous line/history) was pressed. |
+| static [IsTransposePrevious](ConsoleKeyInfoExtensions/IsTransposePrevious.md)(…) | Determines whether the Control+T (transpose previous characters) Emacs shortcut was pressed. |
+| static [IsUppersCurrentWord](ConsoleKeyInfoExtensions/IsUppersCurrentWord.md)(…) | Determines whether the Alt+U (upper-case word) Emacs shortcut was pressed. |
 
 ### See Also
 

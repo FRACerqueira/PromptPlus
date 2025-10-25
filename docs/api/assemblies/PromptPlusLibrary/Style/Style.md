@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents the Style of color and overflow strategy.
+#### Represents a text rendering style consisting of a foreground color, background color and an overflow strategy.
 
 ```csharp
 public Style(Color foreground, Color background, Overflow overflowStrategy = Overflow.None)
@@ -12,13 +12,13 @@ public Style(Color foreground, Color background, Overflow overflowStrategy = Ove
 
 | parameter | description |
 | --- | --- |
-| foreground | [`Color`](../Color.md) foreground |
-| background | [`Color`](../Color.md) background |
-| overflowStrategy | [`Overflow`](../Overflow.md) Strategy |
+| foreground | Foreground [`Color`](../Color.md) used when writing content. |
+| background | Background [`Color`](../Color.md) used behind the content. |
+| overflowStrategy | Overflow handling strategy applied when content exceeds the target width. |
 
 ### Remarks
 
-Create a new instance of [`Style`](../Style.md) with foreground/background color and overflow strategy.
+Use the primary constructor to specify explicit colors and an [`Overflow`](../Overflow.md) strategy, or the helper factory methods ([`Default`](./Default.md) / [`Colors`](./Colors.md)) to derive styles from current console settings.
 
 ### See Also
 

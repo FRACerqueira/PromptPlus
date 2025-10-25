@@ -4,7 +4,7 @@
 </br>
 
 
-#### The input behavior. Defaul value is EditSkipToInput.
+#### Sets the input behavior mode for the control.
 
 ```csharp
 public IMaskEditDateTimeControl InputMode(
@@ -13,7 +13,11 @@ public IMaskEditDateTimeControl InputMode(
 
 | parameter | description |
 | --- | --- |
-| inputBehavior | The input behavior |
+| inputBehavior | The input behavior to use. Default is EditSkipToInput. |
+
+### Return Value
+
+The current [`IMaskEditDateTimeControl`](../IMaskEditDateTimeControl-1.md) instance for chaining.
 
 ### See Also
 

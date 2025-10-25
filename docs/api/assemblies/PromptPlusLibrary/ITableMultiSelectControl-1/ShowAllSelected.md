@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets shows all selected items at finish. Default is `false`.
+#### Sets whether to show all selected items at finish. Default is `false`.
 
 ```csharp
 public ITableMultiSelectControl ShowAllSelected(bool value)
@@ -12,7 +12,7 @@ public ITableMultiSelectControl ShowAllSelected(bool value)
 
 | parameter | description |
 | --- | --- |
-| value | If True, it shows all selected items at finish, otherwise show only at [`MaxWidth`](./MaxWidth.md). |
+| value | If `true`, shows all selected items at finish; otherwise, shows only within the maximum width specified by [`MaxWidth`](./MaxWidth.md). |
 
 ### Return Value
 

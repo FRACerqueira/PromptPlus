@@ -4,7 +4,7 @@
 </br>
 
 
-#### Load only Folders on File Select Control. Default is false
+#### Restricts selection to folders only. Default is false (shows both files and folders).
 
 ```csharp
 public IFileSelectControl OnlyFolders(bool value = true)
@@ -12,7 +12,7 @@ public IFileSelectControl OnlyFolders(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | true only Folders, otherwise Folders and files |
+| value | When true, displays only folders; when false, shows both files and folders. |
 
 ### Return Value
 

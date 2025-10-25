@@ -4,7 +4,7 @@
 </br>
 
 
-#### Applies custom options to the control. Will be ignored for Widget.
+#### Applies custom options to the control.
 
 ```csharp
 public ICalendarControl Options(Action<IControlOptions> options)

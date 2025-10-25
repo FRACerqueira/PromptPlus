@@ -4,7 +4,7 @@
 </br>
 
 
-#### Writes the text representation of a character to the standard output stream.
+#### Writes a single character.
 
 ```csharp
 public (int Left, int Top) Write(char buffer, Style? style = default, bool clearrestofline = false)
@@ -12,13 +12,13 @@ public (int Left, int Top) Write(char buffer, Style? style = default, bool clear
 
 | parameter | description |
 | --- | --- |
-| buffer | A character array to write. |
-| style | The [`Style`](../Style.md) overwrite style current output |
-| clearrestofline | Indicates whether to clear the rest of the line. |
+| buffer | Character to write. |
+| style | Optional [`Style`](../Style.md) overriding current output style. |
+| clearrestofline | `true` to clear remaining characters on the line. |
 
 ### Return Value
 
-The column and row position of the cursor.
+The cursor position after write.
 
 ### See Also
 
@@ -30,7 +30,7 @@ The column and row position of the cursor.
 
 ### IConsole.Write method (2 of 3)
 
-#### Writes the text representation of a character array to the standard output stream.
+#### Writes a character array.
 
 ```csharp
 public (int Left, int Top) Write(char[] buffer, Style? style = default, 
@@ -39,13 +39,13 @@ public (int Left, int Top) Write(char[] buffer, Style? style = default,
 
 | parameter | description |
 | --- | --- |
-| buffer | A character array to write. |
-| style | The [`Style`](../Style.md) overwrite style current output |
-| clearrestofline | Indicates whether to clear the rest of the line. |
+| buffer | Characters to write. |
+| style | Optional [`Style`](../Style.md) overriding current output style. |
+| clearrestofline | `true` to clear remaining characters on the line. |
 
 ### Return Value
 
-The column and row position of the cursor.
+The cursor position after write.
 
 ### See Also
 
@@ -57,7 +57,7 @@ The column and row position of the cursor.
 
 ### IConsole.Write method (3 of 3)
 
-#### Writes the text representation of a string value to the standard output stream.
+#### Writes a string.
 
 ```csharp
 public (int Left, int Top) Write(string value, Style? style = default, bool clearrestofline = false)
@@ -65,13 +65,13 @@ public (int Left, int Top) Write(string value, Style? style = default, bool clea
 
 | parameter | description |
 | --- | --- |
-| value | A string value to write. |
-| style | The [`Style`](../Style.md) overwrite style current output |
-| clearrestofline | Indicates whether to clear the rest of the line. |
+| value | The string to write. |
+| style | Optional [`Style`](../Style.md) overriding current output style. |
+| clearrestofline | `true` to clear remaining characters on the line. |
 
 ### Return Value
 
-The column and row position of the cursor.
+The cursor position after write.
 
 ### See Also
 

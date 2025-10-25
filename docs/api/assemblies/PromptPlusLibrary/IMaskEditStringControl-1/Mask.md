@@ -19,6 +19,10 @@ public IMaskEditStringControl Mask(string mask, bool returnWithMask = false)
 
 The current [`IMaskEditStringControl`](../IMaskEditStringControl-1.md) instance for chaining.
 
+### Remarks
+
+The mask can include literal characters and special pattern characters to define the input format.
+
 ### See Also
 
 * interface [IMaskEditStringControl&lt;T&gt;](../IMaskEditStringControl-1.md)

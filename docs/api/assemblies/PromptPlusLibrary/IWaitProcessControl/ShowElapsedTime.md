@@ -4,7 +4,7 @@
 </br>
 
 
-#### Define if show Elapsed Time .Default true.
+#### Defines whether to show the elapsed time. Default is `true`.
 
 ```csharp
 public IWaitProcessControl ShowElapsedTime(bool value = true)
@@ -12,7 +12,7 @@ public IWaitProcessControl ShowElapsedTime(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | If show Elapsed Time. |
+| value | If `true`, shows the elapsed time; otherwise, hides it. |
 
 ### Return Value
 
