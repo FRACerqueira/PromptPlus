@@ -3,11 +3,11 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-namespace PromptPlusLibrary.Controls.Select
+namespace PromptPlusLibrary.Controls
 {
-    internal sealed class ItemSelect<T>(int uniqueId, T value, bool disabled)
+    internal sealed class ItemSelect<T>(string uniqueId, T value, bool disabled)
     {
-        public int UniqueId => uniqueId;
+        public string UniqueId => uniqueId;
         public T Value => value;
         public bool Disabled => disabled;
         public string? Text { get; set; }

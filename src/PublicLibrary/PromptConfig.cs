@@ -195,6 +195,11 @@ namespace PromptPlusLibrary
         public HotKey HotKeyTooltipChartBarSwitchOrder { get; set; } = HotKey.ChartBarSwitchOrder;
 
         /// <summary>
+        /// Gets or sets the hotkey for chart bar order switching (F3).
+        /// </summary>
+        public HotKey HotKeyTooltipRemoteLoadMore { get; set; } = HotKey.RemoteLoadMore;
+
+        /// <summary>
         /// Gets or sets the hotkey for toggling selection of all items (F2).
         /// </summary>
         public HotKey HotKeyTooltipToggleAll { get; set; } = HotKey.ToggleAll;

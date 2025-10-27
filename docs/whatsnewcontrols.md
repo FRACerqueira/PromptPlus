@@ -54,6 +54,7 @@ Due to the significant modifications, version 5 introduced **significant changes
 - [NodeTree Select Control](#nodetree-select-control)
 - [Progress Bar Control](#progress-bar-control)
 - [ReadLine Emacs Control](#readline-emacs-control-new) **NEW!** 
+- [Remote Select Control](#remote-select-control-new) **NEW! EXPERIMENTAL!** 
 - [Select Control](#select-control)
 - [Slider Control](#slider-control)
 - [Slider Widget](#slider-widget-new)  **NEW!** 
@@ -228,6 +229,10 @@ A separation was made in the writing methods for common texts (default console b
     - Create context to write on standard error output stream for any output included until the 'dispose' is done.
 - (int Left, int Top) WriteLines(this IConsole console, int steps = 1, bool clearrestofline = true)
     - Write lines with line terminator
+- ClearLine(this IConsole console, int? row = null,Style ? style = null)
+    - Clear row line with style. 
+- Clear(Color? backcolor = null)
+    - Set BackgroundColor and Clears the console buffer.
 - IJointOutput Join(this IConsole console)
     - Wait all output using exclusive buffer to console.
     - IJointOutput commands
@@ -865,6 +870,27 @@ Navigation and commands has been optimized for each supported type: string, date
     - CaseOptions(CaseOptions caseOptions).
     - EscAbort(bool escAbort = true).
     - string? ReadLine().
+
+----
+### Remote Select Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Command initialization: PromptPlus.Control.RemoteSelect.
+    - Interface : IRemoteSelectControl\<T1,T2\>.
+    - Standard : RemoteSelect<\T1,T2\>(string prompt = "", string? description = null)
+- Commands: 
+    - Options(Action\<IControlOptions\> options).
+    - Styles(SelectStyles styleType, Style style).
+    - ChangeDescription(Func<T1, string> value).
+    - PageSize(byte value).
+    - TextSelector(Func<T1, string> value).
+    - UniqueId(Func<T1,string> uniquevalue).
+    - Filter(FilterMode value, bool caseinsensitive = true).
+    - PredicateSearchItems(T2 initialvalue, Func\<T2, (bool, T2, IEnumerable\<T1\>)> values, Func\<Exception,string\>? erroMessage = null).
+    - PredicateSelected(Func\<T1, bool\> validselect).
+    - PredicateSelected(Func<T1, (bool, string?)> validselect).
+    - PredicateDisabled(Func<T1, bool> validdisabled).
+    - ResultPrompt\<T1\> Run(CancellationToken token = default).
 
 ----
 ### Select Control

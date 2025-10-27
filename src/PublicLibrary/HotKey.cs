@@ -137,5 +137,10 @@ namespace PromptPlusLibrary
         /// Gets the default chart bar order switch hotkey (F4).
         /// </summary>
         internal static HotKey ChartBarSwitchOrder => new(ConsoleKey.F4);
+
+        /// <summary>
+        /// Gets the default Remote load more items.
+        /// </summary>
+        internal static HotKey RemoteLoadMore => new(ConsoleKey.F3);
     }
 }

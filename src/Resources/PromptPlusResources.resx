@@ -480,4 +480,7 @@
   <data name="TooltipOrder" xml:space="preserve">
     <value>Ordination: {0}</value>
   </data>
+  <data name="RemoteLoadMore" xml:space="preserve">
+    <value>{0}: Load more items.</value>
+  </data>
 </root>

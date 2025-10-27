@@ -34,6 +34,26 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
+        /// Check ConsoleKeyInfo is Yes key
+        /// </summary>
+        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
+        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        public static bool IsYesResponseKey(this ConsoleKeyInfo keyinfo)
+        {
+            return char.ToLowerInvariant(keyinfo.KeyChar) == char.ToLowerInvariant(PromptPlus.Config.YesChar) && keyinfo.Modifiers == 0;
+        }
+
+        /// <summary>
+        /// Check ConsoleKeyInfo is Yes key
+        /// </summary>
+        /// <param name="keyinfo"><see cref="ConsoleKeyInfo"/> to check</param>
+        /// <returns><c>true</c> if equal otherwise <c>false</c>.</returns>
+        public static bool IsNoResponseKey(this ConsoleKeyInfo keyinfo)
+        {
+            return char.ToLowerInvariant(keyinfo.KeyChar) == char.ToLowerInvariant(PromptPlus.Config.NoChar) && keyinfo.Modifiers == 0;
+        }
+
+        /// <summary>
         /// Determines whether the pressed key represents an Enter action.
         /// </summary>
         /// <param name="keyinfo">The <see cref="ConsoleKeyInfo"/> to evaluate.</param>

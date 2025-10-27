@@ -39,6 +39,41 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
+        /// Clears the console buffer with <see cref="Color"/> and set BackgroundColor with <see cref="Color"/>
+        /// </summary>
+        /// <param name="console">The <see cref="IConsole"/> drive</param>
+        /// <param name="backcolor">The <see cref="Color"/> Background</param>
+        public static void Clear(this IConsole console, Color? backcolor = null)
+        {
+            using (InternalExclusiveContext(console))
+            {
+                if (backcolor.HasValue)
+                {
+                    console.BackgroundColor = Color.ToConsoleColor(backcolor.Value);
+                }
+                console.Clear();
+            }
+        }
+
+
+        /// <summary>
+        ///  Clear line
+        /// </summary>
+        /// <param name="console">The <see cref="IConsole"/> drive</param>
+        /// <param name="row">The row to clear</param>
+        /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
+        public static void ClearLine(this IConsole console, int? row = null,Style ? style = null)
+        {
+            using (InternalExclusiveContext(console))
+            {
+                row ??= _consoledrive.CursorTop;
+                console.SetCursorPosition(0, row.Value);
+                console.Write(' ',style, true);
+                console.SetCursorPosition(0, row.Value);
+            }
+        }
+
+        /// <summary>
         /// Wait all output using exclusive buffer to console
         /// </summary>
         /// <param name="console">The <see cref="IConsole"/> drive</param>

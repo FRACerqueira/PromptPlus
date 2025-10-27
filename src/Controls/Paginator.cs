@@ -68,6 +68,9 @@ namespace PromptPlusLibrary.Controls
         public bool IsLastPageItem => SelectedIndex == Count - 1 && Count > 0;
         public bool IsUnselected => SelectedIndex == -1;
 
+        public bool IsLastPage => SelectedPage == PageCount - 1;
+        public bool IsFirstPage => SelectedPage == 0;
+
         public void UnSelect() => SelectedIndex = -1;
 
         public bool TryGetSelected(out T selectedItem)
@@ -165,7 +168,7 @@ namespace PromptPlusLibrary.Controls
 
         public bool End(IndexOption selectedIndexOption = IndexOption.LastItem)
         {
-            if (Count <= 0)
+            if (TotalCount <= 0)
             {
                 UnSelect();
                 return false;
@@ -173,21 +176,23 @@ namespace PromptPlusLibrary.Controls
 
             int oldindex = SelectedIndex;
             int oldpage = SelectedPage;
-            (int index, int page) = FindValidItem(TotalCount - 1, forward: false);
-            if (index >= 0)
+            int page = TotalCount / _userPageSize;
+            if (page > 0)
             {
-                SelectedPage = page;
-                SelectedIndex = index;
-                MoveToSelectIndex(selectedIndexOption);
-                return (oldindex != SelectedIndex || oldpage != SelectedPage);
+                if (TotalCount % _userPageSize == 0)
+                {
+                    page -= 1;
+                }
             }
-            return false;
-
+            SelectedPage = page;
+            SelectedIndex = 0;
+            MoveToSelectIndex(selectedIndexOption);
+            return (oldindex != SelectedIndex || oldpage != SelectedPage);
         }
 
         public bool Home(IndexOption selectedIndexOption = IndexOption.FirstItem)
         {
-            if (Count <= 0)
+            if (TotalCount <= 0)
             {
                 UnSelect();
                 return false;

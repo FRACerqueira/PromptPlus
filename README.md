@@ -66,28 +66,35 @@ Due to the significant modifications, version 5 introduced **significant changes
 - AutoComplete with spinner
 - Banner Ascii
 - Calendar with multiple layouts
+- Calendar Widget **NEW!** 
 - ChartBar with switch layout, Legend and order
+- ChartBar Widget **NEW!** 
 - File and Folder multi-select
 - File and Folder select
+- Hisytory **NEW!** 
 - Input text
 - Input Secret 
 - KeyPress
-- MaskEdit Generic (string)
-- MaskEdit Date (DateTime/DateOnly)
-- MaskEdit Time (DateTime/TimeOnly)
-- MaskEdit DateTime 
-- MaskEdit Number (integer,long,double,decimal)
-- MaskEdit Currency (double,decimal)
+- MaskEdit Generic (string) **NEW!** 
+- MaskEdit Date (DateTime/DateOnly) **NEW!** 
+- MaskEdit Time (DateTime/TimeOnly) **NEW!** 
+- MaskEdit DateTime **NEW!** 
+- MaskEdit Number (integer,long,double,decimal) **NEW!** 
+- MaskEdit Currency (double,decimal) **NEW!** 
 - Multi-Select for any type (with group!) 
 - Nodes hierarchical structures multi-select for any type
 - Nodes hierarchical structures select for any type
 - Progress bar with 6 types , gradient colors and spinner
-- ReadLine Emacs
+- ReadLine Emacs **NEW!** 
+- Remote Select for any type  **NEW!** 
 - Select for any type (with group!) 
 - Slider numeric ranger with gradient colors
+- Slider  Widget **NEW!** 
 - Switch (style on/off)
+- Switch  Widget **NEW!** 
 - Table structures multi-select for any type and multiple layouts
 - Table structures select for any type and multiple layouts
+- Table Widget **NEW!**
 - Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
 - Wait Time with countdown and spinner
 
@@ -225,6 +232,10 @@ PromptPlus adopts the keyboard **arrows, Home, End, PageUp and PageDown** keys f
 - IsPressPageUpKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
 - IsPressPageDownKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
 - IsPressEscKey(this ConsoleKeyInfo keyinfo)
+- IsYesResponseKey(this ConsoleKeyInfo keyinfo)
+    - Check if ConsoleKeyInfo is equal to PromptPlus.Config.YesChar
+- IsNoResponseKey(this ConsoleKeyInfo keyinfo)
+    - Check if ConsoleKeyInfo is equal to PromptPlus.Config.NoChar 
 
 ### For list/colletion
 

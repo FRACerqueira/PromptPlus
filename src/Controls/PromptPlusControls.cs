@@ -16,6 +16,7 @@ using PromptPlusLibrary.Controls.NodeTreeMultiSelect;
 using PromptPlusLibrary.Controls.NodeTreeSelect;
 using PromptPlusLibrary.Controls.ProgressBar;
 using PromptPlusLibrary.Controls.ReadLine;
+using PromptPlusLibrary.Controls.RemoteSelect;
 using PromptPlusLibrary.Controls.Select;
 using PromptPlusLibrary.Controls.Slider;
 using PromptPlusLibrary.Controls.Switch;
@@ -440,6 +441,17 @@ namespace PromptPlusLibrary.Controls
                 opt.Description(description);
             }
             return new NodeTreeMultiSelectControl<T>(console, promptConfig, opt);
+        }
+
+        public IRemoteSelectControl<T1, T2> RemoteSelect<T1,T2>(string prompt = "", string? description = null) where T1 : class where T2 : class
+        {
+            BaseControlOptions opt = new(promptConfig);
+            opt.Prompt(prompt);
+            if (!string.IsNullOrEmpty(description))
+            {
+                opt.Description(description);
+            }
+            return new RemoteSelectControl<T1,T2>(console, promptConfig, opt);
         }
 
     }

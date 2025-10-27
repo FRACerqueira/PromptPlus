@@ -6,35 +6,34 @@
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 
-namespace PromptPlusLibrary.Controls.Select
+namespace PromptPlusLibrary.Controls.RemoteSelect
 {
-    internal sealed class SelectControl<T> : BaseControlPrompt<T>, ISelectControl<T>
+    internal sealed class RemoteSelectControl<T1,T2> : BaseControlPrompt<T1>, IRemoteSelectControl<T1,T2> where T1 : class where T2 : class
     {
         private readonly Dictionary<SelectStyles, Style> _optStyles = BaseControlOptions.LoadStyle<SelectStyles>();
         private readonly EmacsBuffer _filterBuffer;
-        private readonly List<ItemSelect<T>> _items = [];
-        private Func<T, (bool, string?)>? _predicatevalidselect;
-        private int _sequence;
-        private bool _autoSelect;
-        private Func<T, string>? _changeDescription;
-        private Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
-        private Optional<T> _defaultValue = Optional<T>.Empty();
-        private bool _useDefaultHistory;
-        private HistoryOptions? _historyOptions;
+        private readonly List<ItemSelect<T1>> _items = [];
+        private Func<T1, (bool, string?)>? _predicatevalidselect;
+        private Func<T1, string>? _changeDescription;
         private FilterMode _filterType = FilterMode.Disabled;
         private bool _filterCaseinsensitive;
         private byte _pageSize = 10;
-        private bool _hideTipGroup;
-        private Func<T, string>? _textSelector;
-        private IList<ItemHistory>? _itemHistories;
-        private Paginator<ItemSelect<T>>? _localpaginator;
+        private Func<T1, string>? _textSelector;
+        private Paginator<ItemSelect<T1>>? _localpaginator;
+        private Func<T1,string>? _uniqueexpression;
+        private Func<T2, (bool,T2, IEnumerable<T1>)>? _predicateSearchItems;
+        private Func<T1, bool>? _predicateDisabled;
+        private T2 _searchItemsControl;
+        private bool _searchItemsFinished;
+        private Func<Exception, string>? _searchItemsErrorMessage;
+        private Task? _loadingItemTask;
+        private (Exception? error, bool IsFinished, T2 newsearchItemsControl, IEnumerable<T1> newitems)? _loadingResult;
         private enum ModeView
         {
             Select,
@@ -48,27 +47,35 @@ namespace PromptPlusLibrary.Controls.Select
         private ModeView _modeView = ModeView.Select;
         private int _indexTooptip;
         private string _tooltipModeSelect = string.Empty;
-        private int _lengthSeparationline;
         private string _lastinput;
 
 
-        public SelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public RemoteSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
+            _searchItemsControl = default!;
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _lastinput = string.Empty;
         }
 
 
-        #region ISelectControl
+        #region ILoadDynamicallySelectControl
 
-        public ISelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
+
+        public IRemoteSelectControl<T1,T2> PredicateDisabled(Func<T1, bool> validdisabled)
+        {
+            ArgumentNullException.ThrowIfNull(validdisabled);
+            _predicateDisabled = validdisabled;
+            return this; 
+        }
+
+        public IRemoteSelectControl<T1,T2> PredicateSelected(Func<T1, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
             return this;
         }
 
-        public ISelectControl<T> PredicateSelected(Func<T, bool> validselect)
+        public IRemoteSelectControl<T1,T2> PredicateSelected(Func<T1, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
@@ -83,114 +90,13 @@ namespace PromptPlusLibrary.Controls.Select
             return this;
         }
 
-        public ISelectControl<T> EqualItems(Func<T, T, bool> comparer)
-        {
-            ArgumentNullException.ThrowIfNull(comparer, nameof(comparer));
-            _equalItems = comparer;
-            return this;
-        }
-
-        public ISelectControl<T> AddItem(T value, bool disable = false)
-        {
-            ArgumentNullException.ThrowIfNull(value, nameof(value));
-
-            _sequence++;
-            _items.Add(new ItemSelect<T>(_sequence.ToString(), value, disable));
-            return this;
-        }
-
-        public ISelectControl<T> AddItems(IEnumerable<T> values, bool disable = false)
-        {
-            ArgumentNullException.ThrowIfNull(values, nameof(values));
-
-            foreach (T? value in values)
-            {
-                AddItem(value, disable);
-            }
-            return this;
-        }
-
-        public ISelectControl<T> AddGroupedItem(string group, T value, bool disable = false)
-        {
-            ArgumentNullException.ThrowIfNull(group, nameof(group));
-            ArgumentNullException.ThrowIfNull(value, nameof(value));
-            int lastindex = _items.FindLastIndex((x) => x.Group == group);
-            if (lastindex < 0)
-            {
-                _sequence++;
-                _items.Add(new ItemSelect<T>(_sequence.ToString(), value, disable)
-                {
-                    Group = group,
-                    IsFirstItemGroup = true,
-                    IsLastItemGroup = true
-                });
-                return this;
-            }
-            if (lastindex != _items.Count - 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(group), "Group already exists");
-            }
-            _sequence++;
-            _items.Add(new ItemSelect<T>(_sequence.ToString(), value, disable)
-            {
-                Group = group,
-                IsLastItemGroup = true
-            });
-            while (lastindex >= 0)
-            {
-                if (_items[lastindex].Group != group)
-                {
-                    break;
-                }
-                _items[lastindex].IsLastItemGroup = false;
-                lastindex--;
-            }
-            return this;
-        }
-
-        public ISelectControl<T> AddGroupedItems(string group, IEnumerable<T> values, bool disable = false)
-        {
-            ArgumentNullException.ThrowIfNull(values, nameof(values));
-            foreach (T? value in values)
-            {
-                AddGroupedItem(group, value, disable);
-            }
-            return this;
-        }
-
-        public ISelectControl<T> AutoSelect(bool value = true)
-        {
-            _autoSelect = value;
-            return this;
-        }
-
-        public ISelectControl<T> ChangeDescription(Func<T, string> value)
+        public IRemoteSelectControl<T1,T2> ChangeDescription(Func<T1, string> value)
         {
             _changeDescription = value;
             return this;
         }
 
-        public ISelectControl<T> Default(T value, bool useDefaultHistory = true)
-        {
-            ArgumentNullException.ThrowIfNull(value, nameof(value));
-            _defaultValue = Optional<T>.Set(value);
-            _useDefaultHistory = useDefaultHistory;
-            return this;
-        }
-
-        public ISelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
-        {
-            ArgumentNullException.ThrowIfNull(filename);
-            if (string.IsNullOrWhiteSpace(filename))
-            {
-                throw new ArgumentException("Filename cannot be empty or whitespace.", nameof(filename));
-            }
-            _historyOptions = new HistoryOptions(filename);
-            options?.Invoke(_historyOptions);
-            return this;
-        }
-
-        public ISelectControl<T> Filter(FilterMode value, bool caseinsensitive = true)
+        public IRemoteSelectControl<T1,T2> Filter(FilterMode value, bool caseinsensitive = true)
         {
             _filterType = value;
             _filterCaseinsensitive = caseinsensitive;
@@ -198,26 +104,14 @@ namespace PromptPlusLibrary.Controls.Select
         }
 
 
-        public ISelectControl<T> Interaction(IEnumerable<T> items, Action<T, ISelectControl<T>> interactionAction)
-        {
-            ArgumentNullException.ThrowIfNull(items);
-            ArgumentNullException.ThrowIfNull(interactionAction);
-
-            foreach (T? item in items)
-            {
-                interactionAction.Invoke(item, this);
-            }
-            return this;
-        }
-
-        public ISelectControl<T> Options(Action<IControlOptions> options)
+        public IRemoteSelectControl<T1,T2> Options(Action<IControlOptions> options)
         {
             ArgumentNullException.ThrowIfNull(options);
             options.Invoke(GeneralOptions);
             return this;
         }
 
-        public ISelectControl<T> PageSize(byte value)
+        public IRemoteSelectControl<T1,T2> PageSize(byte value)
         {
             if (value < 1)
             {
@@ -227,41 +121,32 @@ namespace PromptPlusLibrary.Controls.Select
             return this;
         }
 
-        public ISelectControl<T> AddSeparator(SeparatorLine separatorLine = SeparatorLine.SingleLine, char? value = null)
-        {
-            char separator = separatorLine switch
-            {
-                SeparatorLine.SingleLine => ConsolePlus.IsUnicodeSupported ? '─' : '-',
-                SeparatorLine.DoubleLine => ConsolePlus.IsUnicodeSupported ? '═' : '=',
-                SeparatorLine.UserChar => value ?? throw new ArgumentNullException(nameof(value), "Char separator is null"),
-                _ => throw new ArgumentOutOfRangeException(nameof(separatorLine), "SeparatorLine not supported")
-            };
-            _sequence++;
-#pragma warning disable CS8604 // Possible null reference argument.
-            _items.Add(new ItemSelect<T>(_sequence.ToString(), default, true)
-            {
-                CharSeparation = separator,
-                Text = ""
-            });
-#pragma warning restore CS8604 // Possible null reference argument.
-            return this;
-        }
-
-        public ISelectControl<T> HideTipGroup(bool value = true)
-        {
-            _hideTipGroup = value;
-            return this;
-        }
-
-        public ISelectControl<T> Styles(SelectStyles styleType, Style style)
+        public IRemoteSelectControl<T1,T2> Styles(SelectStyles styleType, Style style)
         {
             _optStyles[styleType] = style;
             return this;
         }
 
-        public ISelectControl<T> TextSelector(Func<T, string> value)
+        public IRemoteSelectControl<T1,T2> TextSelector(Func<T1, string> value)
         {
             _textSelector = value ?? throw new ArgumentNullException(nameof(value), "TextSelector is null");
+            return this;
+        }
+
+        public IRemoteSelectControl<T1,T2> UniqueId(Func<T1, string> uniquevalue)
+        {
+            ArgumentNullException.ThrowIfNull(uniquevalue);
+            _uniqueexpression = uniquevalue;
+            return this;
+        }
+
+        public IRemoteSelectControl<T1,T2> PredicateSearchItems(T2 initialvalue,Func<T2, (bool,T2, IEnumerable<T1>)> values, Func<Exception, string>? erroMessage = null)
+        {
+            ArgumentNullException.ThrowIfNull(initialvalue);
+            ArgumentNullException.ThrowIfNull(values);
+            _predicateSearchItems = values;
+            _searchItemsErrorMessage = erroMessage;
+            _searchItemsControl = initialvalue;
             return this;
         }
 
@@ -269,73 +154,23 @@ namespace PromptPlusLibrary.Controls.Select
 
         public override void InitControl(CancellationToken cancellationToken)
         {
-            if (typeof(T).IsEnum)
-            {
-                _textSelector ??= EnumDisplay;
-                if (_items.Count == 0)
-                {
-                    LoadEnum();
-                }
-            }
-            else
-            {
-                _textSelector ??= (x) => x?.ToString() ?? string.Empty;
-                foreach (ItemSelect<T>? item in _items.Where(x => !x.CharSeparation.HasValue))
-                {
-                    item.Text = _textSelector.Invoke(item.Value);
-                    if (item.Text.Length > _lengthSeparationline)
-                    {
-                        _lengthSeparationline = item.Text.Length;
-                    }
-                    if ((item.Group ?? string.Empty).Length > _lengthSeparationline)
-                    {
-                        _lengthSeparationline = item.Text.Length;
-                    }
-                }
-            }
+            ValidateConstraints();
 
-            if (_historyOptions != null)
-            {
-                _itemHistories = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
-                if (_useDefaultHistory && _itemHistories.Count > 0)
-                {
-                    try
-                    {
-                        _defaultValue = Optional<T>.Set(JsonSerializer.Deserialize<T>(_itemHistories[0].History!)!);
-                    }
-                    catch (Exception)
-                    {
-                        //invalid Deserialize history 
-                    }
-                }
-            }
-
-            Optional<ItemSelect<T>> defvaluepage = Optional<ItemSelect<T>>.Empty();
-
-            if (_defaultValue.HasValue)
-            {
-                ItemSelect<T>? found = _items.FirstOrDefault(x => !x.Disabled && !x.CharSeparation.HasValue && _equalItems.Invoke(x.Value!, _defaultValue.Value));
-                if (found != null)
-                {
-                    defvaluepage = Optional<ItemSelect<T>>.Set(found);
-                }
-            }
-
-            _localpaginator = new Paginator<ItemSelect<T>>(
+            _localpaginator = new Paginator<ItemSelect<T1>>(
                 _filterType,
                 _items,
                 _pageSize,
-                defvaluepage,
+                Optional<ItemSelect<T1>>.Empty(),
                 (item1, item2) => item1.UniqueId == item2.UniqueId,
-                (item) => (!item.IsFirstItemGroup && !item.CharSeparation.HasValue) ? item.Text! : string.Empty,
-                (item) => !item.CharSeparation.HasValue || !string.IsNullOrEmpty(item.Text),
-                (item) => !item.CharSeparation.HasValue);
+                (item) => _textSelector!(item.Value));
+            
+            _loadingItemTask = Task.Run(() => LoadMoreItem(), cancellationToken);
 
             if (_localpaginator.SelectedItem == null)
             {
                 _localpaginator.FirstItem();
             }
-            if (_localpaginator!.SelectedIndex >= 0  && _localpaginator.SelectedItem!.Disabled)
+            if (_localpaginator.SelectedIndex >= 0 &&  _localpaginator.SelectedItem!.Disabled)
             {
                 SetError(Messages.SelectionDisabled);
             }
@@ -349,7 +184,7 @@ namespace PromptPlusLibrary.Controls.Select
 
             WriteAnswer(screenBuffer);
 
-            WriteErroAndGroupDescription(screenBuffer);
+            WriteError(screenBuffer);
 
             WriteDescription(screenBuffer);
 
@@ -367,16 +202,17 @@ namespace PromptPlusLibrary.Controls.Select
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
+                    ConsoleKeyInfo keyinfo = WaitKeypresLoading(cancellationToken);
+
 
                     #region default Press to Finish and tooltip
                     if (cancellationToken.IsCancellationRequested)
                     {
                         _indexTooptip = 0;
                         _modeView = ModeView.Select;
-#pragma warning disable CS8604 // Possible null reference argument.
-                        ResultCtrl = new ResultPrompt<T>(default, true);
-#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning disable CS8625
+                        ResultCtrl = new ResultPrompt<T1>(default, true);
+#pragma warning restore CS8625 
                         break;
                     }
                     else if (IsAbortKeyPress(keyinfo))
@@ -385,17 +221,17 @@ namespace PromptPlusLibrary.Controls.Select
                         _modeView = ModeView.Select;
                         if (_localpaginator!.SelectedItem != null)
                         {
-                            ResultCtrl = new ResultPrompt<T>(_localpaginator!.SelectedItem!.Value!, true);
+                            ResultCtrl = new ResultPrompt<T1>(_localpaginator!.SelectedItem!.Value!, true);
                         }
                         else
                         {
-#pragma warning disable CS8604 // Possible null reference argument.
-                            ResultCtrl = new ResultPrompt<T>(default, true);
-#pragma warning restore CS8604 // Possible null reference argument.
+#pragma warning disable CS8625
+                            ResultCtrl = new ResultPrompt<T1>(default, true);
+#pragma warning restore CS8625 
                         }
                         break;
                     }
-                    else if (keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null)
+                    else if (_loadingItemTask == null && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null)
                     {
                         _indexTooptip = 0;
                         if (_localpaginator.SelectedItem.Disabled)
@@ -417,8 +253,7 @@ namespace PromptPlusLibrary.Controls.Select
                             break;
                         }
                         _modeView = ModeView.Select;
-                        ResultCtrl = new ResultPrompt<T>(_localpaginator!.SelectedItem.Value, false);
-                        SaveHistory(_localpaginator!.SelectedItem.Value);
+                        ResultCtrl = new ResultPrompt<T1>(_localpaginator!.SelectedItem.Value, false);
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
@@ -436,8 +271,50 @@ namespace PromptPlusLibrary.Controls.Select
                         break;
                     }
                     #endregion
+                    if (_loadingItemTask != null && keyinfo.Key == ConsoleKey.None && keyinfo.Modifiers == ConsoleModifiers.None)
+                    {
+                        _searchItemsFinished = _loadingResult!.Value.IsFinished;
+                        _searchItemsControl = _loadingResult!.Value.newsearchItemsControl;
+                        foreach (T1 item in _loadingResult!.Value.newitems)
+                        {
+                            bool disabled = _predicateDisabled?.Invoke(item) ?? false;
+                            _items.Add(new ItemSelect<T1>(_uniqueexpression!(item), item, disabled)
+                            {
+                                Text = _textSelector!.Invoke(item)
+                            });
+                        }
+                        if (_loadingResult!.Value.error != null)
+                        {
+                            if (_searchItemsErrorMessage != null)
+                            {
+                                SetError(_searchItemsErrorMessage.Invoke(_loadingResult!.Value.error!));
+                            }
+                            else
+                            {
+                                SetError(_loadingResult!.Value.error.Message);
+                            }
+                        }
+                        _localpaginator!.UpdatColletion(_items, null);
+                        _indexTooptip = 0;
+                        _loadingResult = null;
+                        _loadingItemTask?.Dispose();
+                        _loadingItemTask = null;
+                        break;
+                    }
+                    else if (_loadingItemTask == null && !_searchItemsFinished && ConfigPlus.HotKeyTooltipRemoteLoadMore.Equals(keyinfo))
+                    {
+                        if (_modeView == ModeView.Filter)
+                        {
+                            _localpaginator!.UpdateFilter(string.Empty);
+                            _filterBuffer.Clear();
+                            _modeView = ModeView.Select;
+                        }
+                        _loadingItemTask = Task.Run(() => LoadMoreItem(), cancellationToken);
+                        _indexTooptip = 0;
+                        break;
+                    }
 
-                    else if (_filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
+                    else if (_loadingItemTask == null && _filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer.Clear();
@@ -457,6 +334,10 @@ namespace PromptPlusLibrary.Controls.Select
                     {
                         if (_localpaginator!.IsLastPageItem)
                         {
+                            if (!_searchItemsFinished && _localpaginator.IsLastPage)
+                            {
+                                continue;
+                            }
                             _localpaginator.NextPage(IndexOption.FirstItem);
                         }
                         else
@@ -477,6 +358,10 @@ namespace PromptPlusLibrary.Controls.Select
                     {
                         if (_localpaginator!.IsFirstPageItem)
                         {
+                            if (!_searchItemsFinished && _localpaginator.IsFirstPage)
+                            {
+                                continue;
+                            }
                             _localpaginator!.PreviousPage(IndexOption.LastItem);
                         }
                         else
@@ -495,6 +380,15 @@ namespace PromptPlusLibrary.Controls.Select
                     }
                     else if (keyinfo.IsPressPageDownKey())
                     {
+                        if (_localpaginator!.IsLastPage && !_searchItemsFinished)
+                        {
+                            if (_localpaginator.LastItem())
+                            {
+                                _indexTooptip = 0;
+                                break;
+                            }
+                            continue;
+                        }
                         if (_localpaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
                         {
                             if (_localpaginator.SelectedItem != null)
@@ -510,6 +404,15 @@ namespace PromptPlusLibrary.Controls.Select
                     }
                     else if (keyinfo.IsPressPageUpKey())
                     {
+                        if (_localpaginator!.IsFirstPage && !_searchItemsFinished)
+                        {
+                            if (_localpaginator.FirstItem())
+                            {
+                                _indexTooptip = 0;
+                                break;
+                            }
+                            continue;
+                        }
                         if (_localpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
                         {
                             if (_localpaginator.SelectedItem != null)
@@ -541,7 +444,7 @@ namespace PromptPlusLibrary.Controls.Select
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (_filterType != FilterMode.Disabled && _modeView == ModeView.Filter && _filterBuffer.TryAcceptedReadlineConsoleKey(keyinfo))
+                    else if (_loadingItemTask == null && _filterType != FilterMode.Disabled && _modeView == ModeView.Filter && _filterBuffer.TryAcceptedReadlineConsoleKey(keyinfo))
                     {
                         string filter = _filterBuffer.ToString();
                         if (_filterCaseinsensitive)
@@ -553,12 +456,7 @@ namespace PromptPlusLibrary.Controls.Select
                         {
                             _localpaginator!.UpdateFilter(filter);
                         }
-                        if (_localpaginator!.Count == 1 && _autoSelect && _localpaginator!.SelectedIndex >=0  && !_localpaginator!.SelectedItem!.Disabled)
-                        {
-                            _modeView = ModeView.Select;
-                            ResultCtrl = new ResultPrompt<T>(_localpaginator!.SelectedItem!.Value, false);
-                        }
-                        if (_localpaginator.SelectedItem != null)
+                        if (_localpaginator!.SelectedItem != null)
                         {
                             if (_localpaginator.SelectedItem.Disabled)
                             {
@@ -601,49 +499,11 @@ namespace PromptPlusLibrary.Controls.Select
         }
         public override void FinalizeControl()
         {
-            //none
-        }
-
-        private void LoadEnum()
-        {
-
-            IEnumerable<T> aux = Enum.GetValues(typeof(T)).Cast<T>();
-            List<Tuple<int, ItemSelect<T>>> result = [];
-            foreach (T item in aux)
-            {
-                string? name = item!.ToString();
-                DisplayAttribute? displayAttribute = typeof(T).GetField(name!)?.GetCustomAttribute<DisplayAttribute>();
-                int order = displayAttribute?.GetOrder() ?? int.MaxValue;
-                _sequence++;
-                result.Add(new Tuple<int, ItemSelect<T>>(order, new ItemSelect<T>(_sequence.ToString(), item, false)
-                {
-                    Text = _textSelector?.Invoke(item)
-                }));
+            if (_loadingItemTask != null)
+            { 
+                _loadingItemTask.Wait();
+                _loadingItemTask.Dispose();
             }
-            foreach (Tuple<int, ItemSelect<T>>? item in result.OrderBy(x => x.Item1))
-            {
-                _items.Add(item.Item2);
-            }
-        }
-
-        private void SaveHistory(T value)
-        {
-            if (_historyOptions == null)
-            {
-                return;
-            }
-            string aux = JsonSerializer.Serialize<T>(value);
-            FileHistory.ClearHistory(_historyOptions!.FileNameValue);
-            IList<ItemHistory> hist = FileHistory.AddHistory(aux, _historyOptions!.ExpirationTimeValue, null);
-            FileHistory.SaveHistory(_historyOptions!.FileNameValue, hist);
-
-        }
-
-        private static string EnumDisplay(T value)
-        {
-            string name = value!.ToString()!;
-            DisplayAttribute? displayAttribute = value.GetType().GetField(name)?.GetCustomAttribute<DisplayAttribute>();
-            return displayAttribute?.GetName() ?? name;
         }
 
         private void LoadTooltipToggle()
@@ -709,39 +569,13 @@ namespace PromptPlusLibrary.Controls.Select
 
         private void WriteListSelect(BufferScreen screenBuffer)
         {
-            ArraySegment<ItemSelect<T>> subset = _localpaginator!.GetPageData();
-            foreach (ItemSelect<T> item in subset)
+            ArraySegment<ItemSelect<T1>> subset = _localpaginator!.GetPageData();
+            foreach (ItemSelect<T1> item in subset)
             {
                 string value = item.Text!;
-                string? group = item.IsFirstItemGroup ? item.Group : string.Empty;
-                string indentgroup = string.Empty;
-                if (item.CharSeparation.HasValue)
-                {
-                    value = new string(item.CharSeparation.Value, _lengthSeparationline);
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(item.Group) && _modeView != ModeView.Filter)
-                    {
-                        if (item.IsLastItemGroup)
-                        {
-                            indentgroup = $" {ConfigPlus.GetSymbol(SymbolType.IndentEndGroup)}";
-                        }
-                        else
-                        {
-                            indentgroup = $" {ConfigPlus.GetSymbol(SymbolType.IndentGroup)}";
-                        }
-                    }
-                }
-                if (item.IsFirstItemGroup)
-                {
-                    screenBuffer.WriteLine($" {group}", _optStyles[SelectStyles.UnSelected]);
-
-                }
-                if (_localpaginator.TryGetSelected(out ItemSelect<T>? selectedItem) && EqualityComparer<ItemSelect<T>>.Default.Equals(item, selectedItem))
+                if (_localpaginator.TryGetSelected(out ItemSelect<T1>? selectedItem) && EqualityComparer<ItemSelect<T1>>.Default.Equals(item, selectedItem))
                 {
                     screenBuffer.Write($"{ConfigPlus.GetSymbol(SymbolType.Selector)}", _optStyles[SelectStyles.Selected]);
-                    screenBuffer.Write($"{indentgroup}", _optStyles[SelectStyles.Lines]);
                     if (item.Disabled)
                     {
                         screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.Disabled]);
@@ -753,25 +587,29 @@ namespace PromptPlusLibrary.Controls.Select
                 }
                 else
                 {
-                    screenBuffer.Write($" {indentgroup}", _optStyles[SelectStyles.Lines]);
-                    if (!item.CharSeparation.HasValue && item.Disabled)
+                    if (item.Disabled)
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.Disabled]);
+                        screenBuffer.WriteLine($"  {value}", _optStyles[SelectStyles.Disabled]);
                     }
                     else
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.UnSelected]);
+                        screenBuffer.WriteLine($"  {value}", _optStyles[SelectStyles.UnSelected]);
                     }
                 }
             }
-            if (_localpaginator.PageCount > 1)
+            string template = ConfigPlus.PaginationTemplate.Invoke(
+                _localpaginator.TotalCountValid,
+                _localpaginator.SelectedPage + 1,
+                _localpaginator.PageCount
+            )!;
+            if (!_searchItemsFinished)
             {
-                string template = ConfigPlus.PaginationTemplate.Invoke(
-                    _localpaginator.TotalCountValid,
-                    _localpaginator.SelectedPage + 1,
-                    _localpaginator.PageCount
-                )!;
-                screenBuffer.WriteLine(template, _optStyles[SelectStyles.Pagination]);
+                var hk = string.Format(Messages.RemoteLoadMore, ConfigPlus.HotKeyTooltipRemoteLoadMore);
+                screenBuffer.WriteLine($"{template} {hk}", _optStyles[SelectStyles.Pagination]);
+            }
+            else
+            {
+                screenBuffer.WriteLine(template,_optStyles[SelectStyles.Pagination]);
             }
         }
 
@@ -780,9 +618,16 @@ namespace PromptPlusLibrary.Controls.Select
             if (_modeView == ModeView.Select)
             {
                 var text = string.Empty;
-                if (_localpaginator!.SelectedIndex >= 0)
+                if (_loadingItemTask != null)
                 {
-                    text = _localpaginator!.SelectedItem.Text!;
+                    text = Messages.Loading;
+                }
+                else
+                {
+                    if (_localpaginator!.SelectedIndex >= 0)
+                    {
+                        text = _localpaginator!.SelectedItem.Text!;
+                    }
                 }
                 if (_localpaginator!.SelectedIndex >= 0 && _localpaginator!.SelectedItem.Disabled)
                 {
@@ -826,30 +671,12 @@ namespace PromptPlusLibrary.Controls.Select
             }
         }
 
-        private void WriteErroAndGroupDescription(BufferScreen screenBuffer)
+        private void WriteError(BufferScreen screenBuffer)
         {
-            bool hastip = false;
-            if (!_hideTipGroup && _localpaginator!.SelectedItem is not null)
-            {
-                if (!string.IsNullOrEmpty(_localpaginator!.SelectedItem.Group))
-                {
-                    hastip = true;
-                    screenBuffer.Write($"{Messages.Group}: {_localpaginator!.SelectedItem.Group}", _optStyles[SelectStyles.GroupTip]);
-                }
-            }
             if (!string.IsNullOrEmpty(ValidateError))
             {
-                if (hastip)
-                {
-                    screenBuffer.Write(", ", _optStyles[SelectStyles.GroupTip]);
-                }
                 screenBuffer.WriteLine(ValidateError, _optStyles[SelectStyles.Error]);
                 ClearError();
-                return;
-            }
-            if (hastip)
-            {
-                screenBuffer.WriteLine("", Style.Default());
             }
         }
 
@@ -860,6 +687,55 @@ namespace PromptPlusLibrary.Controls.Select
             {
                 screenBuffer.WriteLine(desc, _optStyles[SelectStyles.Description]);
             }
+        }
+
+        private void ValidateConstraints()
+        {
+            if (_uniqueexpression == null)
+            {
+                throw new InvalidOperationException("UniqueId cannot be Null.");
+            }
+            if (_textSelector == null)
+            {
+                throw new InvalidOperationException("TextSelector cannot be Null.");
+            }
+            if (_predicateSearchItems == null)
+            {
+                throw new InvalidOperationException("PredicateSearchItems cannot be Null.");
+            }
+        }
+
+
+        private ConsoleKeyInfo WaitKeypresLoading(CancellationToken token)
+        {
+            while (!ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
+            {
+                if (_loadingItemTask != null && _loadingItemTask.IsCompleted)
+                {
+                    return new ConsoleKeyInfo(new char(), ConsoleKey.None, false, false, false);
+                }
+                token.WaitHandle.WaitOne(2);
+            }
+            if (ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
+            {
+                return ConsolePlus.ReadKey(true);
+            }
+            return new ConsoleKeyInfo();
+        }
+
+        private void LoadMoreItem()
+        {
+            (bool Finished, T2 SearchItemsControl, IEnumerable<T1> Newitems) result = (false, _searchItemsControl, []);
+            Exception? err = null;  
+            try
+            {
+                result = _predicateSearchItems!.Invoke(_searchItemsControl);
+            }
+            catch (Exception ex)
+            {
+                err = ex;
+            }
+            _loadingResult = (err, result.Finished, result.SearchItemsControl, result.Newitems);
         }
 
     }

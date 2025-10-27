@@ -17,9 +17,7 @@ using System.Threading;
 
 namespace PromptPlusLibrary.Controls.TableSelect
 {
-#pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
     internal sealed class TableSelectControl<T> : BaseControlPrompt<T>, ITableWidget<T>, ITableSelectControl<T> where T : class
-#pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
     {
         private readonly Dictionary<TableStyles, Style> _optStyles = BaseControlOptions.LoadStyle<TableStyles>();
         private byte _pageSize = 10;

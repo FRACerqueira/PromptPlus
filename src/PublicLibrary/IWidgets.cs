@@ -29,11 +29,10 @@ namespace PromptPlusLibrary
         /// <param name="maxvalue">Maximum permitted value (default: 100).</param>
         /// <param name="fracionaldig">Number of fractional digits to show (default: 2, maximum: 5).</param>
         /// <returns>An <see cref="ISliderWidget"/> for further customization.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">
-        /// Thrown when:
-        /// <br/>• <paramref name="value"/> is less than <paramref name="minvalue"/> or greater than <paramref name="maxvalue"/>.</br>
-        /// <br/>• <paramref name="minvalue"/> is greater than or equal to <paramref name="maxvalue"/>.</br>
-        /// <br/>• <paramref name="fracionaldig"/> is greater than 5.</br>
+        /// <exception cref="ArgumentOutOfRangeException"> Thrown when:
+        /// <paramref name="value"/> is less than <paramref name="minvalue"/> or greater than <paramref name="maxvalue"/>,
+        /// <paramref name="minvalue"/> is greater than or equal to <paramref name="maxvalue"/>,
+        /// <paramref name="fracionaldig"/> is greater than 5.
         /// </exception>
         ISliderWidget Slider(double value, double minvalue = 0, double maxvalue = 100, byte fracionaldig = 2);
 

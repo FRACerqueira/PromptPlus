@@ -772,6 +772,15 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}: Load more items..
+        /// </summary>
+        internal static string RemoteLoadMore {
+            get {
+                return ResourceManager.GetString("RemoteLoadMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search Filter :.
         /// </summary>
         internal static string SearchFilter {
