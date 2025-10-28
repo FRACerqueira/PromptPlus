@@ -148,7 +148,7 @@
     <value>Hora (0-9)</value>
   </data>
   <data name="MaskEditPosLetter" xml:space="preserve">
-    <value>Letra  (A-Z,a-z)</value>
+    <value>Letra (A-Z,a-z)</value>
   </data>
   <data name="MaskEditPosMinute" xml:space="preserve">
     <value>Minuto (0-9)</value>
@@ -157,7 +157,7 @@
     <value>Mês (0-9)</value>
   </data>
   <data name="MaskEditPosNumeric" xml:space="preserve">
-    <value>Número  (0-9)</value>
+    <value>Número (0-9)</value>
   </data>
   <data name="MaskEditPosSecond" xml:space="preserve">
     <value>Segundo (0-9)</value>
@@ -214,7 +214,7 @@
     <value>Padrão</value>
   </data>
   <data name="PaginationTemplate" xml:space="preserve">
-    <value>Exibindo: {1}/{2} páginas de {0} itens.</value>
+    <value>Exibindo:{1}/{2} páginas de {0} itens.</value>
   </data>
   <data name="PressedKey" xml:space="preserve">
     <value>Tecla pressionada</value>
@@ -262,7 +262,7 @@
     <value>{0}:Mostrar histórico(mín.{1} caracteres)</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Up/Down/PgUp/PgDown:Mover seletor, Ctrl+Home/End: Primeiro/Último item</value>
+    <value>Up/Down/PgUp/PgDown:Mover seletor, Ctrl+Home/End:Primeiro/Último item</value>
   </data>
   <data name="TooltipSelectAll" xml:space="preserve">
     <value>{0}:Alternar Marcar  todos</value>
@@ -286,7 +286,7 @@
     <value>{0}:Ver/Esconder senha</value>
   </data>
   <data name="ValidAnyKey" xml:space="preserve">
-    <value>Tecla válida : {0}</value>
+    <value>Tecla válida:{0}</value>
   </data>
   <data name="ValidateInvalid" xml:space="preserve">
     <value>Valor inválido!</value>
@@ -355,7 +355,7 @@
     <value>Notas vazias para os dados informados</value>
   </data>
   <data name="InvalidKey" xml:space="preserve">
-    <value>Tecla Inválida: {0}</value>
+    <value>Tecla Inválida:{0}</value>
   </data>
   <data name="YesText" xml:space="preserve">
     <value>Sim</value>
@@ -400,10 +400,10 @@
     <value>Constante ({0})</value>
   </data>
   <data name="MaskEditPosLetterUpper" xml:space="preserve">
-    <value>Letra  (A-Z)</value>
+    <value>Letra (A-Z)</value>
   </data>
   <data name="MaskEditPosLetterLower" xml:space="preserve">
-    <value>Letra  (a-z)</value>
+    <value>Letra (a-z)</value>
   </data>
   <data name="MaskEditPosSpace" xml:space="preserve">
     <value>Espaço</value>
@@ -433,10 +433,10 @@
     <value>Entradas com valores inválidos</value>
   </data>
   <data name="TableAnswerRow" xml:space="preserve">
-    <value>Linha: {0}</value>
+    <value>Linha:{0}</value>
   </data>
   <data name="TableAnswerMultiRow" xml:space="preserve">
-    <value>Linhas: {0}</value>
+    <value>Linhas:{0}</value>
   </data>
   <data name="PredicateSelectInvalid" xml:space="preserve">
     <value>Item selecionado não atende aos critérios </value>
@@ -445,7 +445,7 @@
     <value>Pasta Raiz</value>
   </data>
   <data name="FileInfoFolder" xml:space="preserve">
-    <value>Pasta : {0}</value>
+    <value>Pasta:{0}</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Carregando...</value>
@@ -454,10 +454,10 @@
     <value>Descarregando...</value>
   </data>
   <data name="TooltipLevelHomeEnd" xml:space="preserve">
-    <value>Ctrl+Home: Nível anterior, Ctrl+End: Último item do nível</value>
+    <value>Ctrl+Home:Nível anterior, Ctrl+End:Último item do nível</value>
   </data>
   <data name="SearchFilter" xml:space="preserve">
-    <value>Filtro de pesquisa :</value>
+    <value>Filtro de pesquisa:</value>
   </data>
   <data name="Filtered" xml:space="preserve">
     <value>Filtrado</value>
@@ -472,15 +472,15 @@
     <value>Há itens marcados, não podem ser recolhido</value>
   </data>
   <data name="NodePath" xml:space="preserve">
-    <value>Caminho : </value>
+    <value>Caminho:</value>
   </data>
   <data name="TooltipExpandAllPress" xml:space="preserve">
     <value>Alt+:Expandir todos</value>
   </data>
   <data name="TooltipOrder" xml:space="preserve">
-    <value>Ordenação: {0}</value>
+    <value>Ordenação:{0}</value>
   </data>
   <data name="RemoteLoadMore" xml:space="preserve">
-    <value>{0}: Carregar mais itens.</value>
+    <value>{0}:Carregar mais itens.</value>
   </data>
 </root>

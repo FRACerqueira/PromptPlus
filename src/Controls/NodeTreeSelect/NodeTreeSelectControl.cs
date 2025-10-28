@@ -26,7 +26,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         private int _indexTooptip;
         private string _tooltipModeSelect = string.Empty;
         private bool _showInfoFullPath;
-        private byte _pageSize = 10;
+        private byte _pageSize;
         private Func<T, (bool, string?)>? _predicatevalidselect;
         private Func<T, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<T>>? _localpaginator;
@@ -37,6 +37,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         {
             IsRoot = (item) => item.UniqueId == (_items.Count == 0 ? "" : _items[0].UniqueId);
             _toggerTooptips = [];
+            _pageSize = ConfigPlus.PageSize;
         }
 
         #region INodeTreeSelectControl
@@ -657,11 +658,11 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
 
         private string GetAnswerText()
         {
-            string textnode = _localpaginator!.SelectedItem.Text!;
             if (_localpaginator!.SelectedIndex < 0)
             {
                 return string.Empty;
             }
+            string textnode = _localpaginator!.SelectedItem.Text!;
             if (_localpaginator!.SelectedItem.Status == NodeStatus.Loading)
             {
                 return $"{textnode}({Messages.Loading})";

@@ -30,7 +30,7 @@ namespace PromptPlusLibrary.Controls.Select
         private HistoryOptions? _historyOptions;
         private FilterMode _filterType = FilterMode.Disabled;
         private bool _filterCaseinsensitive;
-        private byte _pageSize = 10;
+        private byte _pageSize;
         private bool _hideTipGroup;
         private Func<T, string>? _textSelector;
         private IList<ItemHistory>? _itemHistories;
@@ -56,6 +56,7 @@ namespace PromptPlusLibrary.Controls.Select
         {
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _lastinput = string.Empty;
+            _pageSize = ConfigPlus.PageSize;
         }
 
 

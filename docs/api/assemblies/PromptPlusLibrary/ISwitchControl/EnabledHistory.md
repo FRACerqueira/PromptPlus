@@ -27,7 +27,7 @@ The current [`ISwitchControl`](../ISwitchControl.md) instance for chaining.
 
 ### Remarks
 
-The default hotkey for History is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
+The default hotkey for History is HotKeyShowHistory.
 
 ### See Also
 

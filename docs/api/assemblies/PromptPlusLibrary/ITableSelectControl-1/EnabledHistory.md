@@ -27,7 +27,7 @@ The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for me
 
 ### Remarks
 
-The default hotkey for history is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
+The default hotkey for history is HotKeyShowHistory.
 
 ### See Also
 

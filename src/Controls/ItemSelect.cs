@@ -5,7 +5,7 @@
 
 namespace PromptPlusLibrary.Controls
 {
-    internal sealed class ItemSelect<T>(string uniqueId, T value, bool disabled)
+    internal sealed class ItemSelect<T>(string uniqueId, T value, bool disabled, bool valuechecked = false)
     {
         public string UniqueId => uniqueId;
         public T Value => value;
@@ -15,5 +15,6 @@ namespace PromptPlusLibrary.Controls
         public bool IsFirstItemGroup { get; set; }
         public bool IsLastItemGroup { get; set; }
         public char? CharSeparation { get; set; }
+        public bool ValueChecked { get; set; } = valuechecked;
     }
 }

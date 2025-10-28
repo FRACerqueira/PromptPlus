@@ -311,5 +311,26 @@ namespace PromptPlusLibrary
         /// <returns>An <see cref="IRemoteSelectControl{T1,T2}"/> instance for further configuration and reading input.</returns>
 
         IRemoteSelectControl<T1, T2> RemoteSelect<T1, T2>(string prompt = "", string? description = null) where T1 : class where T2 : class;
+
+        /// <summary>
+        /// Creates an Remote MultiSelect control with the specified prompt.
+        /// </summary>
+        /// <param name="prompt">The text prompt.</param>
+        /// <param name="description">The description for input</param>
+        /// <typeparam name="T1">The type of items in the collection.</typeparam>
+        /// <typeparam name="T2">The type of class that represents a structure capable of storing the data necessary to maintain and search for the next collections of items.</typeparam>
+        /// <returns>An <see cref="IRemoteMultiSelectControl{T1,T2}"/> instance for further configuration and reading input.</returns>
+        IRemoteMultiSelectControl<T1, T2> RemoteMultiSelect<T1, T2>(string prompt = "", string? description = null) where T1 : class where T2 : class;
+
+
+        /// <summary>
+        /// Creates an NodeTree rEMOTE Select control with the specified prompt.
+        /// </summary>
+        /// <param name="prompt">The text prompt.</param>
+        /// <param name="description">The description for input</param>
+        /// <typeparam name="T1">The type of items in the collection.</typeparam>
+        /// <typeparam name="T2">The type of class that represents a structure capable of storing the data necessary to maintain and search for the next collections of items.</typeparam>
+        /// <returns>An <see cref="INodeTreeSelectControl{T}"/> instance for further configuration and reading input.</returns>
+        INodeTreeRemoteSelectControl<T1,T2> NodeTreeRemoteSelect<T1,T2>(string prompt = "", string? description = null) where T1 : class where T2 : class;
     }
 }

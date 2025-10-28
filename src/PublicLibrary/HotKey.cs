@@ -12,16 +12,26 @@ namespace PromptPlusLibrary
     /// <summary>
     /// Represents a configurable hotkey composed of a base <see cref="ConsoleKey"/> and optional modifier flags.
     /// </summary>
-    /// <remarks>
-    /// This struct is lightweight and immutable after construction (properties are init via the primary constructor).
-    /// Use the static members for common built‑in hotkeys.
-    /// </remarks>
-    /// <param name="key">The primary <see cref="ConsoleKey"/>.</param>
-    /// <param name="alt">Indicates whether Alt is part of the hotkey.</param>
-    /// <param name="ctrl">Indicates whether Ctrl is part of the hotkey.</param>
-    /// <param name="shift">Indicates whether Shift is part of the hotkey.</param>
-    public struct HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false) : IEquatable<ConsoleKeyInfo>
+    public readonly struct HotKey : IEquatable<ConsoleKeyInfo>
     {
+        /// <summary>
+        /// This struct is lightweight and immutable after construction (properties are init via the primary constructor).
+        /// Use the static members for common built‑in hotkeys.
+        /// </summary>
+        /// <param name="key">The primary <see cref="ConsoleKey"/>.</param>
+        /// <param name="alt">Indicates whether Alt is part of the hotkey.</param>
+        /// <param name="ctrl">Indicates whether Ctrl is part of the hotkey.</param>
+        /// <param name="shift">Indicates whether Shift is part of the hotkey.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "by Design")]
+        [JsonConstructor]
+        public HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false) 
+        {
+            Key = key;
+            Alt = alt;
+            Ctrl = ctrl;
+            Shift = shift;
+        }
+
         /// <summary>
         /// Gets the <see cref="ConsoleKeyInfo"/> representation of this hotkey.
         /// </summary>
@@ -31,22 +41,22 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets the base <see cref="ConsoleKey"/> of this hotkey.
         /// </summary>
-        public ConsoleKey Key { get; private set; } = key;
+        public ConsoleKey Key { get; }
 
         /// <summary>
         /// Gets a value indicating whether Alt is included.
         /// </summary>
-        public bool Alt { get; private set; } = alt;
+        public bool Alt { get; } 
 
         /// <summary>
         /// Gets a value indicating whether Ctrl is included.
         /// </summary>
-        public bool Ctrl { get; private set; } = ctrl;
+        public bool Ctrl { get; } 
 
         /// <summary>
         /// Gets a value indicating whether Shift is included.
         /// </summary>
-        public bool Shift { get; private set; } = shift;
+        public bool Shift { get; } 
 
         /// <inheritdoc/>
         public override readonly string ToString()

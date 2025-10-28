@@ -27,7 +27,7 @@ The current [`IInputControl`](../IInputControl.md) instance for chaining.
 
 ### Remarks
 
-The Default hotkey to History is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
+The Default hotkey to History is HotKeyShowHistory.
 
 ### See Also
 

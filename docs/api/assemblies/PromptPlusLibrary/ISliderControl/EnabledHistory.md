@@ -27,7 +27,7 @@ The current [`ISliderControl`](../ISliderControl.md) instance for chaining.
 
 ### Remarks
 
-The default hotkey for history is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
+The default hotkey for history is HotKeyShowHistory.
 
 ### See Also
 

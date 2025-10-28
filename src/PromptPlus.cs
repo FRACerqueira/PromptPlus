@@ -11,8 +11,13 @@ using PromptPlusLibrary.PublicLibrary;
 using PromptPlusLibrary.Widgets;
 using System;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -83,7 +88,29 @@ namespace PromptPlusLibrary
             {
                 _consoledrive = new ConsoleDriveLinux(profileDrive);
             }
+
             _promptConfig = new(unicodesupported, _appConsoleCulture);
+
+            if (File.Exists(NameResourceConfigFile))
+            {
+                try
+                {
+#pragma warning disable CA1869 // Cache and reuse 'JsonSerializerOptions' instances
+#pragma warning disable CS8601 // Possible null reference assignment.
+                    _promptConfig = JsonSerializer.Deserialize<PromptConfig>(File.ReadAllText(NameResourceConfigFile),
+                        new JsonSerializerOptions
+                        {
+                            Converters = { new JsonStringEnumConverter() }
+                        });
+                    _promptConfig!.Init(unicodesupported, _appConsoleCulture);
+#pragma warning restore CS8601 // Possible null reference assignment.
+#pragma warning restore CA1869 // Cache and reuse 'JsonSerializerOptions' instances
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
 
             _consoledrive.CursorVisible = true;
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
@@ -106,6 +133,47 @@ namespace PromptPlusLibrary
         /// Each method returns a fluent configuration object.
         /// </summary>
         public static IControls Controls => new PromptPlusControls(_consoledrive, _promptConfig);
+
+        /// <summary>
+        /// Creates a new configuration file for PromptPlus using the name <see cref="NameResourceConfigFile"/>
+        /// </summary>
+        /// <param name="foldername">The name of the foder to create file <see cref="NameResourceConfigFile"/> . Must be a valid folder path and cannot be null or empty.</param>
+        public static void CreatePromptPlusConfigFile(string foldername)
+        { 
+            var text = ReadEmbeddedTextResource($"PromptPlusLibrary.Resources.{NameResourceConfigFile}");
+            if (string.IsNullOrEmpty(text))
+            {
+                throw new InvalidOperationException($"Embedded resource PromptPlusLibrary.Resources.{NameResourceConfigFile} not found.");
+            }
+            File.WriteAllText(Path.Combine(foldername, NameResourceConfigFile), text);
+        }
+
+        /// <summary>
+        /// Gets the default file name for the PromptPlus resource configuration file.
+        /// </summary>
+        public static string NameResourceConfigFile => "PromptPlus.config";
+
+        private static string ReadEmbeddedTextResource(string resourceName)
+        {
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string result = string.Empty;
+
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            {
+                if (stream == null)
+                {
+                    return string.Empty;
+                }
+
+                using (StreamReader reader = new(stream))
+                {
+                    result = reader.ReadToEnd();
+                }
+            }
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+            return result;
+        }
 
         /// <summary>
         /// Reconfigures the active console profile (colors, padding, overflow). Thread-safe.

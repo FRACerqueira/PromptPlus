@@ -10,14 +10,14 @@ using System.Threading;
 namespace PromptPlusLibrary
 {
     /// <summary>
-    /// Provides functionality for configuring and interacting with a Load Dynamically Select control.
+    /// Provides functionality for configuring and interacting with a Load Remote Select control.
     /// </summary>
     /// <typeparam name="T1">The type of items in the collection.</typeparam>
     /// <typeparam name="T2">The type of class that represents a structure capable of storing the data necessary to maintain and search for the next collections of items.</typeparam>
     public interface IRemoteSelectControl<T1,T2> where T1 : class where T2 : class
     {
         /// <summary>
-        /// Runs the Select control and returns the result.
+        /// Runs the Remote Select control and returns the result.
         /// </summary>
         /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
         /// <returns>The <see cref="ResultPrompt{T1}"/> containing the selected item and abort status.</returns>
@@ -32,7 +32,7 @@ namespace PromptPlusLibrary
         IRemoteSelectControl<T1,T2> Options(Action<IControlOptions> options);
 
         /// <summary>
-        /// Overwrites styles for the Select control.
+        /// Overwrites styles for the Remote Select control.
         /// </summary>
         /// <param name="styleType">The <see cref="SelectStyles"/> to apply.</param>
         /// <param name="style">The <see cref="Style"/> to use. Cannot be <c>null</c>.</param>
@@ -42,7 +42,7 @@ namespace PromptPlusLibrary
 
 
         /// <summary>
-        /// Dynamically changes the description of the Select control based on the current selected value.
+        /// Dynamically changes the description of the Remote Select control based on the current selected value.
         /// </summary>
         /// <param name="value">A function that returns the description based on the current value. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
@@ -82,14 +82,24 @@ namespace PromptPlusLibrary
         IRemoteSelectControl<T1,T2> Filter(FilterMode value, bool caseinsensitive = true);
 
         /// <summary>
-        /// Search next colletion of items to add the list. This function is required for operation.
+        /// Registers the function responsible for searching and returning the next collection (page) of items to add to the list.This expression is required for operation.
         /// </summary>
-        /// <param name="initialvalue">The initial value for <typeparamref name="T2"/></param>
-        /// <param name="values">The function that returns the collection of items to be added. Cannot be <c>null</c>.</param>
-        /// <param name="erroMessage">The function for custom error when SearchItems execution fails.</param>
+        /// <param name="initialvalue">Initial state or cursor of type <typeparamref name="T2"/> provided to the search function. Cannot be <c>null</c>.</param>
+        /// <param name="values">
+        /// A function that accepts the current <typeparamref name="T2"/> state and returns a tuple:
+        /// <c>bool</c>: indicates whether additional pages are available (true if more pages exist),
+        /// <c>T2</c>: the next state/cursor to use when requesting subsequent pages,
+        /// <c>IEnumerable{T1}</c>: the collection of items retrieved for the current page.
+        /// This function cannot be <c>null</c>.
+        /// </param>
+        /// <param name="erroMessage">
+        /// Optional function to map an <see cref="Exception"/> thrown during execution of <paramref name="values"/> into a user-friendly error message.
+        /// If omitted, default error handling is used.
+        /// </param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="initialvalue"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="values"/> is <c>null</c>.</exception>
+
         IRemoteSelectControl<T1,T2> PredicateSearchItems(T2 initialvalue, Func<T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception,string>? erroMessage = null);
 
         /// <summary>

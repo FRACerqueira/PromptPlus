@@ -24,6 +24,7 @@ public static class ConsoleKeyInfoExtensions
 | static [IsClearWordBeforeCursor](ConsoleKeyInfoExtensions/IsClearWordBeforeCursor.md)(…) | Determines whether the Control+W (clear word before cursor) Emacs shortcut was pressed. |
 | static [IsForwardWord](ConsoleKeyInfoExtensions/IsForwardWord.md)(…) | Determines whether the Alt+F (forward word) Emacs shortcut was pressed. |
 | static [IsLowersCurrentWord](ConsoleKeyInfoExtensions/IsLowersCurrentWord.md)(…) | Determines whether the Alt+L (lower-case word) Emacs shortcut was pressed. |
+| static [IsNoResponseKey](ConsoleKeyInfoExtensions/IsNoResponseKey.md)(…) | Check ConsoleKeyInfo is Yes key |
 | static [IsPressBackspaceKey](ConsoleKeyInfoExtensions/IsPressBackspaceKey.md)(…) | Determines whether Backspace or (optionally) Control+H (Emacs delete previous character) was pressed. |
 | static [IsPressCtrlEndKey](ConsoleKeyInfoExtensions/IsPressCtrlEndKey.md)(…) | Determines whether Control+End was pressed. |
 | static [IsPressCtrlHomeKey](ConsoleKeyInfoExtensions/IsPressCtrlHomeKey.md)(…) | Determines whether Control+Home was pressed. |
@@ -45,6 +46,7 @@ public static class ConsoleKeyInfoExtensions
 | static [IsPressUpArrowKey](ConsoleKeyInfoExtensions/IsPressUpArrowKey.md)(…) | Determines whether UpArrow or (optionally) Control+P (Emacs previous line/history) was pressed. |
 | static [IsTransposePrevious](ConsoleKeyInfoExtensions/IsTransposePrevious.md)(…) | Determines whether the Control+T (transpose previous characters) Emacs shortcut was pressed. |
 | static [IsUppersCurrentWord](ConsoleKeyInfoExtensions/IsUppersCurrentWord.md)(…) | Determines whether the Alt+U (upper-case word) Emacs shortcut was pressed. |
+| static [IsYesResponseKey](ConsoleKeyInfoExtensions/IsYesResponseKey.md)(…) | Check ConsoleKeyInfo is Yes key |
 
 ### See Also
 

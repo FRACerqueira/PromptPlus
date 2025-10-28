@@ -78,6 +78,16 @@ Properties:  **PromptPlus.Config**.\<Property\> = \<newvalue\>.
 
 - YesChar
 - NoChar
+- PageSize
+- MaxWidth
+- MinimumPrefixLength
+- CompletionWaitToStart
+- ChartWidth
+- SecretChar
+- PromptMaskEdit
+- ProgressBarWidth
+- SliderWidth
+- SwitchWidth
 - MaxLengthFilterText
 - EnabledAbortKey
 - ShowMessageAbortKey
@@ -99,6 +109,14 @@ Properties:  **PromptPlus.Config**.\<Property\> = \<newvalue\>.
 - HotKeyShowHistory
 - HotKeyFilterMode
 - PaginationTemplate
+
+All properties can be created in a name configuration file obtained from **PromptPlus.NameResourceConfigFile** by the command:
+
+- PromptPlus.NameResourceConfigFile = 'PromptPlus.config'
+
+- **PromptPlus.CreatePromptPlusConfigFile(string foldername)**
+
+
 
 To change the pattern of symbols, the method below was made available:
 

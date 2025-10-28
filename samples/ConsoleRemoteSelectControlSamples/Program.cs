@@ -65,7 +65,9 @@ namespace ConsoleRemoteSelectControlSamples
             {
                 lst.Add(new OddNumber { Value = i * 2 + 1 });
             }
-            var status = new MyRemoteControl { LastItem = max+1, EndList = endlist };
+            var status = new MyRemoteControl { LastItem = max, EndList = endlist };
+
+            Thread.Sleep(5000);
 
             return (status.EndList, status, lst);
         }

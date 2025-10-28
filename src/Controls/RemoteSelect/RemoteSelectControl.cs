@@ -6,8 +6,6 @@
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,10 +53,11 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
             _searchItemsControl = default!;
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _lastinput = string.Empty;
+            _pageSize = ConfigPlus.PageSize;
         }
 
 
-        #region ILoadDynamicallySelectControl
+        #region IRemoteSelectControl
 
 
         public IRemoteSelectControl<T1,T2> PredicateDisabled(Func<T1, bool> validdisabled)
@@ -165,15 +164,6 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                 (item) => _textSelector!(item.Value));
             
             _loadingItemTask = Task.Run(() => LoadMoreItem(), cancellationToken);
-
-            if (_localpaginator.SelectedItem == null)
-            {
-                _localpaginator.FirstItem();
-            }
-            if (_localpaginator.SelectedIndex >= 0 &&  _localpaginator.SelectedItem!.Disabled)
-            {
-                SetError(Messages.SelectionDisabled);
-            }
             _tooltipModeSelect = GetTooltipModeSelect();
             LoadTooltipToggle();
         }
@@ -210,9 +200,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                     {
                         _indexTooptip = 0;
                         _modeView = ModeView.Select;
-#pragma warning disable CS8625
-                        ResultCtrl = new ResultPrompt<T1>(default, true);
-#pragma warning restore CS8625 
+                        ResultCtrl = new ResultPrompt<T1>(default!, true);
                         break;
                     }
                     else if (IsAbortKeyPress(keyinfo))
@@ -225,9 +213,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         }
                         else
                         {
-#pragma warning disable CS8625
-                            ResultCtrl = new ResultPrompt<T1>(default, true);
-#pragma warning restore CS8625 
+                            ResultCtrl = new ResultPrompt<T1>(default!, true);
                         }
                         break;
                     }
@@ -271,7 +257,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         break;
                     }
                     #endregion
-                    if (_loadingItemTask != null && keyinfo.Key == ConsoleKey.None && keyinfo.Modifiers == ConsoleModifiers.None)
+                    else if (_loadingItemTask != null && keyinfo.Key == ConsoleKey.None && keyinfo.Modifiers == ConsoleModifiers.None)
                     {
                         _searchItemsFinished = _loadingResult!.Value.IsFinished;
                         _searchItemsControl = _loadingResult!.Value.newsearchItemsControl;
@@ -294,7 +280,12 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                                 SetError(_loadingResult!.Value.error.Message);
                             }
                         }
-                        _localpaginator!.UpdatColletion(_items, null);
+                        Optional<ItemSelect<T1>> defaultvalue = Optional<ItemSelect<T1>>.Empty();
+                        if (_localpaginator!.SelectedIndex >= 0)
+                        {
+                            defaultvalue = Optional<ItemSelect<T1>>.Set(_localpaginator.SelectedItem!);
+                        }
+                        _localpaginator!.UpdatColletion(_items, defaultvalue);
                         _indexTooptip = 0;
                         _loadingResult = null;
                         _loadingItemTask?.Dispose();

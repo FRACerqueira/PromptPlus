@@ -4,10 +4,29 @@
 </br>
 
 
-#### ```csharp
+#### Creates a slider widget for displaying a numeric value within a range.
+
+```csharp
 public ISliderWidget Slider(double value, double minvalue = 0m, double maxvalue = 100m, 
     byte fracionaldig = 2)
 ```
+
+| parameter | description |
+| --- | --- |
+| value | Initial value to display. |
+| minvalue | Minimum permitted value (default: 0). |
+| maxvalue | Maximum permitted value (default: 100). |
+| fracionaldig | Number of fractional digits to show (default: 2, maximum: 5). |
+
+### Return Value
+
+An [`ISliderWidget`](../ISliderWidget.md) for further customization.
+
+### Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentOutOfRangeException | Thrown when: *value* is less than *minvalue* or greater than *maxvalue*, *minvalue* is greater than or equal to *maxvalue*, *fracionaldig* is greater than 5. |
 
 ### See Also
 

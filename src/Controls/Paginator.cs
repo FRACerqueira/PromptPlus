@@ -43,8 +43,13 @@ namespace PromptPlusLibrary.Controls
             _countValidator = countValidator;
             _foundDefault = foundDefault;
             _firstDisabled = true;
+            SelectedIndex = -1;
             InitializeCollection();
             Initialize(defaultValue, _foundDefault);
+            if (SelectedIndex < 0)
+            {
+                MoveToSelectIndex(IndexOption.FirstItem);
+            }
         }
 
         public int PageCount { get; private set; }
@@ -247,7 +252,7 @@ namespace PromptPlusLibrary.Controls
             _items = [.. items];
             _firstDisabled = true;
             InitializeCollection();
-            if (selected.HasValue)
+            if (selected.HasValue && selected.Value.HasValue)
             {
                 Initialize(selected.Value, _foundDefault);
             }

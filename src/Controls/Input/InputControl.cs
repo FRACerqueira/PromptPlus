@@ -31,7 +31,7 @@ namespace PromptPlusLibrary.Controls.Input
         private HistoryOptions? _historyOptions;
         private HotKey? _enabledViewSecret;
         private CaseOptions _inputToCase = CaseOptions.Any;
-        private char _secretChar = '#';
+        private char _secretChar;
         private bool _isinputsecret;
         private bool _passwordvisible;
         private int _maxLength = int.MaxValue;
@@ -53,6 +53,7 @@ namespace PromptPlusLibrary.Controls.Input
         public InputControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _enabledViewSecret = ConfigPlus.HotKeyPasswordView;
+            _secretChar = ConfigPlus.SecretChar;
         }
 
         #region IInputControls

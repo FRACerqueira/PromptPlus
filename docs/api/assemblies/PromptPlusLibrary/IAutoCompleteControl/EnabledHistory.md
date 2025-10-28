@@ -27,7 +27,7 @@ The current [`IAutoCompleteControl`](../IAutoCompleteControl.md) instance for ch
 
 ### Remarks
 
-The Defaults hotkey to Hisyory is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
+The Defaults hotkey to Hisyory is HotKeyShowHistory.
 
 ### See Also
 

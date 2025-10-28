@@ -36,6 +36,11 @@ namespace PromptPlusLibrary.Controls
         /// Get number of Children
         /// </summary>
         public int CountChildren { get; init; }
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether additional child elements can be loaded.
+        /// </summary>
+        public bool MoreLoadChildren { get; set; }
 
         /// <summary>
         /// Node Level 

@@ -31,7 +31,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
         private bool _acceptSystemAttributes;
         private string _searchPattern = "*";
         private string _originalsearchPattern = "*";
-        private byte _pageSize = 10;
+        private byte _pageSize;
         private string _root = AppDomain.CurrentDomain.BaseDirectory;
         private Func<ItemFile, (bool, string?)>? _predicatevalidselect;
         private Func<ItemFile, bool>? _predicatevaliddisabled;
@@ -61,6 +61,8 @@ namespace PromptPlusLibrary.Controls.FileSelect
         {
             IsRoot = (item) => item.UniqueId == (_items.Count == 0 ? "" : _items[0].UniqueId);
             _filterBuffer = new EmacsBuffer(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
+            _pageSize = ConfigPlus.PageSize;
+
         }
 #pragma warning restore IDE0290 // Use primary constructor
 #pragma warning restore IDE0079

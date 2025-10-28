@@ -28,13 +28,13 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         private int _indexTooptip;
         private string _tooltipModeSelect = string.Empty;
         private bool _showInfoFullPath;
-        private byte _pageSize = 10;
+        private byte _pageSize;
         private Func<T, (bool, string?)>? _predicatevalidselect;
         private Func<T, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<T>>? _localpaginator;
         private string _nodeseparator = "|";
         private string[] _toggerTooptips;
-        private byte _maxWidth = 30;
+        private byte _maxWidth;
         private bool _hideCountSelected;
         private int _maxSelect = int.MaxValue;
         private int _minSelect;
@@ -45,6 +45,8 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         {
             IsRoot = (item) => item.UniqueId == (_items.Count == 0 ? "" : _items[0].UniqueId);
             _toggerTooptips = [];
+            _maxWidth = ConfigPlus.MaxWidth;
+            _pageSize = ConfigPlus.PageSize;
         }
 
         #region INodeTreeMultiSelectControl

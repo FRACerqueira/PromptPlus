@@ -16,8 +16,12 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Console.ResetColor();
             PromptPlus.Console.Clear();
 
-            PromptPlus.Widgets.DoubleDash("Sample WriteLine/WriteLineColor", extraLines: 1);
+            PromptPlus.Widgets.DoubleDash($"Create file: '{PromptPlus.NameResourceConfigFile}' at current BaseDirectory with config for all controls", extraLines: 1);
+            PromptPlus.CreatePromptPlusConfigFile(AppDomain.CurrentDomain.BaseDirectory);
+            PromptPlus.Console.WriteLine($"Fiel create :{File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PromptPlus.NameResourceConfigFile))}, ");
+            PromptPlus.Console.WriteLine($"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PromptPlus.NameResourceConfigFile)}");
 
+            PromptPlus.Widgets.DoubleDash("Sample WriteLine/WriteLineColor", extraLines: 1);
             PromptPlus.Console.WriteLine("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
             PromptPlus.Console.WriteLineColor("[RGB(255,0,0):WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
             PromptPlus.Console.WriteLine("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");

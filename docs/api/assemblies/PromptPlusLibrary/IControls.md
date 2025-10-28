@@ -38,8 +38,11 @@ public interface IControls
 | [MaskTimeOnly](IControls/MaskTimeOnly.md)(…) | Creates an MaskEdit(Time) control with the specified prompt. |
 | [MultiSelect&lt;T&gt;](IControls/MultiSelect.md)(…) | Creates an MultiSelect control with the specified prompt. |
 | [NodeTreeMultiSelect&lt;T&gt;](IControls/NodeTreeMultiSelect.md)(…) | Creates an NodeTree MultiSelect control with the specified prompt. |
+| [NodeTreeRemoteSelect&lt;T1,T2&gt;](IControls/NodeTreeRemoteSelect.md)(…) | Creates an NodeTree rEMOTE Select control with the specified prompt. |
 | [NodeTreeSelect&lt;T&gt;](IControls/NodeTreeSelect.md)(…) | Creates an NodeTree Select control with the specified prompt. |
 | [ProgressBar](IControls/ProgressBar.md)(…) | Creates an Progress Bar control with the specified prompt. |
+| [RemoteMultiSelect&lt;T1,T2&gt;](IControls/RemoteMultiSelect.md)(…) | Creates an Remote MultiSelect control with the specified prompt. |
+| [RemoteSelect&lt;T1,T2&gt;](IControls/RemoteSelect.md)(…) | Creates an Remote Select control with the specified prompt. |
 | [Select&lt;T&gt;](IControls/Select.md)(…) | Creates an Select control with the specified prompt. |
 | [Slider](IControls/Slider.md)(…) | Creates an Slider control with the specified prompt. |
 | [Switch](IControls/Switch.md)(…) | Creates an Switch control with the specified prompt. |

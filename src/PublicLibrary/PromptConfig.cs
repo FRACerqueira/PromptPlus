@@ -24,15 +24,25 @@ namespace PromptPlusLibrary
     /// Use <see cref="IPromptPlusConfig"/> for consuming configuration settings. This sealed implementation handles
     /// culture resource switching and Unicode symbol capability detection.
     /// </remarks>
-    public sealed class PromptConfig : IPromptPlusConfig
+    internal sealed class PromptConfig : IPromptPlusConfig
     {
         private readonly Dictionary<SymbolType, bool> _symbolSupport = [];
         private readonly Dictionary<SymbolType, (string value, string unicode)> _globalSymbols = InitSymbols();
-        private readonly bool _isunicode;
+        private  bool _isunicode;
         private char? _yesChar;
         private char? _noChar;
         private CultureInfo? _defaultCulture;
-        private byte _maxLenghtFilterText = 15;
+        private byte _defaultmaxLenghtFilterText = 15;
+        private byte _defaultpagesize = 10;
+        private byte _defaultwidth= 30;
+        private byte _defaultminimumPrefixLength = 3;
+        private byte _defaultchartwidth = 80;
+        private char _defaultsecretchar = '#';
+        private char _defaultpromptmaskedit = '_';
+        private byte _defaultprogressbarwidth = 80;
+        private byte _defaultsliderwidth = 40;
+        private byte _defaultswitchwidth = 6;
+        private int _defaultcompletionwaittostart = 500;
         private Func<int, int, int, string> _paginationTemplate = (totalCount, selectedpage, pagecount) => string.Format(Messages.PaginationTemplate, totalCount, selectedpage, pagecount);
 
         /// <summary>
@@ -69,6 +79,162 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
+        /// Gets or sets the maximum number of items to display per page. Default value is 10.
+        /// Valid range is 1–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        public byte PageSize
+        {
+            get => _defaultpagesize;
+            set
+            {
+                if (value < 1)
+                {
+                    value = 1;
+                }
+                _defaultpagesize = value;
+            }
+        }
+
+        /// <summary>
+        /// Number minimum of chars to accept autocomplete.Default value is 3.
+        /// Valid range is 1–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        public byte MinimumPrefixLength
+        {
+            get => _defaultminimumPrefixLength;
+            set
+            {
+                if (value < 1)
+                {
+                    value = 1;
+                }
+                _defaultminimumPrefixLength = value;
+            }
+        }
+
+        /// <summary>
+        /// Number of milliseconds to wait before to start function autocomplete. Default value is 500
+        /// Valid range is > 100; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        public int CompletionWaitToStart
+        {
+            get => _defaultcompletionwaittostart;
+            set
+            {
+                if (value < 100)
+                {
+                    value = 100;
+                }
+                _defaultcompletionwaittostart = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets Sets the width of the chart bar.Default value is 80. 
+        /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        public byte ChartWidth
+        {
+            get => _defaultchartwidth;
+            set
+            {
+                if (value < 10)
+                {
+                    value = 10;
+                }
+                _defaultchartwidth = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets Sets the character to use as the secret mask input. Defaults is '#'.
+        /// </summary>
+        public char SecretChar
+        {
+            get => _defaultsecretchar;
+            set => _defaultsecretchar = value;
+        }
+
+
+        /// <summary>
+        /// Gets Sets the character to use as the Prompt MaskEdit. Defaults is '_'.
+        /// </summary>
+        public char PromptMaskEdit
+        {
+            get => _defaultpromptmaskedit;
+            set => _defaultpromptmaskedit = value;
+        }
+
+        /// <summary>
+        /// Gets Sets the width of the Progress bar.Default value is 80. 
+        /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        public byte ProgressBarWidth
+        {
+            get => _defaultprogressbarwidth;
+            set
+            {
+                if (value < 10)
+                {
+                    value = 10;
+                }
+                _defaultprogressbarwidth = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets Sets the width of the Slider bar.Default value is 40. 
+        /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        public byte SliderWidth
+        {
+            get => _defaultsliderwidth;
+            set
+            {
+                if (value < 10)
+                {
+                    value = 10;
+                }
+                _defaultsliderwidth = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets Sets the width of the Progress bar.Default value is 6. 
+        /// Valid range is 6–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        public byte SwitchWidth
+        {
+            get => _defaultswitchwidth;
+            set
+            {
+                if (value < 10)
+                {
+                    value = 10;
+                }
+                _defaultswitchwidth = value;
+            }
+        }
+
+        /// <summary>
+        /// Sets the maximum display width for selected items text. Default is 30 characters.
+        /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        public byte MaxWidth
+        {
+            get => _defaultwidth;
+            set
+            {
+                if (value < 10)
+                {
+                    value = 10;
+                }
+                _defaultwidth = value;
+            }
+        }
+
+
+        /// <summary>
         /// Gets or sets the character representing a logical "No" input. Defaults to the localized resource value.
         /// </summary>
         public char NoChar
@@ -83,7 +249,7 @@ namespace PromptPlusLibrary
         /// </summary>
         public byte MaxLenghtFilterText
         {
-            get => _maxLenghtFilterText;
+            get => _defaultmaxLenghtFilterText;
             set
             {
                 if (value > 30)
@@ -96,7 +262,7 @@ namespace PromptPlusLibrary
                     value = 5;
                 }
 
-                _maxLenghtFilterText = value;
+                _defaultmaxLenghtFilterText = value;
             }
         }
 
@@ -272,7 +438,18 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets the application startup culture captured at configuration creation.
         /// </summary>
-        internal CultureInfo AppCulture { get; init; }
+        internal CultureInfo AppCulture { get; private set; }
+
+
+        /// <summary>
+        /// Init with explicit Unicode capability and culture.
+        /// </summary>
+        internal void Init(bool isunicode, CultureInfo culture)
+        {
+            _isunicode = isunicode;
+            AppCulture = culture;
+            
+        }
 
         internal string GetSymbol(SymbolType type, bool useUnicode = true)
         {
