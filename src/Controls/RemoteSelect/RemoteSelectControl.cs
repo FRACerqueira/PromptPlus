@@ -32,6 +32,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
         private Func<Exception, string>? _searchItemsErrorMessage;
         private Task? _loadingItemTask;
         private (Exception? error, bool IsFinished, T2 newsearchItemsControl, IEnumerable<T1> newitems)? _loadingResult;
+        private readonly string _loadMoreId = Guid.NewGuid().ToString(); 
         private enum ModeView
         {
             Select,
@@ -161,7 +162,9 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                 _pageSize,
                 Optional<ItemSelect<T1>>.Empty(),
                 (item1, item2) => item1.UniqueId == item2.UniqueId,
-                (item) => _textSelector!(item.Value));
+                (item) => _textSelector!(item.Value),
+                null,
+                (item) => item.UniqueId != _loadMoreId);
             
             _loadingItemTask = Task.Run(() => LoadMoreItem(), cancellationToken);
             _tooltipModeSelect = GetTooltipModeSelect();
@@ -217,7 +220,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         }
                         break;
                     }
-                    else if (_loadingItemTask == null && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null)
+                    else if (_loadingItemTask == null && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
                     {
                         _indexTooptip = 0;
                         if (_localpaginator.SelectedItem.Disabled)
@@ -257,16 +260,29 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         break;
                     }
                     #endregion
+
                     else if (_loadingItemTask != null && keyinfo.Key == ConsoleKey.None && keyinfo.Modifiers == ConsoleModifiers.None)
                     {
                         _searchItemsFinished = _loadingResult!.Value.IsFinished;
                         _searchItemsControl = _loadingResult!.Value.newsearchItemsControl;
+                        var index = _items.FindIndex(x => x.UniqueId == _loadMoreId);
+                        if (index >= 0)
+                        {
+                            _items.RemoveAt(index);
+                        }
                         foreach (T1 item in _loadingResult!.Value.newitems)
                         {
                             bool disabled = _predicateDisabled?.Invoke(item) ?? false;
                             _items.Add(new ItemSelect<T1>(_uniqueexpression!(item), item, disabled)
                             {
                                 Text = _textSelector!.Invoke(item)
+                            });
+                        }
+                        if (!_searchItemsFinished)
+                        {
+                            _items.Add(new ItemSelect<T1>(_loadMoreId, default!, true)
+                            {
+                                Text = Messages.LoadMore
                             });
                         }
                         if (_loadingResult!.Value.error != null)
@@ -283,16 +299,23 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         Optional<ItemSelect<T1>> defaultvalue = Optional<ItemSelect<T1>>.Empty();
                         if (_localpaginator!.SelectedIndex >= 0)
                         {
-                            defaultvalue = Optional<ItemSelect<T1>>.Set(_localpaginator.SelectedItem!);
+                            if (!_searchItemsFinished)
+                            {
+                                defaultvalue = Optional<ItemSelect<T1>>.Set(_localpaginator.SelectedItem!);
+                            }
                         }
                         _localpaginator!.UpdatColletion(_items, defaultvalue);
+                        if (_searchItemsFinished)
+                        {
+                            _localpaginator!.End();
+                        }
                         _indexTooptip = 0;
                         _loadingResult = null;
                         _loadingItemTask?.Dispose();
                         _loadingItemTask = null;
                         break;
                     }
-                    else if (_loadingItemTask == null && !_searchItemsFinished && ConfigPlus.HotKeyTooltipRemoteLoadMore.Equals(keyinfo))
+                    else if (_loadingItemTask == null && !_searchItemsFinished && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.UniqueId == _loadMoreId)
                     {
                         if (_modeView == ModeView.Filter)
                         {
@@ -304,7 +327,6 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         _indexTooptip = 0;
                         break;
                     }
-
                     else if (_loadingItemTask == null && _filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
@@ -325,17 +347,13 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                     {
                         if (_localpaginator!.IsLastPageItem)
                         {
-                            if (!_searchItemsFinished && _localpaginator.IsLastPage)
-                            {
-                                continue;
-                            }
                             _localpaginator.NextPage(IndexOption.FirstItem);
                         }
                         else
                         {
                             _localpaginator.NextItem();
                         }
-                        if (_localpaginator.SelectedItem != null)
+                        if (_localpaginator.SelectedItem != null && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
                         {
                             if (_localpaginator.SelectedItem.Disabled)
                             {
@@ -349,17 +367,13 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                     {
                         if (_localpaginator!.IsFirstPageItem)
                         {
-                            if (!_searchItemsFinished && _localpaginator.IsFirstPage)
-                            {
-                                continue;
-                            }
                             _localpaginator!.PreviousPage(IndexOption.LastItem);
                         }
                         else
                         {
                             _localpaginator!.PreviousItem();
                         }
-                        if (_localpaginator.SelectedItem != null)
+                        if (_localpaginator.SelectedItem != null && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
                         {
                             if (_localpaginator.SelectedItem.Disabled)
                             {
@@ -371,18 +385,9 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                     }
                     else if (keyinfo.IsPressPageDownKey())
                     {
-                        if (_localpaginator!.IsLastPage && !_searchItemsFinished)
-                        {
-                            if (_localpaginator.LastItem())
-                            {
-                                _indexTooptip = 0;
-                                break;
-                            }
-                            continue;
-                        }
                         if (_localpaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
                         {
-                            if (_localpaginator.SelectedItem != null)
+                            if (_localpaginator.SelectedItem != null && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
                             {
                                 if (_localpaginator.SelectedItem.Disabled)
                                 {
@@ -395,18 +400,9 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                     }
                     else if (keyinfo.IsPressPageUpKey())
                     {
-                        if (_localpaginator!.IsFirstPage && !_searchItemsFinished)
-                        {
-                            if (_localpaginator.FirstItem())
-                            {
-                                _indexTooptip = 0;
-                                break;
-                            }
-                            continue;
-                        }
                         if (_localpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
                         {
-                            if (_localpaginator.SelectedItem != null)
+                            if (_localpaginator.SelectedItem != null && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
                             {
                                 if (_localpaginator.SelectedItem.Disabled)
                                 {
@@ -423,6 +419,13 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         {
                             continue;
                         }
+                        if (_localpaginator.SelectedItem != null && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
+                        {
+                            if (_localpaginator.SelectedItem.Disabled)
+                            {
+                                SetError(Messages.SelectionDisabled);
+                            }
+                        }
                         _indexTooptip = 0;
                         break;
                     }
@@ -431,6 +434,13 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         if (!_localpaginator!.End())
                         {
                             continue;
+                        }
+                        if (_localpaginator.SelectedItem != null && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
+                        {
+                            if (_localpaginator.SelectedItem.Disabled)
+                            {
+                                SetError(Messages.SelectionDisabled);
+                            }
                         }
                         _indexTooptip = 0;
                         break;
@@ -447,7 +457,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         {
                             _localpaginator!.UpdateFilter(filter);
                         }
-                        if (_localpaginator!.SelectedItem != null)
+                        if (_localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
                         {
                             if (_localpaginator.SelectedItem.Disabled)
                             {
@@ -566,6 +576,12 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                 string value = item.Text!;
                 if (_localpaginator.TryGetSelected(out ItemSelect<T1>? selectedItem) && EqualityComparer<ItemSelect<T1>>.Default.Equals(item, selectedItem))
                 {
+                    if (item.UniqueId == _loadMoreId)
+                    {
+                        screenBuffer.Write($"{ConfigPlus.GetSymbol(SymbolType.Selector)}", _optStyles[SelectStyles.Answer]);
+                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.Answer]);
+                        continue;
+                    }
                     screenBuffer.Write($"{ConfigPlus.GetSymbol(SymbolType.Selector)}", _optStyles[SelectStyles.Selected]);
                     if (item.Disabled)
                     {
@@ -578,6 +594,11 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                 }
                 else
                 {
+                    if (item.UniqueId == _loadMoreId)
+                    {
+                        screenBuffer.WriteLine($"  {value}", _optStyles[SelectStyles.Disabled]);
+                        continue;
+                    }
                     if (item.Disabled)
                     {
                         screenBuffer.WriteLine($"  {value}", _optStyles[SelectStyles.Disabled]);
@@ -593,15 +614,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                 _localpaginator.SelectedPage + 1,
                 _localpaginator.PageCount
             )!;
-            if (!_searchItemsFinished)
-            {
-                var hk = string.Format(Messages.RemoteLoadMore, ConfigPlus.HotKeyTooltipRemoteLoadMore);
-                screenBuffer.WriteLine($"{template} {hk}", _optStyles[SelectStyles.Pagination]);
-            }
-            else
-            {
-                screenBuffer.WriteLine(template,_optStyles[SelectStyles.Pagination]);
-            }
+            screenBuffer.WriteLine(template,_optStyles[SelectStyles.Pagination]);
         }
 
         private void WriteAnswer(BufferScreen screenBuffer)
@@ -615,12 +628,12 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                 }
                 else
                 {
-                    if (_localpaginator!.SelectedIndex >= 0)
+                    if (_localpaginator!.SelectedIndex >= 0 && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
                     {
                         text = _localpaginator!.SelectedItem.Text!;
                     }
                 }
-                if (_localpaginator!.SelectedIndex >= 0 && _localpaginator!.SelectedItem.Disabled)
+                if (_localpaginator!.SelectedIndex >= 0 && _localpaginator!.SelectedItem.Disabled && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
                 {
                     screenBuffer.WriteLine(text, _optStyles[SelectStyles.Disabled]);
                 }

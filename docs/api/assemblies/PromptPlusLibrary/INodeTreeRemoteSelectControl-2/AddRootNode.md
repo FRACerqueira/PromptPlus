@@ -7,12 +7,14 @@
 #### Adds a root node to the tree structure. The root node serves as the top-level entry point for the tree hierarchy.
 
 ```csharp
-public INodeTreeRemoteSelectControl AddRootNode(T1 value, string nodeseparator = "|")
+public INodeTreeRemoteSelectControl AddRootNode(T1 value, T2 initialvalue, 
+    string nodeseparator = "|")
 ```
 
 | parameter | description |
 | --- | --- |
 | value | The node value to be added as root. |
+| initialvalue | Initial state or cursor of type *T2* provided to the search function. Cannot be `null`. |
 | nodeseparator | The separator character used to build the node path. Defaults to "&#x7C;". |
 
 ### Return Value

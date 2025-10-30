@@ -483,4 +483,7 @@
   <data name="RemoteLoadMore" xml:space="preserve">
     <value>{0}:Carregar mais itens.</value>
   </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>Enter:Carregar mais itens.</value>
+  </data>
 </root>

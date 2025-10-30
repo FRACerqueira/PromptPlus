@@ -944,27 +944,16 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                 }
             }
-            if (_localpaginator.PageCount > 1)
+            string template = ConfigPlus.PaginationTemplate.Invoke(
+                                _localpaginator.TotalCountValid,
+                                _localpaginator.SelectedPage + 1,
+                                _localpaginator.PageCount)!;
+            screenBuffer.Write(template, _optStyles[MultiSelectStyles.Pagination]);
+            if (!_hideCountSelected)
             {
-                string template = ConfigPlus.PaginationTemplate.Invoke(
-                    _localpaginator.TotalCountValid,
-                    _localpaginator.SelectedPage + 1,
-                    _localpaginator.PageCount
-                )!;
-                screenBuffer.Write(template, _optStyles[MultiSelectStyles.Pagination]);
-                if (!_hideCountSelected)
-                {
-                    screenBuffer.Write(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[MultiSelectStyles.TaggedInfo]);
-                }
-                screenBuffer.WriteLine("", Style.Default());
+                screenBuffer.Write(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[MultiSelectStyles.TaggedInfo]);
             }
-            else
-            {
-                if (!_hideCountSelected)
-                {
-                    screenBuffer.WriteLine(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[MultiSelectStyles.TaggedInfo]);
-                }
-            }
+            screenBuffer.WriteLine("", Style.Default());
         }
 
         private void WriteAnswer(BufferScreen screenBuffer)

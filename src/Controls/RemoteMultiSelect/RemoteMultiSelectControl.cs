@@ -7,7 +7,6 @@ using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -54,8 +53,10 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
         private string _lastinput;
         private Task? _loadingItemTask;
         private (Exception? error, bool IsFinished, T2 newsearchItemsControl, IEnumerable<T1> newitems)? _loadingResult;
+        private readonly string _loadMoreId = Guid.NewGuid().ToString();
 
-#pragma warning disable IDE0079 
+
+#pragma warning disable IDE0079
 #pragma warning disable IDE0290 // Use primary constructor
         public RemoteMultiSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
@@ -242,7 +243,10 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                 _pageSize,
                 Optional<ItemSelect<T1>>.Empty(),
                 (item1, item2) => item1.UniqueId == item2.UniqueId,
-                (item) => _textSelector!(item.Value));
+                (item) => _textSelector!(item.Value),
+                null,
+                (item) => item.UniqueId != _loadMoreId);
+
 
             _loadingItemTask = Task.Run(() => LoadMoreItem(), cancellationToken);
 
@@ -292,7 +296,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                         ResultCtrl = new ResultPrompt<T1[]>([], true);
                         break;
                     }
-                    else if (_loadingItemTask == null && keyinfo.IsPressEnterKey())
+                    else if (_loadingItemTask == null && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
                     {
                         int countselect = _checkeditems.Count;
                         if (countselect < _minSelect)
@@ -331,6 +335,11 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                     {
                         _searchItemsFinished = _loadingResult!.Value.IsFinished;
                         _searchItemsControl = _loadingResult!.Value.newsearchItemsControl;
+                        var index = _items.FindIndex(x => x.UniqueId == _loadMoreId);
+                        if (index >= 0)
+                        {
+                            _items.RemoveAt(index);
+                        }
                         foreach (T1 item in _loadingResult!.Value.newitems)
                         {
                             bool disabled = _predicateDisabled?.Invoke(item) ?? false;
@@ -343,6 +352,13 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                             { 
                                 _checkeditems.Add(_items[^1]);  
                             }
+                        }
+                        if (!_searchItemsFinished)
+                        {
+                            _items.Add(new ItemSelect<T1>(_loadMoreId, default!, true)
+                            {
+                                Text = Messages.LoadMore
+                            });
                         }
                         if (_loadingResult!.Value.error != null)
                         {
@@ -374,17 +390,24 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                         }
                         Optional<ItemSelect<T1>> defaultvalue = Optional<ItemSelect<T1>>.Empty();
                         if (_localpaginator!.SelectedIndex >= 0)
-                        { 
-                            defaultvalue = Optional<ItemSelect<T1>>.Set(_localpaginator.SelectedItem!);
+                        {
+                            if (!_searchItemsFinished)
+                            {
+                                defaultvalue = Optional<ItemSelect<T1>>.Set(_localpaginator.SelectedItem!);
+                            }
                         }
                         _localpaginator!.UpdatColletion(_items, defaultvalue);
+                        if (_searchItemsFinished)
+                        {
+                            _localpaginator!.End();
+                        }
                         _indexTooptip = 0;
                         _loadingResult = null;
                         _loadingItemTask?.Dispose();
                         _loadingItemTask = null;
                         break;
                     }
-                    else if (_loadingItemTask == null && !_searchItemsFinished && ConfigPlus.HotKeyTooltipRemoteLoadMore.Equals(keyinfo))
+                    else if (_loadingItemTask == null && !_searchItemsFinished && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.UniqueId == _loadMoreId)
                     {
                         if (_modeView == ModeView.Filter)
                         {
@@ -415,10 +438,6 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                     {
                         if (_localpaginator!.IsLastPageItem)
                         {
-                            if (!_searchItemsFinished && _localpaginator.IsLastPage)
-                            {
-                                continue;
-                            }
                             _localpaginator.NextPage(IndexOption.FirstItem);
                         }
                         else
@@ -432,10 +451,6 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                     {
                         if (_localpaginator!.IsFirstPageItem)
                         {
-                            if (!_searchItemsFinished && _localpaginator.IsFirstPage)
-                            {
-                                continue;
-                            }
                             _localpaginator!.PreviousPage(IndexOption.LastItem);
                         }
                         else
@@ -447,15 +462,6 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                     }
                     else if (keyinfo.IsPressPageDownKey())
                     {
-                        if (_localpaginator!.IsLastPage && !_searchItemsFinished)
-                        {
-                            if (_localpaginator.LastItem())
-                            {
-                                _indexTooptip = 0;
-                                break;
-                            }
-                            continue;
-                        }
                         if (_localpaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
                         {
                             _indexTooptip = 0;
@@ -465,15 +471,6 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                     }
                     else if (keyinfo.IsPressPageUpKey())
                     {
-                        if (_localpaginator!.IsFirstPage && !_searchItemsFinished)
-                        {
-                            if (_localpaginator.FirstItem())
-                            {
-                                _indexTooptip = 0;
-                                break;
-                            }
-                            continue;
-                        }
                         if (_localpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
                         {
                             _indexTooptip = 0;
@@ -499,7 +496,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.Disabled)
+                    else if (keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.Disabled && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
                     {
                         int index = _items.FindIndex(x => _uniqueexpression!(x.Value!) == _uniqueexpression(_localpaginator.SelectedItem.Value));
                         (bool ok, string? message) = _predicatevalidselect?.Invoke(_items[index].Value) ?? (true, null);
@@ -546,8 +543,8 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                     }
                     else if (_localpaginator!.SelectedItem != null && ConfigPlus.HotKeyTooltipToggleAll.Equals(keyinfo))
                     {
-                        IEnumerable<ItemSelect<T1>> toselect = _items.Where(x => x.Group == _localpaginator.SelectedItem.Group && !x.CharSeparation.HasValue && !x.Disabled);
-                        int qtdcheck = toselect.Count(x => x.ValueChecked && !x.Disabled);
+                        IEnumerable<ItemSelect<T1>> toselect = _items.Where(x => !x.Disabled && x.UniqueId != _loadMoreId);
+                        int qtdcheck = toselect.Count(x => x.ValueChecked);
                         if (qtdcheck == toselect.Count())
                         {
                             foreach (ItemSelect<T1>? item in toselect)
@@ -791,6 +788,12 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                 string value = item.Text!;
                 if (_localpaginator.TryGetSelected(out ItemSelect<T1>? selectedItem) && EqualityComparer<ItemSelect<T1>>.Default.Equals(item, selectedItem))
                 {
+                    if (item.UniqueId == _loadMoreId)
+                    {
+                        screenBuffer.Write($"{ConfigPlus.GetSymbol(SymbolType.Selector)}", _optStyles[MultiSelectStyles.Answer]);
+                        screenBuffer.WriteLine($"{value}", _optStyles[MultiSelectStyles.Answer]);
+                        continue;
+                    }
                     screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.Selector), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
                     if (item.ValueChecked)
                     {
@@ -811,6 +814,11 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                 }
                 else
                 {
+                    if (item.UniqueId == _loadMoreId)
+                    {
+                        screenBuffer.WriteLine($" {value}", _optStyles[MultiSelectStyles.Disabled]);
+                        continue;
+                    }
                     screenBuffer.Write(" ", _optStyles[MultiSelectStyles.UnSelected]);
                     if (!item.CharSeparation.HasValue)
                     {
@@ -833,35 +841,16 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                     }
                 }
             }
-            if (_localpaginator.PageCount > 1)
+            string template = ConfigPlus.PaginationTemplate.Invoke(
+                                _localpaginator.TotalCountValid,
+                                _localpaginator.SelectedPage + 1,
+                                _localpaginator.PageCount)!;
+            screenBuffer.Write(template, _optStyles[MultiSelectStyles.Pagination]);
+            if (!_hideCountSelected)
             {
-                string template = ConfigPlus.PaginationTemplate.Invoke(
-                    _localpaginator.TotalCountValid,
-                    _localpaginator.SelectedPage + 1,
-                    _localpaginator.PageCount
-                )!;
-                if (!_searchItemsFinished)
-                {
-                    var hk = string.Format(Messages.RemoteLoadMore, ConfigPlus.HotKeyTooltipRemoteLoadMore);
-                    screenBuffer.Write($"{template} {hk}", _optStyles[MultiSelectStyles.Pagination]);
-                }
-                else
-                {
-                    screenBuffer.Write(template, _optStyles[MultiSelectStyles.Pagination]);
-                }
-                if (!_hideCountSelected)
-                {
-                    screenBuffer.Write(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[MultiSelectStyles.TaggedInfo]);
-                }
-                screenBuffer.WriteLine("", Style.Default());
+                screenBuffer.Write(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[MultiSelectStyles.TaggedInfo]);
             }
-            else
-            {
-                if (!_hideCountSelected)
-                {
-                    screenBuffer.WriteLine(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[MultiSelectStyles.TaggedInfo]);
-                }
-            }
+            screenBuffer.WriteLine("", Style.Default());
         }
 
         private void WriteAnswer(BufferScreen screenBuffer)

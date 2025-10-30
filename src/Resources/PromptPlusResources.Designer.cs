@@ -367,6 +367,15 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter:Load more items..
+        /// </summary>
+        internal static string LoadMore {
+            get {
+                return ResourceManager.GetString("LoadMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are unreported entries..
         /// </summary>
         internal static string MaskeditInputPending {

@@ -70,39 +70,26 @@ namespace PromptPlusLibrary
         INodeTreeRemoteSelectControl<T1, T2> PredicateChildAllowed(Func<T1, bool> childallowed);
 
         /// <summary>
+        /// Configures the control to provide show additional information for nodes that do not allow child nodes.
+        /// </summary>
+        /// <param name="extraInfoNode">A function that takes a node of type T1 and returns a string containing extra information when the node does not allow child nodes.</param>
+        /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
+        INodeTreeRemoteSelectControl<T1, T2> PredicateExtraInfo(Func<T1, string?> extraInfoNode);
+
+        /// <summary>
         /// Adds a root node to the tree structure.
         /// The root node serves as the top-level entry point for the tree hierarchy.
         /// </summary>
         /// <param name="value">The node value to be added as root.</param>
+        /// <param name="initialvalue">Initial state or cursor of type <typeparamref name="T2"/> provided to the search function. Cannot be <c>null</c>.</param>
         /// <param name="nodeseparator">The separator character used to build the node path. Defaults to "|".</param>
         /// <returns>The current <see cref="INodeTreeSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="InvalidOperationException">Thrown if <paramref name="value"/> already exists.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="nodeseparator"/> is empty or null.</exception>
-        INodeTreeRemoteSelectControl<T1,T2> AddRootNode(T1 value, string nodeseparator = "|");
+        INodeTreeRemoteSelectControl<T1,T2> AddRootNode(T1 value, T2 initialvalue, string nodeseparator = "|");
 
         /// <summary>
-        /// Registers the function responsible for searching and returning the next collection of nodes items to add to the root node.This expression is required for operation.
-        /// </summary>
-        /// <param name="initialvalue">Initial state or cursor of type <typeparamref name="T2"/> provided to the search function. Cannot be <c>null</c>.</param>
-        /// <param name="values">
-        /// A function that accepts The selected node parent and current <typeparamref name="T2"/> state and returns a tuple:
-        /// <c>bool</c>: indicates whether additional pages are available (true if more pages exist),
-        /// <c>T2</c>: the next state/cursor to use when requesting subsequent pages,
-        /// <c>IEnumerable{T1}</c>: the collection of child items retrieved for the root node.
-        /// This function cannot be <c>null</c>.
-        /// </param>
-        /// <param name="erroMessage">
-        /// Optional function to map an <see cref="Exception"/> thrown during execution of <paramref name="values"/> into a user-friendly error message.
-        /// If omitted, default error handling is used.
-        /// </param>
-        /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="initialvalue"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentNullException">Thrown if <paramref name="values"/> is <c>null</c>.</exception>
-        INodeTreeRemoteSelectControl<T1, T2> PredicateSearchRootNode(T2 initialvalue, Func<T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception, string>? erroMessage = null);
-
-
-        /// <summary>
-        /// Registers the function responsible for searching and returning the next collection of noders child items to add to the list.This expression is required for operation.
+        /// Registers the function responsible for searching and returning the next collection of nodes child items to add to the list.This expression is required for operation.
         /// </summary>
         /// <param name="values">
         /// A function that accepts The selected node parent and current <typeparamref name="T2"/> state and returns a tuple:
@@ -117,7 +104,7 @@ namespace PromptPlusLibrary
         /// </param>
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="values"/> is <c>null</c>.</exception>
-        INodeTreeRemoteSelectControl<T1, T2> PredicateSearchChildNode(Func<T1, T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception, string>? erroMessage = null);
+        INodeTreeRemoteSelectControl<T1, T2> PredicateSearchItems(Func<T1, T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception, string>? erroMessage = null);
 
         /// <summary>
         /// Sets the maximum number of items to display per page in the tree view.

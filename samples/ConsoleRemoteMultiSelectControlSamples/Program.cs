@@ -3,9 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Text.Json;
 using PromptPlusLibrary;
 
 namespace ConsoleRemoteMultiSelectControlSamples
@@ -39,7 +37,7 @@ namespace ConsoleRemoteMultiSelectControlSamples
                 .UniqueId(item => item.Value.ToString())
                 .DefaultWhenLoad([new OddNumber{ Value=71 }, new OddNumber { Value = 73 }])
                 .PredicateSearchItems(new MyRemoteControl(), GetOddNumbers, (err) => err.Message)
-                .PageSize(7)
+                .PageSize(13)
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {resultclass.IsAborted}, Value count: {resultclass.Content.Length!}");
 
@@ -54,9 +52,9 @@ namespace ConsoleRemoteMultiSelectControlSamples
             var endlist = false;
             var ini = control.LastItem;
             var max = control.LastItem;
-            if (control.LastItem + 35 > int.MaxValue - 1)
+            if (control.LastItem + 35 > 130)
             {
-                max = control.LastItem + (int.MaxValue - 1 - control.LastItem);
+                max = 130;
                 endlist = true;
             }
             else
@@ -70,7 +68,7 @@ namespace ConsoleRemoteMultiSelectControlSamples
             }
             var status = new MyRemoteControl { LastItem = max, EndList = endlist };
 
-            Thread.Sleep(5000);
+            Thread.Sleep(3000);
 
             return (status.EndList, status, lst);
         }

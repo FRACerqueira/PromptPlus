@@ -36,7 +36,7 @@ namespace ConsoleRemoteSelectControlSamples
                 .TextSelector(item => item.Value.ToString())
                 .UniqueId(item => item.Value.ToString())
                 .PredicateSearchItems(new MyRemoteControl(), GetOddNumbers, (err) => err.Message)
-                .PageSize(7)
+                .PageSize(13)
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {resultclass.IsAborted}, Value ID: {resultclass.Content.Value!}");
 
@@ -51,9 +51,9 @@ namespace ConsoleRemoteSelectControlSamples
             var endlist = false;
             var ini = control.LastItem;
             var max = control.LastItem;
-            if (control.LastItem + 35 > int.MaxValue-1)
+            if (control.LastItem + 35 > 130)
             {
-                max = control.LastItem + (int.MaxValue - 1 - control.LastItem);
+                max = 130;
                 endlist = true;
             }
             else
@@ -67,7 +67,7 @@ namespace ConsoleRemoteSelectControlSamples
             }
             var status = new MyRemoteControl { LastItem = max, EndList = endlist };
 
-            Thread.Sleep(5000);
+            Thread.Sleep(3000);
 
             return (status.EndList, status, lst);
         }

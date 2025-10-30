@@ -8,19 +8,23 @@ using PromptPlusLibrary;
 
 namespace ConsoleNodeTreeRemoteSelectSamples
 {
+    /// <summary>
+    /// This class is for demonstration purposes only and does not represent best practice in this context.
+    /// </summary>
     public class MyRemoteControl
     {
-        public int RootLastItem { get; set; }
-        public bool RootEndList { get; set; }
-
-        public Dictionary<string, (int,bool)> StatusChilds = [];
+        public int LastItem { get; set; }
+        public bool EndList { get; set; }
+        public byte MaxEmpty { get; set; } = 5;
+        public bool FlagErro { get; set; }
     }
 
     public class Number
     {
         public int Value { get; set; }
         public string Name { get; set; } = string.Empty;
-        public bool ChildAllowed { get; set; }
+        public bool ChildAllowed { get; set; } = true;
+        public long Size { get; set; }
     }
 
     internal class Program
@@ -36,52 +40,105 @@ namespace ConsoleNodeTreeRemoteSelectSamples
 
             PromptPlus.Widgets.DoubleDash("Sample Remote Selector");
 
-            var resultclass = PromptPlus.Controls.NodeTreeRemoteSelect<Number, MyRemoteControl>("Select : ")
+            var resultclass = PromptPlus.Controls.NodeTreeRemoteSelect<Number, MyRemoteControl>("Select : ", "Odd number is folder and max root is 100. Childs is fixed at 10 items without more childs")
                 .TextSelector(item => item.Name)
                 .UniqueId(item => item.Value.ToString())
-                .AddRootNode(new Number { Value = int.MinValue, Name = "Root Node" })
-                .PredicateSearchRootNode(new MyRemoteControl(), GetAllNumbers, (err) => err.Message)
-                .PredicateSearchChildNode(GetNodesChildsNumber, (err) => err.Message)
+                .AddRootNode(new Number { Value = int.MinValue, Name = "Root Node"}, new MyRemoteControl())
                 .PredicateChildAllowed(item => item.ChildAllowed)
-                .PageSize(7)
+                .PredicateSearchItems(GetNodes, (err) => err.Message)
+                .PredicateExtraInfo(GetSizeInfo)
+                .PageSize(20)
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {resultclass.IsAborted}, Value ID: {resultclass.Content.Value!}");
 
         }
 
-        private static (bool, MyRemoteControl, IEnumerable<Number>) GetNodesChildsNumber(Number number, MyRemoteControl control)
+        private static string? GetSizeInfo(Number number)
         {
-            throw new NotImplementedException();
+            if (!number.ChildAllowed)
+            {
+                return BytesToString(1024 * (number.Value + 10));
+            }
+            return null;
         }
 
-        private static (bool, MyRemoteControl, IEnumerable<Number>) GetAllNumbers(MyRemoteControl control)
+        private static (bool, MyRemoteControl, IEnumerable<Number>) GetNodes(Number number, MyRemoteControl control)
         {
-            if (control.RootEndList)
+            //Root nodes
+            var lst = new List<Number>();
+            if (number.Value == int.MinValue)
             {
-                return (control.RootEndList, control, []);
+                if (control.EndList)
+                {
+                    return (control.EndList, control, []);
+                }
+                var endlist = false;
+                var ini = control.LastItem;
+                var max = control.LastItem;
+                if (control.LastItem + 35 > 100)
+                {
+                    max = 100;
+                    endlist = true;
+                }
+                else
+                {
+                    max = control.LastItem + 35;
+                }
+                for (int i = ini; i < max; i++)
+                {
+                    lst.Add(new Number { Value = i, Name = $"number {i}", ChildAllowed = (i % 2 != 0) });
+                }
+                var status = new MyRemoteControl { LastItem = max, EndList = endlist };
+
+                Thread.Sleep(5000);
+
+                return (status.EndList, status, lst);
             }
-            var endlist = false;
-            var ini = control.RootLastItem;
-            var max = control.RootLastItem;
-            if (control.RootLastItem + 35 > int.MaxValue-1)
+            if (control.MaxEmpty > 1)
             {
-                max = control.RootLastItem + (int.MaxValue - 1 - control.RootLastItem);
-                endlist = true;
+                var text = $"Other Child {500 + control.MaxEmpty}";
+                lst.Add(new Number { Value = 500+ control.MaxEmpty, Name = text, ChildAllowed = true });
+                control.MaxEmpty--;
             }
             else
-            { 
-                max = control.RootLastItem + 35;
-            }
-            var lst = new List<Number>();
-            for (int i = ini; i < max; i++)
             {
-                lst.Add(new Number { Value = i, Name = $"number {i}" , ChildAllowed = (i % 2 == 0)});
+                if (control.FlagErro)
+                {
+                    if (control.MaxEmpty > 0)
+                    {
+                        var text = $"Other Child {500 + control.MaxEmpty}";
+                        lst.Add(new Number { Value = 500 + control.MaxEmpty, Name = text, ChildAllowed = true });
+                        control.MaxEmpty--;
+                    }
+                }
+                else
+                {
+                    control.FlagErro = true;
+                    throw new Exception("Simulated error getting child nodes, try again!");
+                }
             }
-            var status = new MyRemoteControl { RootLastItem = max, RootEndList = endlist };
+            //Child nodes
+            var randomQtd = new Random(DateTime.Now.Second);
+            var maxqtd = randomQtd.Next(1,8);
+            for (int i = 0; i < maxqtd; i++)
+            {
+                var value = randomQtd.Next(200, 300) + i;
+                lst.Add(new Number { Value = value, Name = $"number {value}", ChildAllowed = false, Size = randomQtd.NextInt64(500, 3000000) });
+            }
+            return (control.MaxEmpty == 0, control, lst);
 
-            Thread.Sleep(5000);
+        }
 
-            return (status.RootEndList, status, lst);
+        private static string BytesToString(long value)
+        {
+            string[] suf = ["", " KB", " MB", " GB", " TB", " PB", " EB"]; //Longs run out around EB
+            if (value == 0)
+            {
+                return "0";
+            }
+            int place = Convert.ToInt32(Math.Floor(Math.Log(value, 1024)));
+            double num = Math.Round(value / Math.Pow(1024, place), 0);
+            return $"{num}{suf[place]}";
         }
     }
 }

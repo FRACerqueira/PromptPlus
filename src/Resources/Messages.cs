@@ -130,7 +130,9 @@ namespace PromptPlusLibrary.Resources
             NodePath = PromptPlusResources.NodePath;
             TooltipExpandAllPress = PromptPlusResources.TooltipExpandAllPress;
             RemoteLoadMore = PromptPlusResources.RemoteLoadMore;
+            LoadMore = PromptPlusResources.LoadMore;
         }
+        public static string LoadMore { get; private set; } = PromptPlusResources.LoadMore;
         public static string RemoteLoadMore { get; private set; } = PromptPlusResources.RemoteLoadMore;
         public static string TooltipExpandAllPress { get; private set; } = PromptPlusResources.TooltipExpandAllPress;
         public static string NodePath { get; private set; } = PromptPlusResources.NodePath;
