@@ -11,6 +11,7 @@ namespace PromptPlusLibrary.Controls
         public T Value => value;
         public bool Disabled => disabled;
         public string? Text { get; set; }
+        public string? ExtraText { get; set; }
         public string? Group { get; set; }
         public bool IsFirstItemGroup { get; set; }
         public bool IsLastItemGroup { get; set; }

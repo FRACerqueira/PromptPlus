@@ -4,12 +4,12 @@
 </br>
 
 
-#### Creates an NodeTree rEMOTE Select control with the specified prompt.
+#### Creates an NodeTree Remote Select control with the specified prompt.
 
 ```csharp
 public INodeTreeRemoteSelectControl<T1, T2> NodeTreeRemoteSelect<T1, T2>(string prompt = "", 
     string? description = null)
-    where T1 : class
+    where T1 : class, new()
     where T2 : class
 ```
 

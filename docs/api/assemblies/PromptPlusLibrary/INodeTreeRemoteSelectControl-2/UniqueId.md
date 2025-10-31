@@ -16,7 +16,7 @@ public INodeTreeRemoteSelectControl UniqueId(Func<T1, string> uniquevalue)
 
 ### Return Value
 
-The current [`IRemoteSelectControl`](../IRemoteSelectControl-2.md) instance for chaining.
+The current [`INodeTreeRemoteSelectControl`](../INodeTreeRemoteSelectControl-2.md) instance for chaining.
 
 ### Exceptions
 

@@ -99,6 +99,13 @@ namespace PromptPlusLibrary
         IMultiSelectControl<T> TextSelector(Func<T, string> value);
 
         /// <summary>
+        /// Configures the control to provide show additional information for item.
+        /// </summary>
+        /// <param name="extraInfoNode">A function that takes a item of type T and returns a string containing extra information.</param>
+        /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
+        IMultiSelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode);
+
+        /// <summary>
         /// Adds a single item to the list.
         /// </summary>
         /// <param name="value">The item to add.</param>

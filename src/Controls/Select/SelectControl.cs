@@ -21,6 +21,7 @@ namespace PromptPlusLibrary.Controls.Select
         private readonly EmacsBuffer _filterBuffer;
         private readonly List<ItemSelect<T>> _items = [];
         private Func<T, (bool, string?)>? _predicatevalidselect;
+        private Func<T, string?>? _extraInfo;
         private int _sequence;
         private bool _autoSelect;
         private Func<T, string>? _changeDescription;
@@ -61,6 +62,13 @@ namespace PromptPlusLibrary.Controls.Select
 
 
         #region ISelectControl
+
+        public ISelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
+        {
+            ArgumentNullException.ThrowIfNull(extraInfoNode);
+            _extraInfo = extraInfoNode;
+            return this;
+        }
 
         public ISelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
         {
@@ -322,6 +330,8 @@ namespace PromptPlusLibrary.Controls.Select
                 }
             }
 
+            LoadExtraInfo();
+
             _localpaginator = new Paginator<ItemSelect<T>>(
                 _filterType,
                 _items,
@@ -342,6 +352,18 @@ namespace PromptPlusLibrary.Controls.Select
             }
             _tooltipModeSelect = GetTooltipModeSelect();
             LoadTooltipToggle();
+        }
+
+        private void LoadExtraInfo()
+        {
+            if (_extraInfo == null)
+            {
+                return;
+            }
+            foreach (var item in _items)
+            {
+                item.ExtraText = _extraInfo.Invoke(item.Value!);
+            }
         }
 
         public override void BufferTemplate(BufferScreen screenBuffer)
@@ -745,24 +767,36 @@ namespace PromptPlusLibrary.Controls.Select
                     screenBuffer.Write($"{indentgroup}", _optStyles[SelectStyles.Lines]);
                     if (item.Disabled)
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.Disabled]);
+                        screenBuffer.Write($" {value}", _optStyles[SelectStyles.Disabled]);
                     }
                     else
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.Selected]);
+                        screenBuffer.Write($" {value}", _optStyles[SelectStyles.Selected]);
                     }
+                    if (!string.IsNullOrEmpty(item.ExtraText))
+                    {
+                        screenBuffer.Write($"({item.ExtraText})", item.Disabled? _optStyles[SelectStyles.Disabled]:_optStyles[SelectStyles.Selected]);
+
+                    }
+                    screenBuffer.WriteLine("", Style.Default());
+
                 }
                 else
                 {
                     screenBuffer.Write($" {indentgroup}", _optStyles[SelectStyles.Lines]);
                     if (!item.CharSeparation.HasValue && item.Disabled)
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.Disabled]);
+                        screenBuffer.Write($" {value}", _optStyles[SelectStyles.Disabled]);
                     }
                     else
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.UnSelected]);
+                        screenBuffer.Write($" {value}", _optStyles[SelectStyles.UnSelected]);
                     }
+                    if (!string.IsNullOrEmpty(item.ExtraText))
+                    {
+                        screenBuffer.Write($"({item.ExtraText})", item.Disabled ? _optStyles[SelectStyles.Disabled] : _optStyles[SelectStyles.TaggedInfo]);
+                    }
+                    screenBuffer.WriteLine("", Style.Default());
                 }
             }
             if (_localpaginator.PageCount > 1)

@@ -94,6 +94,18 @@ namespace ConsoleSelectControlSamples
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {resultstring.IsAborted}, Value: {resultstring.Content!}");
 
+            PromptPlus.Widgets.DoubleDash("Sample Selector with Extra info");
+            resultstring = PromptPlus.Controls.Select<string>("Select : ")
+                .AddItem("Seattle")
+                .AddItem("London")
+                .AddItem("Tokyo")
+                .AddItem("New York")
+                .AddItem("Singapore")
+                .AddItem("Shanghai")
+                .ExtraInfo(x => $"Length: {x.Length}")
+                .Run();
+            PromptPlus.Console.WriteLine($"IsAborted : {resultstring.IsAborted}, Value: {resultstring.Content!}");
+
             PromptPlus.Widgets.DoubleDash("Sample Selector with disabled item");
             resultstring = PromptPlus.Controls.Select<string>("Select : ", "London and Seattle is disabled")
                 .AddItem("Seattle", true)

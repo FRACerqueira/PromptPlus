@@ -42,12 +42,43 @@ namespace PromptPlusLibrary.Controls
         public ResultPrompt<T> Run(CancellationToken stoptoken = default)
         {
             _showTooltipValue = GeneralOptions.ShowTooltipValue;
-            if (isWidget)
+            try
             {
+                if (isWidget)
+                {
+                    using (console.InternalExclusiveContext())
+                    {
+                        _screenPosition = ConsolePlus.GetCursorPosition();
+
+                        bool oldcursor = ConsolePlus.CursorVisible;
+                        Thread.CurrentThread.CurrentCulture = ConfigPlus.DefaultCulture;
+                        ConsolePlus.CursorVisible = false;
+                        try
+                        {
+
+                            InitControl(stoptoken);
+
+
+                            BufferTemplate(_bufferScreen);
+
+                            _bufferScreen.DiffBuffer();
+
+                            RenderBuffer(true);
+
+                            FinalizeControl();
+                        }
+                        finally
+                        {
+                            ConsolePlus.CursorVisible = oldcursor;
+                            Thread.CurrentThread.CurrentCulture = ConfigPlus.AppCulture;
+                        }
+#pragma warning disable CS8604 // Possible null reference argument.
+                        return new ResultPrompt<T>(default, false);
+#pragma warning restore CS8604 // Possible null reference argument.
+                    }
+                }
                 using (console.InternalExclusiveContext())
                 {
-                    _screenPosition = ConsolePlus.GetCursorPosition();
-
                     bool oldcursor = ConsolePlus.CursorVisible;
                     Thread.CurrentThread.CurrentCulture = ConfigPlus.DefaultCulture;
                     ConsolePlus.CursorVisible = false;
@@ -56,13 +87,34 @@ namespace PromptPlusLibrary.Controls
 
                         InitControl(stoptoken);
 
+                        _screenPosition = ConsolePlus.GetCursorPosition();
 
-                        BufferTemplate(_bufferScreen);
+                        do
+                        {
+                            BufferTemplate(_bufferScreen);
+                            RenderBuffer();
+                        } while (!TryResult(stoptoken));
 
-                        _bufferScreen.DiffBuffer();
+                        if (!stoptoken.IsCancellationRequested)
+                        {
+                            if (!ResultCtrl.HasValue)
+                            {
+                                throw new InvalidOperationException("Not setter ResultPrompt after input finalize");
+                            }
 
-                        RenderBuffer(true);
-
+                        }
+                        if (GeneralOptions.HideAfterFinishValue || stoptoken.IsCancellationRequested || (GeneralOptions.HideOnAbortValue && ResultCtrl!.Value.IsAborted))
+                        {
+                            RenderBuffer();
+                            ConsolePlus.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop);
+                        }
+                        else
+                        {
+                            if (FinishTemplate(_bufferScreen))
+                            {
+                                RenderBuffer(true);
+                            }
+                        }
                         FinalizeControl();
                     }
                     finally
@@ -70,57 +122,18 @@ namespace PromptPlusLibrary.Controls
                         ConsolePlus.CursorVisible = oldcursor;
                         Thread.CurrentThread.CurrentCulture = ConfigPlus.AppCulture;
                     }
-#pragma warning disable CS8604 // Possible null reference argument.
-                    return new ResultPrompt<T>(default, false);
-#pragma warning restore CS8604 // Possible null reference argument.
+                    return ResultCtrl!.Value;
                 }
             }
-            using (console.InternalExclusiveContext())
+            catch (Exception)
             {
-                bool oldcursor = ConsolePlus.CursorVisible;
-                Thread.CurrentThread.CurrentCulture = ConfigPlus.DefaultCulture;
-                ConsolePlus.CursorVisible = false;
-                try
-                {
-
-                    InitControl(stoptoken);
-
-                    _screenPosition = ConsolePlus.GetCursorPosition();
-
-                    do
-                    {
-                        BufferTemplate(_bufferScreen);
-                        RenderBuffer();
-                    } while (!TryResult(stoptoken));
-
-                    if (!stoptoken.IsCancellationRequested)
-                    {
-                        if (!ResultCtrl.HasValue)
-                        {
-                            throw new InvalidOperationException("Not setter ResultPrompt after input finalize");
-                        }
-
-                    }
-                    if (GeneralOptions.HideAfterFinishValue || stoptoken.IsCancellationRequested || (GeneralOptions.HideOnAbortValue && ResultCtrl!.Value.IsAborted))
-                    {
-                        RenderBuffer();
-                        ConsolePlus.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop);
-                    }
-                    else
-                    {
-                        if (FinishTemplate(_bufferScreen))
-                        {
-                            RenderBuffer(true);
-                        }
-                    }
-                    FinalizeControl();
-                }
-                finally
-                {
-                    ConsolePlus.CursorVisible = oldcursor;
-                    Thread.CurrentThread.CurrentCulture = ConfigPlus.AppCulture;
-                }
-                return ResultCtrl!.Value;
+                ((IConsoleExtend)ConsolePlus).Dispose();
+                Thread.CurrentThread.CurrentCulture = ConfigPlus.AppCulture;
+                System.Console.OutputEncoding = ConfigPlus.OriginalOutputEncoding;
+                System.Console.ForegroundColor = ConfigPlus.OriginalForecolor;
+                System.Console.BackgroundColor = ConfigPlus.OriginalBackcolor;
+                System.Console.ResetColor();
+                throw;
             }
         }
 

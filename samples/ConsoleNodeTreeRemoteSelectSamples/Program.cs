@@ -41,13 +41,14 @@ namespace ConsoleNodeTreeRemoteSelectSamples
             PromptPlus.Widgets.DoubleDash("Sample Remote Selector");
 
             var resultclass = PromptPlus.Controls.NodeTreeRemoteSelect<Number, MyRemoteControl>("Select : ", "Odd number is folder and max root is 100. Childs is fixed at 10 items without more childs")
+                .AddRootNode(new Number { Value = int.MinValue, Name = "Root Node" }, new MyRemoteControl())
                 .TextSelector(item => item.Name)
+                .ExtraInfo(GetSizeInfo)
                 .UniqueId(item => item.Value.ToString())
-                .AddRootNode(new Number { Value = int.MinValue, Name = "Root Node"}, new MyRemoteControl())
+                .SearchMoreItems(GetNodes, (err) => err.Message)
                 .PredicateChildAllowed(item => item.ChildAllowed)
-                .PredicateSearchItems(GetNodes, (err) => err.Message)
-                .PredicateExtraInfo(GetSizeInfo)
-                .PageSize(20)
+                .PageSize(13)
+                .DisableRecursiveCount(false)
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {resultclass.IsAborted}, Value ID: {resultclass.Content.Value!}");
 

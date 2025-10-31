@@ -19,7 +19,7 @@ public INodeTreeRemoteSelectControl AddRootNode(T1 value, T2 initialvalue,
 
 ### Return Value
 
-The current [`INodeTreeSelectControl`](../INodeTreeSelectControl-1.md) instance for chaining.
+The current [`INodeTreeRemoteSelectControl`](../INodeTreeRemoteSelectControl-2.md) instance for chaining.
 
 ### Exceptions
 

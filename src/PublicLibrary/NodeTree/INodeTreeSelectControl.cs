@@ -122,7 +122,23 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="value">True to hide child counts, false to show them.</param>
         /// <returns>The current <see cref="INodeTreeSelectControl{T}"/> instance for chaining.</returns>
-        INodeTreeSelectControl<T> HideSize(bool value = true);
+        INodeTreeSelectControl<T> HideCount(bool value = true);
+
+        /// <summary>
+        /// Disables or enables recursive counting of child nodes in the selection control. Defauts to disabled.
+        /// </summary>
+        /// <remarks>Disabling recursive counting may improve performance for large node trees by avoiding deep traversal when counting child nodes.</remarks>
+        /// <param name="value">A value indicating whether recursive counting should be disabled. If <see langword="true"/>, recursive
+        /// counting is disabled; otherwise, it remains enabled. </param>
+        /// <returns>The current <see cref="INodeTreeSelectControl{T}"/> instance for chaining.</returns>
+        INodeTreeSelectControl<T> DisableRecursiveCount(bool value = true);
+
+        /// <summary>
+        /// Configures the control to provide show additional information for node.
+        /// </summary>
+        /// <param name="extraInfoNode">A function that takes a node of type T and returns a string containing extra information.</param>
+        /// <returns>The current <see cref="INodeTreeSelectControl{T}"/> instance for chaining.</returns>
+        INodeTreeSelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode);
 
         /// <summary>
         /// Executes the Node Select Control and provides the selection result.

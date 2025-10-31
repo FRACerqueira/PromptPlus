@@ -28,6 +28,7 @@ public interface ISelectControl<T>
 | [Default](ISelectControl-1/Default.md)(…) | Sets the initial value of the Select control. Default is the first item in the list. |
 | [EnabledHistory](ISelectControl-1/EnabledHistory.md)(…) | Enables history and applies custom options to the history feature. |
 | [EqualItems](ISelectControl-1/EqualItems.md)(…) | Sets a custom item comparator for determining item equality. |
+| [ExtraInfo](ISelectControl-1/ExtraInfo.md)(…) | Configures the control to provide show additional information for item. |
 | [Filter](ISelectControl-1/Filter.md)(…) | Sets the filter strategy for filtering items in the collection. Default is Disabled. |
 | [HideTipGroup](ISelectControl-1/HideTipGroup.md)(…) | Hides the tip with the group name. Default is `false`. |
 | [Interaction](ISelectControl-1/Interaction.md)(…) |  |

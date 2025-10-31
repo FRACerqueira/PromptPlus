@@ -35,7 +35,7 @@ namespace ConsoleRemoteSelectControlSamples
             var resultclass = PromptPlus.Controls.RemoteSelect<OddNumber, MyRemoteControl>("Select : ")
                 .TextSelector(item => item.Value.ToString())
                 .UniqueId(item => item.Value.ToString())
-                .PredicateSearchItems(new MyRemoteControl(), GetOddNumbers, (err) => err.Message)
+                .SearchMoreItems(new MyRemoteControl(), GetOddNumbers, (err) => err.Message)
                 .PageSize(13)
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {resultclass.IsAborted}, Value ID: {resultclass.Content.Value!}");

@@ -21,7 +21,9 @@ public interface INodeTreeSelectControl<T>
 | [AddChildNode](INodeTreeSelectControl-1/AddChildNode.md)(…) | Adds a child node to an existing parent node in the tree. Enables building the hierarchical structure of the tree. |
 | [AddRootNode](INodeTreeSelectControl-1/AddRootNode.md)(…) | Adds a root node to the tree structure. The root node serves as the top-level entry point for the tree hierarchy. |
 | [ChangeDescription](INodeTreeSelectControl-1/ChangeDescription.md)(…) | Dynamically changes the description of the Select based on its value. The description updates whenever the selected value changes during interaction. |
-| [HideSize](INodeTreeSelectControl-1/HideSize.md)(…) | Controls the visibility of child node counts in the tree display. When enabled, hides the count indicator next to parent nodes. |
+| [DisableRecursiveCount](INodeTreeSelectControl-1/DisableRecursiveCount.md)(…) | Disables or enables recursive counting of child nodes in the selection control. Defauts to disabled. |
+| [ExtraInfo](INodeTreeSelectControl-1/ExtraInfo.md)(…) | Configures the control to provide show additional information for node. |
+| [HideCount](INodeTreeSelectControl-1/HideCount.md)(…) | Controls the visibility of child node counts in the tree display. When enabled, hides the count indicator next to parent nodes. |
 | [Interaction](INodeTreeSelectControl-1/Interaction.md)(…) |  |
 | [Options](INodeTreeSelectControl-1/Options.md)(…) | Applies custom options to the control to modify its behavior and appearance. |
 | [PageSize](INodeTreeSelectControl-1/PageSize.md)(…) | Sets the maximum number of items to display per page in the tree view. Controls the pagination of large tree structures. |

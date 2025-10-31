@@ -100,6 +100,7 @@ namespace ConsoleNodeTreeMultiSelectSamples
 
             var result = PromptPlus.Controls.NodeTreeMultiSelect<MyOrg>("Node : ","My description")
                 .TextSelector((x) => x.Name)
+                .ExtraInfo(x => x.TypeInfo.ToString())
                 .AddRootNode(root)
                 .AddChildNode(root, new MyOrg { Name = "Tribe0 Empty", TypeInfo = TypeMyOrg.Tribe })
                 .Interaction(MyOrg.LoadTribe(), (item,ctrl) =>

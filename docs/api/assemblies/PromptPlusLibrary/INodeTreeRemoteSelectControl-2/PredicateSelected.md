@@ -16,7 +16,7 @@ public INodeTreeRemoteSelectControl PredicateSelected(Func<T1, (bool, string?)> 
 
 ### Return Value
 
-The current [`INodeTreeSelectControl`](../INodeTreeSelectControl-1.md) instance for chaining.
+The current [`INodeTreeRemoteSelectControl`](../INodeTreeRemoteSelectControl-2.md) instance for chaining.
 
 ### See Also
 
@@ -39,7 +39,7 @@ public INodeTreeRemoteSelectControl PredicateSelected(Func<T1, bool> validselect
 
 ### Return Value
 
-The current [`INodeTreeSelectControl`](../INodeTreeSelectControl-1.md) instance for chaining.
+The current [`INodeTreeRemoteSelectControl`](../INodeTreeRemoteSelectControl-2.md) instance for chaining.
 
 ### See Also
 

@@ -27,6 +27,7 @@ public interface IMultiSelectControl<T>
 | [Default](IMultiSelectControl-1/Default.md)(…) | Sets the initial selected values for the MultiSelect control. |
 | [EnabledHistory](IMultiSelectControl-1/EnabledHistory.md)(…) | Enables history persistence with optional custom configuration. |
 | [EqualItems](IMultiSelectControl-1/EqualItems.md)(…) | Sets a custom equality comparer function for items. |
+| [ExtraInfo](IMultiSelectControl-1/ExtraInfo.md)(…) | Configures the control to provide show additional information for item. |
 | [Filter](IMultiSelectControl-1/Filter.md)(…) | Configures the filter strategy for searching and filtering items. Default is Disabled. |
 | [HideCountSelected](IMultiSelectControl-1/HideCountSelected.md)(…) | Controls the visibility of the selected item count display. Default is `false`. |
 | [HideTipGroup](IMultiSelectControl-1/HideTipGroup.md)(…) | Controls the visibility of the group name tooltip. Default is `false`. |

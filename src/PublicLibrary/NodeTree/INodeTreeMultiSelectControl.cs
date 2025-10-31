@@ -59,6 +59,22 @@ namespace PromptPlusLibrary
         INodeTreeMultiSelectControl<T> TextSelector(Func<T, string> value);
 
         /// <summary>
+        /// Disables or enables recursive counting of child nodes in the selection control. Defauts to disabled.
+        /// </summary>
+        /// <remarks>Disabling recursive counting may improve performance for large node trees by avoiding deep traversal when counting child nodes.</remarks>
+        /// <param name="value">A value indicating whether recursive counting should be disabled. If <see langword="true"/>, recursive
+        /// counting is disabled; otherwise, it remains enabled. </param>
+        /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
+        INodeTreeMultiSelectControl<T> DisableRecursiveCount(bool value = true);
+
+        /// <summary>
+        /// Configures the control to provide show additional information for node.
+        /// </summary>
+        /// <param name="extraInfoNode">A function that takes a node of type T and returns a string containing extra information.</param>
+        /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
+        INodeTreeMultiSelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode);
+
+        /// <summary>
         /// Adds a root node to the tree structure.
         /// </summary>
         /// <param name="value">The value for the root node. Must be unique.</param>
@@ -139,7 +155,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="value">If <c>true</c>, hides the children count. Default is <c>true</c>.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
-        INodeTreeMultiSelectControl<T> HideSize(bool value = true);
+        INodeTreeMultiSelectControl<T> HideCount(bool value = true);
 
         /// <summary>
         /// Executes the Node MultiSelect Control operation.

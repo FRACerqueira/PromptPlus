@@ -78,7 +78,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1, T2> PredicateSearchItems(T2 initialvalue, Func<T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception, string>? erroMessage = null)
+        public IRemoteMultiSelectControl<T1, T2> SearchMoreItems(T2 initialvalue, Func<T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception, string>? erroMessage = null)
         {
             ArgumentNullException.ThrowIfNull(initialvalue);
             ArgumentNullException.ThrowIfNull(values);

@@ -12,6 +12,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
+using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading;
 
@@ -439,6 +440,10 @@ namespace PromptPlusLibrary
         /// Gets the application startup culture captured at configuration creation.
         /// </summary>
         internal CultureInfo AppCulture { get; private set; }
+
+        internal Encoding OriginalOutputEncoding { get; set; }
+        internal ConsoleColor OriginalForecolor { get; set; }
+        internal ConsoleColor OriginalBackcolor { get; set; }
 
 
         /// <summary>

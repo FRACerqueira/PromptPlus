@@ -1,13 +1,13 @@
 ![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
-### INodeTreeRemoteSelectControl&lt;T1,T2&gt;.PredicateSearchItems method
+### INodeTreeRemoteSelectControl&lt;T1,T2&gt;.SearchMoreItems method
 </br>
 
 
 #### Registers the function responsible for searching and returning the next collection of nodes child items to add to the list.This expression is required for operation.
 
 ```csharp
-public INodeTreeRemoteSelectControl PredicateSearchItems(
+public INodeTreeRemoteSelectControl SearchMoreItems(
     Func<T1, T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception, string>? erroMessage = null)
 ```
 

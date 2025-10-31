@@ -23,6 +23,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         private Func<T, (bool, string?)>? _predicatevalidselect;
         private Func<T, string>? _changeDescription;
         private Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
+        private Func<T, string?>? _extraInfo;
         private IEnumerable<T>? _defaultValues;
         private bool _useDefaultHistory;
         private HistoryOptions? _historyOptions;
@@ -66,6 +67,13 @@ namespace PromptPlusLibrary.Controls.MultiSelect
 #pragma warning restore IDE0079
 
         #region IMultiSelect
+
+        public IMultiSelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
+        {
+            ArgumentNullException.ThrowIfNull(extraInfoNode);
+            _extraInfo = extraInfoNode;
+            return this;
+        }
 
         public IMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
         {
@@ -370,6 +378,9 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             }
 
             _resultbuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
+
+
+            LoadExtraInfo();
 
             _localpaginator = new Paginator<ItemSelect<T>>(
                 _filterType,
@@ -913,12 +924,17 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                     if (item.Disabled)
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[MultiSelectStyles.Disabled]);
+                        screenBuffer.Write($" {value}", _optStyles[MultiSelectStyles.Disabled]);
                     }
                     else
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[MultiSelectStyles.Selected]);
+                        screenBuffer.Write($" {value}", _optStyles[MultiSelectStyles.Selected]);
                     }
+                    if (!string.IsNullOrEmpty(item.ExtraText))
+                    {
+                        screenBuffer.Write($"({item.ExtraText})", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
+                    }
+                    screenBuffer.WriteLine("", Style.Default());
                 }
                 else
                 {
@@ -936,12 +952,17 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                     if (item.CharSeparation.HasValue)
                     {
-                        screenBuffer.WriteLine($"{value}", _optStyles[MultiSelectStyles.Disabled]);
+                        screenBuffer.Write($"{value}", _optStyles[MultiSelectStyles.Disabled]);
                     }
                     else
                     {
-                        screenBuffer.WriteLine($" {value}", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.UnSelected]);
+                        screenBuffer.Write($" {value}", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.UnSelected]);
                     }
+                    if (!string.IsNullOrEmpty(item.ExtraText))
+                    {
+                        screenBuffer.Write($"({item.ExtraText})", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.TaggedInfo]);
+                    }
+                    screenBuffer.WriteLine("", Style.Default());
                 }
             }
             string template = ConfigPlus.PaginationTemplate.Invoke(
@@ -1039,6 +1060,19 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             if (!string.IsNullOrEmpty(desc))
             {
                 screenBuffer.WriteLine(desc, _optStyles[MultiSelectStyles.Description]);
+            }
+        }
+
+
+        private void LoadExtraInfo()
+        {
+            if (_extraInfo == null)
+            {
+                return;
+            }
+            foreach (var item in _items)
+            {
+                item.ExtraText = _extraInfo.Invoke(item.Value!);
             }
         }
 

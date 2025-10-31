@@ -100,6 +100,7 @@ namespace ConsoleNodeTreeSelectSamples
 
             var result = PromptPlus.Controls.NodeTreeSelect<MyOrg>("Node : ","My description")
                 .TextSelector((x) => x.Name)
+                .ExtraInfo(x => x.TypeInfo.ToString())
                 .AddRootNode(root)
                 .AddChildNode(root, new MyOrg { Name = "Tribe0 Empty", TypeInfo = TypeMyOrg.Tribe })
                 .Interaction(MyOrg.LoadTribe(), (item,ctrl) =>
@@ -116,6 +117,7 @@ namespace ConsoleNodeTreeSelectSamples
                         }
                     }
                 })
+                .PageSize(20)
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {result.IsAborted}, Value: {result.Content?.Name ?? string.Empty}");
 

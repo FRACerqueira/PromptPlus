@@ -1,13 +1,13 @@
 ![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
-### INodeTreeMultiSelectControl&lt;T&gt;.HideSize method
+### INodeTreeMultiSelectControl&lt;T&gt;.HideCount method
 </br>
 
 
 #### Controls the visibility of the children count display.
 
 ```csharp
-public INodeTreeMultiSelectControl HideSize(bool value = true)
+public INodeTreeMultiSelectControl HideCount(bool value = true)
 ```
 
 | parameter | description |

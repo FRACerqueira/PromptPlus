@@ -149,7 +149,7 @@ namespace PromptPlusLibrary
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="initialvalue"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="values"/> is <c>null</c>.</exception>
 
-        IRemoteMultiSelectControl<T1,T2> PredicateSearchItems(T2 initialvalue, Func<T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception,string>? erroMessage = null);
+        IRemoteMultiSelectControl<T1,T2> SearchMoreItems(T2 initialvalue, Func<T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception,string>? erroMessage = null);
 
         /// <summary>
         /// Sets a validation predicate to determine if a selected item is valid.

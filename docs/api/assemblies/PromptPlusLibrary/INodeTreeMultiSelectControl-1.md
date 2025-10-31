@@ -21,8 +21,10 @@ public interface INodeTreeMultiSelectControl<T>
 | [AddChildNode](INodeTreeMultiSelectControl-1/AddChildNode.md)(…) | Adds a child node to an existing parent node in the tree. |
 | [AddRootNode](INodeTreeMultiSelectControl-1/AddRootNode.md)(…) | Adds a root node to the tree structure. |
 | [ChangeDescription](INodeTreeMultiSelectControl-1/ChangeDescription.md)(…) | Dynamically changes the description of the Select based on its value. |
+| [DisableRecursiveCount](INodeTreeMultiSelectControl-1/DisableRecursiveCount.md)(…) | Disables or enables recursive counting of child nodes in the selection control. Defauts to disabled. |
+| [ExtraInfo](INodeTreeMultiSelectControl-1/ExtraInfo.md)(…) | Configures the control to provide show additional information for node. |
+| [HideCount](INodeTreeMultiSelectControl-1/HideCount.md)(…) | Controls the visibility of the children count display. |
 | [HideCountSelected](INodeTreeMultiSelectControl-1/HideCountSelected.md)(…) | Controls the visibility of the selected items count tip. |
-| [HideSize](INodeTreeMultiSelectControl-1/HideSize.md)(…) | Controls the visibility of the children count display. |
 | [Interaction](INodeTreeMultiSelectControl-1/Interaction.md)(…) |  |
 | [MaxWidth](INodeTreeMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum width for displaying selected items. |
 | [Options](INodeTreeMultiSelectControl-1/Options.md)(…) | Applies custom options to configure the control's behavior. |

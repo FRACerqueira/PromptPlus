@@ -30,10 +30,10 @@ public interface IRemoteMultiSelectControl<T1, T2>
 | [Options](IRemoteMultiSelectControl-2/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](IRemoteMultiSelectControl-2/PageSize.md)(…) | Sets the maximum number of items to display per page. Default value is 10. |
 | [PredicateDisabled](IRemoteMultiSelectControl-2/PredicateDisabled.md)(…) | Sets a validation rule for determining which items should be disabled. |
-| [PredicateSearchItems](IRemoteMultiSelectControl-2/PredicateSearchItems.md)(…) | Registers the function responsible for searching and returning the next collection (page) of items to add to the list.This expression is required for operation. |
 | [PredicateSelected](IRemoteMultiSelectControl-2/PredicateSelected.md)(…) | Sets a validation predicate to determine if a selected item is valid. (2 methods) |
 | [Range](IRemoteMultiSelectControl-2/Range.md)(…) | Defines the valid range of items that must be selected. |
 | [Run](IRemoteMultiSelectControl-2/Run.md)(…) | Runs the Remote MultiSelect control and returns the result. |
+| [SearchMoreItems](IRemoteMultiSelectControl-2/SearchMoreItems.md)(…) | Registers the function responsible for searching and returning the next collection (page) of items to add to the list.This expression is required for operation. |
 | [ShowAllSelected](IRemoteMultiSelectControl-2/ShowAllSelected.md)(…) | Controls whether all selected items are displayed at completion. Default is `false`. |
 | [Styles](IRemoteMultiSelectControl-2/Styles.md)(…) | Overwrites styles for the Remote MultiSelect control. |
 | [TextSelector](IRemoteMultiSelectControl-2/TextSelector.md)(…) | Sets the function to display text for items in the list. This expression is required for operation.. |

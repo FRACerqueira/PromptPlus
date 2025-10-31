@@ -36,7 +36,7 @@ namespace ConsoleRemoteMultiSelectControlSamples
                 .TextSelector(item => item.Value.ToString())
                 .UniqueId(item => item.Value.ToString())
                 .DefaultWhenLoad([new OddNumber{ Value=71 }, new OddNumber { Value = 73 }])
-                .PredicateSearchItems(new MyRemoteControl(), GetOddNumbers, (err) => err.Message)
+                .SearchMoreItems(new MyRemoteControl(), GetOddNumbers, (err) => err.Message)
                 .PageSize(13)
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {resultclass.IsAborted}, Value count: {resultclass.Content.Length!}");

@@ -13,18 +13,19 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 ## What's new in V5.0.0
 
-We're very excited about the big release of this new version. **Version 5 has been completely redesigned** and optimized for better stability, consistency, and performance. 
+We're very excited about the **big release** of this new version. **Version 5 has been completely redesigned** and optimized for better stability, consistency, and performance. 
 All controls and behaviors have been revisited and improved to ensure sustainable evolution. 
 Due to the significant modifications, version 5 introduced **significant changes and is incompatible with versions 4.x**, although the concepts and components are very similar, requiring a small learning curve and minor methodological adjustments.
 
 - Support for .Net10,.Net9 and .Net8
 - External references were reviewed and only those necessary for size treatment for East Asian characters were used.
-- New control rendering engine adjusts more fluidly to the screen size and avoids flickering by redrawing only the changed lines.
+- **New control rendering engine** adjusts more fluidly to the screen size and avoids flickering by redrawing only the changed lines.
 - Revised control of hotkeys and special characters ensuring consistency according to the console's capabilities.
-- Created the separation of interactive controls and added several non-interactive controls (widgets)
+- Created the separation of interactive controls and **added several non-interactive controls (widgets)**
 - Introduced **NEW multi-threaded operation** for controls and commands. Now each command and control block the main thread during printing/interaction execution.
 - Renaming several control methods for better clarity and reduced scope, aiming at the unique responsibility that each component intends to perform, allowing for sustainable evolution.
-- Created the concept of an editing window for controls that require a significant input/response size, ensuring visual consistency and adequate navigability.
+- **NEW external file config 'PromptPlus.config' to customize global behaviors** of PromptPlus without code changes.
+- **NEW concept of an editing window for controls that require a significant input/response size** , ensuring visual consistency and adequate navigability.
 - A slice architecture was adopted for each component, allowing individual evolution of each one with low interference to the others.
 - The **NEW tooltip mechanism** now shows all keys and hotkeys for each control by switching the view ('F1').
 - All interative controls start at : **PromptPlus.Controls**.\<name of control\>.
@@ -33,6 +34,11 @@ Due to the significant modifications, version 5 introduced **significant changes
     - For each non-interactive control the initialization contract was customized.
 - All commands for console start at : **PromptPlus.Console**.\<command\>.
 - All general config start at : **PromptPlus.Config**.\<config\>.
+- **NEW controls group**: Remote sources.This control group is in the **experimental phase** and addresses the scenario of resolving the domain set of collections from an external source (e.g., database, cloud, API with pagination).
+    - Remote Select for any type
+    - Remote Multi Select for any type
+    - Remote Nodetree select for any type
+    - Remote Nodetree Multi select for any type
 
 ## **Supported platforms**
 

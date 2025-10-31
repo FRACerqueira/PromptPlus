@@ -26,9 +26,9 @@ public interface IRemoteSelectControl<T1, T2>
 | [Options](IRemoteSelectControl-2/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](IRemoteSelectControl-2/PageSize.md)(…) | Sets the maximum number of items to display per page. Default value is 10. |
 | [PredicateDisabled](IRemoteSelectControl-2/PredicateDisabled.md)(…) | Sets a validation rule for determining which items should be disabled. |
-| [PredicateSearchItems](IRemoteSelectControl-2/PredicateSearchItems.md)(…) | Registers the function responsible for searching and returning the next collection (page) of items to add to the list.This expression is required for operation. |
 | [PredicateSelected](IRemoteSelectControl-2/PredicateSelected.md)(…) | Sets a validation predicate to determine if a selected item is valid. (2 methods) |
 | [Run](IRemoteSelectControl-2/Run.md)(…) | Runs the Remote Select control and returns the result. |
+| [SearchMoreItems](IRemoteSelectControl-2/SearchMoreItems.md)(…) | Registers the function responsible for searching and returning the next collection (page) of items to add to the list.This expression is required for operation. |
 | [Styles](IRemoteSelectControl-2/Styles.md)(…) | Overwrites styles for the Remote Select control. |
 | [TextSelector](IRemoteSelectControl-2/TextSelector.md)(…) | Sets the function to display text for items in the list. This expression is required for operation.. |
 | [UniqueId](IRemoteSelectControl-2/UniqueId.md)(…) | Sets an expression that defines the uniqueId field to string type. This expression is required for operation. |

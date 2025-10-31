@@ -16,7 +16,7 @@ public INodeTreeRemoteSelectControl PredicateChildAllowed(Func<T1, bool> childal
 
 ### Return Value
 
-The current [`IRemoteSelectControl`](../IRemoteSelectControl-2.md) instance for chaining.
+The current [`INodeTreeRemoteSelectControl`](../INodeTreeRemoteSelectControl-2.md) instance for chaining.
 
 ### See Also
 

@@ -1,13 +1,13 @@
 ![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
-### INodeTreeSelectControl&lt;T&gt;.HideSize method
+### INodeTreeSelectControl&lt;T&gt;.HideCount method
 </br>
 
 
 #### Controls the visibility of child node counts in the tree display. When enabled, hides the count indicator next to parent nodes.
 
 ```csharp
-public INodeTreeSelectControl HideSize(bool value = true)
+public INodeTreeSelectControl HideCount(bool value = true)
 ```
 
 | parameter | description |

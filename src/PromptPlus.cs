@@ -88,7 +88,12 @@ namespace PromptPlusLibrary
                 _consoledrive = new ConsoleDriveLinux(profileDrive);
             }
 
-            _promptConfig = new(unicodesupported, _appConsoleCulture);
+            _promptConfig = new(unicodesupported, _appConsoleCulture)
+            {
+                OriginalOutputEncoding = _originalCodePageEncode,
+                OriginalForecolor = _originalForecolor,
+                OriginalBackcolor = _originalBackcolor
+            };
 
             if (File.Exists(NameResourceConfigFile))
             {
@@ -102,6 +107,9 @@ namespace PromptPlusLibrary
                             Converters = { new JsonStringEnumConverter() }
                         });
                     _promptConfig!.Init(unicodesupported, _appConsoleCulture);
+                    _promptConfig!.OriginalOutputEncoding = _originalCodePageEncode;
+                    _promptConfig!.OriginalForecolor = _originalForecolor;
+                    _promptConfig!.OriginalBackcolor = _originalBackcolor;
 #pragma warning restore CS8601 // Possible null reference assignment.
 #pragma warning restore CA1869 // Cache and reuse 'JsonSerializerOptions' instances
                 }

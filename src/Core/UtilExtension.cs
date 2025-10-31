@@ -342,7 +342,18 @@ namespace PromptPlusLibrary.Core
             }
             if (stack.Count > 0)
             {
-                throw new ArgumentException("Unbalanced markup stack. Did you forget to close a tag?");
+                if (stack.Count == 1)
+                {
+                    var oldstyle = stack.Pop();
+                    if (oldstyle.Foreground != console.ForegroundColor || oldstyle.Background != console.BackgroundColor)
+                    {
+                        throw new ArgumentException("Unclosed tag detected at end of input.");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Unbalanced markup stack. Did you forget to close a tag?");
+                }
             }
 
             return [.. result];

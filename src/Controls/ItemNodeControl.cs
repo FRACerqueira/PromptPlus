@@ -73,9 +73,14 @@ namespace PromptPlusLibrary.Controls
         public bool IsMarked { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether additional items should be loaded beyond the initial set.
+        /// Gets or sets a value indicating whether this element can contain child elements.
         /// </summary>
-        public bool LoadMore { get; set; }
+        public bool AllowsChildren { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this node represents a 'Load More' option in a collection or list.
+        /// </summary>
+        public bool IsLoadMoreNode { get; set; }
 
         /// <summary>
         /// Get number of Children
