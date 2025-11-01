@@ -1,4 +1,4 @@
-![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
+![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
 ### ISwitchControl.EnabledHistory method
 </br>
@@ -27,7 +27,7 @@ The current [`ISwitchControl`](../ISwitchControl.md) instance for chaining.
 
 ### Remarks
 
-The default hotkey for History is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
+The default hotkey for History is HotKeyShowHistory.
 
 ### See Also
 

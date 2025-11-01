@@ -33,9 +33,9 @@ namespace PromptPlusLibrary.Controls
         public string? Text { get; init; }
 
         /// <summary>
-        /// Get number of Children
+        /// Get Extra Text of item
         /// </summary>
-        public int CountChildren { get; init; }
+        public string? ExtraText { get; init; }
 
         /// <summary>
         /// Node Level 
@@ -50,7 +50,7 @@ namespace PromptPlusLibrary.Controls
         /// <summary>
         /// Node First item
         /// </summary>
-        public bool LastItem { get; init; }
+        public bool LastItem { get; set; }
 
         /// <summary>
         /// Node Status
@@ -71,6 +71,21 @@ namespace PromptPlusLibrary.Controls
         /// Node Marked 
         /// </summary>
         public bool IsMarked { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this element can contain child elements.
+        /// </summary>
+        public bool AllowsChildren { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this node represents a 'Load More' option in a collection or list.
+        /// </summary>
+        public bool IsLoadMoreNode { get; set; }
+
+        /// <summary>
+        /// Get number of Children
+        /// </summary>
+        public int CountChildren { get; set; }
 
         public override string ToString()
         {

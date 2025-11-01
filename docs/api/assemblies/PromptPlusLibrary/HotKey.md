@@ -1,4 +1,4 @@
-![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
+![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
 ### HotKey structure
 </br>
@@ -10,18 +10,11 @@
 public struct HotKey : IEquatable<ConsoleKeyInfo>
 ```
 
-| parameter | description |
-| --- | --- |
-| key | The primary ConsoleKey. |
-| alt | Indicates whether Alt is part of the hotkey. |
-| ctrl | Indicates whether Ctrl is part of the hotkey. |
-| shift | Indicates whether Shift is part of the hotkey. |
-
 ### Public Members
 
 | name | description |
 | --- | --- |
-| [HotKey](HotKey/HotKey.md)(…) | Represents a configurable hotkey composed of a base ConsoleKey and optional modifier flags. |
+| [HotKey](HotKey/HotKey.md)(…) | This struct is lightweight and immutable after construction (properties are init via the primary constructor). Use the static members for common built‑in hotkeys. |
 | [Alt](HotKey/Alt.md) { get; } | Gets a value indicating whether Alt is included. |
 | [Ctrl](HotKey/Ctrl.md) { get; } | Gets a value indicating whether Ctrl is included. |
 | [Key](HotKey/Key.md) { get; } | Gets the base ConsoleKey of this hotkey. |
@@ -29,10 +22,6 @@ public struct HotKey : IEquatable<ConsoleKeyInfo>
 | [Shift](HotKey/Shift.md) { get; } | Gets a value indicating whether Shift is included. |
 | [Equals](HotKey/Equals.md)(…) | Determines whether this hotkey matches the provided ConsoleKeyInfo. |
 | override [ToString](HotKey/ToString.md)() |  |
-
-### Remarks
-
-This struct is lightweight and immutable after construction (properties are init via the primary constructor). Use the static members for common built‑in hotkeys.
 
 ### See Also
 

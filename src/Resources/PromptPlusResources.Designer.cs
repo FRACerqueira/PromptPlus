@@ -277,7 +277,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Folder : {0}.
+        ///   Looks up a localized string similar to Folder:{0}.
         /// </summary>
         internal static string FileInfoFolder {
             get {
@@ -349,7 +349,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Key: {0}.
+        ///   Looks up a localized string similar to Invalid Key:{0}.
         /// </summary>
         internal static string InvalidKey {
             get {
@@ -363,6 +363,15 @@ namespace PromptPlusLibrary.Resources {
         internal static string Loading {
             get {
                 return ResourceManager.GetString("Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter:Load more items..
+        /// </summary>
+        internal static string LoadMore {
+            get {
+                return ResourceManager.GetString("LoadMore", resourceCulture);
             }
         }
         
@@ -475,7 +484,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Letra  (a-z).
+        ///   Looks up a localized string similar to Letra (a-z).
         /// </summary>
         internal static string MaskEditPosLetterLower {
             get {
@@ -646,7 +655,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Path : .
+        ///   Looks up a localized string similar to Path:.
         /// </summary>
         internal static string NodePath {
             get {
@@ -745,7 +754,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Displaying: {1}/{2} pages of {0} items..
+        ///   Looks up a localized string similar to Displaying:{1}/{2} pages of {0} items..
         /// </summary>
         internal static string PaginationTemplate {
             get {
@@ -772,7 +781,16 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search Filter :.
+        ///   Looks up a localized string similar to {0}:Load more items..
+        /// </summary>
+        internal static string RemoteLoadMore {
+            get {
+                return ResourceManager.GetString("RemoteLoadMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Filter:.
         /// </summary>
         internal static string SearchFilter {
             get {
@@ -835,7 +853,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rows: {0}.
+        ///   Looks up a localized string similar to Rows:{0}.
         /// </summary>
         internal static string TableAnswerMultiRow {
             get {
@@ -844,7 +862,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Row: {0}.
+        ///   Looks up a localized string similar to Row:{0}.
         /// </summary>
         internal static string TableAnswerRow {
             get {
@@ -997,7 +1015,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ctrl+Home:Previus level, Ctrl+End : Last Item of level.
+        ///   Looks up a localized string similar to Ctrl+Home:Previus level, Ctrl+End:Last Item of level.
         /// </summary>
         internal static string TooltipLevelHomeEnd {
             get {
@@ -1006,7 +1024,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ordination: {0}.
+        ///   Looks up a localized string similar to Ordination:{0}.
         /// </summary>
         internal static string TooltipOrder {
             get {
@@ -1015,7 +1033,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move Selector, Ctrl+Home/End: First/Last item.
+        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move Selector, Ctrl+Home/End:First/Last item.
         /// </summary>
         internal static string TooltipPages {
             get {
@@ -1114,7 +1132,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Valid key: {0}.
+        ///   Looks up a localized string similar to Valid key:{0}.
         /// </summary>
         internal static string ValidAnyKey {
             get {

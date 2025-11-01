@@ -24,6 +24,65 @@ namespace PromptPlusLibrary.PublicLibrary
         char NoChar { get; set; }
 
         /// <summary>
+        /// Gets or sets the maximum number of items to display per page. Default value is 10.
+        /// Valid range is 1–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        byte PageSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Sets the maximum display width for selected items text. Default is 30 characters.
+        /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        byte MaxWidth { get; set; }
+
+        /// <summary>
+        /// Number minimum of chars to accept autocomplete.Default value is 3.
+        /// Valid range is 1–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        byte MinimumPrefixLength { get; set; }
+
+        /// <summary>
+        /// Number of milliseconds to wait before to start function autocomplete. Default value is 500
+        /// Valid range is > 100; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        int CompletionWaitToStart { get; set; }
+
+        /// <summary>
+        /// Gets Sets the width of the chart bar.Default value is 80. 
+        /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        byte ChartWidth { get; set; }
+
+        /// <summary>
+        /// Gets Sets the character to use as the secret mask input. Defaults is '#'.
+        /// </summary>
+        char SecretChar { get; set; }
+
+        /// <summary>
+        /// Gets Sets the character to use as the Prompt MaskEdit. Defaults is '_'.
+        /// </summary>
+        char PromptMaskEdit { get; set; }
+
+        /// <summary>
+        /// Gets Sets the width of the Progress bar.Default value is 80. 
+        /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        byte ProgressBarWidth { get; set; }
+
+        /// <summary>
+        /// Gets Sets the width of the Slider bar.Default value is 40. 
+        /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        byte SliderWidth { get; set; }
+
+        /// <summary>
+        /// Gets Sets the width of the Progress bar.Default value is 6. 
+        /// Valid range is 6–255; values outside the range are coerced to the nearest boundary.
+        /// </summary>
+        byte SwitchWidth { get; set; }
+
+
+        /// <summary>
         /// Gets or sets the maximum length used when filtering text in controls.
         /// Default value is 15. Valid range is 5–30; values outside the range are coerced to the nearest boundary.
         /// </summary>

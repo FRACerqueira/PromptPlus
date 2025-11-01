@@ -27,7 +27,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         private bool _hideTipInputType;
         private bool _returnWithMask;
         private string _usermask = string.Empty;
-        private char _promptmask = '_';
+        private char _promptmask;
         private InputBehavior _inputBehavior = InputBehavior.EditSkipToInput;
         private WeekType _weekType = WeekType.None;
         private string _tooltipModeInput = string.Empty;
@@ -42,6 +42,8 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         public MaskEditControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _culture = ConfigPlus.DefaultCulture;
+            _promptmask = ConfigPlus.PromptMaskEdit;
+
         }
 #pragma warning restore IDE0290 // Use primary constructor
 #pragma warning restore IDE0079

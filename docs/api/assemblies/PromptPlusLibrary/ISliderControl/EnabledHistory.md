@@ -1,4 +1,4 @@
-![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
+![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
 ### ISliderControl.EnabledHistory method
 </br>
@@ -27,7 +27,7 @@ The current [`ISliderControl`](../ISliderControl.md) instance for chaining.
 
 ### Remarks
 
-The default hotkey for history is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
+The default hotkey for history is HotKeyShowHistory.
 
 ### See Also
 

@@ -55,12 +55,16 @@
 | interface [IMaskEditStringControl&lt;T&gt;](./PromptPlusLibrary/IMaskEditStringControl-1.md) | Provides functionality for configuring and interacting with a MaskEdit string control. |
 | interface [IMultiSelectControl&lt;T&gt;](./PromptPlusLibrary/IMultiSelectControl-1.md) | Provides functionality for configuring and interacting with a MultiSelect control. |
 | interface [INodeTreeMultiSelectControl&lt;T&gt;](./PromptPlusLibrary/INodeTreeMultiSelectControl-1.md) | Provides functionality for configuring and interacting with a Node MultiSelect Control. |
+| interface [INodeTreeRemoteMultiSelectControl&lt;T1,T2&gt;](./PromptPlusLibrary/INodeTreeRemoteMultiSelectControl-2.md) | Provides functionality for configuring and interacting with a Remote Node Multi Select Control. This interface enables building and managing hierarchical tree structures with customizable nodes, styles, and interactive selection capabilities. |
+| interface [INodeTreeRemoteSelectControl&lt;T1,T2&gt;](./PromptPlusLibrary/INodeTreeRemoteSelectControl-2.md) | Provides functionality for configuring and interacting with a Remote Node Select Control. This interface enables building and managing hierarchical tree structures with customizable nodes, styles, and interactive selection capabilities. |
 | interface [INodeTreeSelectControl&lt;T&gt;](./PromptPlusLibrary/INodeTreeSelectControl-1.md) | Provides functionality for configuring and interacting with a Node Select Control. This interface enables building and managing hierarchical tree structures with customizable nodes, styles, and interactive selection capabilities. |
 | enum [InputBehavior](./PromptPlusLibrary/InputBehavior.md) | Represents input behavior |
 | enum [InputStyles](./PromptPlusLibrary/InputStyles.md) | Represents the Styles Input Control This enum defines various regions or components of the Input Control. |
 | interface [IProfileDrive](./PromptPlusLibrary/IProfileDrive.md) | Defines a console profile describing capabilities, dimensions, colors and display behavior for the current console/terminal session. |
 | interface [IProfileSetup](./PromptPlusLibrary/IProfileSetup.md) | Defines mutable setup values used to configure a console profile before it is materialized. |
 | interface [IProgressBarControl](./PromptPlusLibrary/IProgressBarControl.md) | Interface for configuring and interacting with a Progress Bar control. |
+| interface [IRemoteMultiSelectControl&lt;T1,T2&gt;](./PromptPlusLibrary/IRemoteMultiSelectControl-2.md) | Provides functionality for configuring and interacting with a Load Remote MultiSelect control. |
+| interface [IRemoteSelectControl&lt;T1,T2&gt;](./PromptPlusLibrary/IRemoteSelectControl-2.md) | Provides functionality for configuring and interacting with a Load Remote Select control. |
 | interface [ISelectControl&lt;T&gt;](./PromptPlusLibrary/ISelectControl-1.md) | Provides functionality for configuring and interacting with a Select control. |
 | interface [ISliderControl](./PromptPlusLibrary/ISliderControl.md) | Provides functionality for configuring and interacting with a slider control. |
 | interface [ISliderWidget](./PromptPlusLibrary/ISliderWidget.md) | Provides functionality for configuring and interacting with a slider widget. |
@@ -80,7 +84,6 @@
 | enum [Overflow](./PromptPlusLibrary/Overflow.md) | Specifies how text overflow should be handled. |
 | enum [ProgressBarStyles](./PromptPlusLibrary/ProgressBarStyles.md) | Represents The Styles ProgressBar control This enum defines various regions or components of the ProgressBar. |
 | enum [ProgressBarType](./PromptPlusLibrary/ProgressBarType.md) | Represents the Graphical-based of Progress Bar. |
-| class [PromptConfig](./PromptPlusLibrary/PromptConfig.md) | Provides the global/default configuration applied to all PromptPlus controls (culture, hotkeys, symbols, pagination and general behavior). |
 | static class [PromptPlus](./PromptPlusLibrary/PromptPlus.md) | Provides the global entry point for all PromptPlus controls, widgets, configuration access and console services. |
 | struct [ResultPrompt&lt;T&gt;](./PromptPlusLibrary/ResultPrompt-1.md) | Represents The Result *T* to Controls |
 | enum [SelectStyles](./PromptPlusLibrary/SelectStyles.md) | Represents the styles for the Select Control. This enum defines various regions or components of the Select Control. |

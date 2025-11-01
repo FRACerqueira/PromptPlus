@@ -28,7 +28,7 @@ namespace PromptPlusLibrary.Controls.Slider
         private Paginator<ItemHistory>? _localpaginator;
         private double _maxValue = 100;
         private double _minValue;
-        private byte _width = 40;
+        private byte _width;
         private HideSlider _hideslide = HideSlider.None;
         private SliderLayout _sliderLayout = SliderLayout.LeftRight;
         private byte _fractionalDigits;
@@ -81,6 +81,7 @@ namespace PromptPlusLibrary.Controls.Slider
         public SliderControl(bool iswidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(iswidget, console, promptConfig, baseControlOptions)
         {
             _culture = ConfigPlus.DefaultCulture;
+            _width = ConfigPlus.SliderWidth;
         }
 
         #region ISliderControl

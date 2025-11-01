@@ -38,9 +38,9 @@ namespace PromptPlusLibrary
         /// </summary>
         public string? ParentiId { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is checked.
+        /// </summary>
         public bool Checked { get; set; }
-
-
-
     }
 }

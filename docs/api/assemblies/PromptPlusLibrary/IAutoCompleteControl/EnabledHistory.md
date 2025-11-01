@@ -1,4 +1,4 @@
-![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
+![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
 ### IAutoCompleteControl.EnabledHistory method
 </br>
@@ -27,7 +27,7 @@ The current [`IAutoCompleteControl`](../IAutoCompleteControl.md) instance for ch
 
 ### Remarks
 
-The Defaults hotkey to Hisyory is [`HotKeyShowHistory`](../PromptConfig/HotKeyShowHistory.md).
+The Defaults hotkey to Hisyory is HotKeyShowHistory.
 
 ### See Also
 

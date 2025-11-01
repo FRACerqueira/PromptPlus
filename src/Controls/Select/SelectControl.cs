@@ -21,6 +21,7 @@ namespace PromptPlusLibrary.Controls.Select
         private readonly EmacsBuffer _filterBuffer;
         private readonly List<ItemSelect<T>> _items = [];
         private Func<T, (bool, string?)>? _predicatevalidselect;
+        private Func<T, string?>? _extraInfo;
         private int _sequence;
         private bool _autoSelect;
         private Func<T, string>? _changeDescription;
@@ -30,7 +31,7 @@ namespace PromptPlusLibrary.Controls.Select
         private HistoryOptions? _historyOptions;
         private FilterMode _filterType = FilterMode.Disabled;
         private bool _filterCaseinsensitive;
-        private byte _pageSize = 10;
+        private byte _pageSize;
         private bool _hideTipGroup;
         private Func<T, string>? _textSelector;
         private IList<ItemHistory>? _itemHistories;
@@ -56,10 +57,18 @@ namespace PromptPlusLibrary.Controls.Select
         {
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _lastinput = string.Empty;
+            _pageSize = ConfigPlus.PageSize;
         }
 
 
         #region ISelectControl
+
+        public ISelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
+        {
+            ArgumentNullException.ThrowIfNull(extraInfoNode);
+            _extraInfo = extraInfoNode;
+            return this;
+        }
 
         public ISelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
         {
@@ -95,7 +104,7 @@ namespace PromptPlusLibrary.Controls.Select
             ArgumentNullException.ThrowIfNull(value, nameof(value));
 
             _sequence++;
-            _items.Add(new ItemSelect<T>(_sequence, value, disable));
+            _items.Add(new ItemSelect<T>(_sequence.ToString(), value, disable));
             return this;
         }
 
@@ -118,7 +127,7 @@ namespace PromptPlusLibrary.Controls.Select
             if (lastindex < 0)
             {
                 _sequence++;
-                _items.Add(new ItemSelect<T>(_sequence, value, disable)
+                _items.Add(new ItemSelect<T>(_sequence.ToString(), value, disable)
                 {
                     Group = group,
                     IsFirstItemGroup = true,
@@ -131,7 +140,7 @@ namespace PromptPlusLibrary.Controls.Select
                 throw new ArgumentOutOfRangeException(nameof(group), "Group already exists");
             }
             _sequence++;
-            _items.Add(new ItemSelect<T>(_sequence, value, disable)
+            _items.Add(new ItemSelect<T>(_sequence.ToString(), value, disable)
             {
                 Group = group,
                 IsLastItemGroup = true
@@ -238,7 +247,7 @@ namespace PromptPlusLibrary.Controls.Select
             };
             _sequence++;
 #pragma warning disable CS8604 // Possible null reference argument.
-            _items.Add(new ItemSelect<T>(_sequence, default, true)
+            _items.Add(new ItemSelect<T>(_sequence.ToString(), default, true)
             {
                 CharSeparation = separator,
                 Text = ""
@@ -321,6 +330,8 @@ namespace PromptPlusLibrary.Controls.Select
                 }
             }
 
+            LoadExtraInfo();
+
             _localpaginator = new Paginator<ItemSelect<T>>(
                 _filterType,
                 _items,
@@ -335,12 +346,24 @@ namespace PromptPlusLibrary.Controls.Select
             {
                 _localpaginator.FirstItem();
             }
-            if (_localpaginator.SelectedItem!.Disabled)
+            if (_localpaginator!.SelectedIndex >= 0  && _localpaginator.SelectedItem!.Disabled)
             {
                 SetError(Messages.SelectionDisabled);
             }
             _tooltipModeSelect = GetTooltipModeSelect();
             LoadTooltipToggle();
+        }
+
+        private void LoadExtraInfo()
+        {
+            if (_extraInfo == null)
+            {
+                return;
+            }
+            foreach (var item in _items)
+            {
+                item.ExtraText = _extraInfo.Invoke(item.Value!);
+            }
         }
 
         public override void BufferTemplate(BufferScreen screenBuffer)
@@ -553,7 +576,7 @@ namespace PromptPlusLibrary.Controls.Select
                         {
                             _localpaginator!.UpdateFilter(filter);
                         }
-                        if (_localpaginator!.Count == 1 && _autoSelect && !_localpaginator!.SelectedItem!.Disabled)
+                        if (_localpaginator!.Count == 1 && _autoSelect && _localpaginator!.SelectedIndex >=0  && !_localpaginator!.SelectedItem!.Disabled)
                         {
                             _modeView = ModeView.Select;
                             ResultCtrl = new ResultPrompt<T>(_localpaginator!.SelectedItem!.Value, false);
@@ -615,7 +638,7 @@ namespace PromptPlusLibrary.Controls.Select
                 DisplayAttribute? displayAttribute = typeof(T).GetField(name!)?.GetCustomAttribute<DisplayAttribute>();
                 int order = displayAttribute?.GetOrder() ?? int.MaxValue;
                 _sequence++;
-                result.Add(new Tuple<int, ItemSelect<T>>(order, new ItemSelect<T>(_sequence, item, false)
+                result.Add(new Tuple<int, ItemSelect<T>>(order, new ItemSelect<T>(_sequence.ToString(), item, false)
                 {
                     Text = _textSelector?.Invoke(item)
                 }));
@@ -744,24 +767,36 @@ namespace PromptPlusLibrary.Controls.Select
                     screenBuffer.Write($"{indentgroup}", _optStyles[SelectStyles.Lines]);
                     if (item.Disabled)
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.Disabled]);
+                        screenBuffer.Write($" {value}", _optStyles[SelectStyles.Disabled]);
                     }
                     else
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.Selected]);
+                        screenBuffer.Write($" {value}", _optStyles[SelectStyles.Selected]);
                     }
+                    if (!string.IsNullOrEmpty(item.ExtraText))
+                    {
+                        screenBuffer.Write($"({item.ExtraText})", item.Disabled? _optStyles[SelectStyles.Disabled]:_optStyles[SelectStyles.Selected]);
+
+                    }
+                    screenBuffer.WriteLine("", Style.Default());
+
                 }
                 else
                 {
                     screenBuffer.Write($" {indentgroup}", _optStyles[SelectStyles.Lines]);
                     if (!item.CharSeparation.HasValue && item.Disabled)
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.Disabled]);
+                        screenBuffer.Write($" {value}", _optStyles[SelectStyles.Disabled]);
                     }
                     else
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[SelectStyles.UnSelected]);
+                        screenBuffer.Write($" {value}", _optStyles[SelectStyles.UnSelected]);
                     }
+                    if (!string.IsNullOrEmpty(item.ExtraText))
+                    {
+                        screenBuffer.Write($"({item.ExtraText})", item.Disabled ? _optStyles[SelectStyles.Disabled] : _optStyles[SelectStyles.TaggedInfo]);
+                    }
+                    screenBuffer.WriteLine("", Style.Default());
                 }
             }
             if (_localpaginator.PageCount > 1)
@@ -779,13 +814,18 @@ namespace PromptPlusLibrary.Controls.Select
         {
             if (_modeView == ModeView.Select)
             {
-                if (_localpaginator!.SelectedItem.Disabled)
+                var text = string.Empty;
+                if (_localpaginator!.SelectedIndex >= 0)
                 {
-                    screenBuffer.WriteLine(_localpaginator!.SelectedItem.Text!, _optStyles[SelectStyles.Disabled]);
+                    text = _localpaginator!.SelectedItem.Text!;
+                }
+                if (_localpaginator!.SelectedIndex >= 0 && _localpaginator!.SelectedItem.Disabled)
+                {
+                    screenBuffer.WriteLine(text, _optStyles[SelectStyles.Disabled]);
                 }
                 else
                 {
-                    screenBuffer.WriteLine(_localpaginator!.SelectedItem.Text!, _optStyles[SelectStyles.Answer]);
+                    screenBuffer.WriteLine(text, _optStyles[SelectStyles.Answer]);
                 }
                 screenBuffer.SavePromptCursor();
             }

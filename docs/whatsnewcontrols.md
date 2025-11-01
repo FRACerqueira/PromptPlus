@@ -54,6 +54,10 @@ Due to the significant modifications, version 5 introduced **significant changes
 - [NodeTree Select Control](#nodetree-select-control)
 - [Progress Bar Control](#progress-bar-control)
 - [ReadLine Emacs Control](#readline-emacs-control-new) **NEW!** 
+- [Remote Select Control](#remote-select-control-new) **NEW! EXPERIMENTAL!** 
+- [Remote MultiSelect Control](#remote-multiselect-control-new) **NEW! EXPERIMENTAL!** 
+- [Remote NodeTree Select Control](#remote-nodetree-select-control-new) **NEW! EXPERIMENTAL!** 
+- [Remote NodeTree MultiSelect Control](#remote-nodetree-multiselect-control-new) **NEW! EXPERIMENTAL!** 
 - [Select Control](#select-control)
 - [Slider Control](#slider-control)
 - [Slider Widget](#slider-widget-new)  **NEW!** 
@@ -77,6 +81,16 @@ Properties:  **PromptPlus.Config**.\<Property\> = \<newvalue\>.
 
 - YesChar
 - NoChar
+- PageSize
+- MaxWidth
+- MinimumPrefixLength
+- CompletionWaitToStart
+- ChartWidth
+- SecretChar
+- PromptMaskEdit
+- ProgressBarWidth
+- SliderWidth
+- SwitchWidth
 - MaxLengthFilterText
 - EnabledAbortKey
 - ShowMessageAbortKey
@@ -98,6 +112,12 @@ Properties:  **PromptPlus.Config**.\<Property\> = \<newvalue\>.
 - HotKeyShowHistory
 - HotKeyFilterMode
 - PaginationTemplate
+
+All properties can be created in a name configuration file obtained from **PromptPlus.NameResourceConfigFile** by the command:
+
+- PromptPlus.NameResourceConfigFile = 'PromptPlus.config'
+
+- **PromptPlus.CreatePromptPlusConfigFile(string foldername)**
 
 To change the pattern of symbols, the method below was made available:
 
@@ -228,6 +248,10 @@ A separation was made in the writing methods for common texts (default console b
     - Create context to write on standard error output stream for any output included until the 'dispose' is done.
 - (int Left, int Top) WriteLines(this IConsole console, int steps = 1, bool clearrestofline = true)
     - Write lines with line terminator
+- ClearLine(this IConsole console, int? row = null,Style ? style = null)
+    - Clear row line with style. 
+- Clear(Color? backcolor = null)
+    - Set BackgroundColor and Clears the console buffer.
 - IJointOutput Join(this IConsole console)
     - Wait all output using exclusive buffer to console.
     - IJointOutput commands
@@ -718,6 +742,7 @@ Navigation and commands has been optimized for each supported type: string, date
     - HideCountSelected(bool value = true).
     - ShowAllSelected(bool value).
     - Default(IEnumerable\<T\> values, bool usedefaultHistory = true).
+    - ExtraInfo(Func<T, string?> extraInfoNode)
 - Changed: 
     - PageSize(int value) -> PageSize(byte value).
     - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlMultiSelect\<T\>, T1\> action) -> Interaction(IEnumerable\<T\> items, Action\<T, IMultiSelectControl\<T\>\> interactionAction)
@@ -759,12 +784,14 @@ Navigation and commands has been optimized for each supported type: string, date
     - AddRootNode(T value, bool valuechecked = false, string nodeseparator = "|").
     - AddChildNode(T parent, T value, bool valuechecked = false).
     - HideCountSelected(bool value = true).
-    - HideSize(bool value = true).
+    - DisableRecursiveCount(bool value = true).
+    - ExtraInfo(Func<T1, string?> extraInfoNode).
 - Changed: 
     - PageSize(int value) -> PageSize(byte value).
     - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlTreeViewMultiSelect\<T\>, T1\> action) -> Interaction(IEnumerable\<T\> items, Action\<T, INodeTreeMultiSelectControl\<T\>\> interactionAction)
     - Styles(TreeViewStyles content, Style value) -> Styles(NodeTreeStyles styleType, Style style).
     - FilterType(FilterMode value) -> Filter(FilterMode value, bool caseinsensitive = true).
+    - HideSize(bool value = true) -> HideCount(bool value = true).
 - Removed: 
     - Config(Action\<IPromptConfig\> context).
     - ShowLines(bool value = true).
@@ -802,12 +829,14 @@ Navigation and commands has been optimized for each supported type: string, date
     - PredicateDisabled(Func<T, bool> validdisabled).
     - AddRootNode(T value, bool valuechecked = false, string nodeseparator = "|").
     - AddChildNode(T parent, T value, bool valuechecked = false).
-    - HideSize(bool value = true).
+    - DisableRecursiveCount(bool value = true).
+    - ExtraInfo(Func<T1, string?> extraInfoNode).
 - Changed: 
     - PageSize(int value) -> PageSize(byte value).
     - Interaction\<T1\>(IEnumerable\<T1\> values, Action\<IControlTreeViewSelect\<T\>, T1\> action) -> Interaction(IEnumerable\<T\> items, Action\<T, INodeTreeSelectControl\<T\>\> interactionAction)
     - Styles(TreeViewStyles content, Style value) -> Styles(NodeTreeStyles styleType, Style style).
     - FilterType(FilterMode value) -> Filter(FilterMode value, bool caseinsensitive = true).
+    - HideSize(bool value = true) -> HideCount(bool value = true).
 - Removed: 
     - Config(Action\<IPromptConfig\> context).
     - ShowLines(bool value = true).
@@ -867,6 +896,108 @@ Navigation and commands has been optimized for each supported type: string, date
     - string? ReadLine().
 
 ----
+### Remote Select Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Command initialization: PromptPlus.Control.RemoteSelect.
+    - Interface : IRemoteSelectControl\<T1,T2\>.
+    - Standard : RemoteSelect<\T1,T2\>(string prompt = "", string? description = null)
+- Commands: 
+    - Options(Action\<IControlOptions\> options).
+    - Styles(SelectStyles styleType, Style style).
+    - ChangeDescription(Func<T1, string> value).
+    - PageSize(byte value).
+    - TextSelector(Func<T1, string> value).
+    - UniqueId(Func<T1,string> uniquevalue).
+    - Filter(FilterMode value, bool caseinsensitive = true).
+    - SearchMoreItems(T2 initialvalue, Func\<T2, (bool, T2, IEnumerable\<T1\>)> values, Func\<Exception,string\>? erroMessage = null).
+    - PredicateSelected(Func\<T1, bool\> validselect).
+    - PredicateSelected(Func<T1, (bool, string?)> validselect).
+    - PredicateDisabled(Func<T1, bool> validdisabled).
+    - ResultPrompt\<T1\> Run(CancellationToken token = default).
+    - ExtraInfo(Func<T1, string?> extraInfoNode)
+
+----
+### Remote MultiSelect Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Command initialization: PromptPlus.Control.RemoteMultiSelect.
+    - Interface : IRemoteMultiSelectControl\<T1,T2\>.
+    - Standard : RemoteMultiSelect<\T1,T2\>(string prompt = "", string? description = null)
+- Commands: 
+    - Options(Action\<IControlOptions\> options).
+    - Styles(SelectStyles styleType, Style style).
+    - ChangeDescription(Func<T1, string> value).
+    - PageSize(byte value).
+    - TextSelector(Func<T1, string> value).
+    - UniqueId(Func<T1,string> uniquevalue).
+    - Filter(FilterMode value, bool caseinsensitive = true).
+    - SearchMoreItems(T2 initialvalue, Func\<T2, (bool, T2, IEnumerable\<T1\>)> values, Func\<Exception,string\>? erroMessage = null).
+    - PredicateSelected(Func\<T1, bool\> validselect).
+    - PredicateSelected(Func<T1, (bool, string?)> validselect).
+    - PredicateDisabled(Func<T1, bool> validdisabled).
+    - ExtraInfo(Func<T1, string?> extraInfoNode).
+    - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
+    - DefaultWhenLoad(IEnumerable<T1> values, bool useDefaultHistory = true).
+    - Range(int minvalue, int? maxvalue = null).
+    - HideCountSelected(bool value = true).
+    - MaxWidth(byte maxWidth).
+    - ShowAllSelected(bool value).
+    - ResultPrompt\<T1\[ \]\> Run(CancellationToken token = default).
+
+----
+### Remote NodeTree Select Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Command initialization: PromptPlus.Control.NodeTreeRemoteSelect.
+    - Interface : INodeTreeRemoteSelectControl\<T1,T2\>.
+    - Standard : NodeTreeRemoteSelect<\T1,T2\>(string prompt = "", string? description = null)
+- Commands: 
+    - ChangeDescription(Func<T1, string> value).
+    - Options(Action\<IControlOptions\> options).
+    - Styles(SelectStyles styleType, Style style).
+    - TextSelector(Func<T1, string> value).
+    - UniqueId(Func<T1,string> uniquevalue).
+    - PredicateChildAllowed(Func<T1, bool> childallowed).
+    - ExtraInfo(Func<T1, string?> extraInfoNode).
+    - AddRootNode(T1 value, T2 initialvalue, string nodeseparator = "|").
+    - SearchMoreItems(T2 initialvalue, Func\<T2, (bool, T2, IEnumerable\<T1\>)> values, Func\<Exception,string\>? erroMessage = null).
+    - PageSize(byte value).
+    - PredicateSelected(Func\<T1, bool\> validselect).
+    - PredicateSelected(Func<T1, (bool, string?)> validselect).
+    - PredicateDisabled(Func<T1, bool> validdisabled).
+    - HideCount(bool value = true).
+    - DisableRecursiveCount(bool value = true).
+    - ResultPrompt\<T1\> Run(CancellationToken token = default).
+
+### Remote NodeTree MultiSelect Control (NEW)
+[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
+
+- Command initialization: PromptPlus.Control.NodeTreeRemoteSelect.
+    - Interface : INodeTreeRemoteSelectControl\<T1,T2\>.
+    - Standard : NodeTreeRemoteSelect<\T1,T2\>(string prompt = "", string? description = null)
+- Commands: 
+    - ChangeDescription(Func<T1, string> value).
+    - Options(Action\<IControlOptions\> options).
+    - Styles(SelectStyles styleType, Style style).
+    - TextSelector(Func<T1, string> value).
+    - UniqueId(Func<T1,string> uniquevalue).
+    - PredicateChildAllowed(Func<T1, bool> childallowed).
+    - ExtraInfo(Func<T1, string?> extraInfoNode).
+    - AddRootNode(T1 value, T2 initialvalue, string nodeseparator = "|").
+    - SearchMoreItems(Func\<T1, T2, (bool, T2, IEnumerable\<(bool,T1)\>)\> values, Func\<Exception, string\>? erroMessage = null).
+    - PageSize(byte value).
+    - PredicateSelected(Func\<T1, bool\> validselect).
+    - PredicateSelected(Func<T1, (bool, string?)> validselect).
+    - PredicateDisabled(Func<T1, bool> validdisabled).
+    - Range(int minvalue, int? maxvalue = null).
+    - HideCountSelected(bool value = true).
+    - HideCount(bool value = true).
+    - MaxWidth(byte maxWidth).
+    - DisableRecursiveCount(bool value = true).
+    - ResultPrompt\<T1\[ \]\> Run(CancellationToken token = default).
+    
+----
 ### Select Control
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
 
@@ -880,6 +1011,7 @@ Navigation and commands has been optimized for each supported type: string, date
     - PredicateSelected(Func\<T, bool)\> validselect).
     - EnabledHistory(string filename, Action\<IHistoryOptions\>? options = null).
     - Options(Action\<IControlOptions\> options).
+    - ExtraInfo(Func<T, string?> extraInfoNode).
 - Changed: 
     - PageSize(int value) -> PageSize(byte value).
     - FilterType(FilterMode value) -> Filter(FilterMode value, bool caseinsensitive = true).

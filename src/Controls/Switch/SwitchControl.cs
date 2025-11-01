@@ -19,7 +19,7 @@ namespace PromptPlusLibrary.Controls.Switch
         private bool _defaultValue;
         private bool _useDefaultHistory;
         private HistoryOptions? _historyOptions;
-        private byte _width = 6;
+        private byte _width;
         private readonly List<string> _toggerTooptips = [];
         private int _indexTooptip;
         private string _tooltipModeInput = string.Empty;
@@ -43,11 +43,10 @@ namespace PromptPlusLibrary.Controls.Switch
         }
 
 
-#pragma warning disable IDE0290 // Use primary constructor
         public SwitchControl(bool widget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(widget, console, promptConfig, baseControlOptions)
         {
+            _width = ConfigPlus.SwitchWidth;
         }
-#pragma warning restore IDE0290 // Use primary constructor
 
         #region ISwitchControl
 

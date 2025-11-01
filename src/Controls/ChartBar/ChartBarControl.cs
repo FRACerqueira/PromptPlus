@@ -26,13 +26,13 @@ namespace PromptPlusLibrary.Controls.ChartBar
         private Func<ChartItem, (bool, string?)>? _predicatevalidselect;
         private bool _hasLegends;
         private bool _showLegends;
-        private byte _width = 80;
+        private byte _width;
         private byte _fractionalDigits = 2;
         private int _startpage;
         private int _indexitem;
         private (string id, int page)[] _paginginfo = [];
         private double _totalvalue;
-        private int _pageSize = 5;
+        private int _pageSize;
         private HideChart _hideChart = HideChart.None;
         private readonly List<string> _toggerTooptips = [];
         private int _indexTooptip;
@@ -61,6 +61,8 @@ namespace PromptPlusLibrary.Controls.ChartBar
         public ChartBarControl(bool isWidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
         {
             _culture = ConfigPlus.DefaultCulture;
+            _pageSize = ConfigPlus.PageSize;
+            _width = ConfigPlus.ChartWidth;
         }
 
         #region IChartBar

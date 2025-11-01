@@ -1,4 +1,4 @@
-﻿                                                                // ***************************************************************************************
+﻿// ***************************************************************************************
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
@@ -97,6 +97,13 @@ namespace PromptPlusLibrary
         /// <returns>The current <see cref="ISelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
         ISelectControl<T> TextSelector(Func<T, string> value);
+
+        /// <summary>
+        /// Configures the control to provide show additional information for item.
+        /// </summary>
+        /// <param name="extraInfoNode">A function that takes a item of type T and returns a string containing extra information.</param>
+        /// <returns>The current <see cref="ISelectControl{T}"/> instance for chaining.</returns>
+        ISelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode);
 
         /// <summary>
         /// Automatically selects and finalizes the item when only one item is in the list. Default is <c>false</c>.

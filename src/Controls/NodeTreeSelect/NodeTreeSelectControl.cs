@@ -19,6 +19,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         private readonly Func<ItemNodeControl<T>, bool> IsRoot;
         private readonly ConcurrentQueue<(string, bool, bool, List<ItemNodeControl<T>>)> _resultTask = [];
         private readonly Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
+        private Func<T, string?>? _extraInfoNode;
         private Func<T, string>? _changeDescription;
         private Func<T, string>? _textSelector;
         private NodeTree<T>? _nodestree;
@@ -26,20 +27,36 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         private int _indexTooptip;
         private string _tooltipModeSelect = string.Empty;
         private bool _showInfoFullPath;
-        private byte _pageSize = 10;
+        private byte _pageSize;
         private Func<T, (bool, string?)>? _predicatevalidselect;
         private Func<T, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<T>>? _localpaginator;
         private string _nodeseparator = "|";
+        private bool _disableRecursiveCount;
         private string[] _toggerTooptips;
 
         public NodeTreeSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             IsRoot = (item) => item.UniqueId == (_items.Count == 0 ? "" : _items[0].UniqueId);
             _toggerTooptips = [];
+            _pageSize = ConfigPlus.PageSize;
         }
 
         #region INodeTreeSelectControl
+
+        public INodeTreeSelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
+        {
+            ArgumentNullException.ThrowIfNull(extraInfoNode);
+            _extraInfoNode = extraInfoNode;
+            return this;
+        }
+
+        public INodeTreeSelectControl<T> DisableRecursiveCount(bool value = true)
+        {
+            _disableRecursiveCount = value;
+            return this;
+        }
+
 
         public INodeTreeSelectControl<T> ChangeDescription(Func<T, string> value)
         {
@@ -59,7 +76,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
             return this;
         }
 
-        public INodeTreeSelectControl<T> HideSize(bool value = true)
+        public INodeTreeSelectControl<T> HideCount(bool value = true)
         {
             _hideSize = value;
             return this;
@@ -494,7 +511,8 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 FullPath = textroot,
                 Text = textroot,
                 CountChildren = _nodestree.Childrens.Count,
-                Value = rootnode
+                Value = rootnode,
+                ExtraText = _extraInfoNode?.Invoke(rootnode) ?? null
             });
             int pos = -1;
             foreach (NodeTree<T> item in _nodestree.Childrens)
@@ -524,8 +542,37 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                     FullPath = CreateFullPath(item.ParentiId, text),
                     Text = text,
                     CountChildren = item.Childrens.Count,
-                    Value = item.Node
+                    Value = item.Node,
+                    ExtraText = _extraInfoNode?.Invoke(item.Node) ?? null
+
                 });
+            }
+            UpdateCountChildren();
+        }
+
+        private void UpdateCountChildren()
+        {
+            if (_disableRecursiveCount)
+            {
+                return;
+            }
+            foreach (NodeTree<T> item in _nodestree!.Childrens)
+            { 
+                int index = _items.FindIndex(x => x.UniqueId == item.UniqueId);
+                if (index != -1)
+                {
+                    int totalchildren = 0;
+                    void CountChildren(NodeTree<T> node)
+                    {
+                        totalchildren += node.Childrens.Count;
+                        foreach (NodeTree<T> child in node.Childrens)
+                        {
+                            CountChildren(child);
+                        }
+                    }
+                    CountChildren(item);
+                    _items[index].CountChildren = totalchildren;
+                }
             }
         }
 
@@ -657,11 +704,11 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
 
         private string GetAnswerText()
         {
-            string textnode = _localpaginator!.SelectedItem.Text!;
             if (_localpaginator!.SelectedIndex < 0)
             {
                 return string.Empty;
             }
+            string textnode = _localpaginator!.SelectedItem.Text!;
             if (_localpaginator!.SelectedItem.Status == NodeStatus.Loading)
             {
                 return $"{textnode}({Messages.Loading})";
@@ -750,11 +797,28 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                     }
                 }
                 screenBuffer.Write(item.Text!, stl);
+                var msgsize = string.Empty;
                 if (!_hideSize && !checkroot && item.CountChildren > 0)
                 {
-                    screenBuffer.Write($"({item.CountChildren})", stlsiz);
+                    msgsize = $"({item.CountChildren}";
                 }
-                screenBuffer.WriteLine("", Style.Default());
+                if (!string.IsNullOrEmpty(item.ExtraText))
+                {
+                    if (msgsize.Length != 0)
+                    {
+                        msgsize += ", ";
+                        msgsize += item.ExtraText;
+                    }
+                    else
+                    {
+                        msgsize = $"({item.ExtraText}";
+                    }
+                }
+                if (msgsize.Length != 0)
+                {
+                    msgsize += ")";
+                }
+                screenBuffer.WriteLine(msgsize, stlsiz);
             }
             if (_localpaginator.PageCount > 1)
             {
@@ -933,7 +997,8 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                     FullPath = CreateFullPath(nodetree.UniqueId, text),
                     Text = text,
                     CountChildren = item.Childrens.Count,
-                    Value = item.Node
+                    Value = item.Node,
+                    ExtraText = _extraInfoNode?.Invoke(item.Node) ?? null
                 };
                 newitems.Add(newitem);
                 pos++;

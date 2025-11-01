@@ -46,9 +46,6 @@ namespace PromptPlusLibrary.Controls.AutoComplete
         private string? _currentspinnerFrame;
         private string _lastinput;
 
-
-
-#pragma warning disable IDE0290 // Use primary constructor
         public AutoCompleteControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _acceptInput = (_) => true;
@@ -56,15 +53,14 @@ namespace PromptPlusLibrary.Controls.AutoComplete
             _defaultIfEmpty = string.Empty;
             _inputToCase = CaseOptions.Any;
             _maxLength = int.MaxValue;
-            _pageSize = 5;
-            _minimumPrefixLength = 3;
-            _completionWaitToStart = 500;
+            _pageSize = ConfigPlus.PageSize;
+            _minimumPrefixLength = ConfigPlus.MinimumPrefixLength;
+            _completionWaitToStart = ConfigPlus.CompletionWaitToStart;
             _completionMaxCount = int.MaxValue;
             _spinner = new(SpinnersType.Ascii);
             _tooltipModeAutoComlete = string.Empty;
             _lastinput = string.Empty;
         }
-#pragma warning restore IDE0290 // Use primary constructor
 
         public void Dispose()
         {

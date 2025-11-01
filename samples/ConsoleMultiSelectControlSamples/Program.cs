@@ -112,16 +112,16 @@ namespace ConsoleMultiSelectControlSamples
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {resultenum.IsAborted}, Value: {resultenum.Content.Length} selected");
 
-            PromptPlus.Widgets.DoubleDash("Sample MultiSelector with interaction and custom type");
+            PromptPlus.Widgets.DoubleDash("Sample MultiSelector with interaction and custom type and extra info");
             var resultclass = PromptPlus.Controls.MultiSelect<(int id, string City, string other)>("Select : ")
                 .Interaction(MyCities(), (item, ctrl) =>
                 {
                     ctrl.AddItem(item);
                 })
                 .TextSelector(item => item.City)
-                .ChangeDescription(item => $"current other info: {item.other}")
                 .EqualItems((item1, item2) => item1.id == item2.id)
                 .Default([new(4, "New York", "any4")])
+                .ExtraInfo(x => x.other)
                 .Run();
             PromptPlus.Console.WriteLine($"IsAborted : {resultenum.IsAborted}, Value: {resultenum.Content.Length} selected");
 

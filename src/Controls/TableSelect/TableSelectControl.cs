@@ -17,12 +17,10 @@ using System.Threading;
 
 namespace PromptPlusLibrary.Controls.TableSelect
 {
-#pragma warning disable CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
     internal sealed class TableSelectControl<T> : BaseControlPrompt<T>, ITableWidget<T>, ITableSelectControl<T> where T : class
-#pragma warning restore CS8613 // Nullability of reference types in return type doesn't match implicitly implemented member.
     {
         private readonly Dictionary<TableStyles, Style> _optStyles = BaseControlOptions.LoadStyle<TableStyles>();
-        private byte _pageSize = 10;
+        private byte _pageSize;
         private bool _autoSelect;
         private Func<T, (bool, string?)>? _predicatevalidselect;
         private readonly List<ItemTableRow<T>> _items = [];
@@ -82,6 +80,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _hideSelectorRow = isWidget;
             _lastinput = string.Empty;
+            _pageSize = ConfigPlus.PageSize;
         }
 #pragma warning restore IDE0290 // Use primary constructor
 #pragma warning restore IDE0079

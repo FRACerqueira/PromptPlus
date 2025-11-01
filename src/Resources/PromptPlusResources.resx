@@ -214,7 +214,7 @@
     <value>Standard</value>
   </data>
   <data name="PaginationTemplate" xml:space="preserve">
-    <value>Displaying: {1}/{2} pages of {0} items.</value>
+    <value>Displaying:{1}/{2} pages of {0} items.</value>
   </data>
   <data name="PressedKey" xml:space="preserve">
     <value>Pressed key</value>
@@ -262,7 +262,7 @@
     <value>{0}:Show Historic(Min. {1} chars)</value>
   </data>
   <data name="TooltipPages" xml:space="preserve">
-    <value>Up/Down/PgUp/PgDown:Move Selector, Ctrl+Home/End: First/Last item</value>
+    <value>Up/Down/PgUp/PgDown:Move Selector, Ctrl+Home/End:First/Last item</value>
   </data>
   <data name="TooltipSelectAll" xml:space="preserve">
     <value>{0}:Toggle Mark All</value>
@@ -286,7 +286,7 @@
     <value>{0}:Switch view password</value>
   </data>
   <data name="ValidAnyKey" xml:space="preserve">
-    <value>Valid key: {0}</value>
+    <value>Valid key:{0}</value>
   </data>
   <data name="ValidateInvalid" xml:space="preserve">
     <value>Invalid value!</value>
@@ -355,7 +355,7 @@
     <value>Empty notes  for input data</value>
   </data>
   <data name="InvalidKey" xml:space="preserve">
-    <value>Invalid Key: {0}</value>
+    <value>Invalid Key:{0}</value>
   </data>
   <data name="YesText" xml:space="preserve">
     <value>Yes</value>
@@ -403,7 +403,7 @@
     <value>Letter (A-Z)</value>
   </data>
   <data name="MaskEditPosLetterLower" xml:space="preserve">
-    <value>Letra  (a-z)</value>
+    <value>Letra (a-z)</value>
   </data>
   <data name="MaskEditPosSpace" xml:space="preserve">
     <value>Space</value>
@@ -433,10 +433,10 @@
     <value>Entries with invalid values</value>
   </data>
   <data name="TableAnswerRow" xml:space="preserve">
-    <value>Row: {0}</value>
+    <value>Row:{0}</value>
   </data>
   <data name="TableAnswerMultiRow" xml:space="preserve">
-    <value>Rows: {0}</value>
+    <value>Rows:{0}</value>
   </data>
   <data name="PredicateSelectInvalid" xml:space="preserve">
     <value>Selected item does not meet the criteria</value>
@@ -445,7 +445,7 @@
     <value>Root folder</value>
   </data>
   <data name="FileInfoFolder" xml:space="preserve">
-    <value>Folder : {0}</value>
+    <value>Folder:{0}</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Loading...</value>
@@ -454,10 +454,10 @@
     <value>Unloading...</value>
   </data>
   <data name="TooltipLevelHomeEnd" xml:space="preserve">
-    <value>Ctrl+Home:Previus level, Ctrl+End : Last Item of level</value>
+    <value>Ctrl+Home:Previus level, Ctrl+End:Last Item of level</value>
   </data>
   <data name="SearchFilter" xml:space="preserve">
-    <value>Search Filter :</value>
+    <value>Search Filter:</value>
   </data>
   <data name="Filtered" xml:space="preserve">
     <value>Filtered</value>
@@ -472,12 +472,18 @@
     <value>There are marked items, cannot be collapsed</value>
   </data>
   <data name="NodePath" xml:space="preserve">
-    <value>Path : </value>
+    <value>Path:</value>
   </data>
   <data name="TooltipExpandAllPress" xml:space="preserve">
     <value>Alt+:Expand All</value>
   </data>
   <data name="TooltipOrder" xml:space="preserve">
-    <value>Ordination: {0}</value>
+    <value>Ordination:{0}</value>
+  </data>
+  <data name="RemoteLoadMore" xml:space="preserve">
+    <value>{0}:Load more items.</value>
+  </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>Enter:Load more items.</value>
   </data>
 </root>

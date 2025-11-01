@@ -43,8 +43,13 @@ namespace PromptPlusLibrary.Controls
             _countValidator = countValidator;
             _foundDefault = foundDefault;
             _firstDisabled = true;
+            SelectedIndex = -1;
             InitializeCollection();
             Initialize(defaultValue, _foundDefault);
+            if (SelectedIndex < 0)
+            {
+                MoveToSelectIndex(IndexOption.FirstItem);
+            }
         }
 
         public int PageCount { get; private set; }
@@ -67,6 +72,9 @@ namespace PromptPlusLibrary.Controls
         public bool IsFirstPageItem => SelectedIndex == 0 && Count > 0;
         public bool IsLastPageItem => SelectedIndex == Count - 1 && Count > 0;
         public bool IsUnselected => SelectedIndex == -1;
+
+        public bool IsLastPage => SelectedPage == PageCount - 1;
+        public bool IsFirstPage => SelectedPage == 0;
 
         public void UnSelect() => SelectedIndex = -1;
 
@@ -165,7 +173,7 @@ namespace PromptPlusLibrary.Controls
 
         public bool End(IndexOption selectedIndexOption = IndexOption.LastItem)
         {
-            if (Count <= 0)
+            if (TotalCount <= 0)
             {
                 UnSelect();
                 return false;
@@ -173,21 +181,23 @@ namespace PromptPlusLibrary.Controls
 
             int oldindex = SelectedIndex;
             int oldpage = SelectedPage;
-            (int index, int page) = FindValidItem(TotalCount - 1, forward: false);
-            if (index >= 0)
+            int page = TotalCount / _userPageSize;
+            if (page > 0)
             {
-                SelectedPage = page;
-                SelectedIndex = index;
-                MoveToSelectIndex(selectedIndexOption);
-                return (oldindex != SelectedIndex || oldpage != SelectedPage);
+                if (TotalCount % _userPageSize == 0)
+                {
+                    page -= 1;
+                }
             }
-            return false;
-
+            SelectedPage = page;
+            SelectedIndex = 0;
+            MoveToSelectIndex(selectedIndexOption);
+            return (oldindex != SelectedIndex || oldpage != SelectedPage);
         }
 
         public bool Home(IndexOption selectedIndexOption = IndexOption.FirstItem)
         {
-            if (Count <= 0)
+            if (TotalCount <= 0)
             {
                 UnSelect();
                 return false;
@@ -242,7 +252,7 @@ namespace PromptPlusLibrary.Controls
             _items = [.. items];
             _firstDisabled = true;
             InitializeCollection();
-            if (selected.HasValue)
+            if (selected.HasValue && selected.Value.HasValue)
             {
                 Initialize(selected.Value, _foundDefault);
             }

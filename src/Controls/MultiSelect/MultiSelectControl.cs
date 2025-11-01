@@ -18,24 +18,25 @@ namespace PromptPlusLibrary.Controls.MultiSelect
     internal sealed class MultiSelectControl<T> : BaseControlPrompt<T[]>, IMultiSelectControl<T>
     {
         private readonly Dictionary<MultiSelectStyles, Style> _optStyles = BaseControlOptions.LoadStyle<MultiSelectStyles>();
-        private readonly List<ItemMultiSelect<T>> _items = [];
+        private readonly List<ItemSelect<T>> _items = [];
         private int _sequence;
         private Func<T, (bool, string?)>? _predicatevalidselect;
         private Func<T, string>? _changeDescription;
         private Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
+        private Func<T, string?>? _extraInfo;
         private IEnumerable<T>? _defaultValues;
         private bool _useDefaultHistory;
         private HistoryOptions? _historyOptions;
         private FilterMode _filterType = FilterMode.Disabled;
         private bool _filterCaseinsensitive;
-        private byte _pageSize = 10;
+        private byte _pageSize;
         private bool _hideTipGroup;
         private Func<T, string>? _textSelector;
         private IList<ItemHistory>? _itemHistories;
-        private Paginator<ItemMultiSelect<T>>? _localpaginator;
+        private Paginator<ItemSelect<T>>? _localpaginator;
         private readonly EmacsBuffer _filterBuffer;
         private EmacsBuffer? _resultbuffer;
-        private readonly List<ItemMultiSelect<T>> _checkeditems = [];
+        private readonly List<ItemSelect<T>> _checkeditems = [];
         private readonly Dictionary<ModeView, string[]> _toggerTooptips = new()
         {
             { ModeView.MultiSelect,[] },
@@ -46,7 +47,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         private int _lengthSeparationline;
         private int _maxSelect = int.MaxValue;
         private int _minSelect;
-        private byte _maxWidth = 30;
+        private byte _maxWidth;
         private bool _isShowAllSeleceted;
         private bool _hideCountSelected;
         private bool _hasGroup;
@@ -59,11 +60,20 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         {
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _lastinput = string.Empty;
+            _maxWidth = ConfigPlus.MaxWidth;
+            _pageSize = ConfigPlus.PageSize;
         }
 #pragma warning restore IDE0290 // Use primary constructor
 #pragma warning restore IDE0079
 
         #region IMultiSelect
+
+        public IMultiSelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
+        {
+            ArgumentNullException.ThrowIfNull(extraInfoNode);
+            _extraInfo = extraInfoNode;
+            return this;
+        }
 
         public IMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
         {
@@ -132,7 +142,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             ArgumentNullException.ThrowIfNull(value, nameof(value));
 
             _sequence++;
-            _items.Add(new ItemMultiSelect<T>(_sequence, value, valuechecked, disable));
+            _items.Add(new ItemSelect<T>(_sequence.ToString(), value, valuechecked, disable));
             return this;
         }
 
@@ -155,7 +165,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             if (lastindex < 0)
             {
                 _sequence++;
-                _items.Add(new ItemMultiSelect<T>(_sequence, value, valuechecked, disable)
+                _items.Add(new ItemSelect<T>(_sequence.ToString(), value, valuechecked, disable)
                 {
                     Group = group,
                     IsFirstItemGroup = true,
@@ -168,7 +178,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 throw new ArgumentOutOfRangeException(nameof(group), "Group already exists");
             }
             _sequence++;
-            _items.Add(new ItemMultiSelect<T>(_sequence, value, valuechecked, disable)
+            _items.Add(new ItemSelect<T>(_sequence.ToString(), value, valuechecked, disable)
             {
                 Group = group,
                 IsLastItemGroup = true
@@ -270,7 +280,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             };
             _sequence++;
 #pragma warning disable CS8604 // Possible null reference argument.
-            _items.Add(new ItemMultiSelect<T>(_sequence, default, false, true)
+            _items.Add(new ItemSelect<T>(_sequence.ToString(), default, false, true)
             {
                 CharSeparation = separator,
                 Text = ""
@@ -312,7 +322,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             else
             {
                 _textSelector ??= (x) => x?.ToString() ?? string.Empty;
-                foreach (ItemMultiSelect<T>? item in _items.Where(x => !x.CharSeparation.HasValue))
+                foreach (ItemSelect<T>? item in _items.Where(x => !x.CharSeparation.HasValue))
                 {
                     item.Text = _textSelector.Invoke(item.Value);
                     if (item.Text.Length > _lengthSeparationline)
@@ -346,7 +356,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 }
             }
 
-            Optional<ItemMultiSelect<T>> defvaluepage = Optional<ItemMultiSelect<T>>.Empty();
+            Optional<ItemSelect<T>> defvaluepage = Optional<ItemSelect<T>>.Empty();
 
             if (_defaultValues != null && _defaultValues.Any())
             {
@@ -361,7 +371,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         if (!hasdefvaluepage)
                         {
                             hasdefvaluepage = true;
-                            defvaluepage = Optional<ItemMultiSelect<T>>.Set(_items[index]);
+                            defvaluepage = Optional<ItemSelect<T>>.Set(_items[index]);
                         }
                     }
                 }
@@ -369,7 +379,10 @@ namespace PromptPlusLibrary.Controls.MultiSelect
 
             _resultbuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
 
-            _localpaginator = new Paginator<ItemMultiSelect<T>>(
+
+            LoadExtraInfo();
+
+            _localpaginator = new Paginator<ItemSelect<T>>(
                 _filterType,
                 _items,
                 _pageSize,
@@ -597,11 +610,11 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                     else if (_localpaginator!.SelectedItem != null && (!string.IsNullOrEmpty(_localpaginator!.SelectedItem.Group) || !_hasGroup) && ConfigPlus.HotKeyTooltipToggleAll.Equals(keyinfo))
                     {
-                        IEnumerable<ItemMultiSelect<T>> toselect = _items.Where(x => x.Group == _localpaginator.SelectedItem.Group && !x.CharSeparation.HasValue && !x.Disabled);
+                        IEnumerable<ItemSelect<T>> toselect = _items.Where(x => x.Group == _localpaginator.SelectedItem.Group && !x.CharSeparation.HasValue && !x.Disabled);
                         int qtdcheck = toselect.Count(x => x.ValueChecked && !x.Disabled);
                         if (qtdcheck == toselect.Count())
                         {
-                            foreach (ItemMultiSelect<T>? item in toselect)
+                            foreach (ItemSelect<T>? item in toselect)
                             {
                                 item.ValueChecked = false;
                                 _checkeditems.Remove(item);
@@ -611,7 +624,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         {
                             bool hasinvalidselect = false;
                             string? customerr = null;
-                            foreach (ItemMultiSelect<T>? item in toselect)
+                            foreach (ItemSelect<T>? item in toselect)
                             {
                                 (bool ok, string? message) = _predicatevalidselect?.Invoke(item.Value) ?? (true, null);
                                 if (!ok)
@@ -756,19 +769,19 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         {
 
             IEnumerable<T> aux = Enum.GetValues(typeof(T)).Cast<T>();
-            List<Tuple<int, ItemMultiSelect<T>>> result = [];
+            List<Tuple<int, ItemSelect<T>>> result = [];
             foreach (T item in aux)
             {
                 string? name = item!.ToString();
                 DisplayAttribute? displayAttribute = typeof(T).GetField(name!)?.GetCustomAttribute<DisplayAttribute>();
                 int order = displayAttribute?.GetOrder() ?? int.MaxValue;
                 _sequence++;
-                result.Add(new Tuple<int, ItemMultiSelect<T>>(order, new ItemMultiSelect<T>(_sequence, item, false, false)
+                result.Add(new Tuple<int, ItemSelect<T>>(order, new ItemSelect<T>(_sequence.ToString(), item, false, false)
                 {
                     Text = _textSelector?.Invoke(item)
                 }));
             }
-            foreach (Tuple<int, ItemMultiSelect<T>>? item in result.OrderBy(x => x.Item1))
+            foreach (Tuple<int, ItemSelect<T>>? item in result.OrderBy(x => x.Item1))
             {
                 _items.Add(item.Item2);
             }
@@ -865,8 +878,8 @@ namespace PromptPlusLibrary.Controls.MultiSelect
 
         private void WriteListMultiSelect(BufferScreen screenBuffer)
         {
-            ArraySegment<ItemMultiSelect<T>> subset = _localpaginator!.GetPageData();
-            foreach (ItemMultiSelect<T> item in subset)
+            ArraySegment<ItemSelect<T>> subset = _localpaginator!.GetPageData();
+            foreach (ItemSelect<T> item in subset)
             {
                 string value = item.Text!;
                 string? group = item.IsFirstItemGroup ? item.Group : string.Empty;
@@ -894,7 +907,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     screenBuffer.WriteLine($" {group}", _optStyles[MultiSelectStyles.UnSelected]);
 
                 }
-                if (_localpaginator.TryGetSelected(out ItemMultiSelect<T>? selectedItem) && EqualityComparer<ItemMultiSelect<T>>.Default.Equals(item, selectedItem))
+                if (_localpaginator.TryGetSelected(out ItemSelect<T>? selectedItem) && EqualityComparer<ItemSelect<T>>.Default.Equals(item, selectedItem))
                 {
                     screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.Selector), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
                     if (!string.IsNullOrEmpty(indentgroup))
@@ -911,12 +924,17 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                     if (item.Disabled)
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[MultiSelectStyles.Disabled]);
+                        screenBuffer.Write($" {value}", _optStyles[MultiSelectStyles.Disabled]);
                     }
                     else
                     {
-                        screenBuffer.WriteLine($" {value}", _optStyles[MultiSelectStyles.Selected]);
+                        screenBuffer.Write($" {value}", _optStyles[MultiSelectStyles.Selected]);
                     }
+                    if (!string.IsNullOrEmpty(item.ExtraText))
+                    {
+                        screenBuffer.Write($"({item.ExtraText})", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
+                    }
+                    screenBuffer.WriteLine("", Style.Default());
                 }
                 else
                 {
@@ -934,35 +952,29 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                     if (item.CharSeparation.HasValue)
                     {
-                        screenBuffer.WriteLine($"{value}", _optStyles[MultiSelectStyles.Disabled]);
+                        screenBuffer.Write($"{value}", _optStyles[MultiSelectStyles.Disabled]);
                     }
                     else
                     {
-                        screenBuffer.WriteLine($" {value}", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.UnSelected]);
+                        screenBuffer.Write($" {value}", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.UnSelected]);
                     }
+                    if (!string.IsNullOrEmpty(item.ExtraText))
+                    {
+                        screenBuffer.Write($"({item.ExtraText})", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.TaggedInfo]);
+                    }
+                    screenBuffer.WriteLine("", Style.Default());
                 }
             }
-            if (_localpaginator.PageCount > 1)
+            string template = ConfigPlus.PaginationTemplate.Invoke(
+                                _localpaginator.TotalCountValid,
+                                _localpaginator.SelectedPage + 1,
+                                _localpaginator.PageCount)!;
+            screenBuffer.Write(template, _optStyles[MultiSelectStyles.Pagination]);
+            if (!_hideCountSelected)
             {
-                string template = ConfigPlus.PaginationTemplate.Invoke(
-                    _localpaginator.TotalCountValid,
-                    _localpaginator.SelectedPage + 1,
-                    _localpaginator.PageCount
-                )!;
-                screenBuffer.Write(template, _optStyles[MultiSelectStyles.Pagination]);
-                if (!_hideCountSelected)
-                {
-                    screenBuffer.Write(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[MultiSelectStyles.TaggedInfo]);
-                }
-                screenBuffer.WriteLine("", Style.Default());
+                screenBuffer.Write(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[MultiSelectStyles.TaggedInfo]);
             }
-            else
-            {
-                if (!_hideCountSelected)
-                {
-                    screenBuffer.WriteLine(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[MultiSelectStyles.TaggedInfo]);
-                }
-            }
+            screenBuffer.WriteLine("", Style.Default());
         }
 
         private void WriteAnswer(BufferScreen screenBuffer)
@@ -1048,6 +1060,19 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             if (!string.IsNullOrEmpty(desc))
             {
                 screenBuffer.WriteLine(desc, _optStyles[MultiSelectStyles.Description]);
+            }
+        }
+
+
+        private void LoadExtraInfo()
+        {
+            if (_extraInfo == null)
+            {
+                return;
+            }
+            foreach (var item in _items)
+            {
+                item.ExtraText = _extraInfo.Invoke(item.Value!);
             }
         }
 

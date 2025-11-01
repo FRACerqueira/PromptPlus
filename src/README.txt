@@ -68,6 +68,12 @@ Due to the significant modifications, version 5 introduced **significant changes
 
 - All general config start at : **PromptPlus.Config**.<config>.
 
+- NEW controls group: Remote sources.This control group is in the **experimental phase** and addresses the scenario of resolving the domain set of collections from an external source (e.g., database, cloud, API with pagination).
+    - Remote Select for any type
+    - Remote Multi Select for any type
+    - Remote Nodetree select for any type
+    - Remote Nodetree Multi select for any type
+
 **License**
 -----------
 

@@ -25,7 +25,7 @@ namespace PromptPlusLibrary.Controls.Calendar
         private Func<DateTime?, string>? _changeDescription;
         private DateTime? _defaultValue;
         private bool _disabledWeekend;
-        private HotKey? _hotKeySwitchNotes;
+        private readonly HotKey? _hotKeySwitchNotes;
         private int _pageSize;
         private DateTime _minRangeDate;
         private DateTime _maxRangeDate;
@@ -51,7 +51,7 @@ namespace PromptPlusLibrary.Controls.Calendar
             _culture = ConfigPlus.DefaultCulture;
             _layout = CalendarLayout.SingleGrid;
             _hotKeySwitchNotes = isWidget ? null : ConfigPlus.HotKeySwitchNotes;
-            _pageSize = 5;
+            _pageSize = ConfigPlus.PageSize; 
             _minRangeDate = DateTime.MinValue;
             _maxRangeDate = DateTime.MaxValue;
             _selectedDate = null;

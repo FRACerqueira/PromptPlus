@@ -20,7 +20,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
     internal sealed class TableMultiSelectControl<T> : BaseControlPrompt<T[]>, ITableMultiSelectControl<T> where T : class
     {
         private readonly Dictionary<TableStyles, Style> _optStyles = BaseControlOptions.LoadStyle<TableStyles>();
-        private byte _pageSize = 10;
+        private byte _pageSize;
         private Func<T, (bool, string?)>? _predicatevalidselect;
         private readonly List<ItemTableRow<T>> _items = [];
         private readonly List<ItemTableRow<T>> _checkeditems = [];
@@ -34,7 +34,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
         private readonly List<ItemColumn<T>> _columns = [];
         private int _maxSelect = int.MaxValue;
         private int _minSelect;
-        private byte _maxWidth = 30;
+        private byte _maxWidth;
         private bool _isShowAllSeleceted;
         private bool _hideCountSelected;
         private bool _useDefaultHistory;
@@ -85,7 +85,8 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
         {
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _lastinput = string.Empty;
-
+            _pageSize = ConfigPlus.PageSize;
+            _maxWidth = ConfigPlus.MaxWidth;
         }
 #pragma warning restore IDE0290 // Use primary constructor
 #pragma warning restore IDE0079

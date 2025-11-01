@@ -20,7 +20,7 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageId>PromptPlus</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageProjectUrl>https://fracerqueira.github.io/PromptPlus</PackageProjectUrl>
+		<PackageProjectUrl>https://github.com/FRACerqueira/PromptPlus</PackageProjectUrl>
 		<Version>5.0.0</Version>
 		<PackageIcon>icon.png</PackageIcon>
 		<Copyright>© 2025 - Fernando Cerqueira </Copyright>
@@ -38,6 +38,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="Resources\PromptPlus.config" />
 	  <EmbeddedResource Include="Widgets\Banner\FIGlet\standard.flf" />
 	</ItemGroup>
 

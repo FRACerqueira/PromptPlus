@@ -21,6 +21,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         private readonly ConcurrentQueue<(string, bool, bool, List<ItemNodeControl<T>>)> _resultTask = [];
         private readonly Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
         private readonly List<ItemNodeControl<T>> _checkeditems = [];
+        private Func<T, string?>? _extraInfoNode;
         private Func<T, string>? _changeDescription;
         private Func<T, string>? _textSelector;
         private NodeTree<T>? _nodestree;
@@ -28,26 +29,42 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         private int _indexTooptip;
         private string _tooltipModeSelect = string.Empty;
         private bool _showInfoFullPath;
-        private byte _pageSize = 10;
+        private byte _pageSize;
         private Func<T, (bool, string?)>? _predicatevalidselect;
         private Func<T, bool>? _predicatevaliddisabled;
         private Paginator<ItemNodeControl<T>>? _localpaginator;
         private string _nodeseparator = "|";
         private string[] _toggerTooptips;
-        private byte _maxWidth = 30;
+        private byte _maxWidth;
         private bool _hideCountSelected;
         private int _maxSelect = int.MaxValue;
         private int _minSelect;
         private EmacsBuffer? _resultbuffer;
+        private bool _disableRecursiveCount;
 
 
         public NodeTreeMultiSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             IsRoot = (item) => item.UniqueId == (_items.Count == 0 ? "" : _items[0].UniqueId);
             _toggerTooptips = [];
+            _maxWidth = ConfigPlus.MaxWidth;
+            _pageSize = ConfigPlus.PageSize;
         }
 
         #region INodeTreeMultiSelectControl
+
+        public INodeTreeMultiSelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
+        {
+            ArgumentNullException.ThrowIfNull(extraInfoNode);
+            _extraInfoNode = extraInfoNode;
+            return this;
+        }
+
+        public INodeTreeMultiSelectControl<T> DisableRecursiveCount(bool value = true)
+        {
+            _disableRecursiveCount = value;
+            return this;
+        }
 
         public INodeTreeMultiSelectControl<T> HideCountSelected(bool value = true)
         {
@@ -94,7 +111,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             return this;
         }
 
-        public INodeTreeMultiSelectControl<T> HideSize(bool value = true)
+        public INodeTreeMultiSelectControl<T> HideCount(bool value = true)
         {
             _hideSize = value;
             return this;
@@ -343,13 +360,6 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                         {
                             _localpaginator.NextItem();
                         }
-                        if (_localpaginator.SelectedItem != null)
-                        {
-                            if (_localpaginator.SelectedItem.IsDisabled)
-                            {
-                                SetError(Messages.SelectionDisabled);
-                            }
-                        }
                         _indexTooptip = 0;
                         break;
                     }
@@ -363,13 +373,6 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                         {
                             _localpaginator!.PreviousItem();
                         }
-                        if (_localpaginator.SelectedItem != null)
-                        {
-                            if (_localpaginator.SelectedItem.IsDisabled)
-                            {
-                                SetError(Messages.SelectionDisabled);
-                            }
-                        }
                         _indexTooptip = 0;
                         break;
                     }
@@ -377,13 +380,6 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     {
                         if (_localpaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
                         {
-                            if (_localpaginator.SelectedItem != null)
-                            {
-                                if (_localpaginator.SelectedItem.IsDisabled)
-                                {
-                                    SetError(Messages.SelectionDisabled);
-                                }
-                            }
                             _indexTooptip = 0;
                             break;
                         }
@@ -392,13 +388,6 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     {
                         if (_localpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
                         {
-                            if (_localpaginator.SelectedItem != null)
-                            {
-                                if (_localpaginator.SelectedItem.IsDisabled)
-                                {
-                                    SetError(Messages.SelectionDisabled);
-                                }
-                            }
                             _indexTooptip = 0;
                             break;
                         }
@@ -716,7 +705,8 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                 FullPath = textroot,
                 Text = textroot,
                 CountChildren = _nodestree.Childrens.Count,
-                Value = rootnode
+                Value = rootnode,
+                ExtraText = _extraInfoNode?.Invoke(rootnode) ?? null
             });
             int pos = -1;
             foreach (NodeTree<T> item in _nodestree.Childrens)
@@ -747,11 +737,39 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     FullPath = CreateFullPath(item.ParentiId, text),
                     Text = text,
                     CountChildren = item.Childrens.Count,
-                    Value = item.Node
+                    Value = item.Node,
+                    ExtraText = _extraInfoNode?.Invoke(item.Node) ?? null
                 });
             }
+            UpdateCountChildren();
         }
 
+
+        private void UpdateCountChildren()
+        {
+            if (_disableRecursiveCount)
+            {
+                return;
+            }
+            foreach (NodeTree<T> item in _nodestree!.Childrens)
+            {
+                int index = _items.FindIndex(x => x.UniqueId == item.UniqueId);
+                if (index != -1)
+                {
+                    int totalchildren = 0;
+                    void CountChildren(NodeTree<T> node)
+                    {
+                        totalchildren += node.Childrens.Count;
+                        foreach (NodeTree<T> child in node.Childrens)
+                        {
+                            CountChildren(child);
+                        }
+                    }
+                    CountChildren(item);
+                    _items[index].CountChildren = totalchildren;
+                }
+            }
+        }
         private string CreateFullPath(string? parentid, string textnode)
         {
             var parents = new Stack<string>();
@@ -983,33 +1001,39 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     }
                 }
                 screenBuffer.Write(item.Text!, stl);
+                var msgsize = string.Empty;
                 if (!_hideSize && !checkroot && item.CountChildren > 0)
                 {
-                    screenBuffer.Write($"({item.CountChildren})", stlsiz);
+                    msgsize = $"({item.CountChildren}";
                 }
-                screenBuffer.WriteLine("", Style.Default());
-            }
-            if (_localpaginator.PageCount > 1)
-            {
-                string template = ConfigPlus.PaginationTemplate.Invoke(
-                    _localpaginator.TotalCountValid,
-                    _localpaginator.SelectedPage + 1,
-                    _localpaginator.PageCount
-                )!;
-                screenBuffer.WriteLine(template, _optStyles[NodeTreeStyles.Pagination]);
-                if (!_hideCountSelected)
+                if (!string.IsNullOrEmpty(item.ExtraText))
                 {
-                    screenBuffer.Write(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[NodeTreeStyles.TaggedInfo]);
+                    if (msgsize.Length != 0)
+                    {
+                        msgsize += ", ";
+                        msgsize += item.ExtraText;
+                    }
+                    else
+                    {
+                        msgsize = $"({item.ExtraText}";
+                    }
                 }
-                screenBuffer.WriteLine(template, _optStyles[NodeTreeStyles.Pagination]);
-            }
-            else
-            {
-                if (!_hideCountSelected)
+                if (msgsize.Length != 0)
                 {
-                    screenBuffer.WriteLine(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[NodeTreeStyles.TaggedInfo]);
+                    msgsize += ")";
                 }
+                screenBuffer.WriteLine(msgsize, stlsiz);
             }
+            string template = ConfigPlus.PaginationTemplate.Invoke(
+                                _localpaginator.TotalCountValid,
+                                _localpaginator.SelectedPage + 1,
+                                _localpaginator.PageCount)!;
+            screenBuffer.Write(template, _optStyles[NodeTreeStyles.Pagination]);
+            if (!_hideCountSelected)
+            {
+                screenBuffer.Write(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[NodeTreeStyles.TaggedInfo]);
+            }
+            screenBuffer.WriteLine("", Style.Default());
         }
 
         private string CreateIndentation(ItemNodeControl<T> item)
@@ -1200,7 +1224,8 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     FullPath = CreateFullPath(nodetree.UniqueId, text),
                     Text = text,
                     CountChildren = item.Childrens.Count,
-                    Value = item.Node
+                    Value = item.Node,
+                    ExtraText = _extraInfoNode?.Invoke(item.Node) ?? null
                 };
                 newitems.Add(newitem);
                 pos++;

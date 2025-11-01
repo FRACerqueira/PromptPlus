@@ -1,4 +1,4 @@
-![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
+![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
 ### PromptPlus class
 </br>
@@ -17,7 +17,11 @@ public static class PromptPlus
 | static [Config](PromptPlus/Config.md) { get; } | Gets the global configuration instance applied to newly created controls and widgets. |
 | static [Console](PromptPlus/Console.md) { get; } | Gets the current console driver abstraction providing low-level I/O, color and buffer operations. |
 | static [Controls](PromptPlus/Controls.md) { get; } | Gets a factory for interactive controls (input, select, file select, progress, masking, etc.). Each method returns a fluent configuration object. |
+| static [NameResourceConfigFile](PromptPlus/NameResourceConfigFile.md) { get; } | Gets the default file name for the PromptPlus resource configuration file. |
 | static [Widgets](PromptPlus/Widgets.md) { get; } | Gets a factory for creating and emitting visual widgets (banner, dash lines, chart bar, slider, etc.). |
+| static [Clear](PromptPlus/Clear.md)(…) | Clears the console buffer with [`Color`](./Color.md) and set BackgroundColor with [`Color`](./Color.md) |
+| static [ClearLine](PromptPlus/ClearLine.md)(…) | Clear line |
+| static [CreatePromptPlusConfigFile](PromptPlus/CreatePromptPlusConfigFile.md)(…) | Creates a new configuration file for PromptPlus using the name [`NameResourceConfigFile`](./PromptPlus/NameResourceConfigFile.md) |
 | static [ExclusiveContext](PromptPlus/ExclusiveContext.md)(…) | Create Exclusive context to write on standard output stream for any output included until the 'dispose' is done. |
 | static [Join](PromptPlus/Join.md)(…) | Wait all output using exclusive buffer to console |
 | static [OutputError](PromptPlus/OutputError.md)(…) | Create context to write on standard error output stream for any output included until the 'dispose' is done. |

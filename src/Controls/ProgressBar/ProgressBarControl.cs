@@ -28,7 +28,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         private double? _defaultValue;
         private double _maxValue = 100;
         private double _minValue;
-        private byte _width = 80;
+        private byte _width;
         private CancellationTokenSource? _cancellationTokenSource;
         private Action<HandlerProgressBar, CancellationToken>? _actionProgressBar;
         private HandlerProgressBar? _handlerProgressBar;
@@ -53,6 +53,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         public ProgressBarControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _culture = ConfigPlus.DefaultCulture;
+            _width = ConfigPlus.ProgressBarWidth;
         }
 
         #region IProgressBarControl
