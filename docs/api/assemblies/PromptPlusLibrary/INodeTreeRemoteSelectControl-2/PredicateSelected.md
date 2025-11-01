@@ -1,4 +1,4 @@
-![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
+![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
 ### INodeTreeRemoteSelectControl&lt;T1,T2&gt;.PredicateSelected method (1 of 2)
 </br>

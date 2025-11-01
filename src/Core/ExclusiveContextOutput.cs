@@ -38,7 +38,14 @@ namespace PromptPlusLibrary.Core
             {
                 if (!_skipRelease)
                 {
-                    _consoleExtend.ExclusiveContext.Release();
+                    try
+                    {
+                        _consoleExtend.ExclusiveContext.Release();
+                    }
+                    catch (ObjectDisposedException)
+                    {
+                        //skip when exception
+                    }
                 }
                 _disposed = true;
                 GC.SuppressFinalize(this);

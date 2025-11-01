@@ -1,4 +1,4 @@
-![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
+![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
 ### IRemoteMultiSelectControl&lt;T1,T2&gt;.Range method
 </br>

@@ -88,12 +88,7 @@ namespace PromptPlusLibrary
                 _consoledrive = new ConsoleDriveLinux(profileDrive);
             }
 
-            _promptConfig = new(unicodesupported, _appConsoleCulture)
-            {
-                OriginalOutputEncoding = _originalCodePageEncode,
-                OriginalForecolor = _originalForecolor,
-                OriginalBackcolor = _originalBackcolor
-            };
+            _promptConfig = new(unicodesupported, _appConsoleCulture);
 
             if (File.Exists(NameResourceConfigFile))
             {
@@ -107,9 +102,6 @@ namespace PromptPlusLibrary
                             Converters = { new JsonStringEnumConverter() }
                         });
                     _promptConfig!.Init(unicodesupported, _appConsoleCulture);
-                    _promptConfig!.OriginalOutputEncoding = _originalCodePageEncode;
-                    _promptConfig!.OriginalForecolor = _originalForecolor;
-                    _promptConfig!.OriginalBackcolor = _originalBackcolor;
 #pragma warning restore CS8601 // Possible null reference assignment.
 #pragma warning restore CA1869 // Cache and reuse 'JsonSerializerOptions' instances
                 }
@@ -120,7 +112,25 @@ namespace PromptPlusLibrary
             }
 
             _consoledrive.CursorVisible = true;
-            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
+            AppDomain.CurrentDomain.ProcessExit += (s, e) =>
+            {
+                ((IConsoleExtend)_consoledrive).Dispose();
+                Thread.CurrentThread.CurrentCulture = _appConsoleCulture;
+                System.Console.OutputEncoding = _originalCodePageEncode;
+                System.Console.ForegroundColor = _originalForecolor;
+                System.Console.BackgroundColor = _originalBackcolor;
+                System.Console.ResetColor();
+            };
+
+            AppDomain.CurrentDomain.UnhandledException += (s, e) =>
+            {
+                ((IConsoleExtend)_consoledrive).Dispose();
+                Thread.CurrentThread.CurrentCulture = _appConsoleCulture;
+                System.Console.OutputEncoding = _originalCodePageEncode;
+                System.Console.ForegroundColor = _originalForecolor;
+                System.Console.BackgroundColor = _originalBackcolor;
+                System.Console.ResetColor();
+            };
             _consoledrive.ResetColor();
             _consoledrive.Clear();
         }
@@ -240,19 +250,6 @@ namespace PromptPlusLibrary
         public static IConsole Console => _consoledrive;
 
         #region private methods
-
-        /// <summary>
-        /// Restores original console state (culture, encoding, colors) on process exit.
-        /// </summary>
-        private static void CurrentDomain_ProcessExit(object? sender, EventArgs e)
-        {
-            ((IConsoleExtend)_consoledrive).Dispose();
-            Thread.CurrentThread.CurrentCulture = _appConsoleCulture;
-            System.Console.OutputEncoding = _originalCodePageEncode;
-            System.Console.ForegroundColor = _originalForecolor;
-            System.Console.BackgroundColor = _originalBackcolor;
-            System.Console.ResetColor();
-        }
 
         // Adapted from https://github.com/willmcgugan/rich/blob/f0c29052c22d1e49579956a9207324d9072beed7/rich/console.py#L391
         /// <summary>

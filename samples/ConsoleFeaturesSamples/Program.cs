@@ -13,8 +13,11 @@ namespace ConsoleFeaturesSamples
     {
         static void Main()
         {
+
             PromptPlus.Console.ResetColor();
             PromptPlus.Console.Clear();
+
+
 
             PromptPlus.Widgets.DoubleDash($"Create file: '{PromptPlus.NameResourceConfigFile}' at current BaseDirectory with config for all controls", extraLines: 1);
             PromptPlus.CreatePromptPlusConfigFile(AppDomain.CurrentDomain.BaseDirectory);
@@ -27,8 +30,11 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Console.WriteLine("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
             PromptPlus.Console.WriteLineColor("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
 
+            PromptPlus.Console.WriteLines(2);
+
             PromptPlus.Widgets.DoubleDash("Sample WriteColor/WriteLineColor with mixed use cases", extraLines: 1);
             PromptPlus.Console.WriteLineColor("[RED]ERROR:[/] Wrong error at (/x/g/[[My Folder Name Has Brackets]]/[[BracketFile]].xml)");
+            PromptPlus.Console.WriteLineColor("[RED]ERROR:[/] Wrong error at (/x/g/[My Folder Name Has Brackets]/[BracketFile].xml)");
 
             PromptPlus.Console.WriteLines(2);
             PromptPlus.Widgets.DoubleDash("Sample SingleDash/SingleDashColor", extraLines: 1);
@@ -177,18 +183,6 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Console.WriteLine("");
             PromptPlus.Console.WriteColor("[Yellow]Press any key to end[/]");
             PromptPlus.Console.ReadKey();
-
-
-            PromptPlus.Controls.Input("Name: ", "Enter your name")
-                .Styles(InputStyles.Answer, Color.Green)
-                .InputToCase(CaseOptions.Any)
-                .AcceptInput((charinput) => throw new Exception("Teste"))
-                .Default("John Doe")
-                .DefaultIfEmpty("Name Empty")
-                .ChangeDescription((input) => $"Input Length: {input.Length}")
-                .MaxLength(150)
-                .MaxWidth(20)
-                .Run();
 
             PromptPlus.Console.ResetColor();
             PromptPlus.Console.Clear();

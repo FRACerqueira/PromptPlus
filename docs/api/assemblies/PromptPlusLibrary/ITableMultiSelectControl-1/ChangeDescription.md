@@ -1,4 +1,4 @@
-![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
+![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
 ### ITableMultiSelectControl&lt;T&gt;.ChangeDescription method
 </br>

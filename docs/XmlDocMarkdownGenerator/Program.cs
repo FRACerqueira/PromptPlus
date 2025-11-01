@@ -61,7 +61,7 @@ namespace XmlDocMarkdownGenerator
                     {
                         var content = File.ReadAllLines(item2).ToList();
                         var title = content[0].Replace("# ", "");
-                        content.Insert(0, "![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)");
+                        content.Insert(0, "![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)");
                         content[1] = "";
                         content.Insert(2, $"### {title}");
                         content.Insert(3, "</br>");
@@ -99,7 +99,7 @@ namespace XmlDocMarkdownGenerator
                 {
                     var content = File.ReadAllLines(item3).ToList();
                     var title = content[0].Replace("# ", "");
-                    content.Insert(0, "![[PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)");
+                    content.Insert(0, "![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)");
                     content[1] = "";
                     content.Insert(2, $"### {title}");
                     content.Insert(3, "</br>");

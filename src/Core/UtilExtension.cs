@@ -247,6 +247,7 @@ namespace PromptPlusLibrary.Core
             Color currentForeground = console.ForegroundColor;
             Color currentBackground = console.BackgroundColor;
             stack.Push(new Style(currentForeground, currentBackground));
+            var onlytext = true;
             while (tokenizer.MoveNext())
             {
                 MarkupToken? token = tokenizer.Current;
@@ -254,9 +255,10 @@ namespace PromptPlusLibrary.Core
                 {
                     break;
                 }
-
+                var notfound = false;
                 if (token.Kind == MarkupTokenKind.Open)
                 {
+                    onlytext = false;
                     string[] parts = token.Value.Split([' ']);
                     if (parts.Length == 1 && parts[0].Contains(':'))
                     {
@@ -266,6 +268,7 @@ namespace PromptPlusLibrary.Core
                     bool foreground = true;
                     Color partForeground = currentForeground;
                     Color partBackground = currentBackground;
+                    var first = true;
                     foreach (string part in parts)
                     {
                         if (part.Equals("on", StringComparison.OrdinalIgnoreCase))
@@ -295,7 +298,13 @@ namespace PromptPlusLibrary.Core
                             }
                             else
                             {
-                                throw new ArgumentException($"Could not parse color '{part}'.");
+                                if (!first)
+                                {
+                                    throw new ArgumentException($"Could not parse color '{part}'.");
+                                }
+                                notfound = true;
+                                token = new MarkupToken(MarkupTokenKind.Text, $"[{token.Value}]", token.Position);
+                                break;
                             }
                         }
                         if (foreground)
@@ -306,13 +315,18 @@ namespace PromptPlusLibrary.Core
                         {
                             partBackground = color.Value!;
                         }
+                        first = false;
                     }
-                    stack.Push(new Style(partForeground, partBackground));
-                    currentForeground = partForeground;
-                    currentBackground = partBackground;
+                    if (!notfound)
+                    {
+                        stack.Push(new Style(partForeground, partBackground));
+                        currentForeground = partForeground;
+                        currentBackground = partBackground;
+                    }
                 }
-                else if (token.Kind == MarkupTokenKind.Close)
+                if (token.Kind == MarkupTokenKind.Close)
                 {
+                    onlytext = false;
                     if (stack.Count == 0)
                     {
                         throw new ArgumentException($"Encountered closing tag when none was expected near position {token.Position}.");
@@ -324,31 +338,28 @@ namespace PromptPlusLibrary.Core
                     }
                     else
                     {
+                        if (stack.Count == 0)
+                        {
+                            throw new ArgumentException($"Encountered closing tag when none was expected near position {token.Position}.");
+                        }
                         oldstyle = stack.Peek();
                     }
                     currentForeground = oldstyle.Foreground;
                     currentBackground = oldstyle.Background;
 
                 }
-                else if (token.Kind == MarkupTokenKind.Text)
+                if (token.Kind == MarkupTokenKind.Text)
                 {
                     // Get the effective style.
                     result.Add(new Segment(token.Value, new Style(currentForeground, currentBackground)));
                 }
-                else
-                {
-                    throw new InvalidOperationException("Encountered unknown markup token.");
-                }
+
             }
-            if (stack.Count > 0)
+            if (stack.Count >=1)
             {
-                if (stack.Count == 1)
+                if (onlytext)
                 {
-                    var oldstyle = stack.Pop();
-                    if (oldstyle.Foreground != console.ForegroundColor || oldstyle.Background != console.BackgroundColor)
-                    {
-                        throw new ArgumentException("Unclosed tag detected at end of input.");
-                    }
+                    stack.Pop();
                 }
                 else
                 {

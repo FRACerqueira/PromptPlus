@@ -441,11 +441,6 @@ namespace PromptPlusLibrary
         /// </summary>
         internal CultureInfo AppCulture { get; private set; }
 
-        internal Encoding OriginalOutputEncoding { get; set; }
-        internal ConsoleColor OriginalForecolor { get; set; }
-        internal ConsoleColor OriginalBackcolor { get; set; }
-
-
         /// <summary>
         /// Init with explicit Unicode capability and culture.
         /// </summary>

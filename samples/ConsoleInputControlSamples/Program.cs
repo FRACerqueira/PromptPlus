@@ -109,9 +109,9 @@ namespace ConsoleInputControlsSamples
                     {
                         if (x.Length < 2)
                         {
-                            return false;
+                            return (false, "Length must be greater than 2");
                         }
-                        return true;
+                        return (true,null);
                     })
                     .MaxLength(5, 5)
                     .Run();
