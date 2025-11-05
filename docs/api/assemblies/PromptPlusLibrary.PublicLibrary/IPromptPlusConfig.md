@@ -14,11 +14,13 @@ public interface IPromptPlusConfig
 
 | name | description |
 | --- | --- |
+| [AfterError](IPromptPlusConfig/AfterError.md) { get; set; } | Gets or sets the action to invoke after an error occurs during processing. |
 | [ChartWidth](IPromptPlusConfig/ChartWidth.md) { get; set; } | Gets Sets the width of the chart bar.Default value is 80. Valid range is 10–255; values outside the range are coerced to the nearest boundary. |
 | [CompletionWaitToStart](IPromptPlusConfig/CompletionWaitToStart.md) { get; set; } | Number of milliseconds to wait before to start function autocomplete. Default value is 500 Valid range is &gt; 100; values outside the range are coerced to the nearest boundary. |
 | [DefaultCulture](IPromptPlusConfig/DefaultCulture.md) { get; set; } | Gets or sets the default CultureInfo used for formatting and localization. |
 | [EnabledAbortKey](IPromptPlusConfig/EnabledAbortKey.md) { get; set; } | Gets or sets whether the abort (Esc) hotkey is enabled globally. If `true`, Esc can abort controls. |
 | [FirstDayOfWeek](IPromptPlusConfig/FirstDayOfWeek.md) { get; set; } | Gets or sets the first day of the week for calendar-based controls (default: Sunday). |
+| [FolderLog](IPromptPlusConfig/FolderLog.md) { get; set; } | Gets or sets the folder path where log files will be stored. |
 | [HideAfterFinish](IPromptPlusConfig/HideAfterFinish.md) { get; set; } | Gets or sets whether a control’s render area is cleared after successful completion. If `true`, the area is cleared. |
 | [HideOnAbort](IPromptPlusConfig/HideOnAbort.md) { get; set; } | Gets or sets whether a control’s render area is cleared after being aborted. If `true`, the area is cleared. |
 | [HotKeyAbortKeyPress](IPromptPlusConfig/HotKeyAbortKeyPress.md) { get; } | Gets the global abort hotkey (default: Esc). |
@@ -41,6 +43,7 @@ public interface IPromptPlusConfig
 | [PaginationTemplate](IPromptPlusConfig/PaginationTemplate.md) { get; set; } | Gets or sets the pagination template function. Parameters: total items, current page (1-based), total pages. Returns a formatted string for display. |
 | [ProgressBarWidth](IPromptPlusConfig/ProgressBarWidth.md) { get; set; } | Gets Sets the width of the Progress bar.Default value is 80. Valid range is 10–255; values outside the range are coerced to the nearest boundary. |
 | [PromptMaskEdit](IPromptPlusConfig/PromptMaskEdit.md) { get; set; } | Gets Sets the character to use as the Prompt MaskEdit. Defaults is '_'. |
+| [ResetBasicStateAfterExist](IPromptPlusConfig/ResetBasicStateAfterExist.md) { get; set; } | Gets or sets a value indicating whether the basic state should be reset after an exit operation. Default value is true. The Culture,cursor, foreground, and background colors are reset to their default values. |
 | [SecretChar](IPromptPlusConfig/SecretChar.md) { get; set; } | Gets Sets the character to use as the secret mask input. Defaults is '#'. |
 | [ShowMesssageAbortKey](IPromptPlusConfig/ShowMesssageAbortKey.md) { get; set; } | Gets or sets whether an abort message is shown after an abort occurs. If `true`, a localized message is displayed. |
 | [ShowTooltip](IPromptPlusConfig/ShowTooltip.md) { get; set; } | Gets or sets whether tooltips are shown by default for controls. If `true`, tooltip rendering is enabled. |

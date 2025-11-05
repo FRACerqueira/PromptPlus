@@ -7,8 +7,7 @@
 #### Writes a single character followed by a line terminator.
 
 ```csharp
-public (int Left, int Top) WriteLine(char buffer, Style? style = default, 
-    bool clearrestofline = true)
+public void WriteLine(char buffer, Style? style = default, bool clearrestofline = true)
 ```
 
 | parameter | description |
@@ -16,10 +15,6 @@ public (int Left, int Top) WriteLine(char buffer, Style? style = default,
 | buffer | Character to write. |
 | style | Optional [`Style`](../Style.md) overriding current output style. |
 | clearrestofline | `true` to clear remaining characters on the line before newline. |
-
-### Return Value
-
-The cursor position after write.
 
 ### See Also
 
@@ -34,8 +29,7 @@ The cursor position after write.
 #### Writes a character array followed by a line terminator.
 
 ```csharp
-public (int Left, int Top) WriteLine(char[] buffer, Style? style = default, 
-    bool clearrestofline = true)
+public void WriteLine(char[] buffer, Style? style = default, bool clearrestofline = true)
 ```
 
 | parameter | description |
@@ -43,10 +37,6 @@ public (int Left, int Top) WriteLine(char[] buffer, Style? style = default,
 | buffer | Characters to write. |
 | style | Optional [`Style`](../Style.md) overriding current output style. |
 | clearrestofline | `true` to clear remaining characters on the line before newline. |
-
-### Return Value
-
-The cursor position after write.
 
 ### See Also
 
@@ -61,8 +51,7 @@ The cursor position after write.
 #### Writes a string followed by a line terminator.
 
 ```csharp
-public (int Left, int Top) WriteLine(string value, Style? style = default, 
-    bool clearrestofline = true)
+public void WriteLine(string value, Style? style = default, bool clearrestofline = true)
 ```
 
 | parameter | description |
@@ -70,10 +59,6 @@ public (int Left, int Top) WriteLine(string value, Style? style = default,
 | value | String to write. |
 | style | Optional [`Style`](../Style.md) overriding current output style. |
 | clearrestofline | `true` to clear remaining characters on the line before newline. |
-
-### Return Value
-
-The cursor position after write.
 
 ### See Also
 

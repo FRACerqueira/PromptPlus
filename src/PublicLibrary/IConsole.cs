@@ -5,6 +5,7 @@
 
 using System;
 using System.IO;
+using System.Runtime.Versioning;
 using System.Text;
 using System.Threading;
 
@@ -21,6 +22,81 @@ namespace PromptPlusLibrary
     /// <seealso cref="IProfileDrive"/>
     public interface IConsole : IProfileDrive
     {
+
+        /// <summary>
+        /// Sets a handler for console cancel events (Ctrl+C/Break).
+        /// </summary>
+        /// <param name="behaviorcontrols">
+        /// A value from <see cref="AfterCancelKeyPress"/> enum determining how the console should handle cancel events:
+        /// <list type="bullet">
+        /// <item><description>Ignore - Continue running without aborting</description></item>
+        /// <item><description>AbortCurrentControl - Abort only the current control's operation</description></item>
+        /// <item><description>AbortAllControl - Abort all control's operation</description></item>
+        /// </list>
+        /// </param>
+        /// <param name="actionhandle">A delegate that handles cancel events. The handler receives:
+        /// <list type="bullet">
+        /// <item><description>sender - The source of the event</description></item>
+        /// <item><description><see cref="ConsoleCancelEventArgs"/> - Event data including cancel type and whether the event was handled</description></item>
+        /// </list>
+        /// Set to <c>null</c> to remove the current handler.</param>
+        /// <remarks>
+        /// <para>The handler's behavior is affected by the <see cref="BehaviorAfterCancelKeyPress"/> property setting.</para>
+        /// <para>This method is not supported on the following platforms:</para>
+        /// <list type="bullet">
+        /// <item><description>Android</description></item>
+        /// <item><description>Browser</description></item>
+        /// <item><description>iOS</description></item>
+        /// <item><description>tvOS</description></item>
+        /// </list>
+        /// </remarks>
+        /// <seealso cref="BehaviorAfterCancelKeyPress"/>
+        /// <seealso cref="UserPressKeyAborted"/>
+
+        [UnsupportedOSPlatform("android")]
+        [UnsupportedOSPlatform("browser")]
+        [UnsupportedOSPlatform("ios")]
+        [UnsupportedOSPlatform("tvos")]
+        void CancelKeyPress(AfterCancelKeyPress behaviorcontrols, Action<object?, ConsoleCancelEventArgs> actionhandle);
+
+        /// <summary>
+        /// Removes the current cancel key press (Ctrl+C/Break) handler and restores default behavior.
+        /// </summary>
+        /// <remarks>
+        /// <para>This method remove handler previously set via <see cref="CancelKeyPress"/>.</para>
+        /// <para>After calling this method:</para>
+        /// <list type="bullet">
+        /// <item><description>The <see cref="BehaviorAfterCancelKeyPress"/> setting will have no effect</description></item>
+        /// <item><description>The <see cref="UserPressKeyAborted"/> setting to <c>false</c>.</description></item>
+        /// </list>
+        /// </remarks>
+        /// <seealso cref="CancelKeyPress"/>
+        /// <seealso cref="BehaviorAfterCancelKeyPress"/>
+        /// <seealso cref="UserPressKeyAborted"/>
+        void RemoveCancelKeyPress();
+
+        /// <summary>
+        /// Gets the behavior to be applied after a cancel key (Ctrl+C/Ctrl+Break) is pressed.
+        /// This setting is ignored if no handler is configured via <see cref="CancelKeyPress"/> or returns <c>false</c> from <see cref="CancelKeyPress"/>.
+        /// </summary>
+        /// <value>
+        /// A value from <see cref="AfterCancelKeyPress"/> enum determining how the console should 
+        /// handle cancel events:
+        /// <list type="bullet">
+        /// <item><description>Ignore - Continue running without aborting</description></item>
+        /// <item><description>AbortCurrentControl - Abort only the current control's operation</description></item>
+        /// </list>
+        /// </value>
+        /// <seealso cref="CancelKeyPress"/>
+        /// <seealso cref="UserPressKeyAborted"/>
+        AfterCancelKeyPress BehaviorAfterCancelKeyPress { get; }
+
+
+        /// <summary>
+        /// Gets a value indicating whether the operation was aborted by the user (Ctrl+C / Ctrl+Break).
+        /// </summary>
+        bool UserPressKeyAborted { get; }
+
         /// <summary>
         /// Gets or sets the current foreground <see cref="Color"/>.
         /// </summary>
@@ -196,8 +272,7 @@ namespace PromptPlusLibrary
         /// <param name="buffer">Characters to write.</param>
         /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
         /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line.</param>
-        /// <returns>The cursor position after write.</returns>
-        (int Left, int Top) Write(char[] buffer, Style? style = null, bool clearrestofline = false);
+        void Write(char[] buffer, Style? style = null, bool clearrestofline = false);
 
         /// <summary>
         /// Writes a single character.
@@ -205,8 +280,7 @@ namespace PromptPlusLibrary
         /// <param name="buffer">Character to write.</param>
         /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
         /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line.</param>
-        /// <returns>The cursor position after write.</returns>
-        (int Left, int Top) Write(char buffer, Style? style = null, bool clearrestofline = false);
+        void Write(char buffer, Style? style = null, bool clearrestofline = false);
 
         /// <summary>
         /// Writes a string.
@@ -214,17 +288,7 @@ namespace PromptPlusLibrary
         /// <param name="value">The string to write.</param>
         /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
         /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line.</param>
-        /// <returns>The cursor position after write.</returns>
-        (int Left, int Top) Write(string value, Style? style = null, bool clearrestofline = false);
-
-        /// <summary>
-        /// Writes a string containing color tokens parsed and rendered with color support.
-        /// </summary>
-        /// <param name="value">String with embedded color tokens.</param>
-        /// <param name="overflow">Overflow handling <see cref="Overflow"/> strategy.</param>
-        /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line.</param>
-        /// <returns>The cursor position after write.</returns>
-        (int Left, int Top) WriteColor(string value, Overflow overflow = Overflow.Crop, bool clearrestofline = false);
+        void Write(string value, Style? style = null, bool clearrestofline = false);
 
         /// <summary>
         /// Writes a character array followed by a line terminator.
@@ -232,8 +296,7 @@ namespace PromptPlusLibrary
         /// <param name="buffer">Characters to write.</param>
         /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
         /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line before newline.</param>
-        /// <returns>The cursor position after write.</returns>
-        (int Left, int Top) WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true);
+        void WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true);
 
         /// <summary>
         /// Writes a single character followed by a line terminator.
@@ -241,8 +304,7 @@ namespace PromptPlusLibrary
         /// <param name="buffer">Character to write.</param>
         /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
         /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line before newline.</param>
-        /// <returns>The cursor position after write.</returns>
-        (int Left, int Top) WriteLine(char buffer, Style? style = null, bool clearrestofline = true);
+        void WriteLine(char buffer, Style? style = null, bool clearrestofline = true);
 
         /// <summary>
         /// Writes a string followed by a line terminator.
@@ -250,17 +312,7 @@ namespace PromptPlusLibrary
         /// <param name="value">String to write.</param>
         /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
         /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line before newline.</param>
-        /// <returns>The cursor position after write.</returns>
-        (int Left, int Top) WriteLine(string value, Style? style = null, bool clearrestofline = true);
-
-        /// <summary>
-        /// Writes a color-tokenized string followed by a line terminator.
-        /// </summary>
-        /// <param name="value">String with embedded color tokens.</param>
-        /// <param name="overflow">Overflow handling <see cref="Overflow"/> strategy.</param>
-        /// <param name="clearrestofline"><c>true</c> to clear remaining characters on the line before newline.</param>
-        /// <returns>The cursor position after write.</returns>
-        (int Left, int Top) WriteLineColor(string value, Overflow overflow = Overflow.Crop, bool clearrestofline = true);
+        void WriteLine(string value, Style? style = null, bool clearrestofline = true);
 
         /// <summary>
         /// Gets the currently active screen buffer.

@@ -7,6 +7,7 @@
 
 | public type | description |
 | --- | --- |
+| enum [AfterCancelKeyPress](./PromptPlusLibrary/AfterCancelKeyPress.md) | Specifies how the control should behave after press (SIGINT) in terminal (typically Ctrl+C) or Ctrl-Break is pressed. |
 | enum [AutoComleteStyles](./PromptPlusLibrary/AutoComleteStyles.md) | Represents the Styles AutoComplete Input Control This enum defines various regions or components of the AutoComplete Input Control. |
 | enum [BannerDashOptions](./PromptPlusLibrary/BannerDashOptions.md) | Represents border options when writing a banner. |
 | enum [CalendarItem](./PromptPlusLibrary/CalendarItem.md) | Specifies the Calendar item. |

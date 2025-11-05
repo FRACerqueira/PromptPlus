@@ -27,13 +27,14 @@ using PromptPlusLibrary.Controls.TableMultiSelect;
 using PromptPlusLibrary.Controls.TableSelect;
 using PromptPlusLibrary.Controls.WaitProcess;
 using PromptPlusLibrary.Controls.WaitTimer;
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Linq;
 
 namespace PromptPlusLibrary.Controls
 {
-    internal sealed class PromptPlusControls(IConsole console, PromptConfig promptConfig) : IControls
+    internal sealed class PromptPlusControls(IConsoleExtend console, PromptConfig promptConfig) : IControls
     {
         public IEmacs InputEmacs(string initialvalue = "")
         {

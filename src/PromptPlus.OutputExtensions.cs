@@ -25,8 +25,7 @@ namespace PromptPlusLibrary
         /// <param name="console">The <see cref="IConsole"/> drive</param>
         /// <param name="steps">Numbers de lines.</param>
         /// <param name="clearrestofline">Indicates whether to clear the rest of the line.</param>
-        /// <returns>The column and row position of the cursor.</returns>
-        public static (int Left, int Top) WriteLines(this IConsole console, int steps = 1, bool clearrestofline = true)
+        public static void WriteLines(this IConsole console, int steps = 1, bool clearrestofline = true)
         {
             using (InternalExclusiveContext(console))
             {
@@ -34,7 +33,6 @@ namespace PromptPlusLibrary
                 {
                     console.WriteLine("", null, clearrestofline);
                 }
-                return console.GetCursorPosition();
             }
         }
 

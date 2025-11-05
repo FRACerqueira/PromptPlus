@@ -38,7 +38,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="Resources\PromptPlus.config" />
 	  <EmbeddedResource Include="Widgets\Banner\FIGlet\standard.flf" />
 	</ItemGroup>
 
@@ -52,7 +51,6 @@
 	<ItemGroup>
 		<PackageReference Include="EastAsianWidthDotNet" Version="1.0.1" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<Content Include="README.txt">
 			<Pack>true</Pack>

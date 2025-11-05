@@ -52,15 +52,6 @@ namespace PromptPlusLibrary
         IJointOutput Write(string value, Style? style = null, bool clearRestOfLine = false);
 
         /// <summary>
-        /// Writes a string whose content contains color tokens, applying the specified overflow strategy.
-        /// </summary>
-        /// <param name="value">The tokenized text to write (implementation‑defined token syntax).</param>
-        /// <param name="overflow">How to handle content wider than the console buffer (see <see cref="Overflow"/>).</param>
-        /// <param name="clearRestOfLine">If <c>true</c>, clears from the end of the written content to the end of the physical line.</param>
-        /// <returns>The same <see cref="IJointOutput"/> instance for chaining.</returns>
-        IJointOutput WriteColor(string value, Overflow overflow = Overflow.None, bool clearRestOfLine = false);
-
-        /// <summary>
         /// Writes a character array followed by a line terminator.
         /// </summary>
         /// <param name="buffer">The characters to write. Ignored if empty.</param>
@@ -77,15 +68,6 @@ namespace PromptPlusLibrary
         /// <param name="clearRestOfLine">If <c>true</c>, clears the remainder of the current line before emitting the newline.</param>
         /// <returns>The same <see cref="IJointOutput"/> instance for chaining.</returns>
         IJointOutput WriteLine(string value, Style? style = null, bool clearRestOfLine = true);
-
-        /// <summary>
-        /// Writes a tokenized string followed by a line terminator, applying the specified overflow strategy.
-        /// </summary>
-        /// <param name="value">The tokenized text to write.</param>
-        /// <param name="overflow">How to handle content wider than the console buffer (see <see cref="Overflow"/>).</param>
-        /// <param name="clearRestOfLine">If <c>true</c>, clears the remainder of the current line before emitting the newline.</param>
-        /// <returns>The same <see cref="IJointOutput"/> instance for chaining.</returns>
-        IJointOutput WriteLineColor(string value, Overflow overflow = Overflow.None, bool clearRestOfLine = true);
 
         /// <summary>
         /// Flushes the staged buffer to the console, releases exclusive access, and returns the final cursor position.

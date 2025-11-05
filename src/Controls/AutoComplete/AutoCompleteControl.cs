@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ namespace PromptPlusLibrary.Controls.AutoComplete
         private string? _currentspinnerFrame;
         private string _lastinput;
 
-        public AutoCompleteControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public AutoCompleteControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _acceptInput = (_) => true;
             _defaultValue = string.Empty;

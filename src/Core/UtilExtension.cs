@@ -228,25 +228,21 @@ namespace PromptPlusLibrary.Core
             return qtd;
         }
 
-        public static Segment[] ToSegment(this string? text, IConsole console)
+        public static Segment[] ToSegment(this string? text,Style defaultstyletext, IConsole console)
         {
-            if (text is null)
+            if (string.IsNullOrEmpty(text))
             {
-                throw new ArgumentNullException(nameof(text), "ParseAnsiControl with text null");
+                return [new Segment("", defaultstyletext)];
             }
             string localtext = text.NormalizeNewLines();
             List<Segment> result = [];
-            if (localtext.Length == 0)
-            {
-                return [];
-            }
 
             using MarkupTokenizer tokenizer = new(localtext);
 
             Stack<Style> stack = new();
-            Color currentForeground = console.ForegroundColor;
-            Color currentBackground = console.BackgroundColor;
-            stack.Push(new Style(currentForeground, currentBackground));
+            Color currentForeground = defaultstyletext.Foreground;
+            Color currentBackground = defaultstyletext.Background;
+            stack.Push(new Style(console.ForegroundColor, console.BackgroundColor));
             var onlytext = true;
             while (tokenizer.MoveNext())
             {
@@ -285,7 +281,7 @@ namespace PromptPlusLibrary.Core
                                 color = ParseHexColor(part);
                                 if (color == null)
                                 {
-                                    throw new ArgumentException($"Could not parse color '{part}'.");
+                                    return [new Segment(text??string.Empty, defaultstyletext)];
                                 }
                             }
                             else if (part.StartsWith("rgb", StringComparison.OrdinalIgnoreCase))
@@ -293,14 +289,14 @@ namespace PromptPlusLibrary.Core
                                 color = ParseRgbColor(part);
                                 if (color == null)
                                 {
-                                    throw new ArgumentException($"Could not parse color '{part}'.");
+                                    return [new Segment(text ?? string.Empty, defaultstyletext)];
                                 }
                             }
                             else
                             {
                                 if (!first)
                                 {
-                                    throw new ArgumentException($"Could not parse color '{part}'.");
+                                    return [new Segment(text ?? string.Empty, defaultstyletext)];
                                 }
                                 notfound = true;
                                 token = new MarkupToken(MarkupTokenKind.Text, $"[{token.Value}]", token.Position);
@@ -329,18 +325,19 @@ namespace PromptPlusLibrary.Core
                     onlytext = false;
                     if (stack.Count == 0)
                     {
-                        throw new ArgumentException($"Encountered closing tag when none was expected near position {token.Position}.");
+                        return [new Segment(text ?? string.Empty, defaultstyletext)];
                     }
                     Style oldstyle = stack.Pop();
                     if (stack.Count == 1)
                     {
-                        oldstyle = stack.Pop();
+                        stack.Pop();
+                        oldstyle = defaultstyletext;
                     }
                     else
                     {
                         if (stack.Count == 0)
                         {
-                            throw new ArgumentException($"Encountered closing tag when none was expected near position {token.Position}.");
+                            return [new Segment(text ?? string.Empty, defaultstyletext)];
                         }
                         oldstyle = stack.Peek();
                     }
@@ -363,10 +360,9 @@ namespace PromptPlusLibrary.Core
                 }
                 else
                 {
-                    throw new ArgumentException("Unbalanced markup stack. Did you forget to close a tag?");
+                    return [new Segment(text ?? string.Empty, defaultstyletext)];
                 }
             }
-
             return [.. result];
         }
 

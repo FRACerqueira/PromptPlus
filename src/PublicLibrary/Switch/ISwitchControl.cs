@@ -64,9 +64,6 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Enables history and applies custom options to the History feature. 
         /// </summary>
-        /// <remarks>
-        ///  The default hotkey for History is <see cref="PromptConfig.HotKeyShowHistory"/>.
-        /// </remarks>
         /// <param name="filename">The name of the file to store history.</param>
         /// <param name="options">An action to configure the <see cref="IHistoryOptions"/>. Can be <c>null</c>.</param>
         /// <returns>The current <see cref="ISwitchControl"/> instance for chaining.</returns>

@@ -4,6 +4,7 @@
 // ***************************************************************************************
 
 
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace PromptPlusLibrary.Controls.WaitProcess
 
 
 #pragma warning disable IDE0290 // Use primary constructor
-        public WaitProcessControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public WaitProcessControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
         }
 #pragma warning restore IDE0290 // Use primary constructor

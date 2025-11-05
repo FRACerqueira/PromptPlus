@@ -67,7 +67,7 @@ Due to the significant modifications, version 5 introduced **significant changes
 ## Features
 [**Top**](#table-of-contents)
 
-**All features have IntelliSense. PromptPlus has more than 20 controls with many features like: filters, validators, history, suggestions, spinner(20 embedding type), colors(Supports 4/8/24-bit colors) and customizable element styles / region for each control** :
+**All features have IntelliSense. PromptPlus has more than 37! controls/widgets with many features like: filters, validators, history, suggestions, spinner(20 embedding type), colors(Supports 4/8/24-bit colors) and customizable element styles / region for each control** :
 
 - AutoComplete with spinner
 - Banner Ascii
@@ -140,12 +140,11 @@ The console driver has the ability to detect terminal capabilities and allow for
 
 The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. 
 
-This automatic adjustment may slightly modify the final color when converting to a lower bit resolution.
+This automatic adjustment may slightly modify the final color when converting to a lower bit resolution, in addition to detecting color tokenization in texts.
 
-A separation was made in the writing methods for common texts (default console behavior): **Write/WriteLine** and texts with syntax for text colors: **WriteColor/WriteLineColor**.
+_Note: If the color tokenization is invalid, the value will be written without applying the color tokens, keeping the tokens as text._
 
 ```csharp
-
 PromptPlus.Console.WriteLine("Test", new Style(ConsoleColor.Red, ConsoleColor.White, Overflow.None));
 PromptPlus.Console.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
 PromptPlus.Console.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
@@ -153,15 +152,43 @@ PromptPlus.Console.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleCol
 PromptPlus.Console.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
 PromptPlus.Console.WriteLine("Test", new Style(Color.FromHtml("#ffffff"), Color.Red, Overflow.None));
 
-PromptPlus.Console.WriteLineColor("[RGB(255,0,0):WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
-PromptPlus.Console.WriteLineColor("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
+PromptPlus.Console.WriteLine("[RGB(255,0,0):WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
+PromptPlus.Console.WriteLine("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
 
 PromptPlus.Widgets.SingleDash("Test SingleDash", DashOptions.DoubleBorder, 1, Style.Default().ForeGround(ConsoleColor.Red).Background(ConsoleColor.Yellow));
-PromptPlus.Widgets.SingleDashColor("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", DashOptions.AsciiSingleBorder, 1);
+PromptPlus.Widgets.SingleDash("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", DashOptions.AsciiSingleBorder, 1);
 PromptPlus.Widgets.DoubleDash("Test SingleDash", DashOptions.DoubleBorder, 1, Style.Default().ForeGround(ConsoleColor.Red).Background(ConsoleColor.Yellow));
-PromptPlus.Widgets.DoubleDashColor("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", DashOptions.AsciiSingleBorder, 1);
+PromptPlus.Widgets.DoubleDash("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", DashOptions.AsciiSingleBorder, 1);
 
 ```
+### About console state preservation
+
+The Prompt Plus library aims to ensure that your logic executes without errors or failures as much as possible.
+
+In this sense, when using the library, it maintains the initial state of the console colors and the initial culture of the execution thread. 
+
+When the application terminates normally or when a critical error occurs, these properties are restored. All other properties must be guaranteed by the application.
+
+The **ResetBasicStateAfterExist property** allows you to change this characteristic when its value is false.
+
+Whenever a **critical error occurs, a log file is generated** before completion in the folder located at - \{SpecialFolder.UserProfile\}/PromptPlus.Log. This file is generated daily and kept for a maximum of 7 days.
+
+### About console Ctrl+C / Ctrl+Break
+
+The Prompt Plus library provides the ability to manipulate the behavior of Ctrl+C/Ctrl+Break using the command:
+- CancelKeyPress(AfterCancelKeyPress behaviorcontrols, Action\<object?, ConsoleCancelEventArgs\> actionhandle)
+
+  The behavior after a cancel event can be configured using the `AfterCancelKeyPress` property:
+  - AfterCancelKeyPress options:
+    - Default: Follows the default action after a cancellation.
+    - AbortCurrentControl: Abort the current control's operation when cancel key is pressed and continue with next operation.
+    - AbortAllControl: Abort the All control's operation when cancel key is pressed and continue with next operation.
+
+To remove the current cancel key press handler:
+- RemoveCancelKeyPress() - Restores default console Ctrl+C/Break handling behavior.
+
+To check if a cancel event has occurred:
+- UserPressKeyAborted (read-only) - Returns true if the operation was aborted by Ctrl+C/Break.
 
 ----
 ## Culture
@@ -280,7 +307,7 @@ The standard color table (0 - 255) can be [**viewed here**](./docs/colors.md).
 ## Examples
 [**Top**](#table-of-contents)
 
-The folder [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/samples) contains more **20** projects samples!.
+The folder [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/samples) contains more **30!** projects samples.
 
 ```
 dotnet run --project [name of sample]

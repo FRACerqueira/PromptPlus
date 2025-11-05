@@ -50,7 +50,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         private int _factor;
         private double _range;
 
-        public ProgressBarControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public ProgressBarControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _culture = ConfigPlus.DefaultCulture;
             _width = ConfigPlus.ProgressBarWidth;
@@ -528,11 +528,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
                 screenBuffer.Write($"{ValueToString(_handlerProgressBar.Minvalue)} ", _optStyles[ProgressBarStyles.Ranger]);
             }
 
-            string delimitbar = "│";
-            if (!ConsolePlus.IsUnicodeSupported)
-            {
-                delimitbar = "|";
-            }
+            string delimitbar = ConfigPlus.GetSymbol(SymbolType.GridSingleDividerY);
             if (!_hideProgressBar.HasFlag(HideProgressBar.Delimit))
             {
                 screenBuffer.Write(delimitbar, _optStyles[ProgressBarStyles.Ranger]);

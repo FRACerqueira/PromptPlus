@@ -25,10 +25,6 @@ The current [`ISwitchControl`](../ISwitchControl.md) instance for chaining.
 | --- | --- |
 | ArgumentNullException | Thrown if *filename* is `null`. |
 
-### Remarks
-
-The default hotkey for History is HotKeyShowHistory.
-
 ### See Also
 
 * interface [IHistoryOptions](../IHistoryOptions.md)

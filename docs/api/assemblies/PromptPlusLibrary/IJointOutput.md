@@ -19,9 +19,7 @@ public interface IJointOutput
 | [Done](IJointOutput/Done.md)() | Flushes the staged buffer to the console, releases exclusive access, and returns the final cursor position. |
 | [ResetColor](IJointOutput/ResetColor.md)() | Resets the current (active) foreground and background colors to their defaults. |
 | [Write](IJointOutput/Write.md)(…) | Writes a character array using an optional override [`Style`](./Style.md). (2 methods) |
-| [WriteColor](IJointOutput/WriteColor.md)(…) | Writes a string whose content contains color tokens, applying the specified overflow strategy. |
 | [WriteLine](IJointOutput/WriteLine.md)(…) | Writes a character array followed by a line terminator. (2 methods) |
-| [WriteLineColor](IJointOutput/WriteLineColor.md)(…) | Writes a tokenized string followed by a line terminator, applying the specified overflow strategy. |
 
 ### Remarks
 

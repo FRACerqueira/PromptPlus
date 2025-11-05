@@ -25,10 +25,6 @@ The current [`ISliderControl`](../ISliderControl.md) instance for chaining.
 | --- | --- |
 | ArgumentNullException | Thrown if *filename* is `null`. |
 
-### Remarks
-
-The default hotkey for history is HotKeyShowHistory.
-
 ### See Also
 
 * interface [IHistoryOptions](../IHistoryOptions.md)

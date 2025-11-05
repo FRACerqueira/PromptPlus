@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Concurrent;
@@ -57,7 +58,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE0290 // Use primary constructor
-        public FileSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public FileSelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             IsRoot = (item) => item.UniqueId == (_items.Count == 0 ? "" : _items[0].UniqueId);
             _filterBuffer = new EmacsBuffer(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);

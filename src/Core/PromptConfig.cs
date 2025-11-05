@@ -3,7 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
-using PromptPlusLibrary.Core;
+using PromptPlusLibrary.Controls;
 using PromptPlusLibrary.PublicLibrary;
 using PromptPlusLibrary.Resources;
 using System;
@@ -12,11 +12,11 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Resources;
-using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading;
+using static System.Environment;
 
-namespace PromptPlusLibrary
+namespace PromptPlusLibrary.Core
 {
     /// <summary>
     /// Provides the global/default configuration applied to all PromptPlus controls (culture, hotkeys, symbols, pagination and general behavior).
@@ -44,6 +44,9 @@ namespace PromptPlusLibrary
         private byte _defaultsliderwidth = 40;
         private byte _defaultswitchwidth = 6;
         private int _defaultcompletionwaittostart = 500;
+        private Action<Exception>? _defaultafterError;
+
+        private string _defaultfolderlog = GetFolderPath(SpecialFolder.UserProfile);
         private Func<int, int, int, string> _paginationTemplate = (totalCount, selectedpage, pagecount) => string.Format(Messages.PaginationTemplate, totalCount, selectedpage, pagecount);
 
         /// <summary>
@@ -57,6 +60,25 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
+        /// Gets or sets the action to invoke after an error occurs during processing.
+        /// </summary>
+        /// <remarks>The specified action receives the exception that was thrown. Use this property to
+        /// perform custom error handling or logging. If the property is null, no action is taken after an error.
+        /// </remarks>
+        [JsonIgnore]
+        public Action<Exception>? AfterError
+        {
+            get => _defaultafterError; 
+            set => _defaultafterError = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the basic state should be reset after an exit operation. Default value is true.
+        /// The Culture,cursor, foreground, and background colors are reset to their default values.
+        /// </summary>
+        public bool ResetBasicStateAfterExist { get; set; } = true; 
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PromptConfig"/> class with explicit Unicode capability and culture.
         /// </summary>
         /// <param name="isunicode">
@@ -68,6 +90,15 @@ namespace PromptPlusLibrary
             _isunicode = isunicode;
             AppCulture = culture;
             DefaultCulture = AppCulture;
+        }
+
+        /// <summary>
+        /// Gets or sets the character representing a logical "Yes" input. Defaults to the localized resource value.
+        /// </summary>
+        public string FolderLog
+        {
+            get => _defaultfolderlog?? GetFolderPath(SpecialFolder.UserProfile);
+            set => _defaultfolderlog = value;
         }
 
         /// <summary>
@@ -422,6 +453,13 @@ namespace PromptPlusLibrary
         }
 
         /// <summary>
+        /// Gets the application startup culture captured at configuration creation.
+        /// </summary>
+        [JsonIgnore]
+        public CultureInfo AppCulture { get; private set; }
+
+
+        /// <summary>
         /// Replaces a global symbol mapping providing both ASCII and Unicode variants.
         /// </summary>
         /// <param name="symbolType">The symbol category to change.</param>
@@ -436,10 +474,11 @@ namespace PromptPlusLibrary
 
         #region internal / private
 
-        /// <summary>
-        /// Gets the application startup culture captured at configuration creation.
-        /// </summary>
-        internal CultureInfo AppCulture { get; private set; }
+        [JsonIgnore]
+        internal BaseControlOptions? TraceBaseControlOptions { get; set; }
+
+        [JsonIgnore]
+        internal string? TraceCurrentFileNameControl { get; set; }
 
         /// <summary>
         /// Init with explicit Unicode capability and culture.

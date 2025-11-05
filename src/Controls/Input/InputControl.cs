@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace PromptPlusLibrary.Controls.Input
         private string _tooltipModeHistory = string.Empty;
         private string _tooltipModeSuggestion = string.Empty;
 
-        public InputControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public InputControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _enabledViewSecret = ConfigPlus.HotKeyPasswordView;
             _secretChar = ConfigPlus.SecretChar;

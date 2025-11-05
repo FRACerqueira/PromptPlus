@@ -75,7 +75,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
 
 #pragma warning disable IDE0079 
 #pragma warning disable IDE0290 // Use primary constructor
-        public TableSelectControl(bool isWidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
+        public TableSelectControl(bool isWidget, IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
         {
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _hideSelectorRow = isWidget;

@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Widgets.Banner.FIGlet;
 using System;
 using System.IO;
@@ -10,7 +11,7 @@ using System.Linq;
 
 namespace PromptPlusLibrary.Widgets.Banner
 {
-    internal sealed class BannerWidget(IConsole console, PromptConfig promptConfig, string text, Style style) : IBanner
+    internal sealed class BannerWidget(IConsoleExtend console, PromptConfig promptConfig, string text, Style style) : IBanner
     {
         private static readonly FigletFont _fontDefault = new();
         private FigletFont? _fontloaded;
@@ -83,12 +84,12 @@ namespace PromptPlusLibrary.Widgets.Banner
                     }
                     if (dach.HasValue)
                     {
-                        console.WriteLine(new string(dach.Value, max), style.Overflow(Overflow.Crop));
+                        console.RawWriteLine(new string(dach.Value, max), style.Overflow(Overflow.Crop));
                     }
                 }
                 foreach (string item in result)
                 {
-                    console.WriteLine(item, style.Overflow(Overflow.Crop));
+                    console.RawWriteLine(item, style.Overflow(Overflow.Crop));
                 }
                 if (_bannerDash != BannerDashOptions.None)
                 {
@@ -120,7 +121,7 @@ namespace PromptPlusLibrary.Widgets.Banner
                     }
                     if (dach.HasValue)
                     {
-                        console.WriteLine(new string(dach.Value, max), style.Overflow(Overflow.Crop));
+                        console.RawWriteLine(new string(dach.Value, max), style.Overflow(Overflow.Crop));
                     }
                 }
             }

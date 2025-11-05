@@ -45,7 +45,7 @@ namespace PromptPlusLibrary.Controls.Calendar
         private bool _isAnyEvent;
 
 
-        public CalendarControl(bool isWidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
+        public CalendarControl(bool isWidget, IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
         {
             _firstdayOfWeek = ConfigPlus.FirstDayOfWeek;
             _culture = ConfigPlus.DefaultCulture;

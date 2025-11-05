@@ -36,6 +36,8 @@ All controls and behaviors have been revisited and improved to ensure sustainabl
 
 Due to the significant modifications, version 5 introduced **significant changes and is **incompatible** with versions 4.x**, although the concepts and components are very similar, requiring a small learning curve and minor methodological adjustments.
 
+- PromptPlus has more than 37! controls/widgets
+
 - Support for .Net10,.Net9 and .Net8
 
 - External references were reviewed and only those necessary for size treatment for East Asian characters were used.
@@ -73,6 +75,8 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Remote Multi Select for any type
     - Remote Nodetree select for any type
     - Remote Nodetree Multi select for any type
+
+- NEW console state preservation with capability to manipulate the console Ctrl+C / Ctrl+Break.
 
 **License**
 -----------
