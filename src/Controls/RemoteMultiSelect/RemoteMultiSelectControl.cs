@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE0290 // Use primary constructor
-        public RemoteMultiSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public RemoteMultiSelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _searchItemsControl = default!;
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);

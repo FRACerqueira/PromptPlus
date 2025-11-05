@@ -7,7 +7,7 @@
 #### Writes a single character.
 
 ```csharp
-public (int Left, int Top) Write(char buffer, Style? style = default, bool clearrestofline = false)
+public void Write(char buffer, Style? style = default, bool clearrestofline = false)
 ```
 
 | parameter | description |
@@ -15,10 +15,6 @@ public (int Left, int Top) Write(char buffer, Style? style = default, bool clear
 | buffer | Character to write. |
 | style | Optional [`Style`](../Style.md) overriding current output style. |
 | clearrestofline | `true` to clear remaining characters on the line. |
-
-### Return Value
-
-The cursor position after write.
 
 ### See Also
 
@@ -33,8 +29,7 @@ The cursor position after write.
 #### Writes a character array.
 
 ```csharp
-public (int Left, int Top) Write(char[] buffer, Style? style = default, 
-    bool clearrestofline = false)
+public void Write(char[] buffer, Style? style = default, bool clearrestofline = false)
 ```
 
 | parameter | description |
@@ -42,10 +37,6 @@ public (int Left, int Top) Write(char[] buffer, Style? style = default,
 | buffer | Characters to write. |
 | style | Optional [`Style`](../Style.md) overriding current output style. |
 | clearrestofline | `true` to clear remaining characters on the line. |
-
-### Return Value
-
-The cursor position after write.
 
 ### See Also
 
@@ -60,7 +51,7 @@ The cursor position after write.
 #### Writes a string.
 
 ```csharp
-public (int Left, int Top) Write(string value, Style? style = default, bool clearrestofline = false)
+public void Write(string value, Style? style = default, bool clearrestofline = false)
 ```
 
 | parameter | description |
@@ -68,10 +59,6 @@ public (int Left, int Top) Write(string value, Style? style = default, bool clea
 | value | The string to write. |
 | style | Optional [`Style`](../Style.md) overriding current output style. |
 | clearrestofline | `true` to clear remaining characters on the line. |
-
-### Return Value
-
-The cursor position after write.
 
 ### See Also
 

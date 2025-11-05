@@ -58,7 +58,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
             _showLegends = value;
         }
 
-        public ChartBarControl(bool isWidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
+        public ChartBarControl(bool isWidget, IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
         {
             _culture = ConfigPlus.DefaultCulture;
             _pageSize = ConfigPlus.PageSize;

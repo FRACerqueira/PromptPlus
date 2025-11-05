@@ -15,6 +15,7 @@ public interface IConsole : IProfileDrive
 | name | description |
 | --- | --- |
 | [BackgroundColor](IConsole/BackgroundColor.md) { get; set; } | Gets or sets the current background [`Color`](./Color.md). |
+| [BehaviorAfterCancelKeyPress](IConsole/BehaviorAfterCancelKeyPress.md) { get; } | Gets the behavior to be applied after a cancel key (Ctrl+C/Ctrl+Break) is pressed. This setting is ignored if no handler is configured via [`CancelKeyPress`](./IConsole/CancelKeyPress.md) or returns `false` from [`CancelKeyPress`](./IConsole/CancelKeyPress.md). |
 | [CurrentBuffer](IConsole/CurrentBuffer.md) { get; } | Gets the currently active screen buffer. |
 | [CursorLeft](IConsole/CursorLeft.md) { get; } | Gets the column (left) position of the cursor within the buffer. |
 | [CursorTop](IConsole/CursorTop.md) { get; } | Gets the row (top) position of the cursor within the buffer. |
@@ -30,7 +31,9 @@ public interface IConsole : IProfileDrive
 | [KeyAvailable](IConsole/KeyAvailable.md) { get; } | Gets a value indicating whether a key press is available. |
 | [Out](IConsole/Out.md) { get; } | Gets the standard output writer. |
 | [OutputEncoding](IConsole/OutputEncoding.md) { get; set; } | Gets or sets the encoding for standard output. |
+| [UserPressKeyAborted](IConsole/UserPressKeyAborted.md) { get; } | Gets a value indicating whether the operation was aborted by the user (Ctrl+C / Ctrl+Break). |
 | [Beep](IConsole/Beep.md)() | Emits an audible beep if supported. |
+| [CancelKeyPress](IConsole/CancelKeyPress.md)(…) | Sets a handler for console cancel events (Ctrl+C/Break). |
 | [Clear](IConsole/Clear.md)() | Clears the buffer (and visible window) and resets cursor to (0,0). |
 | [DefaultColors](IConsole/DefaultColors.md)(…) | Sets the default foreground and background console colors used when resetting. |
 | [GetCursorPosition](IConsole/GetCursorPosition.md)() | Gets the current cursor position. |
@@ -38,6 +41,7 @@ public interface IConsole : IProfileDrive
 | [OnBuffer](IConsole/OnBuffer.md)(…) | Executes an action on a target buffer and then restores the original buffer. |
 | [ReadKey](IConsole/ReadKey.md)(…) | Reads the next key press. |
 | [ReadLine](IConsole/ReadLine.md)() | Reads a line of text from the input stream. |
+| [RemoveCancelKeyPress](IConsole/RemoveCancelKeyPress.md)() | Removes the current cancel key press (Ctrl+C/Break) handler and restores default behavior. |
 | [ResetColor](IConsole/ResetColor.md)() | Resets the current colors to the configured defaults. |
 | [SetCursorPosition](IConsole/SetCursorPosition.md)(…) | Sets the cursor position. |
 | [SetError](IConsole/SetError.md)(…) | Sets the standard error writer. |
@@ -46,9 +50,7 @@ public interface IConsole : IProfileDrive
 | [ShowCursor](IConsole/ShowCursor.md)() | Shows the cursor. |
 | [SwapBuffer](IConsole/SwapBuffer.md)(…) | Attempts to switch to a target screen buffer. |
 | [Write](IConsole/Write.md)(…) | Writes a character array. (3 methods) |
-| [WriteColor](IConsole/WriteColor.md)(…) | Writes a string containing color tokens parsed and rendered with color support. |
 | [WriteLine](IConsole/WriteLine.md)(…) | Writes a character array followed by a line terminator. (3 methods) |
-| [WriteLineColor](IConsole/WriteLineColor.md)(…) | Writes a color-tokenized string followed by a line terminator. |
 
 ### Remarks
 

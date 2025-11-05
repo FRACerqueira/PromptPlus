@@ -39,7 +39,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
 #pragma warning disable IDE0079
 #pragma warning disable IDE0290 // Use primary constructor
-        public MaskEditControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public MaskEditControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _culture = ConfigPlus.DefaultCulture;
             _promptmask = ConfigPlus.PromptMaskEdit;

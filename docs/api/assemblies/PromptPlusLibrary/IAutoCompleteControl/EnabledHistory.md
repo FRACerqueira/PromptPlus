@@ -25,10 +25,6 @@ The current [`IAutoCompleteControl`](../IAutoCompleteControl.md) instance for ch
 | --- | --- |
 | ArgumentNullException | Thrown if *filename* is `null`. |
 
-### Remarks
-
-The Defaults hotkey to Hisyory is HotKeyShowHistory.
-
 ### See Also
 
 * interface [IHistoryOptions](../IHistoryOptions.md)

@@ -15,7 +15,7 @@ using System;
 
 namespace PromptPlusLibrary.Widgets
 {
-    internal sealed class PromptPlusWidgets(IConsole console, PromptConfig promptConfig) : IWidgets
+    internal sealed class PromptPlusWidgets(IConsoleExtend console, PromptConfig promptConfig) : IWidgets
     {
         public ISwitchWidget Switch(bool value, string? onValue = null, string? offValue = null)
         {
@@ -70,15 +70,7 @@ namespace PromptPlusLibrary.Widgets
         {
             using (console.InternalExclusiveContext())
             {
-                SingleDoubleDash(console, promptConfig, false, false, value, dashOptions, extralines, style, applycolorbackground);
-            }
-        }
-
-        public void SingleDashColor(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null, bool applycolorbackground = false)
-        {
-            using (console.InternalExclusiveContext())
-            {
-                SingleDoubleDash(console, promptConfig, true, false, value, dashOptions, extralines, style, applycolorbackground);
+                SingleDoubleDash((IConsole)console, promptConfig, false, value, dashOptions, extralines, style, applycolorbackground);
             }
         }
 
@@ -86,19 +78,11 @@ namespace PromptPlusLibrary.Widgets
         {
             using (console.InternalExclusiveContext())
             {
-                SingleDoubleDash(console, promptConfig, false, true, value, dashOptions, extralines, style, applycolorbackground);
+                SingleDoubleDash((IConsole)console, promptConfig, true, value, dashOptions, extralines, style, applycolorbackground);
             }
         }
 
-        public void DoubleDashColor(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null, bool applycolorbackground = false)
-        {
-            using (console.InternalExclusiveContext())
-            {
-                SingleDoubleDash(console, promptConfig, true, true, value, dashOptions, extralines, style, applycolorbackground);
-            }
-        }
-
-        private static void SingleDoubleDash(IConsole console, PromptConfig config, bool tokencolor, bool doubleDash, string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null, bool applycolorbackground = false)
+        private static void SingleDoubleDash(IConsole console, PromptConfig config, bool doubleDash, string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null, bool applycolorbackground = false)
         {
             Style originalstyle = new(console.ForegroundColor, console.BackgroundColor);
             Style localstyle = style ?? new Style(console.ForegroundColor, console.BackgroundColor);
@@ -118,6 +102,7 @@ namespace PromptPlusLibrary.Widgets
                 string part = parts[i];
                 if (part.Length > maxlength)
                 {
+                    var tokencolor = value.ToSegment(localstyle, console) != null;
                     if (tokencolor)
                     {
                         maxlength = part.LengthTokenColor();
@@ -140,38 +125,17 @@ namespace PromptPlusLibrary.Widgets
                     console.WriteLine(new string(wrapperChar, maxlength), localstyle);
                 }
             }
-            if (tokencolor)
-            {
-                if (!applycolorbackground)
-                {
-                    console.Write("", originalstyle, true);
-                    console.WriteLineColor(value, localstyle.OverflowStrategy, false);
-                }
-                else
-                {
-                    console.WriteLineColor(value, localstyle.OverflowStrategy);
-                }
-            }
-            else
-            {
-                if (!applycolorbackground)
-                {
-                    console.Write("", originalstyle, true);
-                    console.WriteLine(value, localstyle, false);
-                }
-                else
-                {
-                    console.WriteLine(value, localstyle);
-                }
-            }
             if (!applycolorbackground)
             {
+                console.Write("", originalstyle, true);
+                console.WriteLine(value, localstyle, false);
                 console.Write("", originalstyle, true);
                 console.WriteLine(new string(wrapperChar, maxlength), localstyle, false);
             }
             else
             {
                 console.WriteLine(new string(wrapperChar, maxlength), localstyle);
+                console.WriteLine(value, localstyle);
             }
             if (originalstyle != localstyle)
             {

@@ -60,12 +60,6 @@ namespace PromptPlusLibrary.Core
             return this;
         }
 
-        public IJointOutput WriteColor(string value, Overflow overflow = Overflow.None, bool clearrestofline = false)
-        {
-            _console.WriteColor(value, overflow, clearrestofline);
-            return this;
-        }
-
         public IJointOutput WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true)
         {
             _console.WriteLine(buffer, style, clearrestofline);
@@ -75,12 +69,6 @@ namespace PromptPlusLibrary.Core
         public IJointOutput WriteLine(string value, Style? style = null, bool clearrestofline = true)
         {
             _console.WriteLine(value, style, clearrestofline);
-            return this;
-        }
-
-        public IJointOutput WriteLineColor(string value, Overflow overflow = Overflow.None, bool clearrestofline = true)
-        {
-            _console.WriteLineColor(value, overflow, clearrestofline);
             return this;
         }
     }

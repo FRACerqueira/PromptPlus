@@ -79,16 +79,6 @@ namespace PromptPlusLibrary
         void SingleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extraLines = 0, Style? style = null, bool applyColorBackground = false);
 
         /// <summary>
-        /// Writes token-colored text followed by a single dash border line.
-        /// </summary>
-        /// <param name="value">Token-colored text to write (implementation-specific token syntax).</param>
-        /// <param name="dashOptions">Dash style (default: <see cref="DashOptions.AsciiSingleBorder"/>).</param>
-        /// <param name="extraLines">Extra blank lines appended after the dash line (default: 0).</param>
-        /// <param name="style">Optional style for non-token regions; if <c>null</c>, defaults are used.</param>
-        /// <param name="applyColorBackground">If <c>true</c>, applies background color across the full line (default: <c>false</c>).</param>
-        void SingleDashColor(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extraLines = 0, Style? style = null, bool applyColorBackground = false);
-
-        /// <summary>
         /// Writes a colored text line framed by two dash border lines (above and below).
         /// </summary>
         /// <param name="value">Text to write.</param>
@@ -97,15 +87,5 @@ namespace PromptPlusLibrary
         /// <param name="style">Optional style for the text/dash; if <c>null</c>, defaults are used.</param>
         /// <param name="applyColorBackground">If <c>true</c>, applies background color across each full line (default: <c>false</c>).</param>
         void DoubleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extraLines = 0, Style? style = null, bool applyColorBackground = false);
-
-        /// <summary>
-        /// Writes token-colored text framed by two dash border lines (above and below).
-        /// </summary>
-        /// <param name="value">Token-colored text to write.</param>
-        /// <param name="dashOptions">Dash style (default: <see cref="DashOptions.AsciiSingleBorder"/>).</param>
-        /// <param name="extraLines">Extra blank lines appended after the bottom dash line (default: 0).</param>
-        /// <param name="style">Optional style for non-token segments; if <c>null</c>, defaults are used.</param>
-        /// <param name="applyColorBackground">If <c>true</c>, applies background color across each full line (default: <c>false</c>).</param>
-        void DoubleDashColor(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extraLines = 0, Style? style = null, bool applyColorBackground = false);
     }
 }

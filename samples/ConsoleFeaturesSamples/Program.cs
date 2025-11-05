@@ -17,24 +17,30 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Console.ResetColor();
             PromptPlus.Console.Clear();
 
-
-
             PromptPlus.Widgets.DoubleDash($"Create file: '{PromptPlus.NameResourceConfigFile}' at current BaseDirectory with config for all controls", extraLines: 1);
             PromptPlus.CreatePromptPlusConfigFile(AppDomain.CurrentDomain.BaseDirectory);
-            PromptPlus.Console.WriteLine($"Fiel create :{File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PromptPlus.NameResourceConfigFile))}, ");
+            PromptPlus.Console.WriteLine($"File create :{File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PromptPlus.NameResourceConfigFile))}, ");
             PromptPlus.Console.WriteLine($"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, PromptPlus.NameResourceConfigFile)}");
 
             PromptPlus.Widgets.DoubleDash("Sample WriteLine/WriteLineColor", extraLines: 1);
             PromptPlus.Console.WriteLine("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
-            PromptPlus.Console.WriteLineColor("[RGB(255,0,0):WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
+            PromptPlus.Console.WriteLine("[RGB(255,0,0):WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
             PromptPlus.Console.WriteLine("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
-            PromptPlus.Console.WriteLineColor("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
+            PromptPlus.Console.WriteLine("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
 
             PromptPlus.Console.WriteLines(2);
 
             PromptPlus.Widgets.DoubleDash("Sample WriteColor/WriteLineColor with mixed use cases", extraLines: 1);
-            PromptPlus.Console.WriteLineColor("[RED]ERROR:[/] Wrong error at (/x/g/[[My Folder Name Has Brackets]]/[[BracketFile]].xml)");
-            PromptPlus.Console.WriteLineColor("[RED]ERROR:[/] Wrong error at (/x/g/[My Folder Name Has Brackets]/[BracketFile].xml)");
+            PromptPlus.Console.WriteLine("[RED]ERROR:[/] Wrong error at (/x/g/[[My Folder Name Has Brackets]]/[[BracketFile]].xml)");
+            PromptPlus.Console.WriteLine("[RED]ERROR:[/] Wrong error at (/x/g/[My Folder Name Has Brackets]/[BracketFile].xml)");
+            PromptPlus.Console.WriteLine("[RED].xml");
+            PromptPlus.Console.WriteLine("[RED:WHITE]Test[/][bLUE] misisng token");
+            PromptPlus.Console.WriteLine("Test[/] misisng token");
+            PromptPlus.Console.WriteLine("[[RED]]Test escapetoken", Style.Default().ForeGround(Color.Aqua));
+            PromptPlus.Console.WriteLine("[RED]Test[/] with Style", Style.Default().ForeGround(Color.Yellow));
+
+
+            PromptPlus.Console.WriteLine("[RED].xml",new Style(Color.Red,Color.White));
 
             PromptPlus.Console.WriteLines(2);
             PromptPlus.Widgets.DoubleDash("Sample SingleDash/SingleDashColor", extraLines: 1);
@@ -43,20 +49,20 @@ namespace ConsoleFeaturesSamples
             foreach (var item in aux)
             {
                 PromptPlus.Widgets.SingleDash("Test SingleDash", item, 1, Style.Default().ForeGround(ConsoleColor.Red).Background(ConsoleColor.Yellow));
-                PromptPlus.Widgets.SingleDashColor("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", item, 1);
+                PromptPlus.Widgets.SingleDash("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", item, 1);
             }
             PromptPlus.Widgets.DoubleDash("Sample DoubleDashColor", extraLines: 1);
             foreach (var item in aux)
             {
                 PromptPlus.Widgets.DoubleDash("Test DoubleDash", item, 1, Style.Default().ForeGround(ConsoleColor.Red).Background(ConsoleColor.Yellow));
-                PromptPlus.Widgets.DoubleDashColor("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", item, 1);
+                PromptPlus.Widgets.DoubleDash("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", item, 1);
             }
 
             PromptPlus.Widgets.DoubleDash("Sample write to standard error output");
             using (PromptPlus.Console.OutputError())
             {
                 PromptPlus.Console.WriteLine("Test Output Error");
-                PromptPlus.Console.WriteLineColor("[RED]Test Output Error[/]");
+                PromptPlus.Console.WriteLine("[RED]Test Output Error[/]");
             }
             PromptPlus.Console.WriteLine("");
 
@@ -72,7 +78,7 @@ namespace ConsoleFeaturesSamples
 
             PromptPlus.Widgets.DoubleDash("Sample write with Join");
             PromptPlus.Console.Join()
-                 .WriteLineColor("[RGB(255,0,0) ON WHITE]Test[/]")
+                 .WriteLine("[RGB(255,0,0) ON WHITE]Test[/]")
                  .Write("Test COLOR", Style.Default().ForeGround(Color.Yellow))
                  .Write(" ")
                  .Write("BACK COLOR", new Style(Color.Red, Color.White))
@@ -82,21 +88,21 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Console.WriteLine("");
             PromptPlus.Widgets.DoubleDash($"PromptPlus Style.OverflowEllipsis");
             PromptPlus.Console.WriteLine("asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", Style.Default().Overflow(Overflow.Ellipsis));
-            PromptPlus.Console.WriteLineColor("[red]asda[/]jsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", Overflow.Ellipsis);
+            PromptPlus.Console.WriteLine("[red]asda[/]jsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", Style.Default().Overflow(Overflow.Ellipsis));
 
             PromptPlus.Console.WriteLine("");
             PromptPlus.Widgets.DoubleDash($"PromptPlus Style.OverflowCrop");
             PromptPlus.Console.WriteLine("asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", Style.Default().Overflow(Overflow.Crop));
-            PromptPlus.Console.WriteLineColor("[red]asda[/]jsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", Overflow.Crop);
+            PromptPlus.Console.WriteLine("[red]asda[/]jsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", Style.Default().Overflow(Overflow.Crop));
 
             PromptPlus.Console.WriteLine("");
             PromptPlus.Widgets.DoubleDash($"PromptPlus default");
             PromptPlus.Console.WriteLine("asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj");
-            PromptPlus.Console.WriteLineColor("[red]asda[/]jsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj");
+            PromptPlus.Console.WriteLine("[red]asda[/]jsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj");
 
 
             PromptPlus.Console.WriteLine("");
-            PromptPlus.Console.WriteColor("[Yellow]Press any key to continue[/]");
+            PromptPlus.Console.Write("[Yellow]Press any key to continue[/]");
             PromptPlus.Console.ReadKey();
 
             PromptPlus.ProfileConfig("Myprofile",(cfg) =>
@@ -106,7 +112,7 @@ namespace ConsoleFeaturesSamples
                 cfg.PadRight = 2;
             });
 
-            PromptPlus.Widgets.SingleDashColor($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
+            PromptPlus.Widgets.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
             PromptPlus.Console.WriteLine($"Profile Name : {PromptPlus.Console.ProfileName}");
             PromptPlus.Console.WriteLine($"Current Buffer: {PromptPlus.Console.CurrentBuffer}");
             PromptPlus.Console.WriteLine($"IsTerminal: {PromptPlus.Console.IsTerminal}");
@@ -120,11 +126,11 @@ namespace ConsoleFeaturesSamples
             PromptPlus.Console.WriteLine($"PadScreen(Left/Right): {PromptPlus.Console.PadLeft}/{PromptPlus.Console.PadRight}\n");
 
             PromptPlus.Console.WriteLine("");
-            PromptPlus.Console.WriteColor("[Yellow]Press any key to continue[/]");
+            PromptPlus.Console.Write("[Yellow]Press any key to continue[/]");
             PromptPlus.Console.ReadKey();
 
             PromptPlus.Console.WriteLine("");
-            PromptPlus.Widgets.DoubleDashColor($"[yellow]Sample Colors capacities [/]", DashOptions.DoubleBorder, 1);
+            PromptPlus.Widgets.DoubleDash($"[yellow]Sample Colors capacities [/]", DashOptions.DoubleBorder, 1);
             PromptPlus.Console.Write("|");
             for (var i = 0; i < 8; i++)
             {
@@ -141,7 +147,7 @@ namespace ConsoleFeaturesSamples
             if (PromptPlus.Console.ColorDepth >= ColorSystem.Standard)
             {
                 PromptPlus.Console.WriteLine("");
-                PromptPlus.Widgets.DoubleDashColor($"[yellow]Sample Colors capacities Standard[/]", DashOptions.DoubleBorder, 1);
+                PromptPlus.Widgets.DoubleDash($"[yellow]Sample Colors capacities Standard[/]", DashOptions.DoubleBorder, 1);
                 PromptPlus.Console.Write("|");
                 for (var i = 0; i < 16; i++)
                 {
@@ -162,7 +168,7 @@ namespace ConsoleFeaturesSamples
             if (PromptPlus.Console.ColorDepth >= ColorSystem.TrueColor)
             {
                 PromptPlus.Console.WriteLine("");
-                PromptPlus.Widgets.DoubleDashColor($"[yellow]Sample Colors capacities TrueColor[/]", DashOptions.DoubleBorder, 1);
+                PromptPlus.Widgets.DoubleDash($"[yellow]Sample Colors capacities TrueColor[/]", DashOptions.DoubleBorder, 1);
                 for (var y = 0; y < 15; y++)
                 {
                     PromptPlus.Console.Write("|");
@@ -181,7 +187,7 @@ namespace ConsoleFeaturesSamples
             }
 
             PromptPlus.Console.WriteLine("");
-            PromptPlus.Console.WriteColor("[Yellow]Press any key to end[/]");
+            PromptPlus.Console.Write("[Yellow]Press any key to end[/]");
             PromptPlus.Console.ReadKey();
 
             PromptPlus.Console.ResetColor();

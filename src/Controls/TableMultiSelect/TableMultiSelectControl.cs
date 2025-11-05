@@ -81,7 +81,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
 
 #pragma warning disable IDE0079 
 #pragma warning disable IDE0290 // Use primary constructor
-        public TableMultiSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public TableMultiSelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _lastinput = string.Empty;

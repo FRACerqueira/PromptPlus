@@ -18,9 +18,7 @@ public interface IWidgets
 | [Calendar](IWidgets/Calendar.md)(…) | Creates a calendar widget for the month and year referenced by *dateref*. |
 | [ChartBar](IWidgets/ChartBar.md)(…) | Creates a bar chart widget with an optional title and layout options. |
 | [DoubleDash](IWidgets/DoubleDash.md)(…) | Writes a colored text line framed by two dash border lines (above and below). |
-| [DoubleDashColor](IWidgets/DoubleDashColor.md)(…) | Writes token-colored text framed by two dash border lines (above and below). |
 | [SingleDash](IWidgets/SingleDash.md)(…) | Writes a colored text line followed by a single dash border line. |
-| [SingleDashColor](IWidgets/SingleDashColor.md)(…) | Writes token-colored text followed by a single dash border line. |
 | [Slider](IWidgets/Slider.md)(…) | Creates a slider widget for displaying a numeric value within a range. |
 | [Switch](IWidgets/Switch.md)(…) | Creates a switch widget with an initial state and optional custom labels. |
 | [Table&lt;T&gt;](IWidgets/Table.md)() | Creates a table widget for tabular display of items of type *T*. |

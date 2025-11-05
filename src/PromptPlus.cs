@@ -10,9 +10,11 @@ using PromptPlusLibrary.Drivers;
 using PromptPlusLibrary.PublicLibrary;
 using PromptPlusLibrary.Widgets;
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
@@ -33,13 +35,13 @@ namespace PromptPlusLibrary
     public static partial class PromptPlus
     {
         private static readonly CultureInfo _appConsoleCulture;
-        private static readonly Encoding _originalCodePageEncode;
         private static readonly PromptConfig _promptConfig;
         private static IConsole _consoledrive;
         private static readonly ConsoleColor _originalForecolor;
         private static readonly ConsoleColor _originalBackcolor;
+
 #if NET9_0_OR_GREATER
-            private static readonly Lock _lockprofile = new();
+        private static readonly Lock _lockprofile = new();
 #else
         private static readonly object _lockprofile = new();
 #endif
@@ -50,7 +52,6 @@ namespace PromptPlusLibrary
         static PromptPlus()
         {
             _appConsoleCulture = CultureInfo.CurrentCulture;
-            _originalCodePageEncode = System.Console.OutputEncoding;
             (bool localSupportsAnsi, bool localIsLegacy) = AnsiDetector.Detect();
             bool termdetect = UtilExtension.HasTerminalSupport();
             ColorSystem colordetect = ColorSystemDetector(localSupportsAnsi);
@@ -105,34 +106,78 @@ namespace PromptPlusLibrary
 #pragma warning restore CS8601 // Possible null reference assignment.
 #pragma warning restore CA1869 // Cache and reuse 'JsonSerializerOptions' instances
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    WriteCrashLog(typeof(PromptPlus), ex);
                     throw;
                 }
             }
 
             _consoledrive.CursorVisible = true;
+
             AppDomain.CurrentDomain.ProcessExit += (s, e) =>
             {
-                ((IConsoleExtend)_consoledrive).Dispose();
-                Thread.CurrentThread.CurrentCulture = _appConsoleCulture;
-                System.Console.OutputEncoding = _originalCodePageEncode;
-                System.Console.ForegroundColor = _originalForecolor;
-                System.Console.BackgroundColor = _originalBackcolor;
-                System.Console.ResetColor();
+                if (((IConsoleExtend)Console).AbortedByCtrlC)
+                {
+                    var error = new AppDomainUnloadedException("Press Ctrl+C or Ctrl+Break");
+                    try
+                    {
+                        WriteCrashLog(typeof(PromptPlus), error);
+                        _promptConfig.AfterError?.Invoke(error);
+                        System.Console.WriteLine($"{error}");
+                    }
+                    catch 
+                    {
+                        //none
+                    }
+                }
+                if (_promptConfig.ResetBasicStateAfterExist)
+                {
+                    ResetState();
+                }
             };
+
+            AppDomain.CurrentDomain.FirstChanceException += ((object? o, FirstChanceExceptionEventArgs e) =>
+            {
+                if (e.Exception.GetType() == typeof(AppDomainUnloadedException))
+                {
+                    if (_consoledrive.UserPressKeyAborted && ((IConsoleExtend)_consoledrive).IsExitDefaultCancel)
+                    {
+                        ((IConsoleExtend)_consoledrive).ResetTokenCancelPress();
+                        Environment.Exit(1);
+                    }
+                }
+            });
 
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             {
-                ((IConsoleExtend)_consoledrive).Dispose();
-                Thread.CurrentThread.CurrentCulture = _appConsoleCulture;
-                System.Console.OutputEncoding = _originalCodePageEncode;
-                System.Console.ForegroundColor = _originalForecolor;
-                System.Console.BackgroundColor = _originalBackcolor;
-                System.Console.ResetColor();
+                try
+                {
+                    if (((IConsoleExtend)Console).AbortedByCtrlC)
+                    {
+                        var error = new AppDomainUnloadedException("Press Ctrl+C or Ctrl+Break");
+                        WriteCrashLog(typeof(PromptPlus), error);
+                        _promptConfig.AfterError?.Invoke(error);
+                        System.Console.WriteLine($"{error}");
+                    }
+                    else
+                    {
+                        WriteCrashLog(typeof(PromptPlus), (Exception)e.ExceptionObject);
+                        _promptConfig.AfterError?.Invoke((Exception)e.ExceptionObject);
+                    }
+                }
+                catch 
+                {
+                    //none
+                }
+                if (_promptConfig.ResetBasicStateAfterExist)
+                {
+                    ResetState();
+                }
             };
             _consoledrive.ResetColor();
             _consoledrive.Clear();
+            _consoledrive.RemoveCancelKeyPress();
         }
 
         /// <summary>
@@ -143,54 +188,36 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets a factory for creating and emitting visual widgets (banner, dash lines, chart bar, slider, etc.).
         /// </summary>
-        public static IWidgets Widgets => new PromptPlusWidgets(_consoledrive, _promptConfig);
+        public static IWidgets Widgets => new PromptPlusWidgets((IConsoleExtend)_consoledrive, _promptConfig);
 
         /// <summary>
         /// Gets a factory for interactive controls (input, select, file select, progress, masking, etc.).
         /// Each method returns a fluent configuration object.
         /// </summary>
-        public static IControls Controls => new PromptPlusControls(_consoledrive, _promptConfig);
+        public static IControls Controls => new PromptPlusControls((IConsoleExtend)_consoledrive, _promptConfig);
 
         /// <summary>
         /// Creates a new configuration file for PromptPlus using the name <see cref="NameResourceConfigFile"/>
         /// </summary>
         /// <param name="foldername">The name of the foder to create file <see cref="NameResourceConfigFile"/> . Must be a valid folder path and cannot be null or empty.</param>
         public static void CreatePromptPlusConfigFile(string foldername)
-        { 
-            var text = ReadEmbeddedTextResource($"PromptPlusLibrary.Resources.{NameResourceConfigFile}");
-            if (string.IsNullOrEmpty(text))
-            {
-                throw new InvalidOperationException($"Embedded resource PromptPlusLibrary.Resources.{NameResourceConfigFile} not found.");
-            }
-            File.WriteAllText(Path.Combine(foldername, NameResourceConfigFile), text);
+        {
+
+#pragma warning disable CA1869 // Cache and reuse 'JsonSerializerOptions' instances
+            File.WriteAllText(Path.Combine(foldername, NameResourceConfigFile), 
+                JsonSerializer.Serialize(_promptConfig, new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+                }
+            ));
+#pragma warning restore CA1869 // Cache and reuse 'JsonSerializerOptions' instances
         }
 
         /// <summary>
         /// Gets the default file name for the PromptPlus resource configuration file.
         /// </summary>
         public static string NameResourceConfigFile => "PromptPlus.config";
-
-        private static string ReadEmbeddedTextResource(string resourceName)
-        {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            string result = string.Empty;
-
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            {
-                if (stream == null)
-                {
-                    return string.Empty;
-                }
-
-                using (StreamReader reader = new(stream))
-                {
-                    result = reader.ReadToEnd();
-                }
-            }
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
-            return result;
-        }
 
         /// <summary>
         /// Reconfigures the active console profile (colors, padding, overflow). Thread-safe.
@@ -250,6 +277,157 @@ namespace PromptPlusLibrary
         public static IConsole Console => _consoledrive;
 
         #region private methods
+
+        internal static void ResetState()
+        {
+            if (Console.SupportsAnsi)
+            {
+                System.Console.Write(AnsiSequences.SM());
+            }
+            else
+            {
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    System.Console.CursorVisible = true;
+                }
+            }
+            if (_consoledrive.IsEnabledSwapScreen)
+            {
+                if (_consoledrive.CurrentBuffer == TargetScreen.Secondary)
+                {
+                    System.Console.Write("\u001b[?1049l");
+                }
+            }
+            Thread.CurrentThread.CurrentCulture = _appConsoleCulture;
+            System.Console.ForegroundColor = _originalForecolor;
+            System.Console.BackgroundColor = _originalBackcolor;
+            System.Console.ResetColor();
+        }
+
+        private static (string key, string value)[] GetAllProperties(object obj)
+        {
+            List<(string key, string value)> result = [];
+            foreach (var prop in obj.GetType().GetProperties())
+            {
+                try
+                {
+                    string value = (prop.GetValue(obj)?.ToString()) ?? "null";
+                    if (prop.PropertyType == typeof(SemaphoreSlim))
+                    {
+                        if (value != null)
+                        {
+                            value = $"SemaphoreSlim:Count:{((SemaphoreSlim)prop.GetValue(obj)!).CurrentCount}";
+                        }
+                    }
+                    else if (prop.PropertyType == typeof(Encoding))
+                    {
+                        if (value != null)
+                        {
+                            value = $"{((Encoding)prop.GetValue(obj)!).EncodingName}";
+                        }
+                    }
+                    result.Add((prop.Name, value!));
+                }
+                catch (TargetInvocationException)
+                {
+                    //skip
+                }
+            }
+
+            return [.. result];
+        }
+
+        internal static void  WriteCrashLog(Type source, Exception? ex)
+        {
+            var platform = RuntimeInformation.OSDescription;
+            var framework = RuntimeInformation.FrameworkDescription;
+            var version = source.Assembly.GetName()?.Version?.ToString() ?? string.Empty;
+            var culture = Thread.CurrentThread.CurrentCulture;
+            var consoleproperties = GetAllProperties(_consoledrive);
+            var configproperties = GetAllProperties(_promptConfig);
+            (string key, string value)[] optionproperties = _promptConfig.TraceBaseControlOptions==null?[]:GetAllProperties(_promptConfig.TraceBaseControlOptions);
+
+            string folderPath = Path.Combine(_promptConfig.FolderLog, "PromptPlus.Log");
+            var logFileName = $"PromptPlusLog{DateTime.Now:yyyyMMdd}.log";
+            string filePath = Path.Combine(folderPath, logFileName);
+            if (Directory.Exists(folderPath))
+            {
+                var files = Directory.GetFiles(folderPath, "PromptPlusLog*.log");
+                foreach (var file in files)
+                {
+                    var fi = new FileInfo(file);
+                    if (DateOnly.FromDateTime(fi.CreationTime) < DateOnly.FromDateTime(DateTime.Now).AddDays(-7))
+                    {
+                        File.Delete(file);
+                    }
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath).Close();
+            }
+            StreamWriter? writer = null;
+            try
+            {
+                writer = new StreamWriter(filePath, true);
+                writer.WriteLine($"PromptPlus({version}) Crash Log : {DateTime.Now}");
+                writer.WriteLine($"Platform : {platform} UserInteractive : {Environment.UserInteractive}");
+                writer.WriteLine($"Framework : {framework}");
+                if (_promptConfig.TraceCurrentFileNameControl != null)
+                {
+                    writer.WriteLine($"File Source : {_promptConfig.TraceCurrentFileNameControl}");
+                }
+                writer.WriteLine($"CurrentThread Culture : {culture}");
+                writer.WriteLine($"UserPressKeyAborted : {_consoledrive.UserPressKeyAborted}");
+                writer.WriteLine($"CancellationRequested : {((IConsoleExtend)_consoledrive).TokenCancelPress.IsCancellationRequested}");
+                if (ex != null)
+                {
+                    writer.WriteLine("Exception Details");
+                    writer.WriteLine("-----------------");
+                    writer.WriteLine($"  {ex}");
+                }
+                if (optionproperties != null)
+                {
+                    writer.WriteLine($"Options properties");
+                    writer.WriteLine($"------------------");
+                    foreach (var (key, value) in optionproperties)
+                    {
+                        writer.WriteLine($"  {key}: {value}");
+                    }
+                }
+                writer.WriteLine($"Console properties");
+                writer.WriteLine($"------------------");
+                foreach (var (key, value) in consoleproperties)
+                {
+                    writer.WriteLine($"  {key}: {value}");
+                }
+                writer.WriteLine($"Config properties");
+                writer.WriteLine($"-----------------");
+                foreach (var (key, value) in configproperties)
+                {
+                    writer.WriteLine($"  {key}: {value}");
+                }
+                writer.WriteLine(new string('=', 80));
+            }
+            finally
+            {
+                try
+                {
+                    writer?.Flush();
+                    writer?.Close();
+                }
+                catch
+                { 
+                    //none
+                }
+                writer?.Dispose();
+            }
+        }
+
 
         // Adapted from https://github.com/willmcgugan/rich/blob/f0c29052c22d1e49579956a9207324d9072beed7/rich/console.py#L391
         /// <summary>

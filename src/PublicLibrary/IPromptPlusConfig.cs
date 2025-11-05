@@ -13,6 +13,27 @@ namespace PromptPlusLibrary.PublicLibrary
     /// </summary>
     public interface IPromptPlusConfig
     {
+
+        /// <summary>
+        /// Gets or sets the action to invoke after an error occurs during processing.
+        /// </summary>
+        /// <remarks>The specified action receives the exception that was thrown. Use this property to
+        /// perform custom error handling or logging. If the property is null, no action is taken after an error.
+        /// </remarks>
+        Action<Exception>? AfterError { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the basic state should be reset after an exit operation. Default value is true.
+        /// The Culture,cursor, foreground, and background colors are reset to their default values.
+        /// </summary>
+        bool ResetBasicStateAfterExist { get; set; }
+
+        /// <summary>
+        /// Gets or sets the folder path where log files will be stored.
+        /// </summary>
+        /// <value>A string representing the path to the log folder. If not set or empty, the folder is set to <see cref="Environment.SpecialFolder.UserProfile"/>.</value>
+        string FolderLog { get; set; }
+
         /// <summary>
         /// Gets or sets the character representing a logical “Yes” response (default: 'y').
         /// </summary>

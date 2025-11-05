@@ -79,6 +79,9 @@ All global settings for Prompt Plus controls/widgets can be customized to fit us
 
 Properties:  **PromptPlus.Config**.\<Property\> = \<newvalue\>.
 
+- AfterError
+- ResetBasicStateAfterExist
+- FolderLog
 - YesChar
 - NoChar
 - PageSize
@@ -155,6 +158,10 @@ A separation was made in the writing methods for common texts (default console b
 
 **Properties** (All setters use Exclusive Context blocking the main thread during their execution)
 
+- UserPressKeyAborted 
+    - Gets a value indicating whether the operation was aborted by the user (Ctrl+C / Ctrl+Break) when CancelKeyPress is used. 
+- BehaviorAfterCancelKeyPress
+    - Gets the behavior to be applied after a cancel key (Ctrl+C/Ctrl+Break) is pressed.
 - ForegroundColor.
     - Set/Get Color(RGB) class.
 - BackgroundColor.
@@ -196,6 +203,10 @@ A separation was made in the writing methods for common texts (default console b
 
 **Methods/Commands** (All Methods/Commands use Exclusive Context blocking the main thread during their execution)
 
+- CancelKeyPress(AfterCancelKeyPress behaviorcontrols, Action\<object?, ConsoleCancelEventArgs\> actionhandle).
+    - Sets a handler for console cancel events (Ctrl+C/Break)
+- RemoveCancelKeyPress().
+    - Removes the current cancel key press (Ctrl+C/Break) handler and restores default behavior. 
 - DefaultColors(Color foreground, Color background).
 - ResetColor().
     - Reset Color to default profile.
@@ -210,22 +221,18 @@ A separation was made in the writing methods for common texts (default console b
 - SetError(TextWriter value).
 - Clear().
 - Beep().
-- (int Left, int Top) Write(char[] buffer, Style? style = null, bool clearrestofline = false).
+- Write(char[] buffer, Style? style = null, bool clearrestofline = false).
     - Returns the current cursor coordinate.
-- (int Left, int Top) Write(char buffer, Style? style = null, bool clearrestofline = false).
+- Write(char buffer, Style? style = null, bool clearrestofline = false).
     - Returns the current cursor coordinate.
-- (int Left, int Top) Write(string value, Style? style = null, bool clearrestofline = false).
-    - Returns the current cursor coordinate.
-- (int Left, int Top) WriteColor(string value, Overflow overflow = Overflow.Crop, bool clearrestofline = false).
+- Write(string value, Style? style = null, bool clearrestofline = false).
     -  Accept color syntax over text
     - Returns the current cursor coordinate.
-- (int Left, int Top) WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true).
+- WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true).
     - Returns the current cursor coordinate.
-- (int Left, int Top) WriteLine(char buffer, Style? style = null, bool clearrestofline = true).
+- WriteLine(char buffer, Style? style = null, bool clearrestofline = true).
     - Returns the current cursor coordinate.
-- (int Left, int Top) WriteLine(string value, Style? style = null, bool clearrestofline = true).
-    - Returns the current cursor coordinate.
-- (int Left, int Top) WriteLineColor(string value, Overflow overflow = Overflow.Crop, bool clearrestofline = true).
+- WriteLine(string value, Style? style = null, bool clearrestofline = true).
     -  Accept color syntax over text.
     - Returns the current cursor coordinate.
 - SwapBuffer(TargetScreen value).
@@ -246,7 +253,7 @@ A separation was made in the writing methods for common texts (default console b
     - Creates an exclusive context in the main thread, blocking other threads from writing to the UI  until the 'dispose' is done.
 - OutputError(this IConsole console)
     - Create context to write on standard error output stream for any output included until the 'dispose' is done.
-- (int Left, int Top) WriteLines(this IConsole console, int steps = 1, bool clearrestofline = true)
+- WriteLines(this IConsole console, int steps = 1, bool clearrestofline = true)
     - Write lines with line terminator
 - ClearLine(this IConsole console, int? row = null,Style ? style = null)
     - Clear row line with style. 
@@ -260,17 +267,15 @@ A separation was made in the writing methods for common texts (default console b
         - DefaultColors(Color foreground, Color background)
         - Write(char[] buffer, Style? style = null, bool clearRestOfLine = false)
         - Write(string value, Style? style = null, bool clearRestOfLine = false)
-        - WriteColor(string value, Overflow overflow = Overflow.None, bool clearRestOfLine = false)
         - WriteLine(char[] buffer, Style? style = null, bool clearRestOfLine = true)
         - WriteLine(string value, Style? style = null, bool clearRestOfLine = true)
-        - WriteLineColor(string value, Overflow overflow = Overflow.None, bool clearRestOfLine = true)
         - (int Left, int Top) Done()
             - Releases the console exclusive buffer. 
 
 ----
 ### General changes
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)
-
+- PromptPlus has more than **37! controls/widgets**
 - Support for .Net10, .Net9 and .Net8
 - External references were reviewed and only those necessary for size treatment for East Asian characters were used.
 - New control rendering engine adjusts more fluidly to the screen size and avoids flickering by redrawing only the changed lines.
@@ -287,7 +292,8 @@ A separation was made in the writing methods for common texts (default console b
     - For each non-interactive control the initialization contract was customized.
 - All commands for console start at : **PromptPlus.Console**.\<command\>.
 - All general config start at : **PromptPlus.Config**.\<config\>.
-
+- **New console state preservation with capability to manipulate the console Ctrl+C / Ctrl+Break**.
+ 
 ----
 ### History (NEW)
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)

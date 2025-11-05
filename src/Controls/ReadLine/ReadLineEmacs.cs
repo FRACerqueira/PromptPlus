@@ -3,11 +3,12 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using PromptPlusLibrary.Core;
 using System;
 
 namespace PromptPlusLibrary.Controls.ReadLine
 {
-    internal sealed class ReadLineEmacs(IConsole console, PromptConfig promptConfig, string initialValue = "") : IEmacs
+    internal sealed class ReadLineEmacs(IConsoleExtend console, PromptConfig promptConfig, string initialValue = "") : IEmacs
     {
         private CaseOptions _caseOptions = PromptPlusLibrary.CaseOptions.Any;
         private bool _escabort;
@@ -75,18 +76,18 @@ namespace PromptPlusLibrary.Controls.ReadLine
                     string str = _inputBuffer.IsHideLeftBuffer
                         ? promptConfig.GetSymbol(SymbolType.InputDelimiterLeftMost)
                         : promptConfig.GetSymbol(SymbolType.InputDelimiterLeft);
-                    console.Write(str);
+                    console.RawWrite(str);
                 }
 
-                (int Left, int Top) savedcur = console.Write(_inputBuffer.ToBackward(), clearrestofline: true);
-                console.Write(_inputBuffer.ToForward());
+                (int Left, int Top) savedcur = console.RawWrite(_inputBuffer.ToBackward(), clearrestofline: true);
+                console.RawWrite(_inputBuffer.ToForward());
 
                 if (_inputBuffer.IsVirtualBuffer)
                 {
                     string str = _inputBuffer.IsHideRightBuffer
                         ? promptConfig.GetSymbol(SymbolType.InputDelimiterRightMost)
                         : promptConfig.GetSymbol(SymbolType.InputDelimiterRight);
-                    console.Write(str);
+                    console.RawWrite(str);
                 }
 
                 console.SetCursorPosition(savedcur.Left, savedcur.Top);
@@ -118,17 +119,17 @@ namespace PromptPlusLibrary.Controls.ReadLine
                         string str = _inputBuffer.IsHideLeftBuffer
                             ? promptConfig.GetSymbol(SymbolType.InputDelimiterLeftMost)
                             : promptConfig.GetSymbol(SymbolType.InputDelimiterLeft);
-                        console.Write(str);
+                        console.RawWrite(str);
                     }
-                    savedcur = console.Write(_inputBuffer.ToBackward(), clearrestofline: oldlen != _inputBuffer.Length);
-                    console.Write(_inputBuffer.ToForward());
+                    savedcur = console.RawWrite(_inputBuffer.ToBackward(), clearrestofline: oldlen != _inputBuffer.Length);
+                    console.RawWrite(_inputBuffer.ToForward());
 
                     if (_inputBuffer.IsVirtualBuffer)
                     {
                         string str = _inputBuffer.IsHideRightBuffer
                             ? promptConfig.GetSymbol(SymbolType.InputDelimiterRightMost)
                             : promptConfig.GetSymbol(SymbolType.InputDelimiterRight);
-                        console.Write(str);
+                        console.RawWrite(str);
                     }
 
                     console.SetCursorPosition(savedcur.Left, savedcur.Top);

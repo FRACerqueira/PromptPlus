@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Concurrent;
@@ -43,7 +44,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         private bool _disableRecursiveCount;
 
 
-        public NodeTreeMultiSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public NodeTreeMultiSelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             IsRoot = (item) => item.UniqueId == (_items.Count == 0 ? "" : _items[0].UniqueId);
             _toggerTooptips = [];

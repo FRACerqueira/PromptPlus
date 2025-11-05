@@ -25,10 +25,6 @@ The current [`ITableSelectControl`](../ITableSelectControl-1.md) instance for me
 | --- | --- |
 | ArgumentNullException | Thrown when *filename* is null. |
 
-### Remarks
-
-The default hotkey for history is HotKeyShowHistory.
-
 ### See Also
 
 * interface [IHistoryOptions](../IHistoryOptions.md)

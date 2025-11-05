@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
         private string _lastinput;
 
 
-        public RemoteSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public RemoteSelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _searchItemsControl = default!;
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);

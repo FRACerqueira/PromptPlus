@@ -25,5 +25,10 @@ namespace PromptPlusLibrary
         {
             return new ExclusiveContextOutput((IConsoleExtend)console, true);
         }
+
+        internal static IDisposable InternalExclusiveContext(this IConsoleExtend console)
+        {
+            return new ExclusiveContextOutput(console, true);
+        }
     }
 }

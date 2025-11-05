@@ -95,6 +95,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleNodeTreeRemoteSelect
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleNodeTreeRemoteMultiSelectSamples", "samples\ConsoleNodeTreeRemoteMultiSelectSamples\ConsoleNodeTreeRemoteMultiSelectSamples.csproj", "{EF643E9A-2E84-6BC4-978D-12D206EC1058}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleCtrlCFeaturesSamples", "samples\ConsoleCtrlCFeaturesSamples\ConsoleCtrlCFeaturesSamples.csproj", "{396C97FA-0DD0-E97D-041E-F6F7EDFC724C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -233,6 +235,10 @@ Global
 		{EF643E9A-2E84-6BC4-978D-12D206EC1058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF643E9A-2E84-6BC4-978D-12D206EC1058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF643E9A-2E84-6BC4-978D-12D206EC1058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{396C97FA-0DD0-E97D-041E-F6F7EDFC724C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{396C97FA-0DD0-E97D-041E-F6F7EDFC724C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{396C97FA-0DD0-E97D-041E-F6F7EDFC724C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{396C97FA-0DD0-E97D-041E-F6F7EDFC724C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -271,6 +277,7 @@ Global
 		{10B490A4-BF9E-F7D3-4020-1A14287D1B96} = {B224F988-CB31-487D-8B94-84CEF58E4B52}
 		{1BE5F204-5A89-1AC2-9FAF-353D185D5AEA} = {B224F988-CB31-487D-8B94-84CEF58E4B52}
 		{EF643E9A-2E84-6BC4-978D-12D206EC1058} = {B224F988-CB31-487D-8B94-84CEF58E4B52}
+		{396C97FA-0DD0-E97D-041E-F6F7EDFC724C} = {2742117A-A0CB-4544-BDA7-BE537B79B571}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FE8A3E96-3089-44C1-908E-6BD6832A278A}

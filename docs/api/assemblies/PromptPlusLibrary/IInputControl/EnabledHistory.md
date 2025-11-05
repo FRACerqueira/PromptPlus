@@ -25,10 +25,6 @@ The current [`IInputControl`](../IInputControl.md) instance for chaining.
 | --- | --- |
 | ArgumentNullException | Thrown if *filename* is `null`. |
 
-### Remarks
-
-The Default hotkey to History is HotKeyShowHistory.
-
 ### See Also
 
 * interface [IHistoryOptions](../IHistoryOptions.md)

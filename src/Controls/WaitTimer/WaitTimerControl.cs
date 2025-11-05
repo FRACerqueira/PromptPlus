@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace PromptPlusLibrary.Controls.WaitTimer
         private bool _disposed;
 
 #pragma warning disable IDE0290 // Use primary constructor
-        public WaitTimerControl(TimeSpan timer, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public WaitTimerControl(TimeSpan timer, IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _isCountDown = true;
             _timeoutcount = timer;

@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace PromptPlusLibrary.Controls.Select
         private string _lastinput;
 
 
-        public SelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public SelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _lastinput = string.Empty;
@@ -240,8 +241,8 @@ namespace PromptPlusLibrary.Controls.Select
         {
             char separator = separatorLine switch
             {
-                SeparatorLine.SingleLine => ConsolePlus.IsUnicodeSupported ? '─' : '-',
-                SeparatorLine.DoubleLine => ConsolePlus.IsUnicodeSupported ? '═' : '=',
+                SeparatorLine.SingleLine => ConfigPlus.GetSymbol(SymbolType.SingleBorder)[0],
+                SeparatorLine.DoubleLine => ConfigPlus.GetSymbol(SymbolType.DoubleBorder)[0],
                 SeparatorLine.UserChar => value ?? throw new ArgumentNullException(nameof(value), "Char separator is null"),
                 _ => throw new ArgumentOutOfRangeException(nameof(separatorLine), "SeparatorLine not supported")
             };

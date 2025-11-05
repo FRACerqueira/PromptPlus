@@ -78,7 +78,7 @@ namespace PromptPlusLibrary.Controls.Slider
             }
         }
 
-        public SliderControl(bool iswidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(iswidget, console, promptConfig, baseControlOptions)
+        public SliderControl(bool iswidget, IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(iswidget, console, promptConfig, baseControlOptions)
         {
             _culture = ConfigPlus.DefaultCulture;
             _width = ConfigPlus.SliderWidth;
@@ -819,11 +819,7 @@ namespace PromptPlusLibrary.Controls.Slider
                 screenBuffer.Write($"{ValueToString(_minValue)} ", _optStyles[SliderStyles.Ranger]);
             }
 
-            string delimitbar = "│";
-            if (!ConsolePlus.IsUnicodeSupported)
-            {
-                delimitbar = "|";
-            }
+            string delimitbar = ConfigPlus.GetSymbol(SymbolType.GridSingleDividerY);
             if (!_hideslide.HasFlag(HideSlider.Delimit))
             {
                 screenBuffer.Write(delimitbar, _optStyles[SliderStyles.Ranger]);

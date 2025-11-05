@@ -7,8 +7,7 @@
 #### Write lines with line terminator
 
 ```csharp
-public static (int Left, int Top) WriteLines(this IConsole console, int steps = 1, 
-    bool clearrestofline = true)
+public static void WriteLines(this IConsole console, int steps = 1, bool clearrestofline = true)
 ```
 
 | parameter | description |
@@ -16,10 +15,6 @@ public static (int Left, int Top) WriteLines(this IConsole console, int steps = 
 | console | The [`IConsole`](../IConsole.md) drive |
 | steps | Numbers de lines. |
 | clearrestofline | Indicates whether to clear the rest of the line. |
-
-### Return Value
-
-The column and row position of the cursor.
 
 ### See Also
 
