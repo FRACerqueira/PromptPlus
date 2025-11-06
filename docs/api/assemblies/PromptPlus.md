@@ -23,7 +23,6 @@
 | static class [ColorExtensions](./PromptPlusLibrary/ColorExtensions.md) | Extensions for the Color class. |
 | enum [ColorSystem](./PromptPlusLibrary/ColorSystem.md) | Represents the capacity of console color system. |
 | enum [ComponentStyles](./PromptPlusLibrary/ComponentStyles.md) | Represents the different styles that can be applied to components in the PromptPlus library. |
-| static class [ConsoleKeyInfoExtensions](./PromptPlusLibrary/ConsoleKeyInfoExtensions.md) | Provides extension methods for ConsoleKeyInfo to evaluate specific key combinations, including standard keys and Emacs-style shortcuts. |
 | enum [DashOptions](./PromptPlusLibrary/DashOptions.md) | Represents a boder when write line with SingleDash/DoubleDash. |
 | enum [DateTimePart](./PromptPlusLibrary/DateTimePart.md) | Represents date parts |
 | enum [FileStyles](./PromptPlusLibrary/FileStyles.md) | Represents The Style File Control |
@@ -64,6 +63,7 @@
 | interface [IProfileDrive](./PromptPlusLibrary/IProfileDrive.md) | Defines a console profile describing capabilities, dimensions, colors and display behavior for the current console/terminal session. |
 | interface [IProfileSetup](./PromptPlusLibrary/IProfileSetup.md) | Defines mutable setup values used to configure a console profile before it is materialized. |
 | interface [IProgressBarControl](./PromptPlusLibrary/IProgressBarControl.md) | Interface for configuring and interacting with a Progress Bar control. |
+| interface [IPromptPlusConfig](./PromptPlusLibrary/IPromptPlusConfig.md) | Defines global configuration settings applied across all PromptPlus controls (defaults, culture, hotkeys, symbols and layout). |
 | interface [IRemoteMultiSelectControl&lt;T1,T2&gt;](./PromptPlusLibrary/IRemoteMultiSelectControl-2.md) | Provides functionality for configuring and interacting with a Load Remote MultiSelect control. |
 | interface [IRemoteSelectControl&lt;T1,T2&gt;](./PromptPlusLibrary/IRemoteSelectControl-2.md) | Provides functionality for configuring and interacting with a Load Remote Select control. |
 | interface [ISelectControl&lt;T&gt;](./PromptPlusLibrary/ISelectControl-1.md) | Provides functionality for configuring and interacting with a Select control. |
@@ -85,7 +85,7 @@
 | enum [Overflow](./PromptPlusLibrary/Overflow.md) | Specifies how text overflow should be handled. |
 | enum [ProgressBarStyles](./PromptPlusLibrary/ProgressBarStyles.md) | Represents The Styles ProgressBar control This enum defines various regions or components of the ProgressBar. |
 | enum [ProgressBarType](./PromptPlusLibrary/ProgressBarType.md) | Represents the Graphical-based of Progress Bar. |
-| static class [PromptPlus](./PromptPlusLibrary/PromptPlus.md) | Provides the global entry point for all PromptPlus controls, widgets, configuration access and console services. |
+| static class [PromptPlus](./PromptPlusLibrary/PromptPlus.md) | Provides extension methods for ConsoleKeyInfo to evaluate specific key combinations, including standard keys and Emacs-style shortcuts. |
 | struct [ResultPrompt&lt;T&gt;](./PromptPlusLibrary/ResultPrompt-1.md) | Represents The Result *T* to Controls |
 | enum [SelectStyles](./PromptPlusLibrary/SelectStyles.md) | Represents the styles for the Select Control. This enum defines various regions or components of the Select Control. |
 | enum [SeparatorLine](./PromptPlusLibrary/SeparatorLine.md) | Represents Type Separation line |
@@ -107,12 +107,6 @@
 | enum [WaitProcessStyles](./PromptPlusLibrary/WaitProcessStyles.md) | Represents The Style Wait Process Control This enum defines various regions or components of the Wait Process Control. |
 | enum [WaitTimerStyles](./PromptPlusLibrary/WaitTimerStyles.md) | Represents The Style Wait Timer Control This enum defines various regions or components of the Wait Process Control. |
 | enum [WeekType](./PromptPlusLibrary/WeekType.md) | Represents Format week to show |
-
-### PromptPlusLibrary.PublicLibrary namespace
-
-| public type | description |
-| --- | --- |
-| interface [IPromptPlusConfig](./PromptPlusLibrary.PublicLibrary/IPromptPlusConfig.md) | Defines global configuration settings applied across all PromptPlus controls (defaults, culture, hotkeys, symbols and layout). |
 
 ### See Also
 * [Main Index](../docindex.md)

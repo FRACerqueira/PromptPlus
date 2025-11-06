@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace PromptPlusLibrary.Controls.RemoteMultiSelect
 {
-    internal sealed class RemoteMultiSelectControl<T1,T2> : BaseControlPrompt<T1[]>, IRemoteMultiSelectControl<T1,T2> where T1 : class where T2 : class
+    internal sealed class RemoteMultiSelectControl<T1, T2> : BaseControlPrompt<T1[]>, IRemoteMultiSelectControl<T1, T2> where T1 : class where T2 : class
     {
         private readonly Dictionary<MultiSelectStyles, Style> _optStyles = BaseControlOptions.LoadStyle<MultiSelectStyles>();
         private readonly List<ItemSelect<T1>> _items = [];
@@ -105,14 +105,14 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> PredicateSelected(Func<T1, (bool, string?)> validselect)
+        public IRemoteMultiSelectControl<T1, T2> PredicateSelected(Func<T1, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> PredicateSelected(Func<T1, bool> validselect)
+        public IRemoteMultiSelectControl<T1, T2> PredicateSelected(Func<T1, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
@@ -127,19 +127,19 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> ShowAllSelected(bool value)
+        public IRemoteMultiSelectControl<T1, T2> ShowAllSelected(bool value)
         {
             _isShowAllSeleceted = value;
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> HideCountSelected(bool value = true)
+        public IRemoteMultiSelectControl<T1, T2> HideCountSelected(bool value = true)
         {
             _hideCountSelected = value;
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> MaxWidth(byte maxWidth)
+        public IRemoteMultiSelectControl<T1, T2> MaxWidth(byte maxWidth)
         {
             if (maxWidth < 10)
             {
@@ -149,7 +149,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> Range(int minvalue, int? maxvalue = null)
+        public IRemoteMultiSelectControl<T1, T2> Range(int minvalue, int? maxvalue = null)
         {
             if (minvalue > (maxvalue ?? int.MaxValue))
             {
@@ -160,13 +160,13 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> ChangeDescription(Func<T1, string> value)
+        public IRemoteMultiSelectControl<T1, T2> ChangeDescription(Func<T1, string> value)
         {
             _changeDescription = value;
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public IRemoteMultiSelectControl<T1, T2> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))
@@ -178,21 +178,21 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> Filter(FilterMode value, bool caseinsensitive = true)
+        public IRemoteMultiSelectControl<T1, T2> Filter(FilterMode value, bool caseinsensitive = true)
         {
             _filterType = value;
             _filterCaseinsensitive = caseinsensitive;
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> Options(Action<IControlOptions> options)
+        public IRemoteMultiSelectControl<T1, T2> Options(Action<IControlOptions> options)
         {
             ArgumentNullException.ThrowIfNull(options);
             options.Invoke(GeneralOptions);
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> PageSize(byte value)
+        public IRemoteMultiSelectControl<T1, T2> PageSize(byte value)
         {
             if (value < 1)
             {
@@ -202,13 +202,13 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> Styles(MultiSelectStyles styleType, Style style)
+        public IRemoteMultiSelectControl<T1, T2> Styles(MultiSelectStyles styleType, Style style)
         {
             _optStyles[styleType] = style;
             return this;
         }
 
-        public IRemoteMultiSelectControl<T1,T2> TextSelector(Func<T1, string> value)
+        public IRemoteMultiSelectControl<T1, T2> TextSelector(Func<T1, string> value)
         {
             _textSelector = value ?? throw new ArgumentNullException(nameof(value), "TextSelector is null");
             return this;
@@ -336,7 +336,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                     {
                         _searchItemsFinished = _loadingResult!.Value.IsFinished;
                         _searchItemsControl = _loadingResult!.Value.newsearchItemsControl;
-                        var index = _items.FindIndex(x => x.UniqueId == _loadMoreId);
+                        int index = _items.FindIndex(x => x.UniqueId == _loadMoreId);
                         if (index >= 0)
                         {
                             _items.RemoveAt(index);
@@ -344,14 +344,14 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                         foreach (T1 item in _loadingResult!.Value.newitems)
                         {
                             bool disabled = _predicateDisabled?.Invoke(item) ?? false;
-                            bool ischeck = _defaultValues.FindIndex(x => _uniqueexpression!(item) == _uniqueexpression!(x)) >=0;
-                            _items.Add(new ItemSelect<T1>(_uniqueexpression!(item), item, disabled,ischeck)
+                            bool ischeck = _defaultValues.FindIndex(x => _uniqueexpression!(item) == _uniqueexpression!(x)) >= 0;
+                            _items.Add(new ItemSelect<T1>(_uniqueexpression!(item), item, disabled, ischeck)
                             {
                                 Text = _textSelector!.Invoke(item)
                             });
                             if (ischeck)
-                            { 
-                                _checkeditems.Add(_items[^1]);  
+                            {
+                                _checkeditems.Add(_items[^1]);
                             }
                         }
                         if (!_searchItemsFinished)
@@ -424,14 +424,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer!.Clear();
-                        if (_modeView != ModeView.Filter)
-                        {
-                            _modeView = ModeView.Filter;
-                        }
-                        else
-                        {
-                            _modeView = ModeView.MultiSelect;
-                        }
+                        _modeView = _modeView != ModeView.Filter ? ModeView.Filter : ModeView.MultiSelect;
                         _indexTooptip = 0;
                         break;
                     }
@@ -759,15 +752,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
             {
                 return;
             }
-            string? tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            else
-            {
-                tooltip = GetTooltipModeMultiSelect();
-            }
+            string? tooltip = _indexTooptip > 0 ? GetTooltipToggle() : GetTooltipModeMultiSelect();
             screenBuffer.Write(tooltip, _optStyles[MultiSelectStyles.Tooltips]);
         }
 
@@ -955,11 +940,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                 }
                 token.WaitHandle.WaitOne(2);
             }
-            if (ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
-            {
-                return ConsolePlus.ReadKey(true);
-            }
-            return new ConsoleKeyInfo();
+            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : new ConsoleKeyInfo();
         }
 
         private void LoadMoreItem()

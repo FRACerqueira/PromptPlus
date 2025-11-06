@@ -24,7 +24,7 @@ namespace PromptPlusLibrary
         /// <param name="shift">Indicates whether Shift is part of the hotkey.</param>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0290:Use primary constructor", Justification = "by Design")]
         [JsonConstructor]
-        public HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false) 
+        public HotKey(ConsoleKey key, bool alt = false, bool ctrl = false, bool shift = false)
         {
             Key = key;
             Alt = alt;
@@ -46,17 +46,17 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets a value indicating whether Alt is included.
         /// </summary>
-        public bool Alt { get; } 
+        public bool Alt { get; }
 
         /// <summary>
         /// Gets a value indicating whether Ctrl is included.
         /// </summary>
-        public bool Ctrl { get; } 
+        public bool Ctrl { get; }
 
         /// <summary>
         /// Gets a value indicating whether Shift is included.
         /// </summary>
-        public bool Shift { get; } 
+        public bool Shift { get; }
 
         /// <inheritdoc/>
         public override readonly string ToString()
@@ -74,11 +74,7 @@ namespace PromptPlusLibrary
             {
                 modifiers.Append("Alt+");
             }
-            if (Key == ConsoleKey.Escape)
-            {
-                return $"{modifiers}Esc";
-            }
-            return $"{modifiers}{Key}";
+            return Key == ConsoleKey.Escape ? $"{modifiers}Esc" : $"{modifiers}{Key}";
         }
 
         /// <summary>

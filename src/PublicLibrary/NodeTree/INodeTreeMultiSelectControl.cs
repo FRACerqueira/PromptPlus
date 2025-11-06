@@ -13,7 +13,7 @@ namespace PromptPlusLibrary
     /// Provides functionality for configuring and interacting with a Node MultiSelect Control.
     /// </summary>
     /// <typeparam name="T">The type of node in the tree structure.</typeparam>
-    public interface INodeTreeMultiSelectControl<T>
+    public interface INodeTreeMultiSelectControl<T> where T : class, new()
     {
         /// <summary>
         /// Dynamically changes the description of the Select based on its value.

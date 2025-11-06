@@ -6,7 +6,7 @@
 using System;
 using System.Globalization;
 
-namespace PromptPlusLibrary.PublicLibrary
+namespace PromptPlusLibrary
 {
     /// <summary>
     /// Defines global configuration settings applied across all PromptPlus controls (defaults, culture, hotkeys, symbols and layout).

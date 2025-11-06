@@ -31,7 +31,6 @@ Due to the significant modifications, version 5 introduced **significant changes
 - PromptPlus Config **(see concepts above)**
 - Options all Controls **(see concepts above)**
 - Console Commands **(see concepts above)**
-- [General changes](#general-changes)
 - [History](#history-new) **NEW!** 
 - **AddToList Control Discontinued!**
 - [AutoComplete Control](#autocomplete-control)
@@ -272,28 +271,6 @@ A separation was made in the writing methods for common texts (default console b
         - (int Left, int Top) Done()
             - Releases the console exclusive buffer. 
 
-----
-### General changes
-[**Main**](../README.md) | [**Top**](#promptplus-whats-new)
-- PromptPlus has more than **37! controls/widgets**
-- Support for .Net10, .Net9 and .Net8
-- External references were reviewed and only those necessary for size treatment for East Asian characters were used.
-- New control rendering engine adjusts more fluidly to the screen size and avoids flickering by redrawing only the changed lines.
-- Revised control of hotkeys and special characters ensuring consistency according to the console's capabilities.
-- Created the separation of interactive controls and added several non-interactive controls (widgets).
-- Introduced **NEW multi-threaded operation** for controls and commands. Now each command and control block the main thread during printing/interaction execution.
-- Renaming several control methods for better clarity and reduced scope, aiming at the unique responsibility that each component intends to perform, allowing for sustainable evolution.
-- Created the concept of an editing window for controls that require a significant input/response size, ensuring visual consistency and adequate navigability.
-- A slice architecture was adopted for each component, allowing individual evolution of each one with low interference to the others.
-- The **NEW tooltip mechanism** now shows all keys and hotkeys for each control by switching the view ('F1').
-- All interactive controls start at : **PromptPlus.Controls**.\<name of control\>.
-    - All initialization contracts have been standardized: PromptPlus.Controls.\<name of control\>(string prompt = "", string? description = null).
-- All non interactive controls start at : **PromptPlus.Widgets**.\<name of Widget\>.
-    - For each non-interactive control the initialization contract was customized.
-- All commands for console start at : **PromptPlus.Console**.\<command\>.
-- All general config start at : **PromptPlus.Config**.\<config\>.
-- **New console state preservation with capability to manipulate the console Ctrl+C / Ctrl+Break**.
- 
 ----
 ### History (NEW)
 [**Main**](../README.md) | [**Top**](#promptplus-whats-new)

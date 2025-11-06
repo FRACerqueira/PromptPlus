@@ -120,15 +120,7 @@ namespace PromptPlusLibrary.Widgets.Banner.FIGlet
 
         private static int GetIntValue(string[] arrayStrings, int posi)
         {
-            if (arrayStrings.Length <= posi)
-            {
-                return 0;
-            }
-            if (int.TryParse(arrayStrings[posi], out int val))
-            {
-                return val;
-            }
-            return 0;
+            return arrayStrings.Length <= posi ? 0 : int.TryParse(arrayStrings[posi], out int val) ? val : 0;
         }
 
         private static List<string> ReadStreamFont(Stream fontStream)

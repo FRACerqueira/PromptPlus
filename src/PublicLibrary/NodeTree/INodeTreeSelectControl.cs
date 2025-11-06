@@ -15,7 +15,7 @@ namespace PromptPlusLibrary
     /// styles, and interactive selection capabilities.
     /// </summary>
     /// <typeparam name="T">Type of Node that represents the data in the tree structure</typeparam>
-    public interface INodeTreeSelectControl<T>
+    public interface INodeTreeSelectControl<T> where T : class, new()
     {
         /// <summary>
         /// Dynamically changes the description of the Select based on its value.

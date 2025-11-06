@@ -14,7 +14,7 @@ namespace PromptPlusLibrary
     /// </summary>
     /// <typeparam name="T1">The type of items in the collection.</typeparam>
     /// <typeparam name="T2">The type of class that represents a structure capable of storing the data necessary to maintain and search for the next collections of items.</typeparam>
-    public interface IRemoteSelectControl<T1,T2> where T1 : class where T2 : class
+    public interface IRemoteSelectControl<T1, T2> where T1 : class where T2 : class
     {
         /// <summary>
         /// Runs the Remote Select control and returns the result.
@@ -29,7 +29,7 @@ namespace PromptPlusLibrary
         /// <param name="options">An action to configure <see cref="IControlOptions"/>. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> is <c>null</c>.</exception>
-        IRemoteSelectControl<T1,T2> Options(Action<IControlOptions> options);
+        IRemoteSelectControl<T1, T2> Options(Action<IControlOptions> options);
 
         /// <summary>
         /// Overwrites styles for the Remote Select control.
@@ -38,7 +38,7 @@ namespace PromptPlusLibrary
         /// <param name="style">The <see cref="Style"/> to use. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="style"/> is <c>null</c>.</exception>
-        IRemoteSelectControl<T1,T2> Styles(SelectStyles styleType, Style style);
+        IRemoteSelectControl<T1, T2> Styles(SelectStyles styleType, Style style);
 
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace PromptPlusLibrary
         /// <param name="value">A function that returns the description based on the current value. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
-        IRemoteSelectControl<T1,T2> ChangeDescription(Func<T1, string> value);
+        IRemoteSelectControl<T1, T2> ChangeDescription(Func<T1, string> value);
 
         /// <summary>
         /// Sets the maximum number of items to display per page. Default value is 10.
@@ -55,7 +55,7 @@ namespace PromptPlusLibrary
         /// <param name="value">The maximum number of items per page.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
-        IRemoteSelectControl<T1,T2> PageSize(byte value);
+        IRemoteSelectControl<T1, T2> PageSize(byte value);
 
         /// <summary>
         /// Sets the function to display text for items in the list. This expression is required for operation..
@@ -63,7 +63,7 @@ namespace PromptPlusLibrary
         /// <param name="value">A function that returns the display text for each item. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
-        IRemoteSelectControl<T1,T2> TextSelector(Func<T1, string> value);
+        IRemoteSelectControl<T1, T2> TextSelector(Func<T1, string> value);
 
         /// <summary>
         /// Sets an expression that defines the uniqueId field to string type. This expression is required for operation.
@@ -71,7 +71,7 @@ namespace PromptPlusLibrary
         /// <param name="uniquevalue">An function that defines the unique identification stringfor item.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="uniquevalue"/> is null.</exception>
-        IRemoteSelectControl<T1,T2> UniqueId(Func<T1,string> uniquevalue);
+        IRemoteSelectControl<T1, T2> UniqueId(Func<T1, string> uniquevalue);
 
         /// <summary>
         /// Sets the filter strategy for filtering items in the collection. Default is <see cref="FilterMode.Disabled"/>.
@@ -79,7 +79,7 @@ namespace PromptPlusLibrary
         /// <param name="value">The <see cref="FilterMode"/> to apply.</param>
         /// <param name="caseinsensitive">If <c>true</c> (default), performs case-insensitive string comparison when filtering; otherwise case-sensitive comparison is used.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
-        IRemoteSelectControl<T1,T2> Filter(FilterMode value, bool caseinsensitive = true);
+        IRemoteSelectControl<T1, T2> Filter(FilterMode value, bool caseinsensitive = true);
 
         /// <summary>
         /// Registers the function responsible for searching and returning the next collection (page) of items to add to the list.This expression is required for operation.
@@ -100,14 +100,14 @@ namespace PromptPlusLibrary
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="initialvalue"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="values"/> is <c>null</c>.</exception>
 
-        IRemoteSelectControl<T1,T2> SearchMoreItems(T2 initialvalue, Func<T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception,string>? erroMessage = null);
+        IRemoteSelectControl<T1, T2> SearchMoreItems(T2 initialvalue, Func<T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception, string>? erroMessage = null);
 
         /// <summary>
         /// Sets a validation predicate to determine if a selected item is valid.
         /// </summary>
         /// <param name="validselect">A predicate function that returns <c>true</c> if an item is valid and should be selectable.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
-        IRemoteSelectControl<T1,T2> PredicateSelected(Func<T1, bool> validselect);
+        IRemoteSelectControl<T1, T2> PredicateSelected(Func<T1, bool> validselect);
 
 
         /// <summary>
@@ -115,14 +115,14 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="validselect">A predicate function that returns a tuple where the first value indicates if the item is valid, and the second value is an optional error message.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
-        IRemoteSelectControl<T1,T2> PredicateSelected(Func<T1, (bool, string?)> validselect);
+        IRemoteSelectControl<T1, T2> PredicateSelected(Func<T1, (bool, string?)> validselect);
 
         /// <summary>
         /// Sets a validation rule for determining which items should be disabled.
         /// </summary>
         /// <param name="validdisabled">Function that evaluates if an item should be disabled.</param>
         /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
-        IRemoteSelectControl<T1,T2> PredicateDisabled(Func<T1, bool> validdisabled);
+        IRemoteSelectControl<T1, T2> PredicateDisabled(Func<T1, bool> validdisabled);
 
 
     }

@@ -271,11 +271,7 @@ namespace PromptPlusLibrary.Controls
 
         public string ToBackward()
         {
-            if (!IsVirtualBuffer)
-            {
-                return _inputBuffer.ToString(0, Position);
-            }
-            return _inputBuffer.ToString(_startBuffer, Position - _startBuffer);
+            return !IsVirtualBuffer ? _inputBuffer.ToString(0, Position) : _inputBuffer.ToString(_startBuffer, Position - _startBuffer);
         }
 
         public string ToForward(bool virtualwithspaces = true)
@@ -286,11 +282,7 @@ namespace PromptPlusLibrary.Controls
             }
             if (Length == 0)
             {
-                if (!virtualwithspaces)
-                {
-                    return string.Empty;
-                }
-                return new string(' ', maxWidth!.Value);
+                return !virtualwithspaces ? string.Empty : new string(' ', maxWidth!.Value);
             }
             string aux = string.Empty;
             if (!IsEnd())
@@ -303,11 +295,7 @@ namespace PromptPlusLibrary.Controls
                 return aux;
             }
             int totallen = ToBackward().Length + aux.Length;
-            if (totallen < maxWidth!.Value)
-            {
-                return $"{aux}{new string(' ', maxWidth!.Value - totallen)}";
-            }
-            return aux;
+            return totallen < maxWidth!.Value ? $"{aux}{new string(' ', maxWidth!.Value - totallen)}" : aux;
         }
 
         public string ToVirtualString(bool tostart = false)

@@ -132,11 +132,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         public IProgressBarControl FracionalDig(byte value)
         {
             _fracionalDig = value;
-            if (_fracionalDig > 5)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "FracionalDig must be less than 5");
-            }
-            return this;
+            return _fracionalDig > 5 ? throw new ArgumentOutOfRangeException(nameof(value), "FracionalDig must be less than 5") : (IProgressBarControl)this;
         }
 
         public IProgressBarControl HideElements(HideProgressBar value)
@@ -637,11 +633,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
                 }
                 token.WaitHandle.WaitOne(2);
             }
-            if (ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
-            {
-                return ConsolePlus.ReadKey(true);
-            }
-            return null;
+            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : null;
         }
     }
 }

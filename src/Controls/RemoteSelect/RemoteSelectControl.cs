@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PromptPlusLibrary.Controls.RemoteSelect
 {
-    internal sealed class RemoteSelectControl<T1,T2> : BaseControlPrompt<T1>, IRemoteSelectControl<T1,T2> where T1 : class where T2 : class
+    internal sealed class RemoteSelectControl<T1, T2> : BaseControlPrompt<T1>, IRemoteSelectControl<T1, T2> where T1 : class where T2 : class
     {
         private readonly Dictionary<SelectStyles, Style> _optStyles = BaseControlOptions.LoadStyle<SelectStyles>();
         private readonly EmacsBuffer _filterBuffer;
@@ -25,15 +25,15 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
         private byte _pageSize = 10;
         private Func<T1, string>? _textSelector;
         private Paginator<ItemSelect<T1>>? _localpaginator;
-        private Func<T1,string>? _uniqueexpression;
-        private Func<T2, (bool,T2, IEnumerable<T1>)>? _predicateSearchItems;
+        private Func<T1, string>? _uniqueexpression;
+        private Func<T2, (bool, T2, IEnumerable<T1>)>? _predicateSearchItems;
         private Func<T1, bool>? _predicateDisabled;
         private T2 _searchItemsControl;
         private bool _searchItemsFinished;
         private Func<Exception, string>? _searchItemsErrorMessage;
         private Task? _loadingItemTask;
         private (Exception? error, bool IsFinished, T2 newsearchItemsControl, IEnumerable<T1> newitems)? _loadingResult;
-        private readonly string _loadMoreId = Guid.NewGuid().ToString(); 
+        private readonly string _loadMoreId = Guid.NewGuid().ToString();
         private enum ModeView
         {
             Select,
@@ -62,21 +62,21 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
         #region IRemoteSelectControl
 
 
-        public IRemoteSelectControl<T1,T2> PredicateDisabled(Func<T1, bool> validdisabled)
+        public IRemoteSelectControl<T1, T2> PredicateDisabled(Func<T1, bool> validdisabled)
         {
             ArgumentNullException.ThrowIfNull(validdisabled);
             _predicateDisabled = validdisabled;
-            return this; 
+            return this;
         }
 
-        public IRemoteSelectControl<T1,T2> PredicateSelected(Func<T1, (bool, string?)> validselect)
+        public IRemoteSelectControl<T1, T2> PredicateSelected(Func<T1, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
             return this;
         }
 
-        public IRemoteSelectControl<T1,T2> PredicateSelected(Func<T1, bool> validselect)
+        public IRemoteSelectControl<T1, T2> PredicateSelected(Func<T1, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = (input) =>
@@ -91,13 +91,13 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
             return this;
         }
 
-        public IRemoteSelectControl<T1,T2> ChangeDescription(Func<T1, string> value)
+        public IRemoteSelectControl<T1, T2> ChangeDescription(Func<T1, string> value)
         {
             _changeDescription = value;
             return this;
         }
 
-        public IRemoteSelectControl<T1,T2> Filter(FilterMode value, bool caseinsensitive = true)
+        public IRemoteSelectControl<T1, T2> Filter(FilterMode value, bool caseinsensitive = true)
         {
             _filterType = value;
             _filterCaseinsensitive = caseinsensitive;
@@ -105,14 +105,14 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
         }
 
 
-        public IRemoteSelectControl<T1,T2> Options(Action<IControlOptions> options)
+        public IRemoteSelectControl<T1, T2> Options(Action<IControlOptions> options)
         {
             ArgumentNullException.ThrowIfNull(options);
             options.Invoke(GeneralOptions);
             return this;
         }
 
-        public IRemoteSelectControl<T1,T2> PageSize(byte value)
+        public IRemoteSelectControl<T1, T2> PageSize(byte value)
         {
             if (value < 1)
             {
@@ -122,26 +122,26 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
             return this;
         }
 
-        public IRemoteSelectControl<T1,T2> Styles(SelectStyles styleType, Style style)
+        public IRemoteSelectControl<T1, T2> Styles(SelectStyles styleType, Style style)
         {
             _optStyles[styleType] = style;
             return this;
         }
 
-        public IRemoteSelectControl<T1,T2> TextSelector(Func<T1, string> value)
+        public IRemoteSelectControl<T1, T2> TextSelector(Func<T1, string> value)
         {
             _textSelector = value ?? throw new ArgumentNullException(nameof(value), "TextSelector is null");
             return this;
         }
 
-        public IRemoteSelectControl<T1,T2> UniqueId(Func<T1, string> uniquevalue)
+        public IRemoteSelectControl<T1, T2> UniqueId(Func<T1, string> uniquevalue)
         {
             ArgumentNullException.ThrowIfNull(uniquevalue);
             _uniqueexpression = uniquevalue;
             return this;
         }
 
-        public IRemoteSelectControl<T1,T2> SearchMoreItems(T2 initialvalue,Func<T2, (bool,T2, IEnumerable<T1>)> values, Func<Exception, string>? erroMessage = null)
+        public IRemoteSelectControl<T1, T2> SearchMoreItems(T2 initialvalue, Func<T2, (bool, T2, IEnumerable<T1>)> values, Func<Exception, string>? erroMessage = null)
         {
             ArgumentNullException.ThrowIfNull(initialvalue);
             ArgumentNullException.ThrowIfNull(values);
@@ -166,7 +166,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                 (item) => _textSelector!(item.Value),
                 null,
                 (item) => item.UniqueId != _loadMoreId);
-            
+
             _loadingItemTask = Task.Run(() => LoadMoreItem(), cancellationToken);
             _tooltipModeSelect = GetTooltipModeSelect();
             LoadTooltipToggle();
@@ -211,14 +211,9 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                     {
                         _indexTooptip = 0;
                         _modeView = ModeView.Select;
-                        if (_localpaginator!.SelectedItem != null)
-                        {
-                            ResultCtrl = new ResultPrompt<T1>(_localpaginator!.SelectedItem!.Value!, true);
-                        }
-                        else
-                        {
-                            ResultCtrl = new ResultPrompt<T1>(default!, true);
-                        }
+                        ResultCtrl = _localpaginator!.SelectedItem != null
+                            ? new ResultPrompt<T1>(_localpaginator!.SelectedItem!.Value!, true)
+                            : new ResultPrompt<T1>(default!, true);
                         break;
                     }
                     else if (_loadingItemTask == null && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
@@ -266,7 +261,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                     {
                         _searchItemsFinished = _loadingResult!.Value.IsFinished;
                         _searchItemsControl = _loadingResult!.Value.newsearchItemsControl;
-                        var index = _items.FindIndex(x => x.UniqueId == _loadMoreId);
+                        int index = _items.FindIndex(x => x.UniqueId == _loadMoreId);
                         if (index >= 0)
                         {
                             _items.RemoveAt(index);
@@ -332,14 +327,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer.Clear();
-                        if (_modeView != ModeView.Filter)
-                        {
-                            _modeView = ModeView.Filter;
-                        }
-                        else
-                        {
-                            _modeView = ModeView.Select;
-                        }
+                        _modeView = _modeView != ModeView.Filter ? ModeView.Filter : ModeView.Select;
                         _indexTooptip = 0;
                         break;
                     }
@@ -502,7 +490,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
         public override void FinalizeControl()
         {
             if (_loadingItemTask != null)
-            { 
+            {
                 _loadingItemTask.Wait();
                 _loadingItemTask.Dispose();
             }
@@ -547,15 +535,7 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
             {
                 return;
             }
-            string? tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            else
-            {
-                tooltip = _tooltipModeSelect;
-            }
+            string? tooltip = _indexTooptip > 0 ? GetTooltipToggle() : _tooltipModeSelect;
             screenBuffer.Write(tooltip, _optStyles[SelectStyles.Tooltips]);
         }
 
@@ -615,14 +595,14 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                 _localpaginator.SelectedPage + 1,
                 _localpaginator.PageCount
             )!;
-            screenBuffer.WriteLine(template,_optStyles[SelectStyles.Pagination]);
+            screenBuffer.WriteLine(template, _optStyles[SelectStyles.Pagination]);
         }
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
             if (_modeView == ModeView.Select)
             {
-                var text = string.Empty;
+                string text = string.Empty;
                 if (_loadingItemTask != null)
                 {
                     text = Messages.Loading;
@@ -721,17 +701,13 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                 }
                 token.WaitHandle.WaitOne(2);
             }
-            if (ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
-            {
-                return ConsolePlus.ReadKey(true);
-            }
-            return new ConsoleKeyInfo();
+            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : new ConsoleKeyInfo();
         }
 
         private void LoadMoreItem()
         {
             (bool Finished, T2 SearchItemsControl, IEnumerable<T1> Newitems) result = (false, _searchItemsControl, []);
-            Exception? err = null;  
+            Exception? err = null;
             try
             {
                 result = _predicateSearchItems!.Invoke(_searchItemsControl);

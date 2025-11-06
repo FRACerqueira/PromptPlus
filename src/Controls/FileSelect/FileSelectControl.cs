@@ -694,14 +694,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
             if (!string.IsNullOrEmpty(filter))
             {
 
-                if (string.IsNullOrEmpty(desc))
-                {
-                    desc = $"{Messages.Filtered} : {filter}";
-                }
-                else
-                {
-                    desc = $"{Messages.Filtered} : {filter}, {desc}";
-                }
+                desc = string.IsNullOrEmpty(desc) ? $"{Messages.Filtered} : {filter}" : $"{Messages.Filtered} : {filter}, {desc}";
             }
             if (!string.IsNullOrEmpty(desc))
             {
@@ -726,14 +719,9 @@ namespace PromptPlusLibrary.Controls.FileSelect
             if (!string.IsNullOrEmpty(_localpaginator!.SelectedItem.ParentUniqueId))
             {
                 ItemNodeControl<ItemFile> aux = _items.Find(x => x.UniqueId == _localpaginator!.SelectedItem.ParentUniqueId)!;
-                if (_showFolderInfoFullPath)
-                {
-                    info = string.Format(Messages.FileInfoFolder, aux.Value.FullPath);
-                }
-                else
-                {
-                    info = string.Format(Messages.FileInfoFolder, aux.Value.Name);
-                }
+                info = _showFolderInfoFullPath
+                    ? string.Format(Messages.FileInfoFolder, aux.Value.FullPath)
+                    : string.Format(Messages.FileInfoFolder, aux.Value.Name);
             }
             else
             {
@@ -742,14 +730,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                     string aux = _localpaginator!.SelectedItem.Value.FullPath;
                     int index = aux.LastIndexOf(_localpaginator!.SelectedItem.Value.Name, StringComparison.Ordinal);
                     aux = aux[..index];
-                    if (aux.Length > 0)
-                    {
-                        info = $"{Messages.FileInfoRoot}({aux})";
-                    }
-                    else
-                    {
-                        info = $"{Messages.FileInfoRoot}";
-                    }
+                    info = aux.Length > 0 ? $"{Messages.FileInfoRoot}({aux})" : $"{Messages.FileInfoRoot}";
                 }
                 else
                 {
@@ -923,7 +904,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 return string.Empty;
             }
             string? parent = item.ParentUniqueId;
-            var aux = new Stack<string>();
+            Stack<string> aux = new();
             for (int i = 0; i < item.Level - 1; i++)
             {
                 string syb = ConfigPlus.GetSymbol(SymbolType.TreeLinevertical);
@@ -966,17 +947,15 @@ namespace PromptPlusLibrary.Controls.FileSelect
             if (isFile)
             {
                 FileInfo fi = new(name);
-                if (fi.Length < _minvalueSize || fi.Length > _maxvalueSize)
-                {
-                    return null;
-                }
-                return new()
-                {
-                    FullPath = fi.FullName,
-                    IsFolder = false,
-                    Name = fi.Name,
-                    Length = fi.Length
-                };
+                return fi.Length < _minvalueSize || fi.Length > _maxvalueSize
+                    ? null
+                    : new()
+                    {
+                        FullPath = fi.FullName,
+                        IsFolder = false,
+                        Name = fi.Name,
+                        Length = fi.Length
+                    };
             }
             else
             {
@@ -1186,15 +1165,11 @@ namespace PromptPlusLibrary.Controls.FileSelect
             {
                 return string.Empty;
             }
-            if (_localpaginator!.SelectedItem.Status == NodeStatus.Loading)
-            {
-                return $"{_localpaginator!.SelectedItem.Value.Name}({Messages.Loading})";
-            }
-            if (_localpaginator!.SelectedItem.Status == NodeStatus.Unloading)
-            {
-                return $"{_localpaginator!.SelectedItem.Value.Name}({Messages.Unloading})";
-            }
-            return _localpaginator!.SelectedItem.Value.Name;
+            return _localpaginator!.SelectedItem.Status == NodeStatus.Loading
+                ? $"{_localpaginator!.SelectedItem.Value.Name}({Messages.Loading})"
+                : _localpaginator!.SelectedItem.Status == NodeStatus.Unloading
+                ? $"{_localpaginator!.SelectedItem.Value.Name}({Messages.Unloading})"
+                : _localpaginator!.SelectedItem.Value.Name;
         }
 
         private string GetTooltipModeSelect()
@@ -1225,11 +1200,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 }
                 token.WaitHandle.WaitOne(2);
             }
-            if (ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
-            {
-                return ConsolePlus.ReadKey(true);
-            }
-            return new ConsoleKeyInfo();
+            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : new ConsoleKeyInfo();
         }
 
     }

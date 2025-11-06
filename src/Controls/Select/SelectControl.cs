@@ -347,7 +347,7 @@ namespace PromptPlusLibrary.Controls.Select
             {
                 _localpaginator.FirstItem();
             }
-            if (_localpaginator!.SelectedIndex >= 0  && _localpaginator.SelectedItem!.Disabled)
+            if (_localpaginator!.SelectedIndex >= 0 && _localpaginator.SelectedItem!.Disabled)
             {
                 SetError(Messages.SelectionDisabled);
             }
@@ -361,7 +361,7 @@ namespace PromptPlusLibrary.Controls.Select
             {
                 return;
             }
-            foreach (var item in _items)
+            foreach (ItemSelect<T> item in _items)
             {
                 item.ExtraText = _extraInfo.Invoke(item.Value!);
             }
@@ -465,14 +465,7 @@ namespace PromptPlusLibrary.Controls.Select
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer.Clear();
-                        if (_modeView != ModeView.Filter)
-                        {
-                            _modeView = ModeView.Filter;
-                        }
-                        else
-                        {
-                            _modeView = ModeView.Select;
-                        }
+                        _modeView = _modeView != ModeView.Filter ? ModeView.Filter : ModeView.Select;
                         _indexTooptip = 0;
                         break;
                     }
@@ -577,7 +570,7 @@ namespace PromptPlusLibrary.Controls.Select
                         {
                             _localpaginator!.UpdateFilter(filter);
                         }
-                        if (_localpaginator!.Count == 1 && _autoSelect && _localpaginator!.SelectedIndex >=0  && !_localpaginator!.SelectedItem!.Disabled)
+                        if (_localpaginator!.Count == 1 && _autoSelect && _localpaginator!.SelectedIndex >= 0 && !_localpaginator!.SelectedItem!.Disabled)
                         {
                             _modeView = ModeView.Select;
                             ResultCtrl = new ResultPrompt<T>(_localpaginator!.SelectedItem!.Value, false);
@@ -709,15 +702,7 @@ namespace PromptPlusLibrary.Controls.Select
             {
                 return;
             }
-            string? tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            else
-            {
-                tooltip = _tooltipModeSelect;
-            }
+            string? tooltip = _indexTooptip > 0 ? GetTooltipToggle() : _tooltipModeSelect;
             screenBuffer.Write(tooltip, _optStyles[SelectStyles.Tooltips]);
         }
 
@@ -747,14 +732,9 @@ namespace PromptPlusLibrary.Controls.Select
                 {
                     if (!string.IsNullOrEmpty(item.Group) && _modeView != ModeView.Filter)
                     {
-                        if (item.IsLastItemGroup)
-                        {
-                            indentgroup = $" {ConfigPlus.GetSymbol(SymbolType.IndentEndGroup)}";
-                        }
-                        else
-                        {
-                            indentgroup = $" {ConfigPlus.GetSymbol(SymbolType.IndentGroup)}";
-                        }
+                        indentgroup = item.IsLastItemGroup
+                            ? $" {ConfigPlus.GetSymbol(SymbolType.IndentEndGroup)}"
+                            : $" {ConfigPlus.GetSymbol(SymbolType.IndentGroup)}";
                     }
                 }
                 if (item.IsFirstItemGroup)
@@ -776,7 +756,7 @@ namespace PromptPlusLibrary.Controls.Select
                     }
                     if (!string.IsNullOrEmpty(item.ExtraText))
                     {
-                        screenBuffer.Write($"({item.ExtraText})", item.Disabled? _optStyles[SelectStyles.Disabled]:_optStyles[SelectStyles.Selected]);
+                        screenBuffer.Write($"({item.ExtraText})", item.Disabled ? _optStyles[SelectStyles.Disabled] : _optStyles[SelectStyles.Selected]);
 
                     }
                     screenBuffer.WriteLine("", Style.Default());
@@ -815,7 +795,7 @@ namespace PromptPlusLibrary.Controls.Select
         {
             if (_modeView == ModeView.Select)
             {
-                var text = string.Empty;
+                string text = string.Empty;
                 if (_localpaginator!.SelectedIndex >= 0)
                 {
                     text = _localpaginator!.SelectedItem.Text!;

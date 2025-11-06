@@ -42,7 +42,7 @@ namespace PromptPlusLibrary.Controls
 
         public ResultPrompt<T> Run(CancellationToken stoptoken = default)
         {
-             using var cts = CancellationTokenSource.CreateLinkedTokenSource(stoptoken, console.TokenCancelPress);
+            using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(stoptoken, console.TokenCancelPress);
 
             if (isWidget)
             {
@@ -53,7 +53,7 @@ namespace PromptPlusLibrary.Controls
                     promptConfig.TraceBaseControlOptions = GeneralOptions;
                     promptConfig.TraceCurrentFileNameControl = filemecontrol;
 
-                    var error = false;
+                    bool error = false;
                     _showTooltipValue = GeneralOptions.ShowTooltipValue;
                     bool oldcursor = ConsolePlus.CursorVisible;
                     Color oldforecolor = ConsolePlus.ForegroundColor;
@@ -114,7 +114,7 @@ namespace PromptPlusLibrary.Controls
                 Color oldbackcolor = ConsolePlus.BackgroundColor;
                 Thread.CurrentThread.CurrentCulture = ConfigPlus.DefaultCulture;
                 ConsolePlus.CursorVisible = false;
-                var error = false;
+                bool error = false;
                 try
                 {
 
@@ -225,20 +225,12 @@ namespace PromptPlusLibrary.Controls
             {
                 token.WaitHandle.WaitOne(2);
             }
-            if (console.KeyAvailable && !token.IsCancellationRequested)
-            {
-                return console.ReadKey(intercept);
-            }
-            return new ConsoleKeyInfo();
+            return console.KeyAvailable && !token.IsCancellationRequested ? console.ReadKey(intercept) : new ConsoleKeyInfo();
         }
 
         public bool IsTooltipToggerKeyPress(ConsoleKeyInfo keyInfo)
         {
-            if (GeneralOptions.ShowTooltipValue && ConfigPlus.HotKeyTooltip.Equals(keyInfo))
-            {
-                return true;
-            }
-            return false;
+            return GeneralOptions.ShowTooltipValue && ConfigPlus.HotKeyTooltip.Equals(keyInfo);
         }
 
         public bool CheckTooltipShowHideKeyPress(ConsoleKeyInfo keyInfo)
@@ -253,11 +245,7 @@ namespace PromptPlusLibrary.Controls
 
         public bool IsAbortKeyPress(ConsoleKeyInfo keyInfo)
         {
-            if (GeneralOptions.EnabledAbortKeyValue && keyInfo.IsAbortKeyPress())
-            {
-                return true;
-            }
-            return false;
+            return GeneralOptions.EnabledAbortKeyValue && keyInfo.IsAbortKeyPress();
         }
 
         private void RenderBuffer(bool isfinish = false)
@@ -275,7 +263,7 @@ namespace PromptPlusLibrary.Controls
 
                 LineScreen[] result = _bufferScreen.DiffBuffer();
 
-                (int left, int _, int scrolled) = ((IConsoleExtend)ConsolePlus).PreviewCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop + result[^1].Line);
+                (int left, int _, int scrolled) = ConsolePlus.PreviewCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop + result[^1].Line);
                 if (scrolled > 0)
                 {
                     _screenPosition = (left, _screenPosition.StartTop - scrolled);
@@ -293,10 +281,10 @@ namespace PromptPlusLibrary.Controls
                     {
                         ConsolePlus.RawWrite("", Style.Default(), true);
                     }
-                    var first = true;
+                    bool first = true;
                     foreach (Segment? item in itembuffer.Content.Where(x => x.Text.Length > 0))
                     {
-                        ConsolePlus.RawWrite(item.Text, item.Style,first);
+                        ConsolePlus.RawWrite(item.Text, item.Style, first);
                         first = false;
                     }
                 }
@@ -304,13 +292,13 @@ namespace PromptPlusLibrary.Controls
             if (isfinish)
             {
                 LineScreen[] result = _bufferScreen.OriginalBuffer();
-                (int left, int top, int scrolled) = ((IConsoleExtend)ConsolePlus).PreviewCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop + result[^1].Line);
+                (int left, int top, int scrolled) = ConsolePlus.PreviewCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop + result[^1].Line);
                 if (scrolled > 0)
                 {
                     _screenPosition = (left, _screenPosition.StartTop - scrolled);
                     for (int i = 0; i < result[^1].Line; i++)
                     {
-                        ConsolePlus.RawWriteLine("",clearrestofline: true);
+                        ConsolePlus.RawWriteLine("", clearrestofline: true);
                     }
                     ConsolePlus.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop);
                 }
@@ -321,10 +309,10 @@ namespace PromptPlusLibrary.Controls
                     {
                         ConsolePlus.RawWrite("", Style.Default(), true);
                     }
-                    var first = true;
+                    bool first = true;
                     foreach (Segment? item in itembuffer.Content.Where(x => x.Text.Length > 0))
                     {
-                        ConsolePlus.RawWrite(item.Text, item.Style,first);
+                        ConsolePlus.RawWrite(item.Text, item.Style, first);
                         first = false;
                     }
                 }
@@ -334,7 +322,7 @@ namespace PromptPlusLibrary.Controls
             {
                 if (savedcursor.HasValue)
                 {
-                    (int left, int _, int _) = ((IConsoleExtend)ConsolePlus).PreviewCursorPosition(savedcursor.Value.Left + ConsolePlus.PadLeft, _screenPosition.StartTop + savedcursor.Value.Top);
+                    (int left, int _, int _) = ConsolePlus.PreviewCursorPosition(savedcursor.Value.Left + ConsolePlus.PadLeft, _screenPosition.StartTop + savedcursor.Value.Top);
                     ConsolePlus.SetCursorPosition(left, _screenPosition.StartTop + savedcursor.Value.Top);
                 }
             }

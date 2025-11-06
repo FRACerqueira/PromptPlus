@@ -29,7 +29,6 @@ namespace PromptPlusLibrary.Drivers
         private static bool _isAbortCtrlC;
         private static Task? _CheckBackGroundCtrlC;
 
-#pragma warning disable IDE0290 // Use primary constructor
         public ConsoleDriveWindows(IProfileDrive profile)
         {
             ProfilePlus = profile;
@@ -40,7 +39,7 @@ namespace PromptPlusLibrary.Drivers
             _isExistDefaultCancel = false;
             _CheckBackGroundCtrlC = Task.Run(() =>
             {
-                var found = false;
+                bool found = false;
                 while (!_disposed)
                 {
                     try
@@ -64,7 +63,6 @@ namespace PromptPlusLibrary.Drivers
 
             });
         }
-#pragma warning restore IDE0290 // Use primary constructor
 
         public CancellationToken TokenCancelPress => _tokenCancelPress.Token;
 
@@ -138,7 +136,7 @@ namespace PromptPlusLibrary.Drivers
             }
         }
 
-        public  bool UserPressKeyAborted { get; private set; }
+        public bool UserPressKeyAborted { get; private set; }
 
         internal IProfileDrive ProfilePlus { get; }
 
@@ -659,15 +657,7 @@ namespace PromptPlusLibrary.Drivers
                     {
                         int dif = style.Value.OverflowStrategy == Overflow.Ellipsis ? 2 : 1;
                         int max = BufferWidth - CursorLeft - dif;
-                        string aux;
-                        if (value.Length <= dif)
-                        {
-                            aux = string.Empty;
-                        }
-                        else
-                        {
-                            aux = value[..max];
-                        }
+                        string aux = value.Length <= dif ? string.Empty : value[..max];
                         result.Append(aux);
                         if (style.Value.OverflowStrategy == Overflow.Ellipsis)
                         {
@@ -708,15 +698,7 @@ namespace PromptPlusLibrary.Drivers
                     {
                         int dif = style.Value.OverflowStrategy == Overflow.Ellipsis ? 2 : 1;
                         int max = BufferWidth - CursorLeft - dif;
-                        string aux;
-                        if (value.Length <= dif)
-                        {
-                            aux = string.Empty;
-                        }
-                        else
-                        {
-                            aux = value[..max];
-                        }
+                        string aux = value.Length <= dif ? string.Empty : value[..max];
                         Console.Write(aux);
                         if (style.Value.OverflowStrategy == Overflow.Ellipsis)
                         {
@@ -804,15 +786,7 @@ namespace PromptPlusLibrary.Drivers
                     {
                         int dif = overflow == Overflow.Ellipsis ? 2 : 1;
                         int max = BufferWidth - CursorLeft - dif;
-                        string aux;
-                        if (value.Text.Length <= dif)
-                        {
-                            aux = string.Empty;
-                        }
-                        else
-                        {
-                            aux = value.Text[..max];
-                        }
+                        string aux = value.Text.Length <= dif ? string.Empty : value.Text[..max];
                         Console.Write(aux);
                         if (overflow == Overflow.Ellipsis)
                         {
@@ -900,7 +874,7 @@ namespace PromptPlusLibrary.Drivers
 
         private void ConsoleCancelKeyPress(object? sender, ConsoleCancelEventArgs e)
         {
-            _cancelKeyPressEvent!.Invoke(sender,e);
+            _cancelKeyPressEvent!.Invoke(sender, e);
             UserPressKeyAborted = true;
             if (BehaviorAfterCancelKeyPress != AfterCancelKeyPress.Default)
             {

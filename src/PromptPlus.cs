@@ -7,7 +7,6 @@ using PromptPlusLibrary.Controls;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Core.Ansi;
 using PromptPlusLibrary.Drivers;
-using PromptPlusLibrary.PublicLibrary;
 using PromptPlusLibrary.Widgets;
 using System;
 using System.Collections.Generic;
@@ -80,14 +79,9 @@ namespace PromptPlusLibrary
                 0,
                 0);
 
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                _consoledrive = new ConsoleDriveWindows(profileDrive);
-            }
-            else
-            {
-                _consoledrive = new ConsoleDriveLinux(profileDrive);
-            }
+            _consoledrive = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? new ConsoleDriveWindows(profileDrive)
+                : (IConsole)new ConsoleDriveLinux(profileDrive);
 
             _promptConfig = new(unicodesupported, _appConsoleCulture);
 
@@ -119,14 +113,14 @@ namespace PromptPlusLibrary
             {
                 if (((IConsoleExtend)Console).AbortedByCtrlC)
                 {
-                    var error = new AppDomainUnloadedException("Press Ctrl+C or Ctrl+Break");
+                    AppDomainUnloadedException error = new("Press Ctrl+C or Ctrl+Break");
                     try
                     {
                         WriteCrashLog(typeof(PromptPlus), error);
                         _promptConfig.AfterError?.Invoke(error);
                         System.Console.WriteLine($"{error}");
                     }
-                    catch 
+                    catch
                     {
                         //none
                     }
@@ -155,7 +149,7 @@ namespace PromptPlusLibrary
                 {
                     if (((IConsoleExtend)Console).AbortedByCtrlC)
                     {
-                        var error = new AppDomainUnloadedException("Press Ctrl+C or Ctrl+Break");
+                        AppDomainUnloadedException error = new("Press Ctrl+C or Ctrl+Break");
                         WriteCrashLog(typeof(PromptPlus), error);
                         _promptConfig.AfterError?.Invoke(error);
                         System.Console.WriteLine($"{error}");
@@ -166,7 +160,7 @@ namespace PromptPlusLibrary
                         _promptConfig.AfterError?.Invoke((Exception)e.ExceptionObject);
                     }
                 }
-                catch 
+                catch
                 {
                     //none
                 }
@@ -204,7 +198,7 @@ namespace PromptPlusLibrary
         {
 
 #pragma warning disable CA1869 // Cache and reuse 'JsonSerializerOptions' instances
-            File.WriteAllText(Path.Combine(foldername, NameResourceConfigFile), 
+            File.WriteAllText(Path.Combine(foldername, NameResourceConfigFile),
                 JsonSerializer.Serialize(_promptConfig, new JsonSerializerOptions
                 {
                     WriteIndented = true,
@@ -258,14 +252,9 @@ namespace PromptPlusLibrary
                 }
                 ((IConsoleExtend)_consoledrive).Dispose();
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    _consoledrive = new ConsoleDriveWindows(profileDrive);
-                }
-                else
-                {
-                    _consoledrive = new ConsoleDriveLinux(profileDrive);
-                }
+                _consoledrive = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                    ? new ConsoleDriveWindows(profileDrive)
+                    : (IConsole)new ConsoleDriveLinux(profileDrive);
                 _consoledrive.ResetColor();
                 _consoledrive.Clear();
             }
@@ -307,7 +296,7 @@ namespace PromptPlusLibrary
         private static (string key, string value)[] GetAllProperties(object obj)
         {
             List<(string key, string value)> result = [];
-            foreach (var prop in obj.GetType().GetProperties())
+            foreach (PropertyInfo prop in obj.GetType().GetProperties())
             {
                 try
                 {
@@ -337,15 +326,15 @@ namespace PromptPlusLibrary
             return [.. result];
         }
 
-        internal static void  WriteCrashLog(Type source, Exception? ex)
+        internal static void WriteCrashLog(Type source, Exception? ex)
         {
             var platform = RuntimeInformation.OSDescription;
             var framework = RuntimeInformation.FrameworkDescription;
             var version = source.Assembly.GetName()?.Version?.ToString() ?? string.Empty;
-            var culture = Thread.CurrentThread.CurrentCulture;
-            var consoleproperties = GetAllProperties(_consoledrive);
-            var configproperties = GetAllProperties(_promptConfig);
-            (string key, string value)[] optionproperties = _promptConfig.TraceBaseControlOptions==null?[]:GetAllProperties(_promptConfig.TraceBaseControlOptions);
+            CultureInfo culture = Thread.CurrentThread.CurrentCulture;
+            (string key, string value)[] consoleproperties = GetAllProperties(_consoledrive);
+            (string key, string value)[] configproperties = GetAllProperties(_promptConfig);
+            (string key, string value)[] optionproperties = _promptConfig.TraceBaseControlOptions == null ? [] : GetAllProperties(_promptConfig.TraceBaseControlOptions);
 
             string folderPath = Path.Combine(_promptConfig.FolderLog, "PromptPlus.Log");
             var logFileName = $"PromptPlusLog{DateTime.Now:yyyyMMdd}.log";
@@ -355,7 +344,7 @@ namespace PromptPlusLibrary
                 var files = Directory.GetFiles(folderPath, "PromptPlusLog*.log");
                 foreach (var file in files)
                 {
-                    var fi = new FileInfo(file);
+                    FileInfo fi = new(file);
                     if (DateOnly.FromDateTime(fi.CreationTime) < DateOnly.FromDateTime(DateTime.Now).AddDays(-7))
                     {
                         File.Delete(file);
@@ -394,20 +383,20 @@ namespace PromptPlusLibrary
                 {
                     writer.WriteLine($"Options properties");
                     writer.WriteLine($"------------------");
-                    foreach (var (key, value) in optionproperties)
+                    foreach ((string? key, string? value) in optionproperties)
                     {
                         writer.WriteLine($"  {key}: {value}");
                     }
                 }
                 writer.WriteLine($"Console properties");
                 writer.WriteLine($"------------------");
-                foreach (var (key, value) in consoleproperties)
+                foreach ((string? key, string? value) in consoleproperties)
                 {
                     writer.WriteLine($"  {key}: {value}");
                 }
                 writer.WriteLine($"Config properties");
                 writer.WriteLine($"-----------------");
-                foreach (var (key, value) in configproperties)
+                foreach ((string? key, string? value) in configproperties)
                 {
                     writer.WriteLine($"  {key}: {value}");
                 }
@@ -421,7 +410,7 @@ namespace PromptPlusLibrary
                     writer?.Close();
                 }
                 catch
-                { 
+                {
                     //none
                 }
                 writer?.Dispose();

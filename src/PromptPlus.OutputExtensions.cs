@@ -60,13 +60,13 @@ namespace PromptPlusLibrary
         /// <param name="console">The <see cref="IConsole"/> drive</param>
         /// <param name="row">The row to clear</param>
         /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
-        public static void ClearLine(this IConsole console, int? row = null,Style ? style = null)
+        public static void ClearLine(this IConsole console, int? row = null, Style? style = null)
         {
             using (InternalExclusiveContext(console))
             {
                 row ??= _consoledrive.CursorTop;
                 console.SetCursorPosition(0, row.Value);
-                console.Write(' ',style, true);
+                console.Write(' ', style, true);
                 console.SetCursorPosition(0, row.Value);
             }
         }

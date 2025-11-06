@@ -14,7 +14,7 @@ namespace PromptPlusLibrary
     /// </summary>
     /// <typeparam name="T">The type of items in the collection.</typeparam>
     public interface IMultiSelectControl<T>
-    {                               
+    {
         /// <summary>
         /// Runs the MultiSelect control and returns the result.
         /// </summary>

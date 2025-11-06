@@ -151,22 +151,9 @@ namespace PromptPlusLibrary.Controls.KeyPress
 
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
-            string answer;
-            if (ResultCtrl!.Value.IsAborted)
-            {
-                if (GeneralOptions.ShowMesssageAbortKeyValue)
-                {
-                    answer = Messages.CanceledKey;
-                }
-                else
-                {
-                    answer = string.Empty;
-                }
-            }
-            else
-            {
-                answer = ValidTextKeypress(ResultCtrl!.Value.Content!.Value);
-            }
+            string answer = ResultCtrl!.Value.IsAborted
+                ? GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty
+                : ValidTextKeypress(ResultCtrl!.Value.Content!.Value);
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
                 screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[KeyPressStyles.Prompt]);
@@ -267,12 +254,7 @@ namespace PromptPlusLibrary.Controls.KeyPress
 
         private bool IsValidKeypress(ConsoleKeyInfo value)
         {
-            if (_keyValids.Count == 0)
-            {
-                return false;
-            }
-
-            return _keyValids.Any(x => x.KeyPress.Key == value.Key && x.KeyPress.Modifiers == value.Modifiers);
+            return _keyValids.Count != 0 && _keyValids.Any(x => x.KeyPress.Key == value.Key && x.KeyPress.Modifiers == value.Modifiers);
         }
         private string ConsoleKeyInfoText(ConsoleKeyInfo value)
         {
@@ -329,12 +311,8 @@ namespace PromptPlusLibrary.Controls.KeyPress
 
         private bool IsPrintable(char c)
         {
-            if (char.IsControl(c))
-            {
-                return false;
-            }
-            return char.IsWhiteSpace(c) ||
-                !_nonRenderingCategories.Contains(char.GetUnicodeCategory(c));
+            return !char.IsControl(c) && (char.IsWhiteSpace(c) ||
+                !_nonRenderingCategories.Contains(char.GetUnicodeCategory(c)));
         }
 
         private ConsoleKeyInfo? WaitKeypressSpinner(CancellationToken token)
@@ -348,11 +326,7 @@ namespace PromptPlusLibrary.Controls.KeyPress
                 }
                 token.WaitHandle.WaitOne(2);
             }
-            if (ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
-            {
-                return ConsolePlus.ReadKey(true);
-            }
-            return null;
+            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : null;
         }
     }
 }

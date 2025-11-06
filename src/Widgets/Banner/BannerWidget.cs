@@ -45,15 +45,7 @@ namespace PromptPlusLibrary.Widgets.Banner
             }
             using (console.InternalExclusiveContext())
             {
-                string[] result;
-                if (_fontloaded is not null)
-                {
-                    result = _fontloaded.ToAsciiArt(text);
-                }
-                else
-                {
-                    result = _fontDefault.ToAsciiArt(text);
-                }
+                string[] result = _fontloaded is not null ? _fontloaded.ToAsciiArt(text) : _fontDefault.ToAsciiArt(text);
                 int max = 0;
                 foreach (string? item in result.Where(x => max < x.Length))
                 {

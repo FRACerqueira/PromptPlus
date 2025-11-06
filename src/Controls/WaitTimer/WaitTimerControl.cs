@@ -170,29 +170,9 @@ namespace PromptPlusLibrary.Controls.WaitTimer
 
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
-            string answer;
-            if (ResultCtrl!.Value.IsAborted)
-            {
-                if (GeneralOptions.ShowMesssageAbortKeyValue)
-                {
-                    answer = Messages.CanceledKey;
-                }
-                else
-                {
-                    answer = string.Empty;
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(_finish))
-                {
-                    answer = _finish;
-                }
-                else
-                {
-                    answer = $"{_answertimer:hh\\:mm\\:ss\\:ff} ";
-                }
-            }
+            string answer = ResultCtrl!.Value.IsAborted
+                ? GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty
+                : !string.IsNullOrEmpty(_finish) ? _finish : $"{_answertimer:hh\\:mm\\:ss\\:ff} ";
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
                 screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[WaitTimerStyles.Prompt]);
@@ -220,14 +200,7 @@ namespace PromptPlusLibrary.Controls.WaitTimer
 
         private void UpdateElapsedTime(object? state)
         {
-            if (_isCountDown)
-            {
-                _answertimer = _timeoutcount.Subtract(_currenttimer);
-            }
-            else
-            {
-                _answertimer = _currenttimer;
-            }
+            _answertimer = _isCountDown ? _timeoutcount.Subtract(_currenttimer) : _currenttimer;
             _hasupdateanswer = true;
         }
 
@@ -318,11 +291,7 @@ namespace PromptPlusLibrary.Controls.WaitTimer
                 }
                 token.WaitHandle.WaitOne(2);
             }
-            if (ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
-            {
-                return ConsolePlus.ReadKey(true);
-            }
-            return null;
+            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : null;
         }
 
     }

@@ -9,6 +9,7 @@
 ```csharp
 public INodeTreeMultiSelectControl<T> NodeTreeMultiSelect<T>(string prompt = "", 
     string? description = null)
+    where T : class, new()
 ```
 
 | parameter | description |

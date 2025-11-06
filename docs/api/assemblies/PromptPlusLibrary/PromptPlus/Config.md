@@ -12,7 +12,7 @@ public static IPromptPlusConfig Config { get; }
 
 ### See Also
 
-* interface [IPromptPlusConfig](../../PromptPlusLibrary.PublicLibrary/IPromptPlusConfig.md)
+* interface [IPromptPlusConfig](../IPromptPlusConfig.md)
 * class [PromptPlus](../PromptPlus.md)
 * namespace [PromptPlusLibrary](../../PromptPlus.md)
 

@@ -267,14 +267,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
             }
             _filterType = filter;
             _filterCaseinsensitive = caseinsensitive;
-            if (filter == FilterMode.Disabled)
-            {
-                _filterColumns = [];
-            }
-            else
-            {
-                _filterColumns = indexColumn;
-            }
+            _filterColumns = filter == FilterMode.Disabled ? [] : indexColumn;
             return this;
         }
 
@@ -404,14 +397,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                 item.TextColumns = [.. cols];
                 if (_filterType != FilterMode.Disabled)
                 {
-                    if (_filterCaseinsensitive)
-                    {
-                        item.SearchContent = SearchContent(item, _filterColumns).ToUpperInvariant();
-                    }
-                    else
-                    {
-                        item.SearchContent = SearchContent(item, _filterColumns);
-                    }
+                    item.SearchContent = _filterCaseinsensitive ? SearchContent(item, _filterColumns).ToUpperInvariant() : SearchContent(item, _filterColumns);
                 }
                 //Calculate max content Length
                 if (_autoFill)
@@ -491,20 +477,16 @@ namespace PromptPlusLibrary.Controls.TableSelect
                 }
             }
 
-            if (IsWidgetControl || _filterType == FilterMode.Disabled)
-            {
-                _localpaginator = new Paginator<ItemTableRow<T>>(
+            _localpaginator = IsWidgetControl || _filterType == FilterMode.Disabled
+                ? new Paginator<ItemTableRow<T>>(
                     FilterMode.Disabled,
                     _items,
                     _pageSize,
                     defvaluepage,
                     (item1, item2) => item1.UniqueId == item2.UniqueId,
                     null,
-                    IsEnnabled);
-            }
-            else
-            {
-                _localpaginator = new Paginator<ItemTableRow<T>>(
+                    IsEnnabled)
+                : new Paginator<ItemTableRow<T>>(
                     _filterType,
                     _items,
                     _pageSize,
@@ -512,7 +494,6 @@ namespace PromptPlusLibrary.Controls.TableSelect
                     (item1, item2) => item1.UniqueId == item2.UniqueId,
                     (item) => item.SearchContent,
                     IsEnnabled);
-            }
             _currentrow = _localpaginator.CurrentIndex;
 
             if (_localpaginator.SelectedItem == null)
@@ -607,14 +588,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer.Clear();
-                        if (_modeView != ModeView.Filter)
-                        {
-                            _modeView = ModeView.Filter;
-                        }
-                        else
-                        {
-                            _modeView = ModeView.Select;
-                        }
+                        _modeView = _modeView != ModeView.Filter ? ModeView.Filter : ModeView.Select;
                         _indexTooptip = 0;
                         break;
                     }
@@ -1330,15 +1304,9 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         {
                             screenBuffer.Write(sepcol, stl);
                         }
-                        string? col = null;
-                        if (cols[itemcol].Length > i)
-                        {
-                            col = AlignmentText(cols[itemcol][i], _columns[itemcol].AlignCol, _columns[itemcol].Width);
-                        }
-                        else
-                        {
-                            col = new string(' ', _columns[itemcol].Width);
-                        }
+                        string? col = cols[itemcol].Length > i
+                            ? AlignmentText(cols[itemcol][i], _columns[itemcol].AlignCol, _columns[itemcol].Width)
+                            : new string(' ', _columns[itemcol].Width);
                         if (!_hideSelectorRow && itemcol == 0 && !isseleted)
                         {
                             col = " ";
@@ -1571,19 +1539,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
             {
                 return "";
             }
-            string col;
-            if (objftm != null)
-            {
-                col = objftm(obj);
-            }
-            else if (_formatTypes.ContainsKey(obj.GetType()))
-            {
-                col = _formatTypes[obj.GetType()](obj);
-            }
-            else
-            {
-                col = obj.ToString()!;
-            }
+            string col = objftm != null ? objftm(obj) : _formatTypes.ContainsKey(obj.GetType()) ? _formatTypes[obj.GetType()](obj) : obj.ToString()!;
             return col;
         }
 
@@ -1637,15 +1593,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
             {
                 return;
             }
-            string? tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            else
-            {
-                tooltip = _tooltipModeSelect;
-            }
+            string? tooltip = _indexTooptip > 0 ? GetTooltipToggle() : _tooltipModeSelect;
             screenBuffer.Write(tooltip, _optStyles[TableStyles.Tooltips]);
         }
 

@@ -16,6 +16,7 @@ namespace PromptPlusLibrary.Controls
     {
         private const string Folderhistory = "PromptPlus.History";
         private const string Filehistory = "{0}.txt";
+        private static readonly string UserProfilePath = GetFolderPath(SpecialFolder.UserProfile);
 
         public static TimeSpan DefaultHistoryTimeout => TimeSpan.FromDays(365);
 
@@ -30,8 +31,7 @@ namespace PromptPlusLibrary.Controls
 
             string localfilename = UniqueDomain(filename);
             string file = string.Format(Filehistory, localfilename);
-            string userProfile = GetFolderPath(SpecialFolder.UserProfile);
-            string filePath = Path.Combine(userProfile, Folderhistory, file);
+            string filePath = Path.Combine(UserProfilePath, Folderhistory, file);
             List<ItemHistory> result = [];
 
             if (File.Exists(filePath))
@@ -86,8 +86,7 @@ namespace PromptPlusLibrary.Controls
 
             string localfilename = UniqueDomain(filename);
             string file = string.Format(Filehistory, localfilename);
-            string userProfile = GetFolderPath(SpecialFolder.UserProfile);
-            string folderPath = Path.Combine(userProfile, Folderhistory);
+            string folderPath = Path.Combine(UserProfilePath, Folderhistory);
             string filePath = Path.Combine(folderPath, file);
 
             if (!Directory.Exists(folderPath))
@@ -125,8 +124,7 @@ namespace PromptPlusLibrary.Controls
 
             string localfilename = UniqueDomain(filename);
             string file = string.Format(Filehistory, localfilename);
-            string userProfile = GetFolderPath(SpecialFolder.UserProfile);
-            string filePath = Path.Combine(userProfile, Folderhistory, file);
+            string filePath = Path.Combine(UserProfilePath, Folderhistory, file);
 
             if (File.Exists(filePath))
             {

@@ -8,6 +8,7 @@
 
 ```csharp
 public INodeTreeSelectControl<T> NodeTreeSelect<T>(string prompt = "", string? description = null)
+    where T : class, new()
 ```
 
 | parameter | description |

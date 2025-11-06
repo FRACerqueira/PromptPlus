@@ -108,14 +108,7 @@ namespace PromptPlusLibrary.Controls.Input
         {
             _isinputsecret = true;
             _secretChar = value ?? '#';
-            if (enabledView)
-            {
-                _enabledViewSecret = ConfigPlus.HotKeyPasswordView;
-            }
-            else
-            {
-                _enabledViewSecret = null;
-            }
+            _enabledViewSecret = enabledView ? ConfigPlus.HotKeyPasswordView : null;
             return this;
         }
 
@@ -495,14 +488,7 @@ namespace PromptPlusLibrary.Controls.Input
             string answer = ResultCtrl!.Value.Content;
             if (ResultCtrl.Value.IsAborted)
             {
-                if (GeneralOptions.ShowMesssageAbortKeyValue)
-                {
-                    answer = Messages.CanceledKey;
-                }
-                else
-                {
-                    answer = string.Empty;
-                }
+                answer = GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty;
             }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
@@ -626,17 +612,13 @@ namespace PromptPlusLibrary.Controls.Input
             {
                 tooltip = _tooltipModeInput;
             }
-            else if (_modeView == ModeView.Suggestion)
-            {
-                tooltip = _tooltipModeSuggestion;
-            }
-            else if (_modeView == ModeView.History)
-            {
-                tooltip = _tooltipModeHistory;
-            }
             else
             {
-                throw new NotImplementedException($"ModeView {_modeView} not implemented.");
+                tooltip = _modeView == ModeView.Suggestion
+                    ? _tooltipModeSuggestion
+                    : _modeView == ModeView.History
+                    ? _tooltipModeHistory
+                    : throw new NotImplementedException($"ModeView {_modeView} not implemented.");
             }
             screenBuffer.Write(tooltip, _optStyles[InputStyles.Tooltips]);
         }

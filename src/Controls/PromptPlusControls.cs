@@ -425,7 +425,7 @@ namespace PromptPlusLibrary.Controls
             return new FileMultiSelectControl(console, promptConfig, opt);
         }
 
-        public INodeTreeSelectControl<T> NodeTreeSelect<T>(string prompt = "", string? description = null)
+        public INodeTreeSelectControl<T> NodeTreeSelect<T>(string prompt = "", string? description = null) where T : class, new()
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);
@@ -436,7 +436,7 @@ namespace PromptPlusLibrary.Controls
             return new NodeTreeSelectControl<T>(console, promptConfig, opt);
         }
 
-        public INodeTreeMultiSelectControl<T> NodeTreeMultiSelect<T>(string prompt = "", string? description = null)
+        public INodeTreeMultiSelectControl<T> NodeTreeMultiSelect<T>(string prompt = "", string? description = null) where T : class, new()
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);
@@ -447,7 +447,7 @@ namespace PromptPlusLibrary.Controls
             return new NodeTreeMultiSelectControl<T>(console, promptConfig, opt);
         }
 
-        public IRemoteSelectControl<T1, T2> RemoteSelect<T1,T2>(string prompt = "", string? description = null) where T1 : class where T2 : class
+        public IRemoteSelectControl<T1, T2> RemoteSelect<T1, T2>(string prompt = "", string? description = null) where T1 : class where T2 : class
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);
@@ -455,7 +455,7 @@ namespace PromptPlusLibrary.Controls
             {
                 opt.Description(description);
             }
-            return new RemoteSelectControl<T1,T2>(console, promptConfig, opt);
+            return new RemoteSelectControl<T1, T2>(console, promptConfig, opt);
         }
 
         public IRemoteMultiSelectControl<T1, T2> RemoteMultiSelect<T1, T2>(string prompt = "", string? description = null) where T1 : class where T2 : class
@@ -469,7 +469,7 @@ namespace PromptPlusLibrary.Controls
             return new RemoteMultiSelectControl<T1, T2>(console, promptConfig, opt);
         }
 
-        public INodeTreeRemoteSelectControl<T1,T2> NodeTreeRemoteSelect<T1,T2>(string prompt = "", string? description = null) where T1 : class, new() where T2 : class
+        public INodeTreeRemoteSelectControl<T1, T2> NodeTreeRemoteSelect<T1, T2>(string prompt = "", string? description = null) where T1 : class, new() where T2 : class
         {
             BaseControlOptions opt = new(promptConfig);
             opt.Prompt(prompt);
@@ -477,7 +477,7 @@ namespace PromptPlusLibrary.Controls
             {
                 opt.Description(description);
             }
-            return new NodeTreeRemoteSelectControl<T1,T2>(console, promptConfig, opt);
+            return new NodeTreeRemoteSelectControl<T1, T2>(console, promptConfig, opt);
         }
 
         public INodeTreeRemoteMultiSelectControl<T1, T2> NodeTreeRemoteMultiSelect<T1, T2>(string prompt = "", string? description = null) where T1 : class, new() where T2 : class

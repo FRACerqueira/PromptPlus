@@ -491,14 +491,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer!.Clear();
-                        if (_modeView != ModeView.Filter)
-                        {
-                            _modeView = ModeView.Filter;
-                        }
-                        else
-                        {
-                            _modeView = ModeView.MultiSelect;
-                        }
+                        _modeView = _modeView != ModeView.Filter ? ModeView.Filter : ModeView.MultiSelect;
                         _indexTooptip = 0;
                         break;
                     }
@@ -855,15 +848,9 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             {
                 return;
             }
-            string? tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            else
-            {
-                tooltip = GetTooltipModeMultiSelect(!_hasGroup || (_localpaginator!.SelectedItem != null && !string.IsNullOrEmpty(_localpaginator!.SelectedItem.Group)));
-            }
+            string? tooltip = _indexTooptip > 0
+                ? GetTooltipToggle()
+                : GetTooltipModeMultiSelect(!_hasGroup || (_localpaginator!.SelectedItem != null && !string.IsNullOrEmpty(_localpaginator!.SelectedItem.Group)));
             screenBuffer.Write(tooltip, _optStyles[MultiSelectStyles.Tooltips]);
         }
 
@@ -893,14 +880,9 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 {
                     if (!string.IsNullOrEmpty(item.Group) && _modeView != ModeView.Filter)
                     {
-                        if (item.IsLastItemGroup)
-                        {
-                            indentgroup = $" {ConfigPlus.GetSymbol(SymbolType.IndentEndGroup)}";
-                        }
-                        else
-                        {
-                            indentgroup = $" {ConfigPlus.GetSymbol(SymbolType.IndentGroup)}";
-                        }
+                        indentgroup = item.IsLastItemGroup
+                            ? $" {ConfigPlus.GetSymbol(SymbolType.IndentEndGroup)}"
+                            : $" {ConfigPlus.GetSymbol(SymbolType.IndentGroup)}";
                     }
                 }
                 if (item.IsFirstItemGroup)
@@ -1071,7 +1053,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             {
                 return;
             }
-            foreach (var item in _items)
+            foreach (ItemSelect<T> item in _items)
             {
                 item.ExtraText = _extraInfo.Invoke(item.Value!);
             }

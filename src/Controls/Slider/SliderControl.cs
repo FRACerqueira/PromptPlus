@@ -198,11 +198,7 @@ namespace PromptPlusLibrary.Controls.Slider
         public ISliderControl FracionalDig(byte value)
         {
             _fractionalDigits = value;
-            if (_fractionalDigits > 5)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "FracionalDig must be less than 5");
-            }
-            return this;
+            return _fractionalDigits > 5 ? throw new ArgumentOutOfRangeException(nameof(value), "FracionalDig must be less than 5") : (ISliderControl)this;
         }
 
         public ISliderControl HideElements(HideSlider value)
@@ -622,22 +618,9 @@ namespace PromptPlusLibrary.Controls.Slider
             {
                 screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[SliderStyles.Prompt]);
             }
-            string answer;
-            if (ResultCtrl!.Value.IsAborted)
-            {
-                if (GeneralOptions.ShowMesssageAbortKeyValue)
-                {
-                    answer = Messages.CanceledKey;
-                }
-                else
-                {
-                    answer = string.Empty;
-                }
-            }
-            else
-            {
-                answer = ValueToString(_currentValue);
-            }
+            string answer = ResultCtrl!.Value.IsAborted
+                ? GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty
+                : ValueToString(_currentValue);
             screenBuffer.WriteLine(answer, _optStyles[SliderStyles.Answer]);
 
             return true;
@@ -722,17 +705,13 @@ namespace PromptPlusLibrary.Controls.Slider
             {
                 tooltip = GetTooltipToggle();
             }
-            else if (_modeView == ModeView.Input)
-            {
-                tooltip = _tooltipModeInput;
-            }
-            else if (_modeView == ModeView.History)
-            {
-                tooltip = _tooltipModeHistory;
-            }
             else
             {
-                throw new NotImplementedException($"ModeView {_modeView} not implemented.");
+                tooltip = _modeView == ModeView.Input
+                    ? _tooltipModeInput
+                    : _modeView == ModeView.History
+                    ? _tooltipModeHistory
+                    : throw new NotImplementedException($"ModeView {_modeView} not implemented.");
             }
             screenBuffer.Write(tooltip, _optStyles[SliderStyles.Tooltips]);
 

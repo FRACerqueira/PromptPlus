@@ -258,11 +258,7 @@ namespace PromptPlusLibrary.Controls.Switch
 
         private string ValueToString(bool currentValue)
         {
-            if (currentValue)
-            {
-                return (_onValue ?? Messages.OnValue);
-            }
-            return (_offValue ?? Messages.OffValue);
+            return currentValue ? _onValue ?? Messages.OnValue : _offValue ?? Messages.OffValue;
         }
 
         private void WritePrompt(BufferScreen screenBuffer)
@@ -337,22 +333,9 @@ namespace PromptPlusLibrary.Controls.Switch
             {
                 screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[SwitchStyles.Prompt]);
             }
-            string answer;
-            if (ResultCtrl!.Value.IsAborted)
-            {
-                if (GeneralOptions.ShowMesssageAbortKeyValue)
-                {
-                    answer = Messages.CanceledKey;
-                }
-                else
-                {
-                    answer = string.Empty;
-                }
-            }
-            else
-            {
-                answer = ValueToString(_currentValue);
-            }
+            string answer = ResultCtrl!.Value.IsAborted
+                ? GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty
+                : ValueToString(_currentValue);
             screenBuffer.WriteLine(answer, _optStyles[SwitchStyles.Answer]);
 
             return true;

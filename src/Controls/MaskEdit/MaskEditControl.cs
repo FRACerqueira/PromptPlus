@@ -544,17 +544,13 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             {
                 maskelments = NormalizeStringMask(_usermask, _promptmask);
             }
-            else if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateOnly) || typeof(T) == typeof(TimeOnly))
-            {
-                maskelments = NormalizeDateTimeMask(_usermask, _promptmask, _fixedvalues, _culture);
-            }
-            else if (typeof(T) == typeof(int) || typeof(T) == typeof(long) || typeof(T) == typeof(double) || typeof(T) == typeof(decimal))
-            {
-                maskelments = NormalizeNumberMask(_usermask, _promptmask, _culture);
-            }
             else
             {
-                throw new InvalidOperationException($"Invalid type {typeof(T)}");
+                maskelments = typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateOnly) || typeof(T) == typeof(TimeOnly)
+                    ? NormalizeDateTimeMask(_usermask, _promptmask, _fixedvalues, _culture)
+                    : typeof(T) == typeof(int) || typeof(T) == typeof(long) || typeof(T) == typeof(double) || typeof(T) == typeof(decimal)
+                    ? NormalizeNumberMask(_usermask, _promptmask, _culture)
+                    : throw new InvalidOperationException($"Invalid type {typeof(T)}");
             }
 
             if (!ValidateLoad(_defaultValue, _returnWithMask, maskelments))
@@ -685,14 +681,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             string answer = _inputdata!.MaskOut;
             if (ResultCtrl!.Value.IsAborted)
             {
-                if (GeneralOptions.ShowMesssageAbortKeyValue)
-                {
-                    answer = Messages.CanceledKey;
-                }
-                else
-                {
-                    answer = string.Empty;
-                }
+                answer = GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty;
             }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
@@ -725,14 +714,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             }
             if (withsignal)
             {
-                if (_iscurrencymask)
-                {
-                    mask = $"{mask}*";
-                }
-                else
-                {
-                    mask = $"*{mask}";
-                }
+                mask = _iscurrencymask ? $"{mask}*" : $"*{mask}";
             }
             _usermask = mask;
             _returnWithMask = false;
@@ -815,15 +797,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             {
                 return;
             }
-            string? tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            else
-            {
-                tooltip = _tooltipModeInput;
-            }
+            string? tooltip = _indexTooptip > 0 ? GetTooltipToggle() : _tooltipModeInput;
             screenBuffer.Write(tooltip, _optStyles[MaskEditStyles.Tooltips]);
         }
 
@@ -1885,20 +1859,9 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             }
             else if (isDatetimeMask || isDateOnlyMask || isTimeOnlyMask)
             {
-                DateTime loaddt;
-                if (isDateOnlyMask)
-                {
-                    loaddt = ((DateOnly)(object)defaultValue.Value!).ToDateTime(TimeOnly.MinValue);
-                }
-                else if (isTimeOnlyMask)
-                {
-                    loaddt = DateOnly.MinValue.ToDateTime((TimeOnly)(object)defaultValue.Value!);
-                }
-                else //datetime
-                {
-                    loaddt = Convert.ToDateTime(defaultValue.Value);
-                }
-
+                DateTime loaddt = isDateOnlyMask
+                    ? ((DateOnly)(object)defaultValue.Value!).ToDateTime(TimeOnly.MinValue)
+                    : isTimeOnlyMask ? DateOnly.MinValue.ToDateTime((TimeOnly)(object)defaultValue.Value!) : Convert.ToDateTime(defaultValue.Value);
                 string day = loaddt.ToString("dd");
                 string month = loaddt.ToString("MM");
                 string year = loaddt.ToString("yyyy");
