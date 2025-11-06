@@ -8,6 +8,7 @@
 
 ```csharp
 public interface INodeTreeSelectControl<T>
+    where T : class, new()
 ```
 
 | parameter | description |

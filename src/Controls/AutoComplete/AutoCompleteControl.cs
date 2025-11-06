@@ -342,15 +342,7 @@ namespace PromptPlusLibrary.Controls.AutoComplete
 
                     else if (keyinfo!.Value.IsPressDownArrowKey())
                     {
-                        bool ok = false;
-                        if (_localpaginator!.IsLastPageItem)
-                        {
-                            ok = _localpaginator.NextPage(IndexOption.FirstItem);
-                        }
-                        else
-                        {
-                            ok = _localpaginator.NextItem();
-                        }
+                        bool ok = _localpaginator!.IsLastPageItem ? _localpaginator.NextPage(IndexOption.FirstItem) : _localpaginator.NextItem();
                         if (ok)
                         {
                             _indexTooptip = 0;
@@ -361,15 +353,7 @@ namespace PromptPlusLibrary.Controls.AutoComplete
                     }
                     else if (keyinfo!.Value.IsPressUpArrowKey())
                     {
-                        bool ok = false;
-                        if (_localpaginator!.IsFirstPageItem)
-                        {
-                            ok = _localpaginator!.PreviousPage(IndexOption.LastItem);
-                        }
-                        else
-                        {
-                            ok = _localpaginator!.PreviousItem();
-                        }
+                        bool ok = _localpaginator!.IsFirstPageItem ? _localpaginator!.PreviousPage(IndexOption.LastItem) : _localpaginator!.PreviousItem();
                         if (ok)
                         {
                             _indexTooptip = 0;
@@ -464,14 +448,7 @@ namespace PromptPlusLibrary.Controls.AutoComplete
             string answer = ResultCtrl!.Value.Content;
             if (ResultCtrl.Value.IsAborted)
             {
-                if (GeneralOptions.ShowMesssageAbortKeyValue)
-                {
-                    answer = Messages.CanceledKey;
-                }
-                else
-                {
-                    answer = string.Empty;
-                }
+                answer = GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty;
             }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
@@ -580,11 +557,7 @@ namespace PromptPlusLibrary.Controls.AutoComplete
                 }
                 token.WaitHandle.WaitOne(2);
             }
-            if (ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
-            {
-                return ConsolePlus.ReadKey(true);
-            }
-            return null;
+            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : null;
         }
 
         private void WritePrompt(BufferScreen screenBuffer)
@@ -686,15 +659,7 @@ namespace PromptPlusLibrary.Controls.AutoComplete
             {
                 return;
             }
-            string? tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = _toggerTooptips[_indexTooptip - 1];
-            }
-            else
-            {
-                tooltip = _tooltipModeAutoComlete;
-            }
+            string? tooltip = _indexTooptip > 0 ? _toggerTooptips[_indexTooptip - 1] : _tooltipModeAutoComlete;
             screenBuffer.Write(tooltip, _optStyles[AutoComleteStyles.Tooltips]);
         }
     }

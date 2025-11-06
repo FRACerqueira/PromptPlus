@@ -51,7 +51,7 @@ namespace PromptPlusLibrary.Controls.Calendar
             _culture = ConfigPlus.DefaultCulture;
             _layout = CalendarLayout.SingleGrid;
             _hotKeySwitchNotes = isWidget ? null : ConfigPlus.HotKeySwitchNotes;
-            _pageSize = ConfigPlus.PageSize; 
+            _pageSize = ConfigPlus.PageSize;
             _minRangeDate = DateTime.MinValue;
             _maxRangeDate = DateTime.MaxValue;
             _selectedDate = null;
@@ -388,15 +388,7 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         else if (keyinfo.IsPressDownArrowKey())
                         {
-                            bool ok = false;
-                            if (_localpaginator!.IsLastPageItem)
-                            {
-                                ok = _localpaginator.NextPage(IndexOption.FirstItem);
-                            }
-                            else
-                            {
-                                ok = _localpaginator.NextItem();
-                            }
+                            bool ok = _localpaginator!.IsLastPageItem ? _localpaginator.NextPage(IndexOption.FirstItem) : _localpaginator.NextItem();
                             if (ok)
                             {
                                 _indexTooptip = 0;
@@ -406,15 +398,7 @@ namespace PromptPlusLibrary.Controls.Calendar
                         }
                         else if (keyinfo.IsPressUpArrowKey())
                         {
-                            bool ok = false;
-                            if (_localpaginator!.IsFirstPageItem)
-                            {
-                                ok = _localpaginator!.PreviousPage(IndexOption.LastItem);
-                            }
-                            else
-                            {
-                                ok = _localpaginator!.PreviousItem();
-                            }
+                            bool ok = _localpaginator!.IsFirstPageItem ? _localpaginator!.PreviousPage(IndexOption.LastItem) : _localpaginator!.PreviousItem();
                             if (ok)
                             {
                                 _indexTooptip = 0;
@@ -607,14 +591,7 @@ namespace PromptPlusLibrary.Controls.Calendar
 
             if (ResultCtrl!.Value.IsAborted)
             {
-                if (GeneralOptions.ShowMesssageAbortKeyValue)
-                {
-                    answer = Messages.CanceledKey;
-                }
-                else
-                {
-                    answer = string.Empty;
-                }
+                answer = GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty;
             }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
@@ -629,24 +606,12 @@ namespace PromptPlusLibrary.Controls.Calendar
         private bool IsValidToday()
         {
             DateTime aux = DateTime.Today;
-            if (aux < _minRangeDate || aux > _maxRangeDate)
-            {
-                return false;
-            }
-            return true;
+            return aux >= _minRangeDate && aux <= _maxRangeDate;
         }
 
         private bool IsValidSelect(DateOnly date)
         {
-            if (_disabledWeekend && (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday))
-            {
-                return false;
-            }
-            if (IsDateDisable(date))
-            {
-                return false;
-            }
-            return true;
+            return (!_disabledWeekend || date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday) && !IsDateDisable(date);
         }
 
         private string[] GetNotes(DateOnly currentDate)
@@ -888,17 +853,13 @@ namespace PromptPlusLibrary.Controls.Calendar
             {
                 tooltip = GetTooltipToggle();
             }
-            else if (_modeView == ModeView.Input)
-            {
-                tooltip = _tooltipModeInput;
-            }
-            else if (_modeView == ModeView.ShowNotes)
-            {
-                tooltip = _tooltipModeShowNote;
-            }
             else
             {
-                throw new NotImplementedException($"ModeView {_modeView} not implemented.");
+                tooltip = _modeView == ModeView.Input
+                    ? _tooltipModeInput
+                    : _modeView == ModeView.ShowNotes
+                    ? _tooltipModeShowNote
+                    : throw new NotImplementedException($"ModeView {_modeView} not implemented.");
             }
             screenBuffer.Write(tooltip!, _optStyles[CalendarStyles.Tooltips]);
         }
@@ -1017,11 +978,7 @@ namespace PromptPlusLibrary.Controls.Calendar
 
         private bool IsDateDisable(DateOnly date)
         {
-            if (_disabledWeekend && (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday))
-            {
-                return true;
-            }
-            return _itemscope.Any(x => x.Date == date && x.Scope == CalendarItem.Disabled);
+            return _disabledWeekend && (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday) || _itemscope.Any(x => x.Date == date && x.Scope == CalendarItem.Disabled);
         }
 
         private bool IsNote(DateOnly date)

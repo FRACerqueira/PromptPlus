@@ -46,37 +46,41 @@ Due to the significant modifications, version 5 introduced **significant changes
 
 - Revised control of hotkeys and special characters ensuring consistency according to the console's capabilities.
 
-- Created the separation of interactive controls and added several non-interactive controls (widgets)
-
-- Introduced **NEW multi-threaded operation** for controls and commands. Now each command and control block the main thread during printing/interaction execution.
+- Created the separation of interactive controls and **added several non-interactive controls (widgets)
 
 - Renaming several control methods for better clarity and reduced scope, aiming at the unique responsibility that each component intends to perform, allowing for sustainable evolution.
 
-- Created the concept of an editing window for controls that require a significant input/response size, ensuring visual consistency and adequate navigability.
+- Revised concept of an editing window for controls that require a significant input/response size , ensuring visual consistency and adequate navigability.
 
 - A slice architecture was adopted for each component, allowing individual evolution of each one with low interference to the others.
 
-- The **NEW tooltip mechanism** now shows all keys and hotkeys for each control by switching the view ('F1').
-
-- All interative controls start at : **PromptPlus.Controls**.<name of control>.
-
+- All interative controls start at : PromptPlus.Controls.<name of control>.
     - All initialization contracts have been standardized: PromptPlus.Controls.<name of control>(string prompt = "", string? description = null).
 
-- All no interative controls start at : **PromptPlus.Widgets**.<name of control>.
-
+- All no interative controls start at : PromptPlus.Widgets.<name of control>.
     - For each non-interactive control the initialization contract was customized.
 
-- All commands for console start at : **PromptPlus.Console**.<command>.
+- All commands for console start at : PromptPlus.Console.<command>.
 
-- All general config start at : **PromptPlus.Config**.<config>.
+- All general config start at : PromptPlus.Config*.<config>.
+
+- NEW tooltip mechanism, now shows all keys and hotkeys for each control by switching the view ('F1').
 
 - NEW controls group: Remote sources.This control group is in the **experimental phase** and addresses the scenario of resolving the domain set of collections from an external source (e.g., database, cloud, API with pagination).
+
     - Remote Select for any type
+
     - Remote Multi Select for any type
+
     - Remote Nodetree select for any type
+
     - Remote Nodetree Multi select for any type
 
 - NEW console state preservation with capability to manipulate the console Ctrl+C / Ctrl+Break.
+
+- NEW multi-threaded operation for controls and commands. Now each command and control block the main thread during printing/interaction execution.
+
+- NEW external file config 'PromptPlus.config' to customize global behaviors** of PromptPlus without code changes.
 
 **License**
 -----------

@@ -49,7 +49,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
         private byte _maxWidth;
         private readonly List<ItemNodeControl<T1>> _checkeditems = [];
         private EmacsBuffer _resultbuffer;
-        private string _lastinput;
+        private readonly string _lastinput;
 
 
 
@@ -317,7 +317,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                     else if (keyinfo.Key == ConsoleKey.None && keyinfo.Modifiers == ConsoleModifiers.Alt)
                     {
                         //has result backgroud task
-                        if (_resultTask.TryDequeue(out var resultitems))
+                        if (_resultTask.TryDequeue(out (string Key, bool IsLoadMore, bool IsLoad, bool IsFinihed, Exception? Error, List<ItemNodeControl<T1>> Items) resultitems))
                         {
                             if (resultitems.IsLoad)
                             {
@@ -332,7 +332,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                     }
                     else if (_loadingItemTask == null && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.IsLoadMoreNode)
                     {
-                        var index = _items.FindIndex(x => x.UniqueId == _localpaginator!.SelectedItem!.UniqueId);
+                        int index = _items.FindIndex(x => x.UniqueId == _localpaginator!.SelectedItem!.UniqueId);
                         _items[index].Status = NodeStatus.Loading;
                         _loadingItemTask = Task.Run(() => LoadMoreItems(_items[index].UniqueId, true), cancellationToken);
                         _indexTooptip = 0;
@@ -627,9 +627,9 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                     _items[index].Status = NodeStatus.Done;
                 }
                 //update size in parent nodes
-                var curnode = _items[index];
+                ItemNodeControl<T1> curnode = _items[index];
                 int parentindex = -1;
-                var qtd = taskresult.Items.Count(x => !x.IsLoadMoreNode);
+                int qtd = taskresult.Items.Count(x => !x.IsLoadMoreNode);
                 do
                 {
                     curnode.CountChildren += qtd;
@@ -761,15 +761,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
             if (_showInfoFullPath)
             {
                 int pos = _localpaginator!.SelectedItem!.FullPath!.LastIndexOf($"{_nodeseparator}{_localpaginator!.SelectedItem!.Text!}", StringComparison.Ordinal);
-                string info;
-                if (pos < 0)
-                {
-                    info = _localpaginator!.SelectedItem!.FullPath;
-                }
-                else
-                {
-                    info = _localpaginator!.SelectedItem!.FullPath![..pos];
-                }
+                string info = pos < 0 ? _localpaginator!.SelectedItem!.FullPath : _localpaginator!.SelectedItem!.FullPath![..pos];
                 if (!string.IsNullOrEmpty(info))
                 {
                     screenBuffer.Write(Messages.NodePath, _optStyles[NodeTreeStyles.Answer]);
@@ -798,7 +790,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
             ArraySegment<ItemNodeControl<T1>> subset = _localpaginator!.GetPageData();
             foreach (ItemNodeControl<T1> item in subset)
             {
-                var isSelected = false;
+                bool isSelected = false;
                 bool checkroot = IsRoot(item);
                 Style stl = _optStyles[NodeTreeStyles.UnSelected];
                 Style stlexp = _optStyles[NodeTreeStyles.ExpandSymbol];
@@ -816,7 +808,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                     screenBuffer.Write($"{ConfigPlus.GetSymbol(SymbolType.Selector)}", stl);
                     if (item.IsLoadMoreNode)
                     {
-                        screenBuffer.Write(new string(' ',ConfigPlus.GetSymbol(SymbolType.Selected).Length), stl);
+                        screenBuffer.Write(new string(' ', ConfigPlus.GetSymbol(SymbolType.Selected).Length), stl);
                     }
                     else
                     {
@@ -834,14 +826,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                 {
                     if (!item.IsDisabled)
                     {
-                        if (checkroot)
-                        {
-                            stl = _optStyles[NodeTreeStyles.Root];
-                        }
-                        else
-                        {
-                            stl = _optStyles[NodeTreeStyles.Node];
-                        }
+                        stl = checkroot ? _optStyles[NodeTreeStyles.Root] : _optStyles[NodeTreeStyles.Node];
                     }
                     screenBuffer.Write(" ", stl);
                     if (item.IsLoadMoreNode)
@@ -884,7 +869,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                     screenBuffer.Write(item.Text!, stl);
                 }
 
-                var msgsize = string.Empty;
+                string msgsize = string.Empty;
                 if (!item.IsLoadMoreNode)
                 {
                     if (!_hideSize && !checkroot)
@@ -939,15 +924,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
             {
                 return;
             }
-            string tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            else
-            {
-                tooltip = _tooltipModeSelect;
-            }
+            string tooltip = _indexTooptip > 0 ? GetTooltipToggle() : _tooltipModeSelect;
             if (!string.IsNullOrEmpty(tooltip))
             {
                 screenBuffer.Write(tooltip, _optStyles[NodeTreeStyles.Tooltips]);
@@ -1010,15 +987,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
             if (_showInfoFullPath)
             {
                 int pos = _localpaginator!.SelectedItem!.FullPath!.LastIndexOf($"{_nodeseparator}{_localpaginator!.SelectedItem!.Text!}", StringComparison.Ordinal);
-                string info;
-                if (pos < 0)
-                {
-                    info = _localpaginator!.SelectedItem!.FullPath;
-                }
-                else
-                {
-                    info = _localpaginator!.SelectedItem!.FullPath![..pos];
-                }
+                string info = pos < 0 ? _localpaginator!.SelectedItem!.FullPath : _localpaginator!.SelectedItem!.FullPath![..pos];
                 if (!string.IsNullOrEmpty(info))
                 {
                     screenBuffer.Write(Messages.NodePath, _optStyles[NodeTreeStyles.Answer]);
@@ -1050,11 +1019,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                 }
                 token.WaitHandle.WaitOne(2);
             }
-            if (ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
-            {
-                return ConsolePlus.ReadKey(true);
-            }
-            return new ConsoleKeyInfo();
+            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : new ConsoleKeyInfo();
         }
 
         private void ValidateConstraints()
@@ -1101,7 +1066,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
 
         private void LoadMoreItems(string parentId, bool isLoadMore)
         {
-            var index = _items.FindIndex(x => x.UniqueId == parentId);
+            int index = _items.FindIndex(x => x.UniqueId == parentId);
             (bool Finished, T2 SearchItemsControl, IEnumerable<(bool Checked, T1 NewItem)> Newitems) result = (false, _searchItemsControl, []);
             Exception? err = null;
             try
@@ -1113,7 +1078,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
             {
                 err = ex;
             }
-            var newitems = CreateEnqueueNewitems(_items[index], isLoadMore, result.Finished, result.Newitems, err);
+            (string Key, bool IsLoadMore, bool IsLoad, bool IsFinished, Exception? Error, List<ItemNodeControl<T1>> Items) newitems = CreateEnqueueNewitems(_items[index], isLoadMore, result.Finished, result.Newitems, err);
             _resultTask.Enqueue(newitems);
         }
 
@@ -1125,21 +1090,21 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
             }
             int pos = -1;
             List<ItemNodeControl<T1>> newitems = [];
-            var poslastitem = result.Count() - 1;
-            var newlevel = parentnode.Level + 1;
-            var parentid = parentnode.UniqueId;
-            var countnodes = parentnode.CountChildren;
+            int poslastitem = result.Count() - 1;
+            int newlevel = parentnode.Level + 1;
+            string parentid = parentnode.UniqueId;
+            int countnodes = parentnode.CountChildren;
             if (isLoadMore)
             {
                 if (parentnode.ParentUniqueId != null)
                 {
                     newlevel = parentnode.Level;
-                    var index = _items.FindIndex(x => x.UniqueId == parentnode.ParentUniqueId);
+                    int index = _items.FindIndex(x => x.UniqueId == parentnode.ParentUniqueId);
                     parentid = _items[index].UniqueId;
                     countnodes = _items[index].CountChildren;
                 }
             }
-            foreach (var item in result)
+            foreach ((bool Checked, T1 NewItem) in result)
             {
                 pos++;
                 bool first = false;
@@ -1152,23 +1117,23 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                 {
                     last = true;
                 }
-                var text = _textSelector!(item.NewItem);
-                var fullpath = CreateFullPath(parentnode.UniqueId, text);
-                var extratxt = _extraInfoNode?.Invoke(item.NewItem) ?? null;
-                var allowsChildren = _predicateChildAllowed!(item.NewItem);
-                var sta = allowsChildren ? NodeStatus.NotLoad : NodeStatus.Done;
+                string text = _textSelector!(NewItem);
+                string fullpath = CreateFullPath(parentnode.UniqueId, text);
+                string? extratxt = _extraInfoNode?.Invoke(NewItem) ?? null;
+                bool allowsChildren = _predicateChildAllowed!(NewItem);
+                NodeStatus sta = allowsChildren ? NodeStatus.NotLoad : NodeStatus.Done;
 
-                newitems.Add(new ItemNodeControl<T1>(_uniqueexpression!(item.NewItem))
+                newitems.Add(new ItemNodeControl<T1>(_uniqueexpression!(NewItem))
                 {
                     IsExpanded = false,
                     Status = sta,
                     FirstItem = first,
                     LastItem = last,
-                    IsMarked = item.Checked,
-                    IsDisabled = _predicatevaliddisabled?.Invoke(item.NewItem) ?? false,
+                    IsMarked = Checked,
+                    IsDisabled = _predicatevaliddisabled?.Invoke(NewItem) ?? false,
                     Level = newlevel,
                     ParentUniqueId = parentid,
-                    Value = item.NewItem,
+                    Value = NewItem,
                     Text = text,
                     FullPath = fullpath,
                     ExtraText = extratxt,

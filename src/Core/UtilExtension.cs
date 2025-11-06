@@ -85,14 +85,7 @@ namespace PromptPlusLibrary.Core
                             string InstallPath = (string?)Microsoft.Win32.Registry.GetValue(
                                 @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\wt.exe",
                                 "", null) ?? "";
-                            if (InstallPath != "")
-                            {
-                                return true;
-                            }
-                            else
-                            {
-                                return false;
-                            }
+                            return InstallPath != "";
                         }
                     }
                     catch
@@ -116,13 +109,7 @@ namespace PromptPlusLibrary.Core
         {
             // Check if the glyph is in any of our supported ranges
             int codePoint = glyph;
-            if (codePoint >= 32 && codePoint <= 127)
-            {
-                return true;
-            }
-            return
-                // Box Drawing Characters
-                (codePoint >= 0x2500 && codePoint <= 0x257F) ||
+            return codePoint >= 32 && codePoint <= 127 || (codePoint >= 0x2500 && codePoint <= 0x257F) ||
                 // Block Elements
                 (codePoint >= 0x2580 && codePoint <= 0x259F) ||
                 // Geometric Shapes
@@ -183,21 +170,9 @@ namespace PromptPlusLibrary.Core
             }
             if (text.Contains("\r\n"))
             {
-                if (!_alreadyNormalized)
-                {
-                    return text;
-                }
-                return text.Replace("\r\n", Environment.NewLine, StringComparison.Ordinal);
+                return !_alreadyNormalized ? text : text.Replace("\r\n", Environment.NewLine, StringComparison.Ordinal);
             }
-            if (text.Contains('\n'))
-            {
-                if (_alreadyNormalized)
-                {
-                    return text;
-                }
-                return text.Replace("\n", Environment.NewLine, StringComparison.Ordinal);
-            }
-            return text;
+            return text.Contains('\n') ? _alreadyNormalized ? text : text.Replace("\n", Environment.NewLine, StringComparison.Ordinal) : text;
         }
 
         public static int LengthTokenColor(this string? text)
@@ -228,7 +203,7 @@ namespace PromptPlusLibrary.Core
             return qtd;
         }
 
-        public static Segment[] ToSegment(this string? text,Style defaultstyletext, IConsole console)
+        public static Segment[] ToSegment(this string? text, Style defaultstyletext, IConsole console)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -243,7 +218,7 @@ namespace PromptPlusLibrary.Core
             Color currentForeground = defaultstyletext.Foreground;
             Color currentBackground = defaultstyletext.Background;
             stack.Push(new Style(console.ForegroundColor, console.BackgroundColor));
-            var onlytext = true;
+            bool onlytext = true;
             while (tokenizer.MoveNext())
             {
                 MarkupToken? token = tokenizer.Current;
@@ -251,7 +226,7 @@ namespace PromptPlusLibrary.Core
                 {
                     break;
                 }
-                var notfound = false;
+                bool notfound = false;
                 if (token.Kind == MarkupTokenKind.Open)
                 {
                     onlytext = false;
@@ -264,7 +239,7 @@ namespace PromptPlusLibrary.Core
                     bool foreground = true;
                     Color partForeground = currentForeground;
                     Color partBackground = currentBackground;
-                    var first = true;
+                    bool first = true;
                     foreach (string part in parts)
                     {
                         if (part.Equals("on", StringComparison.OrdinalIgnoreCase))
@@ -281,7 +256,7 @@ namespace PromptPlusLibrary.Core
                                 color = ParseHexColor(part);
                                 if (color == null)
                                 {
-                                    return [new Segment(text??string.Empty, defaultstyletext)];
+                                    return [new Segment(text ?? string.Empty, defaultstyletext)];
                                 }
                             }
                             else if (part.StartsWith("rgb", StringComparison.OrdinalIgnoreCase))
@@ -352,7 +327,7 @@ namespace PromptPlusLibrary.Core
                 }
 
             }
-            if (stack.Count >=1)
+            if (stack.Count >= 1)
             {
                 if (onlytext)
                 {

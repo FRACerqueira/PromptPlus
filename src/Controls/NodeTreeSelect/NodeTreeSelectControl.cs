@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace PromptPlusLibrary.Controls.NodeTreeSelect
 {
-    internal sealed class NodeTreeSelectControl<T> : BaseControlPrompt<T>, INodeTreeSelectControl<T>
+    internal sealed class NodeTreeSelectControl<T> : BaseControlPrompt<T>, INodeTreeSelectControl<T> where T : class, new()
     {
         private readonly Dictionary<NodeTreeStyles, Style> _optStyles = BaseControlOptions.LoadStyle<NodeTreeStyles>();
         private readonly List<ItemNodeControl<T>> _items = [];
@@ -212,17 +212,13 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                     if (cancellationToken.IsCancellationRequested)
                     {
                         _indexTooptip = 0;
-#pragma warning disable CS8604 // Possible null reference argument.
-                        ResultCtrl = new ResultPrompt<T>(default, true);
-#pragma warning restore CS8604 // Possible null reference argument.
+                        ResultCtrl = new ResultPrompt<T>(new T(), true);
                         break;
                     }
                     else if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
-#pragma warning disable CS8604 // Possible null reference argument.
-                        ResultCtrl = new ResultPrompt<T>(default, true);
-#pragma warning restore CS8604 // Possible null reference argument.
+                        ResultCtrl = new ResultPrompt<T>(new T(), true);
                         break;
                     }
                     else if (keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null)
@@ -558,7 +554,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 return;
             }
             foreach (NodeTree<T> item in _nodestree!.Childrens)
-            { 
+            {
                 int index = _items.FindIndex(x => x.UniqueId == item.UniqueId);
                 if (index != -1)
                 {
@@ -579,7 +575,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
 
         private string CreateFullPath(string? parentid, string textnode)
         {
-            var parents = new Stack<string>();
+            Stack<string> parents = new();
             if (string.IsNullOrEmpty(parentid))
             {
                 return textnode;
@@ -590,7 +586,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 parents.Push(_items[index].Text!);
                 parentid = _items[index].ParentUniqueId;
             }
-            var result = new StringBuilder();
+            StringBuilder result = new();
             while (parents.TryPop(out string? item))
             {
                 result.Append(item);
@@ -686,15 +682,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
             if (_showInfoFullPath)
             {
                 int pos = _localpaginator!.SelectedItem!.FullPath!.LastIndexOf($"{_nodeseparator}{_localpaginator!.SelectedItem!.Text!}", StringComparison.Ordinal);
-                string info;
-                if (pos < 0)
-                {
-                    info = _localpaginator!.SelectedItem!.FullPath;
-                }
-                else
-                {
-                    info = _localpaginator!.SelectedItem!.FullPath![..pos];
-                }
+                string info = pos < 0 ? _localpaginator!.SelectedItem!.FullPath : _localpaginator!.SelectedItem!.FullPath![..pos];
                 if (!string.IsNullOrEmpty(info))
                 {
                     screenBuffer.Write(Messages.NodePath, _optStyles[NodeTreeStyles.Answer]);
@@ -710,15 +698,9 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 return string.Empty;
             }
             string textnode = _localpaginator!.SelectedItem.Text!;
-            if (_localpaginator!.SelectedItem.Status == NodeStatus.Loading)
-            {
-                return $"{textnode}({Messages.Loading})";
-            }
-            if (_localpaginator!.SelectedItem.Status == NodeStatus.Unloading)
-            {
-                return $"{textnode}({Messages.Unloading})";
-            }
-            return textnode;
+            return _localpaginator!.SelectedItem.Status == NodeStatus.Loading
+                ? $"{textnode}({Messages.Loading})"
+                : _localpaginator!.SelectedItem.Status == NodeStatus.Unloading ? $"{textnode}({Messages.Unloading})" : textnode;
         }
 
         private void WriteTooltip(BufferScreen screenBuffer)
@@ -727,15 +709,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
             {
                 return;
             }
-            string tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            else
-            {
-                tooltip = _tooltipModeSelect;
-            }
+            string tooltip = _indexTooptip > 0 ? GetTooltipToggle() : _tooltipModeSelect;
             if (!string.IsNullOrEmpty(tooltip))
             {
                 screenBuffer.Write(tooltip, _optStyles[NodeTreeStyles.Tooltips]);
@@ -771,14 +745,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 {
                     if (!item.IsDisabled)
                     {
-                        if (checkroot)
-                        {
-                            stl = _optStyles[NodeTreeStyles.Root];
-                        }
-                        else
-                        {
-                            stl = _optStyles[NodeTreeStyles.Node];
-                        }
+                        stl = checkroot ? _optStyles[NodeTreeStyles.Root] : _optStyles[NodeTreeStyles.Node];
                     }
                     screenBuffer.Write(" ", stl);
                 }
@@ -798,7 +765,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                     }
                 }
                 screenBuffer.Write(item.Text!, stl);
-                var msgsize = string.Empty;
+                string msgsize = string.Empty;
                 if (!_hideSize && !checkroot && item.CountChildren > 0)
                 {
                     msgsize = $"({item.CountChildren}";
@@ -840,7 +807,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 return string.Empty;
             }
             string? parent = item.ParentUniqueId;
-            var aux = new Stack<string>();
+            Stack<string> aux = new();
             for (int i = 0; i < item.Level - 1; i++)
             {
                 string syb = ConfigPlus.GetSymbol(SymbolType.TreeLinevertical);
@@ -919,15 +886,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 return;
             }
             _indexTooptip = 0;
-            Optional<ItemNodeControl<T>> defaultvalue;
-            if (isrecursive)
-            {
-                defaultvalue = Optional<ItemNodeControl<T>>.Empty();
-            }
-            else
-            {
-                defaultvalue = Optional<ItemNodeControl<T>>.Set(_items[index]);
-            }
+            Optional<ItemNodeControl<T>> defaultvalue = isrecursive ? Optional<ItemNodeControl<T>>.Empty() : Optional<ItemNodeControl<T>>.Set(_items[index]);
             _localpaginator!.UpdatColletion(_items, defaultvalue);
             _items[index].Status = NodeStatus.Done;
         }
@@ -985,7 +944,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                     last = true;
                 }
                 string text = _textSelector!(item.Node);
-                var newitem = new ItemNodeControl<T>(item.UniqueId)
+                ItemNodeControl<T> newitem = new(item.UniqueId)
                 {
                     IsExpanded = false,
                     Status = item.Childrens.Count > 0 ? NodeStatus.NotLoad : NodeStatus.Done,
@@ -1017,11 +976,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 }
                 token.WaitHandle.WaitOne(2);
             }
-            if (ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
-            {
-                return ConsolePlus.ReadKey(true);
-            }
-            return new ConsoleKeyInfo();
+            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : new ConsoleKeyInfo();
         }
     }
 }

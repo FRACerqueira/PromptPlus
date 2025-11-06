@@ -104,11 +104,23 @@
 
     ![](./images/nodetreemultiselect.jpg)
 
+- Nodes hierarchical structures remote multi-select for any type
+    
+    [**Main**](../README.md)
+
+    ![](./images/nodetreeremotemultiselect.jpg)
+
 - Nodes hierarchical structures select for any type
     
     [**Main**](../README.md)
 
     ![](./images/nodetreeselect.jpg)
+
+- Nodes hierarchical structures remote select for any type
+    
+    [**Main**](../README.md)
+
+    ![](./images/nodetreeremoteselect.jpg)
 
 - Progress bar with 6 types , gradient colors and spinner
     
@@ -121,6 +133,18 @@
     [**Main**](../README.md)
 
     ![](./images/readlineemacs.jpg)
+ 
+- Remote Multi-Select for any type (with group!) 
+    
+    [**Main**](../README.md)
+
+    ![](./images/remotemultiselect.jpg)
+ 
+- Remote Select for any type (with group!) 
+    
+    [**Main**](../README.md)
+
+    ![](./images/remoteselect.jpg)
 
 - Select for any type (with group!) 
     

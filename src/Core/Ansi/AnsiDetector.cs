@@ -37,11 +37,7 @@ namespace PromptPlusLibrary.Core.Ansi
 
         public static bool IsValidTerminal(string term)
         {
-            if (!string.IsNullOrWhiteSpace(term) && _regexes.Any(regex => regex.IsMatch(term)))
-            {
-                return true;
-            }
-            return false;
+            return !string.IsNullOrWhiteSpace(term) && _regexes.Any(regex => regex.IsMatch(term));
         }
 
         public static (bool SupportsAnsi, bool LegacyConsole) Detect()

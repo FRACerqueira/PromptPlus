@@ -269,11 +269,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
         public IChartBarControl FractionalDigits(byte value)
         {
             _fractionalDigits = value;
-            if (_fractionalDigits > 5)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "FracionalDig must be less than 5");
-            }
-            return this;
+            return _fractionalDigits > 5 ? throw new ArgumentOutOfRangeException(nameof(value), "FracionalDig must be less than 5") : (IChartBarControl)this;
         }
 
         public IChartBarControl PageSize(byte value)
@@ -342,14 +338,9 @@ namespace PromptPlusLibrary.Controls.ChartBar
                     indexcolor--;
                 }
                 item.Percent = Math.Round((100 * item.Value) / _totalvalue, _fractionalDigits);
-                if (_chartBarType == ChartBarType.Fill)
-                {
-                    item.StyleBar = new Style(item.Color.Value, item.Color.Value);
-                }
-                else
-                {
-                    item.StyleBar = Style.Default().ForeGround(item.Color.Value);
-                }
+                item.StyleBar = _chartBarType == ChartBarType.Fill
+                    ? new Style(item.Color.Value, item.Color.Value)
+                    : Style.Default().ForeGround(item.Color.Value);
             }
             _currentitem = _items.FirstOrDefault();
             LoadTooltipToggle();
@@ -456,14 +447,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
                     else if (ConfigPlus.HotKeyTooltipChartBarSwitchLayout.Equals(keyinfo) && !_hideChart.HasFlag(HideChart.Layout))
                     {
-                        if (_layout == ChartBarLayout.Standard)
-                        {
-                            _layout = ChartBarLayout.Stacked;
-                        }
-                        else
-                        {
-                            _layout = ChartBarLayout.Standard;
-                        }
+                        _layout = _layout == ChartBarLayout.Standard ? ChartBarLayout.Stacked : ChartBarLayout.Standard;
                         _indexitem = 0;
                         _startpage = 0;
                         _currentitem = _items[_indexitem];

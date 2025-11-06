@@ -108,11 +108,7 @@ namespace PromptPlusLibrary.Core
         {
             get
             {
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                {
-                    return System.Console.WindowHeight - 1;
-                }
-                return System.Console.BufferHeight - 1;
+                return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? System.Console.WindowHeight - 1 : System.Console.BufferHeight - 1;
             }
         }
 

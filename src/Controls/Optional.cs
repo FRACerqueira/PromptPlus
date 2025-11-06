@@ -91,19 +91,11 @@ namespace PromptPlusLibrary.Controls
         {
             if (obj is Optional<T> item)
             {
-                if (Value == null || !item.HasValue)
-                {
-                    return obj == null;
-                }
-                return Value.Equals(item.Value);
+                return Value == null || !item.HasValue ? obj == null : Value.Equals(item.Value);
             }
             else if (obj is T itemT)
             {
-                if (Value == null)
-                {
-                    return obj == null;
-                }
-                return Value.Equals(itemT);
+                return Value == null ? obj == null : Value.Equals(itemT);
             }
             return false;
         }

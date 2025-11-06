@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using PromptPlusLibrary.Controls;
-using PromptPlusLibrary.PublicLibrary;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
@@ -29,13 +28,13 @@ namespace PromptPlusLibrary.Core
     {
         private readonly Dictionary<SymbolType, bool> _symbolSupport = [];
         private readonly Dictionary<SymbolType, (string value, string unicode)> _globalSymbols = InitSymbols();
-        private  bool _isunicode;
+        private bool _isunicode;
         private char? _yesChar;
         private char? _noChar;
         private CultureInfo? _defaultCulture;
         private byte _defaultmaxLenghtFilterText = 15;
         private byte _defaultpagesize = 10;
-        private byte _defaultwidth= 30;
+        private byte _defaultwidth = 30;
         private byte _defaultminimumPrefixLength = 3;
         private byte _defaultchartwidth = 80;
         private char _defaultsecretchar = '#';
@@ -68,7 +67,7 @@ namespace PromptPlusLibrary.Core
         [JsonIgnore]
         public Action<Exception>? AfterError
         {
-            get => _defaultafterError; 
+            get => _defaultafterError;
             set => _defaultafterError = value;
         }
 
@@ -76,7 +75,7 @@ namespace PromptPlusLibrary.Core
         /// Gets or sets a value indicating whether the basic state should be reset after an exit operation. Default value is true.
         /// The Culture,cursor, foreground, and background colors are reset to their default values.
         /// </summary>
-        public bool ResetBasicStateAfterExist { get; set; } = true; 
+        public bool ResetBasicStateAfterExist { get; set; } = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PromptConfig"/> class with explicit Unicode capability and culture.
@@ -97,7 +96,7 @@ namespace PromptPlusLibrary.Core
         /// </summary>
         public string FolderLog
         {
-            get => _defaultfolderlog?? GetFolderPath(SpecialFolder.UserProfile);
+            get => _defaultfolderlog ?? GetFolderPath(SpecialFolder.UserProfile);
             set => _defaultfolderlog = value;
         }
 
@@ -441,14 +440,7 @@ namespace PromptPlusLibrary.Core
             }
             set
             {
-                if (value == null)
-                {
-                    _paginationTemplate = (totalCount, selectedpage, pagecount) => string.Format(Messages.PaginationTemplate, totalCount, selectedpage, pagecount);
-                }
-                else
-                {
-                    _paginationTemplate = value;
-                }
+                _paginationTemplate = value ?? ((totalCount, selectedpage, pagecount) => string.Format(Messages.PaginationTemplate, totalCount, selectedpage, pagecount));
             }
         }
 
@@ -487,7 +479,7 @@ namespace PromptPlusLibrary.Core
         {
             _isunicode = isunicode;
             AppCulture = culture;
-            
+
         }
 
         internal string GetSymbol(SymbolType type, bool useUnicode = true)

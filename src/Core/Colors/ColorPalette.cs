@@ -14,9 +14,9 @@ namespace PromptPlusLibrary.Core.Colors
 {
     internal static class ColorPalette
     {
-        public static ImmutableList<Color> Legacy { get; }
-        public static ImmutableList<Color> Standard { get; }
-        public static ImmutableList<Color> EightBit { get; }
+        private static List<Color> Legacy { get; }
+        private static List<Color> Standard { get; }
+        public static List<Color> EightBit { get; }
 
         static ColorPalette()
         {
@@ -38,7 +38,7 @@ namespace PromptPlusLibrary.Core.Colors
                 return ColorRGB;
             }
 
-            ImmutableList<Color> palette = system switch
+            List<Color> palette = system switch
             {
                 ColorSystem.Legacy => Legacy,
                 ColorSystem.Standard => Standard,
@@ -59,7 +59,7 @@ namespace PromptPlusLibrary.Core.Colors
                 return ColorRGB;
             }
 
-            ImmutableList<Color> palette = system switch
+            List<Color> palette = system switch
             {
                 ColorSystem.Legacy => Legacy,
                 ColorSystem.Standard => Standard,

@@ -102,15 +102,8 @@ namespace PromptPlusLibrary.Widgets
                 string part = parts[i];
                 if (part.Length > maxlength)
                 {
-                    var tokencolor = value.ToSegment(localstyle, console) != null;
-                    if (tokencolor)
-                    {
-                        maxlength = part.LengthTokenColor();
-                    }
-                    else
-                    {
-                        maxlength = part.Length;
-                    }
+                    bool tokencolor = value.ToSegment(localstyle, console) != null;
+                    maxlength = tokencolor ? part.LengthTokenColor() : part.Length;
                 }
             }
             if (doubleDash)

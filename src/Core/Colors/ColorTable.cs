@@ -29,27 +29,16 @@ namespace PromptPlusLibrary.Core.Colors
 
         public static Color GetColorRGB(int number)
         {
-            if (number < 0 || number > 255)
-            {
-                throw new ArgumentException("ColorRGB number must be between 0 and 255");
-            }
-
-            return ColorPalette.EightBit[number];
+            return number < 0 || number > 255
+                ? throw new ArgumentException("ColorRGB number must be between 0 and 255")
+                : ColorPalette.EightBit[number];
         }
 
         public static Color? GetColorRGB(string name)
         {
-            if (!_numberLookup.TryGetValue(name.ToLowerInvariant(), out int number))
-            {
-                return null;
-            }
-
-            if (number > ColorPalette.EightBit.Count - 1)
-            {
-                return null;
-            }
-
-            return ColorPalette.EightBit[number];
+            return !_numberLookup.TryGetValue(name.ToLowerInvariant(), out int number)
+                ? null
+                : number > ColorPalette.EightBit.Count - 1 ? null : ColorPalette.EightBit[number];
         }
 
         public static string? GetName(int number)

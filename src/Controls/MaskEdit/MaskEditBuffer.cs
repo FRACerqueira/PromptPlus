@@ -382,11 +382,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 }
                 if (CursorPosition == _decimalposition)
                 {
-                    if (_decimalposition == 0)
-                    {
-                        return false;
-                    }
-                    return Delete();
+                    return _decimalposition != 0 && Delete();
                 }
                 //CursorPosition > _decimalposition
                 int pos = CursorPosition - 1;
@@ -395,11 +391,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     if (_charElements[CursorPosition].Inputchar == MaskElement.Emptyinputchar)
                     {
                         CursorPosition = _decimalposition;
-                        if (_charElements[_decimalposition - 1].Inputchar == MaskElement.Emptyinputchar)
-                        {
-                            return true;
-                        }
-                        return Delete();
+                        return _charElements[_decimalposition - 1].Inputchar == MaskElement.Emptyinputchar || Delete();
                     }
                     _charElements[CursorPosition].Outputchar = _promptmask;
                     _charElements[CursorPosition].Inputchar = MaskElement.Emptyinputchar;
@@ -489,14 +481,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
         private bool ToStart()
         {
-            if (!IsNumeric)
-            {
-                CursorPosition = _firstInputPosition;
-            }
-            else
-            {
-                CursorPosition = _decimalposition;
-            }
+            CursorPosition = !IsNumeric ? _firstInputPosition : _decimalposition;
             return true;
         }
 
@@ -732,11 +717,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
             bool isprintabled = char.IsWhiteSpace(c) || !_nonRenderingCategories.Contains(char.GetUnicodeCategory(c));
 
-            if (isprintabled && (keyinfo.Modifiers.HasFlag(ConsoleModifiers.Control) || keyinfo.Modifiers.HasFlag(ConsoleModifiers.Alt)))
-            {
-                return false;
-            }
-            return isprintabled;
+            return (!isprintabled || !keyinfo.Modifiers.HasFlag(ConsoleModifiers.Control) && !keyinfo.Modifiers.HasFlag(ConsoleModifiers.Alt)) && isprintabled;
         }
 
         private int GetNextPos()
@@ -804,21 +785,12 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         {
             if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateOnly) || typeof(T) == typeof(TimeOnly))
             {
-                if (HasInputPending)
-                {
-                    return string.Empty;
-                }
-                return MaskOut;
+                return HasInputPending ? string.Empty : MaskOut;
             }
             if (typeof(T) == typeof(int) || typeof(T) == typeof(long))
             {
                 string aux = string.Join("", _charElements.Where(x => x.Value.Inputchar != MaskElement.Emptyinputchar && (x.Value.Type == ElementType.InputMask || x.Value.Type == ElementType.InputConstant)).OrderBy(x => x.Key).Select(x => x.Value.Outputchar));
-                if (aux.Length == 0)
-                {
-                    return "0";
-                }
-                return aux;
-
+                return aux.Length == 0 ? "0" : aux;
             }
             if (typeof(T) == typeof(double) || typeof(T) == typeof(decimal))
             {
@@ -838,11 +810,9 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 return aux;
             }
             //string type
-            if (HasInputPending)
-            {
-                return string.Empty;
-            }
-            return string.Join("", _charElements.Where(x => x.Value.Type == ElementType.InputMask || x.Value.Type == ElementType.InputConstant).OrderBy(x => x.Key).Select(x => x.Value.Outputchar));
+            return HasInputPending
+                ? string.Empty
+                : string.Join("", _charElements.Where(x => x.Value.Type == ElementType.InputMask || x.Value.Type == ElementType.InputConstant).OrderBy(x => x.Key).Select(x => x.Value.Outputchar));
         }
 
         #endregion

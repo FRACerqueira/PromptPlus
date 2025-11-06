@@ -109,7 +109,7 @@ namespace PromptPlusLibrary
         /// operation. If null, a default error message is used.</param>
         /// <returns>The current <see cref="INodeTreeRemoteMultiSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="values"/> is <c>null</c>.</exception>
-        INodeTreeRemoteMultiSelectControl<T1, T2> SearchMoreItems(Func<T1, T2, (bool, T2, IEnumerable<(bool,T1)>)> values, Func<Exception, string>? erroMessage = null);
+        INodeTreeRemoteMultiSelectControl<T1, T2> SearchMoreItems(Func<T1, T2, (bool, T2, IEnumerable<(bool, T1)>)> values, Func<Exception, string>? erroMessage = null);
 
         /// <summary>
         /// Sets the maximum number of items displayed per page in the control.

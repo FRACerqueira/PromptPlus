@@ -16,7 +16,7 @@ namespace PromptPlusLibrary
     /// </summary>
     /// <typeparam name="T1">Type of Node that represents the data in the tree structure</typeparam>
     /// <typeparam name="T2">The type of class that represents a structure capable of storing the data necessary to maintain and search for the next collections of items.</typeparam>
-    public interface INodeTreeRemoteSelectControl<T1,T2> where T1 : class, new() where T2 : class
+    public interface INodeTreeRemoteSelectControl<T1, T2> where T1 : class, new() where T2 : class
     {
         /// <summary>
         /// Dynamically changes the description of the Remote Node Select Control based on its value.
@@ -25,7 +25,7 @@ namespace PromptPlusLibrary
         /// <param name="value">A function to determine the description based on the current value.</param>
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
-        INodeTreeRemoteSelectControl<T1,T2> ChangeDescription(Func<T1, string> value);
+        INodeTreeRemoteSelectControl<T1, T2> ChangeDescription(Func<T1, string> value);
 
         /// <summary>
         /// Applies custom options to the control to modify its behavior and appearance.
@@ -33,7 +33,7 @@ namespace PromptPlusLibrary
         /// <param name="options">An action to configure <see cref="IControlOptions"/>. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> is <c>null</c>.</exception>
-        INodeTreeRemoteSelectControl<T1,T2> Options(Action<IControlOptions> options);
+        INodeTreeRemoteSelectControl<T1, T2> Options(Action<IControlOptions> options);
 
         /// <summary>
         /// Overwrites styles for specific elements of the Remote Node Select Control.
@@ -43,7 +43,7 @@ namespace PromptPlusLibrary
         /// <param name="style">The <see cref="Style"/> to apply. Cannot be <c>null</c>.</param>
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="style"/> is <c>null</c>.</exception>
-        INodeTreeRemoteSelectControl<T1,T2> Styles(NodeTreeStyles styleType, Style style);
+        INodeTreeRemoteSelectControl<T1, T2> Styles(NodeTreeStyles styleType, Style style);
 
         /// <summary>
         /// Sets the function to display text for items in the list.
@@ -52,7 +52,7 @@ namespace PromptPlusLibrary
         /// <param name="value">Function to generate display text for each item.</param>
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
-        INodeTreeRemoteSelectControl<T1,T2> TextSelector(Func<T1, string> value);
+        INodeTreeRemoteSelectControl<T1, T2> TextSelector(Func<T1, string> value);
 
         /// <summary>
         /// Sets an expression that defines the uniqueId field to string type. This expression is required for operation.
@@ -86,7 +86,7 @@ namespace PromptPlusLibrary
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="InvalidOperationException">Thrown if <paramref name="value"/> already exists.</exception>
         /// <exception cref="ArgumentException">Thrown if <paramref name="nodeseparator"/> is empty or null.</exception>
-        INodeTreeRemoteSelectControl<T1,T2> AddRootNode(T1 value, T2 initialvalue, string nodeseparator = "|");
+        INodeTreeRemoteSelectControl<T1, T2> AddRootNode(T1 value, T2 initialvalue, string nodeseparator = "|");
 
         /// <summary>
         /// Registers the function responsible for searching and returning the next collection of nodes child items to add to the list.This expression is required for operation.
@@ -113,14 +113,14 @@ namespace PromptPlusLibrary
         /// <param name="value">Number of maximum items per page.</param>
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1.</exception>
-        INodeTreeRemoteSelectControl<T1,T2> PageSize(byte value);
+        INodeTreeRemoteSelectControl<T1, T2> PageSize(byte value);
 
         /// <summary>
         /// Sets a validation predicate for determining if an item can be selected.
         /// </summary>
         /// <param name="validselect">A predicate function returning true if the item should be selectable.</param>
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
-        INodeTreeRemoteSelectControl<T1,T2> PredicateSelected(Func<T1, bool> validselect);
+        INodeTreeRemoteSelectControl<T1, T2> PredicateSelected(Func<T1, bool> validselect);
 
         /// <summary>
         /// Sets a validation predicate with custom message for item selection.
@@ -128,7 +128,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="validselect">A predicate function returning a tuple of (isValid, errorMessage).</param>
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
-        INodeTreeRemoteSelectControl<T1,T2> PredicateSelected(Func<T1, (bool, string?)> validselect);
+        INodeTreeRemoteSelectControl<T1, T2> PredicateSelected(Func<T1, (bool, string?)> validselect);
 
         /// <summary>
         /// Sets a validation predicate for determining if an item should be disabled.
@@ -136,7 +136,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="validdisabled">A predicate function returning true if the item should be disabled.</param>
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
-        INodeTreeRemoteSelectControl<T1,T2> PredicateDisabled(Func<T1, bool> validdisabled);
+        INodeTreeRemoteSelectControl<T1, T2> PredicateDisabled(Func<T1, bool> validdisabled);
 
         /// <summary>
         /// Controls the visibility of child node counts in the tree display.
@@ -144,7 +144,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="value">True to hide child counts, false to show them.</param>
         /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
-        INodeTreeRemoteSelectControl<T1,T2> HideCount(bool value = true);
+        INodeTreeRemoteSelectControl<T1, T2> HideCount(bool value = true);
 
 
         /// <summary>

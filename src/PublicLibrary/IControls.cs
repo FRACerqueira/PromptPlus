@@ -290,7 +290,7 @@ namespace PromptPlusLibrary
         /// <param name="description">The description for input</param>
         /// <typeparam name="T">type of Node</typeparam>
         /// <returns>An <see cref="INodeTreeSelectControl{T}"/> instance for further configuration and reading input.</returns>
-        INodeTreeSelectControl<T> NodeTreeSelect<T>(string prompt = "", string? description = null);
+        INodeTreeSelectControl<T> NodeTreeSelect<T>(string prompt = "", string? description = null) where T : class, new();
 
         /// <summary>
         /// Creates an NodeTree MultiSelect control with the specified prompt.
@@ -299,7 +299,7 @@ namespace PromptPlusLibrary
         /// <param name="description">The description for input</param>
         /// <typeparam name="T">type of Node</typeparam>
         /// <returns>An <see cref="INodeTreeMultiSelectControl{T}"/> instance for further configuration and reading input.</returns>
-        INodeTreeMultiSelectControl<T> NodeTreeMultiSelect<T>(string prompt = "", string? description = null);
+        INodeTreeMultiSelectControl<T> NodeTreeMultiSelect<T>(string prompt = "", string? description = null) where T : class, new();
 
         /// <summary>
         /// Creates an Remote Select control with the specified prompt.

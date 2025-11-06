@@ -225,22 +225,12 @@ namespace PromptPlusLibrary.Core.Markup
             public char Expect(char character)
             {
                 char read = Read();
-                if (read != character)
-                {
-                    throw new InvalidOperationException($"Expected '{character}', but found '{read}'");
-                }
-
-                return read;
+                return read != character ? throw new InvalidOperationException($"Expected '{character}', but found '{read}'") : read;
             }
 
             public char Peek()
             {
-                if (Eof)
-                {
-                    return '\0';
-                }
-
-                return (char)_reader.Peek();
+                return Eof ? '\0' : (char)_reader.Peek();
             }
 
             public char Read()
