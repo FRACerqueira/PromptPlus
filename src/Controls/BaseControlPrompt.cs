@@ -13,7 +13,6 @@ using System.Threading;
 
 namespace PromptPlusLibrary.Controls
 {
-
     internal abstract class BaseControlPrompt<T>(bool isWidget, IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions, [CallerFilePath] string? filemecontrol = null)
     {
         private readonly BufferScreen _bufferScreen = new();
@@ -42,12 +41,16 @@ namespace PromptPlusLibrary.Controls
 
         public ResultPrompt<T> Run(CancellationToken stoptoken = default)
         {
-            using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(stoptoken, console.TokenCancelPress);
+            if (ConsolePlus.IsExitDefaultCancel && ConsolePlus.AbortedByCtrlC)
+            {
+                throw new PromptPlusException();
+            }
+
+            using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(stoptoken, ConsolePlus.TokenCancelPress);
 
             if (isWidget)
             {
-
-                using (((IConsole)console).InternalExclusiveContext())
+                using (ConsolePlus.InternalExclusiveContext())
                 {
 
                     promptConfig.TraceBaseControlOptions = GeneralOptions;
@@ -80,6 +83,10 @@ namespace PromptPlusLibrary.Controls
                     catch
                     {
                         error = true;
+                        if (ConsolePlus.IsExitDefaultCancel && ConsolePlus.AbortedByCtrlC)
+                        {
+                            throw new PromptPlusException();
+                        }
                         throw;
                     }
                     finally
@@ -103,7 +110,7 @@ namespace PromptPlusLibrary.Controls
 #pragma warning restore CS8604 // Possible null reference argument.
                 }
             }
-            using (console.InternalExclusiveContext())
+            using (ConsolePlus.InternalExclusiveContext())
             {
                 promptConfig.TraceBaseControlOptions = GeneralOptions;
                 promptConfig.TraceCurrentFileNameControl = filemecontrol;
@@ -160,6 +167,10 @@ namespace PromptPlusLibrary.Controls
                 catch
                 {
                     error = true;
+                    if (ConsolePlus.IsExitDefaultCancel && ConsolePlus.AbortedByCtrlC)
+                    {
+                        throw new PromptPlusException();
+                    }
                     throw;
                 }
                 finally
@@ -221,11 +232,11 @@ namespace PromptPlusLibrary.Controls
 
         public ConsoleKeyInfo WaitKeypress(bool intercept, CancellationToken token)
         {
-            while (!console.KeyAvailable && !token.IsCancellationRequested)
+            while (!ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
             {
                 token.WaitHandle.WaitOne(2);
             }
-            return console.KeyAvailable && !token.IsCancellationRequested ? console.ReadKey(intercept) : new ConsoleKeyInfo();
+            return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(intercept) : new ConsoleKeyInfo();
         }
 
         public bool IsTooltipToggerKeyPress(ConsoleKeyInfo keyInfo)

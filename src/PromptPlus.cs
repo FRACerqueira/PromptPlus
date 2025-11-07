@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
@@ -111,9 +110,13 @@ namespace PromptPlusLibrary
 
             AppDomain.CurrentDomain.ProcessExit += (s, e) =>
             {
+                if (_promptConfig.ResetBasicStateAfterExist)
+                {
+                    ResetState();
+                }
                 if (((IConsoleExtend)Console).AbortedByCtrlC)
                 {
-                    AppDomainUnloadedException error = new("Press Ctrl+C or Ctrl+Break");
+                    PromptPlusException error = new("Press Ctrl+C or Ctrl+Break");
                     try
                     {
                         WriteCrashLog(typeof(PromptPlus), error);
@@ -125,31 +128,28 @@ namespace PromptPlusLibrary
                         //none
                     }
                 }
-                if (_promptConfig.ResetBasicStateAfterExist)
-                {
-                    ResetState();
-                }
             };
 
-            AppDomain.CurrentDomain.FirstChanceException += ((object? o, FirstChanceExceptionEventArgs e) =>
+            AppDomain.CurrentDomain.FirstChanceException += ((o, e) =>
             {
-                if (e.Exception.GetType() == typeof(AppDomainUnloadedException))
+                if (e.Exception.GetType() == typeof(PromptPlusException))
                 {
-                    if (_consoledrive.UserPressKeyAborted && ((IConsoleExtend)_consoledrive).IsExitDefaultCancel)
-                    {
-                        ((IConsoleExtend)_consoledrive).ResetTokenCancelPress();
-                        Environment.Exit(1);
-                    }
+                    ((IConsoleExtend)_consoledrive).ResetTokenCancelPress();
+                    Environment.Exit(1);
                 }
             });
 
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             {
+                if (_promptConfig.ResetBasicStateAfterExist)
+                {
+                    ResetState();
+                }
                 try
                 {
                     if (((IConsoleExtend)Console).AbortedByCtrlC)
                     {
-                        AppDomainUnloadedException error = new("Press Ctrl+C or Ctrl+Break");
+                        PromptPlusException error = new("Press Ctrl+C or Ctrl+Break");
                         WriteCrashLog(typeof(PromptPlus), error);
                         _promptConfig.AfterError?.Invoke(error);
                         System.Console.WriteLine($"{error}");
@@ -164,14 +164,9 @@ namespace PromptPlusLibrary
                 {
                     //none
                 }
-                if (_promptConfig.ResetBasicStateAfterExist)
-                {
-                    ResetState();
-                }
             };
             _consoledrive.ResetColor();
             _consoledrive.Clear();
-            _consoledrive.RemoveCancelKeyPress();
         }
 
         /// <summary>
