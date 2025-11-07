@@ -18,16 +18,28 @@ namespace PromptPlusLibrary
         /// <returns><see cref="IDisposable"/></returns>
         public static IDisposable ExclusiveContext(this IConsole console)
         {
+            if (((IConsoleExtend)console).IsExitDefaultCancel && ((IConsoleExtend)console).AbortedByCtrlC)
+            {
+                throw new PromptPlusException();
+            }
             return new ExclusiveContextOutput((IConsoleExtend)console, false);
         }
 
         internal static IDisposable InternalExclusiveContext(this IConsole console)
         {
+            if (((IConsoleExtend)console).IsExitDefaultCancel && ((IConsoleExtend)console).AbortedByCtrlC)
+            {
+                throw new PromptPlusException();
+            }
             return new ExclusiveContextOutput((IConsoleExtend)console, true);
         }
 
         internal static IDisposable InternalExclusiveContext(this IConsoleExtend console)
         {
+            if (console.IsExitDefaultCancel && console.AbortedByCtrlC)
+            {
+                throw new PromptPlusException();
+            }
             return new ExclusiveContextOutput(console, true);
         }
     }

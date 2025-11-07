@@ -16,18 +16,18 @@ namespace PromptPlusLibrary.Drivers
 {
     internal class ConsoleDriveWindows : IConsole, IConsoleExtend
     {
-        internal const int IdleReadKey = 2;
+        private readonly SemaphoreSlim _exclusiveCAbortCtrlC = new(0, 1);
+        private readonly SemaphoreSlim _exclusiveContext = new(1, 1);
+        private readonly Task _CheckBackGroundCtrlC;
         private TargetScreen _currentBuffer = TargetScreen.Primary;
         private Color _consoleForegroundColor;
         private Color _consoleBackgroundColor;
-        private readonly SemaphoreSlim _exclusiveContext = new(1, 1);
         private bool _disposed;
         private Action<object?, ConsoleCancelEventArgs>? _cancelKeyPressEvent;
         private AfterCancelKeyPress _behaviorAfterCancelKeyPress;
         private CancellationTokenSource _tokenCancelPress;
         private bool _isExistDefaultCancel;
-        private static bool _isAbortCtrlC;
-        private static Task? _CheckBackGroundCtrlC;
+        private bool _isAbortCtrlC;
 
         public ConsoleDriveWindows(IProfileDrive profile)
         {
@@ -39,29 +39,13 @@ namespace PromptPlusLibrary.Drivers
             _isExistDefaultCancel = false;
             _CheckBackGroundCtrlC = Task.Run(() =>
             {
-                bool found = false;
-                while (!_disposed)
+                _exclusiveCAbortCtrlC.Wait();
+                if (!_disposed)
                 {
-                    try
-                    {
-                        _tokenCancelPress.Token.WaitHandle.WaitOne(2);
-                    }
-                    catch (ObjectDisposedException)
-                    {
-                        break;
-                    }
-                    if (AbortedByCtrlC)
-                    {
-                        found = true;
-                        break;
-                    }
+                    throw new PromptPlusException();
                 }
-                if (found)
-                {
-                    throw new AppDomainUnloadedException();
-                }
-
             });
+            RemoveCancelKeyPress();
         }
 
         public CancellationToken TokenCancelPress => _tokenCancelPress.Token;
@@ -100,7 +84,11 @@ namespace PromptPlusLibrary.Drivers
             Console.CancelKeyPress -= ExitDefaultCancel;
             SetUserPressKeyAborted();
             _isAbortCtrlC = true;
-            throw new AppDomainUnloadedException();
+            if (!_disposed)
+            {
+                _exclusiveCAbortCtrlC.Release();
+            }
+            throw new PromptPlusException();
         }
 
         public void CancelKeyPress(AfterCancelKeyPress behaviorcontrols, Action<object?, ConsoleCancelEventArgs> actionhandle)
@@ -142,6 +130,10 @@ namespace PromptPlusLibrary.Drivers
 
         public void UniqueContext(Action action)
         {
+            if (IsExitDefaultCancel && AbortedByCtrlC)
+            {
+                throw new PromptPlusException();
+            }
             bool exclusive = false;
             if (_exclusiveContext.CurrentCount == 1)
             {
@@ -851,23 +843,23 @@ namespace PromptPlusLibrary.Drivers
         {
             if (!_disposed)
             {
+                _disposed = true;
+                if (_isExistDefaultCancel)
+                {
+                    Console.CancelKeyPress -= ExitDefaultCancel;
+                }
                 if (_cancelKeyPressEvent != null)
                 {
                     Console.CancelKeyPress -= ConsoleCancelKeyPress;
                 }
-                _disposed = true;
-                if (_CheckBackGroundCtrlC != null)
-                {
-                    while (!_CheckBackGroundCtrlC.IsCompleted)
-                    {
-                        Thread.Sleep(2);
-                    }
-                    _CheckBackGroundCtrlC.Dispose();
-                }
+                _behaviorAfterCancelKeyPress = AfterCancelKeyPress.Default;
+                _exclusiveCAbortCtrlC.Release();
+                _CheckBackGroundCtrlC.Wait();
+                _CheckBackGroundCtrlC.Dispose();
                 _cancelKeyPressEvent = null;
                 _tokenCancelPress?.Dispose();
                 _exclusiveContext?.Dispose();
-                _disposed = true;
+                _exclusiveCAbortCtrlC?.Dispose();
                 GC.SuppressFinalize(this);
             }
         }

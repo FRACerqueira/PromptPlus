@@ -86,6 +86,7 @@
 | enum [ProgressBarStyles](./PromptPlusLibrary/ProgressBarStyles.md) | Represents The Styles ProgressBar control This enum defines various regions or components of the ProgressBar. |
 | enum [ProgressBarType](./PromptPlusLibrary/ProgressBarType.md) | Represents the Graphical-based of Progress Bar. |
 | static class [PromptPlus](./PromptPlusLibrary/PromptPlus.md) | Provides extension methods for ConsoleKeyInfo to evaluate specific key combinations, including standard keys and Emacs-style shortcuts. |
+| class [PromptPlusException](./PromptPlusLibrary/PromptPlusException.md) | Represents an exception thrown by PromptPlus for Press Ctrl+C or Ctrl+Break |
 | struct [ResultPrompt&lt;T&gt;](./PromptPlusLibrary/ResultPrompt-1.md) | Represents The Result *T* to Controls |
 | enum [SelectStyles](./PromptPlusLibrary/SelectStyles.md) | Represents the styles for the Select Control. This enum defines various regions or components of the Select Control. |
 | enum [SeparatorLine](./PromptPlusLibrary/SeparatorLine.md) | Represents Type Separation line |

@@ -178,6 +178,10 @@ Whenever a **critical error occurs, a log file is generated** before completion 
 
 ### About console Ctrl+C / Ctrl+Break
 
+The Prompt Plus library monitors the Ctrl+C / Ctrl+Break keys. 
+
+When it is not handled by the 'CancelKeyPress' command, every time the application is closed it restores the initial state of colors, cursor, Culture and returns to the primary console buffer.
+
 The Prompt Plus library provides the ability to manipulate the behavior of Ctrl+C/Ctrl+Break using the command:
 - CancelKeyPress(AfterCancelKeyPress behaviorcontrols, Action\<object?, ConsoleCancelEventArgs\> actionhandle)
 
@@ -278,7 +282,7 @@ PromptPlus adopts the keyboard **left/right arrows, Home, End** keys for navigat
 
 ### For list/colletion
 
-PromptPlus adopts the keyboard **arrows, Ctrl+Home, Ctrl+End, PageUp and PageDown** keys items navigation.
+PromptPlus adopts the keyboard **Up/Down arrows, Ctrl+Home, Ctrl+End, PageUp and PageDown** keys items navigation.
 
 For multiple-selection lists, a **space** is used to indicate a check mark. The **Shift+space** combination is used in text input to differentiate it from a check mark, when applicable.
 
