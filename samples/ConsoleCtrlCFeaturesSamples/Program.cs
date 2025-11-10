@@ -12,6 +12,9 @@ namespace ConsoleCtrlCFeaturesSamples
         static void Main()
         {
 
+            //Disable Exclusive Context - For demonstration purposes only. Default value = false
+            //In multithreaded scenarios, the rendering of controls and commands may exhibit text sequence errors when the property is set to false.
+            PromptPlus.Console.EnabledExclusiveContext = true;
             PromptPlus.Console.ResetColor();
             PromptPlus.Console.Clear();
 
@@ -50,6 +53,10 @@ namespace ConsoleCtrlCFeaturesSamples
 
             result = PromptPlus.Controls.Input("Input2 : ").Run();
             PromptPlus.Console.WriteLine($"Input2 => IsAborted : {result.IsAborted}, Value: {result.Content}");
+            PromptPlus.Console.WriteLine("");
+
+            result = PromptPlus.Controls.Input("Input3 : ").Run();
+            PromptPlus.Console.WriteLine($"Input3 => IsAborted : {result.IsAborted}, Value: {result.Content}");
             PromptPlus.Console.WriteLine("");
 
             PromptPlus.Console.WriteLine($"Ctrl+C Press : {PromptPlus.Console.UserPressKeyAborted}");

@@ -80,7 +80,7 @@ namespace PromptPlusLibrary
 
             _consoledrive = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
                 ? new ConsoleDriveWindows(profileDrive)
-                : (IConsole)new ConsoleDriveLinux(profileDrive);
+                : new ConsoleDriveLinux(profileDrive);
 
             _promptConfig = new(unicodesupported, _appConsoleCulture);
 
@@ -165,8 +165,6 @@ namespace PromptPlusLibrary
                     //none
                 }
             };
-            _consoledrive.ResetColor();
-            _consoledrive.Clear();
         }
 
         /// <summary>
@@ -218,40 +216,35 @@ namespace PromptPlusLibrary
             lock (_lockprofile)
             {
                 ProfileDrive profileDrive;
-                using (_consoledrive.ExclusiveContext())
+                ProfileSetup newprofile = new()
                 {
-                    ProfileSetup newprofile = new()
-                    {
-                        DefaultConsoleForegroundColor = _consoledrive.ForegroundColor,
-                        DefaultConsoleBackgroundColor = _consoledrive.BackgroundColor,
-                        PadLeft = _consoledrive.PadLeft,
-                        PadRight = _consoledrive.PadRight,
-                        OverflowStrategy = _consoledrive.OverflowStrategy
-                    };
-                    config(newprofile);
-                    profileDrive = new ProfileDrive(
-                         name,
-                         _consoledrive.IsTerminal,
-                         _consoledrive.IsUnicodeSupported,
-                         _consoledrive.SupportsAnsi,
-                         _consoledrive.IsLegacy,
-                         _consoledrive.ColorDepth,
-                         newprofile.DefaultConsoleForegroundColor,
-                         newprofile.DefaultConsoleBackgroundColor,
-                         newprofile.OverflowStrategy,
-                         newprofile.PadLeft,
-                         newprofile.PadRight);
-                    _consoledrive.ResetColor();
-                    _consoledrive.Clear();
-                    _consoledrive.Out.Flush();
-                }
+                    DefaultConsoleForegroundColor = _originalForecolor,
+                    DefaultConsoleBackgroundColor = _originalBackcolor,
+                    PadLeft = 0,
+                    PadRight = 0,
+                    OverflowStrategy = Overflow.None
+                };
+                config(newprofile);
+                profileDrive = new ProfileDrive(
+                     name,
+                     _consoledrive.IsTerminal,
+                     _consoledrive.IsUnicodeSupported,
+                     _consoledrive.SupportsAnsi,
+                     _consoledrive.IsLegacy,
+                     _consoledrive.ColorDepth,
+                     newprofile.DefaultConsoleForegroundColor,
+                     newprofile.DefaultConsoleBackgroundColor,
+                     newprofile.OverflowStrategy,
+                     newprofile.PadLeft,
+                     newprofile.PadRight);
+                _consoledrive.Out.Flush();
+                
                 ((IConsoleExtend)_consoledrive).Dispose();
 
                 _consoledrive = RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
                     ? new ConsoleDriveWindows(profileDrive)
                     : (IConsole)new ConsoleDriveLinux(profileDrive);
                 _consoledrive.ResetColor();
-                _consoledrive.Clear();
             }
         }
 
@@ -285,7 +278,6 @@ namespace PromptPlusLibrary
             Thread.CurrentThread.CurrentCulture = _appConsoleCulture;
             System.Console.ForegroundColor = _originalForecolor;
             System.Console.BackgroundColor = _originalBackcolor;
-            System.Console.ResetColor();
         }
 
         private static (string key, string value)[] GetAllProperties(object obj)

@@ -28,10 +28,12 @@ namespace PromptPlusLibrary.Drivers
         private CancellationTokenSource _tokenCancelPress;
         private bool _isExistDefaultCancel;
         private bool _isAbortCtrlC;
+        private bool _enabledExclusiveContext;
 
         public ConsoleDriveWindows(IProfileDrive profile)
         {
             ProfilePlus = profile;
+            _enabledExclusiveContext = false;
             _consoleForegroundColor = profile.DefaultConsoleForegroundColor;
             _consoleBackgroundColor = profile.DefaultConsoleBackgroundColor;
             _cancelKeyPressEvent = null;
@@ -68,59 +70,87 @@ namespace PromptPlusLibrary.Drivers
 
         public void RemoveCancelKeyPress()
         {
-            _behaviorAfterCancelKeyPress = AfterCancelKeyPress.Default;
-            if (_cancelKeyPressEvent != null)
+            UniqueContext(() =>
             {
-                _cancelKeyPressEvent = null;
-                Console.CancelKeyPress -= ConsoleCancelKeyPress;
-            }
-            ResetTokenCancelPress();
-            _isExistDefaultCancel = true;
-            Console.CancelKeyPress += ExitDefaultCancel;
+                _behaviorAfterCancelKeyPress = AfterCancelKeyPress.Default;
+                if (_cancelKeyPressEvent != null)
+                {
+                    _cancelKeyPressEvent = null;
+                    Console.CancelKeyPress -= ConsoleCancelKeyPress;
+                }
+                ResetTokenCancelPress();
+                _isExistDefaultCancel = true;
+                Console.CancelKeyPress += ExitDefaultCancel;
+            });
         }
 
         private void ExitDefaultCancel(object? sender, ConsoleCancelEventArgs args)
         {
-            Console.CancelKeyPress -= ExitDefaultCancel;
-            SetUserPressKeyAborted();
-            _isAbortCtrlC = true;
-            if (!_disposed)
+            UniqueContext(() =>
             {
-                _exclusiveCAbortCtrlC.Release();
-            }
-            throw new PromptPlusException();
+                Console.CancelKeyPress -= ExitDefaultCancel;
+                SetUserPressKeyAborted();
+                _isAbortCtrlC = true;
+                if (!_disposed)
+                {
+                    _exclusiveCAbortCtrlC.Release();
+                }
+                throw new PromptPlusException();
+            });
         }
 
         public void CancelKeyPress(AfterCancelKeyPress behaviorcontrols, Action<object?, ConsoleCancelEventArgs> actionhandle)
         {
-            UserPressKeyAborted = false;
-            _behaviorAfterCancelKeyPress = behaviorcontrols;
-            if (_isExistDefaultCancel)
+            UniqueContext(() =>
             {
-                Console.CancelKeyPress -= ExitDefaultCancel;
-                _isExistDefaultCancel = false;
-            }
-            else
-            {
-                if (_cancelKeyPressEvent != null)
+                UserPressKeyAborted = false;
+                _behaviorAfterCancelKeyPress = behaviorcontrols;
+                if (_isExistDefaultCancel)
                 {
-                    Console.CancelKeyPress -= ConsoleCancelKeyPress;
+                    Console.CancelKeyPress -= ExitDefaultCancel;
+                    _isExistDefaultCancel = false;
                 }
-            }
-            _cancelKeyPressEvent = actionhandle;
-            Console.CancelKeyPress += ConsoleCancelKeyPress;
+                else
+                {
+                    if (_cancelKeyPressEvent != null)
+                    {
+                        Console.CancelKeyPress -= ConsoleCancelKeyPress;
+                    }
+                }
+                _cancelKeyPressEvent = actionhandle;
+                Console.CancelKeyPress += ConsoleCancelKeyPress;
+            });
         }
 
         public void SetUserPressKeyAborted()
         {
-            UserPressKeyAborted = true;
-            try
+            UniqueContext(() =>
             {
-                _tokenCancelPress.Cancel();
-            }
-            catch (ObjectDisposedException)
+                UserPressKeyAborted = true;
+                try
+                {
+                    _tokenCancelPress.Cancel();
+                }
+                catch (ObjectDisposedException)
+                {
+                    //none
+                }
+            });
+        }
+
+        public bool EnabledExclusiveContext 
+        { 
+            get { return _enabledExclusiveContext; }
+            set
             {
-                //none
+                UniqueContext(() =>
+                {
+                    if (_enabledExclusiveContext && !value && _exclusiveContext.CurrentCount == 0)
+                    {
+                        _exclusiveContext.Release();
+                    }
+                    _enabledExclusiveContext = value;
+                });
             }
         }
 
@@ -134,22 +164,14 @@ namespace PromptPlusLibrary.Drivers
             {
                 throw new PromptPlusException();
             }
-            bool exclusive = false;
-            if (_exclusiveContext.CurrentCount == 1)
-            {
-                _exclusiveContext.Wait();
-                exclusive = true;
-            }
-            try
+            if (!EnabledExclusiveContext)
             {
                 action.Invoke();
+                return;
             }
-            finally
+            using (((IConsoleExtend)this).InternalExclusiveContext())
             {
-                if (exclusive)
-                {
-                    _exclusiveContext.Release();
-                }
+                action.Invoke();
             }
         }
 
@@ -402,7 +424,6 @@ namespace PromptPlusLibrary.Drivers
         public ConsoleKeyInfo ReadKey(bool intercept = false)
         {
             ConsoleKeyInfo result = new();
-
             UniqueContext(() =>
             {
                 result = Console.ReadKey(intercept);
@@ -433,7 +454,6 @@ namespace PromptPlusLibrary.Drivers
         {
             UniqueContext(() =>
             {
-                Console.ResetColor();
                 ForegroundColor = ProfilePlus.DefaultConsoleForegroundColor;
                 BackgroundColor = ProfilePlus.DefaultConsoleBackgroundColor;
             });

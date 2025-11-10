@@ -5,12 +5,12 @@
 
 using System;
 
-namespace PromptPlusLibrary
+namespace PromptPlusLibrary.Core
 {
     /// <summary>
     /// Represents an exception thrown by PromptPlus for Press Ctrl+C or Ctrl+Break
     /// </summary>
-    public class PromptPlusException : Exception
+    internal class PromptPlusException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the PromptPlusException class.

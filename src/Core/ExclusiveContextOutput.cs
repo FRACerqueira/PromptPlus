@@ -15,21 +15,41 @@ namespace PromptPlusLibrary.Core
         public ExclusiveContextOutput(IConsoleExtend console, bool skipexplusive = true)
         {
             _consoleExtend = console;
-            if (skipexplusive)
+            if (_consoleExtend.EnabledExclusiveContext)
             {
-                if (_consoleExtend.ExclusiveContext.CurrentCount == 1)
+                if (skipexplusive)
                 {
-                    _consoleExtend.ExclusiveContext.Wait();
+                    if (_consoleExtend.ExclusiveContext.CurrentCount == 1)
+                    {
+                        try
+                        {
+                            _consoleExtend.ExclusiveContext.Wait(console.TokenCancelPress);
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            //none
+                        }
+                        _skipRelease = false;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        _consoleExtend.ExclusiveContext.Wait(console.TokenCancelPress);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        //none
+                    }
                     _skipRelease = false;
                 }
             }
             else
             {
-                _consoleExtend.ExclusiveContext.Wait();
-                _skipRelease = false;
+                _skipRelease = true;
             }
         }
-
         #region IDisposable
 
         public void Dispose()
@@ -40,7 +60,10 @@ namespace PromptPlusLibrary.Core
                 {
                     try
                     {
-                        _consoleExtend.ExclusiveContext.Release();
+                        if (_consoleExtend.ExclusiveContext.CurrentCount == 0)
+                        {
+                            _consoleExtend.ExclusiveContext.Release();
+                        }
                     }
                     catch (ObjectDisposedException)
                     {

@@ -13,7 +13,6 @@ namespace PromptPlusLibrary
     /// </summary>
     public interface IPromptPlusConfig
     {
-
         /// <summary>
         /// Gets or sets the action to invoke after an error occurs during processing.
         /// </summary>

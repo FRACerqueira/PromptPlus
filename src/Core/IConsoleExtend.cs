@@ -10,6 +10,8 @@ namespace PromptPlusLibrary.Core
 {
     internal interface IConsoleExtend : IDisposable
     {
+        bool EnabledExclusiveContext { get; set; }
+
         bool AbortedByCtrlC { get; }
 
         bool IsExitDefaultCancel { get; }

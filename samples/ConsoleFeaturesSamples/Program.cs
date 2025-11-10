@@ -13,6 +13,9 @@ namespace ConsoleFeaturesSamples
     {
         static void Main()
         {
+            //Disable Exclusive Context - For demonstration purposes only. Default value = false
+            //In multithreaded scenarios, the rendering of controls and commands may exhibit text sequence errors when the property is set to false.
+            PromptPlus.Console.EnabledExclusiveContext = true;
 
             PromptPlus.Console.ResetColor();
             PromptPlus.Console.Clear();
@@ -111,7 +114,7 @@ namespace ConsoleFeaturesSamples
                 cfg.PadLeft = 2;
                 cfg.PadRight = 2;
             });
-
+            PromptPlus.Console.Clear();
             PromptPlus.Widgets.SingleDash($"[yellow]Console Information[/]", DashOptions.DoubleBorder, 1 /*extra lines*/);
             PromptPlus.Console.WriteLine($"Profile Name : {PromptPlus.Console.ProfileName}");
             PromptPlus.Console.WriteLine($"Current Buffer: {PromptPlus.Console.CurrentBuffer}");
