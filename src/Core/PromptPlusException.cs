@@ -10,7 +10,7 @@ namespace PromptPlusLibrary.Core
     /// <summary>
     /// Represents an exception thrown by PromptPlus for Press Ctrl+C or Ctrl+Break
     /// </summary>
-    internal class PromptPlusException : Exception
+    internal sealed class PromptPlusException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the PromptPlusException class.
