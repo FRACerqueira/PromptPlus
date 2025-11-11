@@ -153,10 +153,10 @@ All controls that use the history feature always have the EnabledHistory(string 
 
 All console commands are in: **Prompt Plus.Console**.\<command/Properties\>. The commands are the same as those provided by the Console class with possible additional returns and/or extra functionality.
 
-A separation was made in the writing methods for common texts (default console behavior): **Write/WriteLine** and texts with syntax for text colors: **WriteColor/WriteLineColor**.
-
 **Properties** (All setters use Exclusive Context blocking the main thread during their execution)
 
+- EnabledExclusiveContext
+    - Gets/Sets a value indicating Enabled Exclusive context for controls/wdgets and commands console. Default value is false.
 - UserPressKeyAborted 
     - Gets a value indicating whether the operation was aborted by the user (Ctrl+C / Ctrl+Break) when CancelKeyPress is used. 
 - BehaviorAfterCancelKeyPress

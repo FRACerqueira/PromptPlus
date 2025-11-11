@@ -4,7 +4,7 @@
 </br>
 
 
-#### Gets a value indicating Enabled Exclusive ontext for controls/wdgets and commands console. Default value is `false`.
+#### Gets a value indicating Enabled Exclusive context for controls/wdgets and commands console. Default value is `false`.
 
 ```csharp
 public bool EnabledExclusiveContext { get; set; }
