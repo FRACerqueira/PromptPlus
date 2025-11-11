@@ -222,17 +222,17 @@ To use a non-embedded language/culture:
 
 PromptPlus adopts the keyboard **left/right arrows, Home, End** keys for navigation, extending its functionality with the emacs combinations below:
 
-- CTRL+SHIFT+T : To transpose the previous two characters.
-- CTRL+SHIFT+L : To clears the content.
-- CTRL+SHIFT+H : To deletes the previous character (equivalent to the backspace key).
-- CTRL+SHIFT+E : To moves the cursor to the line end (equivalent to the end key).
-- CTRL+SHIFT+A : To moves the cursor to the line start (equivalent to the home key).
-- CTRL+SHIFT+B : To moves the cursor back one character (equivalent to the left arrow key).
-- CTRL+SHIFT+F : To Moves the cursor forward one character (equivalent to the right arrow key).
-- CTRL+SHIFT+D : To delete the current character (equivalent to the delete key).
-- CTRL+SHIFT+U : To clears the line content before the cursor.
-- CTRL+SHIFT+K : To clears the line content after the cursor.
-- CTRL+SHIFT+W : To clear the word before the cursor.
+- CTRL+T : To transpose the previous two characters.
+- CTRL+L : To clears the content.
+- CTRL+H : To deletes the previous character (equivalent to the backspace key).
+- CTRL+E : To moves the cursor to the line end (equivalent to the end key).
+- CTRL+A : To moves the cursor to the line start (equivalent to the home key).
+- CTRL+B : To moves the cursor back one character (equivalent to the left arrow key).
+- CTRL+F : To Moves the cursor forward one character (equivalent to the right arrow key).
+- CTRL+D : To delete the current character (equivalent to the delete key).
+- CTRL+U : To clears the line content before the cursor.
+- CTRL+K : To clears the line content after the cursor.
+- CTRL+W : To clear the word before the cursor.
 - ALT+L : To lowers the case of every character from the cursor's position to the end of the current word.
 - ALT+U : To upper the case of every character from the cursor's position to the end of the current word.
 - ALT+C : To capitalizes the character under the cursor and moves to the end of the word.
@@ -240,7 +240,7 @@ PromptPlus adopts the keyboard **left/right arrows, Home, End** keys for navigat
 - ALT+F : To moves the cursor forward one word.
 - ALT+B : To moves the cursor backward one word.
 - INSER : To toggle input replacement mode (default/started in insert mode).
-- ESC : (feature optional) to abort input and return null.
+- ESC : (feature optional) to abort input and return default value and flag aborted.
 
 ### Console KeyInfo Extensions
 
