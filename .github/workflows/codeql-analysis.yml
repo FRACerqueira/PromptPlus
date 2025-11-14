@@ -33,7 +33,7 @@ jobs:
         queries: +security-extended,security-and-quality
   
     - name: Build Library
-      run: dotnet build ./src/PromptPlus/PromptPlus.csproj -c Release
+      run: dotnet build ./src/PromptPlus.csproj -c Release
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v4 
