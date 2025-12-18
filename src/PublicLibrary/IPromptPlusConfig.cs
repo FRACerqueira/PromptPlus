@@ -22,6 +22,11 @@ namespace PromptPlusLibrary
         Action<Exception>? AfterError { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether a message is displayed when the operation is aborted by pressing Ctrl+C. Default value is true.
+        /// </summary>
+        bool EnableMessageAbortCtrlC { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the basic state should be reset after an exit operation. Default value is true.
         /// The Culture,cursor, foreground, and background colors are reset to their default values.
         /// </summary>
