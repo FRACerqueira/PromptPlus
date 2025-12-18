@@ -8,7 +8,8 @@
 
 ```csharp
 public IWaitProcessControl AddTask(TaskMode mode, string id, 
-    Action<object?, CancellationToken> process, string? label = null, object? parameter = null)
+    Action<object?, ExtraInfoProcess, CancellationToken> process, string? label = null, 
+    object? parameter = null)
 ```
 
 | parameter | description |
@@ -33,6 +34,7 @@ The current [`IWaitProcessControl`](../IWaitProcessControl.md) instance for chai
 ### See Also
 
 * enum [TaskMode](../TaskMode.md)
+* class [ExtraInfoProcess](../ExtraInfoProcess.md)
 * interface [IWaitProcessControl](../IWaitProcessControl.md)
 * namespace [PromptPlusLibrary](../../PromptPlus.md)
 

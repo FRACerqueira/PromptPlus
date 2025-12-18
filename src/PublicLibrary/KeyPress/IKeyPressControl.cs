@@ -22,6 +22,42 @@ namespace PromptPlusLibrary
         /// <returns>The current <see cref="IKeyPressControl"/> instance for chaining.</returns>
         IKeyPressControl AddKeyValid(ConsoleKey key, ConsoleModifiers? modifiers = null, string? showtext = null);
 
+
+        /// <summary>
+        /// Creates a key press control that waits for user input for the specified duration, returning a default key
+        /// and modifiers if no input is received within the timeout period.
+        /// </summary>
+        /// <param name="time">The maximum amount of time to wait for a key press before returning the default key and modifiers. Must be a
+        /// non-negative duration.</param>
+        /// <param name="defaultkey">The key to return if the timeout elapses without user input.</param>
+        /// <param name="defaultmodifiers">The modifier keys (such as Shift, Alt, or Control) to associate with the default key if the timeout elapses.
+        /// If null, no modifiers are applied.</param>
+        /// <returns>The current <see cref="IKeyPressControl"/> instance for chaining.</returns>
+
+        IKeyPressControl Timeout(TimeSpan time, ConsoleKey defaultkey, ConsoleModifiers? defaultmodifiers = null);
+
+        /// <summary>
+        /// Creates a key press control that waits for user input for the specified duration in milliseconds, returning a default key
+        /// and modifiers if no input is received within the timeout period.
+        /// </summary>
+        /// <param name="milliseconds">The maximum amount of time to wait for a key press before returning the default key and modifiers. Must be a
+        /// non-negative duration.</param>
+        /// <param name="defaultkey">The key to return if the timeout elapses without user input.</param>
+        /// <param name="defaultmodifiers">The modifier keys (such as Shift, Alt, or Control) to associate with the default key if the timeout elapses.
+        /// If null, no modifiers are applied.</param>
+        /// <returns>The current <see cref="IKeyPressControl"/> instance for chaining.</returns>
+        IKeyPressControl Timeout(int milliseconds, ConsoleKey defaultkey, ConsoleModifiers? defaultmodifiers = null) => Timeout(TimeSpan.FromMilliseconds(milliseconds), defaultkey, defaultmodifiers);
+
+        /// <summary>
+        /// Defines whether to show countdown elapsed time. Default is true.
+        /// </summary>
+        /// <param name="value">
+        /// If true, shows countdown elapsed time.
+        /// The interval in milliseconds for updating the countdown display. Default is 500 milliseconds.
+        /// </param>
+        /// <returns>The current <see cref="IWaitTimerControl"/> instance for chaining.</returns>
+        IKeyPressControl ShowCountDown(bool value = true);
+
         /// <summary>
         /// Configures whether invalid keypresses should be displayed to the user.
         /// </summary>

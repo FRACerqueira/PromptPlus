@@ -37,6 +37,7 @@ namespace PromptPlusLibrary
         private static IConsole _consoledrive;
         private static readonly ConsoleColor _originalForecolor;
         private static readonly ConsoleColor _originalBackcolor;
+        private const string _msgCtrlC = "Application aborted by Ctrl+C or Ctrl+Break";
 
 #if NET9_0_OR_GREATER
         private static readonly Lock _lockprofile = new();
@@ -116,12 +117,15 @@ namespace PromptPlusLibrary
                 }
                 if (((IConsoleExtend)Console).AbortedByCtrlC)
                 {
-                    PromptPlusException error = new("Press Ctrl+C or Ctrl+Break");
+                    PromptPlusException error = new(_msgCtrlC);
                     try
                     {
                         WriteCrashLog(typeof(PromptPlus), error);
                         _promptConfig.AfterError?.Invoke(error);
-                        System.Console.WriteLine($"{error}");
+                        if (_promptConfig.EnableMessageAbortCtrlC)
+                        {
+                            System.Console.WriteLine(_msgCtrlC);
+                        }
                     }
                     catch
                     {
@@ -149,10 +153,13 @@ namespace PromptPlusLibrary
                 {
                     if (((IConsoleExtend)Console).AbortedByCtrlC)
                     {
-                        PromptPlusException error = new("Press Ctrl+C or Ctrl+Break");
+                        PromptPlusException error = new(_msgCtrlC);
                         WriteCrashLog(typeof(PromptPlus), error);
                         _promptConfig.AfterError?.Invoke(error);
-                        System.Console.WriteLine($"{error}");
+                        if (_promptConfig.EnableMessageAbortCtrlC)
+                        {
+                            System.Console.WriteLine(_msgCtrlC);
+                        }
                     }
                     else
                     {
@@ -166,6 +173,15 @@ namespace PromptPlusLibrary
                 }
             };
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the current process was terminated by a Ctrl+C (SIGINT) signal from the
+        /// console.
+        /// </summary>
+        /// <remarks>Use this property to determine if the application shutdown was initiated by a user
+        /// pressing Ctrl+C in the console window. This can be useful for handling cleanup or logging in response to
+        /// user-initiated termination.</remarks>
+        public static bool AbortedByCtrlC => ((IConsoleExtend)Console).AbortedByCtrlC;
 
         /// <summary>
         /// Gets the global configuration instance applied to newly created controls and widgets.
@@ -358,7 +374,7 @@ namespace PromptPlusLibrary
                     writer.WriteLine($"File Source : {_promptConfig.TraceCurrentFileNameControl}");
                 }
                 writer.WriteLine($"CurrentThread Culture : {culture}");
-                writer.WriteLine($"UserPressKeyAborted : {_consoledrive.UserPressKeyAborted}");
+                writer.WriteLine($"AbortedByCtrlC : {((IConsoleExtend)_consoledrive).AbortedByCtrlC}");
                 writer.WriteLine($"CancellationRequested : {((IConsoleExtend)_consoledrive).TokenCancelPress.IsCancellationRequested}");
                 if (ex != null)
                 {

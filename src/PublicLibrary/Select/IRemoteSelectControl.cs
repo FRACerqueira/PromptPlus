@@ -125,5 +125,15 @@ namespace PromptPlusLibrary
         IRemoteSelectControl<T1, T2> PredicateDisabled(Func<T1, bool> validdisabled);
 
 
+
+        /// <summary>
+        /// Sets the maximum display width for selected item text.Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
+        /// </summary>
+        /// <param name="maxWidth">The maximum width in characters.</param>
+        /// <returns>The current <see cref="IRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="maxWidth"/> is less than 1.</exception>
+        IRemoteSelectControl<T1, T2> MaxWidth(byte maxWidth);
+
+
     }
 }

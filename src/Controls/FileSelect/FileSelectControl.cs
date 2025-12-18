@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 
 namespace PromptPlusLibrary.Controls.FileSelect
@@ -42,6 +43,14 @@ namespace PromptPlusLibrary.Controls.FileSelect
         private bool _hideZeroEntries;
         private long _minvalueSize = long.MinValue;
         private long _maxvalueSize = long.MaxValue;
+        private string? _defaultitemfullpath;
+        private bool _defaultitemisfolder;
+        private bool _useDefaultHistory;
+        private HistoryOptions? _historyOptions;
+        private ItemNodeControl<ItemFile>? _defaultselect;
+        private byte _maxWidth;
+        private EmacsBuffer? _answerBuffer;
+        private bool _updatePosAnswerBuffer;
 
         private enum ModeView
         {
@@ -63,12 +72,65 @@ namespace PromptPlusLibrary.Controls.FileSelect
             IsRoot = (item) => item.UniqueId == (_items.Count == 0 ? "" : _items[0].UniqueId);
             _filterBuffer = new EmacsBuffer(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _pageSize = ConfigPlus.PageSize;
+            _maxWidth = ConfigPlus.MaxWidth;
 
         }
 #pragma warning restore IDE0290 // Use primary constructor
 #pragma warning restore IDE0079
 
         #region IFileSelectControl
+
+        public IFileSelectControl MaxWidth(byte maxWidth)
+        {
+            if (maxWidth < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
+            }
+            _maxWidth = maxWidth;
+            return this;
+        }
+
+        public IFileSelectControl DefaultHistory(bool useDefaultHistory = true)
+        {
+            _useDefaultHistory = useDefaultHistory;
+            _defaultitemfullpath = null;
+            return this;
+        }
+
+        public IFileSelectControl Default(string itemfullpath, bool useDefaultHistory = true)
+        {
+            ArgumentNullException.ThrowIfNull(itemfullpath);
+            var exist = false;
+            if (File.Exists(itemfullpath))
+            {
+                exist = true;
+                _defaultitemisfolder = false;
+            }
+            else if (Directory.Exists(itemfullpath))
+            {
+                exist = true;
+                _defaultitemisfolder = true;
+            }
+            if (!exist)
+            {
+                return this;
+            }
+            _useDefaultHistory = useDefaultHistory;
+            _defaultitemfullpath = itemfullpath;
+            return this;
+        }
+
+        public IFileSelectControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        {
+            ArgumentNullException.ThrowIfNull(filename);
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                throw new ArgumentException("Filename cannot be empty or whitespace.", nameof(filename));
+            }
+            _historyOptions = new HistoryOptions(filename);
+            options?.Invoke(_historyOptions);
+            return this;
+        }
 
         public IFileSelectControl HideFilesBySize(long minvalue, long maxvalue = long.MaxValue)
         {
@@ -186,6 +248,23 @@ namespace PromptPlusLibrary.Controls.FileSelect
 
         public override void InitControl(CancellationToken cancellationToken)
         {
+            _answerBuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
+            if (_historyOptions != null && _useDefaultHistory)
+            {
+                var itemHistories = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
+                if (itemHistories.Count > 0)
+                {
+                    try
+                    {
+                        _defaultitemfullpath = JsonSerializer.Deserialize<string>(itemHistories[0].History!)!;
+                    }
+                    catch (Exception)
+                    {
+                        //invalid Deserialize history 
+                    }
+                }
+            }
+
             InitViewFiles();
 
             _tooltipModeSelect = GetTooltipModeSelect();
@@ -224,6 +303,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    _updatePosAnswerBuffer = true;
                     ConsoleKeyInfo keyinfo = WaitKeypressDiscovery(cancellationToken);
 
                     #region default Press to Finish and tooltip
@@ -285,6 +365,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                             break;
                         }
                         ResultCtrl = new ResultPrompt<ItemFile>(_localpaginator!.SelectedItem.Value, false);
+                        SaveHistory(_localpaginator!.SelectedItem.Value);
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
@@ -490,6 +571,12 @@ namespace PromptPlusLibrary.Controls.FileSelect
                         }
                         continue;
                     }
+                    else if (!_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    {
+                        _updatePosAnswerBuffer = false;
+                        _indexTooptip = 0;
+                        break;
+                    }
                 }
             }
             finally
@@ -504,13 +591,20 @@ namespace PromptPlusLibrary.Controls.FileSelect
             _items.Clear();
             LoadRoot();
 
-            _localpaginator = new Paginator<ItemNodeControl<ItemFile>>(
+            var _default = Optional<ItemNodeControl<ItemFile>>.Empty();
+            if (_defaultselect != null)
+            { 
+                _default = Optional<ItemNodeControl<ItemFile>>.Set(_defaultselect);
+            }
+
+           _localpaginator = new Paginator<ItemNodeControl<ItemFile>>(
                 FilterMode.Disabled,
                 _items,
                 _pageSize,
-                Optional<ItemNodeControl<ItemFile>>.Empty(),
+                _default,
                 (item1, item2) => item1.UniqueId == item2.UniqueId);
 
+            _updatePosAnswerBuffer = true;
             if (_localpaginator.SelectedItem == null)
             {
                 _localpaginator.FirstItem();
@@ -675,8 +769,22 @@ namespace PromptPlusLibrary.Controls.FileSelect
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
-            screenBuffer.WriteLine(GetAnswerText(), _optStyles[FileStyles.Answer]);
+            if (_updatePosAnswerBuffer)
+            {
+                _answerBuffer!.LoadPrintable(GetAnswerText());
+                _answerBuffer.ToHome();
+            }
+            string str = _answerBuffer!.IsHideLeftBuffer
+                ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeftMost)
+                : ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft);
+            screenBuffer.Write(str, _optStyles[FileStyles.Answer]);
+            screenBuffer.Write(_answerBuffer!.ToBackward(), _optStyles[FileStyles.Answer]);
             screenBuffer.SavePromptCursor();
+            screenBuffer.Write(_answerBuffer!.ToForward(), _optStyles[FileStyles.Answer]);
+            str = _answerBuffer.IsHideRightBuffer
+                ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
+                : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
+            screenBuffer.WriteLine(str, _optStyles[FileStyles.Answer]);
         }
 
         private void WriteDescription(BufferScreen screenBuffer)
@@ -1000,6 +1108,20 @@ namespace PromptPlusLibrary.Controls.FileSelect
             };
         }
 
+        private bool IsDefaultValue(ItemFile item)
+        {
+            if (string.IsNullOrEmpty(_defaultitemfullpath))
+            {
+                return false;
+            }
+            var exist = _defaultitemfullpath == item.FullPath;
+            if (exist)
+            {
+                _defaultitemfullpath = null;
+            }
+            return exist;
+        }
+
         private void LoadRoot()
         {
             string filter = "*";
@@ -1023,6 +1145,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 Name = rootdi.Name,
                 Length = entries.Count
             };
+            var defaultexist = IsDefaultValue(rootitem);
             _items.Add(new ItemNodeControl<ItemFile>(Guid.NewGuid().ToString())
             {
                 IsExpanded = true,
@@ -1033,6 +1156,10 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 ParentUniqueId = null,
                 Value = rootitem
             });
+            if (defaultexist)
+            {
+                _defaultselect = _items[0];
+            }
             int pos = -1;
             foreach ((bool IsFile, string? Name) in entries.OrderBy(x => x.Name))
             {
@@ -1052,6 +1179,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 {
                     last = true;
                 }
+                defaultexist = IsDefaultValue(rootitem);
                 _items.Add(new ItemNodeControl<ItemFile>(Guid.NewGuid().ToString())
                 {
                     IsExpanded = false,
@@ -1064,7 +1192,65 @@ namespace PromptPlusLibrary.Controls.FileSelect
                     ParentUniqueId = _items[0].UniqueId,
                     Value = newitem
                 });
+                if (defaultexist)
+                {
+                    _defaultselect = _items[^1];
+                }
             }
+            if (!defaultexist && !string.IsNullOrEmpty(_defaultitemfullpath))
+            {
+                ExpandRecursive(rootitem.FullPath);
+            }
+        }
+
+        private void ExpandRecursive(string rootPath)
+        {
+            var localfolder = _defaultitemfullpath!;
+            var localfile = string.Empty;
+            if (!_defaultitemisfolder)
+            {
+                localfolder = Path.GetDirectoryName(_defaultitemfullpath!)!;
+                localfile = _defaultitemfullpath!;   
+            }
+            var folders = SplitPath(new DirectoryInfo(localfolder));
+            folders.Remove(rootPath); //remove root
+            ExpandFolders(folders, localfile);
+        }
+
+        private void ExpandFolders(List<string> folders, string localfile)
+        {
+            foreach (var folder in folders)
+            {
+                var index = _items.FindIndex(x => x.Value.FullPath == folder);
+                if (index == -1)
+                {
+                    break;
+                }
+                (string key, bool isload, List<ItemNodeControl<ItemFile>> values) newitems = EnqueueNewitems(_items[index].UniqueId,
+                    _items[index].Level,
+                    _items[index].Value.FullPath);
+                _items[index].IsExpanded = true;
+                _items[index].Status = NodeStatus.Done;
+                _items.InsertRange(index + 1, newitems.values);
+            }
+            var indexdefault = _items.FindIndex(x => x.Value.FullPath == _defaultitemfullpath);
+            if (indexdefault == -1 && !string.IsNullOrEmpty(localfile))
+            {
+                indexdefault = _items.FindIndex(x => x.Value.FullPath == localfile);
+            }
+            if (indexdefault >= 0)
+            {
+                _defaultselect = _items[indexdefault];
+                _defaultitemfullpath = null;
+            }
+        }
+
+        private static List<string> SplitPath(DirectoryInfo path)
+        {
+            var ret = new List<string>();
+            if (path.Parent != null) ret.AddRange(SplitPath(path.Parent));
+            ret.Add(path.FullName);
+            return ret;
         }
 
         private (string, bool, List<ItemNodeControl<ItemFile>>) EnqueueNewitems(string parentid, int level, string fullpath)
@@ -1201,6 +1387,19 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 token.WaitHandle.WaitOne(2);
             }
             return ConsolePlus.KeyAvailable && !token.IsCancellationRequested ? ConsolePlus.ReadKey(true) : new ConsoleKeyInfo();
+        }
+
+        private void SaveHistory(ItemFile value)
+        {
+            if (_historyOptions == null)
+            {
+                return;
+            }
+            string aux = JsonSerializer.Serialize(value.FullPath);
+            FileHistory.ClearHistory(_historyOptions!.FileNameValue);
+            IList<ItemHistory> hist = FileHistory.AddHistory(aux, _historyOptions!.ExpirationTimeValue, null);
+            FileHistory.SaveHistory(_historyOptions!.FileNameValue, hist);
+
         }
 
     }

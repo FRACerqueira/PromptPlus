@@ -63,11 +63,10 @@ namespace PromptPlusLibrary
         IWaitProcessControl IntervalUpdate(int mileseconds = 100);
 
         /// <summary>
-        /// Defines the maximum number of concurrent tasks enabled. The default value is the smaller number between the number of processors and 5.
+        /// Defines the maximum number of concurrent tasks enabled. The default value is the smaller number between the number of processors and 10.
         /// </summary>
-        /// <param name="value">The number of concurrent tasks. Must be between 1 and 5.</param>
+        /// <param name="value">The number of concurrent tasks. Must be between 1 and 10.</param>
         /// <returns>The current <see cref="IWaitProcessControl"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is less than 1 or greater than 5.</exception>
         IWaitProcessControl MaxDegreeProcess(byte value);
 
         /// <summary>
@@ -100,7 +99,7 @@ namespace PromptPlusLibrary
         /// <returns>The current <see cref="IWaitProcessControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="id"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="process"/> is <c>null</c>.</exception>
-        IWaitProcessControl AddTask(TaskMode mode, string id, Action<object?, CancellationToken> process, string? label = null, object? parameter = null);
+        IWaitProcessControl AddTask(TaskMode mode, string id, Action<object?,ExtraInfoProcess, CancellationToken> process, string? label = null, object? parameter = null);
 
         /// <summary>
         /// Runs the Wait process control and returns the result.

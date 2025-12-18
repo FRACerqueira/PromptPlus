@@ -52,17 +52,30 @@ namespace PromptPlusLibrary.Controls.Select
         private string _tooltipModeSelect = string.Empty;
         private int _lengthSeparationline;
         private string _lastinput;
-
+        private byte _maxWidth;
+        private EmacsBuffer? _answerBuffer;
+        private bool _updatePosAnswerBuffer;
 
         public SelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
+            _pageSize = ConfigPlus.PageSize;
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _lastinput = string.Empty;
-            _pageSize = ConfigPlus.PageSize;
+            _maxWidth = ConfigPlus.MaxWidth;
         }
 
 
         #region ISelectControl
+
+        public ISelectControl<T> MaxWidth(byte maxWidth)
+        {
+            if (maxWidth < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
+            }
+            _maxWidth = maxWidth;
+            return this;
+        }
 
         public ISelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
         {
@@ -187,6 +200,13 @@ namespace PromptPlusLibrary.Controls.Select
             _useDefaultHistory = useDefaultHistory;
             return this;
         }
+        
+        public ISelectControl<T> DefaultHistory(bool useDefaultHistory = true)
+        {
+            _defaultValue = Optional<T>.Empty();
+            _useDefaultHistory = useDefaultHistory;
+            return this;
+        }
 
         public ISelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
         {
@@ -279,6 +299,8 @@ namespace PromptPlusLibrary.Controls.Select
 
         public override void InitControl(CancellationToken cancellationToken)
         {
+            _answerBuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
+            _updatePosAnswerBuffer = true;
             if (typeof(T).IsEnum)
             {
                 _textSelector ??= EnumDisplay;
@@ -391,6 +413,8 @@ namespace PromptPlusLibrary.Controls.Select
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    _updatePosAnswerBuffer = true;
+
                     ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
 
                     #region default Press to Finish and tooltip
@@ -582,6 +606,12 @@ namespace PromptPlusLibrary.Controls.Select
                                 SetError(Messages.SelectionDisabled);
                             }
                         }
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (!_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    {
+                        _updatePosAnswerBuffer = false;
                         _indexTooptip = 0;
                         break;
                     }
@@ -800,15 +830,22 @@ namespace PromptPlusLibrary.Controls.Select
                 {
                     text = _localpaginator!.SelectedItem.Text!;
                 }
-                if (_localpaginator!.SelectedIndex >= 0 && _localpaginator!.SelectedItem.Disabled)
+                if (_updatePosAnswerBuffer)
                 {
-                    screenBuffer.WriteLine(text, _optStyles[SelectStyles.Disabled]);
+                    _answerBuffer!.LoadPrintable(text);
+                    _answerBuffer.ToHome();
                 }
-                else
-                {
-                    screenBuffer.WriteLine(text, _optStyles[SelectStyles.Answer]);
-                }
+                string str = _answerBuffer!.IsHideLeftBuffer
+                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeftMost)
+                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft);
+                screenBuffer.Write(str, _optStyles[SelectStyles.Answer]);
+                screenBuffer.Write(_answerBuffer!.ToBackward(), _optStyles[SelectStyles.Answer]);
                 screenBuffer.SavePromptCursor();
+                screenBuffer.Write(_answerBuffer!.ToForward(), _optStyles[SelectStyles.Answer]);
+                str = _answerBuffer.IsHideRightBuffer
+                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
+                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
+                screenBuffer.WriteLine(str, _optStyles[SelectStyles.Answer]);
             }
             else if (_modeView == ModeView.Filter)
             {

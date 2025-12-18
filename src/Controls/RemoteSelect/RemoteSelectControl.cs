@@ -48,7 +48,9 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
         private int _indexTooptip;
         private string _tooltipModeSelect = string.Empty;
         private string _lastinput;
-
+        private byte _maxWidth;
+        private EmacsBuffer? _answerBuffer;
+        private bool _updatePosAnswerBuffer;
 
         public RemoteSelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
@@ -56,11 +58,21 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _lastinput = string.Empty;
             _pageSize = ConfigPlus.PageSize;
+            _maxWidth = ConfigPlus.MaxWidth;
         }
 
 
         #region IRemoteSelectControl
 
+        public IRemoteSelectControl<T1, T2> MaxWidth(byte maxWidth)
+        {
+            if (maxWidth < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
+            }
+            _maxWidth = maxWidth;
+            return this;
+        }
 
         public IRemoteSelectControl<T1, T2> PredicateDisabled(Func<T1, bool> validdisabled)
         {
@@ -157,6 +169,9 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
         {
             ValidateConstraints();
 
+            _answerBuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
+            _updatePosAnswerBuffer = true;
+
             _localpaginator = new Paginator<ItemSelect<T1>>(
                 _filterType,
                 _items,
@@ -196,6 +211,8 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    _updatePosAnswerBuffer = true
+                        ;
                     ConsoleKeyInfo keyinfo = WaitKeypresLoading(cancellationToken);
 
 
@@ -456,6 +473,12 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         _indexTooptip = 0;
                         break;
                     }
+                    else if (!_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    {
+                        _updatePosAnswerBuffer = false;
+                        _indexTooptip = 0;
+                        break;
+                    }
                 }
                 _lastinput = _filterBuffer.ToString();
             }
@@ -614,15 +637,22 @@ namespace PromptPlusLibrary.Controls.RemoteSelect
                         text = _localpaginator!.SelectedItem.Text!;
                     }
                 }
-                if (_localpaginator!.SelectedIndex >= 0 && _localpaginator!.SelectedItem.Disabled && _localpaginator.SelectedItem.UniqueId != _loadMoreId)
+                if (_updatePosAnswerBuffer)
                 {
-                    screenBuffer.WriteLine(text, _optStyles[SelectStyles.Disabled]);
+                    _answerBuffer!.LoadPrintable(text);
+                    _answerBuffer.ToHome();
                 }
-                else
-                {
-                    screenBuffer.WriteLine(text, _optStyles[SelectStyles.Answer]);
-                }
+                string str = _answerBuffer!.IsHideLeftBuffer
+                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeftMost)
+                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft);
+                screenBuffer.Write(str, _optStyles[SelectStyles.Answer]);
+                screenBuffer.Write(_answerBuffer!.ToBackward(), _optStyles[SelectStyles.Answer]);
                 screenBuffer.SavePromptCursor();
+                screenBuffer.Write(_answerBuffer!.ToForward(), _optStyles[SelectStyles.Answer]);
+                str = _answerBuffer.IsHideRightBuffer
+                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
+                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
+                screenBuffer.WriteLine(str, _optStyles[SelectStyles.Answer]);
             }
             else if (_modeView == ModeView.Filter)
             {

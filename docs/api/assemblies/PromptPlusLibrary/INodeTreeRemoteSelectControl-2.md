@@ -26,6 +26,7 @@ public interface INodeTreeRemoteSelectControl<T1, T2>
 | [DisableRecursiveCount](INodeTreeRemoteSelectControl-2/DisableRecursiveCount.md)(…) | Disables or enables recursive counting of child nodes in the selection control. Defauts to disabled. |
 | [ExtraInfo](INodeTreeRemoteSelectControl-2/ExtraInfo.md)(…) | Configures the control to provide show additional information for node. |
 | [HideCount](INodeTreeRemoteSelectControl-2/HideCount.md)(…) | Controls the visibility of child node counts in the tree display. When enabled, hides the count indicator next to parent nodes. |
+| [MaxWidth](INodeTreeRemoteSelectControl-2/MaxWidth.md)(…) | Sets the maximum display width for selected item in characters.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
 | [Options](INodeTreeRemoteSelectControl-2/Options.md)(…) | Applies custom options to the control to modify its behavior and appearance. |
 | [PageSize](INodeTreeRemoteSelectControl-2/PageSize.md)(…) | Sets the maximum number of items to display per page in the tree view. Controls the pagination of large tree structures. |
 | [PredicateChildAllowed](INodeTreeRemoteSelectControl-2/PredicateChildAllowed.md)(…) | Sets a predicate that determines whether a node of type T1 is allowed to own other nodes. This expression is required for operation. |

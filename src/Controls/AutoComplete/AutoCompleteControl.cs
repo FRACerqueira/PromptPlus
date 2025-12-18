@@ -54,6 +54,7 @@ namespace PromptPlusLibrary.Controls.AutoComplete
             _defaultIfEmpty = string.Empty;
             _inputToCase = CaseOptions.Any;
             _maxLength = int.MaxValue;
+            _maxWidth = ConfigPlus.MaxWidth;
             _pageSize = ConfigPlus.PageSize;
             _minimumPrefixLength = ConfigPlus.MinimumPrefixLength;
             _completionWaitToStart = ConfigPlus.CompletionWaitToStart;
@@ -165,6 +166,10 @@ namespace PromptPlusLibrary.Controls.AutoComplete
                     throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
                 }
                 _maxWidth = maxWidth;
+            }
+            if (_maxLength < _maxWidth)
+            {
+                _maxWidth = _maxLength;
             }
             return this;
         }

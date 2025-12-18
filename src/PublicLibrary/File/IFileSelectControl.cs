@@ -111,6 +111,42 @@ namespace PromptPlusLibrary
         IFileSelectControl Root(string value);
 
         /// <summary>
+        /// Sets the initial selected values for the FileMultiSelect control.
+        /// </summary>
+        /// <param name="itemfullpath">The item(fullpath) to be initially selected.</param>
+        /// <param name="useDefaultHistory">Indicates whether to override initial values with history data when history is enabled. Default is <c>true</c>.</param>
+        /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="itemfullpath"/> is <c>null</c>.</exception>
+        IFileSelectControl Default(string itemfullpath, bool useDefaultHistory = true);
+
+
+        /// <summary>
+        /// Sets the maximum display width for selected items in characters.
+        /// </summary>
+        /// <param name="maxWidth">The maximum width in characters (minimum 1).</param>
+        /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxWidth"/> is less than 1.</exception>
+        IFileSelectControl MaxWidth(byte maxWidth);
+
+
+        /// <summary>
+        /// Sets the initial value from history (if enabled).   
+        /// </summary>
+        /// <param name="useDefaultHistory">If <c>true</c>, uses the default value from history (if enabled); otherwise not default value.</param>
+        /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
+        IFileSelectControl DefaultHistory(bool useDefaultHistory = true);
+
+
+        /// <summary>
+        /// Enables history persistence with optional custom configuration.
+        /// </summary>
+        /// <param name="filename">The name of the file to store history data.</param>
+        /// <param name="options">An optional action delegate to configure <see cref="IHistoryOptions"/>.</param>
+        /// <returns>The current <see cref="IFileSelectControl"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="filename"/> is <c>null</c>.</exception>
+        IFileSelectControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+
+        /// <summary>
         /// Sets a validation rule for file and folder selection.
         /// </summary>
         /// <param name="validselect">Function that evaluates if an item can be selected.</param>

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the width of the chart bar. Default value is 80. The value must be greater than or equal to 10.
+#### Sets the width of the chart bar. Default value is 50. The value must be greater than or equal to 10.
 
 ```csharp
 public IChartBarControl Width(byte value)

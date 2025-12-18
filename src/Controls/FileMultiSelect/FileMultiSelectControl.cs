@@ -48,7 +48,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
         private bool _hideZeroEntries;
         private long _minvalueSize = long.MinValue;
         private long _maxvalueSize = long.MaxValue;
-
+        private bool _onfilterOnlySelected;
         private enum ModeView
         {
             Select,
@@ -97,9 +97,9 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
 
         public IFileMultiSelectControl MaxWidth(byte maxWidth)
         {
-            if (maxWidth < 10)
+            if (maxWidth < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 10.");
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
             }
             _maxWidth = maxWidth;
             return this;
@@ -221,7 +221,6 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
         public override void InitControl(CancellationToken cancellationToken)
         {
             InitViewFiles();
-
             _resultbuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
 
             _tooltipModeSelect = GetTooltipModeSelect();
@@ -335,7 +334,26 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
 
                     #endregion
 
-                    else if (_filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
+                    else if (_modeView == ModeView.Select && ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && _onfilterOnlySelected)
+                    {
+                        _onfilterOnlySelected = false;
+                        _localpaginator!.UpdatColletion(_items);
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _filterBuffer!.Clear();
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (_modeView == ModeView.Select && ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && !_onfilterOnlySelected && _checkeditems.Count > 0)
+                    {
+                        _onfilterOnlySelected = true;
+                        _localpaginator!.UpdatColletion(_items.Where(x => x.IsMarked));
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _filterBuffer!.Clear();
+                        _indexTooptip = 0;
+                        break;
+                    }
+
+                    else if (!_onfilterOnlySelected && _filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
                     {
                         _indexTooptip = 0;
                         if (_modeView == ModeView.Select)
@@ -534,6 +552,13 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                         bool mark = !_items[index].IsMarked;
                         MarkAllItems(index);
                         int countselect = _checkeditems.Count;
+                        if (countselect == 0 && _onfilterOnlySelected)
+                        {
+                            _onfilterOnlySelected = false;
+                            _localpaginator!.UpdatColletion(_items);
+                            _localpaginator!.UpdateFilter(string.Empty);
+                            _filterBuffer!.Clear();
+                        }
                         if (countselect < _minSelect)
                         {
                             SetError(string.Format(Messages.MultiSelectMinSelection, _minSelect));
@@ -578,6 +603,13 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                         if (_checkeditems.Count == 0)
                         {
                             _resultbuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                                _filterBuffer!.Clear();
+                            }
                         }
                         else
                         {
@@ -900,7 +932,15 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
             str = _resultbuffer.IsHideRightBuffer
                 ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
                 : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
-            screenBuffer.WriteLine(str, styleAnswer);
+            screenBuffer.Write(str, styleAnswer);
+            if (_onfilterOnlySelected)
+            {
+                screenBuffer.WriteLine($" ({Messages.FilterOnlySelected})", _optStyles[FileStyles.TaggedInfo]);
+            }
+            else
+            {
+                screenBuffer.WriteLine("", styleAnswer);
+            }
         }
 
         private void WriteDescription(BufferScreen screenBuffer)
@@ -1406,6 +1446,10 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                 if (mode == ModeView.Filter)
                 {
                     lsttooltips.AddRange(EmacsBuffer.GetEmacsTooltips());
+                }
+                else
+                {
+                    lsttooltips.Add(string.Format(Messages.TooltipFilterOnlySelected, ConfigPlus.HotKeyTooltipFilterAllSelected));
                 }
                 _toggerTooptips[mode] = [.. lsttooltips];
             }

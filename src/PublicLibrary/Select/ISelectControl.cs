@@ -1,4 +1,6 @@
-﻿// ***************************************************************************************
+﻿
+
+// ***************************************************************************************
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
@@ -56,6 +58,13 @@ namespace PromptPlusLibrary
         /// <returns>The current <see cref="ISelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
         ISelectControl<T> Default(T value, bool useDefaultHistory = true);
+
+        /// <summary>
+        /// Sets the initial value from history (if enabled).   
+        /// </summary>
+        /// <param name="useDefaultHistory">If <c>true</c>, uses the default value from history (if enabled); otherwise not default value.</param>
+        /// <returns>The current <see cref="ISelectControl{T}"/> instance for chaining.</returns>
+        ISelectControl<T> DefaultHistory(bool useDefaultHistory = true);
 
         /// <summary>
         /// Dynamically changes the description of the Select control based on the current selected value.
@@ -188,5 +197,13 @@ namespace PromptPlusLibrary
         /// <param name="validselect">A predicate function that returns a tuple where the first value indicates if the item is valid, and the second value is an optional error message.</param>
         /// <returns>The current <see cref="ISelectControl{T}"/> instance for chaining.</returns>
         ISelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
+
+        /// <summary>
+        /// Sets the maximum display width for selected item text.Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
+        /// </summary>
+        /// <param name="maxWidth">The maximum width in characters.</param>
+        /// <returns>The current <see cref="ISelectControl{T}"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="maxWidth"/> is less than 1.</exception>
+        ISelectControl<T> MaxWidth(byte maxWidth);
     }
 }

@@ -30,7 +30,7 @@ public interface IProgressBarControl
 | [Spinner](IProgressBarControl/Spinner.md)(…) | Shows a [`SpinnersType`](./SpinnersType.md) animation at the end of the prompt. |
 | [Styles](IProgressBarControl/Styles.md)(…) | Overwrites styles for the Progress Bar Control. |
 | [UpdateHandler](IProgressBarControl/UpdateHandler.md)(…) | Sets a handler to update the ProgressBar values dynamically. |
-| [Width](IProgressBarControl/Width.md)(…) | Sets the width of the ProgressBar. Default value is 80. Must be &gt;= 10. |
+| [Width](IProgressBarControl/Width.md)(…) | Sets the width of the ProgressBar. Default value is 50. Must be &gt;= 10. |
 
 ### See Also
 

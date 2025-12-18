@@ -27,6 +27,14 @@ namespace PromptPlusLibrary
         INodeTreeSelectControl<T> ChangeDescription(Func<T, string> value);
 
         /// <summary>
+        /// Sets the maximum display width for selected item in characters.
+        /// </summary>
+        /// <param name="maxWidth">The maximum width of the selected item in characters.</param>
+        /// <returns>The current <see cref="INodeTreeSelectControl{T}"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxWidth"/> is less than 1.</exception>
+        INodeTreeSelectControl<T> MaxWidth(byte maxWidth);
+
+        /// <summary>
         /// Performs an interaction with each item in the collection.
         /// Enables custom processing or modification of items during tree construction.
         /// </summary>

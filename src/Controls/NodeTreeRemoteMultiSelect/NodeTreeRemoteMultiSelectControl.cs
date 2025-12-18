@@ -49,7 +49,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
         private byte _maxWidth;
         private readonly List<ItemNodeControl<T1>> _checkeditems = [];
         private EmacsBuffer _resultbuffer;
-        private readonly string _lastinput;
+        private bool _onfilterOnlySelected;
 
 
 
@@ -61,7 +61,6 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
             IsRoot = (item) => item.UniqueId == (_items.Count == 0 ? "" : _items[0].UniqueId);
             _toggerTooptips = [];
             _resultbuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
-            _lastinput = string.Empty;
             _maxWidth = ConfigPlus.MaxWidth;
             _pageSize = ConfigPlus.PageSize;
         }
@@ -72,9 +71,9 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
 
         public INodeTreeRemoteMultiSelectControl<T1, T2> MaxWidth(byte maxWidth)
         {
-            if (maxWidth < 10)
+            if (maxWidth < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 10.");
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
             }
             _maxWidth = maxWidth;
             return this;
@@ -314,6 +313,23 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
 
                     #endregion
 
+                    else if (ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && _onfilterOnlySelected)
+                    {
+                        _onfilterOnlySelected = false;
+                        _localpaginator!.UpdatColletion(_items);
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && !_onfilterOnlySelected && _checkeditems.Count > 0)
+                    {
+                        _onfilterOnlySelected = true;
+                        _localpaginator!.UpdatColletion(_items.Where(x => x.IsMarked));
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _indexTooptip = 0;
+                        break;
+                    }
+
                     else if (keyinfo.Key == ConsoleKey.None && keyinfo.Modifiers == ConsoleModifiers.Alt)
                     {
                         //has result backgroud task
@@ -330,7 +346,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                             break;
                         }
                     }
-                    else if (_loadingItemTask == null && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.IsLoadMoreNode)
+                    else if (!_onfilterOnlySelected && _loadingItemTask == null && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.IsLoadMoreNode)
                     {
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator!.SelectedItem!.UniqueId);
                         _items[index].Status = NodeStatus.Loading;
@@ -422,7 +438,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                         _showInfoFullPath = !_showInfoFullPath;
                         break;
                     }
-                    else if (_loadingItemTask == null && _localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem!) && _localpaginator.SelectedItem.AllowsChildren && "+-".Contains(keyinfo.KeyChar) && keyinfo.Modifiers == ConsoleModifiers.None)
+                    else if (!_onfilterOnlySelected && _loadingItemTask == null && _localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem!) && _localpaginator.SelectedItem.AllowsChildren && "+-".Contains(keyinfo.KeyChar) && keyinfo.Modifiers == ConsoleModifiers.None)
                     {
                         if (keyinfo.KeyChar == '+')
                         {
@@ -460,6 +476,20 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator.SelectedItem.UniqueId);
                         bool mark = !_items[index].IsMarked;
                         MarkAllNodes(index);
+                        if (_checkeditems.Count == 0)
+                        {
+                            _resultbuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                            }
+                        }
+                        else
+                        {
+                            _resultbuffer!.LoadPrintable(_checkeditems.Select(x => _textSelector!.Invoke(x.Value) ?? string.Empty).Aggregate((x, y) => $"{x},{y}"));
+                        }
                         int countselect = _checkeditems.Count;
                         if (countselect < _minSelect)
                         {
@@ -504,6 +534,12 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                         if (_checkeditems.Count == 0)
                         {
                             _resultbuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                            }
                         }
                         else
                         {
@@ -730,6 +766,10 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
                 ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
                 : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
             screenBuffer.Write(str, styleAnswer);
+            if (_onfilterOnlySelected)
+            {
+                screenBuffer.Write($" ({Messages.FilterOnlySelected})", _optStyles[NodeTreeStyles.TaggedInfo]);
+            }
             if (_loadingItemTask != null)
             {
                 screenBuffer.Write($"({Messages.Loading})", styleAnswer);
@@ -782,6 +822,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
             }
             lsttooltips.Add(Messages.TooltipPages);
             lsttooltips.Add($"{Messages.TooltipExpandAllPress}, {Messages.TooltipLevelHomeEnd}, {Messages.InputFinishEnter}");
+            lsttooltips.Add(string.Format(Messages.TooltipFilterOnlySelected, ConfigPlus.HotKeyTooltipFilterAllSelected));
             _toggerTooptips = [.. lsttooltips];
         }
 
@@ -1011,7 +1052,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteMultiSelect
         {
             while (!ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
             {
-                if (_loadingItemTask != null && _loadingItemTask.IsCompleted)
+                if (!_onfilterOnlySelected && _loadingItemTask != null && _loadingItemTask.IsCompleted)
                 {
                     _loadingItemTask.Dispose();
                     _loadingItemTask = null;

@@ -34,15 +34,16 @@ namespace PromptPlusLibrary.Core
         private CultureInfo? _defaultCulture;
         private byte _defaultmaxLenghtFilterText = 15;
         private byte _defaultpagesize = 10;
-        private byte _defaultwidth = 30;
+        private byte _defaultwidth = 50;
         private byte _defaultminimumPrefixLength = 3;
-        private byte _defaultchartwidth = 80;
+        private byte _defaultchartwidth = 50;
         private char _defaultsecretchar = '#';
         private char _defaultpromptmaskedit = '_';
-        private byte _defaultprogressbarwidth = 80;
+        private byte _defaultprogressbarwidth = 50;
         private byte _defaultsliderwidth = 40;
         private byte _defaultswitchwidth = 6;
         private int _defaultcompletionwaittostart = 500;
+        private bool _defaultenableMessageabortkey = true; 
         private Action<Exception>? _defaultafterError;
 
         private string _defaultfolderlog = GetFolderPath(SpecialFolder.UserProfile);
@@ -69,6 +70,15 @@ namespace PromptPlusLibrary.Core
         {
             get => _defaultafterError;
             set => _defaultafterError = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether a message is displayed when the operation is aborted by pressing Ctrl+C. Default value is true.
+        /// </summary>
+        public bool EnableMessageAbortCtrlC
+        {
+            get => _defaultenableMessageabortkey;
+            set => _defaultenableMessageabortkey = value;
         }
 
         /// <summary>
@@ -161,7 +171,7 @@ namespace PromptPlusLibrary.Core
         }
 
         /// <summary>
-        /// Gets Sets the width of the chart bar.Default value is 80. 
+        /// Gets Sets the width of the chart bar.Default value is 50. 
         /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
         /// </summary>
         public byte ChartWidth
@@ -197,7 +207,7 @@ namespace PromptPlusLibrary.Core
         }
 
         /// <summary>
-        /// Gets Sets the width of the Progress bar.Default value is 80. 
+        /// Gets Sets the width of the Progress bar.Default value is 50. 
         /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
         /// </summary>
         public byte ProgressBarWidth
@@ -248,17 +258,17 @@ namespace PromptPlusLibrary.Core
         }
 
         /// <summary>
-        /// Sets the maximum display width for selected items text. Default is 30 characters.
-        /// Valid range is 10–255; values outside the range are coerced to the nearest boundary.
+        /// Sets the maximum display width for selected items text. Default is 50 characters.
+        /// Valid range is 1–255; values outside the range are coerced to the nearest boundary.
         /// </summary>
         public byte MaxWidth
         {
             get => _defaultwidth;
             set
             {
-                if (value < 10)
+                if (value < 1)
                 {
-                    value = 10;
+                    value = 1;
                 }
                 _defaultwidth = value;
             }
@@ -365,6 +375,12 @@ namespace PromptPlusLibrary.Core
         public HotKey HotKeyAbortKeyPress { get; } = HotKey.AbortKeyPress;
 
         /// <summary>
+        /// Gets or sets the hotkey for Filter all selected items (default: F3).
+        /// </summary>
+        [JsonIgnore]
+        public HotKey HotKeyTooltipFilterAllSelected { get; set; } = HotKey.TooltipFilterAllSelected;
+
+        /// <summary>
         /// Gets the hotkey that cycles through tooltip variants (F1).
         /// </summary>
         [JsonIgnore]
@@ -400,6 +416,11 @@ namespace PromptPlusLibrary.Core
         /// Gets or sets the hotkey for toggling selection of all items (F2).
         /// </summary>
         public HotKey HotKeyTooltipToggleAll { get; set; } = HotKey.ToggleAll;
+
+        /// <summary>
+        /// Gets or sets the hotkey for toggling selection of all groups items (Ctrl+F2).
+        /// </summary>
+        public HotKey HotKeyTooltipToggleAllGroups { get; set; } = HotKey.ToggleAllGroups;
 
         /// <summary>
         /// Gets or sets the hotkey for toggling full file path display (F2).

@@ -26,12 +26,14 @@ public interface ISelectControl<T>
 | [AutoSelect](ISelectControl-1/AutoSelect.md)(…) | Automatically selects and finalizes the item when only one item is in the list. Default is `false`. |
 | [ChangeDescription](ISelectControl-1/ChangeDescription.md)(…) | Dynamically changes the description of the Select control based on the current selected value. |
 | [Default](ISelectControl-1/Default.md)(…) | Sets the initial value of the Select control. Default is the first item in the list. |
+| [DefaultHistory](ISelectControl-1/DefaultHistory.md)(…) | Sets the initial value from history (if enabled). |
 | [EnabledHistory](ISelectControl-1/EnabledHistory.md)(…) | Enables history and applies custom options to the history feature. |
 | [EqualItems](ISelectControl-1/EqualItems.md)(…) | Sets a custom item comparator for determining item equality. |
 | [ExtraInfo](ISelectControl-1/ExtraInfo.md)(…) | Configures the control to provide show additional information for item. |
 | [Filter](ISelectControl-1/Filter.md)(…) | Sets the filter strategy for filtering items in the collection. Default is Disabled. |
 | [HideTipGroup](ISelectControl-1/HideTipGroup.md)(…) | Hides the tip with the group name. Default is `false`. |
 | [Interaction](ISelectControl-1/Interaction.md)(…) |  |
+| [MaxWidth](ISelectControl-1/MaxWidth.md)(…) | Sets the maximum display width for selected item text.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
 | [Options](ISelectControl-1/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](ISelectControl-1/PageSize.md)(…) | Sets the maximum number of items to display per page. Default value is 10. |
 | [PredicateSelected](ISelectControl-1/PredicateSelected.md)(…) | Sets a validation predicate to determine if a selected item is valid. (2 methods) |

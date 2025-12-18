@@ -55,6 +55,7 @@ namespace PromptPlusLibrary.Controls.Input
         {
             _enabledViewSecret = ConfigPlus.HotKeyPasswordView;
             _secretChar = ConfigPlus.SecretChar;
+            _maxWidth = ConfigPlus.MaxWidth;
         }
 
         #region IInputControls
@@ -126,6 +127,10 @@ namespace PromptPlusLibrary.Controls.Input
                     throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
                 }
                 _maxWidth = maxWidth;
+            }
+            if (_maxLength < _maxWidth)
+            {
+                _maxWidth = _maxLength;
             }
             return this;
         }
@@ -486,6 +491,10 @@ namespace PromptPlusLibrary.Controls.Input
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
             string answer = ResultCtrl!.Value.Content;
+            if (_isinputsecret)
+            {
+                answer = new string(_secretChar,answer.Length);
+            }
             if (ResultCtrl.Value.IsAborted)
             {
                 answer = GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty;
@@ -516,12 +525,6 @@ namespace PromptPlusLibrary.Controls.Input
             {
                 _enabledViewSecret = null;
                 return;
-            }
-
-            if (_historyOptions != null || _suggestionHandler != null ||
-                !string.IsNullOrEmpty(_defaultValue) || !string.IsNullOrEmpty(_defaultIfEmpty))
-            {
-                throw new InvalidOperationException("Secret input cannot be used with history, suggestions or default values.");
             }
         }
 

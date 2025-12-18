@@ -8,7 +8,8 @@
 
 ```csharp
 public StateProgress(double value, string? valuetext, double minvalue, double maxvalue, 
-    TimeSpan elapsedtime, Exception? error = null)
+    TimeSpan elapsedtime, KeyValuePair<string, object?>[]? resultcontext = null, 
+    Exception? error = null)
 ```
 
 | parameter | description |
@@ -18,6 +19,7 @@ public StateProgress(double value, string? valuetext, double minvalue, double ma
 | minvalue | Min value of Progress Bar. |
 | maxvalue | Max value of Progress Bar. |
 | elapsedtime | Elapsed Time of Progress Bar. |
+| resultcontext | Result context of Progress Bar. |
 | error | Exception of Progress Bar. |
 
 ### See Also

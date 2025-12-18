@@ -4,6 +4,7 @@
 // ***************************************************************************************
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 
@@ -72,7 +73,7 @@ namespace PromptPlusLibrary
         IProgressBarControl Range(double minvalue, double maxvalue);
 
         /// <summary>
-        /// Sets the width of the ProgressBar. Default value is 80. Must be >= 10.
+        /// Sets the width of the ProgressBar. Default value is 50. Must be >= 10.
         /// </summary>
         /// <param name="value">The width of the ProgressBar.</param>
         /// <returns>The current <see cref="IProgressBarControl"/> instance for chaining.</returns>
@@ -130,9 +131,10 @@ namespace PromptPlusLibrary
         /// Sets a handler to update the ProgressBar values dynamically.
         /// </summary>
         /// <param name="value">The handler to update values. Cannot be <c>null</c>.</param>
+        /// <param name="paramcontext">The context parameters to pass to the handler.</param>
         /// <returns>The current <see cref="IProgressBarControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
-        IProgressBarControl UpdateHandler(Action<HandlerProgressBar, CancellationToken> value);
+        IProgressBarControl UpdateHandler(Action<HandlerProgressBar, CancellationToken> value, KeyValuePair<string, object?>[]? paramcontext = null);
 
         /// <summary>
         /// Hides specific elements of the ProgressBar. Default is to show all elements.

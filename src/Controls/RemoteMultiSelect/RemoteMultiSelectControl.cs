@@ -55,6 +55,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
         private Task? _loadingItemTask;
         private (Exception? error, bool IsFinished, T2 newsearchItemsControl, IEnumerable<T1> newitems)? _loadingResult;
         private readonly string _loadMoreId = Guid.NewGuid().ToString();
+        private bool _onfilterOnlySelected;
 
 
 #pragma warning disable IDE0079
@@ -141,9 +142,9 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
 
         public IRemoteMultiSelectControl<T1, T2> MaxWidth(byte maxWidth)
         {
-            if (maxWidth < 10)
+            if (maxWidth < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 10.");
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
             }
             _maxWidth = maxWidth;
             return this;
@@ -332,6 +333,25 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                         break;
                     }
                     #endregion
+                    else if (_modeView == ModeView.MultiSelect && ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && _onfilterOnlySelected)
+                    {
+                        _onfilterOnlySelected = false;
+                        _localpaginator!.UpdatColletion(_items);
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _filterBuffer!.Clear();
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (_modeView == ModeView.MultiSelect && ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && !_onfilterOnlySelected && _checkeditems.Count > 0)
+                    {
+                        _onfilterOnlySelected = true;
+                        _localpaginator!.UpdatColletion(_items.Where(x => x.ValueChecked));
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _filterBuffer!.Clear();
+                        _indexTooptip = 0;
+                        break;
+                    }
+
                     else if (_loadingItemTask != null && keyinfo.Key == ConsoleKey.None && keyinfo.Modifiers == ConsoleModifiers.None)
                     {
                         _searchItemsFinished = _loadingResult!.Value.IsFinished;
@@ -408,7 +428,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                         _loadingItemTask = null;
                         break;
                     }
-                    else if (_loadingItemTask == null && !_searchItemsFinished && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.UniqueId == _loadMoreId)
+                    else if (!_onfilterOnlySelected && _loadingItemTask == null && !_searchItemsFinished && keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null && _localpaginator.SelectedItem.UniqueId == _loadMoreId)
                     {
                         if (_modeView == ModeView.Filter)
                         {
@@ -420,7 +440,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (_loadingItemTask == null && _filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
+                    else if (!_onfilterOnlySelected && _loadingItemTask == null && _filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer!.Clear();
@@ -517,6 +537,13 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                         if (_checkeditems.Count == 0)
                         {
                             _resultbuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                                _filterBuffer!.Clear();
+                            }
                         }
                         else
                         {
@@ -586,6 +613,14 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                         if (_checkeditems.Count == 0)
                         {
                             _resultbuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                                _filterBuffer!.Clear();
+                            }
+
                         }
                         else
                         {
@@ -729,6 +764,10 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                 {
                     lsttooltips.AddRange(EmacsBuffer.GetEmacsTooltips());
                 }
+                else
+                {
+                    lsttooltips.Add(string.Format(Messages.TooltipFilterOnlySelected, ConfigPlus.HotKeyTooltipFilterAllSelected));
+                }
                 _toggerTooptips[mode] = [.. lsttooltips];
             }
         }
@@ -856,9 +895,13 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                     ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
                     : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
                 screenBuffer.Write(str, styleAnswer);
+                if (_onfilterOnlySelected)
+                {
+                    screenBuffer.Write($" ({Messages.FilterOnlySelected})", _optStyles[MultiSelectStyles.TaggedInfo]);
+                }
                 if (_loadingItemTask != null)
                 {
-                    screenBuffer.Write($" ({Messages.Loading})", styleAnswer);
+                    screenBuffer.Write($"({Messages.Loading})", styleAnswer);
                 }
                 screenBuffer.WriteLine("", styleAnswer);
 
@@ -934,7 +977,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
         {
             while (!ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
             {
-                if (_loadingItemTask != null && _loadingItemTask.IsCompleted)
+                if (!_onfilterOnlySelected && _loadingItemTask != null && _loadingItemTask.IsCompleted)
                 {
                     return new ConsoleKeyInfo(new char(), ConsoleKey.None, false, false, false);
                 }

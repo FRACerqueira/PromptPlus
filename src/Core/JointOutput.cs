@@ -5,20 +5,9 @@
 
 namespace PromptPlusLibrary.Core
 {
-    internal sealed class JointOutput : IJointOutput
+    internal sealed class JointOutput(IConsole console) : IJointOutput
     {
-        private readonly IConsole _console;
-        private readonly bool _exclusive;
-
-        public JointOutput(IConsole console)
-        {
-            _console = console;
-            if (((IConsoleExtend)_console).ExclusiveContext.CurrentCount == 1)
-            {
-                ((IConsoleExtend)_console).ExclusiveContext.Wait();
-                _exclusive = true;
-            }
-        }
+        private readonly IConsole _console = console;
 
         public IJointOutput Clear()
         {
@@ -35,10 +24,6 @@ namespace PromptPlusLibrary.Core
         public (int Left, int Top) Done()
         {
             (int Left, int Top) result = _console.GetCursorPosition();
-            if (_exclusive)
-            {
-                ((IConsoleExtend)_console).ExclusiveContext.Release();
-            }
             return result;
         }
 

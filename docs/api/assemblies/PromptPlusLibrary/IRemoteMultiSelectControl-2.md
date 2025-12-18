@@ -26,7 +26,7 @@ public interface IRemoteMultiSelectControl<T1, T2>
 | [EnabledHistory](IRemoteMultiSelectControl-2/EnabledHistory.md)(…) | Enables history persistence with optional custom configuration. |
 | [Filter](IRemoteMultiSelectControl-2/Filter.md)(…) | Sets the filter strategy for filtering items in the collection. Default is Disabled. |
 | [HideCountSelected](IRemoteMultiSelectControl-2/HideCountSelected.md)(…) | Controls the visibility of the selected item count display. Default is `false`. |
-| [MaxWidth](IRemoteMultiSelectControl-2/MaxWidth.md)(…) | Sets the maximum display width for selected items text. Default is 30 characters. |
+| [MaxWidth](IRemoteMultiSelectControl-2/MaxWidth.md)(…) | Sets the maximum display width for selected items text. Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
 | [Options](IRemoteMultiSelectControl-2/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](IRemoteMultiSelectControl-2/PageSize.md)(…) | Sets the maximum number of items to display per page. Default value is 10. |
 | [PredicateDisabled](IRemoteMultiSelectControl-2/PredicateDisabled.md)(…) | Sets a validation rule for determining which items should be disabled. |

@@ -116,7 +116,7 @@ namespace PromptPlusLibrary
         IAutoCompleteControl MaxLength(int maxLength, byte? maxWidth = null);
 
         /// <summary>
-        /// Sets the maximum width for the input.
+        /// Sets the maximum width for the input.Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
         /// <remarks>
         /// The value of <paramref name="maxWidth"/> must be less than <see cref="MaxLength(int,byte?)"/> otherwise,  it will be set to equal.
         /// </remarks>

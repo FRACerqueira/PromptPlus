@@ -42,7 +42,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         private int _minSelect;
         private EmacsBuffer? _resultbuffer;
         private bool _disableRecursiveCount;
-
+        private bool _onfilterOnlySelected;
 
         public NodeTreeMultiSelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
@@ -75,9 +75,9 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
 
         public INodeTreeMultiSelectControl<T> MaxWidth(byte maxWidth)
         {
-            if (maxWidth < 10)
+            if (maxWidth < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 10.");
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
             }
             _maxWidth = maxWidth;
             return this;
@@ -299,6 +299,23 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
 
                     #endregion
 
+                    else if (ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && _onfilterOnlySelected)
+                    {
+                        _onfilterOnlySelected = false;
+                        _localpaginator!.UpdatColletion(_items);
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && !_onfilterOnlySelected && _checkeditems.Count > 0)
+                    {
+                        _onfilterOnlySelected = true;
+                        _localpaginator!.UpdatColletion(_items.Where(x => x.IsMarked));
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _indexTooptip = 0;
+                        break;
+                    }
+
                     else if (keyinfo.Key == ConsoleKey.None && keyinfo.Modifiers == ConsoleModifiers.Alt)
                     {
                         //has result backgroud result
@@ -399,7 +416,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                         _showInfoFullPath = !_showInfoFullPath;
                         break;
                     }
-                    else if (_localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem) && _localpaginator.SelectedItem.CountChildren > 0 && keyinfo.KeyChar == '+' && keyinfo.Modifiers == ConsoleModifiers.Alt)
+                    else if (!_onfilterOnlySelected && _localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem) && _localpaginator.SelectedItem.CountChildren > 0 && keyinfo.KeyChar == '+' && keyinfo.Modifiers == ConsoleModifiers.Alt)
                     {
                         if (_localpaginator!.SelectedItem!.IsExpanded)
                         {
@@ -412,7 +429,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                         _resultTask.Enqueue(newitems);
                         break;
                     }
-                    else if (_localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem) && _localpaginator.SelectedItem.CountChildren > 0 && "+-".Contains(keyinfo.KeyChar) && keyinfo.Modifiers == ConsoleModifiers.None)
+                    else if (!_onfilterOnlySelected && _localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem) && _localpaginator.SelectedItem.CountChildren > 0 && "+-".Contains(keyinfo.KeyChar) && keyinfo.Modifiers == ConsoleModifiers.None)
                     {
                         if (keyinfo.KeyChar == '+')
                         {
@@ -451,6 +468,20 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                         int index = _items.FindIndex(x => x.UniqueId == _localpaginator.SelectedItem.UniqueId);
                         bool mark = !_items[index].IsMarked;
                         MarkAllNodes(index);
+                        if (_checkeditems.Count == 0)
+                        {
+                            _resultbuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                            }
+                        }
+                        else
+                        {
+                            _resultbuffer!.LoadPrintable(_checkeditems.Select(x => _textSelector!.Invoke(x.Value) ?? string.Empty).Aggregate((x, y) => $"{x},{y}"));
+                        }
                         int countselect = _checkeditems.Count;
                         if (countselect < _minSelect)
                         {
@@ -495,6 +526,12 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                         if (_checkeditems.Count == 0)
                         {
                             _resultbuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                            }
                         }
                         else
                         {
@@ -820,6 +857,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             }
             lsttooltips.Add(Messages.TooltipPages);
             lsttooltips.Add($"{Messages.TooltipExpandAllPress}, {Messages.TooltipLevelHomeEnd}, {Messages.InputFinishEnter}");
+            lsttooltips.Add(string.Format(Messages.TooltipFilterOnlySelected, ConfigPlus.HotKeyTooltipFilterAllSelected));
             _toggerTooptips = [.. lsttooltips];
         }
 
@@ -865,7 +903,15 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
             str = _resultbuffer.IsHideRightBuffer
                 ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
                 : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
-            screenBuffer.WriteLine(str, styleAnswer);
+            screenBuffer.Write(str, styleAnswer);
+            if (_onfilterOnlySelected)
+            {
+                screenBuffer.WriteLine($" ({Messages.FilterOnlySelected})", _optStyles[NodeTreeStyles.TaggedInfo]);
+            }
+            else
+            {
+                screenBuffer.WriteLine("", styleAnswer);
+            }
         }
 
         private void WriteDescription(BufferScreen screenBuffer)
@@ -1227,7 +1273,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
         {
             while (!ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
             {
-                if (!_resultTask.IsEmpty)
+                if (!_onfilterOnlySelected && !_resultTask.IsEmpty)
                 {
                     return new ConsoleKeyInfo(new char(), ConsoleKey.None, false, true, false);
                 }

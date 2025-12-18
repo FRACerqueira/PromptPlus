@@ -155,8 +155,6 @@ All console commands are in: **Prompt Plus.Console**.\<command/Properties\>. The
 
 **Properties** (All setters use Exclusive Context blocking the main thread during their execution)
 
-- EnabledExclusiveContext
-    - Gets/Sets a value indicating Enabled Exclusive context for controls/wdgets and commands console. Default value is false.
 - UserPressKeyAborted 
     - Gets a value indicating whether the operation was aborted by the user (Ctrl+C / Ctrl+Break) when CancelKeyPress is used. 
 - BehaviorAfterCancelKeyPress
@@ -248,8 +246,6 @@ All console commands are in: **Prompt Plus.Console**.\<command/Properties\>. The
 
 **Extension Commands** 
 
-- ExclusiveContext(this IConsole console)
-    - Creates an exclusive context in the main thread, blocking other threads from writing to the UI  until the 'dispose' is done.
 - OutputError(this IConsole console)
     - Create context to write on standard error output stream for any output included until the 'dispose' is done.
 - WriteLines(this IConsole console, int steps = 1, bool clearrestofline = true)
@@ -259,7 +255,6 @@ All console commands are in: **Prompt Plus.Console**.\<command/Properties\>. The
 - Clear(Color? backcolor = null)
     - Set BackgroundColor and Clears the console buffer.
 - IJointOutput Join(this IConsole console)
-    - Wait all output using exclusive buffer to console.
     - IJointOutput commands
         - Clear()
         - ResetColor()
@@ -269,7 +264,6 @@ All console commands are in: **Prompt Plus.Console**.\<command/Properties\>. The
         - WriteLine(char[] buffer, Style? style = null, bool clearRestOfLine = true)
         - WriteLine(string value, Style? style = null, bool clearRestOfLine = true)
         - (int Left, int Top) Done()
-            - Releases the console exclusive buffer. 
 
 ----
 ### History (NEW)

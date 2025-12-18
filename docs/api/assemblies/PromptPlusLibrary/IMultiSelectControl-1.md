@@ -25,6 +25,7 @@ public interface IMultiSelectControl<T>
 | [AddSeparator](IMultiSelectControl-1/AddSeparator.md)(…) | Adds a visual separator line between items. |
 | [ChangeDescription](IMultiSelectControl-1/ChangeDescription.md)(…) | Dynamically changes the control description based on the current item value. |
 | [Default](IMultiSelectControl-1/Default.md)(…) | Sets the initial selected values for the MultiSelect control. |
+| [DefaultHistory](IMultiSelectControl-1/DefaultHistory.md)(…) | Creates a multi-select control with the default history behavior enabled or disabled. |
 | [EnabledHistory](IMultiSelectControl-1/EnabledHistory.md)(…) | Enables history persistence with optional custom configuration. |
 | [EqualItems](IMultiSelectControl-1/EqualItems.md)(…) | Sets a custom equality comparer function for items. |
 | [ExtraInfo](IMultiSelectControl-1/ExtraInfo.md)(…) | Configures the control to provide show additional information for item. |
@@ -32,7 +33,7 @@ public interface IMultiSelectControl<T>
 | [HideCountSelected](IMultiSelectControl-1/HideCountSelected.md)(…) | Controls the visibility of the selected item count display. Default is `false`. |
 | [HideTipGroup](IMultiSelectControl-1/HideTipGroup.md)(…) | Controls the visibility of the group name tooltip. Default is `false`. |
 | [Interaction](IMultiSelectControl-1/Interaction.md)(…) |  |
-| [MaxWidth](IMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum display width for selected items text. Default is 30 characters. |
+| [MaxWidth](IMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum display width for selected items text.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
 | [Options](IMultiSelectControl-1/Options.md)(…) | Applies custom options to configure control behavior. |
 | [PageSize](IMultiSelectControl-1/PageSize.md)(…) | Sets the maximum number of items displayed per page. Default is 10. |
 | [PredicateSelected](IMultiSelectControl-1/PredicateSelected.md)(…) | Sets a validation predicate to determine whether an item can be selected. (2 methods) |

@@ -95,6 +95,11 @@ namespace PromptPlusLibrary
         internal static HotKey TooltipToggle => new(ConsoleKey.F1);
 
         /// <summary>
+        /// Gets the default tooltip Filter all selected items (F2).
+        /// </summary>
+        internal static HotKey TooltipFilterAllSelected => new(ConsoleKey.F3);
+
+        /// <summary>
         /// Gets the default show/hide tooltip hotkey (Ctrl+F1).
         /// </summary>
         internal static HotKey TooltipShowHide => new(ConsoleKey.F1, alt: false, ctrl: true, shift: false);
@@ -128,6 +133,11 @@ namespace PromptPlusLibrary
         /// Gets the default select all toggle hotkey (F2).
         /// </summary>
         internal static HotKey ToggleAll => new(ConsoleKey.F2);
+
+        /// <summary>
+        ///  Gets the default select all groups toggle hotkey
+        /// </summary>
+        internal static HotKey ToggleAllGroups => new(ConsoleKey.F2,false,true);
 
         /// <summary>
         /// Gets the default chart bar layout switch hotkey (F2).

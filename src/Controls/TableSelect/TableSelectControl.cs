@@ -72,6 +72,9 @@ namespace PromptPlusLibrary.Controls.TableSelect
             Right
         }
         private MoveViewport _moveviewport = MoveViewport.None;
+        private byte _maxWidth;
+        private EmacsBuffer? _answerBuffer;
+        private bool _updatePosAnswerBuffer;
 
 #pragma warning disable IDE0079 
 #pragma warning disable IDE0290 // Use primary constructor
@@ -81,6 +84,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
             _hideSelectorRow = isWidget;
             _lastinput = string.Empty;
             _pageSize = ConfigPlus.PageSize;
+            _maxWidth = ConfigPlus.MaxWidth;
         }
 #pragma warning restore IDE0290 // Use primary constructor
 #pragma warning restore IDE0079
@@ -336,6 +340,8 @@ namespace PromptPlusLibrary.Controls.TableSelect
                 throw new InvalidOperationException("Not found columns definition");
             }
 
+            _answerBuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
+            _updatePosAnswerBuffer = true;
             _textSelector ??= DefaultTextSeletor();
 
             //Validate layout UnicodeSupported
@@ -520,6 +526,8 @@ namespace PromptPlusLibrary.Controls.TableSelect
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    _updatePosAnswerBuffer = true;
+
                     ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
 
                     #region default Press to Finish and tooltip
@@ -749,6 +757,12 @@ namespace PromptPlusLibrary.Controls.TableSelect
                                 SetError(Messages.SelectionDisabled);
                             }
                         }
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (!_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    {
+                        _updatePosAnswerBuffer = false;
                         _indexTooptip = 0;
                         break;
                     }
@@ -1619,15 +1633,22 @@ namespace PromptPlusLibrary.Controls.TableSelect
             if (_modeView == ModeView.Select)
             {
                 string answer = _textSelector!(_localpaginator!.SelectedItem.Value!);
-                if (_localpaginator!.SelectedItem.Disabled)
+                if (_updatePosAnswerBuffer)
                 {
-                    screenBuffer.WriteLine(answer, _optStyles[TableStyles.Disabled]);
+                    _answerBuffer!.LoadPrintable(answer);
+                    _answerBuffer.ToHome();
                 }
-                else
-                {
-                    screenBuffer.WriteLine(answer, _optStyles[TableStyles.Answer]);
-                }
+                string str = _answerBuffer!.IsHideLeftBuffer
+                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeftMost)
+                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft);
+                screenBuffer.Write(str, _optStyles[TableStyles.Answer]);
+                screenBuffer.Write(_answerBuffer!.ToBackward(), _optStyles[TableStyles.Answer]);
                 screenBuffer.SavePromptCursor();
+                screenBuffer.Write(_answerBuffer!.ToForward(), _optStyles[TableStyles.Answer]);
+                str = _answerBuffer.IsHideRightBuffer
+                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
+                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
+                screenBuffer.WriteLine(str, _optStyles[TableStyles.Answer]);
             }
             else if (_modeView == ModeView.Filter)
             {

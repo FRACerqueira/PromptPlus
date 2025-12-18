@@ -16,6 +16,7 @@ public static class PromptPlus
 
 | name | description |
 | --- | --- |
+| static [AbortedByCtrlC](PromptPlus/AbortedByCtrlC.md) { get; } | Gets a value indicating whether the current process was terminated by a Ctrl+C (SIGINT) signal from the console. |
 | static [Config](PromptPlus/Config.md) { get; } | Gets the global configuration instance applied to newly created controls and widgets. |
 | static [Console](PromptPlus/Console.md) { get; } | Gets the current console driver abstraction providing low-level I/O, color and buffer operations. |
 | static [Controls](PromptPlus/Controls.md) { get; } | Gets a factory for interactive controls (input, select, file select, progress, masking, etc.). Each method returns a fluent configuration object. |
@@ -24,7 +25,6 @@ public static class PromptPlus
 | static [Clear](PromptPlus/Clear.md)(…) | Clears the console buffer with [`Color`](./Color.md) and set BackgroundColor with [`Color`](./Color.md) |
 | static [ClearLine](PromptPlus/ClearLine.md)(…) | Clear line |
 | static [CreatePromptPlusConfigFile](PromptPlus/CreatePromptPlusConfigFile.md)(…) | Creates a new configuration file for PromptPlus using the name [`NameResourceConfigFile`](./PromptPlus/NameResourceConfigFile.md) |
-| static [ExclusiveContext](PromptPlus/ExclusiveContext.md)(…) | Create Exclusive context to write on standard output stream for any output included until the 'dispose' is done. |
 | static [IsAbortKeyPress](PromptPlus/IsAbortKeyPress.md)(…) | Determines whether the configured global abort hotkey was pressed. |
 | static [IsBackwardWord](PromptPlus/IsBackwardWord.md)(…) | Determines whether the Alt+B (backward word) Emacs shortcut was pressed. |
 | static [IsCapitalizeOverCursor](PromptPlus/IsCapitalizeOverCursor.md)(…) | Determines whether the Alt+C (capitalize over cursor) Emacs shortcut was pressed. |

@@ -10,15 +10,11 @@ namespace PromptPlusLibrary.Core
 {
     internal interface IConsoleExtend : IDisposable
     {
-        bool EnabledExclusiveContext { get; set; }
-
         bool AbortedByCtrlC { get; }
 
         bool IsExitDefaultCancel { get; }
 
         bool WriteToErroOutput { get; set; }
-
-        SemaphoreSlim ExclusiveContext { get; }
 
         (int Left, int Top, int scrolled) PreviewCursorPosition(int left, int top);
 

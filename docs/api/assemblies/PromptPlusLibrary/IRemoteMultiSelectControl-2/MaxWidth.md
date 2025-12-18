@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum display width for selected items text. Default is 30 characters.
+#### Sets the maximum display width for selected items text. Default value is [`MaxWidth`](../IPromptPlusConfig/MaxWidth.md).
 
 ```csharp
 public IRemoteMultiSelectControl MaxWidth(byte maxWidth)

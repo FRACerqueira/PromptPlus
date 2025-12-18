@@ -21,18 +21,17 @@ public enum SpinnersType
 | DotArrowHeavy | `4` | Dots Arrow Heavy type |
 | Star | `5` | Star type |
 | Flip | `6` | Flip type |
-| Balloon | `7` | Balloon type |
-| Noise | `8` | Noise type |
-| Bounce | `9` | Bounce type |
-| BouncingBar | `10` | Bouncing Bar type |
-| BoxHeavy | `11` | Box Heavy type |
-| Arrow | `12` | Arrow type |
-| ArrowHeavy | `13` | Arrow Heavy type |
-| DoubleArrow | `14` | Double Arrow type |
-| RightArrow | `15` | Right Arrow type |
-| LeftArrow | `16` | Left Arrow type |
-| Pipe | `17` | Pipe type |
-| Toggle | `18` | Toggle type |
+| Noise | `7` | Noise type |
+| Bounce | `8` | Bounce type |
+| BouncingBar | `9` | Bouncing Bar type |
+| BoxHeavy | `10` | Box Heavy type |
+| Arrow | `11` | Arrow type |
+| ArrowHeavy | `12` | Arrow Heavy type |
+| DoubleArrow | `13` | Double Arrow type |
+| RightArrow | `14` | Right Arrow type |
+| LeftArrow | `15` | Left Arrow type |
+| Pipe | `16` | Pipe type |
+| Toggle | `17` | Toggle type |
 
 ### See Also
 

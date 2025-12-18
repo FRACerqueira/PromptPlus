@@ -48,121 +48,35 @@ namespace PromptPlusLibrary.Controls
 
             using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(stoptoken, ConsolePlus.TokenCancelPress);
 
+            bool error = false;
+            bool oldcursor = ConsolePlus.CursorVisible;
+            Color oldforecolor = ConsolePlus.ForegroundColor;
+            Color oldbackcolor = ConsolePlus.BackgroundColor;
+
             if (isWidget)
-            {
-                using (ConsolePlus.InternalExclusiveContext())
-                {
-
-                    promptConfig.TraceBaseControlOptions = GeneralOptions;
-                    promptConfig.TraceCurrentFileNameControl = filemecontrol;
-
-                    bool error = false;
-                    _showTooltipValue = GeneralOptions.ShowTooltipValue;
-                    bool oldcursor = ConsolePlus.CursorVisible;
-                    Color oldforecolor = ConsolePlus.ForegroundColor;
-                    Color oldbackcolor = ConsolePlus.BackgroundColor;
-                    Thread.CurrentThread.CurrentCulture = ConfigPlus.DefaultCulture;
-                    try
-                    {
-                        _screenPosition = ConsolePlus.GetCursorPosition();
-                        ConsolePlus.CursorVisible = false;
-
-                        InitControl(cts.Token);
-
-                        if (!cts.IsCancellationRequested)
-                        {
-                            BufferTemplate(_bufferScreen);
-
-                            _bufferScreen.DiffBuffer();
-
-                            RenderBuffer(true);
-
-                            FinalizeControl();
-                        }
-                    }
-                    catch
-                    {
-                        error = true;
-                        if (ConsolePlus.IsExitDefaultCancel && ConsolePlus.AbortedByCtrlC)
-                        {
-                            throw new PromptPlusException();
-                        }
-                        throw;
-                    }
-                    finally
-                    {
-                        if (ConsolePlus.BehaviorAfterCancelKeyPress == AfterCancelKeyPress.AbortCurrentControl)
-                        {
-                            ConsolePlus.ResetTokenCancelPress();
-                        }
-                        if (!error)
-                        {
-                            promptConfig.TraceBaseControlOptions = null;
-                            promptConfig.TraceCurrentFileNameControl = null;
-                            ConsolePlus.CursorVisible = oldcursor;
-                            ConsolePlus.ForegroundColor = oldforecolor;
-                            ConsolePlus.BackgroundColor = oldbackcolor;
-                            Thread.CurrentThread.CurrentCulture = ConfigPlus.AppCulture;
-                        }
-                    }
-#pragma warning disable CS8604 // Possible null reference argument.
-                    return ResultCtrl ?? new ResultPrompt<T>(default, false);
-#pragma warning restore CS8604 // Possible null reference argument.
-                }
-            }
-            using (ConsolePlus.InternalExclusiveContext())
             {
                 promptConfig.TraceBaseControlOptions = GeneralOptions;
                 promptConfig.TraceCurrentFileNameControl = filemecontrol;
 
                 _showTooltipValue = GeneralOptions.ShowTooltipValue;
-                bool oldcursor = ConsolePlus.CursorVisible;
-                Color oldforecolor = ConsolePlus.ForegroundColor;
-                Color oldbackcolor = ConsolePlus.BackgroundColor;
                 Thread.CurrentThread.CurrentCulture = ConfigPlus.DefaultCulture;
-                ConsolePlus.CursorVisible = false;
-                bool error = false;
                 try
                 {
+                    _screenPosition = ConsolePlus.GetCursorPosition();
+                    ConsolePlus.CursorVisible = false;
 
                     InitControl(cts.Token);
 
-                    _screenPosition = ConsolePlus.GetCursorPosition();
-
-                    do
+                    if (!cts.IsCancellationRequested)
                     {
                         BufferTemplate(_bufferScreen);
-                        RenderBuffer();
-                        if (cts.Token.IsCancellationRequested)
-                        {
-#pragma warning disable CS8604 // Possible null reference argument.
-                            ResultCtrl = new ResultPrompt<T>(default, true);
-#pragma warning restore CS8604 // Possible null reference argument.
-                            break;
-                        }
-                    } while (!TryResult(cts.Token));
 
-                    if (!cts.Token.IsCancellationRequested)
-                    {
-                        if (!ResultCtrl.HasValue)
-                        {
-                            throw new InvalidOperationException("Not setter ResultPrompt after input finalize");
-                        }
+                        _bufferScreen.DiffBuffer();
 
+                        RenderBuffer(true);
+
+                        FinalizeControl();
                     }
-                    if (GeneralOptions.HideAfterFinishValue || cts.Token.IsCancellationRequested || (GeneralOptions.HideOnAbortValue && ResultCtrl!.Value.IsAborted))
-                    {
-                        RenderBuffer();
-                        ConsolePlus.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop);
-                    }
-                    else
-                    {
-                        if (FinishTemplate(_bufferScreen))
-                        {
-                            RenderBuffer(true);
-                        }
-                    }
-                    FinalizeControl();
                 }
                 catch
                 {
@@ -190,9 +104,89 @@ namespace PromptPlusLibrary.Controls
                     }
                 }
 #pragma warning disable CS8604 // Possible null reference argument.
-                return ResultCtrl ?? new ResultPrompt<T>(default, true);
+                return ResultCtrl ?? new ResultPrompt<T>(default, false);
 #pragma warning restore CS8604 // Possible null reference argument.
             }
+            promptConfig.TraceBaseControlOptions = GeneralOptions;
+            promptConfig.TraceCurrentFileNameControl = filemecontrol;
+
+            _showTooltipValue = GeneralOptions.ShowTooltipValue;
+            oldcursor = ConsolePlus.CursorVisible;
+            oldforecolor = ConsolePlus.ForegroundColor;
+            oldbackcolor = ConsolePlus.BackgroundColor;
+            Thread.CurrentThread.CurrentCulture = ConfigPlus.DefaultCulture;
+            ConsolePlus.CursorVisible = false;
+            error = false;
+            try
+            {
+
+                InitControl(cts.Token);
+
+                _screenPosition = ConsolePlus.GetCursorPosition();
+
+                do
+                {
+                    BufferTemplate(_bufferScreen);
+                    RenderBuffer();
+                    if (cts.Token.IsCancellationRequested)
+                    {
+#pragma warning disable CS8604 // Possible null reference argument.
+                        ResultCtrl = new ResultPrompt<T>(default, true);
+#pragma warning restore CS8604 // Possible null reference argument.
+                        break;
+                    }
+                } while (!TryResult(cts.Token));
+
+                if (!cts.Token.IsCancellationRequested)
+                {
+                    if (!ResultCtrl.HasValue)
+                    {
+                        throw new InvalidOperationException("Not setter ResultPrompt after input finalize");
+                    }
+
+                }
+                if (GeneralOptions.HideAfterFinishValue || cts.Token.IsCancellationRequested || (GeneralOptions.HideOnAbortValue && ResultCtrl!.Value.IsAborted))
+                {
+                    RenderBuffer();
+                    ConsolePlus.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop);
+                }
+                else
+                {
+                    if (FinishTemplate(_bufferScreen))
+                    {
+                        RenderBuffer(true);
+                    }
+                }
+                FinalizeControl();
+            }
+            catch
+            {
+                error = true;
+                if (ConsolePlus.IsExitDefaultCancel && ConsolePlus.AbortedByCtrlC)
+                {
+                    throw new PromptPlusException();
+                }
+                throw;
+            }
+            finally
+            {
+                if (ConsolePlus.BehaviorAfterCancelKeyPress == AfterCancelKeyPress.AbortCurrentControl)
+                {
+                    ConsolePlus.ResetTokenCancelPress();
+                }
+                if (!error)
+                {
+                    promptConfig.TraceBaseControlOptions = null;
+                    promptConfig.TraceCurrentFileNameControl = null;
+                    ConsolePlus.CursorVisible = oldcursor;
+                    ConsolePlus.ForegroundColor = oldforecolor;
+                    ConsolePlus.BackgroundColor = oldbackcolor;
+                    Thread.CurrentThread.CurrentCulture = ConfigPlus.AppCulture;
+                }
+            }
+#pragma warning disable CS8604 // Possible null reference argument.
+            return ResultCtrl ?? new ResultPrompt<T>(default, true);
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         public abstract bool TryResult(CancellationToken cancellationToken);
@@ -303,31 +297,47 @@ namespace PromptPlusLibrary.Controls
             if (isfinish)
             {
                 LineScreen[] result = _bufferScreen.OriginalBuffer();
-                (int left, int top, int scrolled) = ConsolePlus.PreviewCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop + result[^1].Line);
-                if (scrolled > 0)
+                if (!IsWidgetControl)
                 {
-                    _screenPosition = (left, _screenPosition.StartTop - scrolled);
-                    for (int i = 0; i < result[^1].Line; i++)
+                    (int left, int top, int scrolled) = ConsolePlus.PreviewCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop + result[^1].Line);
+                    if (scrolled > 0)
                     {
+                        _screenPosition = (left, _screenPosition.StartTop - scrolled);
+                        for (int i = 0; i < result[^1].Line; i++)
+                        {
+                            ConsolePlus.RawWriteLine("", clearrestofline: true);
+                        }
+                        ConsolePlus.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop);
+                    }
+                    foreach (LineScreen itembuffer in result)
+                    {
+                        ConsolePlus.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop + itembuffer.Line);
+                        if (scrolled == 0)
+                        {
+                            ConsolePlus.RawWrite("", Style.Default(), true);
+                        }
+                        bool first = true;
+                        foreach (Segment? item in itembuffer.Content.Where(x => x.Text.Length > 0))
+                        {
+                            ConsolePlus.RawWrite(item.Text, item.Style, first);
+                            first = false;
+                        }
+                    }
+                    ConsolePlus.RawWriteLine("", clearrestofline: true);
+                }
+                else
+                {
+                    foreach (LineScreen itembuffer in result)
+                    {
+                        bool first = true;
+                        foreach (Segment? item in itembuffer.Content.Where(x => x.Text.Length > 0))
+                        {
+                            ConsolePlus.RawWrite(item.Text, item.Style, first);
+                            first = false;
+                        }
                         ConsolePlus.RawWriteLine("", clearrestofline: true);
                     }
-                    ConsolePlus.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop);
                 }
-                foreach (LineScreen itembuffer in result)
-                {
-                    ConsolePlus.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop + itembuffer.Line);
-                    if (scrolled == 0)
-                    {
-                        ConsolePlus.RawWrite("", Style.Default(), true);
-                    }
-                    bool first = true;
-                    foreach (Segment? item in itembuffer.Content.Where(x => x.Text.Length > 0))
-                    {
-                        ConsolePlus.RawWrite(item.Text, item.Style, first);
-                        first = false;
-                    }
-                }
-                ConsolePlus.RawWriteLine("", clearrestofline: true);
             }
             else
             {

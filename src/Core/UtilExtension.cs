@@ -12,6 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -22,6 +24,21 @@ namespace PromptPlusLibrary.Core
     /// </summary>
     internal static class UtilExtension
     {
+        /// <summary>
+        /// Determines whether the specified delegate represents an asynchronous method implemented using the async
+        /// pattern.
+        /// </summary>
+        /// <remarks>This method can be used to detect whether a delegate targets a method compiled with
+        /// the async modifier, which typically indicates the use of asynchronous programming patterns in C#. It does
+        /// not check whether the delegate itself is asynchronous, but rather whether the underlying method was
+        /// implemented using the async keyword.</remarks>
+        /// <param name="d">The delegate to inspect for the async state machine attribute.</param>
+        /// <returns>true if the delegate's method is marked with the AsyncStateMachineAttribute; otherwise, false.</returns>
+        public static bool IsAsyncAppliedToDelegate(this Delegate d)
+        {
+            return d.Method.GetCustomAttribute<AsyncStateMachineAttribute>() != null;
+        }
+
         /// <summary>
         /// Tests if the terminal supports a specific Unicode glyph
         /// </summary>

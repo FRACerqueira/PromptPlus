@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum width for displaying selected items.
+#### Sets the maximum width for displaying selected items.Default value is [`MaxWidth`](../IPromptPlusConfig/MaxWidth.md).
 
 ```csharp
 public INodeTreeMultiSelectControl MaxWidth(byte maxWidth)
@@ -12,7 +12,7 @@ public INodeTreeMultiSelectControl MaxWidth(byte maxWidth)
 
 | parameter | description |
 | --- | --- |
-| maxWidth | Maximum number of characters to display. Must be at least 10. |
+| maxWidth | Maximum number of characters to display. Must be at least 1. |
 
 ### Return Value
 
@@ -22,7 +22,7 @@ The current [`INodeTreeMultiSelectControl`](../INodeTreeMultiSelectControl-1.md)
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *maxWidth* is less than 10. |
+| ArgumentOutOfRangeException | Thrown if *maxWidth* is less than 1. |
 
 ### Remarks
 

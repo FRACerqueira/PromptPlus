@@ -63,14 +63,55 @@ namespace PromptPlusLibrary.Controls.ReadLine
 
         public string? ReadLine()
         {
-            using (console.InternalExclusiveContext())
-            {
-                bool oldcurvisible = console.CursorVisible;
-                console.CursorVisible = false;
-                (int initleft, int inittop) = console.GetCursorPosition();
-                EmacsBuffer _inputBuffer = new(_readonly, _caseOptions, _validateKey, _maxlength, _maxwidth);
-                _inputBuffer.LoadPrintable(initialValue);
+            bool oldcurvisible = console.CursorVisible;
+            console.CursorVisible = false;
+            (int initleft, int inittop) = console.GetCursorPosition();
+            EmacsBuffer _inputBuffer = new(_readonly, _caseOptions, _validateKey, _maxlength, _maxwidth);
+            _inputBuffer.LoadPrintable(initialValue);
 
+            if (_inputBuffer.IsVirtualBuffer)
+            {
+                string str = _inputBuffer.IsHideLeftBuffer
+                    ? promptConfig.GetSymbol(SymbolType.InputDelimiterLeftMost)
+                    : promptConfig.GetSymbol(SymbolType.InputDelimiterLeft);
+                console.RawWrite(str);
+            }
+
+            (int Left, int Top) savedcur = console.RawWrite(_inputBuffer.ToBackward(), clearrestofline: true);
+            console.RawWrite(_inputBuffer.ToForward());
+
+            if (_inputBuffer.IsVirtualBuffer)
+            {
+                string str = _inputBuffer.IsHideRightBuffer
+                    ? promptConfig.GetSymbol(SymbolType.InputDelimiterRightMost)
+                    : promptConfig.GetSymbol(SymbolType.InputDelimiterRight);
+                console.RawWrite(str);
+            }
+
+            console.SetCursorPosition(savedcur.Left, savedcur.Top);
+
+            bool endinput = false;
+            do
+            {
+                console.CursorVisible = true;
+                ConsoleKeyInfo keyInfo = console.ReadKey(true);
+                console.CursorVisible = false;
+                int oldlen = _inputBuffer.Length;
+                if (keyInfo.IsPressEscKey() && _escabort)
+                {
+                    _inputBuffer.Clear();
+                    endinput = true;
+                }
+                else if (!_inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo))
+                {
+                    if (keyInfo.IsPressEnterKey())
+                    {
+                        endinput = true;
+                    }
+                    continue;
+                }
+
+                console.SetCursorPosition(initleft, inittop);
                 if (_inputBuffer.IsVirtualBuffer)
                 {
                     string str = _inputBuffer.IsHideLeftBuffer
@@ -78,8 +119,7 @@ namespace PromptPlusLibrary.Controls.ReadLine
                         : promptConfig.GetSymbol(SymbolType.InputDelimiterLeft);
                     console.RawWrite(str);
                 }
-
-                (int Left, int Top) savedcur = console.RawWrite(_inputBuffer.ToBackward(), clearrestofline: true);
+                savedcur = console.RawWrite(_inputBuffer.ToBackward(), clearrestofline: oldlen != _inputBuffer.Length);
                 console.RawWrite(_inputBuffer.ToForward());
 
                 if (_inputBuffer.IsVirtualBuffer)
@@ -92,52 +132,9 @@ namespace PromptPlusLibrary.Controls.ReadLine
 
                 console.SetCursorPosition(savedcur.Left, savedcur.Top);
 
-                bool endinput = false;
-                do
-                {
-                    console.CursorVisible = true;
-                    ConsoleKeyInfo keyInfo = console.ReadKey(true);
-                    console.CursorVisible = false;
-                    int oldlen = _inputBuffer.Length;
-                    if (keyInfo.IsPressEscKey() && _escabort)
-                    {
-                        _inputBuffer.Clear();
-                        endinput = true;
-                    }
-                    else if (!_inputBuffer.TryAcceptedReadlineConsoleKey(keyInfo))
-                    {
-                        if (keyInfo.IsPressEnterKey())
-                        {
-                            endinput = true;
-                        }
-                        continue;
-                    }
-
-                    console.SetCursorPosition(initleft, inittop);
-                    if (_inputBuffer.IsVirtualBuffer)
-                    {
-                        string str = _inputBuffer.IsHideLeftBuffer
-                            ? promptConfig.GetSymbol(SymbolType.InputDelimiterLeftMost)
-                            : promptConfig.GetSymbol(SymbolType.InputDelimiterLeft);
-                        console.RawWrite(str);
-                    }
-                    savedcur = console.RawWrite(_inputBuffer.ToBackward(), clearrestofline: oldlen != _inputBuffer.Length);
-                    console.RawWrite(_inputBuffer.ToForward());
-
-                    if (_inputBuffer.IsVirtualBuffer)
-                    {
-                        string str = _inputBuffer.IsHideRightBuffer
-                            ? promptConfig.GetSymbol(SymbolType.InputDelimiterRightMost)
-                            : promptConfig.GetSymbol(SymbolType.InputDelimiterRight);
-                        console.RawWrite(str);
-                    }
-
-                    console.SetCursorPosition(savedcur.Left, savedcur.Top);
-
-                } while (!endinput);
-                console.CursorVisible = oldcurvisible;
-                return _inputBuffer.ToString();
-            }
+            } while (!endinput);
+            console.CursorVisible = oldcurvisible;
+            return _inputBuffer.ToString();
         }
     }
 }

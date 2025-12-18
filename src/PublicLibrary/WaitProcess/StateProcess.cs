@@ -27,6 +27,12 @@ namespace PromptPlusLibrary
         public string? Label { get; } = label;
 
         /// <summary>
+        /// Dynamic information of Process
+        /// </summary>
+        internal string? DynamicInfo { get; set; }
+
+
+        /// <summary>
         /// Task Mode <see cref="TaskMode"/>
         /// </summary>
         public TaskMode RunMode { get; internal set; } = mode;
@@ -46,6 +52,5 @@ namespace PromptPlusLibrary
         /// Elapsed Time of Task
         /// </summary>
         public TimeSpan ElapsedTime { get; internal set; } = elapsedtime;
-
     }
 }

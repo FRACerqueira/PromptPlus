@@ -27,12 +27,9 @@ namespace PromptPlusLibrary
         /// <param name="clearrestofline">Indicates whether to clear the rest of the line.</param>
         public static void WriteLines(this IConsole console, int steps = 1, bool clearrestofline = true)
         {
-            using (InternalExclusiveContext(console))
+            for (int i = 0; i < steps; i++)
             {
-                for (int i = 0; i < steps; i++)
-                {
-                    console.WriteLine("", null, clearrestofline);
-                }
+                console.WriteLine("", null, clearrestofline);
             }
         }
 
@@ -43,14 +40,11 @@ namespace PromptPlusLibrary
         /// <param name="backcolor">The <see cref="Color"/> Background</param>
         public static void Clear(this IConsole console, Color? backcolor = null)
         {
-            using (InternalExclusiveContext(console))
+            if (backcolor.HasValue)
             {
-                if (backcolor.HasValue)
-                {
-                    console.BackgroundColor = Color.ToConsoleColor(backcolor.Value);
-                }
-                console.Clear();
+                console.BackgroundColor = Color.ToConsoleColor(backcolor.Value);
             }
+            console.Clear();
         }
 
 
@@ -62,13 +56,10 @@ namespace PromptPlusLibrary
         /// <param name="style">Optional <see cref="Style"/> overriding current output style.</param>
         public static void ClearLine(this IConsole console, int? row = null, Style? style = null)
         {
-            using (InternalExclusiveContext(console))
-            {
-                row ??= _consoledrive.CursorTop;
-                console.SetCursorPosition(0, row.Value);
-                console.Write(' ', style, true);
-                console.SetCursorPosition(0, row.Value);
-            }
+            row ??= _consoledrive.CursorTop;
+            console.SetCursorPosition(0, row.Value);
+            console.Write(' ', style, true);
+            console.SetCursorPosition(0, row.Value);
         }
 
         /// <summary>

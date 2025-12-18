@@ -17,9 +17,11 @@ public interface IKeyPressControl
 | [AddKeyValid](IKeyPressControl/AddKeyValid.md)(…) | Adds a valid key and optional modifiers for keypress. |
 | [Options](IKeyPressControl/Options.md)(…) | Applies custom options to the control. |
 | [Run](IKeyPressControl/Run.md)(…) | Runs the keypress control and returns the result. |
+| [ShowCountDown](IKeyPressControl/ShowCountDown.md)(…) | Defines whether to show countdown elapsed time. Default is true. |
 | [ShowInvalidKey](IKeyPressControl/ShowInvalidKey.md)(…) | Configures whether invalid keypresses should be displayed to the user. |
 | [Spinner](IKeyPressControl/Spinner.md)(…) | Shows a [`SpinnersType`](./SpinnersType.md) animation at the end of the prompt. |
 | [Styles](IKeyPressControl/Styles.md)(…) | Overwrites styles for the keypress. |
+| [Timeout](IKeyPressControl/Timeout.md)(…) | Creates a key press control that waits for user input for the specified duration, returning a default key and modifiers if no input is received within the timeout period. (2 methods) |
 
 ### See Also
 

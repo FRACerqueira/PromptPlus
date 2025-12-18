@@ -22,6 +22,8 @@ public interface IChartBarControl
 | [HideElements](IChartBarControl/HideElements.md)(…) | Hides specific elements of the chart bar. Default is to show all elements. |
 | [Interaction&lt;T&gt;](IChartBarControl/Interaction.md)(…) | Performs an interaction with each item in the collection. |
 | [Layout](IChartBarControl/Layout.md)(…) | Sets the layout of the chart bar. Default value is Standard. |
+| [MaxLengthLabel](IChartBarControl/MaxLengthLabel.md)(…) | Sets the maximum length for the label displayed on the chart bar control.Default is 20 characters. |
+| [MaxWidth](IChartBarControl/MaxWidth.md)(…) | Sets the maximum width for the input. Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md).  The value of *maxWidth* must be less than [`Width`](./IChartBarControl/Width.md) otherwise, it will be set to equal. |
 | [Options](IChartBarControl/Options.md)(…) | Applies custom options to the control. |
 | [OrderBy](IChartBarControl/OrderBy.md)(…) | Defines the display order of chart items based on specified criteria. |
 | [PageSize](IChartBarControl/PageSize.md)(…) | Sets the maximum number of items to display per page in the chart visualization. Default value is 5. |
@@ -30,7 +32,7 @@ public interface IChartBarControl
 | [ShowLegends](IChartBarControl/ShowLegends.md)(…) | Shows legends after the chart bar. Default is false. |
 | [Styles](IChartBarControl/Styles.md)(…) | Overwrites styles for the chart bar. |
 | [Title](IChartBarControl/Title.md)(…) | Sets the title of the chart bar. |
-| [Width](IChartBarControl/Width.md)(…) | Sets the width of the chart bar. Default value is 80. The value must be greater than or equal to 10. |
+| [Width](IChartBarControl/Width.md)(…) | Sets the width of the chart bar. Default value is 50. The value must be greater than or equal to 10. |
 
 ### See Also
 

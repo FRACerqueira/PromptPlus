@@ -367,7 +367,7 @@
     <value>Temporizador:</value>
   </data>
   <data name="TaksRunning" xml:space="preserve">
-    <value>Executando {0] tarefa(s)</value>
+    <value>Executando {0} tarefa(s)</value>
   </data>
   <data name="TaskSeqName" xml:space="preserve">
     <value>Tarefa{0}</value>
@@ -388,7 +388,7 @@
     <value>{0}:Alternar modo filtro</value>
   </data>
   <data name="TooltipCountCheck" xml:space="preserve">
-    <value>{0} selecionados</value>
+    <value>{0} selecionados.</value>
   </data>
   <data name="ErrorAutoCompleteService" xml:space="preserve">
     <value>Erro no serviço de preenchimento automático</value>
@@ -482,5 +482,14 @@
   </data>
   <data name="LoadMore" xml:space="preserve">
     <value>Enter:Carregar mais itens.</value>
+  </data>
+  <data name="FilterOnlySelected" xml:space="preserve">
+    <value>Só Selecionados</value>
+  </data>
+  <data name="TooltipFilterOnlySelected" xml:space="preserve">
+    <value>{0}:Alternar modo só selecionados</value>
+  </data>
+  <data name="TooltipSelectAllGroups" xml:space="preserve">
+    <value>{0}:Alternar Marcar  todos os grupos</value>
   </data>
 </root>

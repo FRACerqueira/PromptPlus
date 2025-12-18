@@ -39,10 +39,6 @@ namespace PromptPlusLibrary
         /// </summary>
         Flip,
         /// <summary>
-        /// Balloon type
-        /// </summary>
-        Balloon,
-        /// <summary>
         /// Noise type
         /// </summary>
         Noise,

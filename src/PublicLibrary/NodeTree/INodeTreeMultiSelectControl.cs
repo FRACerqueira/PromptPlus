@@ -142,11 +142,11 @@ namespace PromptPlusLibrary
         INodeTreeMultiSelectControl<T> HideCountSelected(bool value = true);
 
         /// <summary>
-        /// Sets the maximum width for displaying selected items.
+        /// Sets the maximum width for displaying selected items.Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
         /// </summary>
-        /// <param name="maxWidth">Maximum number of characters to display. Must be at least 10.</param>
+        /// <param name="maxWidth">Maximum number of characters to display. Must be at least 1.</param>
         /// <returns>The current <see cref="INodeTreeMultiSelectControl{T}"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxWidth"/> is less than 10.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxWidth"/> is less than 1.</exception>
         /// <remarks>Default value is 30 characters.</remarks>
         INodeTreeMultiSelectControl<T> MaxWidth(byte maxWidth);
 

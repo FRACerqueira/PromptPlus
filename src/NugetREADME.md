@@ -10,8 +10,29 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 #### [Visit the official page for complete documentation of PromptPlus](https://github.com/FRACerqueira/PromptPlus)
 
+## What's new in V5.0.1
 
-## What's new in V5.0.0
+- Removed: Feature multithreading (Incompatible when another process uses the same output stream).
+- Fixed: Read properties to global config to all controls.
+- Fixed: MaxWidths to global config to all controls.
+- Fixed: ProgressBar Issue display % when has custom range.
+- Fixed resources for en-US and pt-BR languages.
+- Improved FileSelect control with History and DefaultHistory command.
+- Improved KeyPress control with Timeout and ShowCountDown command.
+- Improved ProgressBar control with context parameters and result context.
+- Improved MultiSelect control with DefaultHistory command.
+- Improved Select control with DefaultHistory command.
+- Improved WaitProcess control with ExtraInfoProcess for provides functionality to update the extra information associated with a state process.
+- Improved show only seleted items for controls with multi selected items.
+- Improved History control with ReadHistory command.
+- Improved EnableMessageAbortCtrlC property to indicate whether a message is displayed when the operation is aborted by pressing Ctrl+C .
+- Improved Chartbar control with MaxLengthLabel command and options to show only legends.
+- improved code quality and refactoring.
+- Updated dependencies to latest versions.
+- Updated samples to use latest version.
+- Updated documentation.
+
+## What's new in V5.0.0 (version release)
 
 We're very excited about the **big release** of this new version. **Version 5 has been completely redesigned** and optimized for better stability, consistency, and performance. 
 All controls and behaviors have been revisited and improved to ensure sustainable evolution. 
@@ -39,7 +60,6 @@ Due to the significant modifications, version 5 introduced **significant changes
     - Remote Nodetree select for any type
     - Remote Nodetree Multi select for any type
 - **New console state preservation with capability to manipulate the console Ctrl+C / Ctrl+Break**.
-- **NEW multi-threaded operation** for controls and commands. Now each command and control block the main thread during printing/interaction execution.
 - **NEW external file config 'PromptPlus.config'** to customize global behaviors of PromptPlus without code changes.
 
 ## **Supported platforms**

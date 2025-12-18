@@ -4,7 +4,7 @@
 </br>
 
 
-#### Defines the maximum number of concurrent tasks enabled. The default value is the smaller number between the number of processors and 5.
+#### Defines the maximum number of concurrent tasks enabled. The default value is the smaller number between the number of processors and 10.
 
 ```csharp
 public IWaitProcessControl MaxDegreeProcess(byte value)
@@ -12,17 +12,11 @@ public IWaitProcessControl MaxDegreeProcess(byte value)
 
 | parameter | description |
 | --- | --- |
-| value | The number of concurrent tasks. Must be between 1 and 5. |
+| value | The number of concurrent tasks. Must be between 1 and 10. |
 
 ### Return Value
 
 The current [`IWaitProcessControl`](../IWaitProcessControl.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentOutOfRangeException | Thrown if *value* is less than 1 or greater than 5. |
 
 ### See Also
 

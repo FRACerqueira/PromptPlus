@@ -25,16 +25,20 @@ namespace ConsoleWaitProcessControlSamples
             var result = PromptPlus.Controls.WaitProcess("Wait Process: ")
                 .Spinner(SpinnersType.Ascii)
                 .ShowElapsedTime()
-                .AddTask(TaskMode.Sequential, "id1", (_, token) => { token.WaitHandle.WaitOne(5000); }, "label 1")
-                .AddTask(TaskMode.Sequential, "id2", (_, token) => { token.WaitHandle.WaitOne(3000); })
-                .AddTask(TaskMode.Parallel, "id3", (_, token) => { token.WaitHandle.WaitOne(1000); }, "label 3")
-                .AddTask(TaskMode.Parallel, "id4", (_, token) => { token.WaitHandle.WaitOne(2000); }, "label 4")
-                .AddTask(TaskMode.Parallel, "id5", (_, token) => { token.WaitHandle.WaitOne(3000); }, "label 5")
-                .AddTask(TaskMode.Parallel, "id6", (_, token) => { token.WaitHandle.WaitOne(4000); }, "label 6")
-                .AddTask(TaskMode.Parallel, "id7", (_, token) => { token.WaitHandle.WaitOne(5000); })
-                .AddTask(TaskMode.Parallel, "id8", (_, token) => { token.WaitHandle.WaitOne(6000); })
-                .AddTask(TaskMode.Parallel, "id9", (_, token) => { token.WaitHandle.WaitOne(7000); })
-                .AddTask(TaskMode.Sequential, "id10", (_, token) => { token.WaitHandle.WaitOne(4000); })
+                .AddTask(TaskMode.Sequential, "id1", async (_, _, token) => { token.WaitHandle.WaitOne(5000); }, "label 1")
+                .AddTask(TaskMode.Sequential, "id2", (_, _, token) => { token.WaitHandle.WaitOne(3000); })
+                .AddTask(TaskMode.Parallel, "id3", (_, _, token) => { token.WaitHandle.WaitOne(1000); }, "label 3")
+                .AddTask(TaskMode.Parallel, "id4", (_, _, token) => { token.WaitHandle.WaitOne(2000); }, "label 4")
+                .AddTask(TaskMode.Parallel, "id5", (_, _, token) => { token.WaitHandle.WaitOne(3000); }, "label 5")
+                .AddTask(TaskMode.Parallel, "id6", (_, _, token) => { token.WaitHandle.WaitOne(4000); }, "label 6")
+                .AddTask(TaskMode.Parallel, "id7", (_, _, token) => { token.WaitHandle.WaitOne(5000); })
+                .AddTask(TaskMode.Parallel, "id8", (_, _, token) => { token.WaitHandle.WaitOne(6000); })
+                .AddTask(TaskMode.Parallel, "id9", (_, extrainfo, token) => 
+                {
+                    extrainfo.Update("Extra info");
+                    token.WaitHandle.WaitOne(7000); 
+                })
+                .AddTask(TaskMode.Sequential, "id10", (_, _, token) => { token.WaitHandle.WaitOne(4000); })
                 .Run();
 
 
@@ -50,7 +54,7 @@ namespace ConsoleWaitProcessControlSamples
             result = PromptPlus.Controls.WaitProcess("Wait Process: ")
                 .Spinner(SpinnersType.Ascii)
                 .Finish((_) => "End process")
-                .AddTask(TaskMode.Sequential, "id1", (_, token) => { token.WaitHandle.WaitOne(5000); }, "label 1")
+                .AddTask(TaskMode.Sequential, "id1", (_, _, token) => { token.WaitHandle.WaitOne(5000); }, "label 1")
                 .Run();
 
 

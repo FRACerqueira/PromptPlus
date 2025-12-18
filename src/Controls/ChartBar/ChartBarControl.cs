@@ -44,7 +44,9 @@ namespace PromptPlusLibrary.Controls.ChartBar
         private char _barOn = ' ';
         private double _ticketStep;
         private int _maxlengthlabel;
-
+        private int _maxShowlengthlabel;
+        private EmacsBuffer? _answerBuffer;
+        private int _maxWidth;
 
         public void InternalTitle(string title, TextAlignment alignment)
         {
@@ -63,9 +65,31 @@ namespace PromptPlusLibrary.Controls.ChartBar
             _culture = ConfigPlus.DefaultCulture;
             _pageSize = ConfigPlus.PageSize;
             _width = ConfigPlus.ChartWidth;
+            _maxWidth = ConfigPlus.MaxWidth;
+            _maxShowlengthlabel = 20;
         }
 
         #region IChartBar
+
+        IChartBarControl IChartBarControl.MaxWidth(byte maxWidth)
+        {
+            if (maxWidth < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
+            }
+            _maxWidth = maxWidth;
+            return this;
+        }
+
+        IChartBarControl IChartBarControl.MaxLengthLabel(byte value)
+        {
+            if (value < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), "MaxLengthLabel must be greater than 0");
+            }
+            _maxShowlengthlabel = value;
+            return this;
+        }
 
         IChartBarWidget IChartBarWidget.Layout(ChartBarLayout layout)
         {
@@ -142,10 +166,6 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
         public IChartBarControl Options(Action<IControlOptions> options)
         {
-            if (IsWidgetControl)
-            {
-                throw new InvalidOperationException("Options not available in WidgetControl");
-            }
             ArgumentNullException.ThrowIfNull(options);
             options.Invoke(GeneralOptions);
             return this;
@@ -290,6 +310,11 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
         public override void InitControl(CancellationToken cancellationToken)
         {
+            if (_maxWidth > _width)
+            {
+                _maxWidth = _width;
+            }
+            _answerBuffer = new(true, CaseOptions.Any, (_) => true,int.MaxValue, _maxWidth);
             if (_items.Count == 0)
             {
                 throw new InvalidOperationException("No items to show");
@@ -301,8 +326,14 @@ namespace PromptPlusLibrary.Controls.ChartBar
             double maxValue = _items.Max(x => x.Value);
             _ticketStep = maxValue == 0 ? 1 : _width / maxValue;
             _maxlengthlabel = _items.Max(x => x.Label.Length);
-
-
+            if (IsWidgetControl)
+            {
+                _maxShowlengthlabel = int.MaxValue;
+            }
+            if (_maxlengthlabel > _maxShowlengthlabel && !IsWidgetControl)
+            {
+                _maxlengthlabel = _maxShowlengthlabel;
+            }
             switch (_chartBarType)
             {
                 case ChartBarType.Fill:
@@ -343,6 +374,16 @@ namespace PromptPlusLibrary.Controls.ChartBar
                     : Style.Default().ForeGround(item.Color.Value);
             }
             _currentitem = _items.FirstOrDefault();
+            if (_currentitem != null)
+            {
+                var answer = _currentitem!.Label;
+                if (_layout == ChartBarLayout.Stacked && !_showLegends)
+                {
+                    answer = $"{_currentitem!.Label}: {ValueToString(_currentitem!.Value)}({ValueToString(_currentitem.Percent)}%)";
+                }
+                _answerBuffer!.LoadPrintable(answer);
+                _answerBuffer.ToHome();
+            }
             LoadTooltipToggle();
             _tooltipModeInput = GetTooltipModeInput();
         }
@@ -388,11 +429,13 @@ namespace PromptPlusLibrary.Controls.ChartBar
         {
             bool oldcursor = ConsolePlus.CursorVisible;
             ConsolePlus.CursorVisible = true;
+            bool updateposanswer = false;
             try
             {
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    updateposanswer = false;
                     ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
 
                     #region default Press to Finish and tooltip
@@ -451,6 +494,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
                         _indexitem = 0;
                         _startpage = 0;
                         _currentitem = _items[_indexitem];
+                        updateposanswer = true;
                         break;
                     }
                     else if (ConfigPlus.HotKeyTooltipChartBarSwitchLegend.Equals(keyinfo) && _hasLegends)
@@ -503,6 +547,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
                             }
                         }
                         _currentitem = _items[_indexitem];
+                        updateposanswer = true;
                         _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
                         _indexTooptip = 0;
                         break;
@@ -522,6 +567,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
                             }
                         }
                         _currentitem = _items[_indexitem];
+                        updateposanswer = true;
                         _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
                         _indexTooptip = 0;
                         break;
@@ -537,6 +583,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
                             _indexitem = _items.Count - 1;
                         }
                         _currentitem = _items[_indexitem];
+                        updateposanswer = true;
                         _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
                         _indexTooptip = 0;
                         break;
@@ -552,7 +599,13 @@ namespace PromptPlusLibrary.Controls.ChartBar
                             _indexitem = 0;
                         }
                         _currentitem = _items[_indexitem];
+                        updateposanswer = true;
                         _startpage = _paginginfo.First(x => x.id == _currentitem!.Id).page;
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (!_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    {
                         _indexTooptip = 0;
                         break;
                     }
@@ -562,8 +615,20 @@ namespace PromptPlusLibrary.Controls.ChartBar
             {
                 ConsolePlus.CursorVisible = oldcursor;
             }
+            if (_currentitem != null && updateposanswer)
+            {
+                var answer = _currentitem!.Label;
+                if (_layout == ChartBarLayout.Stacked && !_showLegends)
+                {
+                    answer = $"{_currentitem!.Label}: {ValueToString(_currentitem!.Value)}({ValueToString(_currentitem.Percent)}%)";
+                }
+                _answerBuffer!.LoadPrintable(answer);
+                _answerBuffer.ToHome();
+            }
             return ResultCtrl != null;
         }
+
+
 
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
@@ -672,20 +737,26 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
-            if (_layout == ChartBarLayout.Stacked && !_showLegends)
+            screenBuffer.Write("  ", new Style(_currentitem!.Color!.Value, _currentitem!.Color!.Value));
+            screenBuffer.Write(" ", Style.Default());
+            if (!IsWidgetControl)
             {
-                screenBuffer.Write("  ", new Style(_currentitem!.Color!.Value, _currentitem!.Color!.Value));
-                screenBuffer.Write(" ", Style.Default());
-                screenBuffer.Write(_currentitem!.Label, _optStyles[ChartBarStyles.Answer]);
-                screenBuffer.Write(": ", Style.Default());
-                screenBuffer.Write(ValueToString(_currentitem!.Value), _optStyles[ChartBarStyles.Answer]);
-                screenBuffer.Write($"({ValueToString(_currentitem.Percent)}%)", _optStyles[ChartBarStyles.Answer]);
+                string str = _answerBuffer!.IsHideLeftBuffer
+                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeftMost)
+                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft);
+                screenBuffer.Write(str, _optStyles[ChartBarStyles.Answer]);
+                screenBuffer.Write(_answerBuffer!.ToBackward(), _optStyles[ChartBarStyles.Answer]);
+                screenBuffer.SavePromptCursor();
+                screenBuffer.Write(_answerBuffer!.ToForward(), _optStyles[ChartBarStyles.Answer]);
+                str = _answerBuffer.IsHideRightBuffer
+                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
+                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
+                screenBuffer.Write(str, _optStyles[ChartBarStyles.Answer]);
             }
             else
             {
-                screenBuffer.Write($"{_currentitem!.Label}", _optStyles[ChartBarStyles.Answer]);
+                screenBuffer.Write(_answerBuffer!.ToString(), _optStyles[ChartBarStyles.Answer]);
             }
-            screenBuffer.SavePromptCursor();
             screenBuffer.WriteLine("", _optStyles[ChartBarStyles.Answer]);
         }
 
@@ -723,7 +794,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
         private void WriteLegends(BufferScreen screenBuffer)
         {
-            if (!_showLegends)
+            if (!_showLegends && !_hideChart.HasFlag(HideChart.ChartBar))
             {
                 return;
             }
@@ -748,7 +819,14 @@ namespace PromptPlusLibrary.Controls.ChartBar
                 }
                 screenBuffer.Write("  ", new Style(item.Color!.Value, item.Color!.Value));
                 screenBuffer.Write(" ", Style.Default());
-                screenBuffer.Write(item.Label.PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
+                if (item.Label.Length > _maxShowlengthlabel)
+                {
+                    screenBuffer.Write(item.Label[.._maxShowlengthlabel].PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
+                }
+                else
+                {
+                    screenBuffer.Write(item.Label.PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
+                }
                 if (!_hideChart.HasFlag(HideChart.Values) || !_hideChart.HasFlag(HideChart.Percentage))
                 {
                     screenBuffer.Write(": ", Style.Default());
@@ -767,6 +845,10 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
         private void WriteChartBar(BufferScreen screenBuffer)
         {
+            if (_hideChart.HasFlag(HideChart.ChartBar))
+            {
+                return;
+            }
             switch (_layout)
             {
                 case ChartBarLayout.Standard:
@@ -824,7 +906,21 @@ namespace PromptPlusLibrary.Controls.ChartBar
                 }
                 else
                 {
-                    screenBuffer.Write(item.Label.PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
+                    if (IsWidgetControl)
+                    {
+                        screenBuffer.Write(item.Label.PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
+                    }
+                    else
+                    {
+                        if (item.Label.Length > _maxShowlengthlabel)
+                        {
+                            screenBuffer.Write(item.Label[.._maxShowlengthlabel].PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
+                        }
+                        else
+                        {
+                            screenBuffer.Write(item.Label.PadRight(_maxlengthlabel), _optStyles[ChartBarStyles.ChartLabel]);
+                        }
+                    }
                     screenBuffer.Write(": ", Style.Default());
                     screenBuffer.Write(new string(_barOn, tkt), item.StyleBar!.Value);
                     if (!_hideChart.HasFlag(HideChart.Values))

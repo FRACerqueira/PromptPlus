@@ -27,6 +27,16 @@ namespace PromptPlusLibrary
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
         INodeTreeRemoteSelectControl<T1, T2> ChangeDescription(Func<T1, string> value);
 
+
+        /// <summary>
+        /// Sets the maximum display width for selected item in characters.Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
+        /// </summary>
+        /// <param name="maxWidth">The maximum width of the selected item in characters.</param>
+        /// <returns>The current <see cref="INodeTreeRemoteSelectControl{T1,T2}"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxWidth"/> is less than 1.</exception>
+        INodeTreeRemoteSelectControl<T1, T2> MaxWidth(byte maxWidth);
+
+
         /// <summary>
         /// Applies custom options to the control to modify its behavior and appearance.
         /// </summary>

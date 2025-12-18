@@ -49,7 +49,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
         private double _precision;
         private int _factor;
         private double _range;
-
+        private KeyValuePair<string, object?>[]? _paramcontext;
         public ProgressBarControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             _culture = ConfigPlus.DefaultCulture;
@@ -160,9 +160,10 @@ namespace PromptPlusLibrary.Controls.ProgressBar
             return this;
         }
 
-        public IProgressBarControl UpdateHandler(Action<HandlerProgressBar, CancellationToken> value)
+        public IProgressBarControl UpdateHandler(Action<HandlerProgressBar, CancellationToken> value, KeyValuePair<string, object?>[]? paramcontext = null)
         {
             _actionProgressBar = value ?? throw new ArgumentNullException(nameof(value), "The value cannot be null.");
+            _paramcontext = paramcontext;
             return this;
         }
 
@@ -200,7 +201,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
             {
                 throw new InvalidOperationException("The UpdateHandler cannot be null.");
             }
-            _handlerProgressBar = new HandlerProgressBar(_defaultValue.Value, _minValue, _maxValue);
+            _handlerProgressBar = new HandlerProgressBar(_defaultValue.Value, _minValue, _maxValue, _paramcontext);
 
             _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             _cancellationTokenSource.Token.Register(() =>
@@ -264,7 +265,8 @@ namespace PromptPlusLibrary.Controls.ProgressBar
             if (!_hideProgressBar.HasFlag(HideProgressBar.PromptAnswer))
             {
                 result = true;
-                string answer = $"{ValueToString(ResultCtrl!.Value.Content.FinishedValue!.Value)}% - {ResultCtrl!.Value.Content.ElapsedTime:hh\\:mm\\:ss\\:ff}"; ;
+                var aux = (ResultCtrl!.Value.Content.FinishedValue!.Value - _handlerProgressBar!.Minvalue) / (_handlerProgressBar!.Maxvalue - _handlerProgressBar!.Minvalue) * 100;
+                string answer = $"{ValueToString(aux)}% - {ResultCtrl!.Value.Content.ElapsedTime:hh\\:mm\\:ss\\:ff}"; ;
                 Style styleanswer = _optStyles[ProgressBarStyles.Answer];
                 if (ResultCtrl!.Value.IsAborted)
                 {
@@ -313,27 +315,27 @@ namespace PromptPlusLibrary.Controls.ProgressBar
 
                     if (!keyinfo.HasValue)
                     {
-                        _cancellationTokenSource!.Cancel();
                         ResultCtrl = new ResultPrompt<StateProgress>(
-                            new StateProgress(_handlerProgressBar!.Value, _finishText, _minValue, _maxValue, _stopwatch.Elapsed, _handlerProgressBar!.Error)
+                            new StateProgress(_handlerProgressBar!.Value, _finishText, _minValue, _maxValue, _stopwatch.Elapsed, _handlerProgressBar!.OutputContext, _handlerProgressBar!.Error)
                             , true);
+                        _cancellationTokenSource!.Cancel();
                         break;
                     }
 
                     if (IsAbortKeyPress(keyinfo.Value) || _handlerProgressBar!.Error is not null)
                     {
-                        _cancellationTokenSource!.Cancel();
                         ResultCtrl = new ResultPrompt<StateProgress>(
-                            new StateProgress(_handlerProgressBar!.Value, _finishText, _minValue, _maxValue, _stopwatch.Elapsed, _handlerProgressBar!.Error)
+                            new StateProgress(_handlerProgressBar!.Value, _finishText, _minValue, _maxValue, _stopwatch.Elapsed, _handlerProgressBar!.OutputContext, _handlerProgressBar!.Error)
                             , true);
+                        _cancellationTokenSource!.Cancel();
                         break;
                     }
                     if (_handlerProgressBar!.Finish)
                     {
-                        _cancellationTokenSource!.Cancel();
                         ResultCtrl = new ResultPrompt<StateProgress>(
-                            new StateProgress(_handlerProgressBar!.Value, _finishText, _minValue, _maxValue, _stopwatch.Elapsed, _handlerProgressBar!.Error)
+                            new StateProgress(_handlerProgressBar!.Value, _finishText, _minValue, _maxValue, _stopwatch.Elapsed, _handlerProgressBar!.OutputContext, _handlerProgressBar!.Error)
                             , false);
+                        _cancellationTokenSource!.Cancel();
                         break;
                     }
                     if (keyinfo.Value.Key == ConsoleKey.None && keyinfo.Value.Modifiers == ConsoleModifiers.None)
@@ -591,17 +593,20 @@ namespace PromptPlusLibrary.Controls.ProgressBar
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
-            string answer = ValueToString(_handlerProgressBar!.Value);
+            var aux = (_handlerProgressBar!.Value - _handlerProgressBar!.Minvalue) / (_handlerProgressBar!.Maxvalue - _handlerProgressBar!.Minvalue) * 100;
+            string answer = ValueToString(aux);
+            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft), _optStyles[ProgressBarStyles.Answer]);
             screenBuffer.Write($"{answer} %", _optStyles[ProgressBarStyles.Answer]);
             if (!_hideProgressBar.HasFlag(HideProgressBar.ElapsedTime))
             {
                 screenBuffer.Write($" - {_stopwatch.Elapsed:hh\\:mm\\:ss\\:ff}", _optStyles[ProgressBarStyles.Answer]);
             }
+            screenBuffer.SavePromptCursor();
+            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight), _optStyles[ProgressBarStyles.Answer]);
             if (_currentspinnerFrame != null)
             {
                 screenBuffer.Write($" {_currentspinnerFrame} ", _optStyles[ProgressBarStyles.Spinner]);
             }
-            screenBuffer.SavePromptCursor();
             screenBuffer.WriteLine("", _optStyles[ProgressBarStyles.Answer]);
         }
 

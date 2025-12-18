@@ -16,10 +16,14 @@ public interface IFileSelectControl
 | --- | --- |
 | [AcceptHiddenAttributes](IFileSelectControl/AcceptHiddenAttributes.md)(…) | Accept hidden folder and files in File Select Control. Default is false |
 | [AcceptSystemAttributes](IFileSelectControl/AcceptSystemAttributes.md)(…) | Accept system folder and files in File Select Control. Default is false |
+| [Default](IFileSelectControl/Default.md)(…) | Sets the initial selected values for the FileMultiSelect control. |
+| [DefaultHistory](IFileSelectControl/DefaultHistory.md)(…) | Sets the initial value from history (if enabled). |
+| [EnabledHistory](IFileSelectControl/EnabledHistory.md)(…) | Enables history persistence with optional custom configuration. |
 | [EnabledSearchFilter](IFileSelectControl/EnabledSearchFilter.md)(…) | Configures the search filter functionality. Default value is Disabled. |
 | [HideFilesBySize](IFileSelectControl/HideFilesBySize.md)(…) | Filters files based on their size in bytes. |
 | [HideSizeInfo](IFileSelectControl/HideSizeInfo.md)(…) | Controls the visibility of size information for files and folders. Default is false. |
 | [HideZeroEntries](IFileSelectControl/HideZeroEntries.md)(…) | Hide folder with Zero Entries in File Select Control. Default is false |
+| [MaxWidth](IFileSelectControl/MaxWidth.md)(…) | Sets the maximum display width for selected items in characters. |
 | [OnlyFolders](IFileSelectControl/OnlyFolders.md)(…) | Restricts selection to folders only. Default is false (shows both files and folders). |
 | [Options](IFileSelectControl/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](IFileSelectControl/PageSize.md)(…) | Sets the maximum number of items to display per page. |

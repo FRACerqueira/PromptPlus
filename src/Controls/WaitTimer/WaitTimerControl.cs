@@ -231,13 +231,26 @@ namespace PromptPlusLibrary.Controls.WaitTimer
         {
             if (_showElapsedTime)
             {
-                screenBuffer.Write($"{_answertimer:hh\\:mm\\:ss\\:ff} ", _optStyles[WaitTimerStyles.ElapsedTime]);
+                screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft), _optStyles[WaitTimerStyles.Answer]);
+                screenBuffer.Write($"{_answertimer:hh\\:mm\\:ss\\:ff}", _optStyles[WaitTimerStyles.ElapsedTime]);
+                screenBuffer.SavePromptCursor();
+                screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight), _optStyles[WaitTimerStyles.Answer]);
             }
             if (_currentspinnerFrame != null)
             {
                 screenBuffer.Write(_currentspinnerFrame, _optStyles[WaitTimerStyles.Spinner]);
+                if (!_showElapsedTime)
+                {
+                    screenBuffer.SavePromptCursor();
+                }
             }
-            screenBuffer.SavePromptCursor();
+            else
+            {
+                if (!_showElapsedTime)
+                {
+                    screenBuffer.SavePromptCursor();
+                }
+            }
             screenBuffer.WriteLine("", _optStyles[WaitTimerStyles.Answer]);
         }
 

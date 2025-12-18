@@ -19,6 +19,7 @@ public interface IPromptPlusConfig
 | [CompletionWaitToStart](IPromptPlusConfig/CompletionWaitToStart.md) { get; set; } | Number of milliseconds to wait before to start function autocomplete. Default value is 500 Valid range is &gt; 100; values outside the range are coerced to the nearest boundary. |
 | [DefaultCulture](IPromptPlusConfig/DefaultCulture.md) { get; set; } | Gets or sets the default CultureInfo used for formatting and localization. |
 | [EnabledAbortKey](IPromptPlusConfig/EnabledAbortKey.md) { get; set; } | Gets or sets whether the abort (Esc) hotkey is enabled globally. If `true`, Esc can abort controls. |
+| [EnableMessageAbortCtrlC](IPromptPlusConfig/EnableMessageAbortCtrlC.md) { get; set; } | Gets or sets a value indicating whether a message is displayed when the operation is aborted by pressing Ctrl+C. Default value is true. |
 | [FirstDayOfWeek](IPromptPlusConfig/FirstDayOfWeek.md) { get; set; } | Gets or sets the first day of the week for calendar-based controls (default: Sunday). |
 | [FolderLog](IPromptPlusConfig/FolderLog.md) { get; set; } | Gets or sets the folder path where log files will be stored. |
 | [HideAfterFinish](IPromptPlusConfig/HideAfterFinish.md) { get; set; } | Gets or sets whether a control’s render area is cleared after successful completion. If `true`, the area is cleared. |
@@ -33,8 +34,10 @@ public interface IPromptPlusConfig
 | [HotKeyTooltipChartBarSwitchLayout](IPromptPlusConfig/HotKeyTooltipChartBarSwitchLayout.md) { get; set; } | Gets or sets the hotkey for chart bar layout switching (default: F2). |
 | [HotKeyTooltipChartBarSwitchLegend](IPromptPlusConfig/HotKeyTooltipChartBarSwitchLegend.md) { get; set; } | Gets or sets the hotkey for chart bar legend visibility switching (default: F3). |
 | [HotKeyTooltipChartBarSwitchOrder](IPromptPlusConfig/HotKeyTooltipChartBarSwitchOrder.md) { get; set; } | Gets or sets the hotkey for chart bar ordering switching (default: F4). |
+| [HotKeyTooltipFilterAllSelected](IPromptPlusConfig/HotKeyTooltipFilterAllSelected.md) { get; set; } | Gets or sets the hotkey for Filter all selected items (default: F3). |
 | [HotKeyTooltipShowHide](IPromptPlusConfig/HotKeyTooltipShowHide.md) { get; } | Gets the hotkey that shows/hides tooltips (default: Ctrl+F1). |
 | [HotKeyTooltipToggleAll](IPromptPlusConfig/HotKeyTooltipToggleAll.md) { get; set; } | Gets or sets the hotkey for toggling selection of all items (default: F2). |
+| [HotKeyTooltipToggleAllGroups](IPromptPlusConfig/HotKeyTooltipToggleAllGroups.md) { get; set; } | Gets or sets the hotkey used to toggle tooltips for all groups. |
 | [MaxLenghtFilterText](IPromptPlusConfig/MaxLenghtFilterText.md) { get; set; } | Gets or sets the maximum length used when filtering text in controls. Default value is 15. Valid range is 5–30; values outside the range are coerced to the nearest boundary. |
 | [MaxWidth](IPromptPlusConfig/MaxWidth.md) { get; set; } | Gets or sets the Sets the maximum display width for selected items text. Default is 30 characters. Valid range is 10–255; values outside the range are coerced to the nearest boundary. |
 | [MinimumPrefixLength](IPromptPlusConfig/MinimumPrefixLength.md) { get; set; } | Number minimum of chars to accept autocomplete.Default value is 3. Valid range is 1–255; values outside the range are coerced to the nearest boundary. |

@@ -7,6 +7,7 @@ using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -24,15 +25,38 @@ namespace PromptPlusLibrary.Controls.KeyPress
         private string _tooltipModeInput = string.Empty;
         private string? _currentspinnerFrame;
         private bool _showInvalidkey;
+        private bool _showTimer;
+        private TimeSpan _timeoutcount;
+        private bool _istimeout;
+        private ConsoleKey? _defaultkey;
+        private ConsoleModifiers? _defaultmodifiers;
+        private readonly Stopwatch _timer;
 
 #pragma warning disable IDE0290 // Use primary constructor
         public KeyPressControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
-
+            _showTimer = true;
+            _timeoutcount = TimeSpan.Zero;
+            _timer = new Stopwatch();
         }
 #pragma warning restore IDE0290 // Use primary constructor
 
         #region IKeyPressControl
+
+        public IKeyPressControl Timeout(TimeSpan time, ConsoleKey defaultkey, ConsoleModifiers? defaultmodifiers = null)
+        { 
+            _istimeout = true;
+            _timeoutcount = time;
+            _defaultkey = defaultkey;
+            _defaultmodifiers = defaultmodifiers ?? ConsoleModifiers.None;
+            return this;
+        }
+
+        public IKeyPressControl ShowCountDown(bool value = true)
+        { 
+            _showTimer = value;
+            return this;
+        }
 
         public IKeyPressControl AddKeyValid(ConsoleKey key, ConsoleModifiers? modifiers = null, string? showtext = null)
         {
@@ -70,6 +94,7 @@ namespace PromptPlusLibrary.Controls.KeyPress
         {
             _tooltipModeInput = string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip);
             LoadTooltipToggle();
+            _timer.Start();
         }
 
 
@@ -177,11 +202,20 @@ namespace PromptPlusLibrary.Controls.KeyPress
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
+            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
+            {
+                screenBuffer.SavePromptCursor();
+            }
+            screenBuffer.SavePromptCursor();
+            if (_showTimer  && _istimeout)
+            {
+                var answertimer = _timeoutcount - _timer.Elapsed;
+                screenBuffer.Write($" ({answertimer:hh\\:mm\\:ss\\:ff}) ", _optStyles[KeyPressStyles.TaggedInfo]);
+            }
             if (_currentspinnerFrame != null)
             {
                 screenBuffer.Write(_currentspinnerFrame, _optStyles[KeyPressStyles.Spinner]);
             }
-            screenBuffer.SavePromptCursor();
             screenBuffer.WriteLine("", _optStyles[KeyPressStyles.Answer]);
         }
 
@@ -317,8 +351,27 @@ namespace PromptPlusLibrary.Controls.KeyPress
 
         private ConsoleKeyInfo? WaitKeypressSpinner(CancellationToken token)
         {
+            var curtime = _timer.Elapsed;
             while (!ConsolePlus.KeyAvailable && !token.IsCancellationRequested)
             {
+                if (_istimeout)
+                {
+                    if (_timer.Elapsed >= _timeoutcount)
+                    {
+                        _timer.Stop();
+                        _istimeout = false;
+                        return new ConsoleKeyInfo(
+                            (char)_defaultkey!.Value,
+                            _defaultkey!.Value,
+                            _defaultmodifiers!.Value.HasFlag(ConsoleModifiers.Shift),
+                            _defaultmodifiers!.Value.HasFlag(ConsoleModifiers.Alt),
+                            _defaultmodifiers!.Value.HasFlag(ConsoleModifiers.Control));
+                    }
+                    else if (_showTimer && curtime.TotalMilliseconds + 100 <= _timer.Elapsed.TotalMilliseconds)
+                    {
+                        return new ConsoleKeyInfo(new char(), ConsoleKey.None, false, false, false);
+                    }
+                }
                 if (_spinner != null && _spinner.HasNextFrame(out string? newframe))
                 {
                     _currentspinnerFrame = newframe;

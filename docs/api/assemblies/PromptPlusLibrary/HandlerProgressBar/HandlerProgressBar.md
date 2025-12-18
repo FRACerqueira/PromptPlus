@@ -7,7 +7,8 @@
 #### Initializes a new instance of the [`HandlerProgressBar`](../HandlerProgressBar.md) class with the specified value, minimum, and maximum values.
 
 ```csharp
-public HandlerProgressBar(double value, double min, double max)
+public HandlerProgressBar(double value, double min, double max, 
+    KeyValuePair<string, object?>[]? paramcontext)
 ```
 
 | parameter | description |
@@ -15,6 +16,7 @@ public HandlerProgressBar(double value, double min, double max)
 | value | The initial value. |
 | min | The minimum value. |
 | max | The maximum value. |
+| paramcontext | The context parameters to pass to the handler. |
 
 ### Exceptions
 

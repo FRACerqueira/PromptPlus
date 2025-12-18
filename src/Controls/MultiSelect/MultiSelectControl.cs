@@ -53,8 +53,8 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         private bool _hideCountSelected;
         private bool _hasGroup;
         private string _lastinput;
-
-
+        private bool _onfilterOnlySelected;
+        private bool _hasGroupItem;
 #pragma warning disable IDE0079 
 #pragma warning disable IDE0290 // Use primary constructor
         public MultiSelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
@@ -112,9 +112,9 @@ namespace PromptPlusLibrary.Controls.MultiSelect
 
         public IMultiSelectControl<T> MaxWidth(byte maxWidth)
         {
-            if (maxWidth < 10)
+            if (maxWidth < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 10.");
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
             }
             _maxWidth = maxWidth;
             return this;
@@ -162,6 +162,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         {
             ArgumentNullException.ThrowIfNull(group, nameof(group));
             ArgumentNullException.ThrowIfNull(value, nameof(value));
+            _hasGroupItem = true;
             int lastindex = _items.FindLastIndex((x) => x.Group == group);
             if (lastindex < 0)
             {
@@ -437,6 +438,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
 
                     #region default Press to Finish and tooltip
+
                     if (cancellationToken.IsCancellationRequested)
                     {
                         _indexTooptip = 0;
@@ -487,7 +489,25 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                     #endregion
 
-                    else if (_filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
+                    else if (_modeView == ModeView.MultiSelect && ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && _onfilterOnlySelected)
+                    {
+                        _onfilterOnlySelected = false;
+                        _localpaginator!.UpdatColletion(_items);
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _filterBuffer!.Clear();
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (_modeView == ModeView.MultiSelect && ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && !_onfilterOnlySelected && _checkeditems.Count > 0)
+                    {
+                        _onfilterOnlySelected = true;
+                        _localpaginator!.UpdatColletion(_items.Where(x => x.ValueChecked));
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _filterBuffer!.Clear();
+                        _indexTooptip = 0;
+                        break;
+                    }
+                    else if (!_onfilterOnlySelected && _filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
                     {
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer!.Clear();
@@ -584,6 +604,13 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         if (_checkeditems.Count == 0)
                         {
                             _resultbuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                                _filterBuffer!.Clear();
+                            }
                         }
                         else
                         {
@@ -601,6 +628,82 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         }
                         _indexTooptip = 0;
                         break;
+                    }
+                    else if (_localpaginator!.SelectedItem != null && ConfigPlus.HotKeyTooltipToggleAllGroups.Equals(keyinfo))
+                    {
+                        IEnumerable<ItemSelect<T>> toselect = _items.Where(x => !x.CharSeparation.HasValue && !x.Disabled);
+                        int qtdcheck = toselect.Count(x => x.ValueChecked && !x.Disabled);
+                        if (qtdcheck == toselect.Count())
+                        {
+                            foreach (ItemSelect<T>? item in toselect)
+                            {
+                                item.ValueChecked = false;
+                                _checkeditems.Remove(item);
+                            }
+                        }
+                        else
+                        {
+                            bool hasinvalidselect = false;
+                            string? customerr = null;
+                            foreach (ItemSelect<T>? item in toselect)
+                            {
+                                (bool ok, string? message) = _predicatevalidselect?.Invoke(item.Value) ?? (true, null);
+                                if (!ok)
+                                {
+                                    hasinvalidselect = true;
+                                    if (string.IsNullOrEmpty(message))
+                                    {
+                                        customerr = message;
+                                    }
+                                }
+                                else
+                                {
+                                    if (!item.ValueChecked)
+                                    {
+                                        item.ValueChecked = true;
+                                        _checkeditems.Add(item);
+                                    }
+                                }
+                            }
+                            if (hasinvalidselect)
+                            {
+                                if (string.IsNullOrEmpty(customerr))
+                                {
+                                    SetError(Messages.PredicateSelectInvalid);
+                                }
+                                else
+                                {
+                                    SetError(customerr);
+                                }
+                            }
+                        }
+                        if (_checkeditems.Count == 0)
+                        {
+                            _resultbuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                                _filterBuffer!.Clear();
+                            }
+                        }
+                        else
+                        {
+                            _resultbuffer!.LoadPrintable(_checkeditems.Select(x => x.Text!).Aggregate((x, y) => $"{x},{y}"));
+                        }
+                        int countselect = _checkeditems.Count;
+                        if (countselect < _minSelect)
+                        {
+                            SetError(string.Format(Messages.MultiSelectMinSelection, _minSelect));
+                        }
+                        else if (countselect > _maxSelect)
+                        {
+                            SetError(string.Format(Messages.MultiSelectMaxSelection, _maxSelect));
+                        }
+                        _indexTooptip = 0;
+                        break;
+
                     }
                     else if (_localpaginator!.SelectedItem != null && (!string.IsNullOrEmpty(_localpaginator!.SelectedItem.Group) || !_hasGroup) && ConfigPlus.HotKeyTooltipToggleAll.Equals(keyinfo))
                     {
@@ -653,6 +756,13 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         if (_checkeditems.Count == 0)
                         {
                             _resultbuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                                _filterBuffer!.Clear();
+                            }
                         }
                         else
                         {
@@ -822,6 +932,14 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 {
                     lsttooltips.AddRange(EmacsBuffer.GetEmacsTooltips());
                 }
+                else
+                {
+                    if (_hasGroupItem)
+                    {
+                        lsttooltips.Add(string.Format(Messages.TooltipSelectAllGroups, ConfigPlus.HotKeyTooltipToggleAllGroups));
+                    }
+                    lsttooltips.Add(string.Format(Messages.TooltipFilterOnlySelected, ConfigPlus.HotKeyTooltipFilterAllSelected));
+                }
                 _toggerTooptips[mode] = [.. lsttooltips];
             }
         }
@@ -962,7 +1080,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
-            if (_modeView == ModeView.MultiSelect)
+            if (_modeView == ModeView.MultiSelect || _onfilterOnlySelected)
             {
                 Style styleAnswer = _optStyles[MultiSelectStyles.Answer];
                 string str = _resultbuffer!.IsHideLeftBuffer
@@ -976,7 +1094,16 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 str = _resultbuffer.IsHideRightBuffer
                     ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
                     : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
-                screenBuffer.WriteLine(str, styleAnswer);
+                screenBuffer.Write(str, styleAnswer);
+                if (_onfilterOnlySelected)
+                {
+                    screenBuffer.WriteLine($" ({Messages.FilterOnlySelected})", _optStyles[MultiSelectStyles.TaggedInfo]);
+                }
+                else
+                {
+                    screenBuffer.WriteLine("", styleAnswer);
+                }
+
             }
             else if (_modeView == ModeView.Filter)
             {

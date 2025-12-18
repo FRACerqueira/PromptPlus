@@ -11,10 +11,6 @@ namespace ConsoleCtrlCFeaturesSamples
     {
         static void Main()
         {
-
-            //Disable Exclusive Context - For demonstration purposes only. Default value = false
-            //In multithreaded scenarios, the rendering of controls and commands may exhibit text sequence errors when the property is set to false.
-            PromptPlus.Console.EnabledExclusiveContext = true;
             PromptPlus.Console.ResetColor();
             PromptPlus.Console.Clear();
 
@@ -79,7 +75,9 @@ namespace ConsoleCtrlCFeaturesSamples
             PromptPlus.Console.WriteLine("");
             PromptPlus.Console.WriteLine($"[yellow]Show file log at {Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)}/PromptPlus.Log [/]");
 
-            if (!PromptPlus.Console.UserPressKeyAborted)
+            PromptPlus.Config.EnableMessageAbortCtrlC = false;
+
+            if (!PromptPlus.AbortedByCtrlC)
             {
                 while (true)
                 {

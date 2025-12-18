@@ -65,11 +65,11 @@ namespace PromptPlusLibrary
         IFileMultiSelectControl HideFilesBySize(long minvalue, long maxvalue = long.MaxValue);
 
         /// <summary>
-        /// Sets the maximum display width for selected items in characters.
+        /// Sets the maximum display width for selected items in characters.Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
         /// </summary>
-        /// <param name="maxWidth">The maximum width in characters (minimum 10).</param>
+        /// <param name="maxWidth">The maximum width in characters (minimum 1).</param>
         /// <returns>The current <see cref="IFileMultiSelectControl"/> instance for chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxWidth"/> is less than 10.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxWidth"/> is less than 1.</exception>
         IFileMultiSelectControl MaxWidth(byte maxWidth);
 
         /// <summary>

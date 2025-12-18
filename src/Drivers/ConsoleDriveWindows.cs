@@ -17,7 +17,6 @@ namespace PromptPlusLibrary.Drivers
     internal class ConsoleDriveWindows : IConsole, IConsoleExtend
     {
         private readonly SemaphoreSlim _exclusiveCAbortCtrlC = new(0, 1);
-        private readonly SemaphoreSlim _exclusiveContext = new(1, 1);
         private readonly Task _CheckBackGroundCtrlC;
         private TargetScreen _currentBuffer = TargetScreen.Primary;
         private Color _consoleForegroundColor;
@@ -28,12 +27,10 @@ namespace PromptPlusLibrary.Drivers
         private CancellationTokenSource _tokenCancelPress;
         private bool _isExistDefaultCancel;
         private bool _isAbortCtrlC;
-        private bool _enabledExclusiveContext;
 
         public ConsoleDriveWindows(IProfileDrive profile)
         {
             ProfilePlus = profile;
-            _enabledExclusiveContext = false;
             _consoleForegroundColor = profile.DefaultConsoleForegroundColor;
             _consoleBackgroundColor = profile.DefaultConsoleBackgroundColor;
             _cancelKeyPressEvent = null;
@@ -70,110 +67,65 @@ namespace PromptPlusLibrary.Drivers
 
         public void RemoveCancelKeyPress()
         {
-            UniqueContext(() =>
+            _behaviorAfterCancelKeyPress = AfterCancelKeyPress.Default;
+            if (_cancelKeyPressEvent != null)
             {
-                _behaviorAfterCancelKeyPress = AfterCancelKeyPress.Default;
-                if (_cancelKeyPressEvent != null)
-                {
-                    _cancelKeyPressEvent = null;
-                    Console.CancelKeyPress -= ConsoleCancelKeyPress;
-                }
-                ResetTokenCancelPress();
-                _isExistDefaultCancel = true;
-                Console.CancelKeyPress += ExitDefaultCancel;
-            });
+                _cancelKeyPressEvent = null;
+                Console.CancelKeyPress -= ConsoleCancelKeyPress;
+            }
+            ResetTokenCancelPress();
+            _isExistDefaultCancel = true;
+            Console.CancelKeyPress += ExitDefaultCancel;
         }
 
         private void ExitDefaultCancel(object? sender, ConsoleCancelEventArgs args)
         {
-            UniqueContext(() =>
+            Console.CancelKeyPress -= ExitDefaultCancel;
+            SetUserPressKeyAborted();
+            _isAbortCtrlC = true;
+            if (!_disposed)
             {
-                Console.CancelKeyPress -= ExitDefaultCancel;
-                SetUserPressKeyAborted();
-                _isAbortCtrlC = true;
-                if (!_disposed)
-                {
-                    _exclusiveCAbortCtrlC.Release();
-                }
-                throw new PromptPlusException();
-            });
+                _exclusiveCAbortCtrlC.Release();
+            }
+            throw new PromptPlusException();
         }
 
         public void CancelKeyPress(AfterCancelKeyPress behaviorcontrols, Action<object?, ConsoleCancelEventArgs> actionhandle)
         {
-            UniqueContext(() =>
+            UserPressKeyAborted = false;
+            _behaviorAfterCancelKeyPress = behaviorcontrols;
+            if (_isExistDefaultCancel)
             {
-                UserPressKeyAborted = false;
-                _behaviorAfterCancelKeyPress = behaviorcontrols;
-                if (_isExistDefaultCancel)
+                Console.CancelKeyPress -= ExitDefaultCancel;
+                _isExistDefaultCancel = false;
+            }
+            else
+            {
+                if (_cancelKeyPressEvent != null)
                 {
-                    Console.CancelKeyPress -= ExitDefaultCancel;
-                    _isExistDefaultCancel = false;
+                    Console.CancelKeyPress -= ConsoleCancelKeyPress;
                 }
-                else
-                {
-                    if (_cancelKeyPressEvent != null)
-                    {
-                        Console.CancelKeyPress -= ConsoleCancelKeyPress;
-                    }
-                }
-                _cancelKeyPressEvent = actionhandle;
-                Console.CancelKeyPress += ConsoleCancelKeyPress;
-            });
+            }
+            _cancelKeyPressEvent = actionhandle;
+            Console.CancelKeyPress += ConsoleCancelKeyPress;
         }
 
         public void SetUserPressKeyAborted()
         {
-            UniqueContext(() =>
+            UserPressKeyAborted = true;
+            try
             {
-                UserPressKeyAborted = true;
-                try
-                {
-                    _tokenCancelPress.Cancel();
-                }
-                catch (ObjectDisposedException)
-                {
-                    //none
-                }
-            });
-        }
-
-        public bool EnabledExclusiveContext 
-        { 
-            get { return _enabledExclusiveContext; }
-            set
+                _tokenCancelPress.Cancel();
+            }
+            catch (ObjectDisposedException)
             {
-                UniqueContext(() =>
-                {
-                    if (_enabledExclusiveContext && !value && _exclusiveContext.CurrentCount == 0)
-                    {
-                        _exclusiveContext.Release();
-                    }
-                    _enabledExclusiveContext = value;
-                });
+                //none
             }
         }
 
         public bool UserPressKeyAborted { get; private set; }
 
         internal IProfileDrive ProfilePlus { get; }
-
-        public void UniqueContext(Action action)
-        {
-            if (IsExitDefaultCancel && AbortedByCtrlC)
-            {
-                throw new PromptPlusException();
-            }
-            if (!EnabledExclusiveContext)
-            {
-                action.Invoke();
-                return;
-            }
-            using (((IConsoleExtend)this).InternalExclusiveContext())
-            {
-                action.Invoke();
-            }
-        }
 
         public Color ForegroundColor
         {
@@ -183,18 +135,15 @@ namespace PromptPlusLibrary.Drivers
             }
             set
             {
-                UniqueContext(() =>
+                _consoleForegroundColor = value;
+                if (ProfilePlus.SupportsAnsi)
                 {
-                    _consoleForegroundColor = value;
-                    if (ProfilePlus.SupportsAnsi)
-                    {
-                        Console.Write(AnsiSequences.SGR(AnsiColorBuilder.GetAnsiCodes(ProfilePlus.ColorDepth, _consoleForegroundColor, true)));
-                    }
-                    else
-                    {
-                        Console.ForegroundColor = value.ToConsoleColor();
-                    }
-                });
+                    Console.Write(AnsiSequences.SGR(AnsiColorBuilder.GetAnsiCodes(ProfilePlus.ColorDepth, _consoleForegroundColor, true)));
+                }
+                else
+                {
+                    Console.ForegroundColor = value.ToConsoleColor();
+                }
             }
         }
 
@@ -206,18 +155,15 @@ namespace PromptPlusLibrary.Drivers
             }
             set
             {
-                UniqueContext(() =>
+                _consoleBackgroundColor = value;
+                if (ProfilePlus.SupportsAnsi)
                 {
-                    _consoleBackgroundColor = value;
-                    if (ProfilePlus.SupportsAnsi)
-                    {
-                        Console.Write(AnsiSequences.SGR(AnsiColorBuilder.GetAnsiCodes(ProfilePlus.ColorDepth, _consoleBackgroundColor, false)));
-                    }
-                    else
-                    {
-                        Console.BackgroundColor = value.ToConsoleColor();
-                    }
-                });
+                    Console.Write(AnsiSequences.SGR(AnsiColorBuilder.GetAnsiCodes(ProfilePlus.ColorDepth, _consoleBackgroundColor, false)));
+                }
+                else
+                {
+                    Console.BackgroundColor = value.ToConsoleColor();
+                }
             }
         }
 
@@ -233,30 +179,27 @@ namespace PromptPlusLibrary.Drivers
             }
             set
             {
-                UniqueContext(() => ShowCusor(value));
+                ShowCusor(value);
             }
         }
 
         private void ShowCusor(bool value)
         {
-            UniqueContext(() =>
+            if (ProfilePlus.SupportsAnsi)
             {
-                if (ProfilePlus.SupportsAnsi)
+                if (value)
                 {
-                    if (value)
-                    {
-                        Console.Write(AnsiSequences.SM());
-                    }
-                    else
-                    {
-                        Console.Write(AnsiSequences.RM());
-                    }
+                    Console.Write(AnsiSequences.SM());
                 }
                 else
                 {
-                    Console.CursorVisible = value;
+                    Console.Write(AnsiSequences.RM());
                 }
-            });
+            }
+            else
+            {
+                Console.CursorVisible = value;
+            }
         }
 
         public int CursorLeft => Console.CursorLeft;
@@ -270,7 +213,7 @@ namespace PromptPlusLibrary.Drivers
         public Encoding InputEncoding
         {
             get => Console.InputEncoding;
-            set => UniqueContext(() => Console.InputEncoding = value);
+            set => Console.InputEncoding = value;
         }
 
         public TextReader In => Console.In;
@@ -282,7 +225,7 @@ namespace PromptPlusLibrary.Drivers
         public Encoding OutputEncoding
         {
             get => Console.OutputEncoding;
-            set => UniqueContext(() => Console.OutputEncoding = value);
+            set => Console.OutputEncoding = value;
         }
 
         public TextWriter Out => Console.Out;
@@ -321,8 +264,6 @@ namespace PromptPlusLibrary.Drivers
 
         public Color DefaultConsoleBackgroundColor => ProfilePlus.DefaultConsoleBackgroundColor;
 
-        public SemaphoreSlim ExclusiveContext => _exclusiveContext;
-
         public void Beep()
         {
             Console.Beep();
@@ -330,133 +271,102 @@ namespace PromptPlusLibrary.Drivers
 
         public void Clear()
         {
-            UniqueContext(() =>
+            if (ProfilePlus.SupportsAnsi)
             {
-                if (ProfilePlus.SupportsAnsi)
-                {
-                    Console.Write(AnsiSequences.ED(2));
-                    Console.Write(AnsiSequences.ED(3));
-                }
-                else
-                {
-                    Console.Clear();
-                }
-                SetCursorPosition(ProfilePlus.PadLeft, 0);
-            });
+                Console.Write(AnsiSequences.ED(2));
+                Console.Write(AnsiSequences.ED(3));
+            }
+            else
+            {
+                Console.Clear();
+            }
+            SetCursorPosition(ProfilePlus.PadLeft, 0);
         }
 
         public (int Left, int Top) GetCursorPosition()
         {
-            (int Left, int Top) result = (0, 0);
-            UniqueContext(() =>
-            {
-                result = (CursorLeft, CursorTop);
-            });
-            return result;
+            return (CursorLeft, CursorTop);
         }
 
         public virtual void HideCursor()
         {
-            UniqueContext(() => ShowCusor(false));
+            ShowCusor(false);
         }
 
         public bool OnBuffer(TargetScreen target, Action<CancellationToken> value, ConsoleColor? defaultforecolor = null, ConsoleColor? defaultbackcolor = null, CancellationToken? cancellationToken = null)
         {
-            bool result = false;
-            UniqueContext(() =>
+            // Switch to TargetBuffer screen
+            if (_currentBuffer == target)
             {
-                // Switch to TargetBuffer screen
-                if (_currentBuffer == target)
-                {
-                    value.Invoke(cancellationToken ?? CancellationToken.None);
-                    result = true;
-                    return;
-                }
-                if (!IsEnabledSwapScreen)
-                {
-                    result = false;
-                    return;
-                }
+                value.Invoke(cancellationToken ?? CancellationToken.None);
+                return true;
+            }
+            if (!IsEnabledSwapScreen)
+            {
+                return false;
+            }
 
-                Color curforecolor = ForegroundColor;
-                Color curbackcolor = BackgroundColor;
-                TargetScreen curtarget = _currentBuffer;
+            Color curforecolor = ForegroundColor;
+            Color curbackcolor = BackgroundColor;
+            TargetScreen curtarget = _currentBuffer;
 
-                try
-                {
-                    ForegroundColor = defaultforecolor ?? curforecolor;
-                    BackgroundColor = defaultbackcolor ?? curbackcolor;
+            try
+            {
+                ForegroundColor = defaultforecolor ?? curforecolor;
+                BackgroundColor = defaultbackcolor ?? curbackcolor;
 
-                    switch (target)
-                    {
-                        case TargetScreen.Primary:
-                            Console.Write("\u001b[?1049l");
-                            break;
-                        case TargetScreen.Secondary:
-                            Console.Write("\u001b[?1049h");
-                            break;
-                    }
-                    _currentBuffer = target;
-                    Clear();
-                    value.Invoke(cancellationToken ?? CancellationToken.None);
-                }
-                finally
+                switch (target)
                 {
-                    // Switch back to primary screen
-                    switch (_currentBuffer)
-                    {
-                        case TargetScreen.Primary:
-                            Console.Write("\u001b[?1049h");
-                            break;
-                        case TargetScreen.Secondary:
-                            Console.Write("\u001b[?1049l");
-                            break;
-                    }
-                    ForegroundColor = curforecolor;
-                    BackgroundColor = curbackcolor;
-                    _currentBuffer = curtarget;
+                    case TargetScreen.Primary:
+                        Console.Write("\u001b[?1049l");
+                        break;
+                    case TargetScreen.Secondary:
+                        Console.Write("\u001b[?1049h");
+                        break;
                 }
-                result = true;
-            });
-            return result;
+                _currentBuffer = target;
+                Clear();
+                value.Invoke(cancellationToken ?? CancellationToken.None);
+            }
+            finally
+            {
+                // Switch back to primary screen
+                switch (_currentBuffer)
+                {
+                    case TargetScreen.Primary:
+                        Console.Write("\u001b[?1049h");
+                        break;
+                    case TargetScreen.Secondary:
+                        Console.Write("\u001b[?1049l");
+                        break;
+                }
+                ForegroundColor = curforecolor;
+                BackgroundColor = curbackcolor;
+                _currentBuffer = curtarget;
+            }
+            return true;
         }
 
         public ConsoleKeyInfo ReadKey(bool intercept = false)
         {
-            ConsoleKeyInfo result = new();
-            UniqueContext(() =>
-            {
-                result = Console.ReadKey(intercept);
-            });
-            return result;
+            return Console.ReadKey(intercept);
         }
 
         public string? ReadLine()
         {
-            string? result = null;
-            UniqueContext(() =>
-            {
-                result = Console.ReadLine();
-            });
-            return result;
+            return Console.ReadLine();
         }
 
         public void DefaultColors(Color foreground, Color background)
         {
-            UniqueContext(() =>
-            {
-                ForegroundColor = foreground;
-                BackgroundColor = background;
-            });
+            ForegroundColor = foreground;
+            BackgroundColor = background;
         }
 
         public void ResetColor()
         {
-            UniqueContext(() =>
-            {
-                ForegroundColor = ProfilePlus.DefaultConsoleForegroundColor;
-                BackgroundColor = ProfilePlus.DefaultConsoleBackgroundColor;
-            });
+            ForegroundColor = ProfilePlus.DefaultConsoleForegroundColor;
+            BackgroundColor = ProfilePlus.DefaultConsoleBackgroundColor;
         }
         public (int Left, int Top, int scrolled) PreviewCursorPosition(int left, int top)
         {
@@ -482,73 +392,51 @@ namespace PromptPlusLibrary.Drivers
 
         public void SetCursorPosition(int left, int top)
         {
-            UniqueContext(() =>
-            {
-                Console.SetCursorPosition(left, top);
-            });
+            Console.SetCursorPosition(left, top);
         }
 
         public void SetError(TextWriter value)
         {
-            UniqueContext(() =>
-            {
-                Console.SetError(value);
-            });
+            Console.SetError(value);
         }
 
         public void SetIn(TextReader value)
         {
-            UniqueContext(() =>
-            {
-                Console.SetIn(value);
-            });
+            Console.SetIn(value);
         }
 
         public void SetOut(TextWriter value)
         {
-            UniqueContext(() =>
-            {
-                Console.SetOut(value);
-            });
+            Console.SetOut(value);
         }
 
         public virtual void ShowCursor()
         {
-            UniqueContext(() =>
-            {
-                ShowCusor(true);
-            });
+            ShowCusor(true);
         }
 
         public bool SwapBuffer(TargetScreen value)
         {
-            bool result = false;
-            UniqueContext(() =>
+            if (_currentBuffer == value)
             {
-                if (_currentBuffer == value)
-                {
-                    result = true;
-                    return;
-                }
-                if (!IsEnabledSwapScreen)
-                {
-                    result = false;
-                    return;
-                }
-                // Switch to TargetBuffer screen
-                switch (value)
-                {
-                    case TargetScreen.Primary:
-                        Console.Write("\u001b[?1049l");
-                        break;
-                    case TargetScreen.Secondary:
-                        Console.Write("\u001b[?1049h");
-                        break;
-                }
-                _currentBuffer = value;
-                result = true;
-            });
-            return result;
+                return true;
+            }
+            if (!IsEnabledSwapScreen)
+            {
+                return false;
+            }
+            // Switch to TargetBuffer screen
+            switch (value)
+            {
+                case TargetScreen.Primary:
+                    Console.Write("\u001b[?1049l");
+                    break;
+                case TargetScreen.Secondary:
+                    Console.Write("\u001b[?1049h");
+                    break;
+            }
+            _currentBuffer = value;
+            return true;
         }
 
         public void Write(char buffer, Style? style = null, bool clearrestofline = false)
@@ -558,52 +446,36 @@ namespace PromptPlusLibrary.Drivers
 
         public void Write(char[] buffer, Style? style = null, bool clearrestofline = false)
         {
-            UniqueContext(() =>
+            if (buffer is null)
             {
-                if (buffer is null)
-                {
-                    return;
-                }
-                string value = new(buffer);
-                InternalWrite(value, style, clearrestofline);
-            });
+                return;
+            }
+            string value = new(buffer);
+            InternalWrite(value, style, clearrestofline);
         }
 
 
         public (int Left, int Top) RawWriteLine(string value, Style? style = null, bool clearrestofline = true)
         {
-            (int Left, int Top) result = (0, 0);
-            UniqueContext(() =>
+            InternalWrite(value, style, clearrestofline);
+            Console.Write(Environment.NewLine);
+            if (ProfilePlus.PadLeft > 0)
             {
-                InternalWrite(value, style, clearrestofline);
-                Console.Write(Environment.NewLine);
-                if (ProfilePlus.PadLeft > 0)
-                {
-                    SetCursorPosition(ProfilePlus.PadLeft, Console.CursorTop);
-                }
-                result = GetCursorPosition();
-            });
-            return result;
+                SetCursorPosition(ProfilePlus.PadLeft, Console.CursorTop);
+            }
+            return GetCursorPosition();
         }
 
         public (int Left, int Top) RawWrite(string value, Style? style = null, bool clearrestofline = false)
         {
-            (int Left, int Top) result = (0, 0);
-            UniqueContext(() =>
-            {
-                InternalWrite(value, style, clearrestofline);
-                result = GetCursorPosition();
-            });
-            return result;
+            InternalWrite(value, style, clearrestofline);
+            return GetCursorPosition();
         }
 
         public void Write(string value, Style? style = null, bool clearrestofline = false)
         {
             style ??= Style.Default();
-            UniqueContext(() =>
-            {
-                InternalWriteSegments(value.ToSegment(style.Value, this), style.Value.OverflowStrategy, clearrestofline);
-            });
+            InternalWriteSegments(value.ToSegment(style.Value, this), style.Value.OverflowStrategy, clearrestofline);
         }
 
         public void WriteLine(char buffer, Style? style = null, bool clearrestofline = true)
@@ -613,30 +485,24 @@ namespace PromptPlusLibrary.Drivers
 
         public void WriteLine(char[] buffer, Style? style = null, bool clearrestofline = true)
         {
-            UniqueContext(() =>
+            string value = new(buffer);
+            InternalWrite(value, style, clearrestofline);
+            Console.Write(Environment.NewLine);
+            if (ProfilePlus.PadLeft > 0)
             {
-                string value = new(buffer);
-                InternalWrite(value, style, clearrestofline);
-                Console.Write(Environment.NewLine);
-                if (ProfilePlus.PadLeft > 0)
-                {
-                    SetCursorPosition(ProfilePlus.PadLeft, Console.CursorTop);
-                }
-            });
+                SetCursorPosition(ProfilePlus.PadLeft, Console.CursorTop);
+            }
         }
 
         public void WriteLine(string value, Style? style = null, bool clearrestofline = true)
         {
             style ??= Style.Default();
-            UniqueContext(() =>
+            InternalWriteSegments(value.ToSegment(style.Value, this), style.Value.OverflowStrategy, clearrestofline);
+            Console.Write(Environment.NewLine);
+            if (ProfilePlus.PadLeft > 0)
             {
-                InternalWriteSegments(value.ToSegment(style.Value, this), style.Value.OverflowStrategy, clearrestofline);
-                Console.Write(Environment.NewLine);
-                if (ProfilePlus.PadLeft > 0)
-                {
-                    SetCursorPosition(ProfilePlus.PadLeft, Console.CursorTop);
-                }
-            });
+                SetCursorPosition(ProfilePlus.PadLeft, Console.CursorTop);
+            }
         }
 
         private void InternalWrite(string value, Style? style = null, bool clearrestofline = true)
@@ -878,7 +744,7 @@ namespace PromptPlusLibrary.Drivers
                 _CheckBackGroundCtrlC.Dispose();
                 _cancelKeyPressEvent = null;
                 _tokenCancelPress?.Dispose();
-                _exclusiveContext?.Dispose();
+                //_exclusiveContext?.Dispose();
                 _exclusiveCAbortCtrlC?.Dispose();
                 GC.SuppressFinalize(this);
             }

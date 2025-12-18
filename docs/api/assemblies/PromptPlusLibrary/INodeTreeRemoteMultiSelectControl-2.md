@@ -27,7 +27,7 @@ public interface INodeTreeRemoteMultiSelectControl<T1, T2>
 | [ExtraInfo](INodeTreeRemoteMultiSelectControl-2/ExtraInfo.md)(…) | Configures the control to provide show additional information for node. |
 | [HideCount](INodeTreeRemoteMultiSelectControl-2/HideCount.md)(…) | Controls the visibility of the children count display. |
 | [HideCountSelected](INodeTreeRemoteMultiSelectControl-2/HideCountSelected.md)(…) | Controls the visibility of the selected items count tip. |
-| [MaxWidth](INodeTreeRemoteMultiSelectControl-2/MaxWidth.md)(…) | Sets the maximum width for displaying selected items. |
+| [MaxWidth](INodeTreeRemoteMultiSelectControl-2/MaxWidth.md)(…) | Sets the maximum width for displaying selected items.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
 | [Options](INodeTreeRemoteMultiSelectControl-2/Options.md)(…) | Applies custom options to configure the control's behavior. |
 | [PageSize](INodeTreeRemoteMultiSelectControl-2/PageSize.md)(…) | Sets the maximum number of items displayed per page in the control. |
 | [PredicateChildAllowed](INodeTreeRemoteMultiSelectControl-2/PredicateChildAllowed.md)(…) | Sets a predicate that determines whether a node of type T1 is allowed to own other nodes. This expression is required for operation. |

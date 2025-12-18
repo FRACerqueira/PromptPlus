@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace PromptPlusLibrary.Controls
 {
@@ -51,6 +52,18 @@ namespace PromptPlusLibrary.Controls
             }
             _items.Add(ItemHistory.CreateItemHistory(value, timeout ?? FileHistory.DefaultHistoryTimeout));
             return this;
+        }
+
+        public IList<T> ReadHistory<T>()
+        {
+            var aux = FileHistory.LoadHistory(_filename);
+            var result = new List<T>();
+            foreach (var item in aux)
+            {
+                var itemresut = JsonSerializer.Deserialize<T>(item.History!);
+                result.Add(itemresut!);
+            }
+            return result;
         }
 
         /// <summary>

@@ -13,10 +13,6 @@ namespace ConsoleFeaturesSamples
     {
         static void Main()
         {
-            //Disable Exclusive Context - For demonstration purposes only. Default value = false
-            //In multithreaded scenarios, the rendering of controls and commands may exhibit text sequence errors when the property is set to false.
-            PromptPlus.Console.EnabledExclusiveContext = true;
-
             PromptPlus.Console.ResetColor();
             PromptPlus.Console.Clear();
 
@@ -68,16 +64,6 @@ namespace ConsoleFeaturesSamples
                 PromptPlus.Console.WriteLine("[RED]Test Output Error[/]");
             }
             PromptPlus.Console.WriteLine("");
-
-            using (PromptPlus.Console.ExclusiveContext())
-            {
-                PromptPlus.Console.WriteLine("Test", new Style(ConsoleColor.Red, ConsoleColor.White, Overflow.None));
-                PromptPlus.Console.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
-                PromptPlus.Console.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
-                PromptPlus.Console.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
-                PromptPlus.Console.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
-                PromptPlus.Console.WriteLine("Test", new Style(Color.FromHtml("#ffffff"), Color.Red, Overflow.None));
-            }
 
             PromptPlus.Widgets.DoubleDash("Sample write with Join");
             PromptPlus.Console.Join()

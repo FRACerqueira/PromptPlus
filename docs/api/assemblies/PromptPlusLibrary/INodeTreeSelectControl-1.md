@@ -26,6 +26,7 @@ public interface INodeTreeSelectControl<T>
 | [ExtraInfo](INodeTreeSelectControl-1/ExtraInfo.md)(…) | Configures the control to provide show additional information for node. |
 | [HideCount](INodeTreeSelectControl-1/HideCount.md)(…) | Controls the visibility of child node counts in the tree display. When enabled, hides the count indicator next to parent nodes. |
 | [Interaction](INodeTreeSelectControl-1/Interaction.md)(…) |  |
+| [MaxWidth](INodeTreeSelectControl-1/MaxWidth.md)(…) | Sets the maximum display width for selected item in characters. |
 | [Options](INodeTreeSelectControl-1/Options.md)(…) | Applies custom options to the control to modify its behavior and appearance. |
 | [PageSize](INodeTreeSelectControl-1/PageSize.md)(…) | Sets the maximum number of items to display per page in the tree view. Controls the pagination of large tree structures. |
 | [PredicateDisabled](INodeTreeSelectControl-1/PredicateDisabled.md)(…) | Sets a validation predicate for determining if an item should be disabled. Disabled items cannot be selected or interacted with. |

@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the width of the ProgressBar. Default value is 80. Must be &gt;= 10.
+#### Sets the width of the ProgressBar. Default value is 50. Must be &gt;= 10.
 
 ```csharp
 public IProgressBarControl Width(byte value)

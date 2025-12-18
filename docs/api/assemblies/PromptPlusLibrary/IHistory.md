@@ -15,6 +15,7 @@ public interface IHistory
 | name | description |
 | --- | --- |
 | [AddHistory](IHistory/AddHistory.md)(…) | Adds a value to the history. |
+| [ReadHistory&lt;T&gt;](IHistory/ReadHistory.md)() | Reads all history entries, deserialized to the specified type. |
 | [Remove](IHistory/Remove.md)() | Removes the persisted history (e.g. deletes the backing store or clears all entries). |
 | [Save](IHistory/Save.md)() | Persists the in‑memory history set to durable storage. |
 

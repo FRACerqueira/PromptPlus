@@ -22,6 +22,7 @@ public enum HideChart
 | Ordering | `0x8` | Hides ordering options. |
 | Layout | `0x10` | Hides layout options. |
 | ChartbarAtFinish | `0x20` | Hides Chartbar at finish |
+| ChartBar | `0x40` | Hides hartbar (only legends) |
 
 ### See Also
 

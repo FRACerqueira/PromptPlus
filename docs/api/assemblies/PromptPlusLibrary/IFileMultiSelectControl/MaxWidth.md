@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum display width for selected items in characters.
+#### Sets the maximum display width for selected items in characters.Default value is [`MaxWidth`](../IPromptPlusConfig/MaxWidth.md).
 
 ```csharp
 public IFileMultiSelectControl MaxWidth(byte maxWidth)
@@ -12,7 +12,7 @@ public IFileMultiSelectControl MaxWidth(byte maxWidth)
 
 | parameter | description |
 | --- | --- |
-| maxWidth | The maximum width in characters (minimum 10). |
+| maxWidth | The maximum width in characters (minimum 1). |
 
 ### Return Value
 
@@ -22,7 +22,7 @@ The current [`IFileMultiSelectControl`](../IFileMultiSelectControl.md) instance 
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown if *maxWidth* is less than 10. |
+| ArgumentOutOfRangeException | Thrown if *maxWidth* is less than 1. |
 
 ### See Also
 

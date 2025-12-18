@@ -483,4 +483,13 @@
   <data name="LoadMore" xml:space="preserve">
     <value>Enter:Load more items.</value>
   </data>
+  <data name="FilterOnlySelected" xml:space="preserve">
+    <value>Only Selected</value>
+  </data>
+  <data name="TooltipFilterOnlySelected" xml:space="preserve">
+    <value>{0}:Toggle filter only selected</value>
+  </data>
+  <data name="TooltipSelectAllGroups" xml:space="preserve">
+    <value>{0}:Toggle Mark All Groups</value>
+  </data>
 </root>

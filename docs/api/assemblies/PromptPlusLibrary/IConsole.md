@@ -20,7 +20,6 @@ public interface IConsole : IProfileDrive
 | [CursorLeft](IConsole/CursorLeft.md) { get; } | Gets the column (left) position of the cursor within the buffer. |
 | [CursorTop](IConsole/CursorTop.md) { get; } | Gets the row (top) position of the cursor within the buffer. |
 | [CursorVisible](IConsole/CursorVisible.md) { get; set; } | Gets or sets a value indicating whether the cursor is visible. |
-| [EnabledExclusiveContext](IConsole/EnabledExclusiveContext.md) { get; set; } | Gets a value indicating Enabled Exclusive context for controls/wdgets and commands console. Default value is `false`. |
 | [Error](IConsole/Error.md) { get; } | Gets the standard error writer. |
 | [ForegroundColor](IConsole/ForegroundColor.md) { get; set; } | Gets or sets the current foreground [`Color`](./Color.md). |
 | [In](IConsole/In.md) { get; } | Gets the standard input reader. |

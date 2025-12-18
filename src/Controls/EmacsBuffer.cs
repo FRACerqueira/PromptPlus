@@ -269,6 +269,12 @@ namespace PromptPlusLibrary.Controls
             return this;
         }
 
+        public void ToHome()
+        {
+            ToStart();
+            EnsureVirtualLimit();
+        }
+
         public string ToBackward()
         {
             return !IsVirtualBuffer ? _inputBuffer.ToString(0, Position) : _inputBuffer.ToString(_startBuffer, Position - _startBuffer);

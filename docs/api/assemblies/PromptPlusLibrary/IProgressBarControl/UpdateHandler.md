@@ -7,12 +7,14 @@
 #### Sets a handler to update the ProgressBar values dynamically.
 
 ```csharp
-public IProgressBarControl UpdateHandler(Action<HandlerProgressBar, CancellationToken> value)
+public IProgressBarControl UpdateHandler(Action<HandlerProgressBar, CancellationToken> value, 
+    KeyValuePair<string, object?>[]? paramcontext = null)
 ```
 
 | parameter | description |
 | --- | --- |
 | value | The handler to update values. Cannot be `null`. |
+| paramcontext | The context parameters to pass to the handler. |
 
 ### Return Value
 

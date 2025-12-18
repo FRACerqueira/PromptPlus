@@ -49,7 +49,7 @@ namespace PromptPlusLibrary
         IRemoteMultiSelectControl<T1, T2> HideCountSelected(bool value = true);
 
         /// <summary>
-        /// Sets the maximum display width for selected items text. Default is 30 characters.
+        /// Sets the maximum display width for selected items text. Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
         /// </summary>
         /// <param name="maxWidth">The maximum width in characters.</param>
         /// <returns>The current <see cref="IRemoteMultiSelectControl{T1,T2}"/> instance for chaining.</returns>

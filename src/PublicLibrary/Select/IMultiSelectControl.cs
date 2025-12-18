@@ -58,6 +58,14 @@ namespace PromptPlusLibrary
         IMultiSelectControl<T> Default(IEnumerable<T> values, bool useDefaultHistory = true);
 
         /// <summary>
+        /// Creates a multi-select control with the default history behavior enabled or disabled.
+        /// </summary>
+        /// <param name="useDefaultHistory">Specifies whether the control should use its default history functionality. Set to <see langword="true"/> to
+        /// enable default history; otherwise, set to <see langword="false"/>.</param>
+        /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for method chaining.</returns>
+        IMultiSelectControl<T> DefaultHistory(bool useDefaultHistory = true) => Default([], useDefaultHistory);
+
+        /// <summary>
         /// Dynamically changes the control description based on the current item value.
         /// </summary>
         /// <param name="value">A function that takes an item and returns its description text.</param>
@@ -172,11 +180,11 @@ namespace PromptPlusLibrary
         IMultiSelectControl<T> HideCountSelected(bool value = true);
 
         /// <summary>
-        /// Sets the maximum display width for selected items text. Default is 30 characters.
+        /// Sets the maximum display width for selected items text.Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
         /// </summary>
         /// <param name="maxWidth">The maximum width in characters.</param>
         /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for method chaining.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="maxWidth"/> is less than 10.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="maxWidth"/> is less than 1.</exception>
         IMultiSelectControl<T> MaxWidth(byte maxWidth);
 
         /// <summary>

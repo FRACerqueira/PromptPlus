@@ -24,7 +24,19 @@ namespace ConsoleKeyPressControlSamples
 
             var result = PromptPlus.Controls.KeyPress("Press any key")
                 .Run();
+
             PromptPlus.Console.WriteLine($"IsAborted : {result.IsAborted}, Value: {(result.Content.HasValue? result.Content.Value.Key.ToString():"")}");
+            PromptPlus.Console.WriteLine("");
+
+
+            PromptPlus.Widgets.DoubleDash("Sample KeyPress with timeout", extraLines: 1);
+
+            result = PromptPlus.Controls.KeyPress("Press any key")
+                .Timeout(TimeSpan.FromSeconds(5),ConsoleKey.Enter)
+                .ShowCountDown(true)
+                .Run();
+
+            PromptPlus.Console.WriteLine($"IsAborted : {result.IsAborted}, Value: {(result.Content.HasValue ? result.Content.Value.Key.ToString() : "")}");
             PromptPlus.Console.WriteLine("");
 
             PromptPlus.Widgets.DoubleDash("Sample KeyPress with spinner", extraLines: 1);

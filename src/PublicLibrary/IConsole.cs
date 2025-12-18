@@ -92,12 +92,6 @@ namespace PromptPlusLibrary
         AfterCancelKeyPress BehaviorAfterCancelKeyPress { get; }
 
         /// <summary>
-        /// Gets a value indicating Enabled Exclusive context for controls/wdgets and commands console. Default value is <c>false</c>.
-        /// </summary>
-        bool EnabledExclusiveContext { get; set; }
-
-
-        /// <summary>
         /// Gets a value indicating whether the operation was aborted by the user (Ctrl+C / Ctrl+Break).
         /// </summary>
         bool UserPressKeyAborted { get; }

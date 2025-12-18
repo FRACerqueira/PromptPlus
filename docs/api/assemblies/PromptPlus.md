@@ -25,6 +25,7 @@
 | enum [ComponentStyles](./PromptPlusLibrary/ComponentStyles.md) | Represents the different styles that can be applied to components in the PromptPlus library. |
 | enum [DashOptions](./PromptPlusLibrary/DashOptions.md) | Represents a boder when write line with SingleDash/DoubleDash. |
 | enum [DateTimePart](./PromptPlusLibrary/DateTimePart.md) | Represents date parts |
+| class [ExtraInfoProcess](./PromptPlusLibrary/ExtraInfoProcess.md) | Provides functionality to update the extra information associated with a state process. |
 | enum [FileStyles](./PromptPlusLibrary/FileStyles.md) | Represents The Style File Control |
 | enum [FilterMode](./PromptPlusLibrary/FilterMode.md) | Filter strategy for filter items in colletion |
 | class [HandlerProgressBar](./PromptPlusLibrary/HandlerProgressBar.md) | Represents a progress bar handler. |
@@ -75,6 +76,7 @@
 | interface [ITableSelectControl&lt;T&gt;](./PromptPlusLibrary/ITableSelectControl-1.md) | Represents the interface with all Methods of the Table Select Control |
 | interface [ITableWidget&lt;T&gt;](./PromptPlusLibrary/ITableWidget-1.md) | Represents the interface with all Methods of the Table Widget. |
 | class [ItemFile](./PromptPlusLibrary/ItemFile.md) | Represents a file or folder selected |
+| struct [ItemHistory](./PromptPlusLibrary/ItemHistory.md) | Represents the history of an item with a timeout. |
 | interface [IWaitProcessControl](./PromptPlusLibrary/IWaitProcessControl.md) | Provides functionality for configuring and interacting with a Wait Process control. |
 | interface [IWaitTimerControl](./PromptPlusLibrary/IWaitTimerControl.md) | Provides functionality for configuring and interacting with a WaitTimer control. |
 | interface [IWidgets](./PromptPlusLibrary/IWidgets.md) | Provides factory methods for creating and writing PromptPlus visual widgets (switch, slider, table, chart bar, calendar, banner and dash lines). |

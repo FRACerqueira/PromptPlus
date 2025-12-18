@@ -58,7 +58,7 @@ namespace PromptPlusLibrary
 
         /// <summary>
         /// Sets the width of the chart bar.
-        /// Default value is 80. The value must be greater than or equal to 10.
+        /// Default value is 50. The value must be greater than or equal to 10.
         /// </summary>
         /// <param name="value">The width to set.</param>
         /// <returns>The current <see cref="IChartBarControl"/> instance.</returns>
@@ -86,6 +86,27 @@ namespace PromptPlusLibrary
         /// Colors are automatically assigned in descending sequence from 15 to 0 and then back to 15 if not explicitly specified.
         /// </remarks>
         IChartBarControl AddItem(string label, double value, Color? colorBar = null, string? id = null);
+
+        /// <summary>
+        /// Sets the maximum length for the label displayed on the chart bar control.Default is 20 characters.
+        /// </summary>
+        /// <param name="value">The maximum number of characters allowed for the label. Must be greater than zero.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> is less than 1.</exception>
+        /// <returns>The current <see cref="IChartBarControl"/> instance.</returns>
+        IChartBarControl MaxLengthLabel(byte value);
+
+
+        /// <summary>
+        /// Sets the maximum width for the input. Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
+        /// <remarks>
+        /// The value of <paramref name="maxWidth"/> must be less than <see cref="Width(byte)"/> otherwise,  it will be set to equal.
+        /// </remarks>
+        /// </summary>
+        /// <param name="maxWidth">The maximum width of the input in characters.</param>
+        /// <returns>The current <see cref="IChartBarControl"/> instance.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="maxWidth"/> is less than 1.</exception>
+        IChartBarControl MaxWidth(byte maxWidth);
+
 
         /// <summary>
         /// Configures dynamic description generation for chart items.

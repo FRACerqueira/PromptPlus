@@ -68,18 +68,12 @@ namespace PromptPlusLibrary.Widgets
 
         public void SingleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null, bool applycolorbackground = false)
         {
-            using (console.InternalExclusiveContext())
-            {
-                SingleDoubleDash((IConsole)console, promptConfig, false, value, dashOptions, extralines, style, applycolorbackground);
-            }
+            SingleDoubleDash((IConsole)console, promptConfig, false, value, dashOptions, extralines, style, applycolorbackground);
         }
 
         public void DoubleDash(string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null, bool applycolorbackground = false)
         {
-            using (console.InternalExclusiveContext())
-            {
-                SingleDoubleDash((IConsole)console, promptConfig, true, value, dashOptions, extralines, style, applycolorbackground);
-            }
+            SingleDoubleDash((IConsole)console, promptConfig, true, value, dashOptions, extralines, style, applycolorbackground);
         }
 
         private static void SingleDoubleDash(IConsole console, PromptConfig config, bool doubleDash, string value, DashOptions dashOptions = DashOptions.AsciiSingleBorder, int extralines = 0, Style? style = null, bool applycolorbackground = false)

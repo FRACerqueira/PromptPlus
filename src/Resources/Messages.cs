@@ -130,7 +130,14 @@ namespace PromptPlusLibrary.Resources
             NodePath = PromptPlusResources.NodePath;
             TooltipExpandAllPress = PromptPlusResources.TooltipExpandAllPress;
             LoadMore = PromptPlusResources.LoadMore;
+            FilterOnlySelected = PromptPlusResources.FilterOnlySelected;
+            TooltipFilterOnlySelected = PromptPlusResources.TooltipFilterOnlySelected;
+            TooltipSelectAllGroups = PromptPlusResources.TooltipSelectAllGroups;
         }
+
+        public static string TooltipSelectAllGroups { get; private set; } = PromptPlusResources.TooltipSelectAllGroups;
+        public static string TooltipFilterOnlySelected { get; private set; } = PromptPlusResources.TooltipFilterOnlySelected;
+        public static string FilterOnlySelected { get; private set; } = PromptPlusResources.FilterOnlySelected;
         public static string LoadMore { get; private set; } = PromptPlusResources.LoadMore;
         public static string TooltipExpandAllPress { get; private set; } = PromptPlusResources.TooltipExpandAllPress;
         public static string NodePath { get; private set; } = PromptPlusResources.NodePath;

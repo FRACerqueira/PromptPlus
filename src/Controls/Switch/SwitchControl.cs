@@ -251,7 +251,9 @@ namespace PromptPlusLibrary.Controls.Switch
         private void WriteAnswer(BufferScreen screenBuffer)
         {
             string answer = ValueToString(_currentValue);
+            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft), _optStyles[SwitchStyles.Answer]);
             screenBuffer.Write(answer, _optStyles[SwitchStyles.Answer]);
+            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight), _optStyles[SwitchStyles.Answer]);
             screenBuffer.SavePromptCursor();
             screenBuffer.WriteLine("", _optStyles[SwitchStyles.Answer]);
         }

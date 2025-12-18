@@ -19,7 +19,7 @@ public interface IWaitProcessControl
 | [Finish](IWaitProcessControl/Finish.md)(…) | Defines the finish answer to display when the Wait process is completed. |
 | [Interaction&lt;T&gt;](IWaitProcessControl/Interaction.md)(…) | Performs an interaction with each item in the collection. |
 | [IntervalUpdate](IWaitProcessControl/IntervalUpdate.md)(…) | Defines the interval to update task status and spinner. Default is 100ms. |
-| [MaxDegreeProcess](IWaitProcessControl/MaxDegreeProcess.md)(…) | Defines the maximum number of concurrent tasks enabled. The default value is the smaller number between the number of processors and 5. |
+| [MaxDegreeProcess](IWaitProcessControl/MaxDegreeProcess.md)(…) | Defines the maximum number of concurrent tasks enabled. The default value is the smaller number between the number of processors and 10. |
 | [Options](IWaitProcessControl/Options.md)(…) | Applies custom options to the control. |
 | [Run](IWaitProcessControl/Run.md)(…) | Runs the Wait process control and returns the result. |
 | [ShowElapsedTime](IWaitProcessControl/ShowElapsedTime.md)(…) | Defines whether to show the elapsed time. Default is `true`. |

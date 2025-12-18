@@ -313,6 +313,15 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Only Selected.
+        /// </summary>
+        internal static string FilterOnlySelected {
+            get {
+                return ResourceManager.GetString("FilterOnlySelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group.
         /// </summary>
         internal static string Group {
@@ -970,6 +979,15 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}:Toggle filter only selected.
+        /// </summary>
+        internal static string TooltipFilterOnlySelected {
+            get {
+                return ResourceManager.GetString("TooltipFilterOnlySelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ctrl+Del:Clear historic.
         /// </summary>
         internal static string TooltipHistoryClear {
@@ -1038,6 +1056,15 @@ namespace PromptPlusLibrary.Resources {
         internal static string TooltipSelectAll {
             get {
                 return ResourceManager.GetString("TooltipSelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}:Toggle Mark All Groups.
+        /// </summary>
+        internal static string TooltipSelectAllGroups {
+            get {
+                return ResourceManager.GetString("TooltipSelectAllGroups", resourceCulture);
             }
         }
         

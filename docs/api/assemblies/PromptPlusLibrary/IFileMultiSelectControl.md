@@ -21,7 +21,7 @@ public interface IFileMultiSelectControl
 | [HideFilesBySize](IFileMultiSelectControl/HideFilesBySize.md)(…) | Filters files based on their size in bytes. |
 | [HideSizeInfo](IFileMultiSelectControl/HideSizeInfo.md)(…) | Controls the visibility of size information for files and folders. Default is false (shows sizes). |
 | [HideZeroEntries](IFileMultiSelectControl/HideZeroEntries.md)(…) | Hide folder with Zero Entries in File MultiSelect Control. Default is false |
-| [MaxWidth](IFileMultiSelectControl/MaxWidth.md)(…) | Sets the maximum display width for selected items in characters. |
+| [MaxWidth](IFileMultiSelectControl/MaxWidth.md)(…) | Sets the maximum display width for selected items in characters.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
 | [OnlyFolders](IFileMultiSelectControl/OnlyFolders.md)(…) | Configures the control to display and select only folders. Default is false (shows both files and folders). |
 | [Options](IFileMultiSelectControl/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](IFileMultiSelectControl/PageSize.md)(…) | Sets the maximum number of items to view per page. Default value is 10. |

@@ -19,35 +19,26 @@ namespace PromptPlusLibrary.Drivers
             }
             set
             {
-                UniqueContext(() =>
-                {
-                    _cursorvisible = value;
-                });
+                _cursorvisible = value;
             }
         }
 
         public override void HideCursor()
         {
-            UniqueContext(() =>
+            _cursorvisible = false;
+            if (ProfilePlus.SupportsAnsi)
             {
-                _cursorvisible = false;
-                if (ProfilePlus.SupportsAnsi)
-                {
-                    Console.Write("\x1b[?25l");
-                }
-            });
+                Console.Write("\x1b[?25l");
+            }
         }
 
         public override void ShowCursor()
         {
-            UniqueContext(() =>
+            _cursorvisible = true;
+            if (ProfilePlus.SupportsAnsi)
             {
-                _cursorvisible = true;
-                if (ProfilePlus.SupportsAnsi)
-                {
-                    Console.Write("\x1b[?25h");
-                }
-            });
+                Console.Write("\x1b[?25h");
+            }
         }
     }
 }

@@ -4,6 +4,7 @@
 // ***************************************************************************************
 
 using System;
+using System.Collections.Generic;
 
 namespace PromptPlusLibrary
 {
@@ -22,6 +23,17 @@ namespace PromptPlusLibrary
         /// </param>
         /// <returns>The same <see cref="IHistory"/> instance for fluent chaining.</returns>
         IHistory AddHistory(string value, TimeSpan? timeout = null);
+
+        /// <summary>
+        /// Reads all history entries, deserialized to the specified type.
+        /// </summary>
+        /// <typeparam name="T">
+        /// The type to deserialize the history entries into.
+        /// </typeparam>
+        /// <returns>
+        /// A list of deserialized history entries.
+        /// </returns>
+        IList<T> ReadHistory<T>();
 
         /// <summary>
         /// Persists the in‑memory history set to durable storage.

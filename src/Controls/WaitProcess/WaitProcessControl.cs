@@ -29,7 +29,7 @@ namespace PromptPlusLibrary.Controls.WaitProcess
         private string _tooltipModeInput = string.Empty;
         private string? _currentspinnerFrame;
         private bool _hasupdateTaks;
-        private byte _maxDegreeProcess;
+        private byte _maxDegreeProcess = byte.MaxValue;
         private Timer? _timer;
         private CancellationTokenSource? _cancellationTokenSource;
         private DateTime _dateTimeref;
@@ -37,9 +37,11 @@ namespace PromptPlusLibrary.Controls.WaitProcess
         private bool _isCompletedTaskRuning;
         private int _maxlabel;
         private bool _disposed;
+        private bool _isUpdateTask;
+
         private readonly struct Job
         {
-            public Action<object?, CancellationToken> ActionJob { get; init; }
+            public Action<object?, ExtraInfoProcess, CancellationToken> ActionJob { get; init; }
             public object? Paramjob { get; init; }
             public int IndexTask { get; init; }
         }
@@ -103,14 +105,18 @@ namespace PromptPlusLibrary.Controls.WaitProcess
 
         public IWaitProcessControl MaxDegreeProcess(byte value)
         {
-            if (value < 1 || value > 5)
+            if (value < 1)
             {
-                throw new ArgumentOutOfRangeException(nameof(value), "MaxDegreeProcess must be greater than 0 and less or equal than 5.");
+                _maxDegreeProcess = byte.MaxValue;
             }
             _maxDegreeProcess = value;
             if (_maxDegreeProcess > Environment.ProcessorCount)
             {
                 _maxDegreeProcess = (byte)Environment.ProcessorCount;
+            }
+            if (_maxDegreeProcess > 10)
+            {
+                _maxDegreeProcess = 10;
             }
             return this;
         }
@@ -127,7 +133,7 @@ namespace PromptPlusLibrary.Controls.WaitProcess
             return this;
         }
 
-        public IWaitProcessControl AddTask(TaskMode mode, string id, Action<object?, CancellationToken> process, string? label = null, object? parameter = null)
+        public IWaitProcessControl AddTask(TaskMode mode, string id, Action<object?, ExtraInfoProcess, CancellationToken> process, string? label = null, object? parameter = null)
         {
             ArgumentNullException.ThrowIfNull(id);
             ArgumentNullException.ThrowIfNull(process);
@@ -151,10 +157,13 @@ namespace PromptPlusLibrary.Controls.WaitProcess
 
         public override void InitControl(CancellationToken cancellationToken)
         {
-            _maxDegreeProcess = 5;
             if (_maxDegreeProcess > Environment.ProcessorCount)
             {
                 _maxDegreeProcess = (byte)Environment.ProcessorCount;
+            }
+            if (_maxDegreeProcess > 10)
+            {
+                _maxDegreeProcess = 10;
             }
             _tooltipModeInput = string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip);
             LoadTooltipToggle();
@@ -166,9 +175,11 @@ namespace PromptPlusLibrary.Controls.WaitProcess
 
         private void LoadRunTasks()
         {
+            _isUpdateTask = true;
             _lasttask++;
             if (_lasttask > _tasks.Count - 1)
             {
+                _isUpdateTask = false;
                 return;
             }
             int start = _lasttask;
@@ -192,19 +203,28 @@ namespace PromptPlusLibrary.Controls.WaitProcess
                     Paramjob = _tasks[i].Parameter,
                     IndexTask = i
                 };
+                var hasinstance = false;
                 _currenttasks.Add(i);
                 _tasks[i].TaskRunning = Task.Run(() =>
                 {
+                    var upd = new ExtraInfoProcess(_tasks[i].State);
+                    hasinstance = true;
                     try
                     {
-                        job.ActionJob.Invoke(job.Paramjob, _cancellationTokenSource!.Token);
+
+                        job.ActionJob.Invoke(job.Paramjob, upd, _cancellationTokenSource!.Token);
                     }
                     catch (Exception ex)
                     {
                         _tasks[job.IndexTask].State.ExceptionProcess = ex;
+                        _isUpdateTask = false;
                         throw;
                     }
                 }, _cancellationTokenSource!.Token);
+                while (!hasinstance)
+                {
+                    _cancellationTokenSource.Token.WaitHandle.WaitOne(10);
+                }
                 _lasttask = i;
                 if (_tasks[i].State.RunMode == TaskMode.Sequential)
                 {
@@ -220,6 +240,7 @@ namespace PromptPlusLibrary.Controls.WaitProcess
             }
             _isCompletedTaskRuning = false;
             _dateTimeref = DateTime.Now;
+            _isUpdateTask = false;
         }
 
         public override void BufferTemplate(BufferScreen screenBuffer)
@@ -369,11 +390,15 @@ namespace PromptPlusLibrary.Controls.WaitProcess
             {
                 return;
             }
-
             bool haschange = false;
             int qtd = 0;
-            foreach (int pos in _currenttasks)
+            var localtask = _currenttasks.ToList();
+            foreach (int pos in localtask)
             {
+                if (_tasks[pos].TaskRunning is null)
+                {
+                    continue;
+                }
                 if (_tasks[pos].State.Status != _tasks[pos].TaskRunning!.Status)
                 {
                     _tasks[pos].State.ElapsedTime = DateTime.Now.Subtract(_dateTimeref);
@@ -406,7 +431,10 @@ namespace PromptPlusLibrary.Controls.WaitProcess
 
         private void UpdateElapsedTime(object? state)
         {
-            UpdateStatusTasks();
+            if (!_isUpdateTask)
+            {
+                UpdateStatusTasks();
+            }
         }
 
         private void LoadTooltipToggle()
@@ -435,8 +463,10 @@ namespace PromptPlusLibrary.Controls.WaitProcess
         private void WriteAnswer(BufferScreen screenBuffer)
         {
             string answer = string.Format(Messages.TaksRunning, _currenttasks.Count);
+            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft), _optStyles[WaitProcessStyles.Answer]);
             screenBuffer.Write(answer, _optStyles[WaitProcessStyles.Answer]);
             screenBuffer.SavePromptCursor();
+            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight), _optStyles[WaitProcessStyles.Answer]);
             if (_currentspinnerFrame != null)
             {
                 screenBuffer.Write($" {_currentspinnerFrame} ", _optStyles[WaitProcessStyles.Spinner]);
@@ -449,12 +479,7 @@ namespace PromptPlusLibrary.Controls.WaitProcess
             string desc = GeneralOptions.DescriptionValue ?? string.Empty;
             if (_changeDescription != null)
             {
-                List<StateProcess> states = [];
-                foreach (int pos in _currenttasks)
-                {
-                    states.Add(_tasks[pos].State);
-                }
-                desc = _changeDescription!.Invoke(states);
+                desc = _changeDescription!.Invoke(_tasks.Select(x => x.State));
             }
             if (!string.IsNullOrEmpty(desc))
             {
@@ -504,6 +529,10 @@ namespace PromptPlusLibrary.Controls.WaitProcess
                 if (_showElapsedTime)
                 {
                     screenBuffer.Write($" ({_tasks[pos].State.ElapsedTime:hh\\:mm\\:ss\\:ff})", _optStyles[WaitProcessStyles.ElapsedTime]);
+                }
+                if (!string.IsNullOrEmpty(_tasks[pos].State.DynamicInfo))
+                {
+                    screenBuffer.Write($" ({_tasks[pos].State.DynamicInfo})", _optStyles[WaitProcessStyles.TaggedInfo]);
                 }
                 screenBuffer.WriteLine("", styleitem);
             }

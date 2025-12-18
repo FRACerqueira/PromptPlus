@@ -27,7 +27,7 @@ public interface INodeTreeMultiSelectControl<T>
 | [HideCount](INodeTreeMultiSelectControl-1/HideCount.md)(…) | Controls the visibility of the children count display. |
 | [HideCountSelected](INodeTreeMultiSelectControl-1/HideCountSelected.md)(…) | Controls the visibility of the selected items count tip. |
 | [Interaction](INodeTreeMultiSelectControl-1/Interaction.md)(…) |  |
-| [MaxWidth](INodeTreeMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum width for displaying selected items. |
+| [MaxWidth](INodeTreeMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum width for displaying selected items.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
 | [Options](INodeTreeMultiSelectControl-1/Options.md)(…) | Applies custom options to configure the control's behavior. |
 | [PageSize](INodeTreeMultiSelectControl-1/PageSize.md)(…) | Sets the maximum number of items displayed per page in the control. |
 | [PredicateDisabled](INodeTreeMultiSelectControl-1/PredicateDisabled.md)(…) | Sets a predicate to determine if an item should be disabled. |

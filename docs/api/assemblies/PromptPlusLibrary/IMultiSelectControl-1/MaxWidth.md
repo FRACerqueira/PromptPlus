@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum display width for selected items text. Default is 30 characters.
+#### Sets the maximum display width for selected items text.Default value is [`MaxWidth`](../IPromptPlusConfig/MaxWidth.md).
 
 ```csharp
 public IMultiSelectControl MaxWidth(byte maxWidth)
@@ -22,7 +22,7 @@ The current [`IMultiSelectControl`](../IMultiSelectControl-1.md) instance for me
 
 | exception | condition |
 | --- | --- |
-| ArgumentOutOfRangeException | Thrown when *maxWidth* is less than 10. |
+| ArgumentOutOfRangeException | Thrown when *maxWidth* is less than 1. |
 
 ### See Also
 

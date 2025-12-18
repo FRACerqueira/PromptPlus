@@ -774,6 +774,7 @@ namespace PromptPlusLibrary.Controls.Slider
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
+            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft), _optStyles[SliderStyles.Answer]);
             if (_sliderLayout == SliderLayout.UpDown)
             {
                 if (!_hideslide.HasFlag(HideSlider.Range))
@@ -784,6 +785,7 @@ namespace PromptPlusLibrary.Controls.Slider
             string answer = ValueToString(_currentValue);
             screenBuffer.Write(answer, _optStyles[SliderStyles.Answer]);
             screenBuffer.SavePromptCursor();
+            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight), _optStyles[SliderStyles.Answer]);
             screenBuffer.WriteLine("", _optStyles[SliderStyles.Answer]);
         }
 

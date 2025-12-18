@@ -35,15 +35,29 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         private string _nodeseparator = "|";
         private bool _disableRecursiveCount;
         private string[] _toggerTooptips;
+        private EmacsBuffer? _answerBuffer;
+        private bool _updatePosAnswerBuffer;
+        private int _maxWidth;
 
         public NodeTreeSelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
             IsRoot = (item) => item.UniqueId == (_items.Count == 0 ? "" : _items[0].UniqueId);
             _toggerTooptips = [];
             _pageSize = ConfigPlus.PageSize;
+            _maxWidth = ConfigPlus.MaxWidth;
         }
 
         #region INodeTreeSelectControl
+
+        public INodeTreeSelectControl<T> MaxWidth(byte maxWidth)
+        {
+            if (maxWidth < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
+            }
+            _maxWidth = maxWidth;
+            return this;
+        }
 
         public INodeTreeSelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
         {
@@ -173,6 +187,10 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
         {
             _textSelector ??= (x) => x?.ToString() ?? string.Empty;
 
+            _answerBuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
+
+            _updatePosAnswerBuffer = true;
+
             InitViewNodes();
 
             _tooltipModeSelect = GetTooltipModeSelect();
@@ -205,6 +223,8 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    _updatePosAnswerBuffer = true;
+
                     ConsoleKeyInfo keyinfo = WaitKeypressDiscovery(cancellationToken);
 
                     #region default Press to Finish and tooltip
@@ -428,6 +448,12 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                             break;
                         }
                         continue;
+                    }
+                    else if (!_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    {
+                        _updatePosAnswerBuffer = false;
+                        _indexTooptip = 0;
+                        break;
                     }
                 }
             }
@@ -654,8 +680,22 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
-            screenBuffer.WriteLine(GetAnswerText(), _optStyles[NodeTreeStyles.Answer]);
+            if (_updatePosAnswerBuffer)
+            {
+                _answerBuffer!.LoadPrintable(GetAnswerText());
+                _answerBuffer.ToHome();
+            }
+            string str = _answerBuffer!.IsHideLeftBuffer
+                ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeftMost)
+                : ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft);
+            screenBuffer.Write(str, _optStyles[NodeTreeStyles.Answer]);
+            screenBuffer.Write(_answerBuffer!.ToBackward(), _optStyles[NodeTreeStyles.Answer]);
             screenBuffer.SavePromptCursor();
+            screenBuffer.Write(_answerBuffer!.ToForward(), _optStyles[NodeTreeStyles.Answer]);
+            str = _answerBuffer.IsHideRightBuffer
+                ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
+                : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
+            screenBuffer.WriteLine(str, _optStyles[NodeTreeStyles.Answer]);
         }
 
         private void WriteDescription(BufferScreen screenBuffer)

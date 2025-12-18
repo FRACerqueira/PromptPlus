@@ -184,6 +184,16 @@ namespace PromptPlusLibrary
         HotKey HotKeyTooltipToggleAll { get; set; }
 
         /// <summary>
+        /// Gets or sets the hotkey used to toggle tooltips for all groups.
+        /// </summary>
+        HotKey HotKeyTooltipToggleAllGroups { get; set; }
+
+        /// <summary>
+        /// Gets or sets the hotkey for Filter all selected items (default: F3).
+        /// </summary>
+        HotKey HotKeyTooltipFilterAllSelected { get; set; }
+
+        /// <summary>
         /// Gets or sets the hotkey for toggling full path display of files (default: F2).
         /// </summary>
         HotKey HotKeyToggleFullPath { get; set; }

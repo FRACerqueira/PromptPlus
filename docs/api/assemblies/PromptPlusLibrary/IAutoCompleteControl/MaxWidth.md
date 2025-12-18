@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the maximum width for the input.  The value of *maxWidth* must be less than [`MaxLength`](./MaxLength.md) otherwise, it will be set to equal.
+#### Sets the maximum width for the input.Default value is [`MaxWidth`](../IPromptPlusConfig/MaxWidth.md).  The value of *maxWidth* must be less than [`MaxLength`](./MaxLength.md) otherwise, it will be set to equal.
 
 ```csharp
 public IAutoCompleteControl MaxWidth(byte maxWidth)

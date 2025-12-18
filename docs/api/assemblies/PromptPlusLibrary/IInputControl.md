@@ -22,7 +22,7 @@ public interface IInputControl
 | [InputToCase](IInputControl/InputToCase.md)(…) | Transforms the input characters using the specified [`CaseOptions`](./CaseOptions.md). |
 | [IsSecret](IInputControl/IsSecret.md)(…) | Masks the input as a secret, replacing characters with a specified mask character. |
 | [MaxLength](IInputControl/MaxLength.md)(…) | Sets the maximum length for the input and optionally the maximum width. The default vaue for *maxLength* is MaxValue characters. |
-| [MaxWidth](IInputControl/MaxWidth.md)(…) | Sets the maximum width for the input.  The value of *maxWidth* must be less than [`MaxLength`](./IInputControl/MaxLength.md) otherwise, it will be set to equal. |
+| [MaxWidth](IInputControl/MaxWidth.md)(…) | Sets the maximum width for the input. Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md).  The value of *maxWidth* must be less than [`MaxLength`](./IInputControl/MaxLength.md) otherwise, it will be set to equal. |
 | [Options](IInputControl/Options.md)(…) | Applies custom options to the input control. |
 | [PredicateSelected](IInputControl/PredicateSelected.md)(…) | Set validation predicate for selected item. (2 methods) |
 | [Run](IInputControl/Run.md)(…) | Runs the input control and returns the result. |

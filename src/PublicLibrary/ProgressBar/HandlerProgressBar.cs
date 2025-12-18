@@ -4,6 +4,7 @@
 // ***************************************************************************************
 
 using System;
+using System.Collections.Generic;
 
 namespace PromptPlusLibrary
 {
@@ -18,6 +19,9 @@ namespace PromptPlusLibrary
         private readonly double _max;
         private Exception? _error;
         private bool _aborted;
+        private KeyValuePair<string, object?>[]? _paramcontext;
+        private List<KeyValuePair<string, object?>> _outputcontext = [];
+
 
 #pragma warning disable IDE0290 // Use primary constructor
         /// <summary>
@@ -26,15 +30,17 @@ namespace PromptPlusLibrary
         /// <param name="value">The initial value.</param>
         /// <param name="min">The minimum value.</param>
         /// <param name="max">The maximum value.</param>
+        /// <param name="paramcontext">The context parameters to pass to the handler.</param>
         /// <exception cref="ArgumentException">Thrown when min is greater than or equal to max.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when value is outside the range [min, max].</exception>
-        public HandlerProgressBar(double value, double min, double max)
+        public HandlerProgressBar(double value, double min, double max, KeyValuePair<string, object?>[]? paramcontext)
         {
             // Initialize to a value outside the range to ensure HasChange works correctly.
             _lastvalue = value * -1;
             _currentvalue = value;
             _min = min;
             _max = max;
+            _paramcontext = paramcontext;
         }
 #pragma warning restore IDE0290 // Use primary constructor
 
@@ -52,6 +58,76 @@ namespace PromptPlusLibrary
         /// Gets the maximum value of the progress bar.
         /// </summary>
         public double Value => _currentvalue;
+
+        /// <summary>
+        /// Gets a read-only collection of key-value pairs representing the output context for the current operation.
+        /// </summary>
+        public KeyValuePair<string, object?>[] OutputContext => [.. _outputcontext];
+
+        /// <summary>
+        /// Retrieves the value of a context parameter identified by the specified key and casts it to the specified
+        /// type.
+        /// </summary>
+        /// <remarks>Use this method to retrieve strongly typed context parameters. If the parameter
+        /// exists but is not of the requested type, a <see cref="KeyNotFoundException"/> is thrown.</remarks>
+        /// <typeparam name="T">
+        /// The type to which the parameter value will be cast. Must match the actual type of the stored parameter value.
+        /// </typeparam>
+        /// <param name="key">The key that identifies the context parameter to retrieve. Cannot be null.</param>
+        /// <returns>The value of the context parameter associated with the specified key, cast to type <typeparamref name="T"/>.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if the context parameter collection is not available.
+        /// </exception>
+        /// <exception cref="KeyNotFoundException">
+        /// Thrown if a parameter with the specified key does not exist or cannot be cast to type <typeparamref name="T"/>.
+        /// </exception>
+        public T GetParam<T>(string? key = null)
+        {
+            if (_paramcontext == null)
+            {
+                throw new InvalidOperationException("No context parameters available.");
+            }
+
+            foreach (var param in _paramcontext)
+            {
+                if ((string.IsNullOrEmpty(key) || param.Key == key) && param.Value is T value)
+                {
+                    return value;
+                }
+            }
+            throw new KeyNotFoundException($"Parameter '{key ?? string.Empty}' not found or is not of type {typeof(T)}.");
+        }
+
+        /// <summary>
+        /// Adds/update a key and associated value to the output context collection.
+        /// </summary>
+        /// <param name="key">The key that identifies the output context entry. Cannot be null.</param>
+        /// <param name="value">The value to associate with the specified key. May be null.</param>
+        public void SetOutputContext(string key, object? value)
+        {
+            var index = _outputcontext.FindIndex(kv => kv.Key == key);
+            if (index >= 0)
+            {
+                _outputcontext[index] = new KeyValuePair<string, object?>(key, value);
+            }
+            else
+            {
+                _outputcontext.Add(new KeyValuePair<string, object?>(key, value));
+            }
+        }
+
+        /// <summary>
+        /// Removes the output context associated with the specified key, if it exists.
+        /// </summary>
+        /// <param name="key">The key of the output context to remove. Cannot be null.</param>
+        public void RemoveOutputContext(string key)
+        {
+            var index = _outputcontext.FindIndex(kv => kv.Key == key);
+            if (index >= 0)
+            {
+                _outputcontext.RemoveAt(index);
+            }
+        }
 
         /// <summary>
         /// Gets a value indicating whether the progress bar has finished.

@@ -24,7 +24,7 @@ public interface IAutoCompleteControl
 | [EnabledHistory](IAutoCompleteControl/EnabledHistory.md)(…) | Enabled History and applies custom options to History feature. |
 | [InputToCase](IAutoCompleteControl/InputToCase.md)(…) | Transforms the input characters using the specified [`CaseOptions`](./CaseOptions.md). |
 | [MaxLength](IAutoCompleteControl/MaxLength.md)(…) | Sets the maximum length for the input and optionally the maximum width. The default vaue for *maxLength* is MaxValue characters. |
-| [MaxWidth](IAutoCompleteControl/MaxWidth.md)(…) | Sets the maximum width for the input.  The value of *maxWidth* must be less than [`MaxLength`](./IAutoCompleteControl/MaxLength.md) otherwise, it will be set to equal. |
+| [MaxWidth](IAutoCompleteControl/MaxWidth.md)(…) | Sets the maximum width for the input.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md).  The value of *maxWidth* must be less than [`MaxLength`](./IAutoCompleteControl/MaxLength.md) otherwise, it will be set to equal. |
 | [MinimumPrefixLength](IAutoCompleteControl/MinimumPrefixLength.md)(…) | Number minimum of chars to accept autocomplete.Default value is 3. |
 | [Options](IAutoCompleteControl/Options.md)(…) | Applies custom options to the AutoComplete input control. |
 | [PageSize](IAutoCompleteControl/PageSize.md)(…) | Sets the maximum number of items to view per page. Default value is 5. |

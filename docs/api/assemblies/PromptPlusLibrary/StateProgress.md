@@ -17,6 +17,7 @@ public struct StateProgress
 | minvalue | Min value of Progress Bar. |
 | maxvalue | Max value of Progress Bar. |
 | elapsedtime | Elapsed Time of Progress Bar. |
+| resultcontext | Result context of Progress Bar. |
 | error | Exception of Progress Bar. |
 
 ### Public Members
@@ -30,6 +31,8 @@ public struct StateProgress
 | [FinishedValue](StateProgress/FinishedValue.md) { get; } | Last value of Progress Bar |
 | [MaxValue](StateProgress/MaxValue.md) { get; } | Max value of Progress Bar |
 | [MinValue](StateProgress/MinValue.md) { get; } | Min value of Progress Bar |
+| [OutputContext](StateProgress/OutputContext.md) { get; } | Result values for context. |
+| [GetOutput&lt;T&gt;](StateProgress/GetOutput.md)(…) | Retrieves the value of a context parameter identified by the specified key and casts it to the specified type. |
 
 ### See Also
 

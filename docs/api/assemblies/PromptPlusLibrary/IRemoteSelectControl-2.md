@@ -23,6 +23,7 @@ public interface IRemoteSelectControl<T1, T2>
 | --- | --- |
 | [ChangeDescription](IRemoteSelectControl-2/ChangeDescription.md)(…) | Dynamically changes the description of the Remote Select control based on the current selected value. |
 | [Filter](IRemoteSelectControl-2/Filter.md)(…) | Sets the filter strategy for filtering items in the collection. Default is Disabled. |
+| [MaxWidth](IRemoteSelectControl-2/MaxWidth.md)(…) | Sets the maximum display width for selected item text.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
 | [Options](IRemoteSelectControl-2/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](IRemoteSelectControl-2/PageSize.md)(…) | Sets the maximum number of items to display per page. Default value is 10. |
 | [PredicateDisabled](IRemoteSelectControl-2/PredicateDisabled.md)(…) | Sets a validation rule for determining which items should be disabled. |

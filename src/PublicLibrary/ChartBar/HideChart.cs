@@ -46,6 +46,10 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Hides Chartbar at finish
         /// </summary> 
-        ChartbarAtFinish = 32
+        ChartbarAtFinish = 32,
+        /// <summary>
+        /// Hides hartbar (only legends)
+        /// </summary>
+        ChartBar = 64
     }
 }

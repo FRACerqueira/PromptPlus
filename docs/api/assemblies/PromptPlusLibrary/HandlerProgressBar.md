@@ -19,9 +19,13 @@ public sealed class HandlerProgressBar
 | [Finish](HandlerProgressBar/Finish.md) { get; } | Gets a value indicating whether the progress bar has finished. |
 | [Maxvalue](HandlerProgressBar/Maxvalue.md) { get; } | Gets the maximum value of the progress bar. |
 | [Minvalue](HandlerProgressBar/Minvalue.md) { get; } | Gets the maximum value of the progress bar. |
+| [OutputContext](HandlerProgressBar/OutputContext.md) { get; } | Gets a read-only collection of key-value pairs representing the output context for the current operation. |
 | [Value](HandlerProgressBar/Value.md) { get; } | Gets the maximum value of the progress bar. |
 | [ErrorAndAbort](HandlerProgressBar/ErrorAndAbort.md)(…) | Sets the error associated with the progress bar. |
+| [GetParam&lt;T&gt;](HandlerProgressBar/GetParam.md)(…) | Retrieves the value of a context parameter identified by the specified key and casts it to the specified type. |
 | [HasChange](HandlerProgressBar/HasChange.md)() | Checks if the value has changed since the last update. |
+| [RemoveOutputContext](HandlerProgressBar/RemoveOutputContext.md)(…) | Removes the output context associated with the specified key, if it exists. |
+| [SetOutputContext](HandlerProgressBar/SetOutputContext.md)(…) | Adds/update a key and associated value to the output context collection. |
 | [Update](HandlerProgressBar/Update.md)(…) | Updates the current value of the progress bar. |
 
 ### See Also
