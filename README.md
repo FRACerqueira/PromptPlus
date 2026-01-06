@@ -388,6 +388,10 @@ Prompt Plus may **include pieces of code (copy)** from other software released u
 - [XmlDocMarkdown](https://github.com/ejball/XmlDocMarkdown), Copyright (c) 2024 [Ed Ball](https://github.com/ejball)
     - See an unrefined customization to contain header and other adjustments in project [XmlDocMarkdownGenerator](https://github.com/FRACerqueira/PromptPlus/tree/main/src/XmlDocMarkdownGenerator)  
 
+**Special thanks**
+
+- [ividyon](https://github.com/ividyon) for their continued contributions to product improvement.
+
 ----
 ## License
 [**Top**](#table-of-contents)
