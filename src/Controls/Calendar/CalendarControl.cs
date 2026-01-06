@@ -49,9 +49,9 @@ namespace PromptPlusLibrary.Controls.Calendar
         {
             _firstdayOfWeek = ConfigPlus.FirstDayOfWeek;
             _culture = ConfigPlus.DefaultCulture;
-            _layout = CalendarLayout.SingleGrid;
+            _layout = CalendarLayout.SingleGrid; 
             _hotKeySwitchNotes = isWidget ? null : ConfigPlus.HotKeySwitchNotes;
-            _pageSize = ConfigPlus.PageSize;
+            _pageSize = isWidget ? int.MaxValue : ConfigPlus.PageSize;
             _minRangeDate = DateTime.MinValue;
             _maxRangeDate = DateTime.MaxValue;
             _selectedDate = null;

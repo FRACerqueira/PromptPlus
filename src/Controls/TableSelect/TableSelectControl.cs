@@ -20,7 +20,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
     internal sealed class TableSelectControl<T> : BaseControlPrompt<T>, ITableWidget<T>, ITableSelectControl<T> where T : class
     {
         private readonly Dictionary<TableStyles, Style> _optStyles = BaseControlOptions.LoadStyle<TableStyles>();
-        private byte _pageSize;
+        private int _pageSize;
         private bool _autoSelect;
         private Func<T, (bool, string?)>? _predicatevalidselect;
         private readonly List<ItemTableRow<T>> _items = [];
@@ -83,7 +83,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
             _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
             _hideSelectorRow = isWidget;
             _lastinput = string.Empty;
-            _pageSize = ConfigPlus.PageSize;
+            _pageSize = isWidget ? int.MaxValue : ConfigPlus.PageSize;
             _maxWidth = ConfigPlus.MaxWidth;
         }
 #pragma warning restore IDE0290 // Use primary constructor

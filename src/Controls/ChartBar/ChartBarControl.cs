@@ -63,7 +63,7 @@ namespace PromptPlusLibrary.Controls.ChartBar
         public ChartBarControl(bool isWidget, IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
         {
             _culture = ConfigPlus.DefaultCulture;
-            _pageSize = ConfigPlus.PageSize;
+            _pageSize = isWidget ? int.MaxValue : ConfigPlus.PageSize;
             _width = ConfigPlus.ChartWidth;
             _maxWidth = ConfigPlus.MaxWidth;
             _maxShowlengthlabel = 20;
