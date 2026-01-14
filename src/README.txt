@@ -27,6 +27,11 @@ PromptPlus was developed in C# with target frameworks:
 - .NET 9
 - .NET 8
 
+*** What's new in V5.0.4 ***
+----------------------------
+
+- Fixed : Missing target framework .Net10 in Nuget package.
+
 *** What's new in V5.0.3 ***
 ----------------------------
 - Improved : AnsiDetector has been improved.

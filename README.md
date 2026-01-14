@@ -33,6 +33,11 @@
 ----
 ## What's new in the latest version
 
+### V5.0.4
+[**Top**](#table-of-contents)
+
+- Fixed : Missing target framework .Net10 in Nuget package.
+
 ### V5.0.3
 [**Top**](#table-of-contents)
 

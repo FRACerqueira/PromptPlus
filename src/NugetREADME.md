@@ -10,6 +10,10 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 #### [Visit the official page for complete documentation of PromptPlus](https://github.com/FRACerqueira/PromptPlus)
 
+## V5.0.4
+
+- Fixed : Missing target framework .Net10 in Nuget package.
+
 ## What's new in V5.0.3
 
 - Improved : AnsiDetector has been improved.
