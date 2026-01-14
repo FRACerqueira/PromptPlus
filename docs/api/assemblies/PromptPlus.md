@@ -20,7 +20,6 @@
 | enum [ChartBarType](./PromptPlusLibrary/ChartBarType.md) | Represents the Kinds Progress Bar |
 | class [ChartItem](./PromptPlusLibrary/ChartItem.md) | Represents a chart item. |
 | struct [Color](./PromptPlusLibrary/Color.md) | Represents an RGB color (optionally mapped to an indexed palette entry). |
-| static class [ColorExtensions](./PromptPlusLibrary/ColorExtensions.md) | Extensions for the Color class. |
 | enum [ColorSystem](./PromptPlusLibrary/ColorSystem.md) | Represents the capacity of console color system. |
 | enum [ComponentStyles](./PromptPlusLibrary/ComponentStyles.md) | Represents the different styles that can be applied to components in the PromptPlus library. |
 | enum [DashOptions](./PromptPlusLibrary/DashOptions.md) | Represents a boder when write line with SingleDash/DoubleDash. |

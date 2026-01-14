@@ -10,6 +10,20 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 #### [Visit the official page for complete documentation of PromptPlus](https://github.com/FRACerqueira/PromptPlus)
 
+## What's new in V5.0.3
+
+- Improved : AnsiDetector has been improved.
+- Improved : Check requires a terminal/console environment at startup.
+    - System.Console.IsInputRedirected or System.Console.IsOutputRedirected not supported. 
+- Fixed : Cursor visibility/hide on linux system.
+- Fixed : Color conversion methods.
+    - Stackoverflow exception when use ToConsoleColor Extensions. (the Extensions methods were calling themselves recursively).
+    - ForegroundColor/BackgroundColor conversion.
+
+## What's new in V5.0.2
+
+- Fixed : Incorrect PageSize value for widgets.Fixed: ProgressBar control with custom range not updating percentage.
+
 ## What's new in V5.0.1
 
 - Removed: Feature multithreading (Incompatible when another process uses the same output stream).

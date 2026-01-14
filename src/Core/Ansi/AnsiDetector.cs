@@ -40,34 +40,93 @@ namespace PromptPlusLibrary.Core.Ansi
             return !string.IsNullOrWhiteSpace(term) && _regexes.Any(regex => regex.IsMatch(term));
         }
 
+        /// <summary>
+        /// Detect whether current environment supports ANSI sequences.
+        /// Returns tuple (SupportsAnsi, LegacyConsole).
+        /// - SupportsAnsi: true when we can emit ANSI sequences and they will be interpreted.
+        /// - LegacyConsole: true when environment is a legacy Windows console that doesn't support ANSI.
+        /// </summary>
         public static (bool SupportsAnsi, bool LegacyConsole) Detect()
         {
             // Running on Windows?
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                // Running under ConEmu?
+                // ConEmu explicit opt-in
                 string? conEmu = Environment.GetEnvironmentVariable("ConEmuANSI");
                 if (!string.IsNullOrEmpty(conEmu) && conEmu.Equals("On", StringComparison.OrdinalIgnoreCase))
                 {
                     return (true, false);
                 }
 
-                bool supportsAnsi = Windows.SupportsAnsi(out bool legacyConsole);
-                return (supportsAnsi, legacyConsole);
+                // ANSICON (older ANSI emulator), Windows Terminal (WT_SESSION), and similar env hints
+                if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ANSICON")) ||
+                    !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WT_SESSION")) ||
+                    IsKnownTerminalProgram())
+                {
+                    // Even if these env vars are present, we should still try to enable console mode if possible.
+                    bool supports = Windows.SupportsAnsi(out bool legacyConsole);
+                    return (supports, legacyConsole);
+                }
+
+                // Otherwise query Windows console directly (stdout preferred).
+                bool supportsAnsi = Windows.SupportsAnsi(out bool legacy);
+                return (supportsAnsi, legacy);
             }
+            // Non-Windows platforms: decide from TERM/COLORTERM
             return DetectFromTerm();
         }
 
         private static (bool SupportsAnsi, bool LegacyConsole) DetectFromTerm()
         {
-            // Check if the terminal is of type ANSI/VT100/xterm compatible.
+            // If output is redirected, ANSI sequences probably won't be useful.
+            if (Console.IsOutputRedirected && Console.IsErrorRedirected)
+            {
+                return (false, true);
+            }
+
+            // Common variable that indicates color support (truecolor/24bit or general color)
+            string? colorterm = Environment.GetEnvironmentVariable("COLORTERM");
+            if (!string.IsNullOrWhiteSpace(colorterm))
+            {
+                // If COLORTERM is present, assume ANSI/VT sequences are supported on non-Windows
+                return (true, false);
+            }
+
+            // TERM-based detection (xterm, screen, linux, cygwin, etc).
             string? term = Environment.GetEnvironmentVariable("TERM");
             if (!string.IsNullOrWhiteSpace(term) && _regexes.Any(regex => regex.IsMatch(term)))
             {
                 return (true, false);
             }
 
+            // Fallback: if TERM_PROGRAM suggests a modern terminal (vscode, iTerm, Apple_Terminal)
+            if (IsKnownTerminalProgram())
+            {
+                return (true, false);
+            }
+
             return (false, true);
+        }
+
+        private static bool IsKnownTerminalProgram()
+        {
+            string? termProgram = Environment.GetEnvironmentVariable("TERM_PROGRAM");
+            if (string.IsNullOrWhiteSpace(termProgram))
+            {
+                return false;
+            }
+
+            // Some known modern terminal identifiers
+            string[] known =
+            [
+                "vscode",      // VS Code integrated terminal
+                "vscode-insiders",
+                "iTerm.app",   // iTerm2 on macOS
+                "Apple_Terminal",
+                "WindowsTerminal",
+            ];
+
+            return known.Any(k => termProgram.Contains(k, StringComparison.OrdinalIgnoreCase));
         }
 
         [GeneratedRegex("^xterm")]
@@ -121,12 +180,12 @@ namespace PromptPlusLibrary.Core.Ansi
         [GeneratedRegex("alacritty")]
         private static partial Regex AlacrittyRegex();
 
-        unsafe private static partial class Windows
+        private static partial class Windows
         {
+            private const int STD_OUTPUT_HANDLE = -11;
             private const int STD_ERROR_HANDLE = -12;
 
             private const uint ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
-
             private const uint DISABLE_NEWLINE_AUTO_RETURN = 0x0008;
 
             [LibraryImport("kernel32.dll")]
@@ -149,36 +208,51 @@ namespace PromptPlusLibrary.Core.Ansi
 
                 try
                 {
-                    nint @out = GetStdHandle(STD_ERROR_HANDLE);
-                    if (!GetConsoleMode(@out, out uint mode))
+                    // If output is redirected to a file/pipe, the console APIs will fail. Respect redirection.
+                    if (Console.IsOutputRedirected && Console.IsErrorRedirected)
                     {
-                        // Could not get console mode, try TERM (set in cygwin, WSL-Shell).
-                        (bool ansiFromTerm, bool legacyFromTerm) = DetectFromTerm();
-
-                        isLegacy = ansiFromTerm ? legacyFromTerm : isLegacy;
-                        return ansiFromTerm;
-                    }
-
-                    if ((mode & ENABLE_VIRTUAL_TERMINAL_PROCESSING) == 0)
-                    {
-                        isLegacy = true;
-
-                        // Try enable ANSI support.
-                        mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING | DISABLE_NEWLINE_AUTO_RETURN;
-                        if (!SetConsoleMode(@out, mode))
-                        {
-                            // Enabling failed.
-                            return false;
-                        }
-
                         isLegacy = false;
+                        return false;
                     }
 
+                    // Prefer stdout handle, then stderr.
+                    nint handle = GetStdHandle(STD_OUTPUT_HANDLE);
+                    if (handle == nint.Zero || !GetConsoleMode(handle, out uint mode))
+                    {
+                        // try stderr as fallback
+                        handle = GetStdHandle(STD_ERROR_HANDLE);
+                        if (handle == nint.Zero || !GetConsoleMode(handle, out mode))
+                        {
+                            // Could not get console mode. Fall back to TERM detection (WSL, MSYS, Cygwin)
+                            (bool ansiFromTerm, bool legacyFromTerm) = DetectFromTerm();
+                            isLegacy = ansiFromTerm ? legacyFromTerm : isLegacy;
+                            return ansiFromTerm;
+                        }
+                    }
+
+                    // If virtual terminal processing already enabled, we support ANSI
+                    if ((mode & ENABLE_VIRTUAL_TERMINAL_PROCESSING) != 0)
+                    {
+                        return true;
+                    }
+
+                    // Attempt to enable virtual terminal processing.
+                    uint newMode = mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING | DISABLE_NEWLINE_AUTO_RETURN;
+                    if (!SetConsoleMode(handle, newMode))
+                    {
+                        // Enabling failed: treat as legacy Windows console.
+                        isLegacy = true;
+                        return false;
+                    }
+
+                    // Successfully enabled.
+                    isLegacy = false;
                     return true;
                 }
                 catch
                 {
-                    // All we know here is that we don't support ANSI.
+                    // Unknown failure; assume no ANSI support.
+                    isLegacy = true;
                     return false;
                 }
             }

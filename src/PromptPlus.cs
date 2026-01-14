@@ -50,6 +50,11 @@ namespace PromptPlusLibrary
         /// </summary>
         static PromptPlus()
         {
+            if (System.Console.IsInputRedirected || System.Console.IsOutputRedirected)
+            {
+                System.Console.WriteLine("PromptPlus requires a terminal/console environment!.");
+                Environment.Exit(1);
+            }
             _appConsoleCulture = CultureInfo.CurrentCulture;
             (bool localSupportsAnsi, bool localIsLegacy) = AnsiDetector.Detect();
             bool termdetect = UtilExtension.HasTerminalSupport();

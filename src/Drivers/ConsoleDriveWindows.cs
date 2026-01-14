@@ -27,6 +27,7 @@ namespace PromptPlusLibrary.Drivers
         private CancellationTokenSource _tokenCancelPress;
         private bool _isExistDefaultCancel;
         private bool _isAbortCtrlC;
+        private bool _cursorvisible = true;
 
         public ConsoleDriveWindows(IProfileDrive profile)
         {
@@ -142,7 +143,7 @@ namespace PromptPlusLibrary.Drivers
                 }
                 else
                 {
-                    Console.ForegroundColor = value.ToConsoleColor();
+                    Console.ForegroundColor = Color.ToConsoleColor(value);
                 }
             }
         }
@@ -162,7 +163,7 @@ namespace PromptPlusLibrary.Drivers
                 }
                 else
                 {
-                    Console.BackgroundColor = value.ToConsoleColor();
+                    Console.BackgroundColor =  Color.ToConsoleColor(value);
                 }
             }
         }
@@ -171,11 +172,7 @@ namespace PromptPlusLibrary.Drivers
         {
             get
             {
-#pragma warning disable IDE0079 // Remove unnecessary suppression
-#pragma warning disable CA1416 // Validate platform compatibility
-                return Console.CursorVisible;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore IDE0079 // Remove unnecessary suppression
+                return _cursorvisible;
             }
             set
             {
@@ -195,10 +192,19 @@ namespace PromptPlusLibrary.Drivers
                 {
                     Console.Write(AnsiSequences.RM());
                 }
+                _cursorvisible = value;
             }
             else
             {
-                Console.CursorVisible = value;
+                try
+                {
+                    Console.CursorVisible = value;
+                }
+                catch 
+                {
+                    //ignore exception for non supported
+                }
+                _cursorvisible = value;
             }
         }
 

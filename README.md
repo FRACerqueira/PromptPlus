@@ -33,6 +33,22 @@
 ----
 ## What's new in the latest version
 
+### V5.0.3
+[**Top**](#table-of-contents)
+
+- Improved : AnsiDetector has been improved.
+- Improved : Check requires a terminal/console environment at startup.
+    - System.Console.IsInputRedirected or System.Console.IsOutputRedirected not supported. 
+- Fixed : Cursor visibility/hide on linux system.
+- Fixed : Color conversion methods.
+    - Stackoverflow exception when use ToConsoleColor Extensions. (the Extensions methods were calling themselves recursively).
+    - ForegroundColor/BackgroundColor conversion.
+
+### V5.0.2
+[**Top**](#table-of-contents)
+
+- Fixed : Incorrect PageSize value for widgets.Fixed: ProgressBar control with custom range not updating percentage.
+- 
 ### V5.0.1
 [**Top**](#table-of-contents)
 
