@@ -33,14 +33,17 @@
 ----
 ## What's new in the latest version
 
-### V5.0.4
+### V5.0.5
 [**Top**](#table-of-contents)
 
-- Fixed : Missing target framework .Net10 in Nuget package.
+- Fixed : WriteLine does not support two colors in one line.
+- Fixed : WriteLine does not support Extended colors.
+- Improved : Normalize newlines method to support better cross-platform compatibility.
 
-### V5.0.3
+### V5.0.4 / V5.0.3
 [**Top**](#table-of-contents)
 
+- Fixed : Missing target framework .Net10 in Nuget package (V5.0.4).
 - Improved : AnsiDetector has been improved.
 - Improved : Check requires a terminal/console environment at startup.
     - System.Console.IsInputRedirected or System.Console.IsOutputRedirected not supported. 
