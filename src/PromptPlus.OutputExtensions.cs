@@ -5,6 +5,7 @@
 
 using PromptPlusLibrary.Core;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PromptPlusLibrary
 {
@@ -17,6 +18,15 @@ namespace PromptPlusLibrary
         public static IDisposable OutputError(this IConsole console)
         {
             return new RedirectToErrorOutput((IConsoleExtend)console);
+        }
+
+        /// <summary>Replaces all line endings in the specified string with the standard environment new line sequence.</summary>
+        /// <remarks>This method is useful for ensuring consistent line endings across different platforms or input sources.</remarks>
+        /// <param name="input">The input string whose line endings will be normalized. Can be null.</param>
+        /// <returns>A string with all line endings replaced by the environment's new line sequence, or empty string if the input is null.</returns>
+        public static string NormalizeNewLine(this string input)
+        {
+            return UtilExtension.NormalizeNewLines(input);
         }
 
         /// <summary>

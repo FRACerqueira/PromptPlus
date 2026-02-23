@@ -141,10 +141,6 @@ namespace PromptPlusLibrary.Core
         public static char Ellipsis = IsGlyphInSupportedRange('…') ? '…' : '.';
 
 
-        // Cache whether or not internally normalized line endings
-        // already are normalized. No reason to do yet another replace if it is.
-        private static readonly bool _alreadyNormalized = Environment.NewLine.Equals("\n", StringComparison.OrdinalIgnoreCase);
-
         /// <summary>
         /// Determines whether the specified culture name corresponds to a valid culture recognized by the .NET
         /// framework.
@@ -185,11 +181,9 @@ namespace PromptPlusLibrary.Core
             {
                 return string.Empty;
             }
-            if (text.Contains("\r\n"))
-            {
-                return !_alreadyNormalized ? text : text.Replace("\r\n", Environment.NewLine, StringComparison.Ordinal);
-            }
-            return text.Contains('\n') ? _alreadyNormalized ? text : text.Replace("\n", Environment.NewLine, StringComparison.Ordinal) : text;
+            return text
+                .Replace("\r", "", StringComparison.Ordinal)
+                .Replace("\n", Environment.NewLine, StringComparison.Ordinal);
         }
 
         public static int LengthTokenColor(this string? text)
@@ -327,11 +321,14 @@ namespace PromptPlusLibrary.Core
                     }
                     else
                     {
-                        if (stack.Count == 0)
+                        if (stack.Count == 0 && result.Count == 0)
                         {
                             return [new Segment(text ?? string.Empty, defaultstyletext)];
                         }
-                        oldstyle = stack.Peek();
+                        if (stack.Count > 0)
+                        {
+                            oldstyle = stack.Peek();
+                        }
                     }
                     currentForeground = oldstyle.Foreground;
                     currentBackground = oldstyle.Background;

@@ -59,6 +59,7 @@ public static class PromptPlus
 | static [IsUppersCurrentWord](PromptPlus/IsUppersCurrentWord.md)(…) | Determines whether the Alt+U (upper-case word) Emacs shortcut was pressed. |
 | static [IsYesResponseKey](PromptPlus/IsYesResponseKey.md)(…) | Check ConsoleKeyInfo is Yes key |
 | static [Join](PromptPlus/Join.md)(…) | Wait all output using exclusive buffer to console |
+| static [NormalizeNewLine](PromptPlus/NormalizeNewLine.md)(…) | Replaces all line endings in the specified string with the standard environment new line sequence. |
 | static [OutputError](PromptPlus/OutputError.md)(…) | Create context to write on standard error output stream for any output included until the 'dispose' is done. |
 | static [ProfileConfig](PromptPlus/ProfileConfig.md)(…) | Reconfigures the active console profile (colors, padding, overflow). Thread-safe. |
 | static [WriteLines](PromptPlus/WriteLines.md)(…) | Write lines with line terminator |
