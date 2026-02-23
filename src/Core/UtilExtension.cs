@@ -138,7 +138,7 @@ namespace PromptPlusLibrary.Core
         /// <summary>
         /// ellipsis character.
         /// </summary>
-        public static char Ellipsis = IsGlyphInSupportedRange('…') ? '…' : '.';
+        public static readonly char Ellipsis = IsGlyphInSupportedRange('…') ? '…' : '.';
 
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace PromptPlusLibrary.Core
                                 color = ParseHexColor(part);
                                 if (color == null)
                                 {
-                                    return [new Segment(text ?? string.Empty, defaultstyletext)];
+                                    return [new Segment(text , defaultstyletext)];
                                 }
                             }
                             else if (part.StartsWith("rgb", StringComparison.OrdinalIgnoreCase))
@@ -275,14 +275,14 @@ namespace PromptPlusLibrary.Core
                                 color = ParseRgbColor(part);
                                 if (color == null)
                                 {
-                                    return [new Segment(text ?? string.Empty, defaultstyletext)];
+                                    return [new Segment(text, defaultstyletext)];
                                 }
                             }
                             else
                             {
                                 if (!first)
                                 {
-                                    return [new Segment(text ?? string.Empty, defaultstyletext)];
+                                    return [new Segment(text , defaultstyletext)];
                                 }
                                 notfound = true;
                                 token = new MarkupToken(MarkupTokenKind.Text, $"[{token.Value}]", token.Position);
@@ -311,7 +311,7 @@ namespace PromptPlusLibrary.Core
                     onlytext = false;
                     if (stack.Count == 0)
                     {
-                        return [new Segment(text ?? string.Empty, defaultstyletext)];
+                        return [new Segment(text , defaultstyletext)];
                     }
                     Style oldstyle = stack.Pop();
                     if (stack.Count == 1)
@@ -323,7 +323,7 @@ namespace PromptPlusLibrary.Core
                     {
                         if (stack.Count == 0 && result.Count == 0)
                         {
-                            return [new Segment(text ?? string.Empty, defaultstyletext)];
+                            return [new Segment(text, defaultstyletext)];
                         }
                         if (stack.Count > 0)
                         {
@@ -349,7 +349,7 @@ namespace PromptPlusLibrary.Core
                 }
                 else
                 {
-                    return [new Segment(text ?? string.Empty, defaultstyletext)];
+                    return [new Segment(text, defaultstyletext)];
                 }
             }
             return [.. result];
