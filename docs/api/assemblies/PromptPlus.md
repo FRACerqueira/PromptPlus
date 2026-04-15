@@ -76,6 +76,7 @@
 | interface [ITableWidget&lt;T&gt;](./PromptPlusLibrary/ITableWidget-1.md) | Represents the interface with all Methods of the Table Widget. |
 | class [ItemFile](./PromptPlusLibrary/ItemFile.md) | Represents a file or folder selected |
 | struct [ItemHistory](./PromptPlusLibrary/ItemHistory.md) | Represents the history of an item with a timeout. |
+| interface [IWaitCommandControl](./PromptPlusLibrary/IWaitCommandControl.md) | Provides functionality for configuring and interacting with a WaitTimer control. |
 | interface [IWaitProcessControl](./PromptPlusLibrary/IWaitProcessControl.md) | Provides functionality for configuring and interacting with a Wait Process control. |
 | interface [IWaitTimerControl](./PromptPlusLibrary/IWaitTimerControl.md) | Provides functionality for configuring and interacting with a WaitTimer control. |
 | interface [IWidgets](./PromptPlusLibrary/IWidgets.md) | Provides factory methods for creating and writing PromptPlus visual widgets (switch, slider, table, chart bar, calendar, banner and dash lines). |
@@ -105,6 +106,7 @@
 | enum [TargetScreen](./PromptPlusLibrary/TargetScreen.md) | Represents the Target Buffer |
 | enum [TaskMode](./PromptPlusLibrary/TaskMode.md) | Represents The Mode to execute Tasks |
 | enum [TextAlignment](./PromptPlusLibrary/TextAlignment.md) | Represents text aligment |
+| enum [WaitCommandStyles](./PromptPlusLibrary/WaitCommandStyles.md) | Represents The Style Wait command Control This enum defines various regions or components of the Wait Process Control. |
 | enum [WaitProcessStyles](./PromptPlusLibrary/WaitProcessStyles.md) | Represents The Style Wait Process Control This enum defines various regions or components of the Wait Process Control. |
 | enum [WaitTimerStyles](./PromptPlusLibrary/WaitTimerStyles.md) | Represents The Style Wait Timer Control This enum defines various regions or components of the Wait Process Control. |
 | enum [WeekType](./PromptPlusLibrary/WeekType.md) | Represents Format week to show |

@@ -16,7 +16,7 @@ public IKeyPressControl ShowCountDown(bool value = true)
 
 ### Return Value
 
-The current [`IWaitTimerControl`](../IWaitTimerControl.md) instance for chaining.
+The current [`IKeyPressControl`](../IKeyPressControl.md) instance for chaining.
 
 ### See Also
 

@@ -277,7 +277,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Folder:{0}.
+        ///   Looks up a localized string similar to Folder: {0}.
         /// </summary>
         internal static string FileInfoFolder {
             get {
@@ -1110,6 +1110,15 @@ namespace PromptPlusLibrary.Resources {
         internal static string TooltipToggleExpandPress {
             get {
                 return ResourceManager.GetString("TooltipToggleExpandPress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}:Toggle Full Path/Name Folder.
+        /// </summary>
+        internal static string TooltipToggleFullPath {
+            get {
+                return ResourceManager.GetString("TooltipToggleFullPath", resourceCulture);
             }
         }
         

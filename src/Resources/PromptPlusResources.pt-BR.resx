@@ -445,7 +445,7 @@
     <value>Pasta Raiz</value>
   </data>
   <data name="FileInfoFolder" xml:space="preserve">
-    <value>Pasta:{0}</value>
+    <value>Pasta: {0}</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Carregando...</value>
@@ -491,5 +491,8 @@
   </data>
   <data name="TooltipSelectAllGroups" xml:space="preserve">
     <value>{0}:Alternar Marcar  todos os grupos</value>
+  </data>
+  <data name="TooltipToggleFullPath" xml:space="preserve">
+    <value>{0}: Alternar caminho completo/nome da pasta</value>
   </data>
 </root>

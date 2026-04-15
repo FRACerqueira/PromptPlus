@@ -57,6 +57,17 @@ namespace PromptPlusLibrary.Controls
             return new History(filename);
         }
 
+        public IWaitCommandControl WaitCommand(string prompt = "", string? description = null)
+        {
+            BaseControlOptions opt = new(promptConfig);
+            opt.Prompt(prompt);
+            if (!string.IsNullOrEmpty(description))
+            {
+                opt.Description(description);
+            }
+            return new WaitCommandControl(console, promptConfig, opt);
+        }
+
         public ICalendarControl Calendar(string prompt = "", string? description = null)
         {
             BaseControlOptions opt = new(promptConfig);
@@ -87,7 +98,7 @@ namespace PromptPlusLibrary.Controls
         public IKeyPressControl Confirm(string prompt = "", string? description = null)
         {
             BaseControlOptions opt = new(promptConfig);
-            opt.Prompt(prompt);
+            opt.Prompt($"({GetCultureYes(promptConfig)}/{GetCultureNo(promptConfig)}) {prompt}");
             if (!string.IsNullOrEmpty(description))
             {
                 opt.Description(description);

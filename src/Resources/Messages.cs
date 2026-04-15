@@ -133,8 +133,10 @@ namespace PromptPlusLibrary.Resources
             FilterOnlySelected = PromptPlusResources.FilterOnlySelected;
             TooltipFilterOnlySelected = PromptPlusResources.TooltipFilterOnlySelected;
             TooltipSelectAllGroups = PromptPlusResources.TooltipSelectAllGroups;
+            TooltipoggleFullPath = PromptPlusResources.TooltipToggleFullPath;
         }
 
+        public static string TooltipoggleFullPath { get; private set; } = PromptPlusResources.TooltipToggleFullPath;
         public static string TooltipSelectAllGroups { get; private set; } = PromptPlusResources.TooltipSelectAllGroups;
         public static string TooltipFilterOnlySelected { get; private set; } = PromptPlusResources.TooltipFilterOnlySelected;
         public static string FilterOnlySelected { get; private set; } = PromptPlusResources.FilterOnlySelected;

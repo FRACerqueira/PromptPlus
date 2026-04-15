@@ -838,7 +838,7 @@ namespace PromptPlusLibrary.Controls.Calendar
                 return;
             }
             screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft), styleAnswer);
-            screenBuffer.Write(_selectedDate.Value.ToString("d"), styleAnswer);
+            screenBuffer.Write(_selectedDate.Value.ToString("d",_culture), styleAnswer);
             screenBuffer.SavePromptCursor();
             screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight), styleAnswer);
             screenBuffer.WriteLine(" ", styleAnswer);

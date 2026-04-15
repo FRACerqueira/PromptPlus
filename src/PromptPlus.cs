@@ -52,7 +52,7 @@ namespace PromptPlusLibrary
         {
             if (System.Console.IsInputRedirected || System.Console.IsOutputRedirected)
             {
-                System.Console.WriteLine("PromptPlus requires a terminal/console environment!.");
+                System.Console.WriteLine("PromptPlus requires a terminal/console without redirection environment!.");
                 Environment.Exit(1);
             }
             _appConsoleCulture = CultureInfo.CurrentCulture;

@@ -33,7 +33,7 @@ namespace ConsoleRemoteSelectControlSamples
             PromptPlus.Widgets.DoubleDash("Sample Remote Selector");
 
             var resultclass = PromptPlus.Controls.RemoteSelect<OddNumber, MyRemoteControl>("Select : ")
-                .TextSelector(item => item.Value.ToString())
+                .TextSelector(item => item?.Value.ToString()??string.Empty)
                 .UniqueId(item => item.Value.ToString())
                 .SearchMoreItems(new MyRemoteControl(), GetOddNumbers, (err) => err.Message)
                 .PageSize(13)

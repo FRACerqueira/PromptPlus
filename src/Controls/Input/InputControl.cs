@@ -305,7 +305,7 @@ namespace PromptPlusLibrary.Controls.Input
                     #endregion
 
                     # region Suggestions
-                    else if ((_modeView == ModeView.Input || _modeView == ModeView.History) && _suggestionHandler != null && (keyinfo.IsPressTabKey() || keyinfo.IsPressShiftTabKey()))
+                    if ((_modeView == ModeView.Input || _modeView == ModeView.History) && _suggestionHandler != null && (keyinfo.IsPressTabKey() || keyinfo.IsPressShiftTabKey()))
                     {
                         _indexTooptip = 0;
                         _savedinput = _inputdata!.ToString();
@@ -314,7 +314,7 @@ namespace PromptPlusLibrary.Controls.Input
                         _localpaginator = null;
                         _modeView = ModeView.Suggestion;
                     }
-                    else if (_modeView == ModeView.Suggestion && (keyinfo.IsPressTabKey() || keyinfo.IsPressShiftTabKey()))
+                    if (_modeView == ModeView.Suggestion && (keyinfo.IsPressTabKey() || keyinfo.IsPressShiftTabKey()) && _suggestions.Length > 0)
                     {
                         _indexTooptip = 0;
                         if (keyinfo.IsPressTabKey())

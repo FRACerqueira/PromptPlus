@@ -30,7 +30,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
         private string _tooltipModeSelect = string.Empty;
         private string _tooltipModeFilter = string.Empty;
         private bool _onlyFolders;
-        private bool _showFolderInfoFullPath;
+        private bool _showFolderInfoFullPath = true;
         private bool _hideSize;
         private bool _acceptHiddenAttributes;
         private bool _acceptSystemAttributes;
@@ -508,7 +508,7 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                         _showFolderInfoFullPath = !_showFolderInfoFullPath;
                         break;
                     }
-                    else if (_modeView == ModeView.Select && _localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem) && _localpaginator.SelectedItem.Value.IsFolder && "+-".Contains(keyinfo.KeyChar) && keyinfo.Modifiers == ConsoleModifiers.None)
+                    else if (_modeView == ModeView.Select && _localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem) && _localpaginator.SelectedItem.Value.IsFolder && "+-".Contains(keyinfo.KeyChar) && (keyinfo.Modifiers == ConsoleModifiers.Shift || keyinfo.Modifiers == ConsoleModifiers.None))
                     {
                         if (keyinfo.KeyChar == '+')
                         {
@@ -632,6 +632,16 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                         _indexTooptip = 0;
                         break;
                     }
+                    else if (_modeView == ModeView.Select && _localpaginator!.SelectedItem != null && _resultbuffer!.IsPrintable(keyinfo.KeyChar))
+                    {
+                        int index = FindStartByKey(keyinfo.KeyChar.ToString());
+                        if (index >= 0)
+                        {
+                            _localpaginator.EnsureVisibleIndex(index);
+                            _indexTooptip = 0;
+                            break;
+                        }
+                    }
                 }
             }
             finally
@@ -639,6 +649,24 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                 ConsolePlus.CursorVisible = oldcursor;
             }
             return ResultCtrl != null;
+        }
+
+        private int FindStartByKey(string key)
+        {
+            int index = _items.FindIndex(_localpaginator!.CurrentIndex + 1, x => (x.Value.Name).StartsWith(key, StringComparison.OrdinalIgnoreCase));
+            if (index >= 0)
+            {
+                return index;
+            }
+            else
+            {
+                index = _items.FindIndex(0, x => (x.Value.Name).StartsWith(key, StringComparison.OrdinalIgnoreCase));
+                if (index >= 0)
+                {
+                    return index;
+                }
+            }
+            return -1;
         }
 
         public override bool FinishTemplate(BufferScreen screenBuffer)
@@ -1442,6 +1470,8 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
                 if (mode == ModeView.Select)
                 {
                     lsttooltips.Add($"{Messages.TooltipPages}, {Messages.InputFinishEnter}");
+                    lsttooltips.Add($"{string.Format(Messages.TooltipoggleFullPath, ConfigPlus.HotKeyToggleFullPath)}");
+
                 }
                 if (mode == ModeView.Filter)
                 {

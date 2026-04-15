@@ -62,6 +62,17 @@ namespace PromptPlusLibrary
         /// <returns>An <see cref="IKeyPressControl"/> instance for further configuration and reading input.</returns>
         IKeyPressControl Confirm(string prompt = "", string? description = null);
 
+
+
+        /// <summary>
+        /// Creates an Wait Command control with the specified prompt.
+        /// </summary>
+        /// <param name="prompt">The text prompt.</param>
+        /// <param name="description">The description for input</param>
+        /// <returns>An <see cref="IWaitCommandControl"/> instance for further configuration and reading input.</returns>
+        IWaitCommandControl WaitCommand(string prompt = "", string? description = null);
+
+
         /// <summary>
         /// Creates an Wait Timer control with the specified prompt.
         /// </summary>

@@ -49,6 +49,7 @@ public interface IControls
 | [Switch](IControls/Switch.md)(…) | Creates an Switch control with the specified prompt. |
 | [TableMultiSelect&lt;T&gt;](IControls/TableMultiSelect.md)(…) | Creates an Table MultiSelect control with the specified prompt. |
 | [TableSelect&lt;T&gt;](IControls/TableSelect.md)(…) | Creates an Table Select control with the specified prompt. |
+| [WaitCommand](IControls/WaitCommand.md)(…) | Creates an Wait Command control with the specified prompt. |
 | [WaitProcess](IControls/WaitProcess.md)(…) | Creates an Wait Process control with the specified prompt. |
 | [WaitTimer](IControls/WaitTimer.md)(…) | Creates an Wait Timer control with the specified prompt. (2 methods) |
 

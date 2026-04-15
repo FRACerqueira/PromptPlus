@@ -10,7 +10,24 @@ PromptPlus **Supports 4/8/24-bit colors** in the terminal with auto-detection of
 
 #### [Visit the official page for complete documentation of PromptPlus](https://github.com/FRACerqueira/PromptPlus)
 
-### What's new inV5.0.5
+### What's new in V5.0.6
+
+- **New** control: WaitCommand (**EXPERIMENTAL!**)
+- Improved : Detect '+'/'-' with shift key for expand/collapse controls.
+- Improved : jump to next item using the first character of the item's text. 
+    - Select control
+    - file select control
+    - RemoteSelect control
+    - RemoteMultiSelect control
+    - file multi select control
+    - Nodetree select control
+    - Nodetree multi select control
+- Fixed : Corret format for date in calendar control.
+- Fixed : Start with fulpath in file select/multi select controls.
+- Fixed: Bug in sugestion input control when sugestion empty.
+
+
+### What's new in V5.0.5
 
 - Fixed : WriteLine does not support two colors in one line.
 - Fixed : WriteLine does not support Extended colors.

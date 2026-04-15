@@ -1,0 +1,72 @@
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+using System;
+using System.Threading;
+
+namespace PromptPlusLibrary
+{
+    /// <summary>
+    /// Provides functionality for configuring and interacting with a WaitTimer control.
+    /// </summary>
+    public interface IWaitCommandControl
+    {
+
+        /// <summary>
+        /// Applies custom options to the control.
+        /// </summary>
+        /// <param name="options">An action to configure <see cref="IControlOptions"/>. Cannot be <c>null</c>.</param>
+        /// <returns>The current <see cref="IWaitCommandControl"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="options"/> is <c>null</c>.</exception>
+        IWaitCommandControl Options(Action<IControlOptions> options);
+
+        /// <summary>
+        /// Overwrites styles for the WaitTimer.
+        /// </summary>
+        /// <param name="styleType">The <see cref="WaitCommandStyles"/> to apply.</param>
+        /// <param name="style">The <see cref="Style"/> to use. Cannot be <c>null</c>.</param>
+        /// <returns>The current <see cref="IWaitCommandControl"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="style"/> is <c>null</c>.</exception>
+        IWaitCommandControl Styles(WaitCommandStyles styleType, Style style);
+
+        /// <summary>
+        /// Shows a <see cref="SpinnersType"/> animation at the end of the prompt.
+        /// </summary>
+        /// <param name="spinnersType">The <see cref="SpinnersType"/> to display.</param>
+        /// <returns>The current <see cref="IWaitCommandControl"/> instance for chaining.</returns>
+        IWaitCommandControl Spinner(SpinnersType spinnersType);
+
+        /// <summary>
+        /// Finish answer to show when the wait timer is completed.
+        /// </summary>
+        /// <param name="text">The text to display when the wait timer completes.</param>
+        /// <returns>The current <see cref="IWaitCommandControl"/> instance for chaining.</returns>
+        IWaitCommandControl Finish(string text);
+
+        /// <summary>
+        /// Defines whether to show elapsed time. Default is 500ms and true.
+        /// </summary>
+        /// <param name="milliseconds">The interval in milliseconds to update the elapsed time display.</param>
+        /// <param name="value">If true, shows elapsed time.</param>
+        /// <returns>The current <see cref="IWaitCommandControl"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="milliseconds"/> is less than 100 or greater than 1000.</exception>
+        IWaitCommandControl ShowElapsedTime(int milliseconds = 500, bool value = true);
+
+        /// <summary>
+        /// Executes the specified command action and returns a control object for managing the command's execution
+        /// state.
+        /// </summary>
+        /// <param name="commandaction">The action to execute as the command. Cannot be null.</param>
+        /// <returns>An object that provides control over the execution and completion of the command.</returns>
+        IWaitCommandControl CommandHandler(Action commandaction);
+
+        /// <summary>
+        /// Runs the WaitCommand control and returns the result.
+        /// </summary>
+        /// <param name="token">The <see cref="CancellationToken"/> to observe while waiting for the task to complete. Defaults to <see cref="CancellationToken.None"/>.</param>
+        /// <returns>The result with type <see cref="ResultPrompt{T}"/> of the WaitTimer control execution. </returns>
+        ResultPrompt<Exception?> Run(CancellationToken token = default);
+    }
+}

@@ -493,7 +493,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeRemoteSelect
                         _showInfoFullPath = !_showInfoFullPath;
                         break;
                     }
-                    else if (_loadingItemTask == null && _localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem!) && _localpaginator.SelectedItem.AllowsChildren && "+-".Contains(keyinfo.KeyChar) && keyinfo.Modifiers == ConsoleModifiers.None)
+                    else if (_loadingItemTask == null && _localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem!) && _localpaginator.SelectedItem.AllowsChildren && "+-".Contains(keyinfo.KeyChar) && (keyinfo.Modifiers == ConsoleModifiers.Shift || keyinfo.Modifiers == ConsoleModifiers.None))
                     {
                         if (keyinfo.KeyChar == '+')
                         {

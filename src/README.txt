@@ -27,6 +27,23 @@ PromptPlus was developed in C# with target frameworks:
 - .NET 9
 - .NET 8
 
+*** What's new in V5.0.6 ***
+----------------------------
+
+- **New** control: WaitCommand (**EXPERIMENTAL!**)
+- Improved : Detect '+'/'-' with shift key for expand/collapse controls.
+- Improved : jump to next item using the first character of the item's text. 
+    - Select control
+    - file select control
+    - RemoteSelect control
+    - RemoteMultiSelect control
+    - file multi select control
+    - Nodetree select control
+    - Nodetree multi select control
+- Fixed : Corret format for date in calendar control.
+- Fixed : Start with fulpath in file select/multi select controls.
+- Fixed: Bug in sugestion input control when sugestion empty.
+
 *** What's new in V5.0.5 ***
 ----------------------------
 

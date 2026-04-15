@@ -429,7 +429,7 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                         _resultTask.Enqueue(newitems);
                         break;
                     }
-                    else if (!_onfilterOnlySelected && _localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem) && _localpaginator.SelectedItem.CountChildren > 0 && "+-".Contains(keyinfo.KeyChar) && keyinfo.Modifiers == ConsoleModifiers.None)
+                    else if (!_onfilterOnlySelected && _localpaginator!.SelectedItem != null && !IsRoot(_localpaginator.SelectedItem) && _localpaginator.SelectedItem.CountChildren > 0 && "+-".Contains(keyinfo.KeyChar) && (keyinfo.Modifiers == ConsoleModifiers.Shift || keyinfo.Modifiers == ConsoleModifiers.None))
                     {
                         if (keyinfo.KeyChar == '+')
                         {
@@ -553,6 +553,21 @@ namespace PromptPlusLibrary.Controls.NodeTreeMultiSelect
                     {
                         _indexTooptip = 0;
                         break;
+                    }
+                    else if (_localpaginator!.SelectedItem != null && _resultbuffer!.IsPrintable(keyinfo.KeyChar))
+                    {
+                        var start = _localpaginator.CurrentIndex;
+                        int index = _items.FindIndex(start + 1, x => _textSelector!(x.Value).StartsWith(keyinfo.KeyChar.ToString(), StringComparison.OrdinalIgnoreCase));
+                        if (index < 0 && start >= 0)
+                        {
+                            index = _items.FindIndex(0, x => _textSelector!(x.Value).StartsWith(keyinfo.KeyChar.ToString(), StringComparison.OrdinalIgnoreCase));
+                        }
+                        if (index >= 0)
+                        {
+                            _localpaginator.EnsureVisibleIndex(index);
+                            _indexTooptip = 0;
+                            break;
+                        }
                     }
                 }
             }

@@ -55,7 +55,7 @@ namespace PromptPlusLibrary
         /// If true, shows countdown elapsed time.
         /// The interval in milliseconds for updating the countdown display. Default is 500 milliseconds.
         /// </param>
-        /// <returns>The current <see cref="IWaitTimerControl"/> instance for chaining.</returns>
+        /// <returns>The current <see cref="IKeyPressControl"/> instance for chaining.</returns>
         IKeyPressControl ShowCountDown(bool value = true);
 
         /// <summary>
