@@ -38,13 +38,10 @@
 - **New** control: WaitCommand (**EXPERIMENTAL!**)
 - Improved : Detect '+'/'-' with shift key for expand/collapse controls.
 - Improved : jump to next item using the first character of the item's text. 
-    - Select control
-    - file select control
-    - RemoteSelect control
-    - RemoteMultiSelect control
-    - file multi select control
-    - Nodetree select control
-    - Nodetree multi select control
+    - Select/Multi Select control
+    - file Select/Multi Select control
+    - Remote Select/Remote Multi Select control
+    - Nodetree Select/Nodetree Multi Select control
 - Fixed : Corret format for date in calendar control.
 - Fixed : Start with fulpath in file select/multi select controls.
 - Fixed: Bug in sugestion input control when sugestion empty.
