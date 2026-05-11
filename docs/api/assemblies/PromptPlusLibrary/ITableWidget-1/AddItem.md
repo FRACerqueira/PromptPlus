@@ -4,7 +4,7 @@
 </br>
 
 
-#### Adds an item to the table.
+#### Adds a single item to the list.
 
 ```csharp
 public ITableWidget AddItem(T value, bool disable = false)
@@ -13,17 +13,17 @@ public ITableWidget AddItem(T value, bool disable = false)
 | parameter | description |
 | --- | --- |
 | value | The item to add. |
-| disable | If `true`, the item is disabled. Default is `false`. |
+| disable | When true, the item is added in a disabled state and cannot be selected. |
 
 ### Return Value
 
-The current [`ITableWidget`](../ITableWidget-1.md) instance for chaining.
+The current [`ITableWidget`](../ITableWidget-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *value* is `null`. |
+| ArgumentNullException | Thrown when *value* is null. |
 
 ### See Also
 

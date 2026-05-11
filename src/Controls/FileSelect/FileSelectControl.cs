@@ -727,6 +727,10 @@ namespace PromptPlusLibrary.Controls.FileSelect
                     answer = Messages.CanceledKey;
                 }
             }
+            if (answer.Length > _maxWidth!)
+            {
+                answer = answer[.._maxWidth] + "...";
+            }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
                 screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[FileStyles.Prompt]);
@@ -1254,12 +1258,12 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 {
                     break;
                 }
-                (string key, bool isload, List<ItemNodeControl<ItemFile>> values) newitems = EnqueueNewitems(_items[index].UniqueId,
+                (string key, bool isload, List<ItemNodeControl<ItemFile>> values) = EnqueueNewitems(_items[index].UniqueId,
                     _items[index].Level,
                     _items[index].Value.FullPath);
                 _items[index].IsExpanded = true;
                 _items[index].Status = NodeStatus.Done;
-                _items.InsertRange(index + 1, newitems.values);
+                _items.InsertRange(index + 1, values);
             }
             var indexdefault = _items.FindIndex(x => x.Value.FullPath == _defaultitemfullpath);
             if (indexdefault == -1 && !string.IsNullOrEmpty(localfile))

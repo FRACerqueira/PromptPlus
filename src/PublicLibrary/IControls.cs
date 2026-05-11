@@ -268,7 +268,6 @@ namespace PromptPlusLibrary
         /// <returns>An <see cref="ITableSelectControl{T}"/> instance for further configuration and reading input.</returns>
         ITableSelectControl<T> TableSelect<T>(string prompt = "", string? description = null) where T : class;
 
-
         /// <summary>
         /// Creates an Table MultiSelect control with the specified prompt.
         /// </summary>

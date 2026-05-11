@@ -4,7 +4,7 @@
 </br>
 
 
-#### Sets the table layout. Default value is SingleGridFull.
+#### Sets the table layout style. The default value is TableLayout.SingleGridFull.
 
 ```csharp
 public ITableWidget Layout(TableLayout value)
@@ -12,11 +12,11 @@ public ITableWidget Layout(TableLayout value)
 
 | parameter | description |
 | --- | --- |
-| value | The [`TableLayout`](../TableLayout.md) to apply. |
+| value | The [`TableLayout`](../TableLayout.md) style to apply. |
 
 ### Return Value
 
-The current [`ITableWidget`](../ITableWidget-1.md) instance for chaining.
+The current [`ITableWidget`](../ITableWidget-1.md) instance for method chaining.
 
 ### See Also
 

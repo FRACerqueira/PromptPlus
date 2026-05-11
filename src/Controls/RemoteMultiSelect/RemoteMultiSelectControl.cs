@@ -101,7 +101,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
         public IRemoteMultiSelectControl<T1, T2> DefaultWhenLoad(IEnumerable<T1> values, bool useDefaultHistory = true)
         {
             ArgumentNullException.ThrowIfNull(values, nameof(values));
-            _defaultValues = values.ToList();
+            _defaultValues = [.. values];
             _useDefaultHistory = useDefaultHistory;
             return this;
         }
@@ -228,7 +228,7 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
                 {
                     try
                     {
-                        _defaultValues = JsonSerializer.Deserialize<T1[]>(_itemHistories[0].History!)!.ToList();
+                        _defaultValues = [.. JsonSerializer.Deserialize<T1[]>(_itemHistories[0].History!)!];
                     }
                     catch (Exception)
                     {
@@ -711,17 +711,10 @@ namespace PromptPlusLibrary.Controls.RemoteMultiSelect
             else
             {
                 answer = _resultbuffer!.ToString();
-                if (!_isShowAllSeleceted)
-                {
-                    if (answer.Length > _maxWidth)
-                    {
-                        answer = answer[.._maxWidth] + "...";
-                    }
-                    else
-                    {
-                        answer += "...";
-                    }
-                }
+            }
+            if (answer.Length > _maxWidth!)
+            {
+                answer = answer[.._maxWidth] + "...";
             }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {

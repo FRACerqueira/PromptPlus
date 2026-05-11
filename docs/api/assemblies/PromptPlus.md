@@ -73,7 +73,7 @@
 | interface [ISwitchWidget](./PromptPlusLibrary/ISwitchWidget.md) | Provides functionality for configuring and interacting with a Switch widget. |
 | interface [ITableMultiSelectControl&lt;T&gt;](./PromptPlusLibrary/ITableMultiSelectControl-1.md) | Represents the interface with all Methods of the Table MultiSelect Control |
 | interface [ITableSelectControl&lt;T&gt;](./PromptPlusLibrary/ITableSelectControl-1.md) | Represents the interface with all Methods of the Table Select Control |
-| interface [ITableWidget&lt;T&gt;](./PromptPlusLibrary/ITableWidget-1.md) | Represents the interface with all Methods of the Table Widget. |
+| interface [ITableWidget&lt;T&gt;](./PromptPlusLibrary/ITableWidget-1.md) | Represents the interface with all Methods of the Table Widget |
 | class [ItemFile](./PromptPlusLibrary/ItemFile.md) | Represents a file or folder selected |
 | struct [ItemHistory](./PromptPlusLibrary/ItemHistory.md) | Represents the history of an item with a timeout. |
 | interface [IWaitCommandControl](./PromptPlusLibrary/IWaitCommandControl.md) | Provides functionality for configuring and interacting with a WaitTimer control. |

@@ -19,21 +19,20 @@ public interface ITableMultiSelectControl<T>
 
 | name | description |
 | --- | --- |
-| [AddColumn](ITableMultiSelectControl-1/AddColumn.md)(…) | Adds a column to the table. Cannot be used with [`AutoFill`](./ITableMultiSelectControl-1/AutoFill.md). |
-| [AddFormatType&lt;T1&gt;](ITableMultiSelectControl-1/AddFormatType.md)(…) | Sets a custom format function for columns by field type when not specified by [`AddColumn`](./ITableMultiSelectControl-1/AddColumn.md). |
-| [AddItem](ITableMultiSelectControl-1/AddItem.md)(…) | Adds an item to the list. |
-| [AddItems](ITableMultiSelectControl-1/AddItems.md)(…) | Adds a collection of items to the list. |
-| [AutoFill](ITableMultiSelectControl-1/AutoFill.md)(…) | Automatically generates columns based on public properties. Cannot be used with [`AddColumn`](./ITableMultiSelectControl-1/AddColumn.md) or AutoFit. Header alignment will always be Center. Content alignment will always be Left with sliding lines enabled. Columns are generated from public properties of the data class recognized by TypeCode. DBNull and Object will be ignored. The column size will be automatically adjusted based on the title size (property name) and the *minwidth*/*maxwidth* parameters, or content width when min/max width is `null`. |
+| [AddColumn](ITableMultiSelectControl-1/AddColumn.md)(…) | Adds a column to the table with custom formatting and alignment options. |
+| [AddItem](ITableMultiSelectControl-1/AddItem.md)(…) | Adds a single item to the list. |
+| [AddItems](ITableMultiSelectControl-1/AddItems.md)(…) | Adds multiple items to the list. |
 | [ChangeDescription](ITableMultiSelectControl-1/ChangeDescription.md)(…) | Dynamically changes the description using a custom function. |
 | [Default](ITableMultiSelectControl-1/Default.md)(…) | Sets the initial selected values. |
 | [EnabledHistory](ITableMultiSelectControl-1/EnabledHistory.md)(…) | Enables history and applies custom options to the history feature. |
 | [EqualItems](ITableMultiSelectControl-1/EqualItems.md)(…) | Sets a custom item comparator for equality comparison. |
-| [FilterByColumns](ITableMultiSelectControl-1/FilterByColumns.md)(…) | Sets the columns used by the filter strategy. |
+| [Filter](ITableMultiSelectControl-1/Filter.md)(…) | Sets the filter strategy for filtering items in the collection. Default is Disabled. |
 | [HideCountSelected](ITableMultiSelectControl-1/HideCountSelected.md)(…) | Hides the tip count of selected items. Default is `false`. |
 | [HideHeaders](ITableMultiSelectControl-1/HideHeaders.md)(…) | Hides column headers. Default is `false`. |
 | [Interaction](ITableMultiSelectControl-1/Interaction.md)(…) |  |
 | [Layout](ITableMultiSelectControl-1/Layout.md)(…) | Sets the table layout. Default is SingleGridFull. |
 | [MaxWidth](ITableMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum width for the selected items display. Default is 30 characters. |
+| [OnlyView](ITableMultiSelectControl-1/OnlyView.md)(…) | Configures the control to be in view-only mode, where items can be viewed but not selected. Default is `false`. |
 | [Options](ITableMultiSelectControl-1/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](ITableMultiSelectControl-1/PageSize.md)(…) | Sets the maximum number of items to view per page. Default is 10. |
 | [PredicateSelected](ITableMultiSelectControl-1/PredicateSelected.md)(…) | Sets validation predicate for selected items. (2 methods) |

@@ -683,6 +683,10 @@ namespace PromptPlusLibrary.Controls.FileMultiSelect
             {
                 answer = _resultbuffer!.ToString();
             }
+            if (answer.Length > _maxWidth!)
+            {
+                answer = answer[.._maxWidth] + "...";
+            }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
                 screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[FileStyles.Prompt]);

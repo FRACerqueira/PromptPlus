@@ -4,20 +4,28 @@
 </br>
 
 
-#### Adds a collection of items to the list.
+#### Adds multiple items to the list.
 
 ```csharp
-public ITableMultiSelectControl AddItems(IEnumerable<T> values, bool disable = false)
+public ITableMultiSelectControl AddItems(IEnumerable<T> values, bool valuechecked = false, 
+    bool disable = false)
 ```
 
 | parameter | description |
 | --- | --- |
 | values | The collection of items to add. |
-| disable | If `true`, all items are added as disabled; otherwise, they are enabled. |
+| valuechecked | Indicates whether the items should be initially checked. Default is `false`. |
+| disable | Indicates whether the items should be disabled. Default is `false`. |
 
 ### Return Value
 
-The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
+The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for method chaining.
+
+### Exceptions
+
+| exception | condition |
+| --- | --- |
+| ArgumentNullException | Thrown when *values* is `null`. |
 
 ### See Also
 

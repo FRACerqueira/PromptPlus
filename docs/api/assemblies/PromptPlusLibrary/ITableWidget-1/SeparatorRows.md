@@ -4,7 +4,7 @@
 </br>
 
 
-#### Displays a separator between rows. Default is `false`.
+#### Sets whether to display separators between rows. The default is false.
 
 ```csharp
 public ITableWidget SeparatorRows(bool value = true)
@@ -12,11 +12,11 @@ public ITableWidget SeparatorRows(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | If `true`, displays row separators. Default is `true`. |
+| value | When true, displays separators between rows; when false, no separators are shown. |
 
 ### Return Value
 
-The current [`ITableWidget`](../ITableWidget-1.md) instance for chaining.
+The current [`ITableWidget`](../ITableWidget-1.md) instance for method chaining.
 
 ### See Also
 

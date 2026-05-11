@@ -338,6 +338,7 @@ namespace PromptPlusLibrary.Controls.Switch
             string answer = ResultCtrl!.Value.IsAborted
                 ? GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty
                 : ValueToString(_currentValue);
+
             screenBuffer.WriteLine(answer, _optStyles[SwitchStyles.Answer]);
 
             return true;

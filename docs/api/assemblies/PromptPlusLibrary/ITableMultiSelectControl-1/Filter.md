@@ -1,21 +1,19 @@
 ![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
-### ITableMultiSelectControl&lt;T&gt;.FilterByColumns method
+### ITableMultiSelectControl&lt;T&gt;.Filter method
 </br>
 
 
-#### Sets the columns used by the filter strategy.
+#### Sets the filter strategy for filtering items in the collection. Default is Disabled.
 
 ```csharp
-public ITableMultiSelectControl FilterByColumns(FilterMode filter, bool caseinsensitive, 
-    params int[] indexColumn)
+public ITableMultiSelectControl Filter(FilterMode value, bool caseinsensitive = true)
 ```
 
 | parameter | description |
 | --- | --- |
-| filter | The filter strategy for filtering rows. Default is Disabled. |
-| caseinsensitive | If `true`, performs case-insensitive string comparison when filtering; otherwise, performs case-sensitive comparison. |
-| indexColumn | The zero-based indices of columns to include in the filter. |
+| value | The [`FilterMode`](../FilterMode.md) to apply. |
+| caseinsensitive | If `true` (default), performs case-insensitive string comparison when filtering; otherwise case-sensitive comparison is used. |
 
 ### Return Value
 

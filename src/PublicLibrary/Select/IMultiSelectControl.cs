@@ -58,6 +58,13 @@ namespace PromptPlusLibrary
         IMultiSelectControl<T> Default(IEnumerable<T> values, bool useDefaultHistory = true);
 
         /// <summary>
+        /// Configures the control to be in view-only mode, where items can be viewed but not selected. Default is <c>false</c>. 
+        /// </summary>
+        /// <param name="value">If <c>true</c>, the control is in view-only mode; otherwise, it is editable to select items.</param>
+        /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
+        IMultiSelectControl<T> OnlyView(bool value = true);
+
+        /// <summary>
         /// Creates a multi-select control with the default history behavior enabled or disabled.
         /// </summary>
         /// <param name="useDefaultHistory">Specifies whether the control should use its default history functionality. Set to <see langword="true"/> to
@@ -186,13 +193,6 @@ namespace PromptPlusLibrary
         /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for method chaining.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="maxWidth"/> is less than 1.</exception>
         IMultiSelectControl<T> MaxWidth(byte maxWidth);
-
-        /// <summary>
-        /// Controls whether all selected items are displayed at completion. Default is <c>false</c>.
-        /// </summary>
-        /// <param name="value">Indicates whether to show all selected items at completion, ignoring <see cref="MaxWidth(byte)"/> constraints. Default is <c>true</c>.</param>
-        /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for method chaining.</returns>
-        IMultiSelectControl<T> ShowAllSelected(bool value);
 
         /// <summary>
         /// Sets a custom equality comparer function for items.

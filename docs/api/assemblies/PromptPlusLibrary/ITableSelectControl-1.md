@@ -20,19 +20,19 @@ public interface ITableSelectControl<T>
 | name | description |
 | --- | --- |
 | [AddColumn](ITableSelectControl-1/AddColumn.md)(…) | Adds a column to the table with custom formatting and alignment options. |
-| [AddFormatType&lt;T1&gt;](ITableSelectControl-1/AddFormatType.md)(…) | Registers a custom formatting function for a specific field type when not explicitly specified by AddColumn. |
 | [AddItem](ITableSelectControl-1/AddItem.md)(…) | Adds a single item to the list. |
 | [AddItems](ITableSelectControl-1/AddItems.md)(…) | Adds multiple items to the list. |
-| [AutoFill](ITableSelectControl-1/AutoFill.md)(…) | Automatically generates columns based on the public properties of the data class recognized by TypeCode. |
 | [AutoSelect](ITableSelectControl-1/AutoSelect.md)(…) | Sets whether to automatically select and finalize the item when only one item exists in the list. The default is false. |
 | [ChangeDescription](ITableSelectControl-1/ChangeDescription.md)(…) | Dynamically changes the description based on the current row and column position. |
 | [Default](ITableSelectControl-1/Default.md)(…) | Sets the initial value of the selection. The default is the first item in the list. |
 | [EnabledHistory](ITableSelectControl-1/EnabledHistory.md)(…) | Enables history and applies custom options to the history feature. |
 | [EqualItems](ITableSelectControl-1/EqualItems.md)(…) | Sets a custom equality comparer function for comparing items. |
-| [FilterByColumns](ITableSelectControl-1/FilterByColumns.md)(…) | Configures the columns used by the filter strategy. |
+| [Filter](ITableSelectControl-1/Filter.md)(…) | Sets the filter strategy for filtering items in the collection. Default is Disabled. |
 | [HideHeaders](ITableSelectControl-1/HideHeaders.md)(…) | Sets whether to hide the column headers. The default is false. |
 | [Interaction](ITableSelectControl-1/Interaction.md)(…) |  |
 | [Layout](ITableSelectControl-1/Layout.md)(…) | Sets the table layout style. The default value is TableLayout.SingleGridFull. |
+| [MaxWidth](ITableSelectControl-1/MaxWidth.md)(…) | Sets the maximum display width for selected item text.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
+| [OnlyView](ITableSelectControl-1/OnlyView.md)(…) | Configures the control to be in view-only mode, where items can be viewed but not selected. Default is `false`. |
 | [Options](ITableSelectControl-1/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](ITableSelectControl-1/PageSize.md)(…) | Sets the maximum number of items to display per page. The default value is 10. |
 | [PredicateSelected](ITableSelectControl-1/PredicateSelected.md)(…) | Sets a validation predicate to determine if an item can be selected. (2 methods) |

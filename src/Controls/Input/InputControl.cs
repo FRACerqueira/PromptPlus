@@ -499,6 +499,10 @@ namespace PromptPlusLibrary.Controls.Input
             {
                 answer = GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty;
             }
+            if (answer.Length > _maxWidth!)
+            {
+                answer = answer[.._maxWidth.Value] + "...";
+            }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
                 screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[InputStyles.Prompt]);

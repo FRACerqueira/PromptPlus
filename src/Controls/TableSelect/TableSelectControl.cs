@@ -9,8 +9,6 @@ using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -29,21 +27,17 @@ namespace PromptPlusLibrary.Controls.TableSelect
         private Optional<T> _defaultValue = Optional<T>.Empty();
         private FilterMode _filterType = FilterMode.Disabled;
         private bool _filterCaseinsensitive;
-        private int[] _filterColumns = [];
         private TableLayout _layout = TableLayout.SingleGridFull;
         private readonly List<ItemColumn<T>> _columns = [];
         private readonly bool _hideSelectorRow;
         private bool _hideHeaders;
         private bool _separatorRows;
-        private bool _autoFill;
-        private int? _minColWidth;
-        private int? _maxColWidth;
-        private readonly Dictionary<Type, Func<object, string>> _formatTypes = [];
         private Func<T, int, int, string>? _changeDescription;
         private Paginator<ItemTableRow<T>>? _localpaginator;
         private readonly EmacsBuffer _filterBuffer;
         private string _lastinput;
         private bool _useDefaultHistory;
+        private bool _onlyView;
         private HistoryOptions? _historyOptions;
         private IList<ItemHistory>? _itemHistories;
 
@@ -63,7 +57,6 @@ namespace PromptPlusLibrary.Controls.TableSelect
         private int _currentrow = -1;
         private int _currentcol = -1;
         private int _totalTableLenWidth;
-        private int[] _maxlencontentcols = [];
         private (int startWrite, int endwrite) _tableviewport;
         private enum MoveViewport
         {
@@ -91,6 +84,35 @@ namespace PromptPlusLibrary.Controls.TableSelect
 
 
         #region  ITable...
+
+        ITableSelectControl<T> ITableSelectControl<T>.AddColumn(string title, int width, Func<T, string> rowvalue, TextAlignment rowAlignment, TextAlignment titleAlignment, bool titlereplaceswidth, int maxslidinglines)
+        {
+           SetAddColumn(title,width,rowvalue,rowAlignment,titleAlignment,titlereplaceswidth,maxslidinglines);
+           return this;
+        }
+
+        ITableWidget<T> ITableWidget<T>.AddColumn(string title, int width, Func<T, string> rowvalue, TextAlignment rowAlignment, TextAlignment titleAlignment, bool titlereplaceswidth, int maxslidinglines)
+        {
+            SetAddColumn(title, width, rowvalue, rowAlignment, titleAlignment, titlereplaceswidth, maxslidinglines);
+            return this;
+        }
+
+        public ITableSelectControl<T> MaxWidth(byte maxWidth)
+        {
+            if (maxWidth < 1)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
+            }
+            _maxWidth = maxWidth;
+            return this;
+        }
+
+
+        ITableSelectControl<T> ITableSelectControl<T>.OnlyView(bool value)
+        {
+            _onlyView = value;
+            return this;
+        }
 
         ITableWidget<T> ITableWidget<T>.Interaction(IEnumerable<T> items, Action<T, ITableWidget<T>> interactionAction)
         {
@@ -131,18 +153,6 @@ namespace PromptPlusLibrary.Controls.TableSelect
             return this;
         }
 
-        ITableWidget<T> ITableWidget<T>.AddColumn(Expression<Func<T, object>> field, int width, Func<object, string>? format, TextAlignment alignment, string? title, TextAlignment titlealignment, bool titlereplaceswidth, bool textcrop, int? maxslidinglines)
-        {
-            SetAddColumn(field, width, format, alignment, title, titlealignment, titlereplaceswidth, textcrop, maxslidinglines);
-            return this;
-        }
-
-        ITableWidget<T> ITableWidget<T>.AutoFill(int? minwidth, int? maxwidth)
-        {
-            SetAutoFill(minwidth, maxwidth);
-            return this;
-        }
-
         ITableWidget<T> ITableWidget<T>.SeparatorRows(bool value)
         {
             _separatorRows = value;
@@ -152,12 +162,6 @@ namespace PromptPlusLibrary.Controls.TableSelect
         ITableWidget<T> ITableWidget<T>.HideHeaders(bool value)
         {
             _hideHeaders = value;
-            return this;
-        }
-
-        ITableWidget<T> ITableWidget<T>.AddFormatType<T1>(Func<object, string> funcfomatType)
-        {
-            SetAddFormatType<T1>(funcfomatType);
             return this;
         }
 
@@ -259,19 +263,10 @@ namespace PromptPlusLibrary.Controls.TableSelect
             return this;
         }
 
-        ITableSelectControl<T> ITableSelectControl<T>.FilterByColumns(FilterMode filter, bool caseinsensitive, params int[] indexColumn)
+        ITableSelectControl<T> ITableSelectControl<T>.Filter(FilterMode filter, bool caseinsensitive)
         {
-            if (indexColumn.Length == 0)
-            {
-                throw new ArgumentException("At least 1 column must be informed");
-            }
-            if (indexColumn.Length > 1 && filter == FilterMode.StartsWith)
-            {
-                throw new ArgumentException("Only 1 column must be entered for the 'StartsWith' filter");
-            }
             _filterType = filter;
             _filterCaseinsensitive = caseinsensitive;
-            _filterColumns = filter == FilterMode.Disabled ? [] : indexColumn;
             return this;
         }
 
@@ -294,18 +289,6 @@ namespace PromptPlusLibrary.Controls.TableSelect
             return this;
         }
 
-        ITableSelectControl<T> ITableSelectControl<T>.AddColumn(Expression<Func<T, object>> field, int width, Func<object, string>? format, TextAlignment alignment, string? title, TextAlignment titlealignment, bool titlereplaceswidth, bool textcrop, int? maxslidinglines)
-        {
-            SetAddColumn(field, width, format, alignment, title, titlealignment, titlereplaceswidth, textcrop, maxslidinglines);
-            return this;
-        }
-
-        ITableSelectControl<T> ITableSelectControl<T>.AutoFill(int? minwidth, int? maxwidth)
-        {
-            SetAutoFill(minwidth, maxwidth);
-            return this;
-        }
-
         ITableSelectControl<T> ITableSelectControl<T>.SeparatorRows(bool value)
         {
             _separatorRows = value;
@@ -315,12 +298,6 @@ namespace PromptPlusLibrary.Controls.TableSelect
         ITableSelectControl<T> ITableSelectControl<T>.HideHeaders(bool value)
         {
             _hideHeaders = value;
-            return this;
-        }
-
-        ITableSelectControl<T> ITableSelectControl<T>.AddFormatType<T1>(Func<object, string> funcfomatType)
-        {
-            SetAddFormatType<T1>(funcfomatType);
             return this;
         }
 
@@ -338,6 +315,12 @@ namespace PromptPlusLibrary.Controls.TableSelect
             if (_columns.Count == 0)
             {
                 throw new InvalidOperationException("Not found columns definition");
+            }
+
+            if (_onlyView)
+            {
+                _historyOptions = null;
+                _autoSelect = false;
             }
 
             _answerBuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
@@ -364,22 +347,10 @@ namespace PromptPlusLibrary.Controls.TableSelect
                 }
             }
 
-            //re-calc column width when IsColumnsNavigation
-            for (int i = 0; i < _columns.Count; i++)
-            {
-                int w = !_columns[i].TitleReplacesWidth ?
-                    _columns[i].Width
-                    : (_columns[i].Width < ((_columns[i].Title?.Length) ?? 0) ?
-                        _columns[i].Title!.Length
-                        : _columns[i].Width);
-                _columns[i].Width = w;
-                _columns[i].OriginalWidth = w;
-            }
-
             //add column selector
             if (!_hideSelectorRow)
             {
-                _columns.Insert(0, new ItemColumn<T> { Field = ((_) => ConfigPlus.GetSymbol(SymbolType.Selector)), Title = " ", Width = 1, OriginalWidth = 1 });
+                _columns.Insert(0, new ItemColumn<T> { Field = ((_) => ConfigPlus.GetSymbol(SymbolType.Selector)), Title = " ", Width = 1});
             }
 
             _currentcol = 0;
@@ -388,67 +359,22 @@ namespace PromptPlusLibrary.Controls.TableSelect
                 _currentcol = 1;
             }
 
-            //cache Values text
-            if (_autoFill)
-            {
-                _maxlencontentcols = new int[_columns.Count];
-            }
             foreach (ItemTableRow<T> item in _items)
             {
                 List<string> cols = [];
                 for (int i = 0; i < _columns.Count; i++)
                 {
-                    cols.Add(GetTextColumn(item.Value, _columns[i].Field, _columns[i].Format));
+                    cols.Add(_columns[i].Field(item.Value));
                 }
                 item.TextColumns = [.. cols];
                 if (_filterType != FilterMode.Disabled)
                 {
-                    item.SearchContent = _filterCaseinsensitive ? SearchContent(item, _filterColumns).ToUpperInvariant() : SearchContent(item, _filterColumns);
-                }
-                //Calculate max content Length
-                if (_autoFill)
-                {
-                    for (int i = 0; i < _columns.Count; i++)
-                    {
-                        string text = item.TextColumns[i];
-                        int lentext = text.NormalizeNewLines().Split(Environment.NewLine).Max(x => x.Length);
-                        if (_minColWidth.HasValue && lentext < _minColWidth.Value)
-                        {
-                            if (i == 0 && _hideSelectorRow)
-                            {
-                                lentext = _minColWidth.Value;
-                                _columns[i].OriginalWidth = lentext;
-                                _columns[i].Width = lentext;
-                            }
-                        }
-
-                        if (_maxColWidth.HasValue && lentext > _maxColWidth.Value)
-                        {
-                            lentext = _maxColWidth.Value;
-                            if (_columns[i].OriginalWidth < lentext)
-                            {
-                                _columns[i].OriginalWidth = lentext;
-                                _columns[i].Width = lentext;
-                            }
-                        }
-                        else
-                        {
-                            if (_columns[i].OriginalWidth < lentext)
-                            {
-                                _columns[i].OriginalWidth = lentext;
-                                _columns[i].Width = lentext;
-                            }
-                        }
-                        if (_maxlencontentcols[i] < lentext)
-                        {
-                            _maxlencontentcols[i] = lentext;
-                        }
-                    }
+                    item.SearchContent = SearchContent(item);
                 }
             }
 
             //Calculate max content Length
-            _totalTableLenWidth = _columns.Count + 1 + _columns.Sum(x => x.OriginalWidth);
+            _totalTableLenWidth = _columns.Count + 1 + _columns.Sum(x => x.Width);
             _tableviewport = (0, _totalTableLenWidth);
 
             //Set Default value
@@ -491,7 +417,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                     defvaluepage,
                     (item1, item2) => item1.UniqueId == item2.UniqueId,
                     null,
-                    IsEnnabled)
+                    null)
                 : new Paginator<ItemTableRow<T>>(
                     _filterType,
                     _items,
@@ -499,7 +425,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                     defvaluepage,
                     (item1, item2) => item1.UniqueId == item2.UniqueId,
                     (item) => item.SearchContent,
-                    IsEnnabled);
+                    null);
             _currentrow = _localpaginator.CurrentIndex;
 
             if (_localpaginator.SelectedItem == null)
@@ -552,6 +478,16 @@ namespace PromptPlusLibrary.Controls.TableSelect
                     }
                     else if (keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null)
                     {
+                        if (_onlyView)
+                        {
+                            _indexTooptip = 0;
+                            _modeView = ModeView.Select;
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+                            ResultCtrl = new ResultPrompt<T>(default, false);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+                            break;
+                        }
+
                         _indexTooptip = 0;
                         (bool ok, string? message) = _predicatevalidselect?.Invoke(_localpaginator.SelectedItem.Value) ?? (true, null);
                         if (!ok)
@@ -613,7 +549,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         }
                         if (_localpaginator.SelectedItem != null)
                         {
-                            if (_localpaginator.SelectedItem.Disabled)
+                            if (_localpaginator.SelectedItem.Disabled && !_onlyView)
                             {
                                 SetError(Messages.SelectionDisabled);
                             }
@@ -633,7 +569,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         }
                         if (_localpaginator.SelectedItem != null)
                         {
-                            if (_localpaginator.SelectedItem.Disabled)
+                            if (_localpaginator.SelectedItem.Disabled && !_onlyView)
                             {
                                 SetError(Messages.SelectionDisabled);
                             }
@@ -647,7 +583,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         {
                             if (_localpaginator.SelectedItem != null)
                             {
-                                if (_localpaginator.SelectedItem.Disabled)
+                                if (_localpaginator.SelectedItem.Disabled && !_onlyView)
                                 {
                                     SetError(Messages.SelectionDisabled);
                                 }
@@ -663,7 +599,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         {
                             if (_localpaginator.SelectedItem != null)
                             {
-                                if (_localpaginator.SelectedItem.Disabled)
+                                if (_localpaginator.SelectedItem.Disabled && !_onlyView)
                                 {
                                     SetError(Messages.SelectionDisabled);
                                 }
@@ -691,7 +627,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (keyinfo.IsPressLeftArrowKey() && _modeView != ModeView.Filter)
+                    else if (keyinfo.IsPressSpecialKey(ConsoleKey.LeftArrow, ConsoleModifiers.Control) && _modeView != ModeView.Filter)
                     {
                         _moveviewport = MoveViewport.Left;
                         int newcurcol = _currentcol;
@@ -712,7 +648,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (keyinfo.IsPressRightArrowKey() && _modeView != ModeView.Filter)
+                    else if (keyinfo.IsPressSpecialKey(ConsoleKey.RightArrow, ConsoleModifiers.Control) && _modeView != ModeView.Filter)
                     {
                         _moveviewport = MoveViewport.Right;
                         int newcurcol = _currentcol;
@@ -760,7 +696,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (!_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    else if ((!_onlyView || _modeView == ModeView.Filter) && !_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
                     {
                         _updatePosAnswerBuffer = false;
                         _indexTooptip = 0;
@@ -863,10 +799,23 @@ namespace PromptPlusLibrary.Controls.TableSelect
 
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
+            if (_onlyView)
+            {
+                screenBuffer.WriteLine("", _optStyles[TableStyles.Answer]);
+                return true;
+            }
             string answer = string.Empty;
             if (!ResultCtrl!.Value.IsAborted && _localpaginator!.SelectedItem is not null)
             {
                 answer = _textSelector!.Invoke(_localpaginator.SelectedItem.Value);
+                if (answer.Length > _maxWidth)
+                {
+                    answer = answer[.._maxWidth] + "...";
+                }
+                else
+                {
+                    answer += "...";
+                }
             }
             if (ResultCtrl!.Value.IsAborted)
             {
@@ -1485,7 +1434,7 @@ namespace PromptPlusLibrary.Controls.TableSelect
             List<string[]> result = [];
             for (int i = 0; i < cols.Count; i++)
             {
-                if (_columns[i].TextCrop)
+                if (_columns[i].MaxSlidingLines == 0)
                 {
                     string auxcol = cols[i].NormalizeNewLines().Replace(Environment.NewLine, "");
                     if (auxcol.Length > _columns[i].Width)
@@ -1546,17 +1495,6 @@ namespace PromptPlusLibrary.Controls.TableSelect
             return result;
         }
 
-        private string GetTextColumn(T value, Func<T, object> objcol, Func<object, string>? objftm)
-        {
-            object obj = objcol(value);
-            if (obj == null)
-            {
-                return "";
-            }
-            string col = objftm != null ? objftm(obj) : _formatTypes.ContainsKey(obj.GetType()) ? _formatTypes[obj.GetType()](obj) : obj.ToString()!;
-            return col;
-        }
-
         private static string AlignmentText(string value, TextAlignment alignment, int maxlenght)
         {
             switch (alignment)
@@ -1613,6 +1551,10 @@ namespace PromptPlusLibrary.Controls.TableSelect
 
         private void WriteDescription(BufferScreen screenBuffer)
         {
+            if (_localpaginator!.SelectedItem == null)
+            {
+                return;
+            }
             string? desc = _changeDescription?.Invoke(_localpaginator!.SelectedItem.Value, _currentrow, _currentcol) ?? GeneralOptions.DescriptionValue;
             if (!string.IsNullOrEmpty(desc))
             {
@@ -1630,6 +1572,12 @@ namespace PromptPlusLibrary.Controls.TableSelect
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
+            if (_onlyView && _modeView == ModeView.Select)
+            {
+                screenBuffer.SavePromptCursor();
+                screenBuffer.WriteLine("", _optStyles[TableStyles.Answer]);
+                return;
+            }
             if (_modeView == ModeView.Select)
             {
                 string answer = _textSelector!(_localpaginator!.SelectedItem.Value!);
@@ -1706,15 +1654,9 @@ namespace PromptPlusLibrary.Controls.TableSelect
             return (_) => string.Format(Messages.TableAnswerRow, _currentrow);
         }
 
-        private static string SearchContent(ItemTableRow<T> row, int[] columns)
+        private static string SearchContent(ItemTableRow<T> row)
         {
-            StringBuilder content = new();
-            foreach (int item in columns)
-            {
-                content.Append(row.TextColumns[item]);
-
-            }
-            return content.ToString();
+            return row.TextColumns.Aggregate((a, b) => $"{a}{(char)1}{b}");
         }
 
         private bool IsEnnabled(ItemTableRow<T> item)
@@ -1727,152 +1669,29 @@ namespace PromptPlusLibrary.Controls.TableSelect
             return _items.Any(x => x.UniqueId == item.UniqueId && x.Disabled);
         }
 
-        private void SetAddFormatType<T1>(Func<object, string> value)
+        private void SetAddColumn(string title, int width, Func<T, string> rowvalue, TextAlignment rowAlignment, TextAlignment titleAlignment, bool titlereplaceswidth, int maxslidinglines)
         {
-            ArgumentNullException.ThrowIfNull(value);
-            Type type = typeof(T1);
-            if (!_formatTypes.TryAdd(type, value))
-            {
-                _formatTypes[type] = value;
-            }
-        }
-
-        private static Expression<Func<T, object>> GenerateLambdaField(string property_name)
-        {
-            ParameterExpression parameter = Expression.Parameter(typeof(T));
-
-            return Expression.Lambda<Func<T, object>>(
-                Expression.Convert(Expression.Property(parameter, property_name), typeof(object)), parameter);
-        }
-
-        private void SetAutoFill(int? minwidth, int? maxwidth)
-        {
-            if (_columns.Count > 0)
-            {
-                throw new InvalidOperationException($"AutoFill cannot be used with AddColumn");
-            }
-            if (minwidth.HasValue && maxwidth.HasValue && minwidth.Value > maxwidth.Value)
-            {
-                throw new InvalidOperationException($"AutoFill: The minimum is greater than the maximum");
-            }
-            _minColWidth = minwidth;
-            _maxColWidth = maxwidth;
-            _autoFill = true;
-            PropertyInfo[] colpropInfo = typeof(T).GetProperties();
-            for (int i = 0; i < colpropInfo.Length; i++)
-            {
-                TypeCode tc = Type.GetTypeCode(colpropInfo[i].PropertyType);
-                bool isvalid = true;
-                if (isvalid && tc == TypeCode.Object)
-                {
-                    isvalid = !colpropInfo[i].PropertyType.IsClass;
-                    if (isvalid && Nullable.GetUnderlyingType(colpropInfo[i].PropertyType) != null)
-                    {
-                        TypeCode aux = Type.GetTypeCode(Nullable.GetUnderlyingType(colpropInfo[i].PropertyType));
-                        if (aux == TypeCode.Object || aux == TypeCode.DBNull)
-                        {
-                            isvalid = false;
-                        }
-                    }
-                }
-                else if (tc == TypeCode.DBNull)
-                {
-                    isvalid = false;
-                }
-                if (isvalid)
-                {
-                    string tit = $"  {(colpropInfo[i].Name ?? string.Empty).Trim()}";
-                    if (tit.Length > byte.MaxValue)
-                    {
-                        tit = tit[..byte.MaxValue];
-                    }
-                    int w = tit.Trim().Length;
-                    if (tit.Trim().Length < (_minColWidth ?? tit.Trim().Length))
-                    {
-                        w = _minColWidth ?? tit.Trim().Length;
-                    }
-                    _columns.Add(new ItemColumn<T>()
-                    {
-                        AlignCol = TextAlignment.Left,
-                        Field = GenerateLambdaField(colpropInfo[i].Name).Compile(),
-                        Format = null,
-                        Width = w,
-                        OriginalWidth = w,
-                        TextCrop = false,
-                        Title = tit,
-                        AlignTitle = TextAlignment.Center,
-                        MaxSlidingLines = null,
-                        TitleReplacesWidth = true
-                    });
-                }
-            }
-        }
-
-        private void SetAddColumn(Expression<Func<T, object>> field, int width, Func<object, string>? format, TextAlignment alignment, string? title, TextAlignment titlealignment, bool titlereplaceswidth, bool textcrop, int? maxslidinglines)
-        {
-            ArgumentNullException.ThrowIfNull(field);
+            ArgumentNullException.ThrowIfNull(title);
             if (width < 1)
             {
                 throw new ArgumentOutOfRangeException(nameof(width), "Width must be greater than zero.");
             }
-            if (_autoFill || _autoFill)
+            if (maxslidinglines < 0)
             {
-                throw new InvalidOperationException("AddColumn cannot be used with AutoFill/AutoFit");
+                throw new ArgumentOutOfRangeException(nameof(maxslidinglines), "maxslidinglines must be greater than zero.");
             }
-
-            if (maxslidinglines.HasValue)
-            {
-                if (maxslidinglines.Value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(maxslidinglines), "maxslidinglines must be greater than zero.");
-                }
-            }
-            string tit = $"  {(title ?? string.Empty).Trim()}";
-            if (tit.Length > byte.MaxValue)
-            {
-                tit = tit[..byte.MaxValue];
-            }
-            try
-            {
-                string fieldname = GetNameUnaryExpression(field);
-                if (string.IsNullOrEmpty(tit.Trim()))
-                {
-                    tit = $"  {fieldname}";
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Expression field must be UnaryExpression", ex);
-            }
-            int w = (!titlereplaceswidth ? width : (width < tit.Trim().Length) ? tit.Trim().Length : width);
-
+            int w = (!titlereplaceswidth ? width : (width < title.Trim().Length) ? title.Trim().Length : width);
+                
             _columns.Add(new ItemColumn<T>()
             {
-                AlignCol = alignment,
-                Field = field.Compile(),
-                Format = format,
+                AlignCol = rowAlignment,
+                Field = rowvalue,
                 Width = w,
-                OriginalWidth = w,
-                TextCrop = textcrop,
-                Title = tit,
-                AlignTitle = titlealignment,
+                Title = title.Trim(),
+                AlignTitle = titleAlignment,
                 MaxSlidingLines = maxslidinglines,
                 TitleReplacesWidth = titlereplaceswidth
             });
-        }
-
-        private static string GetNameUnaryExpression(Expression<Func<T, object>> exp)
-        {
-            if (exp.Body is not MemberExpression body)
-            {
-                UnaryExpression ubody = (UnaryExpression)exp.Body;
-                if (ubody.Operand as MemberExpression is null)
-                {
-                    throw new InvalidOperationException("Expression field must be UnaryExpression with a MemberExpression operand.");
-                }
-                body = (ubody.Operand as MemberExpression)!;
-            }
-            return body.Member.Name;
         }
 
         private void SetStyles(TableStyles styleType, Style style)

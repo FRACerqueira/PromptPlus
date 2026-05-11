@@ -621,6 +621,7 @@ namespace PromptPlusLibrary.Controls.Slider
             string answer = ResultCtrl!.Value.IsAborted
                 ? GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty
                 : ValueToString(_currentValue);
+
             screenBuffer.WriteLine(answer, _optStyles[SliderStyles.Answer]);
 
             return true;

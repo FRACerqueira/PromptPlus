@@ -9,8 +9,6 @@ using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -29,7 +27,6 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
         private bool _filterCaseinsensitive;
         private IEnumerable<T>? _defaultValues;
         private FilterMode _filterType = FilterMode.Disabled;
-        private int[] _filterColumns = [];
         private TableLayout _layout = TableLayout.SingleGridFull;
         private readonly List<ItemColumn<T>> _columns = [];
         private int _maxSelect = int.MaxValue;
@@ -42,10 +39,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
         private IList<ItemHistory>? _itemHistories;
         private bool _hideHeaders;
         private bool _separatorRows;
-        private bool _autoFill;
-        private int? _minColWidth;
-        private int? _maxColWidth;
-        private readonly Dictionary<Type, Func<object, string>> _formatTypes = [];
+        private bool _onlyView;
         private Func<T, int, int, string>? _changeDescription;
         private Paginator<ItemTableRow<T>>? _localpaginator;
         private readonly EmacsBuffer _filterBuffer;
@@ -68,7 +62,6 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
         private int _currentrow = -1;
         private int _currentcol = -1;
         private int _totalTableLenWidth;
-        private int[] _maxlencontentcols = [];
         private (int startWrite, int endwrite) _tableviewport;
         private enum MoveViewport
         {
@@ -94,6 +87,11 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
 
         #region  ITable...
 
+        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.OnlyView(bool value)
+        {
+            _onlyView = value;
+            return this;
+        }
         ITableMultiSelectControl<T> ITableMultiSelectControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
@@ -178,17 +176,17 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             return this;
         }
 
-        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.AddItem(T value, bool disable)
+        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.AddItem(T value, bool valuechecked, bool disable)
         {
-            SetAddItem(value, disable);
+            SetAddItem(value, valuechecked, disable);
             return this;
         }
 
-        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.AddItems(IEnumerable<T> values, bool disable)
+        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.AddItems(IEnumerable<T> values, bool valuechecked, bool disable)
         {
             foreach (T? item in values)
             {
-                SetAddItem(item, disable);
+                SetAddItem(item, valuechecked, disable);
             }
             return this;
         }
@@ -205,19 +203,10 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             return this;
         }
 
-        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.FilterByColumns(FilterMode filter, bool caseinsensitive, params int[] indexColumn)
+        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.Filter(FilterMode filter, bool caseinsensitive)
         {
-            if (indexColumn.Length == 0)
-            {
-                throw new ArgumentException("At least 1 column must be informed");
-            }
-            if (indexColumn.Length > 1 && filter == FilterMode.StartsWith)
-            {
-                throw new ArgumentException("Only 1 column must be entered for the 'StartsWith' filter");
-            }
             _filterType = filter;
             _filterCaseinsensitive = caseinsensitive;
-            _filterColumns = filter == FilterMode.Disabled ? [] : indexColumn;
             return this;
         }
 
@@ -260,15 +249,9 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             return this;
         }
 
-        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.AddColumn(Expression<Func<T, object>> field, int width, Func<object, string>? format, TextAlignment alignment, string? title, TextAlignment titlealignment, bool titlereplaceswidth, bool textcrop, int? maxslidinglines)
+        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.AddColumn(string title, int width, Func<T, string> rowvalue, TextAlignment rowAlignment, TextAlignment titleAlignment, bool titlereplaceswidth, int maxslidinglines)
         {
-            SetAddColumn(field, width, format, alignment, title, titlealignment, titlereplaceswidth, textcrop, maxslidinglines);
-            return this;
-        }
-
-        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.AutoFill(int? minwidth, int? maxwidth)
-        {
-            SetAutoFill(minwidth, maxwidth);
+            SetAddColumn(title, width, rowvalue, rowAlignment, titleAlignment, titlereplaceswidth, maxslidinglines);
             return this;
         }
 
@@ -284,12 +267,6 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             return this;
         }
 
-        ITableMultiSelectControl<T> ITableMultiSelectControl<T>.AddFormatType<T1>(Func<object, string> funcfomatType)
-        {
-            SetAddFormatType<T1>(funcfomatType);
-            return this;
-        }
-
         #endregion
 
         public override void InitControl(CancellationToken cancellationToken)
@@ -299,6 +276,13 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             {
                 throw new InvalidOperationException("Not found columns definition");
             }
+
+            if (_onlyView)
+            {
+                _maxSelect = int.MaxValue;
+                _historyOptions = null;
+            }
+
             _resultbuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
 
             //Validate layout UnicodeSupported
@@ -321,76 +305,27 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                 }
             }
 
-            //re-calc column width when IsColumnsNavigation
-            for (int i = 0; i < _columns.Count; i++)
-            {
-                int w = !_columns[i].TitleReplacesWidth ?
-                    _columns[i].Width
-                    : (_columns[i].Width < ((_columns[i].Title?.Length) ?? 0) ?
-                        _columns[i].Title!.Length
-                        : _columns[i].Width);
-                _columns[i].Width = w;
-                _columns[i].OriginalWidth = w;
-            }
-
             //add column selector
             string col = new(' ', $"{ConfigPlus.GetSymbol(SymbolType.Selector)}{ConfigPlus.GetSymbol(SymbolType.Selected)}".Length);
-            _columns.Insert(0, new ItemColumn<T> { Field = (_) => col, Title = col, Width = col.Length, OriginalWidth = col.Length });
+            _columns.Insert(0, new ItemColumn<T> { Field = (_) => col, Title = col, Width = col.Length});
             _currentcol = 1;
 
-            //cache Values text
-            if (_autoFill)
-            {
-                _maxlencontentcols = new int[_columns.Count];
-            }
             foreach (ItemTableRow<T> item in _items)
             {
                 List<string> cols = [];
                 for (int i = 0; i < _columns.Count; i++)
                 {
-                    cols.Add(GetTextColumn(item.Value, _columns[i].Field, _columns[i].Format));
+                    cols.Add(_columns[i].Field(item.Value));
                 }
                 item.TextColumns = [.. cols];
                 if (_filterType != FilterMode.Disabled)
                 {
-                    item.SearchContent = _filterCaseinsensitive
-                        ? TableMultiSelectControl<T>.SearchContent(item, _filterColumns).ToUpperInvariant()
-                        : TableMultiSelectControl<T>.SearchContent(item, _filterColumns);
-                }
-                //Calculate max content Length
-                if (_autoFill)
-                {
-                    for (int i = 0; i < _columns.Count; i++)
-                    {
-                        string text = item.TextColumns[i];
-                        int lentext = text.NormalizeNewLines().Split(Environment.NewLine).Max(x => x.Length);
-                        if (_maxColWidth.HasValue && lentext > _maxColWidth.Value)
-                        {
-                            lentext = _maxColWidth.Value;
-                            if (_columns[i].OriginalWidth < lentext)
-                            {
-                                _columns[i].OriginalWidth = lentext;
-                                _columns[i].Width = lentext;
-                            }
-                        }
-                        else
-                        {
-                            if (_columns[i].OriginalWidth < lentext)
-                            {
-                                _columns[i].OriginalWidth = lentext;
-                                _columns[i].Width = lentext;
-                            }
-                        }
-                        if (_maxlencontentcols[i] < lentext)
-                        {
-                            _maxlencontentcols[i] = lentext;
-                        }
-                    }
+                    item.SearchContent = SearchContent(item);
                 }
             }
 
             //Calculate max content Length
-            _totalTableLenWidth = _columns.Count + 1 + _columns.Sum(x => x.OriginalWidth);
+            _totalTableLenWidth = _columns.Count + 1 + _columns.Sum(x => x.Width);
             _tableviewport = (0, _totalTableLenWidth);
 
             if (_historyOptions != null)
@@ -431,6 +366,14 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                 }
             }
 
+            foreach (var item in _items)
+            {
+                if (item.IsCheck && !_checkeditems.Contains(item))
+                {
+                    _checkeditems.Add(item);
+                }
+            }
+
             _localpaginator = _filterType == FilterMode.Disabled
                 ? new Paginator<ItemTableRow<T>>(
                     FilterMode.Disabled,
@@ -439,7 +382,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                     defvaluepage,
                     (item1, item2) => item1.UniqueId == item2.UniqueId,
                     null,
-                    IsEnnabled)
+                    null)
                 : new Paginator<ItemTableRow<T>>(
                     _filterType,
                     _items,
@@ -447,7 +390,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                     defvaluepage,
                     (item1, item2) => item1.UniqueId == item2.UniqueId,
                     (item) => item.SearchContent,
-                    IsEnnabled);
+                    null) ;
             _currentrow = _localpaginator.CurrentIndex;
 
             if (_localpaginator.SelectedItem == null)
@@ -490,6 +433,14 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                     }
                     else if (keyinfo.IsPressEnterKey())
                     {
+                        if (_onlyView)
+                        {
+                            _indexTooptip = 0;
+                            _modeView = ModeView.MultiSelect;
+                            ResultCtrl = new ResultPrompt<T[]>([], false);
+                            break;
+                        }
+
                         int countselect = _checkeditems.Count;
                         if (countselect < _minSelect)
                         {
@@ -647,22 +598,34 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (_localpaginator!.SelectedItem != null && ConfigPlus.HotKeyTooltipToggleAll.Equals(keyinfo))
+                    else if (!_onlyView &&  _localpaginator!.SelectedItem != null && ConfigPlus.HotKeyTooltipToggleAll.Equals(keyinfo))
                     {
                         IEnumerable<ItemTableRow<T>> toselect = _items.Where(x => !x.Disabled);
                         int qtdcheck = toselect.Count(x => x.IsCheck && !x.Disabled);
+                        bool hasinvalidselect = false;
+                        string? customerr = null;
                         if (qtdcheck == toselect.Count())
                         {
                             foreach (ItemTableRow<T>? item in toselect)
                             {
-                                item.IsCheck = false;
-                                _checkeditems.Remove(item);
+                                (bool ok, string? message) = _predicatevalidselect?.Invoke(item.Value) ?? (true, null);
+                                if (!ok)
+                                {
+                                    hasinvalidselect = true;
+                                    if (string.IsNullOrEmpty(message))
+                                    {
+                                        customerr = message;
+                                    }
+                                }
+                                else
+                                {
+                                    item.IsCheck = false;
+                                    _checkeditems.Remove(item);
+                                }
                             }
                         }
                         else
                         {
-                            bool hasinvalidselect = false;
-                            string? customerr = null;
                             foreach (ItemTableRow<T>? item in toselect)
                             {
                                 (bool ok, string? message) = _predicatevalidselect?.Invoke(item.Value) ?? (true, null);
@@ -683,16 +646,16 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                                     }
                                 }
                             }
-                            if (hasinvalidselect)
+                        }
+                        if (hasinvalidselect)
+                        {
+                            if (string.IsNullOrEmpty(customerr))
                             {
-                                if (string.IsNullOrEmpty(customerr))
-                                {
-                                    SetError(Messages.PredicateSelectInvalid);
-                                }
-                                else
-                                {
-                                    SetError(customerr);
-                                }
+                                SetError(Messages.PredicateSelectInvalid);
+                            }
+                            else
+                            {
+                                SetError(customerr);
                             }
                         }
                         if (_checkeditems.Count == 0)
@@ -732,7 +695,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else if ((keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.Disabled))
+                    else if (!_onlyView &&  (keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.Disabled))
                     {
                         int index = _items.FindIndex(x => _equalItems(x.Value!, _localpaginator.SelectedItem.Value));
                         if (!_items[index].IsCheck)
@@ -758,7 +721,24 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                         }
                         else
                         {
-                            _checkeditems.Remove(_items[index]);
+                            (bool ok, string? message) = _predicatevalidselect?.Invoke(_items[index].Value) ?? (true, null);
+                            if (!ok)
+                            {
+                                _indexTooptip = 0;
+                                if (string.IsNullOrEmpty(message))
+                                {
+                                    SetError(Messages.PredicateSelectInvalid);
+                                }
+                                else
+                                {
+                                    SetError(message);
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                _checkeditems.Remove(_items[index]);
+                            }
                         }
                         if (_checkeditems.Count == 0)
                         {
@@ -825,7 +805,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (_modeView == ModeView.MultiSelect && _resultbuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    else if (!_onlyView && _modeView == ModeView.MultiSelect && _resultbuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
                     {
                         _indexTooptip = 0;
                         break;
@@ -921,6 +901,11 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
 
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
+            if (_onlyView)
+            {
+                screenBuffer.WriteLine("", _optStyles[TableStyles.Answer]);
+                return true;
+            }
             string answer = string.Empty;
             if (ResultCtrl!.Value.IsAborted)
             {
@@ -932,17 +917,10 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             else
             {
                 answer = _resultbuffer!.ToString();
-                if (!_isShowAllSeleceted)
-                {
-                    if (answer.Length > _maxWidth)
-                    {
-                        answer = answer[.._maxWidth] + "...";
-                    }
-                    else
-                    {
-                        answer += "...";
-                    }
-                }
+            }
+            if (answer.Length > _maxWidth!)
+            {
+                answer = answer[.._maxWidth] + "...";
             }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
@@ -1592,7 +1570,7 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             List<string[]> result = [];
             for (int i = 0; i < cols.Count; i++)
             {
-                if (_columns[i].TextCrop)
+                if (_columns[i].MaxSlidingLines == 0)
                 {
                     string auxcol = cols[i].NormalizeNewLines().Replace(Environment.NewLine, "");
                     if (auxcol.Length > _columns[i].Width)
@@ -1651,17 +1629,6 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             }
 
             return result;
-        }
-
-        private string GetTextColumn(T value, Func<T, object> objcol, Func<object, string>? objftm)
-        {
-            object obj = objcol(value);
-            if (obj == null)
-            {
-                return "";
-            }
-            string col = objftm != null ? objftm(obj) : _formatTypes.ContainsKey(obj.GetType()) ? _formatTypes[obj.GetType()](obj) : obj.ToString()!;
-            return col;
         }
 
         private static string AlignmentText(string value, TextAlignment alignment, int maxlenght)
@@ -1743,6 +1710,12 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
+            if (_onlyView && _modeView == ModeView.MultiSelect)
+            {
+                screenBuffer.SavePromptCursor();
+                screenBuffer.WriteLine("", _optStyles[TableStyles.Answer]);
+                return;
+            }
             if (_modeView == ModeView.MultiSelect)
             {
                 Style styleAnswer = _optStyles[TableStyles.Answer];
@@ -1815,15 +1788,9 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             return result;
         }
 
-        private static string SearchContent(ItemTableRow<T> row, int[] columns)
+        private static string SearchContent(ItemTableRow<T> row)
         {
-            StringBuilder content = new();
-            foreach (int item in columns)
-            {
-                content.Append(row.TextColumns[item]);
-
-            }
-            return content.ToString();
+            return row.TextColumns.Aggregate((a, b) => a + " " + b);
         }
 
         private bool IsEnnabled(ItemTableRow<T> item)
@@ -1836,152 +1803,29 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             return _items.Any(x => x.UniqueId == item.UniqueId && x.Disabled);
         }
 
-        private void SetAddFormatType<T1>(Func<object, string> value)
+        private void SetAddColumn(string title, int width, Func<T, string> rowvalue, TextAlignment rowAlignment, TextAlignment titleAlignment, bool titlereplaceswidth, int maxslidinglines)
         {
-            ArgumentNullException.ThrowIfNull(value);
-            Type type = typeof(T1);
-            if (!_formatTypes.TryAdd(type, value))
-            {
-                _formatTypes[type] = value;
-            }
-        }
-
-        private static Expression<Func<T, object>> GenerateLambdaField(string property_name)
-        {
-            ParameterExpression parameter = Expression.Parameter(typeof(T));
-
-            return Expression.Lambda<Func<T, object>>(
-                Expression.Convert(Expression.Property(parameter, property_name), typeof(object)), parameter);
-        }
-
-        private void SetAutoFill(int? minwidth, int? maxwidth)
-        {
-            if (_columns.Count > 0)
-            {
-                throw new InvalidOperationException($"AutoFill cannot be used with AddColumn");
-            }
-            if (minwidth.HasValue && maxwidth.HasValue && minwidth.Value > maxwidth.Value)
-            {
-                throw new InvalidOperationException($"AutoFill: The minimum is greater than the maximum");
-            }
-            _minColWidth = minwidth;
-            _maxColWidth = maxwidth;
-            _autoFill = true;
-            PropertyInfo[] colpropInfo = typeof(T).GetProperties();
-            for (int i = 0; i < colpropInfo.Length; i++)
-            {
-                TypeCode tc = Type.GetTypeCode(colpropInfo[i].PropertyType);
-                bool isvalid = true;
-                if (isvalid && tc == TypeCode.Object)
-                {
-                    isvalid = !colpropInfo[i].PropertyType.IsClass;
-                    if (isvalid && Nullable.GetUnderlyingType(colpropInfo[i].PropertyType) != null)
-                    {
-                        TypeCode aux = Type.GetTypeCode(Nullable.GetUnderlyingType(colpropInfo[i].PropertyType));
-                        if (aux == TypeCode.Object || aux == TypeCode.DBNull)
-                        {
-                            isvalid = false;
-                        }
-                    }
-                }
-                else if (tc == TypeCode.DBNull)
-                {
-                    isvalid = false;
-                }
-                if (isvalid)
-                {
-                    string tit = $"  {(colpropInfo[i].Name ?? string.Empty).Trim()}";
-                    if (tit.Length > byte.MaxValue)
-                    {
-                        tit = tit[..byte.MaxValue];
-                    }
-                    int w = tit.Trim().Length;
-                    if (tit.Trim().Length < (_minColWidth ?? tit.Trim().Length))
-                    {
-                        w = _minColWidth ?? tit.Trim().Length;
-                    }
-                    _columns.Add(new ItemColumn<T>()
-                    {
-                        AlignCol = TextAlignment.Left,
-                        Field = GenerateLambdaField(colpropInfo[i].Name).Compile(),
-                        Format = null,
-                        Width = w,
-                        OriginalWidth = w,
-                        TextCrop = false,
-                        Title = tit,
-                        AlignTitle = TextAlignment.Center,
-                        MaxSlidingLines = null,
-                        TitleReplacesWidth = true
-                    });
-                }
-            }
-        }
-
-        private void SetAddColumn(Expression<Func<T, object>> field, int width, Func<object, string>? format, TextAlignment alignment, string? title, TextAlignment titlealignment, bool titlereplaceswidth, bool textcrop, int? maxslidinglines)
-        {
-            ArgumentNullException.ThrowIfNull(field);
+            ArgumentNullException.ThrowIfNull(title);
             if (width < 1)
             {
                 throw new ArgumentOutOfRangeException(nameof(width), "Width must be greater than zero.");
             }
-            if (_autoFill || _autoFill)
+            if (maxslidinglines < 0)
             {
-                throw new InvalidOperationException("AddColumn cannot be used with AutoFill/AutoFit");
+                throw new ArgumentOutOfRangeException(nameof(maxslidinglines), "maxslidinglines must be greater than zero.");
             }
-
-            if (maxslidinglines.HasValue)
-            {
-                if (maxslidinglines.Value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(maxslidinglines), "maxslidinglines must be greater than zero.");
-                }
-            }
-            string tit = $"  {(title ?? string.Empty).Trim()}";
-            if (tit.Length > byte.MaxValue)
-            {
-                tit = tit[..byte.MaxValue];
-            }
-            try
-            {
-                string fieldname = GetNameUnaryExpression(field);
-                if (string.IsNullOrEmpty(tit.Trim()))
-                {
-                    tit = $"  {fieldname}";
-                }
-            }
-            catch (Exception ex)
-            {
-                throw new InvalidOperationException($"Expression field must be UnaryExpression", ex);
-            }
-            int w = (!titlereplaceswidth ? width : (width < tit.Trim().Length) ? tit.Trim().Length : width);
+            int w = (!titlereplaceswidth ? width : (width < title.Trim().Length) ? title.Trim().Length : width);
 
             _columns.Add(new ItemColumn<T>()
             {
-                AlignCol = alignment,
-                Field = field.Compile(),
-                Format = format,
+                AlignCol = rowAlignment,
+                Field = rowvalue,
                 Width = w,
-                OriginalWidth = w,
-                TextCrop = textcrop,
-                Title = tit,
-                AlignTitle = titlealignment,
+                Title = title.Trim(),
+                AlignTitle = titleAlignment,
                 MaxSlidingLines = maxslidinglines,
                 TitleReplacesWidth = titlereplaceswidth
             });
-        }
-
-        private static string GetNameUnaryExpression(Expression<Func<T, object>> exp)
-        {
-            if (exp.Body is not MemberExpression body)
-            {
-                UnaryExpression ubody = (UnaryExpression)exp.Body;
-                if (ubody.Operand as MemberExpression is null)
-                {
-                    throw new InvalidOperationException("Expression field must be UnaryExpression with a MemberExpression operand.");
-                }
-                body = (ubody.Operand as MemberExpression)!;
-            }
-            return body.Member.Name;
         }
 
         private void SetStyles(TableStyles styleType, Style style)
@@ -2000,11 +1844,12 @@ namespace PromptPlusLibrary.Controls.TableMultiSelect
             _equalItems = value;
         }
 
-        private void SetAddItem(T value, bool disable)
+        private void SetAddItem(T value, bool valuechecked, bool disable)
         {
             _items.Add(new ItemTableRow<T>()
             {
                 Value = value,
+                IsCheck = valuechecked,
                 Disabled = disable
             });
         }

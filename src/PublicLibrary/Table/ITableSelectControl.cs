@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading;
 
 namespace PromptPlusLibrary
@@ -108,15 +107,12 @@ namespace PromptPlusLibrary
         ITableSelectControl<T> TextSelector(Func<T, string> value);
 
         /// <summary>
-        /// Configures the columns used by the filter strategy.
+        /// Sets the filter strategy for filtering items in the collection. Default is <see cref="FilterMode.Disabled"/>.
         /// </summary>
-        /// <param name="filter">The filter strategy for filtering rows. The default value is FilterMode.Disabled. For the StartsWith filter, only one column can be specified.</param>
-        /// <param name="caseinsensitive">When true, performs case-insensitive string comparison when filtering; otherwise performs case-sensitive comparison.</param>
-        /// <param name="indexColumn">The zero-based indices of the columns to include in the filter.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexColumn"/> is null.</exception>
-        /// <exception cref="ArgumentException">Thrown when more than one column is specified for the StartsWith filter.</exception>
-        ITableSelectControl<T> FilterByColumns(FilterMode filter, bool caseinsensitive, params int[] indexColumn);
+        /// <param name="value">The <see cref="FilterMode"/> to apply.</param>
+        /// <param name="caseinsensitive">If <c>true</c> (default), performs case-insensitive string comparison when filtering; otherwise case-sensitive comparison is used.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        ITableSelectControl<T> Filter(FilterMode value, bool caseinsensitive = true);
 
         /// <summary>
         /// Sets the table layout style. The default value is TableLayout.SingleGridFull.
@@ -143,38 +139,25 @@ namespace PromptPlusLibrary
         ITableSelectControl<T> Styles(TableStyles styleType, Style style);
 
         /// <summary>
-        /// Adds a column to the table with custom formatting and alignment options.
+        /// Configures the control to be in view-only mode, where items can be viewed but not selected. Default is <c>false</c>. 
         /// </summary>
-        /// <remarks>
-        /// AddColumn cannot be used when AutoFill has already been configured.
-        /// </remarks>
-        /// <param name="field">An expression that defines the field associated with the column.</param>
-        /// <param name="width">The width of the column in characters.</param>
-        /// <param name="format">An optional function to format the field value. If not specified, ToString() is used.</param>
-        /// <param name="alignment">The content alignment within the column. The default is TextAlignment.Left.</param>
-        /// <param name="title">The optional title for the column header. If not specified, the field name is used.</param>
-        /// <param name="titlealignment">The alignment for the column title. The default is TextAlignment.Center.</param>
-        /// <param name="titlereplaceswidth">When true, the title width overrides the column width if the title is longer. The default is true.</param>
-        /// <param name="textcrop">When true, the value is truncated to fit the column width; when false, the content wraps to multiple lines. The default is false.</param>
-        /// <param name="maxslidinglines">The maximum number of sliding lines when content exceeds the column width and textcrop is false. When null, no limit is applied.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="field"/> is null.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="width"/> is less than 1, or when <paramref name="maxslidinglines"/> is specified and less than 1.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when AutoFill has already been configured.</exception>
-        ITableSelectControl<T> AddColumn(Expression<Func<T, object>> field, int width, Func<object, string>? format = null, TextAlignment alignment = TextAlignment.Left, string? title = null, TextAlignment titlealignment = TextAlignment.Center, bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null);
+        /// <param name="value">If <c>true</c>, the control is in view-only mode; otherwise, it is editable to select items.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        ITableSelectControl<T> OnlyView(bool value = true);
+
 
         /// <summary>
-        /// Automatically generates columns based on the public properties of the data class recognized by <see cref="TypeCode"/>.
+        /// Adds a column to the table with custom formatting and alignment options.
         /// </summary>
-        /// <remarks>
-        /// AutoFill cannot be used when AddColumn or AutoFit has already been configured. Properties with TypeCode.DBNull and TypeCode.Object are ignored. The column width is automatically adjusted based on the title size (property name) and the minwidth/maxwidth parameters, or content width when min/max width is null. Header alignment is always Center, and content alignment is always Left with sliding lines enabled.
-        /// </remarks>
-        /// <param name="minwidth">The minimum width for auto-generated columns. When null, no minimum width is enforced.</param>
-        /// <param name="maxwidth">The maximum width for auto-generated columns. When null, no maximum width is enforced.</param>
+        /// <param name="title">The optional title for the column header. If not specified, the field name is used.</param>
+        /// <param name="width">The width of the column in characters.</param>
+        /// <param name="rowvalue">A function that takes an item and returns the value to display in the column.</param>
+        /// <param name="rowAlignment">The content alignment within the column. The default is TextAlignment.Left.</param>
+        /// <param name="titleAlignment">The title alignment within the column. The default is TextAlignment.Center.</param>
+        /// <param name="titlereplaceswidth">When true, the title width overrides the column width if the title is longer. The default is true.</param>
+        /// <param name="maxslidinglines">The maximum number of sliding lines when content exceeds the column width and textcrop is false. The default is 0.</param>
         /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
-        /// <exception cref="InvalidOperationException">Thrown when AddColumn or AutoFit has already been configured.</exception>
-        /// <exception cref="ArgumentException">Thrown when <paramref name="minwidth"/> and <paramref name="maxwidth"/> contain invalid minimum/maximum width combinations.</exception>
-        ITableSelectControl<T> AutoFill(int? minwidth, int? maxwidth = null);
+        ITableSelectControl<T> AddColumn(string title, int width, Func<T, string> rowvalue, TextAlignment rowAlignment = TextAlignment.Left, TextAlignment titleAlignment = TextAlignment.Center, bool titlereplaceswidth = true, int maxslidinglines = 0);
 
         /// <summary>
         /// Sets whether to display separators between rows. The default is false.
@@ -191,20 +174,19 @@ namespace PromptPlusLibrary
         ITableSelectControl<T> HideHeaders(bool value = true);
 
         /// <summary>
-        /// Registers a custom formatting function for a specific field type when not explicitly specified by AddColumn.
-        /// </summary>
-        /// <typeparam name="T1">The type to format.</typeparam>
-        /// <param name="funcfomatType">The function that formats values of the specified type.</param>
-        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="funcfomatType"/> is null.</exception>
-        ITableSelectControl<T> AddFormatType<T1>(Func<object, string> funcfomatType);
-
-        /// <summary>
         /// Sets whether to automatically select and finalize the item when only one item exists in the list. The default is false.
         /// </summary>
         /// <param name="value">When true, automatically selects the single item; when false, user interaction is required.</param>
         /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for method chaining.</returns>
         ITableSelectControl<T> AutoSelect(bool value = true);
+
+        /// <summary>
+        /// Sets the maximum display width for selected item text.Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
+        /// </summary>
+        /// <param name="maxWidth">The maximum width in characters.</param>
+        /// <returns>The current <see cref="ITableSelectControl{T}"/> instance for chaining.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="maxWidth"/> is less than 1.</exception>
+        ITableSelectControl<T> MaxWidth(byte maxWidth);
 
         /// <summary>
         /// Executes the Table Select Control and returns the selected result.

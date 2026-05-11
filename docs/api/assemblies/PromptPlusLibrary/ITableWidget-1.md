@@ -4,7 +4,7 @@
 </br>
 
 
-#### Represents the interface with all Methods of the Table Widget.
+#### Represents the interface with all Methods of the Table Widget
 
 ```csharp
 public interface ITableWidget<T>
@@ -19,17 +19,15 @@ public interface ITableWidget<T>
 
 | name | description |
 | --- | --- |
-| [AddColumn](ITableWidget-1/AddColumn.md)(…) | Adds a column to the table. Cannot be used with [`AutoFill`](./ITableWidget-1/AutoFill.md). |
-| [AddFormatType&lt;T1&gt;](ITableWidget-1/AddFormatType.md)(…) | Registers a custom format function for a specific field type. Used when format is not specified in [`AddColumn`](./ITableWidget-1/AddColumn.md). |
-| [AddItem](ITableWidget-1/AddItem.md)(…) | Adds an item to the table. |
-| [AddItems](ITableWidget-1/AddItems.md)(…) | Adds a collection of items to the table. |
-| [AutoFill](ITableWidget-1/AutoFill.md)(…) | Automatically generates columns from public properties. Cannot be used with [`AddColumn`](./ITableWidget-1/AddColumn.md). Header alignment will always be Center.Content alignment will always be Left with sliding lines enabled.Columns are generated from public properties recognized by TypeCode.DBNull and Object will be ignored.Column width is automatically adjusted based on the property name and the *minwidth*/*maxwidth* parameters, or content width when min/max width is `null`. |
-| [HideHeaders](ITableWidget-1/HideHeaders.md)(…) | Hides column headers. Default is `false`. |
+| [AddColumn](ITableWidget-1/AddColumn.md)(…) | Adds a column to the table with custom formatting and alignment options. |
+| [AddItem](ITableWidget-1/AddItem.md)(…) | Adds a single item to the list. |
+| [AddItems](ITableWidget-1/AddItems.md)(…) | Adds multiple items to the list. |
+| [HideHeaders](ITableWidget-1/HideHeaders.md)(…) | Sets whether to hide the column headers. The default is false. |
 | [Interaction](ITableWidget-1/Interaction.md)(…) |  |
-| [Layout](ITableWidget-1/Layout.md)(…) | Sets the table layout. Default value is SingleGridFull. |
-| [SeparatorRows](ITableWidget-1/SeparatorRows.md)(…) | Displays a separator between rows. Default is `false`. |
+| [Layout](ITableWidget-1/Layout.md)(…) | Sets the table layout style. The default value is TableLayout.SingleGridFull. |
+| [SeparatorRows](ITableWidget-1/SeparatorRows.md)(…) | Sets whether to display separators between rows. The default is false. |
 | [Show](ITableWidget-1/Show.md)() | Displays the Table widget. |
-| [Styles](ITableWidget-1/Styles.md)(…) | Overwrites styles for the Table widget. |
+| [Styles](ITableWidget-1/Styles.md)(…) | Overwrites the style for a specific table element type. |
 
 ### See Also
 

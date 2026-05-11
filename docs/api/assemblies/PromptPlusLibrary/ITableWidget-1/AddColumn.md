@@ -4,38 +4,28 @@
 </br>
 
 
-#### Adds a column to the table. Cannot be used with [`AutoFill`](./AutoFill.md).
+#### Adds a column to the table with custom formatting and alignment options.
 
 ```csharp
-public ITableWidget AddColumn(Expression<Func<T, object>> field, int width, 
-    Func<object, string>? format = null, TextAlignment alignment = TextAlignment.Left, 
-    string? title = null, TextAlignment titlealignment = TextAlignment.Center, 
-    bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null)
+public ITableWidget AddColumn(string title, int width, Func<T, string> rowvalue, 
+    TextAlignment rowAlignment = TextAlignment.Left, 
+    TextAlignment titleAlignment = TextAlignment.Center, bool titlereplaceswidth = true, 
+    int maxslidinglines = 0)
 ```
 
 | parameter | description |
 | --- | --- |
-| field | Expression that defines the field associated with the column. |
-| width | The column width in characters. Must be at least 1. |
-| format | Function to format the field value. If `null`, ToString() will be used. Default is `null`. |
-| alignment | The content alignment. Default is Left. |
-| title | The column title. If `null`, the property name will be used. Default is `null`. |
-| titlealignment | The title alignment. Default is Center. |
-| titlereplaceswidth | If `true`, title width overrides column width when greater. Default is `true`. |
-| textcrop | If `true`, content will be truncated to column size; otherwise, content wraps to multiple lines. Default is `false`. |
-| maxslidinglines | Maximum number of lines when content exceeds column width and *textcrop* is `false`. If `null`, unlimited lines are allowed. Default is `null`. |
+| title | The optional title for the column header. If not specified, the field name is used. |
+| width | The width of the column in characters. |
+| rowvalue | A function that takes an item and returns the value to display in the column. |
+| rowAlignment | The content alignment within the column. The default is TextAlignment.Left. |
+| titleAlignment | The title alignment within the column. The default is TextAlignment.Center. |
+| titlereplaceswidth | When true, the title width overrides the column width if the title is longer. The default is true. |
+| maxslidinglines | The maximum number of sliding lines when content exceeds the column width and textcrop is false. The default is 0. |
 
 ### Return Value
 
-The current [`ITableWidget`](../ITableWidget-1.md) instance for chaining.
-
-### Exceptions
-
-| exception | condition |
-| --- | --- |
-| ArgumentNullException | Thrown if *field* is `null`. |
-| ArgumentOutOfRangeException | Thrown if *width* is less than 1 or if *maxslidinglines* is specified and less than 1. |
-| InvalidOperationException | Thrown if [`AutoFill`](./AutoFill.md) has already been configured. |
+The current [`ITableWidget`](../ITableWidget-1.md) instance for method chaining.
 
 ### See Also
 

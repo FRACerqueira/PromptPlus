@@ -4,7 +4,7 @@
 </br>
 
 
-#### Overwrites styles for the Table widget.
+#### Overwrites the style for a specific table element type.
 
 ```csharp
 public ITableWidget Styles(TableStyles styleType, Style style)
@@ -12,18 +12,18 @@ public ITableWidget Styles(TableStyles styleType, Style style)
 
 | parameter | description |
 | --- | --- |
-| styleType | The [`TableStyles`](../TableStyles.md) to apply. |
-| style | The [`Style`](../Style.md) to use. |
+| styleType | The [`TableStyles`](../TableStyles.md) element type to style. |
+| style | The [`Style`](../Style.md) to apply. |
 
 ### Return Value
 
-The current [`ITableWidget`](../ITableWidget-1.md) instance for chaining.
+The current [`ITableWidget`](../ITableWidget-1.md) instance for method chaining.
 
 ### Exceptions
 
 | exception | condition |
 | --- | --- |
-| ArgumentNullException | Thrown if *style* is `null`. |
+| ArgumentNullException | Thrown when *style* is null. |
 
 ### See Also
 

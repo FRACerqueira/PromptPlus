@@ -34,12 +34,12 @@ public interface IMultiSelectControl<T>
 | [HideTipGroup](IMultiSelectControl-1/HideTipGroup.md)(…) | Controls the visibility of the group name tooltip. Default is `false`. |
 | [Interaction](IMultiSelectControl-1/Interaction.md)(…) |  |
 | [MaxWidth](IMultiSelectControl-1/MaxWidth.md)(…) | Sets the maximum display width for selected items text.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
+| [OnlyView](IMultiSelectControl-1/OnlyView.md)(…) | Configures the control to be in view-only mode, where items can be viewed but not selected. Default is `false`. |
 | [Options](IMultiSelectControl-1/Options.md)(…) | Applies custom options to configure control behavior. |
 | [PageSize](IMultiSelectControl-1/PageSize.md)(…) | Sets the maximum number of items displayed per page. Default is 10. |
 | [PredicateSelected](IMultiSelectControl-1/PredicateSelected.md)(…) | Sets a validation predicate to determine whether an item can be selected. (2 methods) |
 | [Range](IMultiSelectControl-1/Range.md)(…) | Defines the valid range of items that must be selected. |
 | [Run](IMultiSelectControl-1/Run.md)(…) | Runs the MultiSelect control and returns the result. |
-| [ShowAllSelected](IMultiSelectControl-1/ShowAllSelected.md)(…) | Controls whether all selected items are displayed at completion. Default is `false`. |
 | [Styles](IMultiSelectControl-1/Styles.md)(…) | Configures the visual style for a specific element of the MultiSelect control. |
 | [TextSelector](IMultiSelectControl-1/TextSelector.md)(…) | Sets the function to convert items to display text. Default uses `Item.ToString()`. |
 

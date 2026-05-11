@@ -4,6 +4,7 @@
 // ***************************************************************************************
 
 using PromptPlusLibrary.Core;
+using PromptPlusLibrary.Core.Ansi;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -266,9 +267,13 @@ namespace PromptPlusLibrary.Controls
 
                 savedcursor = _bufferScreen.PromptCursor;
 
-                LineScreen[] result = _bufferScreen.DiffBuffer();
-
-                (int left, int _, int scrolled) = ConsolePlus.PreviewCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop + result[^1].Line);
+                int left = 0;
+                int toprow = 0;
+                int scrolled = 0;
+                LineScreen[] result = [];
+                result = _bufferScreen.DiffBuffer();
+                (left, toprow, scrolled) = ConsolePlus.PreviewCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop + result[^1].Line);
+  
                 if (scrolled > 0)
                 {
                     _screenPosition = (left, _screenPosition.StartTop - scrolled);

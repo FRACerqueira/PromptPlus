@@ -4,30 +4,28 @@
 </br>
 
 
-#### Adds a column to the table. Cannot be used with [`AutoFill`](./AutoFill.md).
+#### Adds a column to the table with custom formatting and alignment options.
 
 ```csharp
-public ITableMultiSelectControl AddColumn(Expression<Func<T, object>> field, int width, 
-    Func<object, string>? format = null, TextAlignment alignment = TextAlignment.Left, 
-    string? title = null, TextAlignment titlealignment = TextAlignment.Center, 
-    bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null)
+public ITableMultiSelectControl AddColumn(string title, int width, Func<T, string> rowvalue, 
+    TextAlignment rowAlignment = TextAlignment.Left, 
+    TextAlignment titleAlignment = TextAlignment.Center, bool titlereplaceswidth = true, 
+    int maxslidinglines = 0)
 ```
 
 | parameter | description |
 | --- | --- |
-| field | The expression that defines the field associated with the column. |
-| width | The column width in characters. |
-| format | The function to format the field value. If not specified, uses ToString. |
-| alignment | The content alignment. Default is Left. |
-| title | The column title. If not specified, uses the property name. |
-| titlealignment | The title alignment. Default is Center. |
-| titlereplaceswidth | If `true`, the title width overrides column width when greater; otherwise, the title is truncated to fit the column width. Default is `true`. |
-| textcrop | If `true`, the value will be truncated to the column size; otherwise, the content will be wrapped to multiple lines. Default is `false`. |
-| maxslidinglines | The maximum number of sliding lines when the content length exceeds the column size and *textcrop* is `false`. |
+| title | The optional title for the column header. If not specified, the field name is used. |
+| width | The width of the column in characters. |
+| rowvalue | A function that takes an item and returns the value to display in the column. |
+| rowAlignment | The content alignment within the column. The default is TextAlignment.Left. |
+| titleAlignment | The title alignment within the column. The default is TextAlignment.Center. |
+| titlereplaceswidth | When true, the title width overrides the column width if the title is longer. The default is true. |
+| maxslidinglines | The maximum number of sliding lines when content exceeds the column width and textcrop is false. The default is 0. |
 
 ### Return Value
 
-The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for chaining.
+The current [`ITableMultiSelectControl`](../ITableMultiSelectControl-1.md) instance for method chaining.
 
 ### See Also
 

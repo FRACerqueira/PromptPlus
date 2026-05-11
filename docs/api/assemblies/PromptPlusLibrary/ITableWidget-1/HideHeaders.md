@@ -4,7 +4,7 @@
 </br>
 
 
-#### Hides column headers. Default is `false`.
+#### Sets whether to hide the column headers. The default is false.
 
 ```csharp
 public ITableWidget HideHeaders(bool value = true)
@@ -12,11 +12,11 @@ public ITableWidget HideHeaders(bool value = true)
 
 | parameter | description |
 | --- | --- |
-| value | If `true`, hides the headers. Default is `true`. |
+| value | When true, column headers are hidden; when false, headers are displayed. |
 
 ### Return Value
 
-The current [`ITableWidget`](../ITableWidget-1.md) instance for chaining.
+The current [`ITableWidget`](../ITableWidget-1.md) instance for method chaining.
 
 ### See Also
 

@@ -31,6 +31,13 @@ namespace PromptPlusLibrary
         /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
         ITableMultiSelectControl<T> Default(IEnumerable<T> values, bool usedefaultHistory = true);
 
+        /// <summary>
+        /// Configures the control to be in view-only mode, where items can be viewed but not selected. Default is <c>false</c>. 
+        /// </summary>
+        /// <param name="value">If <c>true</c>, the control is in view-only mode; otherwise, it is editable to select items.</param>
+        /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
+        ITableMultiSelectControl<T> OnlyView(bool value = true);
+
 
         /// <summary>
         /// Enables history and applies custom options to the history feature.
@@ -93,20 +100,24 @@ namespace PromptPlusLibrary
         ITableMultiSelectControl<T> PageSize(byte value);
 
         /// <summary>
-        /// Adds an item to the list.
+        /// Adds a single item to the list.
         /// </summary>
         /// <param name="value">The item to add.</param>
-        /// <param name="disable">If <c>true</c>, the item is added as disabled; otherwise, it is enabled.</param>
-        /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
-        ITableMultiSelectControl<T> AddItem(T value, bool disable = false);
+        /// <param name="valuechecked">Indicates whether the item should be initially checked. Default is <c>false</c>.</param>
+        /// <param name="disable">Indicates whether the item should be disabled. Default is <c>false</c>.</param>
+        /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is <c>null</c>.</exception>
+        ITableMultiSelectControl<T> AddItem(T value, bool valuechecked = false, bool disable = false);
 
         /// <summary>
-        /// Adds a collection of items to the list.
+        /// Adds multiple items to the list.
         /// </summary>
         /// <param name="values">The collection of items to add.</param>
-        /// <param name="disable">If <c>true</c>, all items are added as disabled; otherwise, they are enabled.</param>
-        /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
-        ITableMultiSelectControl<T> AddItems(IEnumerable<T> values, bool disable = false);
+        /// <param name="valuechecked">Indicates whether the items should be initially checked. Default is <c>false</c>.</param>
+        /// <param name="disable">Indicates whether the items should be disabled. Default is <c>false</c>.</param>
+        /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for method chaining.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
+        ITableMultiSelectControl<T> AddItems(IEnumerable<T> values, bool valuechecked = false, bool disable = false);
 
         /// <summary>
         /// Sets a custom item comparator for equality comparison.
@@ -130,13 +141,12 @@ namespace PromptPlusLibrary
         ITableMultiSelectControl<T> MaxWidth(byte maxWidth);
 
         /// <summary>
-        /// Sets the columns used by the filter strategy.
+        /// Sets the filter strategy for filtering items in the collection. Default is <see cref="FilterMode.Disabled"/>.
         /// </summary>
-        /// <param name="filter">The filter strategy for filtering rows. Default is <see cref="FilterMode.Disabled"/>.</param>
-        /// <param name="caseinsensitive">If <c>true</c>, performs case-insensitive string comparison when filtering; otherwise, performs case-sensitive comparison.</param>
-        /// <param name="indexColumn">The zero-based indices of columns to include in the filter.</param>
+        /// <param name="value">The <see cref="FilterMode"/> to apply.</param>
+        /// <param name="caseinsensitive">If <c>true</c> (default), performs case-insensitive string comparison when filtering; otherwise case-sensitive comparison is used.</param>
         /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
-        ITableMultiSelectControl<T> FilterByColumns(FilterMode filter, bool caseinsensitive, params int[] indexColumn);
+        ITableMultiSelectControl<T> Filter(FilterMode value, bool caseinsensitive = true);
 
         /// <summary>
         /// Sets the table layout. Default is <see cref="TableLayout.SingleGridFull"/>.
@@ -161,30 +171,17 @@ namespace PromptPlusLibrary
         ITableMultiSelectControl<T> Styles(TableStyles styleType, Style style);
 
         /// <summary>
-        /// Adds a column to the table. Cannot be used with <see cref="AutoFill(int?, int?)"/>.
+        /// Adds a column to the table with custom formatting and alignment options.
         /// </summary>
-        /// <param name="field">The expression that defines the field associated with the column.</param>
-        /// <param name="width">The column width in characters.</param>
-        /// <param name="format">The function to format the field value. If not specified, uses <see cref="object.ToString()"/>.</param>
-        /// <param name="alignment">The content alignment. Default is <see cref="TextAlignment.Left"/>.</param>
-        /// <param name="title">The column title. If not specified, uses the property name.</param>
-        /// <param name="titlealignment">The title alignment. Default is <see cref="TextAlignment.Center"/>.</param>
-        /// <param name="titlereplaceswidth">If <c>true</c>, the title width overrides column width when greater; otherwise, the title is truncated to fit the column width. Default is <c>true</c>.</param>
-        /// <param name="textcrop">If <c>true</c>, the value will be truncated to the column size; otherwise, the content will be wrapped to multiple lines. Default is <c>false</c>.</param>
-        /// <param name="maxslidinglines">The maximum number of sliding lines when the content length exceeds the column size and <paramref name="textcrop"/> is <c>false</c>.</param>
-        /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
-        ITableMultiSelectControl<T> AddColumn(Expression<Func<T, object>> field, int width, Func<object, string>? format = null, TextAlignment alignment = TextAlignment.Left, string? title = null, TextAlignment titlealignment = TextAlignment.Center, bool titlereplaceswidth = true, bool textcrop = false, int? maxslidinglines = null);
-
-        /// <summary>
-        /// Automatically generates columns based on public properties. Cannot be used with <see cref="AddColumn"/> or AutoFit.
-        /// Header alignment will always be <see cref="TextAlignment.Center"/>. Content alignment will always be <see cref="TextAlignment.Left"/> with sliding lines enabled.
-        /// Columns are generated from public properties of the data class recognized by <see cref="TypeCode"/>. <see cref="TypeCode.DBNull"/> and <see cref="TypeCode.Object"/> will be ignored.
-        /// The column size will be automatically adjusted based on the title size (property name) and the <paramref name="minwidth"/>/<paramref name="maxwidth"/> parameters, or content width when min/max width is <c>null</c>.
-        /// </summary>
-        /// <param name="minwidth">The minimum column width.</param>
-        /// <param name="maxwidth">The maximum column width.</param>
-        /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
-        ITableMultiSelectControl<T> AutoFill(int? minwidth, int? maxwidth = null);
+        /// <param name="title">The optional title for the column header. If not specified, the field name is used.</param>
+        /// <param name="width">The width of the column in characters.</param>
+        /// <param name="rowvalue">A function that takes an item and returns the value to display in the column.</param>
+        /// <param name="rowAlignment">The content alignment within the column. The default is TextAlignment.Left.</param>
+        /// <param name="titleAlignment">The title alignment within the column. The default is TextAlignment.Center.</param>
+        /// <param name="titlereplaceswidth">When true, the title width overrides the column width if the title is longer. The default is true.</param>
+        /// <param name="maxslidinglines">The maximum number of sliding lines when content exceeds the column width and textcrop is false. The default is 0.</param>
+        /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for method chaining.</returns>
+        ITableMultiSelectControl<T> AddColumn(string title, int width, Func<T, string> rowvalue, TextAlignment rowAlignment = TextAlignment.Left, TextAlignment titleAlignment = TextAlignment.Center, bool titlereplaceswidth = true, int maxslidinglines = 0);
 
         /// <summary>
         /// Sets whether to show separators between rows. Default is <c>false</c>.
@@ -199,14 +196,6 @@ namespace PromptPlusLibrary
         /// <param name="value">If <c>true</c>, hides headers; otherwise, shows them.</param>
         /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
         ITableMultiSelectControl<T> HideHeaders(bool value = true);
-
-        /// <summary>
-        /// Sets a custom format function for columns by field type when not specified by <see cref="AddColumn"/>.
-        /// </summary>
-        /// <typeparam name="T1">The type to convert.</typeparam>
-        /// <param name="funcfomatType">The formatting function.</param>
-        /// <returns>The current <see cref="ITableMultiSelectControl{T}"/> instance for chaining.</returns>
-        ITableMultiSelectControl<T> AddFormatType<T1>(Func<object, string> funcfomatType);
 
         /// <summary>
         /// Runs the Table MultiSelect Control and returns the result.

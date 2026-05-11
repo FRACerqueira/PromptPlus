@@ -34,6 +34,7 @@ public interface ISelectControl<T>
 | [HideTipGroup](ISelectControl-1/HideTipGroup.md)(…) | Hides the tip with the group name. Default is `false`. |
 | [Interaction](ISelectControl-1/Interaction.md)(…) |  |
 | [MaxWidth](ISelectControl-1/MaxWidth.md)(…) | Sets the maximum display width for selected item text.Default value is [`MaxWidth`](./IPromptPlusConfig/MaxWidth.md). |
+| [OnlyView](ISelectControl-1/OnlyView.md)(…) | Configures the control to be in view-only mode, where items can be viewed but not selected. Default is `false`. |
 | [Options](ISelectControl-1/Options.md)(…) | Applies custom options to the control. |
 | [PageSize](ISelectControl-1/PageSize.md)(…) | Sets the maximum number of items to display per page. Default value is 10. |
 | [PredicateSelected](ISelectControl-1/PredicateSelected.md)(…) | Sets a validation predicate to determine if a selected item is valid. (2 methods) |

@@ -493,6 +493,10 @@ namespace PromptPlusLibrary.Controls.NodeTreeSelect
                     answer = Messages.CanceledKey;
                 }
             }
+            if (answer.Length > _maxWidth!)
+            {
+                answer = answer[.._maxWidth] + "...";
+            }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
                 screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[NodeTreeStyles.Prompt]);

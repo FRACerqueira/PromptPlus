@@ -1,19 +1,18 @@
 ![PromptPlus Logo](https://raw.githubusercontent.com/FRACerqueira/PromptPlus/refs/heads/main/icon.png)
 
-### ITableMultiSelectControl&lt;T&gt;.AddFormatType&lt;T1&gt; method
+### ITableMultiSelectControl&lt;T&gt;.OnlyView method
 </br>
 
 
-#### Sets a custom format function for columns by field type when not specified by [`AddColumn`](./AddColumn.md).
+#### Configures the control to be in view-only mode, where items can be viewed but not selected. Default is `false`.
 
 ```csharp
-public ITableMultiSelectControl AddFormatType<T1>(Func<object, string> funcfomatType)
+public ITableMultiSelectControl OnlyView(bool value = true)
 ```
 
 | parameter | description |
 | --- | --- |
-| T1 | The type to convert. |
-| funcfomatType | The formatting function. |
+| value | If `true`, the control is in view-only mode; otherwise, it is editable to select items. |
 
 ### Return Value
 

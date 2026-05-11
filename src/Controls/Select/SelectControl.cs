@@ -53,6 +53,7 @@ namespace PromptPlusLibrary.Controls.Select
         private int _lengthSeparationline;
         private string _lastinput;
         private byte _maxWidth;
+        private bool _onlyView;
         private EmacsBuffer? _answerBuffer;
         private bool _updatePosAnswerBuffer;
 
@@ -66,6 +67,12 @@ namespace PromptPlusLibrary.Controls.Select
 
 
         #region ISelectControl
+
+        public ISelectControl<T> OnlyView(bool value = true)
+        {
+            _onlyView = value;
+            return this;
+        }
 
         public ISelectControl<T> MaxWidth(byte maxWidth)
         {
@@ -325,7 +332,11 @@ namespace PromptPlusLibrary.Controls.Select
                     }
                 }
             }
-
+            if (_onlyView)
+            {
+                _historyOptions = null;
+                _autoSelect = false;
+            }
             if (_historyOptions != null)
             {
                 _itemHistories = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
@@ -369,7 +380,7 @@ namespace PromptPlusLibrary.Controls.Select
             {
                 _localpaginator.FirstItem();
             }
-            if (_localpaginator!.SelectedIndex >= 0 && _localpaginator.SelectedItem!.Disabled)
+            if (!_onlyView && _localpaginator!.SelectedIndex >= 0 && _localpaginator.SelectedItem!.Disabled)
             {
                 SetError(Messages.SelectionDisabled);
             }
@@ -445,6 +456,14 @@ namespace PromptPlusLibrary.Controls.Select
                     }
                     else if (keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null)
                     {
+                        if (_onlyView)
+                        {
+                            _modeView = ModeView.Select;
+#pragma warning disable CS8604 // Possible null reference argument.
+                            ResultCtrl = new ResultPrompt<T>(default, false);
+                            break;
+#pragma warning restore CS8604 // Possible null reference argument.
+                        }
                         _indexTooptip = 0;
                         if (_localpaginator.SelectedItem.Disabled)
                         {
@@ -506,7 +525,7 @@ namespace PromptPlusLibrary.Controls.Select
                         }
                         if (_localpaginator.SelectedItem != null)
                         {
-                            if (_localpaginator.SelectedItem.Disabled)
+                            if (_localpaginator.SelectedItem.Disabled && !_onlyView)
                             {
                                 SetError(Messages.SelectionDisabled);
                             }
@@ -526,7 +545,7 @@ namespace PromptPlusLibrary.Controls.Select
                         }
                         if (_localpaginator.SelectedItem != null)
                         {
-                            if (_localpaginator.SelectedItem.Disabled)
+                            if (_localpaginator.SelectedItem.Disabled && !_onlyView)
                             {
                                 SetError(Messages.SelectionDisabled);
                             }
@@ -540,7 +559,7 @@ namespace PromptPlusLibrary.Controls.Select
                         {
                             if (_localpaginator.SelectedItem != null)
                             {
-                                if (_localpaginator.SelectedItem.Disabled)
+                                if (_localpaginator.SelectedItem.Disabled && !_onlyView)
                                 {
                                     SetError(Messages.SelectionDisabled);
                                 }
@@ -555,7 +574,7 @@ namespace PromptPlusLibrary.Controls.Select
                         {
                             if (_localpaginator.SelectedItem != null)
                             {
-                                if (_localpaginator.SelectedItem.Disabled)
+                                if (_localpaginator.SelectedItem.Disabled && !_onlyView)
                                 {
                                     SetError(Messages.SelectionDisabled);
                                 }
@@ -609,7 +628,7 @@ namespace PromptPlusLibrary.Controls.Select
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (!_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    else if ((!_onlyView || _modeView == ModeView.Filter) && !_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
                     {
                         _updatePosAnswerBuffer = false;
                         _indexTooptip = 0;
@@ -642,10 +661,19 @@ namespace PromptPlusLibrary.Controls.Select
 
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
+            if (_onlyView)
+            {
+                screenBuffer.WriteLine("", _optStyles[SelectStyles.Answer]);
+                return true;
+            }
             string answer = string.Empty;
             if (!ResultCtrl!.Value.IsAborted && _localpaginator!.SelectedItem is not null)
             {
                 answer = _localpaginator!.SelectedItem.Text!;
+            }
+            if (answer.Length > _maxWidth!)
+            {
+                answer = answer[.._maxWidth] + "...";
             }
             if (ResultCtrl!.Value.IsAborted)
             {
@@ -653,6 +681,10 @@ namespace PromptPlusLibrary.Controls.Select
                 {
                     answer = Messages.CanceledKey;
                 }
+            }
+            if (answer.Length > _maxWidth)
+            {
+                answer = answer[.._maxWidth] + "...";
             }
             if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
             {
@@ -838,6 +870,12 @@ namespace PromptPlusLibrary.Controls.Select
 
         private void WriteAnswer(BufferScreen screenBuffer)
         {
+            if (_onlyView && _modeView == ModeView.Select)
+            {
+                screenBuffer.SavePromptCursor();
+                screenBuffer.WriteLine("",_optStyles[SelectStyles.Answer]);
+                return;
+            }
             if (_modeView == ModeView.Select)
             {
                 string text = string.Empty;

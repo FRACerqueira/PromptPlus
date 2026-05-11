@@ -198,6 +198,14 @@ namespace PromptPlusLibrary
         /// <returns>The current <see cref="ISelectControl{T}"/> instance for chaining.</returns>
         ISelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
 
+
+        /// <summary>
+        /// Configures the control to be in view-only mode, where items can be viewed but not selected. Default is <c>false</c>. 
+        /// </summary>
+        /// <param name="value">If <c>true</c>, the control is in view-only mode; otherwise, it is editable to select items.</param>
+        /// <returns>The current <see cref="ISelectControl{T}"/> instance for chaining.</returns>
+        ISelectControl<T> OnlyView(bool value = true);
+
         /// <summary>
         /// Sets the maximum display width for selected item text.Default value is <see cref="IPromptPlusConfig.MaxWidth"/>.
         /// </summary>

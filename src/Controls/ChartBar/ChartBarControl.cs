@@ -634,7 +634,17 @@ namespace PromptPlusLibrary.Controls.ChartBar
         {
             WritePrompt(screenBuffer);
 
-            WriteAnswer(screenBuffer);
+            screenBuffer.Write("  ", new Style(_currentitem!.Color!.Value, _currentitem!.Color!.Value));
+            screenBuffer.Write(" ", Style.Default());
+            if (!IsWidgetControl)
+            {
+                var answer = _answerBuffer!.ToString();
+                if (answer.Length > _maxWidth!)
+                {
+                    answer = answer[.._maxWidth] + "...";
+                }
+                screenBuffer.WriteLine(answer, _optStyles[ChartBarStyles.Answer]);
+            }
 
             if (!_hideChart.HasFlag(HideChart.ChartbarAtFinish))
             {

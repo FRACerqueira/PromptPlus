@@ -5,78 +5,33 @@
 
 using PromptPlusLibrary;
 using System.Globalization;
+using System.Text.Json;
 
 namespace ConsoleTableMultiSelectSamples
 {
     internal class Program
     {
-        internal class MyComplexCol(string value)
-        {
-            public string Id { get; } = Guid.NewGuid().ToString()[..8];
-            public string Name { get; } = value;
-        }
-
         internal class MyTable
         {
             public int Id { get; set; }
-            public required string MyText { get; set; }
+            public string MyText { get; set; } = string.Empty;
             public DateTime? MyDate { get; set; }
-            public required MyComplexCol ComplexCol { get; set; }
-        }
-
-
-        internal class MyTableManyCols
-        {
-            public int Id { get; set; }
-            public required string MyText { get; set; }
-            public string D01 { get; set; } = new string('x', 20);
-            public string D02 { get; set; } = new string('x', 20);
-            public string D03 { get; set; } = new string('x', 20);
-            public string D04 { get; set; } = new string('x', 20);
-            public string D05 { get; set; } = new string('x', 20);
-            public string D06 { get; set; } = new string('x', 20);
-            public string D07 { get; set; } = new string('x', 20);
-            public string D08 { get; set; } = new string('x', 20);
-            public string D09 { get; set; } = new string('x', 20);
-            public string D10 { get; set; } = new string('x', 20);
-            public string D11 { get; set; } = new string('x', 20);
-            public string D12 { get; set; } = new string('x', 20);
-            public string D13 { get; set; } = new string('x', 20);
-            public string D14 { get; set; } = new string('x', 20);
-            public string D15 { get; set; } = new string('x', 20);
-            public string D16 { get; set; } = new string('x', 20);
-            public string D17 { get; set; } = new string('x', 20);
-            public string D18 { get; set; } = new string('x', 20);
-            public string D19 { get; set; } = new string('x', 20);
-            public string D20 { get; set; } = new string('x', 20);
-            public string D21 { get; set; } = new string('x', 20);
-            public string D22 { get; set; } = new string('x', 20);
-            public string D23 { get; set; } = new string('x', 20);
-            public string D24 { get; set; } = new string('x', 20);
-            public string D25 { get; set; } = new string('x', 20);
-            public string D26 { get; set; } = new string('x', 20);
-            public string D27 { get; set; } = new string('x', 20);
-            public string D28 { get; set; } = new string('x', 20);
-            public string D29 { get; set; } = new string('x', 20);
-            public string D30 { get; set; } = new string('x', 20);
-            public string D31 { get; set; } = new string('x', 20);
         }
 
         internal static MyTable[] CreateItems(int max)
         {
             var result = new List<MyTable>();
             var flag = false;
-            result.Add(new MyTable { Id = 0, MyDate = DateTime.Now, MyText = $"Test0 linha1{Environment.NewLine}Test0 linha2", ComplexCol = new MyComplexCol("C0") });
             for (int i = 1; i < max; i++)
             {
                 flag = !flag;
                 if (flag)
                 {
-                    result.Add(new MyTable { Id = i, MyText = $"Test{i}", ComplexCol = new MyComplexCol($"C{i}") });
+                    result.Add(new MyTable { Id = i, MyText = $"Test{i}" });
                 }
                 else
                 {
-                    result.Add(new MyTable { Id = i, MyDate = DateTime.Now.AddDays(i), MyText = $"Test{i} very very very very very very very very very very very very very very very long", ComplexCol = new MyComplexCol($"C{i}") });
+                    result.Add(new MyTable { Id = i, MyDate = DateTime.Now.AddDays(i), MyText = $"Test{i} very very very very very very very very very very very very very very very long" });
                 }
             }
             return [.. result];
@@ -93,31 +48,69 @@ namespace ConsoleTableMultiSelectSamples
             PromptPlus.Console.ResetColor();
             PromptPlus.Console.Clear();
 
-            PromptPlus.Widgets.DoubleDash($"TableMultiSelect - Autofill", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
+            PromptPlus.Widgets.DoubleDash($"TableMultiSelect - basic", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
+            var tbl = PromptPlus.Controls.TableMultiSelect<MyTable>("Your Prompt : ", "Description Table")
+                    .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled" }, true)
+                    .AddItems(data)
+                    .AddColumn("Id", 10, (item) => item.Id.ToString())
+                    .AddColumn("Date", 20, (item) => (item.MyDate ?? DateTime.Now).ToString("G"))
+                    .AddColumn("My Text1", 15, (item) => $"1:{item.MyText}", maxslidinglines: 2)
+                    .AddColumn("My Text2", 15, (item) => $"2:{item.MyText}", maxslidinglines: 2)
+                    .AddColumn("My Text3", 15, (item) => $"3:{item.MyText}", maxslidinglines: 2)
+                    .AddColumn("My Text4", 15, (item) => $"4:{item.MyText}", maxslidinglines: 2)
+                    .AddColumn("My Text5", 15, (item) => $"5:{item.MyText}", maxslidinglines: 2)
+                    .AddColumn("My Text6", 15, (item) => $"6:{item.MyText}", maxslidinglines: 2)
+                    .AddColumn("My Text7", 15, (item) => $"7:{item.MyText}", maxslidinglines: 2)
+                    .AddColumn("My Text8", 15, (item) => $"8:{item.MyText}", maxslidinglines: 2)
+                    .Run();
 
-            var tbl = PromptPlus.Controls.TableMultiSelect<MyTable>("Your Prompt : ", "Descripion Table")
-                        .AddItems(data)
-                        .AutoFill(0, 80)
-                        .AddFormatType<DateTime>(FmtDate)
-                        .Run();
+            PromptPlus.Console.WriteLine($"IsAborted : {tbl.IsAborted}, Value({tbl.Content?.Length})");
 
-            PromptPlus.Console.WriteLine($"IsAborted : {tbl.IsAborted}, Value({tbl.Content!.Length})");
 
-            PromptPlus.Widgets.DoubleDash($"TableMultiSelect - Autofill with custom answer", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
+            PromptPlus.Widgets.DoubleDash($"TableMultiSelect -with custom answer", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
+
+            tbl = PromptPlus.Controls.TableMultiSelect<MyTable>("Your Prompt : ", "Description Table")
+                    .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled" }, true)
+                    .AddItems(data)
+                    .TextSelector(x => $"{x.Id}:{x.MyText.Replace(Environment.NewLine, " ")}".Trim())
+                    .AddColumn("Id", 10, (item) => item.Id.ToString())
+                    .AddColumn("Date", 20, (item) => (item.MyDate ?? DateTime.Now).ToString("G"))
+                    .AddColumn("My Text", 20, (item) => item.MyText, maxslidinglines: 2)
+                    .Run();
+            PromptPlus.Console.WriteLine($"IsAborted : {tbl.IsAborted}, Value({tbl.Content?.Length})");
+
+
+            PromptPlus.Widgets.DoubleDash("TableMultiSelect - with history", extraLines: 1);
+            //this code for sample or pre-load History, the control internally carries out this management.
+            PromptPlus.Controls.History("SampleTableMultiSelect")
+                .AddHistory(JsonSerializer.Serialize<MyTable>(data[3]))
+                .Save();
 
             tbl = PromptPlus.Controls.TableMultiSelect<MyTable>("Your Prompt : ", "Descripion Table")
                     .AddItems(data)
-                    .AutoFill(0, 80)
-                    .TextSelector(x => $"{x.Id}:{x.MyText}")
-                    .AddFormatType<DateTime>(FmtDate)
-                        .Run();
+                    .AddColumn("Id", 10, (item) => item.Id.ToString())
+                    .AddColumn("Date", 20, (item) => (item.MyDate ?? DateTime.Now).ToString("G"))
+                    .AddColumn("My Text", 20, (item) => item.MyText, maxslidinglines: 2)
+                    .EqualItems((item1, item2) => item1.Id == item2.Id)
+                    .TextSelector(x => $"{x.Id}:{x.MyText.Replace(Environment.NewLine, " ")}".Trim())
+                    .EnabledHistory("SampleTableSelector")
+                    .PageSize(5)
+                    .Run();
+            PromptPlus.Console.WriteLine($"IsAborted : {tbl.IsAborted}, Value({tbl.Content?.Length})");
 
-            PromptPlus.Widgets.DoubleDash($"TableMultiSelect - Autofill with custom colors", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
 
+            //this code for sample. Remove history to persistent storage.
+            PromptPlus.Controls.History("SampleTableMultiSelect")
+                .Remove();
+
+            PromptPlus.Widgets.DoubleDash($"TableMulSelect - with custom colors", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
+                
             tbl = PromptPlus.Controls.TableMultiSelect<MyTable>("Your Prompt : ", "Description Table")
                     .AddItems(data)
-                    .AutoFill(0, 80)
-                    .AddFormatType<DateTime>(FmtDate)
+                    .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled" }, true)
+                    .AddColumn("Id", 10, (item) => item.Id.ToString())
+                    .AddColumn("Date", 20, (item) => (item.MyDate ?? DateTime.Now).ToString("G"))
+                    .AddColumn("My Text", 20, (item) => item.MyText, maxslidinglines: 2)
                     .Styles(TableStyles.Lines, Color.Red)
                     .Styles(TableStyles.TableContent, Color.Yellow)
                     .Styles(TableStyles.TableHeader, Color.Blue)
@@ -127,62 +120,18 @@ namespace ConsoleTableMultiSelectSamples
             PromptPlus.Console.WriteLine($"IsAborted : {tbl.IsAborted}, Value({tbl.Content?.Length})");
 
 
-            PromptPlus.Widgets.DoubleDash($"TableMultiSelect - Autofill and FilterByColumns(Contains) enabled('F4') for column 2 and 3", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
-
-             tbl = PromptPlus.Controls.TableMultiSelect<MyTable>("Your Prompt : ", "Description Table")
-                        .AddItems(CreateItems(17))
-                        .FilterByColumns(FilterMode.Contains,true,2,3)
-                        .AutoFill(0, 80)
-                        .AddFormatType<DateTime>(FmtDate)
-                        .Run();
-
-            PromptPlus.Console.WriteLine($"IsAborted : {tbl.IsAborted}, Value({tbl.Content?.Length})");
-
-
-            PromptPlus.Widgets.DoubleDash("TableMultiSelect - Autofill with many columns");
-            var newid = -1;
-
-            var tblmany = PromptPlus.Controls.TableMultiSelect<MyTableManyCols>("Your Prompt : ", "Description Table")
-                 .Interaction(new MyTableManyCols[5], (_,ctrl) =>
-                 {
-                     newid++;
-                     ctrl.AddItem(new MyTableManyCols() { Id = newid, MyText = "x" });
-                 })
-                 .AutoFill(10)
-                 .AddFormatType<DateTime>(FmtDate)
-                 .Run();
-
-            PromptPlus.Console.WriteLine($"IsAborted : {tblmany.IsAborted}, Value({tblmany.Content?.Length})");
-
-            PromptPlus.Widgets.DoubleDash($"TableMultiSelect - Column definition", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
+            PromptPlus.Widgets.DoubleDash($"TableMultiSelect - FilterByColumns(Contains) enabled('F4')", DashOptions.DoubleBorder, style: Color.Yellow, extraLines: 1);
 
             tbl = PromptPlus.Controls.TableMultiSelect<MyTable>("Your Prompt : ", "Description Table")
-              .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled", ComplexCol = new MyComplexCol($"C{data.Length}") }, true)
-                .AddItems(data)
-                .AddColumn(field: (item) => item.Id, width: 10)
-                .AddColumn(field: (item) => item.MyDate!, width: 15/*,alignment: Alignment.Center*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text: {arg}", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text1: {arg}", title: $"Mytext1", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text2: {arg}", title: $"Mytext2", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text3: {arg}", title: $"Mytext3", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text4: {arg}", title: $"Mytext4", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text5: {arg}", title: $"Mytext5", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text8: {arg}", title: $"Mytext8", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text9: {arg}", title: $"Mytext9", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.MyText, width: 20, format: (arg) => $"Text10: {arg}", title: $"Mytext10", maxslidinglines: 2/*, textcrop:true*/)
-                .AddColumn(field: (item) => item.ComplexCol, width: 20, format: (arg) => $"{((MyComplexCol)arg).Id}:{((MyComplexCol)arg).Name}")
-                .AddColumn(field: (item) => item.ComplexCol.Name, width: 10)
-                .AddFormatType<DateTime>(FmtDate)
-                .Run();
+                   .AddItems(CreateItems(17))
+                   .AddItem(new MyTable { Id = data.Length, MyText = $"Test{data.Length} disabled" }, true)
+                   .AddColumn("Id", 10, (item) => item.Id.ToString())
+                   .AddColumn("Date", 20, (item) => (item.MyDate ?? DateTime.Now).ToString("G"))
+                   .AddColumn("My Text", 20, (item) => item.MyText, maxslidinglines: 2)
+                   .Filter(FilterMode.Contains, true)
+                   .Run();
 
             PromptPlus.Console.WriteLine($"IsAborted : {tbl.IsAborted}, Value({tbl.Content?.Length})");
-
-        }
-
-        private static string FmtDate(object arg)
-        {
-            var value = (DateTime)arg;
-            return value.ToString("G");
         }
     }
 }
