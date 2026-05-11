@@ -1258,7 +1258,7 @@ namespace PromptPlusLibrary.Controls.FileSelect
                 {
                     break;
                 }
-                (string key, bool isload, List<ItemNodeControl<ItemFile>> values) = EnqueueNewitems(_items[index].UniqueId,
+                (string _, bool _, List<ItemNodeControl<ItemFile>> values) = EnqueueNewitems(_items[index].UniqueId,
                     _items[index].Level,
                     _items[index].Value.FullPath);
                 _items[index].IsExpanded = true;
