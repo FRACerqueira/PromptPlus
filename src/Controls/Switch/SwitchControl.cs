@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 
 namespace PromptPlusLibrary.Controls.Switch
@@ -296,6 +297,7 @@ namespace PromptPlusLibrary.Controls.Switch
                     else if (keyinfo.IsPressEnterKey())
                     {
                         ResultCtrl = new ResultPrompt<bool?>(_currentValue, false);
+                        SaveHistory(_currentValue);
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
@@ -347,6 +349,19 @@ namespace PromptPlusLibrary.Controls.Switch
         public override void FinalizeControl()
         {
             // none
+        }
+
+        private void SaveHistory(bool value)
+        {
+            if (_historyOptions == null)
+            {
+                return;
+            }
+            string aux = JsonSerializer.Serialize<bool>(value);
+            FileHistory.ClearHistory(_historyOptions!.FileNameValue);
+            IList<ItemHistory> hist = FileHistory.AddHistory(aux, _historyOptions!.ExpirationTimeValue, null);
+            FileHistory.SaveHistory(_historyOptions!.FileNameValue, hist);
+
         }
     }
 }

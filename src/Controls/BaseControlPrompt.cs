@@ -4,7 +4,6 @@
 // ***************************************************************************************
 
 using PromptPlusLibrary.Core;
-using PromptPlusLibrary.Core.Ansi;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -33,7 +33,7 @@
 ----
 ## What's new in the latest version
 
-### V5.0.7
+### V5.0.7 / V5.0.8
 [**Top**](#table-of-contents)
 
 - Improved : Added OnlyView method to all select/multiselect interfaces and implementations for view-only mode.   
@@ -41,6 +41,8 @@
 - Fixed    : TableSelect and TableMultiSelect : Correct key to move Column (left/right to ctrl-left/ctrl-right).
 - Removed  : TableSelect/TableMultiSelect: Removed AutoFill/AddFormatType.
 - Improved : Updated TableMultiSelectControl: AddItem/AddItems to support initial checked state.
+- Fixed    : Correct parameter order in MultiSelectControl - AddItem/Additems methods.
+- Fixed    : SaveHistory to SwitchControl.
 
 ### V5.0.6
 [**Top**](#table-of-contents)

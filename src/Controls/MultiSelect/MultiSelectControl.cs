@@ -142,7 +142,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             ArgumentNullException.ThrowIfNull(value, nameof(value));
 
             _sequence++;
-            _items.Add(new ItemSelect<T>(_sequence.ToString(), value, valuechecked, disable));
+            _items.Add(new ItemSelect<T>(_sequence.ToString(), value, disable, valuechecked));
             return this;
         }
 
@@ -152,7 +152,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
 
             foreach (T? value in values)
             {
-                AddItem(value, disable);
+                AddItem(value, valuechecked, disable);
             }
             return this;
         }
@@ -166,7 +166,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             if (lastindex < 0)
             {
                 _sequence++;
-                _items.Add(new ItemSelect<T>(_sequence.ToString(), value, valuechecked, disable)
+                _items.Add(new ItemSelect<T>(_sequence.ToString(), value,disable, valuechecked)
                 {
                     Group = group,
                     IsFirstItemGroup = true,
@@ -179,7 +179,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 throw new ArgumentOutOfRangeException(nameof(group), "Group already exists");
             }
             _sequence++;
-            _items.Add(new ItemSelect<T>(_sequence.ToString(), value, valuechecked, disable)
+            _items.Add(new ItemSelect<T>(_sequence.ToString(), value,disable, valuechecked)
             {
                 Group = group,
                 IsLastItemGroup = true
