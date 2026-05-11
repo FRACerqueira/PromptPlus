@@ -27,6 +27,15 @@ PromptPlus was developed in C# with target frameworks:
 - .NET 9
 - .NET 8
 
+*** What's new in V5.0.7 ***
+----------------------------
+
+- Improved : Added OnlyView method to all select/multiselect interfaces and implementations for view-only mode.   
+- Improved : Updated TableSelect and TableMultiSelect: Changed AddColumn to use Func<T, string>, simplified filtering, and improved answer rendering.
+- Fixed    : TableSelect and TableMultiSelect : Correct key to move Column (left/right to ctrl-left/ctrl-right).
+- Removed  : TableSelect/TableMultiSelect: Removed AutoFill/AddFormatType.
+- Improved : Updated TableMultiSelectControl: AddItem/AddItems to support initial checked state.
+
 *** What's new in V5.0.6 ***
 ----------------------------
 
