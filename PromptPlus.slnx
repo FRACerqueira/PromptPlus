@@ -1,0 +1,31 @@
+<Solution>
+   <Folder Name="/samples/">
+    <Project Path="samples/CalendarControlSamples/CalendarControlSamples.csproj" />
+    <Project Path="samples/CalendarWidgetSamples/CalendarWidgetSamples.csproj" />
+    <Project Path="samples/ChartBarControlSamples/ChartBarControlSamples.csproj" />
+    <Project Path="samples/FileControlSamples/FileControlSamples.csproj" />
+    <Project Path="samples/InputControlSamples/InputControlsSamples.csproj" />
+    <Project Path="samples/KeyPressControlSamples/KeyPressControlSamples.csproj" />
+    <Project Path="samples/MaskEditCurrencyControlSamples/MaskEditCurrencyControlSamples.csproj" />
+    <Project Path="samples/MaskEditDateTimeControlSamples/MaskEditDateTimeControlSamples.csproj" />
+    <Project Path="samples/MaskEditNumberControlSamples/MaskEditNumberControlSamples.csproj" />
+    <Project Path="samples/MaskEditStringControlSamples/MaskEditStringControlSamples.csproj" />
+    <Project Path="samples/MultiFileControlSamples/MultiFileControlSamples.csproj" />
+    <Project Path="samples/MultiSelectControlSamples/MultiSelectControlSamples.csproj" />
+    <Project Path="samples/MultiTableControlSamples/MultiTableControlSamples.csproj" />
+    <Project Path="samples/MultiTasksControlSamples/MultiTasksControlSamples.csproj" />
+    <Project Path="samples/MultiTreeControlSamples/MultiTreeControlSamples.csproj" />
+    <Project Path="samples/ProgressBarControlSamples/ProgressBarControlSamples.csproj" />
+    <Project Path="samples/PromptPlusConsoleFeaturesSamples/PromptPlusConsoleFeaturesSamples.csproj" />
+    <Project Path="samples/SelectControlSamples/SelectControlSamples.csproj" />
+    <Project Path="samples/SliderControlSamples/SliderControlSamples.csproj" />
+    <Project Path="samples/SliderWidgetSamples/SliderWidgetSamples.csproj" />
+    <Project Path="samples/SwitchControlSamples/SwitchControlSamples.csproj" />
+    <Project Path="samples/SwitchWidgetSamples/SwitchWidgetSamples.csproj" />
+    <Project Path="samples/TableControlSamples/TableControlSamples.csproj" />
+    <Project Path="samples/TaskControlSamples/TaskControlSamples.csproj" />
+    <Project Path="samples/TimeControlSamples/TimeControlSamples.csproj" />
+    <Project Path="samples/TreeControlSamples/TreeControlSamples.csproj" />
+  </Folder>
+  <Project Path="src/PromptPlus.csproj" />
+</Solution>

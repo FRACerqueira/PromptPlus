@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Abort" xml:space="preserve">
+    <value>中止</value>
+  </data>
+  <data name="CanceledKey" xml:space="preserve">
+    <value>已取消</value>
+  </data>
+  <data name="Emac_alt_b" xml:space="preserve">
+    <value>Alt+B:向后移动一个词</value>
+  </data>
+  <data name="Emac_alt_c" xml:space="preserve">
+    <value>Alt+C:将光标下的字符转为大写并移动到单词末尾</value>
+  </data>
+  <data name="Emac_alt_d" xml:space="preserve">
+    <value>Alt+D:清除光标后的单词</value>
+  </data>
+  <data name="Emac_alt_f" xml:space="preserve">
+    <value>Alt+F:向前移动一个词</value>
+  </data>
+  <data name="Emac_alt_l" xml:space="preserve">
+    <value>Alt+L:从光标到单词末尾转为小写</value>
+  </data>
+  <data name="Emac_alt_u" xml:space="preserve">
+    <value>Alt+U:从光标到单词末尾转为大写</value>
+  </data>
+  <data name="Emac_ctrl_a" xml:space="preserve">
+    <value>Ctrl+A:将光标移到行首（等同于Home键）</value>
+  </data>
+  <data name="Emac_ctrl_b" xml:space="preserve">
+    <value>Ctrl+B:将光标向后移动一个字符（等同于左箭头键）</value>
+  </data>
+  <data name="Emac_ctrl_d" xml:space="preserve">
+    <value>Ctrl+D:删除当前字符（等同于Delete键）</value>
+  </data>
+  <data name="Emac_ctrl_e" xml:space="preserve">
+    <value>Ctrl+E:将光标移到行尾（等同于End键）</value>
+  </data>
+  <data name="Emac_ctrl_f" xml:space="preserve">
+    <value>Ctrl+F:将光标向前移动一个字符（等同于右箭头键）</value>
+  </data>
+  <data name="Emac_ctrl_h" xml:space="preserve">
+    <value>Ctrl+H:删除上一个字符（等同于退格键）</value>
+  </data>
+  <data name="Emac_ctrl_k" xml:space="preserve">
+    <value>Ctrl+K:清除光标后的行内容</value>
+  </data>
+  <data name="Emac_ctrl_l" xml:space="preserve">
+    <value>Ctrl+L:清除所有内容</value>
+  </data>
+  <data name="Emac_ctrl_t" xml:space="preserve">
+    <value>Ctrl+T:交换前两个字符</value>
+  </data>
+  <data name="Emac_ctrl_u" xml:space="preserve">
+    <value>Ctrl+U:清除光标前的行内容</value>
+  </data>
+  <data name="Emac_ctrl_w" xml:space="preserve">
+    <value>Ctrl+W:清除光标前的单词</value>
+  </data>
+  <data name="Emac_Insert" xml:space="preserve">
+    <value>Insert:切换输入替换模式（默认为插入模式）</value>
+  </data>
+  <data name="EntryHistory" xml:space="preserve">
+    <value>输入历史记录</value>
+  </data>
+  <data name="EntrySuggestion" xml:space="preserve">
+    <value>输入建议</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>错误！</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>筛选</value>
+  </data>
+  <data name="HistoryNotFound" xml:space="preserve">
+    <value>输入数据的历史记录为空</value>
+  </data>
+  <data name="InvalidDateSelect" xml:space="preserve">
+    <value>选择的日期无效！</value>
+  </data>
+  <data name="MoveDays" xml:space="preserve">
+    <value>左/右:更改日期</value>
+  </data>
+  <data name="MoveDayWeek" xml:space="preserve">
+    <value>上/下:更改同一周同一天</value>
+  </data>
+  <data name="MoveMonth" xml:space="preserve">
+    <value>Tab/Shift Tab:更改月份</value>
+  </data>
+  <data name="MoveToday" xml:space="preserve">
+    <value>Home:今天</value>
+  </data>
+  <data name="MoveYear" xml:space="preserve">
+    <value>PgUp/PgDn:更改年份</value>
+  </data>
+  <data name="MsgErrorPromptPlusConfig" xml:space="preserve">
+    <value>加载 PromptPlus 配置时出错。</value>
+  </data>
+  <data name="MsgErrorStyleSchema" xml:space="preserve">
+    <value>StyleSchema 尚未初始化。</value>
+  </data>
+  <data name="MultiSelectMaxSelection" xml:space="preserve">
+    <value>已超过最大项目选择数量（{0}）</value>
+  </data>
+  <data name="MultiSelectMinSelection" xml:space="preserve">
+    <value>最少需要选择 {0} 个项目</value>
+  </data>
+  <data name="MultiTasksFailed" xml:space="preserve">
+    <value>（{0} 个失败）</value>
+  </data>
+  <data name="TooltipToggleFullPath" xml:space="preserve">
+    <value>切换完整路径/名称</value>
+  </data>
+  <data name="TooltipExpandCollapse" xml:space="preserve">
+    <value>+/-:展开/折叠</value>
+  </data>
+  <data name="TooltipTreeTab" xml:space="preserve">
+    <value>Tab:下一个/展开 ShiftTab:上一个/折叠</value>
+  </data>
+  <data name="NoChar" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="PaginationTemplate" xml:space="preserve">
+    <value>数量:{0} 项。第 {1}/{2} 页。</value>
+  </data>
+  <data name="PredicateSelectInvalid" xml:space="preserve">
+    <value>选中的项目不符合条件</value>
+  </data>
+  <data name="PressAnyKey" xml:space="preserve">
+    <value>按任意键</value>
+  </data>
+  <data name="PressKey" xml:space="preserve">
+    <value>按键</value>
+  </data>
+  <data name="ResizeTerminalWarning" xml:space="preserve">
+    <value>调整终端大小（{0} 高度和 {1} 宽度）。当前为（{2} 和 {3}）...</value>
+  </data>
+  <data name="SelectionDisabled" xml:space="preserve">
+    <value>项目已禁用</value>
+  </data>
+  <data name="ShowingCalendarNotes" xml:space="preserve">
+    <value>显示 {0} 日的备注</value>
+  </data>
+  <data name="TooltipBase" xml:space="preserve">
+    <value>提示</value>
+  </data>
+  <data name="TooltipBaseNavegate" xml:space="preserve">
+    <value>箭头键:导航</value>
+  </data>
+  <data name="TooltipCheckAll" xml:space="preserve">
+    <value>全选/取消全选</value>
+  </data>
+  <data name="TooltipCheckItem" xml:space="preserve">
+    <value>空格:选中/取消选中</value>
+  </data>
+  <data name="TooltipRecursiveMark" xml:space="preserve">
+    <value>Ctrl+空格:递归选中/取消选中</value>
+  </data>
+  <data name="TooltipCountCheck" xml:space="preserve">
+    <value>已选 {0} 项。</value>
+  </data>
+  <data name="MultiFileRunningBackground" xml:space="preserve">
+    <value>等待任务</value>
+  </data>
+  <data name="MultiFileOnlySelected" xml:space="preserve">
+    <value>仅已选</value>
+  </data>
+  <data name="TooltipEnterFinish" xml:space="preserve">
+    <value>Enter:完成</value>
+  </data>
+  <data name="TooltipEnterSelect" xml:space="preserve">
+    <value>Enter:选择项目</value>
+  </data>
+  <data name="TooltipChartBarSwitchLayout" xml:space="preserve">
+    <value>{0}:切换布局</value>
+  </data>
+  <data name="TooltipChartBarSwitchLegend" xml:space="preserve">
+    <value>{0}:显示/隐藏图例</value>
+  </data>
+  <data name="TooltipChartBarSwitchOrder" xml:space="preserve">
+    <value>{0}:更改顺序</value>
+  </data>
+  <data name="TooltipFilter" xml:space="preserve">
+    <value>输入字符以启动筛选</value>
+  </data>
+  <data name="TooltipFilterAllSelected" xml:space="preserve">
+    <value>仅显示已标记</value>
+  </data>
+  <data name="TooltipHistoryClear" xml:space="preserve">
+    <value>Ctrl+Del:清除历史记录</value>
+  </data>
+  <data name="TooltipHistoryShow" xml:space="preserve">
+    <value>显示/隐藏历史记录（最少 {0} 个字符）</value>
+  </data>
+  <data name="TooltipJump" xml:space="preserve">
+    <value>输入首字符跳转到项目</value>
+  </data>
+  <data name="TooltipNavegateTextPrompt" xml:space="preserve">
+    <value>左/右/开始/结束: 在提示符内移动光标</value>
+  </data>
+  <data name="TooltipPages" xml:space="preserve">
+    <value>上/下/PgUp/PgDn: 移动选择器, Ctrl+Home/End:第一/最后项目</value>
+  </data>
+  <data name="TooltipShowHide" xml:space="preserve">
+    <value>显示/隐藏工具提示</value>
+  </data>
+  <data name="TooltipSliderLeftRight" xml:space="preserve">
+    <value>左/右/Tab/ShiftTab:更改值</value>
+  </data>
+  <data name="TooltipSliderUpDown" xml:space="preserve">
+    <value>上/下/Tab/ShiftTab:更改值</value>
+  </data>
+  <data name="TooltipSuggestionShiftTab" xml:space="preserve">
+    <value>ShiftTab:取消建议</value>
+  </data>
+  <data name="TooltipSuggestionTab" xml:space="preserve">
+    <value>Tab:显示建议，再次接受（最少 {0} 个字符）</value>
+  </data>
+  <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
+    <value>Tab/ShiftTab:建议（最少 {0} 个字符）</value>
+  </data>
+  <data name="TooltipSwitch" xml:space="preserve">
+    <value>左/右（或空格）:切换</value>
+  </data>
+  <data name="TooltipToggleNotes" xml:space="preserve">
+    <value>查看/隐藏备注</value>
+  </data>
+  <data name="TooltipViewPassword" xml:space="preserve">
+    <value>显示/隐藏密码</value>
+  </data>
+  <data name="YesChar" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="Space" xml:space="preserve">
+    <value>空格</value>
+  </data>
+  <data name="InputFinishEnter" xml:space="preserve">
+    <value>Enter:完成</value>
+  </data>
+  <data name="MaskeditInputPending" xml:space="preserve">
+    <value>存在未上报的条目。</value>
+  </data>
+  <data name="MaskEditInvalidInput" xml:space="preserve">
+    <value>含有无效值的条目</value>
+  </data>
+  <data name="MaskEditPosAnyChar" xml:space="preserve">
+    <value>任意字符 (A-Z,a-z,0-9)</value>
+  </data>
+  <data name="MaskEditPosConstant" xml:space="preserve">
+    <value>常量 ({0})</value>
+  </data>
+  <data name="MaskEditPosCurrencySymbol" xml:space="preserve">
+    <value>货币符号</value>
+  </data>
+  <data name="MaskEditPosCustom" xml:space="preserve">
+    <value>{0}{1}仅({2})</value>
+  </data>
+  <data name="MaskEditPosDateSep" xml:space="preserve">
+    <value>日期分隔符</value>
+  </data>
+  <data name="MaskEditPosDay" xml:space="preserve">
+    <value>日 (0-9)</value>
+  </data>
+  <data name="MaskEditPosDecSep" xml:space="preserve">
+    <value>小数分隔符</value>
+  </data>
+  <data name="MaskEditPosGrpSep" xml:space="preserve">
+    <value>组分隔符</value>
+  </data>
+  <data name="MaskEditPosHour" xml:space="preserve">
+    <value>时 (0-9)</value>
+  </data>
+  <data name="MaskEditPosLetter" xml:space="preserve">
+    <value>字母 (A-Z,a-z)</value>
+  </data>
+  <data name="MaskEditPosLetterLower" xml:space="preserve">
+    <value>字母 (a-z)</value>
+  </data>
+  <data name="MaskEditPosLetterUpper" xml:space="preserve">
+    <value>字母 (A-Z)</value>
+  </data>
+  <data name="MaskEditPosMinute" xml:space="preserve">
+    <value>分 (0-9)</value>
+  </data>
+  <data name="MaskEditPosMonth" xml:space="preserve">
+    <value>月 (0-9)</value>
+  </data>
+  <data name="MaskEditPosNumeric" xml:space="preserve">
+    <value>数字 (0-9)</value>
+  </data>
+  <data name="MaskEditPosSecond" xml:space="preserve">
+    <value>秒 (0-9)</value>
+  </data>
+  <data name="MaskEditPosSing" xml:space="preserve">
+    <value>符号 +-</value>
+  </data>
+  <data name="MaskEditPosSpace" xml:space="preserve">
+    <value>空格</value>
+  </data>
+  <data name="MaskEditPosTimeSep" xml:space="preserve">
+    <value>时间分隔符</value>
+  </data>
+  <data name="MaskEditPosYear" xml:space="preserve">
+    <value>年 (0-9)</value>
+  </data>
+  <data name="TooltipCancelEsc" xml:space="preserve">
+    <value>{0}:取消</value>
+  </data>
+  <data name="TooltipToggle" xml:space="preserve">
+    <value>{0}:切换工具提示</value>
+  </data>
+  <data name="TooltipJumpdelimiter" xml:space="preserve">
+    <value>Tab/ShiftTab:在分隔符之间跳转 </value>
+  </data>
+  <data name="TooltipTableColumnNav" xml:space="preserve">
+    <value>Tab/ShiftTab:导航列</value>
+  </data>
+  <data name="Col_Info" xml:space="preserve">
+    <value>列</value>
+  </data>
+</root>

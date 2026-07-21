@@ -1,0 +1,45 @@
+﻿// ***************************************************************************************
+// MIT LICENCE
+// The maintenance and evolution is maintained by the PromptPlus project under MIT license
+// ***************************************************************************************
+
+#pragma warning disable IDE0130 // Namespace does not match folder structure
+namespace PromptPlusLibrary
+#pragma warning restore IDE0130 // Namespace does not match folder structure
+{
+    /// <summary>
+    /// Defines available ProgressBar visual types.
+    /// </summary>
+    public enum ProgressBarType
+    {
+        /// <summary>
+        /// A progress bar that fills as progress is made.
+        /// </summary>
+        Fill,
+
+        /// <summary>
+        /// A simple bar-style progress bar.
+        /// </summary>
+        Bar,
+
+        /// <summary>
+        /// A progress bar with square blocks.
+        /// </summary>
+        Square,
+
+        /// <summary>
+        /// A light-weight progress bar.
+        /// </summary>
+        Light,
+
+        /// <summary>
+        /// A progress bar with double light blocks.
+        /// </summary>
+        DoubleLight,
+
+        /// <summary>
+        /// A progress bar with dots.
+        /// </summary>
+        Dot
+    }
+}

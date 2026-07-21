@@ -61,11 +61,11 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to or press any other key to end.
+        ///   Looks up a localized string similar to Abort.
         /// </summary>
-        internal static string AnyKey {
+        internal static string Abort {
             get {
-                return ResourceManager.GetString("AnyKey", resourceCulture);
+                return ResourceManager.GetString("Abort", resourceCulture);
             }
         }
         
@@ -75,6 +75,15 @@ namespace PromptPlusLibrary.Resources {
         internal static string CanceledKey {
             get {
                 return ResourceManager.GetString("CanceledKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Col.
+        /// </summary>
+        internal static string Col_Info {
+            get {
+                return ResourceManager.GetString("Col_Info", resourceCulture);
             }
         }
         
@@ -241,7 +250,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Entry history.
+        ///   Looks up a localized string similar to Entry histories.
         /// </summary>
         internal static string EntryHistory {
             get {
@@ -250,11 +259,11 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choice options.
+        ///   Looks up a localized string similar to Entry Suggestions.
         /// </summary>
-        internal static string EntryOptions {
+        internal static string EntrySuggestion {
             get {
-                return ResourceManager.GetString("EntryOptions", resourceCulture);
+                return ResourceManager.GetString("EntrySuggestion", resourceCulture);
             }
         }
         
@@ -268,65 +277,11 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error at AutoComplete Service.
-        /// </summary>
-        internal static string ErrorAutoCompleteService {
-            get {
-                return ResourceManager.GetString("ErrorAutoCompleteService", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Folder: {0}.
-        /// </summary>
-        internal static string FileInfoFolder {
-            get {
-                return ResourceManager.GetString("FileInfoFolder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Root folder.
-        /// </summary>
-        internal static string FileInfoRoot {
-            get {
-                return ResourceManager.GetString("FileInfoRoot", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Filter.
         /// </summary>
         internal static string Filter {
             get {
                 return ResourceManager.GetString("Filter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Filtered.
-        /// </summary>
-        internal static string Filtered {
-            get {
-                return ResourceManager.GetString("Filtered", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Only Selected.
-        /// </summary>
-        internal static string FilterOnlySelected {
-            get {
-                return ResourceManager.GetString("FilterOnlySelected", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Group.
-        /// </summary>
-        internal static string Group {
-            get {
-                return ResourceManager.GetString("Group", resourceCulture);
             }
         }
         
@@ -349,38 +304,11 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter:Apply filter.
+        ///   Looks up a localized string similar to Invalid date selected!.
         /// </summary>
-        internal static string InputFinishFilter {
+        internal static string InvalidDateSelect {
             get {
-                return ResourceManager.GetString("InputFinishFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid Key:{0}.
-        /// </summary>
-        internal static string InvalidKey {
-            get {
-                return ResourceManager.GetString("InvalidKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Loading....
-        /// </summary>
-        internal static string Loading {
-            get {
-                return ResourceManager.GetString("Loading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enter:Load more items..
-        /// </summary>
-        internal static string LoadMore {
-            get {
-                return ResourceManager.GetString("LoadMore", resourceCulture);
+                return ResourceManager.GetString("InvalidDateSelect", resourceCulture);
             }
         }
         
@@ -628,11 +556,38 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Space:Check/Uncheck.
+        ///   Looks up a localized string similar to Error loading PromptPlus configuration..
         /// </summary>
-        internal static string MultiSelectCheck {
+        internal static string MsgErrorPromptPlusConfig {
             get {
-                return ResourceManager.GetString("MultiSelectCheck", resourceCulture);
+                return ResourceManager.GetString("MsgErrorPromptPlusConfig", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to StyleSchema has not been initialized..
+        /// </summary>
+        internal static string MsgErrorStyleSchema {
+            get {
+                return ResourceManager.GetString("MsgErrorStyleSchema", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only selected.
+        /// </summary>
+        internal static string MultiFileOnlySelected {
+            get {
+                return ResourceManager.GetString("MultiFileOnlySelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Awaiting task.
+        /// </summary>
+        internal static string MultiFileRunningBackground {
+            get {
+                return ResourceManager.GetString("MultiFileRunningBackground", resourceCulture);
             }
         }
         
@@ -655,6 +610,15 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ({0} failed) .
+        /// </summary>
+        internal static string MultiTasksFailed {
+            get {
+                return ResourceManager.GetString("MultiTasksFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to N.
         /// </summary>
         internal static string NoChar {
@@ -664,106 +628,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Path:.
-        /// </summary>
-        internal static string NodePath {
-            get {
-                return ResourceManager.GetString("NodePath", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to There are marked items, cannot be collapsed.
-        /// </summary>
-        internal static string NotCollapse {
-            get {
-                return ResourceManager.GetString("NotCollapse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Empty notes  for input data.
-        /// </summary>
-        internal static string NoteNotFound {
-            get {
-                return ResourceManager.GetString("NoteNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No.
-        /// </summary>
-        internal static string NoText {
-            get {
-                return ResourceManager.GetString("NoText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Off.
-        /// </summary>
-        internal static string OffValue {
-            get {
-                return ResourceManager.GetString("OffValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to On.
-        /// </summary>
-        internal static string OnValue {
-            get {
-                return ResourceManager.GetString("OnValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Highest value.
-        /// </summary>
-        internal static string OrderHighest {
-            get {
-                return ResourceManager.GetString("OrderHighest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Label ascending.
-        /// </summary>
-        internal static string OrderLabelAsc {
-            get {
-                return ResourceManager.GetString("OrderLabelAsc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Label descending.
-        /// </summary>
-        internal static string OrderLabelDec {
-            get {
-                return ResourceManager.GetString("OrderLabelDec", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Smallest value.
-        /// </summary>
-        internal static string OrderSmallest {
-            get {
-                return ResourceManager.GetString("OrderSmallest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Standard.
-        /// </summary>
-        internal static string OrderStandard {
-            get {
-                return ResourceManager.GetString("OrderStandard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Displaying:{1}/{2} pages of {0} items..
+        ///   Looks up a localized string similar to Qty:{0} items. {1} of {2} pages..
         /// </summary>
         internal static string PaginationTemplate {
             get {
@@ -781,20 +646,29 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pressed key.
+        ///   Looks up a localized string similar to Press any key.
         /// </summary>
-        internal static string PressedKey {
+        internal static string PressAnyKey {
             get {
-                return ResourceManager.GetString("PressedKey", resourceCulture);
+                return ResourceManager.GetString("PressAnyKey", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search Filter:.
+        ///   Looks up a localized string similar to Press Key.
         /// </summary>
-        internal static string SearchFilter {
+        internal static string PressKey {
             get {
-                return ResourceManager.GetString("SearchFilter", resourceCulture);
+                return ResourceManager.GetString("PressKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resize the terminal ({0} height and {1} width). The current one is ({2} and {3})....
+        /// </summary>
+        internal static string ResizeTerminalWarning {
+            get {
+                return ResourceManager.GetString("ResizeTerminalWarning", resourceCulture);
             }
         }
         
@@ -808,7 +682,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Showing notes of the day {0}.
+        ///   Looks up a localized string similar to Showing notes from day {0}.
         /// </summary>
         internal static string ShowingCalendarNotes {
             get {
@@ -817,92 +691,29 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Left/Right:Short change, Tab/Shift+Tab:Larger change.
+        ///   Looks up a localized string similar to Space.
         /// </summary>
-        internal static string SliderNumberLeftRightKeyNavigator {
+        internal static string Space {
             get {
-                return ResourceManager.GetString("SliderNumberLeftRightKeyNavigator", resourceCulture);
+                return ResourceManager.GetString("Space", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Up/Down:Short change, Tab/Shift+Tab:Larger change.
+        ///   Looks up a localized string similar to Tips.
         /// </summary>
-        internal static string SliderNumberUpDownKeyNavigator {
+        internal static string TooltipBase {
             get {
-                return ResourceManager.GetString("SliderNumberUpDownKeyNavigator", resourceCulture);
+                return ResourceManager.GetString("TooltipBase", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shift+Space = Space for filter.
+        ///   Looks up a localized string similar to Arrows:Navigate.
         /// </summary>
-        internal static string SpaceMultSelect {
+        internal static string TooltipBaseNavegate {
             get {
-                return ResourceManager.GetString("SpaceMultSelect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Left/Right:Change.
-        /// </summary>
-        internal static string SwitchKeyNavigator {
-            get {
-                return ResourceManager.GetString("SwitchKeyNavigator", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Rows:{0}.
-        /// </summary>
-        internal static string TableAnswerMultiRow {
-            get {
-                return ResourceManager.GetString("TableAnswerMultiRow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Row:{0}.
-        /// </summary>
-        internal static string TableAnswerRow {
-            get {
-                return ResourceManager.GetString("TableAnswerRow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ctrl+Left/Right:Move column.
-        /// </summary>
-        internal static string TableMoveCols {
-            get {
-                return ResourceManager.GetString("TableMoveCols", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Executing {0} task(s).
-        /// </summary>
-        internal static string TaksRunning {
-            get {
-                return ResourceManager.GetString("TaksRunning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} completed, {1} Error, {2} canceled.
-        /// </summary>
-        internal static string TaskFiniched {
-            get {
-                return ResourceManager.GetString("TaskFiniched", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Task{0}.
-        /// </summary>
-        internal static string TaskSeqName {
-            get {
-                return ResourceManager.GetString("TaskSeqName", resourceCulture);
+                return ResourceManager.GetString("TooltipBaseNavegate", resourceCulture);
             }
         }
         
@@ -916,38 +727,47 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move, Enter:Finish.
+        ///   Looks up a localized string similar to {0}:Switch Layout.
         /// </summary>
-        internal static string TooltipChart {
+        internal static string TooltipChartBarSwitchLayout {
             get {
-                return ResourceManager.GetString("TooltipChart", resourceCulture);
+                return ResourceManager.GetString("TooltipChartBarSwitchLayout", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}:Switch view legend.
+        ///   Looks up a localized string similar to {0}:Show/Hide Legend.
         /// </summary>
-        internal static string TooltipChartSwitchLegend {
+        internal static string TooltipChartBarSwitchLegend {
             get {
-                return ResourceManager.GetString("TooltipChartSwitchLegend", resourceCulture);
+                return ResourceManager.GetString("TooltipChartBarSwitchLegend", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}:Switch order view.
+        ///   Looks up a localized string similar to {0}:Change Order.
         /// </summary>
-        internal static string TooltipChartSwitchOrder {
+        internal static string TooltipChartBarSwitchOrder {
             get {
-                return ResourceManager.GetString("TooltipChartSwitchOrder", resourceCulture);
+                return ResourceManager.GetString("TooltipChartBarSwitchOrder", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}:Toggle Chart type.
+        ///   Looks up a localized string similar to Chech/Uncheck all item.
         /// </summary>
-        internal static string TooltipChartSwitchType {
+        internal static string TooltipCheckAll {
             get {
-                return ResourceManager.GetString("TooltipChartSwitchType", resourceCulture);
+                return ResourceManager.GetString("TooltipCheckAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Space:Check/Uncheck.
+        /// </summary>
+        internal static string TooltipCheckItem {
+            get {
+                return ResourceManager.GetString("TooltipCheckItem", resourceCulture);
             }
         }
         
@@ -961,29 +781,47 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alt+:Expand All.
+        ///   Looks up a localized string similar to Enter:Finish.
         /// </summary>
-        internal static string TooltipExpandAllPress {
+        internal static string TooltipEnterFinish {
             get {
-                return ResourceManager.GetString("TooltipExpandAllPress", resourceCulture);
+                return ResourceManager.GetString("TooltipEnterFinish", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}:Toggle filter mode.
+        ///   Looks up a localized string similar to Enter:Select item.
         /// </summary>
-        internal static string TooltipFilterMode {
+        internal static string TooltipEnterSelect {
             get {
-                return ResourceManager.GetString("TooltipFilterMode", resourceCulture);
+                return ResourceManager.GetString("TooltipEnterSelect", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}:Toggle filter only selected.
+        ///   Looks up a localized string similar to +/-:Expand/Collapse.
         /// </summary>
-        internal static string TooltipFilterOnlySelected {
+        internal static string TooltipExpandCollapse {
             get {
-                return ResourceManager.GetString("TooltipFilterOnlySelected", resourceCulture);
+                return ResourceManager.GetString("TooltipExpandCollapse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type a character to start the filter.
+        /// </summary>
+        internal static string TooltipFilter {
+            get {
+                return ResourceManager.GetString("TooltipFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show marked only.
+        /// </summary>
+        internal static string TooltipFilterAllSelected {
+            get {
+                return ResourceManager.GetString("TooltipFilterAllSelected", resourceCulture);
             }
         }
         
@@ -997,25 +835,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Esc:Cancel historic.
-        /// </summary>
-        internal static string TooltipHistoryEsc {
-            get {
-                return ResourceManager.GetString("TooltipHistoryEsc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0}:Show Historic.
-        /// </summary>
-        internal static string TooltipHistoryKey {
-            get {
-                return ResourceManager.GetString("TooltipHistoryKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0}:Show Historic(Min. {1} chars).
+        ///   Looks up a localized string similar to Show/Hide Historic(Min. {0} chars).
         /// </summary>
         internal static string TooltipHistoryShow {
             get {
@@ -1024,25 +844,34 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ctrl+Home:Previus level, Ctrl+End:Last Item of level.
+        ///   Looks up a localized string similar to Type the initial character to jump to the item.
         /// </summary>
-        internal static string TooltipLevelHomeEnd {
+        internal static string TooltipJump {
             get {
-                return ResourceManager.GetString("TooltipLevelHomeEnd", resourceCulture);
+                return ResourceManager.GetString("TooltipJump", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ordination:{0}.
+        ///   Looks up a localized string similar to Tab/ShitTab:Jumps between delimiters .
         /// </summary>
-        internal static string TooltipOrder {
+        internal static string TooltipJumpdelimiter {
             get {
-                return ResourceManager.GetString("TooltipOrder", resourceCulture);
+                return ResourceManager.GetString("TooltipJumpdelimiter", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown:Move Selector, Ctrl+Home/End:First/Last item.
+        ///   Looks up a localized string similar to Left/Right/Start/End: Moves the cursor within the prompt.
+        /// </summary>
+        internal static string TooltipNavegateTextPrompt {
+            get {
+                return ResourceManager.GetString("TooltipNavegateTextPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Up/Down/PgUp/PgDown: Move Selector, Ctrl+Home/End:First/Last item.
         /// </summary>
         internal static string TooltipPages {
             get {
@@ -1051,25 +880,16 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}:Toggle Mark All.
+        ///   Looks up a localized string similar to Ctrl+Space:Check/Uncheck recursively.
         /// </summary>
-        internal static string TooltipSelectAll {
+        internal static string TooltipRecursiveMark {
             get {
-                return ResourceManager.GetString("TooltipSelectAll", resourceCulture);
+                return ResourceManager.GetString("TooltipRecursiveMark", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}:Toggle Mark All Groups.
-        /// </summary>
-        internal static string TooltipSelectAllGroups {
-            get {
-                return ResourceManager.GetString("TooltipSelectAllGroups", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0}:Show/Hide tooltips.
+        ///   Looks up a localized string similar to Show/Hide tooltips.
         /// </summary>
         internal static string TooltipShowHide {
             get {
@@ -1078,20 +898,65 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Esc:Cancel suggestion.
+        ///   Looks up a localized string similar to Left/Right/Tab/ShiftTab:Changes value.
         /// </summary>
-        internal static string TooltipSuggestionEsc {
+        internal static string TooltipSliderLeftRight {
             get {
-                return ResourceManager.GetString("TooltipSuggestionEsc", resourceCulture);
+                return ResourceManager.GetString("TooltipSliderLeftRight", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tab/Shift Tab:Suggestions.
+        ///   Looks up a localized string similar to Up/Down/Tab/ShiftTab:Changes value.
         /// </summary>
-        internal static string TooltipSuggestionToggle {
+        internal static string TooltipSliderUpDown {
             get {
-                return ResourceManager.GetString("TooltipSuggestionToggle", resourceCulture);
+                return ResourceManager.GetString("TooltipSliderUpDown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ShiftTab:Abort Sugestion.
+        /// </summary>
+        internal static string TooltipSuggestionShiftTab {
+            get {
+                return ResourceManager.GetString("TooltipSuggestionShiftTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab:Show Sugestion,again Accept (Min. {0} chars).
+        /// </summary>
+        internal static string TooltipSuggestionTab {
+            get {
+                return ResourceManager.GetString("TooltipSuggestionTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab/ShiftTab:Suggestions (Min. {0} chars).
+        /// </summary>
+        internal static string TooltipSuggestionToggleAuto {
+            get {
+                return ResourceManager.GetString("TooltipSuggestionToggleAuto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left/Right (or Space):Toggle.
+        /// </summary>
+        internal static string TooltipSwitch {
+            get {
+                return ResourceManager.GetString("TooltipSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab/ShiftTab:Navigate columns.
+        /// </summary>
+        internal static string TooltipTableColumnNav {
+            get {
+                return ResourceManager.GetString("TooltipTableColumnNav", resourceCulture);
             }
         }
         
@@ -1105,16 +970,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to +/-:Expand/Collapse.
-        /// </summary>
-        internal static string TooltipToggleExpandPress {
-            get {
-                return ResourceManager.GetString("TooltipToggleExpandPress", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0}:Toggle Full Path/Name Folder.
+        ///   Looks up a localized string similar to Toggle full path/name.
         /// </summary>
         internal static string TooltipToggleFullPath {
             get {
@@ -1123,7 +979,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}:Toggle Notes.
+        ///   Looks up a localized string similar to View/Hide Notes.
         /// </summary>
         internal static string TooltipToggleNotes {
             get {
@@ -1132,47 +988,20 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}:Switch view password.
+        ///   Looks up a localized string similar to Tab:Next/Expand ShiftTab:Prev/Collapse.
+        /// </summary>
+        internal static string TooltipTreeTab {
+            get {
+                return ResourceManager.GetString("TooltipTreeTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch view password.
         /// </summary>
         internal static string TooltipViewPassword {
             get {
                 return ResourceManager.GetString("TooltipViewPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Timer:.
-        /// </summary>
-        internal static string TooltipWaitTimer {
-            get {
-                return ResourceManager.GetString("TooltipWaitTimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unloading....
-        /// </summary>
-        internal static string Unloading {
-            get {
-                return ResourceManager.GetString("Unloading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Valid key:{0}.
-        /// </summary>
-        internal static string ValidAnyKey {
-            get {
-                return ResourceManager.GetString("ValidAnyKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid value!.
-        /// </summary>
-        internal static string ValidateInvalid {
-            get {
-                return ResourceManager.GetString("ValidateInvalid", resourceCulture);
             }
         }
         
@@ -1182,15 +1011,6 @@ namespace PromptPlusLibrary.Resources {
         internal static string YesChar {
             get {
                 return ResourceManager.GetString("YesChar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Yes.
-        /// </summary>
-        internal static string YesText {
-            get {
-                return ResourceManager.GetString("YesText", resourceCulture);
             }
         }
     }

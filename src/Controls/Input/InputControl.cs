@@ -3,91 +3,144 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using ConsolePlusLibrary;
+using PromptPlusLibrary.Controls.Common;
+using PromptPlusLibrary.Controls.History;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
+
 
 namespace PromptPlusLibrary.Controls.Input
 {
-    internal sealed class InputControl : BaseControlPrompt<string>, IInputControl
+    /// <inheritdoc/>   
+    internal sealed class InputControl : BaseControlPrompt<string>, IInputControl, IInputSecretControl
     {
-        private readonly Dictionary<InputStyles, Style> _optStyles = BaseControlOptions.LoadStyle<InputStyles>();
-        private readonly Dictionary<ModeView, string[]> _toggerTooptips = new()
-        {
-            { ModeView.Input,[] },
-            { ModeView.Suggestion,[] },
-            { ModeView.History,[] }
-        };
+        /// <summary>
+        /// Total rows the control template reserves around the items list:
+        /// prompt+answer line, optional error/group line, optional description line,
+        /// tooltip line and an extra row for the pagination footer when active.
+        /// Used to derive the maximum visible page size from the available console height.
+        /// </summary>
+        private const int ReservedTemplateLines = 7;
+        private int _effectivePageSize;
 
-        private Func<char, bool> _acceptInput = (_) => true;
-        private Func<string, (bool, string?)>? _predicatevalidselect;
+        private static readonly CompositeFormat s_TooltipHistoryShowFormat = CompositeFormat.Parse(PromptPlusResources.TooltipHistoryShow);
+        private static readonly CompositeFormat s_TooltipSuggestionToggleAutoFormat = CompositeFormat.Parse(PromptPlusResources.TooltipSuggestionToggleAuto);
+        private static readonly CompositeFormat s_TooltipSuggestionTabFormat = CompositeFormat.Parse(PromptPlusResources.TooltipSuggestionTab);
+        private readonly Dictionary<InputStyles, Style> _optStyles;
+        private Func<char, bool>? _acceptvalue = (_) => true;
         private Func<string, string>? _changeDescription;
+        private Func<string, Task<string>>? _changeDescriptionAsync;
         private string _defaultValue = string.Empty;
-        private bool _useDefaultHistory;
         private string _defaultIfEmpty = string.Empty;
+        private bool _useDefaultHistory;
         private HistoryOptions? _historyOptions;
-        private HotKey? _enabledViewSecret;
         private CaseOptions _inputToCase = CaseOptions.Any;
+        private int _maxLength = int.MaxValue;
+        private Func<string, string[]>? _suggestionHandler;
+        private Func<string, Task<string[]>>? _suggestionHandlerAsync;
+        private Func<string, (bool, string?)>? _predicatevalue = (input) => (true, input);
+        private Func<string, Task<(bool, string?)>>? _predicatevalueAsync;
         private char _secretChar;
         private bool _isinputsecret;
         private bool _passwordvisible;
-        private int _maxLength = int.MaxValue;
-        private int? _maxWidth;
-        private Func<string, string[]>? _suggestionHandler;
-        private string[] _suggestions = [];
-        private int _curentSuggestion = -1;
+        private HotKey? _enabledViewSecret;
         private IList<ItemHistory>? _itemHistories;
-        private EmacsBuffer? _inputdata;
-        private bool _abortedKeyPress;
+        private EmacsConsoleBuffer? _inputdata;
         private ModeView _modeView = ModeView.Input;
-        private string? _savedinput;
-        private Paginator<ItemHistory>? _localpaginator;
-        private int _indexTooptip;
-        private string _tooltipModeInput = string.Empty;
-        private string _tooltipModeHistory = string.Empty;
-        private string _tooltipModeSuggestion = string.Empty;
-
-        public InputControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        private readonly Dictionary<ModeView, string[]> _toggerTooptips = new()
         {
-            _enabledViewSecret = ConfigPlus.HotKeyPasswordView;
-            _secretChar = ConfigPlus.SecretChar;
-            _maxWidth = ConfigPlus.MaxWidth;
-        }
+            { ModeView.Input,[] },
+            { ModeView.Sugestions,[] },
+            { ModeView.History,[] }
+        };
+        private int _indexTooptip;
+        private bool _updatePosAnswerBuffer;
+        private string _lastinput = string.Empty;
+        private Paginator<ItemHistory>? _localHistpaginator;
+        private string[]? _suggestions;
+        private int _curentSuggestion = -1;
+        private bool _autocompleteSuggestions = true;
+        private byte _minimumSuggestionLength;
+        private Paginator<(string UniqueId, string SuggestionValue)>? _localSuggestionPaginator;
 
-        #region IInputControls
+        #region IInputControl IInputSecretControl Implementation
 
-        public IInputControl AcceptInput(Func<char, bool> value)
+        /// <inheritdoc/>
+        IInputControl IInputControl.AcceptInput(Func<char, bool> value)
         {
             ArgumentNullException.ThrowIfNull(value);
-            _acceptInput = value;
+            _acceptvalue = value;
             return this;
         }
 
-        public IInputControl ChangeDescription(Func<string, string> value)
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.AcceptInput(Func<char, bool> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _acceptvalue = value;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        IInputControl IInputControl.ChangeDescription(Func<string, string> value)
         {
             ArgumentNullException.ThrowIfNull(value);
             _changeDescription = value;
             return this;
         }
 
-        public IInputControl Default(string value, bool usedefaultHistory = true)
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.ChangeDescription(Func<string, string> value)
         {
-            _defaultValue = value;
-            _useDefaultHistory = usedefaultHistory;
+            ArgumentNullException.ThrowIfNull(value);
+            _changeDescription = value;
             return this;
         }
 
+        /// <inheritdoc/>
+        IInputControl IInputControl.ChangeDescriptionAsync(Func<string, Task<string>> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _changeDescription = null;
+            _changeDescriptionAsync = value;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.ChangeDescriptionAsync(Func<string, Task<string>> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _changeDescription = null;
+            _changeDescriptionAsync = value;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IInputControl Default(string value, bool useDefaultHistory)
+        {
+            _defaultValue = value;
+            _useDefaultHistory = useDefaultHistory;
+            return this;
+        }
+
+        /// <inheritdoc/>
         public IInputControl DefaultIfEmpty(string value)
         {
             _defaultIfEmpty = value;
             return this;
         }
 
-        public IInputControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        /// <inheritdoc/>
+        public IInputControl EnabledHistory(string filename, Action<IHistoryOptions>? options)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))
@@ -99,181 +152,326 @@ namespace PromptPlusLibrary.Controls.Input
             return this;
         }
 
-        public IInputControl InputToCase(CaseOptions value)
+        /// <inheritdoc/>
+        IInputControl IInputControl.InputToCase(CaseOptions value)
         {
             _inputToCase = value;
             return this;
         }
 
-        public IInputControl IsSecret(char? value = null, bool enabledView = true)
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.InputToCase(CaseOptions value)
         {
-            _isinputsecret = true;
-            _secretChar = value ?? '#';
-            _enabledViewSecret = enabledView ? ConfigPlus.HotKeyPasswordView : null;
+            _inputToCase = value;
             return this;
         }
 
-        public IInputControl MaxLength(int maxLength, byte? maxWidth = null)
+        /// <inheritdoc/>
+        IInputControl IInputControl.MaxLength(int maxLength)
         {
-            if (maxLength < 1)
+            if (maxLength <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxLength), "MaxLength must be greater than or equal to 1.");
+                _maxLength = int.MaxValue;
             }
-            _maxLength = maxLength;
-            if (maxWidth.HasValue)
+            else
             {
-                if (maxWidth < 1)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
-                }
-                _maxWidth = maxWidth;
-            }
-            if (_maxLength < _maxWidth)
-            {
-                _maxWidth = _maxLength;
+                _maxLength = maxLength;
             }
             return this;
         }
 
-        public IInputControl MaxWidth(byte maxWidth)
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.MaxLength(int maxLength)
         {
-            if (maxWidth < 1)
+            if (maxLength <= 0)
             {
-                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
+                _maxLength = int.MaxValue;
             }
-            _maxWidth = maxWidth;
+            else
+            {
+                _maxLength = maxLength;
+            }
             return this;
         }
 
-        public IInputControl Options(Action<IControlOptions> options)
+        /// <inheritdoc/>
+        IInputControl IInputControl.Options(Action<IControlOptions> options)
         {
             ArgumentNullException.ThrowIfNull(options);
-            options.Invoke(GeneralOptions);
+            options.Invoke(OptionsControl);
             return this;
         }
 
-        public IInputControl Styles(InputStyles styleType, Style style)
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.Options(Action<IControlOptions> options)
+        {
+            ArgumentNullException.ThrowIfNull(options);
+            options.Invoke(OptionsControl);
+            return this;
+        }
+
+        /// <inheritdoc/>
+        IInputControl IInputControl.Styles(InputStyles styleType, Style style)
         {
             _optStyles[styleType] = style;
             return this;
         }
 
-        public IInputControl SuggestionHandler(Func<string, string[]> value)
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.Styles(InputStyles styleType, Style style)
+        {
+            _optStyles[styleType] = style;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IInputControl SuggestionHandler(Func<string, string[]> value, bool autocomplete = true)
         {
             _suggestionHandler = value ?? throw new ArgumentNullException(nameof(value));
+            _suggestionHandlerAsync = null;
+            _autocompleteSuggestions = autocomplete;
             return this;
         }
 
-        public IInputControl PredicateSelected(Func<string, bool> validselect)
+        /// <inheritdoc/>
+        public IInputControl SuggestionHandlerAsync(Func<string, Task<string[]>> value, bool autocomplete = true)
         {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) =>
-            {
-                bool fn = validselect(input);
-                if (fn)
-                {
-                    return (true, null);
-                }
-                return (false, null);
-            };
+            _suggestionHandlerAsync = value ?? throw new ArgumentNullException(nameof(value));
+            _suggestionHandler = null;
+            _autocompleteSuggestions = autocomplete;
             return this;
         }
 
-        public IInputControl PredicateSelected(Func<string, (bool, string?)> validselect)
+        public IInputControl MinimumSuggestionLength(byte value)
         {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
+            _minimumSuggestionLength = value;
             return this;
         }
+
+        /// <inheritdoc/>
+        IInputControl IInputControl.PredicateSelected(Func<string, (bool, string?)> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _predicatevalue = value;
+            _predicatevalueAsync = null;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.PredicateSelected(Func<string, (bool, string?)> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _predicatevalue = value;
+            _predicatevalueAsync = null;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        IInputControl IInputControl.PredicateSelected(Func<string, bool> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _predicatevalue = (input) => (value(input), (string?)null);
+            _predicatevalueAsync = null;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.PredicateSelected(Func<string, bool> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _predicatevalue = (input) => (value(input), (string?)null);
+            _predicatevalueAsync = null;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        IInputControl IInputControl.PredicateSelectedAsync(Func<string, Task<(bool, string?)>> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _predicatevalueAsync = value;
+            _predicatevalue = null;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.PredicateSelectedAsync(Func<string, Task<(bool, string?)>> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _predicatevalueAsync = value;
+            _predicatevalue = null;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        IInputControl IInputControl.PredicateSelectedAsync(Func<string, Task<bool>> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _predicatevalueAsync = async (input) => ((await value(input).ConfigureAwait(false)), (string?)null);
+            _predicatevalue = null;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        IInputSecretControl IInputSecretControl.PredicateSelectedAsync(Func<string, Task<bool>> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _predicatevalueAsync = async (input) => ((await value(input).ConfigureAwait(false)), (string?)null);
+            _predicatevalue = null;
+            return this;
+        }
+
+
+        /// <inheritdoc/>
+        public IInputSecretControl MaskSecret(char? value, bool enabledView)
+        {
+            _isinputsecret = true;
+            _secretChar = value ?? ConfigPrompt.SecretChar;
+            _enabledViewSecret = enabledView ? ConfigPrompt.HotKeyInputPasswordView : null;
+            return this;
+        }
+
         #endregion
 
-        public override void InitControl(CancellationToken _)
-        {
-            ValidateSecretInputConstraints();
 
-            if (_historyOptions != null)
+        public InputControl(bool isSecret, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        {
+            _optStyles = OptionsControl.LoadStyle<InputStyles>(console.CurrentStyle);
+            _secretChar = ConfigPrompt.SecretChar;
+            _enabledViewSecret = ConfigPrompt.HotKeyInputPasswordView;
+            _isinputsecret = isSecret;
+        }
+
+        /// <inheritdoc/>
+        public override void InitControl(CancellationToken cancellationToken)
+        {
+            if (!_isinputsecret && _historyOptions != null)
             {
                 _itemHistories = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
+                NormalizeLoadedHistory();
                 if (_useDefaultHistory && _itemHistories.Count > 0)
                 {
                     _defaultValue = _itemHistories[0].History;
                 }
             }
 
-            _maxWidth = _maxWidth.HasValue && _maxWidth.Value > _maxLength ? _maxLength : _maxWidth;
+            _inputdata = new(false, _inputToCase,ConfigPrompt.EmacsKeyBindings,  _acceptvalue);
 
-            _inputdata = new EmacsBuffer(false, _inputToCase, _acceptInput, _maxLength, _maxWidth);
-            if (!string.IsNullOrEmpty(_defaultValue))
+            if (!_isinputsecret && !string.IsNullOrEmpty(_defaultValue) && TryInputPredicate(_defaultValue))
             {
-                _inputdata?.LoadPrintable(_defaultValue);
+                _inputdata?.LoadPrintable(_defaultValue,_maxLength);
             }
-            _tooltipModeInput = GetTooltipModeInput();
-            _tooltipModeHistory = GetTooltipModeHistory();
-            _tooltipModeSuggestion = GetTooltipModeSuggestion();
+
             LoadTooltipToggle();
         }
 
+        /// <summary>
+        /// Evaluates the optional value predicate for <paramref name="value"/>, returning <c>true</c>
+        /// when no predicate is configured or when it accepts the value. Used to decide whether a
+        /// default/history value may pre-fill the input (rejected values are not honored).
+        /// </summary>
+        private bool TryInputPredicate(string value)
+        {
+            if (_predicatevalue == null && _predicatevalueAsync == null)
+            {
+                return true;
+            }
+            (bool ok, _) = _predicatevalueAsync != null
+                ? _predicatevalueAsync.Invoke(value).ConfigureAwait(false).GetAwaiter().GetResult()
+                : (_predicatevalue?.Invoke(value) ?? (true, (string?)null));
+            return ok;
+        }
+
+        /// <inheritdoc/>
         public override bool TryResult(CancellationToken cancellationToken)
         {
-            bool oldcursor = ConsolePlus.CursorVisible;
-            ConsolePlus.CursorVisible = true;
+            bool oldcursor = ConsoleHandler.CursorVisible;
+            ConsoleHandler.CursorVisible = true;
             try
             {
                 ResultCtrl = null;
+                if (_localHistpaginator != null && _modeView == ModeView.History)
+                {
+                    _effectivePageSize = ComputeEffectivePageSize(ReservedTemplateLines, _historyOptions!.PageSizeValue);
+                    if (_effectivePageSize != _localHistpaginator!.PageSize)
+                    {
+                        _localHistpaginator.UpdatePageSize(_effectivePageSize);
+                    }
+                }
+                else if (_localSuggestionPaginator != null && _modeView == ModeView.Sugestions)
+                {
+                    _effectivePageSize = ComputeEffectivePageSize(ReservedTemplateLines, _localSuggestionPaginator!.PageSize);
+                    if (_effectivePageSize != _localSuggestionPaginator!.PageSize)
+                    {
+                        _localSuggestionPaginator.UpdatePageSize(_effectivePageSize);
+                    }
+                }
+
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
+                    _updatePosAnswerBuffer = true;
+
+                    KeyPressResult press = ReadNextKey(true, cancellationToken);
+
+                    if (press.IsResize || press.IsCancelled)
+                    {
+                        if (!press.IsResize)
+                        {
+                            if (_modeView != ModeView.Input)
+                            {
+                                _inputdata!.LoadPrintable(_lastinput!, _maxLength);
+                                _localHistpaginator = null;
+                                ResetSuggestions();
+                                _modeView = ModeView.Input;
+                            }
+                        }
+                        break;
+                    }
+
+                    _updatePosAnswerBuffer = false;
+
+                    ConsoleKeyInfo keyinfo = press.Key;
 
                     #region default Press to Finish and tooltip
-                    if (cancellationToken.IsCancellationRequested)
+
+                    if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
                         if (_modeView != ModeView.Input)
                         {
-                            _inputdata!.LoadPrintable(_savedinput!);
-                            _savedinput = null;
-                            _localpaginator = null;
-                            _curentSuggestion = -1;
+                            _inputdata!.LoadPrintable(_lastinput!, _maxLength);
+                            _localHistpaginator = null;
+                            ResetSuggestions();
                             _modeView = ModeView.Input;
-                            break;
                         }
-                        _abortedKeyPress = true;
                         ResultCtrl = new ResultPrompt<string>(_inputdata!.ToString(), true);
                         break;
                     }
-                    else if (IsAbortKeyPress(keyinfo))
+                    else if (keyinfo.IsPressCtrlAltTabKey() || keyinfo.IsPressFilterActivationKey())
                     {
                         _indexTooptip = 0;
-                        if (_modeView != ModeView.Input)
-                        {
-                            _inputdata!.LoadPrintable(_savedinput!);
-                            _savedinput = null;
-                            _localpaginator = null;
-                            _curentSuggestion = -1;
-                            _modeView = ModeView.Input;
-                            break;
-                        }
-                        _abortedKeyPress = true;
-                        ResultCtrl = new ResultPrompt<string>(_inputdata!.ToString(), true);
-                        break;
+                        continue;
                     }
                     else if (keyinfo.IsPressEnterKey())
                     {
                         _indexTooptip = 0;
+                        if (_modeView == ModeView.Sugestions && _localSuggestionPaginator != null)
+                        {
+                            _inputdata!.LoadPrintable(_localSuggestionPaginator.SelectedItem.SuggestionValue, _maxLength);
+                        }
                         if (_modeView != ModeView.Input)
                         {
-                            _savedinput = null;
-                            _localpaginator = null;
-                            _curentSuggestion = -1;
-                            _modeView = ModeView.Input;
+                            _localHistpaginator = null;
+                            ResetSuggestions();
                         }
-                        string finishedresult = _inputdata!.ToString();
-                        (bool ok, string? message) = _predicatevalidselect?.Invoke(finishedresult) ?? (true, null);
+                        _lastinput = _inputdata!.ToString();
+                        (bool ok, string? message) = _predicatevalueAsync is not null
+                            ? _predicatevalueAsync.Invoke(_lastinput).ConfigureAwait(false).GetAwaiter().GetResult()
+                            : _predicatevalue?.Invoke(_lastinput) ?? (true, null);
                         if (!ok)
                         {
                             if (string.IsNullOrEmpty(message))
                             {
-                                SetError(Messages.PredicateSelectInvalid);
+                                SetError(PromptPlusResources.PredicateSelectInvalid);
                             }
                             else
                             {
@@ -281,17 +479,19 @@ namespace PromptPlusLibrary.Controls.Input
                             }
                             break;
                         }
-                        if (!_isinputsecret && !string.IsNullOrEmpty(_defaultIfEmpty) && finishedresult.Length == 0)
+                        _modeView = ModeView.Input;
+                        if (!_isinputsecret && !string.IsNullOrEmpty(_defaultIfEmpty) && _inputdata!.Length == 0)
                         {
-                            finishedresult = _defaultIfEmpty;
+                            _lastinput = _defaultIfEmpty;
                         }
-                        ResultCtrl = new ResultPrompt<string>(finishedresult, false);
+                        ResultCtrl = new ResultPrompt<string>(_lastinput, false);
+                        SaveHistory(_lastinput);
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
                     {
                         _indexTooptip++;
-                        if (_indexTooptip > _toggerTooptips[_modeView].Length)
+                        if (_indexTooptip >= _toggerTooptips[_modeView].Length)
                         {
                             _indexTooptip = 0;
                         }
@@ -304,128 +504,117 @@ namespace PromptPlusLibrary.Controls.Input
                     }
                     #endregion
 
-                    # region Suggestions
-                    if ((_modeView == ModeView.Input || _modeView == ModeView.History) && _suggestionHandler != null && (keyinfo.IsPressTabKey() || keyinfo.IsPressShiftTabKey()))
+                    else if (_modeView == ModeView.Input && _enabledViewSecret != null && ConfigPrompt.HotKeyInputPasswordView.Equals(keyinfo))
                     {
+                        _passwordvisible = !_passwordvisible;
                         _indexTooptip = 0;
-                        _savedinput = _inputdata!.ToString();
-                        _suggestions = _suggestionHandler!(_savedinput);
-                        _curentSuggestion = -1;
-                        _localpaginator = null;
-                        _modeView = ModeView.Suggestion;
-                    }
-                    if (_modeView == ModeView.Suggestion && (keyinfo.IsPressTabKey() || keyinfo.IsPressShiftTabKey()) && _suggestions.Length > 0)
-                    {
-                        _indexTooptip = 0;
-                        if (keyinfo.IsPressTabKey())
-                        {
-                            _curentSuggestion++;
-                            if (_curentSuggestion > _suggestions.Length - 1)
-                            {
-                                _curentSuggestion = 0;
-                            }
-                        }
-                        else
-                        {
-                            _curentSuggestion--;
-                            if (_curentSuggestion < 0)
-                            {
-                                _curentSuggestion = _suggestions.Length - 1;
-                            }
-                        }
-                        _inputdata!.LoadPrintable(_suggestions[_curentSuggestion]);
                         break;
                     }
-                    #endregion
 
                     #region Histories
-                    else if ((_modeView == ModeView.Input || _modeView == ModeView.Suggestion) && ConfigPlus.HotKeyShowHistory.Equals(keyinfo) && (_itemHistories?.Count ?? 0) > 0 && _inputdata!.Length >= _historyOptions!.MinPrefixLengthValue)
+
+                    else if (_modeView == ModeView.Input && ConfigPrompt.HotKeyInputHistoryView.Equals(keyinfo) && (_itemHistories?.Count ?? 0) > 0 && _inputdata!.Length >= _historyOptions!.MinPrefixLengthValue)
                     {
                         _indexTooptip = 0;
-                        IEnumerable<ItemHistory> subhist = GetItemHistory(FilterMode.StartsWith);
-                        if (!subhist.Any())
+                        FilterMode filter = _historyOptions!.FilterTypeValue;
+                        List<ItemHistory> subhist = GetItemHistory(filter);
+                        if (subhist.Count == 0)
                         {
-                            SetError(Messages.HistoryNotFound);
+                            SetError(PromptPlusResources.HistoryNotFound);
                             break;
                         }
-                        _savedinput = _inputdata!.ToString();
-                        _localpaginator = new Paginator<ItemHistory>(
-                            FilterMode.StartsWith,
+                        _lastinput = _inputdata!.ToString();
+
+                        _effectivePageSize = ComputeEffectivePageSize(ReservedTemplateLines, _historyOptions!.PageSizeValue);
+
+                        _localHistpaginator = new Paginator<ItemHistory>(
+                            filter,
                             subhist,
-                            _historyOptions!.PageSizeValue,
+                            _effectivePageSize,
                             Optional<ItemHistory>.Empty(),
-                            (item1, item2) => item1.History == item2.History,
+                            (item1, item2) => item1.History.Equals(item2.History, StringComparison.OrdinalIgnoreCase),
                             (item) => item.History);
                         _modeView = ModeView.History;
-                        _inputdata!.LoadPrintable(_localpaginator.SelectedItem.History);
+                        _inputdata!.LoadPrintable(_localHistpaginator.SelectedItem.History, _maxLength);
                         _indexTooptip = 0;
-                        _curentSuggestion = -1;
+                        ResetSuggestions();
                         break;
 
                     }
                     else if (_modeView == ModeView.History)
                     {
-                        if (keyinfo.IsPressCtrlDeleteKey())
+                        if (ConfigPrompt.HotKeyInputHistoryView.Equals(keyinfo))
+                        {
+                            _indexTooptip = 0;
+                            _localHistpaginator = null;
+                            ResetSuggestions();
+                            _modeView = ModeView.Input;
+                            _inputdata!.LoadPrintable(_lastinput!, _maxLength);
+                            break;
+                        }
+                        else if (keyinfo.IsPressCtrlDeleteKey())
                         {
                             _indexTooptip = 0;
                             FileHistory.ClearHistory(_historyOptions!.FileNameValue);
                             _itemHistories!.Clear();
-                            _inputdata!.LoadPrintable(_savedinput!);
-                            _indexTooptip = 0;
-                            _localpaginator = null;
-                            _savedinput = null;
+                            // History was cleared: rebuild the tooltip cache so the history
+                            // hotkey hint is no longer advertised for the remainder of the control.
+                            LoadTooltipToggle();
+                            _inputdata!.LoadPrintable(_lastinput!, _maxLength);
+                            _localHistpaginator = null;
                             _modeView = ModeView.Input;
+                            ResetSuggestions();
                             break;
                         }
                         else if (keyinfo.IsPressDownArrowKey())
                         {
-                            if (_localpaginator!.IsLastPageItem)
+                            if (_localHistpaginator!.IsLastPageItem)
                             {
-                                _localpaginator.NextPage(IndexOption.FirstItem);
+                                _localHistpaginator.NextPage(IndexOption.FirstItem);
                             }
                             else
                             {
-                                _localpaginator.NextItem();
+                                _localHistpaginator.NextItem();
                             }
-                            _inputdata!.LoadPrintable(_localpaginator.SelectedItem.History);
+                            _inputdata!.LoadPrintable(_localHistpaginator.SelectedItem.History, _maxLength);
                             _indexTooptip = 0;
                             break;
                         }
                         else if (keyinfo.IsPressUpArrowKey())
                         {
-                            if (_localpaginator!.IsFirstPageItem)
+                            if (_localHistpaginator!.IsFirstPageItem)
                             {
-                                _localpaginator!.PreviousPage(IndexOption.LastItem);
+                                _localHistpaginator!.PreviousPage(IndexOption.LastItem);
                             }
                             else
                             {
-                                _localpaginator!.PreviousItem();
+                                _localHistpaginator!.PreviousItem();
                             }
-                            _inputdata!.LoadPrintable(_localpaginator.SelectedItem.History);
+                            _inputdata!.LoadPrintable(_localHistpaginator.SelectedItem.History, _maxLength);
                             _indexTooptip = 0;
                             break;
                         }
                         else if (keyinfo.IsPressPageDownKey())
                         {
-                            if (_localpaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
+                            if (_localHistpaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
                             {
-                                _inputdata!.LoadPrintable(_localpaginator.SelectedItem.History);
+                                _inputdata!.LoadPrintable(_localHistpaginator.SelectedItem.History, _maxLength);
                                 _indexTooptip = 0;
                                 break;
                             }
                         }
                         else if (keyinfo.IsPressPageUpKey())
                         {
-                            if (_localpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
+                            if (_localHistpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
                             {
-                                _inputdata!.LoadPrintable(_localpaginator.SelectedItem.History);
+                                _inputdata!.LoadPrintable(_localHistpaginator.SelectedItem.History, _maxLength);
                                 _indexTooptip = 0;
                                 break;
                             }
                         }
                         else if (keyinfo.IsPressCtrlHomeKey())
                         {
-                            if (!_localpaginator!.Home())
+                            if (!_localHistpaginator!.Home())
                             {
                                 continue;
                             }
@@ -434,129 +623,341 @@ namespace PromptPlusLibrary.Controls.Input
                         }
                         else if (keyinfo.IsPressCtrlEndKey())
                         {
-                            if (!_localpaginator!.End())
+                            if (!_localHistpaginator!.End())
                             {
                                 continue;
                             }
                             _indexTooptip = 0;
                             break;
                         }
+                        else if (keyinfo.KeyChar != '\t' && _inputdata!.TryAcceptedReadlineConsoleKey(keyinfo, _maxLength))
+                        {
+                            _indexTooptip = 0;
+                            if (_modeView != ModeView.Input)
+                            {
+                                _localHistpaginator = null;
+                                ResetSuggestions();
+                                _modeView = ModeView.Input;
+                            }
+                            break;
+                        }
                     }
+
                     #endregion
 
-                    else if (_enabledViewSecret != null && ConfigPlus.HotKeyPasswordView.Equals(keyinfo))
-                    {
-                        _passwordvisible = !_passwordvisible;
-                        _indexTooptip = 0;
-                        break;
-                    }
+                    #region Suggestions
 
-                    else if (_inputdata!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    else if (_modeView == ModeView.Input && (_suggestionHandlerAsync != null || _suggestionHandler != null) && (keyinfo.IsPressTabKey() ||( keyinfo.IsPressShiftTabKey() && !_autocompleteSuggestions)))
                     {
-                        _indexTooptip = 0;
-                        if (_modeView != ModeView.Input)
+                        if (_inputdata!.ToString().Length < _minimumSuggestionLength)
                         {
-                            _savedinput = null;
-                            _localpaginator = null;
+                            continue;
+                        }
+                        if (_suggestions == null)
+                        {
+                            string currentInput = _inputdata!.ToString();
+                            _suggestions = _suggestionHandlerAsync is not null
+                                ? _suggestionHandlerAsync.Invoke(currentInput).ConfigureAwait(false).GetAwaiter().GetResult()
+                                : _suggestionHandler!(currentInput);
                             _curentSuggestion = -1;
+                        }
+                        if (_suggestions.Length == 0)
+                        {
+                            continue;
+                        }
+                        _indexTooptip = 0;
+                        if (_autocompleteSuggestions)
+                        {
+                            if (keyinfo.IsPressTabKey())
+                            {
+                                _curentSuggestion++;
+                                if (_curentSuggestion > _suggestions.Length - 1)
+                                {
+                                    _curentSuggestion = 0;
+                                }
+                            }
+                            else
+                            {
+                                _curentSuggestion--;
+                                if (_curentSuggestion < 0)
+                                {
+                                    _curentSuggestion = _suggestions.Length - 1;
+                                }
+                            }
+                            _inputdata!.LoadPrintable(_suggestions[_curentSuggestion], _maxLength);
+                        }
+                        else
+                        {
+                            _modeView = ModeView.Sugestions;
+                            _effectivePageSize = ComputeEffectivePageSize(ReservedTemplateLines, 5);
+                            _localSuggestionPaginator = new Paginator<(string UniqueId, string SuggestionValue)>(
+                                FilterMode.Disabled,
+                                _suggestions.Select(x => (Guid.NewGuid().ToString(), x)),
+                                _effectivePageSize,
+                                Optional<(string UniqueId, string SuggestionValue)>.Empty(),
+                                (item1, item2) => item1.UniqueId.Equals(item2.UniqueId, StringComparison.OrdinalIgnoreCase),
+                                (item) => item.SuggestionValue);
+                        }
+                        break;
+
+                    }
+                    else if (_modeView == ModeView.Sugestions)
+                    {
+                         if (keyinfo.IsPressShiftTabKey())
+                        {
+                            _indexTooptip = 0;
+                            _inputdata!.LoadPrintable(_lastinput!, _maxLength);
+                            ResetSuggestions();
                             _modeView = ModeView.Input;
                             break;
+                        }
+                        else if (keyinfo.IsPressTabKey())
+                        {
+                            _indexTooptip = 0;
+                            _inputdata!.LoadPrintable(_localSuggestionPaginator!.SelectedItem.SuggestionValue, _maxLength);
+                            ResetSuggestions();
+                            _modeView = ModeView.Input;
+                            break;
+                        }
+                        else if (keyinfo.IsPressDownArrowKey())
+                        {
+                            if (_localSuggestionPaginator!.IsLastPageItem)
+                            {
+                                _localSuggestionPaginator.NextPage(IndexOption.FirstItem);
+                            }
+                            else
+                            {
+                                _localSuggestionPaginator.NextItem();
+                            }
+                            _indexTooptip = 0;
+                            break;
+                        }
+                        else if (keyinfo.IsPressUpArrowKey())
+                        {
+                            if (_localSuggestionPaginator!.IsFirstPageItem)
+                            {
+                                _localSuggestionPaginator.PreviousPage(IndexOption.LastItem);
+                            }
+                            else
+                            {
+                                _localSuggestionPaginator.PreviousItem();
+                            }
+                            _indexTooptip = 0;
+                            break;
+                        }
+                        else if (keyinfo.IsPressPageDownKey())
+                        {
+                            if (_localSuggestionPaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
+                            {
+                                _indexTooptip = 0;
+                                break;
+                            }
+                        }
+                        else if (keyinfo.IsPressPageUpKey())
+                        {
+                            if (_localSuggestionPaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
+                            {
+                                _indexTooptip = 0;
+                                break;
+                            }
+                        }
+                        else if (keyinfo.IsPressCtrlHomeKey())
+                        {
+                            if (!_localSuggestionPaginator!.Home())
+                            {
+                                continue;
+                            }
+                            _indexTooptip = 0;
+                            break;
+                        }
+                        else if (keyinfo.IsPressCtrlEndKey())
+                        {
+                            if (!_localSuggestionPaginator!.End())
+                            {
+                                continue;
+                            }
+                            _indexTooptip = 0;
+                            break;
+                        }
+                        else if (_inputdata!.TryAcceptedReadlineConsoleKey(keyinfo, _maxLength))
+                        {
+                            _indexTooptip = 0;
+                            if (_modeView != ModeView.Input)
+                            {
+                                ResetSuggestions();
+                                _modeView = ModeView.Input;
+                            }
+                            break;
+                        }
+                    }
+
+                    #endregion
+
+                    else if ((_modeView == ModeView.Input || _modeView == ModeView.Sugestions) && keyinfo.KeyChar != '\t' && _inputdata!.TryAcceptedReadlineConsoleKey(keyinfo, _maxLength))
+                    {
+                        _indexTooptip = 0;
+                        if (_suggestions != null)
+                        {
+                            ResetSuggestions();
+                            _modeView = ModeView.Input;
                         }
                         break;
                     }
                 }
+                if (_modeView != ModeView.History)
+                {
+                    _lastinput = _inputdata!.ToString();
+                }
             }
             finally
             {
-                ConsolePlus.CursorVisible = oldcursor;
+                ConsoleHandler.CursorVisible = oldcursor;
             }
             return ResultCtrl != null;
         }
 
+        /// <inheritdoc/>
         public override void BufferTemplate(BufferScreen screenBuffer)
         {
-            WritePrompt(screenBuffer);
+            // Re-evaluate the effective page size every frame so the visible items count
+            // stays in sync with the current console height (after any terminal resize).
+            if (_historyOptions != null && _localHistpaginator != null)
+            {
+                int targetPageSize = ComputeEffectivePageSize(ReservedTemplateLines, _historyOptions!.PageSizeValue);
+                if (targetPageSize != _effectivePageSize)
+                {
+                    _effectivePageSize = targetPageSize;
+                    _localHistpaginator?.UpdatePageSize(_effectivePageSize);
+                }
+            }
+
+            WritePrompt(screenBuffer, _optStyles[InputStyles.Prompt]);
 
             WriteAnswer(screenBuffer);
 
-            WriteError(screenBuffer);
-
             WriteDescription(screenBuffer);
+
+            WriteSugestions(screenBuffer);
 
             WriteHistory(screenBuffer);
 
             WriteTooltip(screenBuffer);
+
+            WriteError(screenBuffer, _optStyles[InputStyles.Error]);
+
         }
 
+        /// <inheritdoc/>
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
-            string answer = ResultCtrl!.Value.Content;
-            if (_isinputsecret)
+            _modeView = ModeView.Input;
+            _localHistpaginator = null;
+            ResetSuggestions();
+            _updatePosAnswerBuffer = false;
+            string answer = string.Empty;
+            if (!ResultCtrl!.Value.IsAborted)
             {
-                answer = new string(_secretChar,answer.Length);
+                answer = ResultCtrl!.Value.Content;
+                if (_isinputsecret)
+                {
+                    answer = new string(_secretChar, answer.Length);
+                }
             }
-            if (ResultCtrl.Value.IsAborted)
+            else if (ResultCtrl!.Value.IsAborted && OptionsControl.ShowMessageAbortKeyValue)
             {
-                answer = GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty;
+                answer = PromptPlusResources.CanceledKey;
             }
-            if (answer.Length > _maxWidth!)
-            {
-                answer = answer[.._maxWidth.Value] + "...";
-            }
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
-            {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[InputStyles.Prompt]);
-            }
+            WritePrompt(screenBuffer, _optStyles[InputStyles.Prompt]);
             screenBuffer.WriteLine(answer, _optStyles[InputStyles.Answer]);
             return true;
         }
 
+        /// <inheritdoc/>
         public override void FinalizeControl()
         {
-            string itemhist = _inputdata?.ToString() ?? string.Empty;
-            if (_historyOptions != null && !_abortedKeyPress && !string.IsNullOrEmpty(itemhist))
+            //none
+        }
+
+        private string GetTooltipToggle()
+        {
+            switch (_modeView)
             {
-                FileHistory.AddHistory(itemhist, _historyOptions.ExpirationTimeValue, _itemHistories);
-                FileHistory.SaveHistory(_historyOptions.FileNameValue, _itemHistories!, _historyOptions.MaxItemsValue);
+                case ModeView.Input:
+                    {
+                        if (_indexTooptip >= _toggerTooptips[ModeView.Input].Length)
+                        {
+                            _indexTooptip = 0;
+                        }
+                        return _toggerTooptips[ModeView.Input][_indexTooptip];
+                    }
+                case ModeView.Sugestions:
+                    {
+                        if (_indexTooptip >= _toggerTooptips[ModeView.Sugestions].Length)
+                        {
+                            _indexTooptip = 0;
+                        }
+                        return _toggerTooptips[ModeView.Sugestions  ][_indexTooptip];
+                    }
+                case ModeView.History:
+                    {
+                        if (_indexTooptip >= _toggerTooptips[ModeView.History].Length)
+                        {
+                            _indexTooptip = 0;
+                        }
+                        return _toggerTooptips[ModeView.History][_indexTooptip];
+                    }
+                default:
+                    throw new NotImplementedException($"ModeView {_modeView} not implemented.");
             }
         }
 
-        #region private methods
-
-        private void ValidateSecretInputConstraints()
+        private void WriteTooltip(BufferScreen screenBuffer)
         {
-            if (!_isinputsecret)
+            if (!IsShowTooltip)
             {
-                _enabledViewSecret = null;
                 return;
             }
-        }
-
-        private IEnumerable<ItemHistory> GetItemHistory(FilterMode filterMode)
-        {
-            DateTime currentTime = DateTime.Now; // Cache the current time
-            string inputData = _inputdata!.ToString(); // Cache the input data
-            return _itemHistories!.Where(x =>
-                currentTime < new DateTime(x.TimeOutTicks) &&
-                (filterMode == FilterMode.Contains
-                    ? x.History.Contains(inputData, StringComparison.InvariantCultureIgnoreCase)
-                    : x.History.StartsWith(inputData, StringComparison.InvariantCultureIgnoreCase)));
-        }
-
-        private void WritePrompt(BufferScreen screenBuffer)
-        {
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
+            string? tooltip = GetTooltipToggle();
+            tooltip = $"{ConfigPrompt.HotKeyTooltip}:{PromptPlusResources.TooltipBase}.{tooltip}";
+            if (!tooltip.EndsWith('.'))
             {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[InputStyles.Prompt]);
+                tooltip = $"{tooltip}.";
             }
+            screenBuffer.WriteLine(tooltip, _optStyles[InputStyles.Tooltips]);
         }
 
-        private void WriteDescription(BufferScreen screenBuffer)
+        private void WriteSugestions(BufferScreen screenBuffer)
         {
-            string? desc = _changeDescription?.Invoke(_inputdata!.ToString()) ?? GeneralOptions.DescriptionValue;
-            if (!string.IsNullOrEmpty(desc))
+            if (_modeView != ModeView.Sugestions)
             {
-                screenBuffer.WriteLine(desc, _optStyles[InputStyles.Description]);
+                return;
+            }
+
+            ArraySegment<(string UniqueID, string Value)> subset = _localSuggestionPaginator!.GetPageData(); // Cache the page data
+            screenBuffer.WriteLine(PromptPlusResources.EntrySuggestion, _optStyles[InputStyles.Selected]);
+            foreach (var (UniqueID, Value) in subset)
+            {
+                string value = Value;
+                if (_localSuggestionPaginator.SelectedIndex >= 0 && _localSuggestionPaginator.SelectedItem.UniqueId == UniqueID)
+                {
+                    screenBuffer.Write($"{GetSymbol(SymbolType.Selector)}", _optStyles[InputStyles.Selected]);
+                    screenBuffer.WriteLine($" {value}", _optStyles[InputStyles.Selected]);
+                }
+                else
+                {
+                    screenBuffer.Write(" ", _optStyles[InputStyles.UnSelected]);
+                    screenBuffer.WriteLine($" {value}", _optStyles[InputStyles.UnSelected]);
+                }
+            }
+
+            if (_localSuggestionPaginator.PageCount > 0)
+            {
+                string template = ConfigPrompt.PaginationTemplateValue(
+                    _localSuggestionPaginator.TotalCountValid,
+                    _localSuggestionPaginator.SelectedPage + 1,
+                    _localSuggestionPaginator.PageCount
+                )!;
+                screenBuffer.WriteLine(template, _optStyles[InputStyles.Pagination]);
             }
         }
 
@@ -567,132 +968,228 @@ namespace PromptPlusLibrary.Controls.Input
                 return;
             }
 
-            ArraySegment<ItemHistory> subset = _localpaginator!.GetPageData(); // Cache the page data
-            screenBuffer.WriteLine(Messages.EntryHistory, _optStyles[InputStyles.Selected]);
+            ArraySegment<ItemHistory> subset = _localHistpaginator!.GetPageData(); // Cache the page data
+            screenBuffer.WriteLine(PromptPlusResources.EntryHistory, _optStyles[InputStyles.Selected]);
+            var pos = -1;
             foreach (ItemHistory item in subset)
             {
+                pos++;
                 string value = item.History;
-                if (_localpaginator.TryGetSelected(out ItemHistory selectedItem) && EqualityComparer<ItemHistory>.Default.Equals(item, selectedItem))
+                if (_localHistpaginator.SelectedIndex >= 0 && _localHistpaginator.SelectedIndex == pos)
                 {
-                    screenBuffer.Write($"{ConfigPlus.GetSymbol(SymbolType.Selector)}", _optStyles[InputStyles.Selected]);
+                    screenBuffer.Write($"{GetSymbol(SymbolType.Selector)}", _optStyles[InputStyles.Selected]);
                     screenBuffer.WriteLine($" {value}", _optStyles[InputStyles.Selected]);
                 }
                 else
                 {
-                    screenBuffer.Write(" ", Style.Default());
+                    screenBuffer.Write(" ", _optStyles[InputStyles.UnSelected]);
                     screenBuffer.WriteLine($" {value}", _optStyles[InputStyles.UnSelected]);
                 }
             }
 
-            if (_localpaginator.PageCount > 1)
+            if (_localHistpaginator.PageCount > 0)
             {
-                string template = ConfigPlus.PaginationTemplate.Invoke(
-                    _localpaginator.TotalCountValid,
-                    _localpaginator.SelectedPage + 1,
-                    _localpaginator.PageCount
+                string template = ConfigPrompt.PaginationTemplateValue(
+                    _localHistpaginator.TotalCountValid,
+                    _localHistpaginator.SelectedPage + 1,
+                    _localHistpaginator.PageCount
                 )!;
                 screenBuffer.WriteLine(template, _optStyles[InputStyles.Pagination]);
             }
         }
 
-        private void WriteError(BufferScreen screenBuffer)
+        private void WriteAnswer(BufferScreen screenBuffer)
         {
-            if (!string.IsNullOrEmpty(ValidateError))
+            if (_updatePosAnswerBuffer)
             {
-                screenBuffer.WriteLine(ValidateError, _optStyles[InputStyles.Error]);
-                ClearError();
+                _inputdata!.LoadPrintable(_lastinput!, _maxLength);
+                _inputdata.ToHome();
+            }
+            int promptWidth = GetPromptDisplayWidth();
+            (string visibleLeft, string visibleRight) = ViewportSlice(_inputdata!, promptWidth);
+            if (_isinputsecret && !_passwordvisible)
+            {
+                visibleLeft = new string(_secretChar, visibleLeft.Length);
+                visibleRight = new string(_secretChar, visibleRight.Length);
+            }
+            screenBuffer.Write(visibleLeft, _optStyles[InputStyles.Answer]);
+            screenBuffer.SavePromptCursor();
+            screenBuffer.WriteLine(visibleRight, _optStyles[InputStyles.Answer]);
+        }
+
+        private void WriteDescription(BufferScreen screenBuffer)
+        {
+            string? desc = OptionsControl.DescriptionValue;
+            if (_changeDescriptionAsync is not null)
+            {
+                desc = _changeDescriptionAsync.Invoke(_inputdata!.ToString())
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            else
+            {
+                desc = _changeDescription?.Invoke(_inputdata!.ToString()) ?? OptionsControl.DescriptionValue;
+            }
+            if (!string.IsNullOrEmpty(desc))
+            {
+                screenBuffer.WriteLine(desc, _optStyles[InputStyles.Description]);
             }
         }
 
-        private void WriteTooltip(BufferScreen screenBuffer)
+       private List<ItemHistory> GetItemHistory(FilterMode filterMode)
         {
-            if (!IsShowTooltip)
+            long currentTime = DateTime.Now.Ticks;
+            string inputData = _inputdata!.ToString();
+            IList<ItemHistory> source = _itemHistories!;
+            bool hasFilter = filterMode != FilterMode.Disabled && !string.IsNullOrEmpty(inputData);
+            List<ItemHistory> result = new(source.Count);
+            for (int i = 0; i < source.Count; i++)
+            {
+                ItemHistory item = source[i];
+                if (currentTime > item.TimeOutTicks)
+                {
+                    continue;
+                }
+                if (hasFilter)
+                {
+                    bool match = filterMode switch
+                    {
+                        FilterMode.Contains => item.History.Contains(inputData, StringComparison.OrdinalIgnoreCase),
+                        FilterMode.StartsWith => item.History.StartsWith(inputData, StringComparison.OrdinalIgnoreCase),
+                        _ => throw new NotImplementedException($"FilterMode {filterMode} not implemented."),
+                    };
+                    if (!match)
+                    {
+                        continue;
+                    }
+                }
+                result.Add(item);
+            }
+            return result;
+        }
+
+        private void SaveHistory(string value)
+        {
+            if (_historyOptions == null || string.IsNullOrWhiteSpace(value))
             {
                 return;
             }
-            string? tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            else if (_modeView == ModeView.Input)
-            {
-                tooltip = _tooltipModeInput;
-            }
-            else
-            {
-                tooltip = _modeView == ModeView.Suggestion
-                    ? _tooltipModeSuggestion
-                    : _modeView == ModeView.History
-                    ? _tooltipModeHistory
-                    : throw new NotImplementedException($"ModeView {_modeView} not implemented.");
-            }
-            screenBuffer.Write(tooltip, _optStyles[InputStyles.Tooltips]);
+            IList<ItemHistory> hist = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
+            hist = FileHistory.AddHistory(value, _historyOptions.ExpirationTimeValue, hist);
+            FileHistory.SaveHistory(_historyOptions.FileNameValue, hist, _historyOptions.MaxItemsValue);
+            _itemHistories = hist;
+            LoadTooltipToggle();
+
         }
 
-        private string GetTooltipToggle()
+        private void NormalizeLoadedHistory()
         {
-            return _modeView switch
+            if (_itemHistories == null || _itemHistories.Count == 0)
             {
-                ModeView.Input => _toggerTooptips[ModeView.Input][_indexTooptip - 1],
-                ModeView.Suggestion => _toggerTooptips[ModeView.Suggestion][_indexTooptip - 1],
-                ModeView.History => _toggerTooptips[ModeView.History][_indexTooptip - 1],
-                _ => throw new NotImplementedException($"ModeView {_modeView} not implemented.")
-            };
+                return;
+            }
+
+            List<ItemHistory> normalized = new(_itemHistories.Count);
+            bool changed = false;
+
+            for (int i = 0; i < _itemHistories.Count; i++)
+            {
+                ItemHistory entry = _itemHistories[i];
+                string normalizedText = NormalizeHistoryValue(entry.History);
+                if (!string.Equals(entry.History, normalizedText, StringComparison.Ordinal))
+                {
+                    changed = true;
+                }
+                normalized.Add(new ItemHistory(normalizedText, entry.TimeOutTicks));
+            }
+
+            _itemHistories = normalized;
+
+            if (!changed || _historyOptions == null)
+            {
+                return;
+            }
+
+            FileHistory.SaveHistory(_historyOptions.FileNameValue, normalized, _historyOptions.MaxItemsValue);
         }
 
-        private void WriteAnswer(BufferScreen screenBuffer)
+        private static string NormalizeHistoryValue(string value)
         {
-            Style styleAnswer = _modeView != ModeView.Input
-                ? _optStyles[InputStyles.TaggedInfo]
-                : _optStyles[InputStyles.Answer];
-
-            if (_inputdata!.IsVirtualBuffer)
+            if (string.IsNullOrEmpty(value))
             {
-                string str = _inputdata!.IsHideLeftBuffer
-                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeftMost)
-                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft);
-                screenBuffer.Write(str, styleAnswer);
+                return value;
             }
 
-            if (_isinputsecret && !_passwordvisible)
+            try
             {
-                string answer = new(_secretChar, _inputdata!.ToBackward().Length);
-                screenBuffer.Write(answer, styleAnswer);
-                screenBuffer.SavePromptCursor();
-                answer = new string(_secretChar, _inputdata!.ToForward(false).Length);
-                if (_inputdata!.IsVirtualBuffer)
+                if (value.Length >= 2 && value[0] == '"' && value[^1] == '"')
                 {
-                    int spaces = _inputdata!.ToForward().Length - answer.Length;
-                    answer += new string(' ', spaces);
-                    screenBuffer.Write(answer, styleAnswer);
-                    string str = _inputdata.IsHideRightBuffer
-                        ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
-                        : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
-                    screenBuffer.WriteLine(str, styleAnswer);
-                }
-                else
-                {
-                    screenBuffer.WriteLine(answer, styleAnswer);
+                    string? decoded = JsonSerializer.Deserialize<string>(value);
+                    if (decoded is not null)
+                    {
+                        return decoded;
+                    }
                 }
             }
-            else
+            catch (JsonException)
             {
-                screenBuffer.Write(_inputdata!.ToBackward(), styleAnswer);
-                screenBuffer.SavePromptCursor();
-                if (_inputdata!.IsVirtualBuffer)
-                {
-                    screenBuffer.Write(_inputdata!.ToForward(), styleAnswer);
-                    string str = _inputdata.IsHideRightBuffer
-                        ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
-                        : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
-                    screenBuffer.WriteLine(str, styleAnswer);
-                }
-                else
-                {
-                    screenBuffer.WriteLine(_inputdata!.ToForward(), styleAnswer);
-                }
+                // Keep original persisted value when it is not valid JSON content.
             }
+
+            return value;
+        }
+
+        private void ResetSuggestions()
+        {
+            _curentSuggestion = -1;
+            _suggestions = null;
+            _localSuggestionPaginator = null;
+        }
+
+        private enum ModeView
+        {
+            Input,
+            Sugestions,
+            History
+        }
+
+        private string GetTooltipInput()
+        {
+            StringBuilder tooltip = new();
+            tooltip.Append(PromptPlusResources.TooltipEnterFinish);
+            tooltip.Append('.');
+            if (_isinputsecret && _enabledViewSecret != null)
+            {
+                tooltip.Append(CultureInfo.CurrentCulture, $"{ConfigPrompt.HotKeyInputPasswordView}:{PromptPlusResources.TooltipViewPassword}.");
+            }
+            if ((_suggestionHandler != null || _suggestionHandlerAsync != null) && _autocompleteSuggestions)
+            {
+                tooltip.Append(string.Format(
+                    ConfigPrompt.DefaultCulture,
+                    s_TooltipSuggestionToggleAutoFormat,
+                    _minimumSuggestionLength));
+                tooltip.Append('.');
+            }
+            if ((_suggestionHandler != null || _suggestionHandlerAsync != null) && !_autocompleteSuggestions)
+            {
+                tooltip.Append(string.Format(
+                    ConfigPrompt.DefaultCulture,
+                    s_TooltipSuggestionTabFormat,
+                    _minimumSuggestionLength));
+                tooltip.Append('.');
+                tooltip.Append(PromptPlusResources.TooltipSuggestionShiftTab);
+                tooltip.Append('.');
+            }
+            if (_itemHistories != null && _itemHistories.Count > 0)
+            {
+                string historyTooltip = string.Format(
+                    CultureInfo.CurrentCulture,
+                    s_TooltipHistoryShowFormat,
+                    _historyOptions!.MinPrefixLengthValue);
+                tooltip.Append(CultureInfo.CurrentCulture, $"{ConfigPrompt.HotKeyInputHistoryView}:{historyTooltip}.");
+            }
+            return tooltip.ToString();
         }
 
         private void LoadTooltipToggle()
@@ -701,83 +1198,23 @@ namespace PromptPlusLibrary.Controls.Input
             {
                 List<string> lsttooltips =
                 [
-                    $"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {Messages.InputFinishEnter}"
+                    GetTooltipInput()
                 ];
-
-                if (mode == ModeView.Input && GeneralOptions.EnabledAbortKeyValue)
+                if (mode == ModeView.Input)
                 {
-                    lsttooltips[0] += $", {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}";
+                    lsttooltips.Add(PromptPlusResources.TooltipNavegateTextPrompt);
                 }
-                if (mode == ModeView.Suggestion)
+                if (mode == ModeView.History && _itemHistories != null && _itemHistories.Count > 0)
                 {
-                    lsttooltips[0] += $", {Messages.TooltipSuggestionEsc}";
+                    lsttooltips.Add(PromptPlusResources.TooltipHistoryClear);
                 }
-                if (mode == ModeView.History)
+                lsttooltips.AddRange(GetEmacsTooltips(false));
+                if (OptionsControl.EnabledAbortKeyValue)
                 {
-                    lsttooltips[0] += $", {Messages.TooltipHistoryEsc}";
+                    lsttooltips.Add($"{ConfigPrompt.HotKeyAbortKeyPress}:{PromptPlusResources.Abort}");
                 }
-                lsttooltips.AddRange(EmacsBuffer.GetEmacsTooltips());
                 _toggerTooptips[mode] = [.. lsttooltips];
             }
         }
-
-        private string GetTooltipModeInput()
-        {
-            StringBuilder tooltip = new();
-            tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
-            if (_enabledViewSecret != null)
-            {
-                tooltip.Append(", ");
-                tooltip.Append(string.Format(Messages.TooltipViewPassword, ConfigPlus.HotKeyPasswordView));
-            }
-            if (_suggestionHandler != null)
-            {
-                tooltip.Append(", ");
-                tooltip.Append(Messages.TooltipSuggestionToggle);
-            }
-            if (_itemHistories != null && _itemHistories.Count > 0)
-            {
-                tooltip.Append(", ");
-                tooltip.Append(string.Format(Messages.TooltipHistoryShow, ConfigPlus.HotKeyShowHistory, _historyOptions!.MinPrefixLengthValue));
-            }
-            return tooltip.ToString();
-        }
-
-        private string GetTooltipModeHistory()
-        {
-            StringBuilder tooltip = new();
-            tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
-            if (_suggestionHandler != null)
-            {
-                tooltip.Append(", ");
-                tooltip.Append(Messages.TooltipSuggestionToggle);
-            }
-            tooltip.Append(", ");
-            tooltip.Append(Messages.TooltipPages);
-            return tooltip.ToString();
-        }
-
-        private string GetTooltipModeSuggestion()
-        {
-            StringBuilder tooltip = new();
-            tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
-            if (_itemHistories != null && _itemHistories.Count > 0)
-            {
-                tooltip.Append(", ");
-                tooltip.Append(string.Format(Messages.TooltipHistoryShow, ConfigPlus.HotKeyShowHistory, _historyOptions!.MinPrefixLengthValue));
-            }
-            tooltip.Append(", ");
-            tooltip.Append(Messages.TooltipSuggestionToggle);
-            return tooltip.ToString();
-        }
-
-        private enum ModeView
-        {
-            Input,
-            Suggestion,
-            History
-        }
-
-        #endregion
     }
 }

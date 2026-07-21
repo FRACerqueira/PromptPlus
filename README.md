@@ -1,417 +1,250 @@
-![Logo](icon.png)
+﻿<div align="center">
+  <img src="icon.png" alt="PromptPlus" width="120" height="120" />
 
-# Welcome to PromptPlus
+  # PromptPlus
 
-[![Build](https://github.com/FRACerqueira/PromptPlus/workflows/Build/badge.svg)](https://github.com/FRACerqueira/PromptPlus/actions/workflows/build.yml)
-[![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
-[![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE)
-[![NuGet](https://img.shields.io/nuget/v/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
+  ### **PromptPlus transforms your console apps with a modern .NET library that delivers polished, interactive experiences — from text input with history and searchable lists to masked fields, date/time pickers, file browsers, progress bars, charts, and more — all streamlined through one sleek fluent API.**
 
+  [![NuGet](https://img.shields.io/badge/NuGet-PromptPlus-blue)](https://www.nuget.org/packages/PromptPlus)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+  [![.NET](https://img.shields.io/badge/.NET-8%20%7C%209%20%7C%2010-512BD4)](https://dotnet.microsoft.com/)
+  [![Downloads](https://img.shields.io/nuget/dt/PromptPlus)](https://www.nuget.org/packages/PromptPlus/)
 
-**The best tool to Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.**
- **PromptPlus** was developed in C# with the **.NET 8**, **.NET 9**, **.NET 10** target frameworks.
+</div>
 
-----
-## Table of Contents
+---
 
-- [What's new in the latest version](#whats-new-in-the-latest-version)
-- [Features](#features)
-- [Installing](#installing)
-- [Console Engine](#console-engine)
-- [Culture](#culture)
-- [Keys navigation, hotkeys and Extensions Emacs](#keys-navigation)
-- [Colors](#colors)
-- [Examples](#examples)
-- [Documentation](#documentation)
-- [Supported Platforms](#supported-platforms)
-- [Code of Conduct](#code-of-conduct)
-- [Contributing](#contributing)
-- [Credits](#credits)
-- [License](#license)
-- [Previous versions](./docs/whatsnewprev.md)
+## Highlights
 
-----
-## What's new in the latest version
+- **20+ interactive controls** — from a simple key-press to multi-column tables and tree browsers
+- **6 output-only widgets** — render sliders, calendars, banners, charts and more without blocking
+- **Fluent API** — every control is configured with readable method chains
+- **Two-layer config** — set defaults once with `PromptPlus.Config`, override per control with `.Options()`
+- **Abort anywhere** — Esc (or your chosen key) aborts any control; result carries an `IsAborted` flag
+- **History persistence** — last confirmed value saved and pre-loaded automatically
+- **Terminal-safe** — auto-detects size, re-renders on resize, enforces 80×10 minimum gracefully
+- **Cross-platform** — Windows, Linux, macOS; .NET 8, 9 and 10
 
-### V5.0.7 / V5.0.8
-[**Top**](#table-of-contents)
+---
 
-- Improved : Added OnlyView method to all select/multiselect interfaces and implementations for view-only mode.   
-- Improved : Updated TableSelect and TableMultiSelect: Changed AddColumn to use Func<T, string>, simplified filtering, and improved answer rendering.
-- Fixed    : TableSelect and TableMultiSelect : Correct key to move Column (left/right to ctrl-left/ctrl-right).
-- Removed  : TableSelect/TableMultiSelect: Removed AutoFill/AddFormatType.
-- Improved : Updated TableMultiSelectControl: AddItem/AddItems to support initial checked state.
-- Fixed    : Correct parameter order in MultiSelectControl - AddItem/Additems methods.
-- Fixed    : SaveHistory to SwitchControl.
+## Installation
 
-### V5.0.6
-[**Top**](#table-of-contents)
-- **New** control: WaitCommand (**EXPERIMENTAL!**)
-- Improved : Detect '+'/'-' with shift key for expand/collapse controls.
-- Improved : jump to next item using the first character of the item's text. 
-    - Select/Multi Select control
-    - file Select/Multi Select control
-    - Remote Select/Remote Multi Select control
-    - Nodetree Select/Nodetree Multi Select control
-- Fixed : Corret format for date in calendar control.
-- Fixed : Start with fulpath in file select/multi select controls.
-- Fixed: Bug in sugestion input control when sugestion empty.
-
-### V5.0.5
-[**Top**](#table-of-contents)
-
-- Fixed : WriteLine does not support two colors in one line.
-- Fixed : WriteLine does not support Extended colors.
-- Improved : Normalize newlines method to support better cross-platform compatibility.
-
-### V5.0.4 / V5.0.3
-[**Top**](#table-of-contents)
-
-- Fixed : Missing target framework .Net10 in Nuget package (V5.0.4).
-- Improved : AnsiDetector has been improved.
-- Improved : Check requires a terminal/console environment at startup.
-    - System.Console.IsInputRedirected or System.Console.IsOutputRedirected not supported. 
-- Fixed : Cursor visibility/hide on linux system.
-- Fixed : Color conversion methods.
-    - Stackoverflow exception when use ToConsoleColor Extensions. (the Extensions methods were calling themselves recursively).
-    - ForegroundColor/BackgroundColor conversion.
-
-### V5.0.2
-[**Top**](#table-of-contents)
-
-- Fixed : Incorrect PageSize value for widgets.Fixed: ProgressBar control with custom range not updating percentage.
-- 
-### V5.0.1
-[**Top**](#table-of-contents)
-
-- Removed: Feature multithreading (Incompatible when another process uses the same output stream).
-- Fixed: Read properties to global config to all controls.
-- Fixed: MaxWidths to global config to all controls.
-- Fixed: ProgressBar Issue display % when has custom range.
-- Fixed resources for en-US and pt-BR languages.
-- Improved FileSelect control with History and DefaultHistory command.
-- Improved KeyPress control with Timeout and ShowCountDown command.
-- Improved ProgressBar control with context parameters and result context.
-- Improved MultiSelect control with DefaultHistory command.
-- Improved Select control with DefaultHistory command.
-- Improved WaitProcess control with ExtraInfoProcess for provides functionality to update the extra information associated with a state process.
-- Improved show only seleted items for controls with multi selected items.
-- Improved History control with ReadHistory command.
-- Improved EnableMessageAbortCtrlC property to indicate whether a message is displayed when the operation is aborted by pressing Ctrl+C .
-- Improved Chartbar control with MaxLengthLabel command and options to show only legends.
-- improved code quality and refactoring.
-- Updated dependencies to latest versions.
-- Updated samples to use latest version.
-- Updated documentation.
-
-### V5.0.0 (version release)
-
-[**Top**](#table-of-contents)
-
-We're very excited about the **big release** of this new version. **Version 5 has been completely redesigned** and optimized for better stability, consistency, and performance. 
-All controls and behaviors have been revisited and improved to ensure sustainable evolution. 
-Due to the significant modifications, version 5 introduced **significant changes and is incompatible with versions 4.x**, although the concepts and components are very similar, requiring a small learning curve and minor methodological adjustments.
-
-- PromptPlus has **more than 37! controls/widgets**
-- Support for **.Net10,.Net9 and .Net8**
-- External references were reviewed and only those necessary for size treatment for East Asian characters were used.
-- **New control rendering engine** adjusts more fluidly to the screen size and avoids flickering by redrawing only the changed lines.
-- Revised control of hotkeys and special characters ensuring consistency according to the console's capabilities.
-- Created the separation of interactive controls and **added several non-interactive controls (widgets)**
-- Renaming several control methods for better clarity and reduced scope, aiming at the unique responsibility that each component intends to perform, allowing for sustainable evolution.
-- Revised concept of an editing window for controls that require a significant input/response size , ensuring visual consistency and adequate navigability.
-- A slice architecture was adopted for each component, allowing individual evolution of each one with low interference to the others.
-- All interative controls start at : **PromptPlus.Controls**.\<name of control\>.
-    - All initialization contracts have been standardized: PromptPlus.Controls.\<name of control\>(string prompt = "", string? description = null).
-- All no interative controls start at : **PromptPlus.Widgets**.\<name of control\>.
-    - For each non-interactive control the initialization contract was customized.
-- All commands for console start at : **PromptPlus.Console**.\<command\>.
-- All general config start at : **PromptPlus.Config**.\<config\>.
-- **NEW tooltip mechanism**: Now shows all keys and hotkeys for each control by switching the view ('F1').
-- **NEW controls group**: Remote sources.This control group is in the **experimental phase** and addresses the scenario of resolving the domain set of collections from an external source (e.g., database, cloud, API with pagination).
-    - Remote Select for any type
-    - Remote Multi Select for any type
-    - Remote Nodetree select for any type
-    - Remote Nodetree Multi select for any type
-- **New console state preservation with capability to manipulate the console Ctrl+C / Ctrl+Break**.
-- **NEW external file config 'PromptPlus.config'** to customize global behaviors of PromptPlus without code changes.
-
-A more detailed list of changes and basic Concepts **[for each of the controls can be seen here](./docs/whatsnewcontrols.md)**. 
-
-----
-## Features
-[**Top**](#table-of-contents)
-
-**All features have IntelliSense. PromptPlus has more than 37! controls/widgets with many features like: filters, validators, history, suggestions, spinner(20 embedding type), colors(Supports 4/8/24-bit colors) and customizable element styles for each control** :
-
-- AutoComplete with spinner
-- Banner Ascii
-- Calendar with multiple layouts
-- Calendar Widget **NEW!** 
-- ChartBar with switch layout, Legend and order
-- ChartBar Widget **NEW!** 
-- File and Folder multi-select
-- File and Folder select
-- Hisytory **NEW!** 
-- Input text
-- Input Secret 
-- KeyPress
-- MaskEdit Generic (string) **NEW!** 
-- MaskEdit Date (DateTime/DateOnly) **NEW!** 
-- MaskEdit Time (DateTime/TimeOnly) **NEW!** 
-- MaskEdit DateTime **NEW!** 
-- MaskEdit Number (integer,long,double,decimal) **NEW!** 
-- MaskEdit Currency (double,decimal) **NEW!** 
-- Multi-Select for any type (with group!) 
-- Nodes hierarchical structures multi-select for any type
-- Nodes hierarchical structures select for any type
-- Progress bar with 6 types , gradient colors and spinner
-- ReadLine Emacs **NEW!** 
-- Remote Select for any type **NEW! EXPERIMENTAL!** 
-- Remote Multi Select for any type **NEW! EXPERIMENTAL!** 
-- Remote NodeTree Select for any type **NEW! EXPERIMENTAL!** 
-- Remote NodeTree Multi Select for any type **NEW! EXPERIMENTAL!** 
-- Select for any type (with group!) 
-- Slider numeric ranger with gradient colors
-- Slider  Widget **NEW!** 
-- Switch (style on/off)
-- Switch  Widget **NEW!** 
-- Table structures multi-select for any type and multiple layouts
-- Table structures select for any type and multiple layouts
-- Table Widget **NEW!**
-- Wait Process (Run background tasks Sequential/Parallel) with elapsedtime and spinner 
-- Wait Time with countdown and spinner
-
-A **complete list of all controls and widgets [snapshots can be seen here](./docs/snapshots.md)**
-
-### snapshots (small sample)
-![](./docs/images/fileselect.jpg)
-
-![](./docs/images/progressbar.jpg)
-
-![](./docs/images/chartbar.jpg)
-
-![](./docs/images/consolecolorcapacity.jpg)
-
-----
-## Installing
-[**Top**](#table-of-contents)
-
-```
-Install-Package PromptPlus [-pre]
+```shell
+dotnet add package PromptPlus
 ```
 
-```
-dotnet add package PromptPlus [--prerelease]
-```
+---
 
-**_Note:  [-pre]/[--prerelease] usage for pre-release versions_**
-
-----
-## Console Engine
-[**Top**](#table-of-contents)
-
-The console driver has the ability to detect terminal capabilities and allow for 24-bit color and text overflow strategies based on terminal size, and left and right margins for a nicer layout and automatic color conversion. 
-
-The new engine detects support ansi commands and adjust output for this functionality respecting OS differences , terminal mode and Windows console mode. The Colors are automatically adjusted to the capacity of the terminal. 
-
-This automatic adjustment may slightly modify the final color when converting to a lower bit resolution, in addition to detecting color tokenization in texts.
-
-_Note: If the color tokenization is invalid, the value will be written without applying the color tokens, keeping the tokens as text._
+## Quick Start
 
 ```csharp
-PromptPlus.Console.WriteLine("Test", new Style(ConsoleColor.Red, ConsoleColor.White, Overflow.None));
-PromptPlus.Console.WriteLine("Test", new Style(Color.White, Color.Red, Overflow.None));
-PromptPlus.Console.WriteLine("Test", new Style(new Color(255, 255, 255), Color.Red, Overflow.None));
-PromptPlus.Console.WriteLine("Test", new Style(Color.FromConsoleColor(ConsoleColor.White), Color.Red, Overflow.None));
-PromptPlus.Console.WriteLine("Test", new Style(Color.FromInt32(255), Color.Red, Overflow.None));
-PromptPlus.Console.WriteLine("Test", new Style(Color.FromHtml("#ffffff"), Color.Red, Overflow.None));
+using PromptPlusLibrary;
 
-PromptPlus.Console.WriteLine("[RGB(255,0,0):WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
-PromptPlus.Console.WriteLine("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
+// Ask for a name
+var nameResult = PromptPlus.Controls.Input("Your name").Run();
+if (nameResult.IsAborted) return;
 
-PromptPlus.Widgets.SingleDash("Test SingleDash", DashOptions.DoubleBorder, 1, Style.Default().ForeGround(ConsoleColor.Red).Background(ConsoleColor.Yellow));
-PromptPlus.Widgets.SingleDash("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", DashOptions.AsciiSingleBorder, 1);
-PromptPlus.Widgets.DoubleDash("Test SingleDash", DashOptions.DoubleBorder, 1, Style.Default().ForeGround(ConsoleColor.Red).Background(ConsoleColor.Yellow));
-PromptPlus.Widgets.DoubleDash("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text", DashOptions.AsciiSingleBorder, 1);
+// Choose a color
+var colorResult = PromptPlus.Controls
+    .Select<string>("Favorite color")
+    .AddItems(["Red", "Green", "Blue"])
+    .Run();
 
+// Deconstruct result
+var (color, aborted) = colorResult;
+if (!aborted)
+    PromptPlus.Console.WriteLine($"Hello {nameResult.Content}, you chose {color}!");
 ```
-### About console state preservation
 
-The Prompt Plus library aims to ensure that your logic executes without errors or failures as much as possible.
+> 💡 **Tip:** Every control returns `ResultPrompt<T>`. Use `.Content` for the value, `.IsAborted` to detect Esc, or deconstruct with `var (value, aborted) = result`.
 
-In this sense, when using the library, it maintains the initial state of the console colors and the initial culture of the execution thread. 
+---
 
-When the application terminates normally or when a critical error occurs, these properties are restored. All other properties must be guaranteed by the application.
+## Two-Layer Configuration
 
-The **ResetBasicStateAfterExist property** allows you to change this characteristic when its value is false.
+### Layer 1 — Global defaults (applied to all controls)
 
-Whenever a **critical error occurs, a log file is generated** before completion in the folder located at - \{SpecialFolder.UserProfile\}/PromptPlus.Log. This file is generated daily and kept for a maximum of 7 days.
+```csharp
+using PromptPlusLibrary;
 
-### About console Ctrl+C / Ctrl+Break
-
-The Prompt Plus library monitors the Ctrl+C / Ctrl+Break keys. 
-
-When it is not handled by the 'CancelKeyPress' command, every time the application is closed it restores the initial state of colors, cursor, Culture and returns to the primary console buffer.
-
-The Prompt Plus library provides the ability to manipulate the behavior of Ctrl+C/Ctrl+Break using the command:
-- CancelKeyPress(AfterCancelKeyPress behaviorcontrols, Action\<object?, ConsoleCancelEventArgs\> actionhandle)
-
-  The behavior after a cancel event can be configured using the `AfterCancelKeyPress` property:
-  - AfterCancelKeyPress options:
-    - Default: Follows the default action after a cancellation.
-    - AbortCurrentControl: Abort the current control's operation when cancel key is pressed and continue with next operation.
-    - AbortAllControl: Abort the All control's operation when cancel key is pressed and continue with next operation.
-
-To remove the current cancel key press handler:
-- RemoveCancelKeyPress() - Restores default console Ctrl+C/Break handling behavior.
-
-To check if a cancel event has occurred:
-- UserPressKeyAborted (read-only) - Returns true if the operation was aborted by Ctrl+C/Break.
-
-----
-## Culture
-[**Top**](#table-of-contents)
-
-PromptPlus applies the language/culture **only when running controls**. The language/culture of the application is **not affected**. If language/culture is not informed, the application's language/culture will be used with fallback to en-US.
-
-All messages are affected when changed language/culture. PromptPlus has languages embedded:
-- en-US (Default)
-- pt-BR
-
-To use a non-embedded language/culture:
-
-- Copy the **PromptPlusResources.resx** file in folder PromptPlus/Resources
-- Translate messages with same format to your language/culture
-- Convert .resx files to binary .resources files ([**reference link here**](https://docs.microsoft.com/en-us/dotnet/core/extensions/work-with-resx-files-programmatically))
-- Publish the compiled file (**PromptPlus.[Language].resources**) in the same folder as the binaries.
-
-----
-## Keys navigation
-[**Top**](#table-of-contents)
-
-### For text navigation
-
-PromptPlus adopts the keyboard **left/right arrows, Home, End** keys for navigation, extending its functionality with the emacs combinations below:
-
-- CTRL+T : To transpose the previous two characters.
-- CTRL+L : To clears the content.
-- CTRL+H : To deletes the previous character (equivalent to the backspace key).
-- CTRL+E : To moves the cursor to the line end (equivalent to the end key).
-- CTRL+A : To moves the cursor to the line start (equivalent to the home key).
-- CTRL+B : To moves the cursor back one character (equivalent to the left arrow key).
-- CTRL+F : To Moves the cursor forward one character (equivalent to the right arrow key).
-- CTRL+D : To delete the current character (equivalent to the delete key).
-- CTRL+U : To clears the line content before the cursor.
-- CTRL+K : To clears the line content after the cursor.
-- CTRL+W : To clear the word before the cursor.
-- ALT+L : To lowers the case of every character from the cursor's position to the end of the current word.
-- ALT+U : To upper the case of every character from the cursor's position to the end of the current word.
-- ALT+C : To capitalizes the character under the cursor and moves to the end of the word.
-- ALT+D : To clear the word after the cursor.
-- ALT+F : To moves the cursor forward one word.
-- ALT+B : To moves the cursor backward one word.
-- INSER : To toggle input replacement mode (default/started in insert mode).
-- ESC : (feature optional) to abort input and return default value and flag aborted.
-
-### Console KeyInfo Extensions
-
-- IsPressSpecialKey(this ConsoleKeyInfo keyinfo, ConsoleKey key, ConsoleModifiers modifier)
-- IsPressEnterKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsAbortKeyPress(this ConsoleKeyInfo keyinfo)
-- IsLowersCurrentWord(this ConsoleKeyInfo keyinfo)
-- IsClearBeforeCursor(this ConsoleKeyInfo keyinfo)
-- IsClearAfterCursor(this ConsoleKeyInfo keyinfo)
-- IsClearWordBeforeCursor(this ConsoleKeyInfo keyinfo)
-- IsClearWordAfterCursor(this ConsoleKeyInfo keyinfo)
-- IsCapitalizeOverCursor(this ConsoleKeyInfo keyinfo)
-- IsForwardWord(this ConsoleKeyInfo keyinfo)
-- IsBackwardWord(this ConsoleKeyInfo keyinfo)
-- IsUppersCurrentWord(this ConsoleKeyInfo keyinfo)
-- IsTransposePrevious(this ConsoleKeyInfo keyinfo)
-- IsClearContent(this ConsoleKeyInfo keyinfo)
-- IsPressTabKey(this ConsoleKeyInfo keyinfo)
-- IsPressShiftTabKey(this ConsoleKeyInfo keyinfo)
-- IsPressEndKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsPressHomeKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsPressCtrlHomeKey(this ConsoleKeyInfo keyinfo)
-- IsPressCtrlEndKey(this ConsoleKeyInfo keyinfo)
-- IsPressBackspaceKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsPressDeleteKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsPressLeftArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsPressSpaceKey(this ConsoleKeyInfo keyinfo)
-- IsPressCtrlSpaceKey(this ConsoleKeyInfo keyinfo)
-- IsPressRightArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsPressUpArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsPressDownArrowKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsPressPageUpKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsPressPageDownKey(this ConsoleKeyInfo keyinfo, bool emacskeys = true)
-- IsPressEscKey(this ConsoleKeyInfo keyinfo)
-- IsYesResponseKey(this ConsoleKeyInfo keyinfo)
-    - Check if ConsoleKeyInfo is equal to PromptPlus.Config.YesChar
-- IsNoResponseKey(this ConsoleKeyInfo keyinfo)
-    - Check if ConsoleKeyInfo is equal to PromptPlus.Config.NoChar 
-
-### For list/colletion
-
-PromptPlus adopts the keyboard **Up/Down arrows, Ctrl+Home, Ctrl+End, PageUp and PageDown** keys items navigation.
-
-For multiple-selection lists, a **space** is used to indicate a check mark. The **Shift+space** combination is used in text input to differentiate it from a check mark, when applicable.
-
-### For expand/collapse
-
-PromptPlus adopts the keyboard **'+', Alt '+'** to expand/expand all and **'-'** to collapse.
-
-----
-## Colors
-[**Top**](#table-of-contents)
-
-The color class has implicit conversion to ConsoleColor. There are conversion methods to facilitate compatibility with other common color representations:
-
-- Html
-	-	Converts string color Html format (#RRGGBB).
-- Int32
-	-	Converts a standard color number (0 ~ 255).
-- Console Color
-	-	Converts a System.Console.ConsoleColor
-- RGB
-	-	Converts a RGB format (R,G,B)
-- Name
-	-	Converts a name standard color
-      
-The standard color table (0 - 255) can be [**viewed here**](./docs/colors.md).
-
-    
-----
-## Examples
-[**Top**](#table-of-contents)
-
-The folder [**Samples**](https://github.com/FRACerqueira/PromptPlus/tree/main/samples) contains more **30!** projects samples.
-
+PromptPlus.Config.PageSize = 8;
+PromptPlus.Config.HideAfterFinish = true;
+PromptPlus.Config.EmacsKeyBindings = true;
 ```
-dotnet run --project [name of sample]
+
+### Layer 2 — Per-control override (`.Options()` fluent method)
+
+```csharp
+PromptPlus.Controls
+    .Input("Notes")
+    .Options(o => o
+        .HideAfterFinish(false)
+        .ShowTooltip(false))
+    .Run();
 ```
-----
+
+Per-control settings always win over global config. See [`docs/global-behaviors.md`](docs/global-behaviors.md) for the full property reference.
+
+### Persist config to disk
+
+```csharp
+// Write PromptPlus.config to the current directory
+PromptPlus.Config.ToFile(".");
+```
+
+On next run, PromptPlus automatically reads `PromptPlus.config` from the working directory.
+
+---
+
+## Global Behaviors
+
+| Behavior | Observable effect |
+|---|---|
+| Terminal resize detection | Control re-renders its own area; surrounding output is untouched |
+| Minimum terminal size (80×10) | Shows a resize prompt and waits — never crashes |
+| Culture isolation | `DefaultCulture` applied only during `.Run()`; thread culture always restored |
+| Emacs key bindings | GNU Emacs shortcuts in all text inputs when `EmacsKeyBindings = true` |
+| Single-line rendering | Newlines stripped; sliding window with `…` when value is too wide |
+| History persistence | Last confirmed value saved to disk; pre-loaded on next run |
+| HideAfterFinish | Control UI erased after confirmation; only the final answer line remains |
+| HideOnAbort | Control UI erased when user presses Esc |
+| Ctrl+C handling | Intercepted by default → triggers abort; set `RemoveHandlerCtrlC = true` to pass to OS |
+| Tooltip visibility | `ShowTooltip = true` shows keyboard hints below the prompt |
+| Abort key hint | `ShowMessageAbortKey = true` includes the abort-key name in the tooltip |
+| Auto-initialization | PromptPlus initializes on first access: detects terminal, loads config, registers error log |
+
+---
+
+## Localization
+
+PromptPlus ships **11 built-in locales** as embedded resources. The active locale is selected automatically from `CultureInfo.CurrentCulture`; override it at any time with:
+
+```csharp
+PromptPlus.Config.DefaultCulture = new CultureInfo("pt-BR");
+```
+
+| Culture code | Language |
+|---|---|
+| *(default)* | English |
+| `pt-BR` | Portuguese (Brazil) |
+| `de-DE` | German |
+| `es-ES` | Spanish |
+| `fr-FR` | French |
+| `it-IT` | Italian |
+| `ja-JP` | Japanese |
+| `ko-KR` | Korean |
+| `nl-BE` | Dutch (Belgium) |
+| `ru-RU` | Russian |
+| `zh-CN` | Chinese (Simplified) |
+
+> If `DefaultCulture` is set to a culture that has no embedded resource, PromptPlus falls back to the default English strings.
+
+### Adding a custom locale
+
+If your target culture is not listed above, you can provide your own satellite resource:
+
+1. Copy `PromptPlus/Resources/PromptPlusResources.resx` from the source tree (or extract it from the NuGet package).
+2. Translate every message value to your language, keeping the existing key names and format placeholders unchanged.
+3. Compile the `.resx` file into a binary `.resources` file — see [Compiling .resx files (Microsoft docs)](https://learn.microsoft.com/dotnet/core/extensions/work-with-resx-files-programmatically).
+4. Place the compiled file, named `PromptPlus.<culture-code>.resources` (e.g. `PromptPlus.pl-PL.resources`), in the same directory as your application binaries.
+
+PromptPlus will discover and load it automatically at runtime via the standard .NET resource fallback chain.
+
+---
+
+## Controls Reference
+
+| Control | Factory method | Returns |
+|---|---|---|
+| Text input | `PromptPlus.Controls.Input(prompt)` | `ResultPrompt<string>` |
+| Secret / password | `PromptPlus.Controls.Secret(prompt)` | `ResultPrompt<string>` |
+| Key press | `PromptPlus.Controls.KeyPress(prompt)` | `ResultPrompt<ConsoleKeyInfo?>` |
+| Confirm (yes/no) | `PromptPlus.Controls.Confirm(prompt)` | `ResultPrompt<ConsoleKeyInfo?>` |
+| Single select | `PromptPlus.Controls.Select<T>(prompt)` | `ResultPrompt<T>` |
+| Multi select | `PromptPlus.Controls.MultiSelect<T>(prompt)` | `ResultPrompt<IEnumerable<T>>` |
+| Table | `PromptPlus.Controls.Table<T>(prompt)` | `ResultPrompt<TableResult<T>>` |
+| Multi-table | `PromptPlus.Controls.MultiTable<T>(prompt)` | `ResultPrompt<IEnumerable<TableResult<T>>>` |
+| Tree | `PromptPlus.Controls.Tree<T>(prompt)` | `ResultPrompt<T>` |
+| Multi-tree | `PromptPlus.Controls.MultiTree<T>(prompt)` | `ResultPrompt<IEnumerable<T>>` |
+| File browser | `PromptPlus.Controls.File(prompt)` | `ResultPrompt<FileInfo>` |
+| Multi-file | `PromptPlus.Controls.MultiFile(prompt)` | `ResultPrompt<IEnumerable<FileInfo>>` |
+| Calendar | `PromptPlus.Controls.Calendar(prompt)` | `ResultPrompt<DateTime>` |
+| Slider | `PromptPlus.Controls.Slider(prompt)` | `ResultPrompt<double>` |
+| Switch | `PromptPlus.Controls.Switch(prompt)` | `ResultPrompt<bool>` |
+| Time picker | `PromptPlus.Controls.Time(prompt)` | `ResultPrompt<TimeSpan>` |
+| Progress bar | `PromptPlus.Controls.ProgressBar(prompt)` | `ResultPrompt<ProgressBarEvent>` |
+| Task | `PromptPlus.Controls.Task(prompt)` | `ResultPrompt<StateTask>` |
+| Multi-tasks | `PromptPlus.Controls.MultiTasks(prompt)` | `ResultPrompt<IEnumerable<MultiTaskResult>>` |
+| Chart bar | `PromptPlus.Controls.ChartBar(prompt)` | `ResultPrompt<double>` |
+| Mask — string | `PromptPlus.Controls.MaskEdit(prompt)` | `ResultPrompt<string>` |
+| Mask — integer | `PromptPlus.Controls.MaskInteger(prompt)` | `ResultPrompt<int>` |
+| Mask — long | `PromptPlus.Controls.MaskLong(prompt)` | `ResultPrompt<long>` |
+| Mask — decimal | `PromptPlus.Controls.MaskDecimal(prompt)` | `ResultPrompt<decimal>` |
+| Mask — decimal currency | `PromptPlus.Controls.MaskDecimalCurrency(prompt)` | `ResultPrompt<decimal>` |
+| Mask — double | `PromptPlus.Controls.MaskDouble(prompt)` | `ResultPrompt<double>` |
+| Mask — double currency | `PromptPlus.Controls.MaskDoubleCurrency(prompt)` | `ResultPrompt<double>` |
+| Mask — date & time | `PromptPlus.Controls.MaskDateTime(prompt)` | `ResultPrompt<DateTime>` |
+| Mask — date only | `PromptPlus.Controls.MaskDate(prompt)` | `ResultPrompt<DateTime>` |
+| Mask — DateOnly | `PromptPlus.Controls.MaskDateOnly(prompt)` | `ResultPrompt<DateOnly>` |
+| Mask — time only | `PromptPlus.Controls.MaskTime(prompt)` | `ResultPrompt<DateTime>` |
+| Mask — TimeOnly | `PromptPlus.Controls.MaskTimeOnly(prompt)` | `ResultPrompt<TimeOnly>` |
+
+---
+
+## Widgets Reference
+
+Widgets are output-only — no user input, no `ResultPrompt`. `Banner` and `Dash` render immediately;
+the fluent widgets (`Slider`, `Calendar`, `Switch`, `ChartBar`) render when you call `.Show()`.
+
+| Widget | Factory method | Output |
+|---|---|---|
+| Slider (display) | `PromptPlus.Widgets.Slider(value, min, max, fracionaldig)` | `ISliderWidget` |
+| Calendar (display) | `PromptPlus.Widgets.Calendar(dateref)` | `ICalendarWidget` |
+| Switch (display) | `PromptPlus.Widgets.Switch(value)` | `ISwitchWidget` |
+| Banner | `PromptPlus.Widgets.Banner(text)` | immediate render |
+| Dash separator | `PromptPlus.Widgets.Dash(text)` | immediate render |
+| Chart bar (display) | `PromptPlus.Widgets.ChartBar()` | `IChartBarWidget` |
+
+---
+
+## ConsolePlus Integration
+
+`PromptPlus.Console` exposes the same `IConsole` driver as `ConsolePlus.Driver`. Use it to write styled text, manage cursor, and compose output alongside your controls:
+
+```csharp
+using ConsolePlusLibrary;
+using PromptPlusLibrary;
+
+// These two are the same object:
+PromptPlus.Console.WriteLine("Hello, [bold]world[/]!");
+ConsolePlus.Driver.WriteLine("Hello, [bold]world[/]!");
+```
+
+---
+
+## Samples
+
+The `samples/` folder contains runnable projects for every control and widget — one sample per concept.
+
+---
+
 ## Documentation
-[**Top**](#table-of-contents)
 
-The library is well documented. The documentation is available in the [Docs directory](./docs/api/docindex.md).
+| Page | Description |
+|---|---|
+| [Getting Started](docs/getting-started.md) | Install, first app, config walkthrough |
+| [Architecture](docs/architecture.md) | Entry points, lifecycle, ResultPrompt |
+| [Global Behaviors](docs/global-behaviors.md) | Full IPromptPlusConfig reference |
+| [Keyboard Bindings](docs/keyboard-bindings.md) | Emacs shortcuts, physical key reference |
+| [Visual Symbols](docs/visual-symbols.md) | Symbol catalog |
+| [Global Styles](docs/global-styles.md) | Style override API |
+| [Widgets](docs/widgets.md) | Output-only widgets guide |
+| [Controls index](docs/index.md) | All pages in one place |
+| [API Reference](docs/api-documentation-guide.md) | Auto-generated API docs |
 
-----
-## Supported platforms
-[**Top**](#table-of-contents)
+---
 
-- Windows
-    - Command Prompt, PowerShell, Windows Terminal
-- Linux (Ubuntu, etc)
-    - Windows Terminal (WSL 2)
-- macOS
-    - Terminal.app
-
-----
 ## Code of Conduct
-[**Top**](#table-of-contents)
-
 This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community.
 For more information see the [Code of Conduct](CODE_OF_CONDUCT.md).
 
@@ -420,31 +253,16 @@ For more information see the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 See the [Contributing guide](CONTRIBUTING.md) for developer documentation.
 
-----
-## Credits
-[**Top**](#table-of-contents)
-
-Prompt Plus may **include pieces of code (copy)** from other software released under the MIT License:
-
-- Color/Engine Console - [Spectre.Console](https://spectreconsole.net/),  Copyright (c) 2020 Patrik Svensson, Phil Scott, Nils Andresen. See [LICENSE](Licenses/LICENSE-SpectreConsole.md).
-
-- Banner Ascii - [FIGlet](https://github.com/auriou/FIGlet), Copyright (c) 2014 Philippe AURIOU. See [LICENSE](Licenses/LICENSE-FIGlet.md).  
-
-
-**API documentation generated by**
-
-- [XmlDocMarkdown](https://github.com/ejball/XmlDocMarkdown), Copyright (c) 2024 [Ed Ball](https://github.com/ejball)
-    - See an unrefined customization to contain header and other adjustments in project [XmlDocMarkdownGenerator](https://github.com/FRACerqueira/PromptPlus/tree/main/src/XmlDocMarkdownGenerator)  
-
 **Special thanks**
 
 - [ividyon](https://github.com/ividyon) for their continued contributions to product improvement.
 
-----
 ## License
-[**Top**](#table-of-contents)
 
-Copyright 2025 @ Fernando Cerqueira
+PromptPlus is licensed under the **[MIT License](https://opensource.org/licenses/MIT)**.
 
-PromptPlus is licensed under the MIT license. See [LICENSE](https://github.com/FRACerqueira/PromptPlus/blob/master/LICENSE).
+---
 
+<div align="center">
+  <sub>Maintained by the ConsolePlus project • © 2026 Fernando Cerqueira</sub>
+</div>

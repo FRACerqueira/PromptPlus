@@ -1,185 +1,227 @@
-﻿// ***************************************************************************************
+// ***************************************************************************************
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using ConsolePlusLibrary;
+using PromptPlusLibrary.Controls.Common;
+using PromptPlusLibrary.Controls.History;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PromptPlusLibrary.Controls.MultiSelect
 {
+    /// <inheritdoc/>
     internal sealed class MultiSelectControl<T> : BaseControlPrompt<T[]>, IMultiSelectControl<T>
     {
-        private readonly Dictionary<MultiSelectStyles, Style> _optStyles = BaseControlOptions.LoadStyle<MultiSelectStyles>();
+        /// <summary>
+        /// Total rows the control template reserves around the items list:
+        /// prompt+answer line, optional error/group line, optional description line,
+        /// tooltip line and an extra row for the pagination footer when active.
+        /// Used to derive the maximum visible page size from the available console height.
+        /// </summary>
+        private const int ReservedTemplateLines = 7;
+
+        // Cached composite format strings for improved performance
+        private static readonly CompositeFormat s_multiSelectMinSelectionFormat = CompositeFormat.Parse(PromptPlusResources.MultiSelectMinSelection);
+        private static readonly CompositeFormat s_multiSelectMaxSelectionFormat = CompositeFormat.Parse(PromptPlusResources.MultiSelectMaxSelection);
+        private static readonly CompositeFormat s_tooltipCountCheckFormat = CompositeFormat.Parse(PromptPlusResources.TooltipCountCheck);
+
+        private readonly Dictionary<MultiSelectStyles, Style> _optStyles;
+        private readonly EmacsConsoleBuffer _filterBuffer;
         private readonly List<ItemSelect<T>> _items = [];
-        private int _sequence;
         private Func<T, (bool, string?)>? _predicatevalidselect;
-        private Func<T, string>? _changeDescription;
-        private Func<T, T, bool> _equalItems = (x, y) => x?.Equals(y) ?? false;
+        private Func<T, Task<(bool, string?)>>? _predicatevalidselectAsync;
         private Func<T, string?>? _extraInfo;
-        private IEnumerable<T>? _defaultValues;
+        private Func<T, Task<string?>>? _extraInfoAsync;
+        private int _sequence;
+        private Func<T, string>? _changeDescription;
+        private Func<T, Task<string>>? _changeDescriptionAsync;
+        private Func<T, T, bool> _DefaultMatchBy = EqualityComparer<T>.Default.Equals;
+        private Optional<T> _defaultValue = Optional<T>.Empty();
+        private IEnumerable<T> _defaultValues = [];
         private bool _useDefaultHistory;
         private HistoryOptions? _historyOptions;
         private FilterMode _filterType = FilterMode.Disabled;
-        private bool _filterCaseinsensitive;
         private byte _pageSize;
+        private int _effectivePageSize;
         private bool _hideTipGroup;
         private Func<T, string>? _textSelector;
+        private Func<T, Task<string>>? _textSelectorAsync;
         private IList<ItemHistory>? _itemHistories;
         private Paginator<ItemSelect<T>>? _localpaginator;
-        private readonly EmacsBuffer _filterBuffer;
-        private EmacsBuffer? _resultbuffer;
-        private readonly List<ItemSelect<T>> _checkeditems = [];
+        private enum ModeView
+        {
+            Select,
+            Filter
+        }
         private readonly Dictionary<ModeView, string[]> _toggerTooptips = new()
         {
-            { ModeView.MultiSelect,[] },
+            { ModeView.Select,[] },
             { ModeView.Filter,[] }
         };
-        private ModeView _modeView = ModeView.MultiSelect;
+        private ModeView _modeView = ModeView.Select;
         private int _indexTooptip;
         private int _lengthSeparationline;
+        private string _lastinput = string.Empty;
+        private bool _viewOnly;
+        private EmacsConsoleBuffer? _answerBuffer;
+        private bool _updatePosAnswerBuffer;
         private int _maxSelect = int.MaxValue;
         private int _minSelect;
-        private byte _maxWidth;
-        private bool _onlyView;
-        private bool _hideCountSelected;
-        private bool _hasGroup;
-        private string _lastinput;
         private bool _onfilterOnlySelected;
-        private bool _hasGroupItem;
-#pragma warning disable IDE0079 
-#pragma warning disable IDE0290 // Use primary constructor
-        public MultiSelectControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        private int _countChecked;
+        // Snapshot of _countChecked used the last time tooltip strings were built. When it
+        // transitions across the 0 boundary the "filter all selected" hint must be added/removed,
+        // so we rebuild the tooltip cache lazily on the next frame.
+        private int _lastCountCheckedTooltip = -1;
+        private bool _lastFilterOnlySelectedTooltip;
+
+        public MultiSelectControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
-            _filterBuffer = new(false, CaseOptions.Any, (_) => true, ConfigPlus.MaxLenghtFilterText);
-            _lastinput = string.Empty;
-            _maxWidth = ConfigPlus.MaxWidth;
-            _pageSize = ConfigPlus.PageSize;
+            _optStyles = OptionsControl.LoadStyle<MultiSelectStyles>(console.CurrentStyle);
+            _pageSize = ConfigPrompt.PageSize;
+            _filterBuffer = new(false, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
         }
-#pragma warning restore IDE0290 // Use primary constructor
-#pragma warning restore IDE0079
 
-        #region IMultiSelect
 
-        public IMultiSelectControl<T> OnlyView(bool value = true)
+        #region IMultIMultiSelectControl
+
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> ViewOnly(bool value = true)
         {
-            _onlyView = value;
+            _viewOnly = value;
             return this;
         }
+
+        /// <inheritdoc/>
         public IMultiSelectControl<T> ExtraInfo(Func<T, string?> extraInfoNode)
         {
             ArgumentNullException.ThrowIfNull(extraInfoNode);
             _extraInfo = extraInfoNode;
+            _extraInfoAsync = null;
             return this;
         }
 
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> ExtraInfoAsync(Func<T, Task<string?>> extraInfoNode)
+        {
+            ArgumentNullException.ThrowIfNull(extraInfoNode);
+            _extraInfoAsync = extraInfoNode;
+            _extraInfo = null;
+            return this;
+        }
+
+        /// <inheritdoc/>
         public IMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
             _predicatevalidselect = validselect;
+            _predicatevalidselectAsync = null;
             return this;
         }
 
+        /// <inheritdoc/>
         public IMultiSelectControl<T> PredicateSelected(Func<T, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) =>
-            {
-                bool fn = validselect(input);
-                if (fn)
-                {
-                    return (true, null);
-                }
-                return (false, null);
-            };
+            _predicatevalidselect = (input) => (validselect(input), (string?)null);
+            _predicatevalidselectAsync = null;
             return this;
         }
 
-        public IMultiSelectControl<T> HideCountSelected(bool value = true)
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect)
         {
-            _hideCountSelected = value;
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselectAsync = validselect;
+            _predicatevalidselect = null;
             return this;
         }
 
-        public IMultiSelectControl<T> MaxWidth(byte maxWidth)
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> PredicateSelectedAsync(Func<T, Task<bool>> validselect)
         {
-            if (maxWidth < 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(maxWidth), "MaxWidth must be greater than or equal to 1.");
-            }
-            _maxWidth = maxWidth;
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselectAsync = async (input) => ((await validselect(input).ConfigureAwait(false)), (string?)null);
+            _predicatevalidselect = null;
             return this;
         }
 
-        public IMultiSelectControl<T> Range(int minvalue, int? maxvalue = null)
-        {
-            if (minvalue > (maxvalue ?? int.MaxValue))
-            {
-                throw new ArgumentOutOfRangeException($"Range invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
-            }
-            _minSelect = minvalue;
-            _maxSelect = maxvalue ?? int.MaxValue;
-            return this;
-        }
-
-        public IMultiSelectControl<T> EqualItems(Func<T, T, bool> comparer)
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> DefaultMatchBy(Func<T, T, bool> comparer)
         {
             ArgumentNullException.ThrowIfNull(comparer, nameof(comparer));
-            _equalItems = comparer;
+            _DefaultMatchBy = comparer;
             return this;
         }
 
-        public IMultiSelectControl<T> AddItem(T value, bool valuechecked = false, bool disable = false)
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> AddItem(T value, bool ischecked = false, bool disable = false)
         {
             ArgumentNullException.ThrowIfNull(value, nameof(value));
 
             _sequence++;
-            _items.Add(new ItemSelect<T>(_sequence.ToString(), value, disable, valuechecked));
+            _items.Add(new ItemSelect<T>(_sequence.ToString(CultureInfo.CurrentCulture), value, disable, ischecked));
             return this;
         }
 
-        public IMultiSelectControl<T> AddItems(IEnumerable<T> values, bool valuechecked = false, bool disable = false)
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> AddItems(IEnumerable<T> values, bool ischecked = false, bool disable = false)
         {
             ArgumentNullException.ThrowIfNull(values, nameof(values));
 
             foreach (T? value in values)
             {
-                AddItem(value, valuechecked, disable);
+                AddItem(value, ischecked, disable);
             }
             return this;
         }
 
-        public IMultiSelectControl<T> AddGroupedItem(string group, T value, bool valuechecked = false, bool disable = false)
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> InteractionAsync<T1>(IEnumerable<T1> items, Func<T1, IMultiSelectControl<T>, Task> interactionAction)
+        {
+            ArgumentNullException.ThrowIfNull(items);
+            ArgumentNullException.ThrowIfNull(interactionAction);
+
+            foreach (T1 item in items)
+            {
+                interactionAction.Invoke(item, this)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> AddGroupedItem(string group, T value, bool ischecked = false, bool disable = false)
         {
             ArgumentNullException.ThrowIfNull(group, nameof(group));
             ArgumentNullException.ThrowIfNull(value, nameof(value));
-            _hasGroupItem = true;
             int lastindex = _items.FindLastIndex((x) => x.Group == group);
             if (lastindex < 0)
             {
                 _sequence++;
-                _items.Add(new ItemSelect<T>(_sequence.ToString(), value,disable, valuechecked)
+                _items.Add(new ItemSelect<T>(_sequence.ToString(CultureInfo.CurrentCulture), value, false)
                 {
                     Group = group,
                     IsFirstItemGroup = true,
                     IsLastItemGroup = true
                 });
-                return this;
-            }
-            if (lastindex != _items.Count - 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(group), "Group already exists");
             }
             _sequence++;
-            _items.Add(new ItemSelect<T>(_sequence.ToString(), value,disable, valuechecked)
+            _items.Add(new ItemSelect<T>(_sequence.ToString(CultureInfo.CurrentCulture), value, disable, ischecked)
             {
                 Group = group,
                 IsLastItemGroup = true
@@ -196,30 +238,57 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             return this;
         }
 
-        public IMultiSelectControl<T> AddGroupedItems(string group, IEnumerable<T> values, bool valuechecked = false, bool disable = false)
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> AddGroupedItems(string group, IEnumerable<T> values, bool ischecked = false, bool disable = false)
         {
             ArgumentNullException.ThrowIfNull(values, nameof(values));
             foreach (T? value in values)
             {
-                AddGroupedItem(group, value, disable);
+                AddGroupedItem(group, value, ischecked, disable);
             }
             return this;
         }
 
+        /// <inheritdoc/>
         public IMultiSelectControl<T> ChangeDescription(Func<T, string> value)
         {
+            ArgumentNullException.ThrowIfNull(value);
             _changeDescription = value;
+            _changeDescriptionAsync = null;
             return this;
         }
 
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> ChangeDescriptionAsync(Func<T, Task<string>> value)
+        {
+            ArgumentNullException.ThrowIfNull(value);
+            _changeDescriptionAsync = value;
+            _changeDescription = null;
+            return this;
+        }
+
+        /// <inheritdoc/>
         public IMultiSelectControl<T> Default(IEnumerable<T> values, bool useDefaultHistory = true)
         {
             ArgumentNullException.ThrowIfNull(values, nameof(values));
+            if (values.Any())
+            {
+                _defaultValue = Optional<T>.Set(values.First());
+            }
             _defaultValues = values;
             _useDefaultHistory = useDefaultHistory;
             return this;
         }
 
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> UseDefaultHistory()
+        {
+            _defaultValue = Optional<T>.Empty();
+            _useDefaultHistory = true;
+            return this;
+        }
+
+        /// <inheritdoc/>
         public IMultiSelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
@@ -232,89 +301,120 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             return this;
         }
 
-        public IMultiSelectControl<T> Filter(FilterMode value, bool caseinsensitive = true)
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> Filter(FilterMode value)
         {
             _filterType = value;
-            _filterCaseinsensitive = caseinsensitive;
             return this;
         }
 
 
-
-        public IMultiSelectControl<T> Interaction(IEnumerable<T> items, Action<T, IMultiSelectControl<T>> interactionAction)
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> Interaction<T1>(IEnumerable<T1> items, Action<T1, IMultiSelectControl<T>> interactionAction)
         {
             ArgumentNullException.ThrowIfNull(items);
             ArgumentNullException.ThrowIfNull(interactionAction);
 
-            foreach (T? item in items)
+            foreach (T1 item in items)
             {
                 interactionAction.Invoke(item, this);
             }
             return this;
         }
 
+        /// <inheritdoc/>
         public IMultiSelectControl<T> Options(Action<IControlOptions> options)
         {
             ArgumentNullException.ThrowIfNull(options);
-            options.Invoke(GeneralOptions);
+            options.Invoke(OptionsControl);
             return this;
         }
 
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> Range(int minvalue, int? maxvalue = null)
+        {
+            if (minvalue > (maxvalue ?? int.MaxValue))
+            {
+                throw new ArgumentOutOfRangeException($"Range invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
+            }
+            _minSelect = minvalue;
+            _maxSelect = maxvalue ?? int.MaxValue;
+            return this;
+        }
+
+        /// <inheritdoc/>
         public IMultiSelectControl<T> PageSize(byte value)
         {
-            if (value < 1)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "PageSize must be greater or equal than 1");
-            }
+            // value == 0 means "auto-fit to console height" (see ComputeEffectivePageSize).
+            // Any positive value is the user's preferred maximum and is later clamped to the
+            // height available on screen.
             _pageSize = value;
             return this;
         }
 
+        /// <inheritdoc/>
         public IMultiSelectControl<T> AddSeparator(SeparatorLine separatorLine = SeparatorLine.SingleLine, char? value = null)
         {
             char separator = separatorLine switch
             {
-                SeparatorLine.SingleLine => ConsolePlus.IsUnicodeSupported ? '─' : '-',
-                SeparatorLine.DoubleLine => ConsolePlus.IsUnicodeSupported ? '═' : '=',
+                SeparatorLine.SingleLine => GetSymbol(SymbolType.SingleBorder)[0],
+                SeparatorLine.DoubleLine => GetSymbol(SymbolType.DoubleBorder)[0],
                 SeparatorLine.UserChar => value ?? throw new ArgumentNullException(nameof(value), "Char separator is null"),
                 _ => throw new ArgumentOutOfRangeException(nameof(separatorLine), "SeparatorLine not supported")
             };
             _sequence++;
-#pragma warning disable CS8604 // Possible null reference argument.
-            _items.Add(new ItemSelect<T>(_sequence.ToString(), default, false, true)
+            _items.Add(new ItemSelect<T>(_sequence.ToString(CultureInfo.CurrentCulture), default!, true)
             {
                 CharSeparation = separator,
                 Text = ""
             });
-#pragma warning restore CS8604 // Possible null reference argument.
             return this;
         }
 
+        /// <inheritdoc/>
         public IMultiSelectControl<T> HideTipGroup(bool value = true)
         {
             _hideTipGroup = value;
             return this;
         }
 
+        /// <inheritdoc/>
         public IMultiSelectControl<T> Styles(MultiSelectStyles styleType, Style style)
         {
             _optStyles[styleType] = style;
             return this;
         }
 
+        /// <inheritdoc/>
         public IMultiSelectControl<T> TextSelector(Func<T, string> value)
         {
             _textSelector = value ?? throw new ArgumentNullException(nameof(value), "TextSelector is null");
+            _textSelectorAsync = null;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public IMultiSelectControl<T> TextSelectorAsync(Func<T, Task<string>> value)
+        {
+            _textSelectorAsync = value ?? throw new ArgumentNullException(nameof(value), "TextSelectorAsync is null");
+            _textSelector = null;
             return this;
         }
 
         #endregion
 
+        /// <inheritdoc/>
         public override void InitControl(CancellationToken cancellationToken)
         {
+            bool loadedDefaultsFromHistory = false;
+            _answerBuffer = new(true, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
+            _updatePosAnswerBuffer = true;
             if (typeof(T).IsEnum)
             {
-                _textSelector ??= EnumDisplay;
+                if (_textSelectorAsync is null)
+                {
+                    _textSelector ??= EnumDisplay;
+                }
                 if (_items.Count == 0)
                 {
                     LoadEnum();
@@ -322,172 +422,197 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             }
             else
             {
-                _textSelector ??= (x) => x?.ToString() ?? string.Empty;
+                if (_textSelectorAsync is null)
+                {
+                    _textSelector ??= (x) => x?.ToString() ?? string.Empty;
+                }
                 foreach (ItemSelect<T>? item in _items.Where(x => !x.CharSeparation.HasValue))
                 {
-                    item.Text = _textSelector.Invoke(item.Value);
+                    item.Text = GetItemText(item.Value);
                     if (item.Text.Length > _lengthSeparationline)
                     {
                         _lengthSeparationline = item.Text.Length;
                     }
-                    if ((item.Group ?? string.Empty).Length > _lengthSeparationline)
+                    int groupLen = (item.Group ?? string.Empty).Length;
+                    if (groupLen > _lengthSeparationline)
                     {
-                        _lengthSeparationline = item.Text.Length;
-                    }
-                    if (!string.IsNullOrEmpty(item.Group))
-                    {
-                        _hasGroup = true;
+                        _lengthSeparationline = groupLen;
                     }
                 }
             }
-
-            if (_onlyView)
+            if (_viewOnly)
             {
-                _maxSelect = int.MaxValue;
                 _historyOptions = null;
             }
-
+            if (_defaultValues.Any())
+            {
+                _defaultValue = Optional<T>.Set(_defaultValues.First());
+            }
             if (_historyOptions != null)
             {
                 _itemHistories = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
                 if (_useDefaultHistory && _itemHistories.Count > 0)
                 {
-                    try
+                    if (TryDeserializeHistoryValue(_itemHistories[0].History, out T[] histvalues))
                     {
-                        _defaultValues = JsonSerializer.Deserialize<T[]>(_itemHistories[0].History!)!;
-                    }
-                    catch (Exception)
-                    {
-                        //invalid Deserialize history 
-                    }
-                }
-            }
-
-            Optional<ItemSelect<T>> defvaluepage = Optional<ItemSelect<T>>.Empty();
-
-            if (_defaultValues != null && _defaultValues.Any())
-            {
-                bool hasdefvaluepage = false;
-                foreach (T? item in _defaultValues)
-                {
-                    int index = _items.FindIndex(x => _equalItems.Invoke(x.Value!, item));
-                    if (index >= 0)
-                    {
-                        _items[index].ValueChecked = true;
-                        _checkeditems.Add(_items[index]);
-                        if (!hasdefvaluepage)
+                        if (histvalues.Length > 0)
                         {
-                            hasdefvaluepage = true;
-                            defvaluepage = Optional<ItemSelect<T>>.Set(_items[index]);
+                            // override default value with history
+                            _defaultValue = Optional<T>.Set(histvalues.First());
+                            // set checked items with history (honoring the selection predicate:
+                            // rejected values are silently skipped so the initial checked set never
+                            // contains items the predicate would forbid)
+                            foreach (var item in histvalues)
+                            {
+                                int index = _items.FindIndex(x => _DefaultMatchBy.Invoke(x.Value!, item));
+                                if (index >= 0 && TryValidateSelectionPredicate(_items[index].Value, out _))
+                                {
+                                    _items[index].ValueChecked = true;
+                                }
+                            }
+
+                            loadedDefaultsFromHistory = true;
                         }
                     }
                 }
             }
-            foreach (var item in _items)
+            //set checked items with history
+            if (_defaultValues.Any() && !loadedDefaultsFromHistory)
             {
-                if (item.ValueChecked && !_checkeditems.Contains(item))
+                foreach (var item in _defaultValues)
                 {
-                    _checkeditems.Add(item);
+                    int index = _items.FindIndex(x => _DefaultMatchBy.Invoke(x.Value!, item));
+                    // Honor the selection predicate: rejected defaults are silently skipped.
+                    if (index >= 0 && TryValidateSelectionPredicate(_items[index].Value, out _))
+                    {
+                        _items[index].ValueChecked = true;
+                    }
+                }
+            }
+            //clear default values 
+            _defaultValues = [];
+            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
+
+            _countChecked = _items.Count(x => x.ValueChecked && !x.IsFirstItemGroup);
+
+            Optional<ItemSelect<T>> defvaluepage = Optional<ItemSelect<T>>.Empty();
+
+            if (_defaultValue.HasValue)
+            {
+                ItemSelect<T>? found = _items.FirstOrDefault(x => !x.Disabled && !x.CharSeparation.HasValue && _DefaultMatchBy.Invoke(x.Value!, _defaultValue.Value));
+                if (found != null)
+                {
+                    defvaluepage = Optional<ItemSelect<T>>.Set(found);
                 }
             }
 
-            _resultbuffer = new(true, CaseOptions.Any, (_) => true, int.MaxValue, _maxWidth);
+            _effectivePageSize = ComputeEffectivePageSize(ReservedTemplateLines, _pageSize);
 
-            LoadExtraInfo();
 
             _localpaginator = new Paginator<ItemSelect<T>>(
                 _filterType,
                 _items,
-                _pageSize,
+                _effectivePageSize,
                 defvaluepage,
                 (item1, item2) => item1.UniqueId == item2.UniqueId,
-                (item) => (!item.IsFirstItemGroup && !item.CharSeparation.HasValue) ? item.Text! : string.Empty,
-                (item) => !item.CharSeparation.HasValue || !string.IsNullOrEmpty(item.Text),
-                (item) => !item.CharSeparation.HasValue);
+                (item) => (item.IsFirstItemGroup ? item.Group! : item.Text!),
+                (item) => !item.CharSeparation.HasValue,
+                (item) => !item.CharSeparation.HasValue && !item.IsFirstItemGroup);
 
             if (_localpaginator.SelectedItem == null)
             {
                 _localpaginator.FirstItem();
             }
-            if (_checkeditems.Count == 0)
+            if (!_viewOnly && _localpaginator!.SelectedIndex >= 0 && _localpaginator.SelectedItem!.Disabled)
             {
-                _resultbuffer!.Clear();
-            }
-            else
-            {
-                _resultbuffer!.LoadPrintable(_checkeditems.Select(x => x.Text!).Aggregate((x, y) => $"{x},{y}"));
+                SetError(PromptPlusResources.SelectionDisabled);
             }
             LoadTooltipToggle();
-
         }
 
+        /// <inheritdoc/>
         public override void BufferTemplate(BufferScreen screenBuffer)
         {
-            WritePrompt(screenBuffer);
+            // Re-evaluate the effective page size every frame so the visible items count
+            // stays in sync with the current console height (after any terminal resize).
+            int targetPageSize = ComputeEffectivePageSize(ReservedTemplateLines, _pageSize);
+            if (targetPageSize != _effectivePageSize)
+            {
+                _effectivePageSize = targetPageSize;
+                _localpaginator?.UpdatePageSize(_effectivePageSize);
+            }
 
+            WritePrompt(screenBuffer, _optStyles[MultiSelectStyles.Prompt]);
             WriteAnswer(screenBuffer);
-
-            WriteErroAndGroupDescription(screenBuffer);
-
+            WriteGroupDescription(screenBuffer);
             WriteDescription(screenBuffer);
-
-            WriteListMultiSelect(screenBuffer);
-
+            WriteListSelect(screenBuffer);
             WriteTooltip(screenBuffer);
+            WriteError(screenBuffer, _optStyles[MultiSelectStyles.Error]);
         }
 
-
+        /// <inheritdoc/>
         public override bool TryResult(CancellationToken cancellationToken)
         {
-            bool oldcursor = ConsolePlus.CursorVisible;
-            ConsolePlus.CursorVisible = true;
+            bool oldcursor = ConsoleHandler.CursorVisible;
+            ConsoleHandler.CursorVisible = true;
             try
             {
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
+                    _updatePosAnswerBuffer = true;
+
+                    KeyPressResult press = ReadNextKey(true, cancellationToken);
+                    if (press.IsResize || press.IsCancelled)
+                    {
+                        if (press.IsCancelled)
+                        {
+                            _indexTooptip = 0;
+                            _modeView = ModeView.Select;
+                            ResultCtrl = new ResultPrompt<T[]>([], true);
+                        }
+                        break;
+                    }
+
+                    ConsoleKeyInfo keyinfo = press.Key;
 
                     #region default Press to Finish and tooltip
-
-                    if (cancellationToken.IsCancellationRequested)
+                    if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
-                        _modeView = ModeView.MultiSelect;
+                        _modeView = ModeView.Select;
                         ResultCtrl = new ResultPrompt<T[]>([], true);
                         break;
                     }
-                    else if (IsAbortKeyPress(keyinfo))
+                    else if (keyinfo.IsPressTabKey() || (keyinfo.IsPressFilterActivationKey() && _localpaginator!.SelectedItem != null))
                     {
                         _indexTooptip = 0;
-                        _modeView = ModeView.MultiSelect;
-                        ResultCtrl = new ResultPrompt<T[]>([], true);
-                        break;
+                        _updatePosAnswerBuffer = false;
+                        continue;
                     }
-                    else if (keyinfo.IsPressEnterKey())
+                    else if (keyinfo.IsPressEnterKey() && _localpaginator!.SelectedItem != null)
                     {
-                        if (_onlyView)
-                        {
-                            _modeView = ModeView.MultiSelect;
-                            ResultCtrl = new ResultPrompt<T[]>([], false);
-                            break;
-                        }
-                        int countselect = _checkeditems.Count;
-                        if (countselect < _minSelect)
-                        {
-                            SetError(string.Format(Messages.MultiSelectMinSelection, _minSelect));
-                            break;
-                        }
-                        if (countselect > _maxSelect)
-                        {
-                            SetError(string.Format(Messages.MultiSelectMaxSelection, _maxSelect));
-                            break;
-                        }
                         _indexTooptip = 0;
-                        _modeView = ModeView.MultiSelect;
-                        T[] result = [.. _checkeditems.Select(x => x.Value)];
-                        ResultCtrl = new ResultPrompt<T[]>(result, false);
-                        SaveHistory(result);
+                        if (_viewOnly)
+                        {
+                            _modeView = ModeView.Select;
+                            ResultCtrl = new ResultPrompt<T[]>([.. _items.Where(x => x.ValueChecked).Select(x => x.Value)], false);
+                            break;
+                        }
+                        if (_countChecked < _minSelect)
+                        {
+                            SetError(string.Format(CultureInfo.CurrentCulture, s_multiSelectMinSelectionFormat, _minSelect));
+                            break;
+                        }
+                        if (_countChecked > _maxSelect)
+                        {
+                            SetError(string.Format(CultureInfo.CurrentCulture, s_multiSelectMaxSelectionFormat, _maxSelect));
+                            break;
+                        }
+                        _modeView = ModeView.Select;
+                        ResultCtrl = new ResultPrompt<T[]>([.. _items.Where(x => x.ValueChecked).Select(x => x.Value)], false);
+                        SaveHistory();
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
@@ -506,29 +631,32 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     }
                     #endregion
 
-                    else if (_modeView == ModeView.MultiSelect && ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && _onfilterOnlySelected)
+                    else if (_onfilterOnlySelected && _modeView == ModeView.Select && ConfigPrompt.HotKeyFilterAllSelected.Equals(keyinfo))
                     {
+                        int index = -1;
+                        if (_localpaginator!.SelectedItem != null)
+                        {
+                            index = _items.FindIndex(x => x.UniqueId == _localpaginator!.SelectedItem!.UniqueId);
+                        }
                         _onfilterOnlySelected = false;
-                        _localpaginator!.UpdatColletion(_items);
+                        _localpaginator!.UpdateCollection(_items);
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer!.Clear();
+                        if (index >= 0)
+                        {
+                            _localpaginator!.EnsureVisibleIndex(index);
+                        }
+                        _filterBuffer!.Clear();
+
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (_modeView == ModeView.MultiSelect && ConfigPlus.HotKeyTooltipFilterAllSelected.Equals(keyinfo) && !_onfilterOnlySelected && _checkeditems.Count > 0)
+                    else if (!_onfilterOnlySelected && _countChecked > 0 && _modeView == ModeView.Select && ConfigPrompt.HotKeyFilterAllSelected.Equals(keyinfo))
                     {
                         _onfilterOnlySelected = true;
-                        _localpaginator!.UpdatColletion(_items.Where(x => x.ValueChecked));
+                        _localpaginator!.UpdateCollection(_items.Where(x => x.ValueChecked));
                         _localpaginator!.UpdateFilter(string.Empty);
                         _filterBuffer!.Clear();
-                        _indexTooptip = 0;
-                        break;
-                    }
-                    else if (!_onfilterOnlySelected && _filterType != FilterMode.Disabled && ConfigPlus.HotKeyFilterMode.Equals(keyinfo))
-                    {
-                        _localpaginator!.UpdateFilter(string.Empty);
-                        _filterBuffer!.Clear();
-                        _modeView = _modeView != ModeView.Filter ? ModeView.Filter : ModeView.MultiSelect;
                         _indexTooptip = 0;
                         break;
                     }
@@ -542,6 +670,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         {
                             _localpaginator.NextItem();
                         }
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -555,6 +684,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         {
                             _localpaginator!.PreviousItem();
                         }
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -562,19 +692,19 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     {
                         if (_localpaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
                         {
+                            SetSelectionDisabledErrorIfNeeded();
                             _indexTooptip = 0;
                             break;
                         }
-                        continue;
                     }
                     else if (keyinfo.IsPressPageUpKey())
                     {
                         if (_localpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
                         {
+                            SetSelectionDisabledErrorIfNeeded();
                             _indexTooptip = 0;
                             break;
                         }
-                        continue;
                     }
                     else if (keyinfo.IsPressCtrlHomeKey())
                     {
@@ -582,6 +712,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         {
                             continue;
                         }
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -591,279 +722,214 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         {
                             continue;
                         }
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (!_onlyView && keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.Disabled)
+                    else if (!_viewOnly && ConfigPrompt.HotKeyToggleAll.Equals(keyinfo) && _onfilterOnlySelected)
                     {
-                        int index = _items.FindIndex(x => _equalItems(x.Value!, _localpaginator.SelectedItem.Value));
-                        (bool ok, string? message) = _predicatevalidselect?.Invoke(_items[index].Value) ?? (true, null);
-                        if (!ok)
+                        foreach (var item in _localpaginator!.AllItems().Where(x => !x.Disabled && !x.IsFirstItemGroup && x.CharSeparation == null))
                         {
-                            if (string.IsNullOrEmpty(message))
+                            item.ValueChecked = false;
+                            _countChecked--;
+                        }
+                        _answerBuffer!.Clear();
+                        _onfilterOnlySelected = false;
+                        _localpaginator!.UpdateCollection(_items);
+                        _localpaginator!.UpdateFilter(string.Empty);
+                        _filterBuffer!.Clear();
+                        SetRangeValidationErrorIfNeeded();
+                        break;
+                    }
+                    else if (!_viewOnly && _modeView == ModeView.Filter && ConfigPrompt.HotKeyToggleAll.Equals(keyinfo) && !_onfilterOnlySelected)
+                    {
+                        int grpcount = _localpaginator!.AllItems().Count(x => !x.Disabled && !x.IsFirstItemGroup && x.CharSeparation == null);
+                        bool grpavaluecheck = _localpaginator.AllItems().Count(x => x.ValueChecked) != grpcount;
+                        foreach (var item in _localpaginator.AllItems().Where(x => !x.Disabled && !x.IsFirstItemGroup && x.CharSeparation == null))
+                        {
+                            // Mass operation: silently skip items rejected by the predicate (no error).
+                            if (!TryValidateSelectionPredicate(item.Value, out _))
                             {
-                                SetError(Messages.PredicateSelectInvalid);
+                                continue;
                             }
-                            else
+                            if (item.ValueChecked != grpavaluecheck)
                             {
-                                SetError(message);
+                                item.ValueChecked = grpavaluecheck;
+                                _countChecked += grpavaluecheck ? 1 : -1;
                             }
+                        }
+                        if (_countChecked == 0)
+                        {
+                            _answerBuffer!.Clear();
+                        }
+                        else
+                        {
+                            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
+                        }
+                        SetRangeValidationErrorIfNeeded();
+                        break;
+                    }
+                    else if (!_viewOnly && _modeView == ModeView.Select && ConfigPrompt.HotKeyToggleAll.Equals(keyinfo) && !_onfilterOnlySelected)
+                    {
+                        int grpcount = _items.Count(x => !x.IsFirstItemGroup && x.CharSeparation == null && !x.Disabled);
+                        int grpcheck = _items.Count(x => x.ValueChecked && !x.Disabled);
+                        bool grpavaluecheck = grpcheck != grpcount;
+                        foreach (var item in _items.Where(x => !x.IsFirstItemGroup && x.CharSeparation == null && !x.Disabled))
+                        {
+                            // Mass operation: silently skip items rejected by the predicate (no error).
+                            if (!TryValidateSelectionPredicate(item.Value, out _))
+                            {
+                                continue;
+                            }
+                            if (item.ValueChecked != grpavaluecheck)
+                            {
+                                item.ValueChecked = grpavaluecheck;
+                                _countChecked += grpavaluecheck ? 1 : -1;
+                            }
+                        }
+                        if (_countChecked == 0)
+                        {
+                            _answerBuffer!.Clear();
+                        }
+                        else
+                        {
+                            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
+                        }
+                        SetRangeValidationErrorIfNeeded();
+                        break;
+                    }
+                    else if (!_viewOnly && keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.Disabled && _localpaginator.SelectedItem.IsFirstItemGroup && _localpaginator.SelectedItem.CharSeparation == null)
+                    {
+                        _indexTooptip = 0;
+                        int index = _items.FindIndex(x => x.UniqueId == _localpaginator.SelectedItem.UniqueId);
+                        int grpcheck = _items.Count(x => x.Group == _items[index].Group && !x.IsFirstItemGroup && x.CharSeparation == null && !x.Disabled && x.ValueChecked);
+                        int grpcount = _items.Count(x => x.Group == _items[index].Group && !x.IsFirstItemGroup && x.CharSeparation == null && !x.Disabled);
+                        bool grpavaluecheck = grpcheck != grpcount;
+                        foreach (var item in _items.Where(x => x.Group == _items[index].Group && !x.IsFirstItemGroup && x.CharSeparation == null && !x.Disabled))
+                        {
+                            // Mass operation: silently skip items rejected by the predicate (no error).
+                            if (!TryValidateSelectionPredicate(item.Value, out _))
+                            {
+                                continue;
+                            }
+                            if (item.ValueChecked != grpavaluecheck)
+                            {
+                                item.ValueChecked = grpavaluecheck;
+                                _countChecked += grpavaluecheck ? 1 : -1;
+                            }
+                        }
+                        if (_countChecked == 0)
+                        {
+                            _answerBuffer!.Clear();
+                            if (_onfilterOnlySelected)
+                            {
+                                _onfilterOnlySelected = false;
+                                _localpaginator!.UpdateCollection(_items);
+                                _localpaginator!.UpdateFilter(string.Empty);
+                                _filterBuffer!.Clear();
+                            }
+                        }
+                        else
+                        {
+                            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
+                        }
+                        SetRangeValidationErrorIfNeeded();
+                        break;
+                    }
+                    else if (!_viewOnly && keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.Disabled && !_localpaginator.SelectedItem.IsFirstItemGroup && _localpaginator.SelectedItem.CharSeparation == null)
+                    {
+                        _indexTooptip = 0;
+                        if (!TryValidateSelectionPredicate(_localpaginator!.SelectedItem.Value, out string? message))
+                        {
+                            SetError(string.IsNullOrEmpty(message) ? PromptPlusResources.PredicateSelectInvalid : message);
                             break;
                         }
-                        if (!_items[index].ValueChecked)
+                        if (_localpaginator!.SelectedItem.ValueChecked)
                         {
-                            _checkeditems.Add(_items[index]);
+                            _localpaginator.SelectedItem.ValueChecked = false;
+                            _countChecked--;
                         }
                         else
                         {
-                            _checkeditems.Remove(_items[index]);
+                            _localpaginator.SelectedItem.ValueChecked = true;
+                            _countChecked++;
                         }
-                        if (_checkeditems.Count == 0)
+                        if (_countChecked == 0)
                         {
-                            _resultbuffer!.Clear();
+                            _answerBuffer!.Clear();
                             if (_onfilterOnlySelected)
                             {
                                 _onfilterOnlySelected = false;
-                                _localpaginator!.UpdatColletion(_items);
+                                _localpaginator!.UpdateCollection(_items);
                                 _localpaginator!.UpdateFilter(string.Empty);
                                 _filterBuffer!.Clear();
                             }
                         }
                         else
                         {
-                            _resultbuffer!.LoadPrintable(_checkeditems.Select(x => x.Text!).Aggregate((x, y) => $"{x},{y}"));
+                            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
                         }
-                        _items[index].ValueChecked = !_items[index].ValueChecked;
-                        int countselect = _checkeditems.Count;
-                        if (countselect < _minSelect)
+                        SetRangeValidationErrorIfNeeded();
+                        break;
+                    }
+                    else if (_filterType != FilterMode.Disabled && _modeView == ModeView.Filter && _filterBuffer.TryAcceptedReadlineConsoleKey(keyinfo))
+                    {
+                        UpdateFilterFromBuffer();
+                        if (string.IsNullOrEmpty(_filterBuffer.ToString()))
                         {
-                            SetError(string.Format(Messages.MultiSelectMinSelection, _minSelect));
+                            _modeView = ModeView.Select;
+                            _localpaginator!.UpdateCollection(_items);
+                            _localpaginator!.UpdateFilter(string.Empty);
+                            _filterBuffer!.Clear();
                         }
-                        else if (countselect > _maxSelect)
-                        {
-                            SetError(string.Format(Messages.MultiSelectMaxSelection, _maxSelect));
-                        }
+                        SetSelectionDisabledErrorIfNeeded(ignoreViewOnly: true);
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (!_onlyView && _localpaginator!.SelectedItem != null && ConfigPlus.HotKeyTooltipToggleAllGroups.Equals(keyinfo))
+                    else if (_filterType != FilterMode.Disabled && _modeView == ModeView.Select && _answerBuffer!.IsPrintable(keyinfo.KeyChar))
                     {
-                        IEnumerable<ItemSelect<T>> toselect = _items.Where(x => !x.CharSeparation.HasValue && !x.Disabled);
-                        int qtdcheck = toselect.Count(x => x.ValueChecked && !x.Disabled);
-                        bool hasinvalidselect = false;
-                        string? customerr = null;
-                        if (qtdcheck == toselect.Count())
+                        var keifilter = keyinfo;
+                        if (keifilter.IsPressFilterActivationKey())
                         {
-                            foreach (ItemSelect<T>? item in toselect)
-                            {
-                                (bool ok, string? message) = _predicatevalidselect?.Invoke(item.Value) ?? (true, null);
-                                if (!ok)
-                                {
-                                    hasinvalidselect = true;
-                                    if (string.IsNullOrEmpty(message))
-                                    {
-                                        customerr = message;
-                                    }
-                                }
-                                else
-                                {
-                                    item.ValueChecked = false;
-                                    _checkeditems.Remove(item);
-                                }
-                            }
+                            keifilter = new ConsoleKeyInfo(' ', ConsoleKey.Spacebar, false, false, false);
                         }
-                        else
+                        if (_filterBuffer.TryAcceptedReadlineConsoleKey(keifilter))
                         {
-                            foreach (ItemSelect<T>? item in toselect)
+                            _modeView = ModeView.Filter;
+                            if (!_onfilterOnlySelected)
                             {
-                                (bool ok, string? message) = _predicatevalidselect?.Invoke(item.Value) ?? (true, null);
-                                if (!ok)
-                                {
-                                    hasinvalidselect = true;
-                                    if (string.IsNullOrEmpty(message))
-                                    {
-                                        customerr = message;
-                                    }
-                                }
-                                else
-                                {
-                                    if (!item.ValueChecked)
-                                    {
-                                        item.ValueChecked = true;
-                                        _checkeditems.Add(item);
-                                    }
-                                }
-                            }
-  
-                        }
-                        if (hasinvalidselect)
-                        {
-                            if (string.IsNullOrEmpty(customerr))
-                            {
-                                SetError(Messages.PredicateSelectInvalid);
+                                _localpaginator!.UpdateCollection(_items.Where(x => !x.CharSeparation.HasValue && !x.IsFirstItemGroup));
                             }
                             else
                             {
-                                SetError(customerr);
+                                _localpaginator!.UpdateCollection(_items.Where(x => !x.CharSeparation.HasValue && !x.IsFirstItemGroup && x.ValueChecked));
                             }
-                        }
-                        if (_checkeditems.Count == 0)
-                        {
-                            _resultbuffer!.Clear();
-                            if (_onfilterOnlySelected)
+                            UpdateFilterFromBuffer();
+                            if (string.IsNullOrEmpty(_filterBuffer.ToString()))
                             {
-                                _onfilterOnlySelected = false;
-                                _localpaginator!.UpdatColletion(_items);
-                                _localpaginator!.UpdateFilter(string.Empty);
-                                _filterBuffer!.Clear();
+                                _modeView = ModeView.Select;
                             }
-                        }
-                        else
-                        {
-                            _resultbuffer!.LoadPrintable(_checkeditems.Select(x => x.Text!).Aggregate((x, y) => $"{x},{y}"));
-                        }
-                        int countselect = _checkeditems.Count;
-                        if (countselect < _minSelect)
-                        {
-                            SetError(string.Format(Messages.MultiSelectMinSelection, _minSelect));
-                        }
-                        else if (countselect > _maxSelect)
-                        {
-                            SetError(string.Format(Messages.MultiSelectMaxSelection, _maxSelect));
-                        }
-                        _indexTooptip = 0;
-                        break;
-
-                    }
-                    else if (!_onlyView && _localpaginator!.SelectedItem != null && (!string.IsNullOrEmpty(_localpaginator!.SelectedItem.Group) || !_hasGroup) && ConfigPlus.HotKeyTooltipToggleAll.Equals(keyinfo))
-                    {
-                        IEnumerable<ItemSelect<T>> toselect = _items.Where(x => x.Group == _localpaginator.SelectedItem.Group && !x.CharSeparation.HasValue && !x.Disabled);
-                        int qtdcheck = toselect.Count(x => x.ValueChecked && !x.Disabled);
-                        bool hasinvalidselect = false;
-                        string? customerr = null;
-                        if (qtdcheck == toselect.Count())
-                        {
-                            foreach (ItemSelect<T>? item in toselect)
-                            {
-                                (bool ok, string? message) = _predicatevalidselect?.Invoke(item.Value) ?? (true, null);
-                                if (!ok)
-                                {
-                                    hasinvalidselect = true;
-                                    if (string.IsNullOrEmpty(message))
-                                    {
-                                        customerr = message;
-                                    }
-                                }
-                                else
-                                {
-                                    item.ValueChecked = false;
-                                    _checkeditems.Remove(item);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            foreach (ItemSelect<T>? item in toselect)
-                            {
-                                (bool ok, string? message) = _predicatevalidselect?.Invoke(item.Value) ?? (true, null);
-                                if (!ok)
-                                {
-                                    hasinvalidselect = true;
-                                    if (string.IsNullOrEmpty(message))
-                                    {
-                                        customerr = message;
-                                    }
-                                }
-                                else
-                                {
-                                    if (!item.ValueChecked)
-                                    {
-                                        item.ValueChecked = true;
-                                        _checkeditems.Add(item);
-                                    }
-                                }
-                            }
-                        }
-                        if (hasinvalidselect)
-                        {
-                            if (string.IsNullOrEmpty(customerr))
-                            {
-                                SetError(Messages.PredicateSelectInvalid);
-                            }
-                            else
-                            {
-                                SetError(customerr);
-                            }
-                        }
-                        if (_checkeditems.Count == 0)
-                        {
-                            _resultbuffer!.Clear();
-                            if (_onfilterOnlySelected)
-                            {
-                                _onfilterOnlySelected = false;
-                                _localpaginator!.UpdatColletion(_items);
-                                _localpaginator!.UpdateFilter(string.Empty);
-                                _filterBuffer!.Clear();
-                            }
-                        }
-                        else
-                        {
-                            _resultbuffer!.LoadPrintable(_checkeditems.Select(x => x.Text!).Aggregate((x, y) => $"{x},{y}"));
-                        }
-                        int countselect = _checkeditems.Count;
-                        if (countselect < _minSelect)
-                        {
-                            SetError(string.Format(Messages.MultiSelectMinSelection, _minSelect));
-                        }
-                        else if (countselect > _maxSelect)
-                        {
-                            SetError(string.Format(Messages.MultiSelectMaxSelection, _maxSelect));
+                            SetSelectionDisabledErrorIfNeeded(ignoreViewOnly: true);
                         }
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (_filterType != FilterMode.Disabled && _modeView == ModeView.Filter)
+                    else if (!_answerBuffer!.IsPrintable(keyinfo.KeyChar) && _answerBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
                     {
-                        if (keyinfo.IsPressSpecialKey(ConsoleKey.Spacebar, ConsoleModifiers.Shift))
-                        {
-                            keyinfo = new ConsoleKeyInfo(' ', ConsoleKey.Spacebar, false, false, false);
-                        }
-                        if (!_filterBuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
-                        {
-                            continue;
-                        }
-                        string filter = _filterBuffer.ToString();
-                        if (_filterCaseinsensitive)
-                        {
-                            filter = filter.ToUpperInvariant();
-                            _lastinput = _lastinput.ToUpperInvariant();
-                        }
-                        if (_lastinput != filter)
-                        {
-                            _localpaginator!.UpdateFilter(filter);
-                        }
-                        if (_localpaginator!.SelectedItem != null)
-                        {
-                            if (_localpaginator.SelectedItem.Disabled)
-                            {
-                                SetError(Messages.SelectionDisabled);
-                            }
-                        }
+                        _updatePosAnswerBuffer = false;
                         _indexTooptip = 0;
                         break;
                     }
-                    else if (!_onlyView && _modeView == ModeView.MultiSelect && !_resultbuffer!.IsPrintable(keyinfo.KeyChar) && _resultbuffer!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    else if (_modeView == ModeView.Select && !_onfilterOnlySelected && _localpaginator!.SelectedItem != null && _answerBuffer!.IsPrintable(keyinfo.KeyChar))
                     {
-                        _indexTooptip = 0;
-                        break;
-                    }
-                    else if (_modeView == ModeView.MultiSelect && _localpaginator!.SelectedItem != null && _resultbuffer!.IsPrintable(keyinfo.KeyChar))
-                    {
-                        var start = _localpaginator.CurrentIndex;
-                        int index = _items.FindIndex(start + 1, x => _textSelector!(x.Value).StartsWith(keyinfo.KeyChar.ToString(), StringComparison.OrdinalIgnoreCase));
+                        string keyChar = keyinfo.KeyChar.ToString();
+                        int start = _localpaginator.CurrentIndex;
+                        // Use the cached item text instead of re-invoking the (possibly async) text
+                        // selector for every item on each keystroke.
+                        int index = _items.FindIndex(start + 1, x => (x.Text ?? GetItemText(x.Value)).StartsWith(keyChar, StringComparison.OrdinalIgnoreCase));
                         if (index < 0 && start >= 0)
                         {
-                            index = _items.FindIndex(0, x => _textSelector!(x.Value).StartsWith(keyinfo.KeyChar.ToString(), StringComparison.OrdinalIgnoreCase));
+                            index = _items.FindIndex(0, x => (x.Text ?? GetItemText(x.Value)).StartsWith(keyChar, StringComparison.OrdinalIgnoreCase));
                         }
                         if (index >= 0)
                         {
@@ -877,94 +943,138 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             }
             finally
             {
-                ConsolePlus.CursorVisible = oldcursor;
+                ConsoleHandler.CursorVisible = oldcursor;
             }
             return ResultCtrl != null;
         }
 
+        /// <inheritdoc/>
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
-            if (_onlyView)
+            _modeView = ModeView.Select;
+            _updatePosAnswerBuffer = false;
+            WritePrompt(screenBuffer, _optStyles[MultiSelectStyles.Prompt]);
+            if (!ResultCtrl!.Value.IsAborted)
             {
-                screenBuffer.WriteLine("", _optStyles[MultiSelectStyles.Answer]);
-                return true;
+                screenBuffer.WriteLine(_answerBuffer!.ToString(), _optStyles[MultiSelectStyles.Answer]);
             }
-            string answer = string.Empty;
-            if (ResultCtrl!.Value.IsAborted)
+            else if (ResultCtrl!.Value.IsAborted && OptionsControl.ShowMessageAbortKeyValue)
             {
-                if (GeneralOptions.ShowMesssageAbortKeyValue)
-                {
-                    answer = Messages.CanceledKey;
-                }
+                screenBuffer.WriteLine(PromptPlusResources.CanceledKey, _optStyles[MultiSelectStyles.Answer]);
             }
-            else
-            {
-                answer = _resultbuffer!.ToString();
-            }
-            if (answer.Length > _maxWidth!)
-            {
-                answer = answer[.._maxWidth] + "...";
-            }
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
-            {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[MultiSelectStyles.Prompt]);
-            }
-            screenBuffer.WriteLine(answer, _optStyles[MultiSelectStyles.Answer].Overflow(Overflow.Ellipsis));
             return true;
         }
 
+        /// <inheritdoc/>
         public override void FinalizeControl()
         {
             //none
         }
 
-        private enum ModeView
-        {
-            MultiSelect,
-            Filter
-        }
-
         private void LoadEnum()
         {
-
-            IEnumerable<T> aux = Enum.GetValues(typeof(T)).Cast<T>();
-            List<Tuple<int, ItemSelect<T>>> result = [];
-            foreach (T item in aux)
+            List<(int Order, ItemSelect<T> Item)> result = [];
+            foreach (T enumValue in Enum.GetValues(typeof(T)).Cast<T>())
             {
-                string? name = item!.ToString();
+                string? name = enumValue!.ToString();
                 DisplayAttribute? displayAttribute = typeof(T).GetField(name!)?.GetCustomAttribute<DisplayAttribute>();
                 int order = displayAttribute?.GetOrder() ?? int.MaxValue;
                 _sequence++;
-                result.Add(new Tuple<int, ItemSelect<T>>(order, new ItemSelect<T>(_sequence.ToString(), item, false, false)
+                result.Add((order, new ItemSelect<T>(_sequence.ToString(CultureInfo.CurrentCulture), enumValue, false)
                 {
-                    Text = _textSelector?.Invoke(item)
+                    Text = GetItemText(enumValue)
                 }));
             }
-            foreach (Tuple<int, ItemSelect<T>>? item in result.OrderBy(x => x.Item1))
+            foreach ((_, ItemSelect<T> item) in result.OrderBy(x => x.Order))
             {
-                _items.Add(item.Item2);
+                _items.Add(item);
             }
         }
 
-        private void SaveHistory(T[] value)
+        private void SaveHistory()
         {
             if (_historyOptions == null)
             {
                 return;
             }
-            string aux = JsonSerializer.Serialize<T[]>(value);
-            FileHistory.ClearHistory(_historyOptions!.FileNameValue);
-            IList<ItemHistory> hist = FileHistory.AddHistory(aux, _historyOptions!.ExpirationTimeValue, null);
-            FileHistory.SaveHistory(_historyOptions!.FileNameValue, hist);
+            string serializedCheckedItems = JsonSerializer.Serialize(_items.Where(x => x.ValueChecked).Select(x => x.Value).ToArray());
+            IList<ItemHistory> hist = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
+            hist.Clear();
+            hist = FileHistory.AddHistory(serializedCheckedItems, _historyOptions.ExpirationTimeValue, hist);
+            FileHistory.SaveHistory(_historyOptions.FileNameValue, hist, _historyOptions.MaxItemsValue);
+            _itemHistories = hist;
 
         }
 
-        private static string EnumDisplay(T value)
+         private static string EnumDisplay(T value)
         {
             string name = value!.ToString()!;
             DisplayAttribute? displayAttribute = value.GetType().GetField(name)?.GetCustomAttribute<DisplayAttribute>();
             return displayAttribute?.GetName() ?? name;
         }
+
+        private string GetItemText(T value)
+        {
+            if (_textSelectorAsync is not null)
+            {
+                return _textSelectorAsync.Invoke(value)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            return _textSelector?.Invoke(value) ?? string.Empty;
+        }
+
+        private void SetSelectionDisabledErrorIfNeeded(bool ignoreViewOnly = false)
+        {
+            if ((!_viewOnly || ignoreViewOnly) && _localpaginator?.SelectedItem?.Disabled == true)
+            {
+                SetError(PromptPlusResources.SelectionDisabled);
+            }
+        }
+
+        private bool TryValidateSelectionPredicate(T value, out string? message)
+        {
+            (bool ok, string? validationMessage) = _predicatevalidselectAsync != null
+                ? _predicatevalidselectAsync.Invoke(value).ConfigureAwait(false).GetAwaiter().GetResult()
+                : (_predicatevalidselect?.Invoke(value) ?? (true, null));
+            message = validationMessage;
+            return ok;
+        }
+
+        private void SetRangeValidationErrorIfNeeded()
+        {
+            if (_countChecked < _minSelect)
+            {
+                SetError(string.Format(CultureInfo.CurrentCulture, s_multiSelectMinSelectionFormat, _minSelect));
+                return;
+            }
+
+            if (_countChecked > _maxSelect)
+            {
+                SetError(string.Format(CultureInfo.CurrentCulture, s_multiSelectMaxSelectionFormat, _maxSelect));
+            }
+        }
+
+        private void UpdateFilterFromBuffer()
+        {
+            string filter = _filterBuffer.ToString();
+            if (!filter.Equals(_lastinput, StringComparison.OrdinalIgnoreCase))
+            {
+                _localpaginator!.UpdateFilter(filter);
+            }
+
+            _lastinput = filter;
+        }
+
+        /// <summary>
+        /// Builds the comma-separated text of all checked items.
+        /// Uses string.Join (single-pass, buffered)
+        /// instead of LINQ Aggregate to avoid O(n^2) intermediate string allocations and to
+        /// safely return an empty string when no item is checked.
+        /// </summary>
+        private string BuildCheckedItemsText()
+            => string.Join(',', _items.Where(x => x.ValueChecked).Select(x => x.Text!));
 
         private void LoadTooltipToggle()
         {
@@ -972,46 +1082,59 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             {
                 List<string> lsttooltips =
                 [
-                    $"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {Messages.InputFinishEnter}"
+                    GetTooltipSelect()
                 ];
-                if (GeneralOptions.EnabledAbortKeyValue)
+                lsttooltips.Add(PromptPlusResources.TooltipPages);
+                if (!_viewOnly)
                 {
-                    lsttooltips[0] += $", {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}";
+                    lsttooltips.Add($"{ConfigPrompt.HotKeyToggleAll}:{PromptPlusResources.TooltipCheckAll}");
                 }
-                lsttooltips.Add(Messages.TooltipPages);
-                if (_filterType != FilterMode.Disabled)
+                if (mode == ModeView.Select)
                 {
-                    lsttooltips.Add(string.Format(Messages.TooltipFilterMode, ConfigPlus.HotKeyFilterMode));
-                }
-                if (mode == ModeView.Filter)
-                {
-                    lsttooltips.AddRange(EmacsBuffer.GetEmacsTooltips());
-                }
-                else
-                {
-                    if (_hasGroupItem)
+                    // Only advertise the "filter all selected" hotkey when it actually does
+                    // something: either there is at least one checked item (to enter the view) or
+                    // we are already inside the "only selected" view (to leave it).
+                    if (_countChecked > 0 || _onfilterOnlySelected)
                     {
-                        lsttooltips.Add(string.Format(Messages.TooltipSelectAllGroups, ConfigPlus.HotKeyTooltipToggleAllGroups));
+                        lsttooltips.Add($"{ConfigPrompt.HotKeyFilterAllSelected}:{PromptPlusResources.TooltipFilterAllSelected}");
                     }
-                    lsttooltips.Add(string.Format(Messages.TooltipFilterOnlySelected, ConfigPlus.HotKeyTooltipFilterAllSelected));
+                    if (!_viewOnly && _filterType != FilterMode.Disabled)
+                    {
+                        lsttooltips.Add(PromptPlusResources.TooltipFilter);
+                    }
+                    if (!_viewOnly)
+                    {
+                        lsttooltips.Add(PromptPlusResources.TooltipNavegateTextPrompt);
+                    }
+                    // Jump-by-first-char is only reachable when filter is disabled (otherwise any
+                    // printable key transitions the control into filter mode instead of jumping).
+                    if (!_viewOnly && _filterType == FilterMode.Disabled)
+                    {
+                        lsttooltips.Add(PromptPlusResources.TooltipJump);
+                    }
                 }
+                if (OptionsControl.EnabledAbortKeyValue)
+                {
+                    lsttooltips.Add($"{ConfigPrompt.HotKeyAbortKeyPress}:{PromptPlusResources.Abort}");
+                }
+                lsttooltips.Add($"{ConfigPrompt.HotKeyTooltipShowHide}:{PromptPlusResources.TooltipShowHide}");
+                lsttooltips.AddRange(GetEmacsTooltips(_viewOnly));
                 _toggerTooptips[mode] = [.. lsttooltips];
             }
         }
 
-        private string GetTooltipModeMultiSelect(bool withselectall)
+        private string GetTooltipSelect()
         {
             StringBuilder tooltip = new();
-            tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
-            tooltip.Append(", ");
-            tooltip.Append(Messages.MultiSelectCheck);
-            tooltip.Append(", ");
-            tooltip.Append(Messages.SpaceMultSelect);
-            if (withselectall)
+            if (!_viewOnly)
             {
-                tooltip.Append(", ");
-                tooltip.Append(string.Format(Messages.TooltipSelectAll, ConfigPlus.HotKeyTooltipToggleAll));
+                tooltip.Append(PromptPlusResources.TooltipEnterFinish);
+                tooltip.Append('.');
+                tooltip.Append(PromptPlusResources.TooltipCheckItem);
+                tooltip.Append('.');
             }
+            tooltip.Append(PromptPlusResources.TooltipBaseNavegate);
+            tooltip.Append('.');
             return tooltip.ToString();
         }
 
@@ -1021,23 +1144,52 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             {
                 return;
             }
-            string? tooltip = _indexTooptip > 0
-                ? GetTooltipToggle()
-                : GetTooltipModeMultiSelect(!_hasGroup || (_localpaginator!.SelectedItem != null && !string.IsNullOrEmpty(_localpaginator!.SelectedItem.Group)));
-            screenBuffer.Write(tooltip, _optStyles[MultiSelectStyles.Tooltips]);
+            // Reload tooltip cache when the "checked" state crosses the 0 boundary or when the
+            // "only selected" view toggles: both change whether the FilterAllSelected hint applies.
+            bool hasChecked = _countChecked > 0;
+            bool hadChecked = _lastCountCheckedTooltip > 0;
+            if (hasChecked != hadChecked || _lastFilterOnlySelectedTooltip != _onfilterOnlySelected)
+            {
+                LoadTooltipToggle();
+                _lastCountCheckedTooltip = _countChecked;
+                _lastFilterOnlySelectedTooltip = _onfilterOnlySelected;
+            }
+            string? tooltip = GetTooltipToggle();
+            tooltip = $"{ConfigPrompt.HotKeyTooltip}:{PromptPlusResources.TooltipBase}.{tooltip}";
+            if (!tooltip.EndsWith('.'))
+            {
+                tooltip = $"{tooltip}.";
+            }
+            screenBuffer.WriteLine(tooltip, _optStyles[MultiSelectStyles.Tooltips]);
         }
 
         private string GetTooltipToggle()
         {
-            return _modeView switch
+            switch (_modeView)
             {
-                ModeView.MultiSelect => _toggerTooptips[ModeView.MultiSelect][_indexTooptip - 1],
-                ModeView.Filter => _toggerTooptips[ModeView.Filter][_indexTooptip - 1],
-                _ => throw new NotImplementedException($"ModeView {_modeView} not implemented.")
-            };
+                case ModeView.Select:
+                    {
+                        if (_indexTooptip >= _toggerTooptips[ModeView.Select].Length)
+                        {
+                            _indexTooptip = 0;
+                        }
+                        return _toggerTooptips[ModeView.Select][_indexTooptip];
+                    }
+                case ModeView.Filter:
+                    {
+                        if (_indexTooptip >= _toggerTooptips[ModeView.Filter].Length)
+                        {
+                            _indexTooptip = 0;
+                        }
+                        return _toggerTooptips[ModeView.Filter][_indexTooptip];
+                    }
+                default:
+                    throw new NotImplementedException($"ModeView {_modeView} not implemented.");
+            }
+            ;
         }
 
-        private void WriteListMultiSelect(BufferScreen screenBuffer)
+        private void WriteListSelect(BufferScreen screenBuffer)
         {
             ArraySegment<ItemSelect<T>> subset = _localpaginator!.GetPageData();
             foreach (ItemSelect<T> item in subset)
@@ -1047,124 +1199,152 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 string indentgroup = string.Empty;
                 if (item.CharSeparation.HasValue)
                 {
-                    value = new string(item.CharSeparation.Value, _lengthSeparationline + ConfigPlus.GetSymbol(SymbolType.NotSelect).Length + 1);
+                    value = new string(item.CharSeparation.Value, _lengthSeparationline + GetSymbol(SymbolType.Selected).Length + 1);
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(item.Group) && _modeView != ModeView.Filter)
+                    if (!string.IsNullOrEmpty(item.Group) && _modeView != ModeView.Filter && !_onfilterOnlySelected)
                     {
                         indentgroup = item.IsLastItemGroup
-                            ? $" {ConfigPlus.GetSymbol(SymbolType.IndentEndGroup)}"
-                            : $" {ConfigPlus.GetSymbol(SymbolType.IndentGroup)}";
+                            ? $" {GetSymbol(SymbolType.IndentEndGroup)}"
+                            : $" {GetSymbol(SymbolType.IndentGroup)}";
                     }
                 }
-                if (item.IsFirstItemGroup)
+                if (_localpaginator.SelectedIndex >= 0 && item.UniqueId == _localpaginator.SelectedItem.UniqueId)
                 {
-                    screenBuffer.WriteLine($" {group}", _optStyles[MultiSelectStyles.UnSelected]);
-
-                }
-                if (_localpaginator.TryGetSelected(out ItemSelect<T>? selectedItem) && EqualityComparer<ItemSelect<T>>.Default.Equals(item, selectedItem))
-                {
-                    screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.Selector), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
-                    if (!string.IsNullOrEmpty(indentgroup))
+                    screenBuffer.Write($"{GetSymbol(SymbolType.Selector)}", _optStyles[MultiSelectStyles.Selected]);
+                    if (item.IsFirstItemGroup)
+                    {
+                        screenBuffer.Write($"{group}", _optStyles[MultiSelectStyles.Selected]);
+                    }
+                    else
                     {
                         screenBuffer.Write($"{indentgroup}", _optStyles[MultiSelectStyles.Lines]);
-                    }
-                    if (item.ValueChecked)
-                    {
-                        screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.Selected), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
-                    }
-                    else
-                    {
-                        screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.NotSelect), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
-                    }
-                    if (item.Disabled)
-                    {
-                        screenBuffer.Write($" {value}", _optStyles[MultiSelectStyles.Disabled]);
-                    }
-                    else
-                    {
-                        screenBuffer.Write($" {value}", _optStyles[MultiSelectStyles.Selected]);
-                    }
-                    if (!string.IsNullOrEmpty(item.ExtraText))
-                    {
-                        screenBuffer.Write($"({item.ExtraText})", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
-                    }
-                    screenBuffer.WriteLine("", Style.Default());
-                }
-                else
-                {
-                    screenBuffer.Write($" {indentgroup}", _optStyles[MultiSelectStyles.Lines]);
-                    if (!item.CharSeparation.HasValue)
-                    {
-                        if (item.ValueChecked)
+                        if (!item.CharSeparation.HasValue)
                         {
-                            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.Selected), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.UnSelected]);
+                            if (item.ValueChecked)
+                            {
+                                screenBuffer.Write(GetSymbol(SymbolType.Selected), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
+                            }
+                            else
+                            {
+                                screenBuffer.Write(GetSymbol(SymbolType.NotSelect), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
+                            }
+                        }
+                        if (!item.CharSeparation.HasValue)
+                        {
+                            if (item.Disabled)
+                            {
+                                screenBuffer.Write($" {value}", _optStyles[MultiSelectStyles.Disabled]);
+                            }
+                            else
+                            {
+                                screenBuffer.Write($" {value}", _optStyles[MultiSelectStyles.Selected]);
+                            }
                         }
                         else
                         {
-                            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.NotSelect), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.UnSelected]);
+                            screenBuffer.Write($"{value}", _optStyles[MultiSelectStyles.Selected]);
+                        }
+                        if (HasExtraInfo(item, out string extraInfo))
+                        {
+                            screenBuffer.Write(extraInfo, item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.Selected]);
                         }
                     }
-                    if (item.CharSeparation.HasValue)
-                    {
-                        screenBuffer.Write($"{value}", _optStyles[MultiSelectStyles.Disabled]);
-                    }
-                    else
-                    {
-                        screenBuffer.Write($" {value}", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.UnSelected]);
-                    }
-                    if (!string.IsNullOrEmpty(item.ExtraText))
-                    {
-                        screenBuffer.Write($"({item.ExtraText})", item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.TaggedInfo]);
-                    }
-                    screenBuffer.WriteLine("", Style.Default());
-                }
-            }
-            string template = ConfigPlus.PaginationTemplate.Invoke(
-                                _localpaginator.TotalCountValid,
-                                _localpaginator.SelectedPage + 1,
-                                _localpaginator.PageCount)!;
-            screenBuffer.Write(template, _optStyles[MultiSelectStyles.Pagination]);
-            if (!_hideCountSelected)
-            {
-                screenBuffer.Write(string.Format(Messages.TooltipCountCheck, _checkeditems.Count), _optStyles[MultiSelectStyles.TaggedInfo]);
-            }
-            screenBuffer.WriteLine("", Style.Default());
-        }
-
-        private void WriteAnswer(BufferScreen screenBuffer)
-        {
-            if (_onlyView && _modeView == ModeView.MultiSelect)
-            {
-                screenBuffer.SavePromptCursor();
-                screenBuffer.WriteLine("", _optStyles[MultiSelectStyles.Answer]);
-                return;
-            }
-            if (_modeView == ModeView.MultiSelect || _onfilterOnlySelected)
-            {
-                Style styleAnswer = _optStyles[MultiSelectStyles.Answer];
-                string str = _resultbuffer!.IsHideLeftBuffer
-                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeftMost)
-                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft);
-                screenBuffer.Write(str, styleAnswer);
-
-                screenBuffer.Write(_resultbuffer!.ToBackward(), styleAnswer);
-                screenBuffer.SavePromptCursor();
-                screenBuffer.Write(_resultbuffer!.ToForward(true), styleAnswer);
-                str = _resultbuffer.IsHideRightBuffer
-                    ? ConfigPlus.GetSymbol(SymbolType.InputDelimiterRightMost)
-                    : ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight);
-                screenBuffer.Write(str, styleAnswer);
-                if (_onfilterOnlySelected)
-                {
-                    screenBuffer.WriteLine($" ({Messages.FilterOnlySelected})", _optStyles[MultiSelectStyles.TaggedInfo]);
+                    screenBuffer.WriteLine("", ConsoleHandler.CurrentStyle);
                 }
                 else
                 {
-                    screenBuffer.WriteLine("", styleAnswer);
+                    screenBuffer.Write(' ', ConsoleHandler.CurrentStyle);
+                    if (item.IsFirstItemGroup)
+                    {
+                        screenBuffer.Write($"{group}", _optStyles[MultiSelectStyles.UnSelected]);
+                    }
+                    else
+                    {
+                        screenBuffer.Write($"{indentgroup}", _optStyles[MultiSelectStyles.Lines]);
+                        if (!item.CharSeparation.HasValue)
+                        {
+                            if (item.ValueChecked)
+                            {
+                                screenBuffer.Write(GetSymbol(SymbolType.Selected), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.UnSelected]);
+                            }
+                            else
+                            {
+                                screenBuffer.Write(GetSymbol(SymbolType.NotSelect), item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.UnSelected]);
+                            }
+                        }
+                        if (!item.CharSeparation.HasValue)
+                        {
+                            if (item.Disabled)
+                            {
+                                screenBuffer.Write($" {value}", _optStyles[MultiSelectStyles.Disabled]);
+                            }
+                            else
+                            {
+                                screenBuffer.Write($" {value}", _optStyles[MultiSelectStyles.UnSelected]);
+                            }
+                        }
+                        else
+                        {
+                            screenBuffer.Write($"{value}", _optStyles[MultiSelectStyles.UnSelected]);
+                        }
+                        if (HasExtraInfo(item, out string extraInfo))
+                        {
+                            screenBuffer.Write(extraInfo, item.Disabled ? _optStyles[MultiSelectStyles.Disabled] : _optStyles[MultiSelectStyles.TaggedInfo]);
+                        }
+                    }
+                    screenBuffer.WriteLine("", ConsoleHandler.CurrentStyle);
                 }
+            }
+            if (_localpaginator.PageCount > 0)
+            {
+                string template = ConfigPrompt.PaginationTemplateValue(
+                    _localpaginator.TotalCountValid,
+                    _localpaginator.SelectedPage + 1,
+                    _localpaginator.PageCount
+                )!;
+                template = $"{template} {string.Format(CultureInfo.CurrentCulture, s_tooltipCountCheckFormat, _countChecked)}";
+                screenBuffer.WriteLine(template, _optStyles[MultiSelectStyles.Pagination]);
+            }
+        }
 
+        private bool HasExtraInfo(ItemSelect<T> item, out string extraInfo)
+        {
+            if (_extraInfoAsync is not null && item.ExtraText == null)
+            {
+                item.ExtraText = _extraInfoAsync.Invoke(item.Value)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult() ?? string.Empty;
+            }
+            else if (_extraInfo != null && item.ExtraText == null)
+            {
+                item.ExtraText = _extraInfo.Invoke(item.Value) ?? string.Empty;
+            }
+            if (string.IsNullOrWhiteSpace(item.ExtraText))
+            {
+                extraInfo = string.Empty;
+                return false;
+            }
+            extraInfo = $"{OptionsControl.PrefixExtraInfoValue}{item.ExtraText}{OptionsControl.SuffixExtraInfoValue}";
+            return true;
+        }
+
+
+        private void WriteAnswer(BufferScreen screenBuffer)
+        {
+            if (_modeView == ModeView.Select)
+            {
+                if (_updatePosAnswerBuffer)
+                {
+                    _answerBuffer!.ToHome();
+                }
+                int promptWidth = GetPromptDisplayWidth();
+                (string visibleLeft, string visibleRight) = ViewportSlice(_answerBuffer!, promptWidth);
+                screenBuffer.Write(visibleLeft, _optStyles[MultiSelectStyles.Answer]);
+                screenBuffer.SavePromptCursor();
+                screenBuffer.WriteLine(visibleRight, _optStyles[MultiSelectStyles.Answer]);
             }
             else if (_modeView == ModeView.Filter)
             {
@@ -1184,66 +1364,45 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             {
                 found = _optStyles[MultiSelectStyles.Error];
             }
-            screenBuffer.Write(_filterBuffer.ToBackward(), found);
+            int promptWidth = GetPromptDisplayWidth();
+            (string visibleLeft, string visibleRight) = ViewportSlice(_filterBuffer, promptWidth);
+            screenBuffer.Write(visibleLeft, found);
             screenBuffer.SavePromptCursor();
-            screenBuffer.Write(_filterBuffer.ToForward(), found);
-            screenBuffer.WriteLine($" ({Messages.Filter})", _optStyles[MultiSelectStyles.TaggedInfo]);
+            screenBuffer.Write(visibleRight, found);
+            screenBuffer.WriteLine($" ({PromptPlusResources.Filter})", _optStyles[MultiSelectStyles.TaggedInfo]);
         }
 
-        private void WritePrompt(BufferScreen screenBuffer)
+        private void WriteGroupDescription(BufferScreen screenBuffer)
         {
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
-            {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[MultiSelectStyles.Prompt]);
-            }
-        }
-
-        private void WriteErroAndGroupDescription(BufferScreen screenBuffer)
-        {
-            bool hastip = false;
             if (!_hideTipGroup && _localpaginator!.SelectedItem is not null)
             {
                 if (!string.IsNullOrEmpty(_localpaginator!.SelectedItem.Group))
                 {
-                    hastip = true;
-                    screenBuffer.Write($"{Messages.Group}: {_localpaginator!.SelectedItem.Group}", _optStyles[MultiSelectStyles.GroupTip]);
+                    screenBuffer.WriteLine(_localpaginator!.SelectedItem.Group, _optStyles[MultiSelectStyles.GroupTip]);
                 }
-            }
-            if (!string.IsNullOrEmpty(ValidateError))
-            {
-                if (hastip)
-                {
-                    screenBuffer.Write(", ", _optStyles[MultiSelectStyles.GroupTip]);
-                }
-                screenBuffer.WriteLine(ValidateError, _optStyles[MultiSelectStyles.Error]);
-                ClearError();
-                return;
-            }
-            if (hastip)
-            {
-                screenBuffer.WriteLine("", Style.Default());
             }
         }
 
         private void WriteDescription(BufferScreen screenBuffer)
         {
-            string? desc = _changeDescription?.Invoke(_localpaginator!.SelectedItem.Value) ?? GeneralOptions.DescriptionValue;
+            string? desc = OptionsControl.DescriptionValue;
+            if (_localpaginator!.SelectedItem is not null)
+            {
+                if (_changeDescriptionAsync is not null)
+                {
+                    desc = _changeDescriptionAsync.Invoke(_localpaginator.SelectedItem.Value)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
+                }
+                else
+                {
+                    desc = _changeDescription?.Invoke(_localpaginator.SelectedItem.Value) ?? OptionsControl.DescriptionValue;
+                }
+            }
             if (!string.IsNullOrEmpty(desc))
             {
                 screenBuffer.WriteLine(desc, _optStyles[MultiSelectStyles.Description]);
-            }
-        }
-
-
-        private void LoadExtraInfo()
-        {
-            if (_extraInfo == null)
-            {
-                return;
-            }
-            foreach (ItemSelect<T> item in _items)
-            {
-                item.ExtraText = _extraInfo.Invoke(item.Value!);
             }
         }
 
