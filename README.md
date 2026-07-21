@@ -240,7 +240,7 @@ The `samples/` folder contains runnable projects for every control and widget â€
 | [Global Styles](docs/global-styles.md) | Style override API |
 | [Widgets](docs/widgets.md) | Output-only widgets guide |
 | [Controls index](docs/index.md) | All pages in one place |
-| [API Reference](docs/api-documentation-guide.md) | Auto-generated API docs |
+| [API Reference](docs/api/PromptPlusLibrary.md) | Auto-generated API docs |
 
 ---
 
