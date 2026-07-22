@@ -29,15 +29,15 @@ namespace PromptPlusLibrary.Controls.ChartBar
         private const int ReservedTemplateLines = 5;
 
         private static readonly System.Text.CompositeFormat s_tooltipShowHideFormat =
-            System.Text.CompositeFormat.Parse(PromptPlusResources.TooltipShowHide);
+            CompositeFormat.Parse(PromptPlusResources.TooltipShowHide);
         private static readonly System.Text.CompositeFormat s_tooltipCancelEscFormat =
-            System.Text.CompositeFormat.Parse(PromptPlusResources.TooltipCancelEsc);
+            CompositeFormat.Parse(PromptPlusResources.TooltipCancelEsc);
         private static readonly System.Text.CompositeFormat s_tooltipChartBarSwitchLayoutFormat =
-            System.Text.CompositeFormat.Parse(PromptPlusResources.TooltipChartBarSwitchLayout);
+            CompositeFormat.Parse(PromptPlusResources.TooltipChartBarSwitchLayout);
         private static readonly System.Text.CompositeFormat s_tooltipChartBarSwitchLegendFormat =
-            System.Text.CompositeFormat.Parse(PromptPlusResources.TooltipChartBarSwitchLegend);
+            CompositeFormat.Parse(PromptPlusResources.TooltipChartBarSwitchLegend);
         private static readonly System.Text.CompositeFormat s_tooltipChartBarSwitchOrderFormat =
-            System.Text.CompositeFormat.Parse(PromptPlusResources.TooltipChartBarSwitchOrder);
+            CompositeFormat.Parse(PromptPlusResources.TooltipChartBarSwitchOrder);
 
         private readonly Dictionary<ChartBarStyles, Style> _optStyles;
         private CultureInfo _culture;

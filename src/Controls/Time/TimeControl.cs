@@ -268,7 +268,7 @@ namespace PromptPlusLibrary.Controls.Time
                     if (IsTickWakeUp(keyinfo))
                     {
                         // Throttle the repaint frequency to the tick interval.
-                        TimeControl.TokenWaitTick(cancellationToken);
+                        TokenWaitTick(cancellationToken);
                         break;
                     }
 

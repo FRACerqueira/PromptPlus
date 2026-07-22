@@ -30,9 +30,9 @@ namespace PromptPlusLibrary.Controls.MultiFile
         private const int ReservedTemplateLines = 7;
 
         // Cached composite format strings for improved performance.
-        private static readonly System.Text.CompositeFormat s_minSelectionFormat = System.Text.CompositeFormat.Parse(PromptPlusResources.MultiSelectMinSelection);
-        private static readonly System.Text.CompositeFormat s_maxSelectionFormat = System.Text.CompositeFormat.Parse(PromptPlusResources.MultiSelectMaxSelection);
-        private static readonly System.Text.CompositeFormat s_countCheckFormat = System.Text.CompositeFormat.Parse(PromptPlusResources.TooltipCountCheck);
+        private static readonly System.Text.CompositeFormat s_minSelectionFormat = CompositeFormat.Parse(PromptPlusResources.MultiSelectMinSelection);
+        private static readonly System.Text.CompositeFormat s_maxSelectionFormat = CompositeFormat.Parse(PromptPlusResources.MultiSelectMaxSelection);
+        private static readonly System.Text.CompositeFormat s_countCheckFormat = CompositeFormat.Parse(PromptPlusResources.TooltipCountCheck);
 
         // Byte-size unit suffixes (static so FormatSize does not allocate a new array per call/frame).
         private static readonly string[] s_sizeUnits = ["KB", "MB", "GB", "TB", "PB"];

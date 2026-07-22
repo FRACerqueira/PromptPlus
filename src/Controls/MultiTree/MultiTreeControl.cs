@@ -26,11 +26,11 @@ namespace PromptPlusLibrary.Controls.MultiTree
         private const int ReservedTemplateLines = 7;
 
         private static readonly CompositeFormat s_countCheckFormat =
-            System.Text.CompositeFormat.Parse(PromptPlusResources.TooltipCountCheck);
+            CompositeFormat.Parse(PromptPlusResources.TooltipCountCheck);
         private static readonly CompositeFormat s_minSelectionFormat =
-            System.Text.CompositeFormat.Parse(PromptPlusResources.MultiSelectMinSelection);
+            CompositeFormat.Parse(PromptPlusResources.MultiSelectMinSelection);
         private static readonly CompositeFormat s_maxSelectionFormat =
-            System.Text.CompositeFormat.Parse(PromptPlusResources.MultiSelectMaxSelection);
+            CompositeFormat.Parse(PromptPlusResources.MultiSelectMaxSelection);
 
         // ─── user tree ──────────────────────────────────────────────────────────────
         private sealed class TreeNode(T value, TreeNode? parent) : ITreeNode<T>
