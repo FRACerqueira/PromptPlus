@@ -21,23 +21,15 @@ PromptPlus supports two sets of keyboard shortcuts: **standard** keys (always ac
 
 ## Enabling Emacs Key Bindings
 
-Emacs bindings are disabled by default. Enable them globally or per control:
+Emacs bindings are inherited by ConsolePlus. Enable them globally:
 
 ```csharp
 using PromptPlusLibrary;
 
-// Global — applies to all text-input controls
-PromptPlus.Config.EmacsKeyBindings = true;
+// Global — applies to all controls
+PromptPlus.Console.EnabledEmacs = true;
 
-// Per-control — only for this Input
-PromptPlus.Controls
-	.Input("Notes")
-	.EmacsKeyBindings(true)
-	.Run();
 ```
-
-> ⚠️ Emacs bindings only apply to text-input controls (`Input`, `Secret`, `MaskEdit` family). They have no effect on list, calendar, or file controls.
-
 ---
 
 ## Emacs Shortcuts

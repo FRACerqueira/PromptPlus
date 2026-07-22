@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using ConsolePlusLibrary;
 using PromptPlusLibrary.Resources;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,6 @@ namespace PromptPlusLibrary.Core
         private string _defaultPrefixExtraInfo = " (";
         private string _defaultSuffixExtraInfo = ")";
         private bool _defaultRemoveHandlerCtrlC ;
-        private bool _defaultEmacsKeyBinding = true;
         private static readonly HashSet<string> _supportedCultures = ["en-us", "pt-br"];
         internal static readonly JsonSerializerOptions JsonOptions = new()
         {
@@ -63,13 +63,6 @@ namespace PromptPlusLibrary.Core
         public PromptConfig()
         {
             _defaultCulture = CultureInfo.CurrentCulture;
-        }
-
-        /// <inheritdoc/>
-        public bool EmacsKeyBindings
-        { 
-            get => _defaultEmacsKeyBinding;
-            set => _defaultEmacsKeyBinding = value;
         }
 
         /// <inheritdoc/>

@@ -66,7 +66,7 @@
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="ConsolePlus.net" Version="0.5.0-Beta" />
+	  <PackageReference Include="ConsolePlus.net" Version="0.5.1-Beta" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0'">

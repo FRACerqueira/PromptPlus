@@ -495,7 +495,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
                     #endregion
 
-                    else if (_inputdata!.TryAcceptedReadlineConsoleKey(keyinfo,ConfigPrompt.EmacsKeyBindings))
+                    else if (_inputdata!.TryAcceptedReadlineConsoleKey(keyinfo,ConsoleHandler.EnabledEmacs))
                     {
                         _indexTooptip = 0;
                         break;

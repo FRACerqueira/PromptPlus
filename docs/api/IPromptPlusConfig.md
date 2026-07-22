@@ -75,19 +75,6 @@ System.Globalization.CultureInfo DefaultCulture { get; set; }
 ### Remarks
 Default: [System\.Globalization\.CultureInfo\.CurrentCulture](https://learn.microsoft.com/en-us/dotnet/api/system.globalization.cultureinfo.currentculture 'System\.Globalization\.CultureInfo\.CurrentCulture') at the time the configuration is created\.
 
-<a name='PromptPlusLibrary.IPromptPlusConfig.EmacsKeyBindings'></a>
-
-## IPromptPlusConfig\.EmacsKeyBindings Property
-
-Gets or sets a value indicating whether Emacs key bindings are enabled for text input controls\.
-
-```csharp
-bool EmacsKeyBindings { get; set; }
-```
-
-#### Property Value
-[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
-
 <a name='PromptPlusLibrary.IPromptPlusConfig.EnabledAbortKey'></a>
 
 ## IPromptPlusConfig\.EnabledAbortKey Property

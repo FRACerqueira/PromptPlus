@@ -357,7 +357,7 @@ namespace PromptPlusLibrary.Controls.MultiTree
             if (_textSelector is null) throw new InvalidOperationException("MultiTree control requires a TextSelector.");
             if (_equals is null) throw new InvalidOperationException("MultiTree control requires DefaultMatchBy.");
 
-            _filterBuffer = new(false, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
+            _filterBuffer = new(false, CaseOptions.Any, ConsoleHandler.EnabledEmacs , (_) => true);
             _modeView = ModeView.Select;
             _lastinput = string.Empty;
             _flatAll = null;

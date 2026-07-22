@@ -354,7 +354,7 @@ namespace PromptPlusLibrary.Controls.Input
                 }
             }
 
-            _inputdata = new(false, _inputToCase,ConfigPrompt.EmacsKeyBindings,  _acceptvalue);
+            _inputdata = new(false, _inputToCase, ConsoleHandler.EnabledEmacs,  _acceptvalue);
 
             if (!_isinputsecret && !string.IsNullOrEmpty(_defaultValue) && TryInputPredicate(_defaultValue))
             {

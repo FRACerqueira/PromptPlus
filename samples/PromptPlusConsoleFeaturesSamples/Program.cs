@@ -12,6 +12,8 @@ namespace PromptPlusConsoleFeaturesSamples
     {
         static void Main()
         {
+            PromptPlus.Console.EnabledEmacs = true;
+
             static void Pause(string message = "[Yellow]Press any key to continue[/]")
             {
                 PromptPlus.Console.WriteLine("");
@@ -30,7 +32,7 @@ namespace PromptPlusConsoleFeaturesSamples
             PromptPlus.Console.WriteLine($"File create :{File.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, IPromptPlusConfig.NameResourcePromptPlusConfigFile))}, ");
             PromptPlus.Console.WriteLine($"{Path.Combine(AppDomain.CurrentDomain.BaseDirectory, IPromptPlusConfig.NameResourcePromptPlusConfigFile)}");
 
-            PromptPlus.Widgets.Dash("01 - Markup básico (foreground/background)", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
+            PromptPlus.Widgets.Dash("01 - Basic Markup (foreground/background)", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
             PromptPlus.Console.WriteLine("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
             PromptPlus.Console.WriteLine("[RGB(255,0,0):WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text");
             PromptPlus.Console.WriteLine("[RED:WHITE]Test[bLUE] COLOR[/] BACK COLOR[/] other text");
@@ -41,7 +43,7 @@ namespace PromptPlusConsoleFeaturesSamples
 
             PromptPlus.Console.WriteLines(2);
 
-            PromptPlus.Widgets.Dash("02 - Casos comuns e escape de markup", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
+            PromptPlus.Widgets.Dash("02 - Common cases and markup escape", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
             PromptPlus.Console.WriteLine("[RED]ERROR:[/] Wrong format! (/x/g/[My Folder Name Has Brackets]/[[BracketFile]].xml)");
             PromptPlus.Console.WriteLine("[RED]ERROR:[/] Wrong format! (/x/g/[My Folder Name Has Brackets]/[BracketFile].xml)");
             PromptPlus.Console.WriteLine("[RED].xml");
@@ -58,16 +60,16 @@ namespace PromptPlusConsoleFeaturesSamples
 
             PromptPlus.Console.WriteLine("Emoji Icons - 2 equivalent approaches:");
             PromptPlus.Console.WriteLine();
-            PromptPlus.Console.WriteLine(":red_heart:  Coração Vermelho");
-            PromptPlus.Console.WriteLine($"{(EmojiValue)EmojiName.RedHeart}  Coração Vermelho");
+            PromptPlus.Console.WriteLine(":red_heart:  Red Heart");
+            PromptPlus.Console.WriteLine($"{(EmojiValue)EmojiName.RedHeart}  Red Heart");
 
             PromptPlus.Console.WriteLine();
-            PromptPlus.Console.WriteLine(":thumbs_up: Polegar para Cima");
-            PromptPlus.Console.WriteLine($"{(EmojiValue)EmojiName.ThumbsUp} Polegar para Cima");
+            PromptPlus.Console.WriteLine(":thumbs_up: Thumbs Up");
+            PromptPlus.Console.WriteLine($"{(EmojiValue)EmojiName.ThumbsUp} Thumbs Up");
 
             PromptPlus.Console.WriteLine();
-            PromptPlus.Console.WriteLine(":fire: Fogo");
-            PromptPlus.Console.WriteLine($"{(EmojiValue)EmojiName.Fire} Fogo");
+            PromptPlus.Console.WriteLine(":fire: Fire");
+            PromptPlus.Console.WriteLine($"{(EmojiValue)EmojiName.Fire} Fire");
 
             PromptPlus.Console.WriteLine();
             PromptPlus.Console.WriteLine($"Emoji Icons with markup:");
@@ -104,7 +106,7 @@ namespace PromptPlusConsoleFeaturesSamples
                 PromptPlus.Widgets.Dash("[RGB(255,0,0) ON WHITE]Test[GREEN] COLOR[/] BACK COLOR [/] other text",null, item, 1);
             }
 
-            PromptPlus.Widgets.Dash("04 - Escrita em standard error", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
+            PromptPlus.Widgets.Dash("04 - Writing to standard error", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
             using (PromptPlus.Console.OutputError())
             {
                 PromptPlus.Console.WriteLine("Test Output Error");
@@ -123,7 +125,7 @@ namespace PromptPlusConsoleFeaturesSamples
             PromptPlus.Console.WriteLine("[red]asda[/]jsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj", PromptPlus.Console.CurrentStyle.Overflow(Overflow.Crop));
 
             PromptPlus.Console.WriteLine("");
-            PromptPlus.Widgets.Dash($"07 - Overflow padrão", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
+            PromptPlus.Widgets.Dash($"07 - Overflow: Default", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
             PromptPlus.Console.WriteLine("asdajsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj");
             PromptPlus.Console.WriteLine("[red]asda[/]jsdkldksdkasasdadasdadjashkjdahsdashdjkashdkashdkashdkashdakshdkashdkashdaskhdaskdhaskdhaskdhaskdhaskdhsakdhaskdhaskjdj");
 
@@ -145,7 +147,7 @@ namespace PromptPlusConsoleFeaturesSamples
             Pause();
 
             PromptPlus.Console.WriteLine("");
-            PromptPlus.Widgets.Dash($"09 - Paleta: Legacy (0..7)", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
+            PromptPlus.Widgets.Dash($"09 - Palette: Legacy (0..7)", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
             PromptPlus.Console.Write('|');
             for (var i = 0; i < 8; i++)
             {
@@ -163,7 +165,7 @@ namespace PromptPlusConsoleFeaturesSamples
             if (PromptPlus.Console.ColorDepth >= ColorSystem.FourBit)
             {
                 PromptPlus.Console.WriteLine("");
-                PromptPlus.Widgets.Dash($"10 - Paleta: Standard (0..15)", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
+                PromptPlus.Widgets.Dash($"10 - Palette: Standard (0..15)", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
                 PromptPlus.Console.Write("|");
                 for (var i = 0; i < 16; i++)
                 {
@@ -186,11 +188,11 @@ namespace PromptPlusConsoleFeaturesSamples
             {
                 PromptPlus.Console.WriteLine("");
                 PromptPlus.Widgets.Dash($"11 - Weighted CSS Colors", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
-                PromptPlus.Console.WriteLine("[silver]Como usar:[/] [aqua]Color.Red.Weighted(500)[/]");
+                PromptPlus.Console.WriteLine("[silver]How to use:[/] [aqua]Color.Red.Weighted(500)[/]");
                 PromptPlus.Console.WriteLine("");
 
-                int[] sampleWeights = { 100, 200, 300, 400, 500, 600, 700, 800, 900 };
-                Color[] baseColors = { Color.Red, Color.Green, Color.Blue, Color.Teal, Color.Purple, Color.Orange };
+                int[] sampleWeights = [100, 200, 300, 400, 500, 600, 700, 800, 900];
+                Color[] baseColors = [Color.Red, Color.Green, Color.Blue, Color.Teal, Color.Purple, Color.Orange];
 
                 foreach (Color baseColor in baseColors)
                 {
@@ -205,13 +207,13 @@ namespace PromptPlusConsoleFeaturesSamples
                 }
 
                 PromptPlus.Console.WriteLine("");
-                PromptPlus.Console.WriteLine($"Exemplo Weighted(844) -> {Color.Blue.Weighted(844)}", new Style(Color.Blue.Weighted(844).GetInvertedColor(), Color.Blue.Weighted(844)));
+                PromptPlus.Console.WriteLine($"Example Weighted(844) -> {Color.Blue.Weighted(844)}", new Style(Color.Blue.Weighted(844).GetInvertedColor(), Color.Blue.Weighted(844)));
                 Pause();
 
             }
 
             PromptPlus.Console.WriteLine("");
-            PromptPlus.Widgets.Dash($"11.1 - Métodos utilitários de Color (extras)", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
+            PromptPlus.Widgets.Dash($"11.1 - Color Utility Methods (extras)", Color.Yellow, DashOptions.DoubleBorderUpDown, 1);
 
             Color fromHex = Color.FromHex("#1E90FF");
             PromptPlus.Console.WriteLine($"FromHex('#1E90FF') -> {fromHex} / ToHex()={fromHex.ToHex()}");

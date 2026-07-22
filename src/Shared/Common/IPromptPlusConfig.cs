@@ -3,6 +3,7 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using ConsolePlusLibrary;
 using System;
 using System.Globalization;
 
@@ -26,11 +27,6 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="foldername">The folder path where <see cref="IPromptPlusConfig.NameResourcePromptPlusConfigFile"/> will be created. Cannot be <c>null</c> or empty.</param>
         void ToFile(string foldername);
-
-        /// <summary>
-        /// Gets or sets a value indicating whether Emacs key bindings are enabled for text input controls.
-        /// </summary>
-        bool EmacsKeyBindings { get; set; }
 
         /// <summary>
         /// Gets or sets the character representing a logical "Yes" response.

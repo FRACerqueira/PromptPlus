@@ -136,7 +136,7 @@ PromptPlus.Config.HideAfterFinish = true;
 PromptPlus.Config.DefaultCulture = new CultureInfo("en-US");
 
 // Enable Emacs shortcuts in text fields
-PromptPlus.Config.EmacsKeyBindings = true;
+PromptPlus.Console.EnabledEmacsKeyBindings(true);
 
 // Now run your controls …
 var result = PromptPlus.Controls.Input("Name").Run();
@@ -165,7 +165,6 @@ The generated file looks like:
 {
   "PageSize": 8,
   "HideAfterFinish": true,
-  "EmacsKeyBindings": false
 }
 ```
 

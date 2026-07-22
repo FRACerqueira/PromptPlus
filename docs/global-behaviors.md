@@ -57,7 +57,6 @@ Set these on `PromptPlus.Config` before running any controls. Changes take effec
 | `HideAfterFinish` | `bool` | `false` | Erases control UI after the user confirms |
 | `HideOnAbort` | `bool` | `false` | Erases control UI when the user presses Esc |
 | `RemoveHandlerCtrlC` | `bool` | `false` | When `true`, Ctrl+C is passed to the OS instead of triggering abort |
-| `EmacsKeyBindings` | `bool` | `false` | Enables GNU Emacs shortcuts in all text inputs |
 
 ### Calendar
 
@@ -146,7 +145,6 @@ Example `PromptPlus.config` (JSON):
 {
   "PageSize": 10,
   "HideAfterFinish": true,
-  "EmacsKeyBindings": false,
   "DefaultCulture": "en-US"
 }
 ```
@@ -198,7 +196,6 @@ PromptPlus.Controls
 | Terminal resize detection | Control re-renders its own area automatically; surrounding output is untouched |
 | Minimum terminal size (80×10) | Control shows a resize prompt and waits — never crashes or corrupts output |
 | Culture isolation | `DefaultCulture` applied only during `.Run()`; thread culture always restored after — even on error |
-| Emacs key bindings | GNU Emacs shortcuts in all text inputs when `EmacsKeyBindings = true` |
 | Single-line rendering | Newlines stripped from display; sliding window with `…` when value is too wide; `result.Content` always holds the original full value |
 | History persistence | Last confirmed value saved to disk; pre-loaded on next run; configurable via `IHistoryOptions` |
 | HideAfterFinish | Control UI erased after confirmation; only the final answer line remains |

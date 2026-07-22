@@ -79,7 +79,7 @@ namespace PromptPlusLibrary.Controls.Calendar
             _firstdayOfWeek = ConfigPrompt.FirstDayOfWeek;
             _culture = ConfigPrompt.DefaultCulture;
             _pageSize = ConfigPrompt.PageSize;
-            _noteBuffer = new(true, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
+            _noteBuffer = new(true, CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
         }
 
         #region ICalendarControl, ICalendarWidget

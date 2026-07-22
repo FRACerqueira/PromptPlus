@@ -113,8 +113,8 @@ namespace PromptPlusLibrary.Controls.Table
         {
             _optStyles = OptionsControl.LoadStyle<TableStyles>(console.CurrentStyle);
             _pageSize = ConfigPrompt.PageSize;
-            _filterBuffer = new(false, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
-            _answerBuffer = new(true, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
+            _filterBuffer = new(false, CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
+            _answerBuffer = new(true, CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
         }
 
         #region ITableControl

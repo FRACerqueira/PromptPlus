@@ -43,7 +43,7 @@ namespace PromptPlusLibrary
                     }
                 }
             });
-            ConsolePlus.ActionBeforeExist((drive, ex, ctrlC) =>
+            ConsolePlus.ActionBeforeExit((drive, ex, ctrlC) =>
             {
                 if (ex != null && !ctrlC)
                 {

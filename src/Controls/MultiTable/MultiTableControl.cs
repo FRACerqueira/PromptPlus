@@ -123,8 +123,8 @@ namespace PromptPlusLibrary.Controls.MultiTable
         {
             _optStyles = OptionsControl.LoadStyle<MultiTableStyles>(console.CurrentStyle);
             _pageSize = ConfigPrompt.PageSize;
-            _filterBuffer = new(false, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
-            _answerBuffer  = new(true,  CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
+            _filterBuffer = new(false, CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
+            _answerBuffer  = new(true,  CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
         }
 
         #region IMultiTableControl

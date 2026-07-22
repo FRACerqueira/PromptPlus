@@ -862,7 +862,7 @@ namespace PromptPlusLibrary.Controls.Common
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ByDesign")]
         public string[] GetEmacsTooltips(bool isreadonly)
         {
-            if (!ConfigPrompt.EmacsKeyBindings)
+            if (!ConsoleHandler.EnabledEmacs)
             {
                 return [];
             }
@@ -939,7 +939,7 @@ namespace PromptPlusLibrary.Controls.Common
         /// <param name="style">The style used to render the answer.</param>
         public void WriteAnswerViewport(BufferScreen screenBuffer, string text, Style style)
         {
-            _answerViewportBuffer ??= new EmacsConsoleBuffer(true, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, static (_) => true);
+            _answerViewportBuffer ??= new EmacsConsoleBuffer(true, CaseOptions.Any, ConsoleHandler.EnabledEmacs, static (_) => true);
 
             int promptWidth = GetPromptDisplayWidth();
             int viewportWidth = Math.Max(0, ConsoleHandler.Width - promptWidth);

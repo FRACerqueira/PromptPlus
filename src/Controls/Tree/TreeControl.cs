@@ -421,8 +421,8 @@ namespace PromptPlusLibrary.Controls.Tree
                 throw new InvalidOperationException("Tree control requires DefaultMatchBy.");
             }
 
-            _answerBuffer = new(true, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
-            _filterBuffer = new(false, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
+            _answerBuffer = new(true, CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
+            _filterBuffer = new(false, CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
             _updatePosAnswerBuffer = true;
             _modeView = ModeView.Select;
             _lastinput = string.Empty;

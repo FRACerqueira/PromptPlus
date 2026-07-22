@@ -70,8 +70,7 @@ an `operations` guide (keyboard, validation, history), and a `styles` page.
 
 | Page | Description |
 |---|---|
-| [API Documentation Guide](api-documentation-guide.md) | How to navigate the auto-generated API docs |
-| [API folder](api/) | Full auto-generated reference for all types |
+| [API Documentation](api/PromptPlusLibrary.md) | Full auto-generated reference for all types |
 
 ---
 

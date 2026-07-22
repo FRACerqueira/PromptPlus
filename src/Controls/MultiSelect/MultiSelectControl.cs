@@ -91,7 +91,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         {
             _optStyles = OptionsControl.LoadStyle<MultiSelectStyles>(console.CurrentStyle);
             _pageSize = ConfigPrompt.PageSize;
-            _filterBuffer = new(false, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
+            _filterBuffer = new(false, CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
         }
 
 
@@ -407,7 +407,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         public override void InitControl(CancellationToken cancellationToken)
         {
             bool loadedDefaultsFromHistory = false;
-            _answerBuffer = new(true, CaseOptions.Any, ConfigPrompt.EmacsKeyBindings, (_) => true);
+            _answerBuffer = new(true, CaseOptions.Any, ConsoleHandler.EnabledEmacs, (_) => true);
             _updatePosAnswerBuffer = true;
             if (typeof(T).IsEnum)
             {
