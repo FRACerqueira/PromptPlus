@@ -10,17 +10,17 @@
 		<AnalysisLevel>latest-recommended</AnalysisLevel>
 	</PropertyGroup>
 	<ItemGroup>
-	  <Compile Update="Resources\PromptPlusResources.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>PromptPlusResources.resx</DependentUpon>
-	  </Compile>
+		<Compile Update="Resources\PromptPlusResources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>PromptPlusResources.resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-	  <EmbeddedResource Update="Resources\PromptPlusResources.resx">
-	    <Generator>ResXFileCodeGenerator</Generator>
-	    <LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
-	  </EmbeddedResource>
+		<EmbeddedResource Update="Resources\PromptPlusResources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 
 	<PropertyGroup>
@@ -65,15 +65,15 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>. -->
 		</PackageReference>
 	</ItemGroup>
-	<ItemGroup Condition="'$(Configuration)' != 'Debug'">
-	  <PackageReference Include="ConsolePlus.net" Version="1.0.0-Beta1" />
-	</ItemGroup>
 	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-	  <ProjectReference Include="..\..\ConsolePlus\src\ConsolePlus.csproj" />
+		<ProjectReference Include="..\..\ConsolePlus\src\ConsolePlus.csproj" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' != 'Debug'">
+		<PackageReference Include="ConsolePlus.net" Version="1.0.0-Beta1" />
 	</ItemGroup>
 	<ItemGroup>
-	  <!-- Enables FileHistory to be tested against a MockFileSystem instead of the real user profile. -->
-	  <PackageReference Include="System.IO.Abstractions" Version="*" />
+		<!-- Enables FileHistory to be tested against a MockFileSystem instead of the real user profile. -->
+		<PackageReference Include="System.IO.Abstractions" Version="*" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0'">
