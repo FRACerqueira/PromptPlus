@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<AssemblyVersion>1.0.0</AssemblyVersion>
+		<Configurations>Debug;Release;ReleaseDoc</Configurations>
 	</PropertyGroup>
 
 	<ItemGroup>

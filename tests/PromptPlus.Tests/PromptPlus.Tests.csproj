@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <TestTfmsInParallel>false</TestTfmsInParallel>
+    <Configurations>Debug;Release;ReleaseDoc</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <!-- Driver is a per-repo copy, not shared across repos — see docs/testing-driver-maintenance.md -->

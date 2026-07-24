@@ -8,6 +8,7 @@
 		<Nullable>enable</Nullable>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<AnalysisLevel>latest-recommended</AnalysisLevel>
+		<Configurations>Debug;Release;ReleaseDoc</Configurations>
 	</PropertyGroup>
 	<ItemGroup>
 		<Compile Update="Resources\PromptPlusResources.Designer.cs">
@@ -59,24 +60,19 @@
 			<PackagePath></PackagePath>
 		</None>
 	</ItemGroup>
-	<ItemGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0'">
+	<ItemGroup Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">
 		<PackageReference Include="DefaultDocumentation" Version="1.2.5">
 			<!-- <PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>. -->
 		</PackageReference>
 	</ItemGroup>
-	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
-		<ProjectReference Include="..\..\ConsolePlus\src\ConsolePlus.csproj" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(Configuration)' != 'Debug'">
-		<PackageReference Include="ConsolePlus.net" Version="1.0.0-Beta1" />
-	</ItemGroup>
 	<ItemGroup>
 		<!-- Enables FileHistory to be tested against a MockFileSystem instead of the real user profile. -->
 		<PackageReference Include="System.IO.Abstractions" Version="*" />
+		<PackageReference Include="ConsolePlus.net" Version="1.0.0-Beta1" />
 	</ItemGroup>
 
-	<PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0'">
+	<PropertyGroup Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">
 		<DefaultDocumentationFolder>..\docs\api</DefaultDocumentationFolder>
 		<DefaultDocumentationGeneratedPages>Assembly, Namespaces , Classes, Interfaces, Events, Enums, Structs, Delegates</DefaultDocumentationGeneratedPages>
 		<DefaultDocumentationFileNameFactory>NameAndMd5Mix</DefaultDocumentationFileNameFactory>
@@ -113,7 +109,7 @@
 			</Code>
 		</Task>
 	</UsingTask>
-	<Target Name="AddDocIconHeader" AfterTargets="DefaultDocumentation" Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0'">
+	<Target Name="AddDocIconHeader" AfterTargets="DefaultDocumentation" Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">
 		<PropertyGroup>
 			<_DocIconFolder>$([System.IO.Path]::GetFullPath($([System.IO.Path]::Combine('$(MSBuildProjectDirectory)', '$(DefaultDocumentationFolder)'))))</_DocIconFolder>
 		</PropertyGroup>
