@@ -6,17 +6,28 @@ This page covers controls that are **mostly** unchanged. Two of them (**Progress
 
 ---
 
-## Slider — one rename only
+## Slider — two renames only
 
-The v5.x and v6.x `Slider` APIs are otherwise the same (`Fill`, `Range`, `Step`, `LargeStep`, `Default`, `Layout`, `Width`, `Culture`, `ChangeColor`, `ChangeGradient`, `ChangeDescription`, `EnabledHistory`, `HideElements`), with one breaking rename:
+The v5.x and v6.x `Slider` APIs are otherwise the same (`Range`, `Step`, `LargeStep`, `Default`, `Layout`, `Width`, `Culture`, `ChangeColor`, `ChangeGradient`, `ChangeDescription`, `EnabledHistory`, `HideElements`), with these breaking renames:
+
+### Renamed public methods
+
+| v5.x member | v6.x member |
+|---|---|
+| `Fill(SliderBarType)` | `BarType(SliderBarType)` |
+| `FracionalDig(int)` | `FractionalDigits(int)` |
 
 ```csharp
 // v5.x
+.Fill(SliderBarType.Fill)
 .FracionalDig(2)
 
-// v6.x — spelling fixed (matches ChartBar.FractionalDigits)
-.FractionalDigits(2)
+// v6.x — method renamed; the SliderBarType.Fill enum member is unchanged
+.BarType(SliderBarType.Fill)
+.FractionalDigits(2)   // spelling fixed (matches ChartBar.FractionalDigits)
 ```
+
+> Only the **method** `Fill` was renamed to `BarType`. The `SliderBarType.Fill` enum member keeps its name.
 
 > The `Default(double, bool)` parameter was also renamed `usedefaultHistory` → `useDefaultHistory` (only affects named-argument callers).
 

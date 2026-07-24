@@ -57,7 +57,9 @@ IChartBarControl AddItem(string label, double value, Color? colorBar = null, str
 
 Adds one bar. `label` is required; `value` drives the bar length and percentage. `colorBar` sets the
 bar color — omit it and colors are auto-assigned in a rotating sequence. `id` is an optional
-identifier carried through to the returned [`ChartItem`](index.md#the-chartitem-type).
+identifier carried through to the returned [`ChartItem`](index.md#the-chartitem-type). When you omit
+`id`, a **sequential** id is generated from the insertion order (`"0"`, `"1"`, `"2"`, …), so every
+item always has a stable, unique id you can match on in [`PredicateSelected`](#predicateselected).
 
 ```csharp
 using PromptPlusLibrary;

@@ -188,7 +188,7 @@ namespace TaskControlSamples
                     .Spinner(SpinnersType.Default)
                     .ActionAsync(async token =>
                     {
-                        await Task.Delay(TimeSpan.FromSeconds(10), token).ConfigureAwait(false);
+                        await Task.Delay(TimeSpan.FromSeconds(20), token).ConfigureAwait(false);
                     })
                     .Run(sw.Token);
                 PrintResult(result);

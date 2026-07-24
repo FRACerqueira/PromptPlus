@@ -68,7 +68,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="value">A predicate that returns whether the submitted value is valid.</param>
         /// <returns>The current <see cref="IInputSecretControl"/> instance for chaining.</returns>
-        IInputSecretControl PredicateSelected(Func<string, bool> value);
+        IInputSecretControl PredicateValid(Func<string, bool> value);
 
         /// <summary>
         /// Sets an asynchronous validation function executed when the user confirms the input.
@@ -76,14 +76,14 @@ namespace PromptPlusLibrary
         /// <param name="value">An asynchronous predicate that returns whether the submitted value is valid.</param>
         /// <returns>The current <see cref="IInputSecretControl"/> instance for chaining.</returns>
         /// <remarks>The asynchronous predicate is evaluated synchronously (blocking) on the UI thread; it does not run in parallel.</remarks>
-        IInputSecretControl PredicateSelectedAsync(Func<string, Task<bool>> value);
+        IInputSecretControl PredicateValidAsync(Func<string, Task<bool>> value);
 
         /// <summary>
         /// Sets a validation function that also returns a custom validation message.
         /// </summary>
         /// <param name="value">A predicate that returns a tuple: the first value indicates validity, and the second is an optional error message.</param>
         /// <returns>The current <see cref="IInputSecretControl"/> instance for chaining.</returns>
-        IInputSecretControl PredicateSelected(Func<string, (bool, string?)> value);
+        IInputSecretControl PredicateValid(Func<string, (bool, string?)> value);
 
         /// <summary>
         /// Sets an asynchronous validation function that also returns a custom validation message.
@@ -91,7 +91,7 @@ namespace PromptPlusLibrary
         /// <param name="value">An asynchronous predicate that returns a tuple: the first value indicates validity, and the second is an optional error message.</param>
         /// <returns>The current <see cref="IInputSecretControl"/> instance for chaining.</returns>
         /// <remarks>The asynchronous predicate is evaluated synchronously (blocking) on the UI thread; it does not run in parallel.</remarks>
-        IInputSecretControl PredicateSelectedAsync(Func<string, Task<(bool, string?)>> value);
+        IInputSecretControl PredicateValidAsync(Func<string, Task<(bool, string?)>> value);
 
         /// <summary>
         /// Updates the control description dynamically using a synchronous callback.

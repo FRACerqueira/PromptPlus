@@ -163,7 +163,7 @@ namespace SliderControlSamples
                 foreach (var type in Enum.GetValues<SliderBarType>())
                 {
                     result = PromptPlus.Controls.Slider("Select value", $"Fill style: {type}")
-                        .Fill(type)
+                        .BarType(type)
                         .Run();
                     PrintSelectionResult(result);
                 }

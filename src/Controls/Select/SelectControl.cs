@@ -405,14 +405,18 @@ namespace PromptPlusLibrary.Controls.Select
                 foreach (ItemSelect<T>? item in _items.Where(x => !x.CharSeparation.HasValue))
                 {
                     item.Text = GetItemText(item.Value);
-                    if (item.Text.Length > _lengthSeparationline)
+                    // Display width (terminal columns), not .Length — a CJK item/group name is fewer
+                    // characters but more columns, so the AddSeparator() divider line used to end up
+                    // shorter than the widest CJK item/group it was meant to span.
+                    int textWidth = item.Text.GetDisplayLength() is { Length: > 0 } d ? d[0] : 0;
+                    if (textWidth > _lengthSeparationline)
                     {
-                        _lengthSeparationline = item.Text.Length;
+                        _lengthSeparationline = textWidth;
                     }
-                    int groupLen = (item.Group ?? string.Empty).Length;
-                    if (groupLen > _lengthSeparationline)
+                    int groupWidth = (item.Group ?? string.Empty).GetDisplayLength() is { Length: > 0 } gd ? gd[0] : 0;
+                    if (groupWidth > _lengthSeparationline)
                     {
-                        _lengthSeparationline = groupLen;
+                        _lengthSeparationline = groupWidth;
                     }
                 }
             }
@@ -500,11 +504,21 @@ namespace PromptPlusLibrary.Controls.Select
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    bool updatePosAnswerBufferBeforeThisKey = _updatePosAnswerBuffer;
                     _updatePosAnswerBuffer = true;
 
                     KeyPressResult press = ReadNextKey(true, cancellationToken);
                     if (press.IsResize || press.IsCancelled)
                     {
+                        // A resize/cancel breaks out below without ever reaching the specific
+                        // resets a real navigation/scroll key would apply. Restore whatever this
+                        // flag was BEFORE this iteration force-set it to `true` above, so a resize
+                        // never changes whether the next render reloads the answer buffer from the
+                        // current selection vs. preserves a scroll the user had just navigated to
+                        // (Left/Right/Home/End on a long answer preview set this flag `false`
+                        // specifically to survive into the next render — a resize must not undo
+                        // that any more than a normal frame without a key would).
+                        _updatePosAnswerBuffer = updatePosAnswerBufferBeforeThisKey;
                         if (press.IsCancelled)
                         {
                             _indexTooptip = 0;

@@ -9,6 +9,19 @@
 | `TableSelect<T>()` | `Table<T>()` |
 | `TableMultiSelect<T>()` | `MultiTable<T>()` |
 
+## Renamed public methods
+
+`MultiTable<T>` **renamed** its confirmation validator. `Table<T>` (single-selection) keeps
+`PredicateSelected`.
+
+| Control | v5.x member | v6.x member |
+|---|---|---|
+| MultiTable | `PredicateSelected(Func<T, bool>)` | `PredicateChecked(Func<T, bool>)` |
+| MultiTable | `PredicateSelected(Func<T, (bool, string?)>)` | `PredicateChecked(Func<T, (bool, string?)>)` |
+
+> The async overloads follow the same name: `MultiTable` uses `PredicateCheckedAsync`; `Table` uses
+> `PredicateSelectedAsync`.
+
 ---
 
 ## Breaking Changes
@@ -171,7 +184,7 @@ PromptPlus.Controls.MultiTable<Product>("Products:")
     .Run();
 ```
 
-New on `Table`/`MultiTable`: `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll` · `ChangeDescriptionAsync` · `TextSelectorAsync` · `InteractionAsync` · `PredicateSelectedAsync` (x2); plus `EnabledHistory` / `UseDefaultHistory` on `MultiTable`.
+New on `Table`/`MultiTable`: `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll` · `ChangeDescriptionAsync` · `TextSelectorAsync` · `InteractionAsync`; `Table` adds `PredicateSelectedAsync` (x2) and `MultiTable` adds `PredicateCheckedAsync` (x2); plus `EnabledHistory` / `UseDefaultHistory` on `MultiTable`.
 
 ---
 
@@ -213,5 +226,6 @@ New on `Table`/`MultiTable`: `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
 | `EqualItems(Func<T,T,bool>)` | ✅ | ❌ | Renamed to `DefaultMatchBy` |
 | `Range(int, int?)` | ✅ | ✅ | Unchanged |
-| `EnabledHistory` · `UseDefaultHistory` · `ViewOnly` · `DefaultMatchBy` · `HorizontalScroll` · async variants | ❌ | ✅ | New |
+| `PredicateSelected` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` (x2) |
+| `EnabledHistory` · `UseDefaultHistory` · `ViewOnly` · `DefaultMatchBy` · `HorizontalScroll` · `PredicateChecked` (x2) · async variants | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<T[]>` | `ResultPrompt<T[]>` | Unchanged |

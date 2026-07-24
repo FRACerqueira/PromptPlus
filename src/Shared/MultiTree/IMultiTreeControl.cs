@@ -21,12 +21,24 @@ namespace PromptPlusLibrary
     /// <typeparam name="T">The type of items in the tree.</typeparam>
     /// <remarks>
     /// The tree structure is built the same way as <see cref="ITreeControl{T}"/>: via
-    /// <see cref="Root(T)"/>, <see cref="AddLast(T)"/>/<see cref="AddFirst(T)"/>,
-    /// <see cref="AddAfter"/>/<see cref="AddBefore"/> and the <see cref="ITreeNode{T}"/> children
-    /// helpers. Container nodes display a tri-state checkbox that reflects the aggregate check
-    /// state of their descendants. Pressing the check key (Space) on a container cycles through
-    /// Unchecked → Checked (all descendants) → Unchecked. Pressing Enter confirms the selection
-    /// and returns all checked leaf (or all checked) values.
+    /// <see cref="Root(T, bool, bool)"/>, <see cref="AddLast(T, bool, bool)"/>/
+    /// <see cref="AddFirst(T, bool, bool)"/>, <see cref="AddAfter(ITreeNode{T}, T, bool, bool)"/>/
+    /// <see cref="AddBefore(ITreeNode{T}, T, bool, bool)"/> and the <see cref="IMultiTreeNode{T}"/>
+    /// children helpers. Container nodes display a tri-state
+    /// checkbox that reflects the aggregate check state of their descendants. Pressing the check
+    /// key (Space) on a container cycles through Unchecked → Checked (all descendants) →
+    /// Unchecked. Pressing Enter confirms the selection and returns all checked leaf (or all
+    /// checked) values. Nodes can be marked <c>disable</c> at creation time: they are shown and
+    /// navigable but cannot be checked/unchecked interactively; a cascading check still passes
+    /// through a disabled node to reach its enabled descendants, and a disabled node force-marked
+    /// via <see cref="Default"/> survives a mass-uncheck (<c>F2</c>) unaffected, same as
+    /// <see cref="IMultiSelectControl{T}"/>. Nodes can also be marked <c>check</c> at creation
+    /// time to start pre-checked (additive with <see cref="Default"/>/history — whichever marks
+    /// a node checked, it stays checked). <see cref="AddLast(T, bool, bool)"/>/
+    /// <see cref="AddFirst(T, bool, bool)"/>/<see cref="AddAfter(ITreeNode{T}, T, bool, bool)"/>/
+    /// <see cref="AddBefore(ITreeNode{T}, T, bool, bool)"/> return <see cref="IMultiTreeNode{T}"/>
+    /// (not the plain <see cref="ITreeNode{T}"/>), so chaining further down the tree keeps access
+    /// to <c>check</c>, not just the top-level calls made directly off the control.
     /// </remarks>
     public interface IMultiTreeControl<T>
     {
@@ -49,35 +61,57 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Sets the root value of the tree. Must be called before adding any children.
         /// </summary>
+        /// <param name="value">The root value. Cannot be <c>null</c>.</param>
+        /// <param name="disable">When <c>true</c>, the root cannot be checked. Default is <c>false</c>.</param>
+        /// <param name="check">
+        /// When <c>true</c>, the root starts pre-checked. Additive with <see cref="Default"/>/
+        /// history — whichever marks it, it stays checked. Subject to cascade the same way an
+        /// interactive check would be; does not auto-expand the tree to reveal it (unlike
+        /// <see cref="Default"/>).
+        /// </param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="value"/> is <c>null</c>.</exception>
-        IMultiTreeControl<T> Root(T value);
+        IMultiTreeControl<T> Root(T value, bool disable = false, bool check = false);
 
         /// <summary>
         /// Adds a new node as the last child of the root and returns it so children can be
         /// appended to it.
         /// </summary>
-        ITreeNode<T> AddLast(T value);
+        /// <param name="value">The value of the new node. Cannot be <c>null</c>.</param>
+        /// <param name="disable">When <c>true</c>, the new node cannot be checked. Default is <c>false</c>.</param>
+        /// <param name="check">Same semantics as in <see cref="Root(T, bool, bool)"/>.</param>
+        IMultiTreeNode<T> AddLast(T value, bool disable = false, bool check = false);
 
         /// <summary>
         /// Adds a new node as the first child of the root and returns it.
         /// </summary>
-        ITreeNode<T> AddFirst(T value);
+        /// <param name="value">The value of the new node. Cannot be <c>null</c>.</param>
+        /// <param name="disable">When <c>true</c>, the new node cannot be checked. Default is <c>false</c>.</param>
+        /// <param name="check">Same semantics as in <see cref="Root(T, bool, bool)"/>.</param>
+        IMultiTreeNode<T> AddFirst(T value, bool disable = false, bool check = false);
 
         /// <summary>
         /// Inserts a new sibling immediately after <paramref name="node"/>.
         /// </summary>
+        /// <param name="node">The reference sibling. Cannot be <c>null</c>.</param>
+        /// <param name="value">The value of the new node. Cannot be <c>null</c>.</param>
+        /// <param name="disable">When <c>true</c>, the new node cannot be checked. Default is <c>false</c>.</param>
+        /// <param name="check">Same semantics as in <see cref="Root(T, bool, bool)"/>.</param>
         /// <exception cref="InvalidOperationException">
         /// Thrown if <paramref name="node"/> does not belong to this tree or is the root.
         /// </exception>
-        ITreeNode<T> AddAfter(ITreeNode<T> node, T value);
+        IMultiTreeNode<T> AddAfter(ITreeNode<T> node, T value, bool disable = false, bool check = false);
 
         /// <summary>
         /// Inserts a new sibling immediately before <paramref name="node"/>.
         /// </summary>
+        /// <param name="node">The reference sibling. Cannot be <c>null</c>.</param>
+        /// <param name="value">The value of the new node. Cannot be <c>null</c>.</param>
+        /// <param name="disable">When <c>true</c>, the new node cannot be checked. Default is <c>false</c>.</param>
+        /// <param name="check">Same semantics as in <see cref="Root(T, bool, bool)"/>.</param>
         /// <exception cref="InvalidOperationException">
         /// Thrown if <paramref name="node"/> does not belong to this tree or is the root.
         /// </exception>
-        ITreeNode<T> AddBefore(ITreeNode<T> node, T value);
+        IMultiTreeNode<T> AddBefore(ITreeNode<T> node, T value, bool disable = false, bool check = false);
 
         /// <summary>
         /// Sets the function used to obtain the display text for each node.
@@ -179,19 +213,23 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Sets a predicate that decides whether a node can be checked.
         /// Nodes that fail the predicate show an error when the user tries to check them.
+        /// Only evaluated when marking a node as checked — unchecking an already-checked node is
+        /// always allowed (subject only to it not being disabled) and never runs this predicate.
         /// </summary>
-        IMultiTreeControl<T> PredicateSelected(Func<T, bool> validselect);
+        IMultiTreeControl<T> PredicateChecked(Func<T, bool> validselect);
 
         /// <summary>
         /// Variant that also returns a custom error message when the node cannot be checked.
+        /// Only evaluated when marking a node as checked — unchecking an already-checked node is
+        /// always allowed (subject only to it not being disabled) and never runs this predicate.
         /// </summary>
-        IMultiTreeControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
+        IMultiTreeControl<T> PredicateChecked(Func<T, (bool, string?)> validselect);
 
-        /// <summary>Asynchronous variant of <see cref="PredicateSelected(Func{T,bool})"/>.</summary>
-        IMultiTreeControl<T> PredicateSelectedAsync(Func<T, Task<bool>> validselect);
+        /// <summary>Asynchronous variant of <see cref="PredicateChecked(Func{T,bool})"/>.</summary>
+        IMultiTreeControl<T> PredicateCheckedAsync(Func<T, Task<bool>> validselect);
 
         /// <summary>Asynchronous variant with custom error message.</summary>
-        IMultiTreeControl<T> PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect);
+        IMultiTreeControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> validselect);
 
         /// <summary>
         /// Defines the valid range for the number of checked items.

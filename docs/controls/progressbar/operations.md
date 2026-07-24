@@ -67,6 +67,12 @@ The two loop conditions matter:
 When the handler returns, the control closes and returns the final
 [`StateProgress`](index.md#stateprogress-members).
 
+> **Final frame is always rendered.** When the loop ends (completion or cancellation), the control
+> paints one last frame before closing, so the finished bar, percentage and the
+> [`ElapsedTime`](methods.md#hideelements) reflect the *actual* end state — the elapsed value shown
+> matches [`StateProgress.ElapsedTime`](index.md#stateprogress-members) and is not frozen a frame
+> early. If you set [`HideAfterFinish(true)`](methods.md#options) the frame is erased instead.
+
 ---
 
 ## The `ProgressBarEvent`

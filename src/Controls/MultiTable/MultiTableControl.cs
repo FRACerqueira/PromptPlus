@@ -43,8 +43,8 @@ namespace PromptPlusLibrary.Controls.MultiTable
         private readonly Dictionary<MultiTableStyles, Style> _optStyles;
         private readonly List<ColumnDefinition<T>> _columns = [];
         private readonly List<ItemTable<T>> _items = [];
-        private Func<T, (bool, string?)>? _predicatevalidselect;
-        private Func<T, Task<(bool, string?)>>? _predicatevalidselectAsync;
+        private Func<T, (bool, string?)>? _predicatevalidcheck;
+        private Func<T, Task<(bool, string?)>>? _predicatevalidcheckAsync;
         private Func<T, T, bool> _DefaultMatchBy = EqualityComparer<T>.Default.Equals;
         private IEnumerable<T> _defaultValues = [];
         private bool _useDefaultHistory;
@@ -240,38 +240,38 @@ namespace PromptPlusLibrary.Controls.MultiTable
         }
 
         /// <inheritdoc/>
-        public IMultiTableControl<T> PredicateSelected(Func<T, bool> validselect)
+        public IMultiTableControl<T> PredicateChecked(Func<T, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) => (validselect(input), (string?)null);
-            _predicatevalidselectAsync = null;
+            _predicatevalidcheck = (input) => (validselect(input), (string?)null);
+            _predicatevalidcheckAsync = null;
             return this;
         }
 
         /// <inheritdoc/>
-        public IMultiTableControl<T> PredicateSelectedAsync(Func<T, Task<bool>> validselect)
+        public IMultiTableControl<T> PredicateCheckedAsync(Func<T, Task<bool>> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselectAsync = async (input) => ((await validselect(input).ConfigureAwait(false)), (string?)null);
-            _predicatevalidselect = null;
+            _predicatevalidcheckAsync = async (input) => ((await validselect(input).ConfigureAwait(false)), (string?)null);
+            _predicatevalidcheck = null;
             return this;
         }
 
         /// <inheritdoc/>
-        public IMultiTableControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
+        public IMultiTableControl<T> PredicateChecked(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
-            _predicatevalidselectAsync = null;
+            _predicatevalidcheck = validselect;
+            _predicatevalidcheckAsync = null;
             return this;
         }
 
         /// <inheritdoc/>
-        public IMultiTableControl<T> PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect)
+        public IMultiTableControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselectAsync = validselect;
-            _predicatevalidselect = null;
+            _predicatevalidcheckAsync = validselect;
+            _predicatevalidcheck = null;
             return this;
         }
 
@@ -408,7 +408,7 @@ namespace PromptPlusLibrary.Controls.MultiTable
                         foreach (var hv in histvalues)
                         {
                             int idx = _items.FindIndex(x => _DefaultMatchBy.Invoke(x.Value!, hv));
-                            if (idx >= 0 && (_items[idx].Disabled || TryValidateSelectionPredicate(_items[idx].Value, out _)))
+                            if (idx >= 0 && (_items[idx].Disabled || TryValidateCheckPredicate(_items[idx].Value, out _)))
                                 _items[idx].ValueChecked = true;
                         }
                         loadedDefaultsFromHistory = true;
@@ -424,7 +424,7 @@ namespace PromptPlusLibrary.Controls.MultiTable
                 foreach (var dv in defaultList)
                 {
                     int idx = _items.FindIndex(x => _DefaultMatchBy.Invoke(x.Value!, dv));
-                    if (idx >= 0 && (_items[idx].Disabled || TryValidateSelectionPredicate(_items[idx].Value, out _)))
+                    if (idx >= 0 && (_items[idx].Disabled || TryValidateCheckPredicate(_items[idx].Value, out _)))
                         _items[idx].ValueChecked = true;
                 }
             }
@@ -470,11 +470,17 @@ namespace PromptPlusLibrary.Controls.MultiTable
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    bool updatePosAnswerBufferBeforeThisKey = _updatePosAnswerBuffer;
                     _updatePosAnswerBuffer = true;
 
                     KeyPressResult press = ReadNextKey(true, cancellationToken);
                     if (press.IsResize || press.IsCancelled)
                     {
+                        // Restore the flag's pre-iteration value instead of leaving it force-set to
+                        // `true` above — same fix as Select/MultiSelect/Table: a resize must not
+                        // silently undo a scroll the user had just navigated to on the answer
+                        // preview.
+                        _updatePosAnswerBuffer = updatePosAnswerBufferBeforeThisKey;
                         if (press.IsCancelled)
                         {
                             _indexTooptip = 0;
@@ -553,6 +559,8 @@ namespace PromptPlusLibrary.Controls.MultiTable
                     else if (keyinfo.IsPressTabKey())
                     {
                         _indexTooptip = 0;
+                        if (_modeView == ModeView.Filter)
+                            ExitFilterMode();
                         _currentColumnIndex++;
                         if (_currentColumnIndex >= _columns.Count)
                             _currentColumnIndex = 0;
@@ -561,6 +569,8 @@ namespace PromptPlusLibrary.Controls.MultiTable
                     else if (keyinfo.IsPressShiftTabKey())
                     {
                         _indexTooptip = 0;
+                        if (_modeView == ModeView.Filter)
+                            ExitFilterMode();
                         _currentColumnIndex--;
                         if (_currentColumnIndex < 0)
                             _currentColumnIndex = _columns.Count - 1;
@@ -680,7 +690,7 @@ namespace PromptPlusLibrary.Controls.MultiTable
                         {
                             if (item.ValueChecked != targetChecked)
                             {
-                                if (targetChecked && !TryValidateSelectionPredicate(item.Value, out _))
+                                if (targetChecked && !TryValidateCheckPredicate(item.Value, out _))
                                     continue;
                                 item.ValueChecked = targetChecked;
                                 _countChecked += targetChecked ? 1 : -1;
@@ -702,7 +712,7 @@ namespace PromptPlusLibrary.Controls.MultiTable
                         {
                             if (item.ValueChecked != targetChecked)
                             {
-                                if (targetChecked && !TryValidateSelectionPredicate(item.Value, out _))
+                                if (targetChecked && !TryValidateCheckPredicate(item.Value, out _))
                                     continue;
                                 item.ValueChecked = targetChecked;
                                 _countChecked += targetChecked ? 1 : -1;
@@ -722,18 +732,19 @@ namespace PromptPlusLibrary.Controls.MultiTable
 
                     else if (!_viewOnly && keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.Disabled)
                     {
-                        if (!TryValidateSelectionPredicate(_localpaginator!.SelectedItem.Value, out string? message))
-                        {
-                            SetError(string.IsNullOrEmpty(message) ? PromptPlusResources.PredicateSelectInvalid : message);
-                            break;
-                        }
                         if (_localpaginator!.SelectedItem.ValueChecked)
                         {
+                            // Unchecking never needs the predicate — it only gates checking a row.
                             _localpaginator.SelectedItem.ValueChecked = false;
                             _countChecked--;
                         }
                         else
                         {
+                            if (!TryValidateCheckPredicate(_localpaginator!.SelectedItem.Value, out string? message))
+                            {
+                                SetError(string.IsNullOrEmpty(message) ? PromptPlusResources.PredicateSelectInvalid : message);
+                                break;
+                            }
                             _localpaginator.SelectedItem.ValueChecked = true;
                             _countChecked++;
                         }
@@ -885,8 +896,12 @@ namespace PromptPlusLibrary.Controls.MultiTable
                         lsttooltips.Add(PromptPlusResources.TooltipNavegateTextPrompt);
                     // Jump-by-first-char is only reachable when filter is disabled (otherwise any
                     // printable key transitions the control into filter mode instead of jumping).
-                    if (!_viewOnly && _filterType == FilterMode.Disabled)
-                        lsttooltips.Add(PromptPlusResources.TooltipJump);
+                    // It also only ever finds a match via item.FilterableText, which is only
+                    // populated from columns marked isFilterable — advertise it only when at
+                    // least one column qualifies, otherwise the tooltip promises a key that
+                    // silently does nothing (same fix as TableControl).
+                    if (!_viewOnly && _filterType == FilterMode.Disabled && _columns.Exists(c => c.IsFilterable))
+                        lsttooltips.Add(PromptPlusResources.TooltipTableJump);
                 }
                 if (OptionsControl.EnabledAbortKeyValue)
                     lsttooltips.Add($"{ConfigPrompt.HotKeyAbortKeyPress}:{PromptPlusResources.Abort}");
@@ -936,23 +951,35 @@ namespace PromptPlusLibrary.Controls.MultiTable
                 _modeView = ModeView.Select;
         }
 
+        // A filter term is only ever valid on the column it was typed against (Answer falls back
+        // to the current column's cell text when no TextSelector is set; ColumnFilters always
+        // targets the current column). Changing column mid-filter exits it entirely instead of
+        // silently re-targeting the search or, for ColumnFilters, matching nothing at all.
+        private void ExitFilterMode()
+        {
+            _modeView = ModeView.Select;
+            _filterBuffer.Clear();
+            _localpaginator!.UpdateFilter(string.Empty);
+            _lastinput = string.Empty;
+        }
+
         private void SetSelectionDisabledErrorIfNeeded(bool ignoreViewOnly = false)
         {
             if ((!_viewOnly || ignoreViewOnly) && _localpaginator?.SelectedItem?.Disabled == true)
                 SetError(PromptPlusResources.SelectionDisabled);
         }
 
-        private bool TryValidateSelectionPredicate(T value, out string? message)
+        private bool TryValidateCheckPredicate(T value, out string? message)
         {
-            if (_predicatevalidselect == null && _predicatevalidselectAsync == null)
+            if (_predicatevalidcheck == null && _predicatevalidcheckAsync == null)
             {
                 message = null;
                 return true;
             }
             bool ok;
-            (ok, message) = _predicatevalidselectAsync != null
-                ? _predicatevalidselectAsync.Invoke(value).ConfigureAwait(false).GetAwaiter().GetResult()
-                : (_predicatevalidselect?.Invoke(value) ?? (true, (string?)null));
+            (ok, message) = _predicatevalidcheckAsync != null
+                ? _predicatevalidcheckAsync.Invoke(value).ConfigureAwait(false).GetAwaiter().GetResult()
+                : (_predicatevalidcheck?.Invoke(value) ?? (true, (string?)null));
             return ok;
         }
 
@@ -1124,7 +1151,7 @@ namespace PromptPlusLibrary.Controls.MultiTable
 
             // Fixed checkbox column header: symbol conveying it's the selection column
             string checkboxHeaderSym = GetSymbol(SymbolType.ChartLabel);
-            string checkboxHeaderCell = AlignCell(Truncate(checkboxHeaderSym, _checkboxColWidth), _checkboxColWidth, ColumnAlignment.Center);
+            string checkboxHeaderCell = DisplayWidthHelpers.AlignCell(DisplayWidthHelpers.Truncate(checkboxHeaderSym, _checkboxColWidth), _checkboxColWidth, ColumnAlignment.Center);
             screenBuffer.Write(checkboxHeaderCell, _optStyles[MultiTableStyles.HeaderText]);
             // Separator between checkbox column and first user column
             screenBuffer.Write(separator, _optStyles[MultiTableStyles.BorderLines]);
@@ -1141,12 +1168,13 @@ namespace PromptPlusLibrary.Controls.MultiTable
                 string suffix = col.IsFilterable ? _cachedFilterableSuffix : "  ";
 
                 int colWidth = col.CalculatedWidth;
+                int headerDisplayWidth = col.Header.GetDisplayLength() is { Length: > 0 } hd ? hd[0] : 0;
                 int availableAfterMarker = Math.Max(0, colWidth - marker.Length);
-                int headerVisibleLength = Math.Min(col.Header.Length, availableAfterMarker);
+                int headerVisibleLength = Math.Min(headerDisplayWidth, availableAfterMarker);
                 int suffixLength = Math.Min(suffix.Length, Math.Max(0, availableAfterMarker - headerVisibleLength));
                 int textWidth = Math.Max(0, availableAfterMarker - suffixLength);
-                string headerText = textWidth == 0 ? string.Empty : AlignCell(col.Header, textWidth, ColumnAlignment.Left);
-                string cell = Truncate(marker + headerText + suffix, colWidth);
+                string headerText = textWidth == 0 ? string.Empty : DisplayWidthHelpers.AlignCell(col.Header, textWidth, ColumnAlignment.Left);
+                string cell = DisplayWidthHelpers.Truncate(marker + headerText + suffix, colWidth);
 
                 screenBuffer.Write(cell, showSelection ? _optStyles[MultiTableStyles.SelectedCell] : _optStyles[MultiTableStyles.HeaderText]);
             }
@@ -1157,8 +1185,8 @@ namespace PromptPlusLibrary.Controls.MultiTable
                 screenBuffer.Write(separator, _optStyles[MultiTableStyles.DisabledRow]);
                 int previewWidth = previewCol.CalculatedWidth;
                 int previewAvailable = Math.Max(0, previewWidth - HeaderSelectionPrefixWidth);
-                string previewText = AlignCell(Truncate(previewCol.Header, previewAvailable), previewWidth - HeaderSelectionPrefixWidth, ColumnAlignment.Left);
-                string previewCell = Truncate("  " + previewText, previewWidth);
+                string previewText = DisplayWidthHelpers.AlignCell(DisplayWidthHelpers.Truncate(previewCol.Header, previewAvailable), previewWidth - HeaderSelectionPrefixWidth, ColumnAlignment.Left);
+                string previewCell = DisplayWidthHelpers.Truncate("  " + previewText, previewWidth);
                 screenBuffer.Write(previewCell, _optStyles[MultiTableStyles.DisabledRow]);
             }
 
@@ -1215,7 +1243,7 @@ namespace PromptPlusLibrary.Controls.MultiTable
 
                 // Fixed checkbox column (first column inside the table, always visible)
                 string checkSym = item.ValueChecked ? checkedSym : notCheckedSym;
-                string checkCell = AlignCell(checkSym, _checkboxColWidth, ColumnAlignment.Center);
+                string checkCell = DisplayWidthHelpers.AlignCell(checkSym, _checkboxColWidth, ColumnAlignment.Center);
                 screenBuffer.Write(checkCell, rowStyle);
                 // Separator between checkbox column and first user column
                 screenBuffer.Write(separator, _optStyles[MultiTableStyles.BorderLines]);
@@ -1264,18 +1292,20 @@ namespace PromptPlusLibrary.Controls.MultiTable
                     ? HeaderSelectionSuffixWidth + 1
                     : HeaderSelectionSuffixWidth;
 
+                int headerDisplayWidth = column.Header.GetDisplayLength() is { Length: > 0 } hd ? hd[0] : 0;
+
                 if (column.Width.HasValue)
                 {
-                    int minForHeader = column.Header.Length + HeaderSelectionPrefixWidth + suffixWidth;
+                    int minForHeader = headerDisplayWidth + HeaderSelectionPrefixWidth + suffixWidth;
                     column.CalculatedWidth = Math.Max(column.Width.Value, minForHeader);
                     continue;
                 }
-                int autoWidth = column.Header.Length + HeaderSelectionPrefixWidth + suffixWidth;
+                int autoWidth = headerDisplayWidth + HeaderSelectionPrefixWidth + suffixWidth;
                 foreach (ItemTable<T> item in _items)
                 {
                     if (colIndex < item.CachedCellValues.Length)
                     {
-                        int cellLen = item.CachedCellValues[colIndex]?.Length ?? 0;
+                        int cellLen = item.CachedCellValues[colIndex]?.GetDisplayLength() is { Length: > 0 } cd ? cd[0] : 0;
                         if (cellLen > autoWidth) autoWidth = cellLen;
                     }
                 }
@@ -1491,26 +1521,7 @@ namespace PromptPlusLibrary.Controls.MultiTable
         // ── Cell helpers ──────────────────────────────────────────────────────────
 
         private static string BuildCell(string value, ColumnDefinition<T> column)
-            => AlignCell(Truncate(value, column.CalculatedWidth), column.CalculatedWidth, column.Alignment);
-
-        private static string Truncate(string value, int width)
-        {
-            if (width <= 0) return string.Empty;
-            return value.Length <= width ? value : value[..width];
-        }
-
-        private static string AlignCell(string value, int width, ColumnAlignment alignment)
-        {
-            string normalized = value.Length > width ? value[..width] : value;
-            int missing = width - normalized.Length;
-            if (missing <= 0) return normalized;
-            return alignment switch
-            {
-                ColumnAlignment.Right  => new string(' ', missing) + normalized,
-                ColumnAlignment.Center => new string(' ', missing / 2) + normalized + new string(' ', missing - (missing / 2)),
-                _                      => normalized + new string(' ', missing)
-            };
-        }
+            => DisplayWidthHelpers.AlignCell(DisplayWidthHelpers.Truncate(value, column.CalculatedWidth), column.CalculatedWidth, column.Alignment);
 
         private string GetRepeated(char ch, int count)
         {

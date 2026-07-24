@@ -37,9 +37,14 @@ namespace PromptPlusLibrary.Controls.Common
         private readonly BufferScreen _bufferScreen = new();
         private readonly CultureInfo _cultureInfo = Thread.CurrentThread.CurrentCulture;
         private static readonly FrozenDictionary<SymbolType, (string value, string unicode)> _symbols = InitSymbols();
-        private static string[]? _EmacsTooltips;
-        private static string[]? _EmacsTooltipsReadonly;
-        private static CompositeFormat? _resizeWarningFormat;
+        // Instance-level (NOT static): both hold resource strings localized per PromptConfig.
+        // DefaultCulture, which is set per control instance (see PromptConfig.DefaultCulture ->
+        // PromptPlusResources.Culture). A static cache would freeze whichever culture the FIRST
+        // control of this closed generic type happened to run under, and every later control
+        // (even one configured for a different culture) would keep reading that stale value.
+        private string[]? _EmacsTooltips;
+        private string[]? _EmacsTooltipsReadonly;
+        private CompositeFormat? _resizeWarningFormat;
         private int _lastKnownWidth;
         private int _lastKnownHeight;
         private int _renderedPhysicalRows;
@@ -859,7 +864,6 @@ namespace PromptPlusLibrary.Controls.Common
         /// </summary>
         /// <param name="isreadonly">Indicates whether the tooltips should be for read-only mode.</param>
         /// <returns>An array of Emacs tooltips.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "ByDesign")]
         public string[] GetEmacsTooltips(bool isreadonly)
         {
             if (!ConsoleHandler.EnabledEmacs)
@@ -1038,36 +1042,10 @@ namespace PromptPlusLibrary.Controls.Common
         /// <param name="viewportWidth">The available viewport width in display columns.</param>
         private (string VisibleLeft, string VisibleRight) ViewportSliceCore(string fullText, int cursorPos, int viewportWidth)
         {
-            static int RuneDisplayWidth(Rune rune)
-            {
-                UnicodeCategory category = Rune.GetUnicodeCategory(rune);
-                if (category is UnicodeCategory.NonSpacingMark or
-                    UnicodeCategory.EnclosingMark or
-                    UnicodeCategory.Control or
-                    UnicodeCategory.Format or
-                    UnicodeCategory.Surrogate)
-                {
-                    return 0;
-                }
-
-                int value = rune.Value;
-                bool isWide = (value >= 0x1100 && value <= 0x115F) ||
-                              value == 0x2329 ||
-                              value == 0x232A ||
-                              (value >= 0x2E80 && value <= 0x303E) ||
-                              (value >= 0x3040 && value <= 0xA4CF) ||
-                              (value >= 0xAC00 && value <= 0xD7A3) ||
-                              (value >= 0xF900 && value <= 0xFAFF) ||
-                              (value >= 0xFE10 && value <= 0xFE19) ||
-                              (value >= 0xFE30 && value <= 0xFE6F) ||
-                              (value >= 0xFF00 && value <= 0xFF60) ||
-                              (value >= 0xFFE0 && value <= 0xFFE6) ||
-                              (value >= 0x1F300 && value <= 0x1FAFF) ||
-                              (value >= 0x20000 && value <= 0x2FFFD) ||
-                              (value >= 0x30000 && value <= 0x3FFFD);
-
-                return isWide ? 2 : 1;
-            }
+            // Rune width classification lives once in ConsolePlusLibrary.StringExtensions.GetRuneWidth
+            // (public extension on Rune) — do not re-duplicate the wide-rune ranges here; a local copy
+            // would silently drift from the canonical one used by GetDisplayLength/TruncateToDisplayWidth.
+            static int RuneDisplayWidth(Rune rune) => rune.GetRuneWidth();
 
             static int SliceDisplayWidth(string source, int start, int end)
             {
@@ -1200,26 +1178,24 @@ namespace PromptPlusLibrary.Controls.Common
                 : AsciiEllipsis;
             int ellipsisWidth = SliceDisplayWidth(ellipsisStr, 0, ellipsisStr.Length);
 
-            int start = Math.Max(0, cursorPos - Math.Max(0, viewportWidth - 1));
-            int end = Math.Min(totalLen, start + viewportWidth);
-            start = Math.Max(0, end - viewportWidth);
+            // When the cursor sits at the absolute end of the text, nothing is rendered to its
+            // right, so it needs its own free column to land on. Without this reservation the
+            // window below fills every column of the viewport and the cursor ends up clamped
+            // onto the same column as the last visible character instead of past it.
+            bool cursorAtTextEnd = cursorPos == totalLen;
+            int usableWidth = cursorAtTextEnd ? Math.Max(0, viewportWidth - 1) : viewportWidth;
 
-            bool hasHiddenLeft = start > 0;
-            bool hasHiddenRight = end < totalLen;
+            int start = Math.Max(0, cursorPos - Math.Max(0, usableWidth - 1));
+            int end = Math.Min(totalLen, start + usableWidth);
+            start = Math.Max(0, end - usableWidth);
 
-            bool showPrefix = hasHiddenLeft && ellipsisWidth > 0 && ellipsisWidth <= viewportWidth;
-            bool showSuffix = hasHiddenRight && ellipsisWidth > 0 && ellipsisWidth <= viewportWidth;
+            bool showPrefix = start > 0 && ellipsisWidth > 0 && ellipsisWidth <= usableWidth;
+            bool showSuffix = end < totalLen && ellipsisWidth > 0 && ellipsisWidth <= usableWidth;
 
-            if (showPrefix && showSuffix && (2 * ellipsisWidth > viewportWidth))
+            if (showPrefix && showSuffix && (2 * ellipsisWidth > usableWidth))
             {
                 showPrefix = false;
             }
-
-            int contentBudget = viewportWidth
-                - (showPrefix ? ellipsisWidth : 0)
-                - (showSuffix ? ellipsisWidth : 0);
-
-            contentBudget = Math.Max(0, contentBudget);
 
             cursorPos = Math.Max(start, Math.Min(cursorPos, end));
             int leftStart = start;
@@ -1230,31 +1206,16 @@ namespace PromptPlusLibrary.Controls.Common
             int contentLeftWidth = SliceDisplayWidth(fullText, leftStart, leftEnd);
             int contentRightWidth = SliceDisplayWidth(fullText, rightStart, rightEnd);
 
-            TrimToBudget(
-                fullText,
-                ref leftStart,
-                leftEnd,
-                ref contentLeftWidth,
-                rightStart,
-                ref rightEnd,
-                ref contentRightWidth,
-                contentBudget);
-
-            // If right side is hidden, suffix must exist. Re-trim content to reserve it.
-            if (hasHiddenRight && ellipsisWidth > 0 && ellipsisWidth <= viewportWidth)
+            // Trimming to fit the budget can hide characters that were not originally flagged as
+            // hidden (e.g. content sacrificed purely to make room for the opposite side's
+            // ellipsis). Re-check both sides against the ACTUAL post-trim bounds and, whenever
+            // that reveals a newly-hidden side, reserve its ellipsis and trim again. Each flag can
+            // only flip from false to true (trimming never un-hides content), so this converges.
+            while (true)
             {
-                showSuffix = true;
-                contentBudget = viewportWidth
+                int contentBudget = Math.Max(0, usableWidth
                     - (showPrefix ? ellipsisWidth : 0)
-                    - ellipsisWidth;
-
-                if (contentBudget < 0 && showPrefix)
-                {
-                    showPrefix = false;
-                    contentBudget = viewportWidth - ellipsisWidth;
-                }
-
-                contentBudget = Math.Max(0, contentBudget);
+                    - (showSuffix ? ellipsisWidth : 0));
 
                 TrimToBudget(
                     fullText,
@@ -1265,12 +1226,23 @@ namespace PromptPlusLibrary.Controls.Common
                     ref rightEnd,
                     ref contentRightWidth,
                     contentBudget);
+
+                bool needsPrefix = leftStart > 0 && ellipsisWidth > 0 && ellipsisWidth <= usableWidth;
+                bool needsSuffix = rightEnd < totalLen && ellipsisWidth > 0 && ellipsisWidth <= usableWidth;
+
+                if (needsPrefix == showPrefix && needsSuffix == showSuffix)
+                {
+                    break;
+                }
+
+                showPrefix = needsPrefix;
+                showSuffix = needsSuffix;
             }
 
             int visibleLeftWidth = contentLeftWidth + (showPrefix ? ellipsisWidth : 0);
             int visibleRightWidth = contentRightWidth + (showSuffix ? ellipsisWidth : 0);
 
-            while (visibleLeftWidth + visibleRightWidth > viewportWidth)
+            while (visibleLeftWidth + visibleRightWidth > usableWidth)
             {
                 if (rightEnd > rightStart)
                 {
@@ -1287,40 +1259,6 @@ namespace PromptPlusLibrary.Controls.Common
                 }
 
                 break;
-            }
-
-            // Final guarantee: if there is hidden text on the right side,
-            // keep suffix ellipsis visible and trim content to fit.
-            if (hasHiddenRight && ellipsisWidth > 0 && ellipsisWidth <= viewportWidth)
-            {
-                showSuffix = true;
-                visibleRightWidth = contentRightWidth + ellipsisWidth;
-                visibleLeftWidth = contentLeftWidth + (showPrefix ? ellipsisWidth : 0);
-
-                if (showPrefix && visibleLeftWidth + visibleRightWidth > viewportWidth && (2 * ellipsisWidth > viewportWidth))
-                {
-                    showPrefix = false;
-                    visibleLeftWidth = contentLeftWidth;
-                }
-
-                while (visibleLeftWidth + visibleRightWidth > viewportWidth)
-                {
-                    if (rightEnd > rightStart)
-                    {
-                        TryTrimRightRune(fullText, rightStart, ref rightEnd, ref contentRightWidth);
-                        visibleRightWidth = contentRightWidth + ellipsisWidth;
-                        continue;
-                    }
-
-                    if (leftEnd > leftStart)
-                    {
-                        TryTrimLeftRune(fullText, ref leftStart, leftEnd, ref contentLeftWidth);
-                        visibleLeftWidth = contentLeftWidth + (showPrefix ? ellipsisWidth : 0);
-                        continue;
-                    }
-
-                    break;
-                }
             }
 
             string contentLeft = fullText[leftStart..leftEnd];

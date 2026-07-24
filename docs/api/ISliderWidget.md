@@ -18,6 +18,27 @@ Every configuration method returns the same [ISliderWidget](ISliderWidget.md 'Pr
 chained together \(fluent style\)\. Call [Show\(\)](ISliderWidget.md#PromptPlusLibrary.ISliderWidget.Show() 'PromptPlusLibrary\.ISliderWidget\.Show\(\)') last to render the bar on the console\.
 ### Methods
 
+<a name='PromptPlusLibrary.ISliderWidget.BarType(PromptPlusLibrary.SliderBarType)'></a>
+
+## ISliderWidget\.BarType\(SliderBarType\) Method
+
+Selects the character set used to draw the slider bar\. Default is [Fill](SliderBarType.md#PromptPlusLibrary.SliderBarType.Fill 'PromptPlusLibrary\.SliderBarType\.Fill')\.
+
+```csharp
+PromptPlusLibrary.ISliderWidget BarType(PromptPlusLibrary.SliderBarType type);
+```
+#### Parameters
+
+<a name='PromptPlusLibrary.ISliderWidget.BarType(PromptPlusLibrary.SliderBarType).type'></a>
+
+`type` [SliderBarType](SliderBarType.md 'PromptPlusLibrary\.SliderBarType')
+
+The visual style of the bar, one of the [SliderBarType](SliderBarType.md 'PromptPlusLibrary\.SliderBarType') values\.
+
+#### Returns
+[ISliderWidget](ISliderWidget.md 'PromptPlusLibrary\.ISliderWidget')  
+The same [ISliderWidget](ISliderWidget.md 'PromptPlusLibrary\.ISliderWidget') instance, so additional settings can be chained\.
+
 <a name='PromptPlusLibrary.ISliderWidget.ChangeColor(System.Func_double,ConsolePlusLibrary.Style_)'></a>
 
 ## ISliderWidget\.ChangeColor\(Func\<double,Style\>\) Method
@@ -123,27 +144,6 @@ The same [ISliderWidget](ISliderWidget.md 'PromptPlusLibrary\.ISliderWidget') in
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
 Thrown when [culture](ISliderWidget.md#PromptPlusLibrary.ISliderWidget.Culture(System.Globalization.CultureInfo).culture 'PromptPlusLibrary\.ISliderWidget\.Culture\(System\.Globalization\.CultureInfo\)\.culture') is `null`\.
-
-<a name='PromptPlusLibrary.ISliderWidget.Fill(PromptPlusLibrary.SliderBarType)'></a>
-
-## ISliderWidget\.Fill\(SliderBarType\) Method
-
-Selects the character set used to draw the slider bar\. Default is [Fill](SliderBarType.md#PromptPlusLibrary.SliderBarType.Fill 'PromptPlusLibrary\.SliderBarType\.Fill')\.
-
-```csharp
-PromptPlusLibrary.ISliderWidget Fill(PromptPlusLibrary.SliderBarType type);
-```
-#### Parameters
-
-<a name='PromptPlusLibrary.ISliderWidget.Fill(PromptPlusLibrary.SliderBarType).type'></a>
-
-`type` [SliderBarType](SliderBarType.md 'PromptPlusLibrary\.SliderBarType')
-
-The visual style of the bar, one of the [SliderBarType](SliderBarType.md 'PromptPlusLibrary\.SliderBarType') values\.
-
-#### Returns
-[ISliderWidget](ISliderWidget.md 'PromptPlusLibrary\.ISliderWidget')  
-The same [ISliderWidget](ISliderWidget.md 'PromptPlusLibrary\.ISliderWidget') instance, so additional settings can be chained\.
 
 <a name='PromptPlusLibrary.ISliderWidget.HideElements(PromptPlusLibrary.HideSlider)'></a>
 

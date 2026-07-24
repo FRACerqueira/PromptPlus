@@ -57,6 +57,7 @@ namespace PromptPlusLibrary.Controls.TaskExec
         private CancellationTokenSource? _cancellationTokenSource;
         private Task? _executionTask;
         private volatile bool _completed;
+        private volatile bool _cancelledByHandler;
         private Exception? _error;
         private bool _disposed;
 
@@ -235,6 +236,7 @@ namespace PromptPlusLibrary.Controls.TaskExec
             _lastObservedHeight = ConsoleHandler.Height;
             _suppressRenderUntilTick = 0;
             _completed = false;
+            _cancelledByHandler = false;
             _error = null;
 
             LoadTooltipToggle();
@@ -332,7 +334,7 @@ namespace PromptPlusLibrary.Controls.TaskExec
                     if (IsFinishedWakeUp(keyinfo) || _completed)
                     {
                         _indexTooptip = 0;
-                        SetResultAndCancel(isAborted: _error is not null);
+                        SetResultAndCancel(isAborted: _error is not null || _cancelledByHandler);
                         break;
                     }
 
@@ -408,7 +410,7 @@ namespace PromptPlusLibrary.Controls.TaskExec
                 }
                 else
                 {
-                    answer = OptionsControl.EnabledAbortKeyValue ? PromptPlusResources.CanceledKey : string.Empty;
+                    answer = OptionsControl.ShowMessageAbortKeyValue ? PromptPlusResources.CanceledKey : string.Empty;
                 }
             }
             else if (!string.IsNullOrEmpty(_finishText))
@@ -464,7 +466,10 @@ namespace PromptPlusLibrary.Controls.TaskExec
             }
             catch (OperationCanceledException)
             {
-                // Cancellation is not treated as an error.
+                // Cancellation is not treated as an error, but it IS an abort — the run must not
+                // be reported as a successful completion (IsAborted=false) just because no
+                // exception was recorded.
+                _cancelledByHandler = true;
             }
             catch (Exception ex)
             {
@@ -502,10 +507,10 @@ namespace PromptPlusLibrary.Controls.TaskExec
                 hasContent = true;
             }
             screenBuffer.SavePromptCursor();
-            if (hasContent)
-            {
-                screenBuffer.WriteLine("", _optStyles[TaskStyles.Answer]);
-            }
+            // Always terminate the line, even with no elapsed time/spinner to show — otherwise the
+            // cursor stays on the prompt's row and WriteDescription/WriteTooltip get appended to it
+            // instead of starting their own rows.
+            screenBuffer.WriteLine("", _optStyles[TaskStyles.Answer]);
         }
 
         private void WriteDescription(BufferScreen screenBuffer)

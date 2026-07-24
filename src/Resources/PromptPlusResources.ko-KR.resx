@@ -223,7 +223,13 @@
     <value>최소 {0}개 항목 선택이 필요합니다</value>
   </data>
   <data name="MultiTasksFailed" xml:space="preserve">
-    <value>({0}개 실패) </value>
+    <value>{0}개 실패</value>
+  </data>
+  <data name="MultiTasksSuccessCount" xml:space="preserve">
+    <value>{0}개 성공</value>
+  </data>
+  <data name="MultiTasksWaitingCount" xml:space="preserve">
+    <value>{0}개 대기</value>
   </data>
   <data name="TooltipToggleFullPath" xml:space="preserve">
     <value>전체 경로/이름 전환</value>
@@ -431,6 +437,9 @@
   </data>
   <data name="TooltipTableColumnNav" xml:space="preserve">
     <value>Tab/ShiftTab:열 탐색</value>
+  </data>
+  <data name="TooltipTableJump" xml:space="preserve">
+    <value>문자를 입력하여 이동 (필터 가능한 열)</value>
   </data>
   <data name="Col_Info" xml:space="preserve">
     <value>열</value>

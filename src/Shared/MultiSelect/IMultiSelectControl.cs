@@ -240,34 +240,36 @@ namespace PromptPlusLibrary
 
         /// <summary>
         /// Sets a synchronous validation predicate executed when the user attempts to check an item.
-        /// Returns <c>false</c> to reject the check and show a generic error.
+        /// Returns <c>false</c> to reject the check and show a generic error. Never evaluated when
+        /// unchecking an item — unchecking is always allowed for non-disabled items.
         /// </summary>
         /// <param name="validselect">A predicate that returns <c>true</c> when the item can be checked.</param>
         /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
-        IMultiSelectControl<T> PredicateSelected(Func<T, bool> validselect);
+        IMultiSelectControl<T> PredicateChecked(Func<T, bool> validselect);
 
         /// <summary>
-        /// Asynchronous counterpart of <see cref="PredicateSelected(Func{T,bool})"/>.
+        /// Asynchronous counterpart of <see cref="PredicateChecked(Func{T,bool})"/>.
         /// </summary>
         /// <param name="validselect">An asynchronous predicate that returns <c>true</c> when the item can be checked.</param>
         /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <remarks>The asynchronous predicate is evaluated synchronously (blocking) on the UI thread; it does not run in parallel.</remarks>
-        IMultiSelectControl<T> PredicateSelectedAsync(Func<T, Task<bool>> validselect);
+        IMultiSelectControl<T> PredicateCheckedAsync(Func<T, Task<bool>> validselect);
 
         /// <summary>
         /// Sets a synchronous validation predicate that also returns a custom error message when the check is rejected.
+        /// Never evaluated when unchecking an item — unchecking is always allowed for non-disabled items.
         /// </summary>
         /// <param name="validselect">A predicate returning a tuple: <c>true</c> when valid, plus an optional error message shown when rejected.</param>
         /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
-        IMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
+        IMultiSelectControl<T> PredicateChecked(Func<T, (bool, string?)> validselect);
 
         /// <summary>
-        /// Asynchronous counterpart of <see cref="PredicateSelected(Func{T, ValueTuple{bool, string}})"/>.
+        /// Asynchronous counterpart of <see cref="PredicateChecked(Func{T, ValueTuple{bool, string}})"/>.
         /// </summary>
         /// <param name="validselect">An asynchronous predicate returning a tuple: <c>true</c> when valid, plus an optional error message.</param>
         /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <remarks>The asynchronous predicate is evaluated synchronously (blocking) on the UI thread; it does not run in parallel.</remarks>
-        IMultiSelectControl<T> PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect);
+        IMultiSelectControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> validselect);
 
 
         /// <summary>

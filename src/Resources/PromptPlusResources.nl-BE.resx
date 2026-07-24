@@ -223,7 +223,13 @@
     <value>Minimale selectie van {0} items is vereist</value>
   </data>
   <data name="MultiTasksFailed" xml:space="preserve">
-    <value>({0} mislukt) </value>
+    <value>{0} mislukt</value>
+  </data>
+  <data name="MultiTasksSuccessCount" xml:space="preserve">
+    <value>{0} geslaagd</value>
+  </data>
+  <data name="MultiTasksWaitingCount" xml:space="preserve">
+    <value>{0} wachtend</value>
   </data>
   <data name="TooltipToggleFullPath" xml:space="preserve">
     <value>Volledig pad/naam omschakelen</value>
@@ -431,6 +437,9 @@
   </data>
   <data name="TooltipTableColumnNav" xml:space="preserve">
     <value>Tab/ShiftTab:Kolommen navigeren</value>
+  </data>
+  <data name="TooltipTableJump" xml:space="preserve">
+    <value>Typ een teken om te springen (filterbare kolommen)</value>
   </data>
   <data name="Col_Info" xml:space="preserve">
     <value>Kol</value>

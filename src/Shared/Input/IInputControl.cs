@@ -72,7 +72,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="validselect">A predicate that returns whether the submitted value is valid.</param>
         /// <returns>The current <see cref="IInputControl"/> instance for chaining.</returns>
-        IInputControl PredicateSelected(Func<string, bool> validselect);
+        IInputControl PredicateValid(Func<string, bool> validselect);
 
         /// <summary>
         /// Sets an asynchronous validation function executed when the user confirms the input.
@@ -80,14 +80,14 @@ namespace PromptPlusLibrary
         /// <param name="validselect">An asynchronous predicate that returns whether the submitted value is valid.</param>
         /// <returns>The current <see cref="IInputControl"/> instance for chaining.</returns>
         /// <remarks>The asynchronous predicate is evaluated synchronously (blocking) on the UI thread; it does not run in parallel.</remarks>
-        IInputControl PredicateSelectedAsync(Func<string, Task<bool>> validselect);
+        IInputControl PredicateValidAsync(Func<string, Task<bool>> validselect);
 
         /// <summary>
         /// Sets a validation function that also returns a custom validation message.
         /// </summary>
         /// <param name="validselect">A predicate that returns a tuple: the first value indicates validity, and the second is an optional error message.</param>
         /// <returns>The current <see cref="IInputControl"/> instance for chaining.</returns>
-        IInputControl PredicateSelected(Func<string, (bool, string?)> validselect);
+        IInputControl PredicateValid(Func<string, (bool, string?)> validselect);
 
         /// <summary>
         /// Sets an asynchronous validation function that also returns a custom validation message.
@@ -95,7 +95,7 @@ namespace PromptPlusLibrary
         /// <param name="validselect">An asynchronous predicate that returns a tuple: the first value indicates validity, and the second is an optional error message.</param>
         /// <returns>The current <see cref="IInputControl"/> instance for chaining.</returns>
         /// <remarks>The asynchronous predicate is evaluated synchronously (blocking) on the UI thread; it does not run in parallel.</remarks>
-        IInputControl PredicateSelectedAsync(Func<string, Task<(bool, string?)>> validselect);
+        IInputControl PredicateValidAsync(Func<string, Task<(bool, string?)>> validselect);
 
         /// <summary>
         /// Updates the control description dynamically using a synchronous callback.

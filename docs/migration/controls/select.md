@@ -2,6 +2,21 @@
 
 > Back to [Migration Overview](../../migration-v5-to-v6.md)
 
+## Renamed public methods
+
+The v5.x members below were **renamed** in v6.x (same behavior, new name). This is the fast list to
+search-and-replace before reading the detailed sections.
+
+| Control | v5.x member | v6.x member |
+|---|---|---|
+| Select / MultiSelect | `EqualItems(Func<T,T,bool>)` | `DefaultMatchBy(Func<T,T,bool>)` |
+| Select / MultiSelect | `OnlyView(bool)` | `ViewOnly(bool)` |
+| Select / MultiSelect | `DefaultHistory(bool)` | `UseDefaultHistory()` *(no parameter)* |
+| MultiSelect | `PredicateSelected` / `PredicateSelectedAsync` | `PredicateChecked` / `PredicateCheckedAsync` |
+
+> `Select<T>` keeps `PredicateSelected` / `PredicateSelectedAsync`. Only the multi-choice
+> `MultiSelect<T>` renamed them to `PredicateChecked` / `PredicateCheckedAsync`.
+
 ## Select\<T\>
 
 ### Breaking Changes
@@ -162,14 +177,17 @@ PromptPlus.Controls.MultiSelect<string>("Items:")
 
 ### What's new in v6.x (MultiSelect)
 
-New: `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `TextSelectorAsync` · `ExtraInfoAsync` · `ChangeDescriptionAsync` · `InteractionAsync` · `PredicateSelectedAsync` (x2).
+New: `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `TextSelectorAsync` · `ExtraInfoAsync` · `ChangeDescriptionAsync` · `InteractionAsync` · `PredicateCheckedAsync` (x2).
+
+> In `MultiSelect<T>`, the v5.x `PredicateSelected` / `PredicateSelectedAsync` were renamed to
+> `PredicateChecked` / `PredicateCheckedAsync`.
 
 ```csharp
 PromptPlus.Controls.MultiSelect<Product>("Products:")
     .AddItems(products)
     .TextSelectorAsync(async p => await FormatNameAsync(p))
     .ExtraInfoAsync(async p => await FormatPriceAsync(p))
-    .PredicateSelectedAsync(async item =>
+    .PredicateCheckedAsync(async item =>
     {
         bool available = await CheckStockAsync(item.Id);
         return (available, available ? null : "Out of stock");
@@ -208,5 +226,6 @@ PromptPlus.Controls.MultiSelect<Product>("Products:")
 | `HideCountSelected(bool)` | ✅ | ❌ | Removed with no equivalent |
 | `Range(int, int?)` | ✅ | ✅ | Unchanged |
 | `Filter(FilterMode, bool)` | ✅ | ❌ | → `Filter(FilterMode)` |
-| `ChangeDescription` · `Interaction` · `TextSelector` · `ExtraInfo` · `PredicateSelected` (x2) | ✅ | ✅ | Unchanged |
-| `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · async variants | ❌ | ✅ | New |
+| `PredicateSelected` / `PredicateSelectedAsync` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` / `PredicateCheckedAsync` |
+| `ChangeDescription` · `Interaction` · `TextSelector` · `ExtraInfo` | ✅ | ✅ | Unchanged |
+| `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `PredicateChecked` · async variants | ❌ | ✅ | New |

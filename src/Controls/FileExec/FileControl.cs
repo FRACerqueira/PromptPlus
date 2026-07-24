@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.IO.Abstractions;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -21,6 +22,13 @@ namespace PromptPlusLibrary.Controls.FileExec
     /// <inheritdoc/>
     internal sealed class FileControl : BaseControlPrompt<FileItem?>, IFileControl
     {
+        // Swappable so tests can run against a MockFileSystem instead of the real disk (Windows and
+        // Linux alike — mirrors the FileHistory.FileSystem pattern). Defaults to the real filesystem
+        // in production. Pure path-string helpers (CountSeparators, EnsureTrailingSeparator, etc.)
+        // are left on plain System.IO.Path below: they don't touch disk, so MockFileSystem wouldn't
+        // behave differently there — only members that read live filesystem state are routed here.
+        internal static IFileSystem FileSystem { get; set; } = new FileSystem();
+
         /// <summary>
         /// Total rows the control template reserves around the tree list: prompt+answer line,
         /// optional description line, tooltip line and an extra row for the pagination footer.
@@ -56,7 +64,7 @@ namespace PromptPlusLibrary.Controls.FileExec
         private readonly List<Node> _nodes = [];
         private Paginator<Node>? _localpaginator;
 
-        private string _root = Directory.GetCurrentDirectory();
+        private string _root = FileSystem.Directory.GetCurrentDirectory();
         private string _searchPattern = "*";
         private bool _onlyFolders;
         private bool _showHidden;
@@ -189,11 +197,11 @@ namespace PromptPlusLibrary.Controls.FileExec
 
         public override void InitControl(CancellationToken cancellationToken)
         {
-            if (!Directory.Exists(_root))
+            if (!FileSystem.Directory.Exists(_root))
             {
                 throw new DirectoryNotFoundException($"Root directory not found: {_root}");
             }
-            _root = Path.GetFullPath(_root);
+            _root = FileSystem.Path.GetFullPath(_root);
 
             _nodes.Clear();
             _sequence = 0;
@@ -239,13 +247,13 @@ namespace PromptPlusLibrary.Controls.FileExec
             string full;
             try
             {
-                full = Path.GetFullPath(target);
+                full = FileSystem.Path.GetFullPath(target);
             }
             catch
             {
                 return;
             }
-            if ((!File.Exists(full) && !Directory.Exists(full))
+            if ((!FileSystem.File.Exists(full) && !FileSystem.Directory.Exists(full))
                 || !IsPathUnderRoot(full, _root))
             {
                 return;
@@ -702,13 +710,13 @@ namespace PromptPlusLibrary.Controls.FileExec
                 };
 
                 // Directories (always, even in OnlyFolders mode).
-                foreach (string dir in Directory.EnumerateDirectories(parent.FullPath, "*", options))
+                foreach (string dir in FileSystem.Directory.EnumerateDirectories(parent.FullPath, "*", options))
                 {
                     if (ShouldSkipHiddenEntry(dir))
                     {
                         continue;
                     }
-                    var di = new DirectoryInfo(dir);
+                    IDirectoryInfo di = FileSystem.DirectoryInfo.New(dir);
                     dirs.Add(new Node(NextId(), di.FullName, di.Name, isDirectory: true, parent.Depth + 1, isLast: false)
                     {
                         LastWriteTime = SafeLastWrite(di)
@@ -717,13 +725,13 @@ namespace PromptPlusLibrary.Controls.FileExec
 
                 if (!_onlyFolders)
                 {
-                    foreach (string file in Directory.EnumerateFiles(parent.FullPath, _searchPattern, options))
+                    foreach (string file in FileSystem.Directory.EnumerateFiles(parent.FullPath, _searchPattern, options))
                     {
                         if (ShouldSkipHiddenEntry(file))
                         {
                             continue;
                         }
-                        var fi = new FileInfo(file);
+                        IFileInfo fi = FileSystem.FileInfo.New(file);
                         files.Add(new Node(NextId(), fi.FullName, fi.Name, isDirectory: false, parent.Depth + 1, isLast: false)
                         {
                             Length = SafeLength(fi),
@@ -874,13 +882,13 @@ namespace PromptPlusLibrary.Controls.FileExec
             }
         }
 
-        private static long SafeLength(FileInfo fi)
+        private static long SafeLength(IFileInfo fi)
         {
             try { return fi.Length; }
             catch { return 0; }
         }
 
-        private static DateTime SafeLastWrite(FileSystemInfo info)
+        private static DateTime SafeLastWrite(IFileSystemInfo info)
         {
             try { return info.LastWriteTime; }
             catch { return DateTime.MinValue; }

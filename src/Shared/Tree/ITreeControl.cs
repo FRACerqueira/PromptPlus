@@ -19,13 +19,15 @@ namespace PromptPlusLibrary
     /// </summary>
     /// <typeparam name="T">The type of items in the tree.</typeparam>
     /// <remarks>
-    /// The tree structure is built explicitly by the caller through <see cref="Root(T)"/>,
-    /// <see cref="AddLast(T)"/>/<see cref="AddFirst(T)"/> (first-level nodes),
-    /// <see cref="AddAfter(ITreeNode{T}, T)"/>/<see cref="AddBefore(ITreeNode{T}, T)"/> (sibling
-    /// insertion) and <see cref="ITreeNode{T}.AddLast(T)"/>/<see cref="ITreeNode{T}.AddFirst(T)"/>
-    /// (nested children). Whether a node is a container or a leaf is inferred from whether it has
-    /// children. The rendered tree materializes visible rows lazily on expand and releases them on
-    /// collapse, keeping memory proportional to what is visible.
+    /// The tree structure is built explicitly by the caller through <see cref="Root(T, bool)"/>,
+    /// <see cref="AddLast(T, bool)"/>/<see cref="AddFirst(T, bool)"/> (first-level nodes),
+    /// <see cref="AddAfter(ITreeNode{T}, T, bool)"/>/<see cref="AddBefore(ITreeNode{T}, T, bool)"/>
+    /// (sibling insertion) and <see cref="ITreeNode{T}.AddLast(T, bool)"/>/
+    /// <see cref="ITreeNode{T}.AddFirst(T, bool)"/> (nested children). Whether a node is a
+    /// container or a leaf is inferred from whether it has children. The rendered tree
+    /// materializes visible rows lazily on expand and releases them on collapse, keeping memory
+    /// proportional to what is visible. Nodes can be marked <c>disable</c> at creation time so
+    /// they are shown and navigable but cannot be confirmed.
     /// </remarks>
     public interface ITreeControl<T>
     {
@@ -37,27 +39,39 @@ namespace PromptPlusLibrary
         ITreeControl<T> Styles(TreeStyles styleType, Style style);
 
         /// <summary>Sets the root value shown as the top-level node. Required.</summary>
+        /// <param name="value">The root value. Cannot be <c>null</c>.</param>
+        /// <param name="disable">When <c>true</c>, the root cannot be confirmed. Default is <c>false</c>.</param>
         /// <exception cref="ArgumentNullException">When <paramref name="value"/> is <c>null</c>.</exception>
-        ITreeControl<T> Root(T value);
+        ITreeControl<T> Root(T value, bool disable = false);
 
         /// <summary>Adds a first-level node (child of the root) at the end.</summary>
+        /// <param name="value">The value of the new node. Cannot be <c>null</c>.</param>
+        /// <param name="disable">When <c>true</c>, the new node cannot be confirmed. Default is <c>false</c>.</param>
         /// <returns>The newly created node so children can be attached to it.</returns>
         /// <exception cref="InvalidOperationException">When the root has not been set yet.</exception>
-        ITreeNode<T> AddLast(T value);
+        ITreeNode<T> AddLast(T value, bool disable = false);
 
         /// <summary>Adds a first-level node (child of the root) at the beginning.</summary>
+        /// <param name="value">The value of the new node. Cannot be <c>null</c>.</param>
+        /// <param name="disable">When <c>true</c>, the new node cannot be confirmed. Default is <c>false</c>.</param>
         /// <exception cref="InvalidOperationException">When the root has not been set yet.</exception>
-        ITreeNode<T> AddFirst(T value);
+        ITreeNode<T> AddFirst(T value, bool disable = false);
 
         /// <summary>Inserts a sibling immediately after <paramref name="node"/>.</summary>
+        /// <param name="node">The reference sibling. Cannot be <c>null</c>.</param>
+        /// <param name="value">The value of the new node. Cannot be <c>null</c>.</param>
+        /// <param name="disable">When <c>true</c>, the new node cannot be confirmed. Default is <c>false</c>.</param>
         /// <exception cref="ArgumentNullException">When <paramref name="node"/> is <c>null</c>.</exception>
         /// <exception cref="InvalidOperationException">When <paramref name="node"/> does not belong to this tree.</exception>
-        ITreeNode<T> AddAfter(ITreeNode<T> node, T value);
+        ITreeNode<T> AddAfter(ITreeNode<T> node, T value, bool disable = false);
 
         /// <summary>Inserts a sibling immediately before <paramref name="node"/>.</summary>
+        /// <param name="node">The reference sibling. Cannot be <c>null</c>.</param>
+        /// <param name="value">The value of the new node. Cannot be <c>null</c>.</param>
+        /// <param name="disable">When <c>true</c>, the new node cannot be confirmed. Default is <c>false</c>.</param>
         /// <exception cref="ArgumentNullException">When <paramref name="node"/> is <c>null</c>.</exception>
         /// <exception cref="InvalidOperationException">When <paramref name="node"/> does not belong to this tree.</exception>
-        ITreeNode<T> AddBefore(ITreeNode<T> node, T value);
+        ITreeNode<T> AddBefore(ITreeNode<T> node, T value, bool disable = false);
 
         /// <summary>Sets the display text selector. Required.</summary>
         /// <exception cref="ArgumentNullException">When <paramref name="selector"/> is <c>null</c>.</exception>
@@ -164,7 +178,7 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Iterates <paramref name="items"/> and invokes <paramref name="interactionAction"/> for each
         /// element, giving the caller a chance to add first-level nodes (and further descendants)
-        /// programmatically. Equivalent to calling <see cref="AddLast(T)"/> inside the loop.
+        /// programmatically. Equivalent to calling <see cref="AddLast(T, bool)"/> inside the loop.
         /// </summary>
         /// <exception cref="ArgumentNullException">When <paramref name="items"/> or <paramref name="interactionAction"/> is <c>null</c>.</exception>
         ITreeControl<T> Interaction<T1>(IEnumerable<T1> items, Action<T1, ITreeControl<T>> interactionAction);

@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -23,6 +24,10 @@ namespace PromptPlusLibrary.Controls.MultiFile
     /// <inheritdoc/>
     internal sealed class MultiFileControl : BaseControlPrompt<FileItem[]>, IMultiFileControl
     {
+        // Swappable so tests can run against a MockFileSystem instead of the real disk — see
+        // FileControl.FileSystem (FileExec/FileControl.cs) for the same pattern and rationale.
+        internal static IFileSystem FileSystem { get; set; } = new FileSystem();
+
         /// <summary>
         /// Total rows the control template reserves around the tree list: prompt+answer line,
         /// optional description line, tooltip line and an extra row for the pagination footer.
@@ -72,7 +77,7 @@ namespace PromptPlusLibrary.Controls.MultiFile
         private readonly Dictionary<string, FileItem> _checkedItems = new(PathComparer);
         private Paginator<Node>? _localpaginator;
 
-        private string _root = Directory.GetCurrentDirectory();
+        private string _root = FileSystem.Directory.GetCurrentDirectory();
         private string _searchPattern = "*";
         private bool _onlyFolders;
         private bool _showHidden;
@@ -96,8 +101,8 @@ namespace PromptPlusLibrary.Controls.MultiFile
         // async variants is active at a time (setting one clears the other). Individual toggles surface
         // the returned message as an error; mass selections (recursive/wildcard/all) silently skip
         // rejected items (Option C).
-        private Func<FileItem, (bool, string?)>? _predicatevalidselect;
-        private Func<FileItem, Task<(bool, string?)>>? _predicatevalidselectAsync;
+        private Func<FileItem, (bool, string?)>? _predicatevalidcheck;
+        private Func<FileItem, Task<(bool, string?)>>? _predicatevalidcheckAsync;
 
         private string[] _toggerTooptips = [];
         private int _indexTooptip;
@@ -267,38 +272,38 @@ namespace PromptPlusLibrary.Controls.MultiFile
         }
 
         /// <inheritdoc/>
-        public IMultiFileControl PredicateSelected(Func<FileItem, (bool, string?)> validselect)
+        public IMultiFileControl PredicateChecked(Func<FileItem, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
-            _predicatevalidselectAsync = null;
+            _predicatevalidcheck = validselect;
+            _predicatevalidcheckAsync = null;
             return this;
         }
 
         /// <inheritdoc/>
-        public IMultiFileControl PredicateSelected(Func<FileItem, bool> validselect)
+        public IMultiFileControl PredicateChecked(Func<FileItem, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) => (validselect(input), (string?)null);
-            _predicatevalidselectAsync = null;
+            _predicatevalidcheck = (input) => (validselect(input), (string?)null);
+            _predicatevalidcheckAsync = null;
             return this;
         }
 
         /// <inheritdoc/>
-        public IMultiFileControl PredicateSelectedAsync(Func<FileItem, Task<(bool, string?)>> validselect)
+        public IMultiFileControl PredicateCheckedAsync(Func<FileItem, Task<(bool, string?)>> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselectAsync = validselect;
-            _predicatevalidselect = null;
+            _predicatevalidcheckAsync = validselect;
+            _predicatevalidcheck = null;
             return this;
         }
 
         /// <inheritdoc/>
-        public IMultiFileControl PredicateSelectedAsync(Func<FileItem, Task<bool>> validselect)
+        public IMultiFileControl PredicateCheckedAsync(Func<FileItem, Task<bool>> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselectAsync = async (input) => ((await validselect(input).ConfigureAwait(false)), (string?)null);
-            _predicatevalidselect = null;
+            _predicatevalidcheckAsync = async (input) => ((await validselect(input).ConfigureAwait(false)), (string?)null);
+            _predicatevalidcheck = null;
             return this;
         }
 
@@ -328,11 +333,11 @@ namespace PromptPlusLibrary.Controls.MultiFile
 
         public override void InitControl(CancellationToken cancellationToken)
         {
-            if (!Directory.Exists(_root))
+            if (!FileSystem.Directory.Exists(_root))
             {
                 throw new DirectoryNotFoundException($"Root directory not found: {_root}");
             }
-            _root = Path.GetFullPath(_root);
+            _root = FileSystem.Path.GetFullPath(_root);
 
             _lifetimeToken = cancellationToken;
 
@@ -402,14 +407,14 @@ namespace PromptPlusLibrary.Controls.MultiFile
             }
             try
             {
-                full = Path.GetFullPath(target);
+                full = FileSystem.Path.GetFullPath(target);
             }
             catch
             {
                 return false;
             }
-            bool dir = Directory.Exists(full);
-            bool file = File.Exists(full);
+            bool dir = FileSystem.Directory.Exists(full);
+            bool file = FileSystem.File.Exists(full);
             if (!dir && !file)
             {
                 return false;
@@ -441,13 +446,13 @@ namespace PromptPlusLibrary.Controls.MultiFile
             string full;
             try
             {
-                full = Path.GetFullPath(target);
+                full = FileSystem.Path.GetFullPath(target);
             }
             catch
             {
                 return;
             }
-            if ((!File.Exists(full) && !Directory.Exists(full))
+            if ((!FileSystem.File.Exists(full) && !FileSystem.Directory.Exists(full))
                 || !IsPathUnderRoot(full, _root))
             {
                 return;
@@ -1113,14 +1118,14 @@ namespace PromptPlusLibrary.Controls.MultiFile
         /// </summary>
         private bool TryValidatePredicate(FileItem item, out string? message)
         {
-            if (_predicatevalidselect == null && _predicatevalidselectAsync == null)
+            if (_predicatevalidcheck == null && _predicatevalidcheckAsync == null)
             {
                 message = null;
                 return true;
             }
-            (bool ok, string? validationMessage) = _predicatevalidselectAsync != null
-                ? _predicatevalidselectAsync.Invoke(item).ConfigureAwait(false).GetAwaiter().GetResult()
-                : (_predicatevalidselect?.Invoke(item) ?? (true, null));
+            (bool ok, string? validationMessage) = _predicatevalidcheckAsync != null
+                ? _predicatevalidcheckAsync.Invoke(item).ConfigureAwait(false).GetAwaiter().GetResult()
+                : (_predicatevalidcheck?.Invoke(item) ?? (true, null));
             message = validationMessage;
             return ok;
         }
@@ -1303,8 +1308,8 @@ namespace PromptPlusLibrary.Controls.MultiFile
             // Capture the predicate delegates locally so the background task never reads instance
             // fields from another thread. Only relevant when selecting (check == true); unselect
             // never consults the predicate.
-            Func<FileItem, (bool, string?)>? predicate = _predicatevalidselect;
-            Func<FileItem, Task<(bool, string?)>>? predicateAsync = _predicatevalidselectAsync;
+            Func<FileItem, (bool, string?)>? predicate = _predicatevalidcheck;
+            Func<FileItem, Task<(bool, string?)>>? predicateAsync = _predicatevalidcheckAsync;
 
             CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(_lifetimeToken);
             BackgroundOp op = new()
@@ -1395,7 +1400,7 @@ namespace PromptPlusLibrary.Controls.MultiFile
                 string current = stack.Pop();
                 try
                 {
-                    foreach (string dir in Directory.EnumerateDirectories(current, "*", options))
+                    foreach (string dir in FileSystem.Directory.EnumerateDirectories(current, "*", options))
                     {
                         token.ThrowIfCancellationRequested();
                         if (!showHidden && IsUnixLike && IsUnixHiddenByName(dir))
@@ -1410,7 +1415,7 @@ namespace PromptPlusLibrary.Controls.MultiFile
                     }
                     if (!onlyFolders)
                     {
-                        foreach (string file in Directory.EnumerateFiles(current, searchPattern, options))
+                        foreach (string file in FileSystem.Directory.EnumerateFiles(current, searchPattern, options))
                         {
                             token.ThrowIfCancellationRequested();
                             if (!showHidden && IsUnixLike && IsUnixHiddenByName(file))
@@ -1909,13 +1914,13 @@ namespace PromptPlusLibrary.Controls.MultiFile
                     AttributesToSkip = BuildAttributesToSkip()
                 };
 
-                foreach (string dir in Directory.EnumerateDirectories(parent.FullPath, "*", options))
+                foreach (string dir in FileSystem.Directory.EnumerateDirectories(parent.FullPath, "*", options))
                 {
                     if (ShouldSkipHiddenEntry(dir))
                     {
                         continue;
                     }
-                    var di = new DirectoryInfo(dir);
+                    IDirectoryInfo di = FileSystem.DirectoryInfo.New(dir);
                     dirs.Add(new Node(NextId(), di.FullName, di.Name, isDirectory: true, parent.Depth + 1, isLast: false)
                     {
                         LastWriteTime = SafeLastWrite(di)
@@ -1924,13 +1929,13 @@ namespace PromptPlusLibrary.Controls.MultiFile
 
                 if (!_onlyFolders)
                 {
-                    foreach (string file in Directory.EnumerateFiles(parent.FullPath, _searchPattern, options))
+                    foreach (string file in FileSystem.Directory.EnumerateFiles(parent.FullPath, _searchPattern, options))
                     {
                         if (ShouldSkipHiddenEntry(file))
                         {
                             continue;
                         }
-                        var fi = new FileInfo(file);
+                        IFileInfo fi = FileSystem.FileInfo.New(file);
                         files.Add(new Node(NextId(), fi.FullName, fi.Name, isDirectory: false, parent.Depth + 1, isLast: false)
                         {
                             Length = SafeLength(fi),
@@ -2053,11 +2058,11 @@ namespace PromptPlusLibrary.Controls.MultiFile
             {
                 if (isDirectory)
                 {
-                    lastWrite = new DirectoryInfo(full).LastWriteTime;
+                    lastWrite = FileSystem.DirectoryInfo.New(full).LastWriteTime;
                 }
                 else
                 {
-                    var fi = new FileInfo(full);
+                    IFileInfo fi = FileSystem.FileInfo.New(full);
                     length = SafeLength(fi);
                     lastWrite = SafeLastWrite(fi);
                 }
@@ -2103,13 +2108,13 @@ namespace PromptPlusLibrary.Controls.MultiFile
             }
         }
 
-        private static long SafeLength(FileInfo fi)
+        private static long SafeLength(IFileInfo fi)
         {
             try { return fi.Length; }
             catch { return 0; }
         }
 
-        private static DateTime SafeLastWrite(FileSystemInfo info)
+        private static DateTime SafeLastWrite(IFileSystemInfo info)
         {
             try { return info.LastWriteTime; }
             catch { return DateTime.MinValue; }

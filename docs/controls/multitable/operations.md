@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [MultiTable — Styles →](styles.md)
+[? Back to Home](../../../README.md) • **Next:** [MultiTable — Styles ?](styles.md)
 
 ---
 
@@ -23,17 +23,17 @@ horizontal scrolling, paging, history, and view-only mode.
 ## Anatomy of the control
 
 ```
-Select products                          ← prompt
-Category: Electronics                     ← description (optional / dynamic)
-┌───┬──────┬───────────────┬────────────┐
-│   │  Id  │ Name          │   Price    │  ← header row
-├───┼──────┼───────────────┼────────────┤
-│ ✓ │    1 │ Notebook Pro  │  $ 1299.99 │  ← focused, checked row
-│   │    2 │ Wireless Mouse│  $   29.90 │  ← unchecked row
-└───┴──────┴───────────────┴────────────┘
-Filter: note                              ← live filter text (when filtering)
-Page 1/2                                  ← pagination
-Space: check  Enter: confirm  Esc: cancel ← tooltip
+Select products                          ? prompt
+Category: Electronics                     ? description (optional / dynamic)
++---------------------------------------+
+¦   ¦  Id  ¦ Name          ¦   Price    ¦  ? header row
++---+------+---------------+------------¦
+¦ ? ¦    1 ¦ Notebook Pro  ¦  $ 1299.99 ¦  ? focused, checked row
+¦   ¦    2 ¦ Wireless Mouse¦  $   29.90 ¦  ? unchecked row
++---------------------------------------+
+Filter: note                              ? live filter text (when filtering)
+Page 1/2                                  ? pagination
+Space: check  Enter: confirm  Esc: cancel ? tooltip
 ```
 
 Every region can be recolored — see [Styles](styles.md).
@@ -44,12 +44,12 @@ Every region can be recolored — see [Styles](styles.md).
 
 | Key | Action |
 |---|---|
-| `↑` / `↓` | Move focus up / down (rows) |
+| `?` / `?` | Move focus up / down (rows) |
 | `Page Up` / `Page Down` | Jump one page |
 | `Space` | Toggle the checkbox on the focused row |
 | `Tab` / `Shift+Tab` | Move the focused **column** (only when the table scrolls horizontally) |
 | `Enter` | Confirm the checked set (enforces [`Range`](methods.md#range)) |
-| `Esc` | Abort → `IsAborted == true` |
+| `Esc` | Abort ? `IsAborted == true` |
 | Any printable character | Type to filter (when [`Filter`](methods.md#filter) is not `Disabled`) |
 | `Backspace` | Edit the filter text |
 | `F2` | Toggle all rows on / off (respects the check predicate) |
@@ -67,7 +67,7 @@ Disabled rows are skipped and cannot be toggled.
 ## Checking rows
 
 - **Space** toggles the focused row. A row can only be checked if the
-  [check predicate](methods.md#predicateselected) allows it; otherwise the row stays unchecked and an
+  [check predicate](methods.md#predicatechecked) allows it; otherwise the row stays unchecked and an
   error line is shown.
 - [`AddItem`](methods.md#additem) / [`AddItems`](methods.md#additems) can start rows checked with
   `ischecked: true`.
@@ -200,4 +200,4 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 - [Methods](methods.md) — the API these behaviors come from
 - [Keyboard Bindings](../../keyboard-bindings.md) — full physical-key reference
 - [Global Behaviors](../../global-behaviors.md) — the config layer behind `Options`
-- [Table → Operations](../table/operations.md) — the single-row sibling
+- [Table ? Operations](../table/operations.md) — the single-row sibling

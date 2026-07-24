@@ -3,7 +3,7 @@
 
   # PromptPlus
 
-  ### **PromptPlus transforms your console apps with a modern .NET library that delivers polished, interactive experiences — from text input with history and searchable lists to masked fields, date/time pickers, file browsers, progress bars, charts, and more — all streamlined through one sleek fluent API.**
+  **PromptPlus transforms your console apps with a modern .NET library that delivers polished, interactive experiences — from text input with history and searchable lists to masked fields, date/time pickers, file browsers, progress bars, charts, and more — all streamlined through one sleek fluent API.**
 
   [![NuGet](https://img.shields.io/badge/NuGet-PromptPlus-blue)](https://www.nuget.org/packages/PromptPlus)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -236,6 +236,19 @@ The `samples/` folder contains runnable projects for every control and widget �
 | [Widgets](docs/widgets.md) | Output-only widgets guide |
 | [Controls index](docs/index.md) | All pages in one place |
 | [API Reference](docs/api/PromptPlusLibrary.md) | Auto-generated API docs |
+
+---
+
+## Architecture Decision Records (ADR)
+
+PromptPlus documents its significant architectural and design decisions as
+**Architecture Decision Records (ADR)**, following the
+[AdrPlus](https://github.com/FRACerqueira/AdrPlus) convention. Each record
+captures the context, the decision, the alternatives considered, and the
+consequences — so the reasoning behind the library's design stays traceable over
+time.
+
+👉 See the **[ADR index](docs/adr/README.md)** for the full list of decisions.
 
 ---
 

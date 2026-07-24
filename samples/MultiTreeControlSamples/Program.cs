@@ -179,7 +179,7 @@ namespace MultiTreeControlSamples
                 .TextSelector(n => n.Name)
                 .ExtraInfo(n => n.Info)
                 .DefaultMatchBy((a, b) => a.Id == b.Id)
-                .PredicateSelected(n =>
+                .PredicateChecked(n =>
                     n.Info == "service"
                         ? (true, null)
                         : (false, $"'{n.Name}' is a {n.Info}, not a service."));
@@ -195,7 +195,7 @@ namespace MultiTreeControlSamples
                 .TextSelector(n => n.Name)
                 .ExtraInfo(n => n.Info)
                 .DefaultMatchBy((a, b) => a.Id == b.Id)
-                .PredicateSelectedAsync(async n =>
+                .PredicateCheckedAsync(async n =>
                 {
                     await Task.Delay(1);
                     return n.Info == "app";
@@ -429,6 +429,94 @@ namespace MultiTreeControlSamples
             t21Front.AddLast(mobile);
 
             PrintResult(t21.Run());
+
+            // ──────────────────────────────────────────────────────────────────────────
+            ShowSection("22) Disabled nodes - AddLast(value, disable: true)");
+            // A disabled node is still shown and can still be navigated to and
+            // expanded/collapsed; only checking/unchecking it directly is blocked, with the
+            // same message as CheckLeafOnly. A cascading check on an ancestor still passes
+            // through a disabled container to reach its enabled descendants.
+            var t22 = PromptPlus.Controls.MultiTree<Node>(
+                    "'Sales' is disabled - Space on it is rejected",
+                    "Check 'Sales' itself: rejected. Check 'Company': EMEA/APAC still get checked.")
+                .Root(root)
+                .TextSelector(n => n.Name)
+                .DefaultMatchBy((a, b) => a.Id == b.Id);
+
+            var t22Eng = t22.AddLast(eng);
+            var t22Back = t22Eng.AddLast(backend);
+            t22Back.AddLast(api);
+            t22Back.AddLast(database);
+            var t22Sales = t22.AddLast(sales, disable: true);
+            t22Sales.AddLast(emea);
+            t22Sales.AddLast(apac);
+            t22.AddLast(hr);
+
+            PrintResult(t22.Run());
+
+            // A Default(...)/history target that resolves to a disabled node IS force-checked
+            // (unlike Tree/Select) and survives a later F2 mass-uncheck untouched, matching
+            // IMultiSelectControl's behavior for disabled defaults.
+            var t22b = PromptPlus.Controls.MultiTree<Node>(
+                    "Default force-checks the disabled 'Sales' node",
+                    "Sales shows checked even though Space on it is rejected; F2 will not uncheck it")
+                .Root(root)
+                .TextSelector(n => n.Name)
+                .DefaultMatchBy((a, b) => a.Id == b.Id)
+                .Default([sales]);
+
+            var t22bEng = t22b.AddLast(eng);
+            t22bEng.AddLast(backend);
+            t22b.AddLast(sales, disable: true).AddLast(emea);
+            t22b.AddLast(hr);
+
+            PrintResult(t22b.Run());
+
+            // ──────────────────────────────────────────────────────────────────────────
+            ShowSection("23) Construction-time check - AddLast(value, check: true)");
+            // Unlike Default(...), check:true does not auto-expand the tree to reveal the node -
+            // it just starts pre-checked, quietly, same spirit as
+            // IMultiSelectControl<T>.AddItem(ischecked:)/IMultiTableControl<T>.AddItem(ischecked:).
+            // AddLast/AddFirst/AddAfter/AddBefore all return IMultiTreeNode<T> (not the plain
+            // ITreeNode<T> that TreeControl uses), so chaining deeper into the tree keeps access
+            // to check, not just the top-level calls made directly off the control.
+            var t23 = PromptPlus.Controls.MultiTree<Node>(
+                    "'API' starts pre-checked (check: true) - tree stays collapsed",
+                    "Compare with Default(...), which would auto-expand down to the checked node")
+                .Root(root)
+                .TextSelector(n => n.Name)
+                .DefaultMatchBy((a, b) => a.Id == b.Id);
+
+            var t23Eng = t23.AddLast(eng);
+            var t23Back = t23Eng.AddLast(backend);
+            t23Back.AddLast(api, check: true);
+            t23Back.AddLast(database);
+            t23.AddLast(sales);
+            t23.AddLast(hr);
+
+            PrintResult(t23.Run());
+
+            // check:true on a container cascades to its descendants exactly like an interactive
+            // check does; check and Default are additive - neither one clears the other.
+            var t23b = PromptPlus.Controls.MultiTree<Node>(
+                    "'Engineering' starts pre-checked (cascades) + 'HR' via Default",
+                    "Both mechanisms compose - Engineering/Backend/API/Database/Frontend/Web/Mobile + HR")
+                .Root(root)
+                .TextSelector(n => n.Name)
+                .DefaultMatchBy((a, b) => a.Id == b.Id)
+                .Default([hr]);
+
+            var t23bEng = t23b.AddLast(eng, check: true);
+            var t23bBack = t23bEng.AddLast(backend);
+            t23bBack.AddLast(api);
+            t23bBack.AddLast(database);
+            var t23bFront = t23bEng.AddLast(frontend);
+            t23bFront.AddLast(web);
+            t23bFront.AddLast(mobile);
+            t23b.AddLast(sales);
+            t23b.AddLast(hr);
+
+            PrintResult(t23b.Run());
         }
 
         // ─── helpers ────────────────────────────────────────────────────────────────

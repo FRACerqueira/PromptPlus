@@ -223,7 +223,13 @@
     <value>Mínimo de {0} itens é necessário</value>
   </data>
   <data name="MultiTasksFailed" xml:space="preserve">
-    <value>({0} falharam) </value>
+    <value>{0} falharam</value>
+  </data>
+  <data name="MultiTasksSuccessCount" xml:space="preserve">
+    <value>{0} com sucesso</value>
+  </data>
+  <data name="MultiTasksWaitingCount" xml:space="preserve">
+    <value>{0} aguardando</value>
   </data>
   <data name="TooltipToggleFullPath" xml:space="preserve">
     <value>Alternar caminho completo/nome</value>
@@ -427,10 +433,13 @@
     <value>{0}:Alternar dicas</value>
   </data>
   <data name="TooltipJumpdelimiter" xml:space="preserve">
-    <value>Tab/ShitTab:Salta entre os delimitadores.</value>
+    <value>Tab\ShiftTab:Salta entre os delimitadores.</value>
   </data>
   <data name="TooltipTableColumnNav" xml:space="preserve">
     <value>Tab/ShiftTab:Navegar entre colunas</value>
+  </data>
+  <data name="TooltipTableJump" xml:space="preserve">
+    <value>Digite a letra inicial para ir ao item (colunas filtráveis)</value>
   </data>
   <data name="Col_Info" xml:space="preserve">
     <value>Col</value>

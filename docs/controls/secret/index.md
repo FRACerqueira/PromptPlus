@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [Secret — Methods →](methods.md)
+[? Back to Home](../../../README.md) • **Next:** [Secret — Methods ?](methods.md)
 
 ---
 
@@ -23,7 +23,7 @@ shares the same live filtering, case coercion, length cap, and confirmation-time
 `Input`, but replaces every typed character with a mask symbol and can optionally let the user peek
 at the plain text with **F2**.
 
-> 🔒 `Secret` deliberately omits the persistence features of `Input` (no history, no autocomplete,
+> ?? `Secret` deliberately omits the persistence features of `Input` (no history, no autocomplete,
 > no seeded default). A secret should never be written to disk or offered as a suggestion — see the
 > [security note](operations.md#security-note) in Operations.
 
@@ -71,7 +71,7 @@ if (!result.IsAborted)
 - The call returns a [`ResultPrompt<string>`](../../architecture.md#resultpromptt): read `.Content`
   for the entered text and `.IsAborted` to detect Esc.
 
-> 💡 Always check `IsAborted` before using `.Content`. On abort, `.Content` is an empty string.
+> ?? Always check `IsAborted` before using `.Content`. On abort, `.Content` is an empty string.
 > Never echo `.Content` to the console — the example above prints a confirmation, not the value.
 
 ---
@@ -87,7 +87,7 @@ var pin = PromptPlus.Controls
     .MaskSecret('*', enabledView: false)   // hide with '*', no F2 reveal
     .AcceptInput(char.IsDigit)             // reject any non-digit keystroke
     .MaxLength(4)                          // stop accepting after 4 characters
-    .PredicateSelected(v => v.Length == 4
+    .PredicateValid(v => v.Length == 4
         ? (true, null)
         : (false, "PIN must be exactly 4 digits"))   // validate on Enter
     .Run();
@@ -98,7 +98,7 @@ if (!pin.IsAborted)
 
 This combines the four most common building blocks: a **custom mask** with reveal disabled
 (`MaskSecret`), **per-keystroke filtering** (`AcceptInput`), a **hard length cap** (`MaxLength`),
-and **confirmation-time validation with a message** (`PredicateSelected`). See
+and **confirmation-time validation with a message** (`PredicateValid`). See
 [Operations](operations.md) for how they interact.
 
 ---
@@ -111,7 +111,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 |---|---|
 | Masking & reveal | `MaskSecret` |
 | Restrict typing | `AcceptInput`, `MaxLength`, `InputToCase` |
-| Validate on confirm | `PredicateSelected`, `PredicateSelectedAsync` |
+| Validate on confirm | `PredicateValid`, `PredicateValidAsync` |
 | Dynamic description | `ChangeDescription`, `ChangeDescriptionAsync` |
 | Appearance & behavior | `Styles`, `Options` |
 | Run | `Run` |

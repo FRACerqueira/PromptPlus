@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [Input — Operations →](operations.md)
+[? Back to Home](../../../README.md) • **Next:** [Input — Operations ?](operations.md)
 
 ---
 
@@ -27,8 +27,8 @@ in any order. Call [`Run`](#run) last.
 [InputToCase](#inputtocase) ·
 [AcceptInput](#acceptinput) ·
 [MaxLength](#maxlength) ·
-[PredicateSelected](#predicateselected) ·
-[PredicateSelectedAsync](#predicateselectedasync) ·
+[PredicateValid](#predicatevalid) ·
+[PredicateValidAsync](#predicatevalidasync) ·
 [SuggestionHandler](#suggestionhandler) ·
 [SuggestionHandlerAsync](#suggestionhandlerasync) ·
 [MinimumSuggestionLength](#minimumsuggestionlength) ·
@@ -62,7 +62,7 @@ PromptPlus.Controls.Input("Profile")
     .Run();
 ```
 
-> 💡 Combine `Default(string.Empty, true)` with `EnabledHistory(...)` to pre-load the last value
+> ?? Combine `Default(string.Empty, true)` with `EnabledHistory(...)` to pre-load the last value
 > the user confirmed on a previous run.
 
 ---
@@ -80,7 +80,7 @@ Sets the value returned when the user confirms **without typing anything**. Unli
 PromptPlus.Controls.Input("Display Name", "Press Enter to accept the fallback")
     .DefaultIfEmpty("Anonymous")
     .Run();
-// User presses Enter on an empty field → result.Content == "Anonymous"
+// User presses Enter on an empty field ? result.Content == "Anonymous"
 ```
 
 ---
@@ -151,13 +151,13 @@ PromptPlus.Controls.Input("Name", "Max 20 characters")
 Validation runs **when the user presses Enter**. If it fails, the control stays open and shows an
 error (styled with [`InputStyles.Error`](styles.md)); the value is only returned when validation passes.
 
-### `PredicateSelected`
+### `PredicateValid`
 
 Two overloads — pick the tuple form when you want to show a custom message.
 
 ```csharp
-IInputControl PredicateSelected(Func<string, bool> validselect)
-IInputControl PredicateSelected(Func<string, (bool, string?)> validselect)
+IInputControl PredicateValid(Func<string, bool> validselect)
+IInputControl PredicateValid(Func<string, (bool, string?)> validselect)
 ```
 
 | Overload | Return | Behavior |
@@ -168,12 +168,12 @@ IInputControl PredicateSelected(Func<string, (bool, string?)> validselect)
 ```csharp
 // Boolean form
 PromptPlus.Controls.Input("Code")
-    .PredicateSelected(v => v.Length >= 2)
+    .PredicateValid(v => v.Length >= 2)
     .Run();
 
 // Message form
 PromptPlus.Controls.Input("Code")
-    .PredicateSelected(v => v.Length >= 2
+    .PredicateValid(v => v.Length >= 2
         ? (true, null)
         : (false, "Length must be at least 2"))
     .Run();
@@ -181,19 +181,19 @@ PromptPlus.Controls.Input("Code")
 
 ---
 
-### `PredicateSelectedAsync`
+### `PredicateValidAsync`
 
-Asynchronous counterparts of [`PredicateSelected`](#predicateselected), for validation that awaits
+Asynchronous counterparts of [`PredicateValid`](#predicatevalid), for validation that awaits
 I/O (a database, an HTTP call).
 
 ```csharp
-IInputControl PredicateSelectedAsync(Func<string, Task<bool>> validselect)
-IInputControl PredicateSelectedAsync(Func<string, Task<(bool, string?)>> validselect)
+IInputControl PredicateValidAsync(Func<string, Task<bool>> validselect)
+IInputControl PredicateValidAsync(Func<string, Task<(bool, string?)>> validselect)
 ```
 
 ```csharp
 PromptPlus.Controls.Input("Username")
-    .PredicateSelectedAsync(async name =>
+    .PredicateValidAsync(async name =>
     {
         var taken = await api.IsUsernameTakenAsync(name);
         return taken ? (false, "That username is already taken") : (true, null);
@@ -201,7 +201,7 @@ PromptPlus.Controls.Input("Username")
     .Run();
 ```
 
-> ⚠️ The async predicate is awaited **synchronously (blocking) on the UI thread** — it does not run
+> ?? The async predicate is awaited **synchronously (blocking) on the UI thread** — it does not run
 > in parallel with the render loop. Keep it fast; long calls freeze the prompt until they return.
 
 ---
@@ -311,8 +311,8 @@ PromptPlus.Controls.Input("Profile", "Press F3 to browse history")
     .Run();
 ```
 
-> 💡 Use a distinct `filename` per field so unrelated histories don't collide. See
-> [Operations → History](operations.md#history) for the runtime behavior.
+> ?? Use a distinct `filename` per field so unrelated histories don't collide. See
+> [Operations ? History](operations.md#history) for the runtime behavior.
 
 ---
 
@@ -387,7 +387,7 @@ PromptPlus.Controls.Input("Name")
     .Run();
 ```
 
-See [Global Behaviors → Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions)
+See [Global Behaviors ? Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions)
 for the complete `IControlOptions` list.
 
 ---

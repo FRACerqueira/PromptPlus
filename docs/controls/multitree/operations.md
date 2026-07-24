@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [MultiTree — Styles →](styles.md)
+[? Back to Home](../../../README.md) • **Next:** [MultiTree — Styles ?](styles.md)
 
 ---
 
@@ -23,17 +23,17 @@ checking and cascade, filtering, leaf-only rules, validation, ranges, history, a
 ## Anatomy of the control
 
 ```
-Check items and press Enter              ← prompt
-Space=check  Enter=confirm  ESC=abort     ← description (optional / dynamic)
-▼ [~] Company                            ← root, indeterminate (some descendants checked)
-  ▼ [x] Engineering        (dept)        ← checked container + ExtraInfo
-    ▶ [x] Backend          (team)        ← collapsed, fully checked
-  › [ ] API                (service)     ← focused unchecked leaf
-  ▶ [ ] Sales              (dept)
-Filter: ap_                              ← live filter text (when filtering)
-Checked: 3                               ← tagged count
-Page 1/2                                 ← pagination
-Enter: confirm  Esc: cancel              ← tooltip
+Check items and press Enter              ? prompt
+Space=check  Enter=confirm  ESC=abort     ? description (optional / dynamic)
+? [~] Company                            ? root, indeterminate (some descendants checked)
+  ? [x] Engineering        (dept)        ? checked container + ExtraInfo
+    ? [x] Backend          (team)        ? collapsed, fully checked
+  › [ ] API                (service)     ? focused unchecked leaf
+  ? [ ] Sales              (dept)
+Filter: ap_                              ? live filter text (when filtering)
+Checked: 3                               ? tagged count
+Page 1/2                                 ? pagination
+Enter: confirm  Esc: cancel              ? tooltip
 ```
 
 Checkbox states: `[ ]` unchecked · `[x]` checked · `[~]` indeterminate (some but not all descendants
@@ -79,17 +79,17 @@ tree.AddLast(sales);
 
 | Key | Action |
 |---|---|
-| `↑` / `↓` | Move focus up / down |
-| `→` / `+` | Expand the focused container |
-| `←` / `-` | Collapse the focused container |
+| `?` / `?` | Move focus up / down |
+| `?` / `+` | Expand the focused container |
+| `?` / `-` | Collapse the focused container |
 | `Space` | Check / uncheck the focused node (cascades per [`CascadeCheck`](methods.md#cascadecheck)) |
 | `Ctrl+Space` | Recursive check of a container + descendants (when [`RecursiveMarkWithCtrlSpace`](methods.md#recursivemarkwithctrlspace) is on) |
 | `F2` | Toggle-all (check / uncheck every node) |
 | `Page Up` / `Page Down` | Jump one page |
 | `Home` / `End` | First / last visible row |
-| `Shift+F3` | Toggle short name ↔ full path display |
+| `Shift+F3` | Toggle short name ? full path display |
 | `Enter` | Confirm the checked set (runs the range + validation gates) |
-| `Esc` | Abort → `IsAborted == true` |
+| `Esc` | Abort ? `IsAborted == true` |
 | Any printable character | Type to filter (when [`Filter`](methods.md#filter) is not `Disabled`) |
 | `Backspace` | Edit / clear the filter text |
 | `F1` | Cycle tooltip content |
@@ -104,8 +104,8 @@ The check key (**Space**) toggles the focused node. What happens next depends on
 - **[`CascadeCheck`](methods.md#cascadecheck)** (default `true`): checking/unchecking a container
   propagates the state to all its descendants. With `false`, only the container itself toggles.
 - **[`RecursiveMarkWithCtrlSpace`](methods.md#recursivemarkwithctrlspace)** (default `false`):
-  - `false` → plain **Space** performs the recursive mark on containers (when `CascadeCheck` is on).
-  - `true` → plain **Space** toggles only the focused node; **Ctrl+Space** does the recursive mark.
+  - `false` ? plain **Space** performs the recursive mark on containers (when `CascadeCheck` is on).
+  - `true` ? plain **Space** toggles only the focused node; **Ctrl+Space** does the recursive mark.
 
 Containers show a **tri-state** checkbox: unchecked when no descendant is checked, checked when all
 are, and indeterminate (`[~]`) when only some are. `F2` toggles every node at once.
@@ -139,14 +139,37 @@ turns typing off entirely.
 
 ---
 
+## Disabled nodes
+
+Any node added with `disable: true` (on [`Root`](methods.md#root), [`AddLast`](methods.md#addlast),
+[`AddFirst`](methods.md#addfirst), [`AddAfter`](methods.md#addafter), [`AddBefore`](methods.md#addbefore),
+or the chained [`IMultiTreeNode<T>`](methods.md#imultitreenodet) overloads) is rendered with
+[`MultiTreeStyles.Disabled`](styles.md) and follows a distinct tri-state / cascade semantic:
+
+1. **Interactive checks are blocked.** `Space` / `Ctrl+Space` on a disabled node do nothing
+   (`SelectionDisabled`), just like the single-selection `Tree`.
+2. **Cascade passes through, it does not mark.** A cascade (`Ctrl+Space` on an ancestor, with
+   `CascadeCheck` on) crosses a disabled container to reach its *enabled* descendants without touching the
+   disabled container's own flag.
+3. **`Default(...)` can force it.** A disabled node can still be force-checked through
+   [`Default`](methods.md#default) (or the construction-time `check: true`), bypassing the interactive block.
+4. **Forced marks survive clear-all.** `F2` (toggle-all) skips disabled nodes in *both* directions: it
+   neither checks them on select-all nor unchecks a force-checked disabled node on clear-all.
+
+> Because a container's checkbox under `CascadeCheck` is always derived from its enabled leaf descendants,
+> a disabled container whose descendants are fully checked reports **Indeterminate** (never claims a
+> confirmation of its own) unless its own flag was explicitly forced via `Default`/`check`.
+
+---
+
 ## Confirmation flow: range & validation
 
 Pressing **Enter** confirms the checked set after two gates:
 
 1. **Range gate** — if [`Range(min, max)`](methods.md#range) is set, confirmation is blocked until the
    number of checked items is within `[min, max]`.
-2. **Per-node validation** — [`PredicateSelected`](methods.md#predicateselected) /
-   [`PredicateSelectedAsync`](methods.md#predicateselectedasync) run when the user tries to *check* a
+2. **Per-node validation** — [`PredicateChecked`](methods.md#predicatechecked) /
+   [`PredicateCheckedAsync`](methods.md#predicatecheckedasync) run when the user tries to *check* a
    node; failing nodes show an error and cannot be checked.
 
 When both pass, the control closes and returns the checked values as `T[]`.
@@ -197,7 +220,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
   nothing is checked. Always branch on `IsAborted` first.
 - **Custom types need equality.** [`DefaultMatchBy`](methods.md#defaultmatchby) is required and drives
   `Default`, history, and cascade matching.
-- **Range blocks Enter, predicate blocks Space.** `Range` gates the final confirm; `PredicateSelected`
+- **Range blocks Enter, predicate blocks Space.** `Range` gates the final confirm; `PredicateChecked`
   gates individual checks — they are separate stages.
 - **Root must come first.** Adding nodes before `Root` throws `InvalidOperationException`.
 - **Async callbacks block the UI thread** — keep validators, extra-info, and description callbacks fast.
@@ -209,4 +232,4 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 - [Methods](methods.md) — the API these behaviors come from
 - [Keyboard Bindings](../../keyboard-bindings.md) — full physical-key reference
 - [Global Behaviors](../../global-behaviors.md) — the config layer behind `Options`
-- [Tree → Operations](../tree/operations.md) — the single-choice sibling
+- [Tree ? Operations](../tree/operations.md) — the single-choice sibling

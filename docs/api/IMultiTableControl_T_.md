@@ -475,20 +475,22 @@ Maximum rows per page\.
 [PromptPlusLibrary\.IMultiTableControl&lt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>')[T](IMultiTableControl_T_.md#PromptPlusLibrary.IMultiTableControl_T_.T 'PromptPlusLibrary\.IMultiTableControl\<T\>\.T')[&gt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>')  
 The current [IMultiTableControl&lt;T&gt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>') instance for chaining\.
 
-<a name='PromptPlusLibrary.IMultiTableControl_T_.PredicateSelected(System.Func_T,bool_)'></a>
+<a name='PromptPlusLibrary.IMultiTableControl_T_.PredicateChecked(System.Func_T,bool_)'></a>
 
-## IMultiTableControl\<T\>\.PredicateSelected\(Func\<T,bool\>\) Method
+## IMultiTableControl\<T\>\.PredicateChecked\(Func\<T,bool\>\) Method
 
 Sets a synchronous predicate that determines whether a row can be checked\.
 Returns `false` to prevent checking and show a generic error message\.
+Only evaluated when marking a row as checked — unchecking an already\-checked row is
+always allowed \(subject only to it not being disabled\) and never runs this predicate\.
 Replaces any previously registered asynchronous predicate\.
 
 ```csharp
-PromptPlusLibrary.IMultiTableControl<T> PredicateSelected(System.Func<T,bool> validselect);
+PromptPlusLibrary.IMultiTableControl<T> PredicateChecked(System.Func<T,bool> validselect);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTableControl_T_.PredicateSelected(System.Func_T,bool_).validselect'></a>
+<a name='PromptPlusLibrary.IMultiTableControl_T_.PredicateChecked(System.Func_T,bool_).validselect'></a>
 
 `validselect` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[T](IMultiTableControl_T_.md#PromptPlusLibrary.IMultiTableControl_T_.T 'PromptPlusLibrary\.IMultiTableControl\<T\>\.T')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
 
@@ -498,20 +500,20 @@ A predicate that returns `true` when the row can be checked\.
 [PromptPlusLibrary\.IMultiTableControl&lt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>')[T](IMultiTableControl_T_.md#PromptPlusLibrary.IMultiTableControl_T_.T 'PromptPlusLibrary\.IMultiTableControl\<T\>\.T')[&gt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>')  
 The current [IMultiTableControl&lt;T&gt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>') instance for chaining\.
 
-<a name='PromptPlusLibrary.IMultiTableControl_T_.PredicateSelectedAsync(System.Func_T,System.Threading.Tasks.Task_bool__)'></a>
+<a name='PromptPlusLibrary.IMultiTableControl_T_.PredicateCheckedAsync(System.Func_T,System.Threading.Tasks.Task_bool__)'></a>
 
-## IMultiTableControl\<T\>\.PredicateSelectedAsync\(Func\<T,Task\<bool\>\>\) Method
+## IMultiTableControl\<T\>\.PredicateCheckedAsync\(Func\<T,Task\<bool\>\>\) Method
 
-Asynchronous counterpart of [PredicateSelected\(Func&lt;T,bool&gt;\)](IMultiTableControl_T_.md#PromptPlusLibrary.IMultiTableControl_T_.PredicateSelected(System.Func_T,bool_) 'PromptPlusLibrary\.IMultiTableControl\<T\>\.PredicateSelected\(System\.Func\<T,bool\>\)')\.
+Asynchronous counterpart of [PredicateChecked\(Func&lt;T,bool&gt;\)](IMultiTableControl_T_.md#PromptPlusLibrary.IMultiTableControl_T_.PredicateChecked(System.Func_T,bool_) 'PromptPlusLibrary\.IMultiTableControl\<T\>\.PredicateChecked\(System\.Func\<T,bool\>\)')\.
 The predicate is evaluated synchronously \(blocking\) on the UI thread\.
 Replaces any previously registered synchronous predicate\.
 
 ```csharp
-PromptPlusLibrary.IMultiTableControl<T> PredicateSelectedAsync(System.Func<T,System.Threading.Tasks.Task<bool>> validselect);
+PromptPlusLibrary.IMultiTableControl<T> PredicateCheckedAsync(System.Func<T,System.Threading.Tasks.Task<bool>> validselect);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTableControl_T_.PredicateSelectedAsync(System.Func_T,System.Threading.Tasks.Task_bool__).validselect'></a>
+<a name='PromptPlusLibrary.IMultiTableControl_T_.PredicateCheckedAsync(System.Func_T,System.Threading.Tasks.Task_bool__).validselect'></a>
 
 `validselect` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[T](IMultiTableControl_T_.md#PromptPlusLibrary.IMultiTableControl_T_.T 'PromptPlusLibrary\.IMultiTableControl\<T\>\.T')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
 

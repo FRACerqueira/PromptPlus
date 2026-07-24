@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [MultiTable — Operations →](operations.md)
+[? Back to Home](../../../README.md) • **Next:** [MultiTable — Operations ?](operations.md)
 
 ---
 
@@ -40,8 +40,8 @@ in any order. Call [`Run`](#run) last.
 [Range](#range) ·
 [UseDefaultHistory](#usedefaulthistory) ·
 [DefaultMatchBy](#defaultmatchby) ·
-[PredicateSelected](#predicateselected) ·
-[PredicateSelectedAsync](#predicateselectedasync) ·
+[PredicateChecked](#predicatechecked) ·
+[PredicateCheckedAsync](#predicatecheckedasync) ·
 [ViewOnly](#viewonly) ·
 [EnabledHistory](#enabledhistory) ·
 [Styles](#styles) ·
@@ -429,11 +429,11 @@ PromptPlus.Controls.MultiTable<Product>("Products")
 A predicate decides whether a row can be **checked** (toggled on). On rejection the row stays unchecked
 and, for the tuple overload, a custom message is shown.
 
-### `PredicateSelected`
+### `PredicateChecked`
 
 ```csharp
-IMultiTableControl<T> PredicateSelected(Func<T, bool> validselect)
-IMultiTableControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
+IMultiTableControl<T> PredicateChecked(Func<T, bool> validselect)
+IMultiTableControl<T> PredicateChecked(Func<T, (bool, string?)> validselect)
 ```
 
 | Overload | Return | Behavior |
@@ -448,7 +448,7 @@ PromptPlus.Controls.MultiTable<Product>("Products (stock > 50 only)")
     .AddColumn("Name",  x => x.Name)
     .AddColumn("Stock", x => x.Stock, alignment: ColumnAlignment.Right, width: 7)
     .AddItems(products)
-    .PredicateSelected(p => p.Stock > 50
+    .PredicateChecked(p => p.Stock > 50
         ? (true, null)
         : (false, $"'{p.Name}' has only {p.Stock} units in stock."))
     .Run();
@@ -456,16 +456,16 @@ PromptPlus.Controls.MultiTable<Product>("Products (stock > 50 only)")
 
 ---
 
-### `PredicateSelectedAsync`
+### `PredicateCheckedAsync`
 
 ```csharp
-IMultiTableControl<T> PredicateSelectedAsync(Func<T, Task<bool>> validselect)
-IMultiTableControl<T> PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect)
+IMultiTableControl<T> PredicateCheckedAsync(Func<T, Task<bool>> validselect)
+IMultiTableControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> validselect)
 ```
 
 Asynchronous counterparts; setting one replaces any previously registered synchronous predicate.
 
-> ⚠️ The async predicate is awaited **synchronously (blocking) on the UI thread** — keep it fast.
+> ?? The async predicate is awaited **synchronously (blocking) on the UI thread** — keep it fast.
 
 ---
 
@@ -503,7 +503,7 @@ IMultiTableControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? o
 
 Persists the checked set to `filename` (serialized as JSON) and can restore it on the next run via
 [`UseDefaultHistory`](#usedefaulthistory). The `IHistoryOptions` builder is identical to the one
-documented for [Input → EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`, `MaxItems`,
+documented for [Input ? EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`, `MaxItems`,
 `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
@@ -549,7 +549,7 @@ IMultiTableControl<T> Options(Action<IControlOptions> options)
 
 Overrides global behaviors for this one control (prompt/description text, abort key, tooltip,
 hide-after-finish). See
-[Global Behaviors → Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
+[Global Behaviors ? Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
 
 > Throws `ArgumentNullException` if `options` is `null`.
 
@@ -585,4 +585,4 @@ if (!result.IsAborted)
 - [Operations](operations.md) — how these methods behave at runtime
 - [Styles](styles.md) — the `MultiTableStyles` regions
 - [Index](index.md) — overview and method map
-- [Table → Methods](../table/methods.md) — the single-row sibling
+- [Table ? Methods](../table/methods.md) — the single-row sibling

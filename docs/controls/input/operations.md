@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [Input — Styles →](styles.md)
+[? Back to Home](../../../README.md) • **Next:** [Input — Styles ?](styles.md)
 
 ---
 
@@ -23,11 +23,11 @@ validation apply, history, autocomplete, and the small details that matter in re
 ## Anatomy of the control
 
 ```
-Name: John_                              ← prompt + typed text + cursor
-First and last name                      ← description (optional / dynamic)
-Current length: 4                        ← ChangeDescription output (optional)
-Value is invalid                         ← error line, only when validation fails
-Enter: confirm  Esc: cancel  F3: history ← tooltip (toggle with F1 / Ctrl+F1)
+Name: John_                              ? prompt + typed text + cursor
+First and last name                      ? description (optional / dynamic)
+Current length: 4                        ? ChangeDescription output (optional)
+Value is invalid                         ? error line, only when validation fails
+Enter: confirm  Esc: cancel  F3: history ? tooltip (toggle with F1 / Ctrl+F1)
 ```
 
 Every region can be recolored — see [Styles](styles.md).
@@ -41,8 +41,8 @@ Every region can be recolored — see [Styles](styles.md).
 | Key | Action |
 |---|---|
 | Any printable character | Insert at the cursor (subject to [`AcceptInput`](methods.md#acceptinput) and [`MaxLength`](methods.md#maxlength)) |
-| `←` / `→` | Move one character |
-| `Ctrl+←` / `Ctrl+→` | Move one word |
+| `?` / `?` | Move one character |
+| `Ctrl+?` / `Ctrl+?` | Move one word |
 | `Home` / `End` | Start / end of line |
 | `Backspace` | Delete character before the cursor |
 | `Delete` | Delete character at the cursor |
@@ -54,7 +54,7 @@ Every region can be recolored — see [Styles](styles.md).
 | Key | Action |
 |---|---|
 | `Enter` | Confirm — runs validation, then returns the value |
-| `Esc` | Abort (when the abort key is enabled) → `IsAborted == true` |
+| `Esc` | Abort (when the abort key is enabled) ? `IsAborted == true` |
 | `Tab` / `Shift+Tab` | Apply / cycle autocomplete suggestions (when a [suggestion handler](methods.md#suggestionhandler) is set) |
 | `F3` | Open history navigation (when [history](methods.md#enabledhistory) is enabled) |
 | `F1` | Cycle tooltip content |
@@ -72,15 +72,15 @@ The restrictions apply in a fixed order, so it helps to picture the pipeline:
 
 ```
 key pressed
-   │
-   ├─ is it a control/navigation key? ──► handled (move, delete, confirm, …)
-   │
-   └─ printable character
-          │
-          ├─ AcceptInput(c) == false ? ──► ignored
-          ├─ length already == MaxLength ? ──► ignored
-          ├─ InputToCase applied (upper/lower)
-          └─ inserted at cursor
+   ¦
+   +- is it a control/navigation key? --? handled (move, delete, confirm, …)
+   ¦
+   +- printable character
+          ¦
+          +- AcceptInput(c) == false ? --? ignored
+          +- length already == MaxLength ? --? ignored
+          +- InputToCase applied (upper/lower)
+          +- inserted at cursor
 ```
 
 Consequently:
@@ -95,13 +95,13 @@ Consequently:
 Pressing **Enter** runs this sequence:
 
 1. If the field is empty and [`DefaultIfEmpty`](methods.md#defaultifempty) was set, its value is substituted.
-2. Validation runs — [`PredicateSelected`](methods.md#predicateselected) /
-   [`PredicateSelectedAsync`](methods.md#predicateselectedasync), if configured.
-3. **Valid** → the control closes and returns `ResultPrompt<string>` with `IsAborted == false`.
-   **Invalid** → the control stays open, shows the error line, and waits for more input.
+2. Validation runs — [`PredicateValid`](methods.md#predicatevalid) /
+   [`PredicateValidAsync`](methods.md#predicatevalidasync), if configured.
+3. **Valid** ? the control closes and returns `ResultPrompt<string>` with `IsAborted == false`.
+   **Invalid** ? the control stays open, shows the error line, and waits for more input.
 
-> ⚠️ Validation only runs on confirm, never per keystroke. Use `AcceptInput` for per-keystroke rules
-> and `PredicateSelected` for whole-value rules (length, format, uniqueness).
+> ?? Validation only runs on confirm, never per keystroke. Use `AcceptInput` for per-keystroke rules
+> and `PredicateValid` for whole-value rules (length, format, uniqueness).
 
 ---
 
@@ -119,7 +119,7 @@ When [`EnabledHistory(filename, …)`](methods.md#enabledhistory) is set:
 You can also manage a history store directly with `PromptPlus.Controls.History(filename)` — add,
 save, or remove entries programmatically (used in the samples to seed reproducible data).
 
-> 💡 Do not enable history on secret fields — confirmed values are written to disk in the store.
+> ?? Do not enable history on secret fields — confirmed values are written to disk in the store.
 
 ---
 
@@ -160,7 +160,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 - **Newlines** are not accepted (Enter confirms). For multi-line data collect line by line.
 - **Aborted results** carry `.Content == ""`, not the seeded `Default`. Always branch on `IsAborted`.
 - **Async callbacks block the UI thread** — see the warning under
-  [`PredicateSelectedAsync`](methods.md#predicateselectedasync).
+  [`PredicateValidAsync`](methods.md#predicatevalidasync).
 
 ---
 

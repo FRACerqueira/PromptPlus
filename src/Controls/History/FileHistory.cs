@@ -5,7 +5,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
 using System.Reflection;
 using static System.Environment;
@@ -16,7 +16,13 @@ namespace PromptPlusLibrary.Controls.History
     {
         private const string Folderhistory = "PromptPlus.History";
         private static readonly string UserProfilePath = GetFolderPath(SpecialFolder.UserProfile);
-        private static readonly string HistoryFolderPath = Path.Combine(UserProfilePath, Folderhistory);
+
+        // Swappable so tests can run against a MockFileSystem instead of the real user profile
+        // folder (Windows and Linux alike — MockFileSystem is a pure in-memory implementation, not
+        // an OS-specific one). Defaults to the real filesystem in production.
+        internal static IFileSystem FileSystem { get; set; } = new FileSystem();
+
+        private static string HistoryFolderPath => FileSystem.Path.Combine(UserProfilePath, Folderhistory);
 
         public static TimeSpan DefaultHistoryTimeout => TimeSpan.FromDays(365);
 
@@ -32,10 +38,10 @@ namespace PromptPlusLibrary.Controls.History
             string filePath = GetFilePath(filename);
             List<ItemHistory> result = [];
 
-            if (File.Exists(filePath))
+            if (FileSystem.File.Exists(filePath))
             {
                 DateTime now = DateTime.Now;
-                string[] rawLines = File.ReadAllLines(filePath);
+                string[] rawLines = FileSystem.File.ReadAllLines(filePath);
                 foreach (string line in rawLines)
                 {
                     string[] parts = line.Split(ItemHistory.Separator, StringSplitOptions.RemoveEmptyEntries);
@@ -83,16 +89,16 @@ namespace PromptPlusLibrary.Controls.History
 
             string filePath = GetFilePath(filename);
 
-            if (!Directory.Exists(HistoryFolderPath))
+            if (!FileSystem.Directory.Exists(HistoryFolderPath))
             {
-                Directory.CreateDirectory(HistoryFolderPath);
+                FileSystem.Directory.CreateDirectory(HistoryFolderPath);
             }
 
             if (items.Count == 0)
             {
-                if (File.Exists(filePath))
+                if (FileSystem.File.Exists(filePath))
                 {
-                    File.Delete(filePath);
+                    FileSystem.File.Delete(filePath);
                 }
                 return;
             }
@@ -107,7 +113,7 @@ namespace PromptPlusLibrary.Controls.History
                 .Where(x => now < new DateTime(x.TimeOutTicks))
                 .Select(x => x.ToString())];
 
-            File.WriteAllLines(filePath, lines);
+            FileSystem.File.WriteAllLines(filePath, lines);
         }
 
         public static void ClearHistory(string filename)
@@ -119,9 +125,9 @@ namespace PromptPlusLibrary.Controls.History
 
             string filePath = GetFilePath(filename);
 
-            if (File.Exists(filePath))
+            if (FileSystem.File.Exists(filePath))
             {
-                File.Delete(filePath);
+                FileSystem.File.Delete(filePath);
             }
         }
 
@@ -132,6 +138,6 @@ namespace PromptPlusLibrary.Controls.History
         }
 
         private static string GetFilePath(string filename) =>
-            Path.Combine(HistoryFolderPath, $"{UniqueDomain(filename)}.txt");
+            FileSystem.Path.Combine(HistoryFolderPath, $"{UniqueDomain(filename)}.txt");
     }
 }

@@ -9,6 +9,18 @@
 | `FileSelect()` | `File()` |
 | `FileMultiSelect()` | `MultiFile()` |
 
+## Renamed public methods
+
+`MultiFile` **renamed** its confirmation validator (v5.x `FileMultiSelect` had `PredicateSelected`).
+The single-selection `File` control has **no** such validator in v6.x.
+
+| Control | v5.x member | v6.x member |
+|---|---|---|
+| MultiFile | `PredicateSelected(Func<FileItem, bool>)` | `PredicateChecked(Func<FileItem, bool>)` |
+| MultiFile | `PredicateSelected(Func<FileItem, (bool, string?)>)` | `PredicateChecked(Func<FileItem, (bool, string?)>)` |
+
+> The async overload follows the same name: `PredicateCheckedAsync` (new in v6.x).
+
 ## Item type changed
 
 The selected item type changed and so did its members:
@@ -79,16 +91,16 @@ PromptPlus.Controls.FileSelect("File:")
 
 **After (v6.x):**
 ```csharp
-// No size filter. For MultiFile you can block confirmation with PredicateSelected:
+// No size filter. For MultiFile you can block confirmation with PredicateChecked:
 PromptPlus.Controls.MultiFile("Files:")
-    .PredicateSelected(item =>
+    .PredicateChecked(item =>
         item.IsDirectory || item.Length <= 1024
             ? (true, null)
             : (false, "File is larger than 1KB"))
     .Run();
 ```
 
-> ⚠️ `File` (single-select) has **no** `PredicateSelected` in v6.x — only `MultiFile` does. There is no built-in size filter for `File`.
+> ⚠️ `File` (single-select) has **no** `PredicateChecked` in v6.x — only `MultiFile` does. There is no built-in size filter for `File`.
 
 ### 6. `EnabledSearchFilter` — removed with no equivalent (File and MultiFile)
 
@@ -116,16 +128,16 @@ PromptPlus.Controls.FileMultiSelect("Files:")
 
 **After (v6.x):**
 ```csharp
-// Use PredicateSelected to block confirmation of invalid items
+// Use PredicateChecked to block confirmation of invalid items
 PromptPlus.Controls.MultiFile("Files:")
-    .PredicateSelected(item =>
+    .PredicateChecked(item =>
         Path.GetExtension(item.FullPath) != ".exe"
             ? (true, null)
             : (false, ".exe files are not allowed"))
     .Run();
 ```
 
-> ⚠️ Difference: `PredicateDisabled` prevented navigating to the item; `PredicateSelected` only blocks confirmation after selection.
+> ⚠️ Difference: `PredicateDisabled` prevented navigating to the item; `PredicateChecked` only blocks confirmation after selection.
 
 ### 8. `HideCountSelected` — removed (MultiFile)
 
@@ -171,10 +183,10 @@ PromptPlus.Controls.MultiFile("Files:")
     .Run();
 ```
 
-### `PredicateSelectedAsync` (MultiFile)
+### `PredicateCheckedAsync` (MultiFile)
 ```csharp
 PromptPlus.Controls.MultiFile("Files:")
-    .PredicateSelectedAsync(async item =>
+    .PredicateCheckedAsync(async item =>
     {
         bool allowed = await CheckPermissionAsync(item.FullPath);
         return (allowed, allowed ? null : "No access permission");
@@ -216,6 +228,7 @@ PromptPlus.Controls.MultiFile("Files:")
 | `HideCountSelected(bool)` | ✅ | ❌ | Removed |
 | `HideZeroEntries` / `HideFilesBySize` | ✅ | ❌ | Removed |
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
-| `Range(int, int?)` · `PredicateSelected` (x2) · `Root` · `SearchPattern` · `OnlyFolders` · `PageSize` | ✅ | ✅ | Unchanged |
-| `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `SelectFilesOnly` · `ShowFullPath` · `PredicateSelectedAsync` (x2) | ❌ | ✅ | New |
+| `Range(int, int?)` · `Root` · `SearchPattern` · `OnlyFolders` · `PageSize` | ✅ | ✅ | Unchanged |
+| `PredicateSelected` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` (x2) |
+| `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `SelectFilesOnly` · `ShowFullPath` · `PredicateChecked` (x2) · `PredicateCheckedAsync` (x2) | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<ItemFile[]>` | `ResultPrompt<FileItem[]>` | Item type changed |

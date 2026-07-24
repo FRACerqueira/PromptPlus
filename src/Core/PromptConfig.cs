@@ -43,7 +43,10 @@ namespace PromptPlusLibrary.Core
         private string _defaultPrefixExtraInfo = " (";
         private string _defaultSuffixExtraInfo = ")";
         private bool _defaultRemoveHandlerCtrlC ;
-        private static readonly HashSet<string> _supportedCultures = ["en-us", "pt-br"];
+        private static readonly HashSet<string> _supportedCultures = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "en-us", "pt-br", "de-de", "es-es", "fr-fr", "it-it", "ja-jp", "ko-kr", "nl-be", "ru-ru", "zh-cn"
+        };
         internal static readonly JsonSerializerOptions JsonOptions = new()
         {
             PropertyNameCaseInsensitive = true,

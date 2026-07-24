@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,13 +11,13 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [MultiTree — Operations →](operations.md)
+[? Back to Home](../../../README.md) • **Next:** [MultiTree — Operations ?](operations.md)
 
 ---
 
 Every fluent method on `IMultiTreeControl<T>`. Each returns the same control instance, so calls chain
 in any order — **except** [`AddLast`](#addlast) / [`AddFirst`](#addfirst) / [`AddAfter`](#addafter) /
-[`AddBefore`](#addbefore), which return the new [`ITreeNode<T>`](#itreenodet) so you can attach
+[`AddBefore`](#addbefore), which return the new [`IMultiTreeNode<T>`](#imultitreenodet) so you can attach
 children to it. Call [`Run`](#run) last.
 
 > The factory is `PromptPlus.Controls.MultiTree<T>(string prompt = "", string? description = null)`,
@@ -48,8 +48,8 @@ children to it. Call [`Run`](#run) last.
 [Range](#range) ·
 [Default](#default) ·
 [DefaultMatchBy](#defaultmatchby) ·
-[PredicateSelected](#predicateselected) ·
-[PredicateSelectedAsync](#predicateselectedasync) ·
+[PredicateChecked](#predicatechecked) ·
+[PredicateCheckedAsync](#predicatecheckedasync) ·
 [ViewOnly](#viewonly) ·
 [ChangeDescription](#changedescription) ·
 [ChangeDescriptionAsync](#changedescriptionasync) ·
@@ -65,8 +65,13 @@ children to it. Call [`Run`](#run) last.
 ### `Root`
 
 ```csharp
-IMultiTreeControl<T> Root(T value)
+IMultiTreeControl<T> Root(T value, bool disable = false, bool check = false)
 ```
+
+| Parameter | Meaning |
+|---|---|
+| `disable` | When `true`, the node cannot be checked interactively (`Space`/`Ctrl+Space` are blocked) and it renders with [`MultiTreeStyles.Disabled`](styles.md). A cascade *passes through* a disabled container to reach enabled descendants without touching the disabled node's own flag. `Default(...)` can still force-check a disabled node, and that forced mark survives `F2` clear-all. Default `false`. |
+| `check` | When `true`, the node starts pre-checked. Additive with [`Default`](#default) / history (neither clears the other); it is applied *before* `Default`/history is resolved. Default `false`. |
 
 Sets the top-level node shown at the top of the tree. **Required** — call it before adding any children.
 
@@ -85,10 +90,11 @@ PromptPlus.Controls.MultiTree<string>("Folders")
 ### `AddLast`
 
 ```csharp
-ITreeNode<T> AddLast(T value)
+IMultiTreeNode<T> AddLast(T value, bool disable = false, bool check = false)
 ```
 
 Adds a first-level node (child of the root) at the **end** and returns it so children can be attached.
+The `disable` and `check` parameters have the same meaning as on [`Root`](#root).
 
 ```csharp
 var eng = tree.AddLast("Engineering");
@@ -100,20 +106,22 @@ eng.AddLast("Backend");   // nested child
 ### `AddFirst`
 
 ```csharp
-ITreeNode<T> AddFirst(T value)
+IMultiTreeNode<T> AddFirst(T value, bool disable = false, bool check = false)
 ```
 
 Adds a first-level node at the **beginning** so it appears at the very top of the child list.
+The `disable` and `check` parameters have the same meaning as on [`Root`](#root).
 
 ---
 
 ### `AddAfter`
 
 ```csharp
-ITreeNode<T> AddAfter(ITreeNode<T> node, T value)
+IMultiTreeNode<T> AddAfter(ITreeNode<T> node, T value, bool disable = false, bool check = false)
 ```
 
 Inserts a sibling immediately **after** `node` and returns the new node.
+The `disable` and `check` parameters have the same meaning as on [`Root`](#root).
 
 > Throws `InvalidOperationException` if `node` does not belong to this tree or is the root.
 
@@ -122,33 +130,47 @@ Inserts a sibling immediately **after** `node` and returns the new node.
 ### `AddBefore`
 
 ```csharp
-ITreeNode<T> AddBefore(ITreeNode<T> node, T value)
+IMultiTreeNode<T> AddBefore(ITreeNode<T> node, T value, bool disable = false, bool check = false)
 ```
 
 Inserts a sibling immediately **before** `node` and returns the new node.
+The `disable` and `check` parameters have the same meaning as on [`Root`](#root).
 
 ```csharp
 var sales = tree.AddLast("Sales");
-tree.AddBefore(sales, "HR");   // → [HR, Sales]
+tree.AddBefore(sales, "HR");   // ? [HR, Sales]
 ```
 
 > Throws `InvalidOperationException` if `node` does not belong to this tree or is the root.
 
 ---
 
-### `ITreeNode<T>`
+### `IMultiTreeNode<T>`
 
-The object returned by the `Add*` methods. Use it to read the node and attach children.
+The object returned by the `Add*` methods. It extends [`ITreeNode<T>`](#itreenodet) with MultiTree-specific
+overloads so that nodes built by *chaining* (deep subtrees) can also be pre-checked or disabled. Use it to
+read the node and attach children.
 
 ```csharp
+public interface IMultiTreeNode<T> : ITreeNode<T>
+{
+    // adds a child, optionally disabled and/or pre-checked
+    IMultiTreeNode<T> AddLast(T value, bool disable = false, bool check = false);
+    IMultiTreeNode<T> AddFirst(T value, bool disable = false, bool check = false);
+}
+
 public interface ITreeNode<T>
 {
     T Value { get; }                 // the user value on this node
     ITreeNode<T>? Parent { get; }    // parent node, or null for the root
-    ITreeNode<T> AddLast(T value);   // append a child
-    ITreeNode<T> AddFirst(T value);  // prepend a child
+    ITreeNode<T> AddLast(T value);   // append a child (check/disable default to false)
+    ITreeNode<T> AddFirst(T value);  // prepend a child (check/disable default to false)
 }
 ```
+
+> The base `ITreeNode<T>` (shared with the single-selection `Tree` control) is left untouched; its
+> `AddLast`/`AddFirst` behave as `check: false, disable: false`. The `disable` and `check` parameters have
+> the same semantics as on [`Root`](#root).
 
 A node with at least one child renders as a **container** (with a tri-state checkbox); a node with
 none renders as a **leaf**.
@@ -233,7 +255,7 @@ IMultiTreeControl<T> ExtraInfoAsync(Func<T, Task<string?>> extraInfoNode)
 
 Asynchronous version of [`ExtraInfo`](#extrainfo).
 
-> ⚠️ The task is awaited **synchronously (blocking)** once per node, per render frame — keep it fast.
+> ?? The task is awaited **synchronously (blocking)** once per node, per render frame — keep it fast.
 
 ---
 
@@ -387,11 +409,11 @@ PromptPlus.Controls.MultiTree<Node>("Pick 2 to 4")
 
 ## Check rules
 
-### `PredicateSelected`
+### `PredicateChecked`
 
 ```csharp
-IMultiTreeControl<T> PredicateSelected(Func<T, bool> validselect)
-IMultiTreeControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
+IMultiTreeControl<T> PredicateChecked(Func<T, bool> validselect)
+IMultiTreeControl<T> PredicateChecked(Func<T, (bool, string?)> validselect)
 ```
 
 Decides whether a node can be checked. Nodes that fail the predicate show an error when the user tries
@@ -406,7 +428,7 @@ to check them.
 PromptPlus.Controls.MultiTree<Node>("Check services")
     .Root(company).TextSelector(n => n.Name).DefaultMatchBy((a, b) => a.Id == b.Id)
     .ExtraInfo(n => n.Info)
-    .PredicateSelected(n => n.Info == "service"
+    .PredicateChecked(n => n.Info == "service"
         ? (true, null)
         : (false, $"'{n.Name}' is a {n.Info}, not a service."))
     .Run();
@@ -414,16 +436,16 @@ PromptPlus.Controls.MultiTree<Node>("Check services")
 
 ---
 
-### `PredicateSelectedAsync`
+### `PredicateCheckedAsync`
 
 ```csharp
-IMultiTreeControl<T> PredicateSelectedAsync(Func<T, Task<bool>> validselect)
-IMultiTreeControl<T> PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect)
+IMultiTreeControl<T> PredicateCheckedAsync(Func<T, Task<bool>> validselect)
+IMultiTreeControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> validselect)
 ```
 
 Asynchronous counterparts.
 
-> ⚠️ The async predicate is awaited **synchronously (blocking) on the UI thread** — keep it fast.
+> ?? The async predicate is awaited **synchronously (blocking) on the UI thread** — keep it fast.
 
 ---
 
@@ -526,7 +548,7 @@ IMultiTreeControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? op
 
 Persists the checked values to `filename`; previously checked items are restored on the next run. The
 `IHistoryOptions` builder is the same one documented for
-[Input → EnabledHistory](../input/methods.md#enabledhistory).
+[Input ? EnabledHistory](../input/methods.md#enabledhistory).
 
 ```csharp
 PromptPlus.Controls.MultiTree<Node>("Nodes")
@@ -568,7 +590,7 @@ IMultiTreeControl<T> Options(Action<IControlOptions> options)
 
 Overrides global behaviors for this one control (prompt/description text, abort key, tooltip,
 hide-after-finish, extra-info affixes). See
-[Global Behaviors → Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
+[Global Behaviors ? Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
 
 ---
 
@@ -597,4 +619,4 @@ var result = PromptPlus.Controls.MultiTree<Node>("Nodes")
 - [Operations](operations.md) — how these methods behave at runtime
 - [Styles](styles.md) — the `MultiTreeStyles` regions
 - [Index](index.md) — overview and method map
-- [Tree → Methods](../tree/methods.md) — the single-choice sibling
+- [Tree ? Methods](../tree/methods.md) — the single-choice sibling

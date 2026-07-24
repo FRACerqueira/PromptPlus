@@ -102,6 +102,13 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         /// <summary>
         /// Emacs shortcut tooltips for the MaskEdit control.
         /// </summary>
+        /// <param name="enabledEmacs">
+        /// Whether Emacs keybindings are enabled (<c>ConsoleHandler.EnabledEmacs</c>). All of
+        /// these entries describe Ctrl-key bindings gated on that flag in
+        /// <see cref="TryAcceptedReadlineConsoleKey"/> — Ctrl+L (clear) has no other way to
+        /// trigger it, so advertising it while Emacs is disabled would promise a shortcut that
+        /// does nothing.
+        /// </param>
         /// <remarks>
         /// This intentionally does NOT reuse <c>BaseControlPrompt.GetEmacsTooltips(bool)</c>.
         /// The base method describes a free-text line editor (<c>EmacsConsoleBuffer</c>) and
@@ -113,8 +120,12 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         /// Ctrl+L (clear), Ctrl+H (backspace), Ctrl+E (end), Ctrl+A (home),
         /// Ctrl+B (left), Ctrl+F (right), Ctrl+D (delete).
         /// </remarks>
-        public static string[] GetEmacsTooltips()
+        public static string[] GetEmacsTooltips(bool enabledEmacs)
         {
+            if (!enabledEmacs)
+            {
+                return [];
+            }
             return
             [
                 PromptPlusResources.Emac_ctrl_l,
@@ -139,6 +150,17 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             if (_charElements.Any(x => x.Value.Type == ElementType.DecimalSeparator))
             {
                 _decimalposition = _charElements.First(x => x.Value.Type == ElementType.DecimalSeparator).Key;
+            }
+            else if (IsNumeric)
+            {
+                // Every numeric code path below indexes _charElements[_decimalposition] directly
+                // (ToStart, TryAcceptedReadlineConsoleKey, Backspace, Delete, ...) with no bounds
+                // check, so a missing decimal separator would leave CursorPosition at -1 after
+                // construction and throw KeyNotFoundException on the very first keystroke instead
+                // of failing here with a clear message. Unreachable via the public API today —
+                // MaskEditControl<T>.SetNumberFormat always appends a '.' even for integers
+                // (decimalpart=0) — but this guards against that invariant ever changing silently.
+                throw new ArgumentException("A numeric mask must include a decimal separator element.", nameof(elements));
             }
 
             if (IsNumeric)
@@ -834,7 +856,19 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             if (s_isIntegerNumber)
             {
                 string aux = string.Join("", _charElements.Where(x => x.Value.Inputchar != MaskElement.Emptyinputchar && (x.Value.Type == ElementType.InputMask || x.Value.Type == ElementType.InputConstant)).OrderBy(x => x.Key).Select(x => x.Value.Outputchar));
-                return aux.Length == 0 ? "0" : aux;
+                if (aux.Length == 0)
+                {
+                    return "0";
+                }
+                if (IsNegative)
+                {
+                    aux = "-" + aux;
+                }
+                else if (IsPositive)
+                {
+                    aux = "+" + aux;
+                }
+                return aux;
             }
             if (s_isDecimalNumber)
             {

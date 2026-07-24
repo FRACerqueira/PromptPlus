@@ -114,8 +114,8 @@ namespace MultiTasksControlSamples
             {
                 result = PromptPlus.Controls.MultiTasks("Long running batch")
                     .Mode(MultiTasksMode.Parallel)
-                    .AddTaskAsync("task-1", async token => await Task.Delay(TimeSpan.FromSeconds(10), token))
-                    .AddTaskAsync("task-2", async token => await Task.Delay(TimeSpan.FromSeconds(10), token))
+                    .AddTaskAsync("task-1", async token => await Task.Delay(TimeSpan.FromSeconds(20), token))
+                    .AddTaskAsync("task-2", async token => await Task.Delay(TimeSpan.FromSeconds(20), token))
                     .Run(sw.Token);
                 PrintResult(result);
             }

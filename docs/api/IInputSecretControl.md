@@ -203,18 +203,18 @@ The current [IInputSecretControl](IInputSecretControl.md 'PromptPlusLibrary\.IIn
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
 Thrown if [options](IInputSecretControl.md#PromptPlusLibrary.IInputSecretControl.Options(System.Action_PromptPlusLibrary.IControlOptions_).options 'PromptPlusLibrary\.IInputSecretControl\.Options\(System\.Action\<PromptPlusLibrary\.IControlOptions\>\)\.options') is `null`\.
 
-<a name='PromptPlusLibrary.IInputSecretControl.PredicateSelected(System.Func_string,bool_)'></a>
+<a name='PromptPlusLibrary.IInputSecretControl.PredicateValid(System.Func_string,bool_)'></a>
 
-## IInputSecretControl\.PredicateSelected\(Func\<string,bool\>\) Method
+## IInputSecretControl\.PredicateValid\(Func\<string,bool\>\) Method
 
 Sets a validation function executed when the user confirms the input\.
 
 ```csharp
-PromptPlusLibrary.IInputSecretControl PredicateSelected(System.Func<string,bool> value);
+PromptPlusLibrary.IInputSecretControl PredicateValid(System.Func<string,bool> value);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IInputSecretControl.PredicateSelected(System.Func_string,bool_).value'></a>
+<a name='PromptPlusLibrary.IInputSecretControl.PredicateValid(System.Func_string,bool_).value'></a>
 
 `value` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
 
@@ -224,18 +224,18 @@ A predicate that returns whether the submitted value is valid\.
 [IInputSecretControl](IInputSecretControl.md 'PromptPlusLibrary\.IInputSecretControl')  
 The current [IInputSecretControl](IInputSecretControl.md 'PromptPlusLibrary\.IInputSecretControl') instance for chaining\.
 
-<a name='PromptPlusLibrary.IInputSecretControl.PredicateSelectedAsync(System.Func_string,System.Threading.Tasks.Task_bool__)'></a>
+<a name='PromptPlusLibrary.IInputSecretControl.PredicateValidAsync(System.Func_string,System.Threading.Tasks.Task_bool__)'></a>
 
-## IInputSecretControl\.PredicateSelectedAsync\(Func\<string,Task\<bool\>\>\) Method
+## IInputSecretControl\.PredicateValidAsync\(Func\<string,Task\<bool\>\>\) Method
 
 Sets an asynchronous validation function executed when the user confirms the input\.
 
 ```csharp
-PromptPlusLibrary.IInputSecretControl PredicateSelectedAsync(System.Func<string,System.Threading.Tasks.Task<bool>> value);
+PromptPlusLibrary.IInputSecretControl PredicateValidAsync(System.Func<string,System.Threading.Tasks.Task<bool>> value);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IInputSecretControl.PredicateSelectedAsync(System.Func_string,System.Threading.Tasks.Task_bool__).value'></a>
+<a name='PromptPlusLibrary.IInputSecretControl.PredicateValidAsync(System.Func_string,System.Threading.Tasks.Task_bool__).value'></a>
 
 `value` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
 

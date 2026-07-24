@@ -37,7 +37,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="type">The visual style of the bar, one of the <see cref="SliderBarType"/> values.</param>
         /// <returns>The same <see cref="ISliderControl"/> instance, so additional settings can be chained.</returns>
-        ISliderControl Fill(SliderBarType type);
+        ISliderControl BarType(SliderBarType type);
 
         /// <summary>
         /// Overrides the colors of a specific region of the slider, such as the prompt, the answer or the bar itself.

@@ -421,7 +421,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Letra (a-z).
+        ///   Looks up a localized string similar to Letter (a-z).
         /// </summary>
         internal static string MaskEditPosLetterLower {
             get {
@@ -610,14 +610,32 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ({0} failed) .
+        ///   Looks up a localized string similar to {0} failed.
         /// </summary>
         internal static string MultiTasksFailed {
             get {
                 return ResourceManager.GetString("MultiTasksFailed", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} ok.
+        /// </summary>
+        internal static string MultiTasksSuccessCount {
+            get {
+                return ResourceManager.GetString("MultiTasksSuccessCount", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} wait.
+        /// </summary>
+        internal static string MultiTasksWaitingCount {
+            get {
+                return ResourceManager.GetString("MultiTasksWaitingCount", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to N.
         /// </summary>
@@ -772,7 +790,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} seleted..
+        ///   Looks up a localized string similar to {0} selected..
         /// </summary>
         internal static string TooltipCountCheck {
             get {
@@ -853,7 +871,7 @@ namespace PromptPlusLibrary.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tab/ShitTab:Jumps between delimiters .
+        ///   Looks up a localized string similar to Tab\ShiftTab:Jumps between delimiters .
         /// </summary>
         internal static string TooltipJumpdelimiter {
             get {
@@ -959,7 +977,16 @@ namespace PromptPlusLibrary.Resources {
                 return ResourceManager.GetString("TooltipTableColumnNav", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Type initial char to jump (filterable columns).
+        /// </summary>
+        internal static string TooltipTableJump {
+            get {
+                return ResourceManager.GetString("TooltipTableJump", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to {0}:Toggle tooltips.
         /// </summary>

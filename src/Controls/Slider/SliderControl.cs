@@ -66,7 +66,7 @@ namespace PromptPlusLibrary.Controls.Slider
             return this;
         }
 
-        public ISliderControl Fill(SliderBarType type)
+        public ISliderControl BarType(SliderBarType type)
         {
             _sliderBarType = type;
             return this;
@@ -199,9 +199,9 @@ namespace PromptPlusLibrary.Controls.Slider
         }
 
         /// <inheritdoc/>
-        ISliderWidget ISliderWidget.Fill(SliderBarType type)
+        ISliderWidget ISliderWidget.BarType(SliderBarType type)
         {
-            Fill(type);
+            BarType(type);
             return this;
         }
 

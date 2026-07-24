@@ -223,7 +223,13 @@
     <value>Se requiere una selección mínima de {0} elementos</value>
   </data>
   <data name="MultiTasksFailed" xml:space="preserve">
-    <value>({0} fallido) </value>
+    <value>{0} fallido</value>
+  </data>
+  <data name="MultiTasksSuccessCount" xml:space="preserve">
+    <value>{0} correcto</value>
+  </data>
+  <data name="MultiTasksWaitingCount" xml:space="preserve">
+    <value>{0} pendiente</value>
   </data>
   <data name="TooltipToggleFullPath" xml:space="preserve">
     <value>Alternar ruta completa/nombre</value>
@@ -431,6 +437,9 @@
   </data>
   <data name="TooltipTableColumnNav" xml:space="preserve">
     <value>Tab/MayúsTab:Navegar columnas</value>
+  </data>
+  <data name="TooltipTableJump" xml:space="preserve">
+    <value>Escriba el carácter inicial para saltar (columnas filtrables)</value>
   </data>
   <data name="Col_Info" xml:space="preserve">
     <value>Col</value>

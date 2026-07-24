@@ -32,25 +32,26 @@ namespace PromptPlusLibrary.Controls.Tree
         /// User-visible node of the tree. Owns its children (never released) so the user hierarchy
         /// stays intact between renders. The visible/flat projection lives in <see cref="_nodes"/>.
         /// </summary>
-        private sealed class TreeNode(T value, TreeNode? parent) : ITreeNode<T>
+        private sealed class TreeNode(T value, TreeNode? parent, bool disabled = false) : ITreeNode<T>
         {
             public T Value { get; } = value;
             public TreeNode? ParentNode { get; } = parent;
             public List<TreeNode> Children { get; } = [];
+            public bool Disabled { get; } = disabled;
 
             ITreeNode<T>? ITreeNode<T>.Parent => ParentNode;
             T ITreeNode<T>.Value => Value;
 
-            public ITreeNode<T> AddLast(T v)
+            public ITreeNode<T> AddLast(T v, bool disable = false)
             {
-                var n = new TreeNode(v, this);
+                var n = new TreeNode(v, this, disable);
                 Children.Add(n);
                 return n;
             }
 
-            public ITreeNode<T> AddFirst(T v)
+            public ITreeNode<T> AddFirst(T v, bool disable = false)
             {
-                var n = new TreeNode(v, this);
+                var n = new TreeNode(v, this, disable);
                 Children.Insert(0, n);
                 return n;
             }
@@ -68,6 +69,7 @@ namespace PromptPlusLibrary.Controls.Tree
             public bool IsExpanded { get; set; }
             public bool IsRoot { get; init; }
             public bool HasChildren => Source.Children.Count > 0;
+            public bool Disabled => Source.Disabled;
             public T Value => Source.Value;
             public long AncestorMask;
         }
@@ -111,6 +113,10 @@ namespace PromptPlusLibrary.Controls.Tree
         private bool _useDefaultHistory = true;
         private HistoryOptions? _historyOptions;
         private IList<ItemHistory>? _itemHistories;
+        // Snapshot of whichever node ends up selected at the end of InitControl (root, or the
+        // resolved Default/history target) so view-only mode always has something real to return
+        // on Enter, even when the caller never called Default(...).
+        private VNode? _initialNode;
 
         private readonly Dictionary<ModeView, string[]> _toggerTooptips = new()
         {
@@ -144,10 +150,10 @@ namespace PromptPlusLibrary.Controls.Tree
         }
 
         /// <inheritdoc/>
-        public ITreeControl<T> Root(T value)
+        public ITreeControl<T> Root(T value, bool disable = false)
         {
             ArgumentNullException.ThrowIfNull(value);
-            _root = new TreeNode(value, parent: null);
+            _root = new TreeNode(value, parent: null, disable);
             return this;
         }
 
@@ -182,21 +188,21 @@ namespace PromptPlusLibrary.Controls.Tree
         }
 
         /// <inheritdoc/>
-        public ITreeNode<T> AddLast(T value)
+        public ITreeNode<T> AddLast(T value, bool disable = false)
         {
             ArgumentNullException.ThrowIfNull(value);
-            return RequireRoot().AddLast(value);
+            return RequireRoot().AddLast(value, disable);
         }
 
         /// <inheritdoc/>
-        public ITreeNode<T> AddFirst(T value)
+        public ITreeNode<T> AddFirst(T value, bool disable = false)
         {
             ArgumentNullException.ThrowIfNull(value);
-            return RequireRoot().AddFirst(value);
+            return RequireRoot().AddFirst(value, disable);
         }
 
         /// <inheritdoc/>
-        public ITreeNode<T> AddAfter(ITreeNode<T> node, T value)
+        public ITreeNode<T> AddAfter(ITreeNode<T> node, T value, bool disable = false)
         {
             ArgumentNullException.ThrowIfNull(value);
             TreeNode target = Unwrap(node);
@@ -206,13 +212,13 @@ namespace PromptPlusLibrary.Controls.Tree
             }
             TreeNode parent = target.ParentNode;
             int idx = parent.Children.IndexOf(target);
-            var created = new TreeNode(value, parent);
+            var created = new TreeNode(value, parent, disable);
             parent.Children.Insert(idx + 1, created);
             return created;
         }
 
         /// <inheritdoc/>
-        public ITreeNode<T> AddBefore(ITreeNode<T> node, T value)
+        public ITreeNode<T> AddBefore(ITreeNode<T> node, T value, bool disable = false)
         {
             ArgumentNullException.ThrowIfNull(value);
             TreeNode target = Unwrap(node);
@@ -222,7 +228,7 @@ namespace PromptPlusLibrary.Controls.Tree
             }
             TreeNode parent = target.ParentNode;
             int idx = parent.Children.IndexOf(target);
-            var created = new TreeNode(value, parent);
+            var created = new TreeNode(value, parent, disable);
             parent.Children.Insert(idx, created);
             return created;
         }
@@ -466,6 +472,12 @@ namespace PromptPlusLibrary.Controls.Tree
                 ExpandToTarget(target);
             }
 
+            _initialNode = _localpaginator!.SelectedItem;
+            if (!_viewOnly && _initialNode?.Disabled == true)
+            {
+                SetError(PromptPlusResources.SelectionDisabled);
+            }
+
             LoadTooltipToggle();
         }
 
@@ -478,6 +490,14 @@ namespace PromptPlusLibrary.Controls.Tree
         {
             List<TreeNode>? path = FindPath(_root!, target);
             if (path is null || path.Count == 0)
+            {
+                return;
+            }
+            // Honor Disabled the same way Select/Table honor it for their own Default/history
+            // resolution: a disabled target is never pre-selected, the cursor stays at the root.
+            // View-only ignores Disabled entirely (see SetSelectionDisabledErrorIfNeeded), so this
+            // only applies when not in view-only mode.
+            if (!_viewOnly && path[^1].Disabled)
             {
                 return;
             }
@@ -554,6 +574,16 @@ namespace PromptPlusLibrary.Controls.Tree
             return -1;
         }
 
+        // View-only ignores Disabled entirely (same exemption as SelectLeafOnly/PredicateSelected
+        // in the Enter branch), so this is only ever called from non-view-only navigation.
+        private void SetSelectionDisabledErrorIfNeeded()
+        {
+            if (!_viewOnly && _localpaginator?.SelectedItem?.Disabled == true)
+            {
+                SetError(PromptPlusResources.SelectionDisabled);
+            }
+        }
+
         public override bool TryResult(CancellationToken cancellationToken)
         {
             bool oldcursor = ConsoleHandler.CursorVisible;
@@ -563,11 +593,17 @@ namespace PromptPlusLibrary.Controls.Tree
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    bool updatePosAnswerBufferBeforeThisKey = _updatePosAnswerBuffer;
                     _updatePosAnswerBuffer = true;
 
                     KeyPressResult press = ReadNextKey(true, cancellationToken);
                     if (press.IsResize || press.IsCancelled)
                     {
+                        // Restore the flag's pre-iteration value instead of leaving it force-set to
+                        // `true` above — same fix as Select/MultiSelect/Table/MultiTable: a resize
+                        // must not silently undo a scroll the user had just navigated to on the
+                        // answer preview.
+                        _updatePosAnswerBuffer = updatePosAnswerBufferBeforeThisKey;
                         if (press.IsCancelled)
                         {
                             _indexTooptip = 0;
@@ -590,7 +626,16 @@ namespace PromptPlusLibrary.Controls.Tree
                         _indexTooptip = 0;
                         if (_viewOnly)
                         {
-                            ResultCtrl = new ResultPrompt<T?>(_hasDefault ? _defaultValue : default, false);
+                            // The initial node (root, or the resolved Default/history target) is
+                            // always real once InitControl has run — fall back to it instead of
+                            // returning null just because the caller never called Default(...).
+                            T? viewValue = _initialNode is not null ? _initialNode.Value : (_hasDefault ? _defaultValue : default);
+                            ResultCtrl = new ResultPrompt<T?>(viewValue, false);
+                            break;
+                        }
+                        if (selected.Disabled)
+                        {
+                            SetError(PromptPlusResources.SelectionDisabled);
                             break;
                         }
                         if (_selectLeafOnly && selected.HasChildren)
@@ -603,7 +648,7 @@ namespace PromptPlusLibrary.Controls.Tree
                             : _predicatevalidselect?.Invoke(selected.Value) ?? (true, (string?)null);
                         if (!ok)
                         {
-                            SetError(string.IsNullOrEmpty(message) ? PromptPlusResources.SelectionDisabled : message!);
+                            SetError(string.IsNullOrEmpty(message) ? PromptPlusResources.PredicateSelectInvalid : message!);
                             break;
                         }
                         ResultCtrl = new ResultPrompt<T?>(selected.Value, false);
@@ -674,6 +719,7 @@ namespace PromptPlusLibrary.Controls.Tree
                                 _localpaginator.NextItem();
                             }
                         }
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -703,6 +749,7 @@ namespace PromptPlusLibrary.Controls.Tree
                                 _localpaginator.PreviousItem();
                             }
                         }
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -716,6 +763,7 @@ namespace PromptPlusLibrary.Controls.Tree
                         {
                             _localpaginator.NextItem();
                         }
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -729,30 +777,35 @@ namespace PromptPlusLibrary.Controls.Tree
                         {
                             _localpaginator.PreviousItem();
                         }
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
                     else if (keyinfo.IsPressPageDownKey())
                     {
                         _localpaginator!.NextPage(IndexOption.FirstItemWhenHasPages);
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
                     else if (keyinfo.IsPressPageUpKey())
                     {
                         _localpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages);
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
                     else if (keyinfo.IsPressCtrlHomeKey())
                     {
                         _localpaginator!.Home();
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
                     else if (keyinfo.IsPressCtrlEndKey())
                     {
                         _localpaginator!.End();
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -1237,7 +1290,8 @@ namespace PromptPlusLibrary.Controls.Tree
                     string pathText = _flatDisplayCache is not null && _flatDisplayCache.TryGetValue(node.UniqueId, out string? p)
                         ? p
                         : (_textSelector!(node.Value) ?? string.Empty);
-                    Style nameStyle = isSelected ? lineStyle
+                    Style nameStyle = node.Disabled ? _optStyles[TreeStyles.Disabled]
+                        : isSelected ? lineStyle
                         : node.IsRoot ? _optStyles[TreeStyles.Root] : _optStyles[TreeStyles.Node];
                     screenBuffer.Write($" {pathText}", nameStyle);
 
@@ -1280,6 +1334,10 @@ namespace PromptPlusLibrary.Controls.Tree
                 if (isSelected)
                 {
                     nameStyleSelect = lineStyle;
+                }
+                if (node.Disabled)
+                {
+                    nameStyleSelect = _optStyles[TreeStyles.Disabled];
                 }
                 screenBuffer.Write(_textSelector!(node.Value) ?? string.Empty, nameStyleSelect);
 

@@ -18,6 +18,27 @@ chained together \(fluent style\)\. Call [Run\(CancellationToken\)](ISliderContr
 and read the value chosen by the user\.
 ### Methods
 
+<a name='PromptPlusLibrary.ISliderControl.BarType(PromptPlusLibrary.SliderBarType)'></a>
+
+## ISliderControl\.BarType\(SliderBarType\) Method
+
+Selects the character set used to draw the slider bar\. Default is [Fill](SliderBarType.md#PromptPlusLibrary.SliderBarType.Fill 'PromptPlusLibrary\.SliderBarType\.Fill')\.
+
+```csharp
+PromptPlusLibrary.ISliderControl BarType(PromptPlusLibrary.SliderBarType type);
+```
+#### Parameters
+
+<a name='PromptPlusLibrary.ISliderControl.BarType(PromptPlusLibrary.SliderBarType).type'></a>
+
+`type` [SliderBarType](SliderBarType.md 'PromptPlusLibrary\.SliderBarType')
+
+The visual style of the bar, one of the [SliderBarType](SliderBarType.md 'PromptPlusLibrary\.SliderBarType') values\.
+
+#### Returns
+[ISliderControl](ISliderControl.md 'PromptPlusLibrary\.ISliderControl')  
+The same [ISliderControl](ISliderControl.md 'PromptPlusLibrary\.ISliderControl') instance, so additional settings can be chained\.
+
 <a name='PromptPlusLibrary.ISliderControl.ChangeColor(System.Func_double,ConsolePlusLibrary.Style_)'></a>
 
 ## ISliderControl\.ChangeColor\(Func\<double,Style\>\) Method
@@ -240,27 +261,6 @@ The same [ISliderControl](ISliderControl.md 'PromptPlusLibrary\.ISliderControl')
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
 Thrown when [filename](ISliderControl.md#PromptPlusLibrary.ISliderControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ISliderControl\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
-
-<a name='PromptPlusLibrary.ISliderControl.Fill(PromptPlusLibrary.SliderBarType)'></a>
-
-## ISliderControl\.Fill\(SliderBarType\) Method
-
-Selects the character set used to draw the slider bar\. Default is [Fill](SliderBarType.md#PromptPlusLibrary.SliderBarType.Fill 'PromptPlusLibrary\.SliderBarType\.Fill')\.
-
-```csharp
-PromptPlusLibrary.ISliderControl Fill(PromptPlusLibrary.SliderBarType type);
-```
-#### Parameters
-
-<a name='PromptPlusLibrary.ISliderControl.Fill(PromptPlusLibrary.SliderBarType).type'></a>
-
-`type` [SliderBarType](SliderBarType.md 'PromptPlusLibrary\.SliderBarType')
-
-The visual style of the bar, one of the [SliderBarType](SliderBarType.md 'PromptPlusLibrary\.SliderBarType') values\.
-
-#### Returns
-[ISliderControl](ISliderControl.md 'PromptPlusLibrary\.ISliderControl')  
-The same [ISliderControl](ISliderControl.md 'PromptPlusLibrary\.ISliderControl') instance, so additional settings can be chained\.
 
 <a name='PromptPlusLibrary.ISliderControl.FractionalDigits(byte)'></a>
 

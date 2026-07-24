@@ -33,7 +33,7 @@
 		<PackageId>PromptPlus</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageProjectUrl>https://github.com/FRACerqueira/PromptPlus</PackageProjectUrl>
-		<Version>6.0.0-beta</Version>
+		<Version>6.0.0-beta1</Version>
 		<PackageIcon>icon.png</PackageIcon>
 		<Copyright>© 2026 - Fernando Cerqueira</Copyright>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -65,8 +65,15 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>. -->
 		</PackageReference>
 	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' != 'Debug'">
+	  <PackageReference Include="ConsolePlus.net" Version="1.0.0-Beta1" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+	  <ProjectReference Include="..\..\ConsolePlus\src\ConsolePlus.csproj" />
+	</ItemGroup>
 	<ItemGroup>
-	  <PackageReference Include="ConsolePlus.net" Version="0.5.2-Beta" />
+	  <!-- Enables FileHistory to be tested against a MockFileSystem instead of the real user profile. -->
+	  <PackageReference Include="System.IO.Abstractions" Version="*" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net10.0'">

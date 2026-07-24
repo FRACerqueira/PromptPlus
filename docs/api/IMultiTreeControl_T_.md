@@ -22,104 +22,176 @@ The type of items in the tree\.
 
 ### Remarks
 The tree structure is built the same way as [ITreeControl&lt;T&gt;](ITreeControl_T_.md 'PromptPlusLibrary\.ITreeControl\<T\>'): via
-[Root\(T\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Root(T) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Root\(T\)'), [AddLast\(T\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddLast(T) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddLast\(T\)')/[AddFirst\(T\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddFirst(T) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddFirst\(T\)'),
-[AddAfter\(ITreeNode&lt;T&gt;, T\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T\)')/[AddBefore\(ITreeNode&lt;T&gt;, T\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T\)') and the [ITreeNode&lt;T&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>') children
-helpers\. Container nodes display a tri\-state checkbox that reflects the aggregate check
-state of their descendants\. Pressing the check key \(Space\) on a container cycles through
-Unchecked → Checked \(all descendants\) → Unchecked\. Pressing Enter confirms the selection
-and returns all checked leaf \(or all checked\) values\.
+[Root\(T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Root(T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Root\(T, bool, bool\)'), [AddLast\(T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddLast(T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddLast\(T, bool, bool\)')/
+[AddFirst\(T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddFirst(T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddFirst\(T, bool, bool\)'), [AddAfter\(ITreeNode&lt;T&gt;, T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool, bool\)')/
+[AddBefore\(ITreeNode&lt;T&gt;, T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool, bool\)') and the [IMultiTreeNode&lt;T&gt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')
+children helpers\. Container nodes display a tri\-state
+checkbox that reflects the aggregate check state of their descendants\. Pressing the check
+key \(Space\) on a container cycles through Unchecked → Checked \(all descendants\) →
+Unchecked\. Pressing Enter confirms the selection and returns all checked leaf \(or all
+checked\) values\. Nodes can be marked `disable` at creation time: they are shown and
+navigable but cannot be checked/unchecked interactively; a cascading check still passes
+through a disabled node to reach its enabled descendants, and a disabled node force\-marked
+via [Default\(IEnumerable&lt;T&gt;, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Default(System.Collections.Generic.IEnumerable_T_,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Default\(System\.Collections\.Generic\.IEnumerable\<T\>, bool\)') survives a mass\-uncheck \(`F2`\) unaffected, same as
+[IMultiSelectControl&lt;T&gt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>')\. Nodes can also be marked `check` at creation
+time to start pre\-checked \(additive with [Default\(IEnumerable&lt;T&gt;, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Default(System.Collections.Generic.IEnumerable_T_,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Default\(System\.Collections\.Generic\.IEnumerable\<T\>, bool\)')/history — whichever marks
+a node checked, it stays checked\)\. [AddLast\(T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddLast(T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddLast\(T, bool, bool\)')/
+[AddFirst\(T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddFirst(T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddFirst\(T, bool, bool\)')/[AddAfter\(ITreeNode&lt;T&gt;, T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool, bool\)')/
+[AddBefore\(ITreeNode&lt;T&gt;, T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool, bool\)') return [IMultiTreeNode&lt;T&gt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')
+\(not the plain [ITreeNode&lt;T&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')\), so chaining further down the tree keeps access
+to `check`, not just the top\-level calls made directly off the control\.
 ### Methods
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T)'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool,bool)'></a>
 
-## IMultiTreeControl\<T\>\.AddAfter\(ITreeNode\<T\>, T\) Method
+## IMultiTreeControl\<T\>\.AddAfter\(ITreeNode\<T\>, T, bool, bool\) Method
 
-Inserts a new sibling immediately after [node](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T).node 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T\)\.node')\.
+Inserts a new sibling immediately after [node](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).node 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool, bool\)\.node')\.
 
 ```csharp
-PromptPlusLibrary.ITreeNode<T> AddAfter(PromptPlusLibrary.ITreeNode<T> node, T value);
+PromptPlusLibrary.IMultiTreeNode<T> AddAfter(PromptPlusLibrary.ITreeNode<T> node, T value, bool disable=false, bool check=false);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T).node'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).node'></a>
 
 `node` [PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T).value'></a>
+The reference sibling\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).value'></a>
 
 `value` [T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')
 
+The value of the new node\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).disable'></a>
+
+`disable` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the new node cannot be checked\. Default is `false`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).check'></a>
+
+`check` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+Same semantics as in [Root\(T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Root(T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Root\(T, bool, bool\)')\.
+
 #### Returns
-[PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
+[PromptPlusLibrary\.IMultiTreeNode&lt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')
 
 #### Exceptions
 
 [System\.InvalidOperationException](https://learn.microsoft.com/en-us/dotnet/api/system.invalidoperationexception 'System\.InvalidOperationException')  
-Thrown if [node](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T).node 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T\)\.node') does not belong to this tree or is the root\.
+Thrown if [node](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).node 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool, bool\)\.node') does not belong to this tree or is the root\.
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T)'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool,bool)'></a>
 
-## IMultiTreeControl\<T\>\.AddBefore\(ITreeNode\<T\>, T\) Method
+## IMultiTreeControl\<T\>\.AddBefore\(ITreeNode\<T\>, T, bool, bool\) Method
 
-Inserts a new sibling immediately before [node](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T).node 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T\)\.node')\.
+Inserts a new sibling immediately before [node](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).node 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool, bool\)\.node')\.
 
 ```csharp
-PromptPlusLibrary.ITreeNode<T> AddBefore(PromptPlusLibrary.ITreeNode<T> node, T value);
+PromptPlusLibrary.IMultiTreeNode<T> AddBefore(PromptPlusLibrary.ITreeNode<T> node, T value, bool disable=false, bool check=false);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T).node'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).node'></a>
 
 `node` [PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T).value'></a>
+The reference sibling\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).value'></a>
 
 `value` [T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')
 
+The value of the new node\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).disable'></a>
+
+`disable` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the new node cannot be checked\. Default is `false`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).check'></a>
+
+`check` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+Same semantics as in [Root\(T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Root(T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Root\(T, bool, bool\)')\.
+
 #### Returns
-[PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
+[PromptPlusLibrary\.IMultiTreeNode&lt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')
 
 #### Exceptions
 
 [System\.InvalidOperationException](https://learn.microsoft.com/en-us/dotnet/api/system.invalidoperationexception 'System\.InvalidOperationException')  
-Thrown if [node](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T).node 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T\)\.node') does not belong to this tree or is the root\.
+Thrown if [node](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool,bool).node 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool, bool\)\.node') does not belong to this tree or is the root\.
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddFirst(T)'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddFirst(T,bool,bool)'></a>
 
-## IMultiTreeControl\<T\>\.AddFirst\(T\) Method
+## IMultiTreeControl\<T\>\.AddFirst\(T, bool, bool\) Method
 
 Adds a new node as the first child of the root and returns it\.
 
 ```csharp
-PromptPlusLibrary.ITreeNode<T> AddFirst(T value);
+PromptPlusLibrary.IMultiTreeNode<T> AddFirst(T value, bool disable=false, bool check=false);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddFirst(T).value'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddFirst(T,bool,bool).value'></a>
 
 `value` [T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')
 
+The value of the new node\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddFirst(T,bool,bool).disable'></a>
+
+`disable` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the new node cannot be checked\. Default is `false`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddFirst(T,bool,bool).check'></a>
+
+`check` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+Same semantics as in [Root\(T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Root(T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Root\(T, bool, bool\)')\.
+
 #### Returns
-[PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
+[PromptPlusLibrary\.IMultiTreeNode&lt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddLast(T)'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddLast(T,bool,bool)'></a>
 
-## IMultiTreeControl\<T\>\.AddLast\(T\) Method
+## IMultiTreeControl\<T\>\.AddLast\(T, bool, bool\) Method
 
 Adds a new node as the last child of the root and returns it so children can be
 appended to it\.
 
 ```csharp
-PromptPlusLibrary.ITreeNode<T> AddLast(T value);
+PromptPlusLibrary.IMultiTreeNode<T> AddLast(T value, bool disable=false, bool check=false);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddLast(T).value'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddLast(T,bool,bool).value'></a>
 
 `value` [T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')
 
+The value of the new node\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddLast(T,bool,bool).disable'></a>
+
+`disable` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the new node cannot be checked\. Default is `false`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.AddLast(T,bool,bool).check'></a>
+
+`check` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+Same semantics as in [Root\(T, bool, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Root(T,bool,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Root\(T, bool, bool\)')\.
+
 #### Returns
-[PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
+[PromptPlusLibrary\.IMultiTreeNode&lt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](IMultiTreeNode_T_.md 'PromptPlusLibrary\.IMultiTreeNode\<T\>')
 
 <a name='PromptPlusLibrary.IMultiTreeControl_T_.CascadeCheck(bool)'></a>
 
@@ -434,37 +506,39 @@ PromptPlusLibrary.IMultiTreeControl<T> PathSeparator(char value);
 #### Returns
 [PromptPlusLibrary\.IMultiTreeControl&lt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.PredicateSelected(System.Func_T,bool_)'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.PredicateChecked(System.Func_T,bool_)'></a>
 
-## IMultiTreeControl\<T\>\.PredicateSelected\(Func\<T,bool\>\) Method
+## IMultiTreeControl\<T\>\.PredicateChecked\(Func\<T,bool\>\) Method
 
 Sets a predicate that decides whether a node can be checked\.
 Nodes that fail the predicate show an error when the user tries to check them\.
+Only evaluated when marking a node as checked — unchecking an already\-checked node is
+always allowed \(subject only to it not being disabled\) and never runs this predicate\.
 
 ```csharp
-PromptPlusLibrary.IMultiTreeControl<T> PredicateSelected(System.Func<T,bool> validselect);
+PromptPlusLibrary.IMultiTreeControl<T> PredicateChecked(System.Func<T,bool> validselect);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.PredicateSelected(System.Func_T,bool_).validselect'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.PredicateChecked(System.Func_T,bool_).validselect'></a>
 
 `validselect` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
 
 #### Returns
 [PromptPlusLibrary\.IMultiTreeControl&lt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.PredicateSelectedAsync(System.Func_T,System.Threading.Tasks.Task_bool__)'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.PredicateCheckedAsync(System.Func_T,System.Threading.Tasks.Task_bool__)'></a>
 
-## IMultiTreeControl\<T\>\.PredicateSelectedAsync\(Func\<T,Task\<bool\>\>\) Method
+## IMultiTreeControl\<T\>\.PredicateCheckedAsync\(Func\<T,Task\<bool\>\>\) Method
 
-Asynchronous variant of [PredicateSelected\(Func&lt;T,bool&gt;\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.PredicateSelected(System.Func_T,bool_) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.PredicateSelected\(System\.Func\<T,bool\>\)')\.
+Asynchronous variant of [PredicateChecked\(Func&lt;T,bool&gt;\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.PredicateChecked(System.Func_T,bool_) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.PredicateChecked\(System\.Func\<T,bool\>\)')\.
 
 ```csharp
-PromptPlusLibrary.IMultiTreeControl<T> PredicateSelectedAsync(System.Func<T,System.Threading.Tasks.Task<bool>> validselect);
+PromptPlusLibrary.IMultiTreeControl<T> PredicateCheckedAsync(System.Func<T,System.Threading.Tasks.Task<bool>> validselect);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.PredicateSelectedAsync(System.Func_T,System.Threading.Tasks.Task_bool__).validselect'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.PredicateCheckedAsync(System.Func_T,System.Threading.Tasks.Task_bool__).validselect'></a>
 
 `validselect` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
 
@@ -523,20 +597,37 @@ PromptPlusLibrary.IMultiTreeControl<T> RecursiveMarkWithCtrlSpace(bool value=tru
 [PromptPlusLibrary\.IMultiTreeControl&lt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')  
 The same [IMultiTreeControl&lt;T&gt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>') instance for chaining\.
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.Root(T)'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.Root(T,bool,bool)'></a>
 
-## IMultiTreeControl\<T\>\.Root\(T\) Method
+## IMultiTreeControl\<T\>\.Root\(T, bool, bool\) Method
 
 Sets the root value of the tree\. Must be called before adding any children\.
 
 ```csharp
-PromptPlusLibrary.IMultiTreeControl<T> Root(T value);
+PromptPlusLibrary.IMultiTreeControl<T> Root(T value, bool disable=false, bool check=false);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.Root(T).value'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.Root(T,bool,bool).value'></a>
 
 `value` [T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')
+
+The root value\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.Root(T,bool,bool).disable'></a>
+
+`disable` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the root cannot be checked\. Default is `false`\.
+
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.Root(T,bool,bool).check'></a>
+
+`check` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the root starts pre\-checked\. Additive with [Default\(IEnumerable&lt;T&gt;, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Default(System.Collections.Generic.IEnumerable_T_,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Default\(System\.Collections\.Generic\.IEnumerable\<T\>, bool\)')/
+history — whichever marks it, it stays checked\. Subject to cascade the same way an
+interactive check would be; does not auto\-expand the tree to reveal it \(unlike
+[Default\(IEnumerable&lt;T&gt;, bool\)](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Default(System.Collections.Generic.IEnumerable_T_,bool) 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Default\(System\.Collections\.Generic\.IEnumerable\<T\>, bool\)')\)\.
 
 #### Returns
 [PromptPlusLibrary\.IMultiTreeControl&lt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')
@@ -544,7 +635,7 @@ PromptPlusLibrary.IMultiTreeControl<T> Root(T value);
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [value](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Root(T).value 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Root\(T\)\.value') is `null`\.
+Thrown when [value](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.Root(T,bool,bool).value 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.Root\(T, bool, bool\)\.value') is `null`\.
 
 <a name='PromptPlusLibrary.IMultiTreeControl_T_.Run(System.Threading.CancellationToken)'></a>
 

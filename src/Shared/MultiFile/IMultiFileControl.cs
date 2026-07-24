@@ -174,7 +174,7 @@ namespace PromptPlusLibrary
         /// <param name="validselect">A function returning whether the item can be checked and an optional error message. Cannot be <c>null</c>.</param>
         /// <returns>The same <see cref="IMultiFileControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="validselect"/> is <c>null</c>.</exception>
-        IMultiFileControl PredicateSelected(Func<FileItem, (bool, string?)> validselect);
+        IMultiFileControl PredicateChecked(Func<FileItem, (bool, string?)> validselect);
 
         /// <summary>
         /// Sets a predicate that decides whether a given <see cref="FileItem"/> may be checked. When the
@@ -185,7 +185,7 @@ namespace PromptPlusLibrary
         /// <param name="validselect">A function returning whether the item can be checked. Cannot be <c>null</c>.</param>
         /// <returns>The same <see cref="IMultiFileControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="validselect"/> is <c>null</c>.</exception>
-        IMultiFileControl PredicateSelected(Func<FileItem, bool> validselect);
+        IMultiFileControl PredicateChecked(Func<FileItem, bool> validselect);
 
         /// <summary>
         /// Sets an asynchronous predicate that decides whether a given <see cref="FileItem"/> may be
@@ -197,7 +197,7 @@ namespace PromptPlusLibrary
         /// <returns>The same <see cref="IMultiFileControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="validselect"/> is <c>null</c>.</exception>
         /// <remarks>For an individual toggle the predicate is evaluated synchronously (blocking) on the UI thread. During a recursive folder (wildcard) selection it is evaluated on a background thread while enumerating the subtree, so it must be thread-safe and should not touch UI state.</remarks>
-        IMultiFileControl PredicateSelectedAsync(Func<FileItem, Task<(bool, string?)>> validselect);
+        IMultiFileControl PredicateCheckedAsync(Func<FileItem, Task<(bool, string?)>> validselect);
 
         /// <summary>
         /// Sets an asynchronous predicate that decides whether a given <see cref="FileItem"/> may be
@@ -209,7 +209,7 @@ namespace PromptPlusLibrary
         /// <returns>The same <see cref="IMultiFileControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="validselect"/> is <c>null</c>.</exception>
         /// <remarks>For an individual toggle the predicate is evaluated synchronously (blocking) on the UI thread. During a recursive folder (wildcard) selection it is evaluated on a background thread while enumerating the subtree, so it must be thread-safe and should not touch UI state.</remarks>
-        IMultiFileControl PredicateSelectedAsync(Func<FileItem, Task<bool>> validselect);
+        IMultiFileControl PredicateCheckedAsync(Func<FileItem, Task<bool>> validselect);
 
         /// <summary>
         /// Displays the MultiFile control and blocks until the user confirms or cancels, returning the

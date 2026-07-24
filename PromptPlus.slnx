@@ -28,4 +28,5 @@
     <Project Path="samples/TreeControlSamples/TreeControlSamples.csproj" />
   </Folder>
   <Project Path="src/PromptPlus.csproj" />
+  <Project Path="tests/PromptPlus.Tests/PromptPlus.Tests.csproj" />
 </Solution>

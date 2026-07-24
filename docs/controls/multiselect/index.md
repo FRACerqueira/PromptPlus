@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [MultiSelect — Methods →](methods.md)
+[? Back to Home](../../../README.md) • **Next:** [MultiSelect — Methods ?](methods.md)
 
 ---
 
@@ -24,7 +24,7 @@ same grouping, filtering, and paging — but each row carries a checkbox and `.R
 items under headers, filter as the user types, enforce a minimum/maximum number of picks, show extra
 info per row, and validate each check before it is accepted.
 
-> ☑️ Need to pick exactly **one** item? Use the [**Select**](../select/index.md) control — same list
+> ?? Need to pick exactly **one** item? Use the [**Select**](../select/index.md) control — same list
 > model, single answer.
 
 ---
@@ -119,7 +119,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Filtering & paging | `Filter`, `PageSize` |
 | Initial value | `Default`, `UseDefaultHistory`, `DefaultMatchBy` |
 | Selection range | `Range` |
-| Validate each check | `PredicateSelected`, `PredicateSelectedAsync` |
+| Validate each check | `PredicateChecked`, `PredicateCheckedAsync` |
 | Read-only display | `ViewOnly` |
 | Dynamic description | `ChangeDescription`, `ChangeDescriptionAsync` |
 | History | `EnabledHistory` |

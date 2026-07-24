@@ -2,6 +2,18 @@
 
 > Back to [Migration Overview](../../migration-v5-to-v6.md)
 
+## Renamed public methods
+
+The v5.x members below were **renamed** in v6.x (same behavior, new name). Apply to both `Input` and
+`Secret`.
+
+| Control | v5.x member | v6.x member |
+|---|---|---|
+| Input / Secret | `PredicateSelected(Func<string, bool>)` | `PredicateValid(Func<string, bool>)` |
+| Input / Secret | `PredicateSelected(Func<string, (bool, string?)>)` | `PredicateValid(Func<string, (bool, string?)>)` |
+
+> The async overloads follow the same name: `PredicateValidAsync` (new in v6.x).
+
 ## AutoComplete → Input
 
 In v5.x, `AutoComplete` was a dedicated, **non-generic** control (`PromptPlus.Controls.AutoComplete(...)`) built around an async completion service. In v6.x the dedicated control is **removed**; suggestion/completion is provided by `Input` via `SuggestionHandler` / `SuggestionHandlerAsync`.
@@ -92,15 +104,16 @@ PromptPlus.Controls.Input("City:")
     .Run();
 ```
 
-### `PredicateSelectedAsync`
+### `PredicateValidAsync`
 
-The v5.x `Input` had only the synchronous `PredicateSelected`. v6.x adds async overloads (useful for remote validation).
+The v5.x `Input` had only the synchronous validator, named `PredicateSelected`. v6.x **renames** it to
+`PredicateValid` and adds async overloads (`PredicateValidAsync`, useful for remote validation).
 
 ```csharp
 using PromptPlusLibrary;
 
 PromptPlus.Controls.Input("E-mail:")
-    .PredicateSelectedAsync(async value =>
+    .PredicateValidAsync(async value =>
     {
         bool valid = await CheckEmailExistsAsync(value);
         return (valid, valid ? null : "E-mail not found");
@@ -135,8 +148,6 @@ PromptPlus.Controls.Input("Tax ID:")
 | `DefaultIfEmpty(string value)` | Unchanged |
 | `InputToCase(CaseOptions value)` | **Already existed in v5.x** (not new) |
 | `AcceptInput(Func<char, bool>)` | Unchanged |
-| `PredicateSelected(Func<string, bool>)` | Unchanged |
-| `PredicateSelected(Func<string, (bool, string?)>)` | Unchanged |
 | `ChangeDescription(Func<string, string>)` | Unchanged |
 | `Styles(InputStyles, Style)` | Unchanged |
 | `Options(Action<IControlOptions>)` | Unchanged |
@@ -148,6 +159,8 @@ PromptPlus.Controls.Input("Tax ID:")
 |---|---|---|
 | `MaxLength(int, byte?)` | `MaxLength(int)` | Optional second parameter dropped |
 | `SuggestionHandler(Func<string,string[]>)` | `SuggestionHandler(Func<string,string[]>, bool autocomplete = true)` | `autocomplete` parameter added |
+| `PredicateSelected(Func<string, bool>)` | `PredicateValid(Func<string, bool>)` | Renamed |
+| `PredicateSelected(Func<string, (bool, string?)>)` | `PredicateValid(Func<string, (bool, string?)>)` | Renamed |
 
 ### Removed
 
@@ -162,8 +175,8 @@ PromptPlus.Controls.Input("Tax ID:")
 |---|---|
 | `SuggestionHandlerAsync(Func<string, Task<string[]>>, bool autocomplete = true)` | Async suggestion provider |
 | `MinimumSuggestionLength(byte)` | Minimum characters before suggestions appear |
-| `PredicateSelectedAsync(Func<string, Task<bool>>)` | Async validation |
-| `PredicateSelectedAsync(Func<string, Task<(bool, string?)>>)` | Async validation with error message |
+| `PredicateValidAsync(Func<string, Task<bool>>)` | Async validation |
+| `PredicateValidAsync(Func<string, Task<(bool, string?)>>)` | Async validation with error message |
 | `ChangeDescriptionAsync(Func<string, Task<string>>)` | Async dynamic description |
 
 > ⚠️ **Correction vs. earlier drafts:** `SuggestionHandlerAsync` is **new in v6.x** — it did **not** exist on the v5.x `Input`, and it is **not** removed. Likewise, `InputToCase` already existed in v5.x and is **not** a v6.x novelty.

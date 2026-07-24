@@ -137,32 +137,32 @@ internal static class Program
         PrintResult(r3);
 
         // --------------------------------------------------------------------
-        // 4 - PredicateSelected (bool overload)
+        // 4 - PredicateChecked (bool overload)
         //     Demonstrates: restricting which rows can be toggled at all
         // --------------------------------------------------------------------
-        ShowSection("4) PredicateSelected(bool) - only Electronics or Peripherals can be checked");
+        ShowSection("4) PredicateChecked(bool) - only Electronics or Peripherals can be checked");
 
         var r4 = PromptPlus.Controls.MultiTable<Product>("Select Electronics/Peripherals products")
             .AddColumn("Name",     x => x.Name)
             .AddColumn("Category", x => x.Category)
             .AddColumn("Price",    x => x.Price, v => $"${v:N2}", alignment: ColumnAlignment.Right)
             .AddItems(s_products)
-            .PredicateSelected(p => p.Category is "Electronics" or "Peripherals")
+            .PredicateChecked(p => p.Category is "Electronics" or "Peripherals")
             .TextSelector(item => $"{item.Name} (${item.Price:N2})")
             .Run();
         PrintResult(r4);
 
         // --------------------------------------------------------------------
-        // 5 - PredicateSelected (bool + message overload)
+        // 5 - PredicateChecked (bool + message overload)
         //     Demonstrates: custom validation error message per rejected row
         // --------------------------------------------------------------------
-        ShowSection("5) PredicateSelected(bool, message) - custom error message per item");
+        ShowSection("5) PredicateChecked(bool, message) - custom error message per item");
 
         var r5 = PromptPlus.Controls.MultiTable<Product>("Select products (stock > 50 only)")
             .AddColumn("Name",  x => x.Name)
             .AddColumn("Stock", x => x.Stock, alignment: ColumnAlignment.Right, width: 7)
             .AddItems(s_products)
-            .PredicateSelected(p => p.Stock > 50
+            .PredicateChecked(p => p.Stock > 50
                 ? (true, null)
                 : (false, $"'{p.Name}' has only {p.Stock} units in stock (minimum: 51)."))
             .TextSelector(item => $"{item.Name} (stock: {item.Stock})")
@@ -170,17 +170,17 @@ internal static class Program
         PrintResult(r5);
 
         // --------------------------------------------------------------------
-        // 6 - PredicateSelectedAsync (bool + message overload)
+        // 6 - PredicateCheckedAsync (bool + message overload)
         //     Demonstrates: async predicate with error message
         // --------------------------------------------------------------------
-        ShowSection("6) PredicateSelectedAsync(bool, message) - async availability check");
+        ShowSection("6) PredicateCheckedAsync(bool, message) - async availability check");
 
         var r6 = PromptPlus.Controls.MultiTable<Product>("Select available products (async check)")
             .AddColumn("Name",      x => x.Name)
             .AddColumn("Available", x => x.Available ? "Yes" : "No",
                 alignment: ColumnAlignment.Center, width: 10)
             .AddItems(s_products)
-            .PredicateSelectedAsync(async p =>
+            .PredicateCheckedAsync(async p =>
             {
                 await Task.Delay(1); // simulate async lookup
                 return p.Available

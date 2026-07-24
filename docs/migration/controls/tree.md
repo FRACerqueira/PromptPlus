@@ -9,6 +9,19 @@
 | `NodeTreeSelect<T>()` | `Tree<T>()` |
 | `NodeTreeMultiSelect<T>()` | `MultiTree<T>()` |
 
+## Renamed public methods
+
+Beyond the factory renames above, `MultiTree<T>` **renamed** its confirmation validator. `Tree<T>`
+(single-selection) keeps `PredicateSelected`.
+
+| Control | v5.x member | v6.x member |
+|---|---|---|
+| MultiTree | `PredicateSelected(Func<T, bool>)` | `PredicateChecked(Func<T, bool>)` |
+| MultiTree | `PredicateSelected(Func<T, (bool, string?)>)` | `PredicateChecked(Func<T, (bool, string?)>)` |
+
+> The async overloads follow the same name: `MultiTree` uses `PredicateCheckedAsync`; `Tree` uses
+> `PredicateSelectedAsync`.
+
 The type constraint is unchanged: `where T : class, new()`.
 
 ---
@@ -122,7 +135,7 @@ var result = control.Run();
 
 ## What's new in v6.x
 
-New on `Tree`/`MultiTree`: `ViewOnly` · `Filter` · `ShowFullPath` · `DefaultMatchBy` · `Default` / `EnabledHistory` · `AddAfter` / `AddBefore` · `ChangeDescriptionAsync` · `ExtraInfoAsync` · `InteractionAsync` · `PredicateSelectedAsync` (x2). `Tree` adds `SelectLeafOnly`; `MultiTree` adds `CheckLeafOnly`, `CascadeCheck`, `RecursiveMarkWithCtrlSpace`.
+New on `Tree`/`MultiTree`: `ViewOnly` · `Filter` · `ShowFullPath` · `DefaultMatchBy` · `Default` / `EnabledHistory` · `AddAfter` / `AddBefore` · `ChangeDescriptionAsync` · `ExtraInfoAsync` · `InteractionAsync`. `Tree` adds `SelectLeafOnly` and `PredicateSelectedAsync` (x2); `MultiTree` adds `CheckLeafOnly`, `CascadeCheck`, `RecursiveMarkWithCtrlSpace`, `PredicateCheckedAsync` (x2), plus the node-level `disable` / `check` parameters on `Root`/`Add*`.
 
 ```csharp
 PromptPlus.Controls.MultiTree<Category>("Categories:")
@@ -163,6 +176,7 @@ PromptPlus.Controls.MultiTree<Category>("Categories:")
 | `HideCount(bool)` / `HideCountSelected(bool)` | ✅ | ❌ | Removed |
 | `PredicateDisabled(Func<T,bool>)` | ✅ | ❌ | Removed |
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
-| `Range(int, int?)` · `PredicateSelected` (x2) | ✅ | ✅ | Unchanged |
-| `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `CheckLeafOnly` · `ShowFullPath` · `ViewOnly` · `Filter` · `DefaultMatchBy` · async variants | ❌ | ✅ | New |
+| `Range(int, int?)` | ✅ | ✅ | Unchanged |
+| `PredicateSelected` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` (x2) |
+| `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `CheckLeafOnly` · `ShowFullPath` · `ViewOnly` · `Filter` · `DefaultMatchBy` · `PredicateChecked` (x2) · async variants | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<T[]>` | `ResultPrompt<T[]>` | Unchanged |

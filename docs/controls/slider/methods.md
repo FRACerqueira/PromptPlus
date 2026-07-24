@@ -29,7 +29,7 @@ in any order. Call [`Run`](#run) last.
 [Default](#default) ·
 [Step](#step) ·
 [LargeStep](#largestep) ·
-[Fill](#fill) ·
+[BarType](#bartype) ·
 [Layout](#layout) ·
 [ChangeColor](#changecolor) ·
 [ChangeGradient](#changegradient) ·
@@ -198,10 +198,10 @@ PromptPlus.Controls.Slider("Value")
 
 ## Bar appearance & layout
 
-### `Fill`
+### `BarType`
 
 ```csharp
-ISliderControl Fill(SliderBarType type)
+ISliderControl BarType(SliderBarType type)
 ```
 
 Selects the character set used to draw the bar. Default is `SliderBarType.Fill`.
@@ -215,8 +215,8 @@ Selects the character set used to draw the bar. Default is `SliderBarType.Fill`.
 | `Dot` | Dotted characters |
 
 ```csharp
-PromptPlus.Controls.Slider("Value", "Fill style: Square")
-    .Fill(SliderBarType.Square)
+PromptPlus.Controls.Slider("Value", "Bar style: Square")
+    .BarType(SliderBarType.Square)
     .Run();
 ```
 

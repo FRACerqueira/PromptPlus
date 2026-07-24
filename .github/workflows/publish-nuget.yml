@@ -32,14 +32,11 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
 
-      - name: Restore dependencies
-        run: dotnet restore
-
       - name: Build (Release)
-        run: dotnet build --no-restore --configuration Release -p:Version=${{ steps.version.outputs.VERSION }}
+        run: dotnet build src/PromptPlus.csproj --configuration Release -p:Version=${{ steps.version.outputs.VERSION }}
 
       - name: Test
-        run: dotnet test --no-build --configuration Release --verbosity normal
+        run: dotnet test tests/PromptPlus.Tests/PromptPlus.Tests.csproj --configuration Debug --verbosity normal
 
       - name: Pack tool
         run: >

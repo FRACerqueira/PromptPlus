@@ -245,6 +245,8 @@ namespace PromptPlusLibrary.Controls.Common
         {
             _items = [.. items];
             _firstDisabled = true;
+            SelectedIndex = -1;
+            SelectedPage = 0;
             InitializeCollection();
             if (selected.HasValue && selected.Value.HasValue)
             {

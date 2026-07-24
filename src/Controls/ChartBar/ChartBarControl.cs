@@ -63,11 +63,16 @@ namespace PromptPlusLibrary.Controls.ChartBar
         private List<string> _toggleTooltips = [];
         private int _indexTooltip;
         private int _sequence;
+        // Dedicated counter for auto-generated item ids — separate from _sequence (which only
+        // advances when a color is auto-assigned) so every AddItem call gets a stable, insertion-
+        // ordered id regardless of whether a color was passed explicitly.
+        private int _itemIdSequence;
         private string? _title;
         private TextAlignment _titleAlignment = TextAlignment.Center;
         private char _barOn = ' ';
         private double _ticketStep;
         private int _maxLengthLabel;
+        private int _maxLabelDisplayWidth;
         private int _maxShowLengthLabel;
 
 
@@ -134,7 +139,10 @@ namespace PromptPlusLibrary.Controls.ChartBar
         {
             ArgumentException.ThrowIfNullOrEmpty(label, nameof(label));
 
-            var itemId = id ?? Guid.NewGuid().ToString();
+            // Zero-padded so a lexicographic string sort (e.g. ChartBarOrder.LabelAsc-style ties,
+            // or any future feature that orders by Id) still matches insertion order regardless of
+            // how many items are added — "0000000002" sorts before "0000000010", "2" would not.
+            var itemId = id ?? (_itemIdSequence++).ToString("D10", CultureInfo.InvariantCulture);
 
             if (!colorBar.HasValue)
             {
@@ -378,8 +386,10 @@ namespace PromptPlusLibrary.Controls.ChartBar
             double maxValue = _items.Max(x => x.Value);
             _ticketStep = maxValue == 0 ? 1 : _width / maxValue;
 
-            // Calculate max label length
-            _maxLengthLabel = _items.Max(x => x.Label.Length);
+            // Calculate max label length. MaxLengthLabel's public contract is a count of
+            // symbols/runes (documented as "characters"), not display columns — counted by rune so a
+            // CJK supplementary-plane surrogate pair is never counted as 2.
+            _maxLengthLabel = _items.Max(x => DisplayWidthHelpers.CountRunes(x.Label));
 
             // Apply label truncation if set (0 = no truncation)
             if (_maxShowLengthLabel > 0 && _maxLengthLabel > _maxShowLengthLabel)
@@ -391,6 +401,15 @@ namespace PromptPlusLibrary.Controls.ChartBar
                 // No truncation - use full label length
                 _maxShowLengthLabel = int.MaxValue;
             }
+
+            // Column alignment across items must be based on the DISPLAY WIDTH of each label once
+            // truncated to _maxLengthLabel runes, not on _maxLengthLabel itself — an ASCII label and a
+            // CJK label truncated to the same rune count can occupy very different terminal columns.
+            _maxLabelDisplayWidth = _items.Max(x =>
+            {
+                string truncated = DisplayWidthHelpers.TruncateToRuneCount(x.Label, _maxLengthLabel);
+                return truncated.GetDisplayLength() is { Length: > 0 } d ? d[0] : 0;
+            });
 
             // Set bar character based on type
             _barOn = _chartBarType switch
@@ -707,7 +726,11 @@ namespace PromptPlusLibrary.Controls.ChartBar
 
             _items = _order switch
             {
-                ChartBarOrder.None => [.. _items.OrderBy(x => x.Id)],
+                // Documented as "No sorting applied; items appear in insertion order" — must be a
+                // true no-op. Sorting by Id here was a real bug: auto-generated ids used to be
+                // random GUIDs (fixed alongside this, see AddItem), so "None" silently randomized
+                // item order on every run instead of preserving insertion order.
+                ChartBarOrder.None => _items,
                 ChartBarOrder.Smallest => [.. _items.OrderBy(x => x.Value)],
                 ChartBarOrder.Highest => [.. _items.OrderByDescending(x => x.Value)],
                 ChartBarOrder.LabelAsc => [.. _items.OrderBy(x => x.Label)],
@@ -903,30 +926,10 @@ namespace PromptPlusLibrary.Controls.ChartBar
             }
         }
 
-        // Helper method to write a line with alignment
+        // Helper method to write a line with alignment.
         private void WriteLineAlign(BufferScreen screenBuffer, string text, TextAlignment alignment, Style style)
         {
-            int maxWidth = _width;
-            string alignedText;
-
-            switch (alignment)
-            {
-                case TextAlignment.Left:
-                    alignedText = text.PadRight(maxWidth);
-                    break;
-                case TextAlignment.Center:
-                    int padding = Math.Max(0, (maxWidth - text.Length) / 2);
-                    alignedText = text.PadLeft(padding + text.Length).PadRight(maxWidth);
-                    break;
-                case TextAlignment.Right:
-                    alignedText = text.PadLeft(maxWidth);
-                    break;
-                default:
-                    alignedText = text;
-                    break;
-            }
-
-            screenBuffer.WriteLine(alignedText, style);
+            screenBuffer.WriteLine(DisplayWidthHelpers.AlignLine(text, _width, alignment), style);
         }
 
         private void WriteChart(BufferScreen screenBuffer)
@@ -983,10 +986,15 @@ namespace PromptPlusLibrary.Controls.ChartBar
                 bool isSelected = !IsWidget && item == _localPaginator?.SelectedItem;
                 Style labelStyle = isSelected ? _optStyles[ChartBarStyles.Selected] : _optStyles[ChartBarStyles.ChartLabel];
 
-                // Truncate label if needed
-                string label = item.Label.Length > _maxLengthLabel
-                    ? item.Label[.._maxLengthLabel]
-                    : item.Label.PadRight(_maxLengthLabel);
+                // Truncate to _maxLengthLabel runes (retention, char-count contract preserved), then
+                // pad to _maxLabelDisplayWidth columns (alignment, computed from real display width)
+                // so ASCII and CJK labels line up their bars on the same column.
+                string label = DisplayWidthHelpers.TruncateToRuneCount(item.Label, _maxLengthLabel);
+                int labelDisplayWidth = label.GetDisplayLength() is { Length: > 0 } ld ? ld[0] : 0;
+                if (labelDisplayWidth < _maxLabelDisplayWidth)
+                {
+                    label += new string(' ', _maxLabelDisplayWidth - labelDisplayWidth);
+                }
 
                 // Write label
                 if (!_showLegends)

@@ -416,6 +416,47 @@ namespace TreeControlSamples
             int total17 = PopulateGrouped(t17, groupCount: 15, itemsPerGroup: 40, startId: 300_001);
             PromptPlus.Console.WriteLine($"(built {total17:N0} nodes)");
             PrintResult(t17.Run());
+
+            // --------------------------------------------------------------------------------
+            ShowSection("18) Disabled nodes - AddLast(value, disable: true)");
+            // A disabled node is still shown and can still be navigated to and expanded/collapsed;
+            // only confirming it (Enter) is blocked, with the same message as SelectLeafOnly.
+            // ViewOnly ignores Disabled entirely, same as PredicateSelected/SelectLeafOnly.
+            var t18 = PromptPlus.Controls.Tree<Node>(
+                    "'Sales' is disabled - Enter on it is rejected",
+                    "You can still navigate onto it and expand/collapse it; only Enter is blocked")
+                .Root(root)
+                .TextSelector(n => n.Name)
+                .DefaultMatchBy((a, b) => a.Id == b.Id);
+
+            var t18Eng = t18.AddLast(eng);
+            var t18Back = t18Eng.AddLast(backend);
+            t18Back.AddLast(api);
+            t18Back.AddLast(database);
+            var t18Sales = t18.AddLast(sales, disable: true);
+            t18Sales.AddLast(emea);
+            t18Sales.AddLast(apac);
+            t18.AddLast(hr);
+
+            PrintResult(t18.Run());
+
+            // A Default(...)/history target that resolves to a disabled node is never pre-selected
+            // (mirrors Select/Table) - the cursor stays at its natural starting position instead of
+            // expanding down to a node the user could never confirm anyway.
+            var t18b = PromptPlus.Controls.Tree<Node>(
+                    "Default points to a disabled node ('Sales')",
+                    "The tree does NOT expand to it - Sales can never be confirmed anyway")
+                .Root(root)
+                .TextSelector(n => n.Name)
+                .DefaultMatchBy((a, b) => a.Id == b.Id)
+                .Default(sales);
+
+            var t18bEng = t18b.AddLast(eng);
+            t18bEng.AddLast(backend);
+            t18b.AddLast(sales, disable: true).AddLast(emea);
+            t18b.AddLast(hr);
+
+            PrintResult(t18b.Run());
         }
 
         /// <summary>

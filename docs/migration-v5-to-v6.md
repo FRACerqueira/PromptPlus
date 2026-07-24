@@ -150,7 +150,7 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | `WaitTimer` → `Time` | `ShowElapsedTime(int, bool)` | Elapsed display managed automatically |
 | `ProgressBar` | `IntervalUpdate(int)` | UI update interval not configurable |
 | `FileSelect` → `File` | `HideZeroEntries(bool)` | Empty folders are always shown |
-| `FileSelect` → `File` | `HideFilesBySize(long, long)` | Size filter not available (use `PredicateSelected` on `MultiFile`) |
+| `FileSelect` → `File` | `HideFilesBySize(long, long)` | Size filter not available (use `PredicateChecked` on `MultiFile`) |
 | `FileSelect` / `FileMultiSelect` | `EnabledSearchFilter(FilterMode)` | Built-in search filter not available (use `SearchPattern`) |
 | `FileMultiSelect` → `MultiFile` | `PredicateDisabled(Func<ItemFile,bool>)` | Per-item disable predicate not available |
 | `NodeTree*` | `DisableRecursiveCount(bool)` | Recursive child-count toggle not available |
@@ -190,14 +190,14 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 |---|---|
 | `KeyPress` | `ShowMessage(Func<ConsoleKeyInfo,string>)` · `ShowMessageAsync(...)` |
 | `Select<T>` | `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `ChangeDescriptionAsync` · `InteractionAsync` · `TextSelectorAsync` · `ExtraInfoAsync` · `PredicateSelectedAsync` (x2) |
-| `MultiSelect<T>` | `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `TextSelectorAsync` · `ExtraInfoAsync` · `ChangeDescriptionAsync` · `InteractionAsync` · `PredicateSelectedAsync` (x2) |
-| `Input` | `SuggestionHandler(..., bool autocomplete)` · `SuggestionHandlerAsync(..., bool autocomplete)` · `MinimumSuggestionLength(byte)` · `PredicateSelectedAsync` (x2) · `ChangeDescriptionAsync` |
-| `Table` / `MultiTable` | `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll` · `ChangeDescriptionAsync` · `TextSelectorAsync` · `InteractionAsync` · `PredicateSelectedAsync` (x2) · (`MultiTable`) `EnabledHistory` · `UseDefaultHistory` |
-| `Tree` / `MultiTree` | `ViewOnly` · `Filter` · `SelectLeafOnly`/`CheckLeafOnly` · `ShowFullPath` · `CascadeCheck` (MultiTree) · `ChangeDescriptionAsync` · `ExtraInfoAsync` · `InteractionAsync` · `PredicateSelectedAsync` (x2) |
+| `MultiSelect<T>` | `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `TextSelectorAsync` · `ExtraInfoAsync` · `ChangeDescriptionAsync` · `InteractionAsync` · `PredicateCheckedAsync` (x2) |
+| `Input` | `SuggestionHandler(..., bool autocomplete)` · `SuggestionHandlerAsync(..., bool autocomplete)` · `MinimumSuggestionLength(byte)` · `PredicateValidAsync` (x2) · `ChangeDescriptionAsync` |
+| `Table` / `MultiTable` | `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll` · `ChangeDescriptionAsync` · `TextSelectorAsync` · `InteractionAsync` · `PredicateSelectedAsync` (Table) / `PredicateCheckedAsync` (MultiTable) (x2) · (`MultiTable`) `EnabledHistory` · `UseDefaultHistory` |
+| `Tree` / `MultiTree` | `ViewOnly` · `Filter` · `SelectLeafOnly`/`CheckLeafOnly` · `ShowFullPath` · `CascadeCheck` (MultiTree) · `ChangeDescriptionAsync` · `ExtraInfoAsync` · `InteractionAsync` · `PredicateSelectedAsync` (Tree) / `PredicateCheckedAsync` (MultiTree) (x2) |
 | `MultiTasks` | `AddTaskAsync` · `Interaction<T>` · `StopOnError(bool)` · `Mode(MultiTasksMode)` |
 | `Task` | `ChangeDescription` · `ChangeDescriptionAsync` · `Context(IDictionary)` · `Culture(CultureInfo)` · multiple `Action`/`ActionAsync` overloads |
 | `Time` | `Duration(TimeSpan/int)` · `Format(string)` · `Culture(CultureInfo)` · `ChangeDescription` · `ChangeDescriptionAsync` · `DisplayMode(TimeDisplayMode)` |
-| `File` / `MultiFile` | `SelectFilesOnly(bool)` · `ShowFullPath(bool)` · (`MultiFile`) `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `PredicateSelectedAsync` (x2) |
+| `File` / `MultiFile` | `SelectFilesOnly(bool)` · `ShowFullPath(bool)` · (`MultiFile`) `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `PredicateCheckedAsync` (x2, MultiFile) |
 | `Switch` | `ChangeDescriptionAsync` · `OffValue(EmojiName, string)` · `OnValue(EmojiName, string)` |
 | `ProgressBar` | `ChangeDescriptionAsync` · `UpdateHandlerAsync` |
 | `ChartBar` | `PredicateSelectedAsync` (x2) · `ChangeDescriptionAsync` |

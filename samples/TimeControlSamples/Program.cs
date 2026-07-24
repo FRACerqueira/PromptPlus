@@ -26,7 +26,7 @@ namespace TimeControlSamples
 
             ShowSection("3) Duration(TimeSpan) - 10 seconds");
             result = PromptPlus.Controls.Time("Cooling down")
-                .Duration(TimeSpan.FromSeconds(10))
+                .Duration(TimeSpan.FromSeconds(20))
                 .Run();
             PrintSelectionResult(result);
 

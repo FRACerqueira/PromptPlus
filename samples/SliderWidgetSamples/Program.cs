@@ -83,7 +83,7 @@ namespace SliderWidgetSamples
             foreach (var type in Enum.GetValues<SliderBarType>())
             {
                 PromptPlus.Widgets.Slider(50)
-                    .Fill(type)
+                    .BarType(type)
                     .Show();
                 Pause();
             }

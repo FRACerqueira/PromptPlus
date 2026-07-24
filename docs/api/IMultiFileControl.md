@@ -202,9 +202,9 @@ The desired page size\.
 [IMultiFileControl](IMultiFileControl.md 'PromptPlusLibrary\.IMultiFileControl')  
 The same [IMultiFileControl](IMultiFileControl.md 'PromptPlusLibrary\.IMultiFileControl') instance for chaining\.
 
-<a name='PromptPlusLibrary.IMultiFileControl.PredicateSelected(System.Func_PromptPlusLibrary.FileItem,bool_)'></a>
+<a name='PromptPlusLibrary.IMultiFileControl.PredicateChecked(System.Func_PromptPlusLibrary.FileItem,bool_)'></a>
 
-## IMultiFileControl\.PredicateSelected\(Func\<FileItem,bool\>\) Method
+## IMultiFileControl\.PredicateChecked\(Func\<FileItem,bool\>\) Method
 
 Sets a predicate that decides whether a given [FileItem](FileItem.md 'PromptPlusLibrary\.FileItem') may be checked\. When the
 predicate returns `false`, the item cannot be checked \(a default message is used for an
@@ -212,11 +212,11 @@ individual toggle; mass selections skip rejected items silently\)\. Replaces any
 predicate \(sync or async\)\.
 
 ```csharp
-PromptPlusLibrary.IMultiFileControl PredicateSelected(System.Func<PromptPlusLibrary.FileItem,bool> validselect);
+PromptPlusLibrary.IMultiFileControl PredicateChecked(System.Func<PromptPlusLibrary.FileItem,bool> validselect);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiFileControl.PredicateSelected(System.Func_PromptPlusLibrary.FileItem,bool_).validselect'></a>
+<a name='PromptPlusLibrary.IMultiFileControl.PredicateChecked(System.Func_PromptPlusLibrary.FileItem,bool_).validselect'></a>
 
 `validselect` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[FileItem](FileItem.md 'PromptPlusLibrary\.FileItem')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
 
@@ -229,11 +229,11 @@ The same [IMultiFileControl](IMultiFileControl.md 'PromptPlusLibrary\.IMultiFile
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [validselect](IMultiFileControl.md#PromptPlusLibrary.IMultiFileControl.PredicateSelected(System.Func_PromptPlusLibrary.FileItem,bool_).validselect 'PromptPlusLibrary\.IMultiFileControl\.PredicateSelected\(System\.Func\<PromptPlusLibrary\.FileItem,bool\>\)\.validselect') is `null`\.
+Thrown when [validselect](IMultiFileControl.md#PromptPlusLibrary.IMultiFileControl.PredicateChecked(System.Func_PromptPlusLibrary.FileItem,bool_).validselect 'PromptPlusLibrary\.IMultiFileControl\.PredicateChecked\(System\.Func\<PromptPlusLibrary\.FileItem,bool\>\)\.validselect') is `null`\.
 
-<a name='PromptPlusLibrary.IMultiFileControl.PredicateSelectedAsync(System.Func_PromptPlusLibrary.FileItem,System.Threading.Tasks.Task_bool__)'></a>
+<a name='PromptPlusLibrary.IMultiFileControl.PredicateCheckedAsync(System.Func_PromptPlusLibrary.FileItem,System.Threading.Tasks.Task_bool__)'></a>
 
-## IMultiFileControl\.PredicateSelectedAsync\(Func\<FileItem,Task\<bool\>\>\) Method
+## IMultiFileControl\.PredicateCheckedAsync\(Func\<FileItem,Task\<bool\>\>\) Method
 
 Sets an asynchronous predicate that decides whether a given [FileItem](FileItem.md 'PromptPlusLibrary\.FileItem') may be
 checked\. When the predicate returns `false`, the item cannot be checked \(a default
@@ -241,11 +241,11 @@ message is used for an individual toggle; mass selections skip rejected items si
 Replaces any previously set predicate \(sync or async\)\.
 
 ```csharp
-PromptPlusLibrary.IMultiFileControl PredicateSelectedAsync(System.Func<PromptPlusLibrary.FileItem,System.Threading.Tasks.Task<bool>> validselect);
+PromptPlusLibrary.IMultiFileControl PredicateCheckedAsync(System.Func<PromptPlusLibrary.FileItem,System.Threading.Tasks.Task<bool>> validselect);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiFileControl.PredicateSelectedAsync(System.Func_PromptPlusLibrary.FileItem,System.Threading.Tasks.Task_bool__).validselect'></a>
+<a name='PromptPlusLibrary.IMultiFileControl.PredicateCheckedAsync(System.Func_PromptPlusLibrary.FileItem,System.Threading.Tasks.Task_bool__).validselect'></a>
 
 `validselect` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[FileItem](FileItem.md 'PromptPlusLibrary\.FileItem')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
 
@@ -258,7 +258,7 @@ The same [IMultiFileControl](IMultiFileControl.md 'PromptPlusLibrary\.IMultiFile
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [validselect](IMultiFileControl.md#PromptPlusLibrary.IMultiFileControl.PredicateSelectedAsync(System.Func_PromptPlusLibrary.FileItem,System.Threading.Tasks.Task_bool__).validselect 'PromptPlusLibrary\.IMultiFileControl\.PredicateSelectedAsync\(System\.Func\<PromptPlusLibrary\.FileItem,System\.Threading\.Tasks\.Task\<bool\>\>\)\.validselect') is `null`\.
+Thrown when [validselect](IMultiFileControl.md#PromptPlusLibrary.IMultiFileControl.PredicateCheckedAsync(System.Func_PromptPlusLibrary.FileItem,System.Threading.Tasks.Task_bool__).validselect 'PromptPlusLibrary\.IMultiFileControl\.PredicateCheckedAsync\(System\.Func\<PromptPlusLibrary\.FileItem,System\.Threading\.Tasks\.Task\<bool\>\>\)\.validselect') is `null`\.
 
 ### Remarks
 For an individual toggle the predicate is evaluated synchronously \(blocking\) on the UI thread\. During a recursive folder \(wildcard\) selection it is evaluated on a background thread while enumerating the subtree, so it must be thread\-safe and should not touch UI state\.

@@ -31,7 +31,7 @@ namespace CalendarControlSamples
                 var result = PromptPlus.Controls.Calendar("Select date")
                     .Default(now)
                     .Layout(CalendarLayout.AsciiSingleGrid)
-                    .Culture("pt-BR")
+                    .Culture("ko-KR")
                     .Run(token);
                 PrintSelectionResult(result);
 

@@ -72,6 +72,10 @@ namespace PromptPlusLibrary.Controls.Table
         // When _viewOnly is true this field captures the initial selection at InitControl so that
         // Enter always returns the original default/initial value, not the row the user browsed to.
         private ItemTable<T>? _initialItem;
+        // Coordinates of _initialItem at the moment it was captured. Kept alongside it so a
+        // view-only result's Value and RowIndex/ColumnIndex always describe the same row.
+        private int _initialRowIndex;
+        private int _initialColumnIndex;
 
         // ached sum of all column CalculatedWidths (without separators); updated in CalculateColumnWidths().
         private int _totalColumnsWidth;
@@ -430,6 +434,8 @@ namespace PromptPlusLibrary.Controls.Table
             // Snapshot the initial item so that in view-only mode Enter always returns
             // the original default/initial value regardless of where the user navigated.
             _initialItem = _localpaginator!.SelectedItem;
+            _initialRowIndex = _localpaginator.CurrentIndex;
+            _initialColumnIndex = _currentColumnIndex;
             // D5: resolve symbol chars once so WriteHeader can use pre-built strings on every frame.
             _cachedSelectorMarker   = $"{GetSymbol(SymbolType.Selector)[0]} ";
             _cachedFilterableSuffix = $" {GetSymbol(SymbolType.FilterableStatus)[0]} ";
@@ -445,11 +451,17 @@ namespace PromptPlusLibrary.Controls.Table
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    bool updatePosAnswerBufferBeforeThisKey = _updatePosAnswerBuffer;
                     _updatePosAnswerBuffer = true;
 
                     KeyPressResult press = ReadNextKey(true, cancellationToken);
                     if (press.IsResize || press.IsCancelled)
                     {
+                        // Restore the flag's pre-iteration value instead of leaving it force-set to
+                        // `true` above — a resize/cancel breaks out without reaching the resets a
+                        // real key applies below, and must not silently undo a scroll the user had
+                        // just navigated to on the answer preview (same fix as Select/MultiSelect).
+                        _updatePosAnswerBuffer = updatePosAnswerBufferBeforeThisKey;
                         if (press.IsCancelled)
                         {
                             _indexTooptip = 0;
@@ -465,9 +477,22 @@ namespace PromptPlusLibrary.Controls.Table
                     {
                         _indexTooptip = 0;
                         _modeView = ModeView.Select;
-                        ResultCtrl = _localpaginator!.SelectedItem != null
-                            ? new ResultPrompt<TableResult<T>>(new TableResult<T>(_localpaginator.SelectedItem.Value!, _localpaginator.CurrentIndex, _currentColumnIndex), true)
-                            : new ResultPrompt<TableResult<T>>(default!, true);
+                        if (_viewOnly)
+                        {
+                            // Same rule as Enter in view-only mode: always the original initial
+                            // item and its own coordinates, so the returned result matches what
+                            // FinishTemplate displays regardless of where the cursor browsed to.
+                            var viewItem = _initialItem ?? _localpaginator!.SelectedItem;
+                            ResultCtrl = viewItem != null
+                                ? new ResultPrompt<TableResult<T>>(new TableResult<T>(viewItem.Value, _initialRowIndex, _initialColumnIndex), true)
+                                : new ResultPrompt<TableResult<T>>(default!, true);
+                        }
+                        else
+                        {
+                            ResultCtrl = _localpaginator!.SelectedItem != null
+                                ? new ResultPrompt<TableResult<T>>(new TableResult<T>(_localpaginator.SelectedItem.Value!, _localpaginator.CurrentIndex, _currentColumnIndex), true)
+                                : new ResultPrompt<TableResult<T>>(default!, true);
+                        }
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
@@ -485,9 +510,11 @@ namespace PromptPlusLibrary.Controls.Table
                         if (_viewOnly)
                         {
                             _modeView = ModeView.Select;
-                            // In view-only mode return the original initial item, not the browsed cursor.
+                            // In view-only mode return the original initial item and its own
+                            // coordinates, not wherever the cursor browsed to — Value and
+                            // RowIndex/ColumnIndex must describe the same row.
                             var viewItem = _initialItem ?? _localpaginator!.SelectedItem;
-                            ResultCtrl = new ResultPrompt<TableResult<T>>(new TableResult<T>(viewItem.Value, _localpaginator.CurrentIndex, _currentColumnIndex), false);
+                            ResultCtrl = new ResultPrompt<TableResult<T>>(new TableResult<T>(viewItem.Value, _initialRowIndex, _initialColumnIndex), false);
                             break;
                         }
                         if (_localpaginator.SelectedItem.Disabled)
@@ -532,6 +559,14 @@ namespace PromptPlusLibrary.Controls.Table
                     else if (keyinfo.IsPressTabKey())
                     {
                         _indexTooptip = 0;
+                        // Switching columns mid-filter would leave a stale filter term matched
+                        // against a different column's text (silently, for Answer; down to zero
+                        // rows, for ColumnFilters — see FASE2-CONTROLS-PLAN.md). A filter is only
+                        // ever valid on the column it was started on, so changing column exits it.
+                        if (_modeView == ModeView.Filter)
+                        {
+                            ExitFilterMode();
+                        }
                         _currentColumnIndex++;
                         if (_currentColumnIndex >= _columns.Count)
                         {
@@ -542,6 +577,10 @@ namespace PromptPlusLibrary.Controls.Table
                     else if (keyinfo.IsPressShiftTabKey())
                     {
                         _indexTooptip = 0;
+                        if (_modeView == ModeView.Filter)
+                        {
+                            ExitFilterMode();
+                        }
                         _currentColumnIndex--;
                         if (_currentColumnIndex < 0)
                         {
@@ -756,9 +795,12 @@ namespace PromptPlusLibrary.Controls.Table
                     }
                     // Jump-by-first-char is only reachable when filter is disabled (otherwise any
                     // printable key transitions the control into filter mode instead of jumping).
-                    if (!_viewOnly && _filterType == FilterMode.Disabled)
+                    // Jump only works via item.FilterableText, built from columns marked
+                    // isFilterable — advertise it only when at least one column qualifies,
+                    // otherwise the tooltip promises a key that silently does nothing.
+                    if (!_viewOnly && _filterType == FilterMode.Disabled && _columns.Exists(c => c.IsFilterable))
                     {
-                        lsttooltips.Add(PromptPlusResources.TooltipJump);
+                        lsttooltips.Add(PromptPlusResources.TooltipTableJump);
                     }
                 }
                 if (OptionsControl.EnabledAbortKeyValue)
@@ -800,6 +842,18 @@ namespace PromptPlusLibrary.Controls.Table
             {
                 _modeView = ModeView.Select;
             }
+        }
+
+        // A filter term is only ever valid on the column it was typed against (Answer falls back
+        // to the current column's cell text when no TextSelector is set; ColumnFilters always
+        // targets the current column). Changing column mid-filter exits it entirely instead of
+        // silently re-targeting the search or, for ColumnFilters, matching nothing at all.
+        private void ExitFilterMode()
+        {
+            _modeView = ModeView.Select;
+            _filterBuffer.Clear();
+            _localpaginator!.UpdateFilter(string.Empty);
+            _lastinput = string.Empty;
         }
 
         private void SetSelectionDisabledErrorIfNeeded(bool ignoreViewOnly = false)
@@ -1045,25 +1099,27 @@ namespace PromptPlusLibrary.Controls.Table
                     ? HeaderSelectionSuffixWidth + 1
                     : HeaderSelectionSuffixWidth;
 
+                int headerDisplayWidth = column.Header.GetDisplayLength() is { Length: > 0 } hd ? hd[0] : 0;
+
                 if (column.Width.HasValue)
                 {
                     // The declared width is a minimum. Expand it when it is too narrow
                     // to render the header text together with the marker + suffix decorations
-                    // (which always occupy HeaderSelectionPrefixWidth + suffixWidth chars).
-                    int minForHeader = column.Header.Length + HeaderSelectionPrefixWidth + suffixWidth;
+                    // (which always occupy HeaderSelectionPrefixWidth + suffixWidth columns).
+                    int minForHeader = headerDisplayWidth + HeaderSelectionPrefixWidth + suffixWidth;
                     column.CalculatedWidth = Math.Max(column.Width.Value, minForHeader);
                     continue;
                 }
 
                 // Auto-width: start from the header+decoration minimum, then expand to
                 // the widest formatted cell value across all items.
-                int autoWidth = column.Header.Length + HeaderSelectionPrefixWidth + suffixWidth;
+                int autoWidth = headerDisplayWidth + HeaderSelectionPrefixWidth + suffixWidth;
 
                 foreach (ItemTable<T> item in _items)
                 {
                     if (colIndex < item.CachedCellValues.Length)
                     {
-                        int cellLen = item.CachedCellValues[colIndex]?.Length ?? 0;
+                        int cellLen = item.CachedCellValues[colIndex]?.GetDisplayLength() is { Length: > 0 } cd ? cd[0] : 0;
                         if (cellLen > autoWidth)
                         {
                             autoWidth = cellLen;
@@ -1360,7 +1416,7 @@ namespace PromptPlusLibrary.Controls.Table
         private static string BuildCell(string value, ColumnDefinition<T> column)
         {
             int displayWidth = column.CalculatedWidth;
-            return AlignCell(Truncate(value, displayWidth), displayWidth, column.Alignment);
+            return DisplayWidthHelpers.AlignCell(DisplayWidthHelpers.Truncate(value, displayWidth), displayWidth, column.Alignment);
         }
 
         private void WriteHeader(BufferScreen screenBuffer)
@@ -1399,8 +1455,9 @@ namespace PromptPlusLibrary.Controls.Table
 
                 string header = col.Header;
                 int colWidth = col.CalculatedWidth;
+                int headerDisplayWidth = header.GetDisplayLength() is { Length: > 0 } hd ? hd[0] : 0;
                 int availableAfterMarker = Math.Max(0, colWidth - marker.Length);
-                int headerVisibleLength = Math.Min(header.Length, availableAfterMarker);
+                int headerVisibleLength = Math.Min(headerDisplayWidth, availableAfterMarker);
                 int suffixLength = Math.Min(
                     suffix.Length,
                     Math.Max(0, availableAfterMarker - headerVisibleLength));
@@ -1408,8 +1465,8 @@ namespace PromptPlusLibrary.Controls.Table
                 int textWidth = Math.Max(0, availableAfterMarker - suffixLength);
                 string headerText = textWidth == 0
                     ? string.Empty
-                    : AlignCell(header, textWidth, ColumnAlignment.Left);
-                string cell = Truncate(marker + headerText + suffix, colWidth);
+                    : DisplayWidthHelpers.AlignCell(header, textWidth, ColumnAlignment.Left);
+                string cell = DisplayWidthHelpers.Truncate(marker + headerText + suffix, colWidth);
 
                 screenBuffer.Write(cell, showSelection ? _optStyles[TableStyles.SelectedCell] : _optStyles[TableStyles.HeaderText]);
             }
@@ -1421,8 +1478,8 @@ namespace PromptPlusLibrary.Controls.Table
                 string previewHeader = previewCol.Header;
                 int previewWidth = previewCol.CalculatedWidth;
                 int previewAvailable = Math.Max(0, previewWidth - HeaderSelectionPrefixWidth);
-                string previewText = AlignCell(Truncate(previewHeader, previewAvailable), previewWidth - HeaderSelectionPrefixWidth, ColumnAlignment.Left);
-                string previewCell = Truncate("  " + previewText, previewWidth);
+                string previewText = DisplayWidthHelpers.AlignCell(DisplayWidthHelpers.Truncate(previewHeader, previewAvailable), previewWidth - HeaderSelectionPrefixWidth, ColumnAlignment.Left);
+                string previewCell = DisplayWidthHelpers.Truncate("  " + previewText, previewWidth);
                 screenBuffer.Write(previewCell, _optStyles[TableStyles.DisabledRow]);
             }
 
@@ -1514,33 +1571,6 @@ namespace PromptPlusLibrary.Controls.Table
             {
                 screenBuffer.Write("  ", _optStyles[TableStyles.BorderLines]);
             }
-        }
-
-        private static string Truncate(string value, int width)
-        {
-            if (width <= 0)
-            {
-                return string.Empty;
-            }
-
-            return value.Length <= width ? value : value[..width];
-        }
-
-        private static string AlignCell(string value, int width, ColumnAlignment alignment)
-        {
-            string normalized = value.Length > width ? value[..width] : value;
-            int missing = width - normalized.Length;
-            if (missing <= 0)
-            {
-                return normalized;
-            }
-
-            return alignment switch
-            {
-                ColumnAlignment.Right => new string(' ', missing) + normalized,
-                ColumnAlignment.Center => new string(' ', missing / 2) + normalized + new string(' ', missing - (missing / 2)),
-                _ => normalized + new string(' ', missing)
-            };
         }
 
        private string? GetChangeDescriptionValue()

@@ -586,19 +586,20 @@ The current [IMultiSelectControl&lt;T&gt;](IMultiSelectControl_T_.md 'PromptPlus
 A value of 0 automatically calculates the page size based on screen height, reserving lines for header, footer, and pagination\.
 If the provided value is greater than the available screen height \(minus reserved lines\), it is coerced to the maximum allowed value\.
 
-<a name='PromptPlusLibrary.IMultiSelectControl_T_.PredicateSelected(System.Func_T,bool_)'></a>
+<a name='PromptPlusLibrary.IMultiSelectControl_T_.PredicateChecked(System.Func_T,bool_)'></a>
 
-## IMultiSelectControl\<T\>\.PredicateSelected\(Func\<T,bool\>\) Method
+## IMultiSelectControl\<T\>\.PredicateChecked\(Func\<T,bool\>\) Method
 
 Sets a synchronous validation predicate executed when the user attempts to check an item\.
-Returns `false` to reject the check and show a generic error\.
+Returns `false` to reject the check and show a generic error\. Never evaluated when
+unchecking an item — unchecking is always allowed for non\-disabled items\.
 
 ```csharp
-PromptPlusLibrary.IMultiSelectControl<T> PredicateSelected(System.Func<T,bool> validselect);
+PromptPlusLibrary.IMultiSelectControl<T> PredicateChecked(System.Func<T,bool> validselect);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiSelectControl_T_.PredicateSelected(System.Func_T,bool_).validselect'></a>
+<a name='PromptPlusLibrary.IMultiSelectControl_T_.PredicateChecked(System.Func_T,bool_).validselect'></a>
 
 `validselect` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[T](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.T 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.T')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
 
@@ -608,18 +609,18 @@ A predicate that returns `true` when the item can be checked\.
 [PromptPlusLibrary\.IMultiSelectControl&lt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>')[T](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.T 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.T')[&gt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>')  
 The current [IMultiSelectControl&lt;T&gt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>') instance for chaining\.
 
-<a name='PromptPlusLibrary.IMultiSelectControl_T_.PredicateSelectedAsync(System.Func_T,System.Threading.Tasks.Task_bool__)'></a>
+<a name='PromptPlusLibrary.IMultiSelectControl_T_.PredicateCheckedAsync(System.Func_T,System.Threading.Tasks.Task_bool__)'></a>
 
-## IMultiSelectControl\<T\>\.PredicateSelectedAsync\(Func\<T,Task\<bool\>\>\) Method
+## IMultiSelectControl\<T\>\.PredicateCheckedAsync\(Func\<T,Task\<bool\>\>\) Method
 
-Asynchronous counterpart of [PredicateSelected\(Func&lt;T,bool&gt;\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.PredicateSelected(System.Func_T,bool_) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.PredicateSelected\(System\.Func\<T,bool\>\)')\.
+Asynchronous counterpart of [PredicateChecked\(Func&lt;T,bool&gt;\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.PredicateChecked(System.Func_T,bool_) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.PredicateChecked\(System\.Func\<T,bool\>\)')\.
 
 ```csharp
-PromptPlusLibrary.IMultiSelectControl<T> PredicateSelectedAsync(System.Func<T,System.Threading.Tasks.Task<bool>> validselect);
+PromptPlusLibrary.IMultiSelectControl<T> PredicateCheckedAsync(System.Func<T,System.Threading.Tasks.Task<bool>> validselect);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiSelectControl_T_.PredicateSelectedAsync(System.Func_T,System.Threading.Tasks.Task_bool__).validselect'></a>
+<a name='PromptPlusLibrary.IMultiSelectControl_T_.PredicateCheckedAsync(System.Func_T,System.Threading.Tasks.Task_bool__).validselect'></a>
 
 `validselect` [System\.Func&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[T](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.T 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.T')[,](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')[System\.Threading\.Tasks\.Task&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1 'System\.Threading\.Tasks\.Task\`1')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.func-2 'System\.Func\`2')
 

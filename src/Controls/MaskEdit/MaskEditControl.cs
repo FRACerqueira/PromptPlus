@@ -543,6 +543,35 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
         private void SetNumberFormat(byte integerpart, byte decimalpart, bool withsignal, bool withseparatorgroup)
         {
+            // Validated eagerly here (integerpart/decimalpart are already known at the call
+            // site) instead of waiting for Run() to normalize the mask and re-derive the same
+            // counts via CountNumericMask — fails fast on NumberFormat(...) itself. The
+            // equivalent checks in NormalizeNumberMask stay in place as a defensive backstop.
+            if (s_isInt && integerpart > 10)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {integerpart} digits, max(10).");
+            }
+            if (s_isLong && integerpart > 19)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {integerpart} digits, max(19).");
+            }
+            if (s_isDecimal && integerpart > 28)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {integerpart} digits, max(28).");
+            }
+            if (s_isDecimal && decimalpart > 28)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {decimalpart} decimal digits, max(28).");
+            }
+            if (s_isDouble && integerpart > 15)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {integerpart} digits, max(15).");
+            }
+            if (s_isDouble && decimalpart > 15)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {decimalpart} decimal digits, max(15).");
+            }
+
             string mask = new('9', integerpart);
             if (withseparatorgroup)
             {
@@ -719,7 +748,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 lsttooltips.Add($"{ConfigPrompt.HotKeyAbortKeyPress}:{PromptPlusResources.Abort}");
             }
             lsttooltips.Add($"{ConfigPrompt.HotKeyTooltipShowHide}:{PromptPlusResources.TooltipShowHide}");
-            lsttooltips.AddRange(MaskEditBuffer<T>.GetEmacsTooltips());
+            lsttooltips.AddRange(MaskEditBuffer<T>.GetEmacsTooltips(ConsoleHandler.EnabledEmacs));
             return [.. lsttooltips];
         }
 
@@ -1317,7 +1346,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                                 else if (groupMaskChar == 'U')
                                 {
                                     desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosLetterUpper, " ,", inner);
-                                    innerForChar = CharLowerLetters;
+                                    innerForChar = CharUpperLetters;
                                 }
                                 else if (groupMaskChar == 'A')
                                 {
@@ -1454,7 +1483,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         else if (maskHandle == 'U')
                         {
                             desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosLetterUpper, " ,", inner);
-                            innerForChar = CharLowerLetters;
+                            innerForChar = CharUpperLetters;
                         }
                         else if (maskHandle == 'A')
                         {

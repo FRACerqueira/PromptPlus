@@ -31,7 +31,7 @@ Left/Right: change  Enter: confirm  Esc  ← tooltip (toggle with F1 / Ctrl+F1)
 
 - The **range** delimiters (`0` … `100`) and the **min/max display** can be hidden with
   [`HideElements`](methods.md#hideelements).
-- The **bar** is drawn with the character set from [`Fill`](methods.md#fill) and colored by
+- The **bar** is drawn with the character set from [`BarType`](methods.md#bartype) and colored by
   [`ChangeColor`](methods.md#changecolor) / [`ChangeGradient`](methods.md#changegradient).
 - The **answer** shows the current value formatted with [`FractionalDigits`](methods.md#fractionalDigits)
   and [`Culture`](methods.md#culture).

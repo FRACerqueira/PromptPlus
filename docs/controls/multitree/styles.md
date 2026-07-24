@@ -32,7 +32,7 @@ recolor per control instance.
 | `Description` | The description line under the prompt |
 | `Selected` | The focused node (cursor) |
 | `UnSelected` | The non-focused nodes |
-| `Disabled` | Nodes that cannot be checked (e.g., containers under `CheckLeafOnly`) |
+| `Disabled` | Nodes that cannot be checked (e.g., containers under `CheckLeafOnly`, or nodes added with `disable: true`) |
 | `Error` | The validation / range error line |
 | `Pagination` | The page indicator |
 | `TaggedInfo` | The checked-item count tag |

@@ -39,8 +39,10 @@ namespace PromptPlusLibrary.Controls.MultiTasks
         private const int WaitLoopIntervalMs = 16;
         private const int ResizeStabilizationWindowMs = 150;
 
-        // Cached composite format string for improved performance (CA1863).
+        // Cached composite format strings for improved performance (CA1863).
+        private static readonly CompositeFormat s_multiTasksSuccessFormat = CompositeFormat.Parse(PromptPlusResources.MultiTasksSuccessCount);
         private static readonly CompositeFormat s_multiTasksFailedFormat = CompositeFormat.Parse(PromptPlusResources.MultiTasksFailed);
+        private static readonly CompositeFormat s_multiTasksWaitingFormat = CompositeFormat.Parse(PromptPlusResources.MultiTasksWaitingCount);
 
         private sealed class TaskItem(string uniqueId, string title, Func<IReadOnlyDictionary<string, object?>, CancellationToken, Task<IDictionary<string, object?>?>> handler, IDictionary<string, object?>? inputContext, MultiTasksMode mode)
         {
@@ -470,24 +472,18 @@ namespace PromptPlusLibrary.Controls.MultiTasks
 
         private void WriteFinishSummary(BufferScreen screenBuffer)
         {
-            (int total, _, int success, int failed, _) = CountStates();
+            // Same three explicit counts as WriteSummary (success/failed/waiting), so the meaning
+            // never changes between the running and finished frames.
+            (int total, int done, int success, int failed, _) = CountStates();
 
             var sb = new StringBuilder();
-            sb.Append(string.Format(CultureInfo.CurrentCulture, "{0}/{1} ", success, total));
+            AppendCounts(sb, total, done, success, failed);
 
-            Style style;
-            if (failed > 0)
-            {
-                sb.Append(string.Format(CultureInfo.CurrentCulture, s_multiTasksFailedFormat, failed));
-                style = _optStyles[MultiTasksStyles.FailedTask];
-            }
-            else
-            {
-                style = _optStyles[MultiTasksStyles.SuccessTask];
-            }
+            Style style = failed > 0 ? _optStyles[MultiTasksStyles.FailedTask] : _optStyles[MultiTasksStyles.SuccessTask];
 
             if (_showElapsedTime)
             {
+                sb.Append(' ');
                 sb.Append(FormatElapsed(_stopwatch.Elapsed));
             }
 
@@ -690,17 +686,13 @@ namespace PromptPlusLibrary.Controls.MultiTasks
 
         private void WriteSummary(BufferScreen screenBuffer)
         {
-            (int total, int done, _, int failed, bool anyRunning) = CountStates();
+            (int total, int done, int success, int failed, bool anyRunning) = CountStates();
 
             var sb = new StringBuilder();
-            sb.Append(string.Format(CultureInfo.CurrentCulture, "{0}/{1}", done, total));
-            if (failed > 0)
-            {
-                sb.Append(string.Format(CultureInfo.CurrentCulture, s_multiTasksFailedFormat, failed));
-            }
+            AppendCounts(sb, total, done, success, failed);
             if (_showElapsedTime)
             {
-                sb.Append(" - ");
+                sb.Append(' ');
                 sb.Append(FormatElapsed(_stopwatch.Elapsed));
             }
             screenBuffer.Write(sb.ToString(), _optStyles[MultiTasksStyles.Answer]);
@@ -713,6 +705,21 @@ namespace PromptPlusLibrary.Controls.MultiTasks
             }
 
             screenBuffer.WriteLine("", _optStyles[MultiTasksStyles.Answer]);
+        }
+
+        /// <summary>
+        /// Appends the explicit "{success} ok, {failed} failed, {waiting} wait" breakdown shared by
+        /// the running and finished summary lines, so the meaning of each count never changes
+        /// between frames (see FASE2-CONTROLS-PLAN.md, Grupo 6, for why the previous done/total
+        /// fraction was replaced).
+        /// </summary>
+        private static void AppendCounts(StringBuilder sb, int total, int done, int success, int failed)
+        {
+            sb.Append(string.Format(CultureInfo.CurrentCulture, s_multiTasksSuccessFormat, success));
+            sb.Append(", ");
+            sb.Append(string.Format(CultureInfo.CurrentCulture, s_multiTasksFailedFormat, failed));
+            sb.Append(", ");
+            sb.Append(string.Format(CultureInfo.CurrentCulture, s_multiTasksWaitingFormat, total - done));
         }
 
         private void WriteDescription(BufferScreen screenBuffer)

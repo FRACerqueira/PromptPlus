@@ -164,17 +164,17 @@ namespace MultiSelectControlSamples
                 .Run();
             PrintSelectionResult(resultstring);
 
-            ShowSection("10) PredicateSelected (bool)");
+            ShowSection("10) PredicateChecked (bool)");
             resultstring = PromptPlus.Controls.MultiSelect<string>("Select", "London cannot be selected")
                 .AddItems(["Seattle", "London", "Tokyo"])
-                .PredicateSelected(city => city != "London")
+                .PredicateChecked(city => city != "London")
                 .Run();
             PrintSelectionResult(resultstring);
 
-            ShowSection("11) PredicateSelected (message)");
+            ShowSection("11) PredicateChecked (message)");
             resultstring = PromptPlus.Controls.MultiSelect<string>("Select", "Only Tokyo can be selected")
                 .AddItems(["Seattle", "London", "Tokyo"])
-                .PredicateSelected(city => city == "Tokyo" ? (true, null) : (false, "Only Tokyo can be selected"))
+                .PredicateChecked(city => city == "Tokyo" ? (true, null) : (false, "Only Tokyo can be selected"))
                 .Run();
             PrintSelectionResult(resultstring);
 
@@ -249,10 +249,10 @@ namespace MultiSelectControlSamples
                 .Run();
             PrintSelectionResult(resultstring);
 
-            ShowSection("18) PredicateSelectedAsync (message)");
+            ShowSection("18) PredicateCheckedAsync (message)");
             resultstring = PromptPlus.Controls.MultiSelect<string>("Select", "Only cities starting with 'S' are allowed")
                 .AddItems(["Seattle", "London", "Tokyo", "Singapore", "Shanghai"])
-                .PredicateSelectedAsync(async city =>
+                .PredicateCheckedAsync(async city =>
                 {
                     await Task.Delay(1);
                     return city.StartsWith('S')

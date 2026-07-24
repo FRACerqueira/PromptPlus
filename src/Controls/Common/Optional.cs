@@ -54,7 +54,7 @@ namespace PromptPlusLibrary.Controls.Common
         /// Compares a raw value with an <see cref="Optional{T}"/>.
         /// </summary>
         public static bool operator ==(T left, Optional<T> right)
-            => EqualityComparer<T>.Default.Equals(left, right.Value);
+            => right.HasValue && EqualityComparer<T>.Default.Equals(left, right.Value);
 
         /// <summary>
         /// Compares a raw value with an <see cref="Optional{T}"/> for inequality.

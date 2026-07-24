@@ -152,38 +152,42 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Sets a synchronous predicate that determines whether a row can be checked.
         /// Returns <c>false</c> to prevent checking and show a generic error message.
+        /// Only evaluated when marking a row as checked — unchecking an already-checked row is
+        /// always allowed (subject only to it not being disabled) and never runs this predicate.
         /// Replaces any previously registered asynchronous predicate.
         /// </summary>
         /// <param name="validselect">A predicate that returns <c>true</c> when the row can be checked.</param>
         /// <returns>The current <see cref="IMultiTableControl{T}"/> instance for chaining.</returns>
-        IMultiTableControl<T> PredicateSelected(Func<T, bool> validselect);
+        IMultiTableControl<T> PredicateChecked(Func<T, bool> validselect);
 
         /// <summary>
-        /// Asynchronous counterpart of <see cref="PredicateSelected(Func{T,bool})"/>.
+        /// Asynchronous counterpart of <see cref="PredicateChecked(Func{T,bool})"/>.
         /// The predicate is evaluated synchronously (blocking) on the UI thread.
         /// Replaces any previously registered synchronous predicate.
         /// </summary>
         /// <param name="validselect">An asynchronous predicate that returns <c>true</c> when the row can be checked.</param>
         /// <returns>The current <see cref="IMultiTableControl{T}"/> instance for chaining.</returns>
-        IMultiTableControl<T> PredicateSelectedAsync(Func<T, Task<bool>> validselect);
+        IMultiTableControl<T> PredicateCheckedAsync(Func<T, Task<bool>> validselect);
 
         /// <summary>
         /// Sets a synchronous predicate that determines whether a row can be checked,
         /// and optionally provides a custom validation error message shown when rejected.
+        /// Only evaluated when marking a row as checked — unchecking an already-checked row is
+        /// always allowed (subject only to it not being disabled) and never runs this predicate.
         /// Replaces any previously registered asynchronous predicate.
         /// </summary>
         /// <param name="validselect">A predicate returning a tuple: <c>true</c> when valid, plus an optional error message shown when rejected.</param>
         /// <returns>The current <see cref="IMultiTableControl{T}"/> instance for chaining.</returns>
-        IMultiTableControl<T> PredicateSelected(Func<T, (bool, string?)> validselect);
+        IMultiTableControl<T> PredicateChecked(Func<T, (bool, string?)> validselect);
 
         /// <summary>
-        /// Asynchronous counterpart of <see cref="PredicateSelected(Func{T, ValueTuple{bool, string}})"/>.
+        /// Asynchronous counterpart of <see cref="PredicateChecked(Func{T, ValueTuple{bool, string}})"/>.
         /// The predicate is evaluated synchronously (blocking) on the UI thread.
         /// Replaces any previously registered synchronous predicate.
         /// </summary>
         /// <param name="validselect">An asynchronous predicate returning a tuple: <c>true</c> when valid, plus an optional error message shown when rejected.</param>
         /// <returns>The current <see cref="IMultiTableControl{T}"/> instance for chaining.</returns>
-        IMultiTableControl<T> PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect);
+        IMultiTableControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> validselect);
 
         /// <summary>
         /// Overrides the equality comparer used to match default and history values against the

@@ -249,7 +249,7 @@ namespace PromptPlusLibrary.Controls.Input
         }
 
         /// <inheritdoc/>
-        IInputControl IInputControl.PredicateSelected(Func<string, (bool, string?)> value)
+        IInputControl IInputControl.PredicateValid(Func<string, (bool, string?)> value)
         {
             ArgumentNullException.ThrowIfNull(value);
             _predicatevalue = value;
@@ -258,7 +258,7 @@ namespace PromptPlusLibrary.Controls.Input
         }
 
         /// <inheritdoc/>
-        IInputSecretControl IInputSecretControl.PredicateSelected(Func<string, (bool, string?)> value)
+        IInputSecretControl IInputSecretControl.PredicateValid(Func<string, (bool, string?)> value)
         {
             ArgumentNullException.ThrowIfNull(value);
             _predicatevalue = value;
@@ -267,7 +267,7 @@ namespace PromptPlusLibrary.Controls.Input
         }
 
         /// <inheritdoc/>
-        IInputControl IInputControl.PredicateSelected(Func<string, bool> value)
+        IInputControl IInputControl.PredicateValid(Func<string, bool> value)
         {
             ArgumentNullException.ThrowIfNull(value);
             _predicatevalue = (input) => (value(input), (string?)null);
@@ -276,7 +276,7 @@ namespace PromptPlusLibrary.Controls.Input
         }
 
         /// <inheritdoc/>
-        IInputSecretControl IInputSecretControl.PredicateSelected(Func<string, bool> value)
+        IInputSecretControl IInputSecretControl.PredicateValid(Func<string, bool> value)
         {
             ArgumentNullException.ThrowIfNull(value);
             _predicatevalue = (input) => (value(input), (string?)null);
@@ -285,7 +285,7 @@ namespace PromptPlusLibrary.Controls.Input
         }
 
         /// <inheritdoc/>
-        IInputControl IInputControl.PredicateSelectedAsync(Func<string, Task<(bool, string?)>> value)
+        IInputControl IInputControl.PredicateValidAsync(Func<string, Task<(bool, string?)>> value)
         {
             ArgumentNullException.ThrowIfNull(value);
             _predicatevalueAsync = value;
@@ -294,7 +294,7 @@ namespace PromptPlusLibrary.Controls.Input
         }
 
         /// <inheritdoc/>
-        IInputSecretControl IInputSecretControl.PredicateSelectedAsync(Func<string, Task<(bool, string?)>> value)
+        IInputSecretControl IInputSecretControl.PredicateValidAsync(Func<string, Task<(bool, string?)>> value)
         {
             ArgumentNullException.ThrowIfNull(value);
             _predicatevalueAsync = value;
@@ -303,7 +303,7 @@ namespace PromptPlusLibrary.Controls.Input
         }
 
         /// <inheritdoc/>
-        IInputControl IInputControl.PredicateSelectedAsync(Func<string, Task<bool>> value)
+        IInputControl IInputControl.PredicateValidAsync(Func<string, Task<bool>> value)
         {
             ArgumentNullException.ThrowIfNull(value);
             _predicatevalueAsync = async (input) => ((await value(input).ConfigureAwait(false)), (string?)null);
@@ -312,7 +312,7 @@ namespace PromptPlusLibrary.Controls.Input
         }
 
         /// <inheritdoc/>
-        IInputSecretControl IInputSecretControl.PredicateSelectedAsync(Func<string, Task<bool>> value)
+        IInputSecretControl IInputSecretControl.PredicateValidAsync(Func<string, Task<bool>> value)
         {
             ArgumentNullException.ThrowIfNull(value);
             _predicatevalueAsync = async (input) => ((await value(input).ConfigureAwait(false)), (string?)null);
@@ -412,6 +412,15 @@ namespace PromptPlusLibrary.Controls.Input
 
                     KeyPressResult press = ReadNextKey(true, cancellationToken);
 
+                    // Reset unconditionally, BEFORE the resize/cancel check below: those branches
+                    // `break` out of the loop without ever reaching the reset that used to sit
+                    // after this check. A resize does not cancel the token, so the outer render
+                    // loop calls BufferTemplate/WriteAnswer again right after this `break` — with
+                    // the flag left `true`, that next WriteAnswer reloaded `_inputdata` from
+                    // `_lastinput` and jumped the cursor back to Home, even though nothing about
+                    // the user's in-progress edit should change on a mere terminal resize.
+                    _updatePosAnswerBuffer = false;
+
                     if (press.IsResize || press.IsCancelled)
                     {
                         if (!press.IsResize)
@@ -423,11 +432,17 @@ namespace PromptPlusLibrary.Controls.Input
                                 ResetSuggestions();
                                 _modeView = ModeView.Input;
                             }
+                            // Mirrors SelectControl's cancellation branch: without this, TryResult
+                            // returns false on a real cancellation (ResultCtrl stays null), which
+                            // makes BaseControlPrompt.Run's outer loop think another render pass is
+                            // needed before it can stop — that extra pass rebuilds the template with
+                            // whatever one-shot state (e.g. a just-shown validation error) had
+                            // already been cleared, silently erasing it from the screen right before
+                            // the control actually exits.
+                            ResultCtrl = new ResultPrompt<string>(_inputdata!.ToString(), true);
                         }
                         break;
                     }
-
-                    _updatePosAnswerBuffer = false;
 
                     ConsoleKeyInfo keyinfo = press.Key;
 
@@ -1009,8 +1024,17 @@ namespace PromptPlusLibrary.Controls.Input
             (string visibleLeft, string visibleRight) = ViewportSlice(_inputdata!, promptWidth);
             if (_isinputsecret && !_passwordvisible)
             {
-                visibleLeft = new string(_secretChar, visibleLeft.Length);
-                visibleRight = new string(_secretChar, visibleRight.Length);
+                // ViewportSlice already sized visibleLeft/visibleRight in DISPLAY COLUMNS (a CJK rune
+                // in the real input is 1 char but 2 columns). Masking by .Length (rune count) instead
+                // of that display width undercounts for CJK input (mask ends up narrower than the
+                // viewport budget, scrolling prematurely) and could overflow the line if the mask
+                // character itself is a custom wide rune. Reproduce the same column budget with
+                // whatever width _secretChar actually has.
+                int secretCharWidth = System.Math.Max(1, new Rune(_secretChar).GetRuneWidth());
+                int leftWidth = visibleLeft.GetDisplayLength() is { Length: > 0 } lw ? lw[0] : 0;
+                int rightWidth = visibleRight.GetDisplayLength() is { Length: > 0 } rw ? rw[0] : 0;
+                visibleLeft = new string(_secretChar, (leftWidth + secretCharWidth - 1) / secretCharWidth);
+                visibleRight = new string(_secretChar, (rightWidth + secretCharWidth - 1) / secretCharWidth);
             }
             screenBuffer.Write(visibleLeft, _optStyles[InputStyles.Answer]);
             screenBuffer.SavePromptCursor();

@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [MultiFile — Methods →](methods.md)
+[? Back to Home](../../../README.md) • **Next:** [MultiFile — Methods ?](methods.md)
 
 ---
 
@@ -25,7 +25,7 @@ survives collapsing and re-expanding the branch that contains it. Beyond the sha
 options, it adds cascade checking, recursive folder marking, a min/max count range, and a check
 predicate.
 
-> ☑️ Only need **one** file or folder? Use the [**File**](../file/index.md) control — same tree
+> ?? Only need **one** file or folder? Use the [**File**](../file/index.md) control — same tree
 > browser, single selection.
 
 ---
@@ -124,7 +124,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Choose the root | `Root` |
 | Filter what is listed | `SearchPattern`, `OnlyFolders`, `ShowHidden`, `ShowSystem` |
 | Check rules | `SelectFilesOnly`, `CascadeCheck`, `RecursiveMarkWithCtrlSpace`, `Range` |
-| Validate a check | `PredicateSelected`, `PredicateSelectedAsync` |
+| Validate a check | `PredicateChecked`, `PredicateCheckedAsync` |
 | Layout & display | `HideSize`, `ShowFullPath`, `PageSize` |
 | Initial values | `Default` |
 | History | `EnabledHistory` |

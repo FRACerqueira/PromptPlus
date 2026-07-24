@@ -33,17 +33,36 @@ namespace PromptPlusLibrary.Controls.MultiTree
             CompositeFormat.Parse(PromptPlusResources.MultiSelectMaxSelection);
 
         // ─── user tree ──────────────────────────────────────────────────────────────
-        private sealed class TreeNode(T value, TreeNode? parent) : ITreeNode<T>
+        private sealed class TreeNode(T value, TreeNode? parent, bool disabled = false, bool check = false) : IMultiTreeNode<T>
         {
             public T Value { get; } = value;
             public TreeNode? ParentNode { get; } = parent;
             public List<TreeNode> Children { get; } = [];
+            public bool Disabled { get; } = disabled;
+            // Construction-time pre-check flag, applied once in InitControl (ApplyConstructionTimeChecks)
+            // via the same SetCheckedOnSource(force:true) path used by Default — additive with it.
+            public bool Checked { get; } = check;
 
             ITreeNode<T>? ITreeNode<T>.Parent => ParentNode;
             T ITreeNode<T>.Value => Value;
 
-            public ITreeNode<T> AddLast(T v) { var n = new TreeNode(v, this); Children.Add(n); return n; }
-            public ITreeNode<T> AddFirst(T v) { var n = new TreeNode(v, this); Children.Insert(0, n); return n; }
+            // ITreeNode<T> (shared with TreeControl) has no `check` concept — forward with check:false.
+            ITreeNode<T> ITreeNode<T>.AddLast(T v, bool disable) => AddLast(v, disable, check: false);
+            ITreeNode<T> ITreeNode<T>.AddFirst(T v, bool disable) => AddFirst(v, disable, check: false);
+
+            public IMultiTreeNode<T> AddLast(T v, bool disable = false, bool check = false)
+            {
+                var n = new TreeNode(v, this, disable, check);
+                Children.Add(n);
+                return n;
+            }
+
+            public IMultiTreeNode<T> AddFirst(T v, bool disable = false, bool check = false)
+            {
+                var n = new TreeNode(v, this, disable, check);
+                Children.Insert(0, n);
+                return n;
+            }
         }
 
         // ─── check state ────────────────────────────────────────────────────────────
@@ -60,6 +79,7 @@ namespace PromptPlusLibrary.Controls.MultiTree
             public bool IsExpanded { get; set; }
             public bool IsRoot { get; init; }
             public bool HasChildren => Source.Children.Count > 0;
+            public bool Disabled => Source.Disabled;
             public T Value => Source.Value;
             public long AncestorMask;
             public CheckState Check { get; set; } = CheckState.Unchecked;
@@ -96,8 +116,8 @@ namespace PromptPlusLibrary.Controls.MultiTree
         private bool _cascadeCheck = true;
         private bool _recursiveMarkWithCtrlSpace;
         private bool _viewOnly;
-        private Func<T, (bool, string?)>? _predicatevalidselect;
-        private Func<T, Task<(bool, string?)>>? _predicatevalidselectAsync;
+        private Func<T, (bool, string?)>? _predicatevalidcheck;
+        private Func<T, Task<(bool, string?)>>? _predicatevalidcheckAsync;
         private byte _pageSize;
         private int _effectivePageSize;
         private int _sequence;
@@ -138,10 +158,10 @@ namespace PromptPlusLibrary.Controls.MultiTree
             return this;
         }
 
-        public IMultiTreeControl<T> Root(T value)
+        public IMultiTreeControl<T> Root(T value, bool disable = false, bool check = false)
         {
             ArgumentNullException.ThrowIfNull(value);
-            _root = new TreeNode(value, parent: null);
+            _root = new TreeNode(value, parent: null, disable, check);
             return this;
         }
 
@@ -165,19 +185,19 @@ namespace PromptPlusLibrary.Controls.MultiTree
             return false;
         }
 
-        public ITreeNode<T> AddLast(T value)
+        public IMultiTreeNode<T> AddLast(T value, bool disable = false, bool check = false)
         {
             ArgumentNullException.ThrowIfNull(value);
-            return RequireRoot().AddLast(value);
+            return RequireRoot().AddLast(value, disable, check);
         }
 
-        public ITreeNode<T> AddFirst(T value)
+        public IMultiTreeNode<T> AddFirst(T value, bool disable = false, bool check = false)
         {
             ArgumentNullException.ThrowIfNull(value);
-            return RequireRoot().AddFirst(value);
+            return RequireRoot().AddFirst(value, disable, check);
         }
 
-        public ITreeNode<T> AddAfter(ITreeNode<T> node, T value)
+        public IMultiTreeNode<T> AddAfter(ITreeNode<T> node, T value, bool disable = false, bool check = false)
         {
             ArgumentNullException.ThrowIfNull(value);
             TreeNode target = Unwrap(node);
@@ -185,12 +205,12 @@ namespace PromptPlusLibrary.Controls.MultiTree
                 throw new InvalidOperationException("The provided node does not belong to this tree or is the root.");
             TreeNode parent = target.ParentNode;
             int idx = parent.Children.IndexOf(target);
-            var created = new TreeNode(value, parent);
+            var created = new TreeNode(value, parent, disable, check);
             parent.Children.Insert(idx + 1, created);
             return created;
         }
 
-        public ITreeNode<T> AddBefore(ITreeNode<T> node, T value)
+        public IMultiTreeNode<T> AddBefore(ITreeNode<T> node, T value, bool disable = false, bool check = false)
         {
             ArgumentNullException.ThrowIfNull(value);
             TreeNode target = Unwrap(node);
@@ -198,7 +218,7 @@ namespace PromptPlusLibrary.Controls.MultiTree
                 throw new InvalidOperationException("The provided node does not belong to this tree or is the root.");
             TreeNode parent = target.ParentNode;
             int idx = parent.Children.IndexOf(target);
-            var created = new TreeNode(value, parent);
+            var created = new TreeNode(value, parent, disable, check);
             parent.Children.Insert(idx, created);
             return created;
         }
@@ -290,35 +310,35 @@ namespace PromptPlusLibrary.Controls.MultiTree
             return this;
         }
 
-        public IMultiTreeControl<T> PredicateSelected(Func<T, bool> validselect)
+        public IMultiTreeControl<T> PredicateChecked(Func<T, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) => (validselect(input), (string?)null);
-            _predicatevalidselectAsync = null;
+            _predicatevalidcheck = (input) => (validselect(input), (string?)null);
+            _predicatevalidcheckAsync = null;
             return this;
         }
 
-        public IMultiTreeControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
+        public IMultiTreeControl<T> PredicateChecked(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
-            _predicatevalidselectAsync = null;
+            _predicatevalidcheck = validselect;
+            _predicatevalidcheckAsync = null;
             return this;
         }
 
-        public IMultiTreeControl<T> PredicateSelectedAsync(Func<T, Task<bool>> validselect)
+        public IMultiTreeControl<T> PredicateCheckedAsync(Func<T, Task<bool>> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselectAsync = async (input) => ((await validselect(input).ConfigureAwait(false)), (string?)null);
-            _predicatevalidselect = null;
+            _predicatevalidcheckAsync = async (input) => ((await validselect(input).ConfigureAwait(false)), (string?)null);
+            _predicatevalidcheck = null;
             return this;
         }
 
-        public IMultiTreeControl<T> PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect)
+        public IMultiTreeControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselectAsync = validselect;
-            _predicatevalidselect = null;
+            _predicatevalidcheckAsync = validselect;
+            _predicatevalidcheck = null;
             return this;
         }
 
@@ -363,6 +383,9 @@ namespace PromptPlusLibrary.Controls.MultiTree
             _flatAll = null;
             _flatDisplayCache = null;
             _checkedSourceIds.Clear();
+            // Construction-time `check: true` nodes, applied before Default/history so both
+            // layers are purely additive (whichever marks a node checked, it stays checked).
+            ApplyConstructionTimeChecks(_root);
 
             _nodes.Clear();
             _sequence = 0;
@@ -387,6 +410,11 @@ namespace PromptPlusLibrary.Controls.MultiTree
             VNode rootV = new(NextId(), _root, depth: 0, isLast: true) { IsRoot = true, IsExpanded = true };
             _nodes.Add(rootV);
             InsertChildren(0);
+            // InsertChildren already computes each inserted child's Check via ComputeCheck, but
+            // rootV itself is created above with the CheckState.Unchecked default — recompute
+            // once so a construction-time check on the root (or its descendants) renders
+            // correctly on the very first frame, even with no Default/history targets.
+            RefreshNodeChecks();
 
             _effectivePageSize = ComputeEffectivePageSize(ReservedTemplateLines, _pageSize);
             RebuildPaginator(selectFirst: true);
@@ -397,6 +425,14 @@ namespace PromptPlusLibrary.Controls.MultiTree
                 {
                     ExpandAndCheckTarget(target);
                 }
+            }
+
+            // Same immediate-error convention as ITreeControl: if the cursor rests on a
+            // disabled node once init is done, surface it right away rather than waiting for
+            // the first navigation key.
+            if (!_viewOnly && _localpaginator!.SelectedItem?.Disabled == true)
+            {
+                SetError(PromptPlusResources.SelectionDisabled);
             }
 
             LoadTooltipToggle();
@@ -536,6 +572,7 @@ namespace PromptPlusLibrary.Controls.MultiTree
                             if (_localpaginator.IsLastPageItem) _localpaginator.NextPage(IndexOption.FirstItem);
                             else _localpaginator.NextItem();
                         }
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -554,6 +591,7 @@ namespace PromptPlusLibrary.Controls.MultiTree
                             if (_localpaginator.IsFirstPageItem) _localpaginator.PreviousPage(IndexOption.LastItem);
                             else _localpaginator.PreviousItem();
                         }
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -561,6 +599,7 @@ namespace PromptPlusLibrary.Controls.MultiTree
                     {
                         if (_localpaginator!.IsLastPageItem) _localpaginator.NextPage(IndexOption.FirstItem);
                         else _localpaginator.NextItem();
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -568,30 +607,35 @@ namespace PromptPlusLibrary.Controls.MultiTree
                     {
                         if (_localpaginator!.IsFirstPageItem) _localpaginator.PreviousPage(IndexOption.LastItem);
                         else _localpaginator.PreviousItem();
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
                     else if (keyinfo.IsPressPageDownKey())
                     {
                         _localpaginator!.NextPage(IndexOption.FirstItemWhenHasPages);
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
                     else if (keyinfo.IsPressPageUpKey())
                     {
                         _localpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages);
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
                     else if (keyinfo.IsPressCtrlHomeKey())
                     {
                         _localpaginator!.Home();
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
                     else if (keyinfo.IsPressCtrlEndKey())
                     {
                         _localpaginator!.End();
+                        SetSelectionDisabledErrorIfNeeded();
                         _indexTooptip = 0;
                         break;
                     }
@@ -709,14 +753,20 @@ namespace PromptPlusLibrary.Controls.MultiTree
 
             foreach (VNode v in candidates)
             {
+                // Disabled nodes are never touched directly by the mass toggle in either
+                // direction: checking silently skips them (like the predicate), and unchecking
+                // leaves them exactly as they are (e.g. force-checked via Default) — same rule as
+                // MultiSelect/MultiTable's F2.
+                if (v.Disabled) continue;
+
                 if (check)
                 {
                     // Mass check: silently skip nodes rejected by the predicate.
-                    if (_predicatevalidselect != null || _predicatevalidselectAsync != null)
+                    if (_predicatevalidcheck != null || _predicatevalidcheckAsync != null)
                     {
-                        (bool ok, _) = _predicatevalidselectAsync is not null
-                            ? _predicatevalidselectAsync.Invoke(v.Value).ConfigureAwait(false).GetAwaiter().GetResult()
-                            : _predicatevalidselect!.Invoke(v.Value);
+                        (bool ok, _) = _predicatevalidcheckAsync is not null
+                            ? _predicatevalidcheckAsync.Invoke(v.Value).ConfigureAwait(false).GetAwaiter().GetResult()
+                            : _predicatevalidcheck!.Invoke(v.Value);
                         if (!ok) continue;
                     }
                 }
@@ -743,27 +793,32 @@ namespace PromptPlusLibrary.Controls.MultiTree
         /// </summary>
         private void ToggleCheck(VNode node)
         {
+            if (node.Disabled)
+            {
+                SetError(PromptPlusResources.SelectionDisabled);
+                return;
+            }
             if (_checkLeafOnly && node.HasChildren)
             {
                 SetError(PromptPlusResources.SelectionDisabled);
                 return;
             }
 
-            // Validate predicate.
-            if (_predicatevalidselect != null || _predicatevalidselectAsync != null)
+            // Determine new state first: Indeterminate and Unchecked both → Checked; Checked →
+            // Unchecked. The predicate only gates checking — unchecking never needs it.
+            bool newChecked = node.Check != CheckState.Checked;
+
+            if (newChecked && (_predicatevalidcheck != null || _predicatevalidcheckAsync != null))
             {
-                (bool ok, string? message) = _predicatevalidselectAsync is not null
-                    ? _predicatevalidselectAsync.Invoke(node.Value).ConfigureAwait(false).GetAwaiter().GetResult()
-                    : _predicatevalidselect!.Invoke(node.Value);
+                (bool ok, string? message) = _predicatevalidcheckAsync is not null
+                    ? _predicatevalidcheckAsync.Invoke(node.Value).ConfigureAwait(false).GetAwaiter().GetResult()
+                    : _predicatevalidcheck!.Invoke(node.Value);
                 if (!ok)
                 {
                     SetError(string.IsNullOrEmpty(message) ? PromptPlusResources.PredicateSelectInvalid : message!);
                     return;
                 }
             }
-
-            // Determine new state: Indeterminate and Unchecked both → Checked; Checked → Unchecked.
-            bool newChecked = node.Check != CheckState.Checked;
 
             SetCheckedOnSource(node.Source, newChecked);
 
@@ -797,18 +852,26 @@ namespace PromptPlusLibrary.Controls.MultiTree
         /// </summary>
         private void ToggleCheckSingleNode(VNode node)
         {
+            if (node.Disabled)
+            {
+                SetError(PromptPlusResources.SelectionDisabled);
+                return;
+            }
             if (_checkLeafOnly && node.HasChildren)
             {
                 SetError(PromptPlusResources.SelectionDisabled);
                 return;
             }
 
-            // Validate predicate.
-            if (_predicatevalidselect != null || _predicatevalidselectAsync != null)
+            // Toggle just this node (never cascade). Determine direction first — the
+            // predicate only gates checking, never unchecking.
+            bool newChecked = node.Check != CheckState.Checked;
+
+            if (newChecked && (_predicatevalidcheck != null || _predicatevalidcheckAsync != null))
             {
-                (bool ok, string? message) = _predicatevalidselectAsync is not null
-                    ? _predicatevalidselectAsync.Invoke(node.Value).ConfigureAwait(false).GetAwaiter().GetResult()
-                    : _predicatevalidselect!.Invoke(node.Value);
+                (bool ok, string? message) = _predicatevalidcheckAsync is not null
+                    ? _predicatevalidcheckAsync.Invoke(node.Value).ConfigureAwait(false).GetAwaiter().GetResult()
+                    : _predicatevalidcheck!.Invoke(node.Value);
                 if (!ok)
                 {
                     SetError(string.IsNullOrEmpty(message) ? PromptPlusResources.PredicateSelectInvalid : message!);
@@ -816,8 +879,6 @@ namespace PromptPlusLibrary.Controls.MultiTree
                 }
             }
 
-            // Toggle just this node (never cascade).
-            bool newChecked = node.Check != CheckState.Checked;
             string id = RuntimeId(node.Source);
             if (newChecked)
                 _checkedSourceIds.Add(id);
@@ -828,14 +889,37 @@ namespace PromptPlusLibrary.Controls.MultiTree
         }
 
         /// <summary>
+        /// Walks the construction-time tree and force-checks every node created with
+        /// <c>check: true</c> (<see cref="Root"/>/<see cref="AddLast"/>/<see cref="AddFirst"/>/
+        /// <see cref="AddAfter"/>/<see cref="AddBefore"/>). Additive with <see cref="Default"/>/
+        /// history — called before them in <see cref="InitControl"/> so neither layer clears
+        /// the other; whichever mechanism marks a node checked, it stays checked.
+        /// </summary>
+        private void ApplyConstructionTimeChecks(TreeNode node)
+        {
+            if (node.Checked)
+                SetCheckedOnSource(node, true, force: true);
+            foreach (TreeNode child in node.Children)
+                ApplyConstructionTimeChecks(child);
+        }
+
+        /// <summary>
         /// Sets the checked flag on <paramref name="source"/> (and optionally all descendants
         /// when <see cref="_cascadeCheck"/> is <c>true</c>) using the source-identity set.
         /// </summary>
-        private void SetCheckedOnSource(TreeNode source, bool checkedState)
+        // A disabled node never has its own flag touched by an interactive/cascading toggle
+        // (the cascade still passes through it to reach enabled descendants), unless <paramref
+        // name="force"/> is set — used by Default/history pre-checking and by construction-time
+        // `check: true` nodes (ApplyConstructionTimeChecks), both of which force-mark a disabled
+        // node the same way IMultiSelectControl does.
+        private void SetCheckedOnSource(TreeNode source, bool checkedState, bool force = false)
         {
-            string id = RuntimeId(source);
-            if (checkedState) _checkedSourceIds.Add(id);
-            else _checkedSourceIds.Remove(id);
+            if (force || !source.Disabled)
+            {
+                string id = RuntimeId(source);
+                if (checkedState) _checkedSourceIds.Add(id);
+                else _checkedSourceIds.Remove(id);
+            }
 
             if (_cascadeCheck)
             {
@@ -892,10 +976,26 @@ namespace PromptPlusLibrary.Controls.MultiTree
 
             int checkedCount = 0, total = 0;
             CountDescendantLeaves(source, ref checkedCount, ref total);
-            if (total == 0) return CheckState.Unchecked;
-            if (checkedCount == total) return CheckState.Checked;
-            if (checkedCount == 0) return CheckState.Unchecked;
-            return CheckState.Indeterminate;
+            CheckState aggregate = total == 0 ? CheckState.Unchecked
+                : checkedCount == total ? CheckState.Checked
+                : checkedCount == 0 ? CheckState.Unchecked
+                : CheckState.Indeterminate;
+
+            if (source.Disabled)
+            {
+                // A disabled container's own flag can only ever be set via a Default/history
+                // force-check — interactive toggles refuse to touch it (ToggleCheck/
+                // ToggleCheckSingleNode/SetCheckedOnSource's non-force path all skip it). So if
+                // it's set here, it's a deliberate force-check and wins outright. Otherwise the
+                // container must never report as fully Checked just because a cascade happened
+                // to pass through it and its descendants ended up all checked — it was passed
+                // through, never actually confirmed itself.
+                return _checkedSourceIds.Contains(RuntimeId(source))
+                    ? CheckState.Checked
+                    : aggregate == CheckState.Checked ? CheckState.Indeterminate : aggregate;
+            }
+
+            return aggregate;
         }
 
         private void CountDescendantLeaves(TreeNode node, ref int checkedCount, ref int total)
@@ -922,9 +1022,14 @@ namespace PromptPlusLibrary.Controls.MultiTree
             return [.. result];
         }
 
+        // Uses ComputeCheck (the same rule the checkbox rendering uses) instead of reading
+        // _checkedSourceIds directly: a cascaded check stamps every descendant's own id, so a
+        // container's raw flag can go stale (e.g. one child gets individually unchecked later)
+        // while nobody clears it. Deriving from ComputeCheck keeps the returned values in sync
+        // with whatever the checkbox actually showed the user.
         private void CollectCheckedFrom(TreeNode node, List<T> result)
         {
-            if (_checkedSourceIds.Contains(RuntimeId(node)) && (!_checkLeafOnly || node.Children.Count == 0))
+            if (ComputeCheck(node) == CheckState.Checked && (!_checkLeafOnly || node.Children.Count == 0))
                 result.Add(node.Value);
             foreach (TreeNode child in node.Children)
                 CollectCheckedFrom(child, result);
@@ -1004,13 +1109,24 @@ namespace PromptPlusLibrary.Controls.MultiTree
             return -1;
         }
 
+        // View-only ignores Disabled entirely (same exemption as CheckLeafOnly/PredicateChecked
+        // in the toggle helpers), so this is only ever called from non-view-only navigation.
+        private void SetSelectionDisabledErrorIfNeeded()
+        {
+            if (!_viewOnly && _localpaginator?.SelectedItem?.Disabled == true)
+            {
+                SetError(PromptPlusResources.SelectionDisabled);
+            }
+        }
+
         private void ExpandAndCheckTarget(T target)
         {
             List<TreeNode>? path = FindPath(_root!, target);
             if (path is null || path.Count == 0) return;
 
-            // Mark the leaf as checked.
-            SetCheckedOnSource(path[^1], true);
+            // Mark the leaf as checked. Force-bypass Disabled: Default/history pre-checking
+            // force-marks a disabled node, same as IMultiSelectControl.
+            SetCheckedOnSource(path[^1], true, force: true);
 
             // Expand ancestors so the checked node is visible.
             for (int i = 0; i < path.Count; i++)
@@ -1248,7 +1364,8 @@ namespace PromptPlusLibrary.Controls.MultiTree
                     CheckState.Indeterminate => GetSymbol(SymbolType.PartialSelect),
                     _ => GetSymbol(SymbolType.NotSelect)
                 };
-                Style checkStyle = isSelected ? lineStyle : _optStyles[MultiTreeStyles.UnSelected];
+                Style checkStyle = node.Disabled ? _optStyles[MultiTreeStyles.Disabled]
+                    : isSelected ? lineStyle : _optStyles[MultiTreeStyles.UnSelected];
                 screenBuffer.Write(checkSymbol, checkStyle);
 
                 if (_modeView == ModeView.Filter)
@@ -1256,7 +1373,8 @@ namespace PromptPlusLibrary.Controls.MultiTree
                     string pathText = _flatDisplayCache is not null && _flatDisplayCache.TryGetValue(node.UniqueId, out string? p)
                         ? p
                         : (_textSelector!(node.Value) ?? string.Empty);
-                    Style nameStyle = isSelected ? lineStyle
+                    Style nameStyle = node.Disabled ? _optStyles[MultiTreeStyles.Disabled]
+                        : isSelected ? lineStyle
                         : node.IsRoot ? _optStyles[MultiTreeStyles.Root] : _optStyles[MultiTreeStyles.Node];
                     screenBuffer.Write($" {pathText}", nameStyle);
                     WriteExtraInfo(screenBuffer, node);
@@ -1289,6 +1407,7 @@ namespace PromptPlusLibrary.Controls.MultiTree
                     ? _optStyles[MultiTreeStyles.Root]
                     : _optStyles[MultiTreeStyles.Node];
                 if (isSelected) nameStyleSelect = lineStyle;
+                if (node.Disabled) nameStyleSelect = _optStyles[MultiTreeStyles.Disabled];
                 screenBuffer.Write(_textSelector!(node.Value) ?? string.Empty, nameStyleSelect);
 
                 WriteExtraInfo(screenBuffer, node);
@@ -1301,7 +1420,11 @@ namespace PromptPlusLibrary.Controls.MultiTree
                     _localpaginator.TotalCountValid,
                     _localpaginator.SelectedPage + 1,
                     _localpaginator.PageCount)!;
-                template = $"{template} {string.Format(CultureInfo.CurrentCulture, s_countCheckFormat, _checkedSourceIds.Count)}";
+                // Reconciled count (CollectChecked), not the raw _checkedSourceIds.Count: a
+                // cascaded check stamps every descendant's own id, so after an individual child
+                // is later unchecked the container's stale id would otherwise inflate this badge
+                // beyond what Enter actually returns.
+                template = $"{template} {string.Format(CultureInfo.CurrentCulture, s_countCheckFormat, CollectChecked().Length)}";
                 screenBuffer.WriteLine(template, _optStyles[MultiTreeStyles.Pagination]);
             }
         }

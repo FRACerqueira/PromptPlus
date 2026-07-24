@@ -14,7 +14,7 @@ namespace InputControlsSamples
     {
         static void Main()
         {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("ko-KR");
             PromptPlus.Config.DefaultCulture = Thread.CurrentThread.CurrentCulture;
 
             PromptPlus.Console.ResetColor();
@@ -126,7 +126,7 @@ namespace InputControlsSamples
             ShowSection("10) Validation (tuple with message)");
             result = PromptPlus.Controls.Input("Code", "Only digits and at least 2 chars")
                 .AcceptInput(char.IsDigit)
-                .PredicateSelected(x => x.Length < 2
+                .PredicateValid(x => x.Length < 2
                     ? (false, "Length must be greater than or equal to 2")
                     : (true, null))
                 .Run();
@@ -135,14 +135,14 @@ namespace InputControlsSamples
             ShowSection("11) Validation (bool)");
             result = PromptPlus.Controls.Input("Code", "Only digits and at least 2 chars")
                 .AcceptInput(char.IsDigit)
-                .PredicateSelected(x => x.Length >= 2)
+                .PredicateValid(x => x.Length >= 2)
                 .Run();
             PrintResult(result);
 
             ShowSection("12) Async validation (bool)");
             result = PromptPlus.Controls.Input("Code", "Only digits and at least 2 chars (async)")
                 .AcceptInput(char.IsDigit)
-                .PredicateSelectedAsync(async x =>
+                .PredicateValidAsync(async x =>
                 {
                     await Task.Delay(1);
                     return x.Length >= 2;
@@ -153,7 +153,7 @@ namespace InputControlsSamples
             ShowSection("13) Async validation (message)");
             result = PromptPlus.Controls.Input("Code", "Only digits and at least 2 chars (async message)")
                 .AcceptInput(char.IsDigit)
-                .PredicateSelectedAsync(async x =>
+                .PredicateValidAsync(async x =>
                 {
                     await Task.Delay(1);
                     return x.Length < 2
@@ -185,7 +185,7 @@ namespace InputControlsSamples
             ShowSection("16) Secret input with complexity rule");
             result = PromptPlus.Controls.Secret("Password", "Min 8 chars with upper/lower/digit/special")
                 .MaskSecret('#', true)
-                .PredicateSelected(x =>
+                .PredicateValid(x =>
                 {
                     var validate = new Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
                     return validate.IsMatch(x);
@@ -199,7 +199,7 @@ namespace InputControlsSamples
                 .Styles(InputStyles.Answer, Color.Green)
                 .AcceptInput(char.IsDigit)
                 .MaxLength(4)
-                .PredicateSelected(x => x.Length == 4
+                .PredicateValid(x => x.Length == 4
                     ? (true, null)
                     : (false, "PIN must be exactly 4 digits"))
                 .Run();
@@ -215,7 +215,7 @@ namespace InputControlsSamples
             ShowSection("19) Secret with sync description + async bool validation");
             result = PromptPlus.Controls.Secret("Password", "Minimum 8 chars")
                 .ChangeDescription(input => $"Length: {input.Length}")
-                .PredicateSelectedAsync(async x =>
+                .PredicateValidAsync(async x =>
                 {
                     await Task.Delay(1);
                     return x.Length >= 8;
@@ -230,7 +230,7 @@ namespace InputControlsSamples
                     await Task.Delay(1);
                     return $"Length: {input.Length}";
                 })
-                .PredicateSelectedAsync(async x =>
+                .PredicateValidAsync(async x =>
                 {
                     await Task.Delay(1);
                     return x.Length < 8

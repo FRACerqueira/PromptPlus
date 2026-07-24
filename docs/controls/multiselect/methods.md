@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [MultiSelect — Operations →](operations.md)
+[? Back to Home](../../../README.md) • **Next:** [MultiSelect — Operations ?](operations.md)
 
 ---
 
@@ -40,8 +40,8 @@ chain in any order. Call [`Run`](#run) last.
 [UseDefaultHistory](#usedefaulthistory) ·
 [DefaultMatchBy](#defaultmatchby) ·
 [Range](#range) ·
-[PredicateSelected](#predicateselected) ·
-[PredicateSelectedAsync](#predicateselectedasync) ·
+[PredicateChecked](#predicatechecked) ·
+[PredicateCheckedAsync](#predicatecheckedasync) ·
 [ViewOnly](#viewonly) ·
 [ChangeDescription](#changedescription) ·
 [ChangeDescriptionAsync](#changedescriptionasync) ·
@@ -389,11 +389,11 @@ PromptPlus.Controls.MultiSelect<string>("Cities", "Min. 2, Max. 3")
 Validation runs when the user **checks an item** (Space). On failure the check is rejected and the
 list shows an error.
 
-### `PredicateSelected`
+### `PredicateChecked`
 
 ```csharp
-IMultiSelectControl<T> PredicateSelected(Func<T, bool> validselect)
-IMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
+IMultiSelectControl<T> PredicateChecked(Func<T, bool> validselect)
+IMultiSelectControl<T> PredicateChecked(Func<T, (bool, string?)> validselect)
 ```
 
 | Overload | Return | Behavior |
@@ -404,7 +404,7 @@ IMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
 ```csharp
 PromptPlus.Controls.MultiSelect<string>("Cities")
     .AddItems(["Seattle", "London", "Tokyo"])
-    .PredicateSelected(city => city == "Tokyo"
+    .PredicateChecked(city => city == "Tokyo"
         ? (true, null)
         : (false, "Only Tokyo can be selected"))
     .Run();
@@ -415,16 +415,16 @@ PromptPlus.Controls.MultiSelect<string>("Cities")
 
 ---
 
-### `PredicateSelectedAsync`
+### `PredicateCheckedAsync`
 
 ```csharp
-IMultiSelectControl<T> PredicateSelectedAsync(Func<T, Task<bool>> validselect)
-IMultiSelectControl<T> PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect)
+IMultiSelectControl<T> PredicateCheckedAsync(Func<T, Task<bool>> validselect)
+IMultiSelectControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> validselect)
 ```
 
-Asynchronous counterparts of the two [`PredicateSelected`](#predicateselected) overloads.
+Asynchronous counterparts of the two [`PredicateChecked`](#predicatechecked) overloads.
 
-> ⚠️ The async predicate is awaited **synchronously (blocking) on the UI thread** — keep it fast.
+> ?? The async predicate is awaited **synchronously (blocking) on the UI thread** — keep it fast.
 
 ---
 
@@ -487,7 +487,7 @@ IMultiSelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? 
 
 Persists confirmed selections to `filename` and can restore them (via [`Default`](#default) or
 [`UseDefaultHistory`](#usedefaulthistory)). The `IHistoryOptions` builder is identical to the one
-documented for [Input → EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`,
+documented for [Input ? EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`,
 `MaxItems`, `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
@@ -533,7 +533,7 @@ IMultiSelectControl<T> Options(Action<IControlOptions> options)
 
 Overrides global behaviors for this one control (prompt/description text, abort key, tooltip,
 hide-after-finish, extra-info affixes). See
-[Global Behaviors → Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
+[Global Behaviors ? Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
 
 > Throws `ArgumentNullException` if `options` is `null`.
 
@@ -562,4 +562,4 @@ var result = PromptPlus.Controls.MultiSelect<string>("Cities").AddItems(cities).
 - [Operations](operations.md) — how these methods behave at runtime
 - [Styles](styles.md) — the `MultiSelectStyles` regions
 - [Index](index.md) — overview and method map
-- [Select → Methods](../select/methods.md) — the single-choice sibling's API
+- [Select ? Methods](../select/methods.md) — the single-choice sibling's API

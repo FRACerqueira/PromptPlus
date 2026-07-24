@@ -383,6 +383,16 @@ namespace PromptPlusLibrary.Controls.ProgressBar
                     ConsoleKeyInfo keyinfo = press.Key;
                     var wakeUpCondition = GetWakeUpCondition(keyinfo);
 
+                    // Checked before the generic Finish check below: Finish is true for BOTH a
+                    // normal completion (value >= max) and an aborted/errored one (ErrorAndAbort
+                    // sets the same underlying flag), so error/abort must take priority or a
+                    // handler exception gets silently reported as a successful (IsAborted=false) run.
+                    if (IsAbortKeyPress(keyinfo) || wakeUpCondition is WaitWakeUpCondition.Error || _progressbarEvent!.Error is not null)
+                    {
+                        _indexTooptip = 0;
+                        SetResultAndCancel(isAborted: true);
+                        break;
+                    }
 
                     if (_progressbarEvent!.Finish)
                     {
@@ -392,13 +402,6 @@ namespace PromptPlusLibrary.Controls.ProgressBar
 
                     if (IsRenderWakeUpCondition(wakeUpCondition))
                     {
-                        break;
-                    }
-
-                    if (IsAbortKeyPress(keyinfo) || wakeUpCondition is WaitWakeUpCondition.Error || _progressbarEvent!.Error is not null)
-                    {
-                        _indexTooptip = 0;
-                        SetResultAndCancel(isAborted: true);
                         break;
                     }
 
@@ -495,7 +498,9 @@ namespace PromptPlusLibrary.Controls.ProgressBar
             {
                 hasoutput = true;
                 var aux = (ResultCtrl!.Value.Content.FinishedValue!.Value - _progressbarEvent!.Minvalue) / (_progressbarEvent!.Maxvalue - _progressbarEvent!.Minvalue) * 100;
-                string answer = $"{ValueToString(aux)}% - {ResultCtrl!.Value.Content.ElapsedTime:hh\\:mm\\:ss\\:ff}"; ;
+                string answer = _hideProgressBar.HasFlag(HideProgressBar.ElapsedTime)
+                    ? $"{ValueToString(aux)}%"
+                    : $"{ValueToString(aux)}% - {ResultCtrl!.Value.Content.ElapsedTime:hh\\:mm\\:ss\\:ff}";
                 Style styleanswer = _optStyles[ProgressBarStyles.Answer];
                 if (ResultCtrl!.Value.IsAborted)
                 {
@@ -513,10 +518,7 @@ namespace PromptPlusLibrary.Controls.ProgressBar
                 {
                     answer = _finishText;
                 }
-                if (!string.IsNullOrEmpty(OptionsControl.PromptValue))
-                {
-                    screenBuffer.Write(OptionsControl.PromptValue, _optStyles[ProgressBarStyles.Prompt]);
-                }
+                WritePrompt(screenBuffer, _optStyles[ProgressBarStyles.Prompt]);
                 screenBuffer.WriteLine(answer, styleanswer);
             }
             if (!_hideProgressBar.HasFlag(HideProgressBar.ProgressbarAtFinish))

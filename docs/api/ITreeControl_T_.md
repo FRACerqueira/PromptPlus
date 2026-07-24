@@ -20,33 +20,45 @@ public interface ITreeControl<T>
 The type of items in the tree\.
 
 ### Remarks
-The tree structure is built explicitly by the caller through [Root\(T\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.Root(T) 'PromptPlusLibrary\.ITreeControl\<T\>\.Root\(T\)'),
-[AddLast\(T\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddLast(T) 'PromptPlusLibrary\.ITreeControl\<T\>\.AddLast\(T\)')/[AddFirst\(T\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddFirst(T) 'PromptPlusLibrary\.ITreeControl\<T\>\.AddFirst\(T\)') \(first\-level nodes\),
-[AddAfter\(ITreeNode&lt;T&gt;, T\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T) 'PromptPlusLibrary\.ITreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T\)')/[AddBefore\(ITreeNode&lt;T&gt;, T\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T) 'PromptPlusLibrary\.ITreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T\)') \(sibling
-insertion\) and [AddLast\(T\)](ITreeNode_T_.md#PromptPlusLibrary.ITreeNode_T_.AddLast(T) 'PromptPlusLibrary\.ITreeNode\<T\>\.AddLast\(T\)')/[AddFirst\(T\)](ITreeNode_T_.md#PromptPlusLibrary.ITreeNode_T_.AddFirst(T) 'PromptPlusLibrary\.ITreeNode\<T\>\.AddFirst\(T\)')
-\(nested children\)\. Whether a node is a container or a leaf is inferred from whether it has
-children\. The rendered tree materializes visible rows lazily on expand and releases them on
-collapse, keeping memory proportional to what is visible\.
+The tree structure is built explicitly by the caller through [Root\(T, bool\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.Root(T,bool) 'PromptPlusLibrary\.ITreeControl\<T\>\.Root\(T, bool\)'),
+[AddLast\(T, bool\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddLast(T,bool) 'PromptPlusLibrary\.ITreeControl\<T\>\.AddLast\(T, bool\)')/[AddFirst\(T, bool\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddFirst(T,bool) 'PromptPlusLibrary\.ITreeControl\<T\>\.AddFirst\(T, bool\)') \(first\-level nodes\),
+[AddAfter\(ITreeNode&lt;T&gt;, T, bool\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool) 'PromptPlusLibrary\.ITreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool\)')/[AddBefore\(ITreeNode&lt;T&gt;, T, bool\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool) 'PromptPlusLibrary\.ITreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool\)')
+\(sibling insertion\) and [AddLast\(T, bool\)](ITreeNode_T_.md#PromptPlusLibrary.ITreeNode_T_.AddLast(T,bool) 'PromptPlusLibrary\.ITreeNode\<T\>\.AddLast\(T, bool\)')/
+[AddFirst\(T, bool\)](ITreeNode_T_.md#PromptPlusLibrary.ITreeNode_T_.AddFirst(T,bool) 'PromptPlusLibrary\.ITreeNode\<T\>\.AddFirst\(T, bool\)') \(nested children\)\. Whether a node is a
+container or a leaf is inferred from whether it has children\. The rendered tree
+materializes visible rows lazily on expand and releases them on collapse, keeping memory
+proportional to what is visible\. Nodes can be marked `disable` at creation time so
+they are shown and navigable but cannot be confirmed\.
 ### Methods
 
-<a name='PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T)'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool)'></a>
 
-## ITreeControl\<T\>\.AddAfter\(ITreeNode\<T\>, T\) Method
+## ITreeControl\<T\>\.AddAfter\(ITreeNode\<T\>, T, bool\) Method
 
-Inserts a sibling immediately after [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T\)\.node')\.
+Inserts a sibling immediately after [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool\)\.node')\.
 
 ```csharp
-PromptPlusLibrary.ITreeNode<T> AddAfter(PromptPlusLibrary.ITreeNode<T> node, T value);
+PromptPlusLibrary.ITreeNode<T> AddAfter(PromptPlusLibrary.ITreeNode<T> node, T value, bool disable=false);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T).node'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool).node'></a>
 
 `node` [PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
 
-<a name='PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T).value'></a>
+The reference sibling\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool).value'></a>
 
 `value` [T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')
+
+The value of the new node\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool).disable'></a>
+
+`disable` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the new node cannot be confirmed\. Default is `false`\.
 
 #### Returns
 [PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
@@ -54,29 +66,39 @@ PromptPlusLibrary.ITreeNode<T> AddAfter(PromptPlusLibrary.ITreeNode<T> node, T v
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-When [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T\)\.node') is `null`\.
+When [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool\)\.node') is `null`\.
 
 [System\.InvalidOperationException](https://learn.microsoft.com/en-us/dotnet/api/system.invalidoperationexception 'System\.InvalidOperationException')  
-When [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T\)\.node') does not belong to this tree\.
+When [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddAfter(PromptPlusLibrary.ITreeNode_T_,T,bool).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddAfter\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool\)\.node') does not belong to this tree\.
 
-<a name='PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T)'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool)'></a>
 
-## ITreeControl\<T\>\.AddBefore\(ITreeNode\<T\>, T\) Method
+## ITreeControl\<T\>\.AddBefore\(ITreeNode\<T\>, T, bool\) Method
 
-Inserts a sibling immediately before [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T\)\.node')\.
+Inserts a sibling immediately before [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool\)\.node')\.
 
 ```csharp
-PromptPlusLibrary.ITreeNode<T> AddBefore(PromptPlusLibrary.ITreeNode<T> node, T value);
+PromptPlusLibrary.ITreeNode<T> AddBefore(PromptPlusLibrary.ITreeNode<T> node, T value, bool disable=false);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T).node'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool).node'></a>
 
 `node` [PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
 
-<a name='PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T).value'></a>
+The reference sibling\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool).value'></a>
 
 `value` [T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')
+
+The value of the new node\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool).disable'></a>
+
+`disable` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the new node cannot be confirmed\. Default is `false`\.
 
 #### Returns
 [PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
@@ -84,25 +106,33 @@ PromptPlusLibrary.ITreeNode<T> AddBefore(PromptPlusLibrary.ITreeNode<T> node, T 
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-When [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T\)\.node') is `null`\.
+When [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool\)\.node') is `null`\.
 
 [System\.InvalidOperationException](https://learn.microsoft.com/en-us/dotnet/api/system.invalidoperationexception 'System\.InvalidOperationException')  
-When [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T\)\.node') does not belong to this tree\.
+When [node](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddBefore(PromptPlusLibrary.ITreeNode_T_,T,bool).node 'PromptPlusLibrary\.ITreeControl\<T\>\.AddBefore\(PromptPlusLibrary\.ITreeNode\<T\>, T, bool\)\.node') does not belong to this tree\.
 
-<a name='PromptPlusLibrary.ITreeControl_T_.AddFirst(T)'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.AddFirst(T,bool)'></a>
 
-## ITreeControl\<T\>\.AddFirst\(T\) Method
+## ITreeControl\<T\>\.AddFirst\(T, bool\) Method
 
 Adds a first\-level node \(child of the root\) at the beginning\.
 
 ```csharp
-PromptPlusLibrary.ITreeNode<T> AddFirst(T value);
+PromptPlusLibrary.ITreeNode<T> AddFirst(T value, bool disable=false);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ITreeControl_T_.AddFirst(T).value'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.AddFirst(T,bool).value'></a>
 
 `value` [T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')
+
+The value of the new node\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.ITreeControl_T_.AddFirst(T,bool).disable'></a>
+
+`disable` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the new node cannot be confirmed\. Default is `false`\.
 
 #### Returns
 [PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')
@@ -112,20 +142,28 @@ PromptPlusLibrary.ITreeNode<T> AddFirst(T value);
 [System\.InvalidOperationException](https://learn.microsoft.com/en-us/dotnet/api/system.invalidoperationexception 'System\.InvalidOperationException')  
 When the root has not been set yet\.
 
-<a name='PromptPlusLibrary.ITreeControl_T_.AddLast(T)'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.AddLast(T,bool)'></a>
 
-## ITreeControl\<T\>\.AddLast\(T\) Method
+## ITreeControl\<T\>\.AddLast\(T, bool\) Method
 
 Adds a first\-level node \(child of the root\) at the end\.
 
 ```csharp
-PromptPlusLibrary.ITreeNode<T> AddLast(T value);
+PromptPlusLibrary.ITreeNode<T> AddLast(T value, bool disable=false);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ITreeControl_T_.AddLast(T).value'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.AddLast(T,bool).value'></a>
 
 `value` [T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')
+
+The value of the new node\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.ITreeControl_T_.AddLast(T,bool).disable'></a>
+
+`disable` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the new node cannot be confirmed\. Default is `false`\.
 
 #### Returns
 [PromptPlusLibrary\.ITreeNode&lt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')[T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')[&gt;](ITreeNode_T_.md 'PromptPlusLibrary\.ITreeNode\<T\>')  
@@ -342,7 +380,7 @@ The [FilterMode](FilterMode.md 'PromptPlusLibrary\.FilterMode') to apply\.
 
 Iterates [items](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.Interaction_T1_(System.Collections.Generic.IEnumerable_T1_,System.Action_T1,PromptPlusLibrary.ITreeControl_T__).items 'PromptPlusLibrary\.ITreeControl\<T\>\.Interaction\<T1\>\(System\.Collections\.Generic\.IEnumerable\<T1\>, System\.Action\<T1,PromptPlusLibrary\.ITreeControl\<T\>\>\)\.items') and invokes [interactionAction](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.Interaction_T1_(System.Collections.Generic.IEnumerable_T1_,System.Action_T1,PromptPlusLibrary.ITreeControl_T__).interactionAction 'PromptPlusLibrary\.ITreeControl\<T\>\.Interaction\<T1\>\(System\.Collections\.Generic\.IEnumerable\<T1\>, System\.Action\<T1,PromptPlusLibrary\.ITreeControl\<T\>\>\)\.interactionAction') for each
 element, giving the caller a chance to add first\-level nodes \(and further descendants\)
-programmatically\. Equivalent to calling [AddLast\(T\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddLast(T) 'PromptPlusLibrary\.ITreeControl\<T\>\.AddLast\(T\)') inside the loop\.
+programmatically\. Equivalent to calling [AddLast\(T, bool\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.AddLast(T,bool) 'PromptPlusLibrary\.ITreeControl\<T\>\.AddLast\(T, bool\)') inside the loop\.
 
 ```csharp
 PromptPlusLibrary.ITreeControl<T> Interaction<T1>(System.Collections.Generic.IEnumerable<T1> items, System.Action<T1,PromptPlusLibrary.ITreeControl<T>> interactionAction);
@@ -502,20 +540,28 @@ PromptPlusLibrary.ITreeControl<T> PredicateSelectedAsync(System.Func<T,System.Th
 ### Remarks
 The asynchronous predicate is evaluated synchronously \(blocking\) on the UI thread\.
 
-<a name='PromptPlusLibrary.ITreeControl_T_.Root(T)'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.Root(T,bool)'></a>
 
-## ITreeControl\<T\>\.Root\(T\) Method
+## ITreeControl\<T\>\.Root\(T, bool\) Method
 
 Sets the root value shown as the top\-level node\. Required\.
 
 ```csharp
-PromptPlusLibrary.ITreeControl<T> Root(T value);
+PromptPlusLibrary.ITreeControl<T> Root(T value, bool disable=false);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ITreeControl_T_.Root(T).value'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.Root(T,bool).value'></a>
 
 `value` [T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')
+
+The root value\. Cannot be `null`\.
+
+<a name='PromptPlusLibrary.ITreeControl_T_.Root(T,bool).disable'></a>
+
+`disable` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
+
+When `true`, the root cannot be confirmed\. Default is `false`\.
 
 #### Returns
 [PromptPlusLibrary\.ITreeControl&lt;](ITreeControl_T_.md 'PromptPlusLibrary\.ITreeControl\<T\>')[T](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.T 'PromptPlusLibrary\.ITreeControl\<T\>\.T')[&gt;](ITreeControl_T_.md 'PromptPlusLibrary\.ITreeControl\<T\>')
@@ -523,7 +569,7 @@ PromptPlusLibrary.ITreeControl<T> Root(T value);
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-When [value](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.Root(T).value 'PromptPlusLibrary\.ITreeControl\<T\>\.Root\(T\)\.value') is `null`\.
+When [value](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.Root(T,bool).value 'PromptPlusLibrary\.ITreeControl\<T\>\.Root\(T, bool\)\.value') is `null`\.
 
 <a name='PromptPlusLibrary.ITreeControl_T_.Run(System.Threading.CancellationToken)'></a>
 

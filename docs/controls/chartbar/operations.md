@@ -84,6 +84,8 @@ Every region can be recolored — see [Styles](styles.md).
 
 - [`OrderBy`](methods.md#orderby) sets the initial order: `None`, `Highest`, `Smallest`, `LabelAsc`,
   or `LabelDesc`.
+- `ChartBarOrder.None` is a **no-op** — it keeps the original insertion order (the sequential
+  auto-id order); it never reshuffles the bars.
 - Press **F4** at runtime to cycle through the orders, unless
   [`EnableOrderingSwitcher(false)`](methods.md#enableorderingswitcher) is set.
 - The active order is shown by the ordering indicator (styled with

@@ -32,8 +32,26 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Gets the <see cref="ConsoleKeyInfo"/> representation of this hotkey.
         /// </summary>
+        /// <remarks>
+        /// <see cref="ConsoleKeyInfo.KeyChar"/> is only set for an explicit allowlist of keys whose
+        /// <see cref="ConsoleKey"/> numeric value coincides with a real character code (letters,
+        /// digits, space, Backspace/Tab/Enter/Escape). A numeric-range check is not safe here: many
+        /// non-printable keys (arrows, Home/End/PageUp/PageDown, function keys, ...) have enum
+        /// values that fall inside the printable ASCII band by coincidence. Every key outside the
+        /// allowlist reports <c>'\0'</c>, matching what a real console reports for those keys,
+        /// instead of casting the enum value into a misleading char.
+        /// </remarks>
         [JsonIgnore]
-        public readonly ConsoleKeyInfo KeyInfo => new((char)Key, Key, Shift, Alt, Ctrl);
+        public readonly ConsoleKeyInfo KeyInfo
+        {
+            get
+            {
+                bool hasRealChar = Key is ConsoleKey.Backspace or ConsoleKey.Tab or ConsoleKey.Enter or ConsoleKey.Escape or ConsoleKey.Spacebar
+                    or (>= ConsoleKey.D0 and <= ConsoleKey.D9)
+                    or (>= ConsoleKey.A and <= ConsoleKey.Z);
+                return new(hasRealChar ? (char)Key : (char)0, Key, Shift, Alt, Ctrl);
+            }
+        }
 
         /// <summary>
         /// Gets the base <see cref="ConsoleKey"/> of this hotkey.

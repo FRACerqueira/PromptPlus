@@ -973,7 +973,10 @@ namespace PromptPlusLibrary.Controls.Calendar
             string calendarNoteHighlight = GetSymbol(SymbolType.CalendarNoteHighlight);
             string calendarNote = GetSymbol(SymbolType.CalendarNote);
             string calendarHighlight = GetSymbol(SymbolType.CalendarHighlight);
-            string curmonth = refcalendar.ToString("MMMM", _culture).PadRight(28);
+            // Padding is computed from display width (terminal columns), not string.Length — a CJK
+            // month name (ja-jp/ko-kr/zh-cn) is fewer characters but more columns than PadRight(28)
+            // assumed, which pushed the box's right border out of alignment with the lines above/below.
+            string curmonth = DisplayWidthHelpers.PadToDisplayWidth(refcalendar.ToString("MMMM", _culture), 28);
             string curyear = refcalendar.ToString("yyyy", _culture);
             curmonth = $"{curmonth[..1].ToUpperInvariant()}{curmonth[1..]}";
 
@@ -995,14 +998,10 @@ namespace PromptPlusLibrary.Controls.Calendar
             {
                 string abr = _culture.DateTimeFormat.AbbreviatedDayNames[(int)item];
                 abr = $"{abr[..1].ToUpperInvariant()}{abr[1..]}";
-                if (abr.Length < 3)
-                {
-                    abr = abr.PadLeft(3, ' ');
-                }
-                if (abr.Length > 3)
-                {
-                    abr = abr[..3];
-                }
+                // Same display-width fix as the month name above: a CJK abbreviation (e.g. 1-2 kanji)
+                // is fewer characters but more columns than the 3-column cell reserves, which drifted
+                // the weekday header to the right of the day grid below it, cumulatively per column.
+                abr = DisplayWidthHelpers.FitToDisplayWidth(abr, 3);
                 if (item == _currentDate.DayOfWeek)
                 {
                     abr = $"{calendarTodayLeft}{abr}{calendarTodayRight}";
@@ -1347,7 +1346,5 @@ namespace PromptPlusLibrary.Controls.Calendar
         {
             return [.. Enumerable.Range(0, 7).Select(i => (DayOfWeek)(((int)_firstdayOfWeek + i) % 7))];
         }
-
-
     }
 }

@@ -30,17 +30,13 @@ jobs:
             9.0.x
             10.0.x
 
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Build
-        run: dotnet build --no-restore --configuration Release
+      - name: Build library (Release)
+        run: dotnet build src/PromptPlus.csproj --configuration Release
 
       - name: Test
         run: >
-          dotnet test
-          --no-build
-          --configuration Release
+          dotnet test tests/PromptPlus.Tests/PromptPlus.Tests.csproj
+          --configuration Debug
           --verbosity normal
           --logger "trx;LogFileName=test-results.trx"
           --collect:"XPlat Code Coverage"

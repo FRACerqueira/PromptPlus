@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,7 +11,7 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [MultiFile — Operations →](operations.md)
+[? Back to Home](../../../README.md) • **Next:** [MultiFile — Operations ?](operations.md)
 
 ---
 
@@ -31,8 +31,8 @@ any order. Call [`Run`](#run) last.
 [CascadeCheck](#cascadecheck) ·
 [RecursiveMarkWithCtrlSpace](#recursivemarkwithctrlspace) ·
 [Range](#range) ·
-[PredicateSelected](#predicateselected) ·
-[PredicateSelectedAsync](#predicateselectedasync) ·
+[PredicateChecked](#predicatechecked) ·
+[PredicateCheckedAsync](#predicatecheckedasync) ·
 [HideSize](#hidesize) ·
 [ShowFullPath](#showfullpath) ·
 [PageSize](#pagesize) ·
@@ -207,11 +207,11 @@ checked. For a single toggle a rejection shows the optional message as an error;
 selections (recursive folder, wildcard, or check-all) rejected items are silently skipped. Setting a
 predicate replaces any previously set one (sync or async).
 
-### `PredicateSelected`
+### `PredicateChecked`
 
 ```csharp
-IMultiFileControl PredicateSelected(Func<FileItem, bool> validselect)
-IMultiFileControl PredicateSelected(Func<FileItem, (bool, string?)> validselect)
+IMultiFileControl PredicateChecked(Func<FileItem, bool> validselect)
+IMultiFileControl PredicateChecked(Func<FileItem, (bool, string?)> validselect)
 ```
 
 | Overload | Return | Behavior |
@@ -222,7 +222,7 @@ IMultiFileControl PredicateSelected(Func<FileItem, (bool, string?)> validselect)
 ```csharp
 PromptPlus.Controls.MultiFile("Check large files only")
     .Root(root)
-    .PredicateSelected(f => f.IsDirectory || f.Length > 1024
+    .PredicateChecked(f => f.IsDirectory || f.Length > 1024
         ? (true, null)
         : (false, "File is too small"))
     .Run();
@@ -232,16 +232,16 @@ PromptPlus.Controls.MultiFile("Check large files only")
 
 ---
 
-### `PredicateSelectedAsync`
+### `PredicateCheckedAsync`
 
 ```csharp
-IMultiFileControl PredicateSelectedAsync(Func<FileItem, Task<bool>> validselect)
-IMultiFileControl PredicateSelectedAsync(Func<FileItem, Task<(bool, string?)>> validselect)
+IMultiFileControl PredicateCheckedAsync(Func<FileItem, Task<bool>> validselect)
+IMultiFileControl PredicateCheckedAsync(Func<FileItem, Task<(bool, string?)>> validselect)
 ```
 
 Asynchronous counterparts.
 
-> ⚠️ For an individual toggle the predicate is awaited **synchronously (blocking) on the UI thread**.
+> ?? For an individual toggle the predicate is awaited **synchronously (blocking) on the UI thread**.
 > During a recursive folder (wildcard) selection it runs on a **background thread** while enumerating
 > the subtree, so it must be thread-safe and must not touch UI state.
 
@@ -325,7 +325,7 @@ IMultiFileControl EnabledHistory(string filename, Action<IHistoryOptions>? optio
 
 Persists the confirmed paths to `filename` and can restore them as the defaults on the next run (the
 tree expands to the first). The `IHistoryOptions` builder is identical to the one documented for
-[Input → EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`, `MaxItems`,
+[Input ? EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`, `MaxItems`,
 `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
@@ -368,7 +368,7 @@ IMultiFileControl Options(Action<IControlOptions> options)
 
 Overrides global behaviors for this one control (prompt/description text, abort key, tooltip,
 hide-after-finish). See
-[Global Behaviors → Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
+[Global Behaviors ? Per-Control Override](../../global-behaviors.md#per-control-override--icontroloptions).
 
 ```csharp
 PromptPlus.Controls.MultiFile("Check").Root(root)
@@ -411,4 +411,4 @@ if (!result.IsAborted)
 - [Operations](operations.md) — how these methods behave at runtime
 - [Styles](styles.md) — the `MultiFileStyles` regions
 - [Index](index.md) — overview and method map
-- [File → Methods](../file/methods.md) — the single-selection sibling
+- [File ? Methods](../file/methods.md) — the single-selection sibling

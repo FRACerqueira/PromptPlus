@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
   <img src="../../../icon.png" alt="PromptPlus" width="120" height="120" />
 
   # PromptPlus
@@ -11,18 +11,18 @@
 
 </div>
 
-[← Back to Home](../../../README.md) • **Next:** [Input — Methods →](methods.md)
+[? Back to Home](../../../README.md) • **Next:** [Input — Methods ?](methods.md)
 
 ---
 
 > Single-line, free-text entry. The user types plain text and confirms with **Enter**.
 
 The `Input` control is the workhorse for collecting any unstructured string — a name, an
-e‑mail address, a URL, a search term, a note. It supports live character filtering, case
+e-mail address, a URL, a search term, a note. It supports live character filtering, case
 coercion, length limits, confirmation-time validation, Tab autocomplete suggestions, and
 persistent history — all through a single fluent chain.
 
-> 🔒 Need to hide what the user types (passwords, API keys, PINs)? Use the
+> ?? Need to hide what the user types (passwords, API keys, PINs)? Use the
 > [**Secret**](../secret/index.md) control instead — it shares this same API plus a mask character.
 
 ---
@@ -68,7 +68,7 @@ if (!result.IsAborted)
 - The call returns a [`ResultPrompt<string>`](../../architecture.md#resultpromptt): read `.Content`
   for the text and `.IsAborted` to detect Esc.
 
-> 💡 Always check `IsAborted` before using `.Content`. On abort, `.Content` is an empty string.
+> ?? Always check `IsAborted` before using `.Content`. On abort, `.Content` is an empty string.
 
 ---
 
@@ -81,7 +81,7 @@ var pin = PromptPlus.Controls
     .Input("PIN", "Only digits are accepted (max 5)")
     .AcceptInput(char.IsDigit)          // reject any non-digit keystroke
     .MaxLength(5)                        // stop accepting after 5 characters
-    .PredicateSelected(v => v.Length == 5
+    .PredicateValid(v => v.Length == 5
         ? (true, null)
         : (false, "PIN must be exactly 5 digits"))   // validate on Enter
     .Run();
@@ -92,7 +92,7 @@ if (!pin.IsAborted)
 
 This shows the three most common building blocks together: **per-keystroke filtering**
 (`AcceptInput`), a **hard length cap** (`MaxLength`), and **confirmation-time validation with a
-message** (`PredicateSelected`). See [Operations](operations.md) for how they interact.
+message** (`PredicateValid`). See [Operations](operations.md) for how they interact.
 
 ---
 
@@ -104,7 +104,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 |---|---|
 | Seed a value | `Default`, `DefaultIfEmpty` |
 | Restrict typing | `AcceptInput`, `MaxLength`, `InputToCase` |
-| Validate on confirm | `PredicateSelected`, `PredicateSelectedAsync` |
+| Validate on confirm | `PredicateValid`, `PredicateValidAsync` |
 | Autocomplete | `SuggestionHandler`, `SuggestionHandlerAsync`, `MinimumSuggestionLength` |
 | History | `EnabledHistory` |
 | Dynamic description | `ChangeDescription`, `ChangeDescriptionAsync` |

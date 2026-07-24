@@ -35,7 +35,7 @@ namespace PromptPlusLibrary.Core
             {
                 return Color.FromHex(hexValue);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex) when (ex is ArgumentException or FormatException)
             {
                 throw new JsonException($"Invalid Color hex format: {hexValue}. Expected format: #RRGGBB", ex);
             }

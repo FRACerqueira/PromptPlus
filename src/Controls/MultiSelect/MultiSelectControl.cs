@@ -40,8 +40,8 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         private readonly Dictionary<MultiSelectStyles, Style> _optStyles;
         private readonly EmacsConsoleBuffer _filterBuffer;
         private readonly List<ItemSelect<T>> _items = [];
-        private Func<T, (bool, string?)>? _predicatevalidselect;
-        private Func<T, Task<(bool, string?)>>? _predicatevalidselectAsync;
+        private Func<T, (bool, string?)>? _predicatevalidcheck;
+        private Func<T, Task<(bool, string?)>>? _predicatevalidcheckAsync;
         private Func<T, string?>? _extraInfo;
         private Func<T, Task<string?>>? _extraInfoAsync;
         private int _sequence;
@@ -123,38 +123,38 @@ namespace PromptPlusLibrary.Controls.MultiSelect
         }
 
         /// <inheritdoc/>
-        public IMultiSelectControl<T> PredicateSelected(Func<T, (bool, string?)> validselect)
+        public IMultiSelectControl<T> PredicateChecked(Func<T, (bool, string?)> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
-            _predicatevalidselectAsync = null;
+            _predicatevalidcheck = validselect;
+            _predicatevalidcheckAsync = null;
             return this;
         }
 
         /// <inheritdoc/>
-        public IMultiSelectControl<T> PredicateSelected(Func<T, bool> validselect)
+        public IMultiSelectControl<T> PredicateChecked(Func<T, bool> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) => (validselect(input), (string?)null);
-            _predicatevalidselectAsync = null;
+            _predicatevalidcheck = (input) => (validselect(input), (string?)null);
+            _predicatevalidcheckAsync = null;
             return this;
         }
 
         /// <inheritdoc/>
-        public IMultiSelectControl<T> PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect)
+        public IMultiSelectControl<T> PredicateCheckedAsync(Func<T, Task<(bool, string?)>> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselectAsync = validselect;
-            _predicatevalidselect = null;
+            _predicatevalidcheckAsync = validselect;
+            _predicatevalidcheck = null;
             return this;
         }
 
         /// <inheritdoc/>
-        public IMultiSelectControl<T> PredicateSelectedAsync(Func<T, Task<bool>> validselect)
+        public IMultiSelectControl<T> PredicateCheckedAsync(Func<T, Task<bool>> validselect)
         {
             ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselectAsync = async (input) => ((await validselect(input).ConfigureAwait(false)), (string?)null);
-            _predicatevalidselect = null;
+            _predicatevalidcheckAsync = async (input) => ((await validselect(input).ConfigureAwait(false)), (string?)null);
+            _predicatevalidcheck = null;
             return this;
         }
 
@@ -429,14 +429,18 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 foreach (ItemSelect<T>? item in _items.Where(x => !x.CharSeparation.HasValue))
                 {
                     item.Text = GetItemText(item.Value);
-                    if (item.Text.Length > _lengthSeparationline)
+                    // Display width (terminal columns), not .Length — a CJK item/group name is fewer
+                    // characters but more columns, so the AddSeparator() divider line used to end up
+                    // shorter than the widest CJK item/group it was meant to span.
+                    int textWidth = item.Text.GetDisplayLength() is { Length: > 0 } d ? d[0] : 0;
+                    if (textWidth > _lengthSeparationline)
                     {
-                        _lengthSeparationline = item.Text.Length;
+                        _lengthSeparationline = textWidth;
                     }
-                    int groupLen = (item.Group ?? string.Empty).Length;
-                    if (groupLen > _lengthSeparationline)
+                    int groupWidth = (item.Group ?? string.Empty).GetDisplayLength() is { Length: > 0 } gd ? gd[0] : 0;
+                    if (groupWidth > _lengthSeparationline)
                     {
-                        _lengthSeparationline = groupLen;
+                        _lengthSeparationline = groupWidth;
                     }
                 }
             }
@@ -465,7 +469,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                             foreach (var item in histvalues)
                             {
                                 int index = _items.FindIndex(x => _DefaultMatchBy.Invoke(x.Value!, item));
-                                if (index >= 0 && TryValidateSelectionPredicate(_items[index].Value, out _))
+                                if (index >= 0 && TryValidateCheckPredicate(_items[index].Value, out _))
                                 {
                                     _items[index].ValueChecked = true;
                                 }
@@ -483,7 +487,7 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 {
                     int index = _items.FindIndex(x => _DefaultMatchBy.Invoke(x.Value!, item));
                     // Honor the selection predicate: rejected defaults are silently skipped.
-                    if (index >= 0 && TryValidateSelectionPredicate(_items[index].Value, out _))
+                    if (index >= 0 && TryValidateCheckPredicate(_items[index].Value, out _))
                     {
                         _items[index].ValueChecked = true;
                     }
@@ -561,11 +565,19 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
+                    bool updatePosAnswerBufferBeforeThisKey = _updatePosAnswerBuffer;
                     _updatePosAnswerBuffer = true;
 
                     KeyPressResult press = ReadNextKey(true, cancellationToken);
                     if (press.IsResize || press.IsCancelled)
                     {
+                        // A resize/cancel breaks out below without ever reaching the specific
+                        // resets a real navigation/scroll key would apply. Restore whatever this
+                        // flag was BEFORE this iteration force-set it to `true` above, so a resize
+                        // never changes whether the next render reloads the answer buffer from the
+                        // current checked-items summary vs. preserves a scroll the user had just
+                        // navigated to on a long answer preview.
+                        _updatePosAnswerBuffer = updatePosAnswerBufferBeforeThisKey;
                         if (press.IsCancelled)
                         {
                             _indexTooptip = 0;
@@ -733,7 +745,14 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                             item.ValueChecked = false;
                             _countChecked--;
                         }
-                        _answerBuffer!.Clear();
+                        if (_countChecked == 0)
+                        {
+                            _answerBuffer!.Clear();
+                        }
+                        else
+                        {
+                            _answerBuffer!.LoadPrintable(BuildCheckedItemsText());
+                        }
                         _onfilterOnlySelected = false;
                         _localpaginator!.UpdateCollection(_items);
                         _localpaginator!.UpdateFilter(string.Empty);
@@ -747,8 +766,10 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         bool grpavaluecheck = _localpaginator.AllItems().Count(x => x.ValueChecked) != grpcount;
                         foreach (var item in _localpaginator.AllItems().Where(x => !x.Disabled && !x.IsFirstItemGroup && x.CharSeparation == null))
                         {
-                            // Mass operation: silently skip items rejected by the predicate (no error).
-                            if (!TryValidateSelectionPredicate(item.Value, out _))
+                            // The predicate only gates checking an item; unchecking never needs it
+                            // (mass operation: items rejected by the predicate are silently skipped
+                            // while checking, no error shown).
+                            if (grpavaluecheck && !TryValidateCheckPredicate(item.Value, out _))
                             {
                                 continue;
                             }
@@ -776,8 +797,10 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         bool grpavaluecheck = grpcheck != grpcount;
                         foreach (var item in _items.Where(x => !x.IsFirstItemGroup && x.CharSeparation == null && !x.Disabled))
                         {
-                            // Mass operation: silently skip items rejected by the predicate (no error).
-                            if (!TryValidateSelectionPredicate(item.Value, out _))
+                            // The predicate only gates checking an item; unchecking never needs it
+                            // (mass operation: items rejected by the predicate are silently skipped
+                            // while checking, no error shown).
+                            if (grpavaluecheck && !TryValidateCheckPredicate(item.Value, out _))
                             {
                                 continue;
                             }
@@ -807,8 +830,10 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                         bool grpavaluecheck = grpcheck != grpcount;
                         foreach (var item in _items.Where(x => x.Group == _items[index].Group && !x.IsFirstItemGroup && x.CharSeparation == null && !x.Disabled))
                         {
-                            // Mass operation: silently skip items rejected by the predicate (no error).
-                            if (!TryValidateSelectionPredicate(item.Value, out _))
+                            // The predicate only gates checking an item; unchecking never needs it
+                            // (mass operation: items rejected by the predicate are silently skipped
+                            // while checking, no error shown).
+                            if (grpavaluecheck && !TryValidateCheckPredicate(item.Value, out _))
                             {
                                 continue;
                             }
@@ -839,18 +864,19 @@ namespace PromptPlusLibrary.Controls.MultiSelect
                     else if (!_viewOnly && keyinfo.IsPressSpaceKey() && _localpaginator!.SelectedItem != null && !_localpaginator.SelectedItem.Disabled && !_localpaginator.SelectedItem.IsFirstItemGroup && _localpaginator.SelectedItem.CharSeparation == null)
                     {
                         _indexTooptip = 0;
-                        if (!TryValidateSelectionPredicate(_localpaginator!.SelectedItem.Value, out string? message))
-                        {
-                            SetError(string.IsNullOrEmpty(message) ? PromptPlusResources.PredicateSelectInvalid : message);
-                            break;
-                        }
                         if (_localpaginator!.SelectedItem.ValueChecked)
                         {
+                            // Unchecking never needs the predicate — it only gates checking an item.
                             _localpaginator.SelectedItem.ValueChecked = false;
                             _countChecked--;
                         }
                         else
                         {
+                            if (!TryValidateCheckPredicate(_localpaginator!.SelectedItem.Value, out string? message))
+                            {
+                                SetError(string.IsNullOrEmpty(message) ? PromptPlusResources.PredicateSelectInvalid : message);
+                                break;
+                            }
                             _localpaginator.SelectedItem.ValueChecked = true;
                             _countChecked++;
                         }
@@ -1033,11 +1059,11 @@ namespace PromptPlusLibrary.Controls.MultiSelect
             }
         }
 
-        private bool TryValidateSelectionPredicate(T value, out string? message)
+        private bool TryValidateCheckPredicate(T value, out string? message)
         {
-            (bool ok, string? validationMessage) = _predicatevalidselectAsync != null
-                ? _predicatevalidselectAsync.Invoke(value).ConfigureAwait(false).GetAwaiter().GetResult()
-                : (_predicatevalidselect?.Invoke(value) ?? (true, null));
+            (bool ok, string? validationMessage) = _predicatevalidcheckAsync != null
+                ? _predicatevalidcheckAsync.Invoke(value).ConfigureAwait(false).GetAwaiter().GetResult()
+                : (_predicatevalidcheck?.Invoke(value) ?? (true, null));
             message = validationMessage;
             return ok;
         }
