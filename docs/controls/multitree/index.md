@@ -150,7 +150,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Initial values | `Default`, `DefaultMatchBy` |
 | Read-only display | `ViewOnly` |
 | Dynamic description | `ChangeDescription`, `ChangeDescriptionAsync` |
-| History | `EnabledHistory` |
+| History | `EnableHistory` |
 | Appearance & behavior | `Styles`, `Options` |
 | Run | `Run` |
 

@@ -97,6 +97,7 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | `File` / `MultiFile` | `HideSizeInfo(bool)` | `HideSize(bool)` | Renamed, same semantics |
 | `WaitTimer` → `Time` | `IsCountDown(bool)` | `DisplayMode(TimeDisplayMode)` | Replaced by an enum (`Countdown`/`Elapsed`) |
 | `Slider` / `ProgressBar` | `FracionalDig(byte)` | `FractionalDigits(byte)` | Renamed (spelling fix); matches `ChartBar.FractionalDigits` |
+| `Select` / `MultiSelect` / `Input` / `Secret` / `Slider` / `Switch` / `File` / `MultiFile` | `EnabledHistory(string, Action<IHistoryOptions>?)` | `EnableHistory(string, Action<IHistoryOptions>?)` | Renamed (grammar fix: enable, not "enabled") |
 
 ### Renamed enum values
 
@@ -192,7 +193,7 @@ var (name, aborted) = PromptPlus.Controls.Input("Name").Run();
 | `Select<T>` | `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `ChangeDescriptionAsync` · `InteractionAsync` · `TextSelectorAsync` · `ExtraInfoAsync` · `PredicateSelectedAsync` (x2) |
 | `MultiSelect<T>` | `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `TextSelectorAsync` · `ExtraInfoAsync` · `ChangeDescriptionAsync` · `InteractionAsync` · `PredicateCheckedAsync` (x2) |
 | `Input` | `SuggestionHandler(..., bool autocomplete)` · `SuggestionHandlerAsync(..., bool autocomplete)` · `MinimumSuggestionLength(byte)` · `PredicateValidAsync` (x2) · `ChangeDescriptionAsync` |
-| `Table` / `MultiTable` | `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll` · `ChangeDescriptionAsync` · `TextSelectorAsync` · `InteractionAsync` · `PredicateSelectedAsync` (Table) / `PredicateCheckedAsync` (MultiTable) (x2) · (`MultiTable`) `EnabledHistory` · `UseDefaultHistory` |
+| `Table` / `MultiTable` | `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll` · `ChangeDescriptionAsync` · `TextSelectorAsync` · `InteractionAsync` · `PredicateSelectedAsync` (Table) / `PredicateCheckedAsync` (MultiTable) (x2) · (`MultiTable`) `EnableHistory` · `UseDefaultHistory` |
 | `Tree` / `MultiTree` | `ViewOnly` · `Filter` · `SelectLeafOnly`/`CheckLeafOnly` · `ShowFullPath` · `CascadeCheck` (MultiTree) · `ChangeDescriptionAsync` · `ExtraInfoAsync` · `InteractionAsync` · `PredicateSelectedAsync` (Tree) / `PredicateCheckedAsync` (MultiTree) (x2) |
 | `MultiTasks` | `AddTaskAsync` · `Interaction<T>` · `StopOnError(bool)` · `Mode(MultiTasksMode)` |
 | `Task` | `ChangeDescription` · `ChangeDescriptionAsync` · `Context(IDictionary)` · `Culture(CultureInfo)` · multiple `Action`/`ActionAsync` overloads |

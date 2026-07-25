@@ -21,7 +21,7 @@ The type of items shown in the list\.
 ### Remarks
 The control renders a scrollable, optionally grouped list where the user moves the cursor
 with the arrow keys and confirms with `Enter`\. Features include inline filtering
-\([Filter\(FilterMode\)](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.Filter(PromptPlusLibrary.FilterMode) 'PromptPlusLibrary\.ISelectControl\<T\>\.Filter\(PromptPlusLibrary\.FilterMode\)')\), optional grouped layout, history persistence \([EnabledHistory\(string, Action&lt;IHistoryOptions&gt;\)](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.ISelectControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)')\),
+\([Filter\(FilterMode\)](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.Filter(PromptPlusLibrary.FilterMode) 'PromptPlusLibrary\.ISelectControl\<T\>\.Filter\(PromptPlusLibrary\.FilterMode\)')\), optional grouped layout, history persistence \([EnableHistory\(string, Action&lt;IHistoryOptions&gt;\)](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.ISelectControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)')\),
 auto\-select when only one item matches the filter \([AutoSelect\(bool\)](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.AutoSelect(bool) 'PromptPlusLibrary\.ISelectControl\<T\>\.AutoSelect\(bool\)')\), and view\-only
 mode \([ViewOnly\(bool\)](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.ViewOnly(bool) 'PromptPlusLibrary\.ISelectControl\<T\>\.ViewOnly\(bool\)')\)\. Every configuration method returns the same
 [ISelectControl&lt;T&gt;](ISelectControl_T_.md 'PromptPlusLibrary\.ISelectControl\<T\>') instance so calls can be chained \(fluent style\)\.
@@ -332,24 +332,24 @@ The current [ISelectControl&lt;T&gt;](ISelectControl_T_.md 'PromptPlusLibrary\.I
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
 Thrown if [comparer](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.DefaultMatchBy(System.Func_T,T,bool_).comparer 'PromptPlusLibrary\.ISelectControl\<T\>\.DefaultMatchBy\(System\.Func\<T,T,bool\>\)\.comparer') is `null`\.
 
-<a name='PromptPlusLibrary.ISelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.ISelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## ISelectControl\<T\>\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## ISelectControl\<T\>\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables history and applies custom configuration to the history feature\.
 
 ```csharp
-PromptPlusLibrary.ISelectControl<T> EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.ISelectControl<T> EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ISelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.ISelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The name of the file to store history\. Cannot be `null`\.
 
-<a name='PromptPlusLibrary.ISelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.ISelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 
@@ -362,7 +362,7 @@ The current [ISelectControl&lt;T&gt;](ISelectControl_T_.md 'PromptPlusLibrary\.I
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown if [filename](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ISelectControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
+Thrown if [filename](ISelectControl_T_.md#PromptPlusLibrary.ISelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ISelectControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
 
 <a name='PromptPlusLibrary.ISelectControl_T_.ExtraInfo(System.Func_T,string_)'></a>
 

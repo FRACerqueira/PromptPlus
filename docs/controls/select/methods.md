@@ -45,7 +45,7 @@ in any order. Call [`Run`](#run) last.
 [ViewOnly](#viewonly) ·
 [ChangeDescription](#changedescription) ·
 [ChangeDescriptionAsync](#changedescriptionasync) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [Styles](#styles) ·
 [Options](#options) ·
 [Run](#run)
@@ -312,7 +312,7 @@ PromptPlus.Controls.Select<string>("City").AddItems(cities).PageSize(8).Run();
 ISelectControl<T> Default(T value, bool useDefaultHistory = true)
 ```
 
-Pre-highlights `value`. When `useDefaultHistory` is `true` and [history](#enabledhistory) is enabled,
+Pre-highlights `value`. When `useDefaultHistory` is `true` and [history](#enablehistory) is enabled,
 the last history value is preferred. Matching uses [`DefaultMatchBy`](#defaultmatchby) if provided,
 otherwise default equality.
 
@@ -333,7 +333,7 @@ PromptPlus.Controls.Select<string>("City")
 ISelectControl<T> UseDefaultHistory()
 ```
 
-Sets the initial selection from the history store (when [`EnabledHistory`](#enabledhistory) is set),
+Sets the initial selection from the history store (when [`EnableHistory`](#enablehistory) is set),
 without also passing an explicit `Default`.
 
 ---
@@ -452,22 +452,22 @@ Asynchronous version of [`ChangeDescription`](#changedescription).
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-ISelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+ISelectControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists confirmed selections to `filename` and can pre-select the last one (via
 [`Default`](#default) or [`UseDefaultHistory`](#usedefaulthistory)). The `IHistoryOptions` builder is
 identical to the one documented for
-[Input → EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`, `MaxItems`,
+[Input → EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`, `MaxItems`,
 `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
 PromptPlus.Controls.Select<string>("City")
     .AddItems(cities)
-    .EnabledHistory("city-history", opt => opt.MaxItems(8).FilterType(FilterMode.StartsWith))
+    .EnableHistory("city-history", opt => opt.MaxItems(8).FilterType(FilterMode.StartsWith))
     .UseDefaultHistory()
     .Run();
 ```

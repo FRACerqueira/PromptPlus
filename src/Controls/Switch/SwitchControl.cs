@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace PromptPlusLibrary.Controls.Switch
 {
-    internal sealed class SwitchContrrol : BaseControlPrompt<bool?>, ISwitchControl, ISwitchWidget
+    internal sealed class SwitchControl : BaseControlPrompt<bool?>, ISwitchControl, ISwitchWidget
     {
         private readonly Dictionary<SwitchStyles, Style> _optStyles;
         private Func<bool, string>? _changeDescription;
@@ -36,7 +36,7 @@ namespace PromptPlusLibrary.Controls.Switch
         private string[] _toggerTooptips = [];
         private int _indexTooptip;
 
-        public SwitchContrrol(bool isWidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
+        public SwitchControl(bool isWidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
         {
             _optStyles = OptionsControl.LoadStyle<SwitchStyles>(console.CurrentStyle);
             _width = ConfigPrompt.SwitchWidth;
@@ -98,7 +98,7 @@ namespace PromptPlusLibrary.Controls.Switch
             return this;
         }
 
-        public ISwitchControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public ISwitchControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

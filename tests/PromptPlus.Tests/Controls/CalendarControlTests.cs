@@ -420,10 +420,10 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void EnabledHistory_alone_does_not_autoreload_without_an_explicit_Default_call()
+        public void EnableHistory_alone_does_not_autoreload_without_an_explicit_Default_call()
         {
             var vt = MakeTerminal();
-            var control = MakeCalendar(vt).EnabledHistory(HistoryFile);
+            var control = MakeCalendar(vt).EnableHistory(HistoryFile);
             _ = vt.Keys.Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
@@ -434,7 +434,7 @@ namespace PromptPlus.Tests.Controls
             // false and is only flipped by Default(value, useDefaultHistory: true).
             var control2 = new PromptPlusControls(vt2, new PromptConfig()).Calendar("Choose")
                 .Culture("en-US")
-                .EnabledHistory(HistoryFile);
+                .EnableHistory(HistoryFile);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control2.Run(cts2.Token);
 
@@ -443,10 +443,10 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void EnabledHistory_reloads_when_Default_is_called_with_useDefaultHistory_true()
+        public void EnableHistory_reloads_when_Default_is_called_with_useDefaultHistory_true()
         {
             var vt = MakeTerminal();
-            var control = MakeCalendar(vt).EnabledHistory(HistoryFile);
+            var control = MakeCalendar(vt).EnableHistory(HistoryFile);
             _ = vt.Keys.Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
@@ -457,7 +457,7 @@ namespace PromptPlus.Tests.Controls
             var control2 = new PromptPlusControls(vt2, new PromptConfig()).Calendar("Choose")
                 .Culture("en-US")
                 .Default(new DateTime(2020, 1, 1))
-                .EnabledHistory(HistoryFile);
+                .EnableHistory(HistoryFile);
             _ = vt2.Keys.Enqueue(ConsoleKey.Enter);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             var result2 = control2.Run(cts2.Token);

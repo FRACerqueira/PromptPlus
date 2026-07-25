@@ -53,7 +53,7 @@ children to it. Call [`Run`](#run) last.
 [ViewOnly](#viewonly) ·
 [ChangeDescription](#changedescription) ·
 [ChangeDescriptionAsync](#changedescriptionasync) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [Styles](#styles) ·
 [Options](#options) ·
 [Run](#run)
@@ -458,7 +458,7 @@ IMultiTreeControl<T> Default(IEnumerable<T> values, bool useDefaultHistory = tru
 ```
 
 Pre-checks one or more items; the tree auto-expands to reveal each of them. When `useDefaultHistory`
-is `true` and [history](#enabledhistory) is enabled, the restored history values override `values`.
+is `true` and [history](#enablehistory) is enabled, the restored history values override `values`.
 Matching uses [`DefaultMatchBy`](#defaultmatchby).
 
 ```csharp
@@ -540,21 +540,21 @@ Asynchronous version of [`ChangeDescription`](#changedescription).
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-IMultiTreeControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+IMultiTreeControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists the checked values to `filename`; previously checked items are restored on the next run. The
 `IHistoryOptions` builder is the same one documented for
-[Input ? EnabledHistory](../input/methods.md#enabledhistory).
+[Input ? EnableHistory](../input/methods.md#enablehistory).
 
 ```csharp
 PromptPlus.Controls.MultiTree<Node>("Nodes")
     .Root(company).TextSelector(n => n.Name).DefaultMatchBy((a, b) => a.Id == b.Id)
     .Default([api, database])
-    .EnabledHistory("multi-tree-history")
+    .EnableHistory("multi-tree-history")
     .Run();
 ```
 

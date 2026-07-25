@@ -233,7 +233,7 @@ namespace PromptPlusLibrary.Core
             {
                 opt.Description(description);
             }
-            return new SwitchContrrol(false, console, promptConfig, opt);
+            return new SwitchControl(false, console, promptConfig, opt);
         }
 
         /// <inheritdoc/>

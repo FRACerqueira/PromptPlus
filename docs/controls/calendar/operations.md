@@ -204,10 +204,10 @@ PromptPlus.Controls.Calendar("Select day <= 28")
 
 - [`Default(value)`](methods.md#default) opens the grid on `value` (today when omitted); a value
   outside [`Range`](#range-limits) is ignored.
-- With [`EnabledHistory`](methods.md#enabledhistory), confirmed dates are stored on disk;
+- With [`EnableHistory`](methods.md#enablehistory), confirmed dates are stored on disk;
   `Default(..., useDefaultHistory: true)` restores the last one on the next run.
 - History options (`MinPrefixLength`, `MaxItems`, `ExpirationTime`, `FilterType`, `PageSize`) match
-  the [Input history options](../input/methods.md#enabledhistory).
+  the [Input history options](../input/methods.md#enablehistory).
 
 ---
 

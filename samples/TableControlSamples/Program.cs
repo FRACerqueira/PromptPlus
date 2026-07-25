@@ -288,10 +288,10 @@ internal static class Program
         PrintResult(r8);
 
         // --------------------------------------------------------------------
-        // 9 - Default + EnabledHistory + UseDefaultHistory
+        // 9 - Default + EnableHistory + UseDefaultHistory
         //     Demonstrates persisting the last selection across runs
         // --------------------------------------------------------------------
-        ShowSection("9) Default + EnabledHistory + UseDefaultHistory");
+        ShowSection("9) Default + EnableHistory + UseDefaultHistory");
 
         var r9 = PromptPlus.Controls.Table<Product>("Select product (history enabled - run twice!)")
             .AddColumn("Id",   x => x.Id,   width: 4, alignment: ColumnAlignment.Right)
@@ -299,7 +299,7 @@ internal static class Program
             .AddItems(s_products)
             .DefaultMatchBy((a, b) => a.Id == b.Id)
             .Default(s_products[0], useDefaultHistory: true)
-            .EnabledHistory("table-product-history")
+            .EnableHistory("table-product-history")
             .UseDefaultHistory()
             .TextSelector(item => $"{item.Name}")
             .Run();

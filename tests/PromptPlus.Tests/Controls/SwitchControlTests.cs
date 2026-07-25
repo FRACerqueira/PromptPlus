@@ -11,7 +11,7 @@ using Xunit;
 
 namespace PromptPlus.Tests.Controls
 {
-    // Grupo 1 (FASE2-CONTROLS-PLAN.md) — SwitchContrrol, sem ModeView. Confirmado por leitura:
+    // Grupo 1 (FASE2-CONTROLS-PLAN.md) — SwitchControl, sem ModeView. Confirmado por leitura:
     // cancelamento já seta ResultCtrl corretamente (linha 220-224) — não é o bug #8 do InputControl.
     [Collection(SerializedGlobalStateCollection.Name)]
     public class SwitchControlTests : IDisposable
@@ -135,16 +135,16 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void EnabledHistory_persists_the_confirmed_value_and_reloads_it_as_the_default()
+        public void EnableHistory_persists_the_confirmed_value_and_reloads_it_as_the_default()
         {
             var vt = MakeTerminal();
-            var control = MakeSwitch(vt).EnabledHistory(HistoryFile);
+            var control = MakeSwitch(vt).EnableHistory(HistoryFile);
             _ = vt.Keys.Enqueue(ConsoleKey.RightArrow).Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
 
             var vt2 = MakeTerminal();
-            var control2 = new PromptPlusControls(vt2, new PromptConfig()).Switch("Enabled").EnabledHistory(HistoryFile);
+            var control2 = new PromptPlusControls(vt2, new PromptConfig()).Switch("Enabled").EnableHistory(HistoryFile);
             _ = vt2.Keys.Enqueue(ConsoleKey.Enter);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             var result2 = control2.Run(cts2.Token);

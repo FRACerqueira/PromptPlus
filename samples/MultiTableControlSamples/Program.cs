@@ -324,10 +324,10 @@ internal static class Program
         PrintResult(r11);
 
         // --------------------------------------------------------------------
-        // 12 - Default + DefaultMatchBy + EnabledHistory + UseDefaultHistory
+        // 12 - Default + DefaultMatchBy + EnableHistory + UseDefaultHistory
         //      Demonstrates persisting the checked set across runs
         // --------------------------------------------------------------------
-        ShowSection("12) Default + DefaultMatchBy + EnabledHistory + UseDefaultHistory (run twice!)");
+        ShowSection("12) Default + DefaultMatchBy + EnableHistory + UseDefaultHistory (run twice!)");
 
         var r12 = PromptPlus.Controls.MultiTable<Product>(
                 "Select products (history enabled - run twice!)")
@@ -336,7 +336,7 @@ internal static class Program
             .AddItems(s_products)
             .DefaultMatchBy((a, b) => a.Id == b.Id)
             .Default([s_products[0], s_products[2]])
-            .EnabledHistory("multitable-product-history")
+            .EnableHistory("multitable-product-history")
             .UseDefaultHistory()
             .TextSelector(item => item.Name)
             .Run();

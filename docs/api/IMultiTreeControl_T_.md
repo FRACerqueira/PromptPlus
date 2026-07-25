@@ -309,22 +309,22 @@ PromptPlusLibrary.IMultiTreeControl<T> DefaultMatchBy(System.Func<T,T,bool> comp
 #### Returns
 [PromptPlusLibrary\.IMultiTreeControl&lt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')[T](IMultiTreeControl_T_.md#PromptPlusLibrary.IMultiTreeControl_T_.T 'PromptPlusLibrary\.IMultiTreeControl\<T\>\.T')[&gt;](IMultiTreeControl_T_.md 'PromptPlusLibrary\.IMultiTreeControl\<T\>')
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## IMultiTreeControl\<T\>\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## IMultiTreeControl\<T\>\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables history persistence\. Previously checked items are restored on next run\.
 
 ```csharp
-PromptPlusLibrary.IMultiTreeControl<T> EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.IMultiTreeControl<T> EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
-<a name='PromptPlusLibrary.IMultiTreeControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.IMultiTreeControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 

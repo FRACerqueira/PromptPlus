@@ -117,7 +117,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Run | `Run` |
 
 > Unlike [`Input`](../input/index.md#method-map), `Secret` has **no** `Default`, `DefaultIfEmpty`,
-> `EnabledHistory`, or suggestion methods — by design.
+> `EnableHistory`, or suggestion methods — by design.
 
 ---
 

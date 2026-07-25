@@ -520,17 +520,17 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void EnabledHistory_persists_the_checked_items_and_reloads_them_as_defaults()
+        public void EnableHistory_persists_the_checked_items_and_reloads_them_as_defaults()
         {
             var vt = MakeTerminal();
-            var control = MakeMultiSelect(vt).EnabledHistory(HistoryFile);
+            var control = MakeMultiSelect(vt).EnableHistory(HistoryFile);
             _ = vt.Keys.Enqueue(ConsoleKey.Spacebar).Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.Spacebar).Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
 
             var vt2 = MakeTerminal();
             var control2 = new PromptPlusControls(vt2, new PromptConfig()).MultiSelect<string>("Choose").AddItems(["A", "B", "C"])
-                .EnabledHistory(HistoryFile).UseDefaultHistory();
+                .EnableHistory(HistoryFile).UseDefaultHistory();
             _ = vt2.Keys.Enqueue(ConsoleKey.Enter);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             var result2 = control2.Run(cts2.Token);

@@ -23,7 +23,7 @@ namespace PromptPlus.Tests.Controls
     // FileSystem`) — every test here swaps it for a `MockFileSystem` in the constructor and
     // restores the real one in Dispose, same pattern as `SerializedGlobalStateCollection`. No dedicated
     // parallelization guard is added here beyond the existing `[Collection(SerializedGlobalStateCollection.
-    // Name)]` (also needed because several tests touch `EnabledHistory`) — `FileControl.FileSystem`
+    // Name)]` (also needed because several tests touch `EnableHistory`) — `FileControl.FileSystem`
     // and `FileHistory.FileSystem` are separate static fields, but sharing the same collection is
     // simplest and keeps this suite from racing the History-swapping suites already using it.
     //
@@ -279,14 +279,14 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void EnabledHistory_alone_autoreloads_without_needing_an_explicit_Default_call()
+        public void EnableHistory_alone_autoreloads_without_needing_an_explicit_Default_call()
         {
             // Different from Select/Table/Calendar (which start _useDefaultHistory = false): File
             // follows the Tree/MultiTree convention where the field defaults to true, so
-            // EnabledHistory alone is already enough to restore the last confirmed path.
+            // EnableHistory alone is already enough to restore the last confirmed path.
             const string historyFile = "file-history-tests";
             var vt = MakeTerminal();
-            var control = MakeControl(vt).Default(ATxtPath).EnabledHistory(historyFile);
+            var control = MakeControl(vt).Default(ATxtPath).EnableHistory(historyFile);
             _ = vt.Keys.Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
@@ -294,7 +294,7 @@ namespace PromptPlus.Tests.Controls
             var vt2 = MakeTerminal();
             FileControl.FileSystem = MakeFs();
             var control2 = new PromptPlusControls(vt2, new PromptConfig()).File("Choose").Root(Root)
-                .EnabledHistory(historyFile);
+                .EnableHistory(historyFile);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control2.Run(cts2.Token);
 

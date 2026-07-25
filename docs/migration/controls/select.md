@@ -12,6 +12,7 @@ search-and-replace before reading the detailed sections.
 | Select / MultiSelect | `EqualItems(Func<T,T,bool>)` | `DefaultMatchBy(Func<T,T,bool>)` |
 | Select / MultiSelect | `OnlyView(bool)` | `ViewOnly(bool)` |
 | Select / MultiSelect | `DefaultHistory(bool)` | `UseDefaultHistory()` *(no parameter)* |
+| Select / MultiSelect | `EnabledHistory(string, Action<IHistoryOptions>?)` | `EnableHistory(string, Action<IHistoryOptions>?)` |
 | MultiSelect | `PredicateSelected` / `PredicateSelectedAsync` | `PredicateChecked` / `PredicateCheckedAsync` |
 
 > `Select<T>` keeps `PredicateSelected` / `PredicateSelectedAsync`. Only the multi-choice
@@ -66,7 +67,7 @@ PromptPlus.Controls.Select<string>("Option:")
 ```csharp
 PromptPlus.Controls.Select<string>("Option:")
     .AddItems(options)
-    .EnabledHistory("myhistory")
+    .EnableHistory("myhistory")   // also renamed: EnabledHistory → EnableHistory
     .UseDefaultHistory()   // no parameter — always enables it
     .Run();
 ```
@@ -212,6 +213,8 @@ PromptPlus.Controls.MultiSelect<Product>("Products:")
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
 | `Filter(FilterMode, bool)` | ✅ | ❌ | `bool` parameter removed |
 | `Filter(FilterMode)` | ❌ | ✅ | New |
+| `EnabledHistory(string, Action<IHistoryOptions>?)` | ✅ | ❌ | Renamed to `EnableHistory` |
+| `EnableHistory(string, Action<IHistoryOptions>?)` | ❌ | ✅ | New name |
 | `ChangeDescription` · `Interaction` · `TextSelector` · `ExtraInfo` · `PredicateSelected` (x2) | ✅ | ✅ | Unchanged |
 | `ChangeDescriptionAsync` · `InteractionAsync` · `TextSelectorAsync` · `ExtraInfoAsync` · `PredicateSelectedAsync` (x2) | ❌ | ✅ | New |
 
@@ -227,5 +230,7 @@ PromptPlus.Controls.MultiSelect<Product>("Products:")
 | `Range(int, int?)` | ✅ | ✅ | Unchanged |
 | `Filter(FilterMode, bool)` | ✅ | ❌ | → `Filter(FilterMode)` |
 | `PredicateSelected` / `PredicateSelectedAsync` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` / `PredicateCheckedAsync` |
+| `EnabledHistory(string, Action<IHistoryOptions>?)` | ✅ | ❌ | Renamed to `EnableHistory` |
+| `EnableHistory(string, Action<IHistoryOptions>?)` | ❌ | ✅ | New name |
 | `ChangeDescription` · `Interaction` · `TextSelector` · `ExtraInfo` | ✅ | ✅ | Unchanged |
 | `DefaultMatchBy` · `ViewOnly` · `UseDefaultHistory` · `PredicateChecked` · async variants | ❌ | ✅ | New |

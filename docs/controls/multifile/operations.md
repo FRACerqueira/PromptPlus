@@ -132,10 +132,10 @@ each `FileItem.FullPath` always carries the complete path.
 
 - [`Default(fullPaths)`](methods.md#default) pre-checks the given paths and expands the tree to the
   first one under the [`Root`](methods.md#root).
-- With [`EnabledHistory`](methods.md#enabledhistory), the confirmed paths are stored on disk; on the
+- With [`EnableHistory`](methods.md#enablehistory), the confirmed paths are stored on disk; on the
   next run they become the defaults and the tree expands to the first.
 - History options (`MinPrefixLength`, `MaxItems`, `ExpirationTime`, `FilterType`, `PageSize`) match
-  the [Input history options](../input/methods.md#enabledhistory).
+  the [Input history options](../input/methods.md#enablehistory).
 
 ---
 

@@ -32,7 +32,7 @@ order. Call [`Run`](#run) last.
 [ShowFullPath](#showfullpath) ·
 [PageSize](#pagesize) ·
 [Default](#default) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [Styles](#styles) ·
 [Options](#options) ·
 [Run](#run)
@@ -205,7 +205,7 @@ IFileControl Default(string fullPath, bool useDefaultHistory = true)
 ```
 
 Pre-selects a file or directory, expanding the tree down to it when the path lies under the root.
-When `useDefaultHistory` is `true` and [history](#enabledhistory) is enabled, a stored value may
+When `useDefaultHistory` is `true` and [history](#enablehistory) is enabled, a stored value may
 override this default.
 
 ```csharp
@@ -221,21 +221,21 @@ PromptPlus.Controls.File("Pick")
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-IFileControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+IFileControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists the confirmed path to `filename` and can restore it as the default on the next run (the tree
 expands to it). The `IHistoryOptions` builder is identical to the one documented for
-[Input → EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`, `MaxItems`,
+[Input → EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`, `MaxItems`,
 `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
 PromptPlus.Controls.File("Pick a file (remembered)")
     .Root(root)
-    .EnabledHistory("file-history")
+    .EnableHistory("file-history")
     .Run();
 ```
 

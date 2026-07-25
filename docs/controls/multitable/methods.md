@@ -43,7 +43,7 @@ in any order. Call [`Run`](#run) last.
 [PredicateChecked](#predicatechecked) ·
 [PredicateCheckedAsync](#predicatecheckedasync) ·
 [ViewOnly](#viewonly) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [Styles](#styles) ·
 [Options](#options) ·
 [Run](#run)
@@ -400,7 +400,7 @@ IMultiTableControl<T> UseDefaultHistory()
 ```
 
 Loads the most recent history entry as the initial checked set, clearing any value set by
-[`Default`](#default). Has no effect unless [`EnabledHistory`](#enabledhistory) is set.
+[`Default`](#default). Has no effect unless [`EnableHistory`](#enablehistory) is set.
 
 ---
 
@@ -495,15 +495,15 @@ PromptPlus.Controls.MultiTable<Product>("Product catalogue (view only)", "Press 
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-IMultiTableControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+IMultiTableControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists the checked set to `filename` (serialized as JSON) and can restore it on the next run via
 [`UseDefaultHistory`](#usedefaulthistory). The `IHistoryOptions` builder is identical to the one
-documented for [Input ? EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`, `MaxItems`,
+documented for [Input ? EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`, `MaxItems`,
 `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
@@ -512,7 +512,7 @@ PromptPlus.Controls.MultiTable<Product>("Products")
     .AddColumn("Name", x => x.Name)
     .AddItems(products)
     .DefaultMatchBy((a, b) => a.Id == b.Id)
-    .EnabledHistory("multitable-product-history")
+    .EnableHistory("multitable-product-history")
     .UseDefaultHistory()
     .Run();
 ```

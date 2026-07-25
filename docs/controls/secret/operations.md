@@ -162,7 +162,7 @@ Set per instance via [`Options(...)`](methods.md#options), or globally on
 `Run()` returns. Follow these rules:
 
 - **Never log or print `.Content`.** Do not write it to the console, a log file, or telemetry.
-- **Do not enable history or any persistence.** `Secret` has no `EnabledHistory` on purpose;
+- **Do not enable history or any persistence.** `Secret` has no `EnableHistory` on purpose;
   do not route a secret through `Input` (which can) or through your own on-disk cache.
 - **Do not offer secrets as suggestions.** `Secret` has no autocomplete for the same reason.
 - **Consume, then discard.** Use the value immediately (authenticate, build the connection) and

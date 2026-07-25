@@ -20,7 +20,7 @@ namespace PromptPlusLibrary
     /// <remarks>
     /// The control renders a scrollable, optionally grouped list where the user moves the cursor
     /// with the arrow keys and confirms with <c>Enter</c>. Features include inline filtering
-    /// (<see cref="Filter"/>), optional grouped layout, history persistence (<see cref="EnabledHistory"/>),
+    /// (<see cref="Filter"/>), optional grouped layout, history persistence (<see cref="EnableHistory"/>),
     /// auto-select when only one item matches the filter (<see cref="AutoSelect"/>), and view-only
     /// mode (<see cref="ViewOnly"/>). Every configuration method returns the same
     /// <see cref="ISelectControl{T}"/> instance so calls can be chained (fluent style).
@@ -60,7 +60,7 @@ namespace PromptPlusLibrary
         /// <param name="options">An action to configure <see cref="IHistoryOptions"/>. Optional.</param>
         /// <returns>The current <see cref="ISelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="filename"/> is <c>null</c>.</exception>
-        ISelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        ISelectControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Sets the initial selected item for the select control.

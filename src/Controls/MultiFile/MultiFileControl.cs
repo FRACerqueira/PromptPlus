@@ -317,7 +317,7 @@ namespace PromptPlusLibrary.Controls.MultiFile
         }
 
         /// <inheritdoc/>
-        public IMultiFileControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public IMultiFileControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

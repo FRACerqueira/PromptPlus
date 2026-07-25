@@ -180,7 +180,7 @@ When both pass, the control closes and returns the checked values as `T[]`.
 
 - [`Default(values)`](methods.md#default) pre-checks nodes and expands the tree to reveal each one;
   provide [`DefaultMatchBy`](methods.md#defaultmatchby) so the right nodes are located (required).
-- With [`EnabledHistory`](methods.md#enabledhistory), the checked set is persisted to disk and
+- With [`EnableHistory`](methods.md#enablehistory), the checked set is persisted to disk and
   restored on the next run; the restored values override `Default` when
   `useDefaultHistory: true` is in effect.
 

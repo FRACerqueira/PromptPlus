@@ -219,7 +219,7 @@ The initial value\. It must be inside the range defined by [Range\(double, doubl
 
 `useDefaultHistory` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
-When `true` and history is enabled via [EnabledHistory\(string, Action&lt;IHistoryOptions&gt;\)](ISliderControl.md#PromptPlusLibrary.ISliderControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.ISliderControl\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)'), the last saved value is used instead of [value](ISliderControl.md#PromptPlusLibrary.ISliderControl.Default(double,bool).value 'PromptPlusLibrary\.ISliderControl\.Default\(double, bool\)\.value')\.
+When `true` and history is enabled via [EnableHistory\(string, Action&lt;IHistoryOptions&gt;\)](ISliderControl.md#PromptPlusLibrary.ISliderControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.ISliderControl\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)'), the last saved value is used instead of [value](ISliderControl.md#PromptPlusLibrary.ISliderControl.Default(double,bool).value 'PromptPlusLibrary\.ISliderControl\.Default\(double, bool\)\.value')\.
 
 #### Returns
 [ISliderControl](ISliderControl.md 'PromptPlusLibrary\.ISliderControl')  
@@ -230,24 +230,24 @@ The same [ISliderControl](ISliderControl.md 'PromptPlusLibrary\.ISliderControl')
 [System\.ArgumentOutOfRangeException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentoutofrangeexception 'System\.ArgumentOutOfRangeException')  
 Thrown when [value](ISliderControl.md#PromptPlusLibrary.ISliderControl.Default(double,bool).value 'PromptPlusLibrary\.ISliderControl\.Default\(double, bool\)\.value') is outside the minimum/maximum range\.
 
-<a name='PromptPlusLibrary.ISliderControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.ISliderControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## ISliderControl\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## ISliderControl\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables value history, persisting the chosen value to a file so it can be reused as the default on the next run\.
 
 ```csharp
-PromptPlusLibrary.ISliderControl EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.ISliderControl EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ISliderControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.ISliderControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The file name used to store the history\. Cannot be `null`\.
 
-<a name='PromptPlusLibrary.ISliderControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.ISliderControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 
@@ -260,7 +260,7 @@ The same [ISliderControl](ISliderControl.md 'PromptPlusLibrary\.ISliderControl')
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [filename](ISliderControl.md#PromptPlusLibrary.ISliderControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ISliderControl\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
+Thrown when [filename](ISliderControl.md#PromptPlusLibrary.ISliderControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ISliderControl\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
 
 <a name='PromptPlusLibrary.ISliderControl.FractionalDigits(byte)'></a>
 

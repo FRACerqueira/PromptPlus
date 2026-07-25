@@ -187,7 +187,7 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Enables history persistence. Previously checked items are restored on next run.
         /// </summary>
-        IMultiTreeControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        IMultiTreeControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Puts the control into view-only mode. The user can navigate and expand/collapse the

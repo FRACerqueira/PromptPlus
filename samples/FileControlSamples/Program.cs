@@ -71,7 +71,7 @@ namespace FileControlSamples
                 .Run();
             PrintResult(result);
 
-            ShowSection("7) EnabledHistory - remembers the last selection");
+            ShowSection("7) EnableHistory - remembers the last selection");
             const string historyKey = "SampleFile.History";
             PromptPlus.Controls.History(historyKey).Remove();
             try
@@ -79,14 +79,14 @@ namespace FileControlSamples
                 // First run: pick something; it gets stored in history.
                 result = PromptPlus.Controls.File("Pick a file (will be remembered)")
                     .Root(root)
-                    .EnabledHistory(historyKey)
+                    .EnableHistory(historyKey)
                     .Run();
                 PrintResult(result);
 
                 // Second run: history value is used as the default (tree expands to it).
                 result = PromptPlus.Controls.File("Runs again (default from history)")
                     .Root(root)
-                    .EnabledHistory(historyKey)
+                    .EnableHistory(historyKey)
                     .Run();
                 PrintResult(result);
             }

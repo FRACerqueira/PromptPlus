@@ -428,16 +428,16 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void EnabledHistory_persists_the_confirmed_row_and_reloads_it_as_the_default()
+        public void EnableHistory_persists_the_confirmed_row_and_reloads_it_as_the_default()
         {
             var vt = MakeTerminal();
-            var control = MakeTable(vt).EnabledHistory(HistoryFile);
+            var control = MakeTable(vt).EnableHistory(HistoryFile);
             _ = vt.Keys.Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
 
             var vt2 = MakeTerminal();
-            var control2 = MakeTable(vt2).EnabledHistory(HistoryFile).UseDefaultHistory();
+            var control2 = MakeTable(vt2).EnableHistory(HistoryFile).UseDefaultHistory();
             _ = vt2.Keys.Enqueue(ConsoleKey.Enter);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             var result2 = control2.Run(cts2.Token);

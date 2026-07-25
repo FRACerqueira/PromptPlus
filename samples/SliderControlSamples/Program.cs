@@ -144,7 +144,7 @@ namespace SliderControlSamples
                     PrintSelectionResult(result);
                 }
 
-                ShowSection("15) EnabledHistory - recall previous values with 20 overwrite 0 - default");
+                ShowSection("15) EnableHistory - recall previous values with 20 overwrite 0 - default");
                 // Pre-load history for the sample; the control manages this internally at runtime.
                 PromptPlus.Controls.History(historyDefaultKey)
                     .AddHistory(double.Parse("20", culture).ToString(culture))
@@ -155,7 +155,7 @@ namespace SliderControlSamples
                     .FractionalDigits(2)
                     .Step(0.5)
                     .LargeStep(5)
-                    .EnabledHistory(historyDefaultKey)
+                    .EnableHistory(historyDefaultKey)
                     .Run();
                 PrintSelectionResult(result);
 

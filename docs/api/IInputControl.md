@@ -121,7 +121,7 @@ The initial value to display\. Cannot be `null`\.
 
 `useDefaultHistory` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
-If `true` and history is enabled with [EnabledHistory\(string, Action&lt;IHistoryOptions&gt;\)](IInputControl.md#PromptPlusLibrary.IInputControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.IInputControl\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)'), the most recent history value is preferred; otherwise, [value](IInputControl.md#PromptPlusLibrary.IInputControl.Default(string,bool).value 'PromptPlusLibrary\.IInputControl\.Default\(string, bool\)\.value') is used\.
+If `true` and history is enabled with [EnableHistory\(string, Action&lt;IHistoryOptions&gt;\)](IInputControl.md#PromptPlusLibrary.IInputControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.IInputControl\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)'), the most recent history value is preferred; otherwise, [value](IInputControl.md#PromptPlusLibrary.IInputControl.Default(string,bool).value 'PromptPlusLibrary\.IInputControl\.Default\(string, bool\)\.value') is used\.
 
 #### Returns
 [IInputControl](IInputControl.md 'PromptPlusLibrary\.IInputControl')  
@@ -148,24 +148,24 @@ The default value to use when the input is empty\.
 [IInputControl](IInputControl.md 'PromptPlusLibrary\.IInputControl')  
 The current [IInputControl](IInputControl.md 'PromptPlusLibrary\.IInputControl') instance for chaining\.
 
-<a name='PromptPlusLibrary.IInputControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.IInputControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## IInputControl\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## IInputControl\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables input history \(F3\) and optionally customizes how history is stored and loaded\.
 
 ```csharp
-PromptPlusLibrary.IInputControl EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.IInputControl EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IInputControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.IInputControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The name of the file to store history\. Cannot be `null`\.
 
-<a name='PromptPlusLibrary.IInputControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.IInputControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 
@@ -178,7 +178,7 @@ The current [IInputControl](IInputControl.md 'PromptPlusLibrary\.IInputControl')
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown if [filename](IInputControl.md#PromptPlusLibrary.IInputControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.IInputControl\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
+Thrown if [filename](IInputControl.md#PromptPlusLibrary.IInputControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.IInputControl\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
 
 <a name='PromptPlusLibrary.IInputControl.InputToCase(ConsolePlusLibrary.CaseOptions)'></a>
 

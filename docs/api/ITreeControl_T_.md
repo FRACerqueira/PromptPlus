@@ -274,24 +274,24 @@ PromptPlusLibrary.ITreeControl<T> DefaultMatchBy(System.Func<T,T,bool> comparer)
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
 When comparer    is `null`\.
 
-<a name='PromptPlusLibrary.ITreeControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## ITreeControl\<T\>\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## ITreeControl\<T\>\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables history: the selected value is serialized as JSON and stored, and on the next run
 the tree is searched \(using [DefaultMatchBy\(Func&lt;T,T,bool&gt;\)](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.DefaultMatchBy(System.Func_T,T,bool_) 'PromptPlusLibrary\.ITreeControl\<T\>\.DefaultMatchBy\(System\.Func\<T,T,bool\>\)')\) for an item that equals the restored
 value so that it can be pre\-selected\.
 
 ```csharp
-PromptPlusLibrary.ITreeControl<T> EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.ITreeControl<T> EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ITreeControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
-<a name='PromptPlusLibrary.ITreeControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.ITreeControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 
@@ -301,7 +301,7 @@ PromptPlusLibrary.ITreeControl<T> EnabledHistory(string filename, System.Action<
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-When [filename](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ITreeControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
+When [filename](ITreeControl_T_.md#PromptPlusLibrary.ITreeControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ITreeControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
 
 <a name='PromptPlusLibrary.ITreeControl_T_.ExtraInfo(System.Func_T,string_)'></a>
 

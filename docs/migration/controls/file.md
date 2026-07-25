@@ -152,8 +152,9 @@ PromptPlus.Controls.MultiFile("Files:")
 // v5.x
 .EnabledHistory("file_history").DefaultHistory(true)
 
-// v6.x — default history is active whenever EnabledHistory is set
-.EnabledHistory("file_history")
+// v6.x — default history is active whenever EnableHistory is set; the method itself was
+// also renamed (EnabledHistory → EnableHistory), see below
+.EnableHistory("file_history")
 ```
 
 ### 10. `MaxWidth(byte)` — removed (File and MultiFile)
@@ -213,7 +214,9 @@ PromptPlus.Controls.MultiFile("Files:")
 | `PredicateSelected` (x2) | ✅ | ❌ | Removed (only on `MultiFile` in v6.x) |
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
 | `DefaultHistory(bool)` | ✅ | ❌ | Removed |
-| `Root(string)` · `SearchPattern(string)` · `OnlyFolders(bool)` · `PageSize(byte)` · `Default(string, bool)` · `EnabledHistory` | ✅ | ✅ | Unchanged |
+| `Root(string)` · `SearchPattern(string)` · `OnlyFolders(bool)` · `PageSize(byte)` · `Default(string, bool)` | ✅ | ✅ | Unchanged |
+| `EnabledHistory(string, Action<IHistoryOptions>?)` | ✅ | ❌ | Renamed to `EnableHistory` |
+| `EnableHistory(string, Action<IHistoryOptions>?)` | ❌ | ✅ | New name |
 | `SelectFilesOnly(bool)` · `ShowFullPath(bool)` | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<ItemFile>` | `ResultPrompt<FileItem?>` | Item type changed |
 
@@ -229,6 +232,8 @@ PromptPlus.Controls.MultiFile("Files:")
 | `HideZeroEntries` / `HideFilesBySize` | ✅ | ❌ | Removed |
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
 | `Range(int, int?)` · `Root` · `SearchPattern` · `OnlyFolders` · `PageSize` | ✅ | ✅ | Unchanged |
+| `EnabledHistory(string, Action<IHistoryOptions>?)` | ✅ | ❌ | Renamed to `EnableHistory` |
+| `EnableHistory(string, Action<IHistoryOptions>?)` | ❌ | ✅ | New name |
 | `PredicateSelected` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` (x2) |
 | `CascadeCheck` · `RecursiveMarkWithCtrlSpace` · `SelectFilesOnly` · `ShowFullPath` · `PredicateChecked` (x2) · `PredicateCheckedAsync` (x2) | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<ItemFile[]>` | `ResultPrompt<FileItem[]>` | Item type changed |

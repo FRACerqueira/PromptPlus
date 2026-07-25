@@ -68,7 +68,7 @@ The keys that change the value depend on the [`Layout`](methods.md#layout).
 |---|---|
 | `Enter` | Confirm — returns the current value |
 | `Esc` | Abort (when the abort key is enabled) → `IsAborted == true`, `Content == null` |
-| `F3` | Open history navigation (when [history](methods.md#enabledhistory) is enabled) |
+| `F3` | Open history navigation (when [history](methods.md#enablehistory) is enabled) |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
 
@@ -117,7 +117,7 @@ The default `LeftRight` layout shows the full bar and uses the Left / Right arro
 
 ## History
 
-When [`EnabledHistory(filename, …)`](methods.md#enabledhistory) is set:
+When [`EnableHistory(filename, …)`](methods.md#enablehistory) is set:
 
 - Each confirmed value is persisted to the on-disk store named `filename`.
 - With [`Default(value, useDefaultHistory: true)`](methods.md#default), the last saved value is

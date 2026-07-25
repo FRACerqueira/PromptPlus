@@ -79,7 +79,7 @@ namespace MultiFileControlSamples
                 .Run();
             PrintResult(result);
 
-            ShowSection("8) EnabledHistory - remembers the last checked items");
+            ShowSection("8) EnableHistory - remembers the last checked items");
             const string historyKey = "SampleMultiFile.History";
             PromptPlus.Controls.History(historyKey).Remove();
             try
@@ -87,14 +87,14 @@ namespace MultiFileControlSamples
                 // First run: check something; it gets stored in history.
                 result = PromptPlus.Controls.MultiFile("Check files (will be remembered)")
                     .Root(root)
-                    .EnabledHistory(historyKey)
+                    .EnableHistory(historyKey)
                     .Run();
                 PrintResult(result);
 
                 // Second run: history values are used as the defaults (tree expands to the first).
                 result = PromptPlus.Controls.MultiFile("Runs again (defaults from history)")
                     .Root(root)
-                    .EnabledHistory(historyKey)
+                    .EnableHistory(historyKey)
                     .Run();
                 PrintResult(result);
             }

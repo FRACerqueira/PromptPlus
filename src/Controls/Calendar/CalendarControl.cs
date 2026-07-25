@@ -210,7 +210,7 @@ namespace PromptPlusLibrary.Controls.Calendar
         }
 
         /// <inheritdoc/>
-        public ICalendarControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public ICalendarControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

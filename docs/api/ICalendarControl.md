@@ -231,24 +231,24 @@ If `true`, weekends are disabled; otherwise, they are enabled\. Default is `true
 [ICalendarControl](ICalendarControl.md 'PromptPlusLibrary\.ICalendarControl')  
 The current [ICalendarControl](ICalendarControl.md 'PromptPlusLibrary\.ICalendarControl') instance for chaining\.
 
-<a name='PromptPlusLibrary.ICalendarControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.ICalendarControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## ICalendarControl\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## ICalendarControl\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables history and applies custom configuration to the history feature\.
 
 ```csharp
-PromptPlusLibrary.ICalendarControl EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.ICalendarControl EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ICalendarControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.ICalendarControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The name of the file to store history\. Cannot be `null`\.
 
-<a name='PromptPlusLibrary.ICalendarControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.ICalendarControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 
@@ -261,7 +261,7 @@ The current [ICalendarControl](ICalendarControl.md 'PromptPlusLibrary\.ICalendar
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown if [filename](ICalendarControl.md#PromptPlusLibrary.ICalendarControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ICalendarControl\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
+Thrown if [filename](ICalendarControl.md#PromptPlusLibrary.ICalendarControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ICalendarControl\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
 
 <a name='PromptPlusLibrary.ICalendarControl.FirstDayOfWeek(System.DayOfWeek)'></a>
 

@@ -6,9 +6,9 @@ This page covers controls that are **mostly** unchanged. Two of them (**Progress
 
 ---
 
-## Slider — two renames only
+## Slider — three renames only
 
-The v5.x and v6.x `Slider` APIs are otherwise the same (`Range`, `Step`, `LargeStep`, `Default`, `Layout`, `Width`, `Culture`, `ChangeColor`, `ChangeGradient`, `ChangeDescription`, `EnabledHistory`, `HideElements`), with these breaking renames:
+The v5.x and v6.x `Slider` APIs are otherwise the same (`Range`, `Step`, `LargeStep`, `Default`, `Layout`, `Width`, `Culture`, `ChangeColor`, `ChangeGradient`, `ChangeDescription`, `HideElements`), with these breaking renames:
 
 ### Renamed public methods
 
@@ -16,6 +16,7 @@ The v5.x and v6.x `Slider` APIs are otherwise the same (`Range`, `Step`, `LargeS
 |---|---|
 | `Fill(SliderBarType)` | `BarType(SliderBarType)` |
 | `FracionalDig(int)` | `FractionalDigits(int)` |
+| `EnabledHistory(string, Action<IHistoryOptions>?)` | `EnableHistory(string, Action<IHistoryOptions>?)` |
 
 ```csharp
 // v5.x
@@ -73,19 +74,21 @@ PromptPlus.Controls.Calendar("Date:")
     .Run();
 ```
 
-New in v6.x: `PredicateSelectedAsync` (x2) · `ChangeDescriptionAsync` · `InteractionAsync` · `AddNotes(...)` · `EnabledHistory(...)`. `Default(DateTime)` gained an optional `bool useDefaultHistory` parameter (source-compatible).
+New in v6.x: `PredicateSelectedAsync` (x2) · `ChangeDescriptionAsync` · `InteractionAsync` · `AddNotes(...)` · `EnableHistory(...)`. `Default(DateTime)` gained an optional `bool useDefaultHistory` parameter (source-compatible).
 
 ---
 
-## Switch — style-enum rename only
+## Switch — style-enum + EnableHistory renames only
 
-The `Switch` control methods are source-compatible, but two style slots were renamed and one parameter was recased:
+The `Switch` control methods are otherwise source-compatible, but two style slots were renamed,
+one parameter was recased, and `EnabledHistory` was renamed:
 
 ```csharp
 // v5.x                         // v6.x
 SwitchStyles.SliderOn      →    SwitchStyles.SwitchOn
 SwitchStyles.SliderOff     →    SwitchStyles.SwitchOff
 .Default(true, usedefaultHistory: false)  →  .Default(true, useDefaultHistory: false)
+.EnabledHistory("switch_history")  →  .EnableHistory("switch_history")
 ```
 
 New in v6.x: the `EmojiName` overloads of `OnValue`/`OffValue`, and `ChangeDescriptionAsync`.
@@ -243,8 +246,8 @@ hist.Remove();   // delete the history file
 | Control | Breaking changes | New in v6.x |
 |---|---|---|
 | `Slider` | ⚠️ `FracionalDig` → `FractionalDigits`; `Default` param recased | None |
-| `Calendar` | ❌ None | `PredicateSelectedAsync`, `ChangeDescriptionAsync`, `InteractionAsync`, `AddNotes`, `EnabledHistory` |
-| `Switch` | ⚠️ `SwitchStyles.SliderOn/SliderOff` → `SwitchOn/SwitchOff`; `Default` param recased | `OnValue/OffValue(EmojiName, string)`, `ChangeDescriptionAsync` |
+| `Calendar` | ❌ None | `PredicateSelectedAsync`, `ChangeDescriptionAsync`, `InteractionAsync`, `AddNotes`, `EnableHistory` |
+| `Switch` | ⚠️ `SwitchStyles.SliderOn/SliderOff` → `SwitchOn/SwitchOff`; `Default` param recased; `EnabledHistory` → `EnableHistory` | `OnValue/OffValue(EmojiName, string)`, `ChangeDescriptionAsync` |
 | `ProgressBar` | ⚠️ `UpdateHandler` event type; `IntervalUpdate` removed; `FracionalDig` → `FractionalDigits` | `UpdateHandlerAsync`, `ChangeDescriptionAsync` |
 | `ChartBar` | ⚠️ `MaxWidth` removed; `ChartBarOrder.LabelDec` → `LabelDesc` | `PredicateSelectedAsync` (x2), `ChangeDescriptionAsync`, layout/ordering switchers |
 | `History` | — | **New helper** — direct history management |

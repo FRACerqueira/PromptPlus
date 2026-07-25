@@ -36,9 +36,9 @@ Status possíveis: `Não iniciado` / `Em andamento` / `Concluído`.
   propriedade de instância (`BaseControlPrompt.cs:149`), então `vt.EnabledEmacs = true` no VT já
   basta, sem singleton, sem `[Collection]`. Aplica a qualquer controle cujo campo de edição/filtro
   use `EmacsConsoleBuffer` com `enableEmacsKeys` vindo de `ConsoleHandler.EnabledEmacs`.
-- **`EnabledHistory`** — `FileHistoryCollection` (`InputControlHistoryModeTests.cs`) já resolve a
+- **`EnableHistory`** — `FileHistoryCollection` (`InputControlHistoryModeTests.cs`) já resolve a
   corrida entre classes que trocam `FileHistory.FileSystem` por `MockFileSystem`. Todo controle que
-  tiver `EnabledHistory` nos testes de History precisa entrar nessa mesma collection (ela já existe,
+  tiver `EnableHistory` nos testes de History precisa entrar nessa mesma collection (ela já existe,
   só referenciar `[Collection(FileHistoryCollection.Name)]`).
 - **Checklist "globals" de todo controle** (baseado no que já foi confirmado em Select/Input,
   verificar em cada um): tecla de abort (Escape) seta `ResultCtrl` no cancelamento (Input tinha o
@@ -53,7 +53,7 @@ Sem máquina de modos — só globais + teclas específicas do controle. 53 test
 | Controle | Arquivo | Linhas | Status | Observações |
 |---|---|---|---|---|
 | KeyPress | `KeyPress/KeyPressControl.cs` | 307 | Concluído — 10 testes | `KeyPressControlTests.cs`. Sem bug. Cancelamento já correto. |
-| Switch | `Switch/SwitchContrrol.cs` | 456 | Concluído — 11 testes | `SwitchControlTests.cs`. Sem bug. `EnabledHistory` via `FileHistoryCollection`. |
+| Switch | `Switch/SwitchControl.cs` | 456 | Concluído — 11 testes | `SwitchControlTests.cs`. Sem bug. `EnableHistory` via `FileHistoryCollection`. |
 | Slider | `Slider/SliderControl.cs` | 747 | Concluído — 15 testes | `SliderControlTests.cs`. Sem bug. Layout UpDown vs LeftRight testado. |
 | ChartBar | `ChartBar/ChartBarControl.cs` | 1077 | Concluído — 17 testes | `ChartBarControlTests.cs`. **2 bugs reais corrigidos** (ver abaixo). |
 
@@ -164,7 +164,7 @@ KeyPress/Switch/Slider/Input/InputSecret. Achados e decisões:
   `ISliderControl` E `ISliderWidget` (mesma mudança nos dois, `SliderControl` implementa ambos).
   Motivo: nome batia só com o valor default do enum, e o `ChartBar` já usa `BarType(ChartBarType)`
   pro mesmo conceito — inconsistência entre controles irmãos, não só interna.
-- **`EnabledHistory`** (presente em quase todo controle) — só **registrado como pendência**, sem
+- **`EnableHistory`** (presente em quase todo controle) — só **registrado como pendência**, sem
   ação: usuário confirmou manter assim por ora (escopo grande, decisão separada).
 - Regra criada pra aplicar nos próximos controles sem precisar reperguntar: ver
   [[promptplus-naming-audit-checklist]] na memória.
@@ -202,9 +202,9 @@ Diferencial confirmado sobre o Select puro (não estava óbvio antes de ler o c�
   guardados por `!_viewOnly`) — teclado ignorado silenciosamente, cai no fim do `while` sem
   `break`/`continue` e volta a esperar a próxima tecla. `Enter` confirma os itens já marcados via
   `AddItem(ischecked:true)`/`Default(...)` sem rodar `PredicateSelected`/`Range`.
-- **`EnabledHistory`**: salva o array de valores marcados (serializado), mas só recarrega como
+- **`EnableHistory`**: salva o array de valores marcados (serializado), mas só recarrega como
   default no próximo `Run()` se `UseDefaultHistory()` for chamado explicitamente (ou `Default(...,
-  useDefaultHistory: true)`, que é o default do parâmetro) — `EnabledHistory` isolado, sem
+  useDefaultHistory: true)`, que é o default do parâmetro) — `EnableHistory` isolado, sem
   `Default`/`UseDefaultHistory`, NÃO autoaplica o histórico (`_useDefaultHistory` fica `false`).
 - **Separadores** (`AddSeparator`) contam como item navegável zero (excluídos de `Qty:N items`,
   nunca respondem a `Space`, largura da linha = maior texto + largura do checkbox + 1).
@@ -292,10 +292,10 @@ branch do predicado; `SelectLeafOnly` continua usando `SelectionDisabled` (esse 
 - `Escape` (real ou por timeout) **sempre** devolve `Content=null`/`default`, nunca preserva a
   posição do cursor — diferente de `Select`/`Table` (que preservam no Escape real), igual ao
   `MultiSelect` (que também sempre zera). Confirmado por sonda, não é regressão nova.
-- `EnabledHistory` sozinho **já recarrega automaticamente** o valor salvo, sem precisar de
+- `EnableHistory` sozinho **já recarrega automaticamente** o valor salvo, sem precisar de
   `.UseDefaultHistory()`/`.Default(...)` explícito — porque `_useDefaultHistory` começa `true` por
   padrão no `Tree` (`Select`/`MultiSelect`/`Table` começam `false`, exigem opt-in). A própria doc
-  do `EnabledHistory` do Tree já promete esse comportamento, então não é bug — só uma
+  do `EnableHistory` do Tree já promete esse comportamento, então não é bug — só uma
   inconsistência real entre controles, registrada aqui pra decisão futura (alinhar ou não).
 - `Tab` numa linha com filhos, já expandida, **entra** no primeiro filho (navegação "drill-down");
   se ainda colapsada, expande e entra. `Shift+Tab` no primeiro filho colapsa o pai e sobe pra ele;
@@ -622,7 +622,7 @@ cabeçalho dos 2 arquivos de teste):
 - `Enter` dentro do modo `ShowNotes` primeiro reseta pro modo `Input` e ENTÃO continua o fluxo
   normal de confirmação (usa `_selectedDate`, que nunca mudou enquanto via notas) — ou seja, fecha
   as notas E confirma o calendário no mesmo pressionar de tecla.
-- `EnabledHistory` segue a convenção da família Select/Table (`_useDefaultHistory` começa `false`)
+- `EnableHistory` segue a convenção da família Select/Table (`_useDefaultHistory` começa `false`)
   — sozinho não recarrega; precisa de `Default(valor, useDefaultHistory: true)` (o `true` é o
   default do parâmetro) pra habilitar o auto-reload, mesmo que o valor de `Default` em si seja
   descartado pelo histórico.
@@ -678,7 +678,7 @@ tem lógica própria de symlink/reparse point (confirmado por leitura, é enumer
 Sem `ModeView` — é uma árvore single-select (Tab/Shift+Tab drill down, `+`/`-` expand/collapse,
 jump-by-letter, `SearchPattern` só filtra arquivos, `ShowFullPath` no hotkey `Shift+F3` — não `F3`
 puro). `_useDefaultHistory = true` por padrão (convenção de Tree/MultiTree, diferente de
-Select/Table/Calendar): `EnabledHistory` sozinho já recarrega o último caminho confirmado, sem
+Select/Table/Calendar): `EnableHistory` sozinho já recarrega o último caminho confirmado, sem
 precisar de `Default(...)` explícito. 18 testes: `FileControlTests.cs` (16, Mock-based) +
 `FileControlRealFilesystemTests.cs` (2, pré-existente, sanity real-disk pra case-sensitivity no
 Linux). **Nenhum bug real encontrado.**

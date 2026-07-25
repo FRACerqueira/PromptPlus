@@ -242,7 +242,7 @@ The value to pre\-select\. Cannot be [null](https://docs.microsoft.com/en-us/dot
 
 `useDefaultHistory` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
-When [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool') \(default\) and history is enabled via [EnabledHistory\(string, Action&lt;IHistoryOptions&gt;\)](ITableControl_T_.md#PromptPlusLibrary.ITableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.ITableControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)'),
+When [true](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/bool 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/builtin\-types/bool') \(default\) and history is enabled via [EnableHistory\(string, Action&lt;IHistoryOptions&gt;\)](ITableControl_T_.md#PromptPlusLibrary.ITableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.ITableControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)'),
 the most recent history entry overrides this value as the initial selection\.
 
 #### Returns
@@ -281,26 +281,26 @@ The current [ITableControl&lt;T&gt;](ITableControl_T_.md 'PromptPlusLibrary\.ITa
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
 Thrown when [comparer](ITableControl_T_.md#PromptPlusLibrary.ITableControl_T_.DefaultMatchBy(System.Func_T,T,bool_).comparer 'PromptPlusLibrary\.ITableControl\<T\>\.DefaultMatchBy\(System\.Func\<T,T,bool\>\)\.comparer') is [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null')\.
 
-<a name='PromptPlusLibrary.ITableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.ITableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## ITableControl\<T\>\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## ITableControl\<T\>\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables persistent history stored in the specified file, and optionally customises
 the history behaviour via [IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')\.
 
 ```csharp
-PromptPlusLibrary.ITableControl<T> EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.ITableControl<T> EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ITableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.ITableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 Path or name of the file used to persist history entries\. Cannot be [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null'),
 empty, or whitespace\.
 
-<a name='PromptPlusLibrary.ITableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.ITableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 
@@ -314,10 +314,10 @@ The current [ITableControl&lt;T&gt;](ITableControl_T_.md 'PromptPlusLibrary\.ITa
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [filename](ITableControl_T_.md#PromptPlusLibrary.ITableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ITableControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null')\.
+Thrown when [filename](ITableControl_T_.md#PromptPlusLibrary.ITableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ITableControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is [null](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/null 'https://docs\.microsoft\.com/en\-us/dotnet/csharp/language\-reference/keywords/null')\.
 
 [System\.ArgumentException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentexception 'System\.ArgumentException')  
-Thrown when [filename](ITableControl_T_.md#PromptPlusLibrary.ITableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ITableControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is empty or whitespace\.
+Thrown when [filename](ITableControl_T_.md#PromptPlusLibrary.ITableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ITableControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is empty or whitespace\.
 
 <a name='PromptPlusLibrary.ITableControl_T_.Filter(PromptPlusLibrary.FilterMode,PromptPlusLibrary.FilterTableMode)'></a>
 
@@ -707,7 +707,7 @@ The current [ITableControl&lt;T&gt;](ITableControl_T_.md 'PromptPlusLibrary\.ITa
 
 Sets the most recent history entry as the initial cursor position, clearing any
 value previously set by [Default\(T, bool\)](ITableControl_T_.md#PromptPlusLibrary.ITableControl_T_.Default(T,bool) 'PromptPlusLibrary\.ITableControl\<T\>\.Default\(T, bool\)')\.
-Has no effect when history is not enabled via [EnabledHistory\(string, Action&lt;IHistoryOptions&gt;\)](ITableControl_T_.md#PromptPlusLibrary.ITableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.ITableControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)')\.
+Has no effect when history is not enabled via [EnableHistory\(string, Action&lt;IHistoryOptions&gt;\)](ITableControl_T_.md#PromptPlusLibrary.ITableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.ITableControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)')\.
 
 ```csharp
 PromptPlusLibrary.ITableControl<T> UseDefaultHistory();

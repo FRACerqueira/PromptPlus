@@ -106,7 +106,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Starting value | `Default` |
 | State labels | `OnValue`, `OffValue` |
 | Dynamic description | `ChangeDescription`, `ChangeDescriptionAsync` |
-| History | `EnabledHistory` |
+| History | `EnableHistory` |
 | Appearance & behavior | `Styles`, `Options` |
 | Run | `Run` |
 

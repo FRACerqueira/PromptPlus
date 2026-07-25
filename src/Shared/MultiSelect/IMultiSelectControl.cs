@@ -21,7 +21,7 @@ namespace PromptPlusLibrary
     /// The control renders a scrollable, optionally grouped list where the user navigates items
     /// with the arrow keys, toggles individual checks with <c>Space</c>, and confirms the entire
     /// selection with <c>Enter</c>. Features include inline filtering (<see cref="Filter"/>),
-    /// optional grouped layout with header separators, history persistence (<see cref="EnabledHistory"/>),
+    /// optional grouped layout with header separators, history persistence (<see cref="EnableHistory"/>),
     /// range constraints (<see cref="Range"/>), and view-only mode (<see cref="ViewOnly"/>).
     /// Every configuration method returns the same <see cref="IMultiSelectControl{T}"/> instance
     /// so calls can be chained (fluent style). Call <see cref="Run(CancellationToken)"/> last.
@@ -60,7 +60,7 @@ namespace PromptPlusLibrary
         /// <param name="options">An action to configure <see cref="IHistoryOptions"/>. Optional.</param>
         /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="filename"/> is <c>null</c>.</exception>
-        IMultiSelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        IMultiSelectControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Sets the initial selected item and checked items for the MultiSelect control.
@@ -77,7 +77,7 @@ namespace PromptPlusLibrary
         /// <summary>
         /// Instructs the control to initialize its checked set from the most recent history entry,
         /// overriding any values supplied by <see cref="Default"/>.
-        /// Has no effect when history is not enabled via <see cref="EnabledHistory"/>.
+        /// Has no effect when history is not enabled via <see cref="EnableHistory"/>.
         /// </summary>
         /// <returns>The current <see cref="IMultiSelectControl{T}"/> instance for chaining.</returns>
         IMultiSelectControl<T> UseDefaultHistory();

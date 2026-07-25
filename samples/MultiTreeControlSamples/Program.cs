@@ -11,7 +11,7 @@ namespace MultiTreeControlSamples
 {
     /// <summary>
     /// A simple user item used to populate the generic multi-tree.
-    /// Marked [Serializable] so that EnabledHistory can persist checked values (see sample 8).
+    /// Marked [Serializable] so that EnableHistory can persist checked values (see sample 8).
     /// </summary>
     [Serializable]
     public sealed class Node
@@ -218,7 +218,7 @@ namespace MultiTreeControlSamples
             PrintResult(t11.Run());
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("12) EnabledHistory - remembers checked nodes across runs");
+            ShowSection("12) EnableHistory - remembers checked nodes across runs");
             const string historyKey = "SampleMultiTree.History";
             PromptPlus.Controls.History(historyKey).Remove();
             try
@@ -227,7 +227,7 @@ namespace MultiTreeControlSamples
                     .Root(root)
                     .TextSelector(n => n.Name)
                     .DefaultMatchBy((a, b) => a.Id == b.Id)
-                    .EnabledHistory(historyKey);
+                    .EnableHistory(historyKey);
                 BuildFullTree(t11First, eng, backend, api, database, frontend, web, mobile, sales, emea, apac, hr);
                 PrintResult(t11First.Run());
 
@@ -235,7 +235,7 @@ namespace MultiTreeControlSamples
                     .Root(root)
                     .TextSelector(n => n.Name)
                     .DefaultMatchBy((a, b) => a.Id == b.Id)
-                    .EnabledHistory(historyKey);
+                    .EnableHistory(historyKey);
                 BuildFullTree(t11Second, eng, backend, api, database, frontend, web, mobile, sales, emea, apac, hr);
                 PrintResult(t11Second.Run());
             }
@@ -245,7 +245,7 @@ namespace MultiTreeControlSamples
             }
 
             // ──────────────────────────────────────────────────────────────────────────
-            ShowSection("12) EnabledHistory - remembers checked nodes across runs");
+            ShowSection("12) EnableHistory - remembers checked nodes across runs");
             var t12 = PromptPlus.Controls.MultiTree<Node>(
                     "History is ON: checked values from the last run are restored",
                     "First run uses the Default; next runs load the last checked set from the .history file")
@@ -253,7 +253,7 @@ namespace MultiTreeControlSamples
                 .TextSelector(n => n.Name)
                 .DefaultMatchBy((a, b) => a.Id == b.Id)
                 .Default([api, database])
-                .EnabledHistory("multi-tree-history");
+                .EnableHistory("multi-tree-history");
 
             BuildFullTree(t12, eng, backend, api, database, frontend, web, mobile, sales, emea, apac, hr);
             PrintResult(t12.Run());

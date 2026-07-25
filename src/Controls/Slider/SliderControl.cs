@@ -121,7 +121,7 @@ namespace PromptPlusLibrary.Controls.Slider
             return this;
         }
 
-        public ISliderControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public ISliderControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

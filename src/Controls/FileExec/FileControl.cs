@@ -181,7 +181,7 @@ namespace PromptPlusLibrary.Controls.FileExec
         }
 
         /// <inheritdoc/>
-        public IFileControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public IFileControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

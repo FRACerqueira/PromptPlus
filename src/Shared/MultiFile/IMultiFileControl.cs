@@ -162,7 +162,7 @@ namespace PromptPlusLibrary
         /// <param name="options">An action to configure <see cref="IHistoryOptions"/>. Optional.</param>
         /// <returns>The same <see cref="IMultiFileControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="filename"/> is <c>null</c>.</exception>
-        IMultiFileControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        IMultiFileControl EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Sets a predicate that decides whether a given <see cref="FileItem"/> may be checked. When

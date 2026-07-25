@@ -88,7 +88,7 @@ namespace PromptPlusLibrary
         /// Sets the value that is pre-selected when the slider is first shown. Default is <c>0</c>.
         /// </summary>
         /// <param name="value">The initial value. It must be inside the range defined by <see cref="Range(double, double)"/>.</param>
-        /// <param name="useDefaultHistory">When <c>true</c> and history is enabled via <see cref="EnabledHistory(string, Action{IHistoryOptions}?)"/>, the last saved value is used instead of <paramref name="value"/>.</param>
+        /// <param name="useDefaultHistory">When <c>true</c> and history is enabled via <see cref="EnableHistory(string, Action{IHistoryOptions}?)"/>, the last saved value is used instead of <paramref name="value"/>.</param>
         /// <returns>The same <see cref="ISliderControl"/> instance, so additional settings can be chained.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="value"/> is outside the minimum/maximum range.</exception>
 #pragma warning disable CA1716 // Identifiers should not match keywords
@@ -102,7 +102,7 @@ namespace PromptPlusLibrary
         /// <param name="options">An optional callback to configure the <see cref="IHistoryOptions"/> (such as expiration).</param>
         /// <returns>The same <see cref="ISliderControl"/> instance, so additional settings can be chained.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="filename"/> is <c>null</c>.</exception>
-        ISliderControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        ISliderControl EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Sets how many decimal places are shown for the slider value. Default is <c>0</c> (whole numbers).

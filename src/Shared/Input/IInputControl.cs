@@ -29,7 +29,7 @@ namespace PromptPlusLibrary
         /// Sets the initial text displayed before the user starts typing.
         /// </summary>
         /// <param name="value">The initial value to display. Cannot be <c>null</c>.</param>
-        /// <param name="useDefaultHistory">If <c>true</c> and history is enabled with <see cref="EnabledHistory(string, Action{IHistoryOptions}?)"/>, the most recent history value is preferred; otherwise, <paramref name="value"/> is used.</param>
+        /// <param name="useDefaultHistory">If <c>true</c> and history is enabled with <see cref="EnableHistory(string, Action{IHistoryOptions}?)"/>, the most recent history value is preferred; otherwise, <paramref name="value"/> is used.</param>
         /// <returns>The current <see cref="IInputControl"/> instance for chaining.</returns>
 #pragma warning disable CA1716 // Identifiers should not match keywords
         IInputControl Default(string value, bool useDefaultHistory = true);
@@ -137,7 +137,7 @@ namespace PromptPlusLibrary
         /// <param name="options">An action to configure <see cref="IHistoryOptions"/>. Optional.</param>
         /// <returns>The current <see cref="IInputControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="filename"/> is <c>null</c>.</exception>
-        IInputControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        IInputControl EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Adds a synchronous suggestion provider for Tab and Shift+Tab completion.

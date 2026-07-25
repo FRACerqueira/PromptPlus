@@ -127,7 +127,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Selection rule | `SelectFilesOnly` |
 | Layout & display | `HideSize`, `ShowFullPath`, `PageSize` |
 | Initial value | `Default` |
-| History | `EnabledHistory` |
+| History | `EnableHistory` |
 | Appearance & behavior | `Styles`, `Options` |
 | Run | `Run` |
 

@@ -148,10 +148,10 @@ When [`Filter`](methods.md#filter) is `Contains` or `StartsWith`, typing narrows
 
 - [`Default(values)`](methods.md#default) pre-checks rows; provide
   [`DefaultMatchBy`](methods.md#defaultmatchby) for records/classes so the right rows are located.
-- With [`EnabledHistory`](methods.md#enabledhistory), the checked array is stored on disk as JSON;
+- With [`EnableHistory`](methods.md#enablehistory), the checked array is stored on disk as JSON;
   [`UseDefaultHistory`](methods.md#usedefaulthistory) restores it on the next run.
 - History options (`MinPrefixLength`, `MaxItems`, `ExpirationTime`, `FilterType`, `PageSize`) match the
-  [Input history options](../input/methods.md#enabledhistory).
+  [Input history options](../input/methods.md#enablehistory).
 
 ---
 

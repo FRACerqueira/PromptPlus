@@ -251,7 +251,7 @@ plano; ver [[promptplus-live-controls-strategy]]).
 
 `TreeControl.cs`/`MultiTreeControl.cs`, `FileControl.cs`/`MultiFileControl.cs`,
 `ProgressBarControl.cs`/`TaskControl.cs`/`MultiTasksControl.cs`,
-`SliderControl.cs`/`SwitchContrrol.cs`/`KeyPressControl.cs`/`TimeControl.cs`,
+`SliderControl.cs`/`SwitchControl.cs`/`KeyPressControl.cs`/`TimeControl.cs`,
 `MaskEditControl.cs`/`MaskEditBuffer.cs`, `FileHistory.cs`, `Paginator.cs`.
 
 `InputControl.MaxLength` — limita número de *caracteres* digitados, é regra de negócio intencional

@@ -99,7 +99,7 @@ namespace InputControlsSamples
 
             ShowSection("7) History + suggestion + advanced history options");
             result = PromptPlus.Controls.Input("Profile", "Type at least 2 chars and press history hotkey")
-                .EnabledHistory(historyKey, opt => opt
+                .EnableHistory(historyKey, opt => opt
                     .PageSize(3)
                     .MinPrefixLength(2)
                     .FilterType(FilterMode.StartsWith)
@@ -112,7 +112,7 @@ namespace InputControlsSamples
             ShowSection("8) Default value from latest history");
             result = PromptPlus.Controls.Input("Profile", "Last saved history entry is loaded as default")
                 .Default(string.Empty, true)
-                .EnabledHistory(historyKey)
+                .EnableHistory(historyKey)
                 .Run();
             PrintResult(result);
 

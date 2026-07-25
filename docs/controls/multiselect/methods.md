@@ -45,7 +45,7 @@ chain in any order. Call [`Run`](#run) last.
 [ViewOnly](#viewonly) ·
 [ChangeDescription](#changedescription) ·
 [ChangeDescriptionAsync](#changedescriptionasync) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [Styles](#styles) ·
 [Options](#options) ·
 [Run](#run)
@@ -303,7 +303,7 @@ IMultiSelectControl<T> Default(IEnumerable<T> values, bool useDefaultHistory = t
 ```
 
 Pre-checks every item that matches a value in `values`, and moves focus to the first match. When
-`useDefaultHistory` is `true` and [history](#enabledhistory) is enabled, the last history entry is
+`useDefaultHistory` is `true` and [history](#enablehistory) is enabled, the last history entry is
 preferred over `values`. Matching uses [`DefaultMatchBy`](#defaultmatchby) if provided, otherwise
 default equality.
 
@@ -328,7 +328,7 @@ IMultiSelectControl<T> UseDefaultHistory()
 ```
 
 Initializes the checked set from the most recent history entry (when
-[`EnabledHistory`](#enabledhistory) is set), overriding any values supplied by [`Default`](#default).
+[`EnableHistory`](#enablehistory) is set), overriding any values supplied by [`Default`](#default).
 Has no effect when history is not enabled.
 
 ---
@@ -479,21 +479,21 @@ Asynchronous version of [`ChangeDescription`](#changedescription).
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-IMultiSelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+IMultiSelectControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists confirmed selections to `filename` and can restore them (via [`Default`](#default) or
 [`UseDefaultHistory`](#usedefaulthistory)). The `IHistoryOptions` builder is identical to the one
-documented for [Input ? EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`,
+documented for [Input ? EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`,
 `MaxItems`, `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
 PromptPlus.Controls.MultiSelect<string>("Cities")
     .AddItems(cities)
-    .EnabledHistory("city-history", opt => opt.MaxItems(8).FilterType(FilterMode.StartsWith))
+    .EnableHistory("city-history", opt => opt.MaxItems(8).FilterType(FilterMode.StartsWith))
     .UseDefaultHistory()
     .Run();
 ```

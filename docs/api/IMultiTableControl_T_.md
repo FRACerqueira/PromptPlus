@@ -235,25 +235,25 @@ A function that returns `true` when two items are considered equal\.
 [PromptPlusLibrary\.IMultiTableControl&lt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>')[T](IMultiTableControl_T_.md#PromptPlusLibrary.IMultiTableControl_T_.T 'PromptPlusLibrary\.IMultiTableControl\<T\>\.T')[&gt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>')  
 The current [IMultiTableControl&lt;T&gt;](IMultiTableControl_T_.md 'PromptPlusLibrary\.IMultiTableControl\<T\>') instance for chaining\.
 
-<a name='PromptPlusLibrary.IMultiTableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.IMultiTableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## IMultiTableControl\<T\>\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## IMultiTableControl\<T\>\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables persistent history stored in the specified file\.
 The checked array is serialized as JSON and restored on the next run\.
 
 ```csharp
-PromptPlusLibrary.IMultiTableControl<T> EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.IMultiTableControl<T> EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiTableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.IMultiTableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The history file name\. Cannot be `null`\.
 
-<a name='PromptPlusLibrary.IMultiTableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.IMultiTableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 
@@ -648,7 +648,7 @@ The current [IMultiTableControl&lt;T&gt;](IMultiTableControl_T_.md 'PromptPlusLi
 
 Loads the most recent history entry as the initial checked set, clearing any
 value previously set by [Default\(IEnumerable&lt;T&gt;\)](IMultiTableControl_T_.md#PromptPlusLibrary.IMultiTableControl_T_.Default(System.Collections.Generic.IEnumerable_T_) 'PromptPlusLibrary\.IMultiTableControl\<T\>\.Default\(System\.Collections\.Generic\.IEnumerable\<T\>\)')\.
-Has no effect when history is not enabled via [EnabledHistory\(string, Action&lt;IHistoryOptions&gt;\)](IMultiTableControl_T_.md#PromptPlusLibrary.IMultiTableControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.IMultiTableControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)')\.
+Has no effect when history is not enabled via [EnableHistory\(string, Action&lt;IHistoryOptions&gt;\)](IMultiTableControl_T_.md#PromptPlusLibrary.IMultiTableControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.IMultiTableControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)')\.
 
 ```csharp
 PromptPlusLibrary.IMultiTableControl<T> UseDefaultHistory();

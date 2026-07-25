@@ -46,7 +46,7 @@ namespace PromptPlusLibrary
         /// Sets the initial value displayed when the control opens. Default is <c>false</c> (off).
         /// </summary>
         /// <param name="value">The initial boolean value: <c>true</c> for on, <c>false</c> for off.</param>
-        /// <param name="useDefaultHistory">When <c>true</c> (default) and history is enabled via <see cref="EnabledHistory(string, Action{IHistoryOptions}?)"/>, the last confirmed value stored in history is used instead of <paramref name="value"/>.</param>
+        /// <param name="useDefaultHistory">When <c>true</c> (default) and history is enabled via <see cref="EnableHistory(string, Action{IHistoryOptions}?)"/>, the last confirmed value stored in history is used instead of <paramref name="value"/>.</param>
         /// <returns>The current <see cref="ISwitchControl"/> instance for chaining.</returns>
 #pragma warning disable CA1716 // Identifiers should not match keywords
         ISwitchControl Default(bool value, bool useDefaultHistory = true);
@@ -92,7 +92,7 @@ namespace PromptPlusLibrary
         /// <param name="options">An optional callback to configure the <see cref="IHistoryOptions"/> (expiration, max items, etc.).</param>
         /// <returns>The current <see cref="ISwitchControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="filename"/> is <c>null</c>.</exception>
-        ISwitchControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        ISwitchControl EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Updates the description text dynamically based on the current switch state.

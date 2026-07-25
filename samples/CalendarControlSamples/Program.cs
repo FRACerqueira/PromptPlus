@@ -140,10 +140,10 @@ namespace CalendarControlSamples
                     .Run();
                 PrintSelectionResult(result);
 
-                ShowSection("10) EnabledHistory + Options + Styles");
+                ShowSection("10) EnableHistory + Options + Styles");
                 result = PromptPlus.Controls.Calendar("Styled date")
                     .Default(now, useDefaultHistory: true)
-                    .EnabledHistory(historyDefaultKey, history =>
+                    .EnableHistory(historyDefaultKey, history =>
                     {
                         history.MaxItems(5);
                     })

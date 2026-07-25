@@ -50,7 +50,7 @@ children to it. Call [`Run`](#run) last.
 [ViewOnly](#viewonly) ·
 [ChangeDescription](#changedescription) ·
 [ChangeDescriptionAsync](#changedescriptionasync) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [Styles](#styles) ·
 [Options](#options) ·
 [Run](#run)
@@ -408,7 +408,7 @@ ITreeControl<T> Default(T value, bool useDefaultHistory = true)
 ```
 
 Pre-selects `value`, expanding the tree down to it when it is reachable from the root. When
-`useDefaultHistory` is `true` and [history](#enabledhistory) is enabled, the restored history value
+`useDefaultHistory` is `true` and [history](#enablehistory) is enabled, the restored history value
 is preferred. Matching uses [`DefaultMatchBy`](#defaultmatchby).
 
 ```csharp
@@ -498,21 +498,21 @@ each frame.
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-ITreeControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+ITreeControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists the confirmed value (serialized as JSON) to `filename`. On the next run the tree is searched
 — using [`DefaultMatchBy`](#defaultmatchby) — for the restored value so it can be pre-selected. The
 `IHistoryOptions` builder is the same one documented for
-[Input → EnabledHistory](../input/methods.md#enabledhistory).
+[Input → EnableHistory](../input/methods.md#enablehistory).
 
 ```csharp
 PromptPlus.Controls.Tree<Node>("Nodes")
     .Root(company).TextSelector(n => n.Name).DefaultMatchBy((a, b) => a.Id == b.Id)
-    .EnabledHistory("tree-history")
+    .EnableHistory("tree-history")
     .Run();
 ```
 

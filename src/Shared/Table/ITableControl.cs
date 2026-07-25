@@ -233,7 +233,7 @@ namespace PromptPlusLibrary
         /// </summary>
         /// <param name="value">The value to pre-select. Cannot be <see langword="null"/>.</param>
         /// <param name="useDefaultHistory">
-        /// When <see langword="true"/> (default) and history is enabled via <see cref="EnabledHistory"/>,
+        /// When <see langword="true"/> (default) and history is enabled via <see cref="EnableHistory"/>,
         /// the most recent history entry overrides this value as the initial selection.
         /// </param>
         /// <returns>The current <see cref="ITableControl{T}"/> instance for chaining.</returns>
@@ -257,12 +257,12 @@ namespace PromptPlusLibrary
         /// <returns>The current <see cref="ITableControl{T}"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="filename"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="filename"/> is empty or whitespace.</exception>
-        ITableControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        ITableControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Sets the most recent history entry as the initial cursor position, clearing any
         /// value previously set by <see cref="Default"/>.
-        /// Has no effect when history is not enabled via <see cref="EnabledHistory"/>.
+        /// Has no effect when history is not enabled via <see cref="EnableHistory"/>.
         /// </summary>
         /// <returns>The current <see cref="ITableControl{T}"/> instance for chaining.</returns>
         ITableControl<T> UseDefaultHistory();

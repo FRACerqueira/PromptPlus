@@ -284,7 +284,7 @@ namespace PromptPlusLibrary.Controls.MultiTable
         }
 
         /// <inheritdoc/>
-        public IMultiTableControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public IMultiTableControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

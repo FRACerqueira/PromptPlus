@@ -106,7 +106,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Restrict typing | `AcceptInput`, `MaxLength`, `InputToCase` |
 | Validate on confirm | `PredicateValid`, `PredicateValidAsync` |
 | Autocomplete | `SuggestionHandler`, `SuggestionHandlerAsync`, `MinimumSuggestionLength` |
-| History | `EnabledHistory` |
+| History | `EnableHistory` |
 | Dynamic description | `ChangeDescription`, `ChangeDescriptionAsync` |
 | Appearance & behavior | `Styles`, `Options` |
 | Run | `Run` |

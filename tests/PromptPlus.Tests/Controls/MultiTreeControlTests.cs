@@ -346,10 +346,10 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void EnabledHistory_persists_the_confirmed_checks_and_autoreloads_without_extra_opt_in()
+        public void EnableHistory_persists_the_confirmed_checks_and_autoreloads_without_extra_opt_in()
         {
             var vt = MakeTerminal();
-            var control = MakeTree(vt).EnabledHistory(HistoryFile);
+            var control = MakeTree(vt).EnableHistory(HistoryFile);
             _ = vt.Keys.Enqueue(ConsoleKey.Tab).Enqueue(ConsoleKey.Tab).Enqueue(ConsoleKey.Spacebar).Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
@@ -357,7 +357,7 @@ namespace PromptPlus.Tests.Controls
             var vt2 = MakeTerminal();
             // Deliberately NOT calling UseDefaultHistory()/Default(...) — same auto-reload
             // convention already confirmed for Tree: _useDefaultHistory starts true here too.
-            var control2 = MakeTree(vt2).EnabledHistory(HistoryFile);
+            var control2 = MakeTree(vt2).EnableHistory(HistoryFile);
             _ = vt2.Keys.Enqueue(ConsoleKey.Enter);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             var result2 = control2.Run(cts2.Token);

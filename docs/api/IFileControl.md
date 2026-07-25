@@ -52,25 +52,25 @@ The same [IFileControl](IFileControl.md 'PromptPlusLibrary\.IFileControl') insta
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
 Thrown when [fullPath](IFileControl.md#PromptPlusLibrary.IFileControl.Default(string,bool).fullPath 'PromptPlusLibrary\.IFileControl\.Default\(string, bool\)\.fullPath') is `null`\.
 
-<a name='PromptPlusLibrary.IFileControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.IFileControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## IFileControl\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## IFileControl\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables history and applies custom configuration to the history feature\. The last selected
 path is stored and can be used as the default on the next run\.
 
 ```csharp
-PromptPlusLibrary.IFileControl EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.IFileControl EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IFileControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.IFileControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The name of the file to store history\. Cannot be `null`\.
 
-<a name='PromptPlusLibrary.IFileControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.IFileControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 
@@ -83,7 +83,7 @@ The same [IFileControl](IFileControl.md 'PromptPlusLibrary\.IFileControl') insta
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [filename](IFileControl.md#PromptPlusLibrary.IFileControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.IFileControl\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
+Thrown when [filename](IFileControl.md#PromptPlusLibrary.IFileControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.IFileControl\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
 
 <a name='PromptPlusLibrary.IFileControl.HideSize(bool)'></a>
 

@@ -148,7 +148,7 @@ Use `SelectLeafOnly` for *structural* rules ("pick an actual item, not a folder"
 
 - [`Default(value)`](methods.md#default) pre-selects a node and expands the tree to reveal it;
   provide [`DefaultMatchBy`](methods.md#defaultmatchby) so the right node is located (required).
-- With [`EnabledHistory`](methods.md#enabledhistory), the confirmed value is serialized to disk; on
+- With [`EnableHistory`](methods.md#enablehistory), the confirmed value is serialized to disk; on
   the next run the tree is searched (via `DefaultMatchBy`) for the restored value and pre-selects it
   when `Default(..., useDefaultHistory: true)` is in effect.
 

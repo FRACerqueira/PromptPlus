@@ -25,7 +25,7 @@ in any order. Call [`Run`](#run) last.
 [Default](#default) ·
 [OnValue](#onvalue) ·
 [OffValue](#offvalue) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [ChangeDescription](#changedescription) ·
 [ChangeDescriptionAsync](#changedescriptionasync) ·
 [Styles](#styles) ·
@@ -47,7 +47,7 @@ Sets the initial state shown when the control opens. Default is `false` (off).
 | Parameter | Meaning |
 |---|---|
 | `value` | The initial state: `true` for on, `false` for off. |
-| `useDefaultHistory` | When `true` (default) **and** history is enabled via [`EnabledHistory`](#enabledhistory), the last confirmed value in history is used instead of `value`. |
+| `useDefaultHistory` | When `true` (default) **and** history is enabled via [`EnableHistory`](#enablehistory), the last confirmed value in history is used instead of `value`. |
 
 ```csharp
 PromptPlus.Controls.Switch("Enable feature?")
@@ -117,10 +117,10 @@ PromptPlus.Controls.Switch("Power")
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-ISwitchControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+ISwitchControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists the confirmed boolean to a file under `filename` so it can be reloaded as the default on
@@ -134,11 +134,11 @@ the next run.
 ```csharp
 PromptPlus.Controls.Switch("Use default from history?")
     .Default(false, true)             // fall back to the last history value
-    .EnabledHistory("switch-history")
+    .EnableHistory("switch-history")
     .Run();
 ```
 
-> 💡 Pair `Default(value, useDefaultHistory: true)` with `EnabledHistory(...)` to pre-load the last
+> 💡 Pair `Default(value, useDefaultHistory: true)` with `EnableHistory(...)` to pre-load the last
 > state the user confirmed. See [Operations → History](operations.md#history) for runtime behavior.
 
 ---

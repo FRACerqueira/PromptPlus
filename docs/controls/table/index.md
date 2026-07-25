@@ -125,7 +125,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Initial row | `Default`, `UseDefaultHistory`, `DefaultMatchBy` |
 | Validate on confirm | `PredicateSelected`, `PredicateSelectedAsync` |
 | Read-only display | `ViewOnly` |
-| History | `EnabledHistory` |
+| History | `EnableHistory` |
 | Appearance & behavior | `Styles`, `Options` |
 | Run | `Run` |
 

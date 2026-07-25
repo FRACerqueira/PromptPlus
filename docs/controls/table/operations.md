@@ -136,11 +136,11 @@ than availability.
 
 - [`Default(value)`](methods.md#default) pre-selects a row; provide
   [`DefaultMatchBy`](methods.md#defaultmatchby) for records/classes so the right row is located.
-- With [`EnabledHistory`](methods.md#enabledhistory), confirmed selections are stored on disk;
+- With [`EnableHistory`](methods.md#enablehistory), confirmed selections are stored on disk;
   [`UseDefaultHistory`](methods.md#usedefaulthistory) (or `Default(..., useDefaultHistory: true)`)
   restores the last one on the next run.
 - History options (`MinPrefixLength`, `MaxItems`, `ExpirationTime`, `FilterType`, `PageSize`) match the
-  [Input history options](../input/methods.md#enabledhistory).
+  [Input history options](../input/methods.md#enablehistory).
 
 ---
 

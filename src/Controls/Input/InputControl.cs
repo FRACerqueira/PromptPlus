@@ -140,7 +140,7 @@ namespace PromptPlusLibrary.Controls.Input
         }
 
         /// <inheritdoc/>
-        public IInputControl EnabledHistory(string filename, Action<IHistoryOptions>? options)
+        public IInputControl EnableHistory(string filename, Action<IHistoryOptions>? options)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

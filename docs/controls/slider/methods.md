@@ -34,7 +34,7 @@ in any order. Call [`Run`](#run) last.
 [ChangeColor](#changecolor) ·
 [ChangeGradient](#changegradient) ·
 [HideElements](#hideelements) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [ChangeDescription](#changedescription) ·
 [ChangeDescriptionAsync](#changedescriptionasync) ·
 [Styles](#styles) ·
@@ -146,7 +146,7 @@ Sets the value that is pre-selected when the slider is first shown. Default is `
 | Parameter | Meaning |
 |---|---|
 | `value` | The initial value. Must be inside the range from [`Range`](#range). |
-| `useDefaultHistory` | When `true` **and** history is enabled via [`EnabledHistory`](#enabledhistory), the last saved value is used instead of `value`. Default `true`. |
+| `useDefaultHistory` | When `true` **and** history is enabled via [`EnableHistory`](#enablehistory), the last saved value is used instead of `value`. Default `true`. |
 
 ```csharp
 PromptPlus.Controls.Slider("Value")
@@ -319,10 +319,10 @@ PromptPlus.Controls.Slider("Value")
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-ISliderControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+ISliderControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists the confirmed value to a file under `filename` so it can be reused as the default on the
@@ -339,11 +339,11 @@ PromptPlus.Controls.Slider("Value")
     .FractionalDigits(2)
     .Step(0.5)
     .LargeStep(5)
-    .EnabledHistory("slider-history")
+    .EnableHistory("slider-history")
     .Run();
 ```
 
-> 💡 Pair `Default(value, useDefaultHistory: true)` with `EnabledHistory(...)` to pre-load the last
+> 💡 Pair `Default(value, useDefaultHistory: true)` with `EnableHistory(...)` to pre-load the last
 > value the user confirmed. See [Operations → History](operations.md#history) for runtime behavior.
 
 ---

@@ -22,7 +22,7 @@ The type of items shown in the list\.
 The control renders a scrollable, optionally grouped list where the user navigates items
 with the arrow keys, toggles individual checks with `Space`, and confirms the entire
 selection with `Enter`\. Features include inline filtering \([Filter\(FilterMode\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.Filter(PromptPlusLibrary.FilterMode) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.Filter\(PromptPlusLibrary\.FilterMode\)')\),
-optional grouped layout with header separators, history persistence \([EnabledHistory\(string, Action&lt;IHistoryOptions&gt;\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)')\),
+optional grouped layout with header separators, history persistence \([EnableHistory\(string, Action&lt;IHistoryOptions&gt;\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)')\),
 range constraints \([Range\(int, Nullable&lt;int&gt;\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.Range(int,System.Nullable_int_) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.Range\(int, System\.Nullable\<int\>\)')\), and view\-only mode \([ViewOnly\(bool\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.ViewOnly(bool) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.ViewOnly\(bool\)')\)\.
 Every configuration method returns the same [IMultiSelectControl&lt;T&gt;](IMultiSelectControl_T_.md 'PromptPlusLibrary\.IMultiSelectControl\<T\>') instance
 so calls can be chained \(fluent style\)\. Call [Run\(CancellationToken\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.Run(System.Threading.CancellationToken) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.Run\(System\.Threading\.CancellationToken\)') last\.
@@ -336,24 +336,24 @@ The current [IMultiSelectControl&lt;T&gt;](IMultiSelectControl_T_.md 'PromptPlus
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
 Thrown if [comparer](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.DefaultMatchBy(System.Func_T,T,bool_).comparer 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.DefaultMatchBy\(System\.Func\<T,T,bool\>\)\.comparer') is `null`\.
 
-<a name='PromptPlusLibrary.IMultiSelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.IMultiSelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## IMultiSelectControl\<T\>\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## IMultiSelectControl\<T\>\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables history and applies custom options to the history feature\.
 
 ```csharp
-PromptPlusLibrary.IMultiSelectControl<T> EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.IMultiSelectControl<T> EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.IMultiSelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.IMultiSelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The name of the file to store history\. Cannot be `null`\.
 
-<a name='PromptPlusLibrary.IMultiSelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.IMultiSelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 
@@ -366,7 +366,7 @@ The current [IMultiSelectControl&lt;T&gt;](IMultiSelectControl_T_.md 'PromptPlus
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown if [filename](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
+Thrown if [filename](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
 
 <a name='PromptPlusLibrary.IMultiSelectControl_T_.ExtraInfo(System.Func_T,string_)'></a>
 
@@ -777,7 +777,7 @@ Thrown if [value](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectContro
 
 Instructs the control to initialize its checked set from the most recent history entry,
 overriding any values supplied by [Default\(IEnumerable&lt;T&gt;, bool\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.Default(System.Collections.Generic.IEnumerable_T_,bool) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.Default\(System\.Collections\.Generic\.IEnumerable\<T\>, bool\)')\.
-Has no effect when history is not enabled via [EnabledHistory\(string, Action&lt;IHistoryOptions&gt;\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)')\.
+Has no effect when history is not enabled via [EnableHistory\(string, Action&lt;IHistoryOptions&gt;\)](IMultiSelectControl_T_.md#PromptPlusLibrary.IMultiSelectControl_T_.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.IMultiSelectControl\<T\>\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)')\.
 
 ```csharp
 PromptPlusLibrary.IMultiSelectControl<T> UseDefaultHistory();

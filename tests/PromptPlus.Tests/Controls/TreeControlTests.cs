@@ -21,10 +21,10 @@ namespace PromptPlus.Tests.Controls
     // - Escape (real ou timeout) SEMPRE devolve Content=null/default, IsAborted=true — Tree nunca
     //   preserva a posição do cursor no cancelamento (mesma família do MultiSelect, diferente do
     //   Select/Table que preservam no Escape real).
-    // - `EnabledHistory` sozinho (sem `.UseDefaultHistory()`/`.Default(...)`) JÁ recarrega o valor
+    // - `EnableHistory` sozinho (sem `.UseDefaultHistory()`/`.Default(...)`) JÁ recarrega o valor
     //   salvo automaticamente — `_useDefaultHistory` começa `true` por padrão no Tree, diferente
     //   de Select/MultiSelect/Table (que começam `false` e exigem opt-in explícito). Não é bug —
-    //   a própria doc de `EnabledHistory` do Tree já promete esse comportamento — só uma
+    //   a própria doc de `EnableHistory` do Tree já promete esse comportamento — só uma
     //   divergência real entre controles, documentada aqui.
     [Collection(SerializedGlobalStateCollection.Name)]
     public class TreeControlTests : IDisposable
@@ -473,18 +473,18 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void EnabledHistory_persists_the_confirmed_node_and_autoreloads_it_without_extra_opt_in()
+        public void EnableHistory_persists_the_confirmed_node_and_autoreloads_it_without_extra_opt_in()
         {
             var vt = MakeTerminal();
-            var control = MakeTree(vt).EnabledHistory(HistoryFile);
+            var control = MakeTree(vt).EnableHistory(HistoryFile);
             _ = vt.Keys.Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
 
             var vt2 = MakeTerminal();
             // Deliberately NOT calling UseDefaultHistory()/Default(...) — Tree auto-reloads from
-            // EnabledHistory alone (see class remarks: _useDefaultHistory starts true here).
-            var control2 = MakeTree(vt2).EnabledHistory(HistoryFile);
+            // EnableHistory alone (see class remarks: _useDefaultHistory starts true here).
+            var control2 = MakeTree(vt2).EnableHistory(HistoryFile);
             _ = vt2.Keys.Enqueue(ConsoleKey.Enter);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             var result2 = control2.Run(cts2.Token);

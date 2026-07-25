@@ -279,7 +279,7 @@ namespace PromptPlusLibrary.Controls.Select
         }
 
         /// <inheritdoc/>
-        public ISelectControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public ISelectControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

@@ -122,7 +122,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Initial value | `Default` |
 | Validate on confirm | `PredicateSelected`, `PredicateSelectedAsync` |
 | Dynamic description | `ChangeDescription`, `ChangeDescriptionAsync` |
-| History | `EnabledHistory` |
+| History | `EnableHistory` |
 | Appearance & behavior | `Styles`, `Options` |
 | Run | `Run` |
 

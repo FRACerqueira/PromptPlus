@@ -112,7 +112,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Step increments | `Step`, `LargeStep` |
 | Bar appearance & layout | `BarType`, `ChangeColor`, `ChangeGradient`, `HideElements`, `Layout` |
 | Dynamic description | `ChangeDescription`, `ChangeDescriptionAsync` |
-| History | `EnabledHistory` |
+| History | `EnableHistory` |
 | Appearance & behavior | `Styles`, `Options` |
 | Run | `Run` |
 

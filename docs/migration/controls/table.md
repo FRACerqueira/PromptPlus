@@ -177,14 +177,14 @@ PromptPlus.Controls.Table<Product>("Products:")
 PromptPlus.Controls.MultiTable<Product>("Products:")
     .AddColumn("Name", p => p.Name)
     .AddItems(products)
-    .EnabledHistory("products_selection")
+    .EnableHistory("products_selection")
     .UseDefaultHistory()
     .TextSelectorAsync(async p => await FormatNameAsync(p))
     .ChangeDescriptionAsync(async p => (await LoadInfoAsync(p.Id)).Summary)
     .Run();
 ```
 
-New on `Table`/`MultiTable`: `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll` · `ChangeDescriptionAsync` · `TextSelectorAsync` · `InteractionAsync`; `Table` adds `PredicateSelectedAsync` (x2) and `MultiTable` adds `PredicateCheckedAsync` (x2); plus `EnabledHistory` / `UseDefaultHistory` on `MultiTable`.
+New on `Table`/`MultiTable`: `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll` · `ChangeDescriptionAsync` · `TextSelectorAsync` · `InteractionAsync`; `Table` adds `PredicateSelectedAsync` (x2) and `MultiTable` adds `PredicateCheckedAsync` (x2); plus `EnableHistory` / `UseDefaultHistory` on `MultiTable`.
 
 ---
 
@@ -227,5 +227,5 @@ New on `Table`/`MultiTable`: `DefaultMatchBy` · `ViewOnly` · `HorizontalScroll
 | `EqualItems(Func<T,T,bool>)` | ✅ | ❌ | Renamed to `DefaultMatchBy` |
 | `Range(int, int?)` | ✅ | ✅ | Unchanged |
 | `PredicateSelected` (x2) | ✅ | ❌ | Renamed to `PredicateChecked` (x2) |
-| `EnabledHistory` · `UseDefaultHistory` · `ViewOnly` · `DefaultMatchBy` · `HorizontalScroll` · `PredicateChecked` (x2) · async variants | ❌ | ✅ | New |
+| `EnableHistory` · `UseDefaultHistory` · `ViewOnly` · `DefaultMatchBy` · `HorizontalScroll` · `PredicateChecked` (x2) · async variants | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<T[]>` | `ResultPrompt<T[]>` | Unchanged |

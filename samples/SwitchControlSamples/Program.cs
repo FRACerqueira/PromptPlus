@@ -98,14 +98,14 @@ namespace SwitchControlSamples
                     PrintSelectionResult(result);
                 }
 
-                ShowSection("10) EnabledHistory + Default from history");
+                ShowSection("10) EnableHistory + Default from history");
                 PromptPlus.Controls.History(historyDefaultKey)
                     .AddHistory("true")
                     .Save();
 
                 result = PromptPlus.Controls.Switch("Use default from history?")
                     .Default(false, true)
-                    .EnabledHistory(historyDefaultKey)
+                    .EnableHistory(historyDefaultKey)
                     .Run();
                 PrintSelectionResult(result);
             }

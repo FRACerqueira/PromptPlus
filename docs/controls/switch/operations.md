@@ -70,7 +70,7 @@ state that is currently highlighted.
 
 ## History
 
-When [`EnabledHistory(filename, …)`](methods.md#enabledhistory) is set:
+When [`EnableHistory(filename, …)`](methods.md#enablehistory) is set:
 
 - Each confirmed state is persisted to the on-disk store named `filename`.
 - With [`Default(value, useDefaultHistory: true)`](methods.md#default), the last saved state is

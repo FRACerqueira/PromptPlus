@@ -72,7 +72,7 @@ Every interactive control follows the same four-step lifecycle:
        ↓
 2. Fluent config  .DefaultValue("Alice")
                   .MaxLength(50)
-                  .EnabledHistory("name-history")
+                  .EnableHistory("name-history")
        ↓
 3. Per-control    .Options(o => o
    overrides          .HideAfterFinish(true)

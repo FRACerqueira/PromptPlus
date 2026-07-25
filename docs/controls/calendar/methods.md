@@ -39,7 +39,7 @@ in any order. Call [`Run`](#run) last.
 [PredicateSelectedAsync](#predicateselectedasync) ·
 [ChangeDescription](#changedescription) ·
 [ChangeDescriptionAsync](#changedescriptionasync) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [Styles](#styles) ·
 [Options](#options) ·
 [Run](#run)
@@ -329,7 +329,7 @@ ICalendarControl Default(DateTime value, bool useDefaultHistory = true)
 ```
 
 Opens the grid on `value` (default is today). When `useDefaultHistory` is `true` and
-[history](#enabledhistory) is enabled, the last history value is preferred. A `value` outside the
+[history](#enablehistory) is enabled, the last history value is preferred. A `value` outside the
 [`Range`](#range) is ignored.
 
 ```csharp
@@ -456,16 +456,16 @@ PromptPlus.Controls.Calendar("Date")
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-ICalendarControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+ICalendarControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists confirmed dates to `filename` and can pre-select the last one (via
 [`Default(..., useDefaultHistory: true)`](#default)). The `IHistoryOptions` builder is identical to
 the one documented for
-[Input → EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`, `MaxItems`,
+[Input → EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`, `MaxItems`,
 `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
@@ -474,7 +474,7 @@ using System;
 
 PromptPlus.Controls.Calendar("Date")
     .Default(DateTime.Now, useDefaultHistory: true)
-    .EnabledHistory("calendar-history", opt => opt.MaxItems(5))
+    .EnableHistory("calendar-history", opt => opt.MaxItems(5))
     .Run();
 ```
 

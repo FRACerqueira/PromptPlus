@@ -306,7 +306,7 @@ namespace PromptPlusLibrary.Controls.Tree
         }
 
         /// <inheritdoc/>
-        public ITreeControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public ITreeControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

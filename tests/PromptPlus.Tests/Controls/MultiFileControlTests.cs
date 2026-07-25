@@ -23,7 +23,7 @@ namespace PromptPlus.Tests.Controls
     // `MockFileSystem` and restores the real one in Dispose. `[Collection(SerializedGlobalStateCollection.
     // Name)]` is needed for two independent reasons, applied to the whole class for simplicity
     // (same as FileControlTests): the tests that touch `FileHistory.FileSystem` (Default/
-    // EnabledHistory) need it for that static, AND the background-wildcard-check tests below spawn
+    // EnableHistory) need it for that static, AND the background-wildcard-check tests below spawn
     // a real background Task + a fixed real-time margin (see SerializedGlobalStateCollection's comment) —
     // confirmed the same class of full-suite-parallel-contention risk as ProgressBar/TaskExec/
     // MultiTasks/etc, even though its 400ms margin has enough slack that it hadn't flaked yet.
@@ -398,11 +398,11 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void Default_and_EnabledHistory_round_trip_the_checked_paths()
+        public void Default_and_EnableHistory_round_trip_the_checked_paths()
         {
             const string historyFile = "multifile-history-tests";
             var vt = MakeTerminal();
-            var control = MakeControl(vt).Default([ATxtPath]).EnabledHistory(historyFile);
+            var control = MakeControl(vt).Default([ATxtPath]).EnableHistory(historyFile);
             _ = vt.Keys.Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
@@ -410,7 +410,7 @@ namespace PromptPlus.Tests.Controls
             var vt2 = MakeTerminal();
             MultiFileControl.FileSystem = MakeFs();
             var control2 = new PromptPlusControls(vt2, new PromptConfig()).MultiFile("Choose").Root(Root)
-                .EnabledHistory(historyFile);
+                .EnableHistory(historyFile);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromMilliseconds(1000));
             _ = control2.Run(cts2.Token);
 

@@ -119,7 +119,7 @@ namespace PromptPlusLibrary
         /// value so that it can be pre-selected.
         /// </summary>
         /// <exception cref="ArgumentNullException">When <paramref name="filename"/> is <c>null</c>.</exception>
-        ITreeControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        ITreeControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Configures the control for view-only mode, where nodes can be navigated but not selected.

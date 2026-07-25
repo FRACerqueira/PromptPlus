@@ -204,12 +204,12 @@ namespace PromptPlusLibrary
         /// <param name="filename">The history file name. Cannot be <c>null</c>.</param>
         /// <param name="options">An optional callback to configure <see cref="IHistoryOptions"/>.</param>
         /// <returns>The current <see cref="IMultiTableControl{T}"/> instance for chaining.</returns>
-        IMultiTableControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        IMultiTableControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Loads the most recent history entry as the initial checked set, clearing any
         /// value previously set by <see cref="Default"/>.
-        /// Has no effect when history is not enabled via <see cref="EnabledHistory"/>.
+        /// Has no effect when history is not enabled via <see cref="EnableHistory"/>.
         /// </summary>
         IMultiTableControl<T> UseDefaultHistory();
 

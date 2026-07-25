@@ -11,6 +11,7 @@ The v5.x members below were **renamed** in v6.x (same behavior, new name). Apply
 |---|---|---|
 | Input / Secret | `PredicateSelected(Func<string, bool>)` | `PredicateValid(Func<string, bool>)` |
 | Input / Secret | `PredicateSelected(Func<string, (bool, string?)>)` | `PredicateValid(Func<string, (bool, string?)>)` |
+| Input / Secret | `EnabledHistory(string, Action<IHistoryOptions>?)` | `EnableHistory(string, Action<IHistoryOptions>?)` |
 
 > The async overloads follow the same name: `PredicateValidAsync` (new in v6.x).
 
@@ -151,7 +152,6 @@ PromptPlus.Controls.Input("Tax ID:")
 | `ChangeDescription(Func<string, string>)` | Unchanged |
 | `Styles(InputStyles, Style)` | Unchanged |
 | `Options(Action<IControlOptions>)` | Unchanged |
-| `EnabledHistory(string, Action<IHistoryOptions>?)` | Unchanged |
 
 ### Changed
 
@@ -161,6 +161,7 @@ PromptPlus.Controls.Input("Tax ID:")
 | `SuggestionHandler(Func<string,string[]>)` | `SuggestionHandler(Func<string,string[]>, bool autocomplete = true)` | `autocomplete` parameter added |
 | `PredicateSelected(Func<string, bool>)` | `PredicateValid(Func<string, bool>)` | Renamed |
 | `PredicateSelected(Func<string, (bool, string?)>)` | `PredicateValid(Func<string, (bool, string?)>)` | Renamed |
+| `EnabledHistory(string, Action<IHistoryOptions>?)` | `EnableHistory(string, Action<IHistoryOptions>?)` | Renamed |
 
 ### Removed
 

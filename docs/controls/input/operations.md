@@ -56,7 +56,7 @@ Every region can be recolored — see [Styles](styles.md).
 | `Enter` | Confirm — runs validation, then returns the value |
 | `Esc` | Abort (when the abort key is enabled) ? `IsAborted == true` |
 | `Tab` / `Shift+Tab` | Apply / cycle autocomplete suggestions (when a [suggestion handler](methods.md#suggestionhandler) is set) |
-| `F3` | Open history navigation (when [history](methods.md#enabledhistory) is enabled) |
+| `F3` | Open history navigation (when [history](methods.md#enablehistory) is enabled) |
 | `F1` | Cycle tooltip content |
 | `Ctrl+F1` | Show / hide the tooltip |
 
@@ -107,7 +107,7 @@ Pressing **Enter** runs this sequence:
 
 ## History
 
-When [`EnabledHistory(filename, …)`](methods.md#enabledhistory) is set:
+When [`EnableHistory(filename, …)`](methods.md#enablehistory) is set:
 
 - Each confirmed value is appended to the on-disk store named `filename`.
 - Pressing **F3** opens a paged list of past entries filtered by what is currently typed

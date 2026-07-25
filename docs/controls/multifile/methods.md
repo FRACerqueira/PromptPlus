@@ -37,7 +37,7 @@ any order. Call [`Run`](#run) last.
 [ShowFullPath](#showfullpath) ·
 [PageSize](#pagesize) ·
 [Default](#default) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [Styles](#styles) ·
 [Options](#options) ·
 [Run](#run)
@@ -301,7 +301,7 @@ IMultiFileControl Default(IEnumerable<string> fullPaths, bool useDefaultHistory 
 ```
 
 Pre-checks the supplied paths, expanding the tree down to the first one when it lies under the root.
-When `useDefaultHistory` is `true` and [history](#enabledhistory) is enabled, stored values may
+When `useDefaultHistory` is `true` and [history](#enablehistory) is enabled, stored values may
 override these defaults.
 
 ```csharp
@@ -317,21 +317,21 @@ PromptPlus.Controls.MultiFile("Pre-checked defaults")
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-IMultiFileControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+IMultiFileControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists the confirmed paths to `filename` and can restore them as the defaults on the next run (the
 tree expands to the first). The `IHistoryOptions` builder is identical to the one documented for
-[Input ? EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`, `MaxItems`,
+[Input ? EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`, `MaxItems`,
 `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
 PromptPlus.Controls.MultiFile("Check (remembered)")
     .Root(root)
-    .EnabledHistory("multifile-history")
+    .EnableHistory("multifile-history")
     .Run();
 ```
 

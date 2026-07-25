@@ -276,7 +276,7 @@ namespace PromptPlusLibrary.Controls.MultiTree
             return this;
         }
 
-        public IMultiTreeControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public IMultiTreeControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

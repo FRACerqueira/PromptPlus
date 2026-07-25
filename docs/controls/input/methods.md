@@ -32,7 +32,7 @@ in any order. Call [`Run`](#run) last.
 [SuggestionHandler](#suggestionhandler) ·
 [SuggestionHandlerAsync](#suggestionhandlerasync) ·
 [MinimumSuggestionLength](#minimumsuggestionlength) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [ChangeDescription](#changedescription) ·
 [ChangeDescriptionAsync](#changedescriptionasync) ·
 [Styles](#styles) ·
@@ -54,7 +54,7 @@ Pre-fills the field with `value` before the user starts typing.
 | Parameter | Meaning |
 |---|---|
 | `value` | The initial text shown in the field. Cannot be `null`. |
-| `useDefaultHistory` | When `true` **and** history is enabled via [`EnabledHistory`](#enabledhistory), the most recent history entry is preferred over `value`. Default `true`. |
+| `useDefaultHistory` | When `true` **and** history is enabled via [`EnableHistory`](#enablehistory), the most recent history entry is preferred over `value`. Default `true`. |
 
 ```csharp
 PromptPlus.Controls.Input("Profile")
@@ -62,7 +62,7 @@ PromptPlus.Controls.Input("Profile")
     .Run();
 ```
 
-> ?? Combine `Default(string.Empty, true)` with `EnabledHistory(...)` to pre-load the last value
+> ?? Combine `Default(string.Empty, true)` with `EnableHistory(...)` to pre-load the last value
 > the user confirmed on a previous run.
 
 ---
@@ -278,10 +278,10 @@ PromptPlus.Controls.Input("Country")
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-IInputControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+IInputControl EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists confirmed values to disk under `filename` and lets the user recall them with **F3**.
@@ -303,7 +303,7 @@ Persists confirmed values to disk under `filename` and lets the user recall them
 
 ```csharp
 PromptPlus.Controls.Input("Profile", "Press F3 to browse history")
-    .EnabledHistory("profile-history", opt => opt
+    .EnableHistory("profile-history", opt => opt
         .MinPrefixLength(2)
         .FilterType(FilterMode.StartsWith)
         .MaxItems(10)

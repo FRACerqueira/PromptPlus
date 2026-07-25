@@ -124,7 +124,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Checked set & count | `Default`, `Range`, `UseDefaultHistory`, `DefaultMatchBy` |
 | Restrict what can be checked | `PredicateChecked`, `PredicateCheckedAsync` |
 | Read-only display | `ViewOnly` |
-| History | `EnabledHistory` |
+| History | `EnableHistory` |
 | Appearance & behavior | `Styles`, `Options` |
 | Run | `Run` |
 

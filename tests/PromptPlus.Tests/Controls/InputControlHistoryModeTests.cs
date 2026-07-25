@@ -70,7 +70,7 @@ namespace PromptPlus.Tests.Controls
         }
 
         private static IInputControl MakeInputWithHistory(VirtualTerminal vt)
-            => new PromptPlusControls(vt, new PromptConfig()).Input("Name").EnabledHistory(HistoryFile);
+            => new PromptPlusControls(vt, new PromptConfig()).Input("Name").EnableHistory(HistoryFile);
 
         // These three confirm with a real Enter rather than letting the safety-net timeout end the
         // run: InputControl.TryResult's cancel branch explicitly restores the pre-history text and

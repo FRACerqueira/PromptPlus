@@ -82,7 +82,7 @@ namespace MultiSelectControlSamples
                 .AddItem("Item 6")
                 .AddItem("Item 7")
                 .Default(["Item 5"], true) // history can override default when useDefaultHistory=true
-                .EnabledHistory(historyDefaultKey)
+                .EnableHistory(historyDefaultKey)
                 .PageSize(5)
                 .Run();
             PrintSelectionResult(resultstring);
@@ -209,7 +209,7 @@ namespace MultiSelectControlSamples
 
             resultstring = PromptPlus.Controls.MultiSelect<string>("Select")
                 .AddItems(["Seattle", "London", "Tokyo", "New York"])
-                .EnabledHistory(historyUseDefaultKey)
+                .EnableHistory(historyUseDefaultKey)
                 .UseDefaultHistory()
                 .Run();
             PrintSelectionResult(resultstring);
@@ -265,7 +265,7 @@ namespace MultiSelectControlSamples
             ShowSection("19) History options (MinPrefixLength + MaxItems + Expiration + FilterType)");
             resultstring = PromptPlus.Controls.MultiSelect<string>("Select", "History appears after typing at least 2 chars")
                 .AddItems(["Alpha", "Alpine", "Beta", "Gamma", "Delta"])
-                .EnabledHistory(historyDefaultKey, opt => opt
+                .EnableHistory(historyDefaultKey, opt => opt
                     .MinPrefixLength(2)
                     .MaxItems(8)
                     .PageSize(3)

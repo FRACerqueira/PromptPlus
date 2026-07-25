@@ -11,7 +11,7 @@ namespace TreeControlSamples
 {
     /// <summary>
     /// A simple user item used to populate the generic tree. Marked [Serializable] so that
-    /// EnabledHistory can persist the selected value (see sample 8).
+    /// EnableHistory can persist the selected value (see sample 8).
     /// </summary>
     [Serializable]
     public sealed class Node
@@ -194,7 +194,7 @@ namespace TreeControlSamples
             PrintResult(t7b.Run());
 
             // --------------------------------------------------------------------------------
-            ShowSection("8) EnabledHistory - remembers the last selected node");
+            ShowSection("8) EnableHistory - remembers the last selected node");
             const string historyKey = "SampleTree.History";
             PromptPlus.Controls.History(historyKey).Remove();
             try
@@ -204,7 +204,7 @@ namespace TreeControlSamples
                     .Root(root)
                     .TextSelector(n => n.Name)
                     .DefaultMatchBy((a, b) => a.Id == b.Id)
-                    .EnabledHistory(historyKey);
+                    .EnableHistory(historyKey);
                 BuildFullTree(t8First, eng, backend, api, database, frontend, web, mobile, sales, emea, apac, hr);
                 PrintResult(t8First.Run());
 
@@ -213,7 +213,7 @@ namespace TreeControlSamples
                     .Root(root)
                     .TextSelector(n => n.Name)
                     .DefaultMatchBy((a, b) => a.Id == b.Id)
-                    .EnabledHistory(historyKey);
+                    .EnableHistory(historyKey);
                 BuildFullTree(t8Second, eng, backend, api, database, frontend, web, mobile, sales, emea, apac, hr);
                 PrintResult(t8Second.Run());
             }

@@ -125,7 +125,7 @@ namespace PromptPlusLibrary
         /// <param name="options">An action to configure <see cref="IHistoryOptions"/>. Optional.</param>
         /// <returns>The same <see cref="IFileControl"/> instance for chaining.</returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="filename"/> is <c>null</c>.</exception>
-        IFileControl EnabledHistory(string filename, Action<IHistoryOptions>? options = null);
+        IFileControl EnableHistory(string filename, Action<IHistoryOptions>? options = null);
 
         /// <summary>
         /// Displays the File control and blocks until the user confirms or cancels, returning the selected entry.

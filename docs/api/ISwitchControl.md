@@ -94,31 +94,31 @@ The initial boolean value: `true` for on, `false` for off\.
 
 `useDefaultHistory` [System\.Boolean](https://learn.microsoft.com/en-us/dotnet/api/system.boolean 'System\.Boolean')
 
-When `true` \(default\) and history is enabled via [EnabledHistory\(string, Action&lt;IHistoryOptions&gt;\)](ISwitchControl.md#PromptPlusLibrary.ISwitchControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.ISwitchControl\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)'), the last confirmed value stored in history is used instead of [value](ISwitchControl.md#PromptPlusLibrary.ISwitchControl.Default(bool,bool).value 'PromptPlusLibrary\.ISwitchControl\.Default\(bool, bool\)\.value')\.
+When `true` \(default\) and history is enabled via [EnableHistory\(string, Action&lt;IHistoryOptions&gt;\)](ISwitchControl.md#PromptPlusLibrary.ISwitchControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_) 'PromptPlusLibrary\.ISwitchControl\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)'), the last confirmed value stored in history is used instead of [value](ISwitchControl.md#PromptPlusLibrary.ISwitchControl.Default(bool,bool).value 'PromptPlusLibrary\.ISwitchControl\.Default\(bool, bool\)\.value')\.
 
 #### Returns
 [ISwitchControl](ISwitchControl.md 'PromptPlusLibrary\.ISwitchControl')  
 The current [ISwitchControl](ISwitchControl.md 'PromptPlusLibrary\.ISwitchControl') instance for chaining\.
 
-<a name='PromptPlusLibrary.ISwitchControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
+<a name='PromptPlusLibrary.ISwitchControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_)'></a>
 
-## ISwitchControl\.EnabledHistory\(string, Action\<IHistoryOptions\>\) Method
+## ISwitchControl\.EnableHistory\(string, Action\<IHistoryOptions\>\) Method
 
 Enables value history, persisting the confirmed boolean to a file so it can be
 reloaded as the default on the next run\.
 
 ```csharp
-PromptPlusLibrary.ISwitchControl EnabledHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
+PromptPlusLibrary.ISwitchControl EnableHistory(string filename, System.Action<PromptPlusLibrary.IHistoryOptions>? options=null);
 ```
 #### Parameters
 
-<a name='PromptPlusLibrary.ISwitchControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
+<a name='PromptPlusLibrary.ISwitchControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename'></a>
 
 `filename` [System\.String](https://learn.microsoft.com/en-us/dotnet/api/system.string 'System\.String')
 
 The name of the file used to store history\. Cannot be `null`\.
 
-<a name='PromptPlusLibrary.ISwitchControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
+<a name='PromptPlusLibrary.ISwitchControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).options'></a>
 
 `options` [System\.Action&lt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')[IHistoryOptions](IHistoryOptions.md 'PromptPlusLibrary\.IHistoryOptions')[&gt;](https://learn.microsoft.com/en-us/dotnet/api/system.action-1 'System\.Action\`1')
 
@@ -131,7 +131,7 @@ The current [ISwitchControl](ISwitchControl.md 'PromptPlusLibrary\.ISwitchContro
 #### Exceptions
 
 [System\.ArgumentNullException](https://learn.microsoft.com/en-us/dotnet/api/system.argumentnullexception 'System\.ArgumentNullException')  
-Thrown when [filename](ISwitchControl.md#PromptPlusLibrary.ISwitchControl.EnabledHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ISwitchControl\.EnabledHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
+Thrown when [filename](ISwitchControl.md#PromptPlusLibrary.ISwitchControl.EnableHistory(string,System.Action_PromptPlusLibrary.IHistoryOptions_).filename 'PromptPlusLibrary\.ISwitchControl\.EnableHistory\(string, System\.Action\<PromptPlusLibrary\.IHistoryOptions\>\)\.filename') is `null`\.
 
 <a name='PromptPlusLibrary.ISwitchControl.OffValue(ConsolePlusLibrary.EmojiName,string)'></a>
 

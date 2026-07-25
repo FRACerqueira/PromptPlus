@@ -40,7 +40,7 @@ namespace PromptPlusLibrary.Core
 
         public ISwitchWidget Switch(bool value)
         {
-            SwitchContrrol ctrl = new(true, console, promptConfig, new BaseControlOptions(promptConfig));
+            SwitchControl ctrl = new(true, console, promptConfig, new BaseControlOptions(promptConfig));
             ctrl.Default(value);
             return ctrl;
         }

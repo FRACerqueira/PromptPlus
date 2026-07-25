@@ -188,16 +188,16 @@ namespace PromptPlus.Tests.Controls
         }
 
         [Fact]
-        public void EnabledHistory_persists_the_confirmed_value_and_reloads_it_as_the_default()
+        public void EnableHistory_persists_the_confirmed_value_and_reloads_it_as_the_default()
         {
             var vt = MakeTerminal();
-            var control = MakeSlider(vt).EnabledHistory(HistoryFile);
+            var control = MakeSlider(vt).EnableHistory(HistoryFile);
             _ = vt.Keys.Enqueue(ConsoleKey.Tab).Enqueue(ConsoleKey.Enter);
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             _ = control.Run(cts.Token);
 
             var vt2 = MakeTerminal();
-            var control2 = new PromptPlusControls(vt2, new PromptConfig()).Slider("Volume").EnabledHistory(HistoryFile);
+            var control2 = new PromptPlusControls(vt2, new PromptConfig()).Slider("Volume").EnableHistory(HistoryFile);
             _ = vt2.Keys.Enqueue(ConsoleKey.Enter);
             using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(2));
             var result2 = control2.Run(cts2.Token);

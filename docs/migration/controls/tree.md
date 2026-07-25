@@ -135,7 +135,7 @@ var result = control.Run();
 
 ## What's new in v6.x
 
-New on `Tree`/`MultiTree`: `ViewOnly` · `Filter` · `ShowFullPath` · `DefaultMatchBy` · `Default` / `EnabledHistory` · `AddAfter` / `AddBefore` · `ChangeDescriptionAsync` · `ExtraInfoAsync` · `InteractionAsync`. `Tree` adds `SelectLeafOnly` and `PredicateSelectedAsync` (x2); `MultiTree` adds `CheckLeafOnly`, `CascadeCheck`, `RecursiveMarkWithCtrlSpace`, `PredicateCheckedAsync` (x2), plus the node-level `disable` / `check` parameters on `Root`/`Add*`.
+New on `Tree`/`MultiTree`: `ViewOnly` · `Filter` · `ShowFullPath` · `DefaultMatchBy` · `Default` / `EnableHistory` · `AddAfter` / `AddBefore` · `ChangeDescriptionAsync` · `ExtraInfoAsync` · `InteractionAsync`. `Tree` adds `SelectLeafOnly` and `PredicateSelectedAsync` (x2); `MultiTree` adds `CheckLeafOnly`, `CascadeCheck`, `RecursiveMarkWithCtrlSpace`, `PredicateCheckedAsync` (x2), plus the node-level `disable` / `check` parameters on `Root`/`Add*`.
 
 ```csharp
 PromptPlus.Controls.MultiTree<Category>("Categories:")
@@ -163,7 +163,7 @@ PromptPlus.Controls.MultiTree<Category>("Categories:")
 | `PredicateDisabled(Func<T,bool>)` | ✅ | ❌ | Removed |
 | `MaxWidth(byte)` | ✅ | ❌ | Removed |
 | `Styles(NodeTreeStyles, Style)` | ✅ | ❌ | → `Styles(TreeStyles, Style)` |
-| `Root` · `AddLast` · `AddFirst` · `AddAfter` · `AddBefore` · `PathSeparator` · `ViewOnly` · `Filter` · `SelectLeafOnly` · `ShowFullPath` · `DefaultMatchBy` · `Default` · `EnabledHistory` · async variants | ❌ | ✅ | New |
+| `Root` · `AddLast` · `AddFirst` · `AddAfter` · `AddBefore` · `PathSeparator` · `ViewOnly` · `Filter` · `SelectLeafOnly` · `ShowFullPath` · `DefaultMatchBy` · `Default` · `EnableHistory` · async variants | ❌ | ✅ | New |
 | `Run()` | `ResultPrompt<T>` | `ResultPrompt<T?>` | Read via `.Content` |
 
 ### MultiTree\<T\> — v5.x vs v6.x

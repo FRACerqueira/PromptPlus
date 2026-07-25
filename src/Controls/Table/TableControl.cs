@@ -280,7 +280,7 @@ namespace PromptPlusLibrary.Controls.Table
         }
 
         /// <inheritdoc/>
-        public ITableControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+        public ITableControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
         {
             ArgumentNullException.ThrowIfNull(filename);
             if (string.IsNullOrWhiteSpace(filename))

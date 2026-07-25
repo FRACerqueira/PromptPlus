@@ -127,7 +127,7 @@ Grouped by purpose. Full signatures and examples are on the [Methods](methods.md
 | Validate a check | `PredicateChecked`, `PredicateCheckedAsync` |
 | Layout & display | `HideSize`, `ShowFullPath`, `PageSize` |
 | Initial values | `Default` |
-| History | `EnabledHistory` |
+| History | `EnableHistory` |
 | Appearance & behavior | `Styles`, `Options` |
 | Run | `Run` |
 

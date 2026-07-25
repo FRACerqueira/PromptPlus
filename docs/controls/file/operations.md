@@ -99,11 +99,11 @@ complete path.
 
 - [`Default(fullPath)`](methods.md#default) pre-selects an entry and expands the tree down to it when
   the path lies under the [`Root`](methods.md#root).
-- With [`EnabledHistory`](methods.md#enabledhistory), the confirmed path is stored on disk; on the
+- With [`EnableHistory`](methods.md#enablehistory), the confirmed path is stored on disk; on the
   next run it becomes the default and the tree expands to it (unless overridden by an explicit
   `Default` with `useDefaultHistory: false`).
 - History options (`MinPrefixLength`, `MaxItems`, `ExpirationTime`, `FilterType`, `PageSize`) match
-  the [Input history options](../input/methods.md#enabledhistory).
+  the [Input history options](../input/methods.md#enablehistory).
 
 ---
 

@@ -42,7 +42,7 @@ in any order. Call [`Run`](#run) last.
 [PredicateSelected](#predicateselected) ·
 [PredicateSelectedAsync](#predicateselectedasync) ·
 [ViewOnly](#viewonly) ·
-[EnabledHistory](#enabledhistory) ·
+[EnableHistory](#enablehistory) ·
 [Styles](#styles) ·
 [Options](#options) ·
 [Run](#run)
@@ -361,7 +361,7 @@ ITableControl<T> Default(T value, bool useDefaultHistory = true)
 
 Pre-selects `value` as the initial cursor position, matched with [`DefaultMatchBy`](#defaultmatchby)
 (default: `EqualityComparer<T>.Default`). Disabled rows and rows rejected by a selection predicate are
-not pre-selected. When `useDefaultHistory` is `true` and [history](#enabledhistory) is enabled, the most
+not pre-selected. When `useDefaultHistory` is `true` and [history](#enablehistory) is enabled, the most
 recent history entry overrides this value.
 
 ```csharp
@@ -384,7 +384,7 @@ ITableControl<T> UseDefaultHistory()
 ```
 
 Sets the initial cursor to the most recent history entry, clearing any value set by [`Default`](#default).
-Has no effect unless [`EnabledHistory`](#enabledhistory) is set.
+Has no effect unless [`EnableHistory`](#enablehistory) is set.
 
 ---
 
@@ -483,15 +483,15 @@ PromptPlus.Controls.Table<Product>("Product catalogue (view only)", "Press Esc o
 
 ## History
 
-### `EnabledHistory`
+### `EnableHistory`
 
 ```csharp
-ITableControl<T> EnabledHistory(string filename, Action<IHistoryOptions>? options = null)
+ITableControl<T> EnableHistory(string filename, Action<IHistoryOptions>? options = null)
 ```
 
 Persists confirmed selections to `filename` and can pre-select the last one (via [`Default`](#default) or
 [`UseDefaultHistory`](#usedefaulthistory)). The `IHistoryOptions` builder is identical to the one
-documented for [Input → EnabledHistory](../input/methods.md#enabledhistory) (`MinPrefixLength`, `MaxItems`,
+documented for [Input → EnableHistory](../input/methods.md#enablehistory) (`MinPrefixLength`, `MaxItems`,
 `ExpirationTime`, `FilterType`, `PageSize`).
 
 ```csharp
@@ -500,7 +500,7 @@ PromptPlus.Controls.Table<Product>("Product")
     .AddColumn("Name", x => x.Name)
     .AddItems(products)
     .DefaultMatchBy((a, b) => a.Id == b.Id)
-    .EnabledHistory("table-product-history")
+    .EnableHistory("table-product-history")
     .UseDefaultHistory()
     .Run();
 ```
