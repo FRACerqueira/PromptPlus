@@ -592,10 +592,6 @@ namespace PromptPlusLibrary.Controls.Common
                         && (console.Width != _lastRenderWidth || console.Height != _lastRenderHeight))
                     {
                         RealignFrameAfterResize();
-                        // The old footprint was erased on screen; reset the buffer so the finish
-                        // render repaints every line fresh instead of diffing against content we
-                        // just cleared.
-                        _bufferScreen.Reset();
                     }
                     else if (IsLiveAutoRenderControl)
                     {
@@ -613,6 +609,15 @@ namespace PromptPlusLibrary.Controls.Common
                         console.WriteRaw("", console.CurrentStyle, true);
                     }
                     console.SetCursorPosition(_screenPosition.StartLeft, _screenPosition.StartTop);
+                    // The raw clear above just wiped the screen (regardless of whether a resize
+                    // happened), but did not touch _bufferScreen's own diff-tracking state. Reset
+                    // it so RenderBuffer's diff treats every row as changed and repaints it —
+                    // otherwise, if FinishTemplate's content for a row happens to be IDENTICAL to
+                    // whatever the last BufferTemplate render captured there (e.g. a Live control
+                    // whose background handler already reached its final value before the very
+                    // first render), the diff sees "no change" and skips repainting a row we just
+                    // blanked, leaving it visibly empty despite correct internal state.
+                    _bufferScreen.Reset();
                     if (FinishTemplate(_bufferScreen))
                     {
                         RenderBuffer(_bufferScreen);

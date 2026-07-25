@@ -183,11 +183,7 @@ namespace PromptPlus.Tests.Controls
                 .UpdateHandler((e, ct) => e.Update(10));
 
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-            var sw = System.Diagnostics.Stopwatch.StartNew();
-            var result = control.Run(cts.Token);
-            sw.Stop();
-            // TEMP DIAGNOSTIC — remove before commit.
-            Console.Error.WriteLine($"[DIAG] elapsed={sw.ElapsedMilliseconds}ms IsAborted={result.IsAborted} FinishedValue={result.Content.FinishedValue} FinishedText={result.Content.FinishedText} Exception={result.Content.ExceptionProgress} snapshot=[{vt.Snapshot().Replace("\n", "|")}]");
+            _ = control.Run(cts.Token);
 
             _ = vt.TextAt(1, 0, 27).Should().Be("0 |####################| 10");
         }
