@@ -20,7 +20,7 @@
 - **6 output-only widgets** — render sliders, calendars, banners, charts and more without blocking
 - **Fluent API** — every control is configured with readable method chains
 - **Two-layer config** — set defaults once with `PromptPlus.Config`, override per control with `.Options()`
-- **Abort anywhere** — Esc (or your chosen key) aborts any control; result carries an `IsAborted` flag
+- **Abort anywhere** — Esc aborts any control; result carries an `IsAborted` flag
 - **History persistence** — last confirmed value saved and pre-loaded automatically
 - **Terminal-safe** — auto-detects size, re-renders on resize, enforces 80×10 minimum gracefully
 - **Cross-platform** — Windows, Linux, macOS; .NET 8, 9 and 10
@@ -204,7 +204,7 @@ the fluent widgets (`Slider`, `Calendar`, `Switch`, `ChartBar`) render when you 
 
 ## ConsolePlus Integration
 
-`PromptPlus.Console` exposes the same `IConsole` driver as `ConsolePlus.Driver`. Use it to write styled text, manage cursor, and compose output alongside your controls:
+`PromptPlus.Console` exposes the same `IConsole` driver as `ConsolePlus`. Use it to write styled text, manage cursor, and compose output alongside your controls:
 
 ```csharp
 using ConsolePlusLibrary;
@@ -212,7 +212,7 @@ using PromptPlusLibrary;
 
 // These two are the same object:
 PromptPlus.Console.WriteLine("Hello, [bold]world[/]!");
-ConsolePlus.Driver.WriteLine("Hello, [bold]world[/]!");
+ConsolePlus.WriteLine("Hello, [bold]world[/]!");
 ```
 
 ---
