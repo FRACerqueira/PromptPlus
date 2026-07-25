@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Abort" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="CanceledKey" xml:space="preserve">
+    <value>Cancelado</value>
+  </data>
+  <data name="Emac_alt_b" xml:space="preserve">
+    <value>Alt+B:Mueve el cursor una palabra hacia atrás</value>
+  </data>
+  <data name="Emac_alt_c" xml:space="preserve">
+    <value>Alt+C:Escribe en mayúscula el carácter bajo el cursor y se mueve al final de la palabra</value>
+  </data>
+  <data name="Emac_alt_d" xml:space="preserve">
+    <value>Alt+D:Borra la palabra después del cursor</value>
+  </data>
+  <data name="Emac_alt_f" xml:space="preserve">
+    <value>Alt+F:Mueve el cursor una palabra hacia adelante</value>
+  </data>
+  <data name="Emac_alt_l" xml:space="preserve">
+    <value>Alt+L:Minúsculas desde el cursor hasta el final de la palabra</value>
+  </data>
+  <data name="Emac_alt_u" xml:space="preserve">
+    <value>Alt+U:Mayúsculas desde el cursor hasta el final de la palabra.</value>
+  </data>
+  <data name="Emac_ctrl_a" xml:space="preserve">
+    <value>Ctrl+A:Mueve el cursor al inicio de la línea (equivalente a la tecla Inicio)</value>
+  </data>
+  <data name="Emac_ctrl_b" xml:space="preserve">
+    <value>Ctrl+B:Mueve el cursor un carácter hacia atrás (equivalente a la tecla de flecha izquierda)</value>
+  </data>
+  <data name="Emac_ctrl_d" xml:space="preserve">
+    <value>Ctrl+D:Elimina el carácter actual (equivalente a la tecla Supr)</value>
+  </data>
+  <data name="Emac_ctrl_e" xml:space="preserve">
+    <value>Ctrl+E:Mueve el cursor al final de la línea (equivalente a la tecla Fin)</value>
+  </data>
+  <data name="Emac_ctrl_f" xml:space="preserve">
+    <value>Ctrl+F:Mueve el cursor un carácter hacia adelante (equivalente a la tecla de flecha derecha)</value>
+  </data>
+  <data name="Emac_ctrl_h" xml:space="preserve">
+    <value>Ctrl+H:Elimina el carácter anterior (equivalente a la tecla Retroceso)</value>
+  </data>
+  <data name="Emac_ctrl_k" xml:space="preserve">
+    <value>Ctrl+K:Borra la línea después del cursor</value>
+  </data>
+  <data name="Emac_ctrl_l" xml:space="preserve">
+    <value>Ctrl+L:Borra todo el contenido</value>
+  </data>
+  <data name="Emac_ctrl_t" xml:space="preserve">
+    <value>Ctrl+T:Transpone los dos caracteres anteriores</value>
+  </data>
+  <data name="Emac_ctrl_u" xml:space="preserve">
+    <value>Ctrl+U:Borra la línea antes del cursor</value>
+  </data>
+  <data name="Emac_ctrl_w" xml:space="preserve">
+    <value>Ctrl+W:Borra la palabra antes del cursor</value>
+  </data>
+  <data name="Emac_Insert" xml:space="preserve">
+    <value>Insert:Alterna el modo de reemplazo de entrada (el modo predeterminado es inserción)</value>
+  </data>
+  <data name="EntryHistory" xml:space="preserve">
+    <value>Historial de entradas</value>
+  </data>
+  <data name="EntrySuggestion" xml:space="preserve">
+    <value>Sugerencias de entrada</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>¡Error!</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtro</value>
+  </data>
+  <data name="HistoryNotFound" xml:space="preserve">
+    <value>Historial vacío para los datos introducidos</value>
+  </data>
+  <data name="InvalidDateSelect" xml:space="preserve">
+    <value>¡Fecha seleccionada no válida!</value>
+  </data>
+  <data name="MoveDays" xml:space="preserve">
+    <value>Izq/Der:Cambiar día</value>
+  </data>
+  <data name="MoveDayWeek" xml:space="preserve">
+    <value>Arriba/Abajo:Cambiar día con el mismo día de la semana</value>
+  </data>
+  <data name="MoveMonth" xml:space="preserve">
+    <value>Tab/Mayús Tab:Cambiar mes</value>
+  </data>
+  <data name="MoveToday" xml:space="preserve">
+    <value>Inicio:Hoy</value>
+  </data>
+  <data name="MoveYear" xml:space="preserve">
+    <value>RePág/AvPág:Cambiar año</value>
+  </data>
+  <data name="MsgErrorPromptPlusConfig" xml:space="preserve">
+    <value>Error al cargar la configuración de PromptPlus.</value>
+  </data>
+  <data name="MsgErrorStyleSchema" xml:space="preserve">
+    <value>StyleSchema no ha sido inicializado.</value>
+  </data>
+  <data name="MultiSelectMaxSelection" xml:space="preserve">
+    <value>Se ha superado la selección máxima de elementos ({0})</value>
+  </data>
+  <data name="MultiSelectMinSelection" xml:space="preserve">
+    <value>Se requiere una selección mínima de {0} elementos</value>
+  </data>
+  <data name="MultiTasksFailed" xml:space="preserve">
+    <value>{0} fallido</value>
+  </data>
+  <data name="MultiTasksSuccessCount" xml:space="preserve">
+    <value>{0} correcto</value>
+  </data>
+  <data name="MultiTasksWaitingCount" xml:space="preserve">
+    <value>{0} pendiente</value>
+  </data>
+  <data name="TooltipToggleFullPath" xml:space="preserve">
+    <value>Alternar ruta completa/nombre</value>
+  </data>
+  <data name="TooltipExpandCollapse" xml:space="preserve">
+    <value>+/-:Expandir/Contraer</value>
+  </data>
+  <data name="TooltipTreeTab" xml:space="preserve">
+    <value>Tab:Siguiente/Expandir Mayús Tab:Anterior/Contraer</value>
+  </data>
+  <data name="NoChar" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="PaginationTemplate" xml:space="preserve">
+    <value>Cant:{0} elementos. {1} de {2} páginas.</value>
+  </data>
+  <data name="PredicateSelectInvalid" xml:space="preserve">
+    <value>El elemento seleccionado no cumple los criterios</value>
+  </data>
+  <data name="PressAnyKey" xml:space="preserve">
+    <value>Pulse cualquier tecla</value>
+  </data>
+  <data name="PressKey" xml:space="preserve">
+    <value>Pulsar tecla</value>
+  </data>
+  <data name="ResizeTerminalWarning" xml:space="preserve">
+    <value>Cambie el tamaño del terminal ({0} alto y {1} ancho). El actual es ({2} y {3})...</value>
+  </data>
+  <data name="SelectionDisabled" xml:space="preserve">
+    <value>Elemento desactivado</value>
+  </data>
+  <data name="ShowingCalendarNotes" xml:space="preserve">
+    <value>Mostrando notas del día {0}</value>
+  </data>
+  <data name="TooltipBase" xml:space="preserve">
+    <value>Consejos</value>
+  </data>
+  <data name="TooltipBaseNavegate" xml:space="preserve">
+    <value>Flechas:Navegar</value>
+  </data>
+  <data name="TooltipCheckAll" xml:space="preserve">
+    <value>Marcar/Desmarcar todos los elementos</value>
+  </data>
+  <data name="TooltipCheckItem" xml:space="preserve">
+    <value>Espacio:Marcar/Desmarcar</value>
+  </data>
+  <data name="TooltipRecursiveMark" xml:space="preserve">
+    <value>Ctrl+Espacio:Marcar/Desmarcar recursivamente</value>
+  </data>
+  <data name="TooltipCountCheck" xml:space="preserve">
+    <value>{0} seleccionado(s).</value>
+  </data>
+  <data name="MultiFileRunningBackground" xml:space="preserve">
+    <value>Esperando tarea</value>
+  </data>
+  <data name="MultiFileOnlySelected" xml:space="preserve">
+    <value>Solo seleccionados</value>
+  </data>
+  <data name="TooltipEnterFinish" xml:space="preserve">
+    <value>Enter:Finalizar</value>
+  </data>
+  <data name="TooltipEnterSelect" xml:space="preserve">
+    <value>Enter:Seleccionar elemento</value>
+  </data>
+  <data name="TooltipChartBarSwitchLayout" xml:space="preserve">
+    <value>{0}:Cambiar diseño</value>
+  </data>
+  <data name="TooltipChartBarSwitchLegend" xml:space="preserve">
+    <value>{0}:Mostrar/Ocultar leyenda</value>
+  </data>
+  <data name="TooltipChartBarSwitchOrder" xml:space="preserve">
+    <value>{0}:Cambiar orden</value>
+  </data>
+  <data name="TooltipFilter" xml:space="preserve">
+    <value>Escriba un carácter para iniciar el filtro</value>
+  </data>
+  <data name="TooltipFilterAllSelected" xml:space="preserve">
+    <value>Mostrar solo marcados</value>
+  </data>
+  <data name="TooltipHistoryClear" xml:space="preserve">
+    <value>Ctrl+Supr:Borrar historial</value>
+  </data>
+  <data name="TooltipHistoryShow" xml:space="preserve">
+    <value>Mostrar/Ocultar historial (Mín. {0} car.)</value>
+  </data>
+  <data name="TooltipJump" xml:space="preserve">
+    <value>Escriba el carácter inicial para saltar al elemento</value>
+  </data>
+  <data name="TooltipNavegateTextPrompt" xml:space="preserve">
+    <value>Izq/Der/Inicio/Fin: Mueve el cursor dentro del prompt</value>
+  </data>
+  <data name="TooltipPages" xml:space="preserve">
+    <value>Arriba/Abajo/RePág/AvPág: Mover selector, Ctrl+Inicio/Fin:Primer/Último elemento</value>
+  </data>
+  <data name="TooltipShowHide" xml:space="preserve">
+    <value>Mostrar/Ocultar información sobre herramientas</value>
+  </data>
+  <data name="TooltipSliderLeftRight" xml:space="preserve">
+    <value>Izq/Der/Tab/MayúsTab:Cambia valor</value>
+  </data>
+  <data name="TooltipSliderUpDown" xml:space="preserve">
+    <value>Arriba/Abajo/Tab/MayúsTab:Cambia valor</value>
+  </data>
+  <data name="TooltipSuggestionShiftTab" xml:space="preserve">
+    <value>MayúsTab:Cancelar sugerencia</value>
+  </data>
+  <data name="TooltipSuggestionTab" xml:space="preserve">
+    <value>Tab:Mostrar sugerencia, otra vez Aceptar (Mín. {0} car.)</value>
+  </data>
+  <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
+    <value>Tab/MayúsTab:Sugerencias (Mín. {0} car.)</value>
+  </data>
+  <data name="TooltipSwitch" xml:space="preserve">
+    <value>Izq/Der (o Espacio):Alternar</value>
+  </data>
+  <data name="TooltipToggleNotes" xml:space="preserve">
+    <value>Ver/Ocultar notas</value>
+  </data>
+  <data name="TooltipViewPassword" xml:space="preserve">
+    <value>Mostrar/ocultar contraseña</value>
+  </data>
+  <data name="YesChar" xml:space="preserve">
+    <value>S</value>
+  </data>
+  <data name="Space" xml:space="preserve">
+    <value>Espacio</value>
+  </data>
+  <data name="InputFinishEnter" xml:space="preserve">
+    <value>Enter:Finalizar</value>
+  </data>
+  <data name="MaskeditInputPending" xml:space="preserve">
+    <value>Hay entradas sin informar.</value>
+  </data>
+  <data name="MaskEditInvalidInput" xml:space="preserve">
+    <value>Entradas con valores no válidos</value>
+  </data>
+  <data name="MaskEditPosAnyChar" xml:space="preserve">
+    <value>Cualquier carácter (A-Z,a-z,0-9)</value>
+  </data>
+  <data name="MaskEditPosConstant" xml:space="preserve">
+    <value>Constante ({0})</value>
+  </data>
+  <data name="MaskEditPosCurrencySymbol" xml:space="preserve">
+    <value>Símbolo de moneda</value>
+  </data>
+  <data name="MaskEditPosCustom" xml:space="preserve">
+    <value>{0}{1}Solo({2})</value>
+  </data>
+  <data name="MaskEditPosDateSep" xml:space="preserve">
+    <value>Separador de fecha</value>
+  </data>
+  <data name="MaskEditPosDay" xml:space="preserve">
+    <value>Día (0-9)</value>
+  </data>
+  <data name="MaskEditPosDecSep" xml:space="preserve">
+    <value>Separador decimal</value>
+  </data>
+  <data name="MaskEditPosGrpSep" xml:space="preserve">
+    <value>Separador de grupo</value>
+  </data>
+  <data name="MaskEditPosHour" xml:space="preserve">
+    <value>Hora (0-9)</value>
+  </data>
+  <data name="MaskEditPosLetter" xml:space="preserve">
+    <value>Letra (A-Z,a-z)</value>
+  </data>
+  <data name="MaskEditPosLetterLower" xml:space="preserve">
+    <value>Letra (a-z)</value>
+  </data>
+  <data name="MaskEditPosLetterUpper" xml:space="preserve">
+    <value>Letra (A-Z)</value>
+  </data>
+  <data name="MaskEditPosMinute" xml:space="preserve">
+    <value>Minuto (0-9)</value>
+  </data>
+  <data name="MaskEditPosMonth" xml:space="preserve">
+    <value>Mes (0-9)</value>
+  </data>
+  <data name="MaskEditPosNumeric" xml:space="preserve">
+    <value>Numérico (0-9)</value>
+  </data>
+  <data name="MaskEditPosSecond" xml:space="preserve">
+    <value>Segundo (0-9)</value>
+  </data>
+  <data name="MaskEditPosSing" xml:space="preserve">
+    <value>Signo +-</value>
+  </data>
+  <data name="MaskEditPosSpace" xml:space="preserve">
+    <value>Espacio</value>
+  </data>
+  <data name="MaskEditPosTimeSep" xml:space="preserve">
+    <value>Separador de hora</value>
+  </data>
+  <data name="MaskEditPosYear" xml:space="preserve">
+    <value>Año (0-9)</value>
+  </data>
+  <data name="TooltipCancelEsc" xml:space="preserve">
+    <value>{0}:Cancelar</value>
+  </data>
+  <data name="TooltipToggle" xml:space="preserve">
+    <value>{0}:Alternar información sobre herramientas</value>
+  </data>
+  <data name="TooltipJumpdelimiter" xml:space="preserve">
+    <value>Tab/MayúsTab:Salta entre delimitadores </value>
+  </data>
+  <data name="TooltipTableColumnNav" xml:space="preserve">
+    <value>Tab/MayúsTab:Navegar columnas</value>
+  </data>
+  <data name="TooltipTableJump" xml:space="preserve">
+    <value>Escriba el carácter inicial para saltar (columnas filtrables)</value>
+  </data>
+  <data name="Col_Info" xml:space="preserve">
+    <value>Col</value>
+  </data>
+</root>

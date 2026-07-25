@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
+    <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <TestTfmsInParallel>false</TestTfmsInParallel>
+    <Configurations>Debug;Release;ReleaseDoc</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Driver is a per-repo copy, not shared across repos — see docs/testing-driver-maintenance.md -->
+    <Compile Include="..\_driver-src\**\*.cs" LinkBase="Driver" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+      Debug config: PromptPlus/src references ConsolePlus/src via ProjectReference (see D6, TEST-PLAN.md
+      section 12) so the linked driver above gets the LOCAL ConsolePlus build — the one that grants us
+      InternalsVisibleTo — instead of the published ConsolePlus.net NuGet package.
+    -->
+    <ProjectReference Include="..\..\src\PromptPlus.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
+    <PackageReference Include="Verify.XunitV3" Version="31.27.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="*" />
+    <PackageReference Include="FluentAssertions" Version="*" />
+    <PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="*" />
+    <PackageReference Include="xunit.v3" Version="3.2.2" />
+  </ItemGroup>
+</Project>

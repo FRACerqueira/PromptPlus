@@ -1,0 +1,185 @@
+using ConsolePlusLibrary.Testing;
+using FluentAssertions;
+using PromptPlusLibrary;
+using PromptPlusLibrary.Controls.History;
+using PromptPlusLibrary.Core;
+using System;
+using System.IO.Abstractions;
+using System.IO.Abstractions.TestingHelpers;
+using System.Threading;
+using Xunit;
+
+namespace PromptPlus.Tests.Controls
+{
+    // FileHistory.FileSystem is a static field shared by the whole test assembly. xUnit runs
+    // different test CLASSES in parallel by default, so any two classes that swap this same static
+    // (this one and Unit.FileHistoryTests) must be forced into the same collection to run
+    // sequentially relative to each other — otherwise one class's constructor/Dispose swap races
+    // the other's mid-test. See the [Collection] usage below and on FileHistoryTests.
+    [CollectionDefinition(Name, DisableParallelization = true)]
+    public class FileHistoryCollection
+    {
+        public const string Name = "FileHistory global state";
+    }
+
+    // Camada 2 (render + estado via VirtualTerminal) — piloto Fase 1, controle Input, modo `History`
+    // (F3, ver ConfigPrompt.HotKeyInputHistoryView). Globais e modo `Input` básico estão em
+    // InputControlTests.cs; modo `Sugestions` está em InputControlSuggestionsModeTests.cs.
+    //
+    // FileHistory.FileSystem é trocado por um MockFileSystem por teste (mesmo padrão de
+    // FileHistoryTests.cs), pra nunca tocar o perfil real do usuário e ser determinístico em
+    // Windows/Linux. InitControl (chamado dentro de Run()) é quem lê o histórico do disco, então
+    // basta trocar o FileSystem e popular o arquivo ANTES de chamar Run().
+    [Collection(FileHistoryCollection.Name)]
+    public class InputControlHistoryModeTests : IDisposable
+    {
+        private const string HistoryFile = "input-history-tests";
+        private readonly IFileSystem _original = FileHistory.FileSystem;
+        private readonly MockFileSystem _mock = new();
+
+        public InputControlHistoryModeTests() => FileHistory.FileSystem = _mock;
+        public void Dispose() => FileHistory.FileSystem = _original;
+
+        private static VirtualTerminal MakeTerminal() => VirtualTerminal.Create(o => { o.SupportsUnicode = false; });
+
+        // FileHistory.LoadHistory re-sorts by TimeOutTicks descending (FileHistory.cs:55-57) — it
+        // does NOT preserve the order items are saved in. Each value here needs an explicitly
+        // distinct expiration so "newest" is unambiguous regardless of how many ticks elapse
+        // between the CreateItemHistory calls (same-day timeouts raced and picked the wrong winner).
+        private static void SeedHistory(params string[] valuesNewestFirst)
+        {
+            var items = new ItemHistory[valuesNewestFirst.Length];
+            for (int i = 0; i < valuesNewestFirst.Length; i++)
+            {
+                items[i] = ItemHistory.CreateItemHistory(valuesNewestFirst[i], TimeSpan.FromDays(valuesNewestFirst.Length - i));
+            }
+            FileHistory.SaveHistory(HistoryFile, items);
+        }
+
+        private static IInputControl MakeInputWithHistory(VirtualTerminal vt)
+            => new PromptPlusControls(vt, new PromptConfig()).Input("Name").EnabledHistory(HistoryFile);
+
+        // These three confirm with a real Enter rather than letting the safety-net timeout end the
+        // run: InputControl.TryResult's cancel branch explicitly restores the pre-history text and
+        // ModeView.Input the moment a run ends while NOT in Input mode (mirrors Escape's own
+        // restore, see the Escape test below) — so a "no more keys, wait for cancellation" snapshot
+        // can never observe History-mode state, unlike Select's Filter mode (which does NOT revert
+        // on cancel). Enter is the only way to observe what History mode actually loaded.
+
+        [Fact]
+        public void F3_opens_history_and_loads_the_most_recent_item()
+        {
+            SeedHistory("second", "first");
+            var vt = MakeTerminal();
+            var control = MakeInputWithHistory(vt);
+            _ = vt.Keys.Enqueue(ConsoleKey.F3).Enqueue(ConsoleKey.Enter);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var result = control.Run(cts.Token);
+
+            _ = result.Content.Should().Be("second");
+        }
+
+        [Fact]
+        public void DownArrow_in_history_mode_cycles_to_the_next_item()
+        {
+            SeedHistory("second", "first");
+            var vt = MakeTerminal();
+            var control = MakeInputWithHistory(vt);
+            _ = vt.Keys.Enqueue(ConsoleKey.F3).Enqueue(ConsoleKey.DownArrow).Enqueue(ConsoleKey.Enter);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var result = control.Run(cts.Token);
+
+            _ = result.Content.Should().Be("first");
+        }
+
+        [Fact]
+        public void UpArrow_in_history_mode_wraps_around_to_the_last_item()
+        {
+            SeedHistory("second", "first");
+            var vt = MakeTerminal();
+            var control = MakeInputWithHistory(vt);
+            _ = vt.Keys.Enqueue(ConsoleKey.F3).Enqueue(ConsoleKey.UpArrow).Enqueue(ConsoleKey.Enter);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var result = control.Run(cts.Token);
+
+            _ = result.Content.Should().Be("first");
+        }
+
+        [Fact]
+        public void F3_again_closes_history_and_restores_the_text_that_was_there_before()
+        {
+            SeedHistory("second", "first");
+            var vt = MakeTerminal();
+            var control = MakeInputWithHistory(vt);
+            _ = vt.Keys.Type("draft").Enqueue(ConsoleKey.F3).Enqueue(ConsoleKey.F3);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            _ = control.Run(cts.Token);
+
+            _ = vt.TextAt(0, 0, 11).Should().Be("Name: draft");
+        }
+
+        [Fact]
+        public void Editing_while_in_history_mode_exits_back_to_input_mode_keeping_the_edit()
+        {
+            SeedHistory("second", "first");
+            var vt = MakeTerminal();
+            var control = MakeInputWithHistory(vt);
+            _ = vt.Keys.Enqueue(ConsoleKey.F3).Type("!").Enqueue(ConsoleKey.Enter);
+
+            // 3s occasionally wasn't enough only under full-suite parallel load (CPU contention
+            // across ~180 concurrently-running tests) — never flaked running this test alone.
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            var result = control.Run(cts.Token);
+
+            _ = result.Content.Should().Be("second!");
+        }
+
+        [Fact]
+        public void CtrlDelete_clears_the_saved_history_and_exits_history_mode()
+        {
+            SeedHistory("second", "first");
+            var vt = MakeTerminal();
+            var control = MakeInputWithHistory(vt);
+            _ = vt.Keys.Enqueue(ConsoleKey.F3).Enqueue(ConsoleKey.Delete, ctrl: true).Enqueue(ConsoleKey.F3);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(2));
+            _ = control.Run(cts.Token);
+
+            // History was cleared, so the second F3 (which only opens when there IS history) is a
+            // no-op — the control is back in Input mode with nothing typed.
+            _ = vt.TextAt(0, 0, 6).Should().Be("Name: ");
+        }
+
+        [Fact]
+        public void F3_is_ignored_when_there_is_no_history()
+        {
+            var vt = MakeTerminal();
+            var control = MakeInputWithHistory(vt);
+            _ = vt.Keys.Type("Joe").Enqueue(ConsoleKey.F3).Enqueue(ConsoleKey.Enter);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var result = control.Run(cts.Token);
+
+            _ = result.Content.Should().Be("Joe");
+        }
+
+        [Fact]
+        public void Escape_while_in_history_mode_aborts_and_restores_the_text_typed_before_opening_it()
+        {
+            SeedHistory("second", "first");
+            var vt = MakeTerminal();
+            var control = MakeInputWithHistory(vt);
+            _ = vt.Keys.Type("draft").Enqueue(ConsoleKey.F3).Enqueue(ConsoleKey.Escape);
+
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(3));
+            var result = control.Run(cts.Token);
+
+            _ = result.IsAborted.Should().BeTrue();
+            _ = result.Content.Should().Be("draft");
+        }
+    }
+}

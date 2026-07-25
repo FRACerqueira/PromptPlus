@@ -1,2 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Verify snapshot files must always use LF line endings, otherwise the
+# VerifiedLineEndingException is thrown when git checks them out as CRLF on Windows.
+*.verified.txt text eol=lf working-tree-encoding=UTF-8
+*.received.txt text eol=lf working-tree-encoding=UTF-8

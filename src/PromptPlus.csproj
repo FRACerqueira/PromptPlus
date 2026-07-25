@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
@@ -9,73 +8,112 @@
 		<Nullable>enable</Nullable>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<AnalysisLevel>latest-recommended</AnalysisLevel>
+		<Configurations>Debug;Release;ReleaseDoc</Configurations>
 	</PropertyGroup>
-
-	<PropertyGroup>
-		<Authors>Fernando Cerqueira</Authors>
-		<Description>Interactive command-line toolkit for .NET Core with powerful controls and commands to create professional console applications.</Description>
-		<PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
-		<PackageTags>cli;console;chart;terminal;csharp;command;command-line;dotnet;prompt;table;tableview;readline;treeview;grid;autocomplete;maskedit;</PackageTags>
-		<RepositoryUrl>https://github.com/FRACerqueira/PromptPlus</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageId>PromptPlus</PackageId>
-		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageProjectUrl>https://github.com/FRACerqueira/PromptPlus</PackageProjectUrl>
-		<Version>5.0.8</Version>
-		<PackageIcon>icon.png</PackageIcon>
-		<Copyright>© 2025 - Fernando Cerqueira</Copyright>
-		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-		<Title>PromptPlus</Title>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<IncludeSymbols>True</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-		<PlatformTarget>AnyCPU</PlatformTarget>
-	</PropertyGroup>
-
 	<ItemGroup>
-	  <None Remove="Widgets\Banner\FIGlet\standard.flf" />
+		<Compile Update="Resources\PromptPlusResources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>PromptPlusResources.resx</DependentUpon>
+		</Compile>
 	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Include="Widgets\Banner\FIGlet\standard.flf" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<EmbeddedResource Update="Resources\PromptPlusResources.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>PromptPlusResources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 	</ItemGroup>
-	
+
+	<PropertyGroup>
+		<Authors>Fernando Cerqueira</Authors>
+		<Description>A .NET library that makes it easier to create beautiful, cross platform, console applications with powerful controls and commands to create professional console applications.</Description>
+		<PackageReleaseNotes>https://github.com/FRACerqueira/PromptPlus/releases</PackageReleaseNotes>
+		<PackageTags>cli;console;terminal;csharp;command;command-line;dotnet;prompt;Spectre.Console;Sharprompt</PackageTags>
+		<RepositoryUrl>https://github.com/FRACerqueira/PromptPlus</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageId>PromptPlus</PackageId>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageProjectUrl>https://github.com/FRACerqueira/PromptPlus</PackageProjectUrl>
+		<Version>6.0.0-beta1</Version>
+		<PackageIcon>icon.png</PackageIcon>
+		<Copyright>© 2026 - Fernando Cerqueira</Copyright>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<Title>PromptPlus</Title>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="EastAsianWidthDotNet" Version="1.0.1" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Include="README.txt">
-			<Pack>true</Pack>
-			<PackagePath>README.txt</PackagePath>
-		</Content>
-		<Content Include="NugetREADME.md">
-			<Pack>true</Pack>
+		<None Include="..\NugetREADME.md">
+			<Pack>True</Pack>
 			<PackagePath>README.md</PackagePath>
-		</Content>
-		<Content Include="..\icon.png">
-			<Pack>true</Pack>
-			<PackagePath>\</PackagePath>
-		</Content>
+		</None>
+		<None Include="..\README.md" Link="README.md" />
+		<None Include="..\README.txt">
+			<Pack>True</Pack>
+			<PackagePath>README.txt</PackagePath>
+		</None>
+		<None Include="..\icon.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
 	</ItemGroup>
-	
+	<ItemGroup Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">
+		<PackageReference Include="DefaultDocumentation" Version="1.2.5">
+			<!-- <PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>. -->
+		</PackageReference>
+	</ItemGroup>
 	<ItemGroup>
-	  <Compile Update="Resources\PromptPlusResources.Designer.cs">
-	    <DesignTime>True</DesignTime>
-	    <AutoGen>True</AutoGen>
-	    <DependentUpon>PromptPlusResources.resx</DependentUpon>
-	  </Compile>
+		<!-- Enables FileHistory to be tested against a MockFileSystem instead of the real user profile. -->
+		<PackageReference Include="System.IO.Abstractions" Version="*" />
+		<PackageReference Include="ConsolePlus.net" Version="1.0.0-Beta1" />
 	</ItemGroup>
-	
-	<ItemGroup>
-	  <None Include="C:\Sources\PromptPlus\src\.editorconfig" />
-	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">
+		<DefaultDocumentationFolder>..\docs\api</DefaultDocumentationFolder>
+		<DefaultDocumentationGeneratedPages>Assembly, Namespaces , Classes, Interfaces, Events, Enums, Structs, Delegates</DefaultDocumentationGeneratedPages>
+		<DefaultDocumentationFileNameFactory>NameAndMd5Mix</DefaultDocumentationFileNameFactory>
+		<DefaultDocumentationGeneratedAccessModifiers>Public</DefaultDocumentationGeneratedAccessModifiers>
+		<DefaultDocumentationAssemblyPageName>PromptPlus</DefaultDocumentationAssemblyPageName>
+		<DocIconUrl>https://raw.githubusercontent.com/FRACerqueira/PromptPlus/main/icon.png</DocIconUrl>
+		<DocIconWidth>120</DocIconWidth>
+	</PropertyGroup>
+
+	<UsingTask TaskName="PrependDocIconHeader" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+		<ParameterGroup>
+			<DocsFolder Required="true" />
+			<IconUrl Required="true" />
+			<IconWidth />
+		</ParameterGroup>
+		<Task>
+			<Code Type="Fragment" Language="cs">
+				<![CDATA[
+					if (Directory.Exists(DocsFolder))
+					{
+						string width = string.IsNullOrEmpty(IconWidth) ? "120" : IconWidth;
+						string header = "<img src=\"" + IconUrl + "\" width=\"" + width + "\" alt=\"PromptPlus\" />";
+						foreach (string file in Directory.GetFiles(DocsFolder, "*.md"))
+						{
+							string content = File.ReadAllText(file);
+							if (content.StartsWith(header, StringComparison.Ordinal))
+							{
+								continue;
+							}
+							File.WriteAllText(file, header + Environment.NewLine + Environment.NewLine + content);
+						}
+					}
+				]]>
+			</Code>
+		</Task>
+	</UsingTask>
+	<Target Name="AddDocIconHeader" AfterTargets="DefaultDocumentation" Condition="'$(Configuration)' == 'ReleaseDoc' and '$(TargetFramework)' == 'net10.0'">
+		<PropertyGroup>
+			<_DocIconFolder>$([System.IO.Path]::GetFullPath($([System.IO.Path]::Combine('$(MSBuildProjectDirectory)', '$(DefaultDocumentationFolder)'))))</_DocIconFolder>
+		</PropertyGroup>
+		<PrependDocIconHeader DocsFolder="$(_DocIconFolder)" IconUrl="$(DocIconUrl)" IconWidth="$(DocIconWidth)" />
+		<Message Importance="high" Text="DefaultDocumentation: added icon header to markdown pages in $(_DocIconFolder)" />
+	</Target>
 </Project>

@@ -1,4 +1,4 @@
-﻿// ***************************************************************************************
+// ***************************************************************************************
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
@@ -28,15 +28,32 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         private readonly int _firstInputPosition;
         private readonly int _lastInputPosition;
 
-        private static bool IsNumeric => typeof(T) == typeof(int) || typeof(T) == typeof(long) || typeof(T) == typeof(double) || typeof(T) == typeof(decimal);
-
-        private static bool IsDateTime => typeof(T) == typeof(DateOnly) || typeof(T) == typeof(DateTime) || typeof(T) == typeof(TimeOnly);
+        // Type dispatch is fixed per closed generic; resolve once for the per-keystroke hot path.
+        private static readonly bool s_isString = typeof(T) == typeof(string);
+        private static readonly bool IsNumeric = typeof(T) == typeof(int) || typeof(T) == typeof(long) || typeof(T) == typeof(double) || typeof(T) == typeof(decimal);
+        private static readonly bool IsDateTime = typeof(T) == typeof(DateOnly) || typeof(T) == typeof(DateTime) || typeof(T) == typeof(TimeOnly);
+        private static readonly bool s_isDateTimeOrDateOnly = typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateOnly);
+        private static readonly bool s_isIntegerNumber = typeof(T) == typeof(int) || typeof(T) == typeof(long);
+        private static readonly bool s_isDecimalNumber = typeof(T) == typeof(double) || typeof(T) == typeof(decimal);
 
         public int MaxLength => _charElements.Count - 1;
 
         public int CursorPosition { get; private set; }
 
-        public string MaskOut => string.Join("", _charElements.Select(x => x.Value.Outputchar));
+        public string MaskOut
+        {
+            get
+            {
+                int count = _charElements.Count;
+                return string.Create(count, _charElements, static (span, elements) =>
+                {
+                    for (int i = 0; i < span.Length; i++)
+                    {
+                        span[i] = elements[i].Outputchar;
+                    }
+                });
+            }
+        }
 
         public string WithoutMask => GetWithoutMask();
 
@@ -44,7 +61,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
         public string WeekTooltip(WeekType weekType, CultureInfo culture)
         {
-            if ((typeof(T) != typeof(DateTime) && typeof(T) != typeof(DateOnly)) || weekType == WeekType.None || HasInputPending)
+            if ((!s_isDateTimeOrDateOnly) || weekType == WeekType.None || HasInputPending)
             {
                 return string.Empty;
             }
@@ -55,7 +72,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 {
                     fmt = "dddd";
                 }
-                return result.ToString(fmt);
+                return result.ToString(fmt, culture);
             }
             return string.Empty;
         }
@@ -65,21 +82,59 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
         public bool IsPositive => _possignal >= 0 && _charElements[_possignal].Outputchar == '+';
 
-        public bool HasInputPending => typeof(T) != typeof(int) && typeof(T) != typeof(long) && typeof(T) != typeof(double) && typeof(T) != typeof(decimal) && _charElements.Any(x => x.Value.Type == ElementType.InputMask && x.Value.Inputchar == MaskElement.Emptyinputchar);
+        public bool HasInputPending => !IsNumeric && _charElements.Any(x => x.Value.Type == ElementType.InputMask && x.Value.Inputchar == MaskElement.Emptyinputchar);
 
-        public bool AllInputEmpty => _charElements.Count(x => x.Value.Type == ElementType.InputMask) == _charElements.Count(x => x.Value.Type == ElementType.InputMask && x.Value.Inputchar == MaskElement.Emptyinputchar);
-
-        public static string[] GetEmacsTooltips()
+        public bool AllInputEmpty
         {
+            get
+            {
+                foreach (KeyValuePair<int, MaskElement> item in _charElements)
+                {
+                    if (item.Value.Type == ElementType.InputMask && item.Value.Inputchar != MaskElement.Emptyinputchar)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Emacs shortcut tooltips for the MaskEdit control.
+        /// </summary>
+        /// <param name="enabledEmacs">
+        /// Whether Emacs keybindings are enabled (<c>ConsoleHandler.EnabledEmacs</c>). All of
+        /// these entries describe Ctrl-key bindings gated on that flag in
+        /// <see cref="TryAcceptedReadlineConsoleKey"/> — Ctrl+L (clear) has no other way to
+        /// trigger it, so advertising it while Emacs is disabled would promise a shortcut that
+        /// does nothing.
+        /// </param>
+        /// <remarks>
+        /// This intentionally does NOT reuse <c>BaseControlPrompt.GetEmacsTooltips(bool)</c>.
+        /// The base method describes a free-text line editor (<c>EmacsConsoleBuffer</c>) and
+        /// advertises word-wise / kill-line / transpose / overwrite shortcuts
+        /// (Ctrl+K/T/U/W, Alt+B/C/D/F/L/U, Insert) that do NOT exist here, while its
+        /// read-only list omits Ctrl+L/H/D which DO work here.
+        /// The MaskEdit buffer is a positional mask editor, so it exposes only the exact
+        /// subset of shortcuts implemented by <see cref="TryAcceptedReadlineConsoleKey"/>:
+        /// Ctrl+L (clear), Ctrl+H (backspace), Ctrl+E (end), Ctrl+A (home),
+        /// Ctrl+B (left), Ctrl+F (right), Ctrl+D (delete).
+        /// </remarks>
+        public static string[] GetEmacsTooltips(bool enabledEmacs)
+        {
+            if (!enabledEmacs)
+            {
+                return [];
+            }
             return
             [
-                Messages.EmacCtrlL,
-                Messages.EmacCtrlH,
-                Messages.EmacCtrlE,
-                Messages.EmacCtrlA,
-                Messages.EmacCtrlB,
-                Messages.EmacCtrlF,
-                Messages.EmacCtrlD
+                PromptPlusResources.Emac_ctrl_l,
+                PromptPlusResources.Emac_ctrl_h,
+                PromptPlusResources.Emac_ctrl_e,
+                PromptPlusResources.Emac_ctrl_a,
+                PromptPlusResources.Emac_ctrl_b,
+                PromptPlusResources.Emac_ctrl_f,
+                PromptPlusResources.Emac_ctrl_d
             ];
         }
 
@@ -95,6 +150,17 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             if (_charElements.Any(x => x.Value.Type == ElementType.DecimalSeparator))
             {
                 _decimalposition = _charElements.First(x => x.Value.Type == ElementType.DecimalSeparator).Key;
+            }
+            else if (IsNumeric)
+            {
+                // Every numeric code path below indexes _charElements[_decimalposition] directly
+                // (ToStart, TryAcceptedReadlineConsoleKey, Backspace, Delete, ...) with no bounds
+                // check, so a missing decimal separator would leave CursorPosition at -1 after
+                // construction and throw KeyNotFoundException on the very first keystroke instead
+                // of failing here with a clear message. Unreachable via the public API today —
+                // MaskEditControl<T>.SetNumberFormat always appends a '.' even for integers
+                // (decimalpart=0) — but this guards against that invariant ever changing silently.
+                throw new ArgumentException("A numeric mask must include a decimal separator element.", nameof(elements));
             }
 
             if (IsNumeric)
@@ -134,7 +200,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             ToStart();
         }
 
-        public bool TryAcceptedReadlineConsoleKey(ConsoleKeyInfo keyinfo)
+        public bool TryAcceptedReadlineConsoleKey(ConsoleKeyInfo keyinfo,bool enabledemacks)
         {
 
             //skip keys enter, esc.
@@ -182,7 +248,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         return false;
                     }
                 }
-                if (IsDateTime || typeof(T) == typeof(string))
+                if (IsDateTime || s_isString)
                 {
                     _charElements[CursorPosition].Outputchar = c;
                     _charElements[CursorPosition].Inputchar = c;
@@ -211,7 +277,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         isvalid = JumpNextDelimiter();
                     }
                     break;
-                //jump previus delimiter
+                //jump previous delimiter
                 case ConsoleKey.Tab when keyinfo.Modifiers == ConsoleModifiers.Shift:
                     {
                         isvalid = JumpPreviusDelimiter();
@@ -219,14 +285,14 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     break;
                 //Emacs keyboard shortcut, when when have any text
                 // Clears the content
-                case ConsoleKey.L when keyinfo.Modifiers == ConsoleModifiers.Control:
+                case ConsoleKey.L when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                     {
                         isvalid = Clear();
                     }
                     break;
                 //Emacs keyboard shortcut when when have any text
                 //Deletes the previous character (same as backspace).
-                case ConsoleKey.H when keyinfo.Modifiers == ConsoleModifiers.Control:
+                case ConsoleKey.H when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.Backspace when keyinfo.Modifiers == 0:
                     {
                         isvalid = Backspace();
@@ -234,7 +300,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     break;
                 //Emacs keyboard shortcut when when have any text
                 //(end) moves the cursor to the line end (equivalent to the key End).
-                case ConsoleKey.E when keyinfo.Modifiers == ConsoleModifiers.Control:
+                case ConsoleKey.E when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.End when keyinfo.Modifiers == 0:
                     {
                         isvalid = ToEnd();
@@ -242,7 +308,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     break;
                 //Emacs keyboard shortcut when when have any text
                 //Moves the cursor to the line start (equivalent to the key Home).
-                case ConsoleKey.A when keyinfo.Modifiers == ConsoleModifiers.Control:
+                case ConsoleKey.A when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.Home when keyinfo.Modifiers == 0:
                     {
                         isvalid = ToStart();
@@ -250,7 +316,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     break;
                 //Emacs keyboard shortcut when when have any text
                 //Moves the cursor back one character (equivalent to the key ←).
-                case ConsoleKey.B when keyinfo.Modifiers == ConsoleModifiers.Control:
+                case ConsoleKey.B when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.LeftArrow when keyinfo.Modifiers == 0:
                     {
                         isvalid = Backward();
@@ -258,7 +324,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     break;
                 //Emacs keyboard shortcut when when have any text
                 //Moves the cursor forward one character (equivalent to the key →).
-                case ConsoleKey.F when keyinfo.Modifiers == ConsoleModifiers.Control:
+                case ConsoleKey.F when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.RightArrow when keyinfo.Modifiers == 0:
                     {
                         isvalid = Forward();
@@ -266,7 +332,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     break;
                 //Emacs keyboard shortcut when when have any text
                 //Delete the current character (then equivalent to the key Delete).
-                case ConsoleKey.D when keyinfo.Modifiers == ConsoleModifiers.Control:
+                case ConsoleKey.D when enabledemacks && keyinfo.Modifiers == ConsoleModifiers.Control:
                 case ConsoleKey.Delete when keyinfo.Modifiers == 0:
                     {
                         isvalid = Delete();
@@ -351,7 +417,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 }
                 return true;
             }
-            if (IsDateTime || typeof(T) == typeof(string))
+            if (IsDateTime || s_isString)
             {
                 if (CursorPosition > _charElements.Count - 1)
                 {
@@ -423,7 +489,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 return true;
             }
             int newpos = GetPreviusPos();
-            if (IsDateTime || typeof(T) == typeof(string))
+            if (IsDateTime || s_isString)
             {
                 if (_charElements[newpos].Type == ElementType.InputMask)
                 {
@@ -523,7 +589,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         private bool JumpPreviusDelimiter()
         {
 
-            if (IsNumeric || typeof(T) == typeof(string))
+            if (IsNumeric || s_isString)
             {
                 return false;
             }
@@ -567,7 +633,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         return true;
                     }
                 }
-                else if (typeof(T) == typeof(DateOnly) || typeof(T) == typeof(DateTime) || typeof(T) == typeof(TimeOnly))
+                else if (IsDateTime)
                 {
                     if (_charElements[newpos].Type == ElementType.DateSeparator || _charElements[newpos].Inputchar == ' ' || _charElements[newpos].Type == ElementType.TimeSeparator)
                     {
@@ -611,7 +677,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
         private bool JumpNextDelimiter()
         {
-            if (IsNumeric || typeof(T) == typeof(string))
+            if (IsNumeric || s_isString)
             {
                 return false;
             }
@@ -783,16 +849,28 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
         private string GetWithoutMask()
         {
-            if (typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateOnly) || typeof(T) == typeof(TimeOnly))
+            if (IsDateTime)
             {
                 return HasInputPending ? string.Empty : MaskOut;
             }
-            if (typeof(T) == typeof(int) || typeof(T) == typeof(long))
+            if (s_isIntegerNumber)
             {
                 string aux = string.Join("", _charElements.Where(x => x.Value.Inputchar != MaskElement.Emptyinputchar && (x.Value.Type == ElementType.InputMask || x.Value.Type == ElementType.InputConstant)).OrderBy(x => x.Key).Select(x => x.Value.Outputchar));
-                return aux.Length == 0 ? "0" : aux;
+                if (aux.Length == 0)
+                {
+                    return "0";
+                }
+                if (IsNegative)
+                {
+                    aux = "-" + aux;
+                }
+                else if (IsPositive)
+                {
+                    aux = "+" + aux;
+                }
+                return aux;
             }
-            if (typeof(T) == typeof(double) || typeof(T) == typeof(decimal))
+            if (s_isDecimalNumber)
             {
                 string aux = string.Join("", _charElements.Where(x => x.Value.Inputchar != MaskElement.Emptyinputchar && (x.Value.Type == ElementType.DecimalSeparator || x.Value.Type == ElementType.InputMask || x.Value.Type == ElementType.InputConstant)).OrderBy(x => x.Key).Select(x => x.Value.Outputchar));
                 if (aux.Length == 0 || aux == _charElements[_decimalposition].Outputchar.ToString())

@@ -1,8 +1,10 @@
-﻿// ***************************************************************************************
+// ***************************************************************************************
 // MIT LICENCE
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using ConsolePlusLibrary;
+using PromptPlusLibrary.Controls.Common;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
@@ -11,16 +13,34 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PromptPlusLibrary.Controls.MaskEdit
 {
+    /// <inheritdoc/>
     internal sealed class MaskEditControl<T> : BaseControlPrompt<T>, IMaskEditNumberControl<T>, IMaskEditCurrencyControl<T>, IMaskEditDateTimeControl<T>, IMaskEditStringControl<T>
     {
-        private static bool IsNumeric => typeof(T) == typeof(int) || typeof(T) == typeof(long) || typeof(T) == typeof(double) || typeof(T) == typeof(decimal);
+        // Type dispatch is fixed per closed generic, so resolve it once instead of
+        // repeating typeof(T) comparisons throughout the hot and init paths.
+        private static readonly bool s_isString = typeof(T) == typeof(string);
+        private static readonly bool s_isInt = typeof(T) == typeof(int);
+        private static readonly bool s_isLong = typeof(T) == typeof(long);
+        private static readonly bool s_isDouble = typeof(T) == typeof(double);
+        private static readonly bool s_isDecimal = typeof(T) == typeof(decimal);
+        private static readonly bool s_isNumeric = s_isInt || s_isLong || s_isDouble || s_isDecimal;
+        private static readonly bool s_isDateTime = typeof(T) == typeof(DateTime);
+        private static readonly bool s_isDateOnly = typeof(T) == typeof(DateOnly);
+        private static readonly bool s_isTimeOnly = typeof(T) == typeof(TimeOnly);
+        private static readonly bool s_isIntegerNumber = s_isInt || s_isLong;
+        private static readonly bool s_isDecimalNumber = s_isDouble || s_isDecimal;
+
+        private static readonly CompositeFormat s_MaskEditPosConstantFormat = CompositeFormat.Parse(PromptPlusResources.MaskEditPosConstant);
+        private static readonly CompositeFormat s_MaskEditPosCustomFormat = CompositeFormat.Parse(PromptPlusResources.MaskEditPosCustom);
 
         private CultureInfo _culture;
-        private readonly Dictionary<MaskEditStyles, Style> _optStyles = BaseControlOptions.LoadStyle<MaskEditStyles>();
+        private readonly Dictionary<MaskEditStyles, Style> _optStyles;
         private Func<T, (bool, string?)>? _predicatevalidselect;
+        private Func<T, Task<(bool, string?)>>? _predicatevalidselectAsync;
         private MaskEditBuffer<T>? _inputdata;
         private Optional<T> _defaultValue = Optional<T>.Empty();
         private Optional<T> _defaultIfEmpty = Optional<T>.Empty();
@@ -30,45 +50,185 @@ namespace PromptPlusLibrary.Controls.MaskEdit
         private char _promptmask;
         private InputBehavior _inputBehavior = InputBehavior.EditSkipToInput;
         private WeekType _weekType = WeekType.None;
-        private string _tooltipModeInput = string.Empty;
-        private string[]? _toggerTooptips;
+        private string[] _toggerTooptips = [];
         private int _indexTooptip;
         private bool _iscurrencymask;
         private readonly List<(DateTimePart, int)> _fixedvalues = [];
         private readonly DateTime _now = DateTime.Now;
 
-#pragma warning disable IDE0079
-#pragma warning disable IDE0290 // Use primary constructor
-        public MaskEditControl(IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
+        public MaskEditControl(IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(false, console, promptConfig, baseControlOptions)
         {
-            _culture = ConfigPlus.DefaultCulture;
-            _promptmask = ConfigPlus.PromptMaskEdit;
-
+            _optStyles = OptionsControl.LoadStyle<MaskEditStyles>(console.CurrentStyle);
+            _culture = ConfigPrompt.DefaultCulture;
+            _promptmask = ConfigPrompt.PromptMaskEdit;
         }
-#pragma warning restore IDE0290 // Use primary constructor
-#pragma warning restore IDE0079
 
         #region implement interfaces
 
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.FixedValues(DateTimePart partdetetime, int value)
+        // The four fluent interfaces (Number/Currency/DateTime/String) declare many
+        // methods with identical signatures but different self-return types, forcing
+        // explicit interface implementation. To avoid duplicated bodies, each explicit
+        // member is a thin delegation to a shared private helper below.
+
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.FixedValues(DateTimePart dateTimePart, int value) { SetFixedValue(dateTimePart, value); return this; }
+
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.NumberFormat(byte integerpart, bool withsignal, bool withseparatorgroup)
+        {
+            if (integerpart == 0)
+            {
+                throw new InvalidOperationException("The integer part must be > 0.");
+            }
+            SetNumberFormat(integerpart, 0, withsignal, withseparatorgroup);
+            return this;
+        }
+
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.NumberFormat(byte integerpart, byte decimalpart, bool withsignal, bool withseparatorgroup)
+        {
+            if (decimalpart == 0 && integerpart == 0)
+            {
+                throw new InvalidOperationException("The integer or decimal part must be > 0.");
+            }
+            SetNumberFormat(integerpart, decimalpart, withsignal, withseparatorgroup);
+            return this;
+        }
+
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect) { SetPredicate(validselect); return this; }
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PredicateSelected(Func<T, bool> validselect) { SetPredicate(validselect); return this; }
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect) { SetPredicate(validselect); return this; }
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PredicateSelected(Func<T, bool> validselect) { SetPredicate(validselect); return this; }
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect) { SetPredicate(validselect); return this; }
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PredicateSelected(Func<T, bool> validselect) { SetPredicate(validselect); return this; }
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect) { SetPredicate(validselect); return this; }
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.PredicateSelected(Func<T, bool> validselect) { SetPredicate(validselect); return this; }
+
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect) { SetPredicateAsync(validselect); return this; }
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PredicateSelectedAsync(Func<T, Task<bool>> validselect) { SetPredicateAsync(validselect); return this; }
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect) { SetPredicateAsync(validselect); return this; }
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PredicateSelectedAsync(Func<T, Task<bool>> validselect) { SetPredicateAsync(validselect); return this; }
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect) { SetPredicateAsync(validselect); return this; }
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PredicateSelectedAsync(Func<T, Task<bool>> validselect) { SetPredicateAsync(validselect); return this; }
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.PredicateSelectedAsync(Func<T, Task<(bool, string?)>> validselect) { SetPredicateAsync(validselect); return this; }
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.PredicateSelectedAsync(Func<T, Task<bool>> validselect) { SetPredicateAsync(validselect); return this; }
+
+
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.Culture(CultureInfo culture) { SetCulture(culture); return this; }
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.Culture(CultureInfo culture) { SetCulture(culture); return this; }
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.Culture(CultureInfo culture) { SetCulture(culture); return this; }
+
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.Default(T value) { _defaultValue = Optional<T>.Set(value); return this; }
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.Default(T value) { _defaultValue = Optional<T>.Set(value); return this; }
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.Default(T value) { _defaultValue = Optional<T>.Set(value); return this; }
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.Default(T value) { _defaultValue = Optional<T>.Set(value); return this; }
+
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.DefaultIfEmpty(T value) { _defaultIfEmpty = Optional<T>.Set(value); return this; }
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.DefaultIfEmpty(T value) { _defaultIfEmpty = Optional<T>.Set(value); return this; }
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.DefaultIfEmpty(T value) { _defaultIfEmpty = Optional<T>.Set(value); return this; }
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.DefaultIfEmpty(T value) { _defaultIfEmpty = Optional<T>.Set(value); return this; }
+
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.HideTipInputType(bool value) { _hideTipInputType = value; return this; }
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.HideTipInputType(bool value) { _hideTipInputType = value; return this; }
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.HideTipInputType(bool value) { _hideTipInputType = value; return this; }
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.HideTipInputType(bool value) { _hideTipInputType = value; return this; }
+
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.Mask(string mask, bool returnWithMask) { SetMask(mask, returnWithMask); return this; }
+
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.InputMode(InputBehavior inputBehavior) { _inputBehavior = inputBehavior; return this; }
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.InputMode(InputBehavior inputBehavior) { _inputBehavior = inputBehavior; return this; }
+
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.Options(Action<IControlOptions> options) { InvokeOptions(options); return this; }
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.Options(Action<IControlOptions> options) { InvokeOptions(options); return this; }
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.Options(Action<IControlOptions> options) { InvokeOptions(options); return this; }
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.Options(Action<IControlOptions> options) { InvokeOptions(options); return this; }
+
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.PromptMask(char value) { _promptmask = value; return this; }
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PromptMask(char value) { _promptmask = value; return this; }
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PromptMask(char value) { _promptmask = value; return this; }
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PromptMask(char value) { _promptmask = value; return this; }
+
+        IMaskEditStringControl<T> IMaskEditStringControl<T>.Styles(MaskEditStyles styleType, Style style) { _optStyles[styleType] = style; return this; }
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.Styles(MaskEditStyles styleType, Style style) { _optStyles[styleType] = style; return this; }
+        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.Styles(MaskEditStyles styleType, Style style) { _optStyles[styleType] = style; return this; }
+        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.Styles(MaskEditStyles styleType, Style style) { _optStyles[styleType] = style; return this; }
+
+        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.WeekTypeMode(WeekType value) { _weekType = value; return this; }
+
+        #endregion
+
+        #region shared helpers for explicit interface members
+
+        private void SetPredicate(Func<T, (bool, string?)> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = validselect;
+            _predicatevalidselectAsync = null;
+        }
+
+        private void SetPredicateAsync(Func<T, Task<(bool, string?)>> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = null;
+            _predicatevalidselectAsync = validselect;
+        }
+
+        private void SetPredicate(Func<T, bool> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselect = (input) => (validselect(input), (string?)null);
+            _predicatevalidselectAsync = null;
+        }
+
+        private void SetPredicateAsync(Func<T, Task<bool>> validselect)
+        {
+            ArgumentNullException.ThrowIfNull(validselect);
+            _predicatevalidselectAsync = async (input) => ((await validselect(input).ConfigureAwait(false)), (string?)null);
+            _predicatevalidselect = null;
+        }
+
+        private void SetCulture(CultureInfo culture)
+        {
+            ArgumentNullException.ThrowIfNull(culture);
+            if (!culture.Name.ExistsCulture())
+            {
+                throw new CultureNotFoundException(culture.Name);
+            }
+            _culture = culture;
+        }
+
+        private void InvokeOptions(Action<IControlOptions> options)
+        {
+            ArgumentNullException.ThrowIfNull(options);
+            options.Invoke(OptionsControl);
+        }
+
+        private void SetMask(string mask, bool returnWithMask)
+        {
+            _usermask = mask ?? throw new ArgumentNullException(nameof(mask));
+            if (string.IsNullOrWhiteSpace(_usermask))
+            {
+                throw new ArgumentException("Mask can not be empty", nameof(mask));
+            }
+            _returnWithMask = returnWithMask;
+        }
+
+        private void SetFixedValue(DateTimePart dateTimePart, int value)
         {
             if (value < 0 && value != -1)
             {
                 throw new ArgumentOutOfRangeException(nameof(value), "Value must be greater than or equal to -1.");
             }
             // remove previous fixed value if exists    
-            int index = _fixedvalues.FindIndex(f => f.Item1 == partdetetime);
+            int index = _fixedvalues.FindIndex(f => f.Item1 == dateTimePart);
             if (index >= 0)
             {
                 _fixedvalues.RemoveAt(index);
             }
-            switch (partdetetime)
+            switch (dateTimePart)
             {
                 case DateTimePart.Day:
                     {
                         if (_usermask.IndexOf('d', StringComparison.InvariantCultureIgnoreCase) < 0)
                         {
-                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {partdetetime} to be fixed.", nameof(partdetetime));
+                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {dateTimePart} to be fixed.", nameof(dateTimePart));
                         }
                         if (value == -1)
                         {
@@ -88,7 +248,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     {
                         if (_usermask.IndexOf('m', StringComparison.InvariantCultureIgnoreCase) < 0)
                         {
-                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {partdetetime} to be fixed.", nameof(partdetetime));
+                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {dateTimePart} to be fixed.", nameof(dateTimePart));
                         }
                         if (value == -1)
                         {
@@ -108,7 +268,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     {
                         if (_usermask.IndexOf('y', StringComparison.InvariantCultureIgnoreCase) < 0)
                         {
-                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {partdetetime} to be fixed.", nameof(partdetetime));
+                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {dateTimePart} to be fixed.", nameof(dateTimePart));
                         }
                         if (value == -1)
                         {
@@ -132,7 +292,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     {
                         if (_usermask.IndexOf('h', StringComparison.InvariantCultureIgnoreCase) < 0)
                         {
-                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {partdetetime} to be fixed.", nameof(partdetetime));
+                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {dateTimePart} to be fixed.", nameof(dateTimePart));
                         }
                         if (value == -1)
                         {
@@ -152,7 +312,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     {
                         if (_usermask.IndexOf(":m", StringComparison.InvariantCultureIgnoreCase) < 0)
                         {
-                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {partdetetime} to be fixed.", nameof(partdetetime));
+                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {dateTimePart} to be fixed.", nameof(dateTimePart));
                         }
                         if (value == -1)
                         {
@@ -172,7 +332,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     {
                         if (_usermask.IndexOf('s', StringComparison.InvariantCultureIgnoreCase) < 0)
                         {
-                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {partdetetime} to be fixed.", nameof(partdetetime));
+                            throw new ArgumentException($"The mask '{_usermask}' does not contain the part {dateTimePart} to be fixed.", nameof(dateTimePart));
                         }
                         if (value == -1)
                         {
@@ -189,327 +349,8 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     }
                     break;
                 default:
-                    throw new ArgumentException($"The mask '{_usermask}' does not contain the part {partdetetime} to be fixed.", nameof(partdetetime));
+                    throw new ArgumentException($"The mask '{_usermask}' does not contain the part {dateTimePart} to be fixed.", nameof(dateTimePart));
             }
-            return this;
-        }
-
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.NumberFormat(byte integerpart, bool withsignal, bool withseparatorgroup)
-        {
-            if (integerpart == 0)
-            {
-                throw new InvalidOperationException("The integer part must be > 0.");
-            }
-            SetNumberFormat(integerpart, 0, withsignal, withseparatorgroup);
-            return this;
-        }
-
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.NumberFormat(byte integerpart, byte decimalpart, bool withsignal, bool withseparatorgroup)
-        {
-            if (decimalpart == 0 && integerpart == 0)
-            {
-                throw new InvalidOperationException("The integer or decimal part must be > 0.");
-            }
-            SetNumberFormat(integerpart, decimalpart, withsignal, withseparatorgroup);
-            return this;
-        }
-
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
-        {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
-            return this;
-        }
-
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PredicateSelected(Func<T, bool> validselect)
-        {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) =>
-            {
-                bool fn = validselect(input);
-                if (fn)
-                {
-                    return (true, null);
-                }
-                return (false, null);
-            };
-            return this;
-        }
-
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
-        {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
-            return this;
-        }
-
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PredicateSelected(Func<T, bool> validselect)
-        {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) =>
-            {
-                bool fn = validselect(input);
-                if (fn)
-                {
-                    return (true, null);
-                }
-                return (false, null);
-            };
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
-        {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PredicateSelected(Func<T, bool> validselect)
-        {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) =>
-            {
-                bool fn = validselect(input);
-                if (fn)
-                {
-                    return (true, null);
-                }
-                return (false, null);
-            };
-            return this;
-        }
-
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.PredicateSelected(Func<T, (bool, string?)> validselect)
-        {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = validselect;
-            return this;
-        }
-
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.PredicateSelected(Func<T, bool> validselect)
-        {
-            ArgumentNullException.ThrowIfNull(validselect);
-            _predicatevalidselect = (input) =>
-            {
-                bool fn = validselect(input);
-                if (fn)
-                {
-                    return (true, null);
-                }
-                return (false, null);
-            };
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.Culture(CultureInfo culture)
-        {
-            ArgumentNullException.ThrowIfNull(culture);
-            if (!culture.Name.ExistsCulture())
-            {
-                throw new CultureNotFoundException(culture.Name);
-            }
-            _culture = culture;
-            return this;
-        }
-
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.Culture(CultureInfo culture)
-        {
-            ArgumentNullException.ThrowIfNull(culture);
-            if (!culture.Name.ExistsCulture())
-            {
-                throw new CultureNotFoundException(culture.Name);
-            }
-            _culture = culture;
-            return this;
-        }
-
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.Culture(CultureInfo culture)
-        {
-            ArgumentNullException.ThrowIfNull(culture);
-            if (!culture.Name.ExistsCulture())
-            {
-                throw new CultureNotFoundException(culture.Name);
-            }
-            _culture = culture;
-            return this;
-        }
-
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.Default(T value)
-        {
-            _defaultValue = Optional<T>.Set(value);
-            return this;
-        }
-
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.Default(T value)
-        {
-            _defaultValue = Optional<T>.Set(value);
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.Default(T value)
-        {
-            _defaultValue = Optional<T>.Set(value);
-            return this;
-        }
-
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.Default(T value)
-        {
-            _defaultValue = Optional<T>.Set(value);
-            return this;
-        }
-
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.DefaultIfEmpty(T value)
-        {
-            _defaultIfEmpty = Optional<T>.Set(value);
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.DefaultIfEmpty(T value)
-        {
-            _defaultIfEmpty = Optional<T>.Set(value);
-            return this;
-        }
-
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.DefaultIfEmpty(T value)
-        {
-            _defaultIfEmpty = Optional<T>.Set(value);
-            return this;
-        }
-
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.DefaultIfEmpty(T value)
-        {
-            _defaultIfEmpty = Optional<T>.Set(value);
-            return this;
-        }
-
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.HideTipInputType(bool value)
-        {
-            _hideTipInputType = value;
-            return this;
-        }
-
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.HideTipInputType(bool value)
-        {
-            _hideTipInputType = value;
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.HideTipInputType(bool value)
-        {
-            _hideTipInputType = value;
-            return this;
-        }
-
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.HideTipInputType(bool value)
-        {
-            _hideTipInputType = value;
-            return this;
-        }
-
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.Mask(string mask, bool returnWithMask)
-        {
-            _usermask = mask ?? throw new ArgumentNullException(nameof(mask));
-            if (string.IsNullOrWhiteSpace(_usermask))
-            {
-                throw new ArgumentException("Mask can not be empty", nameof(mask));
-            }
-            _returnWithMask = returnWithMask;
-            return this;
-        }
-
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.InputMode(InputBehavior inputBehavior)
-        {
-            _inputBehavior = inputBehavior;
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.InputMode(InputBehavior inputBehavior)
-        {
-            _inputBehavior = inputBehavior;
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.Options(Action<IControlOptions> options)
-        {
-            ArgumentNullException.ThrowIfNull(options);
-            options.Invoke(GeneralOptions);
-            return this;
-        }
-
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.Options(Action<IControlOptions> options)
-        {
-            ArgumentNullException.ThrowIfNull(options);
-            options.Invoke(GeneralOptions);
-            return this;
-        }
-
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.Options(Action<IControlOptions> options)
-        {
-            ArgumentNullException.ThrowIfNull(options);
-            options.Invoke(GeneralOptions);
-            return this;
-        }
-
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.Options(Action<IControlOptions> options)
-        {
-            ArgumentNullException.ThrowIfNull(options);
-            options.Invoke(GeneralOptions);
-            return this;
-        }
-
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.PromptMask(char value)
-        {
-            _promptmask = value;
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.PromptMask(char value)
-        {
-            _promptmask = value;
-            return this;
-        }
-
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.PromptMask(char value)
-        {
-            _promptmask = value;
-            return this;
-        }
-
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.PromptMask(char value)
-        {
-            _promptmask = value;
-            return this;
-        }
-
-        IMaskEditStringControl<T> IMaskEditStringControl<T>.Styles(MaskEditStyles styleType, Style style)
-        {
-            _optStyles[styleType] = style;
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.Styles(MaskEditStyles styleType, Style style)
-        {
-            _optStyles[styleType] = style;
-            return this;
-        }
-
-        IMaskEditNumberControl<T> IMaskEditNumberControl<T>.Styles(MaskEditStyles styleType, Style style)
-        {
-            _optStyles[styleType] = style;
-            return this;
-        }
-
-        IMaskEditCurrencyControl<T> IMaskEditCurrencyControl<T>.Styles(MaskEditStyles styleType, Style style)
-        {
-            _optStyles[styleType] = style;
-            return this;
-        }
-
-        IMaskEditDateTimeControl<T> IMaskEditDateTimeControl<T>.WeekTypeMode(WeekType value)
-        {
-            _weekType = value;
-            return this;
         }
 
         #endregion
@@ -540,15 +381,15 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 throw new InvalidOperationException("Mask is not defined, use Mask/Numberformat to define it");
             }
             Dictionary<int, MaskElement> maskelments;
-            if (typeof(T) == typeof(string))
+            if (s_isString)
             {
                 maskelments = NormalizeStringMask(_usermask, _promptmask);
             }
             else
             {
-                maskelments = typeof(T) == typeof(DateTime) || typeof(T) == typeof(DateOnly) || typeof(T) == typeof(TimeOnly)
+                maskelments = s_isDateTime || s_isDateOnly || s_isTimeOnly
                     ? NormalizeDateTimeMask(_usermask, _promptmask, _fixedvalues, _culture)
-                    : typeof(T) == typeof(int) || typeof(T) == typeof(long) || typeof(T) == typeof(double) || typeof(T) == typeof(decimal)
+                    : s_isIntegerNumber || s_isDecimalNumber
                     ? NormalizeNumberMask(_usermask, _promptmask, _culture)
                     : throw new InvalidOperationException($"Invalid type {typeof(T)}");
             }
@@ -561,35 +402,40 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             {
                 throw new InvalidOperationException($"Invalid default empty value");
             }
+
             LoadValue(_defaultValue, _returnWithMask, maskelments);
 
-            _tooltipModeInput = GetTooltipModeInput();
-            _toggerTooptips = LoadTooltipToggle();
-
             _inputdata = new MaskEditBuffer<T>(maskelments, _promptmask, _inputBehavior);
+
+            _toggerTooptips = LoadTooltipToggle();
 
         }
 
         public override bool TryResult(CancellationToken cancellationToken)
         {
-            bool oldcursor = ConsolePlus.CursorVisible;
-            ConsolePlus.CursorVisible = true;
+            bool oldcursor = ConsoleHandler.CursorVisible;
+            ConsoleHandler.CursorVisible = true;
             try
             {
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
+                    KeyPressResult press = ReadNextKey(true, cancellationToken);
+                    if (press.IsResize || press.IsCancelled)
+                    {
+                        if (press.IsCancelled)
+                        {
+                            _indexTooptip = 0;
+                            ResultCtrl = new ResultPrompt<T>(default!, true);
+                        }
+                        break;
+                    }
+
+                    ConsoleKeyInfo keyinfo = press.Key;
 
                     #region default Press to Finish and tooltip
 
-                    if (cancellationToken.IsCancellationRequested)
-                    {
-                        _indexTooptip = 0;
-                        ResultCtrl = new ResultPrompt<T>(default!, true);
-                        break;
-                    }
-                    else if (IsAbortKeyPress(keyinfo))
+                    if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
                         ResultCtrl = new ResultPrompt<T>(default!, true);
@@ -605,18 +451,20 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         }
                         if (_inputdata!.HasInputPending)
                         {
-                            SetError(Messages.MaskeditInputPending);
+                            SetError(PromptPlusResources.MaskeditInputPending);
                             break;
                         }
                         string stringreturn = _returnWithMask ? _inputdata!.MaskOut : _inputdata!.WithoutMask;
                         if (TryGetValue(stringreturn, _culture, out T finishedresult))
                         {
-                            (bool ok, string? message) = _predicatevalidselect?.Invoke(finishedresult) ?? (true, null);
+                            (bool ok, string? message) = _predicatevalidselectAsync is not null
+                                ? _predicatevalidselectAsync.Invoke(finishedresult).ConfigureAwait(false).GetAwaiter().GetResult()
+                                : _predicatevalidselect?.Invoke(finishedresult) ?? (true, null);
                             if (!ok)
                             {
                                 if (string.IsNullOrEmpty(message))
                                 {
-                                    SetError(Messages.PredicateSelectInvalid);
+                                    SetError(PromptPlusResources.PredicateSelectInvalid);
                                 }
                                 else
                                 {
@@ -627,7 +475,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                             ResultCtrl = new ResultPrompt<T>(finishedresult, false);
                             break;
                         }
-                        SetError(Messages.MaskEditInvalidInput);
+                        SetError(PromptPlusResources.MaskEditInvalidInput);
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
@@ -647,7 +495,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
                     #endregion
 
-                    else if (_inputdata!.TryAcceptedReadlineConsoleKey(keyinfo))
+                    else if (_inputdata!.TryAcceptedReadlineConsoleKey(keyinfo,ConsoleHandler.EnabledEmacs))
                     {
                         _indexTooptip = 0;
                         break;
@@ -656,24 +504,24 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             }
             finally
             {
-                ConsolePlus.CursorVisible = oldcursor;
+                ConsoleHandler.CursorVisible = oldcursor;
             }
             return ResultCtrl != null;
         }
 
         public override void BufferTemplate(BufferScreen screenBuffer)
         {
-            WritePrompt(screenBuffer);
+            WritePrompt(screenBuffer, _optStyles[MaskEditStyles.Prompt]);
 
             WriteAnswer(screenBuffer);
 
             WriteTipType(screenBuffer);
 
-            WriteError(screenBuffer);
-
             WriteDescription(screenBuffer);
 
             WriteTooltip(screenBuffer);
+
+            WriteError(screenBuffer, _optStyles[MaskEditStyles.Error]);
         }
 
         public override bool FinishTemplate(BufferScreen screenBuffer)
@@ -681,12 +529,9 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             string answer = _inputdata!.MaskOut;
             if (ResultCtrl!.Value.IsAborted)
             {
-                answer = GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty;
+                answer = OptionsControl.ShowMessageAbortKeyValue ? PromptPlusResources.CanceledKey : string.Empty;
             }
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
-            {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[MaskEditStyles.Prompt]);
-            }
+            WritePrompt(screenBuffer, _optStyles[MaskEditStyles .Prompt]);
             screenBuffer.WriteLine(answer, _optStyles[MaskEditStyles.Answer]);
             return true;
         }
@@ -698,6 +543,35 @@ namespace PromptPlusLibrary.Controls.MaskEdit
 
         private void SetNumberFormat(byte integerpart, byte decimalpart, bool withsignal, bool withseparatorgroup)
         {
+            // Validated eagerly here (integerpart/decimalpart are already known at the call
+            // site) instead of waiting for Run() to normalize the mask and re-derive the same
+            // counts via CountNumericMask — fails fast on NumberFormat(...) itself. The
+            // equivalent checks in NormalizeNumberMask stay in place as a defensive backstop.
+            if (s_isInt && integerpart > 10)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {integerpart} digits, max(10).");
+            }
+            if (s_isLong && integerpart > 19)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {integerpart} digits, max(19).");
+            }
+            if (s_isDecimal && integerpart > 28)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {integerpart} digits, max(28).");
+            }
+            if (s_isDecimal && decimalpart > 28)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {decimalpart} decimal digits, max(28).");
+            }
+            if (s_isDouble && integerpart > 15)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {integerpart} digits, max(15).");
+            }
+            if (s_isDouble && decimalpart > 15)
+            {
+                throw new FormatException($"The mask to {typeof(T)} is not allow {decimalpart} decimal digits, max(15).");
+            }
+
             string mask = new('9', integerpart);
             if (withseparatorgroup)
             {
@@ -720,17 +594,9 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             _returnWithMask = false;
         }
 
-        private void WritePrompt(BufferScreen screenBuffer)
-        {
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
-            {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[MaskEditStyles.Prompt]);
-            }
-        }
-
         private void WriteDescription(BufferScreen screenBuffer)
         {
-            string? desc = GeneralOptions.DescriptionValue;
+            string? desc = OptionsControl.DescriptionValue;
             if (!string.IsNullOrEmpty(desc))
             {
                 screenBuffer.WriteLine(desc, _optStyles[MaskEditStyles.Description]);
@@ -747,15 +613,6 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             if (!string.IsNullOrEmpty(desc))
             {
                 screenBuffer.WriteLine(desc, _optStyles[MaskEditStyles.TaggedInfo]);
-            }
-        }
-
-        private void WriteError(BufferScreen screenBuffer)
-        {
-            if (!string.IsNullOrEmpty(ValidateError))
-            {
-                screenBuffer.WriteLine(ValidateError, _optStyles[MaskEditStyles.Error]);
-                ClearError();
             }
         }
 
@@ -779,9 +636,10 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             {
                 styleAnswer = _optStyles[MaskEditStyles.PositiveValue];
             }
-            screenBuffer.Write(_inputdata!.MaskOut[..cursor], styleAnswer);
+            string maskOut = _inputdata!.MaskOut;
+            screenBuffer.Write(maskOut[..cursor], styleAnswer);
             screenBuffer.SavePromptCursor();
-            screenBuffer.Write(_inputdata!.MaskOut[cursor..], styleAnswer);
+            screenBuffer.Write(maskOut[cursor..], styleAnswer);
             string week = _inputdata!.WeekTooltip(_weekType, _culture);
             if (!string.IsNullOrEmpty(week))
             {
@@ -797,13 +655,22 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             {
                 return;
             }
-            string? tooltip = _indexTooptip > 0 ? GetTooltipToggle() : _tooltipModeInput;
-            screenBuffer.Write(tooltip, _optStyles[MaskEditStyles.Tooltips]);
+            string? tooltip = GetTooltipToggle();
+            tooltip = $"{ConfigPrompt.HotKeyTooltip}:{PromptPlusResources.TooltipBase}.{tooltip}";
+            if (!tooltip.EndsWith('.'))
+            {
+                tooltip = $"{tooltip}.";
+            }
+            screenBuffer.WriteLine(tooltip, _optStyles[MaskEditStyles.Tooltips]);
         }
 
         private string GetTooltipToggle()
         {
-            return _toggerTooptips![_indexTooptip - 1];
+            if (_indexTooptip >= _toggerTooptips.Length)
+            {
+                _indexTooptip = 0;
+            }
+            return _toggerTooptips[_indexTooptip];
         }
 
         private static bool TryGetValue(string value, IFormatProvider culture, out T result)
@@ -811,35 +678,35 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             bool isvalid = true;
             try
             {
-                if (typeof(T) == typeof(string))
+                if (s_isString)
                 {
                     result = (T)(object)value;
                 }
-                else if (typeof(T) == typeof(int))
+                else if (s_isInt)
                 {
                     result = (T)(object)int.Parse(value, culture);
                 }
-                else if (typeof(T) == typeof(long))
+                else if (s_isLong)
                 {
                     result = (T)(object)long.Parse(value, culture);
                 }
-                else if (typeof(T) == typeof(double))
+                else if (s_isDouble)
                 {
                     result = (T)(object)double.Parse(value, culture);
                 }
-                else if (typeof(T) == typeof(decimal))
+                else if (s_isDecimal)
                 {
                     result = (T)(object)decimal.Parse(value, culture);
                 }
-                else if (typeof(T) == typeof(DateTime))
+                else if (s_isDateTime)
                 {
                     result = (T)(object)DateTime.Parse(value, culture);
                 }
-                else if (typeof(T) == typeof(DateOnly))
+                else if (s_isDateOnly)
                 {
                     result = (T)(object)DateOnly.Parse(value, culture);
                 }
-                else if (typeof(T) == typeof(TimeOnly))
+                else if (s_isTimeOnly)
                 {
                     result = (T)(object)TimeOnly.Parse(value, culture);
                 }
@@ -857,25 +724,31 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             return isvalid;
         }
 
-        private string GetTooltipModeInput()
+        private static string GetTooltipMain()
         {
             StringBuilder tooltip = new();
-            tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
+            tooltip.Append(PromptPlusResources.TooltipEnterFinish);
+            tooltip.Append('.');
+            if (!(s_isNumeric || s_isString))
+            {
+                tooltip.Append(PromptPlusResources.TooltipJumpdelimiter);
+                tooltip.Append('.');
+            }
             return tooltip.ToString();
         }
 
         private string[] LoadTooltipToggle()
         {
             List<string> lsttooltips =
-            [
-                    $"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {Messages.InputFinishEnter}"
+                [
+                    MaskEditControl<T>.GetTooltipMain()
                 ];
-
-            if (GeneralOptions.EnabledAbortKeyValue)
+            if (OptionsControl.EnabledAbortKeyValue)
             {
-                lsttooltips[0] += $", {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}";
+                lsttooltips.Add($"{ConfigPrompt.HotKeyAbortKeyPress}:{PromptPlusResources.Abort}");
             }
-            lsttooltips.AddRange(MaskEditBuffer<T>.GetEmacsTooltips());
+            lsttooltips.Add($"{ConfigPrompt.HotKeyTooltipShowHide}:{PromptPlusResources.TooltipShowHide}");
+            lsttooltips.AddRange(MaskEditBuffer<T>.GetEmacsTooltips(ConsoleHandler.EnabledEmacs));
             return [.. lsttooltips];
         }
 
@@ -996,7 +869,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     elements[position] = new MaskElement(ElementType.Placeholder, '#', promptchar)
                     {
                         Validchars = " ",
-                        Description = Messages.MaskEditPosSpace,
+                        Description = PromptPlusResources.MaskEditPosSpace,
                         Inputchar = ' ',
                         Outputchar = ' '
                     };
@@ -1009,7 +882,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     elements[position] = new MaskElement(ElementType.DateSeparator, '#', promptchar)
                     {
                         Validchars = "/",
-                        Description = Messages.MaskEditPosDateSep,
+                        Description = PromptPlusResources.MaskEditPosDateSep,
                         Inputchar = '/',
                         Outputchar = '/'
                     };
@@ -1022,7 +895,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     elements[position] = new MaskElement(ElementType.TimeSeparator, '#', promptchar)
                     {
                         Validchars = ":",
-                        Description = Messages.MaskEditPosTimeSep,
+                        Description = PromptPlusResources.MaskEditPosTimeSep,
                         Inputchar = ':',
                         Outputchar = ':'
                     };
@@ -1040,7 +913,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         throw new FormatException($"Unmatched delimiter '{delimStart}'.");
                     }
 
-                    string inner = mask.Substring(i + 2, endDelim - i - 2);
+                    string inner = mask[(i + 2)..endDelim];
                     int qtd = 2;
                     string desc = string.Empty;
                     if (maskHandle == 'd')
@@ -1054,7 +927,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                             throw new FormatException($"value '{inner}' invalid for day.");
                         }
                         inner = inner.PadLeft(2, '0');
-                        desc = Messages.MaskEditPosDay;
+                        desc = PromptPlusResources.MaskEditPosDay;
 
                     }
                     else if (maskHandle == 'm')
@@ -1068,7 +941,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                             throw new FormatException($"value '{inner}' invalid for minute.");
                         }
                         inner = inner.PadLeft(2, '0');
-                        desc = Messages.MaskEditPosMinute;
+                        desc = PromptPlusResources.MaskEditPosMinute;
                     }
                     else if (maskHandle == 'M')
                     {
@@ -1081,7 +954,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                             throw new FormatException($"value '{inner}' invalid for month.");
                         }
                         inner = inner.PadLeft(2, '0');
-                        desc = Messages.MaskEditPosMonth;
+                        desc = PromptPlusResources.MaskEditPosMonth;
                     }
                     else if (maskHandle == 'y')
                     {
@@ -1099,7 +972,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                             inner = "2000";
                         }
                         inner = inner.PadLeft(4, '0');
-                        desc = Messages.MaskEditPosYear;
+                        desc = PromptPlusResources.MaskEditPosYear;
                     }
                     else if (maskHandle == 'h')
                     {
@@ -1112,7 +985,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                             throw new FormatException($"value '{inner}' invalid for hour.");
                         }
                         inner = inner.PadLeft(2, '0');
-                        desc = Messages.MaskEditPosHour;
+                        desc = PromptPlusResources.MaskEditPosHour;
                     }
                     else if (maskHandle == 's')
                     {
@@ -1125,7 +998,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                             throw new FormatException($"value '{inner}' invalid for second.");
                         }
                         inner = inner.PadLeft(2, '0');
-                        desc = Messages.MaskEditPosSecond;
+                        desc = PromptPlusResources.MaskEditPosSecond;
                     }
                     for (int pos = 0; pos < qtd; pos++)
                     {
@@ -1148,28 +1021,28 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     int qtd = 2;
                     if (c == 'd')
                     {
-                        desc = Messages.MaskEditPosDay;
+                        desc = PromptPlusResources.MaskEditPosDay;
                     }
                     else if (c == 'm')
                     {
-                        desc = Messages.MaskEditPosMinute;
+                        desc = PromptPlusResources.MaskEditPosMinute;
                     }
                     else if (c == 'M')
                     {
-                        desc = Messages.MaskEditPosMonth;
+                        desc = PromptPlusResources.MaskEditPosMonth;
                     }
                     else if (c == 'y')
                     {
-                        desc = Messages.MaskEditPosYear;
+                        desc = PromptPlusResources.MaskEditPosYear;
                         qtd = 4;
                     }
                     else if (c == 'h')
                     {
-                        desc = Messages.MaskEditPosHour;
+                        desc = PromptPlusResources.MaskEditPosHour;
                     }
                     else if (c == 's')
                     {
-                        desc = Messages.MaskEditPosSecond;
+                        desc = PromptPlusResources.MaskEditPosSecond;
                     }
                     for (int pos = 0; pos < qtd; pos++)
                     {
@@ -1201,8 +1074,8 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             bool hassign = false;
             char decvalue = culture.NumberFormat.NumberDecimalSeparator[0];
             char grpvalue = culture.NumberFormat.NumberGroupSeparator[0];
-            bool isNumericMask = typeof(T) == typeof(int) || typeof(T) == typeof(long);
-            bool isDecimalMask = typeof(T) == typeof(double) || typeof(T) == typeof(decimal);
+            bool isNumericMask = s_isIntegerNumber;
+            bool isDecimalMask = s_isDecimalNumber;
 
             if (mask.Contains('$'))
             {
@@ -1234,7 +1107,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         elements[position] = new MaskElement(ElementType.CurrencySymbol, '#', promptchar)
                         {
                             Validchars = cursymbol[pos].ToString(),
-                            Description = Messages.MaskEditPosCurrencySymbol,
+                            Description = PromptPlusResources.MaskEditPosCurrencySymbol,
                             Inputchar = cursymbol[pos],
                             Outputchar = cursymbol[pos]
                         };
@@ -1243,7 +1116,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     elements[position] = new MaskElement(ElementType.Placeholder, '#', promptchar)
                     {
                         Validchars = " ",
-                        Description = Messages.MaskEditPosSpace,
+                        Description = PromptPlusResources.MaskEditPosSpace,
                         Inputchar = ' ',
                         Outputchar = ' '
                     };
@@ -1263,7 +1136,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         elements[position] = new MaskElement(ElementType.Placeholder, '#', promptchar)
                         {
                             Validchars = " ",
-                            Description = Messages.MaskEditPosSpace,
+                            Description = PromptPlusResources.MaskEditPosSpace,
                             Inputchar = ' ',
                             Outputchar = ' '
                         };
@@ -1272,7 +1145,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     elements[position] = new MaskElement(ElementType.SignSymbol, '*', promptchar)
                     {
                         Validchars = "+-",
-                        Description = Messages.MaskEditPosSing,
+                        Description = PromptPlusResources.MaskEditPosSing,
                         Inputchar = '+',
                         Outputchar = '+'
                     };
@@ -1282,7 +1155,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         elements[position] = new MaskElement(ElementType.Placeholder, '#', promptchar)
                         {
                             Validchars = " ",
-                            Description = Messages.MaskEditPosSpace,
+                            Description = PromptPlusResources.MaskEditPosSpace,
                             Inputchar = ' ',
                             Outputchar = ' '
                         };
@@ -1301,7 +1174,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     elements[position] = new MaskElement(ElementType.DecimalSeparator, '#', promptchar)
                     {
                         Validchars = decvalue.ToString(),
-                        Description = Messages.MaskEditPosDecSep,
+                        Description = PromptPlusResources.MaskEditPosDecSep,
                         Inputchar = decvalue,
                         Outputchar = decvalue
                     };
@@ -1314,7 +1187,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     elements[position] = new MaskElement(ElementType.GroupSeparator, '#', promptchar)
                     {
                         Validchars = grpvalue.ToString(),
-                        Description = Messages.MaskEditPosGrpSep,
+                        Description = PromptPlusResources.MaskEditPosGrpSep,
                         Inputchar = grpvalue,
                         Outputchar = grpvalue
                     };
@@ -1327,7 +1200,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     elements[position] = new MaskElement(ElementType.InputMask, '9', promptchar)
                     {
                         Validchars = "0123456789",
-                        Description = Messages.MaskEditPosNumeric,
+                        Description = PromptPlusResources.MaskEditPosNumeric,
                         Inputchar = MaskElement.Emptyinputchar,
                         Outputchar = promptchar
                     };
@@ -1346,30 +1219,30 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 {
                     throw new FormatException($"The type {typeof(T)} is not allow decimal.");
                 }
-                if (typeof(T) == typeof(int) && Ammoutint > 10)
+                if (s_isInt && Ammoutint > 10)
                 {
                     throw new FormatException($"The mask to {typeof(T)} is not allow {Ammoutint} digits, max(10).");
                 }
-                if (typeof(T) == typeof(long) && Ammoutint > 19)
+                if (s_isLong && Ammoutint > 19)
                 {
                     throw new FormatException($"The mask to {typeof(T)} is not allow {Ammoutint} digits, max(19).");
                 }
             }
             if (isDecimalMask)
             {
-                if (typeof(T) == typeof(decimal) && Ammoutint > 28)
+                if (s_isDecimal && Ammoutint > 28)
                 {
                     throw new FormatException($"The mask to {typeof(T)} is not allow {Ammoutint} digits, max(28).");
                 }
-                if (typeof(T) == typeof(decimal) && Ammoutdec > 28)
+                if (s_isDecimal && Ammoutdec > 28)
                 {
                     throw new FormatException($"The mask to {typeof(T)} is not allow {Ammoutdec} decimal digits, max(28).");
                 }
-                if (typeof(T) == typeof(double) && Ammoutint > 15)
+                if (s_isDouble && Ammoutint > 15)
                 {
                     throw new FormatException($"The mask to {typeof(T)} is not allow {Ammoutint} digits, max(15).");
                 }
-                if (typeof(T) == typeof(double) && Ammoutdec > 15)
+                if (s_isDouble && Ammoutdec > 15)
                 {
                     throw new FormatException($"The mask to {typeof(T)} is not allow {Ammoutdec} decimal digits, max(15).");
                 }
@@ -1404,7 +1277,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     elements[position] = new MaskElement(ElementType.Placeholder, '#', promptchar)
                     {
                         Validchars = mask[i + 1].ToString(),
-                        Description = string.Format(Messages.MaskEditPosConstant, mask[i + 1]),
+                        Description = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosConstantFormat, mask[i + 1]),
                         Inputchar = mask[i + 1],
                         Outputchar = mask[i + 1]
                     };
@@ -1420,14 +1293,14 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     {
                         throw new FormatException("Unmatched end group delimiter '}'.");
                     }
-                    string groupContent = mask.Substring(i + 1, endGroup - i - 1);
+                    string groupContent = mask[(i + 1)..endGroup];
                     if (string.IsNullOrEmpty(groupContent))
                     {
                         throw new FormatException("Empty mask group.");
                     }
                     // Validate group: only one mask type allowed
                     char groupMaskChar = char.ToUpperInvariant(groupContent[0]);
-                    if ("9LUACX".Contains(groupMaskChar))
+                    if (!"9LUACX".Contains(groupMaskChar))
                     {
                         throw new FormatException($"Mask char '{groupMaskChar}' not valid.");
                     }
@@ -1452,7 +1325,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         {
                             throw new FormatException($"Unmatched delimiter '{delimStart}'.");
                         }
-                        string inner = mask.Substring(afterGroup + 1, endDelim - afterGroup - 1);
+                        string inner = mask[(afterGroup + 1)..endDelim];
                         if (delimStart == '[')
                         {
                             // Repeat custom char value for each element in the group
@@ -1462,32 +1335,32 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                                 string? innerForChar;
                                 if (groupMaskChar == '9')
                                 {
-                                    desc = string.Format(Messages.MaskEditPosCustom, Messages.MaskEditPosNumeric, " ,", inner);
+                                    desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosNumeric, " ,", inner);
                                     innerForChar = CharNumbers;
                                 }
                                 else if (groupMaskChar == 'L')
                                 {
-                                    desc = string.Format(Messages.MaskEditPosCustom, Messages.MaskEditPosLetterLower, " ,", inner);
+                                    desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosLetterLower, " ,", inner);
                                     innerForChar = CharLowerLetters;
                                 }
                                 else if (groupMaskChar == 'U')
                                 {
-                                    desc = string.Format(Messages.MaskEditPosCustom, Messages.MaskEditPosLetterUpper, " ,", inner);
-                                    innerForChar = CharLowerLetters;
+                                    desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosLetterUpper, " ,", inner);
+                                    innerForChar = CharUpperLetters;
                                 }
                                 else if (groupMaskChar == 'A')
                                 {
-                                    desc = string.Format(Messages.MaskEditPosCustom, Messages.MaskEditPosLetter, " ,", inner);
+                                    desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosLetter, " ,", inner);
                                     innerForChar = CharLetters;
                                 }
                                 else if (groupMaskChar == 'C')
                                 {
-                                    desc = string.Format(Messages.MaskEditPosCustom, "", "", inner);
+                                    desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, "", "", inner);
                                     innerForChar = CharAny;
                                 }
                                 else if (groupMaskChar == 'X')
                                 {
-                                    desc = string.Format(Messages.MaskEditPosCustom, "", " ,", inner);
+                                    desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, "", " ,", inner);
                                     innerForChar = CharAny;
                                 }
                                 else
@@ -1556,7 +1429,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                                 elements[position] = new MaskElement(ElementType.InputConstant, groupMaskChar, promptchar)
                                 {
                                     Validchars = inner[k].ToString(),
-                                    Description = string.Format(Messages.MaskEditPosConstant, inner[k]),
+                                    Description = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosConstantFormat, inner[k]),
                                     Inputchar = inner[k],
                                     Outputchar = inner[k]
                                 };
@@ -1583,7 +1456,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         throw new FormatException($"Unmatched delimiter '{delimStart}'.");
                     }
 
-                    string inner = mask.Substring(i + 2, endDelim - i - 2);
+                    string inner = mask[(i + 2)..endDelim];
                     if (delimStart == '[')
                     {
                         if (!"9LUACX".Contains(maskHandle))
@@ -1599,32 +1472,32 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         string? innerForChar;
                         if (maskHandle == '9')
                         {
-                            desc = string.Format(Messages.MaskEditPosCustom, Messages.MaskEditPosNumeric, " ,", inner);
+                            desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosNumeric, " ,", inner);
                             innerForChar = CharNumbers;
                         }
                         else if (maskHandle == 'L')
                         {
-                            desc = string.Format(Messages.MaskEditPosCustom, Messages.MaskEditPosLetterLower, " ,", inner);
+                            desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosLetterLower, " ,", inner);
                             innerForChar = CharLowerLetters;
                         }
                         else if (maskHandle == 'U')
                         {
-                            desc = string.Format(Messages.MaskEditPosCustom, Messages.MaskEditPosLetterUpper, " ,", inner);
-                            innerForChar = CharLowerLetters;
+                            desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosLetterUpper, " ,", inner);
+                            innerForChar = CharUpperLetters;
                         }
                         else if (maskHandle == 'A')
                         {
-                            desc = string.Format(Messages.MaskEditPosCustom, Messages.MaskEditPosLetter, " ,", inner);
+                            desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosLetter, " ,", inner);
                             innerForChar = CharLetters;
                         }
                         else if (maskHandle == 'X')
                         {
-                            desc = string.Format(Messages.MaskEditPosCustom, Messages.MaskEditPosAnyChar, " ,", inner);
+                            desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, PromptPlusResources.MaskEditPosAnyChar, " ,", inner);
                             innerForChar = CharAny;
                         }
                         else if (maskHandle == 'C')
                         {
-                            desc = string.Format(Messages.MaskEditPosCustom, "", "", inner);
+                            desc = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosCustomFormat, "", "", inner);
                             innerForChar = "";
                         }
                         else
@@ -1680,7 +1553,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         elements[position] = new MaskElement(ElementType.InputConstant, '#', promptchar)
                         {
                             Validchars = inner,
-                            Description = string.Format(Messages.MaskEditPosConstant, inner),
+                            Description = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosConstantFormat, inner),
                             Inputchar = inner[0],
                             Outputchar = inner[0]
                         };
@@ -1690,45 +1563,60 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                     continue;
                 }
                 c = char.ToUpperInvariant(mask[i]);
-                string? chardesc;
-                string? charinner;
+                string chardesc = string.Empty;
+                string charinner = string.Empty;
+                var elementype = ElementType.InputMask;
                 if (c == '9')
                 {
-                    chardesc = Messages.MaskEditPosNumeric;
+                    chardesc = PromptPlusResources.MaskEditPosNumeric;
                     charinner = CharNumbers;
                 }
                 else if (c == 'L')
                 {
-                    chardesc = Messages.MaskEditPosLetterLower;
+                    chardesc = PromptPlusResources.MaskEditPosLetterLower;
                     charinner = CharLowerLetters;
                 }
                 else if (c == 'U')
                 {
-                    chardesc = Messages.MaskEditPosLetterUpper;
+                    chardesc = PromptPlusResources.MaskEditPosLetterUpper;
                     charinner = CharUpperLetters;
                 }
                 else if (c == 'A')
                 {
-                    chardesc = Messages.MaskEditPosLetter;
+                    chardesc = PromptPlusResources.MaskEditPosLetter;
                     charinner = CharLetters;
                 }
                 else if (c == 'X')
                 {
-                    chardesc = Messages.MaskEditPosAnyChar;
+                    chardesc = PromptPlusResources.MaskEditPosAnyChar;
                     charinner = CharAny;
                 }
                 else
                 {
-                    throw new FormatException($"mask {c} not valid.");
+                    elementype = ElementType.Placeholder;
+                     //throw new FormatException($"mask {c} not valid.");
+                }
+                if (elementype == ElementType.InputMask)
+                {
+                    elements[position] = new MaskElement(elementype, c, promptchar)
+                    {
+                        Validchars = charinner!,
+                        Description = chardesc!,
+                        Inputchar = MaskElement.Emptyinputchar,
+                        Outputchar = promptchar
+                    };
+                }
+                else
+                {
+                    elements[position] = new MaskElement(elementype, c, promptchar)
+                    {
+                        Validchars = mask[i].ToString(),
+                        Description = string.Format(CultureInfo.InvariantCulture, s_MaskEditPosConstantFormat, mask[i]),
+                        Inputchar = mask[i],
+                        Outputchar = mask[i]
+                    };
                 }
 
-                elements[position] = new MaskElement(ElementType.InputMask, c, promptchar)
-                {
-                    Validchars = charinner!,
-                    Description = chardesc!,
-                    Inputchar = MaskElement.Emptyinputchar,
-                    Outputchar = promptchar
-                };
                 position++;
                 i++;
             }
@@ -1760,7 +1648,15 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             }
             foreach (MaskElement item in charElements.Values)
             {
-                if (item.Type == ElementType.InputMask)
+                if (item.Type == ElementType.Placeholder)
+                {
+                    if (withmask)
+                    {
+                        pos++;
+                    }
+                    continue;
+                }
+                else if (item.Type == ElementType.InputMask)
                 {
                     if (!item.Validchars.Contains(defaultstring[pos]))
                     {
@@ -1782,43 +1678,28 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             return true;
         }
 
-        private static void LoadValue(Optional<T> defaultValue, bool defaultwithmask, Dictionary<int, MaskElement> charElements)
+        private void LoadValue(Optional<T> defaultValue, bool defaultwithmask, Dictionary<int, MaskElement> charElements)
         {
             if (!defaultValue.HasValue)
             {
                 return;
             }
-            bool isNumericMask = typeof(T) == typeof(int) || typeof(T) == typeof(long);
-            bool isDecimalMask = typeof(T) == typeof(double) || typeof(T) == typeof(decimal);
-            bool isGenericMask = typeof(T) == typeof(string);
-            bool isDatetimeMask = typeof(T) == typeof(DateTime);
-            bool isDateOnlyMask = typeof(T) == typeof(DateOnly);
-            bool isTimeOnlyMask = typeof(T) == typeof(TimeOnly);
-
-            if (isNumericMask || isDecimalMask)
+            if (!TrySelectionPredicate(defaultValue.Value!))
             {
-                decimal curvalue = Convert.ToDecimal(defaultValue.Value!);
+                return;
+            }
+            if (s_isIntegerNumber || s_isDecimalNumber)
+            {
+                decimal curvalue = Convert.ToDecimal(defaultValue.Value!, CultureInfo.InvariantCulture);
                 bool isnegative = Math.Sign(curvalue) == -1;
                 (int Ammoutint, int Ammoutdec) = CountNumericMask(charElements);
-                string wholePart = Math.Truncate(curvalue).ToString(new string('0', Ammoutint));
-                string fractionalPart = ((curvalue - Math.Truncate(curvalue)) * (decimal)Math.Pow(10d, Ammoutdec)).ToString(new string('0', Ammoutdec));
-                string aux = fractionalPart.Reverse().ToArray().Aggregate("", (s, c) => s + c);
-                fractionalPart = string.Empty;
-                bool hassignificativevalue = false;
-                foreach (char item in aux)
-                {
-                    if (item == '0' && !hassignificativevalue)
-                    {
-                        continue;
-                    }
-                    hassignificativevalue = true;
-                    fractionalPart += item;
-                }
-                fractionalPart = fractionalPart.Reverse().ToArray().Aggregate("", (s, c) => s + c);
+                string wholePart = Math.Truncate(curvalue).ToString(new string('0', Ammoutint), CultureInfo.InvariantCulture);
+                // Strip trailing zeros from the fractional part (e.g. "1230" -> "123").
+                string fractionalPart = ((curvalue - Math.Truncate(curvalue)) * (decimal)Math.Pow(10d, Ammoutdec)).ToString(new string('0', Ammoutdec), CultureInfo.InvariantCulture).TrimEnd('0');
 
                 string inputvalue = $"{wholePart}{fractionalPart}";
                 int pos = 0;
-                hassignificativevalue = false;
+                bool hassignificativevalue = false;
                 foreach (KeyValuePair<int, MaskElement> item in charElements)
                 {
                     if (pos > inputvalue.Length - 1)
@@ -1857,17 +1738,17 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 }
                 return;
             }
-            else if (isDatetimeMask || isDateOnlyMask || isTimeOnlyMask)
+            else if (s_isDateTime || s_isDateOnly || s_isTimeOnly)
             {
-                DateTime loaddt = isDateOnlyMask
+                DateTime loaddt = s_isDateOnly
                     ? ((DateOnly)(object)defaultValue.Value!).ToDateTime(TimeOnly.MinValue)
-                    : isTimeOnlyMask ? DateOnly.MinValue.ToDateTime((TimeOnly)(object)defaultValue.Value!) : Convert.ToDateTime(defaultValue.Value);
-                string day = loaddt.ToString("dd");
-                string month = loaddt.ToString("MM");
-                string year = loaddt.ToString("yyyy");
-                string hour = loaddt.ToString("HH");
-                string minute = loaddt.ToString("mm");
-                string second = loaddt.ToString("ss");
+                    : s_isTimeOnly ? DateOnly.MinValue.ToDateTime((TimeOnly)(object)defaultValue.Value!) : Convert.ToDateTime(defaultValue.Value, CultureInfo.InvariantCulture);
+                string day = loaddt.ToString("dd", CultureInfo.InvariantCulture);
+                string month = loaddt.ToString("MM", CultureInfo.InvariantCulture);
+                string year = loaddt.ToString("yyyy", CultureInfo.InvariantCulture);
+                string hour = loaddt.ToString("HH", CultureInfo.InvariantCulture);
+                string minute = loaddt.ToString("mm", CultureInfo.InvariantCulture);
+                string second = loaddt.ToString("ss", CultureInfo.InvariantCulture);
                 int countpart = 0;
                 foreach (KeyValuePair<int, MaskElement> item in charElements)
                 {
@@ -1937,7 +1818,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                 }
                 return;
             }
-            else if (isGenericMask)
+            else if (s_isString)
             {
                 int pos = 0;
                 string defaultstring = defaultValue.Value!.ToString()!;
@@ -1960,6 +1841,7 @@ namespace PromptPlusLibrary.Controls.MaskEdit
                         }
                         charElements[pos].Outputchar = item;
                         charElements[pos].Inputchar = item;
+                        pos++;
                     }
                 }
                 return;
@@ -1967,11 +1849,25 @@ namespace PromptPlusLibrary.Controls.MaskEdit
             throw new InvalidOperationException($"Invalid type {typeof(T)}");
         }
 
+        /// <summary>
+        /// Evaluates the optional selection predicate for <paramref name="value"/>, returning
+        /// <c>true</c> when no predicate is configured or when it accepts the value. Used to decide
+        /// whether a default/history value may position the cursor (rejected values are not honored).
+        /// </summary>
+        private bool TrySelectionPredicate(T value)
+        {
+            if (_predicatevalidselect == null && _predicatevalidselectAsync == null)
+            {
+                return true;
+            }
+            (bool ok, _) = _predicatevalidselectAsync != null
+                ? _predicatevalidselectAsync.Invoke(value).ConfigureAwait(false).GetAwaiter().GetResult()
+                : (_predicatevalidselect?.Invoke(value) ?? (true, (string?)null));
+            return ok;
+        }
         private static (int Ammoutint, int Ammoutdec) CountNumericMask(Dictionary<int, MaskElement> charElements)
         {
-            bool isNumericMask = typeof(T) == typeof(int) || typeof(T) == typeof(long);
-            bool isDecimalMask = typeof(T) == typeof(double) || typeof(T) == typeof(decimal);
-            if (!isNumericMask && !isDecimalMask)
+            if (!s_isIntegerNumber && !s_isDecimalNumber)
             {
                 return (0, 0);
             }

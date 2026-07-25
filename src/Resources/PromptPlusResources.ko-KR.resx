@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Abort" xml:space="preserve">
+    <value>중단</value>
+  </data>
+  <data name="CanceledKey" xml:space="preserve">
+    <value>취소됨</value>
+  </data>
+  <data name="Emac_alt_b" xml:space="preserve">
+    <value>Alt+B:커서를 한 단어 뒤로 이동</value>
+  </data>
+  <data name="Emac_alt_c" xml:space="preserve">
+    <value>Alt+C:커서 아래의 문자를 대문자로 변환하고 단어 끝으로 이동</value>
+  </data>
+  <data name="Emac_alt_d" xml:space="preserve">
+    <value>Alt+D:커서 뒤의 단어 삭제</value>
+  </data>
+  <data name="Emac_alt_f" xml:space="preserve">
+    <value>Alt+F:커서를 한 단어 앞으로 이동</value>
+  </data>
+  <data name="Emac_alt_l" xml:space="preserve">
+    <value>Alt+L:커서부터 단어 끝까지 소문자로 변환</value>
+  </data>
+  <data name="Emac_alt_u" xml:space="preserve">
+    <value>Alt+U:커서부터 단어 끝까지 대문자로 변환</value>
+  </data>
+  <data name="Emac_ctrl_a" xml:space="preserve">
+    <value>Ctrl+A:커서를 줄 시작으로 이동(Home 키와 동일)</value>
+  </data>
+  <data name="Emac_ctrl_b" xml:space="preserve">
+    <value>Ctrl+B:커서를 한 문자 뒤로 이동(왼쪽 화살표 키와 동일)</value>
+  </data>
+  <data name="Emac_ctrl_d" xml:space="preserve">
+    <value>Ctrl+D:현재 문자 삭제(Delete 키와 동일)</value>
+  </data>
+  <data name="Emac_ctrl_e" xml:space="preserve">
+    <value>Ctrl+E:커서를 줄 끝으로 이동(End 키와 동일)</value>
+  </data>
+  <data name="Emac_ctrl_f" xml:space="preserve">
+    <value>Ctrl+F:커서를 한 문자 앞으로 이동(오른쪽 화살표 키와 동일)</value>
+  </data>
+  <data name="Emac_ctrl_h" xml:space="preserve">
+    <value>Ctrl+H:이전 문자 삭제(Backspace 키와 동일)</value>
+  </data>
+  <data name="Emac_ctrl_k" xml:space="preserve">
+    <value>Ctrl+K:커서 뒤의 줄 지우기</value>
+  </data>
+  <data name="Emac_ctrl_l" xml:space="preserve">
+    <value>Ctrl+L:모든 내용 지우기</value>
+  </data>
+  <data name="Emac_ctrl_t" xml:space="preserve">
+    <value>Ctrl+T:이전 두 문자 교체</value>
+  </data>
+  <data name="Emac_ctrl_u" xml:space="preserve">
+    <value>Ctrl+U:커서 앞의 줄 지우기</value>
+  </data>
+  <data name="Emac_ctrl_w" xml:space="preserve">
+    <value>Ctrl+W:커서 앞의 단어 지우기</value>
+  </data>
+  <data name="Emac_Insert" xml:space="preserve">
+    <value>Insert:입력 교체 모드 전환(기본값은 삽입 모드)</value>
+  </data>
+  <data name="EntryHistory" xml:space="preserve">
+    <value>입력 기록</value>
+  </data>
+  <data name="EntrySuggestion" xml:space="preserve">
+    <value>입력 제안</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>오류!</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>필터</value>
+  </data>
+  <data name="HistoryNotFound" xml:space="preserve">
+    <value>입력 데이터에 대한 기록이 없습니다</value>
+  </data>
+  <data name="InvalidDateSelect" xml:space="preserve">
+    <value>선택된 날짜가 유효하지 않습니다!</value>
+  </data>
+  <data name="MoveDays" xml:space="preserve">
+    <value>왼쪽/오른쪽:날짜 변경</value>
+  </data>
+  <data name="MoveDayWeek" xml:space="preserve">
+    <value>위/아래:같은 요일로 날짜 변경</value>
+  </data>
+  <data name="MoveMonth" xml:space="preserve">
+    <value>Tab/Shift Tab:월 변경</value>
+  </data>
+  <data name="MoveToday" xml:space="preserve">
+    <value>Home:오늘</value>
+  </data>
+  <data name="MoveYear" xml:space="preserve">
+    <value>PgUp/PgDn:연도 변경</value>
+  </data>
+  <data name="MsgErrorPromptPlusConfig" xml:space="preserve">
+    <value>PromptPlus 구성을 로드하는 중 오류가 발생했습니다.</value>
+  </data>
+  <data name="MsgErrorStyleSchema" xml:space="preserve">
+    <value>StyleSchema가 초기화되지 않았습니다.</value>
+  </data>
+  <data name="MultiSelectMaxSelection" xml:space="preserve">
+    <value>최대 항목 선택 수({0})를 초과했습니다</value>
+  </data>
+  <data name="MultiSelectMinSelection" xml:space="preserve">
+    <value>최소 {0}개 항목 선택이 필요합니다</value>
+  </data>
+  <data name="MultiTasksFailed" xml:space="preserve">
+    <value>{0}개 실패</value>
+  </data>
+  <data name="MultiTasksSuccessCount" xml:space="preserve">
+    <value>{0}개 성공</value>
+  </data>
+  <data name="MultiTasksWaitingCount" xml:space="preserve">
+    <value>{0}개 대기</value>
+  </data>
+  <data name="TooltipToggleFullPath" xml:space="preserve">
+    <value>전체 경로/이름 전환</value>
+  </data>
+  <data name="TooltipExpandCollapse" xml:space="preserve">
+    <value>+/-:확장/축소</value>
+  </data>
+  <data name="TooltipTreeTab" xml:space="preserve">
+    <value>Tab:다음/확장 ShiftTab:이전/축소</value>
+  </data>
+  <data name="NoChar" xml:space="preserve">
+    <value>N</value>
+  </data>
+  <data name="PaginationTemplate" xml:space="preserve">
+    <value>수량:{0}개 항목. {2}페이지 중 {1}페이지.</value>
+  </data>
+  <data name="PredicateSelectInvalid" xml:space="preserve">
+    <value>선택한 항목이 기준을 충족하지 않습니다</value>
+  </data>
+  <data name="PressAnyKey" xml:space="preserve">
+    <value>아무 키나 누르세요</value>
+  </data>
+  <data name="PressKey" xml:space="preserve">
+    <value>키 누르기</value>
+  </data>
+  <data name="ResizeTerminalWarning" xml:space="preserve">
+    <value>터미널 크기를 조정하세요(높이 {0}, 너비 {1}). 현재 크기는 ({2} 및 {3})입니다...</value>
+  </data>
+  <data name="SelectionDisabled" xml:space="preserve">
+    <value>항목 비활성화됨</value>
+  </data>
+  <data name="ShowingCalendarNotes" xml:space="preserve">
+    <value>{0}일 메모 표시 중</value>
+  </data>
+  <data name="TooltipBase" xml:space="preserve">
+    <value>팁</value>
+  </data>
+  <data name="TooltipBaseNavegate" xml:space="preserve">
+    <value>화살표:탐색</value>
+  </data>
+  <data name="TooltipCheckAll" xml:space="preserve">
+    <value>모든 항목 선택/선택 해제</value>
+  </data>
+  <data name="TooltipCheckItem" xml:space="preserve">
+    <value>Space:선택/선택 해제</value>
+  </data>
+  <data name="TooltipRecursiveMark" xml:space="preserve">
+    <value>Ctrl+Space:재귀적으로 선택/선택 해제</value>
+  </data>
+  <data name="TooltipCountCheck" xml:space="preserve">
+    <value>{0}개 선택됨.</value>
+  </data>
+  <data name="MultiFileRunningBackground" xml:space="preserve">
+    <value>작업 대기 중</value>
+  </data>
+  <data name="MultiFileOnlySelected" xml:space="preserve">
+    <value>선택된 항목만</value>
+  </data>
+  <data name="TooltipEnterFinish" xml:space="preserve">
+    <value>Enter:완료</value>
+  </data>
+  <data name="TooltipEnterSelect" xml:space="preserve">
+    <value>Enter:항목 선택</value>
+  </data>
+  <data name="TooltipChartBarSwitchLayout" xml:space="preserve">
+    <value>{0}:레이아웃 전환</value>
+  </data>
+  <data name="TooltipChartBarSwitchLegend" xml:space="preserve">
+    <value>{0}:범례 표시/숨기기</value>
+  </data>
+  <data name="TooltipChartBarSwitchOrder" xml:space="preserve">
+    <value>{0}:순서 변경</value>
+  </data>
+  <data name="TooltipFilter" xml:space="preserve">
+    <value>필터를 시작하려면 문자를 입력하세요</value>
+  </data>
+  <data name="TooltipFilterAllSelected" xml:space="preserve">
+    <value>표시된 항목만 보기</value>
+  </data>
+  <data name="TooltipHistoryClear" xml:space="preserve">
+    <value>Ctrl+Del:기록 지우기</value>
+  </data>
+  <data name="TooltipHistoryShow" xml:space="preserve">
+    <value>기록 표시/숨기기(최소 {0}자)</value>
+  </data>
+  <data name="TooltipJump" xml:space="preserve">
+    <value>항목으로 이동하려면 첫 번째 문자를 입력하세요</value>
+  </data>
+  <data name="TooltipNavegateTextPrompt" xml:space="preserve">
+    <value>왼쪽/오른쪽/시작/끝: 프롬프트 내에서 커서 이동</value>
+  </data>
+  <data name="TooltipPages" xml:space="preserve">
+    <value>위/아래/PgUp/PgDn: 선택기 이동, Ctrl+Home/End:첫 번째/마지막 항목</value>
+  </data>
+  <data name="TooltipShowHide" xml:space="preserve">
+    <value>툴팁 표시/숨기기</value>
+  </data>
+  <data name="TooltipSliderLeftRight" xml:space="preserve">
+    <value>왼쪽/오른쪽/Tab/ShiftTab:값 변경</value>
+  </data>
+  <data name="TooltipSliderUpDown" xml:space="preserve">
+    <value>위/아래/Tab/ShiftTab:값 변경</value>
+  </data>
+  <data name="TooltipSuggestionShiftTab" xml:space="preserve">
+    <value>ShiftTab:제안 취소</value>
+  </data>
+  <data name="TooltipSuggestionTab" xml:space="preserve">
+    <value>Tab:제안 표시, 다시 수락(최소 {0}자)</value>
+  </data>
+  <data name="TooltipSuggestionToggleAuto" xml:space="preserve">
+    <value>Tab/ShiftTab:제안(최소 {0}자)</value>
+  </data>
+  <data name="TooltipSwitch" xml:space="preserve">
+    <value>왼쪽/오른쪽(또는 Space):전환</value>
+  </data>
+  <data name="TooltipToggleNotes" xml:space="preserve">
+    <value>메모 보기/숨기기</value>
+  </data>
+  <data name="TooltipViewPassword" xml:space="preserve">
+    <value>비밀번호 표시/숨기기</value>
+  </data>
+  <data name="YesChar" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="Space" xml:space="preserve">
+    <value>스페이스</value>
+  </data>
+  <data name="InputFinishEnter" xml:space="preserve">
+    <value>Enter:완료</value>
+  </data>
+  <data name="MaskeditInputPending" xml:space="preserve">
+    <value>보고되지 않은 항목이 있습니다.</value>
+  </data>
+  <data name="MaskEditInvalidInput" xml:space="preserve">
+    <value>유효하지 않은 값이 있는 항목</value>
+  </data>
+  <data name="MaskEditPosAnyChar" xml:space="preserve">
+    <value>임의의 문자 (A-Z,a-z,0-9)</value>
+  </data>
+  <data name="MaskEditPosConstant" xml:space="preserve">
+    <value>상수 ({0})</value>
+  </data>
+  <data name="MaskEditPosCurrencySymbol" xml:space="preserve">
+    <value>통화 기호</value>
+  </data>
+  <data name="MaskEditPosCustom" xml:space="preserve">
+    <value>{0}{1}만({2})</value>
+  </data>
+  <data name="MaskEditPosDateSep" xml:space="preserve">
+    <value>날짜 구분자</value>
+  </data>
+  <data name="MaskEditPosDay" xml:space="preserve">
+    <value>일 (0-9)</value>
+  </data>
+  <data name="MaskEditPosDecSep" xml:space="preserve">
+    <value>소수점 구분자</value>
+  </data>
+  <data name="MaskEditPosGrpSep" xml:space="preserve">
+    <value>그룹 구분자</value>
+  </data>
+  <data name="MaskEditPosHour" xml:space="preserve">
+    <value>시 (0-9)</value>
+  </data>
+  <data name="MaskEditPosLetter" xml:space="preserve">
+    <value>문자 (A-Z,a-z)</value>
+  </data>
+  <data name="MaskEditPosLetterLower" xml:space="preserve">
+    <value>문자 (a-z)</value>
+  </data>
+  <data name="MaskEditPosLetterUpper" xml:space="preserve">
+    <value>문자 (A-Z)</value>
+  </data>
+  <data name="MaskEditPosMinute" xml:space="preserve">
+    <value>분 (0-9)</value>
+  </data>
+  <data name="MaskEditPosMonth" xml:space="preserve">
+    <value>월 (0-9)</value>
+  </data>
+  <data name="MaskEditPosNumeric" xml:space="preserve">
+    <value>숫자 (0-9)</value>
+  </data>
+  <data name="MaskEditPosSecond" xml:space="preserve">
+    <value>초 (0-9)</value>
+  </data>
+  <data name="MaskEditPosSing" xml:space="preserve">
+    <value>기호 +-</value>
+  </data>
+  <data name="MaskEditPosSpace" xml:space="preserve">
+    <value>스페이스</value>
+  </data>
+  <data name="MaskEditPosTimeSep" xml:space="preserve">
+    <value>시간 구분자</value>
+  </data>
+  <data name="MaskEditPosYear" xml:space="preserve">
+    <value>년 (0-9)</value>
+  </data>
+  <data name="TooltipCancelEsc" xml:space="preserve">
+    <value>{0}:취소</value>
+  </data>
+  <data name="TooltipToggle" xml:space="preserve">
+    <value>{0}:툴팁 전환</value>
+  </data>
+  <data name="TooltipJumpdelimiter" xml:space="preserve">
+    <value>Tab/ShiftTab:구분자 사이 이동 </value>
+  </data>
+  <data name="TooltipTableColumnNav" xml:space="preserve">
+    <value>Tab/ShiftTab:열 탐색</value>
+  </data>
+  <data name="TooltipTableJump" xml:space="preserve">
+    <value>문자를 입력하여 이동 (필터 가능한 열)</value>
+  </data>
+  <data name="Col_Info" xml:space="preserve">
+    <value>열</value>
+  </data>
+</root>

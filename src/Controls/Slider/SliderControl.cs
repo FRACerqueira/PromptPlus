@@ -3,6 +3,9 @@
 // The maintenance and evolution is maintained by the PromptPlus project under MIT license
 // ***************************************************************************************
 
+using ConsolePlusLibrary;
+using PromptPlusLibrary.Controls.Common;
+using PromptPlusLibrary.Controls.History;
 using PromptPlusLibrary.Core;
 using PromptPlusLibrary.Resources;
 using System;
@@ -10,152 +13,68 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace PromptPlusLibrary.Controls.Slider
 {
     internal sealed class SliderControl : BaseControlPrompt<double?>, ISliderControl, ISliderWidget
     {
-        private readonly Dictionary<SliderStyles, Style> _optStyles = BaseControlOptions.LoadStyle<SliderStyles>();
+        private readonly Dictionary<SliderStyles, Style> _optStyles;
         private Func<double, Style>? _changeColor;
         private Color[]? _changeGradient;
         private Func<double, string>? _changeDescription;
+        private Func<double, Task<string>>? _changeDescriptionAsync;
         private CultureInfo _culture;
-        private double? _defaultValue;
-        private bool _useDefaultHistory;
-        private HistoryOptions? _historyOptions;
-        private List<ItemHistory>? _itemHistories;
-        private Paginator<ItemHistory>? _localpaginator;
         private double _maxValue = 100;
         private double _minValue;
         private byte _width;
-        private HideSlider _hideslide = HideSlider.None;
-        private SliderLayout _sliderLayout = SliderLayout.LeftRight;
-        private byte _fractionalDigits;
-        private SliderBarType _slideBarType = SliderBarType.Fill;
-        private int _indexTooptip;
-        private string _tooltipModeInput = string.Empty;
-        private string _tooltipModeHistory = string.Empty;
-        private char _slidebar = ' ';
-        private double _precision;
-        private int _fator;
-        private double _ranger;
+        private SliderBarType _sliderBarType = SliderBarType.Fill;
+        private byte _fracionalDig;
+        private HideSlider _hideSlider = HideSlider.None;
+        private SliderLayout _layout = SliderLayout.LeftRight;
+        private double? _step;
         private double? _largeStep;
-        private double? _smallStep;
+        private double? _defaultValue;
+        private bool _useDefaultHistory = true;
+        private HistoryOptions? _historyOptions;
+        private IList<ItemHistory>? _itemHistories;
         private double _currentValue;
-        private double? _savedinput;
-        private bool _abortedKeyPress;
+        private double _ranger;
+        private int _fator;
+        private double _precision;
+        private char _slidebar = ' ';
+        private string[] _toggerTooptips = [];
+        private int _indexTooptip;
+        private string _valueFormat = "F0";
+        private Color[]? _gradientColors;
 
-        private ModeView _modeView = ModeView.Input;
-        private readonly Dictionary<ModeView, string[]> _toggerTooptips = new()
+        public SliderControl(bool isWidget, IConsole console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(isWidget, console, promptConfig, baseControlOptions)
         {
-            { ModeView.Input,[] },
-            { ModeView.History,[] }
-        };
-
-        public void InternalRange(double minvalue, double maxvalue)
-        {
-            if (minvalue > maxvalue)
-            {
-                throw new ArgumentOutOfRangeException($"Range invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
-            }
-            _minValue = minvalue;
-            _maxValue = maxvalue;
+            _optStyles = OptionsControl.LoadStyle<SliderStyles>(console.CurrentStyle);
+            _culture = ConfigPrompt.DefaultCulture;
+            _width = ConfigPrompt.SliderWidth;
         }
 
-        public void InternalDefault(double value)
-        {
-            _defaultValue = value;
-            _useDefaultHistory = false;
-        }
+        #region ISliderControl, ISliderWidget
 
-        public void InternalFracionalDig(byte value)
+        public ISliderControl Options(Action<IControlOptions> options)
         {
-            _fractionalDigits = value;
-            if (_fractionalDigits > 5)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "FracionalDig must be less than 5");
-            }
-        }
-
-        public SliderControl(bool iswidget, IConsoleExtend console, PromptConfig promptConfig, BaseControlOptions baseControlOptions) : base(iswidget, console, promptConfig, baseControlOptions)
-        {
-            _culture = ConfigPlus.DefaultCulture;
-            _width = ConfigPlus.SliderWidth;
-        }
-
-        #region ISliderControl
-
-        ISliderWidget ISliderWidget.Fill(SliderBarType type)
-        {
-            _slideBarType = type;
+            ArgumentNullException.ThrowIfNull(options);
+            options.Invoke(OptionsControl);
             return this;
         }
 
-        ISliderWidget ISliderWidget.Styles(SliderStyles styleType, Style style)
+        public ISliderControl BarType(SliderBarType type)
+        {
+            _sliderBarType = type;
+            return this;
+        }
+
+        public ISliderControl Styles(SliderStyles styleType, Style style)
         {
             _optStyles[styleType] = style;
-            return this;
-        }
-
-        ISliderWidget ISliderWidget.Culture(CultureInfo culture)
-        {
-            ArgumentNullException.ThrowIfNull(culture);
-            if (!culture.Name.ExistsCulture())
-            {
-                throw new CultureNotFoundException(culture.Name);
-            }
-            _culture = culture;
-            return this;
-        }
-
-        ISliderWidget ISliderWidget.Width(byte value)
-        {
-            if (value < 10)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "Width must be greater or equal than 10");
-            }
-            _width = value;
-            return this;
-        }
-
-        ISliderWidget ISliderWidget.ChangeColor(Func<double, Style> value)
-        {
-            _changeColor = value ?? throw new ArgumentNullException(nameof(value), "The value cannot be null.");
-            _changeGradient = null;
-            return this;
-        }
-
-        ISliderWidget ISliderWidget.ChangeGradient(params Color[] colors)
-        {
-            _changeGradient = colors ?? throw new ArgumentNullException(nameof(colors), "The colors cannot be null.");
-            _changeColor = null;
-            return this;
-        }
-
-        ISliderWidget ISliderWidget.HideElements(HideSlider value)
-        {
-            _hideslide = value;
-            return this;
-        }
-
-        public ISliderControl ChangeColor(Func<double, Style> value)
-        {
-            _changeColor = value ?? throw new ArgumentNullException(nameof(value), "The value cannot be null.");
-            _changeGradient = null;
-            return this;
-        }
-
-        public ISliderControl ChangeDescription(Func<double, string> value)
-        {
-            _changeDescription = value ?? throw new ArgumentNullException(nameof(value), "The value cannot be null.");
-            return this;
-        }
-
-        public ISliderControl ChangeGradient(params Color[] colors)
-        {
-            _changeGradient = colors ?? throw new ArgumentNullException(nameof(colors), "The colors cannot be null.");
-            _changeColor = null;
             return this;
         }
 
@@ -170,10 +89,35 @@ namespace PromptPlusLibrary.Controls.Slider
             return this;
         }
 
-        public ISliderControl Default(double value, bool usedefaultHistory = true)
+        public ISliderControl Range(double minvalue, double maxvalue)
+        {
+            if (minvalue >= maxvalue)
+            {
+                throw new ArgumentOutOfRangeException($"Range invalid. Minvalue({minvalue}) must be less than Maxvalue({maxvalue})");
+            }
+            _minValue = minvalue;
+            _maxValue = maxvalue;
+            return this;
+        }
+
+        public ISliderControl Width(byte value)
+        {
+            if (value < 10)
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), "Width must be greater or equal than 10");
+            }
+            else if (value > 100) 
+            {
+                throw new ArgumentOutOfRangeException(nameof(value), "Width must be less or equal than 100");
+            }
+            _width = value;
+            return this;
+        }
+
+        public ISliderControl Default(double value, bool useDefaultHistory = true)
         {
             _defaultValue = value;
-            _useDefaultHistory = usedefaultHistory;
+            _useDefaultHistory = useDefaultHistory;
             return this;
         }
 
@@ -189,37 +133,21 @@ namespace PromptPlusLibrary.Controls.Slider
             return this;
         }
 
-        public ISliderControl Fill(SliderBarType type)
+        public ISliderControl FractionalDigits(byte value)
         {
-            _slideBarType = type;
-            return this;
-        }
-
-        public ISliderControl FracionalDig(byte value)
-        {
-            _fractionalDigits = value;
-            return _fractionalDigits > 5 ? throw new ArgumentOutOfRangeException(nameof(value), "FracionalDig must be less than 5") : (ISliderControl)this;
-        }
-
-        public ISliderControl HideElements(HideSlider value)
-        {
-            _hideslide = value;
-            return this;
-        }
-
-        public ISliderControl Width(byte value)
-        {
-            if (value < 10)
-            {
-                throw new ArgumentOutOfRangeException(nameof(value), "Width must be greater or equal than 10");
-            }
-            _width = value;
-            return this;
+            _fracionalDig = value;
+            return _fracionalDig > 5 ? throw new ArgumentOutOfRangeException(nameof(value), "FractionalDigits must be less than 5") : this;
         }
 
         public ISliderControl Layout(SliderLayout value)
         {
-            _sliderLayout = value;
+            _layout = value;
+            return this;
+        }
+
+        public ISliderControl Step(double value)
+        {
+            _step = value;
             return this;
         }
 
@@ -229,33 +157,93 @@ namespace PromptPlusLibrary.Controls.Slider
             return this;
         }
 
-        public ISliderControl Options(Action<IControlOptions> options)
+        public ISliderControl ChangeColor(Func<double, Style> value)
         {
-            ArgumentNullException.ThrowIfNull(options);
-            options.Invoke(GeneralOptions);
+            _changeColor = value ?? throw new ArgumentNullException(nameof(value), "The value cannot be null.");
+            _changeGradient = null;
             return this;
         }
 
-        public ISliderControl Range(double minvalue, double maxvalue)
+        public ISliderControl ChangeGradient(params Color[] colors)
         {
-            if (minvalue > maxvalue)
+            ArgumentNullException.ThrowIfNull(colors);
+            if (colors.Length == 0)
             {
-                throw new ArgumentOutOfRangeException($"Range invalid. Minvalue({minvalue}) > Maxvalue({maxvalue})");
+                throw new ArgumentNullException(nameof(colors), "The value cannot be empty.");
             }
-            _minValue = minvalue;
-            _maxValue = maxvalue;
+            _changeGradient = colors;
+            _changeColor = null;
             return this;
         }
 
-        public ISliderControl Step(double value)
+        public ISliderControl ChangeDescription(Func<double, string> value)
         {
-            _smallStep = value;
+            ArgumentNullException.ThrowIfNull(value);
+            _changeDescription = value;
+            _changeDescriptionAsync = null;
             return this;
         }
 
-        public ISliderControl Styles(SliderStyles styleType, Style style)
+        public ISliderControl ChangeDescriptionAsync(Func<double, Task<string>> value)
         {
-            _optStyles[styleType] = style;
+            ArgumentNullException.ThrowIfNull(value);
+            _changeDescriptionAsync = value;
+            _changeDescription = null;
+            return this;
+        }
+
+        public ISliderControl HideElements(HideSlider value)
+        {
+            _hideSlider = value;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        ISliderWidget ISliderWidget.BarType(SliderBarType type)
+        {
+            BarType(type);
+            return this;
+        }
+
+        /// <inheritdoc/>
+        ISliderWidget ISliderWidget.Styles(SliderStyles styleType, Style style)
+        {
+            Styles(styleType, style);
+            return this;
+        }
+
+        /// <inheritdoc/>
+        ISliderWidget ISliderWidget.Culture(CultureInfo culture)
+        {
+            Culture(culture);
+            return this;
+        }
+
+        /// <inheritdoc/>
+        ISliderWidget ISliderWidget.Width(byte value)
+        {
+            Width(value);
+            return this;
+        }
+
+        /// <inheritdoc/>
+        ISliderWidget ISliderWidget.ChangeColor(Func<double, Style> value)
+        {
+            ChangeColor(value);
+            return this;
+        }
+
+        /// <inheritdoc/>
+        ISliderWidget ISliderWidget.ChangeGradient(params Color[] colors)
+        {
+            ChangeGradient(colors);
+            return this;
+        }
+
+        /// <inheritdoc/>
+        ISliderWidget ISliderWidget.HideElements(HideSlider value)
+        {
+            HideElements(value);
             return this;
         }
 
@@ -282,7 +270,6 @@ namespace PromptPlusLibrary.Controls.Slider
                 {
                     _itemHistories = [];
                 }
-                FileHistory.SaveHistory(_historyOptions.FileNameValue, _itemHistories, _historyOptions.MaxItemsValue);
                 if (_useDefaultHistory && _itemHistories.Count > 0)
                 {
                     if (double.TryParse(_itemHistories[0].History, out double auxdefault))
@@ -316,17 +303,16 @@ namespace PromptPlusLibrary.Controls.Slider
             {
                 _ranger *= -1;
             }
-            string fra = "1";
-            for (int i = 0; i < _fractionalDigits; i++)
+            _fator = 100;
+            for (int i = 0; i < _fracionalDig; i++)
             {
-                fra += "0";
+                _fator *= 10;
             }
+            _valueFormat = $"F{_fracionalDig}";
 
-            _fator = 100 * (int.Parse(fra));
-
-            if (!_smallStep.HasValue)
+            if (!_step.HasValue)
             {
-                _smallStep = _ranger / 100;
+                _step = _ranger / 100;
             }
             if (!_largeStep.HasValue)
             {
@@ -336,94 +322,57 @@ namespace PromptPlusLibrary.Controls.Slider
 
             SetSlideBarType();
 
-            if (!IsWidgetControl)
+            // Precompute the per-column gradient once. It only depends on the (now fixed)
+            // width and colors, so it never changes during the render loop.
+            _gradientColors = _changeGradient is null ? null : BuildGradient(_width, _changeGradient);
+
+            if (!IsWidget)
             {
                 LoadTooltipToggle();
-                _tooltipModeInput = GetTooltipModeInput();
-                _tooltipModeHistory = GetTooltipModeHistory();
-            }
-        }
-
-        public override void BufferTemplate(BufferScreen screenBuffer)
-        {
-            if (!IsWidgetControl)
-            {
-                WritePrompt(screenBuffer);
-
-                WriteAnswer(screenBuffer);
-
-                WriteError(screenBuffer);
-
-                WriteDescription(screenBuffer);
-            }
-
-            WriteSlider(screenBuffer);
-
-            if (!IsWidgetControl)
-            {
-                WriteHistory(screenBuffer);
-
-                WriteTooltip(screenBuffer);
             }
         }
 
         public override bool TryResult(CancellationToken cancellationToken)
         {
-            bool oldcursor = ConsolePlus.CursorVisible;
-            ConsolePlus.CursorVisible = true;
+            bool oldcursor = ConsoleHandler.CursorVisible;
+            ConsoleHandler.CursorVisible = true;
             try
             {
                 ResultCtrl = null;
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    ConsoleKeyInfo keyinfo = WaitKeypress(true, cancellationToken);
-
-                    #region default Press to Finish and tooltip
-                    if (cancellationToken.IsCancellationRequested)
+                    KeyPressResult press = ReadNextKey(true, cancellationToken);
+                    if (press.IsResize || press.IsCancelled)
                     {
-                        _indexTooptip = 0;
-                        if (_modeView != ModeView.Input)
+                        if (press.IsCancelled)
                         {
-                            _savedinput = null;
-                            _localpaginator = null;
-                            _modeView = ModeView.Input;
-                            break;
+                            _indexTooptip = 0;
+                            ResultCtrl = new ResultPrompt<double?>(default!, true);
                         }
-                        _abortedKeyPress = true;
-                        ResultCtrl = new ResultPrompt<double?>(_currentValue, true);
                         break;
                     }
-                    else if (IsAbortKeyPress(keyinfo))
+
+                    ConsoleKeyInfo keyinfo = press.Key;
+
+                    #region default Press to Finish and tooltip
+
+                    if (IsAbortKeyPress(keyinfo))
                     {
                         _indexTooptip = 0;
-                        if (_modeView != ModeView.Input)
-                        {
-                            _savedinput = null;
-                            _localpaginator = null;
-                            _modeView = ModeView.Input;
-                            break;
-                        }
-                        _abortedKeyPress = true;
                         ResultCtrl = new ResultPrompt<double?>(_currentValue, true);
                         break;
                     }
                     else if (keyinfo.IsPressEnterKey())
                     {
                         _indexTooptip = 0;
-                        if (_modeView != ModeView.Input)
-                        {
-                            _currentValue = _savedinput!.Value;
-                            _savedinput = null;
-                            _localpaginator = null;
-                            _modeView = ModeView.Input;
-                        }
                         ResultCtrl = new ResultPrompt<double?>(_currentValue, false);
+                        SaveHistory();
                         break;
                     }
                     else if (IsTooltipToggerKeyPress(keyinfo))
                     {
                         _indexTooptip++;
-                        if (_indexTooptip > _toggerTooptips[_modeView].Length)
+                        if (_indexTooptip > _toggerTooptips.Length)
                         {
                             _indexTooptip = 0;
                         }
@@ -436,124 +385,19 @@ namespace PromptPlusLibrary.Controls.Slider
                     }
                     #endregion
 
-                    #region Histories
-                    else if (_modeView == ModeView.Input && ConfigPlus.HotKeyShowHistory.Equals(keyinfo) && (_itemHistories?.Count ?? 0) > 0)
-                    {
-                        IEnumerable<ItemHistory> subhist = _itemHistories!.Where(x =>
-                             DateTime.Now < new DateTime(x.TimeOutTicks));
-                        if (!subhist.Any())
-                        {
-                            SetError(Messages.HistoryNotFound);
-                            break;
-                        }
-                        _savedinput = _currentValue;
-                        _localpaginator = new Paginator<ItemHistory>(
-                            FilterMode.Disabled,
-                            subhist,
-                            _historyOptions!.PageSizeValue,
-                            Optional<ItemHistory>.Empty(),
-                            (item1, item2) => item1.History == item2.History,
-                            (item) => item.History);
-                        _modeView = ModeView.History;
-                        _currentValue = double.Parse(_localpaginator.SelectedItem.History);
-                        _indexTooptip = 0;
-                        break;
-                    }
-
-                    else if (_modeView == ModeView.History)
-                    {
-                        if (keyinfo.IsPressCtrlDeleteKey())
-                        {
-                            _indexTooptip = 0;
-                            FileHistory.ClearHistory(_historyOptions!.FileNameValue);
-                            _itemHistories!.Clear();
-                            _currentValue = _savedinput!.Value;
-                            _indexTooptip = 0;
-                            _localpaginator = null;
-                            _savedinput = null;
-                            _modeView = ModeView.Input;
-                            break;
-                        }
-                        else if (keyinfo.IsPressDownArrowKey())
-                        {
-                            if (_localpaginator!.IsLastPageItem)
-                            {
-                                _localpaginator.NextPage(IndexOption.FirstItem);
-                            }
-                            else
-                            {
-                                _localpaginator.NextItem();
-                            }
-                            _currentValue = double.Parse(_localpaginator.SelectedItem.History);
-                            _indexTooptip = 0;
-                            break;
-                        }
-                        else if (keyinfo.IsPressUpArrowKey())
-                        {
-                            if (_localpaginator!.IsFirstPageItem)
-                            {
-                                _localpaginator!.PreviousPage(IndexOption.LastItem);
-                            }
-                            else
-                            {
-                                _localpaginator!.PreviousItem();
-                            }
-                            _currentValue = double.Parse(_localpaginator.SelectedItem.History);
-                            _indexTooptip = 0;
-                            break;
-                        }
-                        else if (keyinfo.IsPressPageDownKey())
-                        {
-                            if (_localpaginator!.NextPage(IndexOption.FirstItemWhenHasPages))
-                            {
-                                _currentValue = double.Parse(_localpaginator.SelectedItem.History);
-                                _indexTooptip = 0;
-                                break;
-                            }
-                        }
-                        else if (keyinfo.IsPressPageUpKey())
-                        {
-                            if (_localpaginator!.PreviousPage(IndexOption.LastItemWhenHasPages))
-                            {
-                                _currentValue = double.Parse(_localpaginator.SelectedItem.History);
-                                _indexTooptip = 0;
-                                break;
-                            }
-                        }
-                        else if (keyinfo.IsPressCtrlHomeKey())
-                        {
-                            if (!_localpaginator!.Home())
-                            {
-                                continue;
-                            }
-                            _indexTooptip = 0;
-                            break;
-                        }
-                        else if (keyinfo.IsPressCtrlEndKey())
-                        {
-                            if (!_localpaginator!.End())
-                            {
-                                continue;
-                            }
-                            _indexTooptip = 0;
-                            break;
-                        }
-                    }
-                    #endregion
-
-                    else if ((keyinfo.IsPressDownArrowKey() && _sliderLayout == SliderLayout.UpDown) ||
-                        (keyinfo.IsPressLeftArrowKey() && _sliderLayout == SliderLayout.LeftRight))
+                    else if ((keyinfo.IsPressDownArrowKey() && _layout == SliderLayout.UpDown) ||
+                        (keyinfo.IsPressLeftArrowKey() && _layout == SliderLayout.LeftRight))
                     {
                         if (_currentValue.CompareTo(_minValue) == 0)
                         {
                             continue;
                         }
-                        double aux = _currentValue - _smallStep!.Value;
+                        double aux = _currentValue - _step!.Value;
                         if (aux.CompareTo(_minValue) < 0)
                         {
                             aux = _minValue;
                         }
-                        _currentValue = Math.Round(aux, _fractionalDigits);
+                        _currentValue = Math.Round(aux, _fracionalDig);
                         _indexTooptip = 0;
                         break;
                     }
@@ -568,23 +412,23 @@ namespace PromptPlusLibrary.Controls.Slider
                         {
                             aux = _minValue;
                         }
-                        _currentValue = Math.Round(aux, _fractionalDigits);
+                        _currentValue = Math.Round(aux, _fracionalDig);
                         _indexTooptip = 0;
                         break;
                     }
-                    else if ((keyinfo.IsPressUpArrowKey() && _sliderLayout == SliderLayout.UpDown) ||
-                             (keyinfo.IsPressRightArrowKey() && _sliderLayout == SliderLayout.LeftRight))
+                    else if ((keyinfo.IsPressUpArrowKey() && _layout == SliderLayout.UpDown) ||
+                             (keyinfo.IsPressRightArrowKey() && _layout == SliderLayout.LeftRight))
                     {
                         if (_currentValue.CompareTo(_maxValue) == 0)
                         {
                             continue;
                         }
-                        double aux = _currentValue + _smallStep!.Value;
+                        double aux = _currentValue + _step!.Value;
                         if (aux.CompareTo(_maxValue) > 0)
                         {
                             aux = _maxValue;
                         }
-                        _currentValue = Math.Round(aux, _fractionalDigits);
+                        _currentValue = Math.Round(aux, _fracionalDig);
                         _indexTooptip = 0;
                         break;
                     }
@@ -599,27 +443,49 @@ namespace PromptPlusLibrary.Controls.Slider
                         {
                             aux = _maxValue;
                         }
-                        _currentValue = Math.Round(aux, _fractionalDigits);
+                        _currentValue = Math.Round(aux, _fracionalDig);
                         _indexTooptip = 0;
                         break;
                     }
+
                 }
             }
             finally
             {
-                ConsolePlus.CursorVisible = oldcursor;
+                ConsoleHandler.CursorVisible = oldcursor;
             }
             return ResultCtrl != null;
         }
 
+        public override void BufferTemplate(BufferScreen screenBuffer)
+        {
+            if (!IsWidget)
+            {
+                WritePrompt(screenBuffer, _optStyles[SliderStyles.Prompt]);
+
+                WriteAnswer(screenBuffer);
+
+                WriteDescription(screenBuffer);
+
+            }
+            WriteSlider(screenBuffer);
+
+            if (!IsWidget)
+            {
+                WriteTooltip(screenBuffer);
+
+                WriteError(screenBuffer, _optStyles[SliderStyles.Error]);
+
+            }
+
+        }
+
         public override bool FinishTemplate(BufferScreen screenBuffer)
         {
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
-            {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[SliderStyles.Prompt]);
-            }
+            WritePrompt(screenBuffer, _optStyles[SliderStyles.Prompt]);
+
             string answer = ResultCtrl!.Value.IsAborted
-                ? GeneralOptions.ShowMesssageAbortKeyValue ? Messages.CanceledKey : string.Empty
+                ? OptionsControl.EnabledAbortKeyValue ? PromptPlusResources.CanceledKey : string.Empty
                 : ValueToString(_currentValue);
 
             screenBuffer.WriteLine(answer, _optStyles[SliderStyles.Answer]);
@@ -629,186 +495,54 @@ namespace PromptPlusLibrary.Controls.Slider
 
         public override void FinalizeControl()
         {
-            if (_historyOptions != null && !_abortedKeyPress)
-            {
-                FileHistory.AddHistory(_currentValue.ToString(_culture), _historyOptions.ExpirationTimeValue, _itemHistories);
-                FileHistory.SaveHistory(_historyOptions.FileNameValue, _itemHistories!, _historyOptions.MaxItemsValue);
-            }
+            //NONE
         }
 
-        private string GetTooltipModeHistory()
+        private string ValueToString(double value)
         {
-            StringBuilder tooltip = new();
-            tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
-            tooltip.Append(", ");
-            tooltip.Append(Messages.TooltipPages);
-            return tooltip.ToString();
+            // Fixed-point format (no group separators). The format string is cached in InitControl
+            // to avoid re-allocating it on every render.
+            return Math.Round(value, _fracionalDig).ToString(_valueFormat, _culture);
         }
 
-        private string GetTooltipModeInput()
+
+        private int CurrentValueStep(double value)
         {
-            StringBuilder tooltip = new();
-            tooltip.Append(string.Format(Messages.TooltipToggle, ConfigPlus.HotKeyTooltip));
-            tooltip.Append(", ");
-            if (_sliderLayout == SliderLayout.LeftRight && _modeView == ModeView.Input)
+            if (value < _minValue)
             {
-                tooltip.Append(Messages.SliderNumberLeftRightKeyNavigator);
+                value = _minValue;
             }
-            if (_sliderLayout == SliderLayout.UpDown && _modeView == ModeView.Input)
+            if (value > _maxValue)
             {
-                tooltip.Append(Messages.SliderNumberUpDownKeyNavigator);
+                value = _maxValue;
             }
-            return tooltip.ToString();
-        }
-
-        private void LoadTooltipToggle()
-        {
-            foreach (ModeView mode in Enum.GetValues<ModeView>())
-            {
-                List<string> lsttooltips =
-                [
-                    $"{string.Format(Messages.TooltipShowHide, ConfigPlus.HotKeyTooltipShowHide)}, {Messages.InputFinishEnter}"
-                ];
-
-                if (mode == ModeView.Input && GeneralOptions.EnabledAbortKeyValue)
-                {
-                    lsttooltips[0] += $", {string.Format(Messages.TooltipCancelEsc, ConfigPlus.HotKeyAbortKeyPress)}";
-                }
-                if (mode == ModeView.History)
-                {
-                    lsttooltips[0] += $", {Messages.TooltipHistoryEsc}";
-                }
-                if (_itemHistories != null && _itemHistories.Count > 0 && mode == ModeView.Input)
-                {
-                    lsttooltips.Add(string.Format(Messages.TooltipHistoryKey, ConfigPlus.HotKeyShowHistory));
-                }
-                _toggerTooptips[mode] = [.. lsttooltips];
-            }
-        }
-
-        private void WriteError(BufferScreen screenBuffer)
-        {
-            if (!string.IsNullOrEmpty(ValidateError))
-            {
-                screenBuffer.WriteLine(ValidateError, _optStyles[SliderStyles.Error]);
-                ClearError();
-            }
-        }
-
-        private void WriteTooltip(BufferScreen screenBuffer)
-        {
-            if (!IsShowTooltip)
-            {
-                return;
-            }
-            string? tooltip;
-            if (_indexTooptip > 0)
-            {
-                tooltip = GetTooltipToggle();
-            }
-            else
-            {
-                tooltip = _modeView == ModeView.Input
-                    ? _tooltipModeInput
-                    : _modeView == ModeView.History
-                    ? _tooltipModeHistory
-                    : throw new NotImplementedException($"ModeView {_modeView} not implemented.");
-            }
-            screenBuffer.Write(tooltip, _optStyles[SliderStyles.Tooltips]);
-
-        }
-
-        private string GetTooltipToggle()
-        {
-            return _modeView switch
-            {
-                ModeView.Input => _toggerTooptips[ModeView.Input][_indexTooptip - 1],
-                ModeView.History => _toggerTooptips[ModeView.History][_indexTooptip - 1],
-                _ => throw new NotImplementedException($"ModeView {_modeView} not implemented.")
-            };
-
-        }
-
-        private void WriteHistory(BufferScreen screenBuffer)
-        {
-            if (_modeView != ModeView.History)
-            {
-                return;
-            }
-
-            ArraySegment<ItemHistory> subset = _localpaginator!.GetPageData(); // Cache the page data
-            screenBuffer.WriteLine(Messages.EntryHistory, _optStyles[SliderStyles.Selected]);
-            foreach (ItemHistory item in subset)
-            {
-                string value = item.History;
-                if (_localpaginator.TryGetSelected(out ItemHistory selectedItem) && EqualityComparer<ItemHistory>.Default.Equals(item, selectedItem))
-                {
-                    screenBuffer.Write($"{ConfigPlus.GetSymbol(SymbolType.Selector)}", _optStyles[SliderStyles.Selected]);
-                    screenBuffer.WriteLine($" {value}", _optStyles[SliderStyles.Selected]);
-                }
-                else
-                {
-                    screenBuffer.Write(" ", _optStyles[SliderStyles.UnSelected]);
-                    screenBuffer.WriteLine($" {value}", _optStyles[SliderStyles.UnSelected]);
-                }
-            }
-
-            if (_localpaginator.PageCount > 1)
-            {
-                string template = ConfigPlus.PaginationTemplate.Invoke(
-                    _localpaginator.TotalCountValid,
-                    _localpaginator.SelectedPage + 1,
-                    _localpaginator.PageCount
-                )!;
-                screenBuffer.WriteLine(template, _optStyles[SliderStyles.Pagination]);
-            }
-        }
-
-        private void WriteDescription(BufferScreen screenBuffer)
-        {
-            string? desc = _changeDescription?.Invoke(_currentValue) ?? GeneralOptions.DescriptionValue;
-            if (!string.IsNullOrEmpty(desc))
-            {
-                screenBuffer.WriteLine(desc, _optStyles[SliderStyles.Description]);
-            }
-        }
-
-        private void WriteAnswer(BufferScreen screenBuffer)
-        {
-            if (_sliderLayout == SliderLayout.UpDown)
-            {
-                if (!_hideslide.HasFlag(HideSlider.Range))
-                {
-                    screenBuffer.Write($"[{ValueToString(_minValue)},{ValueToString(_maxValue)}] ", _optStyles[SliderStyles.Ranger]);
-                }
-            }
-            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterLeft), _optStyles[SliderStyles.Answer]);
-            string answer = ValueToString(_currentValue);
-            screenBuffer.Write(answer, _optStyles[SliderStyles.Answer]);
-            screenBuffer.SavePromptCursor();
-            screenBuffer.Write(ConfigPlus.GetSymbol(SymbolType.InputDelimiterRight), _optStyles[SliderStyles.Answer]);
-            screenBuffer.WriteLine("", _optStyles[SliderStyles.Answer]);
+            // Number of precision steps required to reach 'value'. This is the closed-form
+            // equivalent of the previous incremental loop (O(1) instead of O(qtd), which
+            // could reach 100 * 10^fracionalDig iterations per render).
+            double qtd = _precision > 0 ? Math.Ceiling((value - _minValue) / _precision) : 0;
+            double perc = qtd / _fator;
+            return (int)Math.Round(_width * perc, _fracionalDig);
         }
 
         private void WriteSlider(BufferScreen screenBuffer)
         {
-            if (_sliderLayout != SliderLayout.LeftRight)
+            if (_layout != SliderLayout.LeftRight)
             {
                 return;
             }
-            if (!_hideslide.HasFlag(HideSlider.Range))
+            if (!_hideSlider.HasFlag(HideSlider.Range))
             {
                 screenBuffer.Write($"{ValueToString(_minValue)} ", _optStyles[SliderStyles.Ranger]);
             }
 
-            string delimitbar = ConfigPlus.GetSymbol(SymbolType.GridSingleDividerY);
-            if (!_hideslide.HasFlag(HideSlider.Delimit))
+            string delimitbar = GetSymbol(SymbolType.GridSingleDividerY);
+            if (!_hideSlider.HasFlag(HideSlider.Delimit))
             {
                 screenBuffer.Write(delimitbar, _optStyles[SliderStyles.Ranger]);
             }
 
             Style OnStyle = _optStyles[SliderStyles.Slider].Background(_optStyles[SliderStyles.Slider].Foreground);
-            if (_slideBarType != SliderBarType.Fill)
+            if (_sliderBarType != SliderBarType.Fill)
             {
                 OnStyle = _optStyles[SliderStyles.Slider];
             }
@@ -826,25 +560,19 @@ namespace PromptPlusLibrary.Controls.Slider
             }
             else
             {
-                List<(string Text, Style StyeText)> aux = Gradient(new string(_slidebar, _width), _changeGradient);
-                for (int i = 0; i < aux.Count; i++)
+                Color[] gradient = _gradientColors ??= BuildGradient(_width, _changeGradient);
+                string bar = _slidebar.ToString();
+                bool isSpaceBar = _slidebar == ' ';
+                int count = Math.Min(valuestep, gradient.Length);
+                for (int i = 0; i < count; i++)
                 {
-                    if (i < valuestep && valuestep > 0)
-                    {
-                        if (aux[i].Text[0].Equals(' '))
-                        {
-                            screenBuffer.Write(aux[i].Text[0].ToString(), OnStyle.Background(aux[i].StyeText.Foreground));
-                        }
-                        else
-                        {
-                            screenBuffer.Write(aux[i].Text[0].ToString(), OnStyle.ForeGround(aux[i].StyeText.Foreground));
-                        }
-                    }
+                    Color color = gradient[i];
+                    screenBuffer.Write(bar, isSpaceBar ? OnStyle.Background(color) : OnStyle.ForeGround(color));
                 }
             }
             if (offlength > 0)
             {
-                if (_slideBarType == SliderBarType.Fill)
+                if (_sliderBarType == SliderBarType.Fill)
                 {
                     screenBuffer.Write(new string(' ', _width - valuestep), _optStyles[SliderStyles.Slider]);
                 }
@@ -853,59 +581,82 @@ namespace PromptPlusLibrary.Controls.Slider
                     screenBuffer.Write(new string(_slidebar, _width - valuestep), _optStyles[SliderStyles.Slider].Background);
                 }
             }
-            if (!_hideslide.HasFlag(HideSlider.Delimit))
+            if (!_hideSlider.HasFlag(HideSlider.Delimit))
             {
                 screenBuffer.Write(delimitbar, _optStyles[SliderStyles.Ranger]);
             }
-            if (!_hideslide.HasFlag(HideSlider.Range))
+            if (!_hideSlider.HasFlag(HideSlider.Range))
             {
                 screenBuffer.Write($" {ValueToString(_maxValue)}", _optStyles[SliderStyles.Ranger]);
             }
             screenBuffer.WriteLine("", _optStyles[SliderStyles.Prompt]);
         }
 
-        private void WritePrompt(BufferScreen screenBuffer)
+        private void WriteTooltip(BufferScreen screenBuffer)
         {
-            if (!string.IsNullOrEmpty(GeneralOptions.PromptValue))
+            if (!IsShowTooltip)
             {
-                screenBuffer.Write(GeneralOptions.PromptValue, _optStyles[SliderStyles.Prompt]);
+                return;
+            }
+            string? tooltip = GetTooltipToggle();
+            tooltip = $"{ConfigPrompt.HotKeyTooltip}:{PromptPlusResources.TooltipBase}.{tooltip}";
+            if (!tooltip.EndsWith('.'))
+            {
+                tooltip = $"{tooltip}.";
+            }
+            screenBuffer.WriteLine(tooltip, _optStyles[SliderStyles.Tooltips]);
+        }
+
+        private string GetTooltipToggle()
+        {
+            if (_indexTooptip >= _toggerTooptips.Length)
+            {
+                _indexTooptip = 0;
+            }
+            return _toggerTooptips[_indexTooptip];
+        }
+
+        private void WriteDescription(BufferScreen screenBuffer)
+        {
+            string? desc = OptionsControl.DescriptionValue;
+            if (_changeDescriptionAsync is not null)
+            {
+                desc = _changeDescriptionAsync.Invoke(_currentValue)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+            else
+            {
+                desc = _changeDescription?.Invoke(_currentValue) ?? OptionsControl.DescriptionValue;
+            }
+            if (!string.IsNullOrEmpty(desc))
+            {
+                screenBuffer.WriteLine(desc, _optStyles[SliderStyles.Description]);
             }
         }
 
-        private string ValueToString(double value)
+        private void WriteAnswer(BufferScreen screenBuffer)
         {
-            // Use "N" for number format with group separators, or "F" for fixed-point (no group separators)
-            // "F" is typically preferred for progress bar values
-            return Math.Round(value, _fractionalDigits).ToString($"F{_fractionalDigits}", _culture);
+            if (_layout == SliderLayout.UpDown)
+            {
+                if (!_hideSlider.HasFlag(HideSlider.Range))
+                {
+                    screenBuffer.Write($"[{ValueToString(_minValue)},{ValueToString(_maxValue)}] ", _optStyles[SliderStyles.Ranger]);
+                }
+            }
+            string answer = ValueToString(_currentValue);
+            screenBuffer.Write(answer, _optStyles[SliderStyles.Answer]);
+            screenBuffer.SavePromptCursor();
+            screenBuffer.WriteLine("", _optStyles[SliderStyles.Answer]);
         }
 
-        private int CurrentValueStep(double value)
+        private static Color[] BuildGradient(int width, params Color[] colors)
         {
-            if (value < _minValue)
+            Color[] result = new Color[width];
+            for (int i = 0; i < width; i++)
             {
-                value = _minValue;
-            }
-            if (value > _maxValue)
-            {
-                value = _maxValue;
-            }
-            double min = _minValue;
-            double qtd = 0;
-            while (min < value)
-            {
-                min += _precision;
-                qtd++;
-            }
-            double perc = qtd / _fator;
-            return (int)Math.Round(_width * perc, _fractionalDigits);
-        }
-
-        private static List<(string Text, Style StyeText)> Gradient(string text, params Color[] colors)
-        {
-            List<(string Text, Style StyeText)> result = [];
-            for (int i = 0; i < text.Length; i++)
-            {
-                float percentage = (colors.Length - 1) * ((float)i / text.Length);
+                float percentage = (colors.Length - 1) * ((float)i / width);
                 int colorPrevIndex = (int)percentage;
                 int colorNextIndex = (int)Math.Ceiling(percentage);
                 Color colorPrev = colors[colorPrevIndex];
@@ -917,36 +668,80 @@ namespace PromptPlusLibrary.Controls.Slider
                 byte g = (byte)(rtlOffset * colorPrev.G + ltrOffset * colorNext.G);
                 byte b = (byte)(rtlOffset * colorPrev.B + ltrOffset * colorNext.B);
 
-                Color color = new(r, g, b);
-                result.Add((text[i].ToString(), new Style(color, color)));
+                result[i] = new Color(r, g, b);
             }
             return result;
         }
 
+
         private void SetSlideBarType()
         {
-            switch (_slideBarType)
+            switch (_sliderBarType)
             {
                 case SliderBarType.Fill:
                     break;
                 case SliderBarType.Light:
-                    _slidebar = ConfigPlus.GetSymbol(SymbolType.SliderBarLight)[0];
+                    _slidebar = GetSymbol(SymbolType.SliderBarLight)[0];
                     break;
                 case SliderBarType.DoubleLight:
-                    _slidebar = ConfigPlus.GetSymbol(SymbolType.SliderBarDoubleLight)[0];
+                    _slidebar = GetSymbol(SymbolType.SliderBarDoubleLight)[0];
                     break;
                 case SliderBarType.Square:
-                    _slidebar = ConfigPlus.GetSymbol(SymbolType.SliderBarSquare)[0];
+                    _slidebar = GetSymbol(SymbolType.SliderBarSquare)[0];
+                    break;
+                case SliderBarType.Dot:
+                    _slidebar = GetSymbol(SymbolType.SliderBarDot)[0];
                     break;
                 default:
-                    throw new NotImplementedException($"BarType: {_slideBarType} Not Implemented");
+                    throw new NotImplementedException($"BarType: {_sliderBarType} Not Implemented");
             }
         }
 
-        private enum ModeView
+        private string GetTooltipMain()
         {
-            Input,
-            History
+            StringBuilder tooltip = new();
+            tooltip.Append(PromptPlusResources.TooltipEnterFinish);
+            tooltip.Append('.');
+            if (_layout == SliderLayout.LeftRight)
+            {
+                tooltip.Append(PromptPlusResources.TooltipSliderLeftRight);
+                tooltip.Append('.');
+            }
+            else if (_layout == SliderLayout.UpDown)
+            {
+                tooltip.Append(PromptPlusResources.TooltipSliderUpDown);
+                tooltip.Append('.');
+            }
+            return tooltip.ToString();
+        }
+
+        private void LoadTooltipToggle()
+        {
+            List<string> lsttooltips =
+            [
+                GetTooltipMain()
+            ];
+            if (OptionsControl.EnabledAbortKeyValue)
+            {
+                lsttooltips.Add($"{ConfigPrompt.HotKeyAbortKeyPress}:{PromptPlusResources.Abort}");
+            }
+            lsttooltips.Add($"{ConfigPrompt.HotKeyTooltipShowHide}:{PromptPlusResources.TooltipShowHide}");
+            _toggerTooptips = [.. lsttooltips];
+        }
+
+        private void SaveHistory()
+        {
+            if (_historyOptions == null)
+            {
+                return;
+            }
+            string serializedValue = JsonSerializer.Serialize(_currentValue);
+            IList<ItemHistory> hist = FileHistory.LoadHistory(_historyOptions.FileNameValue, _historyOptions.MaxItemsValue);
+            hist.Clear(); 
+            FileHistory.AddHistory(serializedValue, _historyOptions.ExpirationTimeValue, hist);
+            FileHistory.SaveHistory(_historyOptions.FileNameValue, hist, _historyOptions.MaxItemsValue);
+            _itemHistories = hist;
+
         }
     }
 }
