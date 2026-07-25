@@ -16,6 +16,11 @@ namespace PromptPlus.Tests.Controls
     // VirtualScreen.cs Resize), this exercises the relayout for the first time. Input is used as
     // the vehicle since its render path is simple and well understood by the existing suite; the
     // relayout machinery itself lives entirely in the base class.
+    // Relies on fixed wall-clock waits (WaitUntilAllKeysConsumed, WaitUntilRenderSettles) to observe
+    // the resize/relayout in flight deterministically — the same category of timing dependency
+    // BackgroundTimingCollection was introduced for. Sharing that collection serializes it against
+    // the other timing-sensitive classes instead of competing with them for thread-pool slots.
+    [Collection(BackgroundTimingCollection.Name)]
     public class ResizeRelayoutTests
     {
         private static VirtualTerminal MakeTerminal(int width, int height)
