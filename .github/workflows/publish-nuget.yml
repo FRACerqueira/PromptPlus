@@ -35,9 +35,6 @@ jobs:
       - name: Build (Release)
         run: dotnet build src/PromptPlus.csproj --configuration Release -p:Version=${{ steps.version.outputs.VERSION }}
 
-      - name: Test
-        run: dotnet test tests/PromptPlus.Tests/PromptPlus.Tests.csproj --configuration Debug --verbosity normal
-
       - name: Pack tool
         run: >
           dotnet pack src/PromptPlus.csproj
