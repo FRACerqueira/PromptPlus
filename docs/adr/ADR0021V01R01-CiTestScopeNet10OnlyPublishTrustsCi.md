@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0020V01R01](ADR0020V01R01-DisplayWidthOverCharCountForLayout.md) • [ADR Index](README.md)
+[← ADR0020V01R01](ADR0020V01R01-DisplayWidthOverCharCountForLayout.md) • [ADR Index](README.md) • **Next:** [ADR0022V01R01 →](ADR0022V01R01-CiSkipsTestsForDocOnlyChanges.md)
 
 ---
 

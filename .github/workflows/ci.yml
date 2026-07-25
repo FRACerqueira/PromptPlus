@@ -9,11 +9,34 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
+  # Detects whether the push/PR touches anything besides docs/*.md. Doc-only changes
+  # still get a build (below) but skip the test run entirely.
+  changes:
+    name: Detect changed paths
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Filter changed paths
+        uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            code:
+              - '**'
+              - '!**/*.md'
+              - '!docs/**'
+
   # Single job, OS matrix only (net10.0 tests, not the full net8/9/10 TFM axis).
   build-and-test:
     name: Build & Test (${{ matrix.os }})
+    needs: changes
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -43,7 +66,10 @@ jobs:
       - name: Build library (Release)
         run: dotnet build src/PromptPlus.csproj --configuration Release
 
+      # Skipped for doc-only changes (docs/** and *.md) — those only need a build to
+      # verify nothing broke, not a full test pass. See ADR0022.
       - name: Test (net10.0 only)
+        if: needs.changes.outputs.code == 'true'
         run: >
           dotnet test tests/PromptPlus.Tests/PromptPlus.Tests.csproj
           --configuration Debug
@@ -55,7 +81,7 @@ jobs:
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && needs.changes.outputs.code == 'true'
         with:
           name: test-results-${{ matrix.os }}
           path: "**/TestResults/**/*.trx"
@@ -63,7 +89,7 @@ jobs:
 
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
-        if: always()
+        if: always() && needs.changes.outputs.code == 'true'
         with:
           name: coverage-${{ matrix.os }}
           path: "**/TestResults/**/coverage.cobertura.xml"
