@@ -88,3 +88,4 @@ test/build ADRs (0014–0019) predate that survey and were renumbered to follow.
 | [ADR0017V01R01](ADR0017V01R01-AnsiStyleModelColorOnly.md) | ANSI style model: color only (no attributes) | V01 | Accepted |
 | [ADR0018V01R01](ADR0018V01R01-PilotControlsAndPublicApiSurface.md) | Pilot controls and public API surface | V01 | Accepted |
 | [ADR0019V01R01](ADR0019V01R01-ConditionalConsolePlusReference.md) | Conditional ConsolePlus reference for tests | V01 | Accepted |
+| [ADR0021V01R01](ADR0021V01R01-CiTestScopeNet10OnlyPublishTrustsCi.md) | CI test scope is net10.0-only; release workflow trusts CI and does not re-run tests | V01 | Accepted |

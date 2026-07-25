@@ -24,7 +24,7 @@
 
 </div>
 
-[← ADR0019V01R01](ADR0019V01R01-ConditionalConsolePlusReference.md) • [ADR Index](README.md)
+[← ADR0019V01R01](ADR0019V01R01-ConditionalConsolePlusReference.md) • [ADR Index](README.md) • **Next:** [ADR0021V01R01 →](ADR0021V01R01-CiTestScopeNet10OnlyPublishTrustsCi.md)
 
 ---
 
