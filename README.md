@@ -44,7 +44,7 @@
 - The **main** branch will be updated later, once changes are consolidated and validated.
 
 ## 📦 NuGet Package
-- Latest update: **6.0.0-Beta1**.  
+- Latest update: **6.0.0-Beta[seq]**.  
 - To install, you must **enable the pre-release option** in NuGet.
 
 ## 💬 Community Feedback
